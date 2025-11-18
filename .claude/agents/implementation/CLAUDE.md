@@ -22,6 +22,8 @@ Implementation agents for the multi-agent orchestration system.
 
 - **database-architect.md** - Documentation
 
+- **DESIGN-SYSTEM-V2.md** - Documentation
+
 - **frontend-developer.md** - Documentation
 
 - **integration-specialist.md** - Documentation

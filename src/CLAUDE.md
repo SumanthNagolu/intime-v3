@@ -23,6 +23,7 @@ Next.js 15 application source code including app router, components, and utiliti
 - `app/` - See [app/CLAUDE.md](app/CLAUDE.md)
 - `components/` - See [components/CLAUDE.md](components/CLAUDE.md)
 - `lib/` - See [lib/CLAUDE.md](lib/CLAUDE.md)
+- `types/` - See [types/CLAUDE.md](types/CLAUDE.md)
 
 ---
 

@@ -1,7 +1,7 @@
 # Complete Documentation Index
 
 **Last Updated:** 2025-11-18  
-**Total Folders Documented:** 39  
+**Total Folders Documented:** 42  
 **Coverage Level:** Maximum Granularity ✅
 
 ---
@@ -50,7 +50,7 @@ High-level, project-wide context:
 
 ---
 
-## 📊 Tactical Level (7 folders)
+## 📊 Tactical Level (8 folders)
 
 Domain-level modules:
 
@@ -96,9 +96,15 @@ Domain-level modules:
 
 📄 [View CLAUDE.md](docs/audit/CLAUDE.md)
 
+### Types
+**Path:** `src/types/`  
+**Purpose:** Application types module.
+
+📄 [View CLAUDE.md](src/types/CLAUDE.md)
+
 ---
 
-## ⚙️ Operational Level (29 folders)
+## ⚙️ Operational Level (31 folders)
 
 Specific components and implementations:
 
@@ -204,6 +210,10 @@ Specific components and implementations:
   Documentation for migration.  
   📄 [View CLAUDE.md](docs/migration/CLAUDE.md)
 
+- **Requirements** (`docs/requirements/`)  
+  Documentation for requirements.  
+  📄 [View CLAUDE.md](docs/requirements/CLAUDE.md)
+
 - **Vision** (`docs/vision/`)  
   Documentation for vision.  
   📄 [View CLAUDE.md](docs/vision/CLAUDE.md)
@@ -221,6 +231,10 @@ Specific components and implementations:
   📄 [View CLAUDE.md](src/app/admin/timeline/CLAUDE.md)
 
 #### src/components/
+
+- **Landing** (`src/components/landing/`)  
+  Application landing module.  
+  📄 [View CLAUDE.md](src/components/landing/CLAUDE.md)
 
 - **Timeline** (`src/components/timeline/`)  
   Application timeline module.  
