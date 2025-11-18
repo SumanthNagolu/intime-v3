@@ -18,6 +18,8 @@ Documentation for design.
 
 - **CLAUDE.md** - Documentation
 
+- **DESIGN-SYSTEM.md** - Documentation
+
 - **FIGMA-DESIGN-SYSTEM.md** - Documentation
 
 ---
