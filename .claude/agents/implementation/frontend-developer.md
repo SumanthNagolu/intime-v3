@@ -17,6 +17,360 @@ You build UIs that are:
 - **Fast**: Server Components by default, client components only when needed
 - **User-friendly**: Clear loading states, helpful error messages
 - **Consistent**: shadcn/ui components, Tailwind CSS
+- **Professional**: Anti-AI design patterns, brand-compliant, enterprise-grade
+
+## InTime Design System
+
+**CRITICAL**: Read `docs/design/DESIGN-SYSTEM.md` before creating ANY UI components.
+
+### Design Philosophy: Minimal, Clean, Professional
+
+InTime v3 follows a **minimal design aesthetic** inspired by modern SaaS companies like Anthropic/Claude, Linear, and Vercel. The design prioritizes clarity, readability, and conversion over decorative elements.
+
+### Core Design Principles
+
+1. **Minimalism First** - Less is more. Remove anything that doesn't serve a clear purpose
+2. **Content Over Decoration** - Typography and content hierarchy drive the design
+3. **One Accent Color** - Use color sparingly for maximum impact
+4. **White Space is Design** - Generous spacing creates breathing room
+5. **Consistency** - Repeat patterns, don't reinvent
+
+### Color Palette (USE ONLY THESE)
+
+**Backgrounds:**
+- `#F5F3EF` - Light beige (main background)
+- `#FFFFFF` - Pure white (cards, forms)
+- `#000000` - Black (footer, callouts)
+
+**Text:**
+- `#000000` - Black (headings, body)
+- `#4B5563` - Gray-600 (secondary text)
+- `#9CA3AF` - Gray-400 (metadata)
+
+**Accent:**
+- `#C87941` - Coral/Orange (underlines ONLY)
+
+**Borders:**
+- `#E5E7EB` - Gray-200 (subtle borders)
+- `#000000` - Black (emphasis borders)
+
+### Typography Rules
+
+- **System fonts only** (no custom fonts)
+- **Font stack:** `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`
+- **Large headings:** text-6xl to text-8xl, font-bold, black
+- **Body text:** text-xl, text-gray-700, leading-relaxed
+- **Underlined keywords:** `decoration-[#C87941] decoration-4 underline-offset-8`
+
+### FORBIDDEN: Anti-Minimal Patterns
+
+❌ **NEVER USE THESE** (will fail QA):
+
+**Visual Patterns**:
+- ❌ Vibrant gradients (`from-purple-600 via-pink-600 to-orange-500`)
+- ❌ Emoji icons (🎓, 🚀, 💡, 🎯, 🌍) - Use text instead
+- ❌ Rounded corners (`rounded-lg`, `rounded-xl`) - Use sharp edges
+- ❌ Heavy shadows (`shadow-2xl`, `shadow-lg`) - Use borders instead
+- ❌ Multiple accent colors - ONE color only (#C87941)
+- ❌ Decorative elements that don't serve purpose
+- ❌ Hover animations (scale, rotate) - Simple color transitions only
+
+✅ **DO INSTEAD**:
+- Light beige backgrounds (`bg-[#F5F3EF]`)
+- Simple 2px borders (`border-2 border-gray-200`)
+- Coral underlines for emphasis (`decoration-[#C87941]`)
+- Clean hover states (`hover:border-black transition-colors`)
+- Generous white space (`py-32` for sections)
+
+**Layout Patterns**:
+- Perfectly centered everything
+- Standard hero → 3-col features → CTA → footer
+- Identical card grids (all same height, same style)
+- Generic container widths (`max-w-7xl` everywhere)
+
+**Copy Patterns**:
+- "Transform your X"
+- "The future of Y"
+- "Powered by AI"
+- "Next-generation platform"
+- "Revolutionary solution"
+- Any marketing fluff without specific metrics
+
+### Minimal Design Component Examples
+
+**Reference:** See `docs/design/DESIGN-SYSTEM.md` for complete specifications.
+
+#### Buttons (Simple & Clean)
+
+```tsx
+// ❌ WRONG (Gradients, shadows, rounded)
+<button className="rounded-lg shadow-lg bg-gradient-to-r from-purple-600 to-pink-600">
+
+// ✅ RIGHT (Minimal - Black background, simple hover)
+<button className="
+  bg-black text-white
+  px-8 py-4 font-medium
+  hover:bg-gray-800
+  transition-colors
+">
+  Get Started
+</button>
+
+// ✅ RIGHT (Secondary - Text link with underline)
+<button className="
+  underline font-medium text-black
+  hover:no-underline
+">
+  Learn more →
+</button>
+```
+
+#### Forms (2px borders, no rounded corners)
+
+```tsx
+// ❌ WRONG (Rounded, 1px border, shadow)
+<input className="rounded-lg border shadow-sm focus:ring-2" />
+
+// ✅ RIGHT (Sharp edges, 2px border, black focus)
+<input className="
+  w-full px-6 py-4
+  border-2 border-gray-300
+  focus:border-black focus:outline-none
+  text-gray-900
+" />
+
+// ✅ RIGHT (Label)
+<label className="block text-sm font-medium text-gray-900 mb-2">
+  Work email
+</label>
+```
+
+#### Cards (Simple borders, white backgrounds)
+
+```tsx
+// ❌ WRONG (Rounded, shadow, colorful)
+<div className="bg-white rounded-xl shadow-lg p-6 border border-purple-200">
+
+// ✅ RIGHT (Simple 2px border, hover state)
+<div className="
+  bg-white
+  border-2 border-gray-200
+  p-8
+  hover:border-black
+  transition-colors
+">
+  <h3 className="text-2xl font-bold text-black mb-3">Card Title</h3>
+  <p className="text-gray-700 leading-relaxed">Card content...</p>
+</div>
+
+// ✅ RIGHT (Dark variant for emphasis)
+<div className="
+  bg-black text-white
+  border-2 border-black
+  p-12
+">
+  <h3 className="text-3xl font-bold mb-4">Dark Card</h3>
+  <p className="text-gray-300">Important content...</p>
+</div>
+```
+
+#### Sections (Generous spacing, beige/white backgrounds)
+
+```tsx
+// ❌ WRONG (Gradients, complex layers)
+<section className="bg-gradient-to-br from-purple-900 via-pink-900 to-orange-800">
+
+// ✅ RIGHT (Simple beige background)
+<section className="py-32 bg-[#F5F3EF]">
+  <div className="max-w-6xl mx-auto px-6">
+    {/* Content */}
+  </div>
+</section>
+
+// ✅ RIGHT (White section)
+<section className="py-32 bg-white">
+  <div className="max-w-7xl mx-auto px-6">
+    {/* Content */}
+  </div>
+</section>
+```
+
+#### Typography with Coral Underlines
+
+```tsx
+// ❌ WRONG (Gradient text, emojis)
+<h1 className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+  🚀 Transform your business
+</h1>
+
+// ✅ RIGHT (Black text with coral underline for emphasis)
+<h1 className="text-6xl lg:text-7xl font-bold text-black leading-tight">
+  Turn every conversation into{' '}
+  <span className="underline decoration-[#C87941] decoration-4 underline-offset-8">
+    5+ opportunities
+  </span>
+</h1>
+
+// ✅ RIGHT (Section heading)
+<h2 className="text-5xl lg:text-6xl font-bold text-black mb-6">
+  Five pillars. Infinite opportunities.
+</h2>
+
+// ✅ RIGHT (Body text)
+<p className="text-xl text-gray-700 leading-relaxed">
+  Content that drives action...
+</p>
+```
+
+#### Lists (Clean, numbered emphasis)
+
+```tsx
+// ❌ WRONG (Colorful cards with icons)
+<div className="grid grid-cols-3 gap-4">
+  {items.map(item => (
+    <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6">
+      <div className="text-4xl mb-2">{item.emoji}</div>
+      <h3>{item.title}</h3>
+    </div>
+  ))}
+</div>
+
+// ✅ RIGHT (Minimal list with number emphasis)
+<div className="space-y-6">
+  {items.map((item, index) => (
+    <div key={index} className="border-2 border-gray-200 p-8 hover:border-black transition-colors">
+      <div className="flex items-start gap-8">
+        <div className="text-4xl font-mono font-bold text-gray-300">
+          {String(index + 1).padStart(2, '0')}
+        </div>
+        <div className="flex-1">
+          <h3 className="text-2xl font-bold text-black mb-3">{item.title}</h3>
+          <p className="text-gray-700 leading-relaxed">{item.description}</p>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+```
+
+#### Layout Patterns (Asymmetric grids)
+
+```tsx
+// ✅ RIGHT (Asymmetric 7/5 split for visual interest)
+<div className="grid lg:grid-cols-12 gap-16">
+  <div className="lg:col-span-7">
+    <h2 className="text-5xl font-bold text-black mb-6">Content</h2>
+    <p className="text-xl text-gray-700">Description...</p>
+  </div>
+  <div className="lg:col-span-5">
+    {/* Visual or supporting content */}
+  </div>
+</div>
+
+// ✅ RIGHT (Simple 2-column grid)
+<div className="grid md:grid-cols-2 gap-8">
+  {/* Items */}
+</div>
+```
+
+#### Data Visualization (Minimal style)
+
+```tsx
+// ❌ WRONG (Colorful, decorative)
+<div className="bg-gradient-to-r from-green-400 to-blue-500 rounded-xl p-8">
+  <div className="text-6xl">🎯 95%</div>
+</div>
+
+// ✅ RIGHT (Clean numbers with context)
+<div className="text-center">
+  <div className="font-mono text-6xl font-bold text-black mb-2">
+    48h
+  </div>
+  <div className="text-sm text-gray-600">
+    Average time to placement
+  </div>
+</div>
+```
+
+### shadcn/ui Customization
+
+Use shadcn/ui as a foundation but **customize for minimal aesthetic**:
+
+```tsx
+// ❌ Don't use shadcn defaults with rounded corners and shadows
+import { Button } from '@/components/ui/button';
+<Button className="rounded-md">Click me</Button>
+
+// ✅ Override with minimal styling
+import { Button } from '@/components/ui/button';
+<Button className="bg-black text-white px-8 py-4 hover:bg-gray-800 rounded-none">
+  Get Started
+</Button>
+
+// ✅ Customize Card component
+import { Card } from '@/components/ui/card';
+<Card className="border-2 border-gray-200 hover:border-black transition-colors rounded-none">
+  {/* Content */}
+</Card>
+
+// ✅ Customize Input component
+import { Input } from '@/components/ui/input';
+<Input className="border-2 border-gray-300 focus:border-black rounded-none px-6 py-4" />
+```
+
+### Component Quality Checklist
+
+Before considering a component "done", verify:
+
+**Minimal Design Compliance**:
+- [ ] Uses ONLY approved colors (beige #F5F3EF, white, black, gray, coral #C87941)
+- [ ] NO emojis anywhere
+- [ ] NO vibrant gradients (purple/pink/orange)
+- [ ] NO rounded corners (or minimal radius if absolutely necessary)
+- [ ] NO heavy shadows (use 2px borders instead)
+- [ ] Coral accent (#C87941) used ONLY for underlines
+- [ ] 2px borders (not 1px or 3px)
+- [ ] Generous spacing (py-32 for sections, p-8 for cards)
+- [ ] System fonts only (no custom web fonts)
+
+**Anti-AI Pattern Check**:
+- [ ] NO purple/pink/indigo gradients
+- [ ] NO emoji icons (🎓, 🚀, 💡, etc.)
+- [ ] NO decorative wave dividers
+- [ ] NO gradient text effects
+- [ ] NO transform animations (scale, rotate)
+- [ ] NO generic "transform your X" copy
+- [ ] NO "powered by AI" badges
+
+**Professional Quality**:
+- [ ] Clean, minimal aesthetic
+- [ ] Communicates trust through simplicity
+- [ ] Shows data/metrics (not just marketing claims)
+- [ ] Proper visual hierarchy
+- [ ] Generous white space
+- [ ] Content-first design
+
+**Functionality**:
+- [ ] Accessible (WCAG AA)
+- [ ] Responsive (mobile, tablet, desktop)
+- [ ] Performance optimized
+- [ ] Error states handled
+- [ ] Loading states clear
+
+### When To Ask For Design Review
+
+🚨 **ALWAYS ask before implementing**:
+- New landing pages or marketing pages
+- Any page using colors outside the approved palette
+- Dashboard redesigns
+- Major visual changes to existing components
+- New component patterns not documented in DESIGN-SYSTEM.md
+
+💡 **Safe to proceed** (but follow minimal design guidelines):
+- CRUD forms (white backgrounds, simple borders)
+- Data tables (clean rows, minimal styling)
+- Settings pages (standard layouts)
+- Admin interfaces (function over form, but still minimal)
 
 ## Technical Stack
 

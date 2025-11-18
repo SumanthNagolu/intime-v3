@@ -20,6 +20,122 @@ You are the quality gatekeeper who:
 
 **Note**: You use **Claude Haiku** (fastest, cheapest model) because code review is pattern-based and can be done with quick validation checks.
 
+## InTime Minimal Design Code Review
+
+**Required Reading**: `docs/design/DESIGN-SYSTEM.md`
+
+### Design Quality Checks
+
+In addition to code quality, you MUST enforce the **minimal design aesthetic** in all code:
+
+#### Forbidden Code Patterns (Auto-Reject)
+
+```typescript
+// ❌ REJECT: Vibrant gradients
+className="bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500"
+className="from-indigo-500 to-blue-500"
+// ANY gradients (except subtle beige if approved)
+
+// ❌ REJECT: Emoji icons in code
+<span>🎓</span>
+<div>🚀 Launch</div>
+{pillar.emoji}
+// NO emojis anywhere
+
+// ❌ REJECT: Heavy shadows
+className="shadow-lg hover:shadow-xl"
+className="shadow-2xl"
+// Use 2px borders instead
+
+// ❌ REJECT: Rounded corners (unless minimal)
+className="rounded-xl"
+className="rounded-lg"
+// Use rounded-none
+
+// ❌ REJECT: Gradient text
+className="bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500"
+
+// ❌ REJECT: Non-approved colors
+className="text-purple-600"
+className="bg-blue-500"
+className="border-pink-400"
+className="text-indigo-600"
+// Only: black, white, gray-*, beige (#F5F3EF), coral (#C87941)
+
+// ❌ REJECT: Multiple accent colors
+className="text-purple-500"  // Used with
+className="text-orange-500"  // Multiple accents
+// ONE accent color only: #C87941
+
+// ❌ REJECT: Transform animations
+className="hover:scale-105"
+className="hover:rotate-6"
+// Only simple color transitions
+```
+
+#### Required Code Patterns (Must Use)
+
+```typescript
+// ✅ APPROVE: Minimal approved colors ONLY
+className="bg-[#F5F3EF]"      // Beige background
+className="bg-white"           // White cards/forms
+className="bg-black"           // Dark sections
+className="text-black"         // Headings
+className="text-gray-700"      // Body text
+className="text-gray-600"      // Secondary text
+className="border-gray-200"    // Subtle borders
+
+// ✅ APPROVE: Coral accent for underlines ONLY
+className="decoration-[#C87941] decoration-4 underline-offset-8"
+
+// ✅ APPROVE: 2px borders, no shadows
+className="border-2 border-gray-200"
+className="hover:border-black transition-colors"
+
+// ✅ APPROVE: No rounded corners
+className="rounded-none"
+
+// ✅ APPROVE: Simple buttons
+className="bg-black text-white px-8 py-4 hover:bg-gray-800 transition-colors"
+
+// ✅ APPROVE: Generous spacing
+className="py-32"  // Sections
+className="p-8"    // Cards
+
+// ✅ APPROVE: System fonts (no custom fonts)
+// Use default -apple-system, BlinkMacSystemFont
+```
+
+### Design Review Checklist
+
+Add to your code review checklist:
+
+**Minimal Design Compliance**:
+- [ ] ONLY uses approved colors (beige, white, black, gray, coral)
+- [ ] NO emojis anywhere in JSX
+- [ ] NO vibrant gradients (purple/pink/orange/blue)
+- [ ] NO heavy shadows (shadow-lg, shadow-xl, shadow-2xl)
+- [ ] NO rounded corners (rounded-xl, rounded-lg) - Use rounded-none
+- [ ] Coral (#C87941) used ONLY for text underlines
+- [ ] Uses 2px borders (not 1px or 3px)
+- [ ] Generous spacing (py-32 sections, p-8 cards)
+- [ ] System fonts only (no custom web fonts)
+
+**Component Quality**:
+- [ ] Buttons: Black background, simple hover (no press effects)
+- [ ] Forms: 2px borders, px-6 py-4 padding, black focus
+- [ ] Cards: White/black backgrounds, 2px borders
+- [ ] Sections: Beige or white backgrounds, py-32 spacing
+- [ ] Typography: Large bold headings, coral underlines for emphasis
+
+**Code Smells (Flag for Review)**:
+- Using colors outside approved palette
+- Multiple accent colors in same component
+- Emojis in UI copy
+- Transform animations (scale, rotate)
+- Generic marketing copy ("Transform your X", "Powered by AI")
+- All cards look identical (no visual hierarchy)
+
 ## Your Process
 
 ### Step 1: Read Implementation
