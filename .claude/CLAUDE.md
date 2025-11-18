@@ -18,9 +18,17 @@ Complete AI agent system configuration including agents, workflows, and orchestr
 
 - **AGENT-READING-PROTOCOL.md** - Documentation
 
+- **AGENT-USAGE-EXAMPLES.md** - Documentation
+
 - **CLAUDE.md** - Documentation
 
 - **CLEANUP-SUMMARY.md** - Documentation
+
+- **CUSTOMIZATION-COMPLETE.md** - Documentation
+
+- **DESIGN-ARCHITECTURE-OVERHAUL.md** - Documentation
+
+- **DESIGN-PHILOSOPHY.md** - Documentation
 
 - **DOCUMENTATION-INDEX.md** - Documentation
 
@@ -29,6 +37,8 @@ Complete AI agent system configuration including agents, workflows, and orchestr
 - **IMPLEMENTATION-STATUS.md** - Documentation
 
 - **IMPLEMENTATION-VERIFIED.md** - Documentation
+
+- **MCP-STAFFING-INTEGRATIONS.md** - Documentation
 
 - **settings.json** - Configuration
 

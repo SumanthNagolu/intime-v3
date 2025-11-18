@@ -45,6 +45,7 @@ Complete project documentation including requirements, architecture, and impleme
 - `financials/` - See [financials/CLAUDE.md](financials/CLAUDE.md)
 - `implementation/` - See [implementation/CLAUDE.md](implementation/CLAUDE.md)
 - `migration/` - See [migration/CLAUDE.md](migration/CLAUDE.md)
+- `requirements/` - See [requirements/CLAUDE.md](requirements/CLAUDE.md)
 - `vision/` - See [vision/CLAUDE.md](vision/CLAUDE.md)
 
 ---

@@ -1,4 +1,4 @@
-# Workflows
+# Landing
 
 ⚙️ **Tier:** Operational  
 **Last Updated:** 2025-11-18  
@@ -8,7 +8,7 @@
 
 ## 📁 Purpose
 
-workflows module.
+Application landing module.
 
 ---
 
@@ -16,23 +16,40 @@ workflows module.
 
 ### Files in This Directory
 
-- **candidate-pipeline.md** - Documentation
-
-- **ceo-review.md** - Documentation
+- **Benefits.tsx** (147 lines)
+  No description
 
 - **CLAUDE.md** - Documentation
 
-- **cross-pollination.md** - Documentation
+- **CTASection.tsx** (68 lines)
+  No description
 
-- **database.md** - Documentation
+- **FAQ.tsx** (67 lines)
+  No description
 
-- **deploy.md** - Documentation
+- **FivePillars.tsx** (91 lines)
+  No description
 
-- **feature.md** - Documentation
+- **Footer.tsx** (57 lines)
+  No description
 
-- **start-planning.md** - Documentation
+- **Hero.tsx** (130 lines)
+  No description
 
-- **test.md** - Documentation
+- **HowItWorks.tsx** (138 lines)
+  No description
+
+- **MetricsComparison.tsx** (98 lines)
+  No description
+
+- **MidPageCTA.tsx** (66 lines)
+  No description
+
+- **ProblemSolution.tsx** (94 lines)
+  No description
+
+- **SocialProof.tsx** (68 lines)
+  No description
 
 ---
 
@@ -46,7 +63,7 @@ workflows module.
 
 ### This Folder Depends On:
 
-- Parent: .claude/commands/
+- Parent: src/components/
 
 ### Other Folders That Depend On This:
 
@@ -58,7 +75,7 @@ workflows module.
 
 ### For Developers
 
-This folder contains workflows related files. Check CLAUDE.md for detailed documentation.
+This folder contains landing related files. Check CLAUDE.md for detailed documentation.
 
 ### For AI Agents
 
@@ -90,7 +107,7 @@ Auto-generated folder context. Review files in this directory for specific funct
 - [Project Structure](/PROJECT-STRUCTURE.md)
 - [Documentation Index](/.claude/DOCUMENTATION-INDEX.md)
 
-- [Parent Folder](../commands/CLAUDE.md)
+- [Parent Folder](../components/CLAUDE.md)
 
 ---
 
