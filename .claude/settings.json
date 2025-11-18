@@ -1,0 +1,83 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/scripts/pre-edit.sh",
+            "timeout": 30,
+            "description": "Validate file paths before editing"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/scripts/post-write.sh",
+            "timeout": 60,
+            "description": "Auto-format files after writing"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "developer-agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/scripts/post-dev.sh",
+            "timeout": 300,
+            "description": "Run quality checks after Developer Agent completes"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/pre-commit-docs",
+            "timeout": 120,
+            "description": "Auto-update all CLAUDE.md files (28+ files) after workflow"
+          },
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/scripts/update-project-structure.sh",
+            "timeout": 60,
+            "description": "Auto-update PROJECT-STRUCTURE.md after workflow completes"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/scripts/session-start.sh",
+            "timeout": 30,
+            "description": "Display project status on startup"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/scripts/session-end.sh",
+            "timeout": 30,
+            "description": "Auto-capture session data and log to timeline"
+          }
+        ]
+      }
+    ]
+  }
+}
