@@ -18,16 +18,25 @@ export * from './timeline'; // Existing timeline schema
 export type {
   UserProfile,
   NewUserProfile,
+} from './user-profiles';
+
+export type {
   Role,
   NewRole,
   Permission,
   NewPermission,
   UserRole,
   NewUserRole,
+} from './rbac';
+
+export type {
   AuditLog,
   NewAuditLog,
+} from './audit';
+
+export type {
   Event,
   NewEvent,
   EventSubscription,
   NewEventSubscription,
-} from './user-profiles';
+} from './events';

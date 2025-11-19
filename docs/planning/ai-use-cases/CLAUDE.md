@@ -1,4 +1,4 @@
-# Schema
+# Ai use cases
 
 ⚙️ **Tier:** Operational  
 **Last Updated:** 2025-11-19  
@@ -8,7 +8,7 @@
 
 ## 📁 Purpose
 
-Application schema module.
+Documentation for ai-use-cases.
 
 ---
 
@@ -16,28 +16,13 @@ Application schema module.
 
 ### Files in This Directory
 
-- **audit.ts** (133 lines)
-  Drizzle ORM Schema: Audit Logs
-
 - **CLAUDE.md** - Documentation
 
-- **events.ts** (184 lines)
-  Drizzle ORM Schema: Event Bus
+- **employee-ai-twins.md** - Documentation
 
-- **final-proof.ts** (10 lines)
-  No description
+- **guidewire-guru-multi-agent.md** - Documentation
 
-- **index.ts** (43 lines)
-  Drizzle ORM Schema - Central Export
-
-- **rbac.ts** (196 lines)
-  Drizzle ORM Schema: RBAC (Role-Based Access Control)
-
-- **timeline.ts** (133 lines)
-  Type exports for use in application
-
-- **user-profiles.ts** (122 lines)
-  Drizzle ORM Schema: user_profiles
+- **productivity-tracking-vision.md** - Documentation
 
 ---
 
@@ -51,7 +36,7 @@ Application schema module.
 
 ### This Folder Depends On:
 
-- Parent: src/lib/db/
+- Parent: docs/planning/
 
 ### Other Folders That Depend On This:
 
@@ -63,7 +48,7 @@ Application schema module.
 
 ### For Developers
 
-This folder contains schema related files. Check CLAUDE.md for detailed documentation.
+This folder contains ai-use-cases related files. Check CLAUDE.md for detailed documentation.
 
 ### For AI Agents
 
@@ -95,7 +80,7 @@ Auto-generated folder context. Review files in this directory for specific funct
 - [Project Structure](/PROJECT-STRUCTURE.md)
 - [Documentation Index](/.claude/DOCUMENTATION-INDEX.md)
 
-- [Parent Folder](../db/CLAUDE.md)
+- [Parent Folder](../planning/CLAUDE.md)
 
 ---
 
