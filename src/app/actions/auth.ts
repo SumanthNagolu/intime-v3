@@ -64,10 +64,16 @@ export async function signUpAction(
   // Validate input
   const validation = signUpSchema.safeParse(input);
   if (!validation.success) {
+    const fieldErrors = validation.error.flatten().fieldErrors;
+    const firstError = Object.entries(fieldErrors)[0];
+    const errorMessage = firstError
+      ? `Invalid ${firstError[0]}: ${firstError[1]?.[0] || 'validation failed'}`
+      : 'Invalid input';
+
     return {
       success: false,
-      error: 'Invalid input',
-      fieldErrors: validation.error.flatten().fieldErrors,
+      error: errorMessage,
+      fieldErrors,
     };
   }
 
@@ -198,10 +204,16 @@ export async function signInAction(
   // Validate input
   const validation = signInSchema.safeParse(input);
   if (!validation.success) {
+    const fieldErrors = validation.error.flatten().fieldErrors;
+    const firstError = Object.entries(fieldErrors)[0];
+    const errorMessage = firstError
+      ? `Invalid ${firstError[0]}: ${firstError[1]?.[0] || 'validation failed'}`
+      : 'Invalid input';
+
     return {
       success: false,
-      error: 'Invalid input',
-      fieldErrors: validation.error.flatten().fieldErrors,
+      error: errorMessage,
+      fieldErrors,
     };
   }
 

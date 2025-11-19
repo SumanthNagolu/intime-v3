@@ -1,0 +1,43 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .gemini/hooks/scripts/pre-edit.sh",
+            "timeout": 30,
+            "description": "Validate file paths before editing"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [],
+    "SubagentStop": [],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .gemini/hooks/scripts/session-start.sh",
+            "timeout": 30,
+            "description": "Display project status on startup"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .gemini/hooks/scripts/session-end.sh",
+            "timeout": 30,
+            "description": "Auto-capture session data and log to timeline"
+          }
+        ]
+      }
+    ]
+  }
+}
