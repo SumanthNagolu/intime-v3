@@ -10,6 +10,7 @@
 import { pgTable, uuid, text, timestamp, jsonb, integer, boolean } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { userProfiles } from './user-profiles';
+import { organizations } from './organizations';
 
 // ============================================================================
 // TABLE: events
@@ -17,6 +18,9 @@ import { userProfiles } from './user-profiles';
 
 export const events = pgTable('events', {
   id: uuid('id').primaryKey().defaultRandom(),
+
+  // Multi-tenancy
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
 
   // Event identification
   eventType: text('event_type').notNull(), // 'user.created', 'course.graduated', etc.
@@ -75,6 +79,9 @@ export const eventSubscriptions = pgTable('event_subscriptions', {
 
 export const eventDeliveryLog = pgTable('event_delivery_log', {
   id: uuid('id').primaryKey().defaultRandom(),
+
+  // Multi-tenancy
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
 
   // References
   eventId: uuid('event_id').notNull(),

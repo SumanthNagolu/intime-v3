@@ -10,6 +10,7 @@
 import { pgTable, uuid, text, timestamp, jsonb, inet, integer } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { userProfiles } from './user-profiles';
+import { organizations } from './organizations';
 
 // ============================================================================
 // TABLE: audit_logs (Partitioned by month)
@@ -20,6 +21,9 @@ export const auditLogs = pgTable('audit_logs', {
 
   // Temporal data (partition key)
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+
+  // Multi-tenancy
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
 
   // Action metadata
   tableName: text('table_name').notNull(),
