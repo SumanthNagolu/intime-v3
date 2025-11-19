@@ -16,7 +16,7 @@ Application actions module.
 
 ### Files in This Directory
 
-- **auth.test.ts** (282 lines)
+- **auth.test.ts** (303 lines)
   🧪 Unit Tests: Authentication Server Actions
 
 - **auth.ts** (295 lines)

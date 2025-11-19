@@ -242,7 +242,7 @@ test.describe('Sprint 1: Authentication System', () => {
       // Verify primary role is set
       const primaryRole = userRoles?.find(ur => ur.is_primary);
       expect(primaryRole).toBeDefined();
-      expect(primaryRole?.roles.name).toBe(user.role);
+      expect((primaryRole?.roles as any)?.name).toBe(user.role);
     });
 
     test('should log signup event in audit logs', async () => {
@@ -468,14 +468,14 @@ test.describe('Sprint 1: RBAC System', () => {
     
     // Students should have limited permissions (mostly read own data)
     const ownScopePerms = permissions?.filter(
-      p => p.permissions.scope === 'own'
+      p => (p.permissions as any)?.scope === 'own'
     );
-    
+
     expect(ownScopePerms?.length).toBeGreaterThan(0);
-    
+
     // Students should NOT have 'delete' or 'manage' permissions
     const dangerousPerms = permissions?.filter(
-      p => ['delete', 'manage'].includes(p.permissions.action)
+      p => ['delete', 'manage'].includes((p.permissions as any)?.action)
     );
     
     expect(dangerousPerms?.length).toBe(0);
