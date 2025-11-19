@@ -30,6 +30,9 @@ Application schema module.
 - **index.ts** (51 lines)
   Drizzle ORM Schema - Central Export
 
+- **organizations.test.ts** (279 lines)
+  Multi-Tenancy Isolation Tests
+
 - **organizations.ts** (119 lines)
   Drizzle ORM Schema: organizations
 

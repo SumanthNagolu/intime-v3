@@ -1,0 +1,26 @@
+{
+  "sessionId": "session-2025-11-17-D6A31A7C",
+  "conversationSummary": "Session on main branch",
+  "agentType": "claude",
+  "agentModel": "claude-sonnet-4-5",
+  "tags": [
+    "database",
+    "testing"
+  ],
+  "results": {
+    "status": "success",
+    "summary": "Session on main branch"
+  },
+  "filesChanged": {
+    "created": [
+      ".playwright-mcp/deployment-success.png",
+      "src/lib/db/schema/organizations.test.ts",
+      "src/lib/testing/setup.ts",
+      "vitest.config.ts"
+    ],
+    "modified": [
+      ".mcp.json"
+    ],
+    "deleted": []
+  }
+}

@@ -21,10 +21,13 @@
         "POSTGRES_CONNECTION_STRING": "${SUPABASE_DB_URL}"
       }
     },
-    "puppeteer": {
+    "playwright": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+      "args": ["-y", "@playwright/mcp-server"],
+      "env": {
+        "BROWSER": "msedge"
+      }
     },
     "slack": {
       "type": "stdio",
