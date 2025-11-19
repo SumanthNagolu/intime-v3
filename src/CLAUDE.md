@@ -18,6 +18,9 @@ Next.js 15 application source code including app router, components, and utiliti
 
 - **CLAUDE.md** - Documentation
 
+- **middleware.ts** (122 lines)
+  Next.js Middleware for Authentication
+
 
 **Subdirectories:**
 - `app/` - See [app/CLAUDE.md](app/CLAUDE.md)

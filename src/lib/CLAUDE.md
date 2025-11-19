@@ -23,7 +23,9 @@ Shared utilities, helpers, and business logic used across the application.
 
 
 **Subdirectories:**
+- `auth/` - See [auth/CLAUDE.md](auth/CLAUDE.md)
 - `db/` - See [db/CLAUDE.md](db/CLAUDE.md)
+- `supabase/` - See [supabase/CLAUDE.md](supabase/CLAUDE.md)
 - `testing/` - See [testing/CLAUDE.md](testing/CLAUDE.md)
 
 ---

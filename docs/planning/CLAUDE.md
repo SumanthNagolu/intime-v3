@@ -20,6 +20,8 @@ Documentation for planning.
 
 - **CLAUDE.md** - Documentation
 
+- **epic-01-foundation-requirements.md** - Documentation
+
 - **EPIC-CANVASES.md** - Documentation
 
 - **IMPLEMENTATION-PLAYBOOK.md** - Documentation

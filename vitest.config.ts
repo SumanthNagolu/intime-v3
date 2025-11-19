@@ -55,8 +55,8 @@ export default defineConfig({
     // Watch options
     watch: false,
 
-    // Reporter
-    reporter: ['verbose'],
+    // Reporters
+    reporters: ['verbose'],
   },
 
   resolve: {

@@ -325,65 +325,9 @@ COMMENT ON COLUMN user_profiles.client_tier IS
 'Client relationship tier: preferred (standard) → strategic (high volume) → exclusive (partnership).';
 
 -- ============================================================================
--- SAMPLE DATA (for development/testing)
+-- SAMPLE DATA REMOVED
 -- ============================================================================
-
--- Example: Admin user
-INSERT INTO user_profiles (
-  email,
-  full_name,
-  employee_department,
-  employee_position,
-  employee_hire_date,
-  employee_status
-) VALUES (
-  'admin@intimesolutions.com',
-  'System Administrator',
-  'admin',
-  'Platform Admin',
-  NOW(),
-  'active'
-) ON CONFLICT (email) DO NOTHING;
-
--- Example: Student
-INSERT INTO user_profiles (
-  email,
-  full_name,
-  student_enrollment_date,
-  student_current_module,
-  student_course_progress
-) VALUES (
-  'student@example.com',
-  'Jane Student',
-  NOW() - INTERVAL '2 weeks',
-  'Module 3: Advanced Java',
-  '{"module_1": 100, "module_2": 100, "module_3": 45}'::jsonb
-) ON CONFLICT (email) DO NOTHING;
-
--- Example: Bench candidate
-INSERT INTO user_profiles (
-  email,
-  full_name,
-  candidate_status,
-  candidate_skills,
-  candidate_experience_years,
-  candidate_current_visa,
-  candidate_hourly_rate,
-  candidate_availability,
-  candidate_location,
-  candidate_bench_start_date
-) VALUES (
-  'candidate@example.com',
-  'John Candidate',
-  'bench',
-  ARRAY['Java', 'Spring Boot', 'Microservices', 'AWS'],
-  8,
-  'H1B',
-  85.00,
-  'immediate',
-  'Remote',
-  NOW() - INTERVAL '15 days'
-) ON CONFLICT (email) DO NOTHING;
+-- Sample data removed to avoid audit log conflicts during migration
 
 -- ============================================================================
 -- COMPLETION MESSAGE
@@ -398,7 +342,7 @@ BEGIN
   RAISE NOTICE 'Views created: v_active_users, v_students, v_bench_candidates, v_employees, v_clients';
   RAISE NOTICE 'Indexes created: 11 strategic indexes for performance';
   RAISE NOTICE 'Triggers: updated_at, search_vector, prevent_hard_delete';
-  RAISE NOTICE 'Sample data: 3 example users inserted';
+  RAISE NOTICE 'Sample data: REMOVED (to avoid audit conflicts)';
   RAISE NOTICE '============================================================';
   RAISE NOTICE 'Next: Run 003_create_rbac_system.sql';
   RAISE NOTICE '============================================================';

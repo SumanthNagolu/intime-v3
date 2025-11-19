@@ -355,64 +355,64 @@ ON CONFLICT (name) DO NOTHING;
 -- ============================================================================
 
 -- User management permissions
-INSERT INTO permissions (resource, action, scope, display_name, description) VALUES
-  ('user', 'create', 'all', 'Create User', 'Create new users in the system'),
-  ('user', 'read', 'own', 'Read Own Profile', 'View own user profile'),
-  ('user', 'read', 'all', 'Read All Users', 'View all user profiles'),
-  ('user', 'update', 'own', 'Update Own Profile', 'Edit own user profile'),
-  ('user', 'update', 'all', 'Update Any User', 'Edit any user profile'),
+INSERT INTO permissions (resource, action, scope, display_name, description, is_dangerous) VALUES
+  ('user', 'create', 'all', 'Create User', 'Create new users in the system', FALSE),
+  ('user', 'read', 'own', 'Read Own Profile', 'View own user profile', FALSE),
+  ('user', 'read', 'all', 'Read All Users', 'View all user profiles', FALSE),
+  ('user', 'update', 'own', 'Update Own Profile', 'Edit own user profile', FALSE),
+  ('user', 'update', 'all', 'Update Any User', 'Edit any user profile', FALSE),
   ('user', 'delete', 'all', 'Delete User', 'Soft delete users (dangerous)', TRUE),
-  ('user', 'manage', 'all', 'Manage Users', 'Full user management access')
+  ('user', 'manage', 'all', 'Manage Users', 'Full user management access', FALSE)
 ON CONFLICT (resource, action, scope) DO NOTHING;
 
 -- Candidate permissions
-INSERT INTO permissions (resource, action, scope, display_name, description) VALUES
-  ('candidate', 'create', 'all', 'Create Candidate', 'Add new candidates to system'),
-  ('candidate', 'read', 'own', 'Read Own Candidate Profile', 'View own candidate info'),
-  ('candidate', 'read', 'team', 'Read Team Candidates', 'View candidates in your team'),
-  ('candidate', 'read', 'all', 'Read All Candidates', 'View all candidate profiles'),
-  ('candidate', 'update', 'own', 'Update Own Candidate', 'Edit own candidate profile'),
-  ('candidate', 'update', 'team', 'Update Team Candidates', 'Edit team candidate profiles'),
-  ('candidate', 'update', 'all', 'Update Any Candidate', 'Edit any candidate profile'),
+INSERT INTO permissions (resource, action, scope, display_name, description, is_dangerous) VALUES
+  ('candidate', 'create', 'all', 'Create Candidate', 'Add new candidates to system', FALSE),
+  ('candidate', 'read', 'own', 'Read Own Candidate Profile', 'View own candidate info', FALSE),
+  ('candidate', 'read', 'team', 'Read Team Candidates', 'View candidates in your team', FALSE),
+  ('candidate', 'read', 'all', 'Read All Candidates', 'View all candidate profiles', FALSE),
+  ('candidate', 'update', 'own', 'Update Own Candidate', 'Edit own candidate profile', FALSE),
+  ('candidate', 'update', 'team', 'Update Team Candidates', 'Edit team candidate profiles', FALSE),
+  ('candidate', 'update', 'all', 'Update Any Candidate', 'Edit any candidate profile', FALSE),
   ('candidate', 'delete', 'all', 'Delete Candidate', 'Remove candidates (dangerous)', TRUE),
-  ('candidate', 'export', 'all', 'Export Candidates', 'Export candidate data to CSV/Excel')
+  ('candidate', 'export', 'all', 'Export Candidates', 'Export candidate data to CSV/Excel', FALSE)
 ON CONFLICT (resource, action, scope) DO NOTHING;
 
 -- Placement permissions
-INSERT INTO permissions (resource, action, scope, display_name, description) VALUES
-  ('placement', 'create', 'all', 'Create Placement', 'Submit new placements'),
-  ('placement', 'read', 'own', 'Read Own Placements', 'View own placements'),
-  ('placement', 'read', 'team', 'Read Team Placements', 'View team placements'),
-  ('placement', 'read', 'all', 'Read All Placements', 'View all placements'),
-  ('placement', 'update', 'all', 'Update Placement', 'Edit placement details'),
-  ('placement', 'approve', 'all', 'Approve Placement', 'Approve pending placements'),
-  ('placement', 'reject', 'all', 'Reject Placement', 'Reject placements')
+INSERT INTO permissions (resource, action, scope, display_name, description, is_dangerous) VALUES
+  ('placement', 'create', 'all', 'Create Placement', 'Submit new placements', FALSE),
+  ('placement', 'read', 'own', 'Read Own Placements', 'View own placements', FALSE),
+  ('placement', 'read', 'team', 'Read Team Placements', 'View team placements', FALSE),
+  ('placement', 'read', 'all', 'Read All Placements', 'View all placements', FALSE),
+  ('placement', 'update', 'all', 'Update Placement', 'Edit placement details', FALSE),
+  ('placement', 'approve', 'all', 'Approve Placement', 'Approve pending placements', FALSE),
+  ('placement', 'reject', 'all', 'Reject Placement', 'Reject placements', FALSE)
 ON CONFLICT (resource, action, scope) DO NOTHING;
 
 -- Course permissions (Training Academy)
-INSERT INTO permissions (resource, action, scope, display_name, description) VALUES
-  ('course', 'create', 'all', 'Create Course', 'Create new training courses'),
-  ('course', 'read', 'all', 'Read Courses', 'View course catalog'),
-  ('course', 'update', 'all', 'Update Course', 'Edit course content'),
-  ('course', 'delete', 'all', 'Delete Course', 'Remove courses'),
-  ('course', 'manage', 'all', 'Manage Courses', 'Full course management')
+INSERT INTO permissions (resource, action, scope, display_name, description, is_dangerous) VALUES
+  ('course', 'create', 'all', 'Create Course', 'Create new training courses', FALSE),
+  ('course', 'read', 'all', 'Read Courses', 'View course catalog', FALSE),
+  ('course', 'update', 'all', 'Update Course', 'Edit course content', FALSE),
+  ('course', 'delete', 'all', 'Delete Course', 'Remove courses', FALSE),
+  ('course', 'manage', 'all', 'Manage Courses', 'Full course management', FALSE)
 ON CONFLICT (resource, action, scope) DO NOTHING;
 
 -- Timesheet permissions (HR module)
-INSERT INTO permissions (resource, action, scope, display_name, description) VALUES
-  ('timesheet', 'create', 'own', 'Submit Timesheet', 'Submit own timesheets'),
-  ('timesheet', 'read', 'own', 'Read Own Timesheets', 'View own timesheets'),
-  ('timesheet', 'read', 'all', 'Read All Timesheets', 'View all timesheets'),
-  ('timesheet', 'approve', 'all', 'Approve Timesheets', 'Approve submitted timesheets'),
-  ('timesheet', 'reject', 'all', 'Reject Timesheets', 'Reject timesheets')
+INSERT INTO permissions (resource, action, scope, display_name, description, is_dangerous) VALUES
+  ('timesheet', 'create', 'own', 'Submit Timesheet', 'Submit own timesheets', FALSE),
+  ('timesheet', 'read', 'own', 'Read Own Timesheets', 'View own timesheets', FALSE),
+  ('timesheet', 'read', 'all', 'Read All Timesheets', 'View all timesheets', FALSE),
+  ('timesheet', 'approve', 'all', 'Approve Timesheets', 'Approve submitted timesheets', FALSE),
+  ('timesheet', 'reject', 'all', 'Reject Timesheets', 'Reject timesheets', FALSE)
 ON CONFLICT (resource, action, scope) DO NOTHING;
 
 -- System permissions
-INSERT INTO permissions (resource, action, scope, display_name, description) VALUES
-  ('system', 'read', 'all', 'View System Settings', 'View system configuration'),
+INSERT INTO permissions (resource, action, scope, display_name, description, is_dangerous) VALUES
+  ('system', 'read', 'all', 'View System Settings', 'View system configuration', FALSE),
   ('system', 'manage', 'all', 'Manage System', 'Full system administration (dangerous)', TRUE),
-  ('audit', 'read', 'all', 'View Audit Logs', 'View system audit logs'),
-  ('report', 'export', 'all', 'Export Reports', 'Export system reports')
+  ('audit', 'read', 'all', 'View Audit Logs', 'View system audit logs', FALSE),
+  ('report', 'export', 'all', 'Export Reports', 'Export system reports', FALSE)
 ON CONFLICT (resource, action, scope) DO NOTHING;
 
 -- ============================================================================

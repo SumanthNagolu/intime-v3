@@ -18,6 +18,8 @@ Requirements analysis, architecture decisions, and implementation guides from in
 
 - **CLAUDE.md** - Documentation
 
+- **comprehensive-review-and-plan.md** - Documentation
+
 - **implementation-guide.md** - Documentation
 
 - **legacy-project-audit.md** - Documentation

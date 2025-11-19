@@ -1,7 +1,7 @@
 # Complete Documentation Index
 
 **Last Updated:** 2025-11-19  
-**Total Folders Documented:** 50  
+**Total Folders Documented:** 64  
 **Coverage Level:** Maximum Granularity ✅
 
 ---
@@ -104,7 +104,7 @@ Domain-level modules:
 
 ---
 
-## ⚙️ Operational Level (39 folders)
+## ⚙️ Operational Level (53 folders)
 
 Specific components and implementations:
 
@@ -252,9 +252,43 @@ Specific components and implementations:
 
 #### src/app/
 
+- **(auth)** (`src/app/(auth)/`)  
+  Application (auth) module.  
+  📄 [View CLAUDE.md](src/app/(auth)/CLAUDE.md)
+
+- **Actions** (`src/app/actions/`)  
+  Application actions module.  
+  📄 [View CLAUDE.md](src/app/actions/CLAUDE.md)
+
 - **Admin** (`src/app/admin/`)  
   Application admin module.  
   📄 [View CLAUDE.md](src/app/admin/CLAUDE.md)
+
+- **Api** (`src/app/api/`)  
+  Application api module.  
+  📄 [View CLAUDE.md](src/app/api/CLAUDE.md)
+
+- **Auth** (`src/app/auth/`)  
+  Application auth module.  
+  📄 [View CLAUDE.md](src/app/auth/CLAUDE.md)
+
+- **Dashboard** (`src/app/dashboard/`)  
+  Application dashboard module.  
+  📄 [View CLAUDE.md](src/app/dashboard/CLAUDE.md)
+
+- **Setup** (`src/app/setup/`)  
+  Application setup module.  
+  📄 [View CLAUDE.md](src/app/setup/CLAUDE.md)
+
+#### src/app/(auth)/
+
+- **Login** (`src/app/(auth)/login/`)  
+  Application login module.  
+  📄 [View CLAUDE.md](src/app/(auth)/login/CLAUDE.md)
+
+- **Signup** (`src/app/(auth)/signup/`)  
+  Application signup module.  
+  📄 [View CLAUDE.md](src/app/(auth)/signup/CLAUDE.md)
 
 #### src/app/admin/
 
@@ -262,7 +296,29 @@ Specific components and implementations:
   Application timeline module.  
   📄 [View CLAUDE.md](src/app/admin/timeline/CLAUDE.md)
 
+#### src/app/api/
+
+- **Migrate** (`src/app/api/migrate/`)  
+  Application migrate module.  
+  📄 [View CLAUDE.md](src/app/api/migrate/CLAUDE.md)
+
+#### src/app/auth/
+
+- **Callback** (`src/app/auth/callback/`)  
+  Application callback module.  
+  📄 [View CLAUDE.md](src/app/auth/callback/CLAUDE.md)
+
+#### src/app/setup/
+
+- **Migrate** (`src/app/setup/migrate/`)  
+  Application migrate module.  
+  📄 [View CLAUDE.md](src/app/setup/migrate/CLAUDE.md)
+
 #### src/components/
+
+- **Auth** (`src/components/auth/`)  
+  Application auth module.  
+  📄 [View CLAUDE.md](src/components/auth/CLAUDE.md)
 
 - **Landing** (`src/components/landing/`)  
   Application landing module.  
@@ -274,9 +330,17 @@ Specific components and implementations:
 
 #### src/lib/
 
+- **Auth** (`src/lib/auth/`)  
+  Application auth module.  
+  📄 [View CLAUDE.md](src/lib/auth/CLAUDE.md)
+
 - **Db** (`src/lib/db/`)  
   Application db module.  
   📄 [View CLAUDE.md](src/lib/db/CLAUDE.md)
+
+- **Supabase** (`src/lib/supabase/`)  
+  Application supabase module.  
+  📄 [View CLAUDE.md](src/lib/supabase/CLAUDE.md)
 
 - **Testing** (`src/lib/testing/`)  
   Application testing module.  
