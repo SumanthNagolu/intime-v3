@@ -1,7 +1,7 @@
 # Complete Documentation Index
 
 **Last Updated:** 2025-11-19  
-**Total Folders Documented:** 49  
+**Total Folders Documented:** 50  
 **Coverage Level:** Maximum Granularity ✅
 
 ---
@@ -104,7 +104,7 @@ Domain-level modules:
 
 ---
 
-## ⚙️ Operational Level (38 folders)
+## ⚙️ Operational Level (39 folders)
 
 Specific components and implementations:
 
@@ -277,6 +277,10 @@ Specific components and implementations:
 - **Db** (`src/lib/db/`)  
   Application db module.  
   📄 [View CLAUDE.md](src/lib/db/CLAUDE.md)
+
+- **Testing** (`src/lib/testing/`)  
+  Application testing module.  
+  📄 [View CLAUDE.md](src/lib/testing/CLAUDE.md)
 
 #### src/lib/db/
 
