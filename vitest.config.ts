@@ -39,13 +39,15 @@ export default defineConfig({
     // Test patterns
     include: [
       'src/**/*.{test,spec}.{js,ts,jsx,tsx}',
-      'tests/**/*.{test,spec}.{js,ts,jsx,tsx}',
+      'tests/unit/**/*.{test,spec}.{js,ts,jsx,tsx}',
+      'tests/integration/**/*.{test,spec}.{js,ts,jsx,tsx}',
     ],
     exclude: [
       'node_modules/',
       'dist/',
       '.next/',
       'coverage/',
+      'tests/e2e/**', // E2E tests use Playwright, not Vitest
     ],
 
     // Timeouts

@@ -45,6 +45,9 @@ export async function getCurrentUser() {
   return data.user;
 }
 
+// Alias for backward compatibility
+export const getUser = getCurrentUser;
+
 /**
  * Require authentication - redirects to login if not authenticated
  * Use this in Server Components that require authentication
@@ -182,4 +185,28 @@ export async function userHasAnyRole(
  */
 export async function isAdmin(userId?: string): Promise<boolean> {
   return userHasAnyRole(['admin', 'super_admin'], userId);
+}
+
+/**
+ * Require specific role(s) - throws error or redirects if user doesn't have required role
+ * @param allowedRoles Array of role names that are allowed
+ * @param userId Optional user ID (defaults to current user)
+ * @param redirectTo Optional redirect path (if not provided, throws error)
+ */
+export async function requireRole(
+  allowedRoles: string[],
+  userId?: string,
+  redirectTo?: string
+) {
+  const hasRole = await userHasAnyRole(allowedRoles, userId);
+
+  if (!hasRole) {
+    if (redirectTo) {
+      redirect(redirectTo);
+    } else {
+      throw new Error(`Unauthorized: Requires one of roles: ${allowedRoles.join(', ')}`);
+    }
+  }
+
+  return await getUser();
 }
