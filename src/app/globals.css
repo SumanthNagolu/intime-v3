@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* InTime Brand Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-body text-slate-900 bg-white antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  /* InTime Brand Button Styles - Press Effect (Not Float) */
+  .btn-primary {
+    @apply bg-amber-500 text-slate-900 font-semibold px-8 py-4 rounded-none border-b-4 border-amber-700 hover:border-b-2 hover:translate-y-[2px] transition-all duration-150 font-subheading;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-forest-500 font-semibold px-8 py-4 border-2 border-forest-500 hover:bg-forest-50 transition-colors font-subheading;
+  }
+
+  .btn-ghost {
+    @apply text-forest-500 font-medium px-4 py-2 hover:text-forest-700 underline-offset-4 hover:underline font-body;
+  }
+}
