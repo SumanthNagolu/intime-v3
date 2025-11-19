@@ -9,11 +9,15 @@
 
 import { pgTable, uuid, text, timestamp, numeric, integer, boolean, jsonb, varchar } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
+import { organizations } from './organizations';
 
 export const userProfiles = pgTable('user_profiles', {
   // Primary identification
   id: uuid('id').primaryKey().defaultRandom(),
   authId: uuid('auth_id').unique(), // Link to Supabase auth.users
+
+  // Multi-tenancy
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
 
   // Core fields (ALL users)
   email: text('email').notNull().unique(),

@@ -16,19 +16,22 @@ Application schema module.
 
 ### Files in This Directory
 
-- **audit.ts** (133 lines)
+- **audit.ts** (137 lines)
   Drizzle ORM Schema: Audit Logs
 
 - **CLAUDE.md** - Documentation
 
-- **events.ts** (184 lines)
+- **events.ts** (191 lines)
   Drizzle ORM Schema: Event Bus
 
 - **final-proof.ts** (10 lines)
   No description
 
-- **index.ts** (43 lines)
+- **index.ts** (51 lines)
   Drizzle ORM Schema - Central Export
+
+- **organizations.ts** (119 lines)
+  Drizzle ORM Schema: organizations
 
 - **rbac.ts** (196 lines)
   Drizzle ORM Schema: RBAC (Role-Based Access Control)
@@ -36,7 +39,7 @@ Application schema module.
 - **timeline.ts** (133 lines)
   Type exports for use in application
 
-- **user-profiles.ts** (122 lines)
+- **user-profiles.ts** (126 lines)
   Drizzle ORM Schema: user_profiles
 
 ---

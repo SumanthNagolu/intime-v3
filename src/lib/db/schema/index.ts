@@ -8,6 +8,7 @@
  */
 
 // Export all schemas
+export * from './organizations';
 export * from './user-profiles';
 export * from './rbac';
 export * from './audit';
@@ -15,6 +16,13 @@ export * from './events';
 export * from './timeline'; // Existing timeline schema
 
 // Re-export commonly used types
+export type {
+  Organization,
+  NewOrganization,
+  SubscriptionTier,
+  OrganizationStatus,
+} from './organizations';
+
 export type {
   UserProfile,
   NewUserProfile,
