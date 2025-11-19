@@ -1,0 +1,31 @@
+{
+  "sessionId": "session-2025-11-17-D6A31A7C",
+  "conversationSummary": "Session on main branch",
+  "agentType": "claude",
+  "agentModel": "claude-sonnet-4-5",
+  "tags": [
+    "testing",
+    "documentation"
+  ],
+  "results": {
+    "status": "success",
+    "summary": "Session on main branch"
+  },
+  "filesChanged": {
+    "created": [
+      "docs/planning/CLAUDE.md",
+      "docs/planning/ai-use-cases/CLAUDE.md",
+      "docs/planning/epics/CLAUDE.md",
+      "docs/planning/stories/CLAUDE.md",
+      "docs/planning/stories/epic-01-foundation/CLAUDE.md",
+      "docs/planning/stories/epic-02-training-academy/CLAUDE.md",
+      "docs/planning/stories/epic-02.5-ai-infrastructure/CLAUDE.md",
+      "scripts/test-supabase-connection.ts"
+    ],
+    "modified": [
+      "package.json",
+      "pnpm-lock.yaml"
+    ],
+    "deleted": []
+  }
+}
