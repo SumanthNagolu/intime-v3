@@ -235,9 +235,10 @@ CREATE OR REPLACE VIEW v_session_summary AS
 SELECT
   sm.*,
   COUNT(pt.id) as timeline_entries,
-  array_agg(DISTINCT unnest(pt.tags)) FILTER (WHERE pt.tags IS NOT NULL) as all_tags
+  COALESCE(array_agg(DISTINCT t.tag) FILTER (WHERE t.tag IS NOT NULL), ARRAY[]::text[]) as all_tags
 FROM session_metadata sm
 LEFT JOIN project_timeline pt ON sm.session_id = pt.session_id
+LEFT JOIN LATERAL unnest(pt.tags) AS t(tag) ON TRUE
 GROUP BY sm.id
 ORDER BY sm.started_at DESC;
 

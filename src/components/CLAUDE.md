@@ -20,6 +20,7 @@ Reusable React components built with shadcn/ui and Tailwind CSS.
 
 
 **Subdirectories:**
+- `auth/` - See [auth/CLAUDE.md](auth/CLAUDE.md)
 - `landing/` - See [landing/CLAUDE.md](landing/CLAUDE.md)
 - `timeline/` - See [timeline/CLAUDE.md](timeline/CLAUDE.md)
 

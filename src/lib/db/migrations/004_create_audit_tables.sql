@@ -71,7 +71,7 @@ CREATE INDEX idx_audit_logs_severity ON audit_logs(severity) WHERE severity IN (
 -- ============================================================================
 
 -- Helper function to create a partition for a specific month
-CREATE OR REPLACE FUNCTION create_audit_log_partition(partition_date DATE)
+CREATE OR REPLACE FUNCTION create_audit_log_partition(partition_date TIMESTAMPTZ)
 RETURNS VOID AS $$
 DECLARE
   partition_name TEXT;
@@ -79,7 +79,7 @@ DECLARE
   end_date DATE;
 BEGIN
   -- Calculate partition boundaries
-  start_date := DATE_TRUNC('month', partition_date);
+  start_date := (DATE_TRUNC('month', partition_date AT TIME ZONE 'UTC'))::date;
   end_date := start_date + INTERVAL '1 month';
 
   -- Generate partition name (e.g., audit_logs_2025_11)
@@ -109,10 +109,10 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Create partitions for current month + next 3 months
-SELECT create_audit_log_partition(CURRENT_DATE);
-SELECT create_audit_log_partition(CURRENT_DATE + INTERVAL '1 month');
-SELECT create_audit_log_partition(CURRENT_DATE + INTERVAL '2 months');
-SELECT create_audit_log_partition(CURRENT_DATE + INTERVAL '3 months');
+SELECT create_audit_log_partition(CURRENT_DATE::timestamptz);
+SELECT create_audit_log_partition((CURRENT_DATE + INTERVAL '1 month')::timestamptz);
+SELECT create_audit_log_partition((CURRENT_DATE + INTERVAL '2 months')::timestamptz);
+SELECT create_audit_log_partition((CURRENT_DATE + INTERVAL '3 months')::timestamptz);
 
 -- ============================================================================
 -- FUNCTION: Auto-create partition for next month (cron job)

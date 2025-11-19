@@ -89,12 +89,12 @@ const config: Config = {
   		},
   		fontFamily: {
   			heading: [
-  				'Playfair Display"',
+  				'"Playfair Display"',
   				'Georgia',
   				'serif'
   			],
   			subheading: [
-  				'Space Grotesk"',
+  				'"Space Grotesk"',
   				'Inter',
   				'sans-serif'
   			],
@@ -105,8 +105,8 @@ const config: Config = {
   				'sans-serif'
   			],
   			mono: [
-  				'IBM Plex Mono"',
-  				'Courier New"',
+  				'"IBM Plex Mono"',
+  				'"Courier New"',
   				'monospace'
   			]
   		},
