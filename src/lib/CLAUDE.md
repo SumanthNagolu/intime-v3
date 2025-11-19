@@ -18,6 +18,9 @@ Shared utilities, helpers, and business logic used across the application.
 
 - **CLAUDE.md** - Documentation
 
+- **utils.ts** (7 lines)
+  No description
+
 
 **Subdirectories:**
 - `db/` - See [db/CLAUDE.md](db/CLAUDE.md)
