@@ -1,0 +1,62 @@
+{
+  "name": "intime-v3",
+  "version": "3.0.0",
+  "description": "InTime - Multi-Agent Staffing Platform",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest",
+    "test:watch": "vitest watch",
+    "orchestrate": "tsx .claude/orchestration/cli/index.ts",
+    "orchestrate:feature": "tsx .claude/orchestration/cli/index.ts feature",
+    "orchestrate:bug": "tsx .claude/orchestration/cli/index.ts bug-fix",
+    "orchestrate:review": "tsx .claude/orchestration/cli/index.ts ceo-review",
+    "orchestrate:database": "tsx .claude/orchestration/cli/index.ts database",
+    "orchestrate:test": "tsx .claude/orchestration/cli/index.ts test",
+    "orchestrate:deploy": "tsx .claude/orchestration/cli/index.ts deploy",
+    "orchestrate:artifacts": "tsx .claude/orchestration/cli/index.ts artifacts",
+    "orchestrate:clear": "tsx .claude/orchestration/cli/index.ts clear",
+    "timeline": "tsx tools/timeline-cli.ts",
+    "timeline:add": "tsx tools/timeline-cli.ts add",
+    "timeline:list": "tsx tools/timeline-cli.ts list",
+    "timeline:search": "tsx tools/timeline-cli.ts search",
+    "timeline:stats": "tsx tools/timeline-cli.ts stats",
+    "prompt": "tsx tools/generate-prompt.ts",
+    "prompt:list": "tsx tools/generate-prompt.ts list",
+    "prompt:epic": "tsx tools/generate-prompt.ts generate",
+    "prompt:story": "tsx tools/generate-prompt.ts generate"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.1",
+    "@modelcontextprotocol/sdk": "^1.22.0",
+    "autoprefixer": "^10.4.22",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "drizzle-orm": "^0.44.7",
+    "next": "^15.1.3",
+    "postcss": "^8.5.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "uuid": "^11.0.3",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.6",
+    "@types/react-dom": "^19.0.2",
+    "@types/uuid": "^10.0.0",
+    "dotenv": "^17.2.3",
+    "tailwindcss": "^3.4.18",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

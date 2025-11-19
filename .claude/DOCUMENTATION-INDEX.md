@@ -1,7 +1,7 @@
 # Complete Documentation Index
 
-**Last Updated:** 2025-11-18  
-**Total Folders Documented:** 42  
+**Last Updated:** 2025-11-19  
+**Total Folders Documented:** 49  
 **Coverage Level:** Maximum Granularity ✅
 
 ---
@@ -104,7 +104,7 @@ Domain-level modules:
 
 ---
 
-## ⚙️ Operational Level (31 folders)
+## ⚙️ Operational Level (38 folders)
 
 Specific components and implementations:
 
@@ -210,6 +210,10 @@ Specific components and implementations:
   Documentation for migration.  
   📄 [View CLAUDE.md](docs/migration/CLAUDE.md)
 
+- **Planning** (`docs/planning/`)  
+  Documentation for planning.  
+  📄 [View CLAUDE.md](docs/planning/CLAUDE.md)
+
 - **Requirements** (`docs/requirements/`)  
   Documentation for requirements.  
   📄 [View CLAUDE.md](docs/requirements/CLAUDE.md)
@@ -217,6 +221,34 @@ Specific components and implementations:
 - **Vision** (`docs/vision/`)  
   Documentation for vision.  
   📄 [View CLAUDE.md](docs/vision/CLAUDE.md)
+
+#### docs/planning/
+
+- **Ai use cases** (`docs/planning/ai-use-cases/`)  
+  Documentation for ai-use-cases.  
+  📄 [View CLAUDE.md](docs/planning/ai-use-cases/CLAUDE.md)
+
+- **Epics** (`docs/planning/epics/`)  
+  Documentation for epics.  
+  📄 [View CLAUDE.md](docs/planning/epics/CLAUDE.md)
+
+- **Stories** (`docs/planning/stories/`)  
+  Documentation for stories.  
+  📄 [View CLAUDE.md](docs/planning/stories/CLAUDE.md)
+
+#### docs/planning/stories/
+
+- **Epic 01 foundation** (`docs/planning/stories/epic-01-foundation/`)  
+  Documentation for epic-01-foundation.  
+  📄 [View CLAUDE.md](docs/planning/stories/epic-01-foundation/CLAUDE.md)
+
+- **Epic 02 training academy** (`docs/planning/stories/epic-02-training-academy/`)  
+  Documentation for epic-02-training-academy.  
+  📄 [View CLAUDE.md](docs/planning/stories/epic-02-training-academy/CLAUDE.md)
+
+- **Epic 02.5 ai infrastructure** (`docs/planning/stories/epic-02.5-ai-infrastructure/`)  
+  Documentation for epic-02.5-ai-infrastructure.  
+  📄 [View CLAUDE.md](docs/planning/stories/epic-02.5-ai-infrastructure/CLAUDE.md)
 
 #### src/app/
 
@@ -277,4 +309,4 @@ git diff **/CLAUDE.md
 
 ---
 
-*Maximum granularity documentation - Auto-generated on 2025-11-18*
+*Maximum granularity documentation - Auto-generated on 2025-11-19*

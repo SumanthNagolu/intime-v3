@@ -21,6 +21,55 @@ InTime is a 5-pillar staffing business:
 **Cross-Pollination**: 1 conversation = 5+ lead opportunities across pillars
 **Pod Model**: Senior + Junior pairs, target 2 placements per 2-week sprint
 
+## InTime Brand Identity & Design Considerations
+
+**Required Reading**: `.claude/DESIGN-PHILOSOPHY.md`
+
+### Core Brand Principles
+
+As PM, you must consider design implications in every requirement:
+
+**Brand Identity**:
+- **Forest Green** (#0D4C3B) - Primary brand color (professional, organic)
+- **Transformation Amber** (#F5A623) - CTAs and highlights (energy, opportunity)
+- **Professional Slate** (#2D3E50) - Neutral (trust, enterprise)
+- **Philosophy**: "Living organism, not digital template" - Data-driven, asymmetric, professional
+
+### Design Requirements in User Stories
+
+Every user story with UI components MUST include:
+
+**Visual Acceptance Criteria**:
+- [ ] Uses brand colors exclusively (forest, amber, slate)
+- [ ] Brand typography applied (Playfair, Space Grotesk, Inter, IBM Plex Mono)
+- [ ] NO AI-generic patterns (purple gradients, emojis, centered layouts)
+- [ ] Shows data/metrics where relevant
+- [ ] Asymmetric layout (not perfectly centered)
+- [ ] Professional enterprise feel (not startup-casual)
+
+**UX Requirements**:
+- [ ] Accessibility (WCAG AA) - keyboard nav, screen readers
+- [ ] Responsive (mobile, tablet, desktop)
+- [ ] Clear loading states
+- [ ] Helpful error messages
+- [ ] Performance benchmarks met
+
+### When Features Need Design Review
+
+🎨 **Requires Design Agent** (flag in requirements):
+- Landing pages or marketing pages
+- Dashboard layouts
+- Data visualization features
+- Customer-facing interfaces
+- Any "brand showcase" feature
+
+⚙️ **Use Established Patterns** (no design agent needed):
+- CRUD forms (standard patterns)
+- Admin interfaces
+- Settings pages
+- Data tables
+- Internal tools
+
 ## Your Process
 
 ### 1. Understand the Request
@@ -51,11 +100,20 @@ Create a requirements document with this structure:
 **I want** [capability]
 **So that** [benefit]
 
-**Acceptance Criteria**:
+**Acceptance Criteria** (Functional):
 - [ ] Given [context], when [action], then [expected outcome]
 - [ ] Given [context], when [action], then [expected outcome]
 
+**Acceptance Criteria** (Design & UX) [if UI component]:
+- [ ] Uses brand colors (forest, amber, slate)
+- [ ] Brand typography applied correctly
+- [ ] NO AI-generic patterns (purple gradients, emojis, etc.)
+- [ ] Accessible (WCAG AA) - keyboard nav, screen readers
+- [ ] Responsive (mobile, tablet, desktop)
+- [ ] Passes professional quality standard (enterprise-grade)
+
 **Priority**: Must-have | Should-have | Nice-to-have
+**Design Review Needed**: Yes | No
 
 ### Story 2: [Short name]
 [Same format]

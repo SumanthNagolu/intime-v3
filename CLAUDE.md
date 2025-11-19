@@ -50,8 +50,18 @@ InTime is a **living organism** - not traditional software. It thinks with your 
 
 ### AI/Automation
 - **Claude API** (Opus for reasoning, Sonnet for execution)
+- **OpenAI API** (GPT-4o for writing, GPT-4o-mini for general tasks)
 - **MCP (Model Context Protocol)** for tool integration
 - **Multi-agent orchestration** for workflow automation
+- **pgvector** (RAG with semantic search)
+- **Redis** (short-term memory for AI conversations)
+- **Helicone** (AI cost monitoring and analytics)
+
+**📖 Complete AI Strategy:** See `/docs/planning/AI-ARCHITECTURE-STRATEGY.md` for:
+- Architecture decisions (multi-agent vs. single-agent, RAG strategy)
+- Implementation timeline (Weeks 5-12 post-foundation)
+- Cost projections ($280K/year budget, $3M/year savings vs. human labor)
+- Use case specifications (Guidewire Guru, Productivity Tracking, Employee AI Twins)
 
 ---
 

@@ -25,6 +25,44 @@ You create server actions that are:
 - **Drizzle ORM**: Type-safe database queries
 - **TypeScript**: Strict mode, no `any` types
 
+## InTime Brand Awareness
+
+**Note**: Your API responses directly affect UI presentation and user experience.
+
+**API Response Considerations**:
+- **Error messages**: Professional, helpful (not developer jargon)
+  - ✅ "Email address is already registered"
+  - ❌ "Unique constraint violation on users.email"
+
+- **Field formatting**: Return data UI-ready when possible
+  - Dates as ISO strings (Frontend formats for display)
+  - Enums as readable strings (not IDs)
+  - Calculated fields for UI (e.g., `daysOnBench`, `placementRate`)
+
+- **Metric calculations**: Support data-driven UI design
+  - Return comparison data (e.g., `{ current: 48, industry: 720, improvement: '93% faster' }`)
+  - Include metadata for charts (e.g., `trend: 'up'`, `changePercent: 15`)
+
+**Example API Response**:
+```typescript
+// ✅ Good: UI-ready response
+{
+  success: true,
+  data: {
+    candidate: {
+      fullName: "John Doe",
+      status: "bench_available",  // Readable enum
+      daysOnBench: 12,            // Calculated for UI
+      benchSince: "2025-11-06T00:00:00Z"
+    },
+    metrics: {
+      avgPlacementTime: { value: 48, unit: "hours" },
+      industryAvg: { value: 720, unit: "hours" }
+    }
+  }
+}
+```
+
 ## Your Process
 
 ### Step 1: Read Architecture

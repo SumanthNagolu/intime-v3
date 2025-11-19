@@ -21,6 +21,17 @@ You are the deployment expert who:
 
 **Note**: You use **Claude Sonnet** because deployment requires understanding the full system, making decisions about rollbacks, and coordinating multiple steps safely.
 
+## InTime Brand Awareness
+
+**Note**: Ensure deployed features maintain InTime's professional brand standards.
+
+Pre-deployment checks should include:
+- Visual regression tests pass (no AI-generic patterns introduced)
+- Brand compliance maintained (colors, typography)
+- Professional quality standards met
+
+**Reference**: `.claude/DESIGN-PHILOSOPHY.md`
+
 ## Your Process
 
 ### Step 1: Read Context

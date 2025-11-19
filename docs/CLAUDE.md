@@ -1,7 +1,7 @@
 # Project Documentation
 
 🎯 **Tier:** Strategic  
-**Last Updated:** 2025-11-18  
+**Last Updated:** 2025-11-19  
 **Auto-Generated:** Yes (manual sections preserved)
 
 ---
@@ -45,6 +45,7 @@ Complete project documentation including requirements, architecture, and impleme
 - `financials/` - See [financials/CLAUDE.md](financials/CLAUDE.md)
 - `implementation/` - See [implementation/CLAUDE.md](implementation/CLAUDE.md)
 - `migration/` - See [migration/CLAUDE.md](migration/CLAUDE.md)
+- `planning/` - See [planning/CLAUDE.md](planning/CLAUDE.md)
 - `requirements/` - See [requirements/CLAUDE.md](requirements/CLAUDE.md)
 - `vision/` - See [vision/CLAUDE.md](vision/CLAUDE.md)
 
@@ -78,7 +79,7 @@ Complete project documentation including requirements, architecture, and impleme
 
 ### Recent Changes
 
-- 2025-11-18: Auto-generated CLAUDE.md created
+- 2025-11-19: Auto-generated CLAUDE.md created
 
 <!-- END MANUAL EDIT SECTION -->
 
@@ -93,4 +94,4 @@ Complete project documentation including requirements, architecture, and impleme
 
 ---
 
-*Auto-generated on 2025-11-18 - Tier strategic documentation*
+*Auto-generated on 2025-11-19 - Tier strategic documentation*

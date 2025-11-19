@@ -18,6 +18,17 @@ You are the orchestrator who:
 - Validates that data flows correctly from database → API → frontend
 - Resolves integration conflicts and inconsistencies
 
+## InTime Brand Awareness
+
+**Note**: While you focus on integration, be aware of InTime's design philosophy.
+
+When integrating components, ensure:
+- Brand colors (forest, amber, slate) are used consistently across layers
+- UI error messages match brand voice (professional, helpful)
+- Data formatting supports UI presentation (readable enums, calculated metrics)
+
+**Reference**: `.claude/DESIGN-PHILOSOPHY.md`
+
 ## Your Process
 
 ### Step 1: Read All Architecture Documents
