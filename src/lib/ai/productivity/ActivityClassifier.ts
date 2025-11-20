@@ -5,12 +5,13 @@
  * Story: AI-PROD-002 - Activity Classification
  *
  * Classifies employee activities from screenshots using GPT-4o-mini vision API.
+ * Refactored to extend BaseAgent for cost tracking and model routing.
  *
  * @module lib/ai/productivity/ActivityClassifier
  */
 
 import OpenAI from 'openai';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import type {
   ActivityCategory,
   ActivityClassification,
@@ -19,22 +20,56 @@ import type {
   ProductivityError,
 } from '@/types/productivity';
 import { ProductivityErrorCodes } from '@/types/productivity';
-
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-);
+import { BaseAgent, type AgentConfig } from '../agents/BaseAgent';
 
 /**
  * Activity Classifier
  *
  * Uses GPT-4o-mini vision API to classify screenshots into activity categories.
  * Cost-optimized with batch processing and rate limiting.
+ * Now extends BaseAgent for integrated cost tracking and model routing.
  */
-export class ActivityClassifier implements IActivityClassifier {
+export class ActivityClassifier
+  extends BaseAgent<string, ActivityClassification>
+  implements IActivityClassifier
+{
   private readonly BATCH_SIZE = 10; // Process 10 at a time (rate limiting)
   private readonly RATE_LIMIT_DELAY = 1000; // 1 second delay between batches
+  private openai: OpenAI;
+  private supabase: SupabaseClient;
+
+  constructor(
+    config?: Partial<AgentConfig>,
+    dependencies?: {
+      openai?: OpenAI;
+      supabase?: SupabaseClient;
+    }
+  ) {
+    super({
+      agentName: 'ActivityClassifier',
+      enableCostTracking: true,
+      enableMemory: false,
+      enableRAG: false,
+      ...config,
+    });
+
+    // Allow dependency injection for testing
+    this.openai = dependencies?.openai || new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    this.supabase =
+      dependencies?.supabase ||
+      createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_KEY!
+      );
+  }
+
+  /**
+   * Execute method required by BaseAgent
+   * Routes to classifyScreenshot for single screenshot classification
+   */
+  async execute(screenshotId: string): Promise<ActivityClassification> {
+    return this.classifyScreenshot(screenshotId);
+  }
 
   /**
    * Classify a single screenshot by ID
@@ -46,9 +81,11 @@ export class ActivityClassifier implements IActivityClassifier {
   async classifyScreenshot(
     screenshotId: string
   ): Promise<ActivityClassification> {
+    const startTime = performance.now();
+
     try {
       // Get screenshot metadata
-      const { data: screenshot, error } = await supabase
+      const { data: screenshot, error } = await this.supabase
         .from('employee_screenshots')
         .select('*')
         .eq('id', screenshotId)
@@ -63,7 +100,7 @@ export class ActivityClassifier implements IActivityClassifier {
       }
 
       // Get signed URL for screenshot (60s expiry for AI classification)
-      const { data: signedUrlData, error: urlError } = await supabase.storage
+      const { data: signedUrlData, error: urlError } = await this.supabase.storage
         .from('employee-screenshots')
         .createSignedUrl(screenshot.filename, 60);
 
@@ -75,11 +112,14 @@ export class ActivityClassifier implements IActivityClassifier {
         );
       }
 
+      // Use BaseAgent router to select model (GPT-4o-mini for vision)
+      const model = await this.routeModel('vision-based screenshot activity classification');
+
       // Classify using GPT-4o-mini vision
       const classification = await this.classifyImage(signedUrlData.signedUrl);
 
       // Update screenshot record with classification
-      const { error: updateError } = await supabase
+      const { error: updateError } = await this.supabase
         .from('employee_screenshots')
         .update({
           analyzed: true,
@@ -95,10 +135,18 @@ export class ActivityClassifier implements IActivityClassifier {
         // Don't throw - classification succeeded, just logging failed
       }
 
-      return {
+      const result = {
         ...classification,
         timestamp: new Date().toISOString(),
       };
+
+      // Track cost using BaseAgent (150 tokens estimate for vision task)
+      const latencyMs = performance.now() - startTime;
+      const estimatedTokens = 150;
+      const estimatedCost = this.calculateGPTCost(estimatedTokens, 'gpt-4o-mini');
+      await this.trackCost(estimatedTokens, estimatedCost, model.model, latencyMs);
+
+      return result;
     } catch (error) {
       if (error instanceof Error && error.name === 'ProductivityError') {
         throw error;
@@ -113,6 +161,16 @@ export class ActivityClassifier implements IActivityClassifier {
   }
 
   /**
+   * Calculate GPT cost (helper method)
+   * @private
+   */
+  private calculateGPTCost(tokens: number, model: string): number {
+    // GPT-4o-mini: $0.15/M input + $0.60/M output (assume 50/50 split)
+    const avgCostPerToken = ((0.15 + 0.60) / 2) / 1_000_000;
+    return tokens * avgCostPerToken;
+  }
+
+  /**
    * Classify image using OpenAI GPT-4o-mini vision API
    *
    * @param imageUrl - Signed URL of image to classify
@@ -123,7 +181,7 @@ export class ActivityClassifier implements IActivityClassifier {
     imageUrl: string
   ): Promise<Omit<ActivityClassification, 'timestamp'>> {
     try {
-      const response = await openai.chat.completions.create({
+      const response = await this.openai.chat.completions.create({
         model: 'gpt-4o-mini',
         messages: [
           {
@@ -210,7 +268,7 @@ Return ONLY a JSON object:
   async batchClassify(userId: string, date: string): Promise<number> {
     try {
       // Get unanalyzed screenshots for user on date
-      const { data: screenshots, error } = await supabase
+      const { data: screenshots, error } = await this.supabase
         .from('employee_screenshots')
         .select('id')
         .eq('user_id', userId)
@@ -245,11 +303,11 @@ Return ONLY a JSON object:
 
         // Process batch in parallel
         const results = await Promise.allSettled(
-          batch.map((screenshot) => this.classifyScreenshot(screenshot.id))
+          batch.map((screenshot: { id: string }) => this.classifyScreenshot(screenshot.id))
         );
 
         // Count successes
-        results.forEach((result, index) => {
+        results.forEach((result: PromiseSettledResult<any>, index: number) => {
           if (result.status === 'fulfilled') {
             classifiedCount++;
           } else {
@@ -298,7 +356,7 @@ Return ONLY a JSON object:
     date: string
   ): Promise<DailyActivitySummary> {
     try {
-      const { data: screenshots, error } = await supabase
+      const { data: screenshots, error } = await this.supabase
         .from('employee_screenshots')
         .select('activity_category, confidence, analyzed')
         .eq('user_id', userId)
@@ -342,7 +400,7 @@ Return ONLY a JSON object:
         idle: 0,
       };
 
-      screenshots.forEach((s) => {
+      screenshots.forEach((s: any) => {
         if (s.activity_category) {
           byCategory[s.activity_category as ActivityCategory]++;
         }

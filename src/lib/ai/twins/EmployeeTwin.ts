@@ -6,11 +6,12 @@
  *
  * Personalized AI assistants for employees based on their roles.
  * Provides morning briefings, proactive suggestions, and on-demand help.
+ * Refactored to extend BaseAgent for memory, RAG, and cost tracking.
  *
  * @module lib/ai/twins/EmployeeTwin
  */
 
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import OpenAI from 'openai';
 import type {
   TwinRole,
@@ -20,32 +21,63 @@ import type {
   ProductivityError,
 } from '@/types/productivity';
 import { ProductivityErrorCodes } from '@/types/productivity';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-);
-
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+import { BaseAgent, type AgentConfig } from '../agents/BaseAgent';
 
 /**
  * Employee AI Twin
  *
  * Role-specific AI assistant that provides personalized support to employees.
- * Extends with context awareness and proactive suggestions based on work patterns.
- *
- * NOTE: This is a simplified implementation. In production, this should extend
- * a BaseAgent class (AI-INF-005) that provides memory, RAG, and cost tracking.
+ * Now extends BaseAgent for integrated memory, RAG, and cost tracking capabilities.
  */
-export class EmployeeTwin implements IEmployeeTwin {
+export class EmployeeTwin
+  extends BaseAgent<string, string>
+  implements IEmployeeTwin
+{
   private role: TwinRole;
   private employeeId: string;
   private orgId: string;
+  private openai: OpenAI;
+  private supabase: SupabaseClient;
 
-  constructor(employeeId: string, role: TwinRole) {
+  constructor(
+    employeeId: string,
+    role: TwinRole,
+    config?: Partial<AgentConfig>,
+    dependencies?: {
+      openai?: OpenAI;
+      supabase?: SupabaseClient;
+    }
+  ) {
+    super({
+      agentName: `EmployeeTwin-${role}`,
+      userId: employeeId,
+      enableCostTracking: true,
+      enableMemory: true, // Enable for conversation context
+      enableRAG: true, // Enable for role-specific data retrieval
+      ...config,
+    });
+
     this.employeeId = employeeId;
     this.role = role;
     this.orgId = ''; // Will be fetched in context gathering
+
+    // Allow dependency injection for testing
+    this.openai = dependencies?.openai || new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    this.supabase =
+      dependencies?.supabase ||
+      createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_KEY!
+      );
+  }
+
+  /**
+   * Execute method required by BaseAgent
+   * Routes to query method for general queries
+   */
+  async execute(input: string): Promise<string> {
+    const result = await this.query(input);
+    return result.answer;
   }
 
   /**
@@ -64,7 +96,12 @@ export class EmployeeTwin implements IEmployeeTwin {
    * @throws ProductivityError if generation fails
    */
   async generateMorningBriefing(): Promise<string> {
+    const startTime = performance.now();
+
     try {
+      // Use BaseAgent router for model selection
+      const model = await this.routeModel(`Generate morning briefing for ${this.role}`);
+
       const context = await this.gatherEmployeeContext();
 
       const prompt = `Generate a personalized morning briefing for this ${this.role}.
@@ -81,7 +118,7 @@ BRIEFING STRUCTURE:
 
 Keep it concise (200-300 words), friendly, and actionable.`;
 
-      const response = await openai.chat.completions.create({
+      const response = await this.openai.chat.completions.create({
         model: 'gpt-4o-mini',
         messages: [
           {
@@ -99,16 +136,22 @@ Keep it concise (200-300 words), friendly, and actionable.`;
 
       const briefing = response.choices[0].message.content || 'Unable to generate briefing';
 
+      // Track cost using BaseAgent
+      const latencyMs = performance.now() - startTime;
+      const tokens = response.usage?.total_tokens || 0;
+      const cost = this.calculateCost(tokens, model.model);
+      await this.trackCost(tokens, cost, model.model, latencyMs);
+
       // Log interaction
-      await this.logInteraction({
+      await this.logEmployeeTwinInteraction({
         interactionType: 'morning_briefing',
         prompt: null,
         response: briefing,
         context,
-        modelUsed: 'gpt-4o-mini',
-        tokensUsed: response.usage?.total_tokens || 0,
-        costUsd: this.calculateCost(response.usage?.total_tokens || 0, 'gpt-4o-mini'),
-        latencyMs: 0, // Could be tracked with performance.now()
+        modelUsed: model.model,
+        tokensUsed: tokens,
+        costUsd: cost,
+        latencyMs,
       });
 
       return briefing;
@@ -152,7 +195,7 @@ SUGGESTION FORMAT:
 
 Return only the suggestion text.`;
 
-      const response = await openai.chat.completions.create({
+      const response = await this.openai.chat.completions.create({
         model: 'gpt-4o-mini',
         messages: [
           {
@@ -172,7 +215,7 @@ Return only the suggestion text.`;
 
       if (suggestion) {
         // Log interaction
-        await this.logInteraction({
+        await this.logEmployeeTwinInteraction({
           interactionType: 'suggestion',
           prompt: null,
           response: suggestion,
@@ -219,7 +262,7 @@ ${JSON.stringify(context, null, 2)}
 
 Provide a helpful, specific answer based on the employee's role and context.`;
 
-      const response = await openai.chat.completions.create({
+      const response = await this.openai.chat.completions.create({
         model: 'gpt-4o-mini',
         messages: [
           {
@@ -238,7 +281,7 @@ Provide a helpful, specific answer based on the employee's role and context.`;
       const answer = response.choices[0].message.content || 'Unable to generate answer';
 
       // Log interaction
-      await this.logInteraction({
+      await this.logEmployeeTwinInteraction({
         interactionType: 'question',
         prompt: question,
         response: answer,
@@ -270,7 +313,7 @@ Provide a helpful, specific answer based on the employee's role and context.`;
    */
   async getInteractionHistory(limit: number = 10): Promise<TwinInteraction[]> {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await this.supabase
         .from('employee_twin_interactions')
         .select('*')
         .eq('user_id', this.employeeId)
@@ -401,7 +444,7 @@ TONE: Technical, precise, systems-thinking`,
    */
   private async gatherEmployeeContext(): Promise<TwinContext> {
     // Get employee profile
-    const { data: profile } = await supabase
+    const { data: profile } = await this.supabase
       .from('user_profiles')
       .select('*')
       .eq('id', this.employeeId)
@@ -448,7 +491,7 @@ TONE: Technical, precise, systems-thinking`,
    * @param data - Interaction data
    * @private
    */
-  private async logInteraction(data: {
+  private async logEmployeeTwinInteraction(data: {
     interactionType: string;
     prompt: string | null;
     response: string;
@@ -459,7 +502,7 @@ TONE: Technical, precise, systems-thinking`,
     latencyMs: number;
   }): Promise<void> {
     try {
-      await supabase.from('employee_twin_interactions').insert({
+      await this.supabase.from('employee_twin_interactions').insert({
         org_id: this.orgId,
         user_id: this.employeeId,
         twin_role: this.role,

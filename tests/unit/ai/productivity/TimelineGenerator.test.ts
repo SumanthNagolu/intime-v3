@@ -17,9 +17,41 @@ vi.mock('@/lib/ai/productivity/ActivityClassifier');
 
 describe('TimelineGenerator', () => {
   let generator: TimelineGenerator;
+  let mockClassifier: any;
+  let mockOpenAI: any;
+  let mockSupabase: any;
 
   beforeEach(() => {
-    generator = new TimelineGenerator();
+    // Mock Supabase client
+    mockSupabase = {
+      from: vi.fn().mockReturnThis(),
+      select: vi.fn().mockReturnThis(),
+      eq: vi.fn().mockReturnThis(),
+      single: vi.fn(),
+      insert: vi.fn().mockReturnThis(),
+      update: vi.fn().mockReturnThis(),
+    };
+
+    // Mock OpenAI client
+    mockOpenAI = {
+      chat: {
+        completions: {
+          create: vi.fn(),
+        },
+      },
+    };
+
+    // Mock ActivityClassifier
+    mockClassifier = {
+      getDailySummary: vi.fn(),
+    };
+
+    // Create generator instance WITH mocked dependencies
+    generator = new TimelineGenerator(undefined, {
+      classifier: mockClassifier,
+      openai: mockOpenAI as any,
+      supabase: mockSupabase as any,
+    });
   });
 
   describe('generateDailyReport', () => {

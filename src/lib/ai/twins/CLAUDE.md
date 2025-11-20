@@ -18,7 +18,7 @@ Application twins module.
 
 - **CLAUDE.md** - Documentation
 
-- **EmployeeTwin.ts** (517 lines)
+- **EmployeeTwin.ts** (560 lines)
   EmployeeTwin Framework
 
 ---

@@ -16,12 +16,12 @@ Application productivity module.
 
 ### Files in This Directory
 
-- **ActivityClassifier.ts** (407 lines)
+- **ActivityClassifier.ts** (465 lines)
   ActivityClassifier Service
 
 - **CLAUDE.md** - Documentation
 
-- **TimelineGenerator.ts** (374 lines)
+- **TimelineGenerator.ts** (418 lines)
   TimelineGenerator Service
 
 ---

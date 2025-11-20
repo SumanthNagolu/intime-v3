@@ -18,9 +18,20 @@ Application ai module.
 
 - **CLAUDE.md** - Documentation
 
+- **orchestrator.ts** (329 lines)
+  Multi-Agent Orchestrator
+
+- **router.ts** (273 lines)
+  AI Model Router
+
 
 **Subdirectories:**
+- `agents/` - See [agents/CLAUDE.md](agents/CLAUDE.md)
+- `memory/` - See [memory/CLAUDE.md](memory/CLAUDE.md)
+- `monitoring/` - See [monitoring/CLAUDE.md](monitoring/CLAUDE.md)
 - `productivity/` - See [productivity/CLAUDE.md](productivity/CLAUDE.md)
+- `prompts/` - See [prompts/CLAUDE.md](prompts/CLAUDE.md)
+- `rag/` - See [rag/CLAUDE.md](rag/CLAUDE.md)
 - `twins/` - See [twins/CLAUDE.md](twins/CLAUDE.md)
 
 ---

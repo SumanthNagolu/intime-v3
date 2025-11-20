@@ -5,11 +5,12 @@
  * Story: AI-PROD-003 - Daily Timeline Generator
  *
  * Generates AI-powered daily productivity reports from activity data.
+ * Refactored to extend BaseAgent for cost tracking and model routing.
  *
  * @module lib/ai/productivity/TimelineGenerator
  */
 
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import OpenAI from 'openai';
 import { ActivityClassifier } from './ActivityClassifier';
 import type {
@@ -19,25 +20,55 @@ import type {
   ProductivityError,
 } from '@/types/productivity';
 import { ProductivityErrorCodes } from '@/types/productivity';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-);
-
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+import { BaseAgent, type AgentConfig } from '../agents/BaseAgent';
 
 /**
  * Timeline Generator
  *
  * Generates daily productivity reports with AI-powered narrative summaries.
  * Uses ActivityClassifier for data aggregation and GPT-4o-mini for narrative generation.
+ * Now extends BaseAgent for integrated cost tracking and model routing.
  */
-export class TimelineGenerator implements ITimelineGenerator {
+export class TimelineGenerator
+  extends BaseAgent<{ userId: string; date: string }, ProductivityReport>
+  implements ITimelineGenerator
+{
   private classifier: ActivityClassifier;
+  private openai: OpenAI;
+  private supabase: SupabaseClient;
 
-  constructor() {
-    this.classifier = new ActivityClassifier();
+  constructor(
+    config?: Partial<AgentConfig>,
+    dependencies?: {
+      classifier?: ActivityClassifier;
+      openai?: OpenAI;
+      supabase?: SupabaseClient;
+    }
+  ) {
+    super({
+      agentName: 'TimelineGenerator',
+      enableCostTracking: true,
+      enableMemory: false,
+      enableRAG: false,
+      ...config,
+    });
+
+    // Allow dependency injection for testing
+    this.classifier = dependencies?.classifier || new ActivityClassifier();
+    this.openai = dependencies?.openai || new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    this.supabase =
+      dependencies?.supabase ||
+      createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_KEY!
+      );
+  }
+
+  /**
+   * Execute method required by BaseAgent
+   */
+  async execute(input: { userId: string; date: string }): Promise<ProductivityReport> {
+    return this.generateDailyReport(input.userId, input.date);
   }
 
   /**
@@ -52,9 +83,14 @@ export class TimelineGenerator implements ITimelineGenerator {
     userId: string,
     date: string
   ): Promise<ProductivityReport> {
+    const startTime = performance.now();
+
     try {
+      // Use BaseAgent router for model selection
+      const model = await this.routeModel('daily productivity report narrative generation');
+
       // Get user profile for org_id
-      const { data: userProfile, error: profileError } = await supabase
+      const { data: userProfile, error: profileError } = await this.supabase
         .from('user_profiles')
         .select('org_id, full_name')
         .eq('id', userId)
@@ -119,7 +155,7 @@ export class TimelineGenerator implements ITimelineGenerator {
       };
 
       // Save to database
-      const { data: savedReport, error: saveError } = await supabase
+      const { data: savedReport, error: saveError } = await this.supabase
         .from('productivity_reports')
         .insert({
           org_id: report.orgId,
@@ -145,12 +181,20 @@ export class TimelineGenerator implements ITimelineGenerator {
         );
       }
 
-      return {
+      const result = {
         id: savedReport.id,
         ...report,
         createdAt: savedReport.created_at,
         updatedAt: savedReport.updated_at,
       };
+
+      // Track cost using BaseAgent (estimated 500 tokens for narrative generation)
+      const latencyMs = performance.now() - startTime;
+      const estimatedTokens = 500;
+      const estimatedCost = (estimatedTokens / 1_000_000) * 0.375; // GPT-4o-mini avg
+      await this.trackCost(estimatedTokens, estimatedCost, model.model, latencyMs);
+
+      return result;
     } catch (error) {
       if (error instanceof Error && error.name === 'ProductivityError') {
         throw error;
@@ -217,7 +261,7 @@ Guidelines:
 - Celebrate productive hours
 - Acknowledge focused work periods`;
 
-      const response = await openai.chat.completions.create({
+      const response = await this.openai.chat.completions.create({
         model: 'gpt-4o-mini',
         messages: [
           {
@@ -276,7 +320,7 @@ Your tone is positive, constructive, and focused on growth. You celebrate wins a
   async batchGenerateReports(date: string): Promise<number> {
     try {
       // Get all employees who have screenshots for this date
-      const { data: employeeScreenshots, error } = await supabase
+      const { data: employeeScreenshots, error } = await this.supabase
         .from('employee_screenshots')
         .select('user_id')
         .gte('captured_at', `${date}T00:00:00Z`)
@@ -309,7 +353,7 @@ Your tone is positive, constructive, and focused on growth. You celebrate wins a
       for (const userId of uniqueEmployees) {
         try {
           // Check if report already exists
-          const { data: existingReport } = await supabase
+          const { data: existingReport } = await this.supabase
             .from('productivity_reports')
             .select('id')
             .eq('user_id', userId)

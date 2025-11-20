@@ -24,6 +24,8 @@ Documentation for implementation.
 
 - **SEQUENTIAL-IMPLEMENTATION-ROADMAP.md** - Documentation
 
+- **SPRINT-4-REFACTORING-GUIDE.md** - Documentation
+
 ---
 
 ## 🎯 Key Concepts

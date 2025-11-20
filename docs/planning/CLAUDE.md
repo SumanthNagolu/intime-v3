@@ -26,7 +26,13 @@ Documentation for planning.
 
 - **epic-01-foundation-requirements.md** - Documentation
 
+- **EPIC-2.5-ARCHITECTURE.md** - Documentation
+
+- **EPIC-2.5-COMPLETE.md** - Documentation
+
 - **EPIC-2.5-EXECUTION-PLAN.md** - Documentation
+
+- **EPIC-2.5-PM-VALIDATED.md** - Documentation
 
 - **EPIC-2.5-READY-TO-EXECUTE.md** - Documentation
 
@@ -38,6 +44,8 @@ Documentation for planning.
 
 - **QUICK-REFERENCE.md** - Documentation
 
+- **SPRINT-1-IMPLEMENTATION-COMPLETE.md** - Documentation
+
 - **SPRINT-2-API-ARCHITECTURE.md** - Documentation
 
 - **SPRINT-2-ARCHITECTURE-SUMMARY.md** - Documentation
@@ -45,6 +53,8 @@ Documentation for planning.
 - **SPRINT-2-DATABASE-DESIGN.md** - Documentation
 
 - **SPRINT-2-EVENT-BUS-ARCHITECTURE.md** - Documentation
+
+- **SPRINT-2-IMPLEMENTATION-COMPLETE.md** - Documentation
 
 - **SPRINT-2-IMPLEMENTATION-GUIDE.md** - Documentation
 
@@ -62,6 +72,8 @@ Documentation for planning.
 
 - **SPRINT-3-DATABASE-DESIGN.md** - Documentation
 
+- **SPRINT-3-IMPLEMENTATION-COMPLETE.md** - Documentation
+
 - **SPRINT-3-IMPLEMENTATION-GUIDE.md** - Documentation
 
 - **SPRINT-3-INTEGRATION-DESIGN.md** - Documentation
@@ -71,6 +83,8 @@ Documentation for planning.
 - **SPRINT-4-ARCHITECTURE.md** - Documentation
 
 - **SPRINT-4-IMPLEMENTATION-COMPLETE.md** - Documentation
+
+- **SPRINT-4-REFACTORING-COMPLETE.md** - Documentation
 
 - **SPRINT-STRUCTURE-REORGANIZATION-COMPLETE.md** - Documentation
 

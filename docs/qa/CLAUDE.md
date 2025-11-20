@@ -20,6 +20,12 @@ Documentation for qa.
 
 - **EPIC-01-VERIFICATION-REPORT.md** - Documentation
 
+- **EPIC-2.5-QA-REPORT.md** - Documentation
+
+- **EPIC-2.5-SPRINT-4-COMPREHENSIVE-TEST-REPORT.md** - Documentation
+
+- **EPIC-2.5-TEST-REPORT.md** - Documentation
+
 - **QA-REPORT-EPIC-01-FOUNDATION.md** - Documentation
 
 - **SPRINT-2-BUGS-AND-GAPS.md** - Documentation

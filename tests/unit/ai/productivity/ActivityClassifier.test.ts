@@ -21,9 +21,6 @@ describe('ActivityClassifier', () => {
   let mockOpenAI: any;
 
   beforeEach(() => {
-    // Create classifier instance
-    classifier = new ActivityClassifier();
-
     // Mock Supabase client
     mockSupabase = {
       from: vi.fn().mockReturnThis(),
@@ -48,6 +45,12 @@ describe('ActivityClassifier', () => {
         },
       },
     };
+
+    // Create classifier instance WITH mocked dependencies
+    classifier = new ActivityClassifier(undefined, {
+      supabase: mockSupabase as any,
+      openai: mockOpenAI as any,
+    });
   });
 
   afterEach(() => {
