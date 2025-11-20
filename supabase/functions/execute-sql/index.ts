@@ -71,13 +71,14 @@ Deno.serve(async (req) => {
     await client.connect();
 
     try {
-      // Execute SQL
-      const result = await client.queryObject(sql);
+      // Execute SQL directly - let PostgreSQL handle multi-statement execution
+      // Use queryArray for better multi-statement support
+      await client.queryArray(sql);
 
       const response: SqlResponse = {
         success: true,
-        rows: result.rows,
-        rowCount: result.rowCount,
+        rows: [],
+        rowCount: 0,
       };
 
       await client.end();
