@@ -1,7 +1,7 @@
 # Complete Documentation Index
 
 **Last Updated:** 2025-11-20  
-**Total Folders Documented:** 95  
+**Total Folders Documented:** 101  
 **Coverage Level:** Maximum Granularity ✅
 
 ---
@@ -110,7 +110,7 @@ Domain-level modules:
 
 ---
 
-## ⚙️ Operational Level (83 folders)
+## ⚙️ Operational Level (89 folders)
 
 Specific components and implementations:
 
@@ -440,9 +440,29 @@ Specific components and implementations:
 
 #### src/lib/ai/
 
+- **Agents** (`src/lib/ai/agents/`)  
+  Application agents module.  
+  📄 [View CLAUDE.md](src/lib/ai/agents/CLAUDE.md)
+
+- **Memory** (`src/lib/ai/memory/`)  
+  Application memory module.  
+  📄 [View CLAUDE.md](src/lib/ai/memory/CLAUDE.md)
+
+- **Monitoring** (`src/lib/ai/monitoring/`)  
+  Application monitoring module.  
+  📄 [View CLAUDE.md](src/lib/ai/monitoring/CLAUDE.md)
+
 - **Productivity** (`src/lib/ai/productivity/`)  
   Application productivity module.  
   📄 [View CLAUDE.md](src/lib/ai/productivity/CLAUDE.md)
+
+- **Prompts** (`src/lib/ai/prompts/`)  
+  Application prompts module.  
+  📄 [View CLAUDE.md](src/lib/ai/prompts/CLAUDE.md)
+
+- **Rag** (`src/lib/ai/rag/`)  
+  Application rag module.  
+  📄 [View CLAUDE.md](src/lib/ai/rag/CLAUDE.md)
 
 - **Twins** (`src/lib/ai/twins/`)  
   Application twins module.  
@@ -499,6 +519,12 @@ Specific components and implementations:
 - **Routers** (`src/server/trpc/routers/`)  
   Application routers module.  
   📄 [View CLAUDE.md](src/server/trpc/routers/CLAUDE.md)
+
+#### src/types/
+
+- **Guru** (`src/types/guru/`)  
+  Application guru module.  
+  📄 [View CLAUDE.md](src/types/guru/CLAUDE.md)
 
 ---
 

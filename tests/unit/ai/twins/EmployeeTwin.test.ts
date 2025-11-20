@@ -17,9 +17,37 @@ vi.mock('openai');
 
 describe('EmployeeTwin', () => {
   let twin: EmployeeTwin;
+  let mockOpenAI: any;
+  let mockSupabase: any;
 
   beforeEach(() => {
-    twin = new EmployeeTwin('test-employee-id', 'recruiter');
+    // Mock Supabase client
+    mockSupabase = {
+      from: vi.fn().mockReturnThis(),
+      select: vi.fn().mockReturnThis(),
+      eq: vi.fn().mockReturnThis(),
+      gte: vi.fn().mockReturnThis(),
+      lt: vi.fn().mockReturnThis(),
+      order: vi.fn().mockReturnThis(),
+      limit: vi.fn().mockReturnThis(),
+      single: vi.fn(),
+      insert: vi.fn().mockReturnThis(),
+    };
+
+    // Mock OpenAI client
+    mockOpenAI = {
+      chat: {
+        completions: {
+          create: vi.fn(),
+        },
+      },
+    };
+
+    // Create twin instance WITH mocked dependencies
+    twin = new EmployeeTwin('test-employee-id', 'recruiter', undefined, {
+      openai: mockOpenAI as any,
+      supabase: mockSupabase as any,
+    });
   });
 
   describe('getRole', () => {
