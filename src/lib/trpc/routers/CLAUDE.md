@@ -16,10 +16,16 @@ Application routers module.
 
 ### Files in This Directory
 
-- **_app.ts** (29 lines)
+- **_app.ts** (33 lines)
   Root tRPC Router
 
 - **CLAUDE.md** - Documentation
+
+- **guidewire-guru.ts** (358 lines)
+  Guidewire Guru tRPC Router
+
+- **resume-matching.ts** (460 lines)
+  Resume Matching tRPC Router
 
 - **users.ts** (89 lines)
   Users Router

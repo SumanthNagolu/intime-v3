@@ -1,21 +1,43 @@
 ---
-description: Complete end-to-end feature development workflow (PM → Architect → Developer → QA → Deploy)
+description: Stage 5 - Execute a story through the full development pipeline (PM → Architect → Developer → QA → Deploy)
 ---
 
-I'll route this through our complete feature development pipeline:
+I'll execute this story through our complete development pipeline.
+
+**Usage:**
+```
+/workflows:feature [STORY-ID]
+```
+
+**Example:**
+```
+/workflows:feature AI-GURU-002-code-mentor
+```
+
+**What This Does:**
+1. **PM Agent** - Reads story from `docs/planning/stories/[epic-id]/[story-id].md`
+2. **Architect Agent** - Designs database schema, API contracts, component architecture
+3. **Developer Agent** - Implements code with tests (80%+ coverage)
+4. **QA Agent** - Validates acceptance criteria and runs tests
+5. **Deployment Agent** - Deploys to production safely
 
 **Pipeline Stages**:
-1. **PM Agent** - Gather requirements and create user stories
-2. **Architect Agent** - Design database schema, API contracts, and component architecture
-3. **Developer Agent** - Implement the feature with clean, tested code
-4. **QA Agent** - Run comprehensive tests and quality verification
-5. **Deployment Agent** - Deploy to production safely
+- ✅ PM: Validates story requirements exist
+- 🏗️ Architect: Creates technical design
+- 💻 Developer: Implements + tests
+- ✅ QA: Validates all acceptance criteria
+- 🚀 Deploy: Ships to production
 
-This is the full production workflow. Each agent will:
-- Read the previous agent's output
-- Complete their specialized work
-- Output documentation for the next agent
+**Story Status Updates:**
+- Before: ⚪ Not Started or 🔵 Planned
+- During: 🟡 In Progress
+- After: 🟢 Complete (in production)
 
-**Estimated time**: 1-2 hours depending on feature complexity
+**Prerequisites:**
+- Story must exist in `docs/planning/stories/[epic-id]/[story-id].md`
+- All dependency stories must be complete
+- Story must be in current or past sprint plan
 
-Let me start by spawning the PM Agent to gather requirements...
+**Estimated Time:** 1-4 hours depending on story complexity
+
+Let me start the pipeline...

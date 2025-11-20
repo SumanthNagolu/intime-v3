@@ -1,7 +1,7 @@
 # Complete Documentation Index
 
 **Last Updated:** 2025-11-20  
-**Total Folders Documented:** 101  
+**Total Folders Documented:** 102  
 **Coverage Level:** Maximum Granularity ✅
 
 ---
@@ -110,7 +110,7 @@ Domain-level modules:
 
 ---
 
-## ⚙️ Operational Level (89 folders)
+## ⚙️ Operational Level (90 folders)
 
 Specific components and implementations:
 
@@ -463,6 +463,10 @@ Specific components and implementations:
 - **Rag** (`src/lib/ai/rag/`)  
   Application rag module.  
   📄 [View CLAUDE.md](src/lib/ai/rag/CLAUDE.md)
+
+- **Resume matching** (`src/lib/ai/resume-matching/`)  
+  Application resume-matching module.  
+  📄 [View CLAUDE.md](src/lib/ai/resume-matching/CLAUDE.md)
 
 - **Twins** (`src/lib/ai/twins/`)  
   Application twins module.  

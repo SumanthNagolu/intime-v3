@@ -18,11 +18,17 @@ Documentation for deployment.
 
 - **CLAUDE.md** - Documentation
 
+- **DEPLOYMENT-CHECKLIST.md** - Documentation
+
 - **DEPLOYMENT-GUIDE.md** - Documentation
 
 - **DEPLOYMENT-SUCCESS.md** - Documentation
 
 - **EPIC-2.5-DEPLOYMENT-REPORT.md** - Documentation
+
+- **SPRINT-5-DEPLOYMENT-PLAN.md** - Documentation
+
+- **SPRINT-5-DEPLOYMENT-SUMMARY.md** - Documentation
 
 ---
 

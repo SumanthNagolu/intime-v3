@@ -22,6 +22,8 @@ Documentation for planning.
 
 - **ARCHITECT-HANDOFF-SPRINT-3.md** - Documentation
 
+- **ARCHITECT-HANDOFF-SPRINT-5.md** - Documentation
+
 - **CLAUDE.md** - Documentation
 
 - **epic-01-foundation-requirements.md** - Documentation
@@ -38,9 +40,17 @@ Documentation for planning.
 
 - **EPIC-CANVASES.md** - Documentation
 
+- **FEATURE-EPIC-STORY-SPRINT-HIERARCHY.md** - Documentation
+
+- **HOW-TO-USE-PLANNING-SYSTEM.md** - Documentation
+
 - **IMPLEMENTATION-PLAYBOOK.md** - Documentation
 
+- **PLANNING-QUICK-REFERENCE.md** - Documentation
+
 - **PM-HANDOFF-SPRINT-4-EPIC-2.5.md** - Documentation
+
+- **PM-HANDOFF-SPRINT-5-EPIC-2.5.md** - Documentation
 
 - **QUICK-REFERENCE.md** - Documentation
 
@@ -85,6 +95,10 @@ Documentation for planning.
 - **SPRINT-4-IMPLEMENTATION-COMPLETE.md** - Documentation
 
 - **SPRINT-4-REFACTORING-COMPLETE.md** - Documentation
+
+- **SPRINT-5-ARCHITECTURE.md** - Documentation
+
+- **SPRINT-5-PM-SUMMARY.md** - Documentation
 
 - **SPRINT-STRUCTURE-REORGANIZATION-COMPLETE.md** - Documentation
 

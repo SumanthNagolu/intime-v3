@@ -18,7 +18,7 @@ Application testing module.
 
 - **CLAUDE.md** - Documentation
 
-- **setup.ts** (95 lines)
+- **setup.ts** (208 lines)
   Vitest Setup File
 
 ---

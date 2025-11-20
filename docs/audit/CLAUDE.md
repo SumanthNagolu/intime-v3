@@ -18,6 +18,8 @@ Requirements analysis, architecture decisions, and implementation guides from in
 
 - **CLAUDE.md** - Documentation
 
+- **COMPREHENSIVE-AUDIT-2025-11-20.md** - Documentation
+
 - **comprehensive-review-and-plan.md** - Documentation
 
 - **implementation-guide.md** - Documentation
@@ -25,6 +27,8 @@ Requirements analysis, architecture decisions, and implementation guides from in
 - **legacy-project-audit.md** - Documentation
 
 - **LESSONS-LEARNED.md** - Documentation
+
+- **MULTI-AGENT-MARKET-COMPARISON-2025.md** - Documentation
 
 - **project-setup-architecture.md** - Documentation
 
