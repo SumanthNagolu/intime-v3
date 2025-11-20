@@ -1,7 +1,7 @@
 # Next.js App Router
 
 📊 **Tier:** Tactical  
-**Last Updated:** 2025-11-19  
+**Last Updated:** 2025-11-20  
 **Auto-Generated:** Yes (manual sections preserved)
 
 ---
@@ -18,8 +18,14 @@ Next.js 15 app directory with server components, layouts, and routing.
 
 - **CLAUDE.md** - Documentation
 
-- **layout.tsx** (20 lines)
+- **error.tsx** (92 lines)
+  Global Error Page
+
+- **layout.tsx** (23 lines)
   No description
+
+- **not-found.tsx** (38 lines)
+  404 Not Found Page
 
 - **page.tsx** (22 lines)
   No description
@@ -64,7 +70,7 @@ Next.js 15 app directory with server components, layouts, and routing.
 
 ### Recent Changes
 
-- 2025-11-19: Auto-generated CLAUDE.md created
+- 2025-11-20: Auto-generated CLAUDE.md created
 
 <!-- END MANUAL EDIT SECTION -->
 
@@ -80,4 +86,4 @@ Next.js 15 app directory with server components, layouts, and routing.
 
 ---
 
-*Auto-generated on 2025-11-19 - Tier tactical documentation*
+*Auto-generated on 2025-11-20 - Tier tactical documentation*

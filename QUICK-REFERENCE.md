@@ -1,7 +1,7 @@
 # InTime v3 - Quick Reference Card
 
 ## 🎯 One-Sentence Summary
-**Claude Code CLI** for strategy/architecture/quality, **Cursor** for active coding/debugging/iteration - both tools share full InTime knowledge.
+**Gemini 1.5 Pro** for strategy/architecture/quality, **Cursor** for active coding/debugging/iteration - both tools share full InTime knowledge.
 
 ---
 
@@ -9,16 +9,16 @@
 
 | I Need To... | Use This Tool | Why |
 |-------------|--------------|-----|
-| Plan a new feature | Claude Code CLI | PM Agent + Architect Agent workflow |
+| Plan a new feature | Gemini | PM Agent + Architect Agent workflow |
 | Write component code | Cursor | Visual feedback, fast iteration |
-| Design database schema | Claude Code CLI | Database Architect enforces RLS/audit trails |
+| Design database schema | Gemini | Database Architect enforces RLS/audit trails |
 | Fix a bug | Cursor | Inline edits, quick debugging |
-| Make strategic decision | Claude Code CLI | CEO/CFO Advisor analysis |
+| Make strategic decision | Gemini | CEO/CFO Advisor analysis |
 | Refactor code | Cursor | Multi-file editing, visual diff |
-| Run comprehensive tests | Claude Code CLI | QA Agent with full test suite |
+| Run comprehensive tests | Gemini | QA Agent with full test suite |
 | Build UI components | Cursor | Design system compliance, visual preview |
-| Security audit | Claude Code CLI | Security Auditor specialist |
-| Deploy to production | Claude Code CLI | Deployment Specialist workflow |
+| Security audit | Gemini | Security Auditor specialist |
+| Deploy to production | Gemini | Deployment Specialist workflow |
 
 ---
 
@@ -26,14 +26,14 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ MORNING (30-60 min) - Claude Code CLI                      │
+│ MORNING (30-60 min) - Gemini                                │
 ├─────────────────────────────────────────────────────────────┤
 │ • Review priorities (CEO Advisor)                           │
 │ • Plan features (PM Agent)                                  │
 │ • Design schemas (Database Architect)                       │
 │                                                             │
 │ OUTPUT: Requirements + Architecture docs in                 │
-│         .claude/state/artifacts/                            │
+│         .gemini/state/artifacts/                            │
 └─────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
@@ -49,7 +49,7 @@
 └─────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
-│ EVENING (30-60 min) - Claude Code CLI                      │
+│ EVENING (30-60 min) - Gemini                                │
 ├─────────────────────────────────────────────────────────────┤
 │ • Run comprehensive tests (QA Agent)                        │
 │ • Security audit (Security Auditor)                         │
@@ -70,7 +70,7 @@ Tell Cursor which agent perspective to take:
 "Design a database table"
 
 // ✅ With agent simulation
-"Act as Database Architect (see .claude/agents/implementation/database-architect.md).
+"Act as Database Architect (see .gemini/agents/implementation/database-architect.md).
 
 Design a candidates table with:
 - RLS policies enabled
@@ -224,14 +224,14 @@ test('deleted records hidden', async () => {
 ## 📁 Essential Files
 
 ### Read Before Starting
-1. **`CURSOR-CLAUDE-WORKFLOW.md`** - Complete workflow guide (10 min read)
-2. **`.cursorrules`** - All agent knowledge (reference, don't read cover-to-cover)
-3. **`.claude/DESIGN-PHILOSOPHY.md`** - Design system (MUST READ before UI work)
-4. **`CLAUDE.md`** - Project fundamentals
+1. **`GEMINI-USAGE-GUIDE.md`** - Complete workflow guide (10 min read)
+2. **`.geminirules`** - All agent knowledge (reference, don't read cover-to-cover)
+3. **`GEMINI.md`** - Project fundamentals
+4. **`REPLICATION-SUMMARY.md`** - Migration context
 
 ### Reference During Work
-- **`.claude/agents/`** - Specialist agent expertise
-- **`.claude/commands/workflows/`** - Workflow patterns
+- **`.gemini/agents/`** - Specialist agent expertise
+- **`.gemini/commands/workflows/`** - Workflow patterns
 - **`docs/planning/epics/`** - Feature specifications
 
 ---
@@ -277,7 +277,7 @@ In Cursor:
 - ✅ Rejects purple gradients and emojis
 - ✅ Includes RLS in schema designs
 
-In Claude Code CLI:
+In Gemini:
 - ✅ CEO Advisor analyzes cross-pollination
 - ✅ Database Architect enforces RLS and audit trails
 - ✅ QA Engineer tests multi-tenancy isolation
@@ -288,13 +288,13 @@ In Claude Code CLI:
 ## 🆘 Quick Troubleshooting
 
 **Issue:** Cursor not following InTime standards
-**Fix:** Be more explicit: "Follow database standards in .cursorrules" or "Act as Database Architect"
+**Fix:** Be more explicit: "Follow database standards in .geminirules" or "Act as Database Architect"
 
 **Issue:** Not sure which tool to use
-**Fix:** Strategic/quality → Claude Code, Coding/debugging → Cursor
+**Fix:** Strategic/quality → Gemini, Coding/debugging → Cursor
 
 **Issue:** Need agent expertise
-**Fix:** "Act as [Agent Name]. Read .claude/agents/[tier]/[agent].md then..."
+**Fix:** "Act as [Agent Name]. Read .gemini/agents/[tier]/[agent].md then..."
 
 ---
 
@@ -309,24 +309,24 @@ In Claude Code CLI:
 
 "Act as QA Engineer. Create test suite with multi-tenancy isolation tests"
 
-"Implement [feature] following .claude/state/artifacts/requirements.md"
+"Implement [feature] following .gemini/state/artifacts/requirements.md"
 ```
 
-### In Claude Code CLI
+### In Gemini
 ```bash
 # Strategic review
-$ claude "As CEO Advisor, analyze [decision]"
+$ gemini "As CEO Advisor, analyze [decision]"
 
 # Plan feature
-$ claude "/start-planning"
-$ claude "/database"
+$ gemini "/start-planning"
+$ gemini "/database"
 
 # Quality check
-$ claude "/test"
-$ claude "As Security Auditor, review [feature]"
+$ gemini "/test"
+$ gemini "As Security Auditor, review [feature]"
 
 # Deploy
-$ claude "/deploy"
+$ gemini "/deploy"
 ```
 
 ---
@@ -334,7 +334,7 @@ $ claude "/deploy"
 ## 🎓 Learning Priority
 
 **Week 1:** Understand tools
-- [ ] Read `CURSOR-CLAUDE-WORKFLOW.md`
+- [ ] Read `GEMINI-USAGE-GUIDE.md`
 - [ ] Try simple task in each tool
 - [ ] Practice agent simulation
 
@@ -352,8 +352,8 @@ $ claude "/deploy"
 
 ## 💡 Pro Tips
 
-1. **Keep both tools open** - Left: Cursor (code), Right: Terminal (Claude Code)
-2. **Reference explicitly** - "Follow .claude/DESIGN-PHILOSOPHY.md" vs "use design system"
+1. **Keep both tools open** - Left: Cursor (code), Right: Terminal (Gemini)
+2. **Reference explicitly** - "Follow .geminirules" vs "use design system"
 3. **Simulate agents** - "Act as Database Architect" for better results
 4. **Commit frequently** - Create handoff points between tools
 5. **Start with strategy** - Don't jump into coding without planning
@@ -376,5 +376,3 @@ $ claude "/deploy"
 **Print this page and keep it visible during development!**
 
 **Philosophy:** "Two tools, one vision, zero compromises."
-
-

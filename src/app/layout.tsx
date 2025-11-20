@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { TRPCProvider } from '@/lib/trpc/Provider';
 
 export const metadata: Metadata = {
   title: 'InTime v3 - Multi-Agent Staffing Platform',
@@ -13,7 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-gray-50">{children}</body>
+      <body className="min-h-screen bg-gray-50">
+        <TRPCProvider>{children}</TRPCProvider>
+      </body>
     </html>
   );
 }

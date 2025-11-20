@@ -1,7 +1,7 @@
 # Schema
 
 ⚙️ **Tier:** Operational  
-**Last Updated:** 2025-11-19  
+**Last Updated:** 2025-11-20  
 **Auto-Generated:** Yes (manual sections preserved)
 
 ---
@@ -33,13 +33,13 @@ Application schema module.
 - **organizations.test.ts** (279 lines)
   Multi-Tenancy Isolation Tests
 
-- **organizations.ts** (119 lines)
+- **organizations.ts** (122 lines)
   Drizzle ORM Schema: organizations
 
 - **rbac.ts** (196 lines)
   Drizzle ORM Schema: RBAC (Role-Based Access Control)
 
-- **timeline.ts** (133 lines)
+- **timeline.ts** (157 lines)
   Type exports for use in application
 
 - **user-profiles.ts** (126 lines)
@@ -89,7 +89,7 @@ Auto-generated folder context. Review files in this directory for specific funct
 
 ### Recent Changes
 
-- 2025-11-19: Auto-generated CLAUDE.md created
+- 2025-11-20: Auto-generated CLAUDE.md created
 
 <!-- END MANUAL EDIT SECTION -->
 
@@ -105,4 +105,4 @@ Auto-generated folder context. Review files in this directory for specific funct
 
 ---
 
-*Auto-generated on 2025-11-19 - Tier operational documentation*
+*Auto-generated on 2025-11-20 - Tier operational documentation*
