@@ -22,6 +22,8 @@ Documentation for deployment.
 
 - **DEPLOYMENT-SUCCESS.md** - Documentation
 
+- **EPIC-2.5-DEPLOYMENT-REPORT.md** - Documentation
+
 ---
 
 ## 🎯 Key Concepts
