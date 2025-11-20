@@ -24,6 +24,8 @@ Documentation for qa.
 
 - **EPIC-2.5-SPRINT-4-COMPREHENSIVE-TEST-REPORT.md** - Documentation
 
+- **EPIC-2.5-SPRINT-4-FINAL-QA-REPORT.md** - Documentation
+
 - **EPIC-2.5-TEST-REPORT.md** - Documentation
 
 - **QA-REPORT-EPIC-01-FOUNDATION.md** - Documentation
