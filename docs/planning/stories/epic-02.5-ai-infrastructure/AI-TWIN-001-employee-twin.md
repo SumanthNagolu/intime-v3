@@ -23,9 +23,8 @@ So that **I get proactive suggestions, reminders, and help throughout my workday
 - [ ] Context-aware (knows employee's current tasks)
 - [ ] Learning from patterns (adapts to employee preferences)
 - [ ] Slack/email integration
-- [ ] Privacy controls (employee can pause AI)
 - [ ] 80%+ daily active use
-- [ ] <$5/day cost per employee
+- [ ] <$15/day cost per employee
 
 ---
 

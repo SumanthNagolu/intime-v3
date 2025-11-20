@@ -1,7 +1,7 @@
 # Migration
 
 ⚙️ **Tier:** Operational  
-**Last Updated:** 2025-11-19  
+**Last Updated:** 2025-11-20  
 **Auto-Generated:** Yes (manual sections preserved)
 
 ---
@@ -16,9 +16,21 @@ Documentation for migration.
 
 ### Files in This Directory
 
+- **APPLY-MIGRATIONS-NOW.md** - Documentation
+
+- **AUTOMATED-MIGRATION-GUIDE.md** - Documentation
+
 - **CLAUDE.md** - Documentation
 
 - **MARKETING-SITE-MIGRATION-STRATEGY.md** - Documentation
+
+- **MIGRATION-APPLICATION-GUIDE.md** - Documentation
+
+- **MIGRATION-INSTRUCTIONS.md** - Documentation
+
+- **RUN-MIGRATIONS-NOW.md** - Documentation
+
+- **RUN-MIGRATIONS.md** - Documentation
 
 ---
 
@@ -64,7 +76,7 @@ Auto-generated folder context. Review files in this directory for specific funct
 
 ### Recent Changes
 
-- 2025-11-19: Auto-generated CLAUDE.md created
+- 2025-11-20: Auto-generated CLAUDE.md created
 
 <!-- END MANUAL EDIT SECTION -->
 
@@ -80,4 +92,4 @@ Auto-generated folder context. Review files in this directory for specific funct
 
 ---
 
-*Auto-generated on 2025-11-19 - Tier operational documentation*
+*Auto-generated on 2025-11-20 - Tier operational documentation*

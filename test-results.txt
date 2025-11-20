@@ -1,0 +1,132 @@
+
+> intime-v3@3.0.0 test /Users/sumanthrajkumarnagolu/Projects/intime-v3
+> vitest --reporter=verbose
+
+
+ RUN  v2.1.9 /Users/sumanthrajkumarnagolu/Projects/intime-v3
+
+ ✓ src/lib/db/schema/organizations.test.ts > Multi-Tenancy Isolation > Organization Schema > should have all required fields
+ ✓ src/lib/db/schema/organizations.test.ts > Multi-Tenancy Isolation > Organization Schema > should support all subscription tiers
+ ✓ src/lib/db/schema/organizations.test.ts > Multi-Tenancy Isolation > Organization Schema > should support all organization statuses
+ ✓ src/lib/db/schema/organizations.test.ts > Multi-Tenancy Isolation > Organization Features > should allow optional features configuration
+ ✓ src/lib/db/schema/organizations.test.ts > Multi-Tenancy Isolation > Organization Features > should allow optional settings configuration
+ ✓ src/lib/db/schema/organizations.test.ts > Multi-Tenancy Isolation > User-Organization Relationship > should require org_id for user profiles
+ ✓ src/lib/db/schema/organizations.test.ts > Multi-Tenancy Isolation > Data Isolation Rules > should define isolation requirements for users in different orgs
+ ✓ src/lib/db/schema/organizations.test.ts > Multi-Tenancy Isolation > Data Isolation Rules > should verify subscription tier limits
+ ✓ src/lib/db/schema/organizations.test.ts > Multi-Tenancy Isolation > Soft Delete Behavior > should support soft delete for organizations
+ ✓ src/lib/db/schema/organizations.test.ts > Multi-Tenancy Isolation > RLS Policy Validation (Schema Level) > should document expected RLS helper functions
+ ✓ src/lib/db/schema/organizations.test.ts > Multi-Tenancy Isolation > RLS Policy Validation (Schema Level) > should document expected RLS policies
+ ✓ src/lib/auth/server.test.ts > Server Auth Functions > getUser > should return user when authenticated
+ ✓ src/lib/auth/server.test.ts > Server Auth Functions > getUser > should return null when not authenticated
+ ✓ src/lib/auth/server.test.ts > Server Auth Functions > getUserProfile > should return user profile for authenticated user
+ ✓ src/lib/auth/server.test.ts > Server Auth Functions > getUserProfile > should return null when user not found
+ ✓ src/lib/auth/server.test.ts > Server Auth Functions > getUserRoles > should return array of user roles
+ ✓ src/lib/auth/server.test.ts > Server Auth Functions > getUserRoles > should return empty array when no roles assigned
+ ✓ src/lib/auth/server.test.ts > Server Auth Functions > requireAuth > should redirect to login when not authenticated
+ ✓ src/lib/auth/server.test.ts > Server Auth Functions > requireAuth > should return user when authenticated
+ ✓ src/lib/auth/server.test.ts > Server Auth Functions > requireRole > should redirect when user does not have required role
+ ✓ src/lib/auth/server.test.ts > Server Auth Functions > requireRole > should return user when user has required role
+ ✓ src/lib/auth/server.test.ts > Server Auth Functions > requireRole > should accept multiple role options
+ ✓ src/lib/auth/server.test.ts > Server Auth Integration Tests > Auth Flow > should maintain session across requests
+ ✓ src/lib/auth/server.test.ts > Server Auth Integration Tests > Auth Flow > should handle session expiration
+ ✓ src/lib/auth/server.test.ts > Server Auth Integration Tests > Auth Flow > should refresh tokens when needed
+ ✓ src/lib/auth/server.test.ts > Server Auth Integration Tests > Role-Based Access Control > should enforce role requirements on protected pages
+ ✓ src/lib/auth/server.test.ts > Server Auth Integration Tests > Role-Based Access Control > should allow access with correct role
+ ✓ src/lib/auth/server.test.ts > Server Auth Integration Tests > Role-Based Access Control > should deny access with insufficient role
+ ✓ src/lib/auth/server.test.ts > Server Auth Security Tests > Session Security > should not expose auth tokens in response
+ ✓ src/lib/auth/server.test.ts > Server Auth Security Tests > Session Security > should validate session tokens on each request
+ ✓ src/lib/auth/server.test.ts > Server Auth Security Tests > Session Security > should reject tampered session tokens
+ ✓ src/lib/auth/server.test.ts > Server Auth Security Tests > RLS Enforcement > should query database with user context
+ ✓ src/lib/auth/server.test.ts > Server Auth Security Tests > RLS Enforcement > should prevent privilege escalation
+ ✓ src/lib/auth/server.test.ts > Server Auth Performance Tests > should cache user profile within request
+ ✓ src/lib/auth/server.test.ts > Server Auth Performance Tests > should minimize database queries
+ ✓ src/lib/auth/server.test.ts > Server Auth Performance Tests > should complete auth check in <50ms
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > ApplicationError > should create error with message and code
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > ApplicationError > should include details
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > ApplicationError > should serialize to JSON
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > AuthenticationError > should create authentication error with 401 status
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > AuthenticationError > should accept custom message
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > AuthorizationError > should create authorization error with 403 status
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > ValidationError > should create validation error with 400 status
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > ValidationError > should include validation details
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > NotFoundError > should create not found error with 404 status
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > NotFoundError > should include identifier in message
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > ConflictError > should create conflict error with 409 status
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > RateLimitError > should create rate limit error with 429 status
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > ExternalServiceError > should create external service error with service name
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > DatabaseError > should create database error with 500 status
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > EventBusError > should create event bus error with 500 status
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > isApplicationError > should return true for ApplicationError instances
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > isApplicationError > should return true for ApplicationError subclasses
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > isApplicationError > should return false for regular errors
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > isApplicationError > should return false for non-errors
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > normalizeError > should return ApplicationError as-is
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > normalizeError > should convert Error to ApplicationError
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > normalizeError > should convert unknown errors to ApplicationError
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > formatErrorResponse > should format ApplicationError for API response
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > formatErrorResponse > should format regular Error for API response
+ ✓ src/lib/errors/__tests__/index.test.ts > Error Classes > formatErrorResponse > should format unknown errors for API response
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Core Validation Patterns > email > should accept valid emails
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Core Validation Patterns > email > should reject invalid emails
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Core Validation Patterns > email > should trim whitespace
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Core Validation Patterns > password > should accept valid passwords
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Core Validation Patterns > password > should reject passwords that are too short
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Core Validation Patterns > password > should reject passwords without lowercase
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Core Validation Patterns > password > should reject passwords without uppercase
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Core Validation Patterns > password > should reject passwords without numbers
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Core Validation Patterns > uuid > should accept valid UUIDs
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Core Validation Patterns > uuid > should reject invalid UUIDs
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Core Validation Patterns > phone > should accept valid phone numbers
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Core Validation Patterns > phone > should reject invalid phone numbers
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Core Validation Patterns > phone > should accept undefined (optional)
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Auth Schemas > loginSchema > should accept valid login data
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Auth Schemas > loginSchema > should reject invalid email
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Auth Schemas > loginSchema > should reject empty password
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Auth Schemas > signupSchema > should accept valid signup data
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Auth Schemas > signupSchema > should accept optional phone
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Auth Schemas > signupSchema > should reject weak password
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Event Schemas > eventFiltersSchema > should accept valid filters
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Event Schemas > eventFiltersSchema > should apply default values
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Event Schemas > eventFiltersSchema > should reject invalid status
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Event Schemas > eventFiltersSchema > should reject limit > 200
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Event Schemas > replayEventsSchema > should accept valid event IDs
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Event Schemas > replayEventsSchema > should reject empty array
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Event Schemas > replayEventsSchema > should reject more than 100 events
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Event Schemas > replayEventsSchema > should reject invalid UUIDs
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Event Schemas > handlerActionSchema > should accept valid handler action
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Event Schemas > handlerActionSchema > should accept handler action without reason
+ ✓ src/lib/validations/__tests__/schemas.test.ts > Event Schemas > handlerActionSchema > should reject reason shorter than 10 characters
+ ✓ src/lib/forms/__tests__/helpers.test.ts > Form Helpers > validateData > should return success for valid data
+ ✓ src/lib/forms/__tests__/helpers.test.ts > Form Helpers > validateData > should return error for invalid data
+ ✓ src/lib/forms/__tests__/helpers.test.ts > Form Helpers > getValidationErrors > should extract errors by field
+ ✓ src/lib/forms/__tests__/helpers.test.ts > Form Helpers > getValidationErrors > should handle nested fields
+ ✓ src/lib/forms/__tests__/helpers.test.ts > Form Helpers > formatValidationError > should format errors as a single string
+ ✓ src/lib/forms/__tests__/helpers.test.ts > Form Helpers > formDataToObject > should convert simple FormData to object
+ ✓ src/lib/forms/__tests__/helpers.test.ts > Form Helpers > formDataToObject > should handle array fields
+ ✓ src/lib/forms/__tests__/helpers.test.ts > Form Helpers > formDataToObject > should handle nested fields
+ ✓ src/lib/forms/__tests__/helpers.test.ts > Form Helpers > formDataToObject > should handle mixed fields
+ ✓ src/app/actions/auth.test.ts > Authentication Server Actions > signUpAction > should validate required fields
+ ✓ src/app/actions/auth.test.ts > Authentication Server Actions > signUpAction > should validate email format
+ ✓ src/app/actions/auth.test.ts > Authentication Server Actions > signUpAction > should validate password requirements
+ ✓ src/app/actions/auth.test.ts > Authentication Server Actions > signUpAction > should validate phone format (E.164)
+ ✓ src/app/actions/auth.test.ts > Authentication Server Actions > signUpAction > should accept valid signup data
+ ✓ src/app/actions/auth.test.ts > Authentication Server Actions > signInAction > should validate required fields
+ ✓ src/app/actions/auth.test.ts > Authentication Server Actions > signInAction > should validate email format
+ ✓ src/app/actions/auth.test.ts > Authentication Server Actions > signInAction > should accept valid login credentials
+ ✓ src/app/actions/auth.test.ts > Authentication Server Actions > signOutAction > should call supabase signOut
+ ✓ src/app/actions/auth.test.ts > Authentication Integration Tests > Signup → Profile Creation Flow > should create user profile after successful signup
+ ✓ src/app/actions/auth.test.ts > Authentication Integration Tests > Signup → Profile Creation Flow > should assign role during signup
+ ✓ src/app/actions/auth.test.ts > Authentication Integration Tests > Signup → Profile Creation Flow > should log signup event in audit_logs
+ ✓ src/app/actions/auth.test.ts > Authentication Integration Tests > Login → Session Creation Flow > should create session on successful login
+ ✓ src/app/actions/auth.test.ts > Authentication Integration Tests > Login → Session Creation Flow > should redirect to dashboard after login
+ ✓ src/app/actions/auth.test.ts > Authentication Integration Tests > Logout → Session Cleanup Flow > should destroy session on logout
+ ✓ src/app/actions/auth.test.ts > Authentication Integration Tests > Logout → Session Cleanup Flow > should redirect to login after logout
+ ✓ src/app/actions/auth.test.ts > Authentication Security Tests > Input Sanitization > should reject SQL injection attempts
+ ✓ src/app/actions/auth.test.ts > Authentication Security Tests > Input Sanitization > should reject XSS attempts
+ ✓ src/app/actions/auth.test.ts > Authentication Security Tests > Password Security > should not expose passwords in logs
+
+ Test Files  6 passed (6)
+      Tests  119 passed | 1 skipped (120)
+   Start at  18:02:42
+   Duration  1.30s (transform 226ms, setup 1.27s, collect 420ms, tests 30ms, environment 2.79s, prepare 367ms)
+

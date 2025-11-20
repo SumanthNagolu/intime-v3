@@ -188,6 +188,24 @@ export async function isAdmin(userId?: string): Promise<boolean> {
 }
 
 /**
+ * Get current user ID (or null if not authenticated)
+ * @returns User ID or null
+ */
+export async function getCurrentUserId(): Promise<string | null> {
+  const user = await getCurrentUser();
+  return user?.id || null;
+}
+
+/**
+ * Get current user's organization ID
+ * @returns Organization ID or null
+ */
+export async function getCurrentUserOrgId(): Promise<string | null> {
+  const profile = await getUserProfile();
+  return profile?.org_id || null;
+}
+
+/**
  * Require specific role(s) - throws error or redirects if user doesn't have required role
  * @param allowedRoles Array of role names that are allowed
  * @param userId Optional user ID (defaults to current user)

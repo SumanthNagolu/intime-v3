@@ -1,7 +1,7 @@
 # Source Code
 
 🎯 **Tier:** Strategic  
-**Last Updated:** 2025-11-19  
+**Last Updated:** 2025-11-20  
 **Auto-Generated:** Yes (manual sections preserved)
 
 ---
@@ -26,6 +26,7 @@ Next.js 15 application source code including app router, components, and utiliti
 - `app/` - See [app/CLAUDE.md](app/CLAUDE.md)
 - `components/` - See [components/CLAUDE.md](components/CLAUDE.md)
 - `lib/` - See [lib/CLAUDE.md](lib/CLAUDE.md)
+- `server/` - See [server/CLAUDE.md](server/CLAUDE.md)
 - `types/` - See [types/CLAUDE.md](types/CLAUDE.md)
 
 ---
@@ -58,7 +59,7 @@ Next.js 15 application source code including app router, components, and utiliti
 
 ### Recent Changes
 
-- 2025-11-19: Auto-generated CLAUDE.md created
+- 2025-11-20: Auto-generated CLAUDE.md created
 
 <!-- END MANUAL EDIT SECTION -->
 
@@ -73,4 +74,4 @@ Next.js 15 application source code including app router, components, and utiliti
 
 ---
 
-*Auto-generated on 2025-11-19 - Tier strategic documentation*
+*Auto-generated on 2025-11-20 - Tier strategic documentation*

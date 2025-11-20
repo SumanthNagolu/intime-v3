@@ -1,0 +1,44 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Testing
+tests
+coverage
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+**/__tests__
+**/__mocks__
+
+# Development
+.claude
+.git
+.vscode
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Documentation
+docs
+*.md
+!README.md
+
+# Build artifacts
+.next/cache
+
+# Environment files (managed via Vercel dashboard)
+.env.local
+.env*.local
+
+# Playwright
+playwright-report
+.playwright-mcp
+
+# Timeline and state
+.claude/state
+
+# Scripts and tools
+tools
+scripts

@@ -2915,6 +2915,22 @@ CREATE INDEX idx_event_delivery_log_org_id ON event_delivery_log(org_id);
 
 COMMENT ON COLUMN event_delivery_log.org_id IS 'Organization this delivery log belongs to';
 
+-- Project Timeline (AI Memory)
+ALTER TABLE project_timeline
+  ADD COLUMN org_id UUID REFERENCES organizations(id) ON DELETE CASCADE;
+
+CREATE INDEX idx_project_timeline_org_id ON project_timeline(org_id);
+
+COMMENT ON COLUMN project_timeline.org_id IS 'Organization this timeline entry belongs to';
+
+-- Session Metadata (AI Memory)
+ALTER TABLE session_metadata
+  ADD COLUMN org_id UUID REFERENCES organizations(id) ON DELETE CASCADE;
+
+CREATE INDEX idx_session_metadata_org_id ON session_metadata(org_id);
+
+COMMENT ON COLUMN session_metadata.org_id IS 'Organization this session belongs to';
+
 -- =============================================================================
 -- UPDATE RLS POLICIES FOR MULTI-TENANCY
 -- =============================================================================
@@ -3006,10 +3022,20 @@ CREATE POLICY "Users can view events in their org"
     OR user_is_admin()
   );
 
--- Event Delivery Log: Restrict to same organization
-DROP POLICY IF EXISTS "Users can view delivery logs in their org" ON event_delivery_log;
-CREATE POLICY "Users can view delivery logs in their org"
-  ON event_delivery_log
+-- Project Timeline: Restrict to same organization
+DROP POLICY IF EXISTS "Users can view timeline in their org" ON project_timeline;
+CREATE POLICY "Users can view timeline in their org"
+  ON project_timeline
+  FOR SELECT
+  USING (
+    org_id = auth_user_org_id()
+    OR user_is_admin()
+  );
+
+-- Session Metadata: Restrict to same organization
+DROP POLICY IF EXISTS "Users can view sessions in their org" ON session_metadata;
+CREATE POLICY "Users can view sessions in their org"
+  ON session_metadata
   FOR SELECT
   USING (
     org_id = auth_user_org_id()
@@ -3113,6 +3139,16 @@ UPDATE event_delivery_log
 SET org_id = '00000000-0000-0000-0000-000000000001'::UUID
 WHERE org_id IS NULL;
 
+-- Assign all existing project timeline entries to the default organization
+UPDATE project_timeline
+SET org_id = '00000000-0000-0000-0000-000000000001'::UUID
+WHERE org_id IS NULL;
+
+-- Assign all existing session metadata to the default organization
+UPDATE session_metadata
+SET org_id = '00000000-0000-0000-0000-000000000001'::UUID
+WHERE org_id IS NULL;
+
 -- =============================================================================
 -- MAKE ORG_ID NOT NULL AFTER DATA MIGRATION
 -- =============================================================================
@@ -3128,6 +3164,12 @@ ALTER TABLE events
   ALTER COLUMN org_id SET NOT NULL;
 
 ALTER TABLE event_delivery_log
+  ALTER COLUMN org_id SET NOT NULL;
+
+ALTER TABLE project_timeline
+  ALTER COLUMN org_id SET NOT NULL;
+
+ALTER TABLE session_metadata
   ALTER COLUMN org_id SET NOT NULL;
 
 -- =============================================================================
@@ -3173,7 +3215,23 @@ SELECT
   COUNT(DISTINCT org_id) AS unique_orgs,
   COUNT(*) FILTER (WHERE org_id IS NOT NULL) AS records_with_org,
   NULL AS soft_deleted
-FROM event_delivery_log;
+FROM event_delivery_log
+UNION ALL
+SELECT
+  'project_timeline' AS table_name,
+  COUNT(*) AS total_records,
+  COUNT(DISTINCT org_id) AS unique_orgs,
+  COUNT(*) FILTER (WHERE org_id IS NOT NULL) AS records_with_org,
+  NULL AS soft_deleted
+FROM project_timeline
+UNION ALL
+SELECT
+  'session_metadata' AS table_name,
+  COUNT(*) AS total_records,
+  COUNT(DISTINCT org_id) AS unique_orgs,
+  COUNT(*) FILTER (WHERE org_id IS NOT NULL) AS records_with_org,
+  NULL AS soft_deleted
+FROM session_metadata;
 
 COMMENT ON VIEW v_multi_tenancy_status IS 'Validation view showing multi-tenancy data distribution across tables';
 

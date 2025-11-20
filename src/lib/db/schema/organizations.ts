@@ -12,6 +12,7 @@ import { relations } from 'drizzle-orm';
 import { userProfiles } from './user-profiles';
 import { auditLogs } from './audit';
 import { events, eventDeliveryLog } from './events';
+import { projectTimeline, sessionMetadata } from './timeline';
 
 /**
  * Organizations table
@@ -115,4 +116,6 @@ export const organizationsRelations = relations(organizations, ({ many }) => ({
   auditLogs: many(auditLogs),
   events: many(events),
   eventDeliveryLogs: many(eventDeliveryLog),
+  projectTimeline: many(projectTimeline),
+  sessionMetadata: many(sessionMetadata),
 }));

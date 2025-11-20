@@ -4,7 +4,10 @@
  * CRUD operations and query helpers for the timeline logging system.
  */
 
+import { eq } from 'drizzle-orm';
 import { projectTimeline, sessionMetadata, type NewProjectTimeline, type NewSessionMetadata, type ProjectTimeline, type SessionMetadata } from './schema/timeline';
+
+const DEFAULT_ORG_ID = '00000000-0000-0000-0000-000000000001';
 
 // Re-export types
 export type { ProjectTimeline, NewProjectTimeline, SessionMetadata, NewSessionMetadata };
@@ -13,6 +16,7 @@ export type { ProjectTimeline, NewProjectTimeline, SessionMetadata, NewSessionMe
  * Timeline Entry Input (simplified for CLI/API usage)
  */
 export interface TimelineInput {
+  orgId?: string;
   sessionId: string;
   conversationSummary: string;
   userIntent?: string;
@@ -60,6 +64,7 @@ export interface TimelineInput {
  * Session Input (simplified)
  */
 export interface SessionInput {
+  orgId?: string;
   sessionId: string;
   startedAt: Date;
   endedAt?: Date;
@@ -86,24 +91,17 @@ export interface TimelineFilters {
  * Database client placeholder
  * TODO: Replace with actual Drizzle client when Supabase is configured
  */
-let db: any = null;
-
-export function setDatabaseClient(client: any) {
-  db = client;
-}
+import { db } from './index';
 
 /**
  * Create a new timeline entry
  */
 export async function createTimelineEntry(input: TimelineInput): Promise<ProjectTimeline | null> {
-  if (!db) {
-    console.warn('Database client not configured. Logging to console instead.');
-    console.log('Timeline Entry:', JSON.stringify(input, null, 2));
-    return null;
-  }
+
 
   try {
     const entry: NewProjectTimeline = {
+      orgId: input.orgId || DEFAULT_ORG_ID,
       sessionId: input.sessionId,
       conversationSummary: input.conversationSummary,
       userIntent: input.userIntent,
@@ -134,14 +132,11 @@ export async function createTimelineEntry(input: TimelineInput): Promise<Project
  * Create or update a session
  */
 export async function upsertSession(input: SessionInput): Promise<SessionMetadata | null> {
-  if (!db) {
-    console.warn('Database client not configured. Logging to console instead.');
-    console.log('Session:', JSON.stringify(input, null, 2));
-    return null;
-  }
+
 
   try {
     const session: NewSessionMetadata = {
+      orgId: input.orgId || DEFAULT_ORG_ID,
       sessionId: input.sessionId,
       startedAt: input.startedAt,
       endedAt: input.endedAt,
@@ -174,10 +169,7 @@ export async function upsertSession(input: SessionInput): Promise<SessionMetadat
  * Get timeline entries with filters
  */
 export async function getTimelineEntries(filters: TimelineFilters = {}): Promise<ProjectTimeline[]> {
-  if (!db) {
-    console.warn('Database client not configured.');
-    return [];
-  }
+
 
   try {
     // TODO: Implement full query with Drizzle
@@ -194,10 +186,7 @@ export async function getTimelineEntries(filters: TimelineFilters = {}): Promise
  * Search timeline entries using full-text search
  */
 export async function searchTimeline(query: string, limit = 20): Promise<ProjectTimeline[]> {
-  if (!db) {
-    console.warn('Database client not configured.');
-    return [];
-  }
+
 
   try {
     // TODO: Implement full-text search with tsvector
@@ -214,14 +203,11 @@ export async function searchTimeline(query: string, limit = 20): Promise<Project
  * Get timeline entries by session ID
  */
 export async function getSessionTimeline(sessionId: string): Promise<ProjectTimeline[]> {
-  if (!db) {
-    console.warn('Database client not configured.');
-    return [];
-  }
+
 
   try {
     // TODO: Implement with proper Drizzle query
-    const entries = await db.select().from(projectTimeline).where({ sessionId });
+    const entries = await db.select().from(projectTimeline).where(eq(projectTimeline.sessionId, sessionId));
     return entries;
   } catch (error) {
     console.error('Error fetching session timeline:', error);
@@ -233,10 +219,7 @@ export async function getSessionTimeline(sessionId: string): Promise<ProjectTime
  * Get all unique tags
  */
 export async function getAllTags(): Promise<string[]> {
-  if (!db) {
-    console.warn('Database client not configured.');
-    return [];
-  }
+
 
   try {
     // TODO: Implement with proper query to unnest tags array
@@ -251,15 +234,7 @@ export async function getAllTags(): Promise<string[]> {
  * Get timeline statistics
  */
 export async function getTimelineStats() {
-  if (!db) {
-    console.warn('Database client not configured.');
-    return {
-      totalEntries: 0,
-      totalSessions: 0,
-      tagsCount: 0,
-      recentActivity: [],
-    };
-  }
+
 
   try {
     // TODO: Implement stats queries
@@ -279,10 +254,7 @@ export async function getTimelineStats() {
  * Archive old entries (soft delete)
  */
 export async function archiveOldEntries(beforeDate: Date): Promise<number> {
-  if (!db) {
-    console.warn('Database client not configured.');
-    return 0;
-  }
+
 
   try {
     // TODO: Implement archive logic

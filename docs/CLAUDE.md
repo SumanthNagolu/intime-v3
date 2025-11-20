@@ -1,7 +1,7 @@
 # Project Documentation
 
 🎯 **Tier:** Strategic  
-**Last Updated:** 2025-11-19  
+**Last Updated:** 2025-11-20  
 **Auto-Generated:** Yes (manual sections preserved)
 
 ---
@@ -28,11 +28,35 @@ Complete project documentation including requirements, architecture, and impleme
 
 - **CLEANUP-SUMMARY.md** - Documentation
 
+- **CURSOR-CLAUDE-WORKFLOW.md** - Documentation
+
+- **CURSOR-SYNC-STATUS.md** - Documentation
+
+- **GEMINI-USAGE-GUIDE.md** - Documentation
+
+- **GEMINI.md** - Documentation
+
+- **KNOWN-ISSUES.md** - Documentation
+
 - **ORCHESTRATION-CODE.md** - Documentation
 
 - **PROJECT-TIMELINE-SYSTEM.md** - Documentation
 
+- **QUICK-START.md** - Documentation
+
 - **README-VISION-DOCS.md** - Documentation
+
+- **REPLICATION-SUMMARY.md** - Documentation
+
+- **REVIEW-RESOLUTION.md** - Documentation
+
+- **SECURITY-ALERT.md** - Documentation
+
+- **SETUP-SENTRY-NOW.md** - Documentation
+
+- **SYNC-COMPLETE.md** - Documentation
+
+- **TIMELINE-QUICKSTART.md** - Documentation
 
 - **VISION-AND-STRATEGY.md** - Documentation
 
@@ -41,11 +65,13 @@ Complete project documentation including requirements, architecture, and impleme
 - `adrs/` - See [adrs/CLAUDE.md](adrs/CLAUDE.md)
 - `architecture/` - See [architecture/CLAUDE.md](architecture/CLAUDE.md)
 - `audit/` - See [audit/CLAUDE.md](audit/CLAUDE.md)
+- `deployment/` - See [deployment/CLAUDE.md](deployment/CLAUDE.md)
 - `design/` - See [design/CLAUDE.md](design/CLAUDE.md)
 - `financials/` - See [financials/CLAUDE.md](financials/CLAUDE.md)
 - `implementation/` - See [implementation/CLAUDE.md](implementation/CLAUDE.md)
 - `migration/` - See [migration/CLAUDE.md](migration/CLAUDE.md)
 - `planning/` - See [planning/CLAUDE.md](planning/CLAUDE.md)
+- `qa/` - See [qa/CLAUDE.md](qa/CLAUDE.md)
 - `requirements/` - See [requirements/CLAUDE.md](requirements/CLAUDE.md)
 - `vision/` - See [vision/CLAUDE.md](vision/CLAUDE.md)
 
@@ -79,7 +105,7 @@ Complete project documentation including requirements, architecture, and impleme
 
 ### Recent Changes
 
-- 2025-11-19: Auto-generated CLAUDE.md created
+- 2025-11-20: Auto-generated CLAUDE.md created
 
 <!-- END MANUAL EDIT SECTION -->
 
@@ -94,4 +120,4 @@ Complete project documentation including requirements, architecture, and impleme
 
 ---
 
-*Auto-generated on 2025-11-19 - Tier strategic documentation*
+*Auto-generated on 2025-11-20 - Tier strategic documentation*

@@ -1,7 +1,7 @@
 # Complete Documentation Index
 
-**Last Updated:** 2025-11-19  
-**Total Folders Documented:** 64  
+**Last Updated:** 2025-11-20  
+**Total Folders Documented:** 95  
 **Coverage Level:** Maximum Granularity ✅
 
 ---
@@ -50,7 +50,7 @@ High-level, project-wide context:
 
 ---
 
-## 📊 Tactical Level (8 folders)
+## 📊 Tactical Level (9 folders)
 
 Domain-level modules:
 
@@ -96,6 +96,12 @@ Domain-level modules:
 
 📄 [View CLAUDE.md](docs/audit/CLAUDE.md)
 
+### Server
+**Path:** `src/server/`  
+**Purpose:** Application server module.
+
+📄 [View CLAUDE.md](src/server/CLAUDE.md)
+
 ### Types
 **Path:** `src/types/`  
 **Purpose:** Application types module.
@@ -104,7 +110,7 @@ Domain-level modules:
 
 ---
 
-## ⚙️ Operational Level (53 folders)
+## ⚙️ Operational Level (83 folders)
 
 Specific components and implementations:
 
@@ -194,6 +200,10 @@ Specific components and implementations:
   Documentation for architecture.  
   📄 [View CLAUDE.md](docs/architecture/CLAUDE.md)
 
+- **Deployment** (`docs/deployment/`)  
+  Documentation for deployment.  
+  📄 [View CLAUDE.md](docs/deployment/CLAUDE.md)
+
 - **Design** (`docs/design/`)  
   Documentation for design.  
   📄 [View CLAUDE.md](docs/design/CLAUDE.md)
@@ -214,6 +224,10 @@ Specific components and implementations:
   Documentation for planning.  
   📄 [View CLAUDE.md](docs/planning/CLAUDE.md)
 
+- **Qa** (`docs/qa/`)  
+  Documentation for qa.  
+  📄 [View CLAUDE.md](docs/qa/CLAUDE.md)
+
 - **Requirements** (`docs/requirements/`)  
   Documentation for requirements.  
   📄 [View CLAUDE.md](docs/requirements/CLAUDE.md)
@@ -232,9 +246,43 @@ Specific components and implementations:
   Documentation for epics.  
   📄 [View CLAUDE.md](docs/planning/epics/CLAUDE.md)
 
+- **Sprints** (`docs/planning/sprints/`)  
+  Documentation for sprints.  
+  📄 [View CLAUDE.md](docs/planning/sprints/CLAUDE.md)
+
 - **Stories** (`docs/planning/stories/`)  
   Documentation for stories.  
   📄 [View CLAUDE.md](docs/planning/stories/CLAUDE.md)
+
+#### docs/planning/sprints/
+
+- **Sprint 01** (`docs/planning/sprints/sprint-01/`)  
+  Documentation for sprint-01.  
+  📄 [View CLAUDE.md](docs/planning/sprints/sprint-01/CLAUDE.md)
+
+- **Sprint 02** (`docs/planning/sprints/sprint-02/`)  
+  Documentation for sprint-02.  
+  📄 [View CLAUDE.md](docs/planning/sprints/sprint-02/CLAUDE.md)
+
+- **Sprint 03** (`docs/planning/sprints/sprint-03/`)  
+  Documentation for sprint-03.  
+  📄 [View CLAUDE.md](docs/planning/sprints/sprint-03/CLAUDE.md)
+
+- **Sprint 04** (`docs/planning/sprints/sprint-04/`)  
+  Documentation for sprint-04.  
+  📄 [View CLAUDE.md](docs/planning/sprints/sprint-04/CLAUDE.md)
+
+- **Sprint 05** (`docs/planning/sprints/sprint-05/`)  
+  Documentation for sprint-05.  
+  📄 [View CLAUDE.md](docs/planning/sprints/sprint-05/CLAUDE.md)
+
+- **Sprint 06** (`docs/planning/sprints/sprint-06/`)  
+  Documentation for sprint-06.  
+  📄 [View CLAUDE.md](docs/planning/sprints/sprint-06/CLAUDE.md)
+
+- **Sprint 07** (`docs/planning/sprints/sprint-07/`)  
+  Documentation for sprint-07.  
+  📄 [View CLAUDE.md](docs/planning/sprints/sprint-07/CLAUDE.md)
 
 #### docs/planning/stories/
 
@@ -292,6 +340,14 @@ Specific components and implementations:
 
 #### src/app/admin/
 
+- **Events** (`src/app/admin/events/`)  
+  Application events module.  
+  📄 [View CLAUDE.md](src/app/admin/events/CLAUDE.md)
+
+- **Handlers** (`src/app/admin/handlers/`)  
+  Application handlers module.  
+  📄 [View CLAUDE.md](src/app/admin/handlers/CLAUDE.md)
+
 - **Timeline** (`src/app/admin/timeline/`)  
   Application timeline module.  
   📄 [View CLAUDE.md](src/app/admin/timeline/CLAUDE.md)
@@ -301,6 +357,10 @@ Specific components and implementations:
 - **Migrate** (`src/app/api/migrate/`)  
   Application migrate module.  
   📄 [View CLAUDE.md](src/app/api/migrate/CLAUDE.md)
+
+- **Trpc** (`src/app/api/trpc/`)  
+  Application trpc module.  
+  📄 [View CLAUDE.md](src/app/api/trpc/CLAUDE.md)
 
 #### src/app/auth/
 
@@ -330,6 +390,10 @@ Specific components and implementations:
 
 #### src/lib/
 
+- **Ai** (`src/lib/ai/`)  
+  Application ai module.  
+  📄 [View CLAUDE.md](src/lib/ai/CLAUDE.md)
+
 - **Auth** (`src/lib/auth/`)  
   Application auth module.  
   📄 [View CLAUDE.md](src/lib/auth/CLAUDE.md)
@@ -338,6 +402,22 @@ Specific components and implementations:
   Application db module.  
   📄 [View CLAUDE.md](src/lib/db/CLAUDE.md)
 
+- **Errors** (`src/lib/errors/`)  
+  Application errors module.  
+  📄 [View CLAUDE.md](src/lib/errors/CLAUDE.md)
+
+- **Events** (`src/lib/events/`)  
+  Application events module.  
+  📄 [View CLAUDE.md](src/lib/events/CLAUDE.md)
+
+- **Forms** (`src/lib/forms/`)  
+  Application forms module.  
+  📄 [View CLAUDE.md](src/lib/forms/CLAUDE.md)
+
+- **Rbac** (`src/lib/rbac/`)  
+  Application rbac module.  
+  📄 [View CLAUDE.md](src/lib/rbac/CLAUDE.md)
+
 - **Supabase** (`src/lib/supabase/`)  
   Application supabase module.  
   📄 [View CLAUDE.md](src/lib/supabase/CLAUDE.md)
@@ -345,6 +425,28 @@ Specific components and implementations:
 - **Testing** (`src/lib/testing/`)  
   Application testing module.  
   📄 [View CLAUDE.md](src/lib/testing/CLAUDE.md)
+
+- **Trpc** (`src/lib/trpc/`)  
+  Application trpc module.  
+  📄 [View CLAUDE.md](src/lib/trpc/CLAUDE.md)
+
+- **Validations** (`src/lib/validations/`)  
+  Application validations module.  
+  📄 [View CLAUDE.md](src/lib/validations/CLAUDE.md)
+
+- **Workflows** (`src/lib/workflows/`)  
+  Application workflows module.  
+  📄 [View CLAUDE.md](src/lib/workflows/CLAUDE.md)
+
+#### src/lib/ai/
+
+- **Productivity** (`src/lib/ai/productivity/`)  
+  Application productivity module.  
+  📄 [View CLAUDE.md](src/lib/ai/productivity/CLAUDE.md)
+
+- **Twins** (`src/lib/ai/twins/`)  
+  Application twins module.  
+  📄 [View CLAUDE.md](src/lib/ai/twins/CLAUDE.md)
 
 #### src/lib/db/
 
@@ -355,6 +457,48 @@ Specific components and implementations:
 - **Schema** (`src/lib/db/schema/`)  
   Application schema module.  
   📄 [View CLAUDE.md](src/lib/db/schema/CLAUDE.md)
+
+#### src/lib/errors/
+
+- **__tests__** (`src/lib/errors/__tests__/`)  
+  Application __tests__ module.  
+  📄 [View CLAUDE.md](src/lib/errors/__tests__/CLAUDE.md)
+
+#### src/lib/events/
+
+- **Handlers** (`src/lib/events/handlers/`)  
+  Application handlers module.  
+  📄 [View CLAUDE.md](src/lib/events/handlers/CLAUDE.md)
+
+#### src/lib/forms/
+
+- **__tests__** (`src/lib/forms/__tests__/`)  
+  Application __tests__ module.  
+  📄 [View CLAUDE.md](src/lib/forms/__tests__/CLAUDE.md)
+
+#### src/lib/trpc/
+
+- **Routers** (`src/lib/trpc/routers/`)  
+  Application routers module.  
+  📄 [View CLAUDE.md](src/lib/trpc/routers/CLAUDE.md)
+
+#### src/lib/validations/
+
+- **__tests__** (`src/lib/validations/__tests__/`)  
+  Application __tests__ module.  
+  📄 [View CLAUDE.md](src/lib/validations/__tests__/CLAUDE.md)
+
+#### src/server/
+
+- **Trpc** (`src/server/trpc/`)  
+  Application trpc module.  
+  📄 [View CLAUDE.md](src/server/trpc/CLAUDE.md)
+
+#### src/server/trpc/
+
+- **Routers** (`src/server/trpc/routers/`)  
+  Application routers module.  
+  📄 [View CLAUDE.md](src/server/trpc/routers/CLAUDE.md)
 
 ---
 
@@ -377,4 +521,4 @@ git diff **/CLAUDE.md
 
 ---
 
-*Maximum granularity documentation - Auto-generated on 2025-11-19*
+*Maximum granularity documentation - Auto-generated on 2025-11-20*

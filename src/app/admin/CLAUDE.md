@@ -1,7 +1,7 @@
 # Admin
 
 ⚙️ **Tier:** Operational  
-**Last Updated:** 2025-11-19  
+**Last Updated:** 2025-11-20  
 **Auto-Generated:** Yes (manual sections preserved)
 
 ---
@@ -18,8 +18,16 @@ Application admin module.
 
 - **CLAUDE.md** - Documentation
 
+- **layout.tsx** (71 lines)
+  Admin Layout
+
+- **page.tsx** (68 lines)
+  Admin Dashboard Page
+
 
 **Subdirectories:**
+- `events/` - See [events/CLAUDE.md](events/CLAUDE.md)
+- `handlers/` - See [handlers/CLAUDE.md](handlers/CLAUDE.md)
 - `timeline/` - See [timeline/CLAUDE.md](timeline/CLAUDE.md)
 
 ---
@@ -66,7 +74,7 @@ Auto-generated folder context. Review files in this directory for specific funct
 
 ### Recent Changes
 
-- 2025-11-19: Auto-generated CLAUDE.md created
+- 2025-11-20: Auto-generated CLAUDE.md created
 
 <!-- END MANUAL EDIT SECTION -->
 
@@ -82,4 +90,4 @@ Auto-generated folder context. Review files in this directory for specific funct
 
 ---
 
-*Auto-generated on 2025-11-19 - Tier operational documentation*
+*Auto-generated on 2025-11-20 - Tier operational documentation*

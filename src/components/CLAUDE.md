@@ -1,7 +1,7 @@
 # React Components
 
 📊 **Tier:** Tactical  
-**Last Updated:** 2025-11-19  
+**Last Updated:** 2025-11-20  
 **Auto-Generated:** Yes (manual sections preserved)
 
 ---
@@ -17,6 +17,9 @@ Reusable React components built with shadcn/ui and Tailwind CSS.
 ### Files in This Directory
 
 - **CLAUDE.md** - Documentation
+
+- **ErrorBoundary.tsx** (140 lines)
+  Error Boundary Component
 
 
 **Subdirectories:**
@@ -54,7 +57,7 @@ Reusable React components built with shadcn/ui and Tailwind CSS.
 
 ### Recent Changes
 
-- 2025-11-19: Auto-generated CLAUDE.md created
+- 2025-11-20: Auto-generated CLAUDE.md created
 
 <!-- END MANUAL EDIT SECTION -->
 
@@ -70,4 +73,4 @@ Reusable React components built with shadcn/ui and Tailwind CSS.
 
 ---
 
-*Auto-generated on 2025-11-19 - Tier tactical documentation*
+*Auto-generated on 2025-11-20 - Tier tactical documentation*

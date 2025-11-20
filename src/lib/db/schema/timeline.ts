@@ -1,5 +1,6 @@
 import { pgTable, uuid, text, timestamp, jsonb, boolean, varchar } from 'drizzle-orm/pg-core';
-import { sql } from 'drizzle-orm';
+import { relations } from 'drizzle-orm';
+import { organizations } from './organizations';
 
 /**
  * Project Timeline Schema
@@ -83,6 +84,9 @@ export const projectTimeline = pgTable('project_timeline', {
   // Full-text search
   searchVector: text('search_vector'), // Will be tsvector in actual DB
 
+  // Multi-tenancy
+  orgId: uuid('org_id').notNull(),
+
   // Audit fields
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
@@ -121,9 +125,29 @@ export const sessionMetadata = pgTable('session_metadata', {
   overallGoal: text('overall_goal'),
   successfullyCompleted: boolean('successfully_completed').default(false),
 
+  // Multi-tenancy
+  orgId: uuid('org_id').notNull(),
+
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
 });
+
+/**
+ * Relations
+ */
+export const projectTimelineRelations = relations(projectTimeline, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [projectTimeline.orgId],
+    references: [organizations.id],
+  }),
+}));
+
+export const sessionMetadataRelations = relations(sessionMetadata, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [sessionMetadata.orgId],
+    references: [organizations.id],
+  }),
+}));
 
 // Type exports for use in application
 export type ProjectTimeline = typeof projectTimeline.$inferSelect;
