@@ -26,9 +26,15 @@ Documentation for deployment.
 
 - **EPIC-2.5-DEPLOYMENT-REPORT.md** - Documentation
 
+- **MIGRATION-021-APPLIED.md** - Documentation
+
+- **SPRINT-5-DATABASE-MIGRATION-COMPLETE.md** - Documentation
+
 - **SPRINT-5-DEPLOYMENT-PLAN.md** - Documentation
 
 - **SPRINT-5-DEPLOYMENT-SUMMARY.md** - Documentation
+
+- **SUPABASE-MIGRATION-LIMITATIONS.md** - Documentation
 
 ---
 
