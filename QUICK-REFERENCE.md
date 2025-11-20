@@ -376,3 +376,4 @@ $ gemini "/deploy"
 **Print this page and keep it visible during development!**
 
 **Philosophy:** "Two tools, one vision, zero compromises."
+
