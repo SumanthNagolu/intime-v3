@@ -32,6 +32,8 @@ Complete project documentation including requirements, architecture, and impleme
 
 - **CURSOR-SYNC-STATUS.md** - Documentation
 
+- **DOCUMENTATION-AUTO-UPDATE-IMPLEMENTATION.md** - Documentation
+
 - **DOCUMENTATION-AUTO-UPDATE-SPEC.md** - Documentation
 
 - **GEMINI-USAGE-GUIDE.md** - Documentation
