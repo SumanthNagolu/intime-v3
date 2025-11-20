@@ -22,13 +22,21 @@ workflows module.
 
 - **CLAUDE.md** - Documentation
 
+- **create-epics.md** - Documentation
+
+- **create-stories.md** - Documentation
+
 - **cross-pollination.md** - Documentation
 
 - **database.md** - Documentation
 
+- **define-feature.md** - Documentation
+
 - **deploy.md** - Documentation
 
 - **feature.md** - Documentation
+
+- **plan-sprint.md** - Documentation
 
 - **start-planning.md** - Documentation
 

@@ -42,6 +42,10 @@ Documentation for qa.
 
 - **SPRINT-4-QA-REPORT.md** - Documentation
 
+- **SPRINT-5-PRE-DEPLOYMENT-FIXES.md** - Documentation
+
+- **SPRINT-5-QA-REPORT.md** - Documentation
+
 - **SQL-VALIDATION-REPORT.md** - Documentation
 
 - **TESTING-GUIDE.md** - Documentation

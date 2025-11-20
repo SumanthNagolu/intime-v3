@@ -32,6 +32,7 @@ Application ai module.
 - `productivity/` - See [productivity/CLAUDE.md](productivity/CLAUDE.md)
 - `prompts/` - See [prompts/CLAUDE.md](prompts/CLAUDE.md)
 - `rag/` - See [rag/CLAUDE.md](rag/CLAUDE.md)
+- `resume-matching/` - See [resume-matching/CLAUDE.md](resume-matching/CLAUDE.md)
 - `twins/` - See [twins/CLAUDE.md](twins/CLAUDE.md)
 
 ---
