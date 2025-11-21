@@ -30,7 +30,7 @@ Application events module.
 - **init.ts** (85 lines)
   Event Bus Initialization
 
-- **types.ts** (106 lines)
+- **types.ts** (145 lines)
   Event Bus Type Definitions
 
 

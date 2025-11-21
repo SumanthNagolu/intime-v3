@@ -1,7 +1,7 @@
 # Complete Documentation Index
 
 **Last Updated:** 2025-11-21  
-**Total Folders Documented:** 114  
+**Total Folders Documented:** 145  
 **Coverage Level:** Maximum Granularity ✅
 
 ---
@@ -110,7 +110,7 @@ Domain-level modules:
 
 ---
 
-## ⚙️ Operational Level (102 folders)
+## ⚙️ Operational Level (133 folders)
 
 Specific components and implementations:
 
@@ -250,6 +250,10 @@ Specific components and implementations:
   Documentation for requirements.  
   📄 [View CLAUDE.md](docs/requirements/CLAUDE.md)
 
+- **Setup** (`docs/setup/`)  
+  Documentation for setup.  
+  📄 [View CLAUDE.md](docs/setup/CLAUDE.md)
+
 - **Vision** (`docs/vision/`)  
   Documentation for vision.  
   📄 [View CLAUDE.md](docs/vision/CLAUDE.md)
@@ -350,6 +354,18 @@ Specific components and implementations:
   Application setup module.  
   📄 [View CLAUDE.md](src/app/setup/CLAUDE.md)
 
+- **Students** (`src/app/students/`)  
+  Application students module.  
+  📄 [View CLAUDE.md](src/app/students/CLAUDE.md)
+
+- **Trainer** (`src/app/trainer/`)  
+  Application trainer module.  
+  📄 [View CLAUDE.md](src/app/trainer/CLAUDE.md)
+
+- **Verify** (`src/app/verify/`)  
+  Application verify module.  
+  📄 [View CLAUDE.md](src/app/verify/CLAUDE.md)
+
 #### src/app/(auth)/
 
 - **Login** (`src/app/(auth)/login/`)  
@@ -370,7 +386,15 @@ Specific components and implementations:
   Application my-twin module.  
   📄 [View CLAUDE.md](src/app/(dashboard)/my-twin/CLAUDE.md)
 
+- **Privacy** (`src/app/(dashboard)/privacy/`)  
+  Application privacy module.  
+  📄 [View CLAUDE.md](src/app/(dashboard)/privacy/CLAUDE.md)
+
 #### src/app/admin/
+
+- **Courses** (`src/app/admin/courses/`)  
+  Application courses module.  
+  📄 [View CLAUDE.md](src/app/admin/courses/CLAUDE.md)
 
 - **Events** (`src/app/admin/events/`)  
   Application events module.  
@@ -414,6 +438,10 @@ Specific components and implementations:
   Application twin module.  
   📄 [View CLAUDE.md](src/app/api/twin/CLAUDE.md)
 
+- **Webhooks** (`src/app/api/webhooks/`)  
+  Application webhooks module.  
+  📄 [View CLAUDE.md](src/app/api/webhooks/CLAUDE.md)
+
 #### src/app/auth/
 
 - **Callback** (`src/app/auth/callback/`)  
@@ -426,7 +454,53 @@ Specific components and implementations:
   Application migrate module.  
   📄 [View CLAUDE.md](src/app/setup/migrate/CLAUDE.md)
 
+#### src/app/students/
+
+- **Ai mentor** (`src/app/students/ai-mentor/`)  
+  Application ai-mentor module.  
+  📄 [View CLAUDE.md](src/app/students/ai-mentor/CLAUDE.md)
+
+- **Assessments** (`src/app/students/assessments/`)  
+  Application assessments module.  
+  📄 [View CLAUDE.md](src/app/students/assessments/CLAUDE.md)
+
+- **Certificates** (`src/app/students/certificates/`)  
+  Application certificates module.  
+  📄 [View CLAUDE.md](src/app/students/certificates/CLAUDE.md)
+
+- **Courses** (`src/app/students/courses/`)  
+  Application courses module.  
+  📄 [View CLAUDE.md](src/app/students/courses/CLAUDE.md)
+
+- **Progress** (`src/app/students/progress/`)  
+  Application progress module.  
+  📄 [View CLAUDE.md](src/app/students/progress/CLAUDE.md)
+
+#### src/app/trainer/
+
+- **Dashboard** (`src/app/trainer/dashboard/`)  
+  Application dashboard module.  
+  📄 [View CLAUDE.md](src/app/trainer/dashboard/CLAUDE.md)
+
+- **Grade** (`src/app/trainer/grade/`)  
+  Application grade module.  
+  📄 [View CLAUDE.md](src/app/trainer/grade/CLAUDE.md)
+
+#### src/app/verify/
+
+- **[certificateNumber]** (`src/app/verify/[certificateNumber]/`)  
+  Application [certificateNumber] module.  
+  📄 [View CLAUDE.md](src/app/verify/[certificateNumber]/CLAUDE.md)
+
 #### src/components/
+
+- **Academy** (`src/components/academy/`)  
+  Application academy module.  
+  📄 [View CLAUDE.md](src/components/academy/CLAUDE.md)
+
+- **Admin** (`src/components/admin/`)  
+  Application admin module.  
+  📄 [View CLAUDE.md](src/components/admin/CLAUDE.md)
 
 - **Auth** (`src/components/auth/`)  
   Application auth module.  
@@ -436,11 +510,33 @@ Specific components and implementations:
   Application landing module.  
   📄 [View CLAUDE.md](src/components/landing/CLAUDE.md)
 
+- **Students** (`src/components/students/`)  
+  Application students module.  
+  📄 [View CLAUDE.md](src/components/students/CLAUDE.md)
+
 - **Timeline** (`src/components/timeline/`)  
   Application timeline module.  
   📄 [View CLAUDE.md](src/components/timeline/CLAUDE.md)
 
+- **Trainer** (`src/components/trainer/`)  
+  Application trainer module.  
+  📄 [View CLAUDE.md](src/components/trainer/CLAUDE.md)
+
+- **Ui** (`src/components/ui/`)  
+  Application ui module.  
+  📄 [View CLAUDE.md](src/components/ui/CLAUDE.md)
+
+#### src/components/admin/
+
+- **__tests__** (`src/components/admin/__tests__/`)  
+  Application __tests__ module.  
+  📄 [View CLAUDE.md](src/components/admin/__tests__/CLAUDE.md)
+
 #### src/lib/
+
+- **Academy** (`src/lib/academy/`)  
+  Application academy module.  
+  📄 [View CLAUDE.md](src/lib/academy/CLAUDE.md)
 
 - **Ai** (`src/lib/ai/`)  
   Application ai module.  
@@ -449,6 +545,14 @@ Specific components and implementations:
 - **Auth** (`src/lib/auth/`)  
   Application auth module.  
   📄 [View CLAUDE.md](src/lib/auth/CLAUDE.md)
+
+- **Badges** (`src/lib/badges/`)  
+  Application badges module.  
+  📄 [View CLAUDE.md](src/lib/badges/CLAUDE.md)
+
+- **Certificates** (`src/lib/certificates/`)  
+  Application certificates module.  
+  📄 [View CLAUDE.md](src/lib/certificates/CLAUDE.md)
 
 - **Db** (`src/lib/db/`)  
   Application db module.  
@@ -466,9 +570,29 @@ Specific components and implementations:
   Application forms module.  
   📄 [View CLAUDE.md](src/lib/forms/CLAUDE.md)
 
+- **Labs** (`src/lib/labs/`)  
+  Application labs module.  
+  📄 [View CLAUDE.md](src/lib/labs/CLAUDE.md)
+
+- **Leaderboards** (`src/lib/leaderboards/`)  
+  Application leaderboards module.  
+  📄 [View CLAUDE.md](src/lib/leaderboards/CLAUDE.md)
+
+- **Notifications** (`src/lib/notifications/`)  
+  Application notifications module.  
+  📄 [View CLAUDE.md](src/lib/notifications/CLAUDE.md)
+
 - **Rbac** (`src/lib/rbac/`)  
   Application rbac module.  
   📄 [View CLAUDE.md](src/lib/rbac/CLAUDE.md)
+
+- **Storage** (`src/lib/storage/`)  
+  Application storage module.  
+  📄 [View CLAUDE.md](src/lib/storage/CLAUDE.md)
+
+- **Stripe** (`src/lib/stripe/`)  
+  Application stripe module.  
+  📄 [View CLAUDE.md](src/lib/stripe/CLAUDE.md)
 
 - **Supabase** (`src/lib/supabase/`)  
   Application supabase module.  
@@ -489,6 +613,12 @@ Specific components and implementations:
 - **Workflows** (`src/lib/workflows/`)  
   Application workflows module.  
   📄 [View CLAUDE.md](src/lib/workflows/CLAUDE.md)
+
+#### src/lib/academy/
+
+- **__tests__** (`src/lib/academy/__tests__/`)  
+  Application __tests__ module.  
+  📄 [View CLAUDE.md](src/lib/academy/__tests__/CLAUDE.md)
 
 #### src/lib/ai/
 
@@ -551,6 +681,12 @@ Specific components and implementations:
 - **__tests__** (`src/lib/forms/__tests__/`)  
   Application __tests__ module.  
   📄 [View CLAUDE.md](src/lib/forms/__tests__/CLAUDE.md)
+
+#### src/lib/storage/
+
+- **__tests__** (`src/lib/storage/__tests__/`)  
+  Application __tests__ module.  
+  📄 [View CLAUDE.md](src/lib/storage/__tests__/CLAUDE.md)
 
 #### src/lib/trpc/
 

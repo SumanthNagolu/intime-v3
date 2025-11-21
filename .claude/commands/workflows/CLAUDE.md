@@ -36,8 +36,6 @@ workflows module.
 
 - **feature.md** - Documentation
 
-- **plan-sprint.md** - Documentation
-
 - **start-planning.md** - Documentation
 
 - **test.md** - Documentation

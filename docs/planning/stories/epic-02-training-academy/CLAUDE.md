@@ -18,6 +18,8 @@ Documentation for epic-02-training-academy.
 
 - **ACAD-001-course-tables.md** - Documentation
 
+- **ACAD-001-IMPLEMENTATION.md** - Documentation
+
 - **ACAD-002-enrollment-system.md** - Documentation
 
 - **ACAD-003-progress-tracking.md** - Documentation

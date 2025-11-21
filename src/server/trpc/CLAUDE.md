@@ -27,8 +27,11 @@ Application trpc module.
 - **middleware.ts** (94 lines)
   tRPC Middleware
 
-- **root.ts** (31 lines)
+- **root.ts** (72 lines)
   tRPC Root Router
+
+- **trpc.ts** (15 lines)
+  tRPC Exports
 
 
 **Subdirectories:**

@@ -18,7 +18,7 @@ Application guru module.
 
 - **CLAUDE.md** - Documentation
 
-- **index.ts** (279 lines)
+- **index.ts** (295 lines)
   Guidewire Guru Type Definitions
 
 ---

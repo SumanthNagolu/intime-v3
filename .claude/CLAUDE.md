@@ -52,6 +52,8 @@ Complete AI agent system configuration including agents, workflows, and orchestr
 
 - **TOOL-INTEGRATION-COMPLETE.md** - Documentation
 
+- **WORKFLOW-UPDATE-SUMMARY.md** - Documentation
+
 
 **Subdirectories:**
 - `agents/` - See [agents/CLAUDE.md](agents/CLAUDE.md)

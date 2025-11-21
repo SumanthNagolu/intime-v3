@@ -81,6 +81,7 @@ Complete project documentation including requirements, architecture, and impleme
 - `planning/` - See [planning/CLAUDE.md](planning/CLAUDE.md)
 - `qa/` - See [qa/CLAUDE.md](qa/CLAUDE.md)
 - `requirements/` - See [requirements/CLAUDE.md](requirements/CLAUDE.md)
+- `setup/` - See [setup/CLAUDE.md](setup/CLAUDE.md)
 - `vision/` - See [vision/CLAUDE.md](vision/CLAUDE.md)
 
 ---

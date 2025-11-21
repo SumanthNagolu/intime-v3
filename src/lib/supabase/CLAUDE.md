@@ -16,12 +16,15 @@ Application supabase module.
 
 ### Files in This Directory
 
+- **admin.ts** (64 lines)
+  Supabase Admin Client
+
 - **CLAUDE.md** - Documentation
 
 - **client.ts** (18 lines)
   Supabase Client-Side Helper
 
-- **server.ts** (46 lines)
+- **server.ts** (47 lines)
   Supabase Server-Side Helper
 
 ---
