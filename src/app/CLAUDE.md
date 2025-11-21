@@ -33,6 +33,7 @@ Next.js 15 app directory with server components, layouts, and routing.
 
 **Subdirectories:**
 - `(auth)/` - See [(auth)/CLAUDE.md]((auth)/CLAUDE.md)
+- `(dashboard)/` - See [(dashboard)/CLAUDE.md]((dashboard)/CLAUDE.md)
 - `actions/` - See [actions/CLAUDE.md](actions/CLAUDE.md)
 - `admin/` - See [admin/CLAUDE.md](admin/CLAUDE.md)
 - `api/` - See [api/CLAUDE.md](api/CLAUDE.md)

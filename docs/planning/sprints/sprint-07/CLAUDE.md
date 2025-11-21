@@ -18,7 +18,11 @@ Documentation for sprint-07.
 
 - **CLAUDE.md** - Documentation
 
+- **DEPLOYMENT-GUIDE.md** - Documentation
+
 - **PLAN.md** - Documentation
+
+- **SPRINT-7-COMPLETION-REPORT.md** - Documentation
 
 
 **Subdirectories:**

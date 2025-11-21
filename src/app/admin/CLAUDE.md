@@ -28,6 +28,7 @@ Application admin module.
 **Subdirectories:**
 - `events/` - See [events/CLAUDE.md](events/CLAUDE.md)
 - `handlers/` - See [handlers/CLAUDE.md](handlers/CLAUDE.md)
+- `screenshots/` - See [screenshots/CLAUDE.md](screenshots/CLAUDE.md)
 - `timeline/` - See [timeline/CLAUDE.md](timeline/CLAUDE.md)
 
 ---

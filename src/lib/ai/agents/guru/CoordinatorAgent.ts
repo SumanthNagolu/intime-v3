@@ -269,7 +269,7 @@ Respond ONLY with valid JSON:
   private async checkEscalation(studentId: string, question: string): Promise<boolean> {
     try {
       // Check for repeated questions (5+ times in 24 hours)
-      const { count, error } = await supabase
+      const { count, error } = await getSupabaseClient()
         .from('guru_interactions')
         .select('id', { count: 'exact', head: true })
         .eq('student_id', studentId)
@@ -378,22 +378,22 @@ Respond ONLY with valid JSON:
     latencyMs: number;
   }): Promise<void> {
     try {
-      await supabase.from('guru_interactions').insert({
+      await getSupabaseClient().from('guru_interactions').insert({
         org_id: this.config.orgId || 'default',
         student_id: data.studentId,
         agent_type: 'coordinator',
         conversation_id: data.output.conversationId,
-        input: data.input,
-        output: data.output,
+        input: data.input as any,
+        output: {
+          ...data.output,
+          classification: data.classification,
+          routed_to: data.output.agentUsed,
+          escalated: data.output.escalated,
+        } as any,
         model_used: 'gpt-4o-mini',
         tokens_used: 100, // Estimated
         cost_usd: 0.00002, // Estimated
         latency_ms: data.latencyMs,
-        metadata: {
-          classification: data.classification,
-          routed_to: data.output.agentUsed,
-          escalated: data.output.escalated,
-        },
       });
     } catch (error) {
       console.error('[CoordinatorAgent] Failed to log interaction:', error);
