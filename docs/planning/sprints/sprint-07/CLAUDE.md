@@ -18,6 +18,8 @@ Documentation for sprint-07.
 
 - **CLAUDE.md** - Documentation
 
+- **DEPLOYMENT-COMPLETE.md** - Documentation
+
 - **DEPLOYMENT-GUIDE.md** - Documentation
 
 - **PLAN.md** - Documentation

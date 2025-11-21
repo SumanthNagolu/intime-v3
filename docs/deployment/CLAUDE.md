@@ -24,6 +24,10 @@ Documentation for deployment.
 
 - **DEPLOYMENT-SUCCESS.md** - Documentation
 
+- **epic-2-deployment-log.md** - Documentation
+
+- **epic-2-deployment-plan-revised.md** - Documentation
+
 - **FIX-401-DEPLOYMENT-PROTECTION.md** - Documentation
 
 - **MIGRATION-021-APPLIED.md** - Documentation

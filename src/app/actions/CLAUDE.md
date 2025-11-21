@@ -19,7 +19,7 @@ Application actions module.
 - **auth.test.ts** (303 lines)
   🧪 Unit Tests: Authentication Server Actions
 
-- **auth.ts** (295 lines)
+- **auth.ts** (342 lines)
   Authentication Server Actions
 
 - **CLAUDE.md** - Documentation

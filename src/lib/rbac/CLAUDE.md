@@ -18,7 +18,7 @@ Application rbac module.
 
 - **CLAUDE.md** - Documentation
 
-- **index.ts** (35 lines)
+- **index.ts** (36 lines)
   Role-Based Access Control (RBAC) Helpers
 
 ---

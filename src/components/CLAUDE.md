@@ -23,9 +23,14 @@ Reusable React components built with shadcn/ui and Tailwind CSS.
 
 
 **Subdirectories:**
+- `academy/` - See [academy/CLAUDE.md](academy/CLAUDE.md)
+- `admin/` - See [admin/CLAUDE.md](admin/CLAUDE.md)
 - `auth/` - See [auth/CLAUDE.md](auth/CLAUDE.md)
 - `landing/` - See [landing/CLAUDE.md](landing/CLAUDE.md)
+- `students/` - See [students/CLAUDE.md](students/CLAUDE.md)
 - `timeline/` - See [timeline/CLAUDE.md](timeline/CLAUDE.md)
+- `trainer/` - See [trainer/CLAUDE.md](trainer/CLAUDE.md)
+- `ui/` - See [ui/CLAUDE.md](ui/CLAUDE.md)
 
 ---
 

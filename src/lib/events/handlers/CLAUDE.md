@@ -18,7 +18,7 @@ Application handlers module.
 
 - **CLAUDE.md** - Documentation
 
-- **course-handlers.ts** (86 lines)
+- **course-handlers.ts** (490 lines)
   Course Event Handlers
 
 - **index.ts** (37 lines)

@@ -20,6 +20,10 @@ Documentation for design.
 
 - **DESIGN-SYSTEM.md** - Documentation
 
+- **EPIC-2-TRAINING-ACADEMY-DESIGN-SPEC.md** - Documentation
+
+- **FIGMA-DESIGN-BRIEF.md** - Documentation
+
 - **FIGMA-DESIGN-SYSTEM.md** - Documentation
 
 ---

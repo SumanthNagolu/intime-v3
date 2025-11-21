@@ -40,6 +40,9 @@ Next.js 15 app directory with server components, layouts, and routing.
 - `auth/` - See [auth/CLAUDE.md](auth/CLAUDE.md)
 - `dashboard/` - See [dashboard/CLAUDE.md](dashboard/CLAUDE.md)
 - `setup/` - See [setup/CLAUDE.md](setup/CLAUDE.md)
+- `students/` - See [students/CLAUDE.md](students/CLAUDE.md)
+- `trainer/` - See [trainer/CLAUDE.md](trainer/CLAUDE.md)
+- `verify/` - See [verify/CLAUDE.md](verify/CLAUDE.md)
 
 ---
 

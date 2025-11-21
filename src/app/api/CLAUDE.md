@@ -26,6 +26,7 @@ Application api module.
 - `students/` - See [students/CLAUDE.md](students/CLAUDE.md)
 - `trpc/` - See [trpc/CLAUDE.md](trpc/CLAUDE.md)
 - `twin/` - See [twin/CLAUDE.md](twin/CLAUDE.md)
+- `webhooks/` - See [webhooks/CLAUDE.md](webhooks/CLAUDE.md)
 
 ---
 

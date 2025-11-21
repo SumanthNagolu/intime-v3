@@ -16,13 +16,71 @@ Application routers module.
 
 ### Files in This Directory
 
+- **ai-mentor.ts** (551 lines)
+  AI Mentor tRPC Router
+
+- **analytics.ts** (575 lines)
+  Analytics tRPC Router
+
+- **badges.ts** (166 lines)
+  Badge Router
+
+- **capstone.ts** (397 lines)
+  Capstone Project tRPC Router
+
+- **certificates.ts** (254 lines)
+  Certificates tRPC Router
+
 - **CLAUDE.md** - Documentation
 
-- **users.ts** (111 lines)
+- **content.ts** (359 lines)
+  Content Upload tRPC Router
+
+- **courses.ts** (724 lines)
+  Courses Management tRPC Router
+
+- **discounts.ts** (521 lines)
+  Discounts tRPC Router
+
+- **enrollment.ts** (832 lines)
+  Enrollment tRPC Router
+
+- **escalation.ts** (401 lines)
+  Escalation tRPC Router
+
+- **labs.ts** (451 lines)
+  Labs tRPC Router
+
+- **leaderboards.ts** (176 lines)
+  Leaderboards tRPC Router
+
+- **pricing.ts** (453 lines)
+  Pricing tRPC Router
+
+- **progress.ts** (746 lines)
+  Progress Tracking tRPC Router
+
+- **quiz.ts** (542 lines)
+  Quiz Management tRPC Router
+
+- **reading.ts** (244 lines)
+  Reading Progress tRPC Router
+
+- **stripe.ts** (401 lines)
+  Stripe tRPC Router
+
+- **users.ts** (110 lines)
   User Router
+
+- **video.ts** (269 lines)
+  Video Progress tRPC Router
+
+- **xp-transactions.ts** (225 lines)
+  XP Transactions tRPC Router
 
 
 **Subdirectories:**
+- `__tests__/` - See [__tests__/CLAUDE.md](__tests__/CLAUDE.md)
 - `admin/` - See [admin/CLAUDE.md](admin/CLAUDE.md)
 
 ---

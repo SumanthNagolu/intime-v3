@@ -16,16 +16,58 @@ Application types module.
 
 ### Files in This Directory
 
+- **academy.ts** (202 lines)
+  Academy Course System Types
+
+- **ai-chat.ts** (307 lines)
+  AI Chat Types and Interfaces
+
+- **ai-mentor.ts** (464 lines)
+  AI Mentor Types
+
+- **badges.ts** (301 lines)
+  Badge/Achievement System Types
+
+- **capstone.ts** (362 lines)
+  Capstone Project System Types
+
 - **CLAUDE.md** - Documentation
+
+- **content.ts** (298 lines)
+  Content Upload System Types
+
+- **enrollment.ts** (169 lines)
+  Student Enrollment Types
+
+- **lab.ts** (378 lines)
+  Lab Environment Types
 
 - **landing.ts** (137 lines)
   No description
 
+- **leaderboards.ts** (412 lines)
+  Leaderboards Type Definitions
+
 - **productivity.ts** (401 lines)
   TypeScript Type Definitions for Productivity Tracking
 
-- **supabase.ts** (3789 lines)
+- **progress.ts** (251 lines)
+  Progress Tracking System Types
+
+- **quiz.ts** (820 lines)
+  Quiz System Types
+
+- **reading.ts** (332 lines)
+  Reading Materials Types
+
+- **supabase.ts** (7400 lines)
   No description
+
+- **video.ts** (254 lines)
+  Video Player Types
+
+- **xp-transactions.ts** (338 lines)
+  XP Transactions Type Definitions
 
 
 **Subdirectories:**

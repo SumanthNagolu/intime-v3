@@ -18,6 +18,12 @@ Application ai module.
 
 - **CLAUDE.md** - Documentation
 
+- **escalation-detector.ts** (457 lines)
+  Escalation Detection Service
+
+- **mentor-service.ts** (397 lines)
+  AI Mentor Service
+
 - **orchestrator.ts** (329 lines)
   Multi-Agent Orchestrator
 

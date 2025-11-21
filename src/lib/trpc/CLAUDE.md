@@ -24,6 +24,9 @@ Application trpc module.
 - **Provider.tsx** (57 lines)
   tRPC Provider
 
+- **server.ts** (42 lines)
+  Server-side tRPC Client
+
 - **trpc.ts** (121 lines)
   tRPC Server Configuration
 
