@@ -1,0 +1,30 @@
+{
+  "name": "@intime/screenshot-agent",
+  "version": "1.0.0",
+  "description": "Background service for employee screenshot capture (audit compliance)",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "install-service": "node scripts/install-service.js",
+    "uninstall-service": "node scripts/uninstall-service.js"
+  },
+  "keywords": ["screenshot", "audit", "compliance", "productivity"],
+  "author": "InTime v3",
+  "license": "PROPRIETARY",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "screenshot-desktop": "^1.15.0",
+    "sharp": "^0.33.1",
+    "dotenv": "^16.3.1",
+    "os": "^0.1.2",
+    "node-machine-id": "^1.1.12"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}

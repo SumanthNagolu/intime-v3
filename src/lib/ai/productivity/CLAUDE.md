@@ -19,10 +19,20 @@ Application productivity module.
 - **ActivityClassifier.ts** (465 lines)
   ActivityClassifier Service
 
+- **ActivityClassifierAgent.ts** (390 lines)
+  Activity Classifier Agent
+
 - **CLAUDE.md** - Documentation
 
 - **TimelineGenerator.ts** (418 lines)
   TimelineGenerator Service
+
+- **TimelineGeneratorAgent.ts** (301 lines)
+  Timeline Generator Agent
+
+
+**Subdirectories:**
+- `__tests__/` - See [__tests__/CLAUDE.md](__tests__/CLAUDE.md)
 
 ---
 

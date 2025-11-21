@@ -21,6 +21,10 @@ Application twins module.
 - **EmployeeTwin.ts** (560 lines)
   EmployeeTwin Framework
 
+
+**Subdirectories:**
+- `__tests__/` - See [__tests__/CLAUDE.md](__tests__/CLAUDE.md)
+
 ---
 
 ## 🎯 Key Concepts

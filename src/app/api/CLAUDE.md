@@ -20,9 +20,12 @@ Application api module.
 
 
 **Subdirectories:**
+- `cron/` - See [cron/CLAUDE.md](cron/CLAUDE.md)
 - `migrate/` - See [migrate/CLAUDE.md](migrate/CLAUDE.md)
+- `screenshots/` - See [screenshots/CLAUDE.md](screenshots/CLAUDE.md)
 - `students/` - See [students/CLAUDE.md](students/CLAUDE.md)
 - `trpc/` - See [trpc/CLAUDE.md](trpc/CLAUDE.md)
+- `twin/` - See [twin/CLAUDE.md](twin/CLAUDE.md)
 
 ---
 

@@ -45,5 +45,22 @@
     }
   ],
   "regions": ["iad1"],
-  "crons": []
+  "crons": [
+    {
+      "path": "/api/cron/classify-screenshots",
+      "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/generate-timelines",
+      "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/generate-morning-briefings",
+      "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/cron/generate-proactive-suggestions",
+      "schedule": "0 11,14,16 * * *"
+    }
+  ]
 }

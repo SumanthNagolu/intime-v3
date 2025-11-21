@@ -177,7 +177,7 @@ export class CodeMentorAgent extends BaseAgent<CodeMentorInput, CodeMentorOutput
     studentId: string
   ): Promise<StudentProgress | null> {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await getSupabaseClient()
         .from('student_progress')
         .select('*')
         .eq('student_id', studentId)
@@ -319,7 +319,7 @@ export class CodeMentorAgent extends BaseAgent<CodeMentorInput, CodeMentorOutput
     latencyMs: number;
   }): Promise<void> {
     try {
-      await supabase.from('guru_interactions').insert({
+      await getSupabaseClient().from('guru_interactions').insert({
         org_id: this.config.orgId || 'default',
         student_id: data.studentId,
         agent_type: data.agentType,
@@ -344,7 +344,7 @@ export class CodeMentorAgent extends BaseAgent<CodeMentorInput, CodeMentorOutput
     currentModule: string
   ): Promise<void> {
     try {
-      const { error } = await supabase
+      const { error } = await getSupabaseClient()
         .from('student_progress')
         .upsert(
           {

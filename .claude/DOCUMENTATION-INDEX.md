@@ -1,7 +1,7 @@
 # Complete Documentation Index
 
 **Last Updated:** 2025-11-21  
-**Total Folders Documented:** 107  
+**Total Folders Documented:** 114  
 **Coverage Level:** Maximum Granularity ✅
 
 ---
@@ -110,7 +110,7 @@ Domain-level modules:
 
 ---
 
-## ⚙️ Operational Level (95 folders)
+## ⚙️ Operational Level (102 folders)
 
 Specific components and implementations:
 
@@ -322,6 +322,10 @@ Specific components and implementations:
   Application (auth) module.  
   📄 [View CLAUDE.md](src/app/(auth)/CLAUDE.md)
 
+- **(dashboard)** (`src/app/(dashboard)/`)  
+  Application (dashboard) module.  
+  📄 [View CLAUDE.md](src/app/(dashboard)/CLAUDE.md)
+
 - **Actions** (`src/app/actions/`)  
   Application actions module.  
   📄 [View CLAUDE.md](src/app/actions/CLAUDE.md)
@@ -356,6 +360,16 @@ Specific components and implementations:
   Application signup module.  
   📄 [View CLAUDE.md](src/app/(auth)/signup/CLAUDE.md)
 
+#### src/app/(dashboard)/
+
+- **My productivity** (`src/app/(dashboard)/my-productivity/`)  
+  Application my-productivity module.  
+  📄 [View CLAUDE.md](src/app/(dashboard)/my-productivity/CLAUDE.md)
+
+- **My twin** (`src/app/(dashboard)/my-twin/`)  
+  Application my-twin module.  
+  📄 [View CLAUDE.md](src/app/(dashboard)/my-twin/CLAUDE.md)
+
 #### src/app/admin/
 
 - **Events** (`src/app/admin/events/`)  
@@ -366,15 +380,27 @@ Specific components and implementations:
   Application handlers module.  
   📄 [View CLAUDE.md](src/app/admin/handlers/CLAUDE.md)
 
+- **Screenshots** (`src/app/admin/screenshots/`)  
+  Application screenshots module.  
+  📄 [View CLAUDE.md](src/app/admin/screenshots/CLAUDE.md)
+
 - **Timeline** (`src/app/admin/timeline/`)  
   Application timeline module.  
   📄 [View CLAUDE.md](src/app/admin/timeline/CLAUDE.md)
 
 #### src/app/api/
 
+- **Cron** (`src/app/api/cron/`)  
+  Application cron module.  
+  📄 [View CLAUDE.md](src/app/api/cron/CLAUDE.md)
+
 - **Migrate** (`src/app/api/migrate/`)  
   Application migrate module.  
   📄 [View CLAUDE.md](src/app/api/migrate/CLAUDE.md)
+
+- **Screenshots** (`src/app/api/screenshots/`)  
+  Application screenshots module.  
+  📄 [View CLAUDE.md](src/app/api/screenshots/CLAUDE.md)
 
 - **Students** (`src/app/api/students/`)  
   Application students module.  
@@ -383,6 +409,10 @@ Specific components and implementations:
 - **Trpc** (`src/app/api/trpc/`)  
   Application trpc module.  
   📄 [View CLAUDE.md](src/app/api/trpc/CLAUDE.md)
+
+- **Twin** (`src/app/api/twin/`)  
+  Application twin module.  
+  📄 [View CLAUDE.md](src/app/api/twin/CLAUDE.md)
 
 #### src/app/auth/
 

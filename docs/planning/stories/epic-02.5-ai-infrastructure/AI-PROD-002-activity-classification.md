@@ -1,8 +1,9 @@
 # AI-PROD-002: Activity Classification
 
 **Story Points:** 8
-**Sprint:** Sprint 4 (Week 11-12)
+**Sprint:** Sprint 7
 **Priority:** CRITICAL (Core Productivity Feature)
+**Status:** ✅ **COMPLETE** (2025-11-20)
 
 ---
 

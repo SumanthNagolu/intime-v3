@@ -6,8 +6,9 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
+import type { Database } from '@/types/supabase';
 
-let supabaseInstance: ReturnType<typeof createClient> | null = null;
+let supabaseInstance: ReturnType<typeof createClient<Database>> | null = null;
 
 export function getSupabaseClient() {
   if (!supabaseInstance) {
@@ -20,7 +21,7 @@ export function getSupabaseClient() {
       );
     }
 
-    supabaseInstance = createClient(url, key);
+    supabaseInstance = createClient<Database>(url, key);
   }
 
   return supabaseInstance;
