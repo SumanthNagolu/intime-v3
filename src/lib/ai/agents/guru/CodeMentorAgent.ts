@@ -19,14 +19,10 @@ import type {
 } from '@/types/guru';
 import { GuruErrorCodes } from '@/types/guru';
 import { loadPromptTemplate } from '../../prompts';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseClient } from "./supabase-client";
 import Anthropic from '@anthropic-ai/sdk';
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-);
 
 /**
  * Code Mentor Agent

@@ -181,7 +181,7 @@ export const guidewireGuruRouter = router({
   mockInterview: protectedProcedure
     .input(
       z.object({
-        interviewType: z.enum(['behavioral', 'technical', 'mixed']).default('behavioral'),
+        interviewType: z.enum(['behavioral', 'technical', 'guidewire']).default('behavioral'),
         guidewireModule: z.string().optional(),
       })
     )

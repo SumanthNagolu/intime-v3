@@ -19,14 +19,10 @@ import type {
 } from '@/types/guru';
 import { GuruErrorCodes } from '@/types/guru';
 import { loadPromptTemplate } from '../../prompts';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseClient } from './supabase-client';
 import OpenAI from 'openai';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-);
 
 /**
  * Resume Builder Agent
@@ -159,6 +155,8 @@ export class ResumeBuilderAgent extends BaseAgent<
    */
   private async getStudentData(studentId: string): Promise<any> {
     try {
+      const supabase = getSupabaseClient();
+
       const { data: profile, error: profileError } = await supabase
         .from('user_profiles')
         .select('*')
@@ -377,6 +375,8 @@ Optimized for ATS systems
     atsScore: number
   ): Promise<string> {
     try {
+      const supabase = getSupabaseClient();
+
       const { data, error } = await supabase
         .from('resume_versions')
         .insert({
