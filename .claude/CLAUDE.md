@@ -1,7 +1,7 @@
 # Claude Code Configuration
 
 🎯 **Tier:** Strategic  
-**Last Updated:** 2025-11-20  
+**Last Updated:** 2025-11-21  
 **Auto-Generated:** Yes (manual sections preserved)
 
 ---
@@ -59,6 +59,7 @@ Complete AI agent system configuration including agents, workflows, and orchestr
 - `hooks/` - See [hooks/CLAUDE.md](hooks/CLAUDE.md)
 - `orchestration/` - See [orchestration/CLAUDE.md](orchestration/CLAUDE.md)
 - `state/` - See [state/CLAUDE.md](state/CLAUDE.md)
+- `workflows/` - See [workflows/CLAUDE.md](workflows/CLAUDE.md)
 
 ---
 
@@ -118,7 +119,7 @@ Read subfolder CLAUDE.md for specifics.
 
 ### Recent Changes
 
-- 2025-11-20: Auto-generated CLAUDE.md created
+- 2025-11-21: Auto-generated CLAUDE.md created
 
 <!-- END MANUAL EDIT SECTION -->
 
@@ -133,4 +134,4 @@ Read subfolder CLAUDE.md for specifics.
 
 ---
 
-*Auto-generated on 2025-11-20 - Tier strategic documentation*
+*Auto-generated on 2025-11-21 - Tier strategic documentation*

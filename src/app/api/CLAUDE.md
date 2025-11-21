@@ -1,7 +1,7 @@
 # Api
 
 ⚙️ **Tier:** Operational  
-**Last Updated:** 2025-11-20  
+**Last Updated:** 2025-11-21  
 **Auto-Generated:** Yes (manual sections preserved)
 
 ---
@@ -21,6 +21,7 @@ Application api module.
 
 **Subdirectories:**
 - `migrate/` - See [migrate/CLAUDE.md](migrate/CLAUDE.md)
+- `students/` - See [students/CLAUDE.md](students/CLAUDE.md)
 - `trpc/` - See [trpc/CLAUDE.md](trpc/CLAUDE.md)
 
 ---
@@ -67,7 +68,7 @@ Auto-generated folder context. Review files in this directory for specific funct
 
 ### Recent Changes
 
-- 2025-11-20: Auto-generated CLAUDE.md created
+- 2025-11-21: Auto-generated CLAUDE.md created
 
 <!-- END MANUAL EDIT SECTION -->
 
@@ -83,4 +84,4 @@ Auto-generated folder context. Review files in this directory for specific funct
 
 ---
 
-*Auto-generated on 2025-11-20 - Tier operational documentation*
+*Auto-generated on 2025-11-21 - Tier operational documentation*

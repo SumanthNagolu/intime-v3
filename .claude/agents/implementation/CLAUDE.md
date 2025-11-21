@@ -1,7 +1,7 @@
 # Implementation
 
 ⚙️ **Tier:** Operational  
-**Last Updated:** 2025-11-20  
+**Last Updated:** 2025-11-21  
 **Auto-Generated:** Yes (manual sections preserved)
 
 ---
@@ -27,6 +27,8 @@ Implementation agents for the multi-agent orchestration system.
 - **frontend-developer.md** - Documentation
 
 - **integration-specialist.md** - Documentation
+
+- **ui-designer.md** - Documentation
 
 ---
 
@@ -72,7 +74,7 @@ Auto-generated folder context. Review files in this directory for specific funct
 
 ### Recent Changes
 
-- 2025-11-20: Auto-generated CLAUDE.md created
+- 2025-11-21: Auto-generated CLAUDE.md created
 
 <!-- END MANUAL EDIT SECTION -->
 
@@ -88,4 +90,4 @@ Auto-generated folder context. Review files in this directory for specific funct
 
 ---
 
-*Auto-generated on 2025-11-20 - Tier operational documentation*
+*Auto-generated on 2025-11-21 - Tier operational documentation*

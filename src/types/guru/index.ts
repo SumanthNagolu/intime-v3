@@ -178,7 +178,7 @@ export interface InterviewCoachInput {
   /** Student ID */
   studentId: string;
   /** Interview type */
-  interviewType: 'technical' | 'behavioral' | 'mixed';
+  interviewType: 'technical' | 'behavioral' | 'guidewire';
   /** Guidewire module focus */
   guidewireModule?: string;
   /** Mock interview session ID */
@@ -221,7 +221,7 @@ export interface InterviewCoachOutput {
 export interface InterviewSession {
   id: string;
   studentId: string;
-  interviewType: 'technical' | 'behavioral' | 'mixed';
+  interviewType: 'technical' | 'behavioral' | 'guidewire';
   guidewireModule?: string;
   questions: InterviewQuestion[];
   averageScore: number;

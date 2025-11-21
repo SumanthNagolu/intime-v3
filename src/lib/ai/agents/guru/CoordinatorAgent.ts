@@ -15,14 +15,10 @@ import { CodeMentorAgent } from './CodeMentorAgent';
 import { ResumeBuilderAgent } from './ResumeBuilderAgent';
 import { ProjectPlannerAgent } from './ProjectPlannerAgent';
 import { InterviewCoachAgent } from './InterviewCoachAgent';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseClient } from "./supabase-client";
 import OpenAI from 'openai';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-);
 
 /**
  * Query classification result

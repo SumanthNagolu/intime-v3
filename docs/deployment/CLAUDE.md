@@ -1,7 +1,7 @@
 # Deployment
 
 ⚙️ **Tier:** Operational  
-**Last Updated:** 2025-11-20  
+**Last Updated:** 2025-11-21  
 **Auto-Generated:** Yes (manual sections preserved)
 
 ---
@@ -24,7 +24,7 @@ Documentation for deployment.
 
 - **DEPLOYMENT-SUCCESS.md** - Documentation
 
-- **EPIC-2.5-DEPLOYMENT-REPORT.md** - Documentation
+- **FIX-401-DEPLOYMENT-PROTECTION.md** - Documentation
 
 - **MIGRATION-021-APPLIED.md** - Documentation
 
@@ -33,6 +33,8 @@ Documentation for deployment.
 - **SPRINT-5-DEPLOYMENT-PLAN.md** - Documentation
 
 - **SPRINT-5-DEPLOYMENT-SUMMARY.md** - Documentation
+
+- **SPRINT-5-FINAL-STATUS.md** - Documentation
 
 - **SUPABASE-MIGRATION-LIMITATIONS.md** - Documentation
 
@@ -80,7 +82,7 @@ Auto-generated folder context. Review files in this directory for specific funct
 
 ### Recent Changes
 
-- 2025-11-20: Auto-generated CLAUDE.md created
+- 2025-11-21: Auto-generated CLAUDE.md created
 
 <!-- END MANUAL EDIT SECTION -->
 
@@ -96,4 +98,4 @@ Auto-generated folder context. Review files in this directory for specific funct
 
 ---
 
-*Auto-generated on 2025-11-20 - Tier operational documentation*
+*Auto-generated on 2025-11-21 - Tier operational documentation*

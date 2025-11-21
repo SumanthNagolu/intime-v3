@@ -1,7 +1,7 @@
 # Complete Documentation Index
 
-**Last Updated:** 2025-11-20  
-**Total Folders Documented:** 102  
+**Last Updated:** 2025-11-21  
+**Total Folders Documented:** 107  
 **Coverage Level:** Maximum Granularity ✅
 
 ---
@@ -110,7 +110,7 @@ Domain-level modules:
 
 ---
 
-## ⚙️ Operational Level (90 folders)
+## ⚙️ Operational Level (95 folders)
 
 Specific components and implementations:
 
@@ -178,6 +178,10 @@ Specific components and implementations:
   state module.  
   📄 [View CLAUDE.md](.claude/state/CLAUDE.md)
 
+- **Workflows** (`.claude/workflows/`)  
+  workflows module.  
+  📄 [View CLAUDE.md](.claude/workflows/CLAUDE.md)
+
 #### .claude/hooks/
 
 - **Scripts** (`.claude/hooks/scripts/`)  
@@ -186,9 +190,23 @@ Specific components and implementations:
 
 #### .claude/state/
 
+- **Runs** (`.claude/state/runs/`)  
+  runs module.  
+  📄 [View CLAUDE.md](.claude/state/runs/CLAUDE.md)
+
 - **Timeline** (`.claude/state/timeline/`)  
   timeline module.  
   📄 [View CLAUDE.md](.claude/state/timeline/CLAUDE.md)
+
+#### .claude/state/runs/
+
+- **Feature 2025 11 20T18 53 26** (`.claude/state/runs/feature-2025-11-20T18-53-26/`)  
+  feature-2025-11-20T18-53-26 module.  
+  📄 [View CLAUDE.md](.claude/state/runs/feature-2025-11-20T18-53-26/CLAUDE.md)
+
+- **Feature 2025 11 20T19 37 04** (`.claude/state/runs/feature-2025-11-20T19-37-04/`)  
+  feature-2025-11-20T19-37-04 module.  
+  📄 [View CLAUDE.md](.claude/state/runs/feature-2025-11-20T19-37-04/CLAUDE.md)
 
 #### docs/
 
@@ -357,6 +375,10 @@ Specific components and implementations:
 - **Migrate** (`src/app/api/migrate/`)  
   Application migrate module.  
   📄 [View CLAUDE.md](src/app/api/migrate/CLAUDE.md)
+
+- **Students** (`src/app/api/students/`)  
+  Application students module.  
+  📄 [View CLAUDE.md](src/app/api/students/CLAUDE.md)
 
 - **Trpc** (`src/app/api/trpc/`)  
   Application trpc module.  
@@ -551,4 +573,4 @@ git diff **/CLAUDE.md
 
 ---
 
-*Maximum granularity documentation - Auto-generated on 2025-11-20*
+*Maximum granularity documentation - Auto-generated on 2025-11-21*
