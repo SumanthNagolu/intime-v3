@@ -1,5 +1,7 @@
 # ACAD-023: Certificate Generation
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 6
 **Sprint:** Sprint 4 (Week 11-12)
 **Priority:** MEDIUM

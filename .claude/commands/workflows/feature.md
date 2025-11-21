@@ -1,15 +1,22 @@
 ---
-description: Stage 5 - Execute a story through the full development pipeline (PM → Architect → Developer → QA → Deploy)
+description: Execute a story through the full development pipeline (PM → Architect → Developer → QA → Deploy)
 ---
 
-I'll execute this story through our complete development pipeline.
+**🚀 This workflow is now automated!**
 
-**Usage:**
-```
-/workflows:feature [STORY-ID]
+Instead of me executing this manually, use the unified workflow system:
+
+**NEW Automated Command:**
+```bash
+pnpm workflow feature [STORY-ID]
 ```
 
 **Example:**
+```bash
+pnpm workflow feature AI-GURU-002-code-mentor
+```
+
+**Or use this slash command (triggers same system):**
 ```
 /workflows:feature AI-GURU-002-code-mentor
 ```
@@ -39,5 +46,46 @@ I'll execute this story through our complete development pipeline.
 - Story must be in current or past sprint plan
 
 **Estimated Time:** 1-4 hours depending on story complexity
+
+---
+
+## 📋 Post-Workflow Auto-Updates
+
+After this workflow completes, the following documentation will be **automatically updated**:
+
+✅ **Story File** (`docs/planning/stories/[epic-id]/[story-id].md`)
+- Status badge: ⚪ → 🟡 → 🟢
+- Completion date
+- Implementation notes
+
+✅ **Epic File** (`docs/planning/epics/[feature]/[epic-id].md`)
+- Progress percentage updated (based on completed stories)
+- Story completion status updated
+
+✅ **Feature File** (`docs/planning/features/[feature-name].md`)
+- Overall progress percentage recalculated
+- Epic progress updated
+
+✅ **Sprint File** (`docs/planning/sprints/sprint-[N].md`)
+- Sprint velocity updated
+- Burndown chart data refreshed
+
+✅ **Project Timeline** (`.claude/state/timeline/`)
+- Story completion logged
+- Timeline metrics updated
+
+**How it works:**
+1. Workflow creates/modifies code, tests, and docs
+2. Post-workflow hook (`.claude/hooks/post-workflow.sh`) detects changes
+3. Auto-update script (`scripts/update-documentation.ts`) runs
+4. All related documentation syncs automatically
+5. Update report generated
+
+**Manual verification:**
+Run `pnpm doc:verify` to validate all documentation is consistent.
+
+**See:** `/docs/DOCUMENTATION-AUTO-UPDATE-SPEC.md` for complete details.
+
+---
 
 Let me start the pipeline...

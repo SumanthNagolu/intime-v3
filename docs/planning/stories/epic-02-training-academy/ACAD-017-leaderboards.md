@@ -1,5 +1,7 @@
 # ACAD-017: Leaderboards
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 4
 **Sprint:** Sprint 3 (Week 9-10)
 **Priority:** HIGH

@@ -1,5 +1,7 @@
 # ACAD-028: Stripe Integration
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 8
 **Sprint:** Sprint 5 (Week 13-14)
 **Priority:** CRITICAL

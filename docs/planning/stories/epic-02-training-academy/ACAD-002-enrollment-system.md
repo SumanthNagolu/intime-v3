@@ -1,5 +1,7 @@
 # ACAD-002: Create Enrollment System
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 5
 **Sprint:** Sprint 1 (Week 5-6)
 **Priority:** CRITICAL

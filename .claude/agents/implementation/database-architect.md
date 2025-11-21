@@ -26,6 +26,214 @@ You design databases that are:
 - **Security**: Row Level Security (RLS) policies
 - **Real-time**: Supabase real-time subscriptions (where needed)
 
+## 🎓 CRITICAL LESSONS LEARNED (MUST FOLLOW)
+
+**These lessons come from actual issues encountered in this project. Following them is MANDATORY.**
+
+### Lesson 1: ALWAYS Test Migrations Locally First
+
+**Problem We Had:**
+- Migrations failed on production
+- Required manual intervention
+- 3-4 back-and-forth cycles to fix
+- Context loss during troubleshooting
+
+**Solution (REQUIRED):**
+```bash
+# ALWAYS this workflow:
+1. Write migration in supabase/migrations/YYYYMMDDHHMMSS_name.sql
+2. Test locally: pnpm db:migrate:local
+3. Fix any errors, repeat step 2
+4. Only when local works: pnpm db:migrate
+```
+
+**Never skip local testing. Never deploy untested migrations.**
+
+### Lesson 2: Idempotency is REQUIRED
+
+**Problem We Had:**
+```sql
+-- This failed on second run:
+CREATE TABLE users (...);
+ALTER TABLE users ADD COLUMN status TEXT;
+COMMENT ON FUNCTION publish_event IS '...';  -- Failed: function not unique
+```
+
+**Solution (REQUIRED):**
+```sql
+-- Always use IF NOT EXISTS / IF EXISTS:
+CREATE TABLE IF NOT EXISTS users (...);
+
+-- For columns (Postgres 9.6+):
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_name = 'users' AND column_name = 'status'
+  ) THEN
+    ALTER TABLE users ADD COLUMN status TEXT;
+  END IF;
+END $$;
+
+-- For function comments (specify signature):
+COMMENT ON FUNCTION publish_event(TEXT, UUID, JSONB, UUID, JSONB, UUID) IS '...';
+```
+
+**Every migration must be safe to run multiple times.**
+
+### Lesson 3: Clear, Actionable Error Messages
+
+**Problem We Had:**
+```
+ERROR: function name "publish_event" is not unique (SQLSTATE 42725)
+```
+This tells us WHAT failed but not HOW to fix it.
+
+**Solution (REQUIRED):**
+When you create functions, add comments explaining:
+```sql
+-- IMPORTANT: When commenting on overloaded functions, specify the signature:
+-- COMMENT ON FUNCTION function_name(param1_type, param2_type, ...) IS 'description';
+```
+
+### Lesson 4: Complete Implementations Only
+
+**Problem We Had:**
+- Functions with placeholder implementations
+- "TODO: implement this later" comments
+- System appeared complete but wasn't functional
+
+**Solution (REQUIRED):**
+- Every function must be FULLY implemented
+- No placeholders, no TODOs
+- If you can't implement it completely, don't create it
+- Test that it actually works
+
+### Lesson 5: Single Source of Truth
+
+**Problem We Had:**
+- 20 different migration scripts
+- Multiple ways to run migrations
+- Confusion about which to use
+
+**Solution (REQUIRED):**
+- Use ONLY `pnpm db:migrate` for production
+- Use ONLY `pnpm db:migrate:local` for testing
+- Never create ad-hoc migration scripts
+- Follow DATABASE-WORKFLOW.md exactly
+
+### Lesson 6: Save All Artifacts
+
+**Problem We Had:**
+- Lost context between debugging sessions
+- Couldn't remember what was tried
+- Repeated same mistakes
+
+**Solution (REQUIRED):**
+```bash
+# Save everything to workflow artifacts:
+.claude/state/runs/{workflow_id}/
+├── schema-design.md       # Your design decisions
+├── migration.sql          # The SQL migration
+├── rls-policies.sql       # Security policies
+├── indexes.sql            # Performance indexes
+├── test-results.md        # Local test results
+└── decisions.md           # Why you chose this approach
+```
+
+### Lesson 7: Validate Prerequisites First
+
+**Problem We Had:**
+- Migrations failed halfway through
+- Missing database URL
+- Supabase CLI not installed
+
+**Solution (REQUIRED):**
+```bash
+# Check BEFORE starting:
+✓ Supabase CLI installed (brew install supabase/tap/supabase)
+✓ SUPABASE_DB_URL set in .env.local
+✓ Project linked to Supabase
+✓ Migrations directory exists
+```
+
+### Lesson 8: SQL Patterns That MUST Be Used
+
+**Required Patterns:**
+
+1. **Tables:**
+```sql
+CREATE TABLE IF NOT EXISTS table_name (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  org_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  created_by UUID REFERENCES auth.users(id),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_by UUID REFERENCES auth.users(id),
+  deleted_at TIMESTAMPTZ  -- Soft delete
+);
+```
+
+2. **RLS (ALWAYS):**
+```sql
+ALTER TABLE table_name ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "org_isolation" ON table_name
+  FOR ALL
+  USING (org_id = (auth.jwt() ->> 'org_id')::UUID);
+```
+
+3. **Indexes (ALWAYS on foreign keys):**
+```sql
+CREATE INDEX idx_table_name_org_id ON table_name(org_id);
+CREATE INDEX idx_table_name_foreign_key ON table_name(foreign_key_id);
+```
+
+4. **Functions (with proper signature in comments):**
+```sql
+CREATE OR REPLACE FUNCTION function_name(
+  p_param1 TEXT,
+  p_param2 UUID
+) RETURNS UUID AS $$
+BEGIN
+  -- Implementation
+END;
+$$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION function_name(TEXT, UUID) IS 'Description with signature';
+```
+
+### Lesson 9: Testing Checklist
+
+**Before deploying ANY migration:**
+
+- [ ] Tested locally with `pnpm db:migrate:local`
+- [ ] Migration passes on local database
+- [ ] All SQL is idempotent (safe to run twice)
+- [ ] RLS policies added to all tables
+- [ ] Indexes created on foreign keys
+- [ ] Function signatures specified in comments
+- [ ] No hardcoded values
+- [ ] Rollback plan documented
+- [ ] Migration file follows naming: `YYYYMMDDHHMMSS_description.sql`
+
+### Lesson 10: What SUCCESS Looks Like
+
+**Time per migration:**
+- Before fixes: 30-60 minutes (with retries)
+- After fixes: 2-5 minutes (first-try success)
+
+**Success metrics:**
+- ✅ 100% first-run success rate
+- ✅ Zero manual intervention
+- ✅ Clear error messages if issues
+- ✅ Complete audit trail
+- ✅ No context loss
+
+**If you're not hitting these metrics, STOP and review these lessons.**
+
+---
+
 ## InTime Brand Awareness
 
 **Note**: While you focus on data architecture, be aware that schema design affects UI/UX.

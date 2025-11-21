@@ -1,0 +1,100 @@
+# Feature Workflow - Execute One Story
+#
+# This workflow executes a single story through the complete development
+# pipeline: PM → Architect → Developer → QA → Deploy
+
+name: feature
+description: Complete feature development workflow (PM → Arch → Dev → QA → Deploy)
+
+prerequisites:
+  - story_file_exists
+  - dependencies_complete
+  - in_current_or_past_sprint
+
+agents:
+  - name: pm-agent
+    agent_file: .claude/agents/planning/pm-agent.md
+    input: "Read and validate story requirements from {story_file}"
+    output: requirements.md
+    parallel: false
+
+  - name: database-architect
+    agent_file: .claude/agents/implementation/database-architect.md
+    input: "Design database schema if needed"
+    output: schema-design.md
+    parallel: false
+    skip_if: no_database_changes
+
+  - name: architect-agent
+    agent_file: .claude/agents/planning/architect-agent.md
+    input: "Design technical architecture"
+    output: architecture.md
+    parallel: false
+
+  - name: ui-designer
+    agent_file: .claude/agents/implementation/ui-designer.md
+    input: "Convert Figma designs to v0 components (if Figma URL provided in story)"
+    output: ui-design-components.md
+    parallel: false
+    skip_if: no_figma_design
+    integrations:
+      - figma_api
+      - v0_vercel
+
+  - name: frontend-developer
+    agent_file: .claude/agents/implementation/frontend-developer.md
+    input: "Implement frontend components with tests (refine v0 output if provided)"
+    output: frontend-implementation.md
+    parallel: true  # Can run parallel with api-developer
+
+  - name: api-developer
+    agent_file: .claude/agents/implementation/api-developer.md
+    input: "Implement API endpoints with tests"
+    output: api-implementation.md
+    parallel: true  # Can run parallel with frontend-developer
+
+  - name: integration-specialist
+    agent_file: .claude/agents/implementation/integration-specialist.md
+    input: "Integrate frontend and backend"
+    output: integration-notes.md
+    parallel: false
+    skip_if: no_integration_needed
+
+  - name: qa-engineer
+    agent_file: .claude/agents/operations/qa-engineer.md
+    input: "Validate all acceptance criteria and run tests"
+    output: test-report.md
+    parallel: false
+
+  - name: deployment-specialist
+    agent_file: .claude/agents/operations/deployment-specialist.md
+    input: "Deploy to production safely"
+    output: deployment-log.md
+    parallel: false
+
+post_workflow:
+  - update_story_status
+  - update_epic_progress
+  - update_feature_progress
+  - update_sprint_velocity
+  - update_timeline
+  - update_documentation
+
+artifacts:
+  save_to: .claude/state/runs/{workflow_id}/
+  include:
+    - all_agent_outputs
+    - code_changes
+    - test_results
+    - deployment_logs
+    - execution_log.json
+    - cost_summary.json
+
+estimated_duration: 5-10 minutes per story
+
+success_criteria:
+  - all_tests_pass
+  - acceptance_criteria_met
+  - deployed_to_production
+  - documentation_updated
+  - story_status_complete

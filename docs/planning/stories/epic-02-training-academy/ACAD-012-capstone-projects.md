@@ -1,5 +1,7 @@
 # ACAD-012: Build Capstone Project System
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 8
 **Sprint:** Sprint 2 (Week 7-8)
 **Priority:** HIGH

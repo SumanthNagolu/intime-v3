@@ -1,5 +1,7 @@
 # ACAD-006: Implement Prerequisites and Sequencing
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 4
 **Sprint:** Sprint 1 (Week 5-6)
 **Priority:** HIGH

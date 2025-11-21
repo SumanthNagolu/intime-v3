@@ -1,5 +1,7 @@
 # ACAD-016: Achievement System
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 6
 **Sprint:** Sprint 3 (Week 9-10)
 **Priority:** HIGH

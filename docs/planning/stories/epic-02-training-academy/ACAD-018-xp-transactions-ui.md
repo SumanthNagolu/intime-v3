@@ -1,5 +1,7 @@
 # ACAD-018: XP Transactions UI
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 3
 **Sprint:** Sprint 3 (Week 9-10)
 **Priority:** HIGH

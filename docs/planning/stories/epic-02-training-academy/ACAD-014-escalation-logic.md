@@ -1,5 +1,7 @@
 # ACAD-014: Escalation Logic
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 5
 **Sprint:** Sprint 3 (Week 9-10)
 **Priority:** HIGH

@@ -1,5 +1,7 @@
 # ACAD-009: Build Reading Materials Renderer
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 3
 **Sprint:** Sprint 2 (Week 7-8)
 **Priority:** MEDIUM

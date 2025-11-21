@@ -13,7 +13,19 @@
         ]
       }
     ],
-    "PostToolUse": [],
+    "PostToolUse": [
+      {
+        "matcher": "SlashCommand",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/post-workflow.sh",
+            "timeout": 60,
+            "description": "Auto-update documentation after workflow execution"
+          }
+        ]
+      }
+    ],
     "SubagentStop": [],
     "SessionStart": [
       {

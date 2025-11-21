@@ -1,5 +1,7 @@
 # ACAD-001: Create Courses and Curriculum Tables
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 5
 **Sprint:** Sprint 1 (Week 5-6)
 **Priority:** CRITICAL (Blocks all Academy work)

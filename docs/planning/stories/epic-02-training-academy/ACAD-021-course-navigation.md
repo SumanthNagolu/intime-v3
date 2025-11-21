@@ -1,5 +1,7 @@
 # ACAD-021: Course Navigation
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 4
 **Sprint:** Sprint 4 (Week 11-12)
 **Priority:** HIGH

@@ -1,5 +1,7 @@
 # ACAD-013: AI Mentor Integration
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 8
 **Sprint:** Sprint 3 (Week 9-10)
 **Priority:** HIGH

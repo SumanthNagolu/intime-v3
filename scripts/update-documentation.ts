@@ -17,8 +17,13 @@
 
 import { program } from 'commander';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import fs from 'fs/promises';
 import { glob } from 'glob';
+
+// ES Module compatibility
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // ============================================================================
 // TYPES
@@ -646,9 +651,247 @@ async function updateLinks(
   report: UpdateReport,
   dryRun: boolean
 ): Promise<void> {
-  // This is a placeholder - full implementation would scan for broken links
-  // and add missing parent-child relationships
-  report.updates.links.count = 0;
+  const projectRoot = path.resolve(__dirname, '..');
+
+  // Process all modified and new entities
+  const allEntities = [...changes.newEntities, ...changes.modifiedEntities];
+
+  for (const entity of allEntities) {
+    // entity.path is already an absolute path from parseFileMetadata
+    const filePath = entity.path;
+    const content = await fs.readFile(filePath, 'utf-8');
+
+    // Extract all markdown links
+    const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g;
+    const links = [...content.matchAll(linkPattern)];
+
+    let modified = false;
+    let newContent = content;
+
+    // Check for broken links
+    for (const match of links) {
+      const linkText = match[1];
+      const linkTarget = match[2];
+
+      // Skip external URLs
+      if (linkTarget.startsWith('http://') || linkTarget.startsWith('https://')) {
+        continue;
+      }
+
+      // Resolve relative path
+      const absoluteTarget = path.resolve(path.dirname(filePath), linkTarget);
+
+      // Check if target exists
+      try {
+        await fs.access(absoluteTarget);
+      } catch (error) {
+        // Link is broken - try to fix it
+        const fixedLink = await attemptToFixBrokenLink(linkTarget, filePath, projectRoot);
+
+        if (fixedLink) {
+          newContent = newContent.replace(
+            `[${linkText}](${linkTarget})`,
+            `[${linkText}](${fixedLink})`
+          );
+          modified = true;
+
+          report.updates.links.items.push({
+            file: entity.path,
+            added: `Fixed broken link: ${linkTarget} → ${fixedLink}`
+          });
+        }
+      }
+    }
+
+    // Add parent-child relationship links if missing
+    const parentLink = await getParentEntityLink(entity, projectRoot);
+    if (parentLink && !content.includes(parentLink.target)) {
+      // Add link to parent entity
+      const linkSection = `\n\n**Parent:** [${parentLink.text}](${parentLink.target})\n`;
+
+      // Insert after the header
+      newContent = newContent.replace(
+        /(^# .*?\n\n)/,
+        `$1${linkSection}`
+      );
+      modified = true;
+
+      report.updates.links.items.push({
+        file: entity.path,
+        added: `Added parent link: ${parentLink.text}`
+      });
+    }
+
+    // Add child entity links if missing
+    const childLinks = await getChildEntityLinks(entity, projectRoot);
+    if (childLinks.length > 0) {
+      // Check if we have a "Related" or "Children" section
+      if (!content.includes('## Related Stories') && !content.includes('## Stories')) {
+        const childSection = generateChildLinksSection(entity.type, childLinks);
+
+        if (childSection) {
+          // Add at the end of the file
+          newContent = newContent + '\n\n' + childSection;
+          modified = true;
+
+          report.updates.links.items.push({
+            file: entity.path,
+            added: `Added ${childLinks.length} child link(s)`
+          });
+        }
+      }
+    }
+
+    // Write changes
+    if (modified) {
+      if (!dryRun) {
+        await fs.writeFile(filePath, newContent);
+      }
+      report.updates.links.count++;
+    }
+  }
+}
+
+// Helper function to attempt fixing broken links
+async function attemptToFixBrokenLink(
+  brokenLink: string,
+  sourceFile: string,
+  projectRoot: string
+): Promise<string | null> {
+  // Extract filename from broken link
+  const filename = path.basename(brokenLink);
+
+  // Search for the file in docs directory
+  const docsDir = path.join(projectRoot, 'docs');
+  const pattern = `**/${filename}`;
+
+  try {
+    const files = await glob(pattern, { cwd: docsDir, absolute: false });
+
+    if (files.length > 0) {
+      // Found the file - calculate relative path from source
+      const targetFile = path.join(docsDir, files[0]);
+      const relativePath = path.relative(path.dirname(sourceFile), targetFile);
+      return relativePath;
+    }
+  } catch (error) {
+    // File not found
+  }
+
+  return null;
+}
+
+// Helper function to get parent entity link
+async function getParentEntityLink(
+  entity: FileMetadata,
+  projectRoot: string
+): Promise<{ text: string; target: string } | null> {
+  switch (entity.type) {
+    case 'story': {
+      // Story's parent is epic
+      const epicMatch = entity.path.match(/stories\/(epic-[^/]+)\//);
+      if (epicMatch) {
+        const epicDir = epicMatch[1];
+        const epicFile = path.join(projectRoot, 'docs', 'planning', 'epics', epicDir, `${epicDir.toUpperCase()}.md`);
+
+        try {
+          await fs.access(epicFile);
+          return {
+            text: epicDir.toUpperCase(),
+            target: `../../epics/${epicDir}/${epicDir.toUpperCase()}.md`
+          };
+        } catch {
+          return null;
+        }
+      }
+      break;
+    }
+
+    case 'epic': {
+      // Epic's parent is feature
+      // This would need feature file structure to be implemented
+      return null;
+    }
+
+    case 'sprint': {
+      // Sprint doesn't have a direct parent in hierarchy
+      return null;
+    }
+  }
+
+  return null;
+}
+
+// Helper function to get child entity links
+async function getChildEntityLinks(
+  entity: FileMetadata,
+  projectRoot: string
+): Promise<Array<{ text: string; target: string }>> {
+  const links: Array<{ text: string; target: string }> = [];
+
+  switch (entity.type) {
+    case 'epic': {
+      // Epic's children are stories
+      const epicMatch = entity.path.match(/epics\/(epic-[^/]+)\//);
+      if (epicMatch) {
+        const epicDir = epicMatch[1];
+        const storiesDir = path.join(projectRoot, 'docs', 'planning', 'stories', epicDir);
+
+        try {
+          const files = await fs.readdir(storiesDir);
+          const storyFiles = files.filter(f => f.endsWith('.md') && f !== 'README.md' && f !== 'CLAUDE.md');
+
+          for (const storyFile of storyFiles) {
+            const storyId = storyFile.replace('.md', '');
+            links.push({
+              text: storyId,
+              target: `../../stories/${epicDir}/${storyFile}`
+            });
+          }
+        } catch {
+          // Stories directory doesn't exist
+        }
+      }
+      break;
+    }
+
+    case 'feature': {
+      // Feature's children are epics
+      // Would need feature file structure
+      break;
+    }
+  }
+
+  return links;
+}
+
+// Helper function to generate child links section
+function generateChildLinksSection(
+  entityType: string,
+  childLinks: Array<{ text: string; target: string }>
+): string | null {
+  if (childLinks.length === 0) {
+    return null;
+  }
+
+  let title = '';
+  switch (entityType) {
+    case 'epic':
+      title = '## Stories';
+      break;
+    case 'feature':
+      title = '## Epics';
+      break;
+    default:
+      return null;
+  }
+
+  let section = `${title}\n\n`;
+  for (const link of childLinks) {
+    section += `- [${link.text}](${link.target})\n`;
+  }
+
+  return section;
 }
 
 // ============================================================================
@@ -660,8 +903,233 @@ async function updateTimelines(
   report: UpdateReport,
   dryRun: boolean
 ): Promise<void> {
-  // This is a placeholder - full implementation would regenerate timeline files
-  report.updates.timelines.count = 0;
+  const projectRoot = path.resolve(__dirname, '..');
+  const timelineDir = path.join(projectRoot, '.claude', 'state', 'timeline');
+
+  try {
+    // Read all timeline session files
+    const sessionFiles = await fs.readdir(timelineDir);
+    const jsonFiles = sessionFiles.filter(f => f.endsWith('.json') && f.startsWith('session-'));
+
+    // Parse session data
+    interface TimelineSession {
+      sessionId: string;
+      conversationSummary: string;
+      agentType: string;
+      agentModel: string;
+      tags: string[];
+      results: {
+        status: string;
+        summary: string;
+      };
+      filesChanged: {
+        created: string[];
+        modified: string[];
+        deleted: string[];
+      };
+      timestamp: Date;
+    }
+
+    const sessions: TimelineSession[] = [];
+
+    for (const file of jsonFiles) {
+      try {
+        const filePath = path.join(timelineDir, file);
+        const content = await fs.readFile(filePath, 'utf-8');
+        const sessionData = JSON.parse(content);
+
+        // Extract timestamp from filename (format: session-YYYY-MM-DD-ID-TIMESTAMP.json)
+        const timestampMatch = file.match(/(\d{4}-\d{2}-\d{2}T[\d-:]+Z)/);
+        if (timestampMatch) {
+          sessions.push({
+            ...sessionData,
+            timestamp: new Date(timestampMatch[1])
+          });
+        }
+      } catch (error) {
+        // Skip invalid session files
+      }
+    }
+
+    // Sort sessions by timestamp (newest first)
+    sessions.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
+
+    // Generate timeline markdown files by sprint
+    const sprintTimelines = groupSessionsBySprint(sessions);
+
+    for (const [sprintNumber, sprintSessions] of Object.entries(sprintTimelines)) {
+      const sprintDir = path.join(projectRoot, 'docs', 'planning', 'sprints', `sprint-${sprintNumber.padStart(2, '0')}`);
+
+      // Check if sprint directory exists
+      try {
+        await fs.access(sprintDir);
+      } catch {
+        // Sprint directory doesn't exist, skip
+        continue;
+      }
+
+      // Generate timeline markdown
+      const timelineContent = generateTimelineMarkdown(sprintSessions);
+      const timelinePath = path.join(sprintDir, 'TIMELINE.md');
+
+      if (!dryRun) {
+        await fs.writeFile(timelinePath, timelineContent);
+      }
+
+      report.updates.timelines.items.push(`Sprint ${sprintNumber}: ${sprintSessions.length} sessions`);
+      report.updates.timelines.count++;
+    }
+
+    // Update recent activity section in STATUS.md files
+    for (const entity of changes.affectedParents) {
+      if (entity.includes('sprints/')) {
+        const sprintMatch = entity.match(/sprint-(\d+)/);
+        if (sprintMatch) {
+          const sprintNumber = sprintMatch[1];
+          const statusPath = path.join(
+            projectRoot,
+            'docs',
+            'planning',
+            'sprints',
+            `sprint-${sprintNumber}`,
+            'STATUS.md'
+          );
+
+          try {
+            let statusContent = await fs.readFile(statusPath, 'utf-8');
+
+            // Find recent sessions for this sprint
+            const sprintSessions = sprintTimelines[sprintNumber] || [];
+            const recentSessions = sprintSessions.slice(0, 5); // Last 5 sessions
+
+            // Generate recent activity section
+            const recentActivitySection = generateRecentActivitySection(recentSessions);
+
+            // Update or add recent activity section
+            if (statusContent.includes('## Recent Activity')) {
+              statusContent = statusContent.replace(
+                /## Recent Activity[\s\S]*?(?=\n## |$)/,
+                recentActivitySection
+              );
+            } else {
+              statusContent += '\n\n' + recentActivitySection;
+            }
+
+            if (!dryRun) {
+              await fs.writeFile(statusPath, statusContent);
+            }
+
+            report.updates.timelines.items.push(`Updated STATUS.md for Sprint ${sprintNumber}`);
+          } catch (error) {
+            // STATUS.md doesn't exist or can't be read
+          }
+        }
+      }
+    }
+  } catch (error) {
+    // Timeline directory doesn't exist or can't be read
+    console.error('Timeline update error:', error);
+  }
+}
+
+// Helper function to group sessions by sprint
+function groupSessionsBySprint(sessions: any[]): Record<string, any[]> {
+  const sprintTimelines: Record<string, any[]> = {};
+
+  // Group sessions by date (assuming 2-week sprints)
+  for (const session of sessions) {
+    // For now, use a simple heuristic based on tags or date
+    // In a real implementation, this would check which sprint was active at the time
+    const sprintNumber = inferSprintFromTimestamp(session.timestamp);
+
+    if (!sprintTimelines[sprintNumber]) {
+      sprintTimelines[sprintNumber] = [];
+    }
+
+    sprintTimelines[sprintNumber].push(session);
+  }
+
+  return sprintTimelines;
+}
+
+// Helper function to infer sprint number from timestamp
+function inferSprintFromTimestamp(timestamp: Date): string {
+  // Simple heuristic: Sprint 1 started 2025-11-01
+  // Each sprint is 2 weeks (14 days)
+  const sprintStartDate = new Date('2025-11-01');
+  const daysSinceStart = Math.floor((timestamp.getTime() - sprintStartDate.getTime()) / (1000 * 60 * 60 * 24));
+  const sprintNumber = Math.floor(daysSinceStart / 14) + 1;
+
+  return String(Math.max(1, sprintNumber));
+}
+
+// Helper function to generate timeline markdown
+function generateTimelineMarkdown(sessions: any[]): string {
+  let markdown = '# Sprint Timeline\n\n';
+  markdown += `**Generated:** ${new Date().toISOString()}\n`;
+  markdown += `**Total Sessions:** ${sessions.length}\n\n`;
+  markdown += '---\n\n';
+
+  // Group by date
+  const sessionsByDate: Record<string, any[]> = {};
+  for (const session of sessions) {
+    const dateKey = session.timestamp.toISOString().split('T')[0];
+    if (!sessionsByDate[dateKey]) {
+      sessionsByDate[dateKey] = [];
+    }
+    sessionsByDate[dateKey].push(session);
+  }
+
+  // Generate timeline
+  for (const [date, dateSessions] of Object.entries(sessionsByDate)) {
+    markdown += `## ${date}\n\n`;
+
+    for (const session of dateSessions) {
+      const time = session.timestamp.toISOString().split('T')[1].substring(0, 8);
+      markdown += `### ${time} - ${session.conversationSummary}\n\n`;
+      markdown += `**Agent:** ${session.agentType} (${session.agentModel})\n`;
+      markdown += `**Status:** ${session.results.status}\n`;
+
+      if (session.tags && session.tags.length > 0) {
+        markdown += `**Tags:** ${session.tags.join(', ')}\n`;
+      }
+
+      if (session.filesChanged) {
+        const totalChanges =
+          session.filesChanged.created.length +
+          session.filesChanged.modified.length +
+          session.filesChanged.deleted.length;
+
+        if (totalChanges > 0) {
+          markdown += `**Files Changed:** ${totalChanges}\n`;
+        }
+      }
+
+      markdown += '\n---\n\n';
+    }
+  }
+
+  return markdown;
+}
+
+// Helper function to generate recent activity section
+function generateRecentActivitySection(recentSessions: any[]): string {
+  let section = '## Recent Activity\n\n';
+
+  if (recentSessions.length === 0) {
+    section += '*No recent activity*\n';
+    return section;
+  }
+
+  for (const session of recentSessions) {
+    const date = session.timestamp.toISOString().split('T')[0];
+    const time = session.timestamp.toISOString().split('T')[1].substring(0, 8);
+
+    section += `- **${date} ${time}** - ${session.conversationSummary} (${session.results.status})\n`;
+  }
+
+  section += '\n';
+  return section;
 }
 
 // ============================================================================
@@ -669,9 +1137,190 @@ async function updateTimelines(
 // ============================================================================
 
 async function cleanupDocumentation(report: UpdateReport, dryRun: boolean): Promise<void> {
-  // This is a placeholder - full implementation would detect and remove duplicates
-  report.cleanup.duplicates.count = 0;
-  report.cleanup.outdated.count = 0;
+  const projectRoot = path.resolve(__dirname, '..');
+  const docsDir = path.join(projectRoot, 'docs');
+
+  // Find duplicate files
+  await findDuplicateFiles(docsDir, report, dryRun);
+
+  // Find outdated documentation
+  await findOutdatedDocumentation(docsDir, report, dryRun);
+
+  // Clean up old timeline sessions (keep last 30 days)
+  await cleanupOldTimelineSessions(projectRoot, report, dryRun);
+}
+
+// Helper function to find duplicate files
+async function findDuplicateFiles(
+  docsDir: string,
+  report: UpdateReport,
+  dryRun: boolean
+): Promise<void> {
+  // Find all markdown files
+  const pattern = '**/*.md';
+  const files = await glob(pattern, { cwd: docsDir, absolute: false });
+
+  // Calculate content hashes
+  interface FileHash {
+    path: string;
+    hash: string;
+    size: number;
+  }
+
+  const fileHashes: FileHash[] = [];
+
+  for (const file of files) {
+    // Skip CLAUDE.md and README.md as they're auto-generated or documentation
+    if (file.endsWith('/CLAUDE.md') || file.endsWith('/README.md')) {
+      continue;
+    }
+
+    const fullPath = path.join(docsDir, file);
+    const content = await fs.readFile(fullPath, 'utf-8');
+
+    // Normalize content for comparison (remove timestamps, whitespace differences)
+    const normalized = content
+      .replace(/\*\*Last Updated:\*\* .+/g, '')
+      .replace(/\*\*Generated:\*\* .+/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    // Simple hash (for production, use crypto.createHash)
+    const hash = Buffer.from(normalized).toString('base64').substring(0, 32);
+
+    fileHashes.push({
+      path: file,
+      hash,
+      size: normalized.length
+    });
+  }
+
+  // Group by hash
+  const hashGroups: Record<string, FileHash[]> = {};
+  for (const fileHash of fileHashes) {
+    if (!hashGroups[fileHash.hash]) {
+      hashGroups[fileHash.hash] = [];
+    }
+    hashGroups[fileHash.hash].push(fileHash);
+  }
+
+  // Find duplicates (same hash, different paths)
+  for (const [hash, group] of Object.entries(hashGroups)) {
+    if (group.length > 1) {
+      // Found duplicates - keep the one with shortest path (usually the primary)
+      group.sort((a, b) => a.path.length - b.path.length);
+      const keep = group[0];
+      const duplicates = group.slice(1);
+
+      for (const duplicate of duplicates) {
+        report.cleanup.duplicates.removed.push(duplicate.path);
+        report.cleanup.duplicates.count++;
+
+        if (!dryRun) {
+          const fullPath = path.join(docsDir, duplicate.path);
+          await fs.unlink(fullPath);
+        }
+      }
+    }
+  }
+}
+
+// Helper function to find outdated documentation
+async function findOutdatedDocumentation(
+  docsDir: string,
+  report: UpdateReport,
+  dryRun: boolean
+): Promise<void> {
+  // Find files with certain patterns that indicate they're outdated
+  const outdatedPatterns = [
+    '**/OLD-*.md',
+    '**/DEPRECATED-*.md',
+    '**/*-OLD.md',
+    '**/*-DEPRECATED.md',
+    '**/*.backup.md',
+    '**/*.old.md'
+  ];
+
+  for (const pattern of outdatedPatterns) {
+    const files = await glob(pattern, { cwd: docsDir, absolute: false });
+
+    for (const file of files) {
+      report.cleanup.outdated.removed.push(file);
+      report.cleanup.outdated.count++;
+
+      if (!dryRun) {
+        const fullPath = path.join(docsDir, file);
+        await fs.unlink(fullPath);
+      }
+    }
+  }
+
+  // Find files that haven't been modified in 90+ days and are marked as drafts
+  const pattern = '**/*.md';
+  const allFiles = await glob(pattern, { cwd: docsDir, absolute: false });
+
+  const ninetyDaysAgo = new Date();
+  ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+
+  for (const file of allFiles) {
+    // Skip important files
+    if (
+      file.endsWith('/CLAUDE.md') ||
+      file.endsWith('/README.md') ||
+      file.includes('/epics/') ||
+      file.includes('/stories/') ||
+      file.includes('/sprints/')
+    ) {
+      continue;
+    }
+
+    const fullPath = path.join(docsDir, file);
+    const stats = await fs.stat(fullPath);
+    const content = await fs.readFile(fullPath, 'utf-8');
+
+    // Check if file is old and marked as draft
+    if (stats.mtime < ninetyDaysAgo && content.includes('[DRAFT]')) {
+      report.cleanup.outdated.removed.push(file);
+      report.cleanup.outdated.count++;
+
+      if (!dryRun) {
+        await fs.unlink(fullPath);
+      }
+    }
+  }
+}
+
+// Helper function to clean up old timeline sessions
+async function cleanupOldTimelineSessions(
+  projectRoot: string,
+  report: UpdateReport,
+  dryRun: boolean
+): Promise<void> {
+  const timelineDir = path.join(projectRoot, '.claude', 'state', 'timeline');
+
+  try {
+    const files = await fs.readdir(timelineDir);
+    const sessionFiles = files.filter(f => f.endsWith('.json') && f.startsWith('session-'));
+
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    for (const file of sessionFiles) {
+      const fullPath = path.join(timelineDir, file);
+      const stats = await fs.stat(fullPath);
+
+      if (stats.mtime < thirtyDaysAgo) {
+        report.cleanup.outdated.removed.push(`.claude/state/timeline/${file}`);
+        report.cleanup.outdated.count++;
+
+        if (!dryRun) {
+          await fs.unlink(fullPath);
+        }
+      }
+    }
+  } catch (error) {
+    // Timeline directory doesn't exist or can't be accessed
+  }
 }
 
 // ============================================================================
@@ -679,9 +1328,257 @@ async function cleanupDocumentation(report: UpdateReport, dryRun: boolean): Prom
 // ============================================================================
 
 async function validateDocumentation(report: UpdateReport): Promise<void> {
-  // This is a placeholder - full implementation would validate hierarchy
-  report.validation.passed = true;
-  report.validation.errors = [];
+  const projectRoot = path.resolve(__dirname, '..');
+  const errors: string[] = [];
+
+  // Validate story files
+  await validateStoryFiles(projectRoot, errors);
+
+  // Validate epic files
+  await validateEpicFiles(projectRoot, errors);
+
+  // Validate hierarchy integrity
+  await validateHierarchyIntegrity(projectRoot, errors);
+
+  // Validate cross-references
+  await validateCrossReferences(projectRoot, errors);
+
+  // Check for orphaned files
+  await checkOrphanedFiles(projectRoot, errors);
+
+  report.validation.errors = errors;
+  report.validation.passed = errors.length === 0;
+}
+
+// Helper function to validate story files
+async function validateStoryFiles(projectRoot: string, errors: string[]): Promise<void> {
+  const storiesDir = path.join(projectRoot, 'docs', 'planning', 'stories');
+
+  try {
+    const epicDirs = await fs.readdir(storiesDir);
+
+    for (const epicDir of epicDirs) {
+      if (!epicDir.startsWith('epic-')) {
+        continue;
+      }
+
+      const epicStoriesDir = path.join(storiesDir, epicDir);
+      const stat = await fs.stat(epicStoriesDir);
+
+      if (!stat.isDirectory()) {
+        continue;
+      }
+
+      const files = await fs.readdir(epicStoriesDir);
+      const storyFiles = files.filter(f => f.endsWith('.md') && !['README.md', 'CLAUDE.md', 'COMPLETION-REPORT.md'].includes(f));
+
+      for (const storyFile of storyFiles) {
+        const storyPath = path.join(epicStoriesDir, storyFile);
+        const content = await fs.readFile(storyPath, 'utf-8');
+
+        // Check required fields
+        const requiredFields = [
+          { field: 'Story Points', pattern: /\*\*Story Points:\*\* \d+/ },
+          { field: 'Sprint', pattern: /\*\*Sprint:\*\* Sprint \d+/ },
+          { field: 'Priority', pattern: /\*\*Priority:\*\* (CRITICAL|HIGH|MEDIUM|LOW)/ },
+          { field: 'User Story', pattern: /## User Story/ },
+          { field: 'Acceptance Criteria', pattern: /## Acceptance Criteria/ }
+        ];
+
+        for (const { field, pattern } of requiredFields) {
+          if (!pattern.test(content)) {
+            errors.push(`${epicDir}/${storyFile}: Missing required field: ${field}`);
+          }
+        }
+
+        // Validate story ID format
+        const storyId = storyFile.replace('.md', '');
+        if (!/^[A-Z]+-[A-Z]+-\d{3}/.test(storyId)) {
+          errors.push(`${epicDir}/${storyFile}: Invalid story ID format. Expected: PREFIX-CATEGORY-NNN`);
+        }
+
+        // Check for empty acceptance criteria
+        const criteriaMatch = content.match(/## Acceptance Criteria\s*([\s\S]*?)(?=\n## |$)/);
+        if (criteriaMatch) {
+          const criteria = criteriaMatch[1].trim();
+          if (!criteria || criteria.length < 10) {
+            errors.push(`${epicDir}/${storyFile}: Empty or insufficient acceptance criteria`);
+          }
+        }
+      }
+    }
+  } catch (error) {
+    errors.push(`Error validating story files: ${error}`);
+  }
+}
+
+// Helper function to validate epic files
+async function validateEpicFiles(projectRoot: string, errors: string[]): Promise<void> {
+  const epicsDir = path.join(projectRoot, 'docs', 'planning', 'epics');
+
+  try {
+    const epicDirs = await fs.readdir(epicsDir);
+
+    for (const epicDir of epicDirs) {
+      if (!epicDir.startsWith('epic-')) {
+        continue;
+      }
+
+      const epicPath = path.join(epicsDir, epicDir);
+      const stat = await fs.stat(epicPath);
+
+      if (!stat.isDirectory()) {
+        continue;
+      }
+
+      // Check if epic file exists
+      const epicFileName = `${epicDir.toUpperCase()}.md`;
+      const epicFilePath = path.join(epicPath, epicFileName);
+
+      try {
+        const content = await fs.readFile(epicFilePath, 'utf-8');
+
+        // Check required sections
+        const requiredSections = [
+          'Epic Overview',
+          'Business Value',
+          'Stories',
+          'Dependencies',
+          'Acceptance Criteria'
+        ];
+
+        for (const section of requiredSections) {
+          if (!content.includes(`## ${section}`) && !content.includes(`### ${section}`)) {
+            errors.push(`${epicDir}/${epicFileName}: Missing required section: ${section}`);
+          }
+        }
+      } catch {
+        errors.push(`${epicDir}: Epic file not found: ${epicFileName}`);
+      }
+    }
+  } catch (error) {
+    errors.push(`Error validating epic files: ${error}`);
+  }
+}
+
+// Helper function to validate hierarchy integrity
+async function validateHierarchyIntegrity(projectRoot: string, errors: string[]): Promise<void> {
+  // Check that all stories belong to valid epics
+  const storiesDir = path.join(projectRoot, 'docs', 'planning', 'stories');
+  const epicsDir = path.join(projectRoot, 'docs', 'planning', 'epics');
+
+  try {
+    const storyEpicDirs = await fs.readdir(storiesDir);
+    const epicDirs = await fs.readdir(epicsDir);
+
+    for (const storyEpicDir of storyEpicDirs) {
+      if (!storyEpicDir.startsWith('epic-')) {
+        continue;
+      }
+
+      // Check if corresponding epic directory exists
+      if (!epicDirs.includes(storyEpicDir)) {
+        errors.push(`Orphaned story directory: stories/${storyEpicDir} (no matching epic)`);
+      }
+    }
+
+    // Check that all epics have story directories
+    for (const epicDir of epicDirs) {
+      if (!epicDir.startsWith('epic-')) {
+        continue;
+      }
+
+      if (!storyEpicDirs.includes(epicDir)) {
+        errors.push(`Epic has no stories directory: epics/${epicDir}`);
+      }
+    }
+  } catch (error) {
+    errors.push(`Error validating hierarchy integrity: ${error}`);
+  }
+}
+
+// Helper function to validate cross-references
+async function validateCrossReferences(projectRoot: string, errors: string[]): Promise<void> {
+  const docsDir = path.join(projectRoot, 'docs');
+  const pattern = '**/*.md';
+  const files = await glob(pattern, { cwd: docsDir, absolute: false });
+
+  for (const file of files) {
+    // Skip auto-generated files
+    if (file.endsWith('/CLAUDE.md') || file.endsWith('/README.md')) {
+      continue;
+    }
+
+    const fullPath = path.join(docsDir, file);
+    const content = await fs.readFile(fullPath, 'utf-8');
+
+    // Extract all markdown links
+    const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g;
+    const links = [...content.matchAll(linkPattern)];
+
+    for (const match of links) {
+      const linkTarget = match[2];
+
+      // Skip external URLs
+      if (linkTarget.startsWith('http://') || linkTarget.startsWith('https://') || linkTarget.startsWith('#')) {
+        continue;
+      }
+
+      // Resolve relative path
+      const absoluteTarget = path.resolve(path.dirname(fullPath), linkTarget);
+
+      // Check if target exists
+      try {
+        await fs.access(absoluteTarget);
+      } catch {
+        errors.push(`${file}: Broken link to ${linkTarget}`);
+      }
+    }
+  }
+}
+
+// Helper function to check for orphaned files
+async function checkOrphanedFiles(projectRoot: string, errors: string[]): Promise<void> {
+  const docsDir = path.join(projectRoot, 'docs', 'planning');
+
+  // Check for story files in wrong locations
+  const storiesPattern = '**/AI-*.md';
+  const storyFiles = await glob(storiesPattern, { cwd: docsDir, absolute: false });
+
+  for (const storyFile of storyFiles) {
+    // Story files should be in stories/epic-XX/ directories
+    if (!storyFile.includes('stories/epic-')) {
+      errors.push(`Orphaned story file: ${storyFile} (should be in stories/epic-XX/)`);
+    }
+  }
+
+  // Check for empty directories
+  await checkEmptyDirectories(docsDir, errors);
+}
+
+// Helper function to check for empty directories
+async function checkEmptyDirectories(dir: string, errors: string[], prefix = ''): Promise<void> {
+  try {
+    const entries = await fs.readdir(dir, { withFileTypes: true });
+
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        const fullPath = path.join(dir, entry.name);
+        const subEntries = await fs.readdir(fullPath);
+
+        // Filter out .DS_Store and other system files
+        const realFiles = subEntries.filter(f => !f.startsWith('.'));
+
+        if (realFiles.length === 0) {
+          errors.push(`Empty directory: ${prefix}${entry.name}/`);
+        } else {
+          await checkEmptyDirectories(fullPath, errors, `${prefix}${entry.name}/`);
+        }
+      }
+    }
+  } catch (error) {
+    // Can't access directory
+  }
 }
 
 // ============================================================================

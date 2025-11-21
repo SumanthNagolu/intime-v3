@@ -1,5 +1,7 @@
 # ACAD-003: Create Progress Tracking System
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 6
 **Sprint:** Sprint 1 (Week 5-6)
 **Priority:** CRITICAL

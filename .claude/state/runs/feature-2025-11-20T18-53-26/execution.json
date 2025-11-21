@@ -1,0 +1,30 @@
+{
+  "workflow_id": "feature-2025-11-20T18-53-26",
+  "workflow_type": "feature",
+  "started_at": "2025-11-20T18:53:26.208Z",
+  "status": "running",
+  "target": "TEST-WORKFLOW-001-hello-world",
+  "agents_executed": [
+    {
+      "agent_name": "pm-agent",
+      "started_at": "2025-11-20T18:53:26.214Z",
+      "status": "completed",
+      "output_files": [
+        "requirements.md"
+      ],
+      "completed_at": "2025-11-20T18:53:26.215Z",
+      "duration_seconds": 0.001
+    },
+    {
+      "agent_name": "database-architect",
+      "started_at": "2025-11-20T18:53:26.215Z",
+      "status": "completed",
+      "output_files": [
+        "schema-design.md"
+      ],
+      "completed_at": "2025-11-20T18:53:26.215Z",
+      "duration_seconds": 0
+    }
+  ],
+  "artifacts_path": "/Users/sumanthrajkumarnagolu/Projects/intime-v3/.claude/state/runs/feature-2025-11-20T18-53-26"
+}

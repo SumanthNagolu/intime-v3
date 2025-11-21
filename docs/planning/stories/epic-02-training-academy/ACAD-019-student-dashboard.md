@@ -1,5 +1,7 @@
 # ACAD-019: Student Dashboard
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 6
 **Sprint:** Sprint 4 (Week 11-12)
 **Priority:** HIGH

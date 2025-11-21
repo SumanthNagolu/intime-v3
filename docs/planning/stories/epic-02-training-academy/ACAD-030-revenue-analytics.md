@@ -1,5 +1,7 @@
 # ACAD-030: Revenue Analytics
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 6
 **Sprint:** Sprint 5 (Week 13-14)
 **Priority:** MEDIUM
