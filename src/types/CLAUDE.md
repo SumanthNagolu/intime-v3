@@ -24,6 +24,9 @@ Application types module.
 - **productivity.ts** (401 lines)
   TypeScript Type Definitions for Productivity Tracking
 
+- **supabase.ts** (3789 lines)
+  No description
+
 
 **Subdirectories:**
 - `guru/` - See [guru/CLAUDE.md](guru/CLAUDE.md)
