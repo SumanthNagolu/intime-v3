@@ -86,4 +86,4 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-COMMENT ON FUNCTION publish_event IS 'Publish an event to the event bus. Triggers PostgreSQL NOTIFY for real-time processing. Supports multi-tenancy.';
+COMMENT ON FUNCTION publish_event(TEXT, UUID, JSONB, UUID, JSONB, UUID) IS 'Publish an event to the event bus. Triggers PostgreSQL NOTIFY for real-time processing. Supports multi-tenancy.';

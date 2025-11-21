@@ -1,5 +1,7 @@
 # ACAD-026: Grading System
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 6
 **Sprint:** Sprint 5 (Week 13-14)
 **Priority:** MEDIUM

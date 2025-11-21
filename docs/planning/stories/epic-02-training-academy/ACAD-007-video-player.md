@@ -1,5 +1,7 @@
 # ACAD-007: Build Video Player with Progress Tracking
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 5
 **Sprint:** Sprint 2 (Week 7-8)
 **Priority:** CRITICAL

@@ -1,5 +1,7 @@
 # ACAD-027: At-Risk Alerts
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 5
 **Sprint:** Sprint 5 (Week 13-14)
 **Priority:** MEDIUM

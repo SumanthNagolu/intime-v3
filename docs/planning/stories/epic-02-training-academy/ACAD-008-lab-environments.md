@@ -1,5 +1,7 @@
 # ACAD-008: Create Lab Environments System
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 8
 **Sprint:** Sprint 2 (Week 7-8)
 **Priority:** HIGH

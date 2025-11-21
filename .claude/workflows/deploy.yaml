@@ -1,0 +1,53 @@
+# Deploy Workflow - Production Deployment
+#
+# This workflow deploys to production with safety checks,
+# smoke tests, and monitoring.
+
+name: deploy
+description: Deploy feature to production with safety checks and monitoring
+
+prerequisites:
+  - all_tests_pass
+  - code_reviewed
+  - security_audit_complete
+  - staging_deployed_successfully
+
+agents:
+  - name: deployment-specialist
+    agent_file: .claude/agents/operations/deployment-specialist.md
+    input: "Deploy to {target} with safety checks"
+    output: deployment-log.md
+    parallel: false
+
+  - name: qa-engineer
+    agent_file: .claude/agents/operations/qa-engineer.md
+    input: "Run smoke tests on deployed environment"
+    output: smoke-test-results.md
+    parallel: false
+
+post_workflow:
+  - update_deployment_status
+  - notify_team
+  - update_documentation
+
+artifacts:
+  save_to: .claude/state/runs/{workflow_id}/
+  include:
+    - deployment-log.md
+    - smoke-test-results.md
+    - deployment-metrics.json
+    - rollback-plan.md
+    - execution_log.json
+
+estimated_duration: 5-10 minutes
+
+success_criteria:
+  - deployment_successful
+  - smoke_tests_pass
+  - no_errors_in_logs
+  - monitoring_shows_healthy
+
+rollback_plan:
+  - automatic_if_smoke_tests_fail
+  - manual_trigger_available
+  - previous_version_preserved

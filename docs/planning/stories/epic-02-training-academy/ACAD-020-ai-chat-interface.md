@@ -1,5 +1,7 @@
 # ACAD-020: AI Chat Interface
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 5
 **Sprint:** Sprint 4 (Week 11-12)
 **Priority:** HIGH

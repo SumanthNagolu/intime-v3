@@ -1,5 +1,7 @@
 # ACAD-025: Trainer Dashboard
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 7
 **Sprint:** Sprint 5 (Week 13-14)
 **Priority:** MEDIUM

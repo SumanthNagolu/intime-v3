@@ -1,5 +1,7 @@
 # ACAD-011: Build Quiz Engine (Student-Facing)
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 7
 **Sprint:** Sprint 2 (Week 7-8)
 **Priority:** CRITICAL

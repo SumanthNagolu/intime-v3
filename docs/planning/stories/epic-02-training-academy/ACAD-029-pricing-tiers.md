@@ -1,5 +1,7 @@
 # ACAD-029: Pricing Tiers
 
+**Status:** ⚪ Not Started
+
 **Story Points:** 4
 **Sprint:** Sprint 5 (Week 13-14)
 **Priority:** MEDIUM
