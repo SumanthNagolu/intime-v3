@@ -1,139 +1,121 @@
 # Claude Code Configuration
 
-🎯 **Tier:** Strategic  
-**Last Updated:** 2025-11-22  
-**Auto-Generated:** Yes (manual sections preserved)
+**Simplified setup** - Direct conversation over complex orchestration.
 
 ---
 
-## 📁 Purpose
+## 📁 What's Here
 
-Complete AI agent system configuration including agents, workflows, and orchestration.
-
----
-
-## 📋 Contents
-
-### Files in This Directory
-
-- **AGENT-READING-PROTOCOL.md** - Documentation
-
-- **AGENT-USAGE-EXAMPLES.md** - Documentation
-
-- **CLAUDE.md** - Documentation
-
-- **CLEANUP-SUMMARY.md** - Documentation
-
-- **CUSTOMIZATION-COMPLETE.md** - Documentation
-
-- **DESIGN-ARCHITECTURE-OVERHAUL.md** - Documentation
-
-- **DESIGN-PHILOSOPHY.md** - Documentation
-
-- **DOCUMENTATION-INDEX.md** - Documentation
-
-- **FOLDER-DOCS-IMPLEMENTATION.md** - Documentation
-
-- **IMPLEMENTATION-STATUS.md** - Documentation
-
-- **IMPLEMENTATION-VERIFIED.md** - Documentation
-
-- **MCP-STAFFING-INTEGRATIONS.md** - Documentation
-
-- **settings.json** - Configuration
-
-- **settings.local.json** - Configuration
-
-- **SETUP-GUIDE.md** - Documentation
-
-- **TEST-RESULTS-FINAL-WORKING.md** - Documentation
-
-- **TEST-RESULTS-FINAL.md** - Documentation
-
-- **TOOL-INTEGRATION-COMPLETE.md** - Documentation
-
-- **WORKFLOW-UPDATE-SUMMARY.md** - Documentation
-
-
-**Subdirectories:**
-- `agents/` - See [agents/CLAUDE.md](agents/CLAUDE.md)
-- `commands/` - See [commands/CLAUDE.md](commands/CLAUDE.md)
-- `hooks/` - See [hooks/CLAUDE.md](hooks/CLAUDE.md)
-- `orchestration/` - See [orchestration/CLAUDE.md](orchestration/CLAUDE.md)
-- `state/` - See [state/CLAUDE.md](state/CLAUDE.md)
-- `workflows/` - See [workflows/CLAUDE.md](workflows/CLAUDE.md)
+```
+.claude/
+├── README.md                ← Start here! Main usage guide
+├── AGENTS-REFERENCE.md      ← Different expertise areas
+├── QUICK-COMMANDS.md        ← Common task patterns
+├── CLAUDE.md               ← This file (technical context)
+├── settings.json           ← Session hooks
+├── hooks/                  ← Startup/shutdown automation
+├── state/                  ← Timeline tracking
+└── archive/                ← Old orchestration (archived)
+```
 
 ---
 
-## 🎯 Key Concepts
+## 🎯 Philosophy
 
-- 8 specialist AI agents (strategic, planning, implementation, operations, quality)
-- Multi-agent orchestration system
-- Workflow commands and automation
-- Git hooks for quality gates
+**Simple > Complex**
 
----
+Instead of orchestrating 8 separate agents through workflows:
+- ✅ Direct conversation
+- ✅ Natural task breakdown
+- ✅ Real-time progress tracking
+- ✅ Flexible iteration
 
-## 🔗 Dependencies
+I (Claude) naturally handle all roles:
+- Strategic thinking (CEO/CFO perspective)
+- Planning (PM/Architect)
+- Implementation (Developer/Database)
+- Quality (QA/Code Review/Security)
+- Operations (Deployment/DevOps)
 
-### This Folder Depends On:
-
-- @anthropic-ai/sdk
-- @modelcontextprotocol/sdk
-
-### Other Folders That Depend On This:
-
-- All agents use this configuration
-
----
-
-## 🚀 Quick Start
-
-### For Developers
-
-Explore subdirectories:
-- agents/ - 8 specialist agents
-- orchestration/ - Multi-agent workflows
-- commands/ - Slash commands
-- hooks/ - Quality automation
-
-### For AI Agents
-
-This is your home directory. Contains:
-- Agent definitions (agents/)
-- Orchestration engine (orchestration/)
-- Workflow commands (commands/)
-Read subfolder CLAUDE.md for specifics.
+See `AGENTS-REFERENCE.md` for details.
 
 ---
 
-## ⚠️ Important Notes
+## 🚀 How to Use
 
-- ⚠️ Root of AI agent system
-- ⚠️ All agents defined here
-- ⚠️ Orchestration engine powers multi-agent workflows
+**Just talk directly:**
+```
+"Build the student enrollment feature"
+"Review this code for security issues"
+"Deploy Epic 2 to production"
+"Help me plan the next sprint"
+```
+
+I'll handle:
+1. Requirements gathering
+2. Architecture design
+3. Implementation
+4. Testing
+5. Deployment planning
+
+See `QUICK-COMMANDS.md` for common patterns.
+
+---
+
+## 🔧 What's Active
+
+### Hooks (settings.json)
+- **SessionStart:** Display project status
+- **SessionEnd:** Save to timeline
+
+### State Tracking
+- Timeline in `state/timeline/`
+- Session history preserved
+
+### Documentation
+- This file (technical context)
+- README.md (usage guide)
+- AGENTS-REFERENCE.md (expertise areas)
+- QUICK-COMMANDS.md (common patterns)
+
+---
+
+## 📦 What's Archived
+
+The `archive/` directory contains the old complex setup:
+- TypeScript orchestration engine
+- Multi-agent workflow system
+- 8 separate agent definitions
+- Complex slash commands
+- 145 auto-generated CLAUDE.md files
+
+**Can be deleted anytime** - kept for transition reference only.
 
 ---
 
 ## 📝 Change Log
 
-<!-- MANUAL EDIT SECTION - Add your changes below -->
+### 2025-11-22: Simplified Setup
+- Removed complex orchestration
+- Archived 8-agent system
+- Created simple reference guides
+- Streamlined to 2 essential hooks
+- Direct conversation over workflows
 
-### Recent Changes
-
-- 2025-11-22: Auto-generated CLAUDE.md created
-
-<!-- END MANUAL EDIT SECTION -->
-
----
-
-## 📚 Related Documentation
-
-- [Project Root CLAUDE.md](/CLAUDE.md)
-- [Project Structure](/PROJECT-STRUCTURE.md)
-- [Documentation Index](/.claude/DOCUMENTATION-INDEX.md)
-
+### 2025-11-22: Original Auto-Generated
+- Complex multi-agent orchestration
+- 8 specialist agents
+- TypeScript workflow engine
 
 ---
 
-*Auto-generated on 2025-11-22 - Tier strategic documentation*
+## 📚 Getting Started
+
+1. Read `README.md` - Complete usage guide
+2. Browse `QUICK-COMMANDS.md` - Common patterns
+3. Reference `AGENTS-REFERENCE.md` - Expertise areas
+4. **Just start talking** - Best way to learn!
+
+---
+
+*Simplified 2025-11-22 - Direct conversation over complexity*
