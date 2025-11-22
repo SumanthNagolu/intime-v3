@@ -64,9 +64,21 @@ export async function middleware(request: NextRequest) {
   );
 
   // Refresh session if needed
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  let user = null;
+  try {
+    const { data } = await supabase.auth.getUser();
+    user = data.user;
+  } catch (error) {
+    // If there's an auth error (e.g., invalid refresh token), clear the user
+    console.error('Auth error in middleware:', error);
+    user = null;
+
+    // Clear invalid auth cookies
+    const authCookies = ['sb-access-token', 'sb-refresh-token'];
+    authCookies.forEach(cookieName => {
+      response.cookies.delete(cookieName);
+    });
+  }
 
   // Define protected paths that require authentication
   const protectedPaths = [
@@ -95,12 +107,28 @@ export async function middleware(request: NextRequest) {
   if (isProtectedPath && !user) {
     const redirectUrl = new URL('/login', request.url);
     redirectUrl.searchParams.set('redirect', request.nextUrl.pathname);
-    return NextResponse.redirect(redirectUrl);
+    const redirectResponse = NextResponse.redirect(redirectUrl);
+
+    // Copy cookies to preserve session
+    const cookiesToSet = response.cookies.getAll();
+    cookiesToSet.forEach(cookie => {
+      redirectResponse.cookies.set(cookie);
+    });
+
+    return redirectResponse;
   }
 
   // Redirect to dashboard if accessing auth pages while logged in
   if (isAuthPath && user) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+    const redirectResponse = NextResponse.redirect(new URL('/dashboard', request.url));
+
+    // Copy cookies to preserve session
+    const cookiesToSet = response.cookies.getAll();
+    cookiesToSet.forEach(cookie => {
+      redirectResponse.cookies.set(cookie);
+    });
+
+    return redirectResponse;
   }
 
   return response;
