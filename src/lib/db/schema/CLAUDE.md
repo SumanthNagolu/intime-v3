@@ -1,7 +1,7 @@
 # Schema
 
 ⚙️ **Tier:** Operational  
-**Last Updated:** 2025-11-21  
+**Last Updated:** 2025-11-22  
 **Auto-Generated:** Yes (manual sections preserved)
 
 ---
@@ -16,6 +16,9 @@ Application schema module.
 
 ### Files in This Directory
 
+- **academy.ts** (243 lines)
+  Enums
+
 - **audit.ts** (137 lines)
   Drizzle ORM Schema: Audit Logs
 
@@ -27,7 +30,7 @@ Application schema module.
 - **final-proof.ts** (10 lines)
   No description
 
-- **index.ts** (51 lines)
+- **index.ts** (52 lines)
   Drizzle ORM Schema - Central Export
 
 - **organizations.test.ts** (279 lines)
@@ -89,7 +92,7 @@ Auto-generated folder context. Review files in this directory for specific funct
 
 ### Recent Changes
 
-- 2025-11-21: Auto-generated CLAUDE.md created
+- 2025-11-22: Auto-generated CLAUDE.md created
 
 <!-- END MANUAL EDIT SECTION -->
 
@@ -105,4 +108,4 @@ Auto-generated folder context. Review files in this directory for specific funct
 
 ---
 
-*Auto-generated on 2025-11-21 - Tier operational documentation*
+*Auto-generated on 2025-11-22 - Tier operational documentation*

@@ -1,7 +1,7 @@
 # Types
 
 📊 **Tier:** Tactical  
-**Last Updated:** 2025-11-21  
+**Last Updated:** 2025-11-22  
 **Auto-Generated:** Yes (manual sections preserved)
 
 ---
@@ -60,7 +60,7 @@ Application types module.
 - **reading.ts** (332 lines)
   Reading Materials Types
 
-- **supabase.ts** (7400 lines)
+- **supabase.ts** (14377 lines)
   No description
 
 - **video.ts** (254 lines)
@@ -117,7 +117,7 @@ Auto-generated folder context. Review files in this directory for specific funct
 
 ### Recent Changes
 
-- 2025-11-21: Auto-generated CLAUDE.md created
+- 2025-11-22: Auto-generated CLAUDE.md created
 
 <!-- END MANUAL EDIT SECTION -->
 
@@ -133,4 +133,4 @@ Auto-generated folder context. Review files in this directory for specific funct
 
 ---
 
-*Auto-generated on 2025-11-21 - Tier tactical documentation*
+*Auto-generated on 2025-11-22 - Tier tactical documentation*
