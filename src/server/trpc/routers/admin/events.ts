@@ -49,8 +49,10 @@ export const adminEventsRouter = router({
    */
   deadLetterQueue: adminProcedure.query(async ({ ctx }) => {
     const { data, error } = await ctx.supabase
-      .from('v_dead_letter_queue')
+      .from('events')
       .select('*')
+      .eq('status', 'failed')
+      .gte('retry_count', 3) // Failed events that exhausted retries
       .order('created_at', { ascending: false })
       .limit(100);
 
@@ -90,9 +92,17 @@ export const adminEventsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const { data, error } = await ctx.supabase.rpc('replay_failed_events_batch', {
-        p_event_ids: input.eventIds,
-      });
+      // Reset failed events to pending status for replay
+      const { data, error } = await ctx.supabase
+        .from('events')
+        .update({
+          status: 'pending',
+          retry_count: 0,
+          error_message: null,
+        })
+        .in('id', input.eventIds)
+        .eq('status', 'failed')
+        .select();
 
       if (error) {
         throw new Error(`Failed to replay events: ${error.message}`);
@@ -109,14 +119,27 @@ export const adminEventsRouter = router({
    */
   metrics: adminProcedure.query(async ({ ctx }) => {
     const { data, error } = await ctx.supabase
-      .from('v_event_metrics_24h')
-      .select('*')
-      .order('total_events', { ascending: false });
+      .from('events')
+      .select('event_type, event_category, status, created_at')
+      .gte('created_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString());
 
     if (error) {
       throw new Error(`Failed to fetch event metrics: ${error.message}`);
     }
 
-    return data || [];
+    // Aggregate metrics in JavaScript
+    const metrics = (data || []).reduce((acc: any, event) => {
+      const name = `${event.event_category}.${event.event_type}`;
+      if (!acc[name]) {
+        acc[name] = { event_name: name, total: 0, pending: 0, completed: 0, failed: 0 };
+      }
+      acc[name].total++;
+      if (event.status === 'pending') acc[name].pending++;
+      if (event.status === 'completed') acc[name].completed++;
+      if (event.status === 'failed') acc[name].failed++;
+      return acc;
+    }, {});
+
+    return Object.values(metrics);
   }),
 });

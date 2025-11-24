@@ -4,7 +4,7 @@
  */
 
 import { z } from 'zod';
-import { router, protectedProcedure } from '../trpc';
+import { router, protectedProcedure } from '@/lib/trpc/trpc';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { TRPCError } from '@trpc/server';
 import type {

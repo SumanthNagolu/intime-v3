@@ -10,7 +10,7 @@
  */
 
 import { z } from 'zod';
-import { router, publicProcedure, protectedProcedure } from '../trpc';
+import { router, publicProcedure, protectedProcedure } from '@/lib/trpc/trpc';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import type { Course, CourseModule, ModuleTopic } from '@/types/academy';
@@ -629,10 +629,10 @@ export const coursesRouter = router({
                 is_unlocked: isUnlocked || false,
                 completion_data: completion
                   ? {
-                      completed_at: completion.completed_at,
-                      xp_earned: completion.xp_earned,
-                      time_spent_seconds: completion.time_spent_seconds,
-                    }
+                    completed_at: completion.completed_at,
+                    xp_earned: completion.xp_earned,
+                    time_spent_seconds: completion.time_spent_seconds,
+                  }
                   : null,
               };
             })
@@ -718,6 +718,75 @@ export const coursesRouter = router({
       return {
         previous: previousTopic,
         next: nextTopic,
+      };
+    }),
+
+  /**
+   * Get topic details with lessons
+   */
+  getTopicWithLessons: protectedProcedure
+    .input(
+      z.object({
+        topicId: z.string().uuid(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
+      const supabase = await createClient();
+
+      // Get topic
+      const { data: topic, error: topicError } = await supabase
+        .from('module_topics')
+        .select(`
+          *,
+          module:course_modules(
+            id,
+            title,
+            slug,
+            course:courses(
+              id,
+              title,
+              slug
+            )
+          )
+        `)
+        .eq('id', input.topicId)
+        .single();
+
+      if (topicError || !topic) {
+        throw new Error(`Topic not found: ${topicError?.message}`);
+      }
+
+      // Get lessons
+      const { data: lessons, error: lessonsError } = await supabase
+        .from('topic_lessons')
+        .select('*')
+        .eq('topic_id', input.topicId)
+        .order('lesson_number', { ascending: true });
+
+      if (lessonsError) {
+        throw new Error(`Failed to fetch lessons: ${lessonsError.message}`);
+      }
+
+      // Check if topic is unlocked
+      const { data: isUnlocked } = await supabase.rpc('is_topic_unlocked', {
+        p_user_id: ctx.userId,
+        p_topic_id: input.topicId,
+      });
+
+      // Check completion status (if topic is marked complete)
+      const { data: completion } = await supabase
+        .from('topic_completions')
+        .select('*')
+        .eq('user_id', ctx.userId)
+        .eq('topic_id', input.topicId)
+        .maybeSingle();
+
+      return {
+        ...topic,
+        lessons: lessons || [],
+        is_unlocked: isUnlocked || false,
+        is_completed: !!completion,
+        completion_data: completion,
       };
     }),
 });

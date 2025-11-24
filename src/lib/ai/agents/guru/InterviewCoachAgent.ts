@@ -74,9 +74,16 @@ export class InterviewCoachAgent extends BaseAgent<
 
       // Track cost
       const latencyMs = performance.now() - startTime;
-      await this.trackCost(800, 0.002, model.model, latencyMs);
+      const tokensUsed = 800; // Estimated
+      const cost = 0.002; // Estimated
 
-      return output;
+      await this.trackCost(tokensUsed, cost, model.model, latencyMs);
+
+      return {
+        ...output,
+        tokensUsed,
+        cost,
+      };
     } catch (error) {
       throw this.createGuruError(
         `Failed to process interview coaching: ${error instanceof Error ? error.message : 'Unknown error'}`,

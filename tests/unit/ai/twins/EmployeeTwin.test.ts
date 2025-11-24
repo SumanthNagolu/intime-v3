@@ -21,24 +21,75 @@ describe('EmployeeTwin', () => {
   let mockSupabase: any;
 
   beforeEach(() => {
-    // Mock Supabase client
-    mockSupabase = {
-      from: vi.fn().mockReturnThis(),
+    // Mock Supabase client with proper query chain
+    const mockQueryChain = {
       select: vi.fn().mockReturnThis(),
       eq: vi.fn().mockReturnThis(),
       gte: vi.fn().mockReturnThis(),
       lt: vi.fn().mockReturnThis(),
       order: vi.fn().mockReturnThis(),
       limit: vi.fn().mockReturnThis(),
-      single: vi.fn(),
-      insert: vi.fn().mockReturnThis(),
+      single: vi.fn().mockResolvedValue({
+        data: {
+          id: 'test-employee-id',
+          org_id: 'test-org-id',
+          full_name: 'Test Employee',
+          email: 'test@example.com',
+        },
+        error: null,
+      }),
+      insert: vi.fn().mockResolvedValue({
+        data: { id: 'new-id' },
+        error: null,
+      }),
+    };
+
+    mockSupabase = {
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            single: vi.fn().mockResolvedValue({
+              data: {
+                id: 'test-employee-id',
+                org_id: 'test-org-id',
+                full_name: 'Test Employee',
+                email: 'test@example.com',
+              },
+              error: null,
+            }),
+            eq: vi.fn().mockReturnValue({
+              order: vi.fn().mockReturnValue({
+                limit: vi.fn().mockResolvedValue({
+                  data: [],
+                  error: null,
+                }),
+              }),
+            }),
+          }),
+        }),
+        insert: vi.fn().mockResolvedValue({
+          data: { id: 'new-id' },
+          error: null,
+        }),
+      }),
     };
 
     // Mock OpenAI client
     mockOpenAI = {
       chat: {
         completions: {
-          create: vi.fn(),
+          create: vi.fn().mockResolvedValue({
+            choices: [
+              {
+                message: {
+                  content: 'Good morning! Here is your personalized briefing for today.',
+                },
+              },
+            ],
+            usage: {
+              total_tokens: 500,
+            },
+          }),
         },
       },
     };

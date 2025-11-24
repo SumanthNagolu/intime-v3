@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* InTime Brand Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @layer base {
   html {
@@ -11,59 +11,83 @@
   }
 
   body {
-    @apply font-body text-slate-900 bg-white antialiased;
+    @apply font-body text-slate-900 bg-background antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
   }
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    /* Ivory Background */
+    --background: 60 20% 98%; 
+    /* Charcoal Foreground */
+    --foreground: 240 5% 4%; 
+    
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card-foreground: 240 5% 4%;
+    
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
+    --popover-foreground: 240 5% 4%;
+    
+    /* Forest Primary */
+    --primary: 155 42% 18%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
+    
+    /* Rust Secondary */
+    --secondary: 16 67% 50%;
+    --secondary-foreground: 0 0% 98%;
+    
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
+    
+    --accent: 60 20% 96%;
+    --accent-foreground: 240 5% 4%;
+    
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
+    
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --ring: 155 42% 18%;
+    
+    --radius: 0.75rem; /* 12px */
+    
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
   }
+  
   .dark {
-    --background: 0 0% 3.9%;
+    --background: 240 5% 4%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
+    
+    --card: 240 5% 4%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
+    
+    --popover: 240 5% 4%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
+    
+    --primary: 155 42% 18%;
+    --primary-foreground: 0 0% 98%;
+    
+    --secondary: 16 67% 50%;
     --secondary-foreground: 0 0% 98%;
+    
     --muted: 0 0% 14.9%;
     --muted-foreground: 0 0% 63.9%;
+    
     --accent: 0 0% 14.9%;
     --accent-foreground: 0 0% 98%;
+    
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
+    
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --ring: 155 42% 18%;
+    
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -73,21 +97,24 @@
 }
 
 @layer components {
-  /* InTime Brand Button Styles - Press Effect (Not Float) */
+  /* Background Noise Texture */
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+
+  /* V2 Button Styles - Academy Design System */
   .btn-primary {
-    @apply bg-amber-500 text-slate-900 font-semibold px-8 py-4 rounded-none border-b-4 border-amber-700 hover:border-b-2 hover:translate-y-[2px] transition-all duration-150 font-subheading;
+    @apply bg-forest text-white font-medium px-6 py-3 rounded-lg hover:bg-forest/90 transition-colors duration-200 shadow-sm hover:shadow-md;
   }
 
   .btn-secondary {
-    @apply bg-white text-forest-500 font-semibold px-8 py-4 border-2 border-forest-500 hover:bg-forest-50 transition-colors font-subheading;
+    @apply bg-rust text-white font-medium px-6 py-3 rounded-lg hover:bg-[#B8421E] transition-colors duration-200 shadow-sm hover:shadow-md;
   }
 
   .btn-ghost {
-    @apply text-forest-500 font-medium px-4 py-2 hover:text-forest-700 underline-offset-4 hover:underline font-body;
+    @apply text-forest font-medium px-4 py-2 hover:bg-stone-50 rounded-lg transition-colors;
   }
 }
-
-
 
 @layer base {
   * {
@@ -96,4 +123,69 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Glassmorphism Utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================ */
+/* Academy UI Styles (Exact Match)             */
+/* ============================================ */
+
+/* Premium Noise Texture */
+.bg-noise {
+  position: relative;
+}
+.bg-noise::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.04;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  z-index: 0;
+}
+
+/* Academy Typography - Tight tracking for premium feel */
+.font-serif {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: -0.02em;
+}
+
+/* Custom scrollbar hiding */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* No scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

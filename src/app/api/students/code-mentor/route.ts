@@ -34,13 +34,10 @@ export async function POST(req: NextRequest) {
     }
 
     // Verify user is a student
-    const { data: profile } = await supabase
-      .from('user_profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single();
+    const { data: isStudent } = await supabase
+      .rpc('user_has_role', { role_name: 'student' });
 
-    if (!profile || profile.role !== 'student') {
+    if (!isStudent) {
       return NextResponse.json(
         { error: 'Only students can access Code Mentor' },
         { status: 403 }
@@ -140,9 +137,9 @@ export async function GET(req: NextRequest) {
         conversationId,
         messages: interactions?.map((i) => ({
           role: 'assistant',
-          content: i.output?.response || '',
+          content: typeof i.output === 'string' ? i.output : (i.output as any)?.response || JSON.stringify(i.output),
           timestamp: i.created_at,
-          helpful: i.helpful_rating,
+          helpful: i.was_helpful,
         })) || [],
       },
     });

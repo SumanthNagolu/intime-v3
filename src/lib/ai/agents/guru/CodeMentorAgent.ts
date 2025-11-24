@@ -116,20 +116,22 @@ export class CodeMentorAgent extends BaseAgent<CodeMentorInput, CodeMentorOutput
       const documentationHints = this.extractDocumentationHints(relevantDocs);
       const nextSteps = this.extractNextSteps(responseText);
 
-      const output: CodeMentorOutput = {
-        response: responseText,
-        conversationId,
-        documentationHints,
-        nextSteps,
-      };
-
-      // Track cost and log interaction
+      // Calculate cost and tokens
       const latencyMs = performance.now() - startTime;
       const tokens = response.usage.input_tokens + response.usage.output_tokens;
       const cost = this.calculateClaudeCost(
         response.usage.input_tokens,
         response.usage.output_tokens
       );
+
+      const output: CodeMentorOutput = {
+        response: responseText,
+        conversationId,
+        documentationHints,
+        nextSteps,
+        tokensUsed: tokens,
+        cost,
+      };
 
       await this.trackCost(tokens, cost, model.model, latencyMs);
       await this.logGuruInteraction({

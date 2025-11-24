@@ -269,7 +269,15 @@ Respond ONLY with valid JSON:
   private async checkEscalation(studentId: string, question: string): Promise<boolean> {
     try {
       // Check for repeated questions (5+ times in 24 hours)
-      const { count, error } = await getSupabaseClient()
+      const client = getSupabaseClient();
+
+      // Defensive check for client
+      if (!client || !client.from) {
+        console.warn('[CoordinatorAgent] Supabase client not initialized correctly');
+        return false;
+      }
+
+      const { count, error } = await client
         .from('guru_interactions')
         .select('id', { count: 'exact', head: true })
         .eq('student_id', studentId)
@@ -378,10 +386,11 @@ Respond ONLY with valid JSON:
     latencyMs: number;
   }): Promise<void> {
     try {
-      await getSupabaseClient().from('guru_interactions').insert({
+      console.log('[CoordinatorAgent] Logging interaction for:', data.studentId);
+      const { error } = await getSupabaseClient().from('guru_interactions').insert({
         org_id: this.config.orgId || 'default',
         student_id: data.studentId,
-        agent_type: 'coordinator',
+        agent_type: data.output.agentUsed,
         conversation_id: data.output.conversationId,
         input: data.input as any,
         output: {
@@ -393,10 +402,16 @@ Respond ONLY with valid JSON:
         model_used: 'gpt-4o-mini',
         tokens_used: 100, // Estimated
         cost_usd: 0.00002, // Estimated
-        latency_ms: data.latencyMs,
+        latency_ms: Math.round(data.latencyMs),
       });
+
+      if (error) {
+        console.error('[CoordinatorAgent] Supabase INSERT error:', error);
+      } else {
+        console.log('[CoordinatorAgent] Interaction logged successfully');
+      }
     } catch (error) {
-      console.error('[CoordinatorAgent] Failed to log interaction:', error);
+      console.error('[CoordinatorAgent] Failed to log interaction (exception):', error);
     }
   }
 }

@@ -34,13 +34,10 @@ export async function POST(req: NextRequest) {
     }
 
     // Verify user is a student
-    const { data: profile } = await supabase
-      .from('user_profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single();
+    const { data: isStudent } = await supabase
+      .rpc('user_has_role', { role_name: 'student' });
 
-    if (!profile || profile.role !== 'student') {
+    if (!isStudent) {
       return NextResponse.json(
         { error: 'Only students can use Interview Coach' },
         { status: 403 }

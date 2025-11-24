@@ -15,6 +15,13 @@ import { resumeMatchingRouter } from './resume-matching';
 /**
  * Main application router
  */
+import { coursesRouter } from '@/server/trpc/routers/courses';
+import { enrollmentRouter } from '@/server/trpc/routers/enrollment';
+import { xpTransactionsRouter } from '@/server/trpc/routers/xp-transactions';
+import { badgeRouter } from '@/server/trpc/routers/badges';
+import { progressRouter } from '@/server/trpc/routers/progress';
+import { quizRouter } from '@/server/trpc/routers/quiz';
+
 export const appRouter = router({
   users: usersRouter,
   admin: router({
@@ -23,6 +30,13 @@ export const appRouter = router({
   }),
   guidewireGuru: guidewireGuruRouter,
   resumeMatching: resumeMatchingRouter,
+  // Academy Routers
+  courses: coursesRouter,
+  enrollments: enrollmentRouter,
+  xpTransactions: xpTransactionsRouter,
+  badges: badgeRouter,
+  progress: progressRouter,
+  quiz: quizRouter,
 });
 
 /**

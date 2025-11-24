@@ -20,15 +20,16 @@ export async function checkPermission(
 
 export async function isAdmin(userId: string): Promise<boolean> {
   const supabase = await createClient();
-  const { data } = await supabase.rpc('user_is_admin', { p_user_id: userId });
+  // user_is_admin works with the authenticated user from JWT context
+  const { data } = await supabase.rpc('user_is_admin');
   return data === true;
 }
 
 export async function hasRole(userId: string, roleName: string): Promise<boolean> {
   const supabase = await createClient();
+  // user_has_role works with the authenticated user from JWT context
   const { data } = await supabase.rpc('user_has_role', {
-    p_user_id: userId,
-    p_role_name: roleName,
+    role_name: roleName,
   });
   return data === true;
 }

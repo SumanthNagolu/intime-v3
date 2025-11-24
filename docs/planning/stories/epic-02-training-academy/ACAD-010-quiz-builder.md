@@ -1,6 +1,6 @@
 # ACAD-010: Build Quiz Builder (Admin)
 
-**Status:** ⚪ Not Started
+**Status:** 🟢 Complete
 
 **Story Points:** 6
 **Sprint:** Sprint 2 (Week 7-8)
@@ -18,15 +18,15 @@ So that **I can assess student knowledge**.
 
 ## Acceptance Criteria
 
-- [ ] Question bank system (reusable questions)
-- [ ] Multiple choice questions (single/multiple answer)
-- [ ] True/False questions
-- [ ] Code snippet questions
-- [ ] Question randomization (optional)
-- [ ] Answer key management
-- [ ] Quiz preview mode
-- [ ] Bulk import (CSV/JSON)
-- [ ] Question difficulty tagging
+- [x] Question bank system (reusable questions)
+- [x] Multiple choice questions (single/multiple answer)
+- [x] True/False questions
+- [x] Code snippet questions
+- [x] Question randomization (optional)
+- [x] Answer key management
+- [x] Quiz preview mode
+- [x] Bulk import (CSV/JSON)
+- [x] Question difficulty tagging
 
 ---
 

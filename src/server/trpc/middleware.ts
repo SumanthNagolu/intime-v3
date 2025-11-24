@@ -66,7 +66,7 @@ export const hasPermission = (resource: string, action: string) =>
   isAuthenticated.unstable_pipe(
     middleware(async ({ ctx, next }) => {
       const { data: hasPermission } = await ctx.supabase.rpc('user_has_permission', {
-        p_user_id: ctx.userId,
+        p_user_id: ctx.userId as string,
         p_resource: resource,
         p_action: action
       });

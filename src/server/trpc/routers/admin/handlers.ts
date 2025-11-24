@@ -50,8 +50,19 @@ export const adminHandlersRouter = router({
   disable: adminProcedure
     .input(z.object({ subscriptionId: z.string().uuid() }))
     .mutation(async ({ ctx, input }) => {
-      const { data, error } = await ctx.supabase.rpc('disable_event_handler', {
-        p_subscription_id: input.subscriptionId,
+      // Get handler name from subscription
+      const { data: subscription, error: fetchError } = await ctx.supabase
+        .from('event_subscriptions')
+        .select('subscriber_name')
+        .eq('id', input.subscriptionId)
+        .single();
+
+      if (fetchError || !subscription) {
+        throw new Error(`Failed to find handler: ${fetchError?.message}`);
+      }
+
+      const { error } = await ctx.supabase.rpc('disable_event_handler', {
+        p_handler_name: subscription.subscriber_name,
       });
 
       if (error) {
@@ -67,8 +78,19 @@ export const adminHandlersRouter = router({
   enable: adminProcedure
     .input(z.object({ subscriptionId: z.string().uuid() }))
     .mutation(async ({ ctx, input }) => {
-      const { data, error } = await ctx.supabase.rpc('enable_event_handler', {
-        p_subscription_id: input.subscriptionId,
+      // Get handler name from subscription
+      const { data: subscription, error: fetchError } = await ctx.supabase
+        .from('event_subscriptions')
+        .select('subscriber_name')
+        .eq('id', input.subscriptionId)
+        .single();
+
+      if (fetchError || !subscription) {
+        throw new Error(`Failed to find handler: ${fetchError?.message}`);
+      }
+
+      const { error } = await ctx.supabase.rpc('enable_event_handler', {
+        p_handler_name: subscription.subscriber_name,
       });
 
       if (error) {
@@ -83,9 +105,9 @@ export const adminHandlersRouter = router({
    */
   healthDashboard: adminProcedure.query(async ({ ctx }) => {
     const { data, error } = await ctx.supabase
-      .from('v_handler_health')
+      .from('event_subscriptions')
       .select('*')
-      .order('consecutive_failures', { ascending: false });
+      .order('consecutive_failures', { ascending: false, nullsFirst: false });
 
     if (error) {
       throw new Error(`Failed to fetch handler health: ${error.message}`);

@@ -85,8 +85,8 @@ export async function getUserProfile(userId?: string) {
   const { data, error } = await supabase
     .from('user_profiles')
     .select('*')
-    .eq('id', userId)
-    .eq('deleted_at', null)
+    .eq('auth_id', userId)
+    .is('deleted_at', null)
     .single();
 
   if (error) {
@@ -109,7 +109,7 @@ export async function getUserProfileByAuthId(authId: string) {
     .from('user_profiles')
     .select('*')
     .eq('auth_id', authId)
-    .eq('deleted_at', null)
+    .is('deleted_at', null)
     .single();
 
   if (error) {
@@ -135,10 +135,14 @@ export async function getUserRoles(userId?: string): Promise<string[]> {
     userId = user.id;
   }
 
+  // Get user profile to find the profile ID
+  const profile = await getUserProfile(userId);
+  if (!profile) return [];
+
   const { data, error } = await supabase
     .from('user_roles')
     .select('role:roles(name)')
-    .eq('user_id', userId)
+    .eq('user_id', profile.id)
     .is('deleted_at', null)
     .or('expires_at.is.null,expires_at.gt.now()');
 

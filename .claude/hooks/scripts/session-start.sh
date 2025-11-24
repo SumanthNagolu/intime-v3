@@ -63,41 +63,21 @@ fi
 
 echo ""
 
-# Agent System Status
-if [ -d ".claude/agents" ]; then
-  AGENT_COUNT=$(ls -1 .claude/agents/*.md 2>/dev/null | wc -l | tr -d ' ')
-  echo "🤖 Agent System: $AGENT_COUNT agents available"
-
-  if [ "$AGENT_COUNT" -gt 0 ]; then
-    echo "   Agents:"
-    ls .claude/agents/*.md 2>/dev/null | xargs -n 1 basename | sed 's/.md$//' | sed 's/^/   - /'
-  fi
+# Claude Code Setup
+if [ -f ".claude/AGENTS-REFERENCE.md" ]; then
+  echo "🤖 Claude Code: Simplified setup ✅"
+  echo "   See .claude/QUICK-COMMANDS.md for usage"
 else
-  echo "⚠️  Agent system not configured"
-fi
-
-echo ""
-
-# Workflow Commands
-if [ -d ".claude/commands/workflows" ]; then
-  CMD_COUNT=$(ls -1 .claude/commands/workflows/*.md 2>/dev/null | wc -l | tr -d ' ')
-  echo "⚡ Workflow Commands: $CMD_COUNT available"
-
-  if [ "$CMD_COUNT" -gt 0 ]; then
-    ls .claude/commands/workflows/*.md 2>/dev/null | xargs -n 1 basename | sed 's/.md$//' | sed 's/^/   \//'
-  fi
+  echo "⚠️  Claude Code setup incomplete"
 fi
 
 echo ""
 
 # Quick Tips
-echo "💡 Quick Start"
-echo "   /start-planning - Begin requirements gathering"
-echo "   /feature - Full development pipeline"
-echo "   /ceo-review - Business strategy analysis"
-echo "   /database - Design database schema"
-echo "   /test - Run comprehensive QA"
-echo "   /deploy - Deploy to production"
+echo "💡 Quick Tips"
+echo "   Read .claude/QUICK-COMMANDS.md for common patterns"
+echo "   Read .claude/AGENTS-REFERENCE.md to understand expertise areas"
+echo "   Just talk directly - no complex workflows needed!"
 
 echo ""
 echo "┌─────────────────────────────────────────────────┐"

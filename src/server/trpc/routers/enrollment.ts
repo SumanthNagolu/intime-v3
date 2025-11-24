@@ -6,10 +6,36 @@
  */
 
 import { z } from 'zod';
-import { router, protectedProcedure } from '../trpc';
+import { router, protectedProcedure } from '@/lib/trpc/trpc';
 import { createClient } from '@/lib/supabase/server';
 
 export const enrollmentRouter = router({
+  /**
+   * Get current user's enrollment stats
+   */
+  getMyStats: protectedProcedure.query(async ({ ctx }) => {
+    const supabase = await createClient();
+
+    const { data: enrollments, error } = await supabase
+      .from('student_enrollments')
+      .select('status')
+      .eq('user_id', ctx.userId);
+
+    if (error) {
+      throw new Error(`Failed to fetch stats: ${error.message}`);
+    }
+
+    const total = enrollments?.length || 0;
+    const active = enrollments?.filter((e) => e.status === 'active').length || 0;
+    const completed = enrollments?.filter((e) => e.status === 'completed').length || 0;
+
+    return {
+      total_count: total,
+      active_count: active,
+      completed_count: completed,
+    };
+  }),
+
   /**
    * Get current user's enrollments
    */
@@ -464,7 +490,7 @@ export const enrollmentRouter = router({
           const completionPercentage = enrollment.completion_percentage || 0;
           const enrolledDays = Math.floor(
             (Date.now() - new Date(enrollment.enrolled_at).getTime()) /
-              (1000 * 60 * 60 * 24)
+            (1000 * 60 * 60 * 24)
           );
 
           // Expected 2% progress per week (14% per day rough estimate)
@@ -578,7 +604,7 @@ export const enrollmentRouter = router({
       const avgProgress =
         enrollments && enrollments.length > 0
           ? enrollments.reduce((sum, e) => sum + (e.completion_percentage || 0), 0) /
-            enrollments.length
+          enrollments.length
           : 0;
 
       // Calculate completion rate

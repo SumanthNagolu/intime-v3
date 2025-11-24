@@ -1,6 +1,7 @@
 /**
  * Course Progress Card Component
  * ACAD-019
+ * Design System V2 (Ivory/Forest/Rust)
  *
  * Displays individual course enrollment with progress and next steps
  */
@@ -36,39 +37,39 @@ export function CourseProgressCard({ enrollment }: CourseProgressCardProps) {
   const getStatusBadge = () => {
     switch (enrollment.status) {
       case 'completed':
-        return <Badge variant="default" className="bg-green-600">Completed</Badge>;
+        return <Badge variant="default" className="bg-forest-500 hover:bg-forest-600">Completed</Badge>;
       case 'active':
-        return <Badge variant="default" className="bg-blue-600">In Progress</Badge>;
+        return <Badge variant="default" className="bg-blue-600 hover:bg-blue-700">In Progress</Badge>;
       case 'pending':
-        return <Badge variant="secondary">Not Started</Badge>;
+        return <Badge variant="secondary" className="bg-gray-100 text-gray-700">Not Started</Badge>;
       case 'dropped':
         return <Badge variant="destructive">Dropped</Badge>;
       case 'expired':
-        return <Badge variant="outline">Expired</Badge>;
+        return <Badge variant="outline" className="border-gray-300 text-gray-500">Expired</Badge>;
       default:
         return <Badge variant="secondary">{enrollment.status}</Badge>;
     }
   };
 
   const getProgressColor = () => {
-    if (isCompleted) return 'bg-green-600';
-    if (enrollment.completion_percentage >= 75) return 'bg-blue-600';
-    if (enrollment.completion_percentage >= 50) return 'bg-yellow-600';
-    return 'bg-gray-600';
+    if (isCompleted) return 'bg-forest-500';
+    if (enrollment.completion_percentage >= 75) return 'bg-blue-500';
+    if (enrollment.completion_percentage >= 50) return 'bg-yellow-500';
+    return 'bg-gray-400';
   };
 
   return (
-    <Card className="hover:shadow-lg transition-shadow">
+    <Card className="hover:shadow-elevation-md transition-shadow border-gray-200">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <CardTitle className="flex items-center gap-2 mb-2">
-              <BookOpen className="h-5 w-5 text-primary" />
+            <CardTitle className="flex items-center gap-2 mb-2 text-charcoal font-heading text-lg">
+              <BookOpen className="h-5 w-5 text-forest-600" />
               {enrollment.course_title}
             </CardTitle>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               {getStatusBadge()}
-              <span className="text-sm text-muted-foreground flex items-center gap-1">
+              <span className="text-xs text-gray-500 flex items-center gap-1 font-medium">
                 <Clock className="h-3 w-3" />
                 Enrolled {new Date(enrollment.enrolled_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
               </span>
@@ -77,24 +78,24 @@ export function CourseProgressCard({ enrollment }: CourseProgressCardProps) {
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-5">
         {/* Progress Bar */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium flex items-center gap-1">
-              <TrendingUp className="h-4 w-4" />
+            <span className="text-sm font-medium text-gray-600 flex items-center gap-1">
+              <TrendingUp className="h-4 w-4 text-forest-500" />
               Progress
             </span>
-            <span className="text-sm font-bold">
+            <span className="text-sm font-bold text-charcoal">
               {enrollment.completion_percentage}%
             </span>
           </div>
           <Progress
             value={enrollment.completion_percentage}
-            className={`h-2 ${getProgressColor()}`}
+            className={`h-2 bg-gray-100 [&>div]:${getProgressColor()}`}
           />
           {enrollment.modules_completed !== undefined && enrollment.total_modules !== undefined && (
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-gray-500 text-right">
               {enrollment.modules_completed} of {enrollment.total_modules} modules completed
             </p>
           )}
@@ -102,17 +103,17 @@ export function CourseProgressCard({ enrollment }: CourseProgressCardProps) {
 
         {/* Current Progress */}
         {isActive && enrollment.current_topic_name && (
-          <div className="pt-4 border-t">
-            <p className="text-sm font-medium mb-2">Currently Studying</p>
-            <div className="flex items-start gap-2 p-3 rounded-lg bg-muted">
-              <PlayCircle className="h-5 w-5 text-primary mt-0.5" />
+          <div className="pt-4 border-t border-gray-100">
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Currently Studying</p>
+            <div className="flex items-start gap-3 p-3 rounded-lg bg-forest-50/50 border border-forest-100">
+              <PlayCircle className="h-5 w-5 text-forest-600 mt-0.5 flex-shrink-0" />
               <div>
                 {enrollment.current_module_name && (
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-forest-500 mb-0.5 font-medium">
                     {enrollment.current_module_name}
                   </p>
                 )}
-                <p className="text-sm font-medium">
+                <p className="text-sm font-semibold text-charcoal line-clamp-1">
                   {enrollment.current_topic_name}
                 </p>
               </div>
@@ -122,16 +123,16 @@ export function CourseProgressCard({ enrollment }: CourseProgressCardProps) {
 
         {/* Completion Message */}
         {isCompleted && (
-          <div className="flex items-center gap-2 p-3 rounded-lg bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800">
-            <CheckCircle2 className="h-5 w-5 text-green-600" />
-            <p className="text-sm font-medium text-green-700 dark:text-green-400">
+          <div className="flex items-center gap-2 p-3 rounded-lg bg-forest-50 border border-forest-200">
+            <CheckCircle2 className="h-5 w-5 text-forest-600" />
+            <p className="text-sm font-medium text-forest-800">
               Course completed! Great work!
             </p>
           </div>
         )}
       </CardContent>
 
-      <CardFooter>
+      <CardFooter className="pt-0">
         <Link href={`/courses/${enrollment.course_id}`} className="w-full">
           <Button className="w-full" variant={isActive ? 'default' : 'outline'}>
             {isCompleted ? 'Review Course' : isActive ? 'Continue Learning' : 'Start Course'}

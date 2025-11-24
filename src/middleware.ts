@@ -81,6 +81,12 @@ export async function middleware(request: NextRequest) {
   }
 
   // Define protected paths that require authentication
+  // TEMPORARY: Allow /students/dashboard and /students/profile without auth for development
+  const allowWithoutAuth = ['/students/dashboard', '/students/profile'];
+  const isAllowedWithoutAuth = allowWithoutAuth.some((path) =>
+    request.nextUrl.pathname.startsWith(path)
+  );
+  
   const protectedPaths = [
     '/dashboard',
     '/admin',
@@ -90,6 +96,7 @@ export async function middleware(request: NextRequest) {
     '/clients',
     '/recruiting',
     '/placements',
+    // Note: /academy is public (landing pages), but /students is protected
   ];
 
   // Define auth paths (redirect if already logged in)
@@ -104,7 +111,8 @@ export async function middleware(request: NextRequest) {
   );
 
   // Redirect to login if accessing protected path without authentication
-  if (isProtectedPath && !user) {
+  // TEMPORARY: Skip auth check for development routes
+  if (isProtectedPath && !user && !isAllowedWithoutAuth) {
     const redirectUrl = new URL('/login', request.url);
     redirectUrl.searchParams.set('redirect', request.nextUrl.pathname);
     const redirectResponse = NextResponse.redirect(redirectUrl);

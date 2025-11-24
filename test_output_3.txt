@@ -1,0 +1,599 @@
+
+ RUN  v2.1.9 /Users/sumanthrajkumarnagolu/Projects/intime-v3
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should complete full student question flow
+[MockOpenAI] Prompt: classify this question: "what is a coverage in policycenter?"
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should complete full student question flow
+GoTrueClient@sb-gkwhxmvugnjwwwiufmdy-auth-token:1 (2.83.0) 2025-11-22T12:08:50.525Z Multiple GoTrueClient instances detected in the same browser context. It is not an error, but this should be avoided as it may produce undefined behavior when used concurrently under the same storage key.
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should complete full student question flow
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should complete full student question flow
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should handle conversation context
+[MockOpenAI] Prompt: classify this question: "what is rating in policycenter?"
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+
+ × tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should complete full student question flow 402ms
+   → expected 'This is a test response from mocked A…' to match /\?/
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should handle conversation context
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should handle conversation context
+[CoordinatorAgent] Interaction logged successfully
+[MockOpenAI] Prompt: classify this question: "can you explain that in more detail?"
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should handle conversation context
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should handle conversation context
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should route different question types correctly
+[MockOpenAI] Prompt: classify this question: "how do i configure rating in policycenter?"
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+
+ ✓ tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should handle conversation context 570ms
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should route different question types correctly
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should route different question types correctly
+[CoordinatorAgent] Interaction logged successfully
+[MockOpenAI] Prompt: classify this question: "help me create a resume for a guidewire job"
+[CoordinatorAgent] Classification: {"category":"resume_help","confidence":0.95,"reasoning":"Career question","complexity":"medium","required_capabilities":["resume_review"]}
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should route different question types correctly
+[MockOpenAI] Prompt: you are an ats-optimized resume builder for guidewire consultants.
+
+your mission:
+- create resumes that pass applicant tracking systems (ats)
+- highlight guidewire-specific skills and certifications
+- quantify achievements with metrics
+- tailor content to specific job descriptions
+- optimize keyword density
+
+context:
+consultant: {{consultantname}}
+guidewire products: {{guidewireproducts}}
+years of experience: {{yearsexperience}}
+certifications: {{certifications}}
+target role: {{targetrole}}
+target company: {{targetcompany}}
+
+resume structure:
+1. professional summary (3-4 lines, keyword-rich)
+2. technical skills (guidewire products, programming languages, tools)
+3. professional experience (reverse chronological)
+   - job title, company, dates
+   - 4-6 bullet points per role
+   - start with action verbs
+   - include metrics (e.g., "reduced claim processing time by 30%")
+4. certifications (guidewire ace, specialist certifications)
+5. education (degree, university, year)
+
+ats optimization:
+- use standard section headers
+- include keywords from job description
+- avoid tables, images, graphics
+- use simple formatting
+- include both acronyms and full terms (e.g., "policycenter (pc)")
+
+tone: professional, confident, achievement-oriented
+
+output a complete, ats-optimized resume in markdown format.
+
+
+student data:
+{
+  "profile": {
+    "id": "32a3cfc5-ca17-4881-babe-211a214e706c",
+    "auth_id": null,
+    "email": "test-user-1763813330463@example.com",
+    "full_name": "integration test user",
+    "avatar_url": null,
+    "phone": null,
+    "timezone": "america/new_york",
+    "locale": "en-us",
+    "student_enrollment_date": null,
+    "student_course_id": null,
+    "student_current_module": null,
+    "student_course_progress": {},
+    "student_graduation_date": null,
+    "student_certificates": [],
+    "employee_hire_date": null,
+    "employee_department": null,
+    "employee_position": null,
+    "employee_salary": null,
+    "employee_status": null,
+    "employee_manager_id": null,
+    "employee_performance_rating": null,
+    "candidate_status": null,
+    "candidate_resume_url": null,
+    "candidate_skills": null,
+    "candidate_experience_years": null,
+    "candidate_current_visa": null,
+    "candidate_visa_expiry": null,
+    "candidate_hourly_rate": null,
+    "candidate_bench_start_date": null,
+    "candidate_availability": null,
+    "candidate_location": null,
+    "candidate_willing_to_relocate": false,
+    "client_company_name": null,
+    "client_industry": null,
+    "client_tier": null,
+    "client_contract_start_date": null,
+    "client_contract_end_date": null,
+    "client_payment_terms": 30,
+    "client_preferred_markup_percentage": null,
+    "recruiter_territory": null,
+    "recruiter_specialization": null,
+    "recruiter_monthly_placement_target": 2,
+    "recruiter_pod_id": null,
+    "created_at": "2025-11-22t12:08:50.629348+00:00",
+    "updated_at": "2025-11-22t12:08:50.629348+00:00",
+    "created_by": null,
+    "updated_by": null,
+    "deleted_at": null,
+    "is_active": true,
+    "search_vector": "'integr':1a 'test':2a 'test-user-1763813330463@example.com':4b 'user':3a",
+    "org_id": "9765601b-ddd3-49f7-bdb1-022f3c7cf812",
+    "leaderboard_visible": true
+  },
+  "progress": {
+    "id": "05f324ff-d8f5-454a-9902-418621325926",
+    "student_id": "32a3cfc5-ca17-4881-babe-211a214e706c",
+    "current_module": "general",
+    "completed_modules": [],
+    "struggle_areas": [],
+    "mastery_score": 0,
+    "total_interactions": 0,
+    "helpful_interactions": 0,
+    "last_activity_at": "2025-11-22t12:08:51.63+00:00",
+    "created_at": "2025-11-22t12:08:50.814287+00:00",
+    "updated_at": "2025-11-22t12:08:51.795355+00:00"
+  }
+}
+
+target job:
+help me create a resume for a guidewire job
+
+requirements:
+- include certifications: yes
+- include projects: yes
+- format: json
+
+generate a professional resume optimized for ats systems.
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should route different question types correctly
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should route different question types correctly
+[CoordinatorAgent] Interaction logged successfully
+[MockOpenAI] Prompt: classify this question: "i need help planning my capstone project"
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should route different question types correctly
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should route different question types correctly
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[MockOpenAI] Prompt: classify this question: "i dont understand rating at all"
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+
+ × tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should route different question types correctly 880ms
+   → expected 'code_mentor' to be 'project_planner' // Object.is equality
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CodeMentorAgent] Failed to fetch student progress: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813332376"'
+}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CodeMentorAgent] Failed to update progress: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813332376"'
+}
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CoordinatorAgent] Logging interaction for: escalation-test-1763813332376
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[MockOpenAI] Prompt: classify this question: "i dont understand rating at all"
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CoordinatorAgent] Supabase INSERT error: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813332376"'
+}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CodeMentorAgent] Failed to fetch student progress: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813332688"'
+}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CodeMentorAgent] Failed to update progress: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813332688"'
+}
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CoordinatorAgent] Logging interaction for: escalation-test-1763813332688
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[MockOpenAI] Prompt: classify this question: "i dont understand rating at all"
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CoordinatorAgent] Supabase INSERT error: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813332688"'
+}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CodeMentorAgent] Failed to fetch student progress: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813333002"'
+}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CodeMentorAgent] Failed to update progress: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813333002"'
+}
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CoordinatorAgent] Logging interaction for: escalation-test-1763813333002
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[MockOpenAI] Prompt: classify this question: "i dont understand rating at all"
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CoordinatorAgent] Supabase INSERT error: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813333002"'
+}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CodeMentorAgent] Failed to fetch student progress: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813333299"'
+}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CodeMentorAgent] Failed to update progress: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813333299"'
+}
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CoordinatorAgent] Logging interaction for: escalation-test-1763813333299
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[MockOpenAI] Prompt: classify this question: "i dont understand rating at all"
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CoordinatorAgent] Supabase INSERT error: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813333299"'
+}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CodeMentorAgent] Failed to fetch student progress: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813333609"'
+}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CodeMentorAgent] Failed to update progress: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813333609"'
+}
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CoordinatorAgent] Logging interaction for: escalation-test-1763813333609
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[MockOpenAI] Prompt: classify this question: "i dont understand rating at all"
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CoordinatorAgent] Supabase INSERT error: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813333609"'
+}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CodeMentorAgent] Failed to fetch student progress: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813333935"'
+}
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CodeMentorAgent] Failed to update progress: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813333935"'
+}
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CoordinatorAgent] Logging interaction for: escalation-test-1763813333935
+
+stderr | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate
+[CoordinatorAgent] Supabase INSERT error: {
+  code: '22P02',
+  details: null,
+  hint: null,
+  message: 'invalid input syntax for type uuid: "escalation-test-1763813333935"'
+}
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should meet response time targets
+[MockOpenAI] Prompt: classify this question: "what is policycenter?"
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+
+ ✓ tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Escalation Flow > should detect repeated questions and escalate 1874ms
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should meet response time targets
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should meet response time targets
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[MockOpenAI] Prompt: classify this question: "question 0"
+[MockOpenAI] Prompt: classify this question: "question 1"
+[MockOpenAI] Prompt: classify this question: "question 2"
+[MockOpenAI] Prompt: classify this question: "question 3"
+[MockOpenAI] Prompt: classify this question: "question 4"
+[MockOpenAI] Prompt: classify this question: "question 5"
+[MockOpenAI] Prompt: classify this question: "question 6"
+[MockOpenAI] Prompt: classify this question: "question 7"
+[MockOpenAI] Prompt: classify this question: "question 8"
+[MockOpenAI] Prompt: classify this question: "question 9"
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+
+ ✓ tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should meet response time targets 320ms
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Interaction logged successfully
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Cost Tracking > should track cumulative costs accurately
+[MockOpenAI] Prompt: classify this question: "test question"
+[MockOpenAI] Prompt: classify this question: "test question"
+[MockOpenAI] Prompt: classify this question: "test question"
+[MockOpenAI] Prompt: classify this question: "test question"
+[MockOpenAI] Prompt: classify this question: "test question"
+[MockOpenAI] Prompt: classify this question: "test question"
+[MockOpenAI] Prompt: classify this question: "test question"
+[MockOpenAI] Prompt: classify this question: "test question"
+[MockOpenAI] Prompt: classify this question: "test question"
+[MockOpenAI] Prompt: classify this question: "test question"
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+
+ ✓ tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Performance Benchmarks > should handle concurrent requests 371ms
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Cost Tracking > should track cumulative costs accurately
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Cost Tracking > should track cumulative costs accurately
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Cost Tracking > should track cumulative costs accurately
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Cost Tracking > should track cumulative costs accurately
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Cost Tracking > should track cumulative costs accurately
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Cost Tracking > should track cumulative costs accurately
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Cost Tracking > should track cumulative costs accurately
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Cost Tracking > should track cumulative costs accurately
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Cost Tracking > should track cumulative costs accurately
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Cost Tracking > should track cumulative costs accurately
+[CoordinatorAgent] Interaction logged successfully
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Cost Tracking > should track cumulative costs accurately
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Cost Tracking > should track cumulative costs accurately
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Cost Tracking > should track cumulative costs accurately
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Cost Tracking > should track cumulative costs accurately
+[CoordinatorAgent] Interaction logged successfully
+[CoordinatorAgent] Interaction logged successfully
+[CoordinatorAgent] Interaction logged successfully
+[CoordinatorAgent] Interaction logged successfully
+[CoordinatorAgent] Interaction logged successfully
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Database Consistency > should maintain data integrity across interactions
+[MockOpenAI] Prompt: classify this question: "first question"
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+
+ ✓ tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Cost Tracking > should track cumulative costs accurately 341ms
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Database Consistency > should maintain data integrity across interactions
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Database Consistency > should maintain data integrity across interactions
+[CoordinatorAgent] Interaction logged successfully
+[MockOpenAI] Prompt: classify this question: "second question"
+[CoordinatorAgent] Classification: {"category":"code_question","confidence":0.95,"reasoning":"Technical question","complexity":"medium","required_capabilities":["code_generation"]}
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Database Consistency > should maintain data integrity across interactions
+[CoordinatorAgent] Logging interaction for: 32a3cfc5-ca17-4881-babe-211a214e706c
+
+stdout | tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Database Consistency > should maintain data integrity across interactions
+[CoordinatorAgent] Interaction logged successfully
+
+ ✓ tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Database Consistency > should maintain data integrity across interactions 699ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should complete full student question flow
+AssertionError: expected 'This is a test response from mocked A…' to match /\?/
+
+- Expected: 
+/\?/
+
++ Received: 
+"This is a test response from mocked Anthropic Claude"
+
+ ❯ tests/integration/guidewire-guru-flow.test.ts:186:31
+    184| 
+    185|       // Step 3: Verify Socratic response (Code Mentor)
+    186|       expect(response.answer).toMatch(/\?/); // Socratic method uses q…
+       |                               ^
+    187|     });
+    188| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/integration/guidewire-guru-flow.test.ts > Guidewire Guru Integration Flow > Complete Question Flow > should route different question types correctly
+AssertionError: expected 'code_mentor' to be 'project_planner' // Object.is equality
+
+Expected: "project_planner"
+Received: "code_mentor"
+
+ ❯ tests/integration/guidewire-guru-flow.test.ts:235:36
+    233|         });
+    234| 
+    235|         expect(response.agentUsed).toBe(testCase.expectedAgent);
+       |                                    ^
+    236|       }
+    237|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 6 passed (8)
+   Start at  07:08:49
+   Duration  6.77s (transform 62ms, setup 110ms, collect 82ms, tests 5.80s, environment 306ms, prepare 38ms)
+

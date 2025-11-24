@@ -1,6 +1,6 @@
 # ACAD-017: Leaderboards
 
-**Status:** ⚪ Not Started
+**Status:** 🟢 Complete
 
 **Story Points:** 4
 **Sprint:** Sprint 3 (Week 9-10)
@@ -18,14 +18,14 @@ So that **I can get help 24/7 and stay motivated**.
 
 ## Acceptance Criteria
 
-- [ ] Global leaderboard (all students)
-- [ ] Course-specific leaderboard
-- [ ] Cohort leaderboard (students enrolled same time)
-- [ ] Weekly XP leaders
-- [ ] All-time leaders
-- [ ] Rank display (1st, 2nd, 3rd with badges)
-- [ ] Opt-out option (privacy)
-- [ ] Real-time rank updates
+- [x] Global leaderboard (all students)
+- [x] Course-specific leaderboard
+- [x] Cohort leaderboard (students enrolled same time)
+- [x] Weekly XP leaders
+- [x] All-time leaders
+- [x] Rank display (1st, 2nd, 3rd with badges)
+- [x] Opt-out option (privacy)
+- [x] Real-time rank updates
 
 ---
 

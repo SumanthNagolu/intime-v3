@@ -105,7 +105,7 @@ export const adminEventsRouter = router({
     .query(async ({ ctx, input }) => {
       const { data, error } = await ctx.supabase
         .rpc('admin_get_event_stats', {
-          p_org_id: input.orgId || null,
+          p_org_id: input.orgId ?? undefined,
         });
 
       if (error) throw error;
