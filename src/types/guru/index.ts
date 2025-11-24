@@ -55,6 +55,10 @@ export interface CodeMentorOutput {
   nextSteps: string[];
   /** Helpful rating (optional, user feedback) */
   wasHelpful?: boolean;
+  /** Tokens used in AI request */
+  tokensUsed?: number;
+  /** Cost in USD */
+  cost?: number;
 }
 
 export interface StudentProgress {
@@ -102,6 +106,10 @@ export interface ResumeBuilderOutput {
   format: ResumeFormat;
   /** Created/updated timestamp */
   timestamp: string;
+  /** Tokens used in AI request */
+  tokensUsed?: number;
+  /** Cost in USD */
+  cost?: number;
 }
 
 export interface ResumeVersion {
@@ -149,6 +157,10 @@ export interface ProjectPlannerOutput {
   successCriteria: string[];
   /** Next action */
   nextAction: string;
+  /** Tokens used in AI request */
+  tokensUsed?: number;
+  /** Cost in USD */
+  cost?: number;
 }
 
 export interface ProjectMilestone {
@@ -216,6 +228,10 @@ export interface InterviewCoachOutput {
   suggestions?: string[];
   /** Next question */
   nextQuestion?: string;
+  /** Tokens used in AI request */
+  tokensUsed?: number;
+  /** Cost in USD */
+  cost?: number;
 }
 
 export interface InterviewSession {

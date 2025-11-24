@@ -9,6 +9,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
@@ -80,13 +81,14 @@ export async function signUpAction(
   const { email, password, full_name, phone, role } = validation.data;
 
   const supabase = await createClient();
+  const adminSupabase = createAdminClient();
 
   // Step 1: Create Supabase Auth user
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
       data: {
         full_name,
       },
@@ -94,7 +96,7 @@ export async function signUpAction(
   });
 
   if (authError) {
-    console.error('Auth signup error:', authError);
+    console.error('Auth signup error:', JSON.stringify(authError, null, 2));
     return {
       success: false,
       error: authError.message || 'Failed to create account',
@@ -108,8 +110,33 @@ export async function signUpAction(
     };
   }
 
+  // Step 1.5: Create organization for the new user
+  // Generate a unique slug from email (remove @ and domain)
+  const orgSlug = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '-');
+  const timestamp = Date.now().toString().slice(-6);
+
+  const { data: orgData, error: orgError } = await adminSupabase
+    .from('organizations')
+    .insert({
+      name: `${full_name}'s Organization`,
+      slug: `${orgSlug}-${timestamp}`,
+      status: 'active',
+      subscription_tier: 'free',
+      subscription_status: 'active',
+    })
+    .select()
+    .single();
+
+  if (orgError || !orgData) {
+    console.error('Organization creation error:', orgError);
+    return {
+      success: false,
+      error: 'Failed to create organization',
+    };
+  }
+
   // Step 2: Create user profile in database
-  const { data: profileData, error: profileError } = await supabase
+  const { data: profileData, error: profileError } = await adminSupabase
     .from('user_profiles')
     .insert({
       id: authData.user.id,
@@ -117,6 +144,7 @@ export async function signUpAction(
       email,
       full_name,
       phone: phone || null,
+      org_id: orgData.id,
     })
     .select()
     .single();
@@ -130,7 +158,7 @@ export async function signUpAction(
   }
 
   // Step 3: Get the role ID for the requested role
-  const { data: roleData, error: roleError } = await supabase
+  const { data: roleData, error: roleError } = await adminSupabase
     .from('roles')
     .select('id')
     .eq('name', role)
@@ -145,7 +173,7 @@ export async function signUpAction(
   }
 
   // Step 4: Assign role to user
-  const { error: roleAssignmentError } = await supabase
+  const { error: roleAssignmentError } = await adminSupabase
     .from('user_roles')
     .insert({
       user_id: authData.user.id,
@@ -161,12 +189,13 @@ export async function signUpAction(
   }
 
   // Step 5: Log audit event
-  await supabase.from('audit_logs').insert({
+  await adminSupabase.from('audit_logs').insert({
     table_name: 'user_profiles',
     action: 'INSERT',
     record_id: authData.user.id,
     user_id: authData.user.id,
     user_email: email,
+    org_id: orgData.id,
     new_values: {
       email,
       full_name,
@@ -220,6 +249,7 @@ export async function signInAction(
   const { email, password } = validation.data;
 
   const supabase = await createClient();
+  const adminSupabase = createAdminClient();
 
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
@@ -234,18 +264,28 @@ export async function signInAction(
     };
   }
 
+  // Get user's org_id for audit log
+  const { data: profile } = await supabase
+    .from('user_profiles')
+    .select('org_id')
+    .eq('auth_id', data.user.id)
+    .single();
+
   // Log audit event
-  await supabase.from('audit_logs').insert({
-    table_name: 'user_profiles',
-    action: 'LOGIN',
-    record_id: data.user.id,
-    user_id: data.user.id,
-    user_email: email,
-    metadata: {
-      source: 'login',
-    },
-    severity: 'info',
-  });
+  if (profile) {
+    await adminSupabase.from('audit_logs').insert({
+      table_name: 'user_profiles',
+      action: 'LOGIN',
+      record_id: data.user.id,
+      user_id: data.user.id,
+      user_email: email,
+      org_id: profile.org_id,
+      metadata: {
+        source: 'login',
+      },
+      severity: 'info',
+    });
+  }
 
   revalidatePath('/', 'layout');
   redirect('/dashboard');
@@ -261,6 +301,7 @@ export async function signInAction(
  */
 export async function signOutAction(): Promise<ActionResult> {
   const supabase = await createClient();
+  const adminSupabase = createAdminClient();
 
   // Get current user for audit log
   const { data: { user } } = await supabase.auth.getUser();
@@ -277,16 +318,26 @@ export async function signOutAction(): Promise<ActionResult> {
 
   // Log audit event
   if (user) {
-    await supabase.from('audit_logs').insert({
-      table_name: 'user_profiles',
-      action: 'LOGOUT',
-      record_id: user.id,
-      user_id: user.id,
-      metadata: {
-        source: 'logout',
-      },
-      severity: 'info',
-    });
+    // Get user's org_id for audit log
+    const { data: profile } = await supabase
+      .from('user_profiles')
+      .select('org_id')
+      .eq('auth_id', user.id)
+      .single();
+
+    if (profile) {
+      await adminSupabase.from('audit_logs').insert({
+        table_name: 'user_profiles',
+        action: 'LOGOUT',
+        record_id: user.id,
+        user_id: user.id,
+        org_id: profile.org_id,
+        metadata: {
+          source: 'logout',
+        },
+        severity: 'info',
+      });
+    }
   }
 
   revalidatePath('/', 'layout');

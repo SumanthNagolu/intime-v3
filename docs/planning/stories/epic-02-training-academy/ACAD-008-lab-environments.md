@@ -1,6 +1,6 @@
 # ACAD-008: Create Lab Environments System
 
-**Status:** ⚪ Not Started
+**Status:** 🟢 Complete
 
 **Story Points:** 8
 **Sprint:** Sprint 2 (Week 7-8)
@@ -18,15 +18,15 @@ So that **I can practice real-world skills without complex setup**.
 
 ## Acceptance Criteria
 
-- [ ] GitHub template repository integration
-- [ ] Auto-create student fork when lab started
-- [ ] Docker/sandbox environment provisioning (optional)
-- [ ] Lab instructions embedded in UI
-- [ ] Submission workflow (submit GitHub repo URL)
-- [ ] Auto-grading for simple labs (unit tests pass)
-- [ ] Manual grading queue for complex labs
-- [ ] Lab time limit (optional, for certifications)
-- [ ] Resource cleanup after lab completion
+- [x] GitHub template repository integration
+- [x] Auto-create student fork when lab started
+- [x] Docker/sandbox environment provisioning (optional)
+- [x] Lab instructions embedded in UI
+- [x] Submission workflow (submit GitHub repo URL)
+- [x] Auto-grading for simple labs (unit tests pass)
+- [x] Manual grading queue for complex labs
+- [x] Lab time limit (optional, for certifications)
+- [x] Resource cleanup after lab completion
 
 ---
 

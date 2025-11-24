@@ -12,6 +12,7 @@
  */
 
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import type { Database } from '@/types/supabase';
 import OpenAI from 'openai';
 import type {
   TwinRole,
@@ -37,7 +38,7 @@ export class EmployeeTwin
   private employeeId: string;
   private orgId: string;
   private openai: OpenAI;
-  private supabase: SupabaseClient;
+  private supabase: SupabaseClient<Database>;
 
   constructor(
     employeeId: string,
@@ -45,7 +46,7 @@ export class EmployeeTwin
     config?: Partial<AgentConfig>,
     dependencies?: {
       openai?: OpenAI;
-      supabase?: SupabaseClient;
+      supabase?: SupabaseClient<Database>;
     }
   ) {
     super({
@@ -65,7 +66,7 @@ export class EmployeeTwin
     this.openai = dependencies?.openai || new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     this.supabase =
       dependencies?.supabase ||
-      createClient(
+      createClient<Database>(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.SUPABASE_SERVICE_KEY!
       );
@@ -314,10 +315,10 @@ Provide a helpful, specific answer based on the employee's role and context.`;
   async getInteractionHistory(limit: number = 10): Promise<TwinInteraction[]> {
     try {
       const { data, error } = await this.supabase
-        .from('employee_twin_interactions')
+        .from('ai_agent_interactions')
         .select('*')
         .eq('user_id', this.employeeId)
-        .eq('twin_role', this.role)
+        .eq('agent_name', `EmployeeTwin-${this.role}`)
         .order('created_at', { ascending: false })
         .limit(limit);
 
@@ -332,20 +333,20 @@ Provide a helpful, specific answer based on the employee's role and context.`;
       return (data || []).map((row) => ({
         id: row.id,
         orgId: row.org_id,
-        userId: row.user_id,
-        twinRole: row.twin_role,
-        interactionType: row.interaction_type,
-        prompt: row.prompt,
-        response: row.response,
-        context: row.context,
-        wasHelpful: row.was_helpful,
-        userFeedback: row.user_feedback,
+        userId: row.user_id || '',
+        twinRole: this.role,
+        interactionType: row.interaction_type as 'morning_briefing' | 'suggestion' | 'question' | 'feedback',
+        prompt: row.input || '',
+        response: row.output || '',
+        context: (row.metadata as any)?.context || {},
+        wasHelpful: (row.metadata as any)?.was_helpful,
+        userFeedback: (row.metadata as any)?.user_feedback,
         modelUsed: row.model_used,
         tokensUsed: row.tokens_used,
         costUsd: row.cost_usd,
         latencyMs: row.latency_ms,
         createdAt: row.created_at,
-      }));
+      })) as any;
     } catch (error) {
       throw this.createError(
         `Failed to get interaction history: ${error instanceof Error ? error.message : 'Unknown error'}`,

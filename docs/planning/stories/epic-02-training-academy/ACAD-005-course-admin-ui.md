@@ -1,6 +1,6 @@
 # ACAD-005: Build Course Admin UI
 
-**Status:** ⚪ Not Started
+**Status:** 🟢 Complete
 
 **Story Points:** 6
 **Sprint:** Sprint 1 (Week 5-6)

@@ -83,9 +83,9 @@ export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
  * Requires user to be admin
  */
 export const adminProcedure = protectedProcedure.use(async ({ ctx, next }) => {
-  // Check if user is admin via database
+  // Check if user is admin via database (works with authenticated user from JWT context)
   const { data: isAdmin } = await ctx.supabase
-    .rpc('user_is_admin', { p_user_id: ctx.userId });
+    .rpc('user_is_admin');
 
   if (!isAdmin) {
     throw new TRPCError({

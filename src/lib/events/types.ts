@@ -54,6 +54,16 @@ export interface CourseGraduatedPayload {
   grade: number;
 }
 
+export interface CourseEnrolledPayload {
+  studentId: string;
+  enrollmentId: string;
+  courseId: string;
+  courseName: string;
+  enrolledAt: Date;
+  paymentType: 'subscription' | 'one_time' | 'free' | 'scholarship';
+  paymentAmount: number;
+}
+
 export interface CandidatePlacedPayload {
   candidateId: string;
   jobId: string;
@@ -68,6 +78,35 @@ export interface JobCreatedPayload {
   clientId: string;
   requiredSkills: string[];
   experienceYears: { min: number; max: number };
+}
+
+export interface CapstoneGradedPayload {
+  submissionId: string;
+  studentId: string;
+  studentName: string;
+  studentEmail: string;
+  courseId: string;
+  courseName: string;
+  grade: number;
+  feedback: string;
+  status: 'passed' | 'failed' | 'revision_requested';
+  graderId: string;
+  graderName: string;
+  gradedAt: string;
+}
+
+export interface StudentAtRiskPayload {
+  studentId: string;
+  studentName: string;
+  studentEmail: string;
+  enrollmentId: string;
+  courseId: string;
+  courseName: string;
+  riskReasons: string[];
+  riskLevel: 'low' | 'medium' | 'high';
+  interventionId: string;
+  trainerId: string;
+  detectedAt: string;
 }
 
 /**

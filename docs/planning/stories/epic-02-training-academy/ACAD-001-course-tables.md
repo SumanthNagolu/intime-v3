@@ -1,10 +1,12 @@
 # ACAD-001: Create Courses and Curriculum Tables
 
-**Status:** ⚪ Not Started
+**Status:** 🟢 Complete
 
 **Story Points:** 5
-**Sprint:** Sprint 1 (Week 5-6)
+**Sprint:** Sprint 8 (Week 15-16)
 **Priority:** CRITICAL (Blocks all Academy work)
+**Implementation Date:** 2025-11-21
+**Deployed:** 2025-11-21
 
 ---
 

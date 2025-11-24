@@ -6,7 +6,7 @@
  */
 
 import { z } from 'zod';
-import { router, protectedProcedure, adminProcedure } from '../trpc';
+import { router, protectedProcedure, adminProcedure } from '@/lib/trpc/trpc';
 import {
   checkAndAwardBadges,
   awardBadgeManual,

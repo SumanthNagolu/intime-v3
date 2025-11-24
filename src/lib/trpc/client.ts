@@ -6,7 +6,7 @@
  */
 
 import { createTRPCReact } from '@trpc/react-query';
-import type { AppRouter } from './routers/_app';
+import type { AppRouter } from '@/server/trpc/root';
 
 /**
  * tRPC React hooks

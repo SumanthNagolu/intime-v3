@@ -5,21 +5,166 @@
  * Tests: Complete student question flow including database logging
  */
 
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import { CoordinatorAgent } from '@/lib/ai/agents/guru/CoordinatorAgent';
 import { createClient } from '@supabase/supabase-js';
+import dotenv from 'dotenv';
+import path from 'path';
+import fs from 'fs';
+
+// Load environment variables from .env.local and FORCE overwrite
+const envConfig = dotenv.parse(fs.readFileSync(path.resolve(process.cwd(), '.env.local')));
+for (const k in envConfig) {
+  process.env[k] = envConfig[k];
+}
+
+// Unmock Supabase for integration tests
+vi.unmock('@supabase/supabase-js');
+
+// Mock OpenAI with dynamic responses
+vi.mock('openai', () => {
+  const MockOpenAI = vi.fn().mockImplementation(() => ({
+    chat: {
+      completions: {
+        create: vi.fn().mockImplementation((params) => {
+          const content = params.messages[1].content.toLowerCase();
+          let response;
+
+          if (content.includes('project details:')) {
+            response = {
+              title: "Guidewire Capstone Plan",
+              description: "A comprehensive plan.",
+              milestones: [
+                {
+                  title: "Phase 1",
+                  description: "Setup",
+                  estimatedHours: 10,
+                  tasks: [{ description: "Setup env", estimatedMinutes: 60 }]
+                }
+              ],
+              guidewireRequirements: ["Req 1"],
+              successCriteria: ["Success 1"]
+            };
+          } else if (content.includes('study plan') || content.includes('schedule') || content.includes('planning') || content.includes('capstone')) {
+            response = {
+              category: 'project_planning',
+              confidence: 0.95,
+              reasoning: 'Planning question',
+              complexity: 'medium',
+              required_capabilities: ['planning']
+            };
+          } else if (content.includes('resume') || content.includes('cv')) {
+            response = {
+              category: 'resume_help',
+              confidence: 0.95,
+              reasoning: 'Career question',
+              complexity: 'medium',
+              required_capabilities: ['resume_review']
+            };
+          } else if (content.includes('interview')) {
+            response = {
+              category: 'interview_prep',
+              confidence: 0.95,
+              reasoning: 'Interview question',
+              complexity: 'medium',
+              required_capabilities: ['interview_prep']
+            };
+          } else {
+            response = {
+              category: 'code_question',
+              confidence: 0.95,
+              reasoning: 'Technical question',
+              complexity: 'medium',
+              required_capabilities: ['code_generation']
+            };
+          }
+
+          return Promise.resolve({
+            choices: [
+              {
+                message: {
+                  content: JSON.stringify(response),
+                },
+              },
+            ],
+            usage: { total_tokens: 100 }
+          });
+        }),
+      },
+    },
+  }));
+
+  return {
+    default: MockOpenAI,
+    OpenAI: MockOpenAI,
+  };
+});
+
+// Mock Anthropic for Socratic responses
+vi.mock('@anthropic-ai/sdk', () => {
+  const MockAnthropic = vi.fn().mockImplementation(() => ({
+    messages: {
+      create: vi.fn().mockResolvedValue({
+        content: [
+          {
+            type: 'text',
+            text: 'This is a test response from mocked Anthropic Claude? (Socratic)',
+          },
+        ],
+        usage: {
+          input_tokens: 10,
+          output_tokens: 20,
+        },
+      }),
+    },
+  }));
+
+  return {
+    default: MockAnthropic,
+    Anthropic: MockAnthropic,
+  };
+});
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
 describe('Guidewire Guru Integration Flow', () => {
-  const testOrgId = 'test-org-integration';
-  const testUserId = 'test-user-integration';
+  let testOrgId: string;
+  let testUserId: string;
   let coordinator: CoordinatorAgent;
 
   beforeAll(async () => {
+    // Create test organization
+    const { data: org, error: orgError } = await supabase
+      .from('organizations')
+      .insert({
+        name: 'Integration Test Org',
+        slug: `test-org-${Date.now()}`,
+        status: 'active'
+      })
+      .select()
+      .single();
+
+    if (orgError) throw new Error(`Failed to create test org: ${orgError.message}`);
+    testOrgId = org.id;
+
+    // Create test user
+    const { data: user, error: userError } = await supabase
+      .from('user_profiles')
+      .insert({
+        email: `test-user-${Date.now()}@example.com`,
+        full_name: 'Integration Test User',
+        org_id: testOrgId
+        // role: 'student' // Role is handled in user_roles table
+      })
+      .select()
+      .single();
+
+    if (userError) throw new Error(`Failed to create test user: ${userError.message}`);
+    testUserId = user.id;
+
     coordinator = new CoordinatorAgent({
       orgId: testOrgId,
       userId: testUserId,
@@ -35,6 +180,16 @@ describe('Guidewire Guru Integration Flow', () => {
       .from('guru_interactions')
       .delete()
       .eq('student_id', testUserId);
+
+    // Cleanup: Delete test user
+    if (testUserId) {
+      await supabase.from('user_profiles').delete().eq('id', testUserId);
+    }
+
+    // Cleanup: Delete test org
+    if (testOrgId) {
+      await supabase.from('organizations').delete().eq('id', testOrgId);
+    }
   });
 
   describe('Complete Question Flow', () => {

@@ -1,6 +1,6 @@
 # ACAD-004: Create Content Upload System
 
-**Status:** ⚪ Not Started
+**Status:** 🟢 Complete
 
 **Story Points:** 5
 **Sprint:** Sprint 1 (Week 5-6)

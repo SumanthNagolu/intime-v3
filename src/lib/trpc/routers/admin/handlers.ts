@@ -86,7 +86,7 @@ export const adminHandlersRouter = router({
       // Get stats
       const { data: stats, error: statsError } = await ctx.supabase
         .rpc('admin_get_handler_stats', {
-          p_org_id: input.orgId || null,
+          p_org_id: input.orgId ?? undefined,
         });
 
       if (statsError) throw statsError;

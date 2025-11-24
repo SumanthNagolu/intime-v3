@@ -1,6 +1,6 @@
 # ACAD-019: Student Dashboard
 
-**Status:** ⚪ Not Started
+**Status:** 🟢 Complete
 
 **Story Points:** 6
 **Sprint:** Sprint 4 (Week 11-12)
@@ -18,15 +18,15 @@ So that **I can track my learning journey and achieve my goals**.
 
 ## Acceptance Criteria
 
-- [ ] Overview of all enrolled courses
-- [ ] Current course progress (percentage complete)
-- [ ] Next topic to study (smart recommendations)
-- [ ] Recent XP earnings
-- [ ] Badges earned
-- [ ] Leaderboard position
-- [ ] Upcoming deadlines (if any)
-- [ ] AI mentor quick access
-- [ ] Mobile-responsive layout
+- [x] Overview of all enrolled courses
+- [x] Current course progress (percentage complete)
+- [x] Next topic to study (smart recommendations)
+- [x] Recent XP earnings
+- [x] Badges earned
+- [x] Leaderboard position
+- [x] Upcoming deadlines (if any)
+- [x] AI mentor quick access
+- [x] Mobile-responsive layout
 
 ---
 

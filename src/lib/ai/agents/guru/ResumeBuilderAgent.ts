@@ -104,6 +104,11 @@ export class ResumeBuilderAgent extends BaseAgent<
         atsScore
       );
 
+      // Track cost
+      const latencyMs = performance.now() - startTime;
+      const tokensUsed = 1500; // Estimated
+      const cost = 0.005; // Estimated
+
       const output: ResumeBuilderOutput = {
         content: formattedContent,
         versionId,
@@ -112,11 +117,11 @@ export class ResumeBuilderAgent extends BaseAgent<
         suggestions,
         format: input.format,
         timestamp: new Date().toISOString(),
+        tokensUsed,
+        cost,
       };
 
-      // Track cost
-      const latencyMs = performance.now() - startTime;
-      await this.trackCost(1500, 0.005, model.model, latencyMs); // Estimated
+      await this.trackCost(tokensUsed, cost, model.model, latencyMs);
 
       return output;
     } catch (error) {

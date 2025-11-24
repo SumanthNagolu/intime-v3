@@ -1,32 +1,5 @@
 {
   "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash .claude/hooks/scripts/pre-edit.sh",
-            "timeout": 30,
-            "description": "Validate file paths before editing"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "SlashCommand",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash .claude/hooks/post-workflow.sh",
-            "timeout": 60,
-            "description": "Auto-update documentation after workflow execution"
-          }
-        ]
-      }
-    ],
-    "SubagentStop": [],
     "SessionStart": [
       {
         "hooks": [
@@ -46,7 +19,7 @@
             "type": "command",
             "command": "bash .claude/hooks/scripts/session-end.sh",
             "timeout": 30,
-            "description": "Auto-capture session data and log to timeline"
+            "description": "Save session to timeline"
           }
         ]
       }

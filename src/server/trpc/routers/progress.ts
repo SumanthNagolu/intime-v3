@@ -10,7 +10,7 @@
  */
 
 import { z } from 'zod';
-import { router, protectedProcedure } from '../trpc';
+import { router, protectedProcedure } from '@/lib/trpc/trpc';
 import { createClient } from '@/lib/supabase/server';
 import {
   TopicCompletion,
@@ -707,19 +707,19 @@ export const progressRouter = router({
       const avgCompletionDays =
         graduations && graduations.length > 0
           ? graduations
-              .filter((g) => g.enrolled_at && g.completed_at)
-              .map((g) => {
-                const start = new Date(g.enrolled_at!);
-                const end = new Date(g.completed_at!);
-                return (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
-              })
-              .reduce((sum, days) => sum + days, 0) / graduations.length
+            .filter((g) => g.enrolled_at && g.completed_at)
+            .map((g) => {
+              const start = new Date(g.enrolled_at!);
+              const end = new Date(g.completed_at!);
+              return (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+            })
+            .reduce((sum, days) => sum + days, 0) / graduations.length
           : 0;
 
       const avgCompletionPercentage =
         graduations && graduations.length > 0
           ? graduations.reduce((sum, g) => sum + (g.completion_percentage ?? 0), 0) /
-            graduations.length
+          graduations.length
           : 0;
 
       // Group by month

@@ -1,6 +1,7 @@
 /**
  * AI Mentor Chat Interface
  * Story: ACAD-020 (UI) + ACAD-013 (Backend Integration)
+ * Design System V2 (Ivory/Forest/Rust)
  *
  * Real-time AI mentor chat with:
  * - OpenAI GPT-4o-mini integration
@@ -13,7 +14,7 @@
 
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -39,7 +40,7 @@ interface ChatSession {
   total_chats: number;
 }
 
-export default function AIMentorPage() {
+function AIMentorContent() {
   const searchParams = useSearchParams();
   const promptParam = searchParams.get('prompt');
 
@@ -200,24 +201,24 @@ export default function AIMentorPage() {
   };
 
   return (
-    <div className="h-full w-full flex flex-1">
+    <div className="h-full w-full flex font-body">
       {/* Sidebar - Session History */}
       <div
         className={`${
           showSidebar ? 'w-80' : 'w-0'
-        } transition-all duration-300 overflow-hidden border-r-2 border-gray-200`}
+        } transition-all duration-300 overflow-hidden border-r border-gray-200 bg-white shadow-sm z-10`}
       >
-        <div className="h-full flex flex-col bg-gray-50">
+        <div className="h-full flex flex-col">
           {/* Header */}
-          <div className="p-4 border-b">
-            <Button onClick={handleNewSession} className="w-full" size="sm">
+          <div className="p-4 border-b border-gray-100">
+            <Button onClick={handleNewSession} className="w-full btn-primary" size="sm">
               <Sparkles className="h-4 w-4 mr-2" />
               New Chat
             </Button>
           </div>
 
           {/* Sessions List */}
-          <ScrollArea className="flex-1">
+          <ScrollArea className="flex-1 bg-gray-50/50">
             <div className="p-2">
               {sessionsLoading ? (
                 <div className="space-y-2">
@@ -231,19 +232,23 @@ export default function AIMentorPage() {
                     <button
                       key={session.session_id}
                       onClick={() => handleSelectSession(session)}
-                      className={`w-full p-3 text-left rounded-lg transition-colors ${
+                      className={`w-full p-3 text-left transition-all rounded-lg border border-transparent ${
                         activeSessionId === session.session_id
-                          ? 'bg-accent'
-                          : 'hover:bg-accent/50'
+                          ? 'bg-white shadow-sm border-gray-200 text-forest-700'
+                          : 'hover:bg-white hover:border-gray-200 text-gray-600'
                       }`}
                     >
                       <div className="flex items-center gap-2 mb-1">
-                        <Sparkles className="h-4 w-4 text-purple-500" />
-                        <span className="text-sm font-medium">
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                            activeSessionId === session.session_id ? 'bg-forest-100 text-forest-600' : 'bg-gray-100 text-gray-400'
+                        }`}>
+                            <Sparkles className="h-3 w-3" />
+                        </div>
+                        <span className="text-sm font-medium truncate">
                           Session {session.total_chats} chats
                         </span>
                       </div>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-gray-400 pl-8">
                         {new Date(session.last_activity).toLocaleDateString()}
                       </p>
                     </button>
@@ -251,12 +256,12 @@ export default function AIMentorPage() {
                 </div>
               ) : (
                 <div className="text-center py-12">
-                  <Sparkles className="h-12 w-12 mx-auto mb-4 text-muted-foreground opacity-50" />
-                  <p className="text-sm text-muted-foreground">No sessions yet</p>
+                  <Sparkles className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+                  <p className="text-sm text-gray-500">No sessions yet</p>
                   <Button
                     variant="link"
                     size="sm"
-                    className="mt-2"
+                    className="mt-2 text-forest-600"
                     onClick={handleNewSession}
                   >
                     Start your first chat
@@ -269,25 +274,26 @@ export default function AIMentorPage() {
       </div>
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col bg-background">
         {/* Header */}
-        <div className="border-b-2 border-gray-200 bg-white p-4 flex-shrink-0">
+        <div className="border-b border-gray-200 bg-white/80 backdrop-blur p-4 flex-shrink-0 sticky top-0 z-10">
           <div className="flex items-center justify-between max-w-4xl mx-auto">
             <div className="flex items-center gap-3">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setShowSidebar(!showSidebar)}
+                className="text-gray-500 hover:text-forest-600 hover:bg-forest-50"
               >
                 {showSidebar ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </Button>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-white" />
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-forest-100 border-2 border-white shadow-sm flex items-center justify-center">
+                  <Sparkles className="w-5 h-5 text-forest-600" />
                 </div>
                 <div>
-                  <h1 className="text-lg font-semibold">AI Mentor</h1>
-                  <p className="text-xs text-muted-foreground">
+                  <h1 className="text-lg font-heading font-bold text-charcoal leading-none mb-1">AI Mentor</h1>
+                  <p className="text-xs text-gray-500 font-medium">
                     Powered by GPT-4o-mini · Socratic Method
                   </p>
                 </div>
@@ -298,6 +304,7 @@ export default function AIMentorPage() {
                 variant="outline"
                 size="sm"
                 onClick={handleNewSession}
+                className="border-gray-200 hover:border-forest-500 hover:text-forest-600"
               >
                 New Chat
               </Button>
@@ -307,23 +314,23 @@ export default function AIMentorPage() {
 
         {/* Messages Area */}
         <ScrollArea className="flex-1 min-h-0">
-          <div className="max-w-4xl mx-auto p-6">
+          <div className="max-w-4xl mx-auto p-6 min-h-full">
             {historyLoading && activeSessionId ? (
               <div className="space-y-4">
                 {Array.from({ length: 3 }).map((_, i) => (
-                  <Skeleton key={i} className="h-24 w-full" />
+                  <Skeleton key={i} className="h-24 w-full rounded-xl" />
                 ))}
               </div>
             ) : messages.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center mx-auto mb-6">
-                  <Sparkles className="w-8 h-8 text-white" />
+              <div className="text-center py-12 min-h-full flex flex-col justify-center items-center">
+                <div className="w-24 h-24 bg-white border-2 border-forest-100 rounded-full flex items-center justify-center mb-8 shadow-sm">
+                  <Sparkles className="w-12 h-12 text-forest-500" />
                 </div>
-                <h2 className="text-2xl font-bold mb-2">Welcome to AI Mentor!</h2>
-                <p className="text-muted-foreground mb-8 max-w-md mx-auto">
+                <h2 className="text-3xl md:text-4xl font-heading font-bold text-charcoal mb-6">Welcome to AI Mentor!</h2>
+                <p className="text-lg text-gray-600 leading-relaxed mb-12 max-w-2xl">
                   I'm here to help you learn Guidewire using the Socratic method. I'll guide you to discover answers through questions rather than giving you direct answers.
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl w-full mt-8">
                   {[
                     {
                       icon: '💡',
@@ -348,18 +355,18 @@ export default function AIMentorPage() {
                   ].map((suggestion, index) => (
                     <Card
                       key={index}
-                      className="p-4 hover:bg-accent cursor-pointer transition-colors"
+                      className="p-6 bg-white border border-gray-200 hover:border-forest-500 hover:shadow-md cursor-pointer transition-all group text-left"
                       onClick={() => handleSendMessage(suggestion.prompt)}
                     >
-                      <div className="text-2xl mb-2">{suggestion.icon}</div>
-                      <h3 className="font-medium mb-1">{suggestion.title}</h3>
-                      <p className="text-sm text-muted-foreground">{suggestion.prompt}</p>
+                      <div className="text-3xl mb-4 group-hover:scale-110 transition-transform duration-300">{suggestion.icon}</div>
+                      <h3 className="text-lg font-bold text-charcoal mb-2 group-hover:text-forest-600 transition-colors">{suggestion.title}</h3>
+                      <p className="text-sm text-gray-500 leading-relaxed">{suggestion.prompt}</p>
                     </Card>
                   ))}
                 </div>
               </div>
             ) : (
-              <>
+              <div className="space-y-6">
                 {messages.map((message) => (
                   <ChatMessage
                     key={message.id}
@@ -369,14 +376,14 @@ export default function AIMentorPage() {
                 ))}
                 {isTyping && <TypingIndicator />}
                 <div ref={messagesEndRef} />
-              </>
+              </div>
             )}
           </div>
         </ScrollArea>
 
         {/* Input Area */}
-        <div className="flex-shrink-0 border-t-2 border-gray-200 bg-white">
-          <div className="max-w-4xl mx-auto p-4">
+        <div className="flex-shrink-0 border-t border-gray-200 bg-white p-4">
+          <div className="max-w-4xl mx-auto">
             <ChatInput
               onSend={handleSendMessage}
               disabled={askMentorMutation.isPending}
@@ -384,9 +391,30 @@ export default function AIMentorPage() {
               placeholder="Ask me anything about Guidewire..."
               maxLength={1000}
             />
+            <p className="text-xs text-center text-gray-400 mt-3">
+                AI can make mistakes. Consider checking important information.
+            </p>
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+export default function AIMentorPage() {
+  return (
+    <Suspense fallback={
+      <div className="h-full w-full flex items-center justify-center bg-background">
+        <div className="text-center">
+            <Sparkles className="h-10 w-10 text-forest-300 animate-pulse mx-auto mb-4" />
+            <p className="text-gray-500">Loading AI Mentor...</p>
+        </div>
+      </div>
+    }>
+      <AIMentorContent />
+    </Suspense>
+  );
+}
+
+
+

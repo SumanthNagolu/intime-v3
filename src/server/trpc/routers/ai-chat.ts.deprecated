@@ -1,0 +1,242 @@
+/**
+ * AI Chat tRPC Router
+ * ACAD-020
+ *
+ * Endpoints for AI mentor chat functionality
+ * Note: This is a placeholder implementation. Full AI integration
+ * will be completed in ACAD-013 (AI Mentor Backend Integration)
+ */
+
+import { router, protectedProcedure } from '../trpc';
+import { TRPCError } from '@trpc/server';
+import {
+  SendMessageInputSchema,
+  CreateConversationInputSchema,
+  GetConversationHistoryInputSchema,
+  GetConversationMessagesInputSchema,
+  ProvideFeedbackInputSchema,
+  DeleteConversationInputSchema,
+  generateConversationTitle,
+} from '@/types/ai-chat';
+import type {
+  Conversation,
+  ChatMessage,
+  ConversationWithMessages,
+} from '@/types/ai-chat';
+
+export const aiChatRouter = router({
+  /**
+   * Get user's conversation history
+   */
+  getMyConversations: protectedProcedure
+    .input(GetConversationHistoryInputSchema.optional())
+    .query(async ({ ctx, input }) => {
+      const limit = input?.limit || 20;
+      const offset = input?.offset || 0;
+
+      // TODO: Implement actual database query
+      // Placeholder response
+      const conversations: Conversation[] = [];
+
+      return {
+        conversations,
+        total: 0,
+        hasMore: false,
+      };
+    }),
+
+  /**
+   * Get messages for a specific conversation
+   */
+  getConversationMessages: protectedProcedure
+    .input(GetConversationMessagesInputSchema)
+    .query(async ({ ctx, input }) => {
+      const { conversation_id, limit = 50, offset = 0 } = input;
+
+      // TODO: Implement actual database query
+      // Placeholder response
+      const messages: ChatMessage[] = [];
+
+      return {
+        conversation_id,
+        messages,
+        total: 0,
+        hasMore: false,
+      };
+    }),
+
+  /**
+   * Create a new conversation with initial message
+   */
+  createConversation: protectedProcedure
+    .input(CreateConversationInputSchema)
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+      const { initial_message, topic, context } = input;
+
+      // TODO: Implement actual conversation creation and AI response
+      // This is a placeholder implementation
+
+      const conversationId = crypto.randomUUID();
+      const now = new Date().toISOString();
+
+      const conversation: Conversation = {
+        id: conversationId,
+        user_id: userId,
+        title: input.title || generateConversationTitle(initial_message),
+        topic: topic || 'General',
+        last_message_at: now,
+        created_at: now,
+        message_count: 2,
+        context,
+      };
+
+      const userMessage: ChatMessage = {
+        id: crypto.randomUUID(),
+        conversation_id: conversationId,
+        role: 'user',
+        content: initial_message,
+        created_at: now,
+      };
+
+      // Placeholder AI response
+      const assistantMessage: ChatMessage = {
+        id: crypto.randomUUID(),
+        conversation_id: conversationId,
+        role: 'assistant',
+        content:
+          'This is a placeholder response. The AI mentor integration will be completed in ACAD-013. For now, this demonstrates the chat interface and message formatting capabilities.',
+        created_at: new Date(Date.now() + 1000).toISOString(),
+      };
+
+      return {
+        conversation,
+        messages: [userMessage, assistantMessage],
+      };
+    }),
+
+  /**
+   * Send a message in an existing conversation
+   */
+  sendMessage: protectedProcedure
+    .input(SendMessageInputSchema)
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+      const { conversation_id, content, context } = input;
+
+      if (!conversation_id) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'conversation_id is required',
+        });
+      }
+
+      // TODO: Implement actual message sending and AI response
+      // This is a placeholder implementation
+
+      const now = new Date().toISOString();
+
+      const userMessage: ChatMessage = {
+        id: crypto.randomUUID(),
+        conversation_id,
+        role: 'user',
+        content,
+        created_at: now,
+        metadata: context
+          ? {
+              topic_id: context.topic_id,
+              course_id: context.course_id,
+            }
+          : undefined,
+      };
+
+      // Placeholder AI response with code example
+      const assistantMessage: ChatMessage = {
+        id: crypto.randomUUID(),
+        conversation_id,
+        role: 'assistant',
+        content: `Thank you for your question! Here's a placeholder response.
+
+This demonstrates **markdown formatting** with:
+- Bold text
+- *Italic text*
+- Bullet points
+
+And here's a code example:
+
+\`\`\`typescript
+function example() {
+  console.log("This is a placeholder code snippet");
+  return "AI integration coming in ACAD-013";
+}
+\`\`\`
+
+You can also use inline code like \`const x = 5\`.
+
+For actual AI responses, the Guidewire Guru system (from Epic 2.5) will be integrated in ACAD-013.`,
+        created_at: new Date(Date.now() + 1500).toISOString(),
+      };
+
+      return {
+        userMessage,
+        assistantMessage,
+      };
+    }),
+
+  /**
+   * Provide feedback on an AI message
+   */
+  provideFeedback: protectedProcedure
+    .input(ProvideFeedbackInputSchema)
+    .mutation(async ({ ctx, input }) => {
+      const { message_id, feedback } = input;
+
+      // TODO: Implement actual feedback storage
+      // Placeholder implementation
+      console.log('Feedback recorded:', { message_id, feedback });
+
+      return {
+        success: true,
+        message: 'Feedback recorded successfully',
+      };
+    }),
+
+  /**
+   * Delete a conversation
+   */
+  deleteConversation: protectedProcedure
+    .input(DeleteConversationInputSchema)
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+      const { conversation_id } = input;
+
+      // TODO: Implement actual conversation deletion
+      // Placeholder implementation
+      console.log('Deleting conversation:', conversation_id);
+
+      return {
+        success: true,
+        message: 'Conversation deleted successfully',
+      };
+    }),
+
+  /**
+   * Get conversation summary/metadata
+   */
+  getConversationSummary: protectedProcedure
+    .input(DeleteConversationInputSchema)
+    .query(async ({ ctx, input }) => {
+      const { conversation_id } = input;
+
+      // TODO: Implement actual query
+      // Placeholder response
+      return {
+        id: conversation_id,
+        title: 'Sample Conversation',
+        topic: 'General',
+        message_count: 0,
+        created_at: new Date().toISOString(),
+        last_message_at: new Date().toISOString(),
+      };
+    }),
+});

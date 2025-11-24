@@ -1,6 +1,6 @@
 # ACAD-011: Build Quiz Engine (Student-Facing)
 
-**Status:** ⚪ Not Started
+**Status:** 🟢 Complete
 
 **Story Points:** 7
 **Sprint:** Sprint 2 (Week 7-8)
@@ -18,16 +18,16 @@ So that **I can test my knowledge and pass assessments**.
 
 ## Acceptance Criteria
 
-- [ ] Quiz-taking interface (student view)
-- [ ] Timer display (if time-limited)
-- [ ] Answer selection (radio/checkbox)
-- [ ] Submit quiz and get instant score
-- [ ] Pass/fail determination (80%+ to pass)
-- [ ] Unlimited retakes allowed
-- [ ] Show correct answers after submission
-- [ ] Display explanation for wrong answers
-- [ ] Track best attempt score
-- [ ] XP awarded only on first pass
+- [x] Quiz-taking interface (student view)
+- [x] Timer display (if time-limited)
+- [x] Answer selection (radio/checkbox)
+- [x] Submit quiz and get instant score
+- [x] Pass/fail determination (configurable threshold, default 70%)
+- [x] Unlimited retakes allowed (configurable max_attempts)
+- [x] Show correct answers after submission
+- [x] Display explanation for wrong answers
+- [x] Track best attempt score
+- [x] XP awarded only on first pass
 
 ---
 

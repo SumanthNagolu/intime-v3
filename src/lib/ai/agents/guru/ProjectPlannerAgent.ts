@@ -71,9 +71,16 @@ export class ProjectPlannerAgent extends BaseAgent<
 
       // Track cost
       const latencyMs = performance.now() - startTime;
-      await this.trackCost(1200, 0.004, model.model, latencyMs);
+      const tokensUsed = 1200; // Estimated
+      const cost = 0.004; // Estimated
 
-      return plan;
+      await this.trackCost(tokensUsed, cost, model.model, latencyMs);
+
+      return {
+        ...plan,
+        tokensUsed,
+        cost,
+      };
     } catch (error) {
       throw this.createGuruError(
         `Failed to generate project plan: ${error instanceof Error ? error.message : 'Unknown error'}`,

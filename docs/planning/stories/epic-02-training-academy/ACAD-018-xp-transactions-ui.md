@@ -1,6 +1,6 @@
 # ACAD-018: XP Transactions UI
 
-**Status:** ⚪ Not Started
+**Status:** 🟢 Complete
 
 **Story Points:** 3
 **Sprint:** Sprint 3 (Week 9-10)
@@ -18,13 +18,13 @@ So that **I can get help 24/7 and stay motivated**.
 
 ## Acceptance Criteria
 
-- [ ] XP transaction history page
-- [ ] Filter by type (completions, badges, bonuses)
-- [ ] Display reason and timestamp
-- [ ] Visual indicator (positive/negative XP)
-- [ ] Total XP prominently displayed
-- [ ] XP progress bar to next level
-- [ ] Export transaction history (CSV)
+- [x] XP transaction history page
+- [x] Filter by type (completions, badges, bonuses)
+- [x] Display reason and timestamp
+- [x] Visual indicator (positive/negative XP)
+- [x] Total XP prominently displayed
+- [x] XP progress bar to next level
+- [x] Export transaction history (CSV)
 
 ---
 

@@ -1,6 +1,6 @@
 # ACAD-007: Build Video Player with Progress Tracking
 
-**Status:** ⚪ Not Started
+**Status:** 🟢 Complete
 
 **Story Points:** 5
 **Sprint:** Sprint 2 (Week 7-8)
@@ -18,15 +18,15 @@ So that **I can learn at my own pace and the system knows what I've watched**.
 
 ## Acceptance Criteria
 
-- [ ] Vimeo player embedded (or YouTube as fallback)
-- [ ] Video progress tracking (pause/resume from last position)
-- [ ] Auto-mark complete when 90%+ watched
-- [ ] Playback speed controls (0.75x, 1x, 1.25x, 1.5x, 2x)
-- [ ] Transcript display (if available)
-- [ ] Next video auto-advance (optional, user preference)
-- [ ] Watch time analytics (total minutes watched)
-- [ ] Mobile-responsive player
-- [ ] Keyboard shortcuts (space=pause, arrows=seek)
+- [x] Vimeo player embedded (or YouTube as fallback)
+- [x] Video progress tracking (pause/resume from last position)
+- [x] Auto-mark complete when 90%+ watched
+- [x] Playback speed controls (0.75x, 1x, 1.25x, 1.5x, 2x)
+- [x] Transcript display (if available)
+- [x] Next video auto-advance (optional, user preference)
+- [x] Watch time analytics (total minutes watched)
+- [x] Mobile-responsive player
+- [x] Keyboard shortcuts (space=pause, arrows=seek)
 
 ---
 

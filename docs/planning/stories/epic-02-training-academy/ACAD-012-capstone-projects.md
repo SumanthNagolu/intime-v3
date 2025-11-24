@@ -1,6 +1,6 @@
 # ACAD-012: Build Capstone Project System
 
-**Status:** ⚪ Not Started
+**Status:** 🟢 Complete
 
 **Story Points:** 8
 **Sprint:** Sprint 2 (Week 7-8)
@@ -18,15 +18,15 @@ So that **I can demonstrate mastery and build portfolio pieces**.
 
 ## Acceptance Criteria
 
-- [ ] Capstone project requirements page
-- [ ] GitHub repository submission
-- [ ] Video demo submission (optional)
-- [ ] Peer review system (students review each other)
-- [ ] Trainer grading with rubric
-- [ ] Comments/feedback on submission
-- [ ] Revision workflow (resubmit if failed)
-- [ ] Auto-graduate on capstone pass
-- [ ] Certificate generation trigger
+- [x] Capstone project requirements page
+- [x] GitHub repository submission
+- [x] Video demo submission (optional)
+- [x] Peer review system (students review each other)
+- [x] Trainer grading with rubric
+- [x] Comments/feedback on submission
+- [x] Revision workflow (resubmit if failed)
+- [x] Auto-graduate on capstone pass
+- [x] Certificate generation trigger
 
 ---
 

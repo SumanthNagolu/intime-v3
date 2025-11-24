@@ -1,0 +1,342 @@
+/**
+ * Escalation Queue Component
+ * ACAD-014
+ *
+ * Trainer dashboard for viewing and responding to student escalations
+ */
+
+'use client';
+
+import { useState } from 'react';
+import {
+  AlertCircle,
+  Clock,
+  User,
+  MessageSquare,
+  CheckCircle,
+  XCircle,
+  Send,
+  Eye,
+  AlertTriangle,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+// ============================================================================
+// TYPES
+// ============================================================================
+
+export interface Escalation {
+  escalationId: string;
+  chatId: string;
+  userId: string;
+  studentName: string;
+  studentEmail: string;
+  topicId: string | null;
+  topicTitle: string | null;
+  reason: string;
+  confidence: number;
+  autoDetected: boolean;
+  triggers: Record<string, boolean>;
+  status: 'pending' | 'in_progress' | 'resolved' | 'dismissed';
+  assignedTo: string | null;
+  assignedTrainerName: string | null;
+  createdAt: Date;
+  waitTimeMinutes: number;
+  originalQuestion: string;
+  responseCount: number;
+}
+
+export interface TrainerResponse {
+  responseId: string;
+  trainerId: string;
+  trainerName: string;
+  message: string;
+  isInternalNote: boolean;
+  createdAt: Date;
+}
+
+export interface EscalationQueueProps {
+  escalations: Escalation[];
+  onAssign: (escalationId: string, trainerId: string) => Promise<void>;
+  onRespond: (escalationId: string, message: string, isInternal: boolean) => Promise<void>;
+  onResolve: (escalationId: string, notes: string) => Promise<void>;
+  onDismiss: (escalationId: string, reason: string) => Promise<void>;
+  onViewDetails: (escalationId: string) => void;
+  currentTrainerId: string;
+}
+
+// ============================================================================
+// COMPONENT
+// ============================================================================
+
+export function EscalationQueue({
+  escalations,
+  onAssign,
+  onRespond,
+  onResolve,
+  onDismiss,
+  onViewDetails,
+  currentTrainerId,
+}: EscalationQueueProps) {
+  const [selectedEscalation, setSelectedEscalation] = useState<string | null>(null);
+  const [responseMessage, setResponseMessage] = useState('');
+  const [isInternalNote, setIsInternalNote] = useState(false);
+  const [resolutionNotes, setResolutionNotes] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const selected = escalations.find((e) => e.escalationId === selectedEscalation);
+
+  const handleAssignToMe = async (escalationId: string) => {
+    try {
+      setIsSubmitting(true);
+      await onAssign(escalationId, currentTrainerId);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleSendResponse = async () => {
+    if (!selectedEscalation || !responseMessage.trim()) return;
+
+    try {
+      setIsSubmitting(true);
+      await onRespond(selectedEscalation, responseMessage.trim(), isInternalNote);
+      setResponseMessage('');
+      setIsInternalNote(false);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleResolve = async () => {
+    if (!selectedEscalation || !resolutionNotes.trim()) return;
+
+    try {
+      setIsSubmitting(true);
+      await onResolve(selectedEscalation, resolutionNotes.trim());
+      setSelectedEscalation(null);
+      setResolutionNotes('');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDismiss = async () => {
+    if (!selectedEscalation || !resolutionNotes.trim()) return;
+
+    try {
+      setIsSubmitting(true);
+      await onDismiss(selectedEscalation, resolutionNotes.trim());
+      setSelectedEscalation(null);
+      setResolutionNotes('');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[800px]"
+      {/* Queue List */}
+      <div className="lg:col-span-1 overflow-y-auto border rounded-lg"
+        <div className="sticky top-0 bg-gray-50 dark:bg-gray-800 p-4 border-b"
+          <h2 className="text-lg font-semibold"Escalation Queue ({escalations.length})</h2>
+        </div>
+
+        <div className="divide-y"
+          {escalations.length === 0 && (
+            <div className="p-8 text-center text-gray-500 dark:text-gray-400"
+              <AlertCircle className="h-12 w-12 mx-auto mb-3 opacity-50\" />
+              <p>No escalations in queue</p>
+            </div>
+          )}
+
+          {escalations.map((escalation) => (
+            <button
+              key={escalation.escalationId}
+              onClick={() => setSelectedEscalation(escalation.escalationId)}
+              className={cn(
+                'w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors',
+                selectedEscalation === escalation.escalationId && 'bg-blue-50 dark:bg-blue-900/20'
+              )}
+            >
+              <div className="flex items-start justify-between mb-2"
+                <div>
+                  <div className="font-medium"{escalation.studentName}</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400"
+                    {escalation.topicTitle || 'General'}
+                  </div>
+                </div>
+                <div
+                  className={cn(
+                    'px-2 py-1 rounded text-xs font-medium',
+                    escalation.waitTimeMinutes < 30
+                      ? 'bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400'
+                      : escalation.waitTimeMinutes < 60
+                      ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400'
+                      : 'bg-red-100 text-red-700 dark:bg-red-900/20 dark:text-red-400'
+                  )}
+                >
+                  {Math.floor(escalation.waitTimeMinutes)}m
+                </div>
+              </div>
+
+              <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-2"
+                {escalation.reason}
+              </p>
+
+              <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400"
+                <span className="flex items-center gap-1"
+                  <AlertCircle className="h-3 w-3\" />
+                  {Math.round(escalation.confidence * 100)}%
+                </span>
+                {escalation.responseCount > 0 && (
+                  <span className="flex items-center gap-1"
+                    <MessageSquare className="h-3 w-3\" />
+                    {escalation.responseCount}
+                  </span>
+                )}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Details Panel */}
+      <div className="lg:col-span-2 border rounded-lg overflow-hidden flex flex-col"
+        {!selected ? (
+          <div className="flex-1 flex items-center justify-center text-gray-500 dark:text-gray-400"
+            <div className="text-center"
+              <Eye className="h-16 w-16 mx-auto mb-4 opacity-50\" />
+              <p>Select an escalation to view details</p>
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Header */}
+            <div className="bg-gray-50 dark:bg-gray-800 p-4 border-b"
+              <div className="flex items-start justify-between mb-3"
+                <div>
+                  <h3 className="text-lg font-semibold"{selected.studentName}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400"
+                    {selected.topicTitle || 'General'} • {selected.studentEmail}
+                  </p>
+                </div>
+                <div className="flex gap-2"
+                  {!selected.assignedTo && (
+                    <button
+                      onClick={() => handleAssignToMe(selected.escalationId)}
+                      disabled={isSubmitting}
+                      className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50\"
+                    >
+                      Assign to Me
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-4 text-sm"
+                <div>
+                  <div className="text-gray-600 dark:text-gray-400"Wait Time</div>
+                  <div className="font-medium"{Math.floor(selected.waitTimeMinutes)} minutes</div>
+                </div>
+                <div>
+                  <div className="text-gray-600 dark:text-gray-400"Confidence</div>
+                  <div className="font-medium"{Math.round(selected.confidence * 100)}%</div>
+                </div>
+                <div>
+                  <div className="text-gray-600 dark:text-gray-400"Detection</div>
+                  <div className="font-medium"{selected.autoDetected ? 'Auto' : 'Manual'}</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4"
+              {/* Reason */}
+              <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg"
+                <div className="flex items-start gap-2"
+                  <AlertTriangle className="h-5 w-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5\" />
+                  <div>
+                    <div className="font-medium text-yellow-900 dark:text-yellow-100 mb-1"
+                      Escalation Reason
+                    </div>
+                    <p className="text-sm text-yellow-800 dark:text-yellow-200"{selected.reason}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Original Question */}
+              <div>
+                <h4 className="font-medium mb-2"Original Question</h4>
+                <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded border"
+                  <p className="text-sm"{selected.originalQuestion}</p>
+                </div>
+              </div>
+
+              {/* Response Interface */}
+              <div>
+                <h4 className="font-medium mb-2"Add Response</h4>
+                <textarea
+                  value={responseMessage}
+                  onChange={(e) => setResponseMessage(e.target.value)}
+                  placeholder=\"Write your response to the student...\"
+                  rows={4}
+                  className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-800\"
+                />
+                <div className="flex items-center justify-between mt-2"
+                  <label className="flex items-center gap-2 text-sm"
+                    <input
+                      type=\"checkbox\"
+                      checked={isInternalNote}
+                      onChange={(e) => setIsInternalNote(e.target.checked)}
+                      className="rounded\"
+                    />
+                    Internal note (not visible to student)
+                  </label>
+                  <button
+                    onClick={handleSendResponse}
+                    disabled={!responseMessage.trim() || isSubmitting}
+                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50\"
+                  >
+                    <Send className="h-4 w-4\" />
+                    Send Response
+                  </button>
+                </div>
+              </div>
+
+              {/* Resolution */}
+              <div>
+                <h4 className="font-medium mb-2"Resolve Escalation</h4>
+                <textarea
+                  value={resolutionNotes}
+                  onChange={(e) => setResolutionNotes(e.target.value)}
+                  placeholder=\"Add resolution notes...\"
+                  rows={3}
+                  className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-800\"
+                />
+                <div className="flex gap-2 mt-2"
+                  <button
+                    onClick={handleResolve}
+                    disabled={!resolutionNotes.trim() || isSubmitting}
+                    className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50\"
+                  >
+                    <CheckCircle className="h-4 w-4\" />
+                    Mark Resolved
+                  </button>
+                  <button
+                    onClick={handleDismiss}
+                    disabled={!resolutionNotes.trim() || isSubmitting}
+                    className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 disabled:opacity-50\"
+                  >
+                    <XCircle className="h-4 w-4\" />
+                    Dismiss
+                  </button>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}

@@ -8,6 +8,7 @@
  */
 
 // Export all schemas
+export * from './academy';
 export * from './organizations';
 export * from './user-profiles';
 export * from './rbac';
