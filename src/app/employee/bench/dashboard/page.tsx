@@ -1,11 +1,11 @@
 export const dynamic = "force-dynamic";
-import { PublicAcademy } from '@/components/PublicAcademy';
+import { BenchDashboard } from '@/components/bench/BenchDashboard';
 import { AppLayout } from '@/components/AppLayout';
 
 export default function Page() {
   return (
     <AppLayout>
-      <PublicAcademy />
+      <BenchDashboard />
     </AppLayout>
   );
 }
