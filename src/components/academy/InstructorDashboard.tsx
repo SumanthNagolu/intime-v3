@@ -2,7 +2,8 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'next/navigation';
+import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
 import { useAppStore } from '../../lib/store';
 import { Users, AlertCircle, Calendar, CheckCircle, ChevronRight, MessageSquare, Video, BookOpen, TrendingUp, LayoutDashboard, Award, Layers, Plus, MoreHorizontal, Search, Filter, Clock, Activity, Zap, CheckSquare, ArrowUp, ArrowDown } from 'lucide-react';
 import { CourseBuilder } from '../admin/CourseBuilder';
@@ -59,7 +60,7 @@ const ConsoleView: React.FC = () => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {cohorts.filter(c => c.status === 'Active').map(cohort => (
-                          <div key={cohort.id} onClick={() => navigate(`/employee/academy/admin/cohorts/${cohort.id}`)} className="p-6 rounded-2xl border border-stone-200 hover:shadow-md hover:border-rust/30 transition-all group cursor-pointer relative overflow-hidden bg-stone-50">
+                          <div key={cohort.id} onClick={() => router.push(`/employee/academy/admin/cohorts/${cohort.id}`)} className="p-6 rounded-2xl border border-stone-200 hover:shadow-md hover:border-rust/30 transition-all group cursor-pointer relative overflow-hidden bg-stone-50">
                               <div className="absolute top-0 left-0 w-1 h-full bg-rust group-hover:w-2 transition-all"></div>
                               
                               <div className="flex justify-between items-start mb-4 pl-2">
@@ -106,7 +107,7 @@ const ConsoleView: React.FC = () => {
                   <div className="space-y-4">
                       {atRiskStudents.map(student => (
                           <div key={student.id} className="flex items-center justify-between p-4 bg-stone-50 rounded-xl border border-stone-100 hover:border-red-200 transition-all group">
-                              <div className="flex items-center gap-4 cursor-pointer" onClick={() => navigate(`/employee/academy/admin/students/${student.id}`)}>
+                              <div className="flex items-center gap-4 cursor-pointer" onClick={() => router.push(`/employee/academy/admin/students/${student.id}`)}>
                                   <div className="w-12 h-12 rounded-full bg-red-50 text-red-700 flex items-center justify-center font-bold border border-red-100 group-hover:scale-105 transition-transform">
                                       {student.avatar}
                                   </div>
@@ -324,7 +325,7 @@ const CohortsView: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {cohorts.map(cohort => (
-                    <div key={cohort.id} onClick={() => navigate(`/employee/academy/admin/cohorts/${cohort.id}`)} className="bg-white p-8 rounded-[2rem] shadow-sm border border-stone-200 hover:shadow-xl hover:border-rust/30 transition-all group cursor-pointer relative overflow-hidden">
+                    <div key={cohort.id} onClick={() => router.push(`/employee/academy/admin/cohorts/${cohort.id}`)} className="bg-white p-8 rounded-[2rem] shadow-sm border border-stone-200 hover:shadow-xl hover:border-rust/30 transition-all group cursor-pointer relative overflow-hidden">
                         <div className="flex justify-between items-start mb-6">
                             <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${cohort.status === 'Active' ? 'bg-green-50 text-green-600' : 'bg-stone-100 text-stone-400'}`}>
                                 <Users size={24} />
@@ -480,10 +481,10 @@ const ActivityFeedView: React.FC = () => {
     const handleActivityClick = (act: typeof activities[0]) => {
         if (act.type === 'lab' || act.type === 'quiz') {
             // Go to student profile to grade/review
-            navigate(`/employee/academy/admin/students/${act.studentId}`);
+            router.push(`/employee/academy/admin/students/${act.studentId}`);
         } else {
             // Just go to student profile general view
-            navigate(`/employee/academy/admin/students/${act.studentId}`);
+            router.push(`/employee/academy/admin/students/${act.studentId}`);
         }
     };
 
@@ -572,7 +573,7 @@ export const InstructorDashboard: React.FC = () => {
                 <h1 className="text-4xl font-serif font-bold text-charcoal">Academic Dashboard</h1>
             </div>
           </div>
-          
+
           {/* Sub Nav */}
           <div className="flex gap-8 overflow-x-auto">
               {['Console', 'Cohorts', 'Courses', 'Assignments', 'Certificates', 'Activity'].map(tab => (

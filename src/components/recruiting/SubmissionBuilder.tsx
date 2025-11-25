@@ -103,8 +103,8 @@ export const SubmissionBuilder: React.FC = () => {
           setCurrentStatus(newStatus);
           
           // Handle specific navigation
-          if (newStatus === 'offer') navigate(`/employee/recruiting/offer/${existingSubmission.id}`);
-          if (newStatus === 'placed') navigate(`/employee/recruiting/placement/${existingSubmission.id}`);
+          if (newStatus === 'offer') router.push(`/employee/recruiting/offer/${existingSubmission.id}`);
+          if (newStatus === 'placed') router.push(`/employee/recruiting/placement/${existingSubmission.id}`);
       }
   };
 

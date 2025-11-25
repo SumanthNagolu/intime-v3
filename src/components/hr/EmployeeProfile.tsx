@@ -2,7 +2,8 @@
 
 
 import React, { useState } from 'react';
-import { useParams, Link } from 'next/navigation';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { useAppStore } from '../../lib/store';
 import { ChevronLeft, Mail, Phone, MapPin, Building2, Calendar, DollarSign, Award, Clock, FileText, Download, UserPlus, UserMinus, TrendingUp, Laptop, Smartphone, Key, X, Plus, Target, Upload, Edit2, Save } from 'lucide-react';
 import { OffboardingModal } from './OffboardingModal';

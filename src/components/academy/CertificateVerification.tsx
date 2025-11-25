@@ -2,7 +2,8 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'next/navigation';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { CheckCircle, ShieldCheck, Award, Calendar, User, XCircle, Loader2 } from 'lucide-react';
 
 export const CertificateVerification: React.FC = () => {

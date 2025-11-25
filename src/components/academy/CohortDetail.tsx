@@ -2,7 +2,8 @@
 
 
 import React, { useState } from 'react';
-import { Link, useParams, useNavigate } from 'next/navigation';
+import Link from 'next/link';
+import { useRouter, useParams } from 'next/navigation';
 import { ChevronLeft, Users, Calendar, MoreHorizontal, Search, MessageSquare, Eye, AlertCircle, CheckCircle, Clock, Award, Video, Edit3, Download, Megaphone } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 import { ScheduleSessionModal } from './ScheduleSessionModal';
@@ -196,7 +197,7 @@ export const CohortDetail: React.FC = () => {
                                   <tr 
                                     key={s.id} 
                                     className="hover:bg-stone-50 transition-colors group cursor-pointer"
-                                    onClick={() => navigate(`/employee/academy/admin/students/${s.id}`)}
+                                    onClick={() => router.push(`/employee/academy/admin/students/${s.id}`)}
                                   >
                                       <td className="py-4 pl-2">
                                           <div className="flex items-center gap-3">
@@ -223,7 +224,7 @@ export const CohortDetail: React.FC = () => {
                                           <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
                                               <button className="p-1.5 bg-white border border-stone-200 rounded hover:text-rust hover:border-rust"><MessageSquare size={14}/></button>
                                               <button 
-                                                onClick={() => navigate(`/employee/academy/admin/students/${s.id}`)}
+                                                onClick={() => router.push(`/employee/academy/admin/students/${s.id}`)}
                                                 className="p-1.5 bg-charcoal text-white rounded hover:bg-rust"
                                               >
                                                   <Eye size={14}/>

@@ -16,6 +16,13 @@ export * from './audit';
 export * from './events';
 export * from './timeline'; // Existing timeline schema
 
+// Business modules
+export * from './crm';
+export * from './ats';
+export * from './bench';
+export * from './ta-hr';
+export * from './shared';
+
 // Re-export commonly used types
 export type {
   Organization,

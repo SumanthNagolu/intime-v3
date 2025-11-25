@@ -2,7 +2,8 @@
 
 
 import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'next/navigation';
+import Link from 'next/link';
+import { useRouter, useParams } from 'next/navigation';
 import { ChevronLeft, DollarSign, Calendar, FileText, CheckCircle, Send, Download } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 

@@ -2,7 +2,8 @@
 
 
 import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'next/navigation';
+import Link from 'next/link';
+import { useRouter, useParams } from 'next/navigation';
 import { CheckCircle, Calendar, FileText, Users, PartyPopper, ArrowRight } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 

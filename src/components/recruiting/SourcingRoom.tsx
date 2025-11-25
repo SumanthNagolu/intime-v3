@@ -35,7 +35,7 @@ export const SourcingRoom: React.FC = () => {
       updateSubmission({ ...submission, status: 'screening', lastActivity: 'Sourcing Cleared' });
       
       setTimeout(() => {
-          navigate(`/employee/recruiting/jobs/${jobId}`);
+          router.push(`/employee/recruiting/jobs/${jobId}`);
       }, 800);
   };
 
@@ -43,7 +43,7 @@ export const SourcingRoom: React.FC = () => {
       setDecision('reject');
       updateSubmission({ ...submission, status: 'rejected', lastActivity: 'Rejected at Sourcing' });
       setTimeout(() => {
-          navigate(`/employee/recruiting/jobs/${jobId}`);
+          router.push(`/employee/recruiting/jobs/${jobId}`);
       }, 800);
   };
 

@@ -1,0 +1,107 @@
+## Task: Finalize Marketing Page
+
+**Current Page** : http://localhost:3000/resources
+---
+
+### Reference Implementation
+Study these files first:
+- `src/components/marketing/LandingPage.tsx` - Hero scroll-flip pattern
+- `src/app/globals.css` - Utilities & animations
+- `tailwind.config.ts` - Full color palette
+
+---
+
+### Requirements
+
+#### 1. Full-Screen Hero with Scroll-Flip Effect
+Hero must be `100vh - 80px` with scroll-flip transition matching Landing Page.
+
+**Key patterns in LandingPage.tsx:**
+- `heroRef` + scroll listener → `scrollProgress` state
+- Hero transform: `perspective(1000px) rotateX(${scrollProgress * -8}deg)`
+- Content wrapper with opacity/translate tied to scroll
+- Scroll indicator button at bottom
+
+#### 2. Color Strategy (IMPORTANT - NOT Same Colors Everywhere)
+
+**Brand Foundation (consistent across all pages):**
+- Dark backgrounds: `charcoal-900` / `#0B1A14`
+- Primary green: `forest-500/600/700`
+- Accent gold: `gold-400/500/600`
+- Light backgrounds: `ivory`, `cream`, `white`
+
+**Page-Specific Accent Colors (create variety):**
+Each page should have a PRIMARY ACCENT based on its purpose:
+
+| Page | Primary Accent | Reason |
+|------|----------------|--------|
+| Landing | Gold | Premium, aspirational |
+| Academy | Gold + Amber warmth | Education, achievement |
+| Solutions/Staffing | Forest green | Trust, growth, stability |
+| Cross-Border | Purple tints | Global, innovation |
+| Industries | Slate/Blue | Professional, corporate |
+| Careers | Emerald | Opportunity, fresh start |
+| Contact | Warm gold | Approachable, inviting |
+| About | Forest + Gold balanced | Brand story |
+
+**How to apply:**
+- Hero gradient tints
+- Section accent bars on cards
+- CTA button colors
+- Icon background colors
+- Badge/tag colors
+
+The brand palette is consistent; the EMPHASIS shifts per page.
+
+---
+
+#### 3. Design Patterns
+
+**Section Headers:**
+<div className="flex items-center gap-3 mb-6">
+<div className="w-12 h-px bg-gold-500" />
+<span className="text-gold-600 text-xs font-bold uppercase tracking-[0.2em]">
+Section Label
+</span>
+</div>
+
+
+**Card Accents:** Left-side colored bars (1px width, full height)
+
+**CTAs:** Angled clip-path, NOT rounded-full
+
+**Backgrounds:** Organic radial gradients with irregular shapes
+
+---
+
+#### 4. STRICT NO-GO LIST
+
+**🚫 NO EMOJIS - ANYWHERE**
+- Not in headings
+- Not in badges  
+- Not in CTAs
+- Not as decorative elements
+- Not in footer
+- Use Lucide icons instead when icons are needed
+
+**🚫 NO Generic AI Patterns:**
+- Inter/Roboto/Arial fonts
+- Perfect circles as decoration
+- Uniform grids (3x3, 4x4)
+- Purple-on-white gradients
+- "Learn More" / "Click Here" generic CTAs
+- `rounded-full` overuse
+
+---
+
+### Deliverable
+Transform the page to:
+1. ✅ Match Landing Page hero scroll-flip behavior
+2. ✅ Apply page-appropriate accent color emphasis
+3. ✅ Feel premium, authentic, human-crafted
+4. ✅ Zero emojis, zero generic patterns
+
+
+Do not test it. I will test manually.
+
+Sadhguru!

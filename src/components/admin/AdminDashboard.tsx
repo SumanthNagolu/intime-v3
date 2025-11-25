@@ -491,7 +491,7 @@ export const AdminDashboard: React.FC = () => {
                 <h1 className="text-4xl font-serif font-bold text-charcoal">Admin Console</h1>
             </div>
           </div>
-          
+
           {/* Sub Nav */}
           <div className="flex gap-8 overflow-x-auto">
               {['Mission Control', 'User Management', 'Permissions', 'Configuration', 'Audit Logs', 'Courses'].map(tab => (

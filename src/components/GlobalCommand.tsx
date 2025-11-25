@@ -33,7 +33,7 @@ export const GlobalCommand: React.FC = () => {
   const handleNavigate = (path: string) => {
       setIsOpen(false);
       setQuery('');
-      navigate(path);
+      router.push(path);
   };
 
   return (

@@ -2,7 +2,8 @@
 
 
 import React, { useState } from 'react';
-import { Link, useParams } from 'next/navigation';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { ChevronLeft, Mail, Calendar, Clock, Award, CheckCircle, AlertCircle, FileText, MessageSquare, X, Send, Check, Zap, Users, Activity, Unlock, StickyNote } from 'lucide-react';
 import { CommunicationLog } from '../shared/CommunicationLog';
 import { GradingModal } from './AcademyModals';

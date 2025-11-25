@@ -40,7 +40,7 @@ export const LoginPage: React.FC = () => {
     setTimeout(() => {
       setActiveRole(role);
       if (path) {
-          navigate(path);
+          router.push(path);
       } else {
           // Routing Logic
           switch(role) {
