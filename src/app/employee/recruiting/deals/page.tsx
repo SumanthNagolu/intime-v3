@@ -1,0 +1,15 @@
+import { DealsPipeline } from '@/components/recruiting/DealsPipeline';
+import { AppLayout } from '@/components/AppLayout';
+import { RecruitingLayout } from '@/components/layouts/RecruitingLayout';
+
+export const dynamic = "force-dynamic";
+
+export default function Page() {
+  return (
+    <AppLayout showMentor={true}>
+      <RecruitingLayout>
+      <DealsPipeline />
+      </RecruitingLayout>
+    </AppLayout>
+  );
+}

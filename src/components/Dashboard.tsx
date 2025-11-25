@@ -1,14 +1,15 @@
 'use client';
 
-
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { MOCK_MODULES, COHORT_ACTIVITY } from '@/lib/constants';
-import { ChevronRight, Lock, Clock, Target, Briefcase, Activity, Users, Zap, Calendar, Check, Loader2, ArrowUpRight, Terminal } from 'lucide-react';
+import { ChevronRight, Lock, Clock, Target, Briefcase, Activity, Users, Zap, Calendar, Check, Loader2, ArrowUpRight, Terminal, TrendingUp, Award, Sparkles } from 'lucide-react';
 import { Module } from '@/lib/types';
 import { useAppStore } from '@/lib/store';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 
 export const Dashboard: React.FC = () => {
   const router = useRouter();
@@ -16,7 +17,8 @@ export const Dashboard: React.FC = () => {
   const [modules, setModules] = useState<Module[]>(MOCK_MODULES);
   const [isSyncing, setIsSyncing] = useState(false);
   const [liveActivity, setLiveActivity] = useState(COHORT_ACTIVITY);
-  
+  const [animatedStats, setAnimatedStats] = useState({ techScore: 0, portfolioScore: 0, commScore: 0, overall: 0 });
+
   useEffect(() => {
     if (Object.keys(academyProgress).length === 0) {
         initializeAcademy();
@@ -38,7 +40,7 @@ export const Dashboard: React.FC = () => {
         const randomActivity = activities[Math.floor(Math.random() * activities.length)];
         const newEntry = { ...randomActivity, time: "Just now" };
         setLiveActivity(prev => [newEntry, ...prev].slice(0, 5));
-    }, 15000); 
+    }, 15000);
 
     return () => clearInterval(interval);
   }, [isSprintActive]);
@@ -47,7 +49,7 @@ export const Dashboard: React.FC = () => {
       const lessonStatuses = m.lessons.map(l => academyProgress[`${m.id}-${l.id}`]?.status || 'locked');
       const completedCount = lessonStatuses.filter(s => s === 'completed').length;
       const progress = Math.round((completedCount / m.lessons.length) * 100);
-      
+
       return {
           ...m,
           progress,
@@ -65,22 +67,49 @@ export const Dashboard: React.FC = () => {
   const calculateEmployability = () => {
       const totalLabs = mergedModules.reduce((acc, m) => acc + m.lessons.filter(l => l.type === 'lab').length, 0);
       const completedLabs = mergedModules.reduce((acc, m) => acc + m.lessons.filter(l => l.type === 'lab' && l.status === 'completed').length, 0);
-      
+
       const totalStandard = mergedModules.reduce((acc, m) => acc + m.lessons.filter(l => l.type === 'standard').length, 0);
       const completedStandard = mergedModules.reduce((acc, m) => acc + m.lessons.filter(l => l.type === 'standard' && l.status === 'completed').length, 0);
-      
+
       const techScore = totalStandard > 0 ? Math.round((completedStandard / totalStandard) * 100) : 0;
       const portfolioScore = totalLabs > 0 ? Math.round((completedLabs / totalLabs) * 100) : 0;
       const commScore = Math.min(100, Math.round(techScore * 0.8 + 20));
       const overall = Math.round((techScore + portfolioScore + commScore) / 3);
-      
+
       return { techScore, portfolioScore, commScore, overall };
   };
 
   const stats = calculateEmployability();
 
+  // Animate numbers on mount
+  useEffect(() => {
+    const duration = 2000;
+    const steps = 60;
+    const stepDuration = duration / steps;
+
+    let currentStep = 0;
+
+    const interval = setInterval(() => {
+      currentStep++;
+      const progress = currentStep / steps;
+
+      setAnimatedStats({
+        techScore: Math.round(stats.techScore * progress),
+        portfolioScore: Math.round(stats.portfolioScore * progress),
+        commScore: Math.round(stats.commScore * progress),
+        overall: Math.round(stats.overall * progress),
+      });
+
+      if (currentStep >= steps) {
+        clearInterval(interval);
+      }
+    }, stepDuration);
+
+    return () => clearInterval(interval);
+  }, [stats.techScore, stats.portfolioScore, stats.commScore, stats.overall]);
+
   const handleNavigateToLesson = (moduleId: number, lessonId: string) => {
-      navigate(`/academy/lesson/${moduleId}/${lessonId}`);
+      router.push(`/academy/lesson/${moduleId}/${lessonId}`);
   };
 
   const handleJoinSprint = () => {
@@ -92,172 +121,288 @@ export const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="animate-fade-in pt-4">
-      
-      {/* Architectural Header */}
-      <div className="mb-12 flex flex-col md:flex-row justify-between items-end gap-6 border-b-2 border-charcoal pb-8">
-        <div>
-          <div className="font-mono text-charcoal font-bold text-[10px] uppercase tracking-widest mb-3 flex items-center gap-3">
-             <span className={cn("w-2 h-2 rounded-none border border-charcoal", isSprintActive ? 'bg-rust animate-pulse' : 'bg-stone-300')}></span>
-             {isSprintActive ? 'STATUS: SPRINT_ACTIVE' : 'STATUS: SELF_PACED'}
-             <span className="text-stone-400">|</span>
-             <span>DAY_23</span>
+    <div className="animate-fade-in space-y-8">
+
+      {/* Premium Header */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 pb-8 border-b border-charcoal-100">
+        <div className="flex-1">
+          <div className="flex items-center gap-3 mb-4">
+            <div className={cn(
+              "px-3 py-1.5 rounded-lg text-caption font-bold flex items-center gap-2 transition-all",
+              isSprintActive
+                ? "bg-success-50 text-success-700 border border-success-200"
+                : "bg-charcoal-100 text-charcoal-600 border border-charcoal-200"
+            )}>
+              <span className={cn("w-2 h-2 rounded-full", isSprintActive ? "bg-success-500 animate-pulse-slow" : "bg-charcoal-400")}></span>
+              {isSprintActive ? 'Sprint Active' : 'Self-Paced'}
+            </div>
+            <div className="text-caption text-charcoal-400">Day 23</div>
           </div>
-          <h1 className="text-5xl md:text-7xl font-serif font-bold text-charcoal mb-4 tracking-tighter leading-none">Candidate<br/>Dashboard</h1>
-          <p className="text-stone-600 text-lg max-w-xl leading-relaxed font-serif italic border-l-2 border-rust pl-4 mt-6">
+
+          <h1 className="text-h1 font-heading font-black text-charcoal-900 mb-4">
+            Your Learning Journey
+          </h1>
+
+          <p className="text-body-lg text-charcoal-600 max-w-2xl leading-relaxed border-l-4 border-gold-500 pl-6 italic">
             "Consistency is the bridge between where you are and where you want to be."
           </p>
         </div>
-        <div className="text-right hidden md:block">
-          <div className="relative inline-block border-2 border-charcoal p-6 bg-white shadow-sharp">
-             <div className="text-6xl font-mono font-bold text-charcoal mb-1 leading-none tracking-tighter">{stats.overall}<span className="text-2xl align-top">%</span></div>
-             <div className="text-[10px] uppercase tracking-widest text-stone-500 font-bold flex items-center justify-end gap-2 mt-2">
-                Readiness Index
-             </div>
+
+        {/* Premium Readiness Index */}
+        <div className="card-feature relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-gold opacity-10 rounded-full blur-3xl"></div>
+          <div className="relative z-10 text-center p-6">
+            <div className="text-display font-heading font-black text-charcoal-900 leading-none mb-2">
+              {animatedStats.overall}<span className="text-h2 align-top text-gold-600">%</span>
+            </div>
+            <div className="text-caption text-charcoal-500 font-bold">
+              Readiness Index
+            </div>
+            <div className="mt-4 flex items-center justify-center gap-2 text-caption text-success-600">
+              <TrendingUp size={14} strokeWidth={2.5} />
+              <span className="font-bold">+12% this week</span>
+            </div>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
+
         {/* Left Column: The Work */}
-        <div className="lg:col-span-8 flex flex-col gap-8">
-          
-          {/* Hero Card: Today's Focus */}
-          <div className="group relative cursor-pointer" onClick={() => handleNavigateToLesson(currentModule.id, currentLesson.id)}>
-            <div className="relative bg-charcoal text-ivory rounded-none border-2 border-charcoal p-12 shadow-sharp overflow-hidden flex flex-col justify-between min-h-[400px] transition-transform hover:-translate-y-1 hover:shadow-premium">
-              
-              {/* Grid Texture */}
-              <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+        <div className="lg:col-span-8 space-y-8">
 
-              <div className="relative z-10 flex justify-between items-start">
-                <div className="flex items-center gap-3 px-3 py-1 border border-white/30 rounded-none bg-white/5 backdrop-blur-sm">
-                    <span className="w-1.5 h-1.5 bg-rust animate-pulse"></span>
-                    <span className="text-[10px] font-mono text-stone-300 uppercase tracking-widest">Protocol_Active</span>
+          {/* Premium Hero Card: Today's Focus */}
+          <div
+            className="group relative cursor-pointer"
+            onClick={() => handleNavigateToLesson(currentModule.id, currentLesson.id)}
+          >
+            <Card className="relative bg-gradient-forest text-white border-0 shadow-premium hover:shadow-premium-lg transition-all duration-500 overflow-hidden min-h-[420px] flex flex-col hover:-translate-y-1">
+              {/* Animated Background Pattern */}
+              <div className="absolute inset-0 opacity-5 pointer-events-none"
+                   style={{
+                     backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
+                     backgroundSize: '40px 40px'
+                   }}>
+              </div>
+
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-forest-500/50 via-forest-600/50 to-forest-900/80 pointer-events-none"></div>
+
+              <CardHeader className="relative z-10">
+                <div className="flex justify-between items-start mb-6">
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
+                    <span className="w-2 h-2 bg-gold-400 rounded-full animate-pulse-slow"></span>
+                    <span className="text-caption text-white/90 font-bold">In Progress</span>
+                  </div>
+                  <div className="text-caption text-white/60">{currentModule.week.toUpperCase()}</div>
                 </div>
-                <div className="font-mono text-xs text-stone-400">{currentModule.week.toUpperCase()}</div>
-              </div>
-              
-              <div className="relative z-10 max-w-2xl mt-8">
-                 <h2 className="text-4xl md:text-6xl font-serif font-medium text-white mb-6 leading-tight">{currentLesson.title}</h2>
-                 <p className="text-stone-400 text-lg font-light leading-relaxed">{currentLesson.description || currentModule.description}</p>
-              </div>
-              
-              <div className="relative z-10 flex justify-between items-end mt-12">
-                 <div className="flex gap-3">
-                     {currentLesson.type === 'lab' && (
-                       <div className="px-3 py-1.5 border border-blue-500 text-blue-300 text-[10px] font-mono uppercase tracking-widest flex items-center gap-2 rounded-none bg-blue-900/20">
-                         <Briefcase size={12} /> Portfolio Asset
-                       </div>
-                     )}
-                     <div className="px-3 py-1.5 border border-white/20 text-stone-400 text-[10px] font-mono uppercase tracking-widest rounded-none">
-                         Est. {currentLesson.duration}
-                     </div>
-                 </div>
 
-                 <button className="flex items-center gap-3 px-8 py-4 bg-white text-charcoal text-xs font-bold uppercase tracking-widest hover:bg-rust hover:text-white transition-all rounded-none border-2 border-white">
-                    {currentLesson.status === 'completed' ? 'Review Protocol' : 'Initialize'} <ChevronRight size={14} />
-                 </button>
-              </div>
-            </div>
+                <CardTitle className="text-h1 text-white mb-4 group-hover:text-gold-100 transition-colors">
+                  {currentLesson.title}
+                </CardTitle>
+                <CardDescription className="text-body-lg text-white/80 leading-relaxed">
+                  {currentLesson.description || currentModule.description}
+                </CardDescription>
+              </CardHeader>
+
+              <CardContent className="relative z-10 mt-auto">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+                  <div className="flex flex-wrap gap-2">
+                    {currentLesson.type === 'lab' && (
+                      <div className="px-3 py-1.5 rounded-lg bg-gold-500/20 border border-gold-400/30 text-gold-100 text-caption font-bold flex items-center gap-2">
+                        <Briefcase size={14} strokeWidth={2.5} />
+                        Portfolio Asset
+                      </div>
+                    )}
+                    <div className="px-3 py-1.5 rounded-lg bg-white/10 border border-white/20 text-white/80 text-caption font-bold flex items-center gap-2">
+                      <Clock size={14} strokeWidth={2} />
+                      {currentLesson.duration}
+                    </div>
+                  </div>
+
+                  <Button
+                    variant="gold"
+                    size="lg"
+                    className="group/btn"
+                  >
+                    {currentLesson.status === 'completed' ? 'Review Lesson' : 'Start Learning'}
+                    <ChevronRight size={18} className="group-hover/btn:translate-x-1 transition-transform" strokeWidth={2.5} />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Curriculum Horizon */}
-          <div className="bg-white border-2 border-stone-200 p-8 shadow-sharp-sm">
-             <div className="flex items-center justify-between mb-6 border-b-2 border-stone-100 pb-4">
-                 <h3 className="text-lg font-serif font-bold text-charcoal">Curriculum Map</h3>
-                 <span className="text-[10px] font-mono text-stone-400 uppercase">8_WEEK_PROGRAM</span>
-             </div>
-             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                 {mergedModules.map((m) => (
-                     <div key={m.id} className={`p-4 border transition-all relative overflow-hidden group ${m.progress === 100 ? 'bg-stone-50 border-stone-300' : m.progress > 0 ? 'bg-white border-charcoal shadow-sharp-sm' : 'bg-white border-stone-200 opacity-60'}`}>
-                         <div className="text-[9px] font-mono text-stone-400 mb-2">{m.week}</div>
-                         <div className="font-bold text-xs text-charcoal leading-tight mb-4 pr-2 font-mono">{m.title}</div>
-                         <div className="h-1 bg-stone-100 w-full overflow-hidden absolute bottom-0 left-0">
-                             <div className={`h-full ${m.progress === 100 ? 'bg-forest' : 'bg-charcoal'}`} style={{ width: `${m.progress}%` }}></div>
-                         </div>
-                     </div>
-                 ))}
-             </div>
-          </div>
+          {/* Premium Curriculum Map */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle>Curriculum Overview</CardTitle>
+                <span className="text-caption text-charcoal-400">8-Week Program</span>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {mergedModules.map((m) => (
+                  <div
+                    key={m.id}
+                    className={cn(
+                      "relative p-5 rounded-xl border-2 transition-all duration-300 group/module overflow-hidden",
+                      m.progress === 100
+                        ? "bg-success-50 border-success-200 shadow-elevation-xs"
+                        : m.progress > 0
+                        ? "bg-white border-forest-200 shadow-elevation-sm hover:shadow-elevation-md hover:-translate-y-0.5"
+                        : "bg-charcoal-50/50 border-charcoal-200 opacity-70"
+                    )}
+                  >
+                    <div className="text-caption text-charcoal-500 mb-2">{m.week}</div>
+                    <div className="text-body-sm font-bold text-charcoal-900 leading-tight mb-4">
+                      {m.title}
+                    </div>
 
+                    {/* Progress Bar */}
+                    <div className="absolute bottom-0 left-0 w-full h-1.5 bg-charcoal-100 overflow-hidden">
+                      <div
+                        className={cn(
+                          "h-full transition-all duration-1000",
+                          m.progress === 100 ? "bg-gradient-to-r from-success-500 to-success-600" : "bg-gradient-gold"
+                        )}
+                        style={{ width: `${m.progress}%` }}
+                      ></div>
+                    </div>
+
+                    {/* Completion Badge */}
+                    {m.progress === 100 && (
+                      <div className="absolute top-3 right-3">
+                        <div className="w-6 h-6 rounded-full bg-success-500 flex items-center justify-center shadow-elevation-sm">
+                          <Check size={14} strokeWidth={3} className="text-white" />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Right Column: Metrics & Log */}
+        {/* Right Column: Metrics & Activity */}
         <div className="lg:col-span-4 space-y-8">
-           
-           {/* Stats Box */}
-           <div className="bg-white border-2 border-charcoal p-8 shadow-sharp">
-              <h3 className="font-serif text-xl text-charcoal mb-6 border-b-2 border-stone-100 pb-4 flex items-center justify-between">
-                  Employability
-                  <Terminal size={16} className="text-stone-400"/>
-              </h3>
-              
+
+          {/* Premium Stats Card */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2">
+                  <Award size={20} className="text-gold-600" strokeWidth={2.5} />
+                  Employability Metrics
+                </CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
               <div className="space-y-6">
-                 {[
-                     { label: 'Technical', val: stats.techScore, color: 'bg-charcoal' },
-                     { label: 'Communication', val: stats.commScore, color: 'bg-rust' },
-                     { label: 'Portfolio', val: stats.portfolioScore, color: 'bg-stone-400' }
-                 ].map(stat => (
-                     <div key={stat.label}>
-                        <div className="flex justify-between text-[10px] font-mono uppercase tracking-widest text-stone-500 mb-2">
-                          {stat.label}
-                          <span className="text-charcoal font-bold">{stat.val}%</span>
-                        </div>
-                        <div className="h-2 bg-stone-200 w-full overflow-hidden border border-stone-200">
-                          <div className={`h-full ${stat.color}`} style={{ width: `${stat.val}%` }}></div>
-                        </div>
-                     </div>
-                 ))}
+                {[
+                  { label: 'Technical Skills', val: animatedStats.techScore, color: 'from-forest-500 to-forest-600', icon: Terminal },
+                  { label: 'Communication', val: animatedStats.commScore, color: 'from-gold-500 to-gold-600', icon: Users },
+                  { label: 'Portfolio', val: animatedStats.portfolioScore, color: 'from-charcoal-600 to-charcoal-700', icon: Briefcase }
+                ].map(stat => (
+                  <div key={stat.label} className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-2">
+                        <stat.icon size={16} className="text-charcoal-500" strokeWidth={2} />
+                        <span className="text-body-sm font-semibold text-charcoal-700">{stat.label}</span>
+                      </div>
+                      <span className="text-h4 font-heading font-bold text-charcoal-900">{stat.val}%</span>
+                    </div>
+
+                    <div className="relative h-3 bg-charcoal-100 rounded-full overflow-hidden shadow-inner-glow">
+                      <div
+                        className={cn("h-full rounded-full bg-gradient-to-r transition-all duration-1000", stat.color)}
+                        style={{ width: `${stat.val}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                ))}
               </div>
 
-              <div className="mt-8 pt-6 border-t-2 border-stone-100 flex items-center gap-4">
-                 <div className="p-3 border-2 border-stone-200 text-rust">
-                    <Target size={18} />
-                 </div>
-                 <div>
-                    <div className="text-[9px] font-mono text-stone-400 uppercase tracking-widest">Next Milestone</div>
-                    <div className="text-xs font-bold text-charcoal font-mono">Rules Engine Cert.</div>
-                 </div>
-              </div>
-           </div>
+              <div className="divider-premium my-6"></div>
 
-           {/* Sprint Log */}
-           <div className="bg-white border-2 border-stone-200 p-8 shadow-sharp-sm">
-              <div className="flex items-center justify-between mb-6">
-                  <h3 className="font-serif text-xl text-charcoal">Cohort Log</h3>
-                  <div className="w-2 h-2 bg-green-500 animate-pulse rounded-none"></div>
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-subtle border border-charcoal-100">
+                <div className="w-12 h-12 rounded-xl bg-gradient-gold flex items-center justify-center shadow-elevation-sm">
+                  <Target size={20} className="text-charcoal-900" strokeWidth={2.5} />
+                </div>
+                <div>
+                  <div className="text-caption text-charcoal-500">Next Milestone</div>
+                  <div className="text-body-sm font-bold text-charcoal-900">Rules Engine Certification</div>
+                </div>
               </div>
-              
+            </CardContent>
+          </Card>
+
+          {/* Premium Cohort Log */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2">
+                  <Activity size={20} className="text-forest-600" strokeWidth={2.5} />
+                  Cohort Activity
+                </CardTitle>
+                {isSprintActive && (
+                  <div className="w-2 h-2 bg-success-500 rounded-full animate-pulse-slow shadow-elevation-sm"></div>
+                )}
+              </div>
+            </CardHeader>
+            <CardContent>
               {isSprintActive ? (
-                 <div className="space-y-0 relative">
-                    <div className="absolute left-[5px] top-2 bottom-2 w-px bg-stone-200"></div>
-                    {liveActivity.map((activity, i) => (
-                         <div key={i} className="relative pl-6 py-3 border-b border-stone-50 last:border-0">
-                             <div className="absolute left-0 top-4 w-2.5 h-2.5 bg-white border-2 border-stone-300 z-10"></div>
-                             <div>
-                                 <p className="text-xs text-charcoal font-medium font-mono">
-                                     <span className="font-bold">{activity.user}</span> {activity.action}
-                                 </p>
-                                 <p className="text-[9px] font-mono text-stone-400 mt-1 uppercase">{activity.time}</p>
-                             </div>
-                         </div>
-                    ))}
-                 </div>
-              ) : (
-                 <div className="text-center py-8">
-                     <p className="text-stone-400 text-xs mb-6 font-mono">SYNC_REQUIRED</p>
-                     <button 
-                        onClick={handleJoinSprint}
-                        disabled={isSyncing}
-                        className="w-full py-3 border-2 border-charcoal text-charcoal text-xs font-bold uppercase tracking-widest hover:bg-charcoal hover:text-white transition-all"
-                     >
-                        {isSyncing ? 'Connecting...' : 'Join Real-time Sprint'}
-                     </button>
-                 </div>
-              )}
-           </div>
+                <div className="space-y-0 relative">
+                  <div className="absolute left-2 top-3 bottom-3 w-px bg-gradient-to-b from-forest-300 via-charcoal-200 to-transparent"></div>
 
+                  {liveActivity.map((activity, i) => (
+                    <div key={i} className="relative pl-8 py-4 hover:bg-charcoal-50/50 rounded-lg transition-colors -mx-2 px-2">
+                      <div className={cn(
+                        "absolute left-0 top-5 w-4 h-4 rounded-full border-2 bg-white z-10 transition-colors",
+                        activity.type === 'milestone' ? "border-gold-500" :
+                        activity.type === 'lab' ? "border-forest-500" :
+                        "border-charcoal-300"
+                      )}></div>
+
+                      <div>
+                        <p className="text-body-sm text-charcoal-800 leading-tight">
+                          <span className="font-bold text-charcoal-900">{activity.user}</span> {activity.action}
+                        </p>
+                        <p className="text-caption text-charcoal-400 mt-1">{activity.time}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-charcoal-100 flex items-center justify-center">
+                    <Sparkles size={28} className="text-charcoal-400" strokeWidth={2} />
+                  </div>
+                  <p className="text-body text-charcoal-600 mb-6">Join a sprint to see live cohort activity</p>
+                  <Button
+                    variant="default"
+                    onClick={handleJoinSprint}
+                    disabled={isSyncing}
+                    className="mx-auto"
+                  >
+                    {isSyncing ? (
+                      <>
+                        <Loader2 size={16} className="animate-spin" />
+                        Syncing...
+                      </>
+                    ) : (
+                      <>
+                        <Zap size={16} strokeWidth={2.5} />
+                        Join Sprint
+                      </>
+                    )}
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

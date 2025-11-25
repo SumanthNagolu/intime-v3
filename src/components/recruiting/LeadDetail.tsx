@@ -46,7 +46,7 @@ export const LeadDetail: React.FC = () => {
       };
       addDeal(newDeal);
       updateLead({ ...lead, status: 'converted' });
-      navigate(`/employee/recruiting/deals/${newDeal.id}`);
+      router.push(`/employee/recruiting/deals/${newDeal.id}`);
   };
 
   const handleAddActivity = () => {

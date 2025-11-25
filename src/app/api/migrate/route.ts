@@ -83,8 +83,17 @@ export async function POST(request: Request) {
 
     console.log('🚀 Starting migration process...');
 
-    // Read all migration files
-    const migrationsDir = path.join(process.cwd(), 'src/lib/db/migrations');
+    // Read all migration files from supabase/migrations
+    const migrationsDir = path.join(process.cwd(), 'supabase/migrations');
+
+    // Check if directory exists
+    if (!fs.existsSync(migrationsDir)) {
+      return NextResponse.json(
+        { error: 'Migrations directory not found at: ' + migrationsDir },
+        { status: 404 }
+      );
+    }
+
     const files = fs.readdirSync(migrationsDir)
       .filter(f => f.endsWith('.sql') && !f.includes('rollback'))
       .sort();
@@ -110,29 +119,20 @@ export async function POST(request: Request) {
       sql = sql.replace(/-- SAMPLE DATA[\s\S]*?(?=-- ={50,}|$)/g, '');
 
       try {
-        // Execute the entire SQL file as one transaction
-        const { error } = await supabase.rpc('exec_migration', {
-          migration_sql: sql
+        // Execute SQL using the execute-sql edge function
+        const response = await fetch(`${supabaseUrl}/functions/v1/execute-sql`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${serviceRoleKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ sql })
         });
 
-        if (error) {
-          // Fallback: Try executing line by line
-          console.log(`⚠️  RPC failed, trying alternative method...`);
+        const result = await response.json();
 
-          // For CREATE TABLE, INSERT, etc. we can use Supabase's query builder
-          // This is a workaround for when RPC doesn't exist
-          const lines = sql.split('\n').filter(line =>
-            line.trim() && !line.trim().startsWith('--')
-          );
-
-          results.push({
-            filename,
-            success: false,
-            error: `RPC function 'exec_migration' not found. Need to bootstrap first.`,
-            timestamp: new Date().toISOString()
-          });
-
-          continue;
+        if (!response.ok || !result.success) {
+          throw new Error(result.error || `HTTP ${response.status}`);
         }
 
         results.push({

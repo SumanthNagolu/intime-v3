@@ -1,11 +1,11 @@
 export const dynamic = "force-dynamic";
-import { Dashboard } from '@/components/Dashboard';
+import { CandidateDashboard } from '@/components/academy/CandidateDashboard';
 import { AppLayout } from '@/components/AppLayout';
 
 export default function Page() {
   return (
     <AppLayout showMentor>
-      <Dashboard />
+      <CandidateDashboard />
     </AppLayout>
   );
 }

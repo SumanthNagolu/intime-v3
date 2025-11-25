@@ -32,7 +32,7 @@ export const JobHuntRoom: React.FC = () => {
   const filteredJobs = scoredJobs.filter(j => j.title.toLowerCase().includes(searchTerm.toLowerCase()) || j.client.toLowerCase().includes(searchTerm.toLowerCase()));
 
   const handleStartSubmission = (jobId: string) => {
-      navigate(`/employee/recruiting/submit/${consultant.id}/${jobId}`);
+      router.push(`/employee/recruiting/submit/${consultant.id}/${jobId}`);
   };
 
   return (

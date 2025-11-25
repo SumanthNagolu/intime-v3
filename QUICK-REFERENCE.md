@@ -16,7 +16,7 @@
 | Make strategic decision | Gemini | CEO/CFO Advisor analysis |
 | Refactor code | Cursor | Multi-file editing, visual diff |
 | Run comprehensive tests | Gemini | QA Agent with full test suite |
-| Build UI components | Cursor | Design system compliance, visual preview |
+| Build UI components | Cursor | Visual preview |
 | Security audit | Gemini | Security Auditor specialist |
 | Deploy to production | Gemini | Deployment Specialist workflow |
 
@@ -86,48 +86,9 @@ Follow InTime database standards."
 - **CEO Advisor** - Strategic decisions, cross-pollination analysis
 - **PM Agent** - Requirements, user stories, success metrics
 - **Database Architect** - Schema design, RLS, multi-tenancy
-- **Frontend Developer** - UI components, minimal design system
+- **Frontend Developer** - UI components
 - **QA Engineer** - Testing, multi-tenancy validation
 - **Security Auditor** - Security review, GDPR compliance
-
----
-
-## 🎨 Design System (Critical Before Any UI Work)
-
-### Color Palette (USE ONLY THESE)
-```typescript
-Background: "#F5F3EF"  // Light beige
-Cards:      "#FFFFFF"  // Pure white
-Callouts:   "#000000"  // Black
-Text:       "#000000"  // Black
-Secondary:  "#4B5563"  // Gray-600
-Metadata:   "#9CA3AF"  // Gray-400
-Accent:     "#C87941"  // Coral (underlines ONLY)
-Borders:    "#E5E7EB"  // Gray-200
-```
-
-### Typography
-```typescript
-Font: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
-Headings: "text-6xl to text-8xl, font-bold"
-Body: "text-xl text-gray-700 leading-relaxed"
-Underline: "decoration-[#C87941] decoration-4 underline-offset-8"
-```
-
-### 🚫 FORBIDDEN (Will Fail QA)
-- ❌ Purple/pink/indigo gradients
-- ❌ Emoji icons (🎓, 🚀, 💡)
-- ❌ Rounded corners (`rounded-lg`)
-- ❌ Heavy shadows (`shadow-2xl`)
-- ❌ Generic marketing copy ("Transform your X")
-
-### ✅ USE INSTEAD
-- ✅ Light beige backgrounds
-- ✅ Sharp edges (no rounded corners)
-- ✅ 2px borders
-- ✅ Coral underlines for emphasis
-- ✅ Generous white space
-- ✅ System fonts only
 
 ---
 
@@ -195,19 +156,7 @@ test('org A cannot see org B data', async () => {
   expect(results).not.toContain(dataB)
 })
 
-// 2. Design Compliance
-test('no AI-generic gradients', async ({ page }) => {
-  await page.goto('/')
-  const hasAIGradient = await page.evaluate(() => {
-    return Array.from(document.querySelectorAll('*')).some(el => {
-      const bg = getComputedStyle(el).background
-      return bg.includes('purple') && bg.includes('pink')
-    })
-  })
-  expect(hasAIGradient).toBe(false)
-})
-
-// 3. Soft Delete
+// 2. Soft Delete
 test('deleted records hidden', async () => {
   const item = await create()
   await softDelete(item.id)
@@ -261,7 +210,6 @@ Before committing:
 - [ ] RLS enabled on new tables
 - [ ] Multi-tenancy respected (org_id in queries)
 - [ ] Soft delete implemented (deleted_at)
-- [ ] Design compliance (no AI-generic patterns)
 - [ ] Accessible (WCAG AA)
 
 ---
@@ -273,8 +221,6 @@ Before committing:
 In Cursor:
 - ✅ Suggests `org_id` in database queries automatically
 - ✅ Applies Zod validation without prompting
-- ✅ Uses minimal design (beige/black/coral, sharp edges)
-- ✅ Rejects purple gradients and emojis
 - ✅ Includes RLS in schema designs
 
 In Gemini:
@@ -303,9 +249,6 @@ In Gemini:
 ### In Cursor (Composer)
 ```
 "Act as Database Architect. Design [table] with RLS, multi-tenancy, audit trails"
-
-"Act as Frontend Developer. Build [component] using minimal design system 
-(beige bg, black text, coral accents, sharp edges, system fonts)"
 
 "Act as QA Engineer. Create test suite with multi-tenancy isolation tests"
 
@@ -341,7 +284,6 @@ $ gemini "/deploy"
 **Week 2:** Establish workflow
 - [ ] Follow morning/day/evening pattern
 - [ ] Build one complete feature
-- [ ] Reference design philosophy
 
 **Week 3:** Optimize
 - [ ] Personalize workflow
@@ -353,7 +295,7 @@ $ gemini "/deploy"
 ## 💡 Pro Tips
 
 1. **Keep both tools open** - Left: Cursor (code), Right: Terminal (Gemini)
-2. **Reference explicitly** - "Follow .geminirules" vs "use design system"
+2. **Reference explicitly** - "Follow .geminirules"
 3. **Simulate agents** - "Act as Database Architect" for better results
 4. **Commit frequently** - Create handoff points between tools
 5. **Start with strategy** - Don't jump into coding without planning
@@ -372,11 +314,7 @@ $ gemini "/deploy"
 
 ---
 
-**Last Updated:** 2025-11-19
+**Last Updated:** 2025-11-25
 **Print this page and keep it visible during development!**
 
 **Philosophy:** "Two tools, one vision, zero compromises."
-
-
-
-

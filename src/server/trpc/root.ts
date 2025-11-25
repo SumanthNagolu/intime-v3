@@ -31,6 +31,12 @@ import { analyticsRouter } from './routers/analytics';
 import { academyRouter } from './routers/academy';
 // Removed aiChatRouter - using aiMentorRouter instead (ACAD-013)
 
+// Business module routers
+import { crmRouter } from '../routers/crm';
+import { atsRouter } from '../routers/ats';
+import { benchRouter } from '../routers/bench';
+import { taHrRouter } from '../routers/ta-hr';
+
 /**
  * App Router
  *
@@ -65,6 +71,12 @@ export const appRouter = router({
   discounts: discountsRouter,
   analytics: analyticsRouter,
   // aiChat router removed - chat UI now uses aiMentor router
+
+  // Business module routers
+  crm: crmRouter,
+  ats: atsRouter,
+  bench: benchRouter,
+  taHr: taHrRouter,
 });
 
 /**

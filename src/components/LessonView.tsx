@@ -125,7 +125,7 @@ export const LessonView: React.FC = () => {
         // Show confetti or success modal here (optional), then redirect
         setTimeout(() => {
             if (nextLesson) {
-               navigate(`/academy/lesson/${moduleId}/${nextLesson.id}`);
+               router.push(`/academy/lesson/${moduleId}/${nextLesson.id}`);
                // Reset local state for next lesson
                setCurrentStage('theory');
                setCompletedStages([]);

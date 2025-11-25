@@ -1,309 +1,512 @@
 'use client';
 
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppStore } from '../../lib/store';
-import { TrendingUp, Users, AlertTriangle, CheckCircle, DollarSign, Activity, Zap, ChevronDown, Target, BarChart3, Globe, Brain, ArrowRight, LayoutDashboard, PieChart, Lightbulb } from 'lucide-react';
+import { TrendingUp, Users, AlertTriangle, CheckCircle, DollarSign, Activity, Zap, ChevronDown, Target, BarChart3, Globe, Brain, ArrowRight, LayoutDashboard, PieChart, Lightbulb, Download, TrendingDown, Award, Sparkles } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/card';
+import { Button } from '../ui/button';
+import { cn } from '@/lib/utils';
 
 export const CEODashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'Console' | 'Strategy' | 'Intel'>('Console');
+  const [animatedMetrics, setAnimatedMetrics] = useState({
+    revenue: 0,
+    placements: 0,
+    benchUtil: 0,
+    revPerEmp: 0
+  });
 
   // Mock metrics
-  const revenue = "$147,000";
-  const target = "$150,000";
-  const placements = "18/20";
-  const revenuePerEmployee = "$245k";
+  const metrics = {
+    revenue: 147000,
+    target: 150000,
+    placements: 18,
+    placementsTarget: 20,
+    benchUtil: 78,
+    revPerEmp: 245
+  };
+
+  // Animate numbers on mount
+  useEffect(() => {
+    const duration = 2000;
+    const steps = 60;
+    const stepDuration = duration / steps;
+    let currentStep = 0;
+
+    const interval = setInterval(() => {
+      currentStep++;
+      const progress = currentStep / steps;
+
+      setAnimatedMetrics({
+        revenue: Math.round(metrics.revenue * progress),
+        placements: Math.round(metrics.placements * progress),
+        benchUtil: Math.round(metrics.benchUtil * progress),
+        revPerEmp: Math.round(metrics.revPerEmp * progress)
+      });
+
+      if (currentStep >= steps) {
+        clearInterval(interval);
+      }
+    }, stepDuration);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="animate-fade-in pt-4">
-      <div className="mb-10 border-b border-stone-200 pb-6">
-        <div className="flex justify-between items-start">
-            <div>
-                <div className="text-rust font-bold text-xs uppercase tracking-[0.2em] mb-2">Executive Office</div>
-                <h1 className="text-4xl font-serif font-bold text-charcoal">Company Performance</h1>
-                <p className="text-stone-500 mt-2">Real-time strategic oversight across all 19 pods.</p>
+    <div className="animate-fade-in space-y-8">
+      {/* Premium Header */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pb-8 border-b border-charcoal-100">
+        <div className="flex-1">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="px-3 py-1.5 rounded-lg bg-gold-50 text-gold-700 border border-gold-200 text-caption font-bold">
+              Executive Office
             </div>
-            <div className="flex gap-4">
-                 <button className="flex items-center gap-2 px-4 py-2 bg-white border border-stone-200 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-stone-50 shadow-sm">
-                    <BarChart3 size={14} /> Export Report
-                 </button>
-            </div>
+          </div>
+
+          <h1 className="text-h1 font-heading font-black text-charcoal-900 mb-3">
+            Company Performance
+          </h1>
+
+          <p className="text-body-lg text-charcoal-600">
+            Real-time strategic oversight across all 19 pods
+          </p>
         </div>
+
+        <Button variant="outline" size="lg">
+          <Download size={16} strokeWidth={2} />
+          Export Report
+        </Button>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-8 border-b border-stone-100 mb-8">
-          {['Console', 'Strategy', 'Intel'].map(tab => (
-              <button
-                 key={tab}
-                 onClick={() => setActiveTab(tab as any)}
-                 className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors flex items-center gap-2 ${
-                     activeTab === tab ? 'border-charcoal text-charcoal' : 'border-transparent text-stone-400 hover:text-charcoal'
-                 }`}
-              >
-                  {tab === 'Console' && <LayoutDashboard size={14} />}
-                  {tab === 'Strategy' && <Target size={14} />}
-                  {tab === 'Intel' && <Lightbulb size={14} />}
-                  {tab}
-              </button>
-          ))}
+      {/* Premium Tabs */}
+      <div className="flex gap-2 border-b border-charcoal-100">
+        {[
+          { id: 'Console', icon: LayoutDashboard },
+          { id: 'Strategy', icon: Target },
+          { id: 'Intel', icon: Lightbulb }
+        ].map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id as any)}
+            className={cn(
+              "flex items-center gap-2 px-6 py-4 text-caption font-bold transition-all duration-300 border-b-2",
+              activeTab === tab.id
+                ? "text-forest-700 border-gold-500"
+                : "text-charcoal-500 border-transparent hover:text-forest-600 hover:bg-forest-50/50 rounded-t-lg"
+            )}
+          >
+            <tab.icon size={16} strokeWidth={2.5} />
+            {tab.id}
+          </button>
+        ))}
       </div>
 
-      {activeTab === 'Console' && <ConsoleView revenue={revenue} placements={placements} revenuePerEmployee={revenuePerEmployee} />}
+      {activeTab === 'Console' && <ConsoleView metrics={metrics} animatedMetrics={animatedMetrics} />}
       {activeTab === 'Strategy' && <StrategyView />}
       {activeTab === 'Intel' && <IntelView />}
     </div>
   );
 };
 
-const ConsoleView: React.FC<{ revenue: string, placements: string, revenuePerEmployee: string }> = ({ revenue, placements, revenuePerEmployee }) => {
-    return (
-      <>
-      {/* Main Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-          <div className="bg-charcoal text-white p-8 rounded-[2rem] shadow-xl relative overflow-hidden group hover:scale-[1.02] transition-transform duration-300">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-rust/20 rounded-full blur-2xl -mr-10 -mt-10"></div>
-              <div className="relative z-10">
-                  <div className="text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Revenue (Nov)</div>
-                  <div className="text-4xl font-serif font-bold mb-2">{revenue}</div>
-                  <div className="flex items-center gap-2 text-xs font-bold text-green-400 uppercase tracking-wide">
-                      <TrendingUp size={14} /> 98% to Target
-                  </div>
+const ConsoleView: React.FC<{
+  metrics: any;
+  animatedMetrics: any;
+}> = ({ metrics, animatedMetrics }) => {
+  return (
+    <div className="space-y-8">
+      {/* Premium Metric Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Revenue Card */}
+        <Card className="relative overflow-hidden bg-gradient-forest text-white border-0 shadow-premium hover:shadow-premium-lg transition-all duration-500 hover:-translate-y-1">
+          <div className="absolute top-0 right-0 w-40 h-40 bg-gold-400/20 rounded-full blur-3xl"></div>
+          <CardContent className="relative z-10 p-8">
+            <div className="text-caption text-white/70 mb-3">Revenue (November)</div>
+            <div className="text-display font-heading font-black text-white leading-none mb-4">
+              ${(animatedMetrics.revenue / 1000).toFixed(0)}<span className="text-h3">k</span>
+            </div>
+            <div className="flex items-center gap-2 text-caption text-gold-300 font-bold">
+              <TrendingUp size={14} strokeWidth={2.5} />
+              {Math.round((animatedMetrics.revenue / metrics.target) * 100)}% to Target
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Placements Card */}
+        <Card className="relative overflow-hidden group">
+          <CardContent className="p-8">
+            <div className="text-caption text-charcoal-500 mb-3">Sprint Placements</div>
+            <div className="text-display font-heading font-black text-charcoal-900 leading-none mb-4">
+              {animatedMetrics.placements}<span className="text-h3 text-charcoal-500">/{metrics.placementsTarget}</span>
+            </div>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-warning-50 text-warning-700 border border-warning-200 text-caption font-bold">
+              <AlertTriangle size={12} strokeWidth={2.5} />
+              2 Pods Below Goal
+            </div>
+          </CardContent>
+          <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-gold transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+        </Card>
+
+        {/* Bench Utilization Card */}
+        <Card className="relative overflow-hidden group">
+          <CardContent className="p-8">
+            <div className="text-caption text-charcoal-500 mb-3">Bench Utilization</div>
+            <div className="text-display font-heading font-black text-charcoal-900 leading-none mb-4">
+              {animatedMetrics.benchUtil}<span className="text-h3 text-charcoal-500">%</span>
+            </div>
+            <div className="text-caption text-charcoal-400">Target: 85%</div>
+            {/* Progress Ring */}
+            <div className="mt-4">
+              <div className="h-2 bg-charcoal-100 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-forest-500 to-forest-600 rounded-full transition-all duration-1000"
+                  style={{ width: `${animatedMetrics.benchUtil}%` }}
+                ></div>
               </div>
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-rust to-charcoal transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
-          </div>
+            </div>
+          </CardContent>
+          <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-forest-500 to-forest-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+        </Card>
 
-          <div className="bg-white p-8 rounded-[2rem] border border-stone-200 shadow-lg hover:border-rust/30 transition-colors group relative overflow-hidden">
-              <div className="text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Placements</div>
-              <div className="text-4xl font-serif font-bold text-charcoal mb-2">{placements}</div>
-              <div className="text-xs font-bold text-yellow-600 bg-yellow-50 px-2 py-1 rounded inline-block uppercase tracking-wide mb-1">
-                  2 Pods Below Goal
-              </div>
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-yellow-400 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
-          </div>
-
-          <div className="bg-white p-8 rounded-[2rem] border border-stone-200 shadow-lg hover:border-rust/30 transition-colors group relative overflow-hidden">
-              <div className="text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Bench Utilization</div>
-              <div className="text-4xl font-serif font-bold text-charcoal mb-2">78%</div>
-              <div className="text-xs text-stone-400 uppercase tracking-wide">Target: 85%</div>
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-blue-400 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
-          </div>
-
-          <div className="bg-white p-8 rounded-[2rem] border border-stone-200 shadow-lg hover:border-rust/30 transition-colors group relative overflow-hidden">
-              <div className="text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Rev / Employee</div>
-              <div className="text-4xl font-serif font-bold text-forest mb-2">{revenuePerEmployee}</div>
-              <div className="text-xs text-stone-400 uppercase tracking-wide">Annualized</div>
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-green-400 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
-          </div>
+        {/* Rev per Employee Card */}
+        <Card className="relative overflow-hidden group">
+          <CardContent className="p-8">
+            <div className="text-caption text-charcoal-500 mb-3">Revenue / Employee</div>
+            <div className="text-display font-heading font-black text-success-600 leading-none mb-4">
+              ${animatedMetrics.revPerEmp}<span className="text-h3">k</span>
+            </div>
+            <div className="flex items-center gap-2 text-caption text-success-600 font-bold">
+              <TrendingUp size={14} strokeWidth={2.5} />
+              Annualized
+            </div>
+          </CardContent>
+          <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-success-500 to-success-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+        </Card>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          {/* Pod Scoreboard */}
-          <div className="lg:col-span-2 bg-white rounded-[2.5rem] border border-stone-200 shadow-xl overflow-hidden flex flex-col">
-              <div className="p-8 border-b border-stone-100 flex justify-between items-center">
-                  <h3 className="font-serif text-xl font-bold text-charcoal">Pod Scoreboard</h3>
-                  <button className="text-xs font-bold text-rust uppercase tracking-widest hover:underline flex items-center gap-1">
-                    View All 19 Pods <ArrowRight size={12} />
-                  </button>
-              </div>
-              <div className="overflow-x-auto">
-                  <table className="w-full text-left">
-                      <thead className="bg-stone-50 text-xs font-bold uppercase tracking-widest text-stone-400">
-                          <tr>
-                              <th className="p-6">Pod Name</th>
-                              <th className="p-6">Type</th>
-                              <th className="p-6">Placements</th>
-                              <th className="p-6">Rev YTD</th>
-                              <th className="p-6">Status</th>
-                          </tr>
-                      </thead>
-                      <tbody className="divide-y divide-stone-100">
-                          {[
-                              { name: 'Recruiting Pod A', type: 'Recruiting', placements: 2, rev: '$180k', status: 'Exceeding' },
-                              { name: 'Sales Pod 1', type: 'Bench Sales', placements: 1, rev: '$95k', status: 'On Track' },
-                              { name: 'Recruiting Pod B', type: 'Recruiting', placements: 0, rev: '$45k', status: 'At Risk' },
-                              { name: 'TA Pod 3', type: 'Talent Acq', placements: 15, rev: 'N/A', status: 'High Perf' },
-                              { name: 'Immigration Pod 1', type: 'Immigration', placements: 8, rev: '$42k', status: 'On Track' },
-                          ].map((pod, i) => (
-                              <tr key={i} className="hover:bg-stone-50 transition-colors group cursor-pointer">
-                                  <td className="p-6 font-bold text-charcoal group-hover:text-rust transition-colors">{pod.name}</td>
-                                  <td className="p-6 text-xs text-stone-500 uppercase tracking-wide">{pod.type}</td>
-                                  <td className="p-6 font-mono text-stone-600">{pod.placements}</td>
-                                  <td className="p-6 font-mono text-stone-600">{pod.rev}</td>
-                                  <td className="p-6">
-                                      <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${
-                                          pod.status === 'Exceeding' || pod.status === 'High Perf' ? 'bg-green-50 text-green-700' :
-                                          pod.status === 'At Risk' ? 'bg-red-50 text-red-700' : 'bg-yellow-50 text-yellow-700'
-                                      }`}>
-                                          {pod.status}
-                                      </span>
-                                  </td>
-                              </tr>
-                          ))}
-                      </tbody>
-                  </table>
-              </div>
-          </div>
+        {/* Premium Pod Scoreboard */}
+        <Card className="lg:col-span-2">
+          <CardHeader>
+            <div className="flex justify-between items-center">
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 size={20} className="text-forest-600" strokeWidth={2.5} />
+                Pod Scoreboard
+              </CardTitle>
+              <Button variant="ghost-gold" size="sm">
+                View All 19 Pods
+                <ArrowRight size={14} strokeWidth={2.5} />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto -mx-8">
+              <table className="w-full">
+                <thead className="bg-charcoal-50">
+                  <tr>
+                    <th className="text-left p-4 text-caption text-charcoal-500 font-bold">Pod Name</th>
+                    <th className="text-left p-4 text-caption text-charcoal-500 font-bold">Type</th>
+                    <th className="text-left p-4 text-caption text-charcoal-500 font-bold">Placements</th>
+                    <th className="text-left p-4 text-caption text-charcoal-500 font-bold">Rev YTD</th>
+                    <th className="text-left p-4 text-caption text-charcoal-500 font-bold">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-charcoal-100">
+                  {[
+                    { name: 'Recruiting Pod A', type: 'Recruiting', placements: 2, rev: '$180k', status: 'Exceeding', statusColor: 'success' },
+                    { name: 'Sales Pod 1', type: 'Bench Sales', placements: 1, rev: '$95k', status: 'On Track', statusColor: 'info' },
+                    { name: 'Recruiting Pod B', type: 'Recruiting', placements: 0, rev: '$45k', status: 'At Risk', statusColor: 'error' },
+                    { name: 'TA Pod 3', type: 'Talent Acq', placements: 15, rev: 'N/A', status: 'High Perf', statusColor: 'success' },
+                    { name: 'Immigration Pod 1', type: 'Immigration', placements: 8, rev: '$42k', status: 'On Track', statusColor: 'info' },
+                  ].map((pod, i) => (
+                    <tr key={i} className="hover:bg-charcoal-50/50 transition-colors group cursor-pointer">
+                      <td className="p-4">
+                        <div className="font-bold text-body-sm text-charcoal-900 group-hover:text-forest-600 transition-colors">
+                          {pod.name}
+                        </div>
+                      </td>
+                      <td className="p-4">
+                        <span className="text-caption text-charcoal-500">{pod.type}</span>
+                      </td>
+                      <td className="p-4">
+                        <span className="font-mono text-body-sm font-bold text-charcoal-700">{pod.placements}</span>
+                      </td>
+                      <td className="p-4">
+                        <span className="font-mono text-body-sm font-bold text-charcoal-700">{pod.rev}</span>
+                      </td>
+                      <td className="p-4">
+                        <span className={cn(
+                          "inline-flex px-3 py-1 rounded-lg text-caption font-bold",
+                          pod.statusColor === 'success' && "bg-success-50 text-success-700 border border-success-200",
+                          pod.statusColor === 'info' && "bg-info-50 text-info-700 border border-info-200",
+                          pod.statusColor === 'error' && "bg-error-50 text-error-700 border border-error-200"
+                        )}>
+                          {pod.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
 
-          {/* Right Column */}
-          <div className="space-y-8">
-              {/* AI Strategic Insights */}
-              <div className="bg-charcoal text-white p-8 rounded-[2rem] shadow-xl relative overflow-hidden">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-rust via-purple-500 to-blue-500"></div>
-                  <div className="absolute -right-10 -top-10 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl"></div>
-                  
-                  <h3 className="font-serif text-xl font-bold mb-6 flex items-center gap-3 relative z-10">
-                      <Zap className="text-yellow-400 fill-yellow-400" size={20} /> AI Twin Insights
-                  </h3>
-                  
-                  <div className="space-y-6 relative z-10">
-                      <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
-                          <div className="flex items-start gap-3 mb-2">
-                              <AlertTriangle size={16} className="text-red-400 shrink-0 mt-1" />
-                              <span className="font-bold text-sm text-red-100">Risk Alert</span>
-                          </div>
-                          <p className="text-xs text-stone-300 leading-relaxed">
-                              Recruiting Pod B has 0 placements this sprint. Recommendation: Reassign Senior's top client to Pod A temporarily.
-                          </p>
-                      </div>
+        {/* Right Column */}
+        <div className="space-y-8">
+          {/* Premium AI Insights */}
+          <Card className="relative overflow-hidden bg-gradient-forest text-white border-0 shadow-premium">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600"></div>
+            <div className="absolute -right-10 -top-10 w-40 h-40 bg-gold-400/20 rounded-full blur-3xl"></div>
 
-                      <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
-                          <div className="flex items-start gap-3 mb-2">
-                              <CheckCircle size={16} className="text-green-400 shrink-0 mt-1" />
-                              <span className="font-bold text-sm text-green-100">Revenue Opportunity</span>
-                          </div>
-                          <p className="text-xs text-stone-300 leading-relaxed">
-                              12 Academy graduates are available. Bench Sales can place 8 within 30 days if we launch targeted outreach.
-                          </p>
-                      </div>
+            <CardHeader className="relative z-10">
+              <CardTitle className="text-h3 text-white flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-gold-500/20 border border-gold-400/30 flex items-center justify-center">
+                  <Sparkles size={20} className="text-gold-300" strokeWidth={2.5} />
+                </div>
+                AI Twin Insights
+              </CardTitle>
+            </CardHeader>
 
-                      <button className="w-full py-3 bg-white text-charcoal rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-rust hover:text-white transition-all shadow-lg">
-                          Generate Board Report
-                      </button>
+            <CardContent className="relative z-10 space-y-4">
+              <div className="p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/15 transition-all duration-300 cursor-pointer group">
+                <div className="flex items-start gap-3 mb-2">
+                  <div className="w-8 h-8 rounded-lg bg-error-500/20 border border-error-400/30 flex items-center justify-center shrink-0">
+                    <AlertTriangle size={14} className="text-error-300" strokeWidth={2.5} />
                   </div>
-              </div>
-
-              {/* Vision 2030 Tracker */}
-              <div className="bg-white p-8 rounded-[2rem] border border-stone-200 shadow-lg">
-                  <h3 className="font-serif text-lg font-bold text-charcoal mb-4 flex items-center justify-between">
-                    <span>Vision 2030</span>
-                    <Globe size={16} className="text-stone-300" />
-                  </h3>
-                  <div className="space-y-6 relative">
-                      <div className="absolute left-3 top-2 bottom-2 w-0.5 bg-stone-100"></div>
-                      
-                      <div className="flex gap-4 relative">
-                          <div className="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center border-2 border-white shadow-sm z-10 shrink-0">
-                              <CheckCircle size={12} />
-                          </div>
-                          <div>
-                              <div className="text-xs font-bold uppercase tracking-widest text-green-600 mb-1">Year 1</div>
-                              <div className="text-sm font-bold text-charcoal">Internal Tool</div>
-                              <div className="text-xs text-stone-400 mt-1">Completed • Nov 2025</div>
-                          </div>
-                      </div>
-
-                      <div className="flex gap-4 relative opacity-60">
-                          <div className="w-6 h-6 rounded-full bg-stone-100 text-stone-400 flex items-center justify-center border-2 border-white shadow-sm z-10 shrink-0">
-                              <div className="w-2 h-2 bg-stone-400 rounded-full"></div>
-                          </div>
-                          <div>
-                              <div className="text-xs font-bold uppercase tracking-widest text-stone-400 mb-1">Year 2</div>
-                              <div className="text-sm font-bold text-charcoal">B2B SaaS (InTimeOS)</div>
-                          </div>
-                      </div>
-
-                      <div className="flex gap-4 relative opacity-40">
-                          <div className="w-6 h-6 rounded-full bg-stone-100 text-stone-400 flex items-center justify-center border-2 border-white shadow-sm z-10 shrink-0">
-                              <div className="w-2 h-2 bg-stone-300 rounded-full"></div>
-                          </div>
-                          <div>
-                              <div className="text-xs font-bold uppercase tracking-widest text-stone-400 mb-1">Year 5</div>
-                              <div className="text-sm font-bold text-charcoal">IPO Ready</div>
-                          </div>
-                      </div>
+                  <div className="flex-1">
+                    <div className="text-body-sm font-bold text-white mb-2">Risk Alert</div>
+                    <p className="text-body-sm text-white/80 leading-relaxed">
+                      Recruiting Pod B has 0 placements this sprint. Recommendation: Reassign Senior's top client to Pod A temporarily.
+                    </p>
                   </div>
+                </div>
               </div>
-          </div>
+
+              <div className="p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/15 transition-all duration-300 cursor-pointer group">
+                <div className="flex items-start gap-3 mb-2">
+                  <div className="w-8 h-8 rounded-lg bg-success-500/20 border border-success-400/30 flex items-center justify-center shrink-0">
+                    <TrendingUp size={14} className="text-success-300" strokeWidth={2.5} />
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-body-sm font-bold text-white mb-2">Revenue Opportunity</div>
+                    <p className="text-body-sm text-white/80 leading-relaxed">
+                      12 Academy graduates are available. Bench Sales can place 8 within 30 days if we launch targeted outreach.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <Button variant="gold" size="lg" className="w-full">
+                <Download size={16} strokeWidth={2.5} />
+                Generate Board Report
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Premium Vision 2030 Tracker */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Globe size={20} className="text-gold-600" strokeWidth={2.5} />
+                Vision 2030
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6 relative">
+                <div className="absolute left-3 top-3 bottom-3 w-0.5 bg-gradient-to-b from-gold-400 via-charcoal-200 to-charcoal-100"></div>
+
+                <div className="flex gap-4 relative">
+                  <div className="w-8 h-8 rounded-full bg-success-100 border-2 border-success-500 flex items-center justify-center z-10 shrink-0 shadow-elevation-sm">
+                    <CheckCircle size={16} className="text-success-600" strokeWidth={2.5} />
+                  </div>
+                  <div>
+                    <div className="text-caption text-success-600 font-bold mb-1">Year 1 • Completed</div>
+                    <div className="text-body-sm font-bold text-charcoal-900">Internal Operating System</div>
+                    <div className="text-caption text-charcoal-400 mt-1">Nov 2025</div>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 relative opacity-70">
+                  <div className="w-8 h-8 rounded-full bg-gold-100 border-2 border-gold-400 flex items-center justify-center z-10 shrink-0 shadow-elevation-sm">
+                    <div className="w-2.5 h-2.5 bg-gold-500 rounded-full"></div>
+                  </div>
+                  <div>
+                    <div className="text-caption text-gold-600 font-bold mb-1">Year 2 • In Progress</div>
+                    <div className="text-body-sm font-bold text-charcoal-900">B2B SaaS (InTimeOS)</div>
+                    <div className="text-caption text-charcoal-400 mt-1">Target: Q4 2026</div>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 relative opacity-40">
+                  <div className="w-8 h-8 rounded-full bg-charcoal-100 border-2 border-charcoal-300 flex items-center justify-center z-10 shrink-0">
+                    <div className="w-2.5 h-2.5 bg-charcoal-400 rounded-full"></div>
+                  </div>
+                  <div>
+                    <div className="text-caption text-charcoal-400 font-bold mb-1">Year 5 • Planned</div>
+                    <div className="text-body-sm font-bold text-charcoal-700">IPO Ready ($250M ARR)</div>
+                    <div className="text-caption text-charcoal-400 mt-1">Target: 2030</div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
-      </>
-    )
-}
+    </div>
+  );
+};
 
 const StrategyView: React.FC = () => {
-    return (
-        <div className="grid grid-cols-2 gap-8">
-             <div className="bg-white p-8 rounded-[2rem] border border-stone-200 shadow-lg">
-                 <h3 className="font-serif text-2xl font-bold text-charcoal mb-6">Strategic Roadmap</h3>
-                 <div className="space-y-6">
-                     {['Market Expansion', 'Product Development', 'Talent Acquisition'].map((item, i) => (
-                         <div key={i} className="p-6 bg-stone-50 rounded-2xl border border-stone-100">
-                             <div className="flex justify-between items-center mb-4">
-                                 <h4 className="font-bold text-lg text-charcoal">{item}</h4>
-                                 <span className="px-3 py-1 bg-white rounded-full text-xs font-bold text-stone-500 border border-stone-200">Q4 2025</span>
-                             </div>
-                             <div className="w-full bg-stone-200 h-2 rounded-full overflow-hidden">
-                                 <div className="bg-rust h-full rounded-full" style={{ width: '65%' }}></div>
-                             </div>
-                         </div>
-                     ))}
-                 </div>
-             </div>
-             <div className="bg-white p-8 rounded-[2rem] border border-stone-200 shadow-lg">
-                 <h3 className="font-serif text-2xl font-bold text-charcoal mb-6">Key Initiatives</h3>
-                 <ul className="space-y-4">
-                     <li className="flex items-center gap-3 p-4 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">
-                         <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center"><Globe size={20} /></div>
-                         <div>
-                             <div className="font-bold text-charcoal">Cross-Border Expansion</div>
-                             <div className="text-xs text-stone-500">Establishing UK entity</div>
-                         </div>
-                     </li>
-                     <li className="flex items-center gap-3 p-4 hover:bg-stone-50 rounded-xl transition-colors cursor-pointer">
-                         <div className="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center"><Brain size={20} /></div>
-                         <div>
-                             <div className="font-bold text-charcoal">AI Agent V2</div>
-                             <div className="text-xs text-stone-500">Multi-agent orchestration</div>
-                         </div>
-                     </li>
-                 </ul>
-             </div>
-        </div>
-    )
-}
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Target size={20} className="text-forest-600" strokeWidth={2.5} />
+            Strategic Roadmap
+          </CardTitle>
+          <CardDescription>Key initiatives for Q4 2025</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {[
+            { title: 'Market Expansion', progress: 65, quarter: 'Q4 2025', color: 'from-forest-500 to-forest-600' },
+            { title: 'Product Development', progress: 45, quarter: 'Q1 2026', color: 'from-gold-500 to-gold-600' },
+            { title: 'Talent Acquisition', progress: 80, quarter: 'Q3 2025', color: 'from-charcoal-600 to-charcoal-700' }
+          ].map((item, i) => (
+            <div key={i} className="p-6 bg-gradient-subtle rounded-xl border border-charcoal-100">
+              <div className="flex justify-between items-start mb-4">
+                <h4 className="text-h4 font-heading font-bold text-charcoal-900">{item.title}</h4>
+                <span className="px-3 py-1 bg-white rounded-lg text-caption font-bold text-charcoal-600 border border-charcoal-200 shadow-elevation-xs">
+                  {item.quarter}
+                </span>
+              </div>
+              <div className="space-y-2">
+                <div className="flex justify-between items-center text-caption text-charcoal-500">
+                  <span>Progress</span>
+                  <span className="font-bold text-charcoal-900">{item.progress}%</span>
+                </div>
+                <div className="h-3 bg-charcoal-100 rounded-full overflow-hidden shadow-inner-glow">
+                  <div
+                    className={cn("h-full rounded-full bg-gradient-to-r transition-all duration-1000", item.color)}
+                    style={{ width: `${item.progress}%` }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Award size={20} className="text-gold-600" strokeWidth={2.5} />
+            Key Priorities
+          </CardTitle>
+          <CardDescription>Focus areas for leadership team</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {[
+            { title: 'Scale Pod Model', description: 'Grow from 19 to 30 pods by Q2', icon: Users, color: 'forest' },
+            { title: 'Launch InTimeOS Beta', description: 'B2B SaaS platform for staffing firms', icon: Zap, color: 'gold' },
+            { title: 'Improve Win Rate', description: 'Increase placement success from 60% to 75%', icon: Target, color: 'success' }
+          ].map((priority, i) => (
+            <div key={i} className="p-5 rounded-xl bg-white border border-charcoal-100 hover:shadow-elevation-md hover:-translate-y-0.5 transition-all duration-300 cursor-pointer group">
+              <div className="flex gap-4">
+                <div className={cn(
+                  "w-12 h-12 rounded-xl flex items-center justify-center shadow-elevation-sm shrink-0",
+                  priority.color === 'forest' && "bg-forest-50 border border-forest-200",
+                  priority.color === 'gold' && "bg-gold-50 border border-gold-200",
+                  priority.color === 'success' && "bg-success-50 border border-success-200"
+                )}>
+                  <priority.icon
+                    size={20}
+                    strokeWidth={2.5}
+                    className={cn(
+                      priority.color === 'forest' && "text-forest-600",
+                      priority.color === 'gold' && "text-gold-600",
+                      priority.color === 'success' && "text-success-600"
+                    )}
+                  />
+                </div>
+                <div>
+                  <div className="text-body font-bold text-charcoal-900 mb-1 group-hover:text-forest-600 transition-colors">
+                    {priority.title}
+                  </div>
+                  <div className="text-body-sm text-charcoal-600">
+                    {priority.description}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
 
 const IntelView: React.FC = () => {
-    return (
-        <div className="bg-charcoal text-white p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden min-h-[600px]">
-             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-rust/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
-             <div className="relative z-10 grid grid-cols-2 gap-12">
-                 <div>
-                     <div className="text-rust font-bold text-xs uppercase tracking-[0.2em] mb-4">Market Intelligence</div>
-                     <h2 className="text-5xl font-serif font-bold mb-8">Global Competitor Analysis</h2>
-                     <p className="text-lg text-stone-400 leading-relaxed mb-8">
-                         Real-time analysis of 45 competitor firms indicates a 15% shift towards AI-driven staffing models in Q4.
-                         InTime is currently positioned in the top 5% for technological adoption.
-                     </p>
-                     <button className="px-8 py-4 bg-white text-charcoal rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-rust hover:text-white transition-all">
-                         Download Full Report
-                     </button>
-                 </div>
-                 <div className="space-y-6">
-                     {[1, 2, 3].map((_, i) => (
-                         <div key={i} className="bg-white/5 p-6 rounded-2xl border border-white/10 backdrop-blur-sm">
-                             <div className="flex justify-between items-start mb-4">
-                                 <div className="font-bold text-lg">Competitor {String.fromCharCode(65 + i)}</div>
-                                 <span className="text-red-400 text-xs font-bold uppercase">-5% Market Share</span>
-                             </div>
-                             <div className="w-full bg-white/10 h-1 rounded-full mb-2">
-                                 <div className="bg-stone-500 h-full rounded-full" style={{ width: '40%' }}></div>
-                             </div>
-                         </div>
-                     ))}
-                 </div>
-             </div>
-        </div>
-    )
-}
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Brain size={20} className="text-forest-600" strokeWidth={2.5} />
+            Market Intelligence
+          </CardTitle>
+          <CardDescription>Competitive landscape insights</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="text-center py-12">
+              <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-subtle border border-charcoal-100 flex items-center justify-center">
+                <Lightbulb size={32} className="text-charcoal-400" strokeWidth={2} />
+              </div>
+              <p className="text-body text-charcoal-600 mb-6">AI-powered market insights coming soon</p>
+              <Button variant="default">
+                <Sparkles size={16} strokeWidth={2.5} />
+                Enable AI Analysis
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Activity size={20} className="text-gold-600" strokeWidth={2.5} />
+            Real-Time Metrics
+          </CardTitle>
+          <CardDescription>Live performance indicators</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            {[
+              { label: 'Active Searches', value: '47', trend: '+8', trendUp: true },
+              { label: 'Interviews Today', value: '12', trend: '+3', trendUp: true },
+              { label: 'Offers Pending', value: '9', trend: '-2', trendUp: false }
+            ].map((metric, i) => (
+              <div key={i} className="flex justify-between items-center p-4 rounded-xl bg-gradient-subtle border border-charcoal-100">
+                <div>
+                  <div className="text-caption text-charcoal-500 mb-1">{metric.label}</div>
+                  <div className="text-h2 font-heading font-black text-charcoal-900">{metric.value}</div>
+                </div>
+                <div className={cn(
+                  "flex items-center gap-1 px-3 py-1.5 rounded-lg text-caption font-bold",
+                  metric.trendUp
+                    ? "bg-success-50 text-success-700 border border-success-200"
+                    : "bg-error-50 text-error-700 border border-error-200"
+                )}>
+                  {metric.trendUp ? <TrendingUp size={14} strokeWidth={2.5} /> : <TrendingDown size={14} strokeWidth={2.5} />}
+                  {metric.trend}
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};

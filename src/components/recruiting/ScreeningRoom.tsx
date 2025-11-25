@@ -32,7 +32,7 @@ export const ScreeningRoom: React.FC = () => {
       updateSubmission({ ...submission, status: 'submission_ready', lastActivity: 'Shortlisted' });
       // Navigate back to job detail where they will now appear in 'Submission Ready' tab
       setTimeout(() => {
-          navigate(`/employee/recruiting/jobs/${jobId}`);
+          router.push(`/employee/recruiting/jobs/${jobId}`);
       }, 800);
   };
 
@@ -40,7 +40,7 @@ export const ScreeningRoom: React.FC = () => {
       setDecision('reject');
       updateSubmission({ ...submission, status: 'rejected', lastActivity: 'Rejected' });
       setTimeout(() => {
-          navigate(`/employee/recruiting/jobs/${jobId}`);
+          router.push(`/employee/recruiting/jobs/${jobId}`);
       }, 800);
   };
 

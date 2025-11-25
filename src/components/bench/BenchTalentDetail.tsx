@@ -51,7 +51,7 @@ export const BenchTalentDetail: React.FC = () => {
                       <CheckCircle size={14}/> Available
                   </div>
                   <button 
-                    onClick={() => navigate(`/employee/bench/hunt/${consultant.id}`)}
+                    onClick={() => router.push(`/employee/bench/hunt/${consultant.id}`)}
                     className="px-6 py-3 bg-charcoal text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors shadow-lg flex items-center gap-2"
                   >
                       Start Job Hunt <Search size={14} />
@@ -66,7 +66,7 @@ export const BenchTalentDetail: React.FC = () => {
               <button
                  key={tab}
                  onClick={() => {
-                     if (tab === 'Job Hunt') navigate(`/employee/bench/hunt/${consultant.id}`);
+                     if (tab === 'Job Hunt') router.push(`/employee/bench/hunt/${consultant.id}`);
                      else setActiveTab(tab as any);
                  }}
                  className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors ${
@@ -180,7 +180,7 @@ export const BenchTalentDetail: React.FC = () => {
                       <div className="text-center py-12 text-stone-400">
                           <Send size={48} className="mx-auto mb-4 opacity-20" />
                           <p>No active submissions. Start a Job Hunt.</p>
-                          <button onClick={() => navigate(`/employee/bench/hunt/${consultant.id}`)} className="mt-4 text-rust font-bold hover:underline">Find Jobs</button>
+                          <button onClick={() => router.push(`/employee/bench/hunt/${consultant.id}`)} className="mt-4 text-rust font-bold hover:underline">Find Jobs</button>
                       </div>
                   )}
               </div>

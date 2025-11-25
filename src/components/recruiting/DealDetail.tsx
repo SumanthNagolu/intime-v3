@@ -44,7 +44,7 @@ export const DealDetail: React.FC = () => {
           };
           addAccount(newAccount);
           setIsConvertModalOpen(false);
-          navigate(`/employee/recruiting/accounts/${newAccount.id}`);
+          router.push(`/employee/recruiting/accounts/${newAccount.id}`);
       } else {
           // Both Bench and Academy create a Candidate record
           const newCandidate: Candidate = {

@@ -47,7 +47,7 @@ export const JobCollector: React.FC = () => {
   };
 
   const handleApply = (jobId: string, candidateId: string) => {
-      navigate(`/employee/recruiting/submit/${candidateId}/${jobId}`);
+      router.push(`/employee/recruiting/submit/${candidateId}/${jobId}`);
   };
 
   // Simple Match Logic

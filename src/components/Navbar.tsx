@@ -1,6 +1,5 @@
 'use client';
 
-
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
@@ -8,6 +7,7 @@ import { User, Mic, Map, Menu, X, Cpu, ChevronDown, List, Layers, Sparkles, LogO
 import { cn } from '@/lib/utils';
 import { useAppStore } from '@/lib/store';
 import { Role } from '@/lib/types';
+import { Button } from '@/components/ui/button';
 
 // Navigation structures based on 4 Parent Categories
 const ROLE_NAV: Record<Role, { title: string; icon: any; items: { label: string; path: string; icon: any }[] }[]> = {
@@ -66,7 +66,7 @@ const ROLE_NAV: Record<Role, { title: string; icon: any; items: { label: string;
   ],
 
   // --- 4. EMPLOYEE / HR (Internal Roles) ---
-  
+
   // 1. Bench Sales
   bench_manager: [
       {
@@ -138,7 +138,7 @@ const ROLE_NAV: Record<Role, { title: string; icon: any; items: { label: string;
       }
   ],
 
-  // 4. Academy Coordinator (Formerly Training Specialist)
+  // 4. Academy Coordinator
   academy_admin: [
       {
           title: "Training Ops",
@@ -272,10 +272,10 @@ export const Navbar: React.FC = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isRoleSwitcherOpen, setIsRoleSwitcherOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
-  
+
   const isPublic = pathname === '/' || pathname === '/academy' || pathname === '/clients' || pathname === '/login' || pathname.startsWith('/verify-certificate');
   const isLoginPage = pathname === '/login';
-  
+
   const isActive = (path: string) => pathname === path;
   const isGroupActive = (items: { path: string }[]) => items.some(item => isActive(item.path));
 
@@ -313,256 +313,276 @@ export const Navbar: React.FC = () => {
       if (role === 'hr_admin') return 'HR Manager';
       if (role === 'admin') return 'System Admin';
       if (role === 'ceo') return 'CEO';
-      
+
       // External
       if (role === 'student') return 'Student';
       if (role === 'client') return 'Client';
       if (role === 'consultant') return 'Talent';
-      
+
       return (role as string).toUpperCase();
   };
 
   const activeNavStructure = ROLE_NAV[activeRole] || [];
 
   return (
-    <nav className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
-      <div className="bg-white/90 backdrop-blur-xl border border-white/20 shadow-2xl shadow-stone-900/5 rounded-3xl lg:rounded-full px-6 lg:px-8 py-4 flex flex-col lg:flex-row items-center justify-between gap-8 max-w-7xl w-full pointer-events-auto transition-all duration-500">
-        
-        <div className="w-full lg:w-auto flex items-center justify-between gap-6">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group shrink-0 relative" onClick={() => setIsMobileMenuOpen(false)}>
-              <div className="absolute inset-0 bg-rust/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              <div className="w-11 h-11 bg-gradient-to-br from-charcoal to-stone-800 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:shadow-rust/20 transition-all duration-500 relative z-10">
-                  <span className="font-serif font-bold italic text-xl text-rust">I</span>
-              </div>
-              <div className="flex flex-col relative z-10">
-                  <span className="font-serif font-bold text-charcoal text-lg leading-none tracking-tight">InTime</span>
-                  <span className="text-[9px] uppercase tracking-[0.3em] text-rust font-bold mt-1">Solutions</span>
-              </div>
-            </Link>
+    <nav className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+      {/* Premium Glass Navigation Bar */}
+      <div className="container-premium py-6 pointer-events-auto">
+        <div className="glass-strong shadow-premium rounded-2xl px-8 py-4 flex flex-col lg:flex-row items-center justify-between gap-6">
 
-            {/* Role Switcher (Desktop) - Internal Only */}
-            {!isPublic && isInternal && (
-                <div className="relative hidden lg:block">
-                    <button 
-                        onClick={() => setIsRoleSwitcherOpen(!isRoleSwitcherOpen)}
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-600 text-xs font-bold uppercase tracking-wider transition-colors"
-                    >
-                        {getRoleLabel(activeRole)}
-                        <ChevronDown size={12} />
-                    </button>
-                    
-                    {isRoleSwitcherOpen && (
-                        <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-stone-100 overflow-hidden z-50 animate-fade-in">
-                            <div className="p-2 bg-stone-50 border-b border-stone-100 text-[10px] font-bold uppercase tracking-widest text-stone-400">Switch Context</div>
-                            <div className="max-h-80 overflow-y-auto">
-                                {INTERNAL_ROLES.map((r) => (
-                                    <button
-                                        key={r}
-                                        onClick={() => handleRoleSwitch(r)}
-                                        className={cn(
-                                            "w-full text-left px-4 py-3 text-xs font-bold uppercase tracking-wide hover:bg-stone-50 transition-colors border-b border-stone-50",
-                                            activeRole === r ? "text-rust bg-rust/5" : "text-stone-500"
-                                        )}
-                                    >
-                                        {getRoleLabel(r)}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+          <div className="w-full lg:w-auto flex items-center justify-between gap-6">
+              {/* Premium Logo */}
+              <Link href="/" className="flex items-center gap-3 group shrink-0 relative" onClick={() => setIsMobileMenuOpen(false)}>
+                <div className="absolute inset-0 bg-gradient-gold blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-700 rounded-full"></div>
+                <div className="w-12 h-12 bg-gradient-forest rounded-xl flex items-center justify-center text-white shadow-elevation-md group-hover:shadow-elevation-lg transition-all duration-300 relative z-10 group-hover:scale-105">
+                    <span className="font-heading font-black text-2xl gradient-text-gold">I</span>
                 </div>
-            )}
+                <div className="flex flex-col relative z-10">
+                    <span className="font-heading font-bold text-charcoal-900 text-xl leading-none tracking-tight">InTime</span>
+                    <span className="text-caption text-gold-600 mt-0.5">Solutions</span>
+                </div>
+              </Link>
 
-            <button 
-                className="lg:hidden p-2 text-stone-500 hover:text-charcoal"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-        </div>
-        
-        {/* Main Links (Desktop) */}
-        {!isPublic && activeNavStructure.length > 0 && (
-          <ul className="hidden lg:flex items-center gap-2">
-            {activeNavStructure.map((group) => (
-              <li 
-                  key={group.title} 
-                  className="relative group/dropdown"
-                  onMouseEnter={() => setActiveDropdown(group.title)}
-                  onMouseLeave={() => setActiveDropdown(null)}
-              >
-                  <button className={cn(
-                      "flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all",
-                      isGroupActive(group.items) ? 'text-charcoal bg-stone-100' : 'text-stone-400 hover:text-charcoal hover:bg-stone-50'
-                  )}>
-                      {group.title}
-                      <ChevronDown size={12} className={cn("transition-transform duration-300", activeDropdown === group.title && 'rotate-180')} />
-                  </button>
+              {/* Premium Role Switcher (Desktop) - Internal Only */}
+              {!isPublic && isInternal && (
+                  <div className="relative hidden lg:block">
+                      <button
+                          onClick={() => setIsRoleSwitcherOpen(!isRoleSwitcherOpen)}
+                          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-charcoal-100/50 hover:bg-charcoal-100 text-charcoal-700 hover:text-charcoal-900 text-caption transition-all duration-300 border border-charcoal-200/50"
+                      >
+                          {getRoleLabel(activeRole)}
+                          <ChevronDown size={14} className={cn("transition-transform duration-300", isRoleSwitcherOpen && 'rotate-180')} />
+                      </button>
 
-                  {/* Dropdown Menu */}
-                  <div className={cn(
-                      "absolute top-full left-1/2 -translate-x-1/2 pt-4 w-52 transition-all duration-300 transform origin-top",
-                      activeDropdown === group.title ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'
-                  )}>
-                      <div className="bg-white rounded-2xl shadow-xl shadow-stone-200/50 border border-stone-100 p-2 overflow-hidden">
-                          {group.items.map(item => (
-                              <Link 
-                                  key={item.path}
-                                  to={item.path}
-                                  className={cn(
-                                      "flex items-center gap-3 px-4 py-3 rounded-xl transition-colors",
-                                      isActive(item.path) ? 'bg-rust/5 text-rust' : 'text-stone-500 hover:bg-stone-50 hover:text-charcoal'
-                                  )}
-                              >
-                                  <item.icon size={16} className={isActive(item.path) ? "stroke-[2.5px]" : ""} />
-                                  <span className="text-xs font-bold uppercase tracking-wide">{item.label}</span>
-                              </Link>
-                          ))}
-                      </div>
-                  </div>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        {/* Mobile Menu */}
-        {!isPublic && (
-          <div className={cn("lg:hidden flex-col w-full pb-6 border-b border-stone-100 space-y-6 mt-4", isMobileMenuOpen ? 'flex' : 'hidden')}>
-              {isInternal && (
-                  <div className="p-2 bg-stone-50 rounded-xl mb-4">
-                     <p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest mb-2 px-2">Switch View</p>
-                     <div className="grid grid-cols-2 gap-2">
-                        {INTERNAL_ROLES.map((r) => (
-                            <button
-                                key={r}
-                                onClick={() => handleRoleSwitch(r)}
-                                className={cn(
-                                    "text-left px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wide",
-                                    activeRole === r ? "bg-white text-rust shadow-sm" : "text-stone-500"
-                                )}
-                            >
-                                {getRoleLabel(r)}
-                            </button>
-                        ))}
-                     </div>
+                      {isRoleSwitcherOpen && (
+                          <div className="absolute top-full left-0 mt-3 w-64 glass-strong rounded-xl shadow-premium border border-charcoal-100 overflow-hidden z-50 animate-slide-down">
+                              <div className="p-3 border-b border-charcoal-100/50">
+                                  <p className="text-caption text-charcoal-500">Switch Context</p>
+                              </div>
+                              <div className="max-h-96 overflow-y-auto scrollbar-premium p-2">
+                                  {INTERNAL_ROLES.map((r) => (
+                                      <button
+                                          key={r}
+                                          onClick={() => handleRoleSwitch(r)}
+                                          className={cn(
+                                              "w-full text-left px-4 py-3 text-caption rounded-lg transition-all duration-300 mb-1",
+                                              activeRole === r
+                                                ? "bg-gradient-gold text-charcoal-900 shadow-elevation-sm font-bold"
+                                                : "text-charcoal-600 hover:bg-charcoal-50 hover:text-charcoal-900"
+                                          )}
+                                      >
+                                          {getRoleLabel(r)}
+                                      </button>
+                                  ))}
+                              </div>
+                          </div>
+                      )}
                   </div>
               )}
 
-              {activeNavStructure.map((group) => (
-                  <div key={group.title}>
-                      <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-300 mb-3 pl-2">{group.title}</div>
-                      <div className="space-y-2">
-                          {group.items.map(item => (
-                               <Link 
-                                  key={item.path}
-                                  to={item.path} 
-                                  className={cn(
-                                      "flex items-center gap-3 p-3 rounded-xl transition-colors",
-                                      isActive(item.path) ? 'bg-rust/5 text-rust' : 'text-stone-500 hover:bg-stone-50'
-                                  )}
-                                  onClick={() => setIsMobileMenuOpen(false)}
-                                >
-                                  <item.icon size={18} />
-                                  <span className="text-sm font-bold uppercase tracking-wide">{item.label}</span>
-                                </Link>
-                          ))}
-                      </div>
-                  </div>
-              ))}
+              <button
+                  className="lg:hidden p-2 text-charcoal-600 hover:text-forest-600 transition-colors rounded-lg hover:bg-charcoal-50"
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              >
+                  {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
           </div>
-        )}
 
-        {/* Status / Profile / Notifications */}
-        <div className={cn("lg:flex items-center justify-center lg:justify-end w-full lg:w-auto gap-5 shrink-0 lg:pl-5 lg:border-l border-stone-100", isMobileMenuOpen ? 'flex' : 'hidden')}>
-           {!isPublic ? (
-             <>
-               {/* Notifications */}
-               <div className="relative">
-                   <button 
-                      onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
-                      className="relative p-2 text-stone-400 hover:text-charcoal transition-colors"
+          {/* Premium Main Links (Desktop) */}
+          {!isPublic && activeNavStructure.length > 0 && (
+            <ul className="hidden lg:flex items-center gap-1">
+              {activeNavStructure.map((group) => (
+                <li
+                    key={group.title}
+                    className="relative group/dropdown"
+                    onMouseEnter={() => setActiveDropdown(group.title)}
+                    onMouseLeave={() => setActiveDropdown(null)}
+                >
+                    <button className={cn(
+                        "flex items-center gap-2 px-5 py-2.5 rounded-lg text-caption transition-all duration-300",
+                        isGroupActive(group.items)
+                          ? 'text-forest-700 bg-forest-50 font-bold shadow-elevation-xs'
+                          : 'text-charcoal-600 hover:text-forest-600 hover:bg-forest-50/50'
+                    )}>
+                        {group.title}
+                        <ChevronDown size={14} className={cn("transition-transform duration-300", activeDropdown === group.title && 'rotate-180')} />
+                    </button>
+
+                    {/* Premium Dropdown Menu */}
+                    <div className={cn(
+                        "absolute top-full left-1/2 -translate-x-1/2 pt-3 w-56 transition-all duration-300 transform origin-top",
+                        activeDropdown === group.title ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible pointer-events-none'
+                    )}>
+                        <div className="glass-strong rounded-xl shadow-premium border border-charcoal-100 p-2 overflow-hidden">
+                            {group.items.map(item => (
+                                <Link
+                                    key={item.path}
+                                    href={item.path}
+                                    className={cn(
+                                        "flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300",
+                                        isActive(item.path)
+                                          ? 'bg-gradient-gold text-charcoal-900 shadow-elevation-sm font-bold'
+                                          : 'text-charcoal-600 hover:bg-charcoal-50 hover:text-forest-600'
+                                    )}
+                                >
+                                    <item.icon size={18} strokeWidth={isActive(item.path) ? 2.5 : 2} />
+                                    <span className="text-caption">{item.label}</span>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {/* Premium Mobile Menu */}
+          {!isPublic && (
+            <div className={cn("lg:hidden flex-col w-full pb-4 space-y-4 mt-2", isMobileMenuOpen ? 'flex' : 'hidden')}>
+                {isInternal && (
+                    <div className="p-3 bg-charcoal-50/50 rounded-xl border border-charcoal-100/50">
+                       <p className="text-caption text-charcoal-500 mb-3 px-2">Switch View</p>
+                       <div className="grid grid-cols-2 gap-2">
+                          {INTERNAL_ROLES.map((r) => (
+                              <button
+                                  key={r}
+                                  onClick={() => handleRoleSwitch(r)}
+                                  className={cn(
+                                      "text-left px-3 py-2.5 rounded-lg text-caption transition-all duration-300",
+                                      activeRole === r
+                                        ? "bg-gradient-gold text-charcoal-900 shadow-elevation-sm font-bold"
+                                        : "text-charcoal-600 hover:bg-white"
+                                  )}
+                              >
+                                  {getRoleLabel(r)}
+                              </button>
+                          ))}
+                       </div>
+                    </div>
+                )}
+
+                {activeNavStructure.map((group) => (
+                    <div key={group.title}>
+                        <div className="text-caption text-charcoal-400 mb-3 px-2">{group.title}</div>
+                        <div className="space-y-1">
+                            {group.items.map(item => (
+                                 <Link
+                                    key={item.path}
+                                    href={item.path}
+                                    className={cn(
+                                        "flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300",
+                                        isActive(item.path)
+                                          ? 'bg-gradient-gold text-charcoal-900 shadow-elevation-sm font-bold'
+                                          : 'text-charcoal-600 hover:bg-charcoal-50 hover:text-forest-600'
+                                    )}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    <item.icon size={20} strokeWidth={isActive(item.path) ? 2.5 : 2} />
+                                    <span className="text-caption">{item.label}</span>
+                                  </Link>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
+          )}
+
+          {/* Premium Status / Profile / Notifications */}
+          <div className={cn("lg:flex items-center justify-center lg:justify-end w-full lg:w-auto gap-4 shrink-0 lg:pl-6 lg:border-l border-charcoal-100/50", isMobileMenuOpen ? 'flex' : 'hidden')}>
+             {!isPublic ? (
+               <>
+                 {/* Premium Notifications */}
+                 <div className="relative">
+                     <button
+                        onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+                        className="relative p-2.5 text-charcoal-500 hover:text-forest-600 transition-all duration-300 rounded-lg hover:bg-forest-50"
+                     >
+                         <Bell size={20} strokeWidth={2} />
+                         <div className="absolute top-2 right-2 w-2 h-2 bg-error-500 rounded-full border-2 border-white animate-pulse-slow"></div>
+                     </button>
+
+                     {isNotificationsOpen && (
+                         <div className="absolute top-full right-0 mt-3 w-80 glass-strong rounded-xl shadow-premium border border-charcoal-100 overflow-hidden z-50 animate-slide-down">
+                             <div className="p-4 border-b border-charcoal-100/50 flex justify-between items-center">
+                                 <span className="text-caption text-charcoal-500">Notifications</span>
+                                 <button className="text-caption text-gold-600 hover:text-gold-700 font-bold hover:underline">Mark all read</button>
+                             </div>
+                             <div className="max-h-96 overflow-y-auto scrollbar-premium">
+                                 {[
+                                     { text: "New job order from TechFlow", time: "10m ago", type: "info" },
+                                     { text: "Pod A placed candidate! 🎉", time: "5 hours ago", type: "celebration" },
+                                 ].map((note, i) => (
+                                     <div key={i} className="p-4 border-b border-charcoal-50 hover:bg-charcoal-50/50 transition-colors flex gap-3 cursor-pointer">
+                                         <div className={cn(
+                                             "w-2 h-2 rounded-full mt-1.5 shrink-0",
+                                             note.type === 'celebration' ? 'bg-gold-500' : 'bg-forest-500'
+                                         )}></div>
+                                         <div>
+                                             <p className="text-body-sm font-medium text-charcoal-800 leading-tight">{note.text}</p>
+                                             <p className="text-caption text-charcoal-400 mt-1">{note.time}</p>
+                                         </div>
+                                     </div>
+                                 ))}
+                             </div>
+                         </div>
+                     )}
+                 </div>
+
+                 <div className="text-right hidden md:block">
+                    <div className="text-caption text-charcoal-400">
+                        {isInternal ? 'Internal User' : activeRole === 'student' ? 'Student' : 'Partner'}
+                    </div>
+                    <div className="text-body-sm font-heading font-bold text-charcoal-900">
+                        {activeRole === 'student' ? 'Priya Sharma' : isInternal ? getRoleLabel(activeRole) : 'Guest User'}
+                    </div>
+                 </div>
+
+                 <div className="relative group">
+                   <button
+                      onClick={() => setIsProfileOpen(!isProfileOpen)}
+                      className="relative group cursor-pointer outline-none"
                    >
-                       <Bell size={20} />
-                       <div className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></div>
+                     <div className="absolute inset-0 bg-gradient-gold blur-lg opacity-30 group-hover:opacity-60 transition-opacity duration-300 rounded-full"></div>
+                     <div className="relative w-11 h-11 rounded-full bg-gradient-gold text-charcoal-900 border-2 border-gold-200 shadow-elevation-md flex items-center justify-center font-heading font-black text-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-elevation-lg">
+                       {(activeRole as string).charAt(0).toUpperCase()}
+                     </div>
                    </button>
 
-                   {isNotificationsOpen && (
-                       <div className="absolute top-full right-0 mt-4 w-80 bg-white rounded-2xl shadow-xl border border-stone-100 overflow-hidden z-50 animate-fade-in">
-                           <div className="p-4 border-b border-stone-50 flex justify-between items-center">
-                               <span className="text-xs font-bold uppercase tracking-widest text-stone-400">Notifications</span>
-                               <button className="text-[10px] font-bold text-rust hover:underline">Mark all read</button>
-                           </div>
-                           <div className="max-h-80 overflow-y-auto">
-                               {[
-                                   { text: "New job order from TechFlow", time: "10m ago", type: "info" },
-                                   { text: "Pod A placed candidate! 🎉", time: "5 hours ago", type: "celebration" },
-                               ].map((note, i) => (
-                                   <div key={i} className="p-4 border-b border-stone-50 hover:bg-stone-50 transition-colors flex gap-3">
-                                       <div className={cn(
-                                           "w-2 h-2 rounded-full mt-1.5 shrink-0",
-                                           note.type === 'celebration' ? 'bg-purple-500' : 'bg-blue-500'
-                                       )}></div>
-                                       <div>
-                                           <p className="text-sm font-medium text-charcoal leading-tight">{note.text}</p>
-                                           <p className="text--[10px] text-stone-400 mt-1">{note.time}</p>
-                                       </div>
-                                   </div>
-                               ))}
-                           </div>
-                       </div>
+                   {/* Premium Profile Dropdown */}
+                   {isProfileOpen && (
+                     <div className="absolute top-full right-0 mt-3 w-72 glass-strong rounded-xl shadow-premium border border-charcoal-100 overflow-hidden z-50 animate-slide-down">
+                        <div className="p-5 border-b border-charcoal-100/50">
+                            <p className="text-body font-bold text-charcoal-900">
+                                {activeRole === 'student' ? 'Priya Sharma' : 'User Profile'}
+                            </p>
+                            <p className="text-caption text-charcoal-500 mt-1">
+                                {getRoleLabel(activeRole)}
+                            </p>
+                        </div>
+
+                        <div className="p-2">
+                            <button
+                              onClick={handleLogout}
+                              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-error-50 text-charcoal-600 hover:text-error-600 transition-all duration-300 group"
+                            >
+                                <div className="w-9 h-9 rounded-lg bg-charcoal-50 flex items-center justify-center group-hover:bg-error-100 transition-all duration-300">
+                                  <LogOut size={16} strokeWidth={2} />
+                                </div>
+                                <span className="text-caption font-bold">Logout</span>
+                            </button>
+                        </div>
+                     </div>
                    )}
-               </div>
-
-               <div className="text-right hidden md:block">
-                  <div className="text-[9px] font-bold text-stone-400 uppercase tracking-[0.2em] mb-0.5">
-                      {isInternal ? 'Internal User' : activeRole === 'student' ? 'Student' : 'Partner'}
-                  </div>
-                  <div className="text-sm font-serif font-bold text-charcoal">
-                      {activeRole === 'student' ? 'Priya Sharma' : isInternal ? getRoleLabel(activeRole) : 'Guest User'}
-                  </div>
-               </div>
-               
-               <div className="relative group">
-                 <button 
-                    onClick={() => setIsProfileOpen(!isProfileOpen)}
-                    className="relative group cursor-pointer outline-none"
-                 >
-                   <div className="absolute inset-0 bg-rust blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                   <div className="relative w-11 h-11 rounded-full bg-rust text-white border-2 border-white shadow-lg flex items-center justify-center font-serif font-bold italic text-lg transition-transform group-hover:scale-105">
-                     {(activeRole as string).charAt(0).toUpperCase()}
-                   </div>
-                 </button>
-
-                 {/* Profile Dropdown */}
-                 {isProfileOpen && (
-                   <div className="absolute top-full right-0 mt-4 w-72 bg-white rounded-2xl shadow-xl border border-stone-100 p-2 z-50 animate-fade-in">
-                      <div className="p-4 border-b border-stone-50 mb-2">
-                          <p className="text-sm font-bold text-charcoal">
-                              {activeRole === 'student' ? 'Priya Sharma' : 'User Profile'}
-                          </p>
-                          <p className="text-xs text-stone-400 mt-0.5 capitalize">
-                              {getRoleLabel(activeRole)}
-                          </p>
-                      </div>
-                      
-                      <div className="space-y-1">
-                          <button onClick={handleLogout} className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-red-50 text-stone-500 hover:text-red-500 transition-colors mt-2 border-t border-stone-50 group">
-                              <div className="w-8 h-8 rounded-full bg-stone-50 flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all"><LogOut size={14} /></div>
-                              <span className="text-xs font-bold uppercase tracking-wide">Logout</span>
-                          </button>
-                      </div>
-                   </div>
-                 )}
-               </div>
-             </>
-           ) : (
-             !isLoginPage && (
-                 <Link href="/login" className="px-6 py-3 bg-charcoal text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors shadow-lg">
-                    Sign In
-                 </Link>
-             )
-           )}
+                 </div>
+               </>
+             ) : (
+               !isLoginPage && (
+                   <Button variant="default" size="lg" asChild>
+                     <Link href="/login">Sign In</Link>
+                   </Button>
+               )
+             )}
+          </div>
         </div>
       </div>
     </nav>

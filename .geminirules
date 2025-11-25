@@ -30,9 +30,6 @@ For complete context, reference these files:
    - `/docs/planning/epics/` - Feature epics and stories
    - `/docs/audit/LESSONS-LEARNED.md` - What NOT to do (from legacy project)
 
-3. **Design System** (CRITICAL - READ BEFORE ANY UI WORK)
-   - `/.claude/DESIGN-PHILOSOPHY.md` - Design principles, forbidden patterns, brand identity (Shared)
-   - `/docs/design/DESIGN-SYSTEM.md` - Component specifications
 
 4. **Agent Knowledge** (Specialist Expertise)
    - `/.gemini/agents/strategic/` - CEO Advisor, CFO Advisor
@@ -104,7 +101,6 @@ CREATE POLICY "org_isolation" ON candidates
 - **Zod validation** - ALL form inputs must be validated
 - **Accessibility first** - WCAG AA compliance, keyboard navigation, screen readers
 - **Responsive design** - Mobile-first approach
-- **Design system compliance** - See Design Philosophy section below
 
 **Component Pattern:**
 ```typescript
@@ -168,14 +164,8 @@ export function CandidateForm() {
 
 **Acceptance Criteria** (Functional):
 - [ ] Given [context], when [action], then [expected outcome]
-
-**Acceptance Criteria** (Design - if UI):
-- [ ] Uses brand colors (see Design Philosophy)
-- [ ] Brand typography applied
-- [ ] NO AI-generic patterns (purple gradients, emojis, etc.)
 - [ ] Accessible (WCAG AA)
 - [ ] Responsive (mobile/tablet/desktop)
-- [ ] Professional enterprise feel
 
 **Success Metrics**:
 1. [Quantifiable metric 1]
@@ -193,7 +183,6 @@ export function CandidateForm() {
 - **Test cross-pillar workflows** - Training graduate → Candidate pipeline
 - **Test pod metrics** - Placement tracking works correctly
 - **Test accessibility** - WCAG AA compliance
-- **Test design quality** - Brand compliance, NO AI-generic patterns
 - **80%+ coverage** for critical paths
 
 **Test Categories:**
@@ -224,20 +213,6 @@ describe('Training to Recruiting Pipeline', () => {
   })
 })
 
-// 3. Design Quality (Anti-AI Pattern Detection)
-describe('Design Quality', () => {
-  test('should not use forbidden AI-generic gradients', async ({ page }) => {
-    await page.goto('/')
-    const hasAIGradient = await page.evaluate(() => {
-      const elements = document.querySelectorAll('*')
-      return Array.from(elements).some(el => {
-        const bg = window.getComputedStyle(el).background
-        return bg.includes('indigo') && bg.includes('purple')
-      })
-    })
-    expect(hasAIGradient).toBe(false)
-  })
-})
 ```
 
 ---
@@ -255,184 +230,6 @@ describe('Design Quality', () => {
 
 ---
 
-## 🎨 Design Philosophy (CRITICAL - READ BEFORE ANY UI WORK)
-
-**Authority:** `/.claude/DESIGN-PHILOSOPHY.md` is the supreme authority for ALL design decisions. (Shared with Claude)
-
-### Core Philosophy
-
-> **InTime is not software. It is a living organism.**
-> 
-> We design for timeless professionalism, not temporary trends. Every visual element must serve a purpose or communicate information.
-
-### The Five Design Truths
-
-1. **Truth Over Trends** - Timeless professionalism, not temporary fads
-2. **Data Over Decoration** - Every element serves a purpose or communicates information
-3. **Asymmetry Over Symmetry** - Nature is asymmetric, so is InTime (7/5, 8/4 grid splits, not 6/6)
-4. **Specificity Over Abstraction** - "48-hour placements" not "fast hiring"
-5. **Brand Over Blandness** - Bold opinions, unique POV, not for everyone
-
-### Design System: Minimal, Clean, Professional
-
-InTime follows a **minimal design aesthetic** inspired by Anthropic/Claude, Linear, and Vercel.
-
-**Color Palette (USE ONLY THESE):**
-
-Backgrounds:
-- `#F5F3EF` - Light beige (main background)
-- `#FFFFFF` - Pure white (cards, forms)
-- `#000000` - Black (footer, callouts)
-
-Text:
-- `#000000` - Black (headings, body)
-- `#4B5563` - Gray-600 (secondary text)
-- `#9CA3AF` - Gray-400 (metadata)
-
-Accent:
-- `#C87941` - Coral/Orange (underlines ONLY - use sparingly)
-
-Borders:
-- `#E5E7EB` - Gray-200 (subtle borders)
-- `#000000` - Black (emphasis borders)
-
-**Typography:**
-- **System fonts only** - No custom fonts
-- **Font stack:** `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`
-- **Headings:** `text-6xl` to `text-8xl`, `font-bold`, black
-- **Body:** `text-xl`, `text-gray-700`, `leading-relaxed`
-- **Underlined keywords:** `decoration-[#C87941] decoration-4 underline-offset-8`
-
-### 🚫 FORBIDDEN PATTERNS (WILL FAIL QA)
-
-**PERMANENTLY BANNED - NO EXCEPTIONS:**
-
-Visual Patterns:
-- ❌ Vibrant gradients (`from-purple-600 via-pink-600 to-orange-500`)
-- ❌ Multi-color gradients as primary backgrounds
-- ❌ Emoji icons (🎓, 🚀, 💡, 🎯, 🌍) - Use text or lucide-react icons
-- ❌ Rounded corners (`rounded-lg`, `rounded-xl`) - Use sharp edges
-- ❌ Heavy shadows (`shadow-2xl`, `shadow-lg`) - Use borders instead
-- ❌ Indigo/purple/pink as brand colors
-- ❌ Gradient text (`bg-clip-text bg-gradient-to-r`)
-- ❌ Wave dividers (SVG waves at section breaks)
-- ❌ Dot matrix overlays
-- ❌ Glassmorphism (`backdrop-blur-sm` everywhere)
-
-Layout Patterns:
-- ❌ Perfectly centered everything
-- ❌ Standard hero → 3-col features → CTA → footer (be creative)
-- ❌ Identical card grids (all same height/style)
-
-Copy Patterns:
-- ❌ "Transform your X"
-- ❌ "The future of Y"
-- ❌ "Powered by AI"
-- ❌ "Next-generation platform"
-- ❌ "Revolutionary solution"
-- ❌ "Game-changing technology"
-
-### ✅ THE INTIME WAY (Use These Instead)
-
-**Buttons:**
-```tsx
-// ❌ WRONG (Gradients, shadows, rounded)
-<button className="rounded-lg shadow-lg bg-gradient-to-r from-purple-600 to-pink-600">
-
-// ✅ RIGHT (Minimal - Black background, simple hover)
-<button className="
-  bg-black text-white
-  px-8 py-4 font-medium
-  hover:bg-gray-800
-  transition-colors
-">
-  Get Started
-</button>
-
-// ✅ RIGHT (Secondary - Text link with underline)
-<button className="
-  underline font-medium text-black
-  hover:no-underline
-">
-  Learn more →
-</button>
-```
-
-**Forms:**
-```tsx
-// ✅ RIGHT (Sharp edges, 2px border, black focus)
-<input className="
-  w-full px-6 py-4
-  border-2 border-gray-300
-  focus:border-black focus:outline-none
-  text-gray-900
-" />
-
-<label className="block text-sm font-medium text-gray-900 mb-2">
-  Work email
-</label>
-```
-
-**Cards:**
-```tsx
-// ✅ RIGHT (Simple borders, white backgrounds)
-<div className="bg-white border-2 border-gray-200 p-8">
-  <h3 className="text-2xl font-bold mb-4">Title</h3>
-  <p className="text-gray-700 leading-relaxed">Content</p>
-</div>
-
-// ✅ RIGHT (Hover states - simple transition)
-<div className="
-  bg-white border-2 border-gray-200 p-8
-  hover:border-black transition-colors
-">
-```
-
-**Sections:**
-```tsx
-// ✅ RIGHT (Light beige background, generous spacing)
-<section className="bg-[#F5F3EF] py-32">
-  <div className="max-w-6xl mx-auto px-8">
-    <h2 className="text-7xl font-bold mb-8">
-      Headline with{' '}
-      <span className="underline decoration-[#C87941] decoration-4 underline-offset-8">
-        coral underline
-      </span>
-    </h2>
-    <p className="text-xl text-gray-700 leading-relaxed">
-      Body text with professional feel...
-    </p>
-  </div>
-</section>
-```
-
-### Design Quality Checklist
-
-Before submitting ANY UI component, verify:
-
-**Brand Compliance:**
-- [ ] Uses only brand colors (beige, white, black, gray, coral accent)
-- [ ] Uses system fonts (no custom fonts)
-- [ ] Follows spacing system (py-32 for sections, p-8 for cards)
-- [ ] Professional and minimal
-
-**Anti-AI Pattern Check:**
-- [ ] NO purple/pink/indigo gradients
-- [ ] NO emoji icons
-- [ ] NO rounded corners (use sharp edges)
-- [ ] NO heavy shadows (use borders)
-- [ ] NO gradient text effects
-- [ ] NO wave dividers
-- [ ] NO generic marketing copy
-
-**Professional Quality:**
-- [ ] Looks expensive (premium feel)
-- [ ] Communicates trust (enterprise-grade)
-- [ ] Shows data/metrics (not just claims)
-- [ ] Generous white space
-- [ ] Clear visual hierarchy
-
----
 
 ## 💻 Code Conventions
 
@@ -651,13 +448,11 @@ test('soft deleted records are hidden from queries', async () => {
 3. **Implementation** (Frontend/API Developer thinking)
    - Build Server Components
    - Implement Zod validation
-   - Follow design system
    - Write tests alongside code
 
 4. **Quality** (QA Engineer thinking)
    - Test multi-tenancy isolation
    - Test cross-pillar workflows
-   - Verify design compliance
    - Check accessibility
 
 5. **Deploy** (Deployment Specialist thinking)
@@ -707,13 +502,6 @@ Before committing any code, verify:
 - [ ] Audit fields present (`created_at`, `updated_at`, `deleted_at`, `created_by`, `updated_by`)
 - [ ] Soft delete implemented (no hard deletes)
 - [ ] Foreign keys indexed
-
-**Design Quality:**
-- [ ] Uses brand colors only (beige, white, black, gray, coral)
-- [ ] NO AI-generic patterns (purple gradients, emojis, rounded corners)
-- [ ] Professional and minimal
-- [ ] Accessible (WCAG AA)
-- [ ] Responsive
 
 **Business Logic:**
 - [ ] Multi-tenancy respected (queries filter by org_id)
