@@ -104,7 +104,7 @@ export function BiometricBackground({ biometricScore, className }: BiometricBack
     >
       {/* Base layer - very subtle gradient */}
       <div 
-        className="absolute inset-0 transition-colors duration-[2000ms]"
+        className="absolute inset-0 transition-colors duration-1000"
         style={{
           background: state === 'ember' 
             ? 'linear-gradient(135deg, #FDFBF7 0%, #FEF2F2 100%)'
@@ -144,14 +144,14 @@ export function BiometricBackground({ biometricScore, className }: BiometricBack
 
       {/* Geometric accent lines */}
       <div 
-        className="absolute top-[15%] right-[8%] w-[350px] h-[350px] border rounded-full opacity-10 transition-colors duration-[2000ms]"
+        className="absolute top-[15%] right-[8%] w-[350px] h-[350px] border rounded-full opacity-10 transition-colors duration-1000"
         style={{ 
           borderColor: theme.pulseColor,
           transform: 'rotate(-15deg)',
         }}
       />
       <div 
-        className="absolute bottom-[20%] left-[5%] w-[180px] h-[180px] border rounded-full opacity-5 transition-colors duration-[2000ms]"
+        className="absolute bottom-[20%] left-[5%] w-[180px] h-[180px] border rounded-full opacity-5 transition-colors duration-1000"
         style={{ borderColor: theme.pulseColor }}
       />
 

@@ -4,7 +4,7 @@
  */
 
 import { z } from 'zod';
-import { router, protectedProcedure } from '../trpc/trpc';
+import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
 import {
   jobs,
@@ -38,7 +38,7 @@ export const atsRouter = router({
     /**
      * Get all jobs
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -65,7 +65,7 @@ export const atsRouter = router({
     /**
      * Get job by ID
      */
-    getById: protectedProcedure
+    getById: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -87,7 +87,7 @@ export const atsRouter = router({
     /**
      * Create new job
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createJobSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -105,7 +105,7 @@ export const atsRouter = router({
     /**
      * Update job
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updateJobSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -129,7 +129,7 @@ export const atsRouter = router({
     /**
      * Get job metrics
      */
-    metrics: protectedProcedure
+    metrics: orgProtectedProcedure
       .input(z.object({ jobId: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -182,7 +182,7 @@ export const atsRouter = router({
     /**
      * Get all submissions
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -211,7 +211,7 @@ export const atsRouter = router({
     /**
      * Get submission by ID
      */
-    getById: protectedProcedure
+    getById: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -233,7 +233,7 @@ export const atsRouter = router({
     /**
      * Create new submission
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createSubmissionSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -250,7 +250,7 @@ export const atsRouter = router({
     /**
      * Update submission
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updateSubmissionSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -274,7 +274,7 @@ export const atsRouter = router({
     /**
      * Update submission status
      */
-    updateStatus: protectedProcedure
+    updateStatus: orgProtectedProcedure
       .input(z.object({
         id: z.string().uuid(),
         status: z.string(),
@@ -311,7 +311,7 @@ export const atsRouter = router({
     /**
      * Get all interviews
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -338,7 +338,7 @@ export const atsRouter = router({
     /**
      * Create interview
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createInterviewSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -355,7 +355,7 @@ export const atsRouter = router({
     /**
      * Update interview
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updateInterviewSchema)
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -379,7 +379,7 @@ export const atsRouter = router({
     /**
      * Cancel interview
      */
-    cancel: protectedProcedure
+    cancel: orgProtectedProcedure
       .input(z.object({
         id: z.string().uuid(),
         cancellationReason: z.string(),
@@ -414,7 +414,7 @@ export const atsRouter = router({
     /**
      * Get all offers
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -441,7 +441,7 @@ export const atsRouter = router({
     /**
      * Create offer
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createOfferSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -458,7 +458,7 @@ export const atsRouter = router({
     /**
      * Update offer
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updateOfferSchema)
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -482,7 +482,7 @@ export const atsRouter = router({
     /**
      * Send offer
      */
-    send: protectedProcedure
+    send: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -510,7 +510,7 @@ export const atsRouter = router({
     /**
      * Accept/decline offer
      */
-    respond: protectedProcedure
+    respond: orgProtectedProcedure
       .input(z.object({
         id: z.string().uuid(),
         accept: z.boolean(),
@@ -548,7 +548,7 @@ export const atsRouter = router({
     /**
      * Get all placements
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -575,7 +575,7 @@ export const atsRouter = router({
     /**
      * Create placement
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createPlacementSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -592,7 +592,7 @@ export const atsRouter = router({
     /**
      * Update placement
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updatePlacementSchema)
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -616,7 +616,7 @@ export const atsRouter = router({
     /**
      * Extend placement
      */
-    extend: protectedProcedure
+    extend: orgProtectedProcedure
       .input(z.object({
         id: z.string().uuid(),
         newEndDate: z.date(),
@@ -647,7 +647,7 @@ export const atsRouter = router({
     /**
      * Get active placements count
      */
-    activeCount: protectedProcedure
+    activeCount: orgProtectedProcedure
       .query(async ({ ctx }) => {
         const { orgId } = ctx;
 
@@ -672,7 +672,7 @@ export const atsRouter = router({
     /**
      * Get all skills
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .query(async ({ ctx }) => {
         const results = await db.select().from(skills)
           .orderBy(skills.name);
@@ -683,7 +683,7 @@ export const atsRouter = router({
     /**
      * Get candidate skills
      */
-    getCandidateSkills: protectedProcedure
+    getCandidateSkills: orgProtectedProcedure
       .input(z.object({ candidateId: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -701,7 +701,7 @@ export const atsRouter = router({
     /**
      * Add skill to candidate
      */
-    addToCandid: protectedProcedure
+    addToCandid: orgProtectedProcedure
       .input(z.object({
         candidateId: z.string().uuid(),
         skillId: z.string().uuid(),

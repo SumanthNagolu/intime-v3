@@ -4,7 +4,7 @@
  */
 
 import { z } from 'zod';
-import { router, protectedProcedure } from '../trpc/trpc';
+import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
 import {
   benchMetadata,
@@ -35,7 +35,7 @@ export const benchRouter = router({
     /**
      * Get all bench consultants
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -64,7 +64,7 @@ export const benchRouter = router({
     /**
      * Get consultant by ID
      */
-    getById: protectedProcedure
+    getById: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -86,7 +86,7 @@ export const benchRouter = router({
     /**
      * Create bench metadata
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createBenchMetadataSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -103,7 +103,7 @@ export const benchRouter = router({
     /**
      * Update bench metadata
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updateBenchMetadataSchema)
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -127,7 +127,7 @@ export const benchRouter = router({
     /**
      * Get bench aging report
      */
-    agingReport: protectedProcedure
+    agingReport: orgProtectedProcedure
       .query(async ({ ctx }) => {
         const { orgId } = ctx;
 
@@ -168,7 +168,7 @@ export const benchRouter = router({
     /**
      * Get all scraped jobs
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -197,7 +197,7 @@ export const benchRouter = router({
     /**
      * Create external job
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createExternalJobSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -214,7 +214,7 @@ export const benchRouter = router({
     /**
      * Update external job
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updateExternalJobSchema)
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -244,7 +244,7 @@ export const benchRouter = router({
     /**
      * Get all job sources
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .query(async ({ ctx }) => {
         const { orgId } = ctx;
 
@@ -258,7 +258,7 @@ export const benchRouter = router({
     /**
      * Create job source
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(z.object({
         sourceName: z.string(),
         sourceType: z.enum(['dice', 'indeed', 'linkedin', 'monster', 'ziprecruiter', 'custom']),
@@ -287,7 +287,7 @@ export const benchRouter = router({
     /**
      * Get all bench submissions
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -314,7 +314,7 @@ export const benchRouter = router({
     /**
      * Create bench submission
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createBenchSubmissionSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -331,7 +331,7 @@ export const benchRouter = router({
     /**
      * Update bench submission
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updateBenchSubmissionSchema)
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -361,7 +361,7 @@ export const benchRouter = router({
     /**
      * Get all hotlists
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -382,7 +382,7 @@ export const benchRouter = router({
     /**
      * Create hotlist
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(z.object({
         consultantIds: z.array(z.string().uuid()).min(1),
         recipientEmails: z.array(z.string().email()).min(1),
@@ -414,7 +414,7 @@ export const benchRouter = router({
     /**
      * Get all immigration cases
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -441,7 +441,7 @@ export const benchRouter = router({
     /**
      * Get immigration case by ID
      */
-    getById: protectedProcedure
+    getById: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -463,7 +463,7 @@ export const benchRouter = router({
     /**
      * Create immigration case
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createImmigrationCaseSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -480,7 +480,7 @@ export const benchRouter = router({
     /**
      * Update immigration case
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updateImmigrationCaseSchema)
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -504,7 +504,7 @@ export const benchRouter = router({
     /**
      * Get immigration case statistics
      */
-    statistics: protectedProcedure
+    statistics: orgProtectedProcedure
       .query(async ({ ctx }) => {
         const { orgId } = ctx;
 

@@ -33,6 +33,30 @@ export const isAuthenticated = middleware(async ({ ctx, next }) => {
 });
 
 /**
+ * Middleware: Require organization membership
+ *
+ * Throws FORBIDDEN error if user is not part of an organization.
+ * Narrows the context type to guarantee orgId is non-null.
+ */
+export const requireOrganization = isAuthenticated.unstable_pipe(
+  middleware(async ({ ctx, next }) => {
+    if (!ctx.orgId) {
+      throw new TRPCError({
+        code: 'FORBIDDEN',
+        message: 'Organization membership required. Please contact your administrator.'
+      });
+    }
+
+    return next({
+      ctx: {
+        ...ctx,
+        orgId: ctx.orgId // Type is now narrowed to string (not string | null)
+      }
+    });
+  })
+);
+
+/**
  * Middleware: Require admin role
  *
  * Checks if user is authenticated and has admin role.
@@ -86,6 +110,11 @@ export const hasPermission = (resource: string, action: string) =>
  * Procedure: Protected (requires authentication)
  */
 export const protectedProcedure = publicProcedure.use(isAuthenticated);
+
+/**
+ * Procedure: Organization Protected (requires authentication and organization)
+ */
+export const orgProtectedProcedure = publicProcedure.use(requireOrganization);
 
 /**
  * Procedure: Admin (requires admin role)

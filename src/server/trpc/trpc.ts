@@ -8,7 +8,7 @@
 export { router, publicProcedure } from './init';
 
 // Export procedures from middleware
-export { protectedProcedure, adminProcedure } from './middleware';
+export { protectedProcedure, orgProtectedProcedure, adminProcedure } from './middleware';
 
 // Export types
 export type { Context } from './context';

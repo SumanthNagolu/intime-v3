@@ -4,7 +4,7 @@
  */
 
 import { z } from 'zod';
-import { router, protectedProcedure } from '../trpc/trpc';
+import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
 import {
   accounts,
@@ -23,6 +23,7 @@ import {
   createLeadSchema,
   updateLeadSchema,
   createDealSchema,
+  baseDealSchema,
   updateDealSchema,
   createPointOfContactSchema,
   updatePointOfContactSchema
@@ -38,7 +39,7 @@ export const crmRouter = router({
    * Get all accounts for current user's organization
    */
   accounts: router({
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -77,7 +78,7 @@ export const crmRouter = router({
     /**
      * Get single account by ID
      */
-    getById: protectedProcedure
+    getById: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -98,7 +99,7 @@ export const crmRouter = router({
     /**
      * Create new account
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createAccountSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -116,7 +117,7 @@ export const crmRouter = router({
     /**
      * Update account
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updateAccountSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -140,7 +141,7 @@ export const crmRouter = router({
     /**
      * Delete account (soft delete)
      */
-    delete: protectedProcedure
+    delete: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -172,7 +173,7 @@ export const crmRouter = router({
     /**
      * Get all leads
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -199,7 +200,7 @@ export const crmRouter = router({
     /**
      * Create new lead
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createLeadSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -217,7 +218,7 @@ export const crmRouter = router({
     /**
      * Update lead
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updateLeadSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -241,10 +242,10 @@ export const crmRouter = router({
     /**
      * Convert lead to deal
      */
-    convertToDeal: protectedProcedure
+    convertToDeal: orgProtectedProcedure
       .input(z.object({
         leadId: z.string().uuid(),
-        dealData: createDealSchema.partial(),
+        dealData: baseDealSchema.partial(),
       }))
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -292,7 +293,7 @@ export const crmRouter = router({
     /**
      * Get all deals
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -319,7 +320,7 @@ export const crmRouter = router({
     /**
      * Get deal by ID with related data
      */
-    getById: protectedProcedure
+    getById: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -341,7 +342,7 @@ export const crmRouter = router({
     /**
      * Create new deal
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createDealSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -359,7 +360,7 @@ export const crmRouter = router({
     /**
      * Update deal
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updateDealSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -383,7 +384,7 @@ export const crmRouter = router({
     /**
      * Get pipeline summary (deals by stage)
      */
-    pipelineSummary: protectedProcedure
+    pipelineSummary: orgProtectedProcedure
       .query(async ({ ctx }) => {
         const { orgId } = ctx;
 
@@ -411,7 +412,7 @@ export const crmRouter = router({
     /**
      * Get all POCs for an account
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         accountId: z.string().uuid(),
         limit: z.number().min(1).max(100).default(50),
@@ -436,7 +437,7 @@ export const crmRouter = router({
     /**
      * Create new POC
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createPointOfContactSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -453,7 +454,7 @@ export const crmRouter = router({
     /**
      * Update POC
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updatePointOfContactSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -477,7 +478,7 @@ export const crmRouter = router({
     /**
      * Delete POC
      */
-    delete: protectedProcedure
+    delete: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -505,7 +506,7 @@ export const crmRouter = router({
     /**
      * Get activity log for an entity
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         entityType: z.enum(['account', 'lead', 'deal', 'poc']),
         entityId: z.string().uuid(),
@@ -532,7 +533,7 @@ export const crmRouter = router({
     /**
      * Create activity log entry
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(z.object({
         entityType: z.enum(['account', 'lead', 'deal', 'poc']),
         entityId: z.string().uuid(),
