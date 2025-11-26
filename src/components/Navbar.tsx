@@ -271,7 +271,6 @@ export const Navbar: React.FC = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isRoleSwitcherOpen, setIsRoleSwitcherOpen] = useState(false);
-  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
   const isPublic = pathname === '/' || pathname === '/academy' || pathname === '/clients' || pathname === '/login' || pathname.startsWith('/verify-certificate');
   const isLoginPage = pathname === '/login';
@@ -491,43 +490,6 @@ export const Navbar: React.FC = () => {
           <div className={cn("lg:flex items-center justify-center lg:justify-end w-full lg:w-auto gap-4 shrink-0 lg:pl-6 lg:border-l border-charcoal-100/50", isMobileMenuOpen ? 'flex' : 'hidden')}>
              {!isPublic ? (
                <>
-                 {/* Premium Notifications */}
-                 <div className="relative">
-                     <button
-                        onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
-                        className="relative p-2.5 text-charcoal-500 hover:text-forest-600 transition-all duration-300 rounded-lg hover:bg-forest-50"
-                     >
-                         <Bell size={20} strokeWidth={2} />
-                         <div className="absolute top-2 right-2 w-2 h-2 bg-error-500 rounded-full border-2 border-white animate-pulse-slow"></div>
-                     </button>
-
-                     {isNotificationsOpen && (
-                         <div className="absolute top-full right-0 mt-3 w-80 glass-strong rounded-xl shadow-premium border border-charcoal-100 overflow-hidden z-50 animate-slide-down">
-                             <div className="p-4 border-b border-charcoal-100/50 flex justify-between items-center">
-                                 <span className="text-caption text-charcoal-500">Notifications</span>
-                                 <button className="text-caption text-gold-600 hover:text-gold-700 font-bold hover:underline">Mark all read</button>
-                             </div>
-                             <div className="max-h-96 overflow-y-auto scrollbar-premium">
-                                 {[
-                                     { text: "New job order from TechFlow", time: "10m ago", type: "info" },
-                                     { text: "Pod A placed candidate! 🎉", time: "5 hours ago", type: "celebration" },
-                                 ].map((note, i) => (
-                                     <div key={i} className="p-4 border-b border-charcoal-50 hover:bg-charcoal-50/50 transition-colors flex gap-3 cursor-pointer">
-                                         <div className={cn(
-                                             "w-2 h-2 rounded-full mt-1.5 shrink-0",
-                                             note.type === 'celebration' ? 'bg-gold-500' : 'bg-forest-500'
-                                         )}></div>
-                                         <div>
-                                             <p className="text-body-sm font-medium text-charcoal-800 leading-tight">{note.text}</p>
-                                             <p className="text-caption text-charcoal-400 mt-1">{note.time}</p>
-                                         </div>
-                                     </div>
-                                 ))}
-                             </div>
-                         </div>
-                     )}
-                 </div>
-
                  <div className="text-right hidden md:block">
                     <div className="text-caption text-charcoal-400">
                         {isInternal ? 'Internal User' : activeRole === 'student' ? 'Student' : 'Partner'}
@@ -546,6 +508,10 @@ export const Navbar: React.FC = () => {
                      <div className="relative w-11 h-11 rounded-full bg-gradient-gold text-charcoal-900 border-2 border-gold-200 shadow-elevation-md flex items-center justify-center font-heading font-black text-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-elevation-lg">
                        {(activeRole as string).charAt(0).toUpperCase()}
                      </div>
+                     {/* Notification Badge */}
+                     <div className="absolute -top-1 -right-1 w-5 h-5 bg-error-500 rounded-full border-2 border-white shadow-elevation-sm flex items-center justify-center">
+                       <span className="text-[10px] font-bold text-white">2</span>
+                     </div>
                    </button>
 
                    {/* Premium Profile Dropdown */}
@@ -560,7 +526,35 @@ export const Navbar: React.FC = () => {
                             </p>
                         </div>
 
-                        <div className="p-2">
+                        <div className="p-2 space-y-1">
+                            {/* Profile Link */}
+                            <Link
+                              href={activeRole === 'student' ? '/academy/profile' : '/employee/profile'}
+                              onClick={() => setIsProfileOpen(false)}
+                              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-forest-50 text-charcoal-600 hover:text-forest-600 transition-all duration-300 group"
+                            >
+                                <div className="w-9 h-9 rounded-lg bg-charcoal-50 flex items-center justify-center group-hover:bg-forest-100 transition-all duration-300">
+                                  <User size={16} strokeWidth={2} />
+                                </div>
+                                <span className="text-caption font-bold">Profile</span>
+                            </Link>
+
+                            {/* Notifications Link */}
+                            <Link
+                              href={activeRole === 'student' ? '/academy/notifications' : '/employee/notifications'}
+                              onClick={() => setIsProfileOpen(false)}
+                              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-forest-50 text-charcoal-600 hover:text-forest-600 transition-all duration-300 group"
+                            >
+                                <div className="w-9 h-9 rounded-lg bg-charcoal-50 flex items-center justify-center group-hover:bg-forest-100 transition-all duration-300">
+                                  <Bell size={16} strokeWidth={2} />
+                                </div>
+                                <span className="text-caption font-bold">Notifications</span>
+                            </Link>
+
+                            {/* Divider */}
+                            <div className="border-t border-charcoal-100/50 my-2"></div>
+
+                            {/* Logout Button */}
                             <button
                               onClick={handleLogout}
                               className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-error-50 text-charcoal-600 hover:text-error-600 transition-all duration-300 group"

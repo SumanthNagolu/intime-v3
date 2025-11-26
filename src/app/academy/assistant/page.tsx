@@ -1,11 +1,11 @@
 export const dynamic = "force-dynamic";
 import { AIAssistantPage } from '@/components/AIAssistantPage';
-import { AppLayout } from '@/components/AppLayout';
+import { AcademyLayout } from '@/components/AcademyLayout';
 
 export default function Page() {
   return (
-    <AppLayout showMentor>
+    <AcademyLayout showMentor>
       <AIAssistantPage />
-    </AppLayout>
+    </AcademyLayout>
   );
 }

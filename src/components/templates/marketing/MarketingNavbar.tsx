@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronDown, Menu, X, User, LogOut, Settings, Bell } from 'lucide-react';
@@ -66,59 +66,130 @@ const NAVIGATION = {
   academy: { label: 'Academy', href: '/academy' },
 };
 
+// Submenu component with hover intent
+const NavSubmenu: React.FC<{
+  item: { label: string; href: string; submenu?: { label: string; href: string }[] };
+}> = ({ item }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = useCallback(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setIsOpen(true);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    timeoutRef.current = setTimeout(() => setIsOpen(false), 150);
+  }, []);
+
+  if (!item.submenu) {
+    return (
+      <Link
+        href={item.href}
+        className="block px-5 py-2.5 text-sm text-charcoal-600 hover:bg-forest-50 hover:text-forest-700 transition-colors"
+      >
+        {item.label}
+      </Link>
+    );
+  }
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <Link
+        href={item.href}
+        className="flex items-center justify-between px-5 py-2.5 text-sm text-charcoal-600 hover:bg-forest-50 hover:text-forest-700 transition-colors"
+      >
+        <span className="font-medium">{item.label}</span>
+        <ChevronDown size={14} className="-rotate-90" />
+      </Link>
+      <div
+        className={cn(
+          'absolute left-full top-0 ml-1 w-56 bg-white rounded-xl shadow-xl py-3 border border-charcoal-100/50 z-50 transition-all duration-200',
+          isOpen 
+            ? 'opacity-100 visible translate-x-0' 
+            : 'opacity-0 invisible -translate-x-2 pointer-events-none'
+        )}
+      >
+        {item.submenu.map((sub) => (
+          <Link
+            key={sub.href}
+            href={sub.href}
+            className="block px-5 py-2.5 text-sm text-charcoal-600 hover:bg-forest-50 hover:text-forest-700 transition-colors"
+          >
+            {sub.label}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// Main dropdown with hover intent (delays for better UX)
 const NavDropdown: React.FC<{
   label: string;
   href: string;
   items: { label: string; href: string; submenu?: { label: string; href: string }[] }[];
   scrollable?: boolean;
 }> = ({ label, href, items, scrollable }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = useCallback(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    // Small delay before opening (50ms) - prevents accidental triggers
+    timeoutRef.current = setTimeout(() => setIsOpen(true), 50);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    // Grace period before closing (200ms) - gives user time to move to dropdown
+    timeoutRef.current = setTimeout(() => setIsOpen(false), 200);
+  }, []);
+
   return (
-    <div className="relative group">
+    <div 
+      className="relative"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <Link
         href={href}
-        className="flex items-center gap-1 text-charcoal-800 hover:text-forest-600 font-bold transition-colors text-sm uppercase tracking-wider"
+        className={cn(
+          'flex items-center gap-1 font-bold transition-colors text-sm uppercase tracking-wider',
+          isOpen ? 'text-forest-600' : 'text-charcoal-800 hover:text-forest-600'
+        )}
       >
         <span>{label}</span>
-        <ChevronDown size={16} className="transition-transform group-hover:rotate-180" />
+        <ChevronDown 
+          size={16} 
+          className={cn(
+            'transition-transform duration-200',
+            isOpen && 'rotate-180'
+          )} 
+        />
       </Link>
       <div
         className={cn(
-          'absolute top-full left-0 mt-2 w-72 bg-white rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-3 border border-charcoal-100/50 z-50',
-          scrollable && 'max-h-[70vh] overflow-y-auto'
+          'absolute top-full left-0 pt-3 w-72 z-50 transition-all duration-200',
+          isOpen 
+            ? 'opacity-100 visible translate-y-0' 
+            : 'opacity-0 invisible -translate-y-2 pointer-events-none'
         )}
       >
-        {items.map((item) =>
-          item.submenu ? (
-            <div key={item.href} className="relative group/sub">
-              <Link
-                href={item.href}
-                className="flex items-center justify-between px-5 py-2.5 text-sm text-charcoal-600 hover:bg-forest-50 hover:text-forest-700 transition-colors"
-              >
-                <span className="font-medium">{item.label}</span>
-                <ChevronDown size={14} className="-rotate-90" />
-              </Link>
-              <div className="absolute left-full top-0 ml-1 w-56 bg-white rounded-xl shadow-xl opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-300 py-3 border border-charcoal-100/50 z-50">
-                {item.submenu.map((sub) => (
-                  <Link
-                    key={sub.href}
-                    href={sub.href}
-                    className="block px-5 py-2.5 text-sm text-charcoal-600 hover:bg-forest-50 hover:text-forest-700 transition-colors"
-                  >
-                    {sub.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="block px-5 py-2.5 text-sm text-charcoal-600 hover:bg-forest-50 hover:text-forest-700 transition-colors"
-            >
-              {item.label}
-            </Link>
-          )
-        )}
+        <div
+          className={cn(
+            'bg-white rounded-xl shadow-xl py-3 border border-charcoal-100/50',
+            scrollable && 'max-h-[70vh] overflow-y-auto'
+          )}
+        >
+          {items.map((item) => (
+            <NavSubmenu key={item.href} item={item} />
+          ))}
+        </div>
       </div>
     </div>
   );

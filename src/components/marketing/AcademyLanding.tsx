@@ -5,24 +5,21 @@ import Link from 'next/link';
 import {
   GraduationCap,
   BookOpen,
-  Code2,
-  Brain,
-  Trophy,
   CheckCircle2,
   ArrowRight,
-  ArrowDown,
   Star,
   Play,
   Calendar,
-  DollarSign,
   Users,
   Target,
   Award,
   Sparkles,
   Quote,
-  Clock,
   Briefcase,
-  ChevronRight
+  Stethoscope,
+  BarChart3,
+  Wrench,
+  Laptop
 } from 'lucide-react';
 import { MarketingNavbar, Footer } from '@/components/templates';
 
@@ -65,98 +62,97 @@ const useInView = (threshold = 0.2) => {
   return { ref: setRef, inView };
 };
 
-const CURRICULUM = [
+const COURSE_CATEGORIES = [
   {
-    week: 'Week 1-2',
-    title: 'Foundation & Architecture',
-    icon: BookOpen,
-    topics: ['Data Model Fundamentals', 'Configuration Hierarchy', 'Business Rules Engine', 'Integration Patterns'],
+    category: 'Technology',
+    title: 'Software & Engineering',
+    icon: Laptop,
+    courses: ['Full-Stack Development', 'Cloud Architecture (AWS/Azure)', 'Data Science & AI/ML', 'Cybersecurity'],
     accent: 'gold'
   },
   {
-    week: 'Week 3-4',
-    title: 'Advanced Development',
-    icon: Code2,
-    topics: ['Gosu Programming Deep Dive', 'Custom UI Development', 'PCF Configuration', 'API Development'],
+    category: 'Healthcare',
+    title: 'Medical & Allied Health',
+    icon: Stethoscope,
+    courses: ['Healthcare Administration', 'Medical Coding & Billing', 'Clinical Research', 'Health Informatics'],
     accent: 'amber'
   },
   {
-    week: 'Week 5-6',
-    title: 'Enterprise Patterns',
-    icon: Brain,
-    topics: ['Multi-tenant Architecture', 'Performance Optimization', 'Security Implementation', 'Testing Strategies'],
+    category: 'Business',
+    title: 'Management & Finance',
+    icon: BarChart3,
+    courses: ['Project Management (PMP)', 'Business Analytics', 'Financial Modeling', 'Supply Chain Management'],
     accent: 'gold'
   },
   {
-    week: 'Week 7-8',
-    title: 'Capstone & Certification',
-    icon: Trophy,
-    topics: ['Real-world Project', 'Production Deployment', 'Certification Prep', 'Interview Coaching'],
+    category: 'Trades',
+    title: 'Skilled Trades & Technical',
+    icon: Wrench,
+    courses: ['HVAC Certification', 'Electrical Systems', 'Welding & Fabrication', 'Renewable Energy Tech'],
     accent: 'amber'
   }
 ];
 
 const TESTIMONIALS = [
   {
-    quote: "I went from $65K in retail management to $145K as a Guidewire Developer in 10 weeks. The ROI was immediate and life-changing.",
+    quote: "I transitioned from retail management to healthcare administration. The structured learning path and career support made all the difference.",
     name: "Sarah Chen",
-    role: "Senior Developer, Deloitte",
-    before: "$65K Retail Manager",
-    after: "$145K Senior Dev",
-    highlight: "123% salary increase"
+    role: "Healthcare Admin, Kaiser",
+    before: "$52K Retail Manager",
+    after: "$85K Healthcare Admin",
+    highlight: "63% salary increase"
   },
   {
-    quote: "The capstone project alone was worth the investment. I had a production-ready portfolio that impressed every interviewer.",
+    quote: "The hands-on projects gave me a portfolio that impressed every interviewer. I landed my dream role in data science within weeks of completing the program.",
     name: "Marcus Johnson",
-    role: "Lead Developer, Capgemini",
-    before: "Junior Java Dev",
-    after: "$130K Lead Developer",
-    highlight: "Hired in 3 weeks"
+    role: "Data Analyst, Meta",
+    before: "Junior Accountant",
+    after: "$125K Data Analyst",
+    highlight: "Hired in 4 weeks"
   },
   {
-    quote: "Other bootcamps teach theory. InTime had me building real insurance systems from day one. The hands-on approach made all the difference.",
+    quote: "Other programs teach theory. InTime Academy had me working on real-world scenarios from day one. The practical approach prepared me for immediate impact.",
     name: "Priya Patel",
-    role: "Tech Lead, PwC",
+    role: "Project Manager, Accenture",
     before: "Recent Graduate",
-    after: "$125K Tech Lead",
-    highlight: "Zero to Tech Lead"
+    after: "$95K Project Manager",
+    highlight: "Zero to PM in 12 weeks"
   }
 ];
 
 const DIFFERENTIATORS = [
   {
     icon: Target,
-    title: 'Industry-First Curriculum',
-    description: 'Built by architects who deployed at Fortune 100 insurers. Every lesson maps to real production scenarios.'
+    title: 'Industry-Driven Curriculum',
+    description: 'Courses designed with leading employers across healthcare, tech, finance, and skilled trades. Every lesson maps to real job requirements.'
   },
   {
     icon: Users,
     title: 'Cohort-Based Learning',
-    description: 'Learn alongside 20 peers. Group projects, code reviews, and networking that extends beyond graduation.'
+    description: 'Learn alongside motivated peers. Group projects, mentorship, and networking that extends beyond graduation.'
   },
   {
     icon: Briefcase,
-    title: 'Placement Partnership',
-    description: 'Direct pipeline to 50+ enterprise clients. Our graduates skip the resume pile.'
+    title: 'Career Partnership Network',
+    description: 'Direct pipeline to 200+ employer partners across industries. Our graduates get priority access to open roles.'
   },
   {
     icon: Award,
-    title: 'Job Guarantee',
-    description: 'Secure a role within 90 days of graduation or receive a full tuition refund. We stand behind our promise.'
+    title: 'Job Placement Support',
+    description: 'Dedicated career coaches, resume optimization, interview prep, and ongoing support until you land your target role.'
   }
 ];
 
 export const AcademyLanding: React.FC = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [hasScrolledPastHero, setHasScrolledPastHero] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const stats = {
-    graduates: useCounter(500, 2500),
-    salary: useCounter(145, 2000),
-    placement: useCounter(95, 2200),
-    rating: useCounter(49, 1800) // 4.9 * 10
+    graduates: useCounter(2500, 2500),
+    courses: useCounter(50, 2000),
+    placement: useCounter(92, 2200),
+    rating: useCounter(48, 1800) // 4.8 * 10
   };
 
   const statsSection = useInView();
@@ -164,7 +160,7 @@ export const AcademyLanding: React.FC = () => {
   useEffect(() => {
     if (statsSection.inView) {
       stats.graduates.start();
-      stats.salary.start();
+      stats.courses.start();
       stats.placement.start();
       stats.rating.start();
     }
@@ -180,7 +176,6 @@ export const AcademyLanding: React.FC = () => {
       const progress = Math.min(scrollY / (heroHeight * 0.5), 1);
       
       setScrollProgress(progress);
-      setHasScrolledPastHero(scrollY > heroHeight * 0.3);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -279,27 +274,27 @@ export const AcademyLanding: React.FC = () => {
                   </div>
                   <div className="h-6 w-px bg-white/20" />
                   <span className="text-charcoal-400 text-sm tracking-wide">
-                    Join <span className="text-gold-400 font-semibold">500+</span> successful graduates
+                    Join <span className="text-gold-400 font-semibold">2,500+</span> successful graduates
                   </span>
                 </div>
 
                 {/* Main Headline */}
                 <h1 className="mb-8">
                   <span className="block text-[clamp(2.5rem,5.5vw,4.5rem)] font-heading font-black text-white leading-[0.95] tracking-tight">
-                    The Premier
+                    Transform Your
                   </span>
                   <span className="block text-[clamp(2.5rem,5.5vw,4.5rem)] font-heading font-black leading-[0.95] tracking-tight">
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-amber-400 to-gold-500">
-                      Guidewire Academy
+                      Career Path
                     </span>
                   </span>
                 </h1>
 
                 {/* Subheadline */}
                 <p className="text-lg md:text-xl text-charcoal-300/90 font-light max-w-xl mb-12 leading-relaxed">
-                  8-week intensive that transforms career changers into{' '}
-                  <span className="text-white font-medium">$150K+ Senior Developers</span>.
-                  Real projects. Industry certification. Job guarantee.
+                  Industry-leading courses across{' '}
+                  <span className="text-white font-medium">technology, healthcare, business, and skilled trades</span>.
+                  Real-world skills. Industry certifications. Career support.
                 </p>
 
                 {/* CTA Section */}
@@ -310,7 +305,7 @@ export const AcademyLanding: React.FC = () => {
                     style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0% 100%)' }}
                   >
                     <Play size={18} />
-                    Start Learning
+                    Explore Courses
                     <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                   </Link>
 
@@ -318,16 +313,16 @@ export const AcademyLanding: React.FC = () => {
                     className="group inline-flex items-center gap-3 px-8 py-4 border border-white/20 hover:border-gold-500/40 text-white hover:text-gold-400 font-medium text-sm uppercase tracking-wider transition-all duration-300"
                   >
                     <Calendar size={18} />
-                    Schedule Discovery Call
+                    Schedule Consultation
                   </button>
                 </div>
 
                 {/* Key differentiators */}
                 <div className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-charcoal-400">
                   {[
-                    '95% Placement Rate',
-                    '$3,000 Investment',
-                    'Money-Back Guarantee'
+                    '50+ Professional Courses',
+                    '92% Placement Rate',
+                    'Flexible Learning'
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-2">
                       <div className="w-1.5 h-1.5 rounded-full bg-gold-500" />
@@ -347,20 +342,20 @@ export const AcademyLanding: React.FC = () => {
                     {/* Featured stat */}
                     <div className="text-center mb-8 pb-8 border-b border-white/10">
                       <div className="text-5xl md:text-6xl font-heading font-black text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-amber-400 mb-2">
-                        $145K
+                        50+
                       </div>
                       <div className="text-charcoal-400 text-xs font-bold uppercase tracking-[0.2em]">
-                        Average Starting Salary
+                        Professional Courses
                       </div>
                     </div>
 
                     {/* Stats grid */}
                     <div className="grid grid-cols-2 gap-4 mb-8">
                       {[
-                        { value: '8', label: 'Week Program' },
-                        { value: '95%', label: 'Job Rate' },
-                        { value: '500+', label: 'Graduates' },
-                        { value: '4.9', label: 'Student Rating' }
+                        { value: '4', label: 'Industry Sectors' },
+                        { value: '92%', label: 'Job Placement' },
+                        { value: '2,500+', label: 'Graduates' },
+                        { value: '4.8', label: 'Student Rating' }
                       ].map((stat, i) => (
                         <div key={i} className="text-center p-4 rounded-xl bg-white/5 border border-white/5">
                           <div className="text-2xl font-heading font-bold text-white mb-1">{stat.value}</div>
@@ -371,7 +366,7 @@ export const AcademyLanding: React.FC = () => {
 
                     {/* Features list */}
                     <div className="space-y-3">
-                      {['AI-Powered Learning Path', 'Live Portfolio Projects', '1:1 Career Coaching'].map((feature) => (
+                      {['Flexible Self-Paced Learning', 'Live Instructor Sessions', '1:1 Career Coaching'].map((feature) => (
                         <div key={feature} className="flex items-center gap-3 text-charcoal-300 text-sm">
                           <div className="w-5 h-5 rounded-md bg-gold-500/20 flex items-center justify-center">
                             <CheckCircle2 size={12} className="text-gold-400" />
@@ -412,7 +407,7 @@ export const AcademyLanding: React.FC = () => {
       >
         
         {/* ============================================
-            PROBLEM SECTION - The $150K Problem
+            OPPORTUNITY SECTION - Skills Gap
             ============================================ */}
         <section className="py-24 lg:py-32 bg-white relative overflow-hidden">
           {/* Subtle background */}
@@ -432,22 +427,22 @@ export const AcademyLanding: React.FC = () => {
                 <div className="w-12 h-px bg-gold-500" />
               </div>
               <h2 className="text-4xl md:text-5xl font-heading font-black text-charcoal-900 mb-6 leading-tight">
-                The{' '}
+                Bridge the{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 to-amber-500">
-                  $150K Problem
+                  Skills Gap
                 </span>
               </h2>
               <p className="text-lg text-charcoal-500 leading-relaxed">
-                There are 50,000+ Guidewire jobs open right now. But hiring managers cannot find qualified candidates.
+                Industries are evolving faster than ever. Employers across every sector are searching for skilled professionals they cannot find.
               </p>
             </div>
 
             {/* Problem Stats */}
             <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
               {[
-                { stat: '50,000+', label: 'Open Positions', description: 'Enterprise insurance companies are desperate for Guidewire talent.' },
-                { stat: '$150-250K', label: 'Salary Range', description: 'Senior developers command premium compensation due to scarcity.' },
-                { stat: '< 1,000', label: 'Certified Annually', description: 'Traditional certification programs produce too few qualified developers.' }
+                { stat: '8.5M', label: 'Unfilled Jobs by 2030', description: 'The global talent shortage is creating unprecedented opportunities for skilled professionals across all industries.' },
+                { stat: '65%', label: 'Skills Mismatch', description: 'Most job seekers lack the specific skills employers need. Targeted training bridges this gap effectively.' },
+                { stat: '40%', label: 'Higher Earnings', description: 'Certified professionals earn significantly more than their non-certified peers in the same roles.' }
               ].map((item, i) => (
                 <div 
                   key={i} 
@@ -495,7 +490,7 @@ export const AcademyLanding: React.FC = () => {
                 </h2>
                 
                 <p className="text-lg text-charcoal-300 mb-10 leading-relaxed">
-                  We do not just teach Guidewire. We transform career trajectories. Our curriculum is designed by architects who have deployed at Fortune 100 insurers.
+                  We do not just teach skills. We transform careers. Our courses are designed by industry practitioners who understand what employers actually need.
                 </p>
 
                 <div className="space-y-6">
@@ -521,7 +516,7 @@ export const AcademyLanding: React.FC = () => {
                 {[
                   { value: stats.graduates.count, suffix: '+', label: 'Graduates Placed', icon: Users },
                   { value: stats.placement.count, suffix: '%', label: 'Placement Rate', icon: Target },
-                  { value: `$${stats.salary.count}K`, suffix: '', label: 'Avg Starting Salary', icon: DollarSign },
+                  { value: stats.courses.count, suffix: '+', label: 'Professional Courses', icon: BookOpen },
                   { value: (stats.rating.count / 10).toFixed(1), suffix: '', label: 'Student Rating', icon: Star }
                 ].map((stat, i) => (
                   <div 
@@ -543,7 +538,7 @@ export const AcademyLanding: React.FC = () => {
         </section>
 
         {/* ============================================
-            CURRICULUM SECTION
+            COURSE CATEGORIES SECTION
             ============================================ */}
         <section className="py-24 lg:py-32 bg-ivory relative overflow-hidden">
           {/* Subtle background texture */}
@@ -558,30 +553,30 @@ export const AcademyLanding: React.FC = () => {
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-px bg-gold-500" />
                 <span className="text-gold-600 text-xs font-bold uppercase tracking-[0.2em]">
-                  8-Week Intensive
+                  Explore Our Programs
                 </span>
               </div>
               <h2 className="text-4xl md:text-5xl font-heading font-black text-charcoal-900 mb-6 leading-tight">
-                Battle-Tested{' '}
+                Courses Across{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 to-amber-500">
-                  Curriculum
+                  Every Industry
                 </span>
               </h2>
               <p className="text-lg text-charcoal-500 leading-relaxed">
-                Every module is designed by senior architects with 10+ years of enterprise Guidewire experience.
+                From technology to healthcare, business to skilled trades—find the path that matches your goals and interests.
               </p>
             </div>
 
-            {/* Curriculum Grid - Asymmetric */}
+            {/* Course Categories Grid - Asymmetric */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-              {CURRICULUM.map((module, i) => {
-                const Icon = module.icon;
+              {COURSE_CATEGORIES.map((category, i) => {
+                const Icon = category.icon;
                 const isWide = i === 0 || i === 3;
                 const accentColors: Record<string, { bg: string; text: string; border: string }> = {
                   gold: { bg: 'bg-gold-50', text: 'text-gold-600', border: 'bg-gold-500' },
                   amber: { bg: 'bg-amber-50', text: 'text-amber-600', border: 'bg-amber-500' }
                 };
-                const colors = accentColors[module.accent];
+                const colors = accentColors[category.accent];
                 
                 return (
                   <div 
@@ -599,19 +594,19 @@ export const AcademyLanding: React.FC = () => {
                           <Icon size={28} className={colors.text} />
                         </div>
                         <span className="text-[10px] font-bold text-charcoal-400 uppercase tracking-widest">
-                          {module.week}
+                          {category.category}
                         </span>
                       </div>
                       
                       <h3 className="text-xl lg:text-2xl font-heading font-bold text-charcoal-900 mb-4 group-hover:text-gold-700 transition-colors">
-                        {module.title}
+                        {category.title}
                       </h3>
                       
                       <ul className="space-y-2">
-                        {module.topics.map((topic, j) => (
+                        {category.courses.map((course, j) => (
                           <li key={j} className="flex items-center gap-3 text-sm text-charcoal-600">
                             <CheckCircle2 size={14} className={colors.text} />
-                            {topic}
+                            {course}
                           </li>
                         ))}
                       </ul>
@@ -638,8 +633,8 @@ export const AcademyLanding: React.FC = () => {
                 <div className="w-12 h-px bg-gold-500" />
               </div>
               <h2 className="text-4xl md:text-5xl font-heading font-black text-charcoal-900 mb-6">
-                From Zero to{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 to-amber-500">$150K</span>
+                Real People,{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-500 to-amber-500">Real Results</span>
               </h2>
             </div>
 
@@ -694,7 +689,7 @@ export const AcademyLanding: React.FC = () => {
         </section>
 
         {/* ============================================
-            CTA SECTION - Pricing
+            CTA SECTION - Start Your Journey
             ============================================ */}
         <section className="py-24 lg:py-32 bg-forest-900 relative overflow-hidden">
           {/* Background */}
@@ -709,24 +704,24 @@ export const AcademyLanding: React.FC = () => {
               <div className="flex items-center justify-center gap-3 mb-8">
                 <div className="w-12 h-px bg-gold-500/50" />
                 <span className="text-gold-400 text-xs font-bold uppercase tracking-[0.2em]">
-                  Investment
+                  Start Today
                 </span>
                 <div className="w-12 h-px bg-gold-500/50" />
               </div>
 
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-white mb-4 leading-tight">
+                Your New Career{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-amber-400">
-                  $3,000
+                  Starts Here
                 </span>
-                {' '}Total Investment
               </h2>
               <p className="text-xl text-forest-200 font-light max-w-2xl mx-auto mb-10">
-                Average ROI: 48x in first year. We are so confident in our program, we offer a complete money-back guarantee.
+                Choose from 50+ professional courses across technology, healthcare, business, and skilled trades. Flexible payment options and financing available.
               </p>
 
               {/* Features Grid */}
               <div className="flex flex-wrap justify-center gap-3 mb-12">
-                {['8-Week Program', 'AI Mentor Access', 'Career Coaching', 'Job Guarantee', 'Lifetime Updates'].map((feature) => (
+                {['Flexible Schedules', 'Industry Certifications', 'Career Coaching', 'Employer Network', 'Payment Plans'].map((feature) => (
                   <span 
                     key={feature} 
                     className="px-4 py-2 bg-white/10 text-forest-100 text-sm font-medium border border-white/10"
@@ -744,7 +739,7 @@ export const AcademyLanding: React.FC = () => {
                   style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0% 100%)' }}
                 >
                   <GraduationCap size={18} />
-                  Enroll Now
+                  Browse All Courses
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
 
@@ -752,7 +747,7 @@ export const AcademyLanding: React.FC = () => {
                   className="px-10 py-5 border border-white/20 hover:border-gold-500/40 text-white hover:text-gold-400 font-bold uppercase tracking-widest text-sm transition-all duration-300 flex items-center gap-3"
                 >
                   <BookOpen size={18} />
-                  Download Syllabus
+                  Download Course Catalog
                 </button>
               </div>
             </div>
@@ -762,21 +757,21 @@ export const AcademyLanding: React.FC = () => {
         <Footer
           columns={[
             {
-              title: 'Academy',
+              title: 'Programs',
               links: [
-                { label: 'Curriculum', href: '/academy#curriculum' },
-                { label: 'Success Stories', href: '/academy#testimonials' },
-                { label: 'Pricing', href: '/academy#pricing' },
-                { label: 'FAQ', href: '/academy#faq' },
+                { label: 'Technology', href: '/academy#technology' },
+                { label: 'Healthcare', href: '/academy#healthcare' },
+                { label: 'Business', href: '/academy#business' },
+                { label: 'Skilled Trades', href: '/academy#trades' },
               ],
             },
             {
               title: 'Resources',
               links: [
-                { label: 'Free Guide', href: '/resources/guidewire-guide' },
+                { label: 'Course Catalog', href: '/academy/catalog' },
                 { label: 'Blog', href: '/resources' },
-                { label: 'Webinars', href: '/resources/webinars' },
-                { label: 'Careers', href: '/careers' },
+                { label: 'Success Stories', href: '/academy#testimonials' },
+                { label: 'Employer Partners', href: '/employers' },
               ],
             },
             {
