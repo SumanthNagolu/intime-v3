@@ -171,7 +171,7 @@ export const convertLeadToDealSchema = z.object({
 // =====================================================
 
 // Base schema without refinement for reusability
-const baseDealSchema = z.object({
+export const baseDealSchema = z.object({
   // Association
   leadId: z.string().uuid().optional(),
   accountId: z.string().uuid().optional(),

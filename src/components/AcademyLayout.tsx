@@ -35,7 +35,7 @@ export function AcademyLayout({ children, showMentor = false }: AcademyLayoutPro
 
       {/* Subtle Top Glow - responds to biometric state */}
       <div 
-        className="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] blur-3xl pointer-events-none z-0 transition-colors duration-[2000ms]"
+        className="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] blur-3xl pointer-events-none z-0 transition-colors duration-1000"
         style={{
           background: `radial-gradient(ellipse, ${theme.primaryColor}, transparent)`,
         }}
@@ -60,7 +60,7 @@ export function AcademyLayout({ children, showMentor = false }: AcademyLayoutPro
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-2">
                 <div 
-                  className="w-8 h-8 rounded-lg flex items-center justify-center shadow-elevation-sm transition-colors duration-[2000ms]"
+                  className="w-8 h-8 rounded-lg flex items-center justify-center shadow-elevation-sm transition-colors duration-1000"
                   style={{
                     background: `linear-gradient(135deg, ${theme.gradientFrom}, ${theme.gradientTo})`,
                   }}

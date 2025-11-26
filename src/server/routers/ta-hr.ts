@@ -4,7 +4,7 @@
  */
 
 import { z } from 'zod';
-import { router, protectedProcedure } from '../trpc/trpc';
+import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
 import {
   campaigns,
@@ -42,7 +42,7 @@ export const taHrRouter = router({
     /**
      * Get all campaigns
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -67,7 +67,7 @@ export const taHrRouter = router({
     /**
      * Get campaign by ID
      */
-    getById: protectedProcedure
+    getById: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -89,7 +89,7 @@ export const taHrRouter = router({
     /**
      * Create campaign
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createCampaignSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -107,7 +107,7 @@ export const taHrRouter = router({
     /**
      * Update campaign
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updateCampaignSchema)
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -131,7 +131,7 @@ export const taHrRouter = router({
     /**
      * Get campaign metrics
      */
-    metrics: protectedProcedure
+    metrics: orgProtectedProcedure
       .input(z.object({ campaignId: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -176,7 +176,7 @@ export const taHrRouter = router({
     /**
      * Get contacts for a campaign
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         campaignId: z.string().uuid(),
         limit: z.number().min(1).max(100).default(50),
@@ -205,7 +205,7 @@ export const taHrRouter = router({
     /**
      * Add contact to campaign
      */
-    add: protectedProcedure
+    add: orgProtectedProcedure
       .input(z.object({
         campaignId: z.string().uuid(),
         prospectId: z.string().uuid(),
@@ -226,7 +226,7 @@ export const taHrRouter = router({
     /**
      * Update contact status
      */
-    updateStatus: protectedProcedure
+    updateStatus: orgProtectedProcedure
       .input(z.object({
         id: z.string().uuid(),
         status: z.enum(['new', 'contacted', 'responded', 'qualified', 'not_interested']),
@@ -267,7 +267,7 @@ export const taHrRouter = router({
     /**
      * Get all employees
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -294,7 +294,7 @@ export const taHrRouter = router({
     /**
      * Get employee by ID
      */
-    getById: protectedProcedure
+    getById: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -316,7 +316,7 @@ export const taHrRouter = router({
     /**
      * Create employee
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createEmployeeMetadataSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -333,7 +333,7 @@ export const taHrRouter = router({
     /**
      * Update employee
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updateEmployeeMetadataSchema)
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -357,7 +357,7 @@ export const taHrRouter = router({
     /**
      * Get organization chart data
      */
-    orgChart: protectedProcedure
+    orgChart: orgProtectedProcedure
       .query(async ({ ctx }) => {
         const { orgId } = ctx;
 
@@ -377,7 +377,7 @@ export const taHrRouter = router({
     /**
      * Get all pods
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .query(async ({ ctx }) => {
         const { orgId } = ctx;
 
@@ -391,7 +391,7 @@ export const taHrRouter = router({
     /**
      * Create pod
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createPodSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -408,7 +408,7 @@ export const taHrRouter = router({
     /**
      * Update pod
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updatePodSchema)
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -432,7 +432,7 @@ export const taHrRouter = router({
     /**
      * Get pod performance
      */
-    performance: protectedProcedure
+    performance: orgProtectedProcedure
       .input(z.object({
         podId: z.string().uuid(),
         startDate: z.date(),
@@ -467,7 +467,7 @@ export const taHrRouter = router({
     /**
      * Get all payroll runs
      */
-    runs: protectedProcedure
+    runs: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -492,7 +492,7 @@ export const taHrRouter = router({
     /**
      * Create payroll run
      */
-    createRun: protectedProcedure
+    createRun: orgProtectedProcedure
       .input(createPayrollRunSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -509,7 +509,7 @@ export const taHrRouter = router({
     /**
      * Get payroll items for a run
      */
-    items: protectedProcedure
+    items: orgProtectedProcedure
       .input(z.object({ payrollRunId: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -533,7 +533,7 @@ export const taHrRouter = router({
     /**
      * Get all performance reviews
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -560,7 +560,7 @@ export const taHrRouter = router({
     /**
      * Create performance review
      */
-    create: protectedProcedure
+    create: orgProtectedProcedure
       .input(createPerformanceReviewSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -577,7 +577,7 @@ export const taHrRouter = router({
     /**
      * Update performance review
      */
-    update: protectedProcedure
+    update: orgProtectedProcedure
       .input(updatePerformanceReviewSchema)
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -607,7 +607,7 @@ export const taHrRouter = router({
     /**
      * Get time records
      */
-    list: protectedProcedure
+    list: orgProtectedProcedure
       .input(z.object({
         employeeId: z.string().uuid(),
         startDate: z.date(),
@@ -632,7 +632,7 @@ export const taHrRouter = router({
     /**
      * Clock in
      */
-    clockIn: protectedProcedure
+    clockIn: orgProtectedProcedure
       .input(z.object({
         date: z.date().default(() => new Date()),
         notes: z.string().optional(),
@@ -654,7 +654,7 @@ export const taHrRouter = router({
     /**
      * Clock out
      */
-    clockOut: protectedProcedure
+    clockOut: orgProtectedProcedure
       .input(z.object({
         id: z.string().uuid(),
         notes: z.string().optional(),
@@ -690,7 +690,7 @@ export const taHrRouter = router({
     /**
      * Get PTO balance
      */
-    balance: protectedProcedure
+    balance: orgProtectedProcedure
       .input(z.object({
         employeeId: z.string().uuid().optional(),
       }))
@@ -711,7 +711,7 @@ export const taHrRouter = router({
     /**
      * Request PTO
      */
-    request: protectedProcedure
+    request: orgProtectedProcedure
       .input(z.object({
         startDate: z.date(),
         endDate: z.date(),

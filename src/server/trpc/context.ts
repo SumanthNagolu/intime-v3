@@ -21,26 +21,33 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 export async function createContext() {
   const supabase = await createClient();
 
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await supabase.auth.getUser();
 
   let userId: string | null = null;
   let orgId: string | null = null;
 
-  if (session?.user) {
-    userId = session.user.id;
+  if (user) {
+    userId = user.id;
 
-    // Get user's org_id from profile
-    const { data: profile } = await supabase
-      .from('user_profiles')
-      .select('org_id')
-      .eq('id', userId)
-      .single();
+    // Get user's org_id from profile with error handling
+    try {
+      const { data: profile, error } = await supabase
+        .from('user_profiles')
+        .select('org_id')
+        .eq('id', userId)
+        .maybeSingle();
 
-    orgId = profile?.org_id || null;
+      if (!error && profile) {
+        orgId = profile.org_id || null;
+      }
+    } catch (error) {
+      // Log the error but don't fail the context creation
+      console.error('Error fetching user profile:', error);
+    }
   }
 
   return {
-    session,
+    session: user ? { user } : null,
     userId,
     orgId,
     supabase
