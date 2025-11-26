@@ -7,7 +7,7 @@ export default function Page() {
   return (
     <AppLayout>
       <RecruitingLayout>
-        <SubmissionBuilder />
+      <SubmissionBuilder />
       </RecruitingLayout>
     </AppLayout>
   );

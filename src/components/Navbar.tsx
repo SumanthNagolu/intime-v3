@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { User, Mic, Map, Menu, X, Cpu, ChevronDown, List, Layers, Sparkles, LogOut, FileText, Bell, Briefcase, Users, Globe, TrendingUp, LayoutDashboard, Search, Clock, Activity, Plus, DollarSign, UserPlus, Network, BarChart3, GraduationCap, Settings, Award, Rocket, Megaphone, Plane, CheckCircle, Building2, Download, ShieldCheck, Target, Lock, Terminal, BookOpen } from 'lucide-react';
@@ -272,6 +272,46 @@ export const Navbar: React.FC = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isRoleSwitcherOpen, setIsRoleSwitcherOpen] = useState(false);
 
+  // Auto-detect role from URL path
+  useEffect(() => {
+    // Don't auto-switch on public routes
+    if (pathname === '/' || pathname === '/academy' || pathname === '/clients' || pathname === '/login' || pathname.startsWith('/verify-certificate')) {
+      return;
+    }
+
+    // Detect role from URL path
+    let detectedRole: Role | null = null;
+    
+    if (pathname.startsWith('/employee/bench')) {
+      detectedRole = 'bench_manager';
+    } else if (pathname.startsWith('/employee/recruiting')) {
+      detectedRole = 'recruiter';
+    } else if (pathname.startsWith('/employee/ta')) {
+      detectedRole = 'ta_specialist';
+    } else if (pathname.startsWith('/employee/academy/admin')) {
+      detectedRole = 'academy_admin';
+    } else if (pathname.startsWith('/employee/immigration')) {
+      detectedRole = 'cross_border_specialist';
+    } else if (pathname.startsWith('/employee/hr')) {
+      detectedRole = 'hr_admin';
+    } else if (pathname.startsWith('/employee/admin')) {
+      detectedRole = 'admin';
+    } else if (pathname.startsWith('/employee/ceo')) {
+      detectedRole = 'ceo';
+    } else if (pathname.startsWith('/academy') && !pathname.startsWith('/employee/academy')) {
+      detectedRole = 'student';
+    } else if (pathname.startsWith('/client')) {
+      detectedRole = 'client';
+    } else if (pathname.startsWith('/talent')) {
+      detectedRole = 'consultant';
+    }
+
+    // Update role if detected and different from current
+    if (detectedRole && detectedRole !== activeRole) {
+      setActiveRole(detectedRole);
+    }
+  }, [pathname, activeRole, setActiveRole]);
+
   const isPublic = pathname === '/' || pathname === '/academy' || pathname === '/clients' || pathname === '/login' || pathname.startsWith('/verify-certificate');
   const isLoginPage = pathname === '/login';
 
@@ -492,10 +532,10 @@ export const Navbar: React.FC = () => {
                <>
                  <div className="text-right hidden md:block">
                     <div className="text-caption text-charcoal-400">
-                        {isInternal ? 'Internal User' : activeRole === 'student' ? 'Student' : 'Partner'}
+                        {isInternal ? 'INTERNAL EMPLOYEE' : activeRole === 'student' ? 'STUDENT' : 'PARTNER'}
                     </div>
                     <div className="text-body-sm font-heading font-bold text-charcoal-900">
-                        {activeRole === 'student' ? 'Priya Sharma' : isInternal ? getRoleLabel(activeRole) : 'Guest User'}
+                        {activeRole === 'student' ? 'Priya Sharma' : isInternal ? 'Employee Portal' : 'Guest User'}
                     </div>
                  </div>
 
@@ -519,7 +559,7 @@ export const Navbar: React.FC = () => {
                      <div className="absolute top-full right-0 mt-3 w-72 glass-strong rounded-xl shadow-premium border border-charcoal-100 overflow-hidden z-50 animate-slide-down">
                         <div className="p-5 border-b border-charcoal-100/50">
                             <p className="text-body font-bold text-charcoal-900">
-                                {activeRole === 'student' ? 'Priya Sharma' : 'User Profile'}
+                                {activeRole === 'student' ? 'Priya Sharma' : isInternal ? 'Employee Portal' : 'User Profile'}
                             </p>
                             <p className="text-caption text-charcoal-500 mt-1">
                                 {getRoleLabel(activeRole)}

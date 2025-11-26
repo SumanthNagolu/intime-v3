@@ -77,7 +77,7 @@ export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
       hasKey: false,
-      activeRole: 'recruiter', // Default to internal employee role (was 'student')
+      activeRole: 'student', 
       isSprintActive: false,
       isMentorOpen: false,
       mentorContext: null,

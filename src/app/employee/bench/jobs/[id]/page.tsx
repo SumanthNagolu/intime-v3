@@ -7,7 +7,7 @@ export default function Page() {
   return (
     <AppLayout>
       <BenchLayout>
-        <JobHuntRoom />
+      <JobHuntRoom />
       </BenchLayout>
     </AppLayout>
   );
