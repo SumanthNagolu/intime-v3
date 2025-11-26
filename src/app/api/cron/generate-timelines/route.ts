@@ -13,6 +13,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { TimelineGeneratorAgent } from '@/lib/ai/productivity/TimelineGeneratorAgent';
+import { createClient } from '@/lib/supabase/server';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300; // 5 minutes max execution
@@ -47,7 +48,8 @@ export async function POST(request: NextRequest) {
 
     console.log('[GenerateTimelines] Starting batch timeline generation');
 
-    const generator = new TimelineGeneratorAgent();
+    const supabase = await createClient();
+    const generator = new TimelineGeneratorAgent(supabase);
 
     // Generate reports for yesterday (classification runs at 2 AM for today's screenshots)
     const yesterday = new Date();

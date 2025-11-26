@@ -13,13 +13,12 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { EmployeeTwin } from '@/lib/ai/twins/EmployeeTwin';
-import { createClient } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/server';
 import type { TwinRole } from '@/types/productivity';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300; // 5 minutes max execution
-
-const supabase = createClient();
 
 /**
  * Verify cron secret (prevent unauthorized access)
@@ -47,6 +46,8 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now();
 
   try {
+    const supabase = await createClient();
+
     // Verify authorization
     if (!verifyCronSecret(request)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -99,7 +100,7 @@ export async function POST(request: NextRequest) {
         }
 
         // Check if we've already hit frequency limit for today
-        const todayCount = await getTodaySuggestionCount(employee.id);
+        const todayCount = await getTodaySuggestionCount(supabase, employee.id);
         const maxSuggestions = prefs?.suggestion_frequency || 3;
 
         if (todayCount >= maxSuggestions) {
@@ -167,7 +168,7 @@ export async function POST(request: NextRequest) {
 /**
  * Get count of suggestions already generated today for a user
  */
-async function getTodaySuggestionCount(userId: string): Promise<number> {
+async function getTodaySuggestionCount(supabase: SupabaseClient, userId: string): Promise<number> {
   const today = new Date().toISOString().split('T')[0];
 
   const { data, error } = await supabase

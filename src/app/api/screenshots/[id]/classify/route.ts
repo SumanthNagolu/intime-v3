@@ -44,7 +44,7 @@ export async function POST(
     // TODO: Verify user has permission to classify (admin only)
 
     // Classify screenshot
-    const classifier = new ActivityClassifierAgent();
+    const classifier = new ActivityClassifierAgent(supabase);
     const result = await classifier.classifyScreenshot(id);
 
     return NextResponse.json({

@@ -13,13 +13,11 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { EmployeeTwin } from '@/lib/ai/twins/EmployeeTwin';
-import { createClient } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/server';
 import type { TwinRole } from '@/types/productivity';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300; // 5 minutes max execution
-
-const supabase = createClient();
 
 /**
  * Verify cron secret (prevent unauthorized access)
@@ -47,6 +45,8 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now();
 
   try {
+    const supabase = await createClient();
+
     // Verify authorization
     if (!verifyCronSecret(request)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

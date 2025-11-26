@@ -145,8 +145,64 @@ export interface GenerateReportResponse {
 
 /**
  * Employee AI Twin role types
+ *
+ * Partner Approach: Each partner handles end-to-end workflows
+ * Hierarchy: Flat with CEO oversight
  */
-export type TwinRole = 'recruiter' | 'trainer' | 'bench_sales' | 'admin';
+export type TwinRole =
+  // Leadership
+  | 'ceo'              // Strategic overview, cross-pillar coordination
+  | 'admin'            // System/org administration
+  // Revenue Partners (End-to-End ownership)
+  | 'recruiter'        // Full recruiting cycle: sourcing → placement
+  | 'bench_sales'      // Full bench cycle: onboard → placement → extension
+  | 'talent_acquisition'  // Full TA cycle: prospecting → deal close
+  // Support Partners
+  | 'hr'               // People ops, compliance, performance
+  | 'immigration'      // Visa tracking, compliance, cross-border
+  | 'trainer';         // Academy/training operations
+
+/**
+ * Twin hierarchy mapping
+ * Flat structure: CEO oversees all, no intermediate hierarchy
+ */
+export const TWIN_HIERARCHY: Record<TwinRole, TwinRole | null> = {
+  ceo: null,                    // Top level
+  admin: 'ceo',
+  recruiter: 'ceo',
+  bench_sales: 'ceo',
+  talent_acquisition: 'ceo',
+  hr: 'ceo',
+  immigration: 'ceo',
+  trainer: 'ceo',
+};
+
+/**
+ * Twin role display names
+ */
+export const TWIN_ROLE_DISPLAY: Record<TwinRole, string> = {
+  ceo: 'CEO',
+  admin: 'Administrator',
+  recruiter: 'Recruiter',
+  bench_sales: 'Bench Sales',
+  talent_acquisition: 'Talent Acquisition',
+  hr: 'HR',
+  immigration: 'Immigration',
+  trainer: 'Trainer',
+};
+
+/**
+ * Cross-pollination event types for inter-twin communication
+ */
+export type CrossPollinationEvent =
+  | 'placement_complete'      // Recruiter → Bench Sales (new consultant)
+  | 'bench_ending'            // Bench Sales → TA (renewal opportunity)
+  | 'training_graduate'       // Trainer → Recruiter (ready for placement)
+  | 'deal_closed'             // TA → Recruiting (new positions)
+  | 'escalation'              // Any → CEO (needs attention)
+  | 'approval_needed'         // Any → Approver (workflow)
+  | 'milestone_reached'       // Broadcast (celebration)
+  | 'cross_sell_opportunity'; // Any → TA (upsell potential)
 
 /**
  * Interaction types with AI Twin

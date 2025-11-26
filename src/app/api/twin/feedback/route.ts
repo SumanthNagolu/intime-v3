@@ -9,15 +9,14 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/client';
-
-const supabase = createClient();
+import { createClient } from '@/lib/supabase/server';
 
 /**
  * Submit feedback for a twin interaction
  */
 export async function POST(request: NextRequest) {
   try {
+    const supabase = await createClient();
     const { interactionId, wasHelpful, userFeedback, dismissed } = await request.json();
 
     if (!interactionId) {

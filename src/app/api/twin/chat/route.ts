@@ -10,16 +10,15 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { EmployeeTwin } from '@/lib/ai/twins/EmployeeTwin';
-import { createClient } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/server';
 import type { TwinRole } from '@/types/productivity';
-
-const supabase = createClient();
 
 /**
  * Send message to AI twin
  */
 export async function POST(request: NextRequest) {
   try {
+    const supabase = await createClient();
     const { question } = await request.json();
 
     if (!question || typeof question !== 'string') {
@@ -78,11 +77,30 @@ function mapEmployeeRoleToTwinRole(employeeRole: string | null): TwinRole | null
   if (!employeeRole) return null;
 
   const roleMap: Record<string, TwinRole> = {
-    recruiter: 'recruiter',
-    trainer: 'trainer',
-    bench_sales: 'bench_sales',
+    // Leadership
+    ceo: 'ceo',
     admin: 'admin',
     administrator: 'admin',
+    super_admin: 'admin',
+    // Revenue Partners
+    recruiter: 'recruiter',
+    junior_recruiter: 'recruiter',
+    senior_recruiter: 'recruiter',
+    bench_sales: 'bench_sales',
+    junior_bench_sales: 'bench_sales',
+    senior_bench_sales: 'bench_sales',
+    talent_acquisition: 'talent_acquisition',
+    ta: 'talent_acquisition',
+    junior_ta: 'talent_acquisition',
+    senior_ta: 'talent_acquisition',
+    // Support Partners
+    hr: 'hr',
+    hr_manager: 'hr',
+    hr_specialist: 'hr',
+    immigration: 'immigration',
+    immigration_specialist: 'immigration',
+    trainer: 'trainer',
+    academy_admin: 'trainer',
   };
 
   return roleMap[employeeRole.toLowerCase()] || null;
