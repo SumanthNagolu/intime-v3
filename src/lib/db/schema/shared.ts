@@ -3,7 +3,7 @@
  * Tables: notifications, tasks, comments
  */
 
-import { pgTable, uuid, text, timestamp, boolean, date, jsonb } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, timestamp, boolean, date, jsonb, integer } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { userProfiles } from './user-profiles';
 import { organizations } from './organizations';

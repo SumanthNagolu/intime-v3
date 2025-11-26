@@ -102,7 +102,8 @@ export const createActivityLogSchema = z.object({
 // LEADS
 // =====================================================
 
-export const createLeadSchema = z.object({
+// Base schema without refinement for reusability
+const baseLeadSchema = z.object({
   // Lead type
   leadType: z.enum(['company', 'contact']).default('company'),
 
@@ -134,7 +135,10 @@ export const createLeadSchema = z.object({
   lastContactedAt: z.coerce.date().optional(),
   lastResponseAt: z.coerce.date().optional(),
   engagementScore: z.number().int().min(0).max(100).optional(),
-}).refine(
+});
+
+// Create schema with refinement
+export const createLeadSchema = baseLeadSchema.refine(
   (data) => {
     if (data.leadType === 'company') {
       return !!data.companyName;
@@ -147,7 +151,8 @@ export const createLeadSchema = z.object({
   }
 );
 
-export const updateLeadSchema = createLeadSchema.partial().extend({
+// Update schema - partial of base schema, then extend with id
+export const updateLeadSchema = baseLeadSchema.partial().extend({
   id: z.string().uuid(),
 });
 
@@ -165,7 +170,8 @@ export const convertLeadToDealSchema = z.object({
 // DEALS
 // =====================================================
 
-export const createDealSchema = z.object({
+// Base schema without refinement for reusability
+const baseDealSchema = z.object({
   // Association
   leadId: z.string().uuid().optional(),
   accountId: z.string().uuid().optional(),
@@ -185,7 +191,10 @@ export const createDealSchema = z.object({
 
   // Linked jobs
   linkedJobIds: z.array(z.string().uuid()).optional(),
-}).refine(
+});
+
+// Create schema with refinement
+export const createDealSchema = baseDealSchema.refine(
   (data) => !!(data.leadId || data.accountId),
   {
     message: 'Deal must be associated with either a lead or an account',
@@ -193,7 +202,8 @@ export const createDealSchema = z.object({
   }
 );
 
-export const updateDealSchema = createDealSchema.partial().extend({
+// Update schema - partial of base schema, then extend with id
+export const updateDealSchema = baseDealSchema.partial().extend({
   id: z.string().uuid(),
 });
 

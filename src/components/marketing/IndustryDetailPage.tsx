@@ -5,11 +5,7 @@ import Link from 'next/link';
 import {
   ArrowRight,
   CheckCircle2,
-  Users,
   Award,
-  Clock,
-  Shield,
-  TrendingUp,
   Monitor,
   Heart,
   Building2,
@@ -25,7 +21,11 @@ import {
   ShoppingBag,
   Landmark,
   Briefcase,
-  Phone
+  Phone,
+  ChevronRight,
+  Users,
+  Target,
+  Zap
 } from 'lucide-react';
 import { MarketingNavbar, Footer } from '@/components/templates';
 
@@ -208,7 +208,7 @@ export const INDUSTRIES_DATA: Record<string, {
     solutions: ['Experienced hospitality pros', 'POS/PMS expertise', 'Multi-property experience', 'Service excellence training', 'Flexible staffing'],
     stats: [
       { value: '200+', label: 'Hospitality Placements' },
-      { value: '4.8★', label: 'Avg. Guest Rating' },
+      { value: '4.8', label: 'Avg. Guest Rating' },
       { value: '35%', label: 'Revenue Increase' }
     ],
     certifications: ['CHM', 'CHSP', 'ServSafe', 'PMS'],
@@ -314,9 +314,10 @@ export const IndustryDetailPage: React.FC<IndustryDetailPageProps> = ({ slug }) 
         <MarketingNavbar />
         <div className="container mx-auto px-6 py-32 text-center">
           <h1 className="text-4xl font-heading font-bold text-charcoal-900 mb-4">Industry Not Found</h1>
-          <p className="text-charcoal-500 mb-8">The industry you're looking for doesn't exist.</p>
+          <p className="text-charcoal-500 mb-8">The industry you&apos;re looking for doesn&apos;t exist.</p>
           <Link href="/industries" className="text-forest-600 font-bold">
-            View All Industries →
+            View All Industries
+            <ArrowRight size={14} className="inline ml-2" />
           </Link>
         </div>
         <Footer />
@@ -325,74 +326,129 @@ export const IndustryDetailPage: React.FC<IndustryDetailPageProps> = ({ slug }) 
   }
 
   const Icon = industry.icon;
-  const colorVariants: Record<string, { bg: string; text: string; border: string; light: string }> = {
-    forest: { bg: 'bg-forest-600', text: 'text-forest-600', border: 'border-forest-500', light: 'bg-forest-100' },
-    rose: { bg: 'bg-rose-600', text: 'text-rose-600', border: 'border-rose-500', light: 'bg-rose-100' },
-    slate: { bg: 'bg-slate-600', text: 'text-slate-600', border: 'border-slate-500', light: 'bg-slate-100' },
-    amber: { bg: 'bg-amber-600', text: 'text-amber-600', border: 'border-amber-500', light: 'bg-amber-100' },
-    emerald: { bg: 'bg-emerald-600', text: 'text-emerald-600', border: 'border-emerald-500', light: 'bg-emerald-100' },
-    violet: { bg: 'bg-violet-600', text: 'text-violet-600', border: 'border-violet-500', light: 'bg-violet-100' },
-    indigo: { bg: 'bg-indigo-600', text: 'text-indigo-600', border: 'border-indigo-500', light: 'bg-indigo-100' },
-    orange: { bg: 'bg-orange-600', text: 'text-orange-600', border: 'border-orange-500', light: 'bg-orange-100' },
-    cyan: { bg: 'bg-cyan-600', text: 'text-cyan-600', border: 'border-cyan-500', light: 'bg-cyan-100' },
-    pink: { bg: 'bg-pink-600', text: 'text-pink-600', border: 'border-pink-500', light: 'bg-pink-100' },
-    teal: { bg: 'bg-teal-600', text: 'text-teal-600', border: 'border-teal-500', light: 'bg-teal-100' },
-    sky: { bg: 'bg-sky-600', text: 'text-sky-600', border: 'border-sky-500', light: 'bg-sky-100' },
-    red: { bg: 'bg-red-600', text: 'text-red-600', border: 'border-red-500', light: 'bg-red-100' },
-    fuchsia: { bg: 'bg-fuchsia-600', text: 'text-fuchsia-600', border: 'border-fuchsia-500', light: 'bg-fuchsia-100' },
-    blue: { bg: 'bg-blue-600', text: 'text-blue-600', border: 'border-blue-500', light: 'bg-blue-100' }
+  
+  // Industries section uses Slate/Blue accent per the guidelines
+  const accentColors = {
+    primary: 'slate',
+    gradient: 'from-slate-400 via-slate-500 to-blue-500',
+    text: 'text-slate-400',
+    textDark: 'text-slate-600',
+    bg: 'bg-slate-500',
+    bgLight: 'bg-slate-50',
+    border: 'border-slate-500/20',
+    borderLight: 'border-slate-200',
+    hover: 'hover:text-slate-400',
+    iconBg: 'bg-slate-500/10',
+    iconText: 'text-slate-400',
+    accentBar: 'bg-slate-500',
+    ctaBg: 'bg-slate-600 hover:bg-slate-500',
+    gradientTint: 'rgba(100, 116, 139, 0.12)', // slate-500 with opacity
   };
-
-  const colors = colorVariants[industry.color] || colorVariants.forest;
 
   return (
     <div className="min-h-screen bg-ivory">
       <MarketingNavbar />
 
-      {/* Hero Section */}
-      <section className="relative py-32 bg-charcoal-900 overflow-hidden">
+      {/* ============================================
+          COMPACT HERO SECTION - 50vh, No Scroll Flip
+          ============================================ */}
+      <section className="relative min-h-[50vh] flex items-center overflow-hidden py-20 lg:py-28">
+        {/* Sophisticated Background - Slate/Blue accent for Industries */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-charcoal-800 via-charcoal-900 to-charcoal-950" />
-          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-forest-600/15 rounded-full blur-[120px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-gold-600/10 rounded-full blur-[80px]" />
+          <div className="absolute inset-0 bg-[#0B1A14]" />
+          
+          {/* Organic gradient shapes - Slate/Blue tints */}
+          <div 
+            className="absolute top-0 right-0 w-[60%] h-[80%] rounded-bl-[40%]"
+            style={{
+              background: `radial-gradient(ellipse at 70% 30%, ${accentColors.gradientTint} 0%, transparent 60%)`,
+            }}
+          />
+          <div 
+            className="absolute bottom-0 left-0 w-[50%] h-[60%] rounded-tr-[50%]"
+            style={{
+              background: 'radial-gradient(ellipse at 20% 80%, rgba(59, 130, 246, 0.06) 0%, transparent 50%)',
+            }}
+          />
+          <div 
+            className="absolute top-[30%] left-[40%] w-[30%] h-[40%] rounded-full"
+            style={{
+              background: 'radial-gradient(ellipse at 50% 50%, rgba(201, 169, 97, 0.04) 0%, transparent 60%)',
+            }}
+          />
+          
+          {/* Subtle geometric accent */}
+          <div 
+            className="absolute top-[15%] right-[8%] w-[200px] h-[200px] border border-slate-500/10 rounded-full"
+            style={{ transform: 'rotate(-15deg)' }}
+          />
+          
+          {/* Film grain texture */}
+          <div 
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            }}
+          />
         </div>
 
+        {/* Content */}
         <div className="relative z-10 container mx-auto px-6 lg:px-12">
           <div className="max-w-4xl">
-            <Link
-              href="/industries"
-              className="inline-flex items-center gap-2 text-charcoal-400 hover:text-white transition-colors mb-8"
-            >
-              ← Back to Industries
-            </Link>
-
-            <div className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl ${colors.light} mb-8`}>
-              <Icon size={40} className={colors.text} />
+            {/* Breadcrumb Navigation */}
+            <div className="flex items-center gap-3 mb-8">
+              <Link href="/industries" className="text-charcoal-500 hover:text-slate-400 text-sm transition-colors">
+                Industries
+              </Link>
+              <ChevronRight size={14} className="text-charcoal-600" />
+              <span className="text-slate-400 text-sm font-medium">{industry.title}</span>
             </div>
 
-            <h1 className="text-5xl md:text-6xl font-heading font-black text-white leading-[0.95] mb-6">
-              {industry.title}
+            {/* Badge with Icon */}
+            <div className="flex items-center gap-3 mb-8">
+              <div className="flex items-center gap-2 px-4 py-2 bg-slate-500/10 border border-slate-500/20 rounded-sm">
+                <Icon size={16} className="text-slate-400" />
+                <span className="text-slate-400 text-xs font-bold uppercase tracking-widest">
+                  Industry Expertise
+                </span>
+              </div>
+              <div className="h-6 w-px bg-white/20" />
+              <span className="text-charcoal-400 text-sm">
+                <span className="text-slate-400 font-semibold">{industry.marketSize}</span> market size
+              </span>
+            </div>
+
+            {/* Main Headline */}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-white leading-[0.95] mb-6">
+              {industry.title}{' '}
+              <span className={`text-transparent bg-clip-text bg-gradient-to-r ${accentColors.gradient}`}>
+                Staffing
+              </span>
             </h1>
 
-            <p className="text-xl text-gold-400 font-medium mb-6">
+            {/* Tagline */}
+            <p className="text-xl text-gold-400 font-medium mb-4">
               {industry.tagline}
             </p>
 
-            <p className="text-lg text-charcoal-300 font-light leading-relaxed mb-8 max-w-3xl">
+            {/* Description */}
+            <p className="text-lg text-charcoal-300/90 font-light max-w-3xl mb-10 leading-relaxed">
               {industry.description}
             </p>
 
-            <div className="flex flex-wrap gap-6">
+            {/* CTAs - Angled, NOT rounded-full */}
+            <div className="flex flex-wrap gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-gold-500 to-gold-600 text-charcoal-900 rounded-full font-bold uppercase tracking-widest text-sm shadow-lg hover:shadow-xl transition-all"
+                className="group inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-gold-500 to-gold-600 text-charcoal-900 font-bold uppercase tracking-widest text-sm transition-all duration-300"
+                style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0% 100%)' }}
               >
                 Request Talent
-                <ArrowRight size={16} />
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </Link>
               <a
                 href="tel:+13076502850"
-                className="inline-flex items-center gap-3 px-10 py-5 bg-white/10 text-white border border-white/20 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-white/20 transition-all"
+                className="inline-flex items-center gap-3 px-10 py-5 border border-white/20 hover:border-slate-500/40 text-white hover:text-slate-400 font-bold uppercase tracking-widest text-sm transition-all duration-300"
               >
                 <Phone size={16} />
                 Talk to an Expert
@@ -402,19 +458,26 @@ export const IndustryDetailPage: React.FC<IndustryDetailPageProps> = ({ slug }) 
         </div>
       </section>
 
-      {/* Stats Bar */}
-      <section className="py-12 bg-white border-b border-charcoal-100">
-        <div className="container mx-auto px-6 lg:px-12">
+      {/* ============================================
+          STATS BAR
+          ============================================ */}
+      <section className="py-12 bg-white border-b border-charcoal-100 relative overflow-hidden">
+        {/* Subtle background */}
+        <div className="absolute inset-0 opacity-50">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_50%,rgba(100,116,139,0.02)_0%,transparent_50%)]" />
+        </div>
+
+        <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
-              <div className={`text-3xl font-heading font-black ${colors.text} mb-1`}>
+              <div className="text-3xl font-heading font-black text-slate-600 mb-1">
                 {industry.marketSize}
               </div>
               <div className="text-sm text-charcoal-500 uppercase tracking-widest">Market Size</div>
             </div>
             {industry.stats.map((stat, i) => (
               <div key={i} className="text-center">
-                <div className={`text-3xl font-heading font-black ${colors.text} mb-1`}>
+                <div className="text-3xl font-heading font-black text-slate-600 mb-1">
                   {stat.value}
                 </div>
                 <div className="text-sm text-charcoal-500 uppercase tracking-widest">{stat.label}</div>
@@ -424,21 +487,47 @@ export const IndustryDetailPage: React.FC<IndustryDetailPageProps> = ({ slug }) 
         </div>
       </section>
 
-      {/* Key Roles */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6 lg:px-12">
+      {/* ============================================
+          KEY ROLES SECTION
+          ============================================ */}
+      <section className="py-24 lg:py-28 bg-white relative overflow-hidden">
+        {/* Subtle background */}
+        <div className="absolute inset-0 opacity-50">
+          <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_80%,rgba(100,116,139,0.02)_0%,transparent_50%)]" />
+        </div>
+
+        <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-heading font-black text-charcoal-900 mb-8">
-              Key Roles We Fill
+            {/* Section Header */}
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-px bg-gold-500" />
+              <span className="text-gold-600 text-xs font-bold uppercase tracking-[0.2em]">
+                Talent Pool
+              </span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-heading font-black text-charcoal-900 mb-4">
+              Key Roles <span className="text-slate-600">We Fill</span>
             </h2>
+            <p className="text-lg text-charcoal-500 mb-12">
+              Pre-vetted professionals ready to drive your {industry.title.toLowerCase()} initiatives forward.
+            </p>
+
+            {/* Role Cards - Asymmetric layout */}
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
               {industry.keyRoles.map((role, i) => (
                 <div
                   key={i}
-                  className={`flex items-center gap-3 p-4 rounded-xl ${colors.light}`}
+                  className="group relative bg-white rounded-xl overflow-hidden shadow-elevation-sm hover:shadow-elevation-md border border-charcoal-100 transition-all duration-300"
                 >
-                  <Briefcase size={18} className={colors.text} />
-                  <span className="font-medium text-charcoal-800">{role}</span>
+                  {/* Accent bar */}
+                  <div className="absolute top-0 left-0 w-1 h-full bg-slate-500" />
+                  
+                  <div className="p-5 pl-6">
+                    <div className="flex items-center gap-3">
+                      <Briefcase size={16} className="text-slate-500 shrink-0" />
+                      <span className="font-medium text-charcoal-800 text-sm">{role}</span>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -446,23 +535,45 @@ export const IndustryDetailPage: React.FC<IndustryDetailPageProps> = ({ slug }) 
         </div>
       </section>
 
-      {/* Challenges & Solutions */}
-      <section className="py-20 bg-charcoal-50">
-        <div className="container mx-auto px-6 lg:px-12">
+      {/* ============================================
+          CHALLENGES & SOLUTIONS SECTION
+          ============================================ */}
+      <section className="py-24 lg:py-28 bg-ivory relative overflow-hidden">
+        <div className="absolute inset-0 opacity-50">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_20%,rgba(201,169,97,0.03)_0%,transparent_50%)]" />
+        </div>
+
+        <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <div className="max-w-5xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-12">
+            <div className="grid md:grid-cols-2 gap-16">
               {/* Challenges */}
               <div>
-                <h2 className="text-2xl font-heading font-bold text-charcoal-900 mb-6">
-                  Industry Challenges
+                {/* Section Header */}
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-px bg-gold-500" />
+                  <span className="text-gold-600 text-xs font-bold uppercase tracking-[0.2em]">
+                    Pain Points
+                  </span>
+                </div>
+                <h2 className="text-2xl md:text-3xl font-heading font-bold text-charcoal-900 mb-8">
+                  Industry <span className="text-slate-600">Challenges</span>
                 </h2>
+
                 <div className="space-y-4">
                   {industry.challenges.map((challenge, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <div className="w-6 h-6 rounded-full bg-charcoal-200 flex items-center justify-center shrink-0 mt-0.5">
-                        <span className="text-charcoal-600 text-sm">{i + 1}</span>
+                    <div
+                      key={i}
+                      className="group relative bg-white rounded-xl overflow-hidden shadow-elevation-sm border border-charcoal-100"
+                    >
+                      {/* Accent bar */}
+                      <div className="absolute top-0 left-0 w-1 h-full bg-charcoal-300" />
+                      
+                      <div className="p-5 pl-8 flex items-start gap-4">
+                        <div className="w-7 h-7 rounded-lg bg-charcoal-100 flex items-center justify-center shrink-0">
+                          <span className="text-charcoal-600 text-sm font-bold">{i + 1}</span>
+                        </div>
+                        <span className="text-charcoal-700 leading-relaxed">{challenge}</span>
                       </div>
-                      <span className="text-charcoal-700">{challenge}</span>
                     </div>
                   ))}
                 </div>
@@ -470,14 +581,30 @@ export const IndustryDetailPage: React.FC<IndustryDetailPageProps> = ({ slug }) 
 
               {/* Solutions */}
               <div>
-                <h2 className="text-2xl font-heading font-bold text-charcoal-900 mb-6">
-                  How We Solve Them
+                {/* Section Header */}
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-px bg-gold-500" />
+                  <span className="text-gold-600 text-xs font-bold uppercase tracking-[0.2em]">
+                    Our Approach
+                  </span>
+                </div>
+                <h2 className="text-2xl md:text-3xl font-heading font-bold text-charcoal-900 mb-8">
+                  How We <span className="text-forest-600">Solve Them</span>
                 </h2>
+
                 <div className="space-y-4">
                   {industry.solutions.map((solution, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <CheckCircle2 size={20} className={`${colors.text} shrink-0 mt-0.5`} />
-                      <span className="text-charcoal-700">{solution}</span>
+                    <div
+                      key={i}
+                      className="group relative bg-white rounded-xl overflow-hidden shadow-elevation-sm border border-charcoal-100"
+                    >
+                      {/* Accent bar */}
+                      <div className="absolute top-0 left-0 w-1 h-full bg-forest-500" />
+                      
+                      <div className="p-5 pl-8 flex items-start gap-4">
+                        <CheckCircle2 size={20} className="text-forest-500 shrink-0 mt-0.5" />
+                        <span className="text-charcoal-700 leading-relaxed">{solution}</span>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -487,19 +614,36 @@ export const IndustryDetailPage: React.FC<IndustryDetailPageProps> = ({ slug }) 
         </div>
       </section>
 
-      {/* Certifications */}
+      {/* ============================================
+          CERTIFICATIONS SECTION
+          ============================================ */}
       {industry.certifications && (
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-6 lg:px-12">
+        <section className="py-20 lg:py-24 bg-white relative overflow-hidden">
+          <div className="absolute inset-0 opacity-50">
+            <div className="absolute bottom-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_80%,rgba(100,116,139,0.02)_0%,transparent_50%)]" />
+          </div>
+
+          <div className="container mx-auto px-6 lg:px-12 relative z-10">
             <div className="max-w-5xl mx-auto">
-              <h2 className="text-2xl font-heading font-bold text-charcoal-900 mb-6 text-center">
-                Our Certifications & Expertise
-              </h2>
+              {/* Section Header - Centered */}
+              <div className="text-center mb-12">
+                <div className="flex items-center justify-center gap-3 mb-6">
+                  <div className="w-12 h-px bg-gold-500" />
+                  <span className="text-gold-600 text-xs font-bold uppercase tracking-[0.2em]">
+                    Expertise
+                  </span>
+                  <div className="w-12 h-px bg-gold-500" />
+                </div>
+                <h2 className="text-2xl md:text-3xl font-heading font-bold text-charcoal-900">
+                  Our <span className="text-slate-600">Certifications</span>
+                </h2>
+              </div>
+
               <div className="flex flex-wrap justify-center gap-3">
                 {industry.certifications.map((cert, i) => (
                   <span
                     key={i}
-                    className={`px-4 py-2 rounded-full ${colors.light} ${colors.text} font-medium text-sm`}
+                    className="px-5 py-2.5 bg-slate-50 border border-slate-200 text-slate-700 font-medium text-sm rounded-sm"
                   >
                     {cert}
                   </span>
@@ -510,52 +654,104 @@ export const IndustryDetailPage: React.FC<IndustryDetailPageProps> = ({ slug }) 
         </section>
       )}
 
-      {/* Case Study */}
+      {/* ============================================
+          CASE STUDY SECTION
+          ============================================ */}
       {industry.caseStudy && (
-        <section className="py-20 bg-charcoal-900">
-          <div className="container mx-auto px-6 lg:px-12">
+        <section className="py-24 lg:py-28 bg-[#0B1A14] relative overflow-hidden">
+          {/* Background */}
+          <div className="absolute inset-0">
+            <div 
+              className="absolute top-0 right-0 w-[50%] h-[70%] rounded-bl-[40%]"
+              style={{
+                background: 'radial-gradient(ellipse at 70% 30%, rgba(100, 116, 139, 0.08) 0%, transparent 60%)',
+              }}
+            />
+            <div 
+              className="absolute bottom-0 left-0 w-[40%] h-[50%] rounded-tr-[50%]"
+              style={{
+                background: 'radial-gradient(ellipse at 20% 80%, rgba(201, 169, 97, 0.06) 0%, transparent 50%)',
+              }}
+            />
+          </div>
+
+          <div className="container mx-auto px-6 lg:px-12 relative z-10">
             <div className="max-w-4xl mx-auto">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-500/10 text-gold-400 text-xs font-bold uppercase tracking-widest mb-6">
-                <Award size={14} />
-                Case Study
+              {/* Badge */}
+              <div className="flex items-center gap-3 mb-8">
+                <div className="flex items-center gap-2 px-4 py-2 bg-gold-500/10 border border-gold-500/20 rounded-sm">
+                  <Award size={16} className="text-gold-400" />
+                  <span className="text-gold-400 text-xs font-bold uppercase tracking-widest">
+                    Case Study
+                  </span>
+                </div>
               </div>
-              <h2 className="text-3xl font-heading font-bold text-white mb-6">
+
+              <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-6">
                 {industry.caseStudy.client}
               </h2>
-              <p className="text-xl text-charcoal-300 mb-4">
+
+              <p className="text-xl text-charcoal-300 mb-8 leading-relaxed">
                 {industry.caseStudy.result}
               </p>
-              <div className="inline-block bg-gold-500/20 px-6 py-3 rounded-xl">
-                <span className="text-gold-400 font-bold">{industry.caseStudy.metric}</span>
+
+              <div className="inline-flex items-center gap-3 px-6 py-4 bg-gold-500/10 border border-gold-500/20 rounded-sm">
+                <Target size={20} className="text-gold-400" />
+                <span className="text-gold-400 font-bold text-lg">{industry.caseStudy.metric}</span>
               </div>
             </div>
           </div>
         </section>
       )}
 
-      {/* CTA */}
-      <section className="py-20 bg-gradient-to-br from-forest-900 to-charcoal-900">
-        <div className="container mx-auto px-6 lg:px-12">
+      {/* ============================================
+          CTA SECTION
+          ============================================ */}
+      <section className="py-20 lg:py-24 bg-gradient-to-br from-slate-900 via-charcoal-900 to-charcoal-950 relative overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-slate-500/10 rounded-full blur-[120px]" />
+          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-gold-500/10 rounded-full blur-[100px]" />
+        </div>
+
+        <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-heading font-black text-white mb-6">
-              Ready to Build Your {industry.title} Team?
+            {/* Section Header */}
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="w-12 h-px bg-gold-500" />
+              <span className="text-gold-400 text-xs font-bold uppercase tracking-[0.2em]">
+                Get Started
+              </span>
+              <div className="w-12 h-px bg-gold-500" />
+            </div>
+
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-black text-white mb-6 leading-tight">
+              Ready to Build Your{' '}
+              <span className={`text-transparent bg-clip-text bg-gradient-to-r ${accentColors.gradient}`}>
+                {industry.title}
+              </span>{' '}
+              Team?
             </h2>
-            <p className="text-lg text-charcoal-300 mb-8">
+            <p className="text-lg text-slate-300/80 font-light max-w-xl mx-auto mb-10">
               Get matched with pre-vetted professionals in 48 hours.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-gold-500 to-gold-600 text-charcoal-900 rounded-full font-bold uppercase tracking-widest text-sm shadow-lg hover:shadow-xl transition-all"
+                className="group px-10 py-5 bg-gradient-to-r from-gold-500 to-gold-600 text-charcoal-900 font-bold uppercase tracking-widest text-sm transition-all duration-300 flex items-center gap-3"
+                style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0% 100%)' }}
               >
-                Request Talent
-                <ArrowRight size={16} />
+                <Zap size={18} />
+                Request Talent Now
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </Link>
+
               <Link
-                href="/careers/available-talent"
-                className="inline-flex items-center gap-3 px-10 py-5 bg-white/10 text-white border border-white/20 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-white/20 transition-all"
+                href="/industries"
+                className="px-10 py-5 border border-white/20 hover:border-slate-500/40 text-white hover:text-slate-400 font-bold uppercase tracking-widest text-sm transition-all duration-300 flex items-center gap-3"
               >
-                Browse Available Talent
+                Explore All Industries
               </Link>
             </div>
           </div>

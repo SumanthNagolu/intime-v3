@@ -1,11 +1,11 @@
 export const dynamic = "force-dynamic";
 import { MediaStudio } from '@/components/MediaStudio';
-import { AppLayout } from '@/components/AppLayout';
+import { AcademyLayout } from '@/components/AcademyLayout';
 
 export default function Page() {
   return (
-    <AppLayout showMentor>
+    <AcademyLayout showMentor>
       <MediaStudio />
-    </AppLayout>
+    </AcademyLayout>
   );
 }

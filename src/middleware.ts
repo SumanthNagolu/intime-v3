@@ -70,7 +70,7 @@ export async function middleware(request: NextRequest) {
     user = data.user;
   } catch (error) {
     // If there's an auth error (e.g., invalid refresh token), clear the user
-    console.error('Auth error in middleware:', error);
+    // Silently handle auth errors to avoid excessive logging
     user = null;
 
     // Clear invalid auth cookies
@@ -91,6 +91,7 @@ export async function middleware(request: NextRequest) {
     '/dashboard',
     '/admin',
     '/students',
+    '/employee',
     '/employees',
     '/candidates',
     '/clients',
@@ -126,8 +127,9 @@ export async function middleware(request: NextRequest) {
     return redirectResponse;
   }
 
-  // Redirect to dashboard if accessing auth pages while logged in
-  if (isAuthPath && user) {
+  // Allow users to explicitly sign out and return to login
+  // Only redirect if they're on the signup page (not login)
+  if (isAuthPath && user && request.nextUrl.pathname.startsWith('/signup')) {
     const redirectResponse = NextResponse.redirect(new URL('/dashboard', request.url));
 
     // Copy cookies to preserve session
