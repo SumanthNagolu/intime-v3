@@ -1,14 +1,13 @@
+export const dynamic = "force-dynamic";
 import { RecruitingJobsList } from '@/components/recruiting/RecruitingJobsList';
 import { AppLayout } from '@/components/AppLayout';
 import { RecruitingLayout } from '@/components/layouts/RecruitingLayout';
 
-export const dynamic = "force-dynamic";
-
 export default function Page() {
   return (
-    <AppLayout showMentor={true}>
+    <AppLayout>
       <RecruitingLayout>
-      <RecruitingJobsList />
+        <RecruitingJobsList />
       </RecruitingLayout>
     </AppLayout>
   );

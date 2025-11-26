@@ -7,8 +7,8 @@ export default function Page() {
   return (
     <AppLayout>
       <HRLayout>
-      <HRDashboard />
-          </HRLayout>
+        <HRDashboard />
+      </HRLayout>
     </AppLayout>
   );
 }

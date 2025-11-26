@@ -7,8 +7,8 @@ export default function Page() {
   return (
     <AppLayout>
       <ImmigrationLayout>
-      <CrossBorderDashboard />
-          </ImmigrationLayout>
+        <CrossBorderDashboard />
+      </ImmigrationLayout>
     </AppLayout>
   );
 }

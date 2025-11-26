@@ -7,8 +7,8 @@ export default function Page() {
   return (
     <AppLayout>
       <TALayout>
-      <SalesAnalytics />
-          </TALayout>
+        <SalesAnalytics />
+      </TALayout>
     </AppLayout>
   );
 }
