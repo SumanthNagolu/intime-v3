@@ -9,3 +9,5 @@ export default function TalentAuthPage() {
   return <AuthPage portal="talent" />;
 }
 
+
+

@@ -1,15 +1,14 @@
+export const dynamic = "force-dynamic";
 import { CohortDetail } from '@/components/academy/CohortDetail';
 import { AppLayout } from '@/components/AppLayout';
 import { AcademyLayout } from '@/components/layouts/AcademyLayout';
 
-export const dynamic = "force-dynamic";
-
 export default function Page() {
   return (
-    <AppLayout showMentor={true}>
+    <AppLayout>
       <AcademyLayout>
-      <CohortDetail />
-          </AcademyLayout>
+        <CohortDetail />
+      </AcademyLayout>
     </AppLayout>
   );
 }

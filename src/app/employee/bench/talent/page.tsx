@@ -1,12 +1,11 @@
+export const dynamic = "force-dynamic";
 import { BenchTalentList } from '@/components/bench/BenchTalentList';
 import { AppLayout } from '@/components/AppLayout';
 import { BenchLayout } from '@/components/layouts/BenchLayout';
 
-export const dynamic = "force-dynamic";
-
 export default function Page() {
   return (
-    <AppLayout showMentor={true}>
+    <AppLayout>
       <BenchLayout>
         <BenchTalentList />
       </BenchLayout>

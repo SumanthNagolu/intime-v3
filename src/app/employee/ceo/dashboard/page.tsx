@@ -7,8 +7,8 @@ export default function Page() {
   return (
     <AppLayout>
       <CEOLayout>
-      <CEODashboard />
-          </CEOLayout>
+        <CEODashboard />
+      </CEOLayout>
     </AppLayout>
   );
 }

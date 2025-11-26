@@ -7,8 +7,8 @@ export default function Page() {
   return (
     <AppLayout>
       <RecruitingLayout>
-      <RecruiterAnalytics />
-            </RecruitingLayout>
+        <RecruiterAnalytics />
+      </RecruitingLayout>
     </AppLayout>
   );
 }

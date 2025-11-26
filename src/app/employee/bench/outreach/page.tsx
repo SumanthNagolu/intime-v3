@@ -7,8 +7,8 @@ export default function Page() {
   return (
     <AppLayout>
       <BenchLayout>
-      <ClientOutreach />
-            </BenchLayout>
+        <ClientOutreach />
+      </BenchLayout>
     </AppLayout>
   );
 }

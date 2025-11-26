@@ -9,3 +9,5 @@ export default function AcademyAuthPage() {
   return <AuthPage portal="academy" />;
 }
 
+
+

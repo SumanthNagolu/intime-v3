@@ -1,14 +1,13 @@
+export const dynamic = "force-dynamic";
 import { ClientOutreach } from '@/components/bench/ClientOutreach';
 import { AppLayout } from '@/components/AppLayout';
 import { BenchLayout } from '@/components/layouts/BenchLayout';
 
-export const dynamic = "force-dynamic";
-
 export default function Page() {
   return (
-    <AppLayout showMentor={true}>
+    <AppLayout>
       <BenchLayout>
-      <ClientOutreach />
+        <ClientOutreach />
       </BenchLayout>
     </AppLayout>
   );

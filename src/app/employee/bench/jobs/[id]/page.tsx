@@ -1,14 +1,13 @@
+export const dynamic = "force-dynamic";
 import { JobHuntRoom } from '@/components/bench/JobHuntRoom';
 import { AppLayout } from '@/components/AppLayout';
 import { BenchLayout } from '@/components/layouts/BenchLayout';
 
-export const dynamic = "force-dynamic";
-
 export default function Page() {
   return (
-    <AppLayout showMentor={true}>
+    <AppLayout>
       <BenchLayout>
-      <JobHuntRoom />
+        <JobHuntRoom />
       </BenchLayout>
     </AppLayout>
   );

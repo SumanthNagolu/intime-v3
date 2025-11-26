@@ -1,12 +1,14 @@
+export const dynamic = "force-dynamic";
 import { SourcedCandidateDetail } from '@/components/sales/SourcedCandidateDetail';
 import { AppLayout } from '@/components/AppLayout';
-
-export const dynamic = "force-dynamic";
+import { TALayout } from '@/components/layouts/TALayout';
 
 export default function Page() {
   return (
-    <AppLayout showMentor={true}>
-      <SourcedCandidateDetail />
+    <AppLayout>
+      <TALayout>
+        <SourcedCandidateDetail />
+      </TALayout>
     </AppLayout>
   );
 }

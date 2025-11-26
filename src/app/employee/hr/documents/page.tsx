@@ -1,15 +1,14 @@
+export const dynamic = "force-dynamic";
 import { Documents } from '@/components/hr/Documents';
 import { AppLayout } from '@/components/AppLayout';
 import { HRLayout } from '@/components/layouts/HRLayout';
 
-export const dynamic = "force-dynamic";
-
 export default function Page() {
   return (
-    <AppLayout showMentor={true}>
+    <AppLayout>
       <HRLayout>
-      <Documents />
-          </HRLayout>
+        <Documents />
+      </HRLayout>
     </AppLayout>
   );
 }

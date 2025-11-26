@@ -1,14 +1,14 @@
 export const dynamic = "force-dynamic";
 import { RecruiterDashboard } from '@/components/recruiting/RecruiterDashboard';
-import { EmployeeLayout } from '@/components/layouts/EmployeeLayout';
+import { AppLayout } from '@/components/AppLayout';
 import { RecruitingLayout } from '@/components/layouts/RecruitingLayout';
 
 export default function Page() {
   return (
-    <EmployeeLayout>
+    <AppLayout>
       <RecruitingLayout>
         <RecruiterDashboard />
       </RecruitingLayout>
-    </EmployeeLayout>
+    </AppLayout>
   );
 }

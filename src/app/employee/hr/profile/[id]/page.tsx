@@ -1,12 +1,14 @@
+export const dynamic = "force-dynamic";
 import { EmployeeProfile } from '@/components/hr/EmployeeProfile';
 import { AppLayout } from '@/components/AppLayout';
-
-export const dynamic = "force-dynamic";
+import { HRLayout } from '@/components/layouts/HRLayout';
 
 export default function Page() {
   return (
-    <AppLayout showMentor={true}>
-      <EmployeeProfile />
+    <AppLayout>
+      <HRLayout>
+        <EmployeeProfile />
+      </HRLayout>
     </AppLayout>
   );
 }
