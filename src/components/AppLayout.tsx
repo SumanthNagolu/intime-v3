@@ -5,6 +5,7 @@ import { SystemBar } from './SystemBar';
 import { Navbar } from './Navbar';
 import { GlobalCommand } from './GlobalCommand';
 import { AIMentor } from './AIMentor';
+import { TwinWidgetWrapper } from './twin';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -62,6 +63,9 @@ export const AppLayout = ({ children, showMentor = false }: AppLayoutProps) => {
       </div>
 
       {showMentor && <AIMentor />}
+
+      {/* AI Twin Floating Widget - Always visible for authenticated users */}
+      <TwinWidgetWrapper />
     </div>
   );
 };

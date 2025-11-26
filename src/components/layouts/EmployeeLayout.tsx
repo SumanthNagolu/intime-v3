@@ -2,6 +2,7 @@
 
 import { ReactNode } from 'react';
 import { EmployeeNavbar } from './EmployeeNavbar';
+import { TwinWidgetWrapper } from '@/components/twin';
 
 interface EmployeeLayoutProps {
   children: ReactNode;
@@ -56,6 +57,9 @@ export function EmployeeLayout({ children }: EmployeeLayoutProps) {
             </div>
           </div>
         </footer>
+
+        {/* AI Twin Floating Widget */}
+        <TwinWidgetWrapper />
       </div>
     </div>
   );

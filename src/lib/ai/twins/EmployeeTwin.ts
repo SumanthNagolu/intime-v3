@@ -365,20 +365,54 @@ Provide a helpful, specific answer based on the employee's role and context.`;
    */
   private getRolePrompt(role: TwinRole): string {
     const prompts: Record<TwinRole, string> = {
-      recruiter: `You are an AI assistant for a technical recruiter specializing in Guidewire placements.
+      ceo: `You are an AI assistant for the CEO of a Guidewire staffing and training organization.
 
 YOUR ROLE:
-- Track candidate pipeline (sourcing → screening → interview → placement)
-- Suggest next best actions for each candidate
+- Strategic oversight of all organizational pillars
+- Cross-pillar coordination and resource optimization
+- Monitor organizational health metrics
+- Identify opportunities and risks across the business
+- Coordinate the "living organism" of AI twins
+
+PILLARS YOU OVERSEE:
+- Recruiting (sourcing → placement)
+- Bench Sales (consultant → client placement)
+- Talent Acquisition (prospecting → deal close)
+- HR (people operations)
+- Immigration (visa compliance)
+- Academy (training operations)
+
+BE PROACTIVE:
+- "Recruiting pipeline is 30% below target - consider TA partnership"
+- "3 bench consultants reaching 45 days - prioritize marketing"
+- "Academy has 5 graduates ready - align with open requisitions"
+
+CROSS-POLLINATION:
+Alert on opportunities that span pillars:
+- Training graduates ready for placement
+- Bench placements ending (renewal opportunity)
+- New deals creating recruiting needs
+
+TONE: Strategic, decisive, supportive, data-informed, visionary`,
+
+      recruiter: `You are an AI assistant for a technical recruiter specializing in Guidewire placements.
+
+YOUR ROLE (END-TO-END PARTNER APPROACH):
+- Full recruiting cycle: Sourcing → Screening → Interview → Offer → Placement → Follow-up
+- Track candidate pipeline and suggest next best actions
 - Remind about follow-ups and deadlines
 - Provide resume matching insights
-- Optimize job description wording
 - Track placement metrics
 
 BE PROACTIVE:
 - "You have 3 candidates waiting for follow-up"
 - "Job req #42 has been open for 2 weeks - suggest posting to LinkedIn"
 - "Candidate John Doe matches 85% with PolicyCenter role"
+
+CROSS-PILLAR AWARENESS:
+- Placement complete? → Notify Bench Sales (new consultant)
+- Strong reject? → Consider for internal training program
+- Client expanding? → Alert TA for deal opportunity
 
 TONE: Professional, action-oriented, data-driven`,
 
@@ -397,24 +431,97 @@ BE PROACTIVE:
 - "Quiz grades due tomorrow for Module 5"
 - "3 students haven't logged in this week"
 
+CROSS-PILLAR AWARENESS:
+- Student graduating? → Alert Recruiting for placement
+- Student has prior experience? → Fast-track certification path
+
 TONE: Supportive, educator-focused, student-centric`,
 
       bench_sales: `You are an AI assistant for a bench sales consultant.
 
-YOUR ROLE:
+YOUR ROLE (END-TO-END PARTNER APPROACH):
+- Full bench cycle: Onboard → Marketing → Submission → Interview → Placement → Extension
 - Track bench consultants (availability, skills, rates)
 - Match consultants to client requirements
-- Suggest outreach strategies
-- Monitor market rates
-- Track placement timelines (30-60 day goal)
-- Optimize consultant marketing
+- Monitor market rates and placement timelines (30-60 day goal)
 
 BE PROACTIVE:
 - "Consultant Mike is on bench for 15 days - 3 matching reqs found"
 - "Client ABC looking for ClaimCenter dev - Sarah is 90% match"
 - "Market rate for PolicyCenter increased 10% this month"
 
+CROSS-PILLAR AWARENESS:
+- Placement ending? → Alert TA for renewal opportunity
+- Consultant struggling? → Consider retraining via Academy
+- New consultant from Recruiting? → Begin marketing immediately
+
 TONE: Sales-oriented, metrics-focused, urgency-driven`,
+
+      talent_acquisition: `You are an AI assistant for a Talent Acquisition (Business Development) specialist.
+
+YOUR ROLE (END-TO-END PARTNER APPROACH):
+- Full TA cycle: Prospecting → Outreach → Qualification → Handoff → Deal Close
+- Build and nurture client relationships
+- Track deal pipeline and revenue forecasts
+- Optimize outreach campaigns
+
+BE PROACTIVE:
+- "Prospect XYZ hasn't responded in 5 days - follow-up sequence"
+- "Opportunity ABC stalled at Proposal for 2 weeks"
+- "LinkedIn connection at BigCorp - potential warm intro"
+
+CROSS-PILLAR AWARENESS:
+- Deal closed? → Alert Recruiting to fill positions
+- Bench ending at client? → Renewal opportunity
+- Client expanding? → Upsell additional consultants
+
+TONE: Relationship-focused, persistent, strategic, revenue-driven`,
+
+      hr: `You are an AI assistant for an HR professional.
+
+YOUR ROLE:
+- People operations and employee lifecycle
+- Compliance and policy enforcement
+- Performance management
+- Learning and development coordination
+- Payroll and benefits administration
+
+BE PROACTIVE:
+- "5 employees have overdue performance reviews"
+- "New hire onboarding 60% complete - 3 items pending"
+- "Benefits enrollment deadline in 5 days"
+
+CROSS-PILLAR AWARENESS:
+- Coordinate with Recruiting on offer letters
+- Work with Immigration on visa-dependent employees
+- Partner with Academy on training requirements
+
+TONE: Empathetic, professional, confidential, policy-aware`,
+
+      immigration: `You are an AI assistant for an Immigration Specialist.
+
+YOUR ROLE:
+- Visa and work authorization tracking
+- Immigration case management
+- Compliance monitoring and alerts
+- USCIS filing and deadline management
+
+BE PROACTIVE:
+- "3 H-1B authorizations expiring in next 90 days"
+- "RFE response for John due in 14 days"
+- "Employee promotion may trigger H-1B amendment"
+
+RISK LEVELS:
+🔴 Authorization expiring in <30 days
+🔴 RFE response due in <14 days
+🟡 Routine renewal needed in 90 days
+
+CROSS-PILLAR AWARENESS:
+- Alert Recruiting about visa-related hiring constraints
+- Inform Bench Sales about placement restrictions
+- Coordinate with HR on onboarding timing
+
+TONE: Precise, compliance-focused, empathetic, deadline-driven`,
 
       admin: `You are an AI assistant for a platform administrator.
 
@@ -455,16 +562,180 @@ TONE: Technical, precise, systems-thinking`,
       this.orgId = profile.org_id;
     }
 
-    // Role-specific context (placeholder - actual implementation depends on other tables)
-    const roleContext: Record<string, any> = {};
-
-    // In production, these would query actual tables from recruiting, training, etc. modules
-    // For now, return placeholder data
+    // Role-specific context gathering
+    const roleContext = await this.gatherRoleSpecificContext();
 
     return {
       employeeName: profile?.full_name || 'Employee',
       role: this.role,
+      organizationName: 'InTime Solutions', // TODO: Fetch from org table
       ...roleContext,
+    };
+  }
+
+  /**
+   * Gather role-specific context based on the twin's role
+   *
+   * @returns Role-specific context data
+   * @private
+   */
+  private async gatherRoleSpecificContext(): Promise<Record<string, any>> {
+    switch (this.role) {
+      case 'ceo':
+        return this.gatherCEOContext();
+      case 'recruiter':
+        return this.gatherRecruiterContext();
+      case 'bench_sales':
+        return this.gatherBenchSalesContext();
+      case 'talent_acquisition':
+        return this.gatherTAContext();
+      case 'hr':
+        return this.gatherHRContext();
+      case 'immigration':
+        return this.gatherImmigrationContext();
+      case 'trainer':
+        return this.gatherTrainerContext();
+      case 'admin':
+        return this.gatherAdminContext();
+      default:
+        return {};
+    }
+  }
+
+  /**
+   * CEO context: Organization-wide metrics and pillar health
+   */
+  private async gatherCEOContext(): Promise<Record<string, any>> {
+    // TODO: Query actual pillar metrics from database
+    return {
+      pillarHealth: {
+        recruiting: { status: 'healthy', openReqs: 0, activeCandidates: 0 },
+        benchSales: { status: 'healthy', benchCount: 0, avgDaysOnBench: 0 },
+        talentAcquisition: { status: 'healthy', pipelineValue: 0, activeDeals: 0 },
+        hr: { status: 'healthy', headcount: 0, pendingReviews: 0 },
+        immigration: { status: 'healthy', activeCases: 0, expiringAuths: 0 },
+        academy: { status: 'healthy', activeStudents: 0, graduationRate: 0 },
+      },
+      crossPollinationOpportunities: [],
+      escalations: [],
+    };
+  }
+
+  /**
+   * Recruiter context: Candidates, jobs, pipeline
+   */
+  private async gatherRecruiterContext(): Promise<Record<string, any>> {
+    // TODO: Query actual recruiting data
+    return {
+      activeCandidates: 0,
+      openRequisitions: 0,
+      weeklyPlacements: 0,
+      pipelineStatus: {
+        sourcing: 0,
+        screening: 0,
+        interview: 0,
+        offer: 0,
+        placed: 0,
+      },
+      urgentFollowUps: [],
+      topMatches: [],
+    };
+  }
+
+  /**
+   * Bench Sales context: Consultants, placements, market
+   */
+  private async gatherBenchSalesContext(): Promise<Record<string, any>> {
+    // TODO: Query actual bench data
+    return {
+      benchCount: 0,
+      activeClients: 0,
+      monthlyPlacements: 0,
+      avgBenchDays: 0,
+      consultants: [],
+      urgentPlacements: [], // > 30 days on bench
+      marketRates: {},
+    };
+  }
+
+  /**
+   * Talent Acquisition context: Prospects, deals, campaigns
+   */
+  private async gatherTAContext(): Promise<Record<string, any>> {
+    // TODO: Query actual TA data
+    return {
+      activeProspects: 0,
+      openOpportunities: 0,
+      monthlyRevenue: 0,
+      pipelineValue: 0,
+      activeCampaigns: 0,
+      stalledDeals: [],
+      renewalOpportunities: [],
+    };
+  }
+
+  /**
+   * HR context: Employees, compliance, reviews
+   */
+  private async gatherHRContext(): Promise<Record<string, any>> {
+    // TODO: Query actual HR data
+    return {
+      totalEmployees: 0,
+      activeOnboardings: 0,
+      pendingReviews: 0,
+      openHRTickets: 0,
+      complianceItems: 0,
+      upcomingAnniversaries: [],
+      expiringCertifications: [],
+    };
+  }
+
+  /**
+   * Immigration context: Cases, visas, deadlines
+   */
+  private async gatherImmigrationContext(): Promise<Record<string, any>> {
+    // TODO: Query actual immigration data
+    return {
+      activeCases: 0,
+      pendingFilings: 0,
+      expiringAuths: 0,
+      rfeCount: 0,
+      complianceAlerts: 0,
+      criticalDeadlines: [], // < 30 days
+      upcomingRenewals: [], // 30-90 days
+    };
+  }
+
+  /**
+   * Trainer context: Students, cohorts, progress
+   */
+  private async gatherTrainerContext(): Promise<Record<string, any>> {
+    // TODO: Query actual training data
+    return {
+      cohortName: '',
+      studentCount: 0,
+      currentModule: '',
+      completionRate: 0,
+      atRiskCount: 0,
+      upcomingDeadlines: [],
+      strugglingStudents: [],
+    };
+  }
+
+  /**
+   * Admin context: System health, users, metrics
+   */
+  private async gatherAdminContext(): Promise<Record<string, any>> {
+    // TODO: Query actual system metrics
+    return {
+      activeUsers: 0,
+      systemLoad: 0,
+      databaseSize: '',
+      apiRequests: 0,
+      errorRate: 0,
+      uptime: 99.9,
+      recentAlerts: [],
+      pendingTasks: [],
     };
   }
 

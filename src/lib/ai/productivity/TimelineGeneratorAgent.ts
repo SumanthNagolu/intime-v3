@@ -12,7 +12,8 @@
 
 import { BaseAgent } from '../agents/BaseAgent';
 import { ActivityClassifierAgent, type DailySummary } from './ActivityClassifierAgent';
-import { createClient } from '@/lib/supabase/client';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import type { Database } from '@/types/supabase';
 import OpenAI from 'openai';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -45,10 +46,10 @@ export class TimelineGeneratorAgent extends BaseAgent<
   { userId: string; date: string },
   DailyReport
 > {
-  private supabase = createClient();
-  private classifier = new ActivityClassifierAgent();
+  private supabase: SupabaseClient<Database>;
+  private classifier: ActivityClassifierAgent;
 
-  constructor() {
+  constructor(supabase: SupabaseClient<Database>) {
     super({
       agentName: 'timeline_generator',
       enableCostTracking: true,
@@ -57,6 +58,8 @@ export class TimelineGeneratorAgent extends BaseAgent<
         useCase: 'productivity_timeline',
       },
     });
+    this.supabase = supabase;
+    this.classifier = new ActivityClassifierAgent(supabase);
   }
 
   /**

@@ -11,7 +11,8 @@
  */
 
 import { BaseAgent } from '../agents/BaseAgent';
-import { createClient } from '@/lib/supabase/client';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import type { Database } from '@/types/supabase';
 import OpenAI from 'openai';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -61,9 +62,9 @@ export interface DailySummary {
  * ```
  */
 export class ActivityClassifierAgent extends BaseAgent<string, ActivityClassification> {
-  private supabase = createClient();
+  private supabase: SupabaseClient<Database>;
 
-  constructor() {
+  constructor(supabase: SupabaseClient<Database>) {
     super({
       agentName: 'activity_classifier',
       enableCostTracking: true,
@@ -72,6 +73,7 @@ export class ActivityClassifierAgent extends BaseAgent<string, ActivityClassific
         useCase: 'productivity_tracking',
       },
     });
+    this.supabase = supabase;
   }
 
   /**

@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
     console.log('[ClassifyScreenshots] Starting batch classification job');
 
     const supabase = await createClient();
-    const classifier = new ActivityClassifierAgent();
+    const classifier = new ActivityClassifierAgent(supabase);
 
     // Get all users with unanalyzed screenshots
     const { data: unanalyzedUsers, error } = await supabase

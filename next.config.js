@@ -23,48 +23,19 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
 
+  // Exclude problematic packages from server bundling
+  serverExternalPackages: ['@supabase/supabase-js', '@supabase/realtime-js', '@supabase/ssr'],
+
   experimental: {
     // Enable server components by default
     serverActions: {
       allowedOrigins: ['localhost:3000'],
     },
     // Optimize package imports
-    optimizePackageImports: ['@supabase/supabase-js', 'react-icons', 'date-fns'],
+    optimizePackageImports: ['react-icons', 'date-fns'],
   },
 
   webpack: (config, { dev, isServer }) => {
-    // Production optimizations
-    if (!dev) {
-      config.optimization = {
-        ...config.optimization,
-        moduleIds: 'deterministic',
-        runtimeChunk: 'single',
-        splitChunks: {
-          chunks: 'all',
-          cacheGroups: {
-            default: false,
-            vendors: false,
-            // Vendor chunk
-            vendor: {
-              name: 'vendor',
-              chunks: 'all',
-              test: /node_modules/,
-              priority: 20
-            },
-            // Common chunk
-            common: {
-              name: 'common',
-              minChunks: 2,
-              chunks: 'all',
-              priority: 10,
-              reuseExistingChunk: true,
-              enforce: true
-            }
-          }
-        }
-      };
-    }
-
     // Suppress warnings from OpenTelemetry and require-in-the-middle
     config.ignoreWarnings = [
       /Critical dependency: the request of a dependency is an expression/,
