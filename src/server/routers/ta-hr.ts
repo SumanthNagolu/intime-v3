@@ -286,7 +286,7 @@ export const taHrRouter = router({
           .where(and(...conditions))
           .limit(limit)
           .offset(offset)
-          .orderBy(employeeMetadata.firstName);
+          .orderBy(employeeMetadata.userId);
 
         return results;
       }),
@@ -363,7 +363,7 @@ export const taHrRouter = router({
 
         const employees = await db.select().from(employeeMetadata)
           .where(eq(employeeMetadata.orgId, orgId))
-          .orderBy(employeeMetadata.firstName);
+          .orderBy(employeeMetadata.userId);
 
         return employees;
       }),

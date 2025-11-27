@@ -266,7 +266,7 @@ export const crmRouter = router({
         const [newDeal] = await db.insert(deals).values({
           ...input.dealData,
           orgId,
-          accountId: lead.accountId,
+          accountId: lead.convertedToAccountId,
           leadSource: lead.source,
           ownerId: lead.ownerId,
           createdBy: userId,

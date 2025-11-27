@@ -9,7 +9,7 @@
  * - Supabase client
  */
 
-import { createClient } from '@/lib/supabase/server';
+import { createClient, createAdminClient } from '@/lib/supabase/server';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 /**
@@ -29,13 +29,28 @@ export async function createContext() {
   if (user) {
     userId = user.id;
 
-    // Get user's org_id from profile with error handling
+    // Get user's org_id from profile using admin client to bypass RLS
+    // (RLS policies on user_profiles can cause stack depth exceeded errors)
     try {
-      const { data: profile, error } = await supabase
+      const adminClient = createAdminClient();
+
+      // First try by id (default case)
+      let { data: profile, error } = await adminClient
         .from('user_profiles')
         .select('org_id')
         .eq('id', userId)
         .maybeSingle();
+
+      // If not found by id, try by auth_id
+      if (!profile && !error) {
+        const result = await adminClient
+          .from('user_profiles')
+          .select('org_id')
+          .eq('auth_id', userId)
+          .maybeSingle();
+        profile = result.data;
+        error = result.error;
+      }
 
       if (!error && profile) {
         orgId = profile.org_id || null;
