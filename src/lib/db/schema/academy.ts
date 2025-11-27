@@ -240,3 +240,50 @@ export const escalations = pgTable('escalations', {
     created_at: timestamp('created_at').defaultNow().notNull(),
     resolved_at: timestamp('resolved_at'),
 });
+
+// Course Pricing
+export const coursePricing = pgTable('course_pricing', {
+    id: uuid('id').defaultRandom().primaryKey(),
+    course_id: uuid('course_id').references(() => courses.id, { onDelete: 'cascade' }).notNull().unique(),
+    price_monthly: integer('price_monthly'),
+    price_annual: integer('price_annual'),
+    price_one_time: integer('price_one_time'),
+    stripe_price_id_monthly: text('stripe_price_id_monthly'),
+    stripe_price_id_annual: text('stripe_price_id_annual'),
+    stripe_price_id_one_time: text('stripe_price_id_one_time'),
+    stripe_product_id: text('stripe_product_id'),
+    early_bird_price: integer('early_bird_price'),
+    early_bird_valid_until: timestamp('early_bird_valid_until'),
+    scholarship_available: boolean('scholarship_available').default(false),
+    scholarship_criteria: text('scholarship_criteria'),
+    team_discount_percentage: integer('team_discount_percentage'),
+    min_team_size: integer('min_team_size').default(5),
+    created_at: timestamp('created_at').defaultNow().notNull(),
+    updated_at: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// Pricing Plans
+export const pricingPlans = pgTable('pricing_plans', {
+    id: uuid('id').defaultRandom().primaryKey(),
+    name: text('name').notNull().unique(),
+    description: text('description'),
+    slug: text('slug').notNull().unique(),
+    plan_type: text('plan_type').notNull(),
+    price_monthly: integer('price_monthly'),
+    price_annual: integer('price_annual'),
+    price_one_time: integer('price_one_time'),
+    stripe_price_id_monthly: text('stripe_price_id_monthly'),
+    stripe_price_id_annual: text('stripe_price_id_annual'),
+    stripe_price_id_one_time: text('stripe_price_id_one_time'),
+    stripe_product_id: text('stripe_product_id'),
+    features: jsonb('features').default([]),
+    max_courses: integer('max_courses'),
+    max_users: integer('max_users'),
+    display_order: integer('display_order').default(0),
+    is_featured: boolean('is_featured').default(false),
+    badge_text: text('badge_text'),
+    is_active: boolean('is_active').default(true),
+    created_at: timestamp('created_at').defaultNow().notNull(),
+    updated_at: timestamp('updated_at').defaultNow().notNull(),
+    deleted_at: timestamp('deleted_at'),
+});

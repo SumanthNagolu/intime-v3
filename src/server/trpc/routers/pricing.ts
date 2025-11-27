@@ -12,6 +12,52 @@ import { z } from 'zod';
 import { router, publicProcedure, protectedProcedure } from '../trpc';
 import { TRPCError } from '@trpc/server';
 
+// Type assertion for tables not yet in Supabase generated types
+type CoursePricingTable = {
+  id: string;
+  course_id: string;
+  price_monthly: number | null;
+  price_annual: number | null;
+  price_one_time: number | null;
+  stripe_price_id_monthly: string | null;
+  stripe_price_id_annual: string | null;
+  stripe_price_id_one_time: string | null;
+  stripe_product_id: string | null;
+  early_bird_price: number | null;
+  early_bird_valid_until: string | null;
+  scholarship_available: boolean;
+  scholarship_criteria: string | null;
+  team_discount_percentage: number | null;
+  min_team_size: number;
+  created_at: string;
+  updated_at: string;
+};
+
+type PricingPlanTable = {
+  id: string;
+  name: string;
+  description: string | null;
+  slug: string;
+  plan_type: string;
+  price_monthly: number | null;
+  price_annual: number | null;
+  price_one_time: number | null;
+  stripe_price_id_monthly: string | null;
+  stripe_price_id_annual: string | null;
+  stripe_price_id_one_time: string | null;
+  stripe_product_id: string | null;
+  features: any;
+  max_courses: number | null;
+  max_users: number | null;
+  display_order: number;
+  is_featured: boolean;
+  badge_text: string | null;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+};
+
 export const pricingRouter = router({
   /**
    * Get all active pricing plans
@@ -20,12 +66,12 @@ export const pricingRouter = router({
    */
   getPlans: publicProcedure.query(async ({ ctx }) => {
     try {
-      const { data: plans, error } = await ctx.supabase
+      const { data: plans, error } = await (ctx.supabase as any)
         .from('pricing_plans')
         .select('*')
         .is('deleted_at', null)
         .eq('is_active', true)
-        .order('display_order', { ascending: true });
+        .order('display_order', { ascending: true }) as { data: PricingPlanTable[] | null; error: any };
 
       if (error) throw error;
 
@@ -66,7 +112,7 @@ export const pricingRouter = router({
       }
 
       try {
-        let query = ctx.supabase
+        let query = (ctx.supabase as any)
           .from('pricing_plans')
           .select('*')
           .is('deleted_at', null)
@@ -78,7 +124,7 @@ export const pricingRouter = router({
           query = query.eq('slug', input.slug);
         }
 
-        const { data: plan, error } = await query.single();
+        const { data: plan, error } = await query.single() as { data: PricingPlanTable | null; error: any };
 
         if (error) {
           if (error.code === 'PGRST116') {
@@ -119,11 +165,11 @@ export const pricingRouter = router({
     )
     .query(async ({ ctx, input }) => {
       try {
-        const { data: pricing, error } = await ctx.supabase
+        const { data: pricing, error } = await (ctx.supabase as any)
           .from('course_pricing')
           .select('*')
           .eq('course_id', input.courseId)
-          .single();
+          .single() as { data: CoursePricingTable | null; error: any };
 
         if (error && error.code !== 'PGRST116') {
           throw error;
@@ -198,7 +244,7 @@ export const pricingRouter = router({
       }
 
       try {
-        const { data: plan, error } = await ctx.supabase
+        const { data: plan, error } = await (ctx.supabase as any)
           .from('pricing_plans')
           .insert({
             name: input.name,
@@ -220,7 +266,7 @@ export const pricingRouter = router({
             badge_text: input.badge_text,
           })
           .select()
-          .single();
+          .single() as { data: PricingPlanTable | null; error: any };
 
         if (error) throw error;
 
@@ -290,13 +336,13 @@ export const pricingRouter = router({
       try {
         const { id, ...updates } = input;
 
-        const { data: plan, error } = await ctx.supabase
+        const { data: plan, error } = await (ctx.supabase as any)
           .from('pricing_plans')
           .update(updates)
           .eq('id', id)
           .is('deleted_at', null)
           .select()
-          .single();
+          .single() as { data: PricingPlanTable | null; error: any };
 
         if (error) {
           if (error.code === 'PGRST116') {
@@ -354,7 +400,7 @@ export const pricingRouter = router({
       }
 
       try {
-        const { error } = await ctx.supabase
+        const { error } = await (ctx.supabase as any)
           .from('pricing_plans')
           .update({ deleted_at: new Date().toISOString() })
           .eq('id', input.id)
@@ -422,7 +468,7 @@ export const pricingRouter = router({
       try {
         const { courseId, ...pricingData } = input;
 
-        const { data: pricing, error } = await ctx.supabase
+        const { data: pricing, error } = await (ctx.supabase as any)
           .from('course_pricing')
           .upsert(
             {
@@ -432,7 +478,7 @@ export const pricingRouter = router({
             { onConflict: 'course_id' }
           )
           .select()
-          .single();
+          .single() as { data: CoursePricingTable | null; error: any };
 
         if (error) throw error;
 

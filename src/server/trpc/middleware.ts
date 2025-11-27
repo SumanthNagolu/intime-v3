@@ -14,10 +14,10 @@ import { middleware, publicProcedure } from './init';
  * Middleware: Require authentication
  *
  * Throws UNAUTHORIZED error if user is not authenticated.
- * Narrows the context type to guarantee userId is non-null.
+ * Narrows the context type to guarantee userId and session are non-null.
  */
 export const isAuthenticated = middleware(async ({ ctx, next }) => {
-  if (!ctx.userId) {
+  if (!ctx.userId || !ctx.session) {
     throw new TRPCError({
       code: 'UNAUTHORIZED',
       message: 'Authentication required'
@@ -27,7 +27,8 @@ export const isAuthenticated = middleware(async ({ ctx, next }) => {
   return next({
     ctx: {
       ...ctx,
-      userId: ctx.userId // Type is now narrowed to string (not string | null)
+      userId: ctx.userId, // Type is now narrowed to string (not string | null)
+      session: ctx.session // Type is now narrowed to non-null
     }
   });
 });

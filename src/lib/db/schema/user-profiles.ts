@@ -21,7 +21,9 @@ export const userProfiles = pgTable('user_profiles', {
 
   // Core fields (ALL users)
   email: text('email').notNull().unique(),
-  fullName: text('full_name').notNull(),
+  firstName: text('first_name'),
+  lastName: text('last_name'),
+  fullName: text('full_name'), // Generated column in DB: first_name || ' ' || last_name
   avatarUrl: text('avatar_url'),
   phone: text('phone'),
   timezone: text('timezone').default('America/New_York'),
