@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { ChevronDown, Menu, X, User, LogOut, Settings, Bell } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { ChevronDown, Menu, X, User, LogOut, LayoutDashboard } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { createClient } from '@/lib/supabase/client';
+import type { User as SupabaseUser } from '@supabase/supabase-js';
 
 const NAVIGATION = {
   solutions: {
@@ -197,7 +199,49 @@ const NavDropdown: React.FC<{
 
 export const MarketingNavbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const pathname = usePathname();
+  const router = useRouter();
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  // Check auth state on mount and listen for changes
+  useEffect(() => {
+    const supabase = createClient();
+
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      setIsLoading(false);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Close user menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleSignOut = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    setUserMenuOpen(false);
+    router.push('/');
+    router.refresh();
+  };
 
   const getSecondWord = () => {
     if (pathname.startsWith('/academy')) return 'Academy';
@@ -259,12 +303,66 @@ export const MarketingNavbar: React.FC = () => {
               {NAVIGATION.academy.label}
             </Link>
 
-            <Link
-              href="/login"
-              className="px-6 py-2.5 bg-gradient-to-r from-gold-500 to-gold-600 text-charcoal-900 rounded-full font-bold text-xs uppercase tracking-widest shadow-sm hover:shadow-lg transition-all"
-            >
-              Sign In
-            </Link>
+            {/* Auth Button - Sign In or User Menu */}
+            {isLoading ? (
+              <div className="w-24 h-10 bg-charcoal-100 rounded-full animate-pulse" />
+            ) : user ? (
+              <div className="relative" ref={userMenuRef}>
+                <button
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  className="flex items-center gap-2 px-4 py-2 bg-forest-50 hover:bg-forest-100 rounded-full transition-colors"
+                >
+                  <div className="w-8 h-8 bg-gradient-to-br from-forest-500 to-forest-700 rounded-full flex items-center justify-center">
+                    <User size={16} className="text-white" />
+                  </div>
+                  <ChevronDown
+                    size={14}
+                    className={cn(
+                      'text-charcoal-600 transition-transform',
+                      userMenuOpen && 'rotate-180'
+                    )}
+                  />
+                </button>
+
+                {/* User Dropdown Menu */}
+                <div
+                  className={cn(
+                    'absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl py-2 border border-charcoal-100/50 z-50 transition-all duration-200',
+                    userMenuOpen
+                      ? 'opacity-100 visible translate-y-0'
+                      : 'opacity-0 invisible -translate-y-2 pointer-events-none'
+                  )}
+                >
+                  <div className="px-4 py-3 border-b border-charcoal-100">
+                    <p className="text-sm font-semibold text-charcoal-900 truncate">
+                      {user.email}
+                    </p>
+                  </div>
+                  <Link
+                    href="/login"
+                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-charcoal-600 hover:bg-forest-50 hover:text-forest-700 transition-colors"
+                    onClick={() => setUserMenuOpen(false)}
+                  >
+                    <LayoutDashboard size={16} />
+                    Go to Portal
+                  </Link>
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                  >
+                    <LogOut size={16} />
+                    Sign Out
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="px-6 py-2.5 bg-gradient-to-r from-gold-500 to-gold-600 text-charcoal-900 rounded-full font-bold text-xs uppercase tracking-widest shadow-sm hover:shadow-lg transition-all"
+              >
+                Sign In
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -311,13 +409,37 @@ export const MarketingNavbar: React.FC = () => {
             </Link>
 
             <div className="pt-4 border-t border-charcoal-100">
-              <Link
-                href="/login"
-                className="block w-full text-center px-6 py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-charcoal-900 rounded-full font-bold text-sm uppercase tracking-widest"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Sign In
-              </Link>
+              {user ? (
+                <div className="space-y-3">
+                  <div className="text-sm text-charcoal-500 px-1">
+                    Signed in as <span className="font-semibold text-charcoal-700">{user.email}</span>
+                  </div>
+                  <Link
+                    href="/login"
+                    className="block w-full text-center px-6 py-3 bg-forest-600 hover:bg-forest-700 text-white rounded-full font-bold text-sm uppercase tracking-widest transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Go to Portal
+                  </Link>
+                  <button
+                    onClick={() => {
+                      handleSignOut();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="block w-full text-center px-6 py-3 border border-red-200 text-red-600 hover:bg-red-50 rounded-full font-bold text-sm uppercase tracking-widest transition-colors"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  href="/login"
+                  className="block w-full text-center px-6 py-3 bg-gradient-to-r from-gold-500 to-gold-600 text-charcoal-900 rounded-full font-bold text-sm uppercase tracking-widest"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Sign In
+                </Link>
+              )}
             </div>
           </div>
         </div>
