@@ -360,6 +360,7 @@ export const LeadStatus = {
 
 export const DealStage = {
   DISCOVERY: 'discovery',
+  QUALIFICATION: 'qualification',
   PROPOSAL: 'proposal',
   NEGOTIATION: 'negotiation',
   CLOSED_WON: 'closed_won',

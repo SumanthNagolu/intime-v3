@@ -100,3 +100,16 @@ export {
   useCreateLeadActivity,
   useInvalidateAllLeadData,
 } from './leads';
+
+// Deals
+export {
+  useCreateDeal,
+  useUpdateDeal,
+  useUpdateDealStage,
+  useCloseDealWon,
+  useCloseDealLost,
+  useCreateDealActivity,
+  useDealActivities,
+  useDealPendingTasks,
+  useInvalidateAllDealData,
+} from './deals';
