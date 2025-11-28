@@ -38,6 +38,7 @@ import { benchRouter } from '../routers/bench';
 import { taHrRouter } from '../routers/ta-hr';
 import { dashboardRouter } from '../routers/dashboard';
 import { activitiesRouter } from '../routers/activities';
+import { strategyRouter } from '../routers/strategy';
 
 /**
  * App Router
@@ -81,6 +82,7 @@ export const appRouter = router({
   taHr: taHrRouter,
   dashboard: dashboardRouter,
   activities: activitiesRouter,
+  strategy: strategyRouter,
 });
 
 /**

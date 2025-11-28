@@ -12,13 +12,12 @@ import {
   deals,
   pointOfContacts,
   activityLog,
-  leadTasks,
   type Account,
   type Lead,
   type Deal,
   type PointOfContact,
-  type LeadTask
 } from '@/lib/db/schema/crm';
+// Note: leadTasks has been migrated to the unified activities system
 import { userProfiles } from '@/lib/db/schema/user-profiles';
 import {
   createAccountSchema,
@@ -529,155 +528,10 @@ export const crmRouter = router({
   }),
 
   // =====================================================
-  // LEAD TASKS
+  // LEAD TASKS - DEPRECATED
+  // Migrated to unified activities system.
+  // Use the activities router instead (activities.create with activityType: 'task')
   // =====================================================
-
-  leadTasks: router({
-    /**
-     * Get all tasks for a lead
-     */
-    list: orgProtectedProcedure
-      .input(z.object({
-        leadId: z.string().uuid(),
-        includeCompleted: z.boolean().default(true),
-      }))
-      .query(async ({ ctx, input }) => {
-        const { orgId } = ctx;
-
-        let query = db.select().from(leadTasks)
-          .where(and(
-            eq(leadTasks.leadId, input.leadId),
-            eq(leadTasks.orgId, orgId),
-            isNull(leadTasks.deletedAt)
-          ));
-
-        const tasks = await query.orderBy(desc(leadTasks.dueDate));
-
-        if (!input.includeCompleted) {
-          return tasks.filter(t => !t.completed);
-        }
-
-        return tasks;
-      }),
-
-    /**
-     * Create a new task
-     */
-    create: orgProtectedProcedure
-      .input(z.object({
-        leadId: z.string().uuid(),
-        title: z.string().min(1),
-        description: z.string().optional(),
-        dueDate: z.string(), // ISO date string
-        priority: z.enum(['low', 'medium', 'high']).default('medium'),
-      }))
-      .mutation(async ({ ctx, input }) => {
-        const { userId, orgId } = ctx;
-
-        // Get user profile ID for createdBy
-        const [userProfile] = await db.select({ id: userProfiles.id })
-          .from(userProfiles)
-          .where(eq(userProfiles.authId, userId))
-          .limit(1);
-
-        const [task] = await db.insert(leadTasks)
-          .values({
-            orgId,
-            leadId: input.leadId,
-            title: input.title,
-            description: input.description,
-            dueDate: input.dueDate,
-            priority: input.priority,
-            assignedTo: userProfile?.id,
-            createdBy: userProfile?.id,
-          })
-          .returning();
-
-        return task;
-      }),
-
-    /**
-     * Update a task
-     */
-    update: orgProtectedProcedure
-      .input(z.object({
-        id: z.string().uuid(),
-        title: z.string().min(1).optional(),
-        description: z.string().optional(),
-        dueDate: z.string().optional(),
-        priority: z.enum(['low', 'medium', 'high']).optional(),
-        completed: z.boolean().optional(),
-      }))
-      .mutation(async ({ ctx, input }) => {
-        const { userId, orgId } = ctx;
-
-        // Get user profile ID
-        const [userProfile] = await db.select({ id: userProfiles.id })
-          .from(userProfiles)
-          .where(eq(userProfiles.authId, userId))
-          .limit(1);
-
-        const updateData: Record<string, unknown> = {
-          updatedAt: new Date(),
-        };
-
-        if (input.title !== undefined) updateData.title = input.title;
-        if (input.description !== undefined) updateData.description = input.description;
-        if (input.dueDate !== undefined) updateData.dueDate = input.dueDate;
-        if (input.priority !== undefined) updateData.priority = input.priority;
-        if (input.completed !== undefined) {
-          updateData.completed = input.completed;
-          if (input.completed) {
-            updateData.completedAt = new Date();
-            updateData.completedBy = userProfile?.id;
-          } else {
-            updateData.completedAt = null;
-            updateData.completedBy = null;
-          }
-        }
-
-        const [updated] = await db.update(leadTasks)
-          .set(updateData)
-          .where(and(
-            eq(leadTasks.id, input.id),
-            eq(leadTasks.orgId, orgId)
-          ))
-          .returning();
-
-        if (!updated) {
-          throw new Error('Task not found or unauthorized');
-        }
-
-        return updated;
-      }),
-
-    /**
-     * Delete a task (soft delete)
-     */
-    delete: orgProtectedProcedure
-      .input(z.object({
-        id: z.string().uuid(),
-      }))
-      .mutation(async ({ ctx, input }) => {
-        const { orgId } = ctx;
-
-        const [deleted] = await db.update(leadTasks)
-          .set({
-            deletedAt: new Date(),
-          })
-          .where(and(
-            eq(leadTasks.id, input.id),
-            eq(leadTasks.orgId, orgId)
-          ))
-          .returning();
-
-        if (!deleted) {
-          throw new Error('Task not found or unauthorized');
-        }
-
-        return { success: true };
-      }),
-  }),
 
   // =====================================================
   // DEALS
@@ -944,10 +798,16 @@ export const crmRouter = router({
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
 
+        // Get user profile ID for performedBy (FK references user_profiles.id, not auth.users.id)
+        const [userProfile] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId))
+          .limit(1);
+
         const [newActivity] = await db.insert(activityLog).values({
           ...input,
           orgId,
-          performedBy: userId,
+          performedBy: userProfile?.id,
           activityDate: input.activityDate || new Date(),
         }).returning();
 

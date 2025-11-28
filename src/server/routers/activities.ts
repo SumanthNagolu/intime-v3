@@ -1,340 +1,637 @@
 /**
- * tRPC Router: Activities (Daily Planner)
- * Handles user activities, tasks, follow-ups with escalation tracking
+ * Unified Activities Router
+ * 
+ * Handles all activity CRUD operations across entities.
+ * Replaces both activity_log and lead_tasks functionality.
  */
 
 import { z } from 'zod';
 import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
-import { activities } from '@/lib/db/schema/ats';
-import { eq, and, desc, sql, gte, lte, or, type SQL } from 'drizzle-orm';
+import { 
+  activities, 
+  type Activity, 
+  type ActivityStatus, 
+  type ActivityType,
+  type ActivityPriority 
+} from '@/lib/db/schema/activities';
+import { userProfiles } from '@/lib/db/schema/user-profiles';
+import { leads } from '@/lib/db/schema/crm';
+import { eq, and, desc, asc, isNull, or, lte, gte, inArray } from 'drizzle-orm';
 
-// Activity types enum
-const activityTypeEnum = z.enum([
-  'task',
-  'follow_up',
-  'call',
-  'meeting',
-  'reminder',
+// =====================================================
+// VALIDATION SCHEMAS
+// =====================================================
+
+const activityStatusSchema = z.enum([
+  'scheduled', 'open', 'in_progress', 'completed', 'skipped', 'cancelled'
 ]);
 
-// Priority levels
-const priorityEnum = z.enum(['low', 'medium', 'high', 'urgent']);
-
-// Activity status
-const statusEnum = z.enum(['pending', 'in_progress', 'completed', 'cancelled']);
-
-// Entity types for polymorphic linking
-const entityTypeEnum = z.enum([
-  'job',
-  'submission',
-  'candidate',
-  'account',
-  'lead',
-  'deal',
+const activityTypeSchema = z.enum([
+  'email', 'call', 'meeting', 'note', 'linkedin_message', 'task', 'follow_up', 'reminder'
 ]);
 
-// Create activity schema
+const activityPrioritySchema = z.enum(['low', 'medium', 'high', 'urgent']);
+
+const activityOutcomeSchema = z.enum(['positive', 'neutral', 'negative']);
+
+const activityDirectionSchema = z.enum(['inbound', 'outbound']);
+
+const entityTypeSchema = z.enum([
+  'lead', 'deal', 'account', 'candidate', 'submission', 'job', 'poc'
+]);
+
+// Create activity input schema
 const createActivitySchema = z.object({
-  title: z.string().min(1).max(500),
-  description: z.string().optional(),
-  activityType: activityTypeEnum,
-  priority: priorityEnum.default('medium'),
-  startDate: z.date(),
-  targetDate: z.date().optional(),
-  entityType: entityTypeEnum.optional(),
-  entityId: z.string().uuid().optional(),
+  // Required fields
+  entityType: entityTypeSchema,
+  entityId: z.string().uuid(),
+  activityType: activityTypeSchema,
+  dueDate: z.date(),
+  
+  // Optional fields
+  status: activityStatusSchema.default('open'),
+  priority: activityPrioritySchema.default('medium'),
+  subject: z.string().optional(),
+  body: z.string().optional(),
+  direction: activityDirectionSchema.optional(),
+  scheduledAt: z.date().optional(),
+  escalationDate: z.date().optional(),
+  durationMinutes: z.number().int().min(0).max(480).optional(),
+  outcome: activityOutcomeSchema.optional(),
+  pocId: z.string().uuid().optional(),
+  parentActivityId: z.string().uuid().optional(),
 });
 
-// Update activity schema
+// Update activity input schema
 const updateActivitySchema = z.object({
   id: z.string().uuid(),
-  title: z.string().min(1).max(500).optional(),
-  description: z.string().optional(),
-  activityType: activityTypeEnum.optional(),
-  priority: priorityEnum.optional(),
-  startDate: z.date().optional(),
-  targetDate: z.date().optional(),
-  status: statusEnum.optional(),
-  entityType: entityTypeEnum.optional(),
-  entityId: z.string().uuid().optional(),
+  status: activityStatusSchema.optional(),
+  priority: activityPrioritySchema.optional(),
+  subject: z.string().optional(),
+  body: z.string().optional(),
+  direction: activityDirectionSchema.optional(),
+  dueDate: z.date().optional(),
+  scheduledAt: z.date().optional(),
+  escalationDate: z.date().optional(),
+  completedAt: z.date().optional(),
+  skippedAt: z.date().optional(),
+  durationMinutes: z.number().int().min(0).max(480).optional(),
+  outcome: activityOutcomeSchema.optional(),
+  assignedTo: z.string().uuid().optional(),
 });
 
+// =====================================================
+// ACTIVITIES ROUTER
+// =====================================================
+
 export const activitiesRouter = router({
+  
+  // ─────────────────────────────────────────────────────
+  // LIST ACTIVITIES
+  // ─────────────────────────────────────────────────────
+  
   /**
-   * List activities for current user
+   * Get activities for an entity
    */
   list: orgProtectedProcedure
     .input(z.object({
+      entityType: entityTypeSchema,
+      entityId: z.string().uuid(),
+      includeCompleted: z.boolean().default(true),
+      activityTypes: z.array(activityTypeSchema).optional(),
       limit: z.number().min(1).max(100).default(50),
       offset: z.number().min(0).default(0),
-      status: statusEnum.optional(),
-      priority: priorityEnum.optional(),
-      activityType: activityTypeEnum.optional(),
-      dateFrom: z.date().optional(),
-      dateTo: z.date().optional(),
-      includeEscalated: z.boolean().default(false),
     }))
     .query(async ({ ctx, input }) => {
-      const userId = ctx.userId!;  // Guaranteed by orgProtectedProcedure
-      const orgId = ctx.orgId!;    // Guaranteed by orgProtectedProcedure
-      const { limit, offset, status, priority, activityType, dateFrom, dateTo, includeEscalated } = input;
-
-      const conditions: SQL[] = [
+      const { orgId } = ctx;
+      
+      const conditions = [
+        eq(activities.entityType, input.entityType),
+        eq(activities.entityId, input.entityId),
         eq(activities.orgId, orgId),
-        eq(activities.userId, userId),
       ];
-
-      if (status) {
-        conditions.push(eq(activities.status, status));
-      }
-      if (priority) {
-        conditions.push(eq(activities.priority, priority));
-      }
-      if (activityType) {
-        conditions.push(eq(activities.activityType, activityType));
-      }
-      if (dateFrom) {
-        conditions.push(gte(activities.startDate, dateFrom));
-      }
-      if (dateTo) {
-        conditions.push(lte(activities.startDate, dateTo));
-      }
-      if (includeEscalated) {
-        conditions.push(eq(activities.isEscalated, true));
-      }
-
-      const results = await db.select().from(activities)
-        .where(and(...conditions))
-        .limit(limit)
-        .offset(offset)
-        .orderBy(
-          desc(activities.isEscalated),
-          desc(activities.priority),
-          activities.targetDate
+      
+      if (!input.includeCompleted) {
+        conditions.push(
+          or(
+            eq(activities.status, 'scheduled'),
+            eq(activities.status, 'open'),
+            eq(activities.status, 'in_progress')
+          )!
         );
-
-      return results;
+      }
+      
+      if (input.activityTypes && input.activityTypes.length > 0) {
+        conditions.push(inArray(activities.activityType, input.activityTypes));
+      }
+      
+      const result = await db.select()
+        .from(activities)
+        .where(and(...conditions))
+        .orderBy(desc(activities.createdAt))
+        .limit(input.limit)
+        .offset(input.offset);
+      
+      return result;
     }),
 
   /**
-   * Get activities for today
+   * Get open/pending activities (tasks, follow-ups) for an entity
    */
-  today: orgProtectedProcedure.query(async ({ ctx }) => {
-    const userId = ctx.userId!;
-    const orgId = ctx.orgId!;
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-
-    const results = await db.select().from(activities)
-      .where(and(
-        eq(activities.orgId, orgId),
-        eq(activities.userId, userId),
-        or(
-          // Tasks scheduled for today
-          and(
-            gte(activities.startDate, today),
-            lte(activities.startDate, tomorrow)
-          ),
-          // Or tasks that are pending/in_progress and not completed
-          and(
-            sql`${activities.status} IN ('pending', 'in_progress')`,
-            lte(activities.startDate, tomorrow)
-          )
-        )
-      ))
-      .orderBy(
-        desc(activities.isEscalated),
-        desc(activities.priority),
-        activities.targetDate
-      );
-
-    return results;
-  }),
-
-  /**
-   * Get escalated activities
-   */
-  escalated: orgProtectedProcedure.query(async ({ ctx }) => {
-    const userId = ctx.userId!;
-    const orgId = ctx.orgId!;
-
-    const results = await db.select().from(activities)
-      .where(and(
-        eq(activities.orgId, orgId),
-        eq(activities.userId, userId),
-        eq(activities.isEscalated, true),
-        sql`${activities.status} NOT IN ('completed', 'cancelled')`
-      ))
-      .orderBy(
-        desc(activities.escalatedDays),
-        desc(activities.priority)
-      );
-
-    return results;
-  }),
-
-  /**
-   * Get activity by ID
-   */
-  getById: orgProtectedProcedure
-    .input(z.object({ id: z.string().uuid() }))
+  pending: orgProtectedProcedure
+    .input(z.object({
+      entityType: entityTypeSchema,
+      entityId: z.string().uuid(),
+    }))
     .query(async ({ ctx, input }) => {
-      const userId = ctx.userId!;
-      const orgId = ctx.orgId!;
+      const { orgId } = ctx;
+      
+      const result = await db.select()
+        .from(activities)
+        .where(and(
+          eq(activities.entityType, input.entityType),
+          eq(activities.entityId, input.entityId),
+          eq(activities.orgId, orgId),
+          inArray(activities.status, ['scheduled', 'open', 'in_progress']),
+          inArray(activities.activityType, ['task', 'follow_up', 'reminder', 'meeting', 'call'])
+        ))
+        .orderBy(asc(activities.dueDate));
+      
+      return result;
+    }),
 
-      const [activity] = await db.select().from(activities)
+  /**
+   * Get overdue activities across all entities
+   */
+  overdue: orgProtectedProcedure
+    .input(z.object({
+      entityType: entityTypeSchema.optional(),
+      limit: z.number().min(1).max(100).default(20),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+      const now = new Date();
+      
+      const conditions = [
+        eq(activities.orgId, orgId),
+        lte(activities.dueDate, now),
+        inArray(activities.status, ['scheduled', 'open', 'in_progress']),
+      ];
+      
+      if (input.entityType) {
+        conditions.push(eq(activities.entityType, input.entityType));
+      }
+      
+      const result = await db.select()
+        .from(activities)
+        .where(and(...conditions))
+        .orderBy(asc(activities.dueDate))
+        .limit(input.limit);
+      
+      return result;
+    }),
+
+  /**
+   * Get single activity by ID
+   */
+  get: orgProtectedProcedure
+    .input(z.object({
+      id: z.string().uuid(),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+      
+      const [activity] = await db.select()
+        .from(activities)
         .where(and(
           eq(activities.id, input.id),
-          eq(activities.orgId, orgId),
-          eq(activities.userId, userId)
+          eq(activities.orgId, orgId)
         ))
         .limit(1);
-
-      if (!activity) {
-        throw new Error('Activity not found');
-      }
-
-      return activity;
+      
+      return activity || null;
     }),
 
+  // ─────────────────────────────────────────────────────
+  // CREATE ACTIVITY
+  // ─────────────────────────────────────────────────────
+  
   /**
-   * Create new activity
+   * Create a new activity
    */
   create: orgProtectedProcedure
     .input(createActivitySchema)
     .mutation(async ({ ctx, input }) => {
-      const userId = ctx.userId!;
-      const orgId = ctx.orgId!;
-
-      const [newActivity] = await db.insert(activities).values({
-        ...input,
-        orgId,
-        userId,
-        status: 'pending',
-      }).returning();
-
+      const { userId, orgId } = ctx;
+      
+      // Get user profile for assignedTo and createdBy
+      const [userProfile] = await db.select({ id: userProfiles.id })
+        .from(userProfiles)
+        .where(eq(userProfiles.authId, userId))
+        .limit(1);
+      
+      if (!userProfile) {
+        throw new Error('User profile not found');
+      }
+      
+      const [newActivity] = await db.insert(activities)
+        .values({
+          orgId,
+          entityType: input.entityType,
+          entityId: input.entityId,
+          activityType: input.activityType,
+          status: input.status,
+          priority: input.priority,
+          subject: input.subject,
+          body: input.body,
+          direction: input.direction,
+          dueDate: input.dueDate,
+          scheduledAt: input.scheduledAt,
+          escalationDate: input.escalationDate,
+          durationMinutes: input.durationMinutes,
+          outcome: input.outcome,
+          assignedTo: userProfile.id,
+          createdBy: userProfile.id,
+          pocId: input.pocId,
+          parentActivityId: input.parentActivityId,
+        })
+        .returning();
+      
+      // Update lastContactedAt on lead if applicable
+      if (input.entityType === 'lead' && 
+          ['email', 'call', 'meeting', 'linkedin_message'].includes(input.activityType) &&
+          input.status === 'completed') {
+        await db.update(leads)
+          .set({ lastContactedAt: new Date() })
+          .where(eq(leads.id, input.entityId));
+      }
+      
       return newActivity;
     }),
 
   /**
-   * Update activity
+   * Log a completed activity (email, call, meeting, note)
+   * Convenience method that creates with status='completed'
+   */
+  log: orgProtectedProcedure
+    .input(z.object({
+      entityType: entityTypeSchema,
+      entityId: z.string().uuid(),
+      activityType: z.enum(['email', 'call', 'meeting', 'note', 'linkedin_message']),
+      subject: z.string().optional(),
+      body: z.string().optional(),
+      direction: activityDirectionSchema.optional(),
+      durationMinutes: z.number().int().min(0).max(480).optional(),
+      outcome: activityOutcomeSchema.optional(),
+      pocId: z.string().uuid().optional(),
+      // Follow-up creation
+      createFollowUp: z.boolean().default(false),
+      followUpSubject: z.string().optional(),
+      followUpDueDate: z.date().optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId, orgId } = ctx;
+      
+      // Get user profile
+      const [userProfile] = await db.select({ id: userProfiles.id })
+        .from(userProfiles)
+        .where(eq(userProfiles.authId, userId))
+        .limit(1);
+      
+      if (!userProfile) {
+        throw new Error('User profile not found');
+      }
+      
+      const now = new Date();
+      
+      // Create the completed activity
+      const [activity] = await db.insert(activities)
+        .values({
+          orgId,
+          entityType: input.entityType,
+          entityId: input.entityId,
+          activityType: input.activityType,
+          status: 'completed',
+          priority: 'medium',
+          subject: input.subject,
+          body: input.body,
+          direction: input.direction,
+          dueDate: now,
+          completedAt: now,
+          durationMinutes: input.durationMinutes,
+          outcome: input.outcome,
+          assignedTo: userProfile.id,
+          performedBy: userProfile.id,
+          createdBy: userProfile.id,
+          pocId: input.pocId,
+        })
+        .returning();
+      
+      // Create follow-up if requested
+      let followUp: Activity | null = null;
+      if (input.createFollowUp && input.followUpDueDate) {
+        const [newFollowUp] = await db.insert(activities)
+          .values({
+            orgId,
+            entityType: input.entityType,
+            entityId: input.entityId,
+            activityType: 'follow_up',
+            status: 'scheduled',
+            priority: 'medium',
+            subject: input.followUpSubject || `Follow up on: ${input.subject || input.activityType}`,
+            dueDate: input.followUpDueDate,
+            scheduledAt: input.followUpDueDate,
+            assignedTo: userProfile.id,
+            createdBy: userProfile.id,
+            parentActivityId: activity.id,
+          })
+          .returning();
+        followUp = newFollowUp;
+      }
+      
+      // Update lastContactedAt on lead
+      if (input.entityType === 'lead') {
+        await db.update(leads)
+          .set({ lastContactedAt: now })
+          .where(eq(leads.id, input.entityId));
+      }
+      
+      return { activity, followUp };
+    }),
+
+  // ─────────────────────────────────────────────────────
+  // UPDATE ACTIVITY
+  // ─────────────────────────────────────────────────────
+  
+  /**
+   * Update an activity
    */
   update: orgProtectedProcedure
     .input(updateActivitySchema)
     .mutation(async ({ ctx, input }) => {
-      const userId = ctx.userId!;
-      const orgId = ctx.orgId!;
-      const { id, ...data } = input;
-
+      const { userId, orgId } = ctx;
+      
+      const updateData: Partial<Activity> = {
+        updatedAt: new Date(),
+      };
+      
+      if (input.status !== undefined) updateData.status = input.status;
+      if (input.priority !== undefined) updateData.priority = input.priority;
+      if (input.subject !== undefined) updateData.subject = input.subject;
+      if (input.body !== undefined) updateData.body = input.body;
+      if (input.direction !== undefined) updateData.direction = input.direction;
+      if (input.dueDate !== undefined) updateData.dueDate = input.dueDate;
+      if (input.scheduledAt !== undefined) updateData.scheduledAt = input.scheduledAt;
+      if (input.escalationDate !== undefined) updateData.escalationDate = input.escalationDate;
+      if (input.completedAt !== undefined) updateData.completedAt = input.completedAt;
+      if (input.skippedAt !== undefined) updateData.skippedAt = input.skippedAt;
+      if (input.durationMinutes !== undefined) updateData.durationMinutes = input.durationMinutes;
+      if (input.outcome !== undefined) updateData.outcome = input.outcome;
+      if (input.assignedTo !== undefined) updateData.assignedTo = input.assignedTo;
+      
       const [updated] = await db.update(activities)
-        .set(data)
+        .set(updateData)
         .where(and(
-          eq(activities.id, id),
-          eq(activities.orgId, orgId),
-          eq(activities.userId, userId)
+          eq(activities.id, input.id),
+          eq(activities.orgId, orgId)
         ))
         .returning();
-
+      
       if (!updated) {
         throw new Error('Activity not found or unauthorized');
       }
-
+      
       return updated;
     }),
 
   /**
-   * Mark activity as completed
+   * Complete an activity
    */
   complete: orgProtectedProcedure
-    .input(z.object({ id: z.string().uuid() }))
+    .input(z.object({
+      id: z.string().uuid(),
+      outcome: activityOutcomeSchema.optional(),
+      body: z.string().optional(), // Completion notes
+      durationMinutes: z.number().int().min(0).max(480).optional(),
+      // Follow-up creation
+      createFollowUp: z.boolean().default(false),
+      followUpSubject: z.string().optional(),
+      followUpDueDate: z.date().optional(),
+    }))
     .mutation(async ({ ctx, input }) => {
-      const userId = ctx.userId!;
-      const orgId = ctx.orgId!;
-
-      const [updated] = await db.update(activities)
+      const { userId, orgId } = ctx;
+      
+      // Get user profile
+      const [userProfile] = await db.select({ id: userProfiles.id })
+        .from(userProfiles)
+        .where(eq(userProfiles.authId, userId))
+        .limit(1);
+      
+      if (!userProfile) {
+        throw new Error('User profile not found');
+      }
+      
+      const now = new Date();
+      
+      // Get the activity first
+      const [activity] = await db.select()
+        .from(activities)
+        .where(and(
+          eq(activities.id, input.id),
+          eq(activities.orgId, orgId)
+        ))
+        .limit(1);
+      
+      if (!activity) {
+        throw new Error('Activity not found');
+      }
+      
+      // Complete the activity
+      const [completed] = await db.update(activities)
         .set({
           status: 'completed',
-          completedAt: new Date(),
+          completedAt: now,
+          performedBy: userProfile.id,
+          outcome: input.outcome,
+          body: input.body ? `${activity.body || ''}\n\n---\nCompletion Notes: ${input.body}` : activity.body,
+          durationMinutes: input.durationMinutes,
+          updatedAt: now,
+        })
+        .where(eq(activities.id, input.id))
+        .returning();
+      
+      // Create follow-up if requested
+      let followUp: Activity | null = null;
+      if (input.createFollowUp && input.followUpDueDate) {
+        const [newFollowUp] = await db.insert(activities)
+          .values({
+            orgId,
+            entityType: activity.entityType,
+            entityId: activity.entityId,
+            activityType: 'follow_up',
+            status: 'scheduled',
+            priority: activity.priority as ActivityPriority,
+            subject: input.followUpSubject || `Follow up on: ${activity.subject || activity.activityType}`,
+            dueDate: input.followUpDueDate,
+            scheduledAt: input.followUpDueDate,
+            assignedTo: userProfile.id,
+            createdBy: userProfile.id,
+            parentActivityId: activity.id,
+          })
+          .returning();
+        followUp = newFollowUp;
+      }
+      
+      // Update lastContactedAt on lead
+      if (activity.entityType === 'lead') {
+        await db.update(leads)
+          .set({ lastContactedAt: now })
+          .where(eq(leads.id, activity.entityId));
+      }
+      
+      return { activity: completed, followUp };
+    }),
+
+  /**
+   * Skip an activity
+   */
+  skip: orgProtectedProcedure
+    .input(z.object({
+      id: z.string().uuid(),
+      reason: z.string().optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+      
+      const [activity] = await db.select()
+        .from(activities)
+        .where(and(
+          eq(activities.id, input.id),
+          eq(activities.orgId, orgId)
+        ))
+        .limit(1);
+      
+      if (!activity) {
+        throw new Error('Activity not found');
+      }
+      
+      const [skipped] = await db.update(activities)
+        .set({
+          status: 'skipped',
+          skippedAt: new Date(),
+          body: input.reason ? `${activity.body || ''}\n\n---\nSkipped: ${input.reason}` : activity.body,
+          updatedAt: new Date(),
+        })
+        .where(eq(activities.id, input.id))
+        .returning();
+      
+      return skipped;
+    }),
+
+  /**
+   * Cancel an activity
+   */
+  cancel: orgProtectedProcedure
+    .input(z.object({
+      id: z.string().uuid(),
+      reason: z.string().optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+      
+      const [activity] = await db.select()
+        .from(activities)
+        .where(and(
+          eq(activities.id, input.id),
+          eq(activities.orgId, orgId)
+        ))
+        .limit(1);
+      
+      if (!activity) {
+        throw new Error('Activity not found');
+      }
+      
+      const [cancelled] = await db.update(activities)
+        .set({
+          status: 'cancelled',
+          body: input.reason ? `${activity.body || ''}\n\n---\nCancelled: ${input.reason}` : activity.body,
+          updatedAt: new Date(),
+        })
+        .where(eq(activities.id, input.id))
+        .returning();
+      
+      return cancelled;
+    }),
+
+  // ─────────────────────────────────────────────────────
+  // DELETE ACTIVITY (Soft delete via cancel)
+  // ─────────────────────────────────────────────────────
+  
+  /**
+   * Delete an activity (sets status to cancelled)
+   * We don't hard delete activities for audit trail
+   */
+  delete: orgProtectedProcedure
+    .input(z.object({
+      id: z.string().uuid(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+      
+      const [deleted] = await db.update(activities)
+        .set({
+          status: 'cancelled',
+          updatedAt: new Date(),
         })
         .where(and(
           eq(activities.id, input.id),
-          eq(activities.orgId, orgId),
-          eq(activities.userId, userId)
+          eq(activities.orgId, orgId)
         ))
         .returning();
-
-      if (!updated) {
-        throw new Error('Activity not found or unauthorized');
-      }
-
-      return updated;
-    }),
-
-  /**
-   * Delete activity
-   */
-  delete: orgProtectedProcedure
-    .input(z.object({ id: z.string().uuid() }))
-    .mutation(async ({ ctx, input }) => {
-      const userId = ctx.userId!;
-      const orgId = ctx.orgId!;
-
-      const [deleted] = await db.delete(activities)
-        .where(and(
-          eq(activities.id, input.id),
-          eq(activities.orgId, orgId),
-          eq(activities.userId, userId)
-        ))
-        .returning();
-
+      
       if (!deleted) {
         throw new Error('Activity not found or unauthorized');
       }
-
+      
       return { success: true };
     }),
 
+  // ─────────────────────────────────────────────────────
+  // RESCHEDULE
+  // ─────────────────────────────────────────────────────
+  
   /**
-   * Get activity summary/stats
+   * Reschedule an activity
    */
-  summary: orgProtectedProcedure.query(async ({ ctx }) => {
-    const userId = ctx.userId!;
-    const orgId = ctx.orgId!;
-
-    const stats = await db.select({
-      status: activities.status,
-      count: sql<number>`count(*)::int`,
-      escalatedCount: sql<number>`count(case when ${activities.isEscalated} then 1 end)::int`,
-    })
-      .from(activities)
-      .where(and(
-        eq(activities.orgId, orgId),
-        eq(activities.userId, userId)
-      ))
-      .groupBy(activities.status);
-
-    const summary = {
-      pending: 0,
-      inProgress: 0,
-      completed: 0,
-      cancelled: 0,
-      escalated: 0,
-      total: 0,
-    };
-
-    for (const stat of stats) {
-      if (stat.status === 'pending') summary.pending = stat.count;
-      if (stat.status === 'in_progress') summary.inProgress = stat.count;
-      if (stat.status === 'completed') summary.completed = stat.count;
-      if (stat.status === 'cancelled') summary.cancelled = stat.count;
-      summary.escalated += stat.escalatedCount;
-      summary.total += stat.count;
-    }
-
-    return summary;
-  }),
+  reschedule: orgProtectedProcedure
+    .input(z.object({
+      id: z.string().uuid(),
+      newDueDate: z.date(),
+      newScheduledAt: z.date().optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+      
+      const [rescheduled] = await db.update(activities)
+        .set({
+          dueDate: input.newDueDate,
+          scheduledAt: input.newScheduledAt || input.newDueDate,
+          status: 'scheduled',
+          updatedAt: new Date(),
+        })
+        .where(and(
+          eq(activities.id, input.id),
+          eq(activities.orgId, orgId)
+        ))
+        .returning();
+      
+      if (!rescheduled) {
+        throw new Error('Activity not found or unauthorized');
+      }
+      
+      return rescheduled;
+    }),
 });
+
+export type ActivitiesRouter = typeof activitiesRouter;

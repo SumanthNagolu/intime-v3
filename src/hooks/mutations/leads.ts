@@ -163,55 +163,14 @@ export function useUpdateLeadBANT() {
 // ============================================
 // LEAD TASKS
 // ============================================
-
-/**
- * Get tasks for a lead
- */
-export function useLeadTasks(leadId: string, includeCompleted = true) {
-  return trpc.crm.leadTasks.list.useQuery(
-    { leadId, includeCompleted },
-    { enabled: !!leadId }
-  );
-}
-
-/**
- * Create a new task for a lead
- */
-export function useCreateLeadTask() {
-  const utils = trpc.useUtils();
-
-  return trpc.crm.leadTasks.create.useMutation({
-    onSuccess: (data) => {
-      utils.crm.leadTasks.list.invalidate({ leadId: data.leadId });
-    },
-  });
-}
-
-/**
- * Update a task
- */
-export function useUpdateLeadTask() {
-  const utils = trpc.useUtils();
-
-  return trpc.crm.leadTasks.update.useMutation({
-    onSuccess: (data) => {
-      utils.crm.leadTasks.list.invalidate({ leadId: data.leadId });
-    },
-  });
-}
-
-/**
- * Delete a task
- */
-export function useDeleteLeadTask(leadId: string) {
-  const utils = trpc.useUtils();
-
-  return trpc.crm.leadTasks.delete.useMutation({
-    onSuccess: () => {
-      utils.crm.leadTasks.list.invalidate({ leadId });
-    },
-  });
-}
+// DEPRECATED: Lead Tasks
+// These have been replaced by the unified activities system.
+// Use hooks from '@/hooks/mutations/activities' instead:
+//   - usePendingActivities('lead', leadId)
+//   - useCreateActivity()
+//   - useCompleteActivity()
+//   - useCancelActivity()
+// ============================================
 
 // ============================================
 // BATCH OPERATIONS

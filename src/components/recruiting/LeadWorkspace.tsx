@@ -10,13 +10,16 @@ import {
   useUpdateLead, 
   useCreateLeadActivity,
   useUpdateLeadBANT,
-  useLeadTasks,
-  useCreateLeadTask,
-  useUpdateLeadTask,
-  useDeleteLeadTask
 } from '@/hooks/mutations/leads';
+import {
+  usePendingActivities,
+  useCreateActivity,
+  useCompleteActivity,
+  useCancelActivity,
+} from '@/hooks/mutations/activities';
 import { ActivityComposer } from '@/components/crm/ActivityComposer';
 import { ActivityTimeline } from '@/components/crm/ActivityTimeline';
+import { LeadStrategy } from '@/components/crm/LeadStrategy';
 import {
   ChevronLeft,
   Building2,
@@ -111,8 +114,8 @@ export const LeadWorkspace: React.FC = () => {
   const { leadRaw: lead, isLoading, isError, error, refetch } = useLead(leadId);
   const { activities, isLoading: activitiesLoading, refetch: refetchActivities } = useLeadActivities(leadId);
   
-  // Fetch tasks from database
-  const { data: dbTasks, isLoading: tasksLoading, refetch: refetchTasks } = useLeadTasks(leadId);
+  // Fetch tasks from unified activities (type = 'task' or 'follow_up')
+  const { data: pendingTasks, isLoading: tasksLoading, refetch: refetchTasks } = usePendingActivities('lead', leadId);
 
   // Mutations
   const updateStatus = useUpdateLeadStatus();
@@ -120,9 +123,11 @@ export const LeadWorkspace: React.FC = () => {
   const updateLead = useUpdateLead();
   const createActivity = useCreateLeadActivity();
   const updateBANT = useUpdateLeadBANT();
-  const createTask = useCreateLeadTask();
-  const updateTask = useUpdateLeadTask();
-  const deleteTask = useDeleteLeadTask(leadId);
+  
+  // Task mutations (using unified activities)
+  const createTaskMutation = useCreateActivity();
+  const completeTaskMutation = useCompleteActivity();
+  const cancelTaskMutation = useCancelActivity();
 
   // UI State
   const [showLostModal, setShowLostModal] = useState(false);
@@ -272,23 +277,30 @@ export const LeadWorkspace: React.FC = () => {
     );
   };
 
-  // Toggle task completion
-  const toggleTask = (taskId: string, currentCompleted: boolean) => {
-    updateTask.mutate(
-      { id: taskId, completed: !currentCompleted },
+  // Toggle task completion (using unified activities)
+  const toggleTask = (taskId: string, currentStatus: string) => {
+    if (currentStatus === 'completed') {
+      // Can't uncomplete for now - would need reschedule
+      return;
+    }
+    completeTaskMutation.mutate(
+      { id: taskId },
       { onSuccess: () => refetchTasks() }
     );
   };
 
-  // Add new task
+  // Add new task (using unified activities)
   const addTask = () => {
     if (!newTaskTitle.trim()) return;
-    createTask.mutate(
+    createTaskMutation.mutate(
       {
-        leadId,
-        title: newTaskTitle,
-        dueDate: newTaskDueDate,
+        entityType: 'lead',
+        entityId: leadId,
+        activityType: 'task',
+        subject: newTaskTitle,
+        dueDate: new Date(newTaskDueDate),
         priority: newTaskPriority,
+        status: 'open',
       },
       {
         onSuccess: () => {
@@ -296,14 +308,15 @@ export const LeadWorkspace: React.FC = () => {
           setNewTaskPriority('medium');
           setNewTaskDueDate(new Date(Date.now() + 86400000).toISOString().split('T')[0]);
           refetchTasks();
+          refetchActivities(); // Also refresh activity timeline
         },
       }
     );
   };
 
-  // Delete task
+  // Delete task (cancel via unified activities)
   const handleDeleteTask = (taskId: string) => {
-    deleteTask.mutate({ id: taskId }, { onSuccess: () => refetchTasks() });
+    cancelTaskMutation.mutate({ id: taskId }, { onSuccess: () => refetchTasks() });
   };
 
   // Save BANT scores to database
@@ -384,7 +397,7 @@ export const LeadWorkspace: React.FC = () => {
   const currentStatus = STATUS_OPTIONS.find((s) => s.value === lead.status) || STATUS_OPTIONS[0];
   const StatusIcon = currentStatus.icon;
   const bantGrade = getBantGrade(bantPercentage);
-  const taskList = dbTasks || [];
+  const taskList = pendingTasks || [];
   const completedTasks = taskList.filter(t => t.completed).length;
   const overdueTasks = taskList.filter(t => !t.completed && new Date(t.dueDate) < new Date()).length;
 
@@ -853,86 +866,7 @@ export const LeadWorkspace: React.FC = () => {
 
               {/* Strategy Tab */}
               {activeTab === 'strategy' && (
-                <div className="space-y-6">
-                  {/* Strategy Notes */}
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-sm font-bold uppercase tracking-widest text-stone-400 flex items-center gap-2">
-                        <FileText size={14} /> Sales Strategy & Notes
-                      </h3>
-                      {isEditingNotes ? (
-                        <button
-                          onClick={handleSaveNotes}
-                          disabled={updateLead.isPending}
-                          className="px-3 py-1.5 bg-charcoal text-white rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors flex items-center gap-2"
-                        >
-                          {updateLead.isPending ? <Loader2 size={12} className="animate-spin" /> : <Save size={12} />}
-                          Save
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => setIsEditingNotes(true)}
-                          className="px-3 py-1.5 bg-stone-100 text-stone-600 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-stone-200 transition-colors flex items-center gap-2"
-                        >
-                          <Edit3 size={12} /> Edit
-                        </button>
-                      )}
-                    </div>
-                    {isEditingNotes ? (
-                      <textarea
-                        value={strategyNotes}
-                        onChange={(e) => setStrategyNotes(e.target.value)}
-                        className="w-full h-64 p-4 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust resize-none"
-                        placeholder="Document your sales strategy, key talking points, objection handling, and important notes about this lead..."
-                      />
-                    ) : (
-                      <div className="bg-stone-50 rounded-xl p-4 min-h-[200px]">
-                        {strategyNotes ? (
-                          <p className="text-sm text-stone-600 whitespace-pre-wrap">{strategyNotes}</p>
-                        ) : (
-                          <p className="text-sm text-stone-400 italic">No strategy notes yet. Click Edit to add your sales strategy.</p>
-                        )}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Key Talking Points Template */}
-                  <div>
-                    <h3 className="text-sm font-bold uppercase tracking-widest text-stone-400 mb-4 flex items-center gap-2">
-                      <MessageSquare size={14} /> Talking Points Template
-                    </h3>
-                    <div className="bg-stone-50 rounded-xl p-4 space-y-3">
-                      <div className="flex items-start gap-3">
-                        <div className="w-6 h-6 bg-rust/10 text-rust rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
-                        <div>
-                          <div className="font-medium text-charcoal text-sm">Opening</div>
-                          <div className="text-xs text-stone-500">Acknowledge their role at {lead.companyName}</div>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <div className="w-6 h-6 bg-rust/10 text-rust rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
-                        <div>
-                          <div className="font-medium text-charcoal text-sm">Pain Discovery</div>
-                          <div className="text-xs text-stone-500">Ask about current staffing challenges</div>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <div className="w-6 h-6 bg-rust/10 text-rust rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
-                        <div>
-                          <div className="font-medium text-charcoal text-sm">Value Proposition</div>
-                          <div className="text-xs text-stone-500">Our pod structure & 48-hour placement guarantee</div>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <div className="w-6 h-6 bg-rust/10 text-rust rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">4</div>
-                        <div>
-                          <div className="font-medium text-charcoal text-sm">Next Steps</div>
-                          <div className="text-xs text-stone-500">Schedule detailed requirements call</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <LeadStrategy leadId={leadId} companyName={lead.companyName || undefined} />
               )}
 
               {/* Tasks Tab */}
@@ -973,30 +907,31 @@ export const LeadWorkspace: React.FC = () => {
                       <div className="flex items-end">
                         <button
                           onClick={addTask}
-                          disabled={!newTaskTitle.trim() || createTask.isPending}
+                          disabled={!newTaskTitle.trim() || createTaskMutation.isPending}
                           className="px-4 py-2 bg-charcoal text-white rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors disabled:opacity-50 flex items-center gap-2"
                         >
-                          {createTask.isPending ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />}
+                          {createTaskMutation.isPending ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />}
                           Add
                         </button>
                       </div>
                     </div>
                   </div>
 
-                  {/* Task List */}
+                  {/* Task List - Using Unified Activities */}
                   <div className="space-y-2">
                     {tasksLoading ? (
                       <div className="text-center py-8">
                         <Loader2 size={24} className="animate-spin mx-auto text-rust" />
                       </div>
-                    ) : dbTasks && dbTasks.length > 0 ? (
-                      dbTasks.map((task) => {
-                        const isOverdue = !task.completed && new Date(task.dueDate) < new Date();
+                    ) : pendingTasks && pendingTasks.length > 0 ? (
+                      pendingTasks.map((task) => {
+                        const isCompleted = task.status === 'completed';
+                        const isOverdue = !isCompleted && task.dueDate && new Date(task.dueDate) < new Date();
                         return (
                           <div
                             key={task.id}
                             className={`flex items-center gap-3 p-3 rounded-xl border transition-all ${
-                              task.completed
+                              isCompleted
                                 ? 'bg-green-50 border-green-200'
                                 : isOverdue
                                 ? 'bg-red-50 border-red-200'
@@ -1004,39 +939,39 @@ export const LeadWorkspace: React.FC = () => {
                             }`}
                           >
                             <button 
-                              onClick={() => toggleTask(task.id, task.completed)} 
+                              onClick={() => toggleTask(task.id, task.status)} 
                               className="flex-shrink-0"
-                              disabled={updateTask.isPending}
+                              disabled={completeTaskMutation.isPending || isCompleted}
                             >
-                              {task.completed ? (
+                              {isCompleted ? (
                                 <CheckSquare size={20} className="text-green-600" />
                               ) : (
                                 <Square size={20} className="text-stone-400 hover:text-charcoal" />
                               )}
                             </button>
                             <div className="flex-1 min-w-0">
-                              <div className={`text-sm font-medium ${task.completed ? 'line-through text-stone-400' : 'text-charcoal'}`}>
-                                {task.title}
+                              <div className={`text-sm font-medium ${isCompleted ? 'line-through text-stone-400' : 'text-charcoal'}`}>
+                                {task.subject || 'Untitled Task'}
                               </div>
                               <div className={`text-xs ${isOverdue ? 'text-red-600' : 'text-stone-400'}`}>
-                                Due: {new Date(task.dueDate).toLocaleDateString()}
+                                Due: {task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'No date'}
                                 {isOverdue && ' (Overdue)'}
                               </div>
                             </div>
                             <span
                               className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                                task.priority === 'high'
+                                task.priority === 'high' || task.priority === 'urgent'
                                   ? 'bg-red-100 text-red-600'
                                   : task.priority === 'medium'
                                   ? 'bg-amber-100 text-amber-600'
                                   : 'bg-stone-100 text-stone-600'
                               }`}
                             >
-                              {task.priority}
+                              {task.priority || 'medium'}
                             </span>
                             <button
                               onClick={() => handleDeleteTask(task.id)}
-                              disabled={deleteTask.isPending}
+                              disabled={cancelTaskMutation.isPending}
                               className="text-stone-400 hover:text-red-500 transition-colors p-1"
                             >
                               <X size={16} />
