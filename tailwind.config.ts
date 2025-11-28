@@ -10,6 +10,21 @@ const config: Config = {
 	theme: {
 		extend: {
 			colors: {
+				// Rust - Warm Accent Color (for CTAs and highlights)
+				rust: {
+					'50': '#FDF6F3',
+					'100': '#FBEAE3',
+					'200': '#F6D5C8',
+					'300': '#F0B8A1',
+					'400': '#E68E6C',
+					'500': '#C75B39',  // Main rust
+					'600': '#B5482D',  // Slightly darker
+					'700': '#9A3D26',
+					'800': '#7F331F',
+					'900': '#682A1A',
+					'950': '#3A1409',
+					DEFAULT: '#C75B39'  // Default rust color
+				},
 				// Premium Forest Green - Primary Brand Color
 				forest: {
 					'50': '#E8F5ED',
@@ -63,7 +78,8 @@ const config: Config = {
 					'700': '#343A40',
 					'800': '#212529',
 					'900': '#1A1A1A',  // True charcoal
-					'950': '#0D0D0D'
+					'950': '#0D0D0D',
+					DEFAULT: '#1A1A1A'  // Default to true charcoal (900)
 				},
 				slate: {
 					'50': '#F8F9FA',

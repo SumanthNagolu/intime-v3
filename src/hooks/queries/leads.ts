@@ -257,15 +257,18 @@ export function useLeadStats(options: { enabled?: boolean } = {}) {
 
 /**
  * Get activities for a lead
+ * Now uses the unified activities table
  */
 export function useLeadActivities(leadId: string | undefined, options: { enabled?: boolean; limit?: number } = {}) {
   const { enabled = true, limit = 50 } = options;
 
-  const query = trpc.crm.activities.list.useQuery(
+  // Use the new unified activities API
+  const query = trpc.activities.list.useQuery(
     {
       entityType: 'lead',
       entityId: leadId!,
       limit,
+      includeCompleted: true,
     },
     {
       enabled: enabled && !!leadId,

@@ -23,6 +23,12 @@ export * from './bench';
 export * from './ta-hr';
 export * from './shared';
 
+// Unified Activity System
+export * from './activities';
+
+// Sales Strategy System
+export * from './strategy';
+
 // Re-export commonly used types
 export type {
   Organization,

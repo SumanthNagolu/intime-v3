@@ -262,54 +262,17 @@ export const leadsRelations = relations(leads, ({ one, many }) => ({
     fields: [leads.convertedToAccountId],
     references: [accounts.id],
   }),
-  tasks: many(leadTasks),
+  // NOTE: Tasks are now tracked via unified 'activities' table
+  // Use entityType='lead' and entityId=lead.id to query activities for a lead
 }));
 
 // =====================================================
-// LEAD TASKS
+// LEAD TASKS - DEPRECATED
 // =====================================================
-
-export const leadTasks = pgTable('lead_tasks', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
-  leadId: uuid('lead_id').notNull().references(() => leads.id, { onDelete: 'cascade' }),
-
-  // Task details
-  title: text('title').notNull(),
-  description: text('description'),
-  dueDate: date('due_date').notNull(),
-  priority: text('priority').notNull().default('medium'), // low, medium, high
-  completed: boolean('completed').notNull().default(false),
-  completedAt: timestamp('completed_at', { withTimezone: true }),
-  completedBy: uuid('completed_by').references(() => userProfiles.id),
-
-  // Assignment
-  assignedTo: uuid('assigned_to').references(() => userProfiles.id),
-
-  // Metadata
-  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
-  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
-  createdBy: uuid('created_by').references(() => userProfiles.id),
-  deletedAt: timestamp('deleted_at', { withTimezone: true }),
-});
-
-export const leadTasksRelations = relations(leadTasks, ({ one }) => ({
-  organization: one(organizations, {
-    fields: [leadTasks.orgId],
-    references: [organizations.id],
-  }),
-  lead: one(leads, {
-    fields: [leadTasks.leadId],
-    references: [leads.id],
-  }),
-  assignee: one(userProfiles, {
-    fields: [leadTasks.assignedTo],
-    references: [userProfiles.id],
-  }),
-}));
-
-export type LeadTask = typeof leadTasks.$inferSelect;
-export type NewLeadTask = typeof leadTasks.$inferInsert;
+// Tasks are now tracked via the unified 'activities' table
+// See: src/lib/db/schema/activities.ts
+// Query: activities WHERE entityType='lead' AND activityType IN ('task', 'follow_up')
+// =====================================================
 
 export type Lead = typeof leads.$inferSelect;
 export type NewLead = typeof leads.$inferInsert;
