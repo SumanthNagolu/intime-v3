@@ -263,6 +263,7 @@ export type NewSubmission = typeof submissions.$inferInsert;
 
 export const interviews = pgTable('interviews', {
   id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
   submissionId: uuid('submission_id').notNull().references(() => submissions.id, { onDelete: 'cascade' }),
   jobId: uuid('job_id').notNull().references(() => jobs.id),
   candidateId: uuid('candidate_id').notNull().references(() => userProfiles.id),
@@ -300,6 +301,10 @@ export const interviews = pgTable('interviews', {
 });
 
 export const interviewsRelations = relations(interviews, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [interviews.orgId],
+    references: [organizations.id],
+  }),
   submission: one(submissions, {
     fields: [interviews.submissionId],
     references: [submissions.id],
@@ -323,6 +328,7 @@ export type NewInterview = typeof interviews.$inferInsert;
 
 export const offers = pgTable('offers', {
   id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
   submissionId: uuid('submission_id').notNull().references(() => submissions.id),
   jobId: uuid('job_id').notNull().references(() => jobs.id),
   candidateId: uuid('candidate_id').notNull().references(() => userProfiles.id),
@@ -365,6 +371,10 @@ export const offers = pgTable('offers', {
 });
 
 export const offersRelations = relations(offers, ({ one, many }) => ({
+  organization: one(organizations, {
+    fields: [offers.orgId],
+    references: [organizations.id],
+  }),
   submission: one(submissions, {
     fields: [offers.submissionId],
     references: [submissions.id],
@@ -522,3 +532,72 @@ export type SubmissionStatusType = typeof SubmissionStatus[keyof typeof Submissi
 export type InterviewStatusType = typeof InterviewStatus[keyof typeof InterviewStatus];
 export type OfferStatusType = typeof OfferStatus[keyof typeof OfferStatus];
 export type PlacementStatusType = typeof PlacementStatus[keyof typeof PlacementStatus];
+
+// =====================================================
+// ACTIVITIES (Daily Planner / Tasks)
+// =====================================================
+
+export const activities = pgTable('activities', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+  userId: uuid('user_id').notNull().references(() => userProfiles.id, { onDelete: 'cascade' }),
+
+  // Activity details
+  title: text('title').notNull(),
+  description: text('description'),
+  activityType: text('activity_type').notNull(), // 'task', 'follow_up', 'call', 'meeting', 'reminder'
+  priority: text('priority').default('medium'), // 'low', 'medium', 'high', 'urgent'
+
+  // Dates
+  startDate: timestamp('start_date', { withTimezone: true }).notNull(),
+  targetDate: timestamp('target_date', { withTimezone: true }),
+  completedAt: timestamp('completed_at', { withTimezone: true }),
+
+  // Escalation tracking
+  escalatedDays: integer('escalated_days').default(0), // Days past target
+  isEscalated: boolean('is_escalated').default(false),
+  escalatedAt: timestamp('escalated_at', { withTimezone: true }),
+
+  // Status
+  status: text('status').default('pending'), // 'pending', 'in_progress', 'completed', 'cancelled'
+
+  // Optional entity links (polymorphic)
+  entityType: text('entity_type'), // 'job', 'submission', 'candidate', 'account', 'lead', 'deal'
+  entityId: uuid('entity_id'),
+
+  // Metadata
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const activitiesRelations = relations(activities, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [activities.orgId],
+    references: [organizations.id],
+  }),
+  user: one(userProfiles, {
+    fields: [activities.userId],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type Activity = typeof activities.$inferSelect;
+export type NewActivity = typeof activities.$inferInsert;
+
+export const ActivityType = {
+  TASK: 'task',
+  FOLLOW_UP: 'follow_up',
+  CALL: 'call',
+  MEETING: 'meeting',
+  REMINDER: 'reminder',
+} as const;
+
+export const ActivityStatus = {
+  PENDING: 'pending',
+  IN_PROGRESS: 'in_progress',
+  COMPLETED: 'completed',
+  CANCELLED: 'cancelled',
+} as const;
+
+export type ActivityTypeType = typeof ActivityType[keyof typeof ActivityType];
+export type ActivityStatusType = typeof ActivityStatus[keyof typeof ActivityStatus];
