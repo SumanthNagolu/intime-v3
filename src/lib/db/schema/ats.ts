@@ -584,7 +584,7 @@ export const activitiesRelations = relations(activities, ({ one }) => ({
 export type Activity = typeof activities.$inferSelect;
 export type NewActivity = typeof activities.$inferInsert;
 
-export const ActivityType = {
+export const ATSActivityType = {
   TASK: 'task',
   FOLLOW_UP: 'follow_up',
   CALL: 'call',
@@ -592,12 +592,12 @@ export const ActivityType = {
   REMINDER: 'reminder',
 } as const;
 
-export const ActivityStatus = {
+export const ATSActivityStatus = {
   PENDING: 'pending',
   IN_PROGRESS: 'in_progress',
   COMPLETED: 'completed',
   CANCELLED: 'cancelled',
 } as const;
 
-export type ActivityTypeType = typeof ActivityType[keyof typeof ActivityType];
-export type ActivityStatusType = typeof ActivityStatus[keyof typeof ActivityStatus];
+export type ATSActivityTypeType = typeof ATSActivityType[keyof typeof ATSActivityType];
+export type ATSActivityStatusType = typeof ATSActivityStatus[keyof typeof ATSActivityStatus];
