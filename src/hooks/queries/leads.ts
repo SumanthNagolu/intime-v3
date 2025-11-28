@@ -25,7 +25,7 @@ export interface LeadsQueryOptions {
   enabled?: boolean;
   limit?: number;
   offset?: number;
-  status?: 'new' | 'contacted' | 'qualified' | 'proposal' | 'negotiation' | 'closed_won' | 'closed_lost';
+  status?: 'new' | 'warm' | 'hot' | 'cold' | 'converted' | 'lost';
   accountId?: string;
 }
 
@@ -43,15 +43,19 @@ function toDisplayLead(lead: any): DisplayLead {
     companyName: lead.companyName || '',
     firstName: lead.firstName || '',
     lastName: lead.lastName || '',
-    email: lead.email || '',
-    phone: lead.phone || '',
+    title: lead.title || undefined,
+    email: lead.email || undefined,
+    phone: lead.phone || undefined,
     status: lead.status || 'new',
-    source: lead.source || 'manual',
-    estimatedValue: lead.estimatedValue ? Number(lead.estimatedValue) : 0,
-    accountId: lead.accountId,
-    ownerId: lead.ownerId,
+    source: lead.source || undefined,
+    estimatedValue: lead.estimatedValue ? Number(lead.estimatedValue) : undefined,
+    accountId: lead.accountId || undefined,
+    ownerId: lead.ownerId || undefined,
     createdAt: lead.createdAt,
-    notes: lead.notes,
+    notes: lead.notes || undefined,
+    industry: lead.industry || undefined,
+    companySize: lead.companySize || undefined,
+    engagementScore: lead.engagementScore || undefined,
   };
 }
 
@@ -120,17 +124,17 @@ export function useNewLeads(options: Omit<LeadsQueryOptions, 'status'> = {}) {
 }
 
 /**
- * Get qualified leads
+ * Get warm leads (qualified)
  */
-export function useQualifiedLeads(options: Omit<LeadsQueryOptions, 'status'> = {}) {
-  return useLeads({ ...options, status: 'qualified' });
+export function useWarmLeads(options: Omit<LeadsQueryOptions, 'status'> = {}) {
+  return useLeads({ ...options, status: 'warm' });
 }
 
 /**
- * Get leads in negotiation
+ * Get hot leads (high priority)
  */
-export function useNegotiationLeads(options: Omit<LeadsQueryOptions, 'status'> = {}) {
-  return useLeads({ ...options, status: 'negotiation' });
+export function useHotLeads(options: Omit<LeadsQueryOptions, 'status'> = {}) {
+  return useLeads({ ...options, status: 'hot' });
 }
 
 /**
@@ -168,5 +172,112 @@ export function useInvalidateLeads() {
 
   return () => {
     return utils.crm.leads.list.invalidate();
+  };
+}
+
+// ============================================
+// SINGLE LEAD HOOKS
+// ============================================
+
+/**
+ * Get single lead by ID
+ */
+export function useLead(id: string | undefined, options: LeadQueryOptions = {}) {
+  const { enabled = true } = options;
+
+  const query = trpc.crm.leads.getById.useQuery(
+    { id: id! },
+    {
+      enabled: enabled && !!id,
+      staleTime: 30 * 1000,
+    }
+  );
+
+  return {
+    lead: query.data ? toDisplayLead(query.data) : null,
+    leadRaw: query.data,
+    isLoading: query.isLoading,
+    isError: query.isError,
+    error: query.error,
+    refetch: query.refetch,
+  };
+}
+
+/**
+ * Get raw lead data by ID without transformation
+ */
+export function useLeadRaw(id: string | undefined, options: LeadQueryOptions = {}) {
+  const { enabled = true } = options;
+
+  return trpc.crm.leads.getById.useQuery(
+    { id: id! },
+    {
+      enabled: enabled && !!id,
+      staleTime: 30 * 1000,
+    }
+  );
+}
+
+// ============================================
+// STATS HOOKS
+// ============================================
+
+/**
+ * Get lead statistics for dashboard
+ */
+export function useLeadStats(options: { enabled?: boolean } = {}) {
+  const { enabled = true } = options;
+
+  const query = trpc.crm.leads.getStats.useQuery(undefined, {
+    enabled,
+    staleTime: 60 * 1000, // 1 minute cache
+  });
+
+  return {
+    stats: query.data ?? {
+      total: 0,
+      new: 0,
+      warm: 0,
+      hot: 0,
+      cold: 0,
+      converted: 0,
+      lost: 0,
+      totalValue: 0,
+    },
+    isLoading: query.isLoading,
+    isError: query.isError,
+    error: query.error,
+    refetch: query.refetch,
+  };
+}
+
+// ============================================
+// ACTIVITY HOOKS
+// ============================================
+
+/**
+ * Get activities for a lead
+ */
+export function useLeadActivities(leadId: string | undefined, options: { enabled?: boolean; limit?: number } = {}) {
+  const { enabled = true, limit = 50 } = options;
+
+  const query = trpc.crm.activities.list.useQuery(
+    {
+      entityType: 'lead',
+      entityId: leadId!,
+      limit,
+    },
+    {
+      enabled: enabled && !!leadId,
+      staleTime: 30 * 1000,
+    }
+  );
+
+  return {
+    activities: query.data ?? [],
+    isLoading: query.isLoading,
+    isError: query.isError,
+    error: query.error,
+    refetch: query.refetch,
   };
 }

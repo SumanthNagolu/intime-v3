@@ -199,22 +199,28 @@ export interface AlignedLead {
 // Frontend-compatible lead
 export interface DisplayLead {
   id: string;
-  company: string;
+  companyName: string;
   firstName: string;
   lastName: string;
-  title: string;
+  title?: string;
   email?: string;
   phone?: string;
-  status: 'new' | 'cold' | 'warm' | 'hot' | 'converted';
-  value?: string;
+  status: 'new' | 'cold' | 'warm' | 'hot' | 'converted' | 'lost';
+  estimatedValue?: number;
   source?: string;
   lastAction?: string;
   notes?: string;
-  contact: string;
   // Extended
   industry?: string;
   companySize?: string;
   engagementScore?: number;
+  accountId?: string;
+  ownerId?: string;
+  createdAt?: Date;
+  // Legacy compatibility
+  company?: string;
+  contact?: string;
+  value?: string;
 }
 
 // ============================================

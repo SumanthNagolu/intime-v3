@@ -102,34 +102,79 @@ export const createActivityLogSchema = z.object({
 // LEADS
 // =====================================================
 
+// Lead sources for staffing industry
+const leadSourceEnum = z.enum([
+  'cold_outreach',
+  'linkedin',
+  'linkedin_sales_navigator',
+  'referral',
+  'website_inquiry',
+  'job_board',
+  'conference_event',
+  'email_campaign',
+  'partner_referral',
+  'existing_client',
+  'other'
+]);
+
+// Company size ranges
+const companySizeEnum = z.enum([
+  '1-50',
+  '51-200',
+  '201-500',
+  '501-1000',
+  '1001-5000',
+  '5000+'
+]);
+
+// Account tier
+const accountTierEnum = z.enum(['enterprise', 'mid_market', 'smb', 'strategic']);
+
+// Decision authority levels
+const decisionAuthorityEnum = z.enum(['decision_maker', 'influencer', 'gatekeeper', 'end_user', 'champion']);
+
 // Base schema without refinement for reusability
 const baseLeadSchema = z.object({
   // Lead type
-  leadType: z.enum(['company', 'contact']).default('company'),
+  leadType: z.enum(['company', 'person']).default('company'),
 
   // Company fields
   companyName: z.string().optional(),
   industry: z.string().optional(),
-  companySize: z.enum(['1-10', '11-50', '51-200', '201-500', '501-1000', '1000+']).optional(),
+  companyType: z.enum(['direct_client', 'implementation_partner', 'msp_vms', 'system_integrator']).optional(),
+  companySize: companySizeEnum.optional(),
+  website: z.string().url().optional().or(z.literal('')),
+  headquarters: z.string().optional(),
+  tier: accountTierEnum.optional(),
+  companyDescription: z.string().optional(),
 
-  // Contact fields
+  // Contact/Person fields
   firstName: z.string().optional(),
   lastName: z.string().optional(),
+  fullName: z.string().optional(),
   title: z.string().optional(),
-  email: z.string().email().optional(),
+  email: z.string().email().optional().or(z.literal('')),
   phone: z.string().optional(),
-  linkedinUrl: z.string().url().optional(),
+  linkedinUrl: z.string().url().optional().or(z.literal('')),
+  decisionAuthority: decisionAuthorityEnum.optional(),
+  preferredContactMethod: z.enum(['email', 'phone', 'linkedin', 'text']).default('email'),
+
+  // Link to existing account (for person leads)
+  accountId: z.string().uuid().optional(),
 
   // Lead status
   status: z.enum(['new', 'warm', 'hot', 'cold', 'converted', 'lost']).default('new'),
   estimatedValue: z.number().min(0).optional(),
 
   // Source tracking
-  source: z.enum(['inbound', 'outbound', 'referral', 'campaign', 'event', 'linkedin', 'other']).optional(),
+  source: leadSourceEnum.optional(),
   sourceCampaignId: z.string().uuid().optional(),
 
   // Assignment
   ownerId: z.string().uuid().optional(),
+
+  // Notes
+  notes: z.string().optional(),
 
   // Engagement
   lastContactedAt: z.coerce.date().optional(),
@@ -146,7 +191,7 @@ export const createLeadSchema = baseLeadSchema.refine(
     return !!(data.firstName && data.lastName && data.email);
   },
   {
-    message: 'Company leads need companyName. Contact leads need firstName, lastName, and email.',
+    message: 'Company leads need companyName. Person leads need firstName, lastName, and email.',
     path: ['leadType'],
   }
 );

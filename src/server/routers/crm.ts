@@ -12,11 +12,14 @@ import {
   deals,
   pointOfContacts,
   activityLog,
+  leadTasks,
   type Account,
   type Lead,
   type Deal,
-  type PointOfContact
+  type PointOfContact,
+  type LeadTask
 } from '@/lib/db/schema/crm';
+import { userProfiles } from '@/lib/db/schema/user-profiles';
 import {
   createAccountSchema,
   updateAccountSchema,
@@ -28,7 +31,8 @@ import {
   createPointOfContactSchema,
   updatePointOfContactSchema
 } from '@/lib/validations/crm';
-import { eq, and, desc, sql } from 'drizzle-orm';
+import { eq, and, desc, sql, isNull } from 'drizzle-orm';
+import { createActivityLogSchema } from '@/lib/validations/crm';
 
 export const crmRouter = router({
   // =====================================================
@@ -177,14 +181,14 @@ export const crmRouter = router({
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        status: z.enum(['new', 'contacted', 'qualified', 'proposal', 'negotiation', 'closed_won', 'closed_lost']).optional(),
+        status: z.enum(['new', 'warm', 'hot', 'cold', 'converted', 'lost']).optional(),
         accountId: z.string().uuid().optional(),
       }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
         const { limit, offset, status, accountId } = input;
 
-        let conditions = [eq(leads.orgId, orgId)];
+        let conditions = [eq(leads.orgId, orgId), isNull(leads.deletedAt)];
         if (status) conditions.push(eq(leads.status, status));
         if (accountId) conditions.push(eq(leads.accountId, accountId));
 
@@ -198,6 +202,51 @@ export const crmRouter = router({
       }),
 
     /**
+     * Get single lead by ID
+     */
+    getById: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        const [lead] = await db.select().from(leads)
+          .where(and(
+            eq(leads.id, input.id),
+            eq(leads.orgId, orgId),
+            isNull(leads.deletedAt)
+          ))
+          .limit(1);
+
+        if (!lead) {
+          throw new Error('Lead not found');
+        }
+
+        return lead;
+      }),
+
+    /**
+     * Get lead statistics for dashboard
+     */
+    getStats: orgProtectedProcedure
+      .query(async ({ ctx }) => {
+        const { orgId } = ctx;
+
+        const allLeads = await db.select().from(leads)
+          .where(and(eq(leads.orgId, orgId), isNull(leads.deletedAt)));
+
+        return {
+          total: allLeads.length,
+          new: allLeads.filter(l => l.status === 'new').length,
+          warm: allLeads.filter(l => l.status === 'warm').length,
+          hot: allLeads.filter(l => l.status === 'hot').length,
+          cold: allLeads.filter(l => l.status === 'cold').length,
+          converted: allLeads.filter(l => l.status === 'converted').length,
+          lost: allLeads.filter(l => l.status === 'lost').length,
+          totalValue: allLeads.reduce((sum, l) => sum + (parseFloat(l.estimatedValue || '0')), 0),
+        };
+      }),
+
+    /**
      * Create new lead
      */
     create: orgProtectedProcedure
@@ -205,11 +254,24 @@ export const crmRouter = router({
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
 
+        // Get user profile ID for createdBy (FK references user_profiles.id, not auth.users.id)
+        const [userProfile] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId))
+          .limit(1);
+
+        const profileId = userProfile?.id;
+
         const [newLead] = await db.insert(leads).values({
           ...input,
           orgId,
-          ownerId: input.ownerId || userId,
-          createdBy: userId,
+          ownerId: profileId || undefined,
+          createdBy: profileId,
+          // Explicitly set BANT defaults to avoid schema sync issues
+          bantBudget: 0,
+          bantAuthority: 0,
+          bantNeed: 0,
+          bantTimeline: 0,
         }).returning();
 
         return newLead;
@@ -225,7 +287,10 @@ export const crmRouter = router({
         const { id, ...data } = input;
 
         const [updated] = await db.update(leads)
-          .set(data)
+          .set({
+            ...data,
+            updatedAt: new Date(),
+          })
           .where(and(
             eq(leads.id, id),
             eq(leads.orgId, orgId)
@@ -240,15 +305,90 @@ export const crmRouter = router({
       }),
 
     /**
+     * Update lead status (for quick status changes)
+     */
+    updateStatus: orgProtectedProcedure
+      .input(z.object({
+        id: z.string().uuid(),
+        status: z.enum(['new', 'warm', 'hot', 'cold', 'converted', 'lost']),
+        lostReason: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+
+        // IMPORTANT: userId from context is auth.users.id, but FK columns reference user_profiles.id
+        const [userProfile] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId))
+          .limit(1);
+
+        const profileId = userProfile?.id;
+
+        const updateData: Record<string, any> = {
+          status: input.status,
+          updatedAt: new Date(),
+        };
+
+        if (input.status === 'lost' && input.lostReason) {
+          updateData.lostReason = input.lostReason;
+        }
+
+        const [updated] = await db.update(leads)
+          .set(updateData)
+          .where(and(
+            eq(leads.id, input.id),
+            eq(leads.orgId, orgId)
+          ))
+          .returning();
+
+        if (!updated) {
+          throw new Error('Lead not found or unauthorized');
+        }
+
+        // Log the status change as an activity (only if we have a valid profile ID)
+        if (profileId) {
+          await db.insert(activityLog).values({
+            orgId,
+            entityType: 'lead',
+            entityId: input.id,
+            activityType: 'note',
+            subject: `Status changed to ${input.status}`,
+            body: input.lostReason ? `Reason: ${input.lostReason}` : undefined,
+            performedBy: profileId,
+            activityDate: new Date(),
+          });
+        }
+
+        return updated;
+      }),
+
+    /**
      * Convert lead to deal
      */
     convertToDeal: orgProtectedProcedure
       .input(z.object({
         leadId: z.string().uuid(),
-        dealData: baseDealSchema.partial(),
+        dealTitle: z.string().min(1),
+        dealValue: z.number().min(0),
+        stage: z.enum(['discovery', 'proposal', 'negotiation']).default('discovery'),
+        expectedCloseDate: z.date().optional(),
+        createAccount: z.boolean().default(false),
+        accountName: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
+
+        // IMPORTANT: userId from context is auth.users.id, but FK columns reference user_profiles.id
+        // We need to lookup the profile ID
+        const [userProfile] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId))
+          .limit(1);
+
+        if (!userProfile) {
+          throw new Error('User profile not found');
+        }
+        const profileId = userProfile.id;
 
         // Get lead data
         const [lead] = await db.select().from(leads)
@@ -262,26 +402,280 @@ export const crmRouter = router({
           throw new Error('Lead not found');
         }
 
+        let accountId = lead.accountId;
+
+        // Create account if requested
+        if (input.createAccount && !accountId) {
+          const [newAccount] = await db.insert(accounts).values({
+            orgId,
+            name: input.accountName || lead.companyName || 'New Account',
+            industry: lead.industry,
+            companyType: lead.companyType,
+            status: 'active',
+            tier: lead.tier,
+            website: lead.website,
+            headquartersLocation: lead.headquarters,
+            createdBy: profileId,
+          }).returning();
+          accountId = newAccount.id;
+        }
+
         // Create deal from lead
         const [newDeal] = await db.insert(deals).values({
-          ...input.dealData,
           orgId,
-          accountId: lead.convertedToAccountId,
-          leadSource: lead.source,
-          ownerId: lead.ownerId,
-          createdBy: userId,
+          title: input.dealTitle,
+          value: input.dealValue.toString(),
+          stage: input.stage,
+          expectedCloseDate: input.expectedCloseDate,
+          accountId,
+          leadId: lead.id,
+          ownerId: lead.ownerId || profileId,
+          createdBy: profileId,
         }).returning();
 
-        // Update lead status
+        // Update lead status to converted
         await db.update(leads)
           .set({
-            status: 'closed_won',
+            status: 'converted',
             convertedToDealId: newDeal.id,
+            convertedToAccountId: accountId,
             convertedAt: new Date(),
+            updatedAt: new Date(),
           })
           .where(eq(leads.id, input.leadId));
 
-        return newDeal;
+        // Log the conversion as an activity
+        await db.insert(activityLog).values({
+          orgId,
+          entityType: 'lead',
+          entityId: input.leadId,
+          activityType: 'note',
+          subject: 'Lead converted to deal',
+          body: `Deal: ${input.dealTitle}, Value: $${input.dealValue}`,
+          performedBy: profileId,
+          activityDate: new Date(),
+        });
+
+        return { deal: newDeal, accountId };
+      }),
+
+    /**
+     * Soft delete a lead
+     */
+    delete: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+
+        const [deleted] = await db.update(leads)
+          .set({
+            deletedAt: new Date(),
+          })
+          .where(and(
+            eq(leads.id, input.id),
+            eq(leads.orgId, orgId)
+          ))
+          .returning();
+
+        if (!deleted) {
+          throw new Error('Lead not found or unauthorized');
+        }
+
+        return { success: true };
+      }),
+
+    /**
+     * Update BANT scores for a lead
+     */
+    updateBANT: orgProtectedProcedure
+      .input(z.object({
+        id: z.string().uuid(),
+        bantBudget: z.number().min(0).max(25),
+        bantAuthority: z.number().min(0).max(25),
+        bantNeed: z.number().min(0).max(25),
+        bantTimeline: z.number().min(0).max(25),
+        bantBudgetNotes: z.string().optional(),
+        bantAuthorityNotes: z.string().optional(),
+        bantNeedNotes: z.string().optional(),
+        bantTimelineNotes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        const [updated] = await db.update(leads)
+          .set({
+            bantBudget: input.bantBudget,
+            bantAuthority: input.bantAuthority,
+            bantNeed: input.bantNeed,
+            bantTimeline: input.bantTimeline,
+            bantBudgetNotes: input.bantBudgetNotes,
+            bantAuthorityNotes: input.bantAuthorityNotes,
+            bantNeedNotes: input.bantNeedNotes,
+            bantTimelineNotes: input.bantTimelineNotes,
+            updatedAt: new Date(),
+          })
+          .where(and(
+            eq(leads.id, input.id),
+            eq(leads.orgId, orgId)
+          ))
+          .returning();
+
+        if (!updated) {
+          throw new Error('Lead not found or unauthorized');
+        }
+
+        return updated;
+      }),
+  }),
+
+  // =====================================================
+  // LEAD TASKS
+  // =====================================================
+
+  leadTasks: router({
+    /**
+     * Get all tasks for a lead
+     */
+    list: orgProtectedProcedure
+      .input(z.object({
+        leadId: z.string().uuid(),
+        includeCompleted: z.boolean().default(true),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        let query = db.select().from(leadTasks)
+          .where(and(
+            eq(leadTasks.leadId, input.leadId),
+            eq(leadTasks.orgId, orgId),
+            isNull(leadTasks.deletedAt)
+          ));
+
+        const tasks = await query.orderBy(desc(leadTasks.dueDate));
+
+        if (!input.includeCompleted) {
+          return tasks.filter(t => !t.completed);
+        }
+
+        return tasks;
+      }),
+
+    /**
+     * Create a new task
+     */
+    create: orgProtectedProcedure
+      .input(z.object({
+        leadId: z.string().uuid(),
+        title: z.string().min(1),
+        description: z.string().optional(),
+        dueDate: z.string(), // ISO date string
+        priority: z.enum(['low', 'medium', 'high']).default('medium'),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+
+        // Get user profile ID for createdBy
+        const [userProfile] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId))
+          .limit(1);
+
+        const [task] = await db.insert(leadTasks)
+          .values({
+            orgId,
+            leadId: input.leadId,
+            title: input.title,
+            description: input.description,
+            dueDate: input.dueDate,
+            priority: input.priority,
+            assignedTo: userProfile?.id,
+            createdBy: userProfile?.id,
+          })
+          .returning();
+
+        return task;
+      }),
+
+    /**
+     * Update a task
+     */
+    update: orgProtectedProcedure
+      .input(z.object({
+        id: z.string().uuid(),
+        title: z.string().min(1).optional(),
+        description: z.string().optional(),
+        dueDate: z.string().optional(),
+        priority: z.enum(['low', 'medium', 'high']).optional(),
+        completed: z.boolean().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+
+        // Get user profile ID
+        const [userProfile] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId))
+          .limit(1);
+
+        const updateData: Record<string, unknown> = {
+          updatedAt: new Date(),
+        };
+
+        if (input.title !== undefined) updateData.title = input.title;
+        if (input.description !== undefined) updateData.description = input.description;
+        if (input.dueDate !== undefined) updateData.dueDate = input.dueDate;
+        if (input.priority !== undefined) updateData.priority = input.priority;
+        if (input.completed !== undefined) {
+          updateData.completed = input.completed;
+          if (input.completed) {
+            updateData.completedAt = new Date();
+            updateData.completedBy = userProfile?.id;
+          } else {
+            updateData.completedAt = null;
+            updateData.completedBy = null;
+          }
+        }
+
+        const [updated] = await db.update(leadTasks)
+          .set(updateData)
+          .where(and(
+            eq(leadTasks.id, input.id),
+            eq(leadTasks.orgId, orgId)
+          ))
+          .returning();
+
+        if (!updated) {
+          throw new Error('Task not found or unauthorized');
+        }
+
+        return updated;
+      }),
+
+    /**
+     * Delete a task (soft delete)
+     */
+    delete: orgProtectedProcedure
+      .input(z.object({
+        id: z.string().uuid(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        const [deleted] = await db.update(leadTasks)
+          .set({
+            deletedAt: new Date(),
+          })
+          .where(and(
+            eq(leadTasks.id, input.id),
+            eq(leadTasks.orgId, orgId)
+          ))
+          .returning();
+
+        if (!deleted) {
+          throw new Error('Task not found or unauthorized');
+        }
+
+        return { success: true };
       }),
   }),
 
@@ -508,7 +902,7 @@ export const crmRouter = router({
      */
     list: orgProtectedProcedure
       .input(z.object({
-        entityType: z.enum(['account', 'lead', 'deal', 'poc']),
+        entityType: z.enum(['account', 'lead', 'deal', 'poc', 'submission', 'candidate']),
         entityId: z.string().uuid(),
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -535,13 +929,17 @@ export const crmRouter = router({
      */
     create: orgProtectedProcedure
       .input(z.object({
-        entityType: z.enum(['account', 'lead', 'deal', 'poc']),
+        entityType: z.enum(['account', 'lead', 'deal', 'poc', 'submission', 'candidate']),
         entityId: z.string().uuid(),
-        activityType: z.enum(['call', 'email', 'meeting', 'note', 'task', 'status_change']),
-        subject: z.string().min(1).max(500),
-        description: z.string().optional(),
+        activityType: z.enum(['call', 'email', 'meeting', 'note', 'linkedin_message']),
+        subject: z.string().optional(),
+        body: z.string().optional(),
+        direction: z.enum(['inbound', 'outbound']).optional(),
         activityDate: z.date().optional(),
-        metadata: z.record(z.any()).optional(),
+        durationMinutes: z.number().int().min(0).max(480).optional(),
+        outcome: z.enum(['positive', 'neutral', 'negative']).optional(),
+        nextAction: z.string().optional(),
+        nextActionDate: z.date().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
@@ -552,6 +950,13 @@ export const crmRouter = router({
           performedBy: userId,
           activityDate: input.activityDate || new Date(),
         }).returning();
+
+        // Update lastContactedAt on the entity if it's a lead
+        if (input.entityType === 'lead') {
+          await db.update(leads)
+            .set({ lastContactedAt: new Date() })
+            .where(eq(leads.id, input.entityId));
+        }
 
         return newActivity;
       }),

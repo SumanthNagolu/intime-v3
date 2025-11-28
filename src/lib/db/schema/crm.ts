@@ -3,7 +3,7 @@
  * Tables: accounts, point_of_contacts, activity_log, leads, deals
  */
 
-import { pgTable, uuid, text, timestamp, numeric, integer, boolean } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, timestamp, numeric, integer, boolean, date } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { userProfiles } from './user-profiles';
 import { organizations } from './organizations';
@@ -180,16 +180,27 @@ export const leads = pgTable('leads', {
   // Company fields
   companyName: text('company_name'),
   industry: text('industry'),
+  companyType: text('company_type'), // direct_client, implementation_partner, msp_vms, system_integrator
   companySize: text('company_size'),
+  website: text('website'),
+  headquarters: text('headquarters'),
+  tier: text('tier'), // enterprise, mid_market, smb, strategic
+  companyDescription: text('company_description'),
 
   // Contact fields
   firstName: text('first_name'),
   lastName: text('last_name'),
-  fullName: text('full_name'),
+  // fullName is a GENERATED ALWAYS column in the database - we don't define it in Drizzle
+  // to prevent Drizzle from trying to insert into it. Access it via raw SQL if needed.
   title: text('title'),
   email: text('email'),
   phone: text('phone'),
   linkedinUrl: text('linkedin_url'),
+  decisionAuthority: text('decision_authority'), // decision_maker, influencer, gatekeeper, end_user, champion
+  preferredContactMethod: text('preferred_contact_method').default('email'),
+
+  // Link to existing account (for person leads)
+  accountId: uuid('account_id').references(() => accounts.id),
 
   // Lead status
   status: text('status').notNull().default('new'),
@@ -201,6 +212,23 @@ export const leads = pgTable('leads', {
 
   // Assignment
   ownerId: uuid('owner_id').references(() => userProfiles.id),
+
+  // Notes
+  notes: text('notes'),
+
+  // BANT Qualification Scores (0-25 each)
+  bantBudget: integer('bant_budget').default(0),
+  bantAuthority: integer('bant_authority').default(0),
+  bantNeed: integer('bant_need').default(0),
+  bantTimeline: integer('bant_timeline').default(0),
+  
+  // BANT Notes
+  bantBudgetNotes: text('bant_budget_notes'),
+  bantAuthorityNotes: text('bant_authority_notes'),
+  bantNeedNotes: text('bant_need_notes'),
+  bantTimelineNotes: text('bant_timeline_notes'),
+  
+  // bant_total_score is a GENERATED column - don't define in Drizzle
 
   // Engagement
   lastContactedAt: timestamp('last_contacted_at', { withTimezone: true }),
@@ -218,12 +246,10 @@ export const leads = pgTable('leads', {
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
   createdBy: uuid('created_by').references(() => userProfiles.id),
   deletedAt: timestamp('deleted_at', { withTimezone: true }),
-
-  // Search
-  searchVector: text('search_vector'),
+  // Note: search_vector column removed - not needed for MVP, can be re-added with proper tsvector type later
 });
 
-export const leadsRelations = relations(leads, ({ one }) => ({
+export const leadsRelations = relations(leads, ({ one, many }) => ({
   organization: one(organizations, {
     fields: [leads.orgId],
     references: [organizations.id],
@@ -236,7 +262,54 @@ export const leadsRelations = relations(leads, ({ one }) => ({
     fields: [leads.convertedToAccountId],
     references: [accounts.id],
   }),
+  tasks: many(leadTasks),
 }));
+
+// =====================================================
+// LEAD TASKS
+// =====================================================
+
+export const leadTasks = pgTable('lead_tasks', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+  leadId: uuid('lead_id').notNull().references(() => leads.id, { onDelete: 'cascade' }),
+
+  // Task details
+  title: text('title').notNull(),
+  description: text('description'),
+  dueDate: date('due_date').notNull(),
+  priority: text('priority').notNull().default('medium'), // low, medium, high
+  completed: boolean('completed').notNull().default(false),
+  completedAt: timestamp('completed_at', { withTimezone: true }),
+  completedBy: uuid('completed_by').references(() => userProfiles.id),
+
+  // Assignment
+  assignedTo: uuid('assigned_to').references(() => userProfiles.id),
+
+  // Metadata
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  createdBy: uuid('created_by').references(() => userProfiles.id),
+  deletedAt: timestamp('deleted_at', { withTimezone: true }),
+});
+
+export const leadTasksRelations = relations(leadTasks, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [leadTasks.orgId],
+    references: [organizations.id],
+  }),
+  lead: one(leads, {
+    fields: [leadTasks.leadId],
+    references: [leads.id],
+  }),
+  assignee: one(userProfiles, {
+    fields: [leadTasks.assignedTo],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type LeadTask = typeof leadTasks.$inferSelect;
+export type NewLeadTask = typeof leadTasks.$inferInsert;
 
 export type Lead = typeof leads.$inferSelect;
 export type NewLead = typeof leads.$inferInsert;
