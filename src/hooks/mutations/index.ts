@@ -89,3 +89,14 @@ export {
   type BulkUpdateAccountsInput,
   type LogActivityInput,
 } from './accounts';
+
+// Leads
+export {
+  useCreateLead,
+  useUpdateLead,
+  useUpdateLeadStatus,
+  useDeleteLead,
+  useConvertLead,
+  useCreateLeadActivity,
+  useInvalidateAllLeadData,
+} from './leads';

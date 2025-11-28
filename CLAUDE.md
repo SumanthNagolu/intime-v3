@@ -99,3 +99,50 @@ npm run claude:full
 - Always use broswer extension built in cursor ide for testing
 
 After switching presets, restart Claude Code to apply changes.
+
+---
+
+## Database Migration Rules (IMPORTANT)
+
+**ALWAYS use the `execute-sql` Edge Function for database migrations. NEVER use `npx supabase db push` directly.**
+
+### How to Run Migrations
+
+```bash
+# 1. Source environment variables
+source .env.local
+
+# 2. Execute SQL via the Edge Function
+curl -X POST 'https://gkwhxmvugnjwwwiufmdy.supabase.co/functions/v1/execute-sql' \
+  -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"sql":"YOUR SQL STATEMENT HERE"}'
+```
+
+### Migration Workflow
+
+1. **Check current schema first:**
+   ```bash
+   source .env.local && curl -X POST 'https://gkwhxmvugnjwwwiufmdy.supabase.co/functions/v1/execute-sql' \
+     -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+     -H 'Content-Type: application/json' \
+     -d '{"sql":"SELECT column_name FROM information_schema.columns WHERE table_name = '\''TABLE_NAME'\'' ORDER BY ordinal_position"}'
+   ```
+
+2. **Add columns with IF NOT EXISTS:**
+   ```sql
+   ALTER TABLE table_name ADD COLUMN IF NOT EXISTS column_name TYPE;
+   ```
+
+3. **Create indexes:**
+   ```sql
+   CREATE INDEX IF NOT EXISTS idx_name ON table_name(column_name);
+   ```
+
+4. **Always update local migration files** in `supabase/migrations/` after applying changes
+
+### Key Points
+- The `execute-sql` function requires the `SUPABASE_SERVICE_ROLE_KEY` for authorization
+- Always use `IF NOT EXISTS` / `IF EXISTS` for idempotent migrations
+- Test queries before running DDL statements
+- Keep Drizzle schema (`src/lib/db/schema/`) in sync with database

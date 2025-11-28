@@ -1,9 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { LayoutDashboard, Building2, Target, DollarSign, Briefcase, List } from 'lucide-react';
+import { CreateLeadModal } from '../recruiting/Modals';
+import { useAppStore } from '../../lib/store';
+import { Lead, Account } from '../../types';
 
 interface RecruitingLayoutProps {
   children: React.ReactNode;
@@ -12,8 +15,27 @@ interface RecruitingLayoutProps {
 export const RecruitingLayout: React.FC<RecruitingLayoutProps> = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter();
+  const { addLead, addAccount } = useAppStore();
+  const [showLeadModal, setShowLeadModal] = useState(false);
 
   const isActive = (path: string) => pathname.includes(path);
+  const isLeadsPage = pathname.includes('/leads');
+
+  const handleCreateLead = (newLead: Lead, newAccount?: Account) => {
+    // If a company lead was created, also add the account
+    if (newAccount) {
+      addAccount(newAccount);
+    }
+    addLead(newLead);
+  };
+
+  const handleActionClick = () => {
+    if (isLeadsPage) {
+      setShowLeadModal(true);
+    } else {
+      router.push('/employee/recruiting/post');
+    }
+  };
 
   return (
     <div className="pt-4">
@@ -25,11 +47,11 @@ export const RecruitingLayout: React.FC<RecruitingLayoutProps> = ({ children }) 
             <h1 className="text-4xl font-serif font-bold text-charcoal">Recruiter Workspace</h1>
           </div>
           <button
-            onClick={() => router.push('/employee/recruiting/post')}
+            onClick={handleActionClick}
             className="px-6 py-3 bg-charcoal text-white font-bold text-sm uppercase tracking-wider rounded-lg hover:bg-rust transition-colors flex items-center gap-2"
           >
             <span className="text-lg">+</span>
-            New Requisition
+            {isLeadsPage ? 'New Lead' : 'New Requisition'}
           </button>
         </div>
 
@@ -88,6 +110,14 @@ export const RecruitingLayout: React.FC<RecruitingLayoutProps> = ({ children }) 
 
       {/* Page Content */}
       {children}
+
+      {/* Create Lead Modal */}
+      {showLeadModal && (
+        <CreateLeadModal
+          onClose={() => setShowLeadModal(false)}
+          onSave={handleCreateLead}
+        />
+      )}
     </div>
   );
 };

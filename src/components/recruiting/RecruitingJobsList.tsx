@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Briefcase, MapPin, DollarSign, Users, Plus } from 'lucide-react';
+import { Briefcase, MapPin, DollarSign, Users } from 'lucide-react';
 
 export const RecruitingJobsList: React.FC = () => {
   const jobs = [
@@ -12,17 +12,7 @@ export const RecruitingJobsList: React.FC = () => {
   ];
 
   return (
-    <div className="animate-fade-in pt-4">
-      <div className="mb-10 flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-serif font-bold text-charcoal mb-2">Job Orders</h1>
-          <p className="text-stone-500">Active recruiting assignments and pipeline</p>
-        </div>
-        <Link href="/employee/recruiting/post" className="px-6 py-3 bg-charcoal text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-rust transition-all flex items-center gap-2">
-          <Plus size={16} /> New Job Order
-        </Link>
-      </div>
-
+    <div className="animate-fade-in">
       <div className="space-y-4">
         {jobs.map((job) => (
           <Link key={job.id} href={`/employee/recruiting/jobs/${job.id}`} className="block bg-white p-6 rounded-[2rem] border border-stone-200 shadow-sm hover:shadow-lg transition-all">
