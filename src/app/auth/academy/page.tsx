@@ -1,4 +1,4 @@
-import { AuthPage } from '@/components/auth/AuthPage';
+import { redirect } from 'next/navigation';
 
 export const metadata = {
   title: 'Training Academy - Sign In | InTime',
@@ -6,8 +6,5 @@ export const metadata = {
 };
 
 export default function AcademyAuthPage() {
-  return <AuthPage portal="academy" />;
+  redirect('/login');
 }
-
-
-

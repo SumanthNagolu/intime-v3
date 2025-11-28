@@ -10,8 +10,58 @@
  * Epic: FOUND-005 - Configure Supabase Auth
  */
 
-import { createClient } from '@/lib/supabase/server';
+import { createClient, createAdminClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
+import type { PortalType } from './client';
+
+/**
+ * Portal access rules - defines which roles can access which portal
+ *
+ * IMPORTANT: These are EXCLUSIVE lists. A user should only access one portal.
+ * - Academy is for STUDENTS only (pure learners, not employees)
+ * - Employee portal is for all internal staff (including trainers who are employees)
+ * - Client portal is for external clients
+ * - Talent portal is for job seekers/candidates
+ */
+export const PORTAL_ALLOWED_ROLES: Record<PortalType, string[]> = {
+  // Academy: Only for external students learning on the platform
+  academy: ['student'],
+
+  // Employee: All internal staff including trainers, admins, recruiters, etc.
+  employee: [
+    'super_admin', 'admin', 'ceo',
+    'recruiter', 'senior_recruiter', 'junior_recruiter',
+    'bench_manager', 'bench_sales',
+    'ta_specialist', 'talent_acquisition',
+    'hr_admin', 'hr_manager',
+    'academy_admin',
+    'trainer', 'training_coordinator',
+    'immigration_specialist',
+    'employee'
+  ],
+
+  // Client: External clients who hire talent
+  client: ['client', 'client_admin', 'client_poc'],
+
+  // Talent: Job seekers and candidates
+  talent: ['candidate', 'talent'],
+};
+
+/**
+ * Employee roles - used to check if user is an internal employee
+ * If user has ANY of these roles, they should use Employee portal
+ */
+export const EMPLOYEE_ROLES = [
+  'super_admin', 'admin', 'ceo',
+  'recruiter', 'senior_recruiter', 'junior_recruiter',
+  'bench_manager', 'bench_sales',
+  'ta_specialist', 'talent_acquisition',
+  'hr_admin', 'hr_manager',
+  'academy_admin',
+  'trainer', 'training_coordinator',
+  'immigration_specialist',
+  'employee'
+];
 
 /**
  * Get the current authenticated user's session
@@ -231,4 +281,95 @@ export async function requireRole(
   }
 
   return await getUser();
+}
+
+/**
+ * Require portal access - checks if user has roles that allow access to a specific portal
+ * Uses admin client to bypass RLS for role lookups
+ * @param portal - The portal type (academy, employee, client, talent)
+ * @returns User and roles if authorized
+ */
+export async function requirePortalAccess(
+  portal: PortalType
+): Promise<{ user: Awaited<ReturnType<typeof getCurrentUser>>; roles: string[] }> {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    redirect(`/auth/${portal}`);
+  }
+
+  // Use admin client to bypass RLS for profile/role lookups
+  const supabase = createAdminClient();
+
+  // Get user profile
+  const { data: profile } = await supabase
+    .from('user_profiles')
+    .select('id, full_name, email')
+    .eq('auth_id', user.id)
+    .is('deleted_at', null)
+    .single();
+
+  let roles: string[] = [];
+
+  // Get user roles if profile exists
+  if (profile) {
+    const { data: rolesData } = await supabase
+      .from('user_roles')
+      .select('role:roles(name)')
+      .eq('user_id', profile.id)
+      .is('deleted_at', null);
+
+    if (rolesData) {
+      roles = rolesData.map((item: any) => item.role?.name).filter(Boolean);
+    }
+  }
+
+  const allowedRoles = PORTAL_ALLOWED_ROLES[portal];
+  const hasAccess = roles.some(role => allowedRoles.includes(role));
+
+  if (!hasAccess) {
+    // Redirect to appropriate portal based on their actual roles
+    const correctPortal = getCorrectPortalForRoles(roles);
+    if (correctPortal && correctPortal !== portal) {
+      redirect(`/${correctPortal}/portal?error=wrong_portal`);
+    }
+    // No valid portal - redirect to login with error
+    redirect(`/login?error=no_access`);
+  }
+
+  return { user, roles };
+}
+
+/**
+ * Determine which portal a user should access based on their roles
+ * @param roles - User's roles
+ * @returns The portal type they should access, or null if no match
+ */
+export function getCorrectPortalForRoles(roles: string[]): PortalType | null {
+  // Check in order of priority
+  const portalPriority: PortalType[] = ['employee', 'academy', 'client', 'talent'];
+
+  for (const portal of portalPriority) {
+    const allowedRoles = PORTAL_ALLOWED_ROLES[portal];
+    if (roles.some(role => allowedRoles.includes(role))) {
+      return portal;
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Check if user can access a portal (without redirecting)
+ * @param portal - The portal type
+ * @param userId - Optional user ID
+ * @returns true if user can access the portal
+ */
+export async function canAccessPortal(
+  portal: PortalType,
+  userId?: string
+): Promise<boolean> {
+  const roles = await getUserRoles(userId);
+  const allowedRoles = PORTAL_ALLOWED_ROLES[portal];
+  return roles.some(role => allowedRoles.includes(role));
 }

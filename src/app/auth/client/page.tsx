@@ -1,4 +1,4 @@
-import { AuthPage } from '@/components/auth/AuthPage';
+import { redirect } from 'next/navigation';
 
 export const metadata = {
   title: 'Client Portal - Sign In | InTime',
@@ -6,8 +6,5 @@ export const metadata = {
 };
 
 export default function ClientAuthPage() {
-  return <AuthPage portal="client" />;
+  redirect('/login');
 }
-
-
-

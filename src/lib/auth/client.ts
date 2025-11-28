@@ -23,10 +23,43 @@ export interface AuthResult<T = any> {
 export type PortalType = 'academy' | 'client' | 'talent' | 'employee';
 
 /**
+ * Portal access rules - defines which roles can access which portal
+ *
+ * IMPORTANT: These are EXCLUSIVE lists. A user should only access one portal.
+ * - Academy is for STUDENTS only (pure learners, not employees)
+ * - Employee portal is for all internal staff (including trainers who are employees)
+ * - Client portal is for external clients
+ * - Talent portal is for job seekers/candidates
+ */
+export const PORTAL_ALLOWED_ROLES: Record<PortalType, string[]> = {
+  // Academy: Only for external students learning on the platform
+  academy: ['student'],
+
+  // Employee: All internal staff including trainers, admins, recruiters, etc.
+  employee: [
+    'super_admin', 'admin', 'ceo',
+    'recruiter', 'senior_recruiter', 'junior_recruiter',
+    'bench_manager', 'bench_sales',
+    'ta_specialist', 'talent_acquisition',
+    'hr_admin', 'hr_manager',
+    'academy_admin',
+    'trainer', 'training_coordinator',
+    'immigration_specialist',
+    'employee'
+  ],
+
+  // Client: External clients who hire talent
+  client: ['client', 'client_admin', 'client_poc'],
+
+  // Talent: Job seekers and candidates
+  talent: ['candidate', 'talent'],
+};
+
+/**
  * Sign up a new user with email and password
  * @param email - User's email address
  * @param password - User's password (min 6 characters)
- * @param metadata - Additional user metadata (full_name, etc.)
+ * @param metadata - Additional user metadata (full_name, role, etc.)
  * @returns AuthResult with user data or error
  */
 export async function signUp(
@@ -35,6 +68,7 @@ export async function signUp(
   metadata?: {
     full_name?: string;
     phone?: string;
+    role?: 'student' | 'client' | 'candidate'; // Public signup roles only
   }
 ): Promise<AuthResult> {
   const supabase = createClient();

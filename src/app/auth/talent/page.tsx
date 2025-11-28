@@ -1,4 +1,4 @@
-import { AuthPage } from '@/components/auth/AuthPage';
+import { redirect } from 'next/navigation';
 
 export const metadata = {
   title: 'Talent Portal - Sign In | InTime',
@@ -6,8 +6,5 @@ export const metadata = {
 };
 
 export default function TalentAuthPage() {
-  return <AuthPage portal="talent" />;
+  redirect('/login');
 }
-
-
-

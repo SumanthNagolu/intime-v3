@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { useAppStore } from '@/lib/store';
 import { Role } from '@/lib/types';
 import { Button } from '@/components/ui/button';
+import { signOut } from '@/lib/auth/client';
 
 // Navigation structures based on 4 Parent Categories
 const ROLE_NAV: Record<Role, { title: string; icon: any; items: { label: string; path: string; icon: any }[] }[]> = {
@@ -321,9 +322,11 @@ export const Navbar: React.FC = () => {
   // Is Internal Employee?
   const isInternal = !['student', 'client', 'consultant'].includes(activeRole);
 
-  const handleLogout = () => {
-      router.push('/');
+  const handleLogout = async () => {
       setIsProfileOpen(false);
+      await signOut();
+      router.push('/');
+      router.refresh();
   };
 
   const handleRoleSwitch = (role: Role) => {

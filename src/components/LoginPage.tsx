@@ -2,459 +2,417 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { 
-  User, 
-  Briefcase, 
-  Layout, 
-  Lock, 
-  ArrowLeft, 
-  ShieldCheck, 
-  Globe, 
-  Users, 
-  Building2, 
-  ChevronRight, 
-  X, 
-  GraduationCap, 
-  Settings, 
-  Plane,
-  ArrowRight,
-  Sparkles,
-  CheckCircle2
+import { useRouter, useSearchParams } from 'next/navigation';
+import {
+  Mail,
+  Lock,
+  User,
+  Eye,
+  EyeOff,
+  Loader2,
+  AlertCircle,
+  CheckCircle2,
+  GraduationCap,
+  Building2,
+  Briefcase,
 } from 'lucide-react';
-import { useAppStore } from '@/lib/store';
-import { Role } from '@/lib/types';
+import { signIn, signInWithGoogle } from '@/lib/auth/client';
+import { getUserPortalAction, signUpAction } from '@/app/actions/auth';
+import { MarketingNavbar } from '@/components/templates/marketing/MarketingNavbar';
+
+const ERROR_MESSAGES: Record<string, string> = {
+  wrong_portal: "You were redirected to your correct portal.",
+  no_access: "Your account doesn't have access to any portal. Please contact your administrator.",
+  unauthorized: "You're not authorized to access that resource.",
+  session_expired: "Your session has expired. Please sign in again.",
+};
+
+// Public signup roles - only these can be selected by external users
+const PUBLIC_ROLES = [
+  {
+    value: 'student',
+    label: 'Student',
+    description: 'Join our training academy',
+    icon: GraduationCap,
+  },
+  {
+    value: 'client',
+    label: 'Client',
+    description: 'Hire qualified talent',
+    icon: Building2,
+  },
+  {
+    value: 'candidate',
+    label: 'Talent',
+    description: 'Find your next opportunity',
+    icon: Briefcase,
+  },
+] as const;
+
+type PublicRole = typeof PUBLIC_ROLES[number]['value'];
 
 export const LoginPage: React.FC = () => {
   const router = useRouter();
-  const { setActiveRole } = useAppStore();
-  const [loadingRole, setLoadingRole] = useState<string | null>(null);
-  const [showEmployeeMenu, setShowEmployeeMenu] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const searchParams = useSearchParams();
+  const [mode, setMode] = useState<'signin' | 'signup'>('signin');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [selectedRole, setSelectedRole] = useState<PublicRole>('student');
+
+  // Check if user is already logged in and redirect to their portal
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    const checkAuthAndRedirect = async () => {
+      try {
+        const result = await getUserPortalAction();
 
-  // The 3 External Portals
-  const externalPortals = [
-    { 
-      id: 'academy', 
-      name: 'Training Academy', 
-      icon: GraduationCap, 
-      role: 'student' as Role, 
-      desc: 'Transform Your Career', 
-      features: ['50+ Professional Courses', 'Industry Certifications', 'Career Coaching'],
-      accentColor: 'bg-gold-500',
-      gradientFrom: 'from-gold-400',
-      gradientTo: 'to-amber-500',
-      iconBg: 'bg-gold-500/20',
-      iconColor: 'text-gold-400',
-      hoverBorder: 'hover:border-gold-500/40',
-      hoverGlow: 'hover:shadow-[0_0_40px_rgba(201,169,97,0.15)]'
-    },
-    { 
-      id: 'client', 
-      name: 'Client Portal', 
-      icon: Building2, 
-      role: 'client' as Role, 
-      desc: 'Hire Pre-Vetted Talent', 
-      features: ['Access Talent Pipeline', 'Direct Hiring', 'Submission Tracking'],
-      accentColor: 'bg-amber-500',
-      gradientFrom: 'from-amber-400',
-      gradientTo: 'to-amber-600',
-      iconBg: 'bg-amber-500/20',
-      iconColor: 'text-amber-400',
-      hoverBorder: 'hover:border-amber-500/40',
-      hoverGlow: 'hover:shadow-[0_0_40px_rgba(245,158,11,0.15)]'
-    },
-    { 
-      id: 'talent', 
-      name: 'Talent Portal', 
-      icon: Briefcase, 
-      role: 'consultant' as Role, 
-      desc: 'Consultant Workspace', 
-      features: ['Job Opportunities', 'Profile Management', 'Application Status'],
-      accentColor: 'bg-slate-400',
-      gradientFrom: 'from-slate-300',
-      gradientTo: 'to-slate-500',
-      iconBg: 'bg-slate-400/20',
-      iconColor: 'text-slate-300',
-      hoverBorder: 'hover:border-slate-400/40',
-      hoverGlow: 'hover:shadow-[0_0_40px_rgba(148,163,184,0.15)]'
-    },
-  ];
+        if (result.success && result.data?.portal) {
+          // User is logged in and has a valid portal, redirect them
+          router.replace(`/${result.data.portal}/portal`);
+          return;
+        }
+      } catch (err) {
+        console.error('Error checking user portal:', err);
+      }
 
-  // The Internal Employee Roles
-  const internalRoles: { id: string; label: string; role: Role; icon: React.ComponentType<{ size?: number }> }[] = [
-    { id: 'bench', label: 'Bench Sales', role: 'bench_manager', icon: Layout },
-    { id: 'recruiter', label: 'Recruiter', role: 'recruiter', icon: Users },
-    { id: 'sales', label: 'Sales Specialist', role: 'ta_specialist', icon: Globe },
-    { id: 'training', label: 'Training Specialist', role: 'academy_admin', icon: GraduationCap },
-    { id: 'imm', label: 'Immigration', role: 'cross_border_specialist', icon: Plane },
-    { id: 'hr', label: 'HR Manager', role: 'hr_admin', icon: ShieldCheck },
-    { id: 'admin', label: 'Admin', role: 'admin', icon: Settings },
-    { id: 'ceo', label: 'CEO', role: 'ceo', icon: Lock },
-  ];
+      setIsCheckingAuth(false);
+    };
 
-  // Navigate to the appropriate auth page for each portal
-  const handlePortalSelect = (portalType: 'academy' | 'client' | 'talent' | 'employee') => {
-    setLoadingRole(portalType);
-    setTimeout(() => {
-      router.push(`/auth/${portalType}`);
-    }, 400);
+    checkAuthAndRedirect();
+  }, [router]);
+
+  // Check for error codes in URL
+  useEffect(() => {
+    const errorCode = searchParams.get('error');
+    if (errorCode && ERROR_MESSAGES[errorCode]) {
+      setError(ERROR_MESSAGES[errorCode]);
+    }
+  }, [searchParams]);
+
+  const handleGoogleSignIn = async () => {
+    setIsGoogleLoading(true);
+    setError(null);
+
+    try {
+      // Use 'employee' as default portal for OAuth - server will redirect to correct portal
+      const { error } = await signInWithGoogle('employee');
+      if (error) {
+        setError(error.message);
+        setIsGoogleLoading(false);
+      }
+    } catch {
+      setError('An unexpected error occurred');
+      setIsGoogleLoading(false);
+    }
   };
 
-  // Legacy handleLogin for demo purposes (employee roles direct access)
-  const handleLogin = (role: Role, path?: string) => {
-    setLoadingRole(role);
-    setTimeout(() => {
-      setActiveRole(role);
-      if (path) {
-        router.push(path);
+  const handleEmailAuth = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      if (mode === 'signup') {
+        const result = await signUpAction({
+          email,
+          password,
+          full_name: fullName,
+          role: selectedRole,
+        });
+        if (!result.success) {
+          setError(result.error || 'Failed to create account');
+        } else {
+          setSuccess('Account created! Please check your email to verify your account.');
+        }
       } else {
-        switch(role) {
-          case 'student': router.push('/academy/dashboard'); break;
-          case 'client': router.push('/client/portal'); break;
-          case 'consultant': router.push('/talent/portal'); break;
-          case 'bench_manager': router.push('/employee/bench/dashboard'); break;
-          case 'recruiter': router.push('/employee/recruiting/dashboard'); break;
-          case 'ta_specialist': router.push('/employee/ta/dashboard'); break;
-          case 'academy_admin': router.push('/employee/academy/admin/dashboard'); break;
-          case 'cross_border_specialist': router.push('/employee/immigration/dashboard'); break;
-          case 'hr_admin': router.push('/employee/hr/dashboard'); break;
-          case 'admin': router.push('/employee/admin/dashboard'); break;
-          case 'ceo': router.push('/employee/ceo/dashboard'); break;
+        const { error } = await signIn(email, password);
+        if (error) {
+          setError(error.message);
+        } else {
+          // After successful login, get user's portal and redirect
+          const result = await getUserPortalAction();
+          if (result.success && result.data?.portal) {
+            router.push(`/${result.data.portal}/portal`);
+          } else {
+            // Fallback - no portal found
+            setError("Your account doesn't have access to any portal. Please contact your administrator.");
+          }
         }
       }
-    }, 800);
+    } catch {
+      setError('An unexpected error occurred');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  return (
-    <div className="min-h-screen bg-[#0D0D0F] flex flex-col relative overflow-hidden">
-      {/* ============================================
-          SOPHISTICATED BACKGROUND
-          Elegant dark theme with gold accents
-          ============================================ */}
-      <div className="absolute inset-0">
-        {/* Base gradient - deep charcoal with warmth */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0D0D0F] via-[#141418] to-[#0D0D0F]" />
-        
-        {/* Primary gold ambient glow - top right */}
-        <div 
-          className="absolute top-0 right-0 w-[70%] h-[60%] rounded-bl-[60%]"
-          style={{
-            background: 'radial-gradient(ellipse at 85% 15%, rgba(201, 169, 97, 0.12) 0%, transparent 50%)',
-          }}
-        />
-        
-        {/* Secondary warm glow - bottom left */}
-        <div 
-          className="absolute bottom-0 left-0 w-[60%] h-[50%] rounded-tr-[70%]"
-          style={{
-            background: 'radial-gradient(ellipse at 10% 90%, rgba(212, 175, 55, 0.08) 0%, transparent 45%)',
-          }}
-        />
-        
-        {/* Subtle center accent */}
-        <div 
-          className="absolute top-[35%] left-[40%] w-[35%] h-[35%]"
-          style={{
-            background: 'radial-gradient(ellipse at 50% 50%, rgba(201, 169, 97, 0.04) 0%, transparent 60%)',
-          }}
-        />
-        
-        {/* Geometric accents - gold circles */}
-        <div 
-          className="absolute top-[6%] right-[5%] w-[300px] h-[300px] border border-gold-500/8 rounded-full"
-          style={{ transform: 'rotate(-12deg)' }}
-        />
-        <div 
-          className="absolute top-[10%] right-[8%] w-[180px] h-[180px] border border-gold-400/5 rounded-full"
-        />
-        <div 
-          className="absolute bottom-[12%] left-[3%] w-[200px] h-[200px] border border-gold-500/6 rounded-full"
-        />
-        <div 
-          className="absolute top-[50%] right-[10%] w-[80px] h-[80px] border border-amber-500/8"
-          style={{ transform: 'rotate(45deg)' }}
-        />
-        
-        {/* Film grain texture for authenticity */}
-        <div 
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          }}
-        />
+  // Show loading state while checking auth
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen bg-ivory flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-forest-200 border-t-forest-600 rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-charcoal-500">Checking your session...</p>
+        </div>
       </div>
+    );
+  }
 
-      {/* Content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto flex-1 flex flex-col justify-center px-6 lg:px-12 py-12">
-        
-        {/* Back Navigation */}
-        <Link 
-          href="/" 
-          className="group inline-flex items-center gap-2 text-charcoal-500 hover:text-gold-400 font-bold uppercase tracking-[0.15em] text-[11px] transition-all duration-300 mb-12 w-fit"
-        >
-          <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> 
-          Back to Home
-        </Link>
-        
-        {/* Header Section */}
-        <div className={`text-center mb-16 transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          {/* Logo Mark with glow */}
-          <div className="relative inline-block mb-10">
-            <div className="absolute -inset-2 bg-gold-500/20 blur-xl rounded-2xl" />
-            <div className="relative inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-gold-400 via-gold-500 to-gold-600 rounded-xl shadow-premium">
-              <span className="font-heading font-bold text-4xl text-charcoal-900 italic">I</span>
+  return (
+    <div className="min-h-screen bg-ivory flex flex-col">
+      {/* Marketing Navbar */}
+      <MarketingNavbar />
+
+      <div className="flex-1 flex flex-col lg:flex-row">
+        {/* Left side - Logo & branding */}
+        <div className="lg:w-[40%] px-8 md:px-12 lg:px-16 py-12 lg:py-16 flex flex-col">
+          <div className="my-auto">
+            <div className="font-heading text-6xl md:text-7xl lg:text-8xl text-forest-900 tracking-tight leading-none">
+              In<span className="text-gold-600">Time</span>
             </div>
+            <p className="text-charcoal-400 text-lg mt-4 max-w-sm">
+              Enterprise staffing platform
+            </p>
           </div>
-          
-          {/* Title */}
-          <h1 className="mb-6">
-            <span className="block text-4xl md:text-5xl lg:text-6xl font-heading font-black text-white leading-[1.1] tracking-tight">
-              Welcome to
-            </span>
-            <span className="block text-4xl md:text-5xl lg:text-6xl font-heading font-black leading-[1.1] tracking-tight">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-400 to-gold-500">
-                InTime
-              </span>
-            </span>
+
+          {/* Footer on left */}
+          <div className="mt-auto pt-8 text-xs text-charcoal-400 font-mono tracking-wider">
+            SOC 2 · GDPR · CCPA
+          </div>
+        </div>
+
+      {/* Right side - Auth form */}
+      <div className="lg:w-[60%] bg-white lg:rounded-tl-[4rem] flex flex-col min-h-screen lg:min-h-0">
+
+        {/* Header section */}
+        <div className="px-8 md:px-12 py-10 lg:py-14 border-b border-charcoal-100">
+          <p className="text-gold-700 font-mono text-sm font-semibold tracking-widest uppercase mb-4">
+            Sign In
+          </p>
+
+          <h1 className="font-heading text-5xl md:text-6xl font-bold text-charcoal-900 leading-[1] mb-5">
+            {mode === 'signin' ? 'Welcome back' : 'Create account'}<span className="text-gold-600">.</span>
           </h1>
-          <p className="text-charcoal-400 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
-            Select your portal to access the unified staffing ecosystem
+
+          <p className="text-charcoal-500 text-lg font-medium max-w-lg">
+            Sign in to access your personalized dashboard
           </p>
         </div>
 
-        {/* Portal Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto w-full">
-          
-          {/* External Portals */}
-          {externalPortals.map((portal, index) => (
-            <button 
-              key={portal.id}
-              onClick={() => handlePortalSelect(portal.id as 'academy' | 'client' | 'talent')}
-              disabled={loadingRole !== null}
-              className={`group relative bg-white/[0.03] backdrop-blur-sm rounded-2xl border border-white/10 
-                ${portal.hoverBorder} ${portal.hoverGlow} hover:bg-white/[0.06] hover:-translate-y-2 
-                transition-all duration-500 text-left overflow-hidden
-                ${loadingRole === portal.id ? 'ring-2 ring-gold-500/50' : ''}
-                ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-              style={{ 
-                transitionDelay: mounted ? `${150 + index * 100}ms` : '0ms'
-              }}
+        {/* Form section */}
+        <div className="flex-1 px-8 md:px-12 py-10 lg:py-12 flex flex-col">
+          <div className="max-w-md">
+
+            {/* Google Sign-In */}
+            <button
+              onClick={handleGoogleSignIn}
+              disabled={isGoogleLoading || isLoading}
+              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-charcoal-900 hover:bg-charcoal-800 text-white rounded-xl font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {/* Left accent bar */}
-              <div className={`absolute top-0 left-0 w-1 h-full ${portal.accentColor}`} />
-              
-              {/* Card content */}
-              <div className="p-8">
-                {/* Icon */}
-                <div className={`w-14 h-14 ${portal.iconBg} rounded-xl flex items-center justify-center ${portal.iconColor} mb-6 transition-transform duration-300 group-hover:scale-110`}>
-                  {loadingRole === portal.id ? (
-                    <div className="w-6 h-6 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                  ) : (
-                    <portal.icon size={26} />
-                  )}
-                </div>
-                
-                {/* Content */}
-                <h3 className="font-heading font-bold text-white text-xl mb-2 group-hover:text-gold-400 transition-colors duration-300">
-                  {portal.name}
-                </h3>
-                <p className="text-charcoal-400 text-sm mb-6 leading-relaxed">
-                  {portal.desc}
-                </p>
-                
-                {/* Features list */}
-                <div className="space-y-2 mb-6">
-                  {portal.features.map((feature, i) => (
-                    <div key={i} className="flex items-center gap-2 text-charcoal-500 text-xs">
-                      <CheckCircle2 size={12} className={portal.iconColor} />
-                      <span>{feature}</span>
+              {isGoogleLoading ? (
+                <Loader2 size={20} className="animate-spin" />
+              ) : (
+                <svg className="w-5 h-5" viewBox="0 0 24 24">
+                  <path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                  <path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                  <path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                  <path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                </svg>
+              )}
+              <span>Continue with Google</span>
+            </button>
+
+            {/* Divider */}
+            <div className="relative my-8">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-charcoal-200" />
+              </div>
+              <div className="relative flex justify-center">
+                <span className="bg-white px-4 text-charcoal-400 text-sm">
+                  or use email
+                </span>
+              </div>
+            </div>
+
+            {/* Error/Success Messages */}
+            {error && (
+              <div className="flex items-center gap-2 p-4 mb-6 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+                <AlertCircle size={16} />
+                <span>{error}</span>
+              </div>
+            )}
+            {success && (
+              <div className="flex items-center gap-2 p-4 mb-6 bg-green-50 border border-green-200 rounded-xl text-green-700 text-sm">
+                <CheckCircle2 size={16} />
+                <span>{success}</span>
+              </div>
+            )}
+
+            {/* Email Form */}
+            <form onSubmit={handleEmailAuth} className="space-y-5">
+              {mode === 'signup' && (
+                <>
+                  {/* Role Selector */}
+                  <div>
+                    <label className="block text-charcoal-700 text-sm font-medium mb-3">
+                      I am a...
+                    </label>
+                    <div className="grid grid-cols-3 gap-3">
+                      {PUBLIC_ROLES.map((role) => {
+                        const Icon = role.icon;
+                        const isSelected = selectedRole === role.value;
+                        return (
+                          <button
+                            key={role.value}
+                            type="button"
+                            onClick={() => setSelectedRole(role.value)}
+                            className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
+                              isSelected
+                                ? 'border-forest-500 bg-forest-50 text-forest-700'
+                                : 'border-charcoal-200 bg-charcoal-50 text-charcoal-600 hover:border-charcoal-300'
+                            }`}
+                          >
+                            <Icon size={24} className={isSelected ? 'text-forest-600' : 'text-charcoal-400'} />
+                            <span className="font-semibold text-sm">{role.label}</span>
+                          </button>
+                        );
+                      })}
                     </div>
-                  ))}
-                </div>
-                
-                {/* Arrow indicator */}
-                <div className="flex items-center gap-2 text-charcoal-500 group-hover:text-gold-400 transition-all duration-300">
-                  <span className="text-[10px] font-bold uppercase tracking-widest">Enter Portal</span>
-                  <ArrowRight size={12} className="group-hover:translate-x-1.5 transition-transform duration-300" />
+                    <p className="mt-2 text-charcoal-500 text-xs text-center">
+                      {PUBLIC_ROLES.find(r => r.value === selectedRole)?.description}
+                    </p>
+                  </div>
+
+                  {/* Full Name */}
+                  <div>
+                    <label className="block text-charcoal-700 text-sm font-medium mb-2">
+                      Full Name
+                    </label>
+                    <div className="relative">
+                      <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal-400" />
+                      <input
+                        type="text"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        placeholder="John Doe"
+                        required
+                        className="w-full pl-12 pr-4 py-3.5 bg-charcoal-50 border border-charcoal-200 rounded-xl text-charcoal-900 placeholder:text-charcoal-400 focus:outline-none focus:border-forest-500 focus:ring-2 focus:ring-forest-500/20 transition-all"
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+
+              <div>
+                <label className="block text-charcoal-700 text-sm font-medium mb-2">
+                  Email Address
+                </label>
+                <div className="relative">
+                  <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal-400" />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    required
+                    className="w-full pl-12 pr-4 py-3.5 bg-charcoal-50 border border-charcoal-200 rounded-xl text-charcoal-900 placeholder:text-charcoal-400 focus:outline-none focus:border-forest-500 focus:ring-2 focus:ring-forest-500/20 transition-all"
+                  />
                 </div>
               </div>
-            </button>
-          ))}
 
-          {/* Internal Portal Card */}
-          <button 
-            onClick={() => handlePortalSelect('employee')}
-            disabled={loadingRole !== null}
-            className={`group relative bg-gradient-to-br from-charcoal-800/80 to-charcoal-900/60 backdrop-blur-sm rounded-2xl border border-gold-500/20 
-              hover:border-gold-500/40 hover:shadow-[0_0_50px_rgba(201,169,97,0.12)] hover:-translate-y-2 
-              transition-all duration-500 text-left overflow-hidden
-              ${loadingRole === 'employee' ? 'ring-2 ring-gold-500/50' : ''}
-              ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-            style={{ 
-              transitionDelay: mounted ? `${150 + 3 * 100}ms` : '0ms'
-            }}
-          >
-            {/* Left accent bar */}
-            <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-gold-400 to-amber-500" />
-            
-            {/* Background icon watermark */}
-            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
-              <ShieldCheck size={120} />
-            </div>
-            
-            {/* Glow effect on hover */}
-            <div className="absolute inset-0 bg-gradient-to-br from-gold-500/0 to-gold-500/0 group-hover:from-gold-500/5 group-hover:to-transparent transition-all duration-500 rounded-2xl" />
-
-            {/* Card content */}
-            <div className="relative p-8">
-              {/* Icon */}
-              <div className="w-14 h-14 bg-gold-500/20 rounded-xl flex items-center justify-center text-gold-400 mb-6 transition-transform duration-300 group-hover:scale-110">
-                {loadingRole === 'employee' ? (
-                  <div className="w-6 h-6 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                ) : (
-                  <ShieldCheck size={26} />
+              <div>
+                <label className="block text-charcoal-700 text-sm font-medium mb-2">
+                  Password
+                </label>
+                <div className="relative">
+                  <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal-400" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    required
+                    minLength={mode === 'signup' ? 8 : 1}
+                    className="w-full pl-12 pr-12 py-3.5 bg-charcoal-50 border border-charcoal-200 rounded-xl text-charcoal-900 placeholder:text-charcoal-400 focus:outline-none focus:border-forest-500 focus:ring-2 focus:ring-forest-500/20 transition-all"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-charcoal-400 hover:text-charcoal-600 transition-colors"
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+                {mode === 'signup' && (
+                  <p className="mt-2 text-charcoal-500 text-xs">
+                    Min 8 characters
+                  </p>
                 )}
               </div>
-              
-              {/* Content */}
-              <h3 className="font-heading font-bold text-white text-xl mb-2 group-hover:text-gold-400 transition-colors duration-300">
-                InTime OS
-              </h3>
-              <p className="text-charcoal-400 text-sm mb-6 leading-relaxed">
-                Internal Operations Hub
-              </p>
-              
-              {/* Features list */}
-              <div className="space-y-2 mb-6">
-                {['Bench Sales Management', 'Recruiting Dashboard', 'Cross-Border Operations'].map((feature, i) => (
-                  <div key={i} className="flex items-center gap-2 text-charcoal-500 text-xs">
-                    <CheckCircle2 size={12} className="text-gold-500/70" />
-                    <span>{feature}</span>
-                  </div>
-                ))}
-              </div>
-              
-              {/* SSO Badge */}
-              <div className="flex items-center gap-2 text-gold-500 group-hover:text-gold-400 transition-colors duration-300">
-                <Lock size={12} />
-                <span className="text-[10px] font-bold uppercase tracking-widest">Secure SSO Access</span>
-              </div>
-            </div>
-          </button>
-        </div>
 
-        {/* Footer */}
-        <div className={`mt-20 text-center transition-all duration-700 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <div className="inline-flex items-center gap-4">
-            <div className="w-12 h-px bg-gradient-to-r from-transparent via-charcoal-700 to-transparent" />
-            <div className="flex items-center gap-2 text-charcoal-600">
-              <ShieldCheck size={14} className="text-gold-500/60" />
-              <p className="text-[10px] tracking-[0.2em] uppercase font-medium">
-                Enterprise Grade Security
-              </p>
-            </div>
-            <div className="w-12 h-px bg-gradient-to-r from-transparent via-charcoal-700 to-transparent" />
+              {mode === 'signin' && (
+                <div className="flex justify-end">
+                  <Link
+                    href="/auth/forgot-password"
+                    className="text-sm text-forest-600 hover:text-forest-700 font-medium transition-colors"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={isLoading || isGoogleLoading}
+                className="w-full px-6 py-4 bg-forest-600 hover:bg-forest-700 text-white rounded-xl font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {isLoading ? (
+                  <Loader2 size={18} className="animate-spin" />
+                ) : (
+                  mode === 'signin' ? 'Sign In' : 'Create Account'
+                )}
+              </button>
+            </form>
+
+            {/* Toggle Mode */}
+            <p className="mt-8 text-center text-charcoal-500">
+              {mode === 'signin' ? (
+                <>
+                  Don&apos;t have an account?{' '}
+                  <button
+                    onClick={() => { setMode('signup'); setError(null); setSuccess(null); }}
+                    className="text-forest-600 hover:text-forest-700 font-semibold transition-colors"
+                  >
+                    Sign up
+                  </button>
+                </>
+              ) : (
+                <>
+                  Already have an account?{' '}
+                  <button
+                    onClick={() => { setMode('signin'); setError(null); setSuccess(null); }}
+                    className="text-forest-600 hover:text-forest-700 font-semibold transition-colors"
+                  >
+                    Sign in
+                  </button>
+                </>
+              )}
+            </p>
           </div>
-          <p className="text-charcoal-700 text-[10px] mt-4 tracking-wide font-mono">
-            v3.2.0 • SOC 2 Type II Compliant
-          </p>
+
+          {/* Push footer down */}
+          <div className="mt-auto" />
         </div>
       </div>
-
-      {/* ============================================
-          EMPLOYEE SUB-MENU MODAL
-          Refined design matching premium theme
-          ============================================ */}
-      {showEmployeeMenu && (
-        <div 
-          className="fixed inset-0 bg-[#0D0D0F]/95 backdrop-blur-md z-50 flex items-center justify-center p-4" 
-          onClick={() => setShowEmployeeMenu(false)}
-        >
-          {/* Modal content */}
-          <div 
-            className="bg-white w-full max-w-2xl rounded-2xl shadow-premium-lg relative overflow-hidden animate-scale-in" 
-            onClick={e => e.stopPropagation()}
-          >
-            {/* Top accent bar - gradient */}
-            <div className="h-1 w-full bg-gradient-to-r from-gold-400 via-amber-500 to-gold-400" />
-            
-            <div className="p-10 md:p-12">
-              {/* Close button */}
-              <button 
-                onClick={() => setShowEmployeeMenu(false)} 
-                className="absolute top-6 right-6 w-10 h-10 rounded-xl bg-charcoal-50 flex items-center justify-center text-charcoal-400 hover:text-charcoal-900 hover:bg-charcoal-100 transition-all duration-200"
-              >
-                <X size={20} />
-              </button>
-              
-              {/* Header */}
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-px bg-gold-500" />
-                <span className="text-gold-600 text-[10px] font-bold uppercase tracking-[0.2em]">
-                  Secure Access
-                </span>
-              </div>
-              <h2 className="text-3xl md:text-4xl font-heading font-black text-charcoal-900 mb-2">
-                Internal Login
-              </h2>
-              <p className="text-charcoal-500 mb-10 text-lg font-light">
-                Select your role to access the Employee Portal
-              </p>
-
-              {/* Role Grid */}
-              <div className="grid grid-cols-2 gap-4">
-                {internalRoles.map((role, index) => (
-                  <button
-                    key={role.id}
-                    onClick={() => handleLogin(role.role)}
-                    disabled={loadingRole !== null}
-                    className={`group relative flex items-center gap-4 p-4 rounded-xl border border-charcoal-100 
-                      hover:border-gold-500/40 hover:bg-gold-50/50 hover:shadow-elevation-sm
-                      transition-all duration-300 text-left overflow-hidden
-                      ${loadingRole === role.role ? 'ring-2 ring-gold-500 bg-gold-50' : ''}`}
-                    style={{
-                      animationDelay: `${index * 50}ms`
-                    }}
-                  >
-                    {/* Left accent bar on hover */}
-                    <div className="absolute top-0 left-0 w-0 h-full bg-gold-500 group-hover:w-1 transition-all duration-300" />
-                    
-                    <div className="w-11 h-11 bg-charcoal-50 rounded-xl flex items-center justify-center text-charcoal-400 group-hover:bg-gold-100 group-hover:text-gold-700 transition-all duration-300 shrink-0">
-                      {loadingRole === role.role ? (
-                        <div className="w-5 h-5 border-2 border-gold-500 border-t-transparent rounded-full animate-spin" />
-                      ) : (
-                        <role.icon size={20} />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="font-bold text-charcoal-900 text-sm group-hover:text-gold-700 transition-colors truncate">
-                        {role.label}
-                      </div>
-                      <div className="text-[9px] font-bold uppercase tracking-[0.15em] text-charcoal-400">
-                        Employee Portal
-                      </div>
-                    </div>
-                    <ChevronRight size={16} className="text-charcoal-300 group-hover:text-gold-500 group-hover:translate-x-1 transition-all duration-300 shrink-0" />
-                  </button>
-                ))}
-              </div>
-              
-              {/* Security footer */}
-              <div className="mt-8 pt-6 border-t border-charcoal-100 flex items-center justify-center gap-3 text-charcoal-400">
-                <ShieldCheck size={14} className="text-gold-500" />
-                <span className="text-[10px] font-medium tracking-widest uppercase">
-                  Protected by Enterprise SSO
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 };

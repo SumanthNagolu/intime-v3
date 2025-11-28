@@ -28,7 +28,7 @@ const signUpSchema = z.object({
     .regex(/[0-9]/, 'Password must contain at least one number'),
   full_name: z.string().min(2, 'Full name must be at least 2 characters'),
   phone: z.string().optional(),
-  role: z.enum(['student', 'candidate', 'recruiter', 'trainer']).default('student'),
+  role: z.enum(['student', 'candidate', 'client', 'recruiter', 'trainer']).default('student'),
 });
 
 const signInSchema = z.object({
@@ -289,6 +289,89 @@ export async function signInAction(
 
   revalidatePath('/', 'layout');
   redirect('/dashboard');
+}
+
+// ============================================================================
+// Get User Portal Action
+// ============================================================================
+
+/**
+ * Get the appropriate portal for the current user based on their roles
+ * Uses admin client to bypass RLS
+ * @returns The portal type or null if not authenticated
+ */
+export async function getUserPortalAction(): Promise<ActionResult<{ portal: string | null }>> {
+  const supabase = await createClient();
+  const adminSupabase = createAdminClient();
+
+  // Get current user
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+  if (userError || !user) {
+    return {
+      success: true,
+      data: { portal: null },
+    };
+  }
+
+  // Get user profile using admin client
+  const { data: profile } = await adminSupabase
+    .from('user_profiles')
+    .select('id')
+    .eq('auth_id', user.id)
+    .is('deleted_at', null)
+    .single();
+
+  if (!profile) {
+    return {
+      success: true,
+      data: { portal: null },
+    };
+  }
+
+  // Get user roles using admin client
+  const { data: rolesData } = await adminSupabase
+    .from('user_roles')
+    .select('role:roles(name)')
+    .eq('user_id', profile.id)
+    .is('deleted_at', null);
+
+  const roles = rolesData?.map((item: any) => item.role?.name).filter(Boolean) || [];
+
+  // Determine correct portal based on roles
+  const portalRoles: Record<string, string[]> = {
+    employee: [
+      'super_admin', 'admin', 'ceo',
+      'recruiter', 'senior_recruiter', 'junior_recruiter',
+      'bench_manager', 'bench_sales',
+      'ta_specialist', 'talent_acquisition',
+      'hr_admin', 'hr_manager',
+      'academy_admin',
+      'trainer', 'training_coordinator',
+      'immigration_specialist',
+      'employee'
+    ],
+    academy: ['student'],
+    client: ['client', 'client_admin', 'client_poc'],
+    talent: ['candidate', 'talent'],
+  };
+
+  const portalPriority = ['employee', 'academy', 'client', 'talent'];
+
+  for (const portal of portalPriority) {
+    const allowedRoles = portalRoles[portal];
+    if (roles.some((role: string) => allowedRoles.includes(role))) {
+      return {
+        success: true,
+        data: { portal },
+      };
+    }
+  }
+
+  return {
+    success: true,
+    data: { portal: null },
+  };
 }
 
 // ============================================================================
