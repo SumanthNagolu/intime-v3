@@ -7,20 +7,46 @@
  * - User ID
  * - Organization ID
  * - Supabase client
+ *
+ * PERFORMANCE OPTIMIZATION:
+ * User context (userId, orgId) is now primarily set by middleware
+ * via request headers, eliminating repeated DB lookups per tRPC call.
+ * Falls back to direct lookup if headers not available.
  */
 
 import { createClient, createAdminClient } from '@/lib/supabase/server';
-import type { SupabaseClient } from '@supabase/supabase-js';
+import { headers } from 'next/headers';
 
 /**
  * Create tRPC context
  *
  * This function is called for every tRPC request.
- * It extracts the session and user information from Supabase Auth.
+ * It extracts the session and user information from:
+ * 1. Request headers (set by middleware - fast path)
+ * 2. Direct Supabase lookup (fallback - slower)
  */
 export async function createContext() {
   const supabase = await createClient();
+  const headersList = await headers();
 
+  // Fast path: Check if middleware already set user context
+  const headerUserId = headersList.get('x-user-id');
+  const headerOrgId = headersList.get('x-org-id');
+
+  // If we have headers from middleware, use them (fast path)
+  if (headerUserId) {
+    // Still need to get user for session, but skip the profile lookup
+    const { data: { user } } = await supabase.auth.getUser();
+
+    return {
+      session: user ? { user } : null,
+      userId: headerUserId,
+      orgId: headerOrgId,
+      supabase
+    };
+  }
+
+  // Fallback: Direct lookup (for cases where middleware didn't run)
   const { data: { user } } = await supabase.auth.getUser();
 
   let userId: string | null = null;
@@ -34,23 +60,13 @@ export async function createContext() {
     try {
       const adminClient = createAdminClient();
 
-      // First try by id (default case)
-      let { data: profile, error } = await adminClient
+      // Single query with OR condition (optimized from two separate queries)
+      const { data: profile, error } = await adminClient
         .from('user_profiles')
         .select('org_id')
-        .eq('id', userId)
+        .or(`id.eq.${userId},auth_id.eq.${userId}`)
+        .limit(1)
         .maybeSingle();
-
-      // If not found by id, try by auth_id
-      if (!profile && !error) {
-        const result = await adminClient
-          .from('user_profiles')
-          .select('org_id')
-          .eq('auth_id', userId)
-          .maybeSingle();
-        profile = result.data;
-        error = result.error;
-      }
 
       if (!error && profile) {
         orgId = profile.org_id || null;

@@ -3,6 +3,8 @@
  *
  * Wraps the app with tRPC and React Query providers.
  * Add this to your root layout.
+ *
+ * Supports server-side prefetching with React Query hydration.
  */
 
 'use client';
@@ -13,25 +15,45 @@ import { useState } from 'react';
 import superjson from 'superjson';
 import { trpc } from './client';
 
+// Singleton query client for better caching across navigation
+let browserQueryClient: QueryClient | undefined = undefined;
+
+function getQueryClient() {
+  if (typeof window === 'undefined') {
+    // Server: always create a new client
+    return new QueryClient({
+      defaultOptions: {
+        queries: {
+          refetchOnWindowFocus: false,
+          staleTime: 5 * 60 * 1000, // 5 minutes
+          gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
+        },
+      },
+    });
+  }
+
+  // Browser: use singleton for better cache persistence
+  if (!browserQueryClient) {
+    browserQueryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          refetchOnWindowFocus: false,
+          staleTime: 5 * 60 * 1000,
+          gcTime: 10 * 60 * 1000,
+        },
+      },
+    });
+  }
+  return browserQueryClient;
+}
+
 /**
  * tRPC Provider Component
  *
  * Provides tRPC context to all child components.
  */
 export function TRPCProvider({ children }: { children: React.ReactNode }) {
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            // Don't refetch on window focus by default
-            refetchOnWindowFocus: false,
-            // Cache for 5 minutes
-            staleTime: 5 * 60 * 1000,
-          },
-        },
-      })
-  );
+  const [queryClient] = useState(() => getQueryClient());
 
   const [trpcClient] = useState(() =>
     trpc.createClient({

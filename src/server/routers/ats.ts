@@ -50,8 +50,8 @@ export const atsRouter = router({
         const { limit, offset, status, clientId } = input;
 
         let conditions = [eq(jobs.orgId, orgId)];
-        if (status) conditions.push(eq(jobs.jobStatus, status));
-        if (clientId) conditions.push(eq(jobs.clientId, clientId));
+        if (status) conditions.push(eq(jobs.status, status));
+        if (clientId) conditions.push(eq(jobs.accountId, clientId));
 
         const results = await db.select().from(jobs)
           .where(and(...conditions))
@@ -136,7 +136,7 @@ export const atsRouter = router({
 
         // Get submission counts by status
         const submissionStats = await db.select({
-          status: submissions.submissionStatus,
+          status: submissions.status,
           count: sql<number>`count(*)::int`,
         })
           .from(submissions)
@@ -144,7 +144,7 @@ export const atsRouter = router({
             eq(submissions.jobId, input.jobId),
             eq(submissions.orgId, orgId)
           ))
-          .groupBy(submissions.submissionStatus);
+          .groupBy(submissions.status);
 
         // Get interview count
         const [interviewCount] = await db.select({
@@ -195,7 +195,7 @@ export const atsRouter = router({
         const { limit, offset, status, jobId, candidateId } = input;
 
         let conditions = [eq(submissions.orgId, orgId)];
-        if (status) conditions.push(eq(submissions.submissionStatus, status));
+        if (status) conditions.push(eq(submissions.status, status));
         if (jobId) conditions.push(eq(submissions.jobId, jobId));
         if (candidateId) conditions.push(eq(submissions.candidateId, candidateId));
 
@@ -203,7 +203,7 @@ export const atsRouter = router({
           .where(and(...conditions))
           .limit(limit)
           .offset(offset)
-          .orderBy(desc(submissions.submittedAt));
+          .orderBy(desc(submissions.createdAt));
 
         return results;
       }),
@@ -286,8 +286,8 @@ export const atsRouter = router({
 
         const [updated] = await db.update(submissions)
           .set({
-            submissionStatus: status,
-            internalNotes: notes,
+            status: status,
+            submissionNotes: notes,
           })
           .where(and(
             eq(submissions.id, id),
@@ -323,14 +323,14 @@ export const atsRouter = router({
         const { limit, offset, status, submissionId } = input;
 
         let conditions = [eq(interviews.orgId, orgId)];
-        if (status) conditions.push(eq(interviews.interviewStatus, status));
+        if (status) conditions.push(eq(interviews.status, status));
         if (submissionId) conditions.push(eq(interviews.submissionId, submissionId));
 
         const results = await db.select().from(interviews)
           .where(and(...conditions))
           .limit(limit)
           .offset(offset)
-          .orderBy(desc(interviews.scheduledTime));
+          .orderBy(desc(interviews.scheduledAt));
 
         return results;
       }),
@@ -389,7 +389,7 @@ export const atsRouter = router({
 
         const [updated] = await db.update(interviews)
           .set({
-            interviewStatus: 'cancelled',
+            status: 'cancelled',
             cancellationReason: input.cancellationReason,
           })
           .where(and(
@@ -426,7 +426,7 @@ export const atsRouter = router({
         const { limit, offset, status, submissionId } = input;
 
         let conditions = [eq(offers.orgId, orgId)];
-        if (status) conditions.push(eq(offers.offerStatus, status));
+        if (status) conditions.push(eq(offers.status, status));
         if (submissionId) conditions.push(eq(offers.submissionId, submissionId));
 
         const results = await db.select().from(offers)
@@ -489,7 +489,7 @@ export const atsRouter = router({
 
         const [updated] = await db.update(offers)
           .set({
-            offerStatus: 'sent',
+            status: 'sent',
             sentAt: new Date(),
           })
           .where(and(
@@ -522,9 +522,10 @@ export const atsRouter = router({
 
         const [updated] = await db.update(offers)
           .set({
-            offerStatus: accept ? 'accepted' : 'declined',
-            acceptedDeclinedAt: new Date(),
-            responseNotes: notes,
+            status: accept ? 'accepted' : 'declined',
+            ...(accept
+              ? { acceptedAt: new Date() }
+              : { declinedAt: new Date(), declineReason: notes }),
           })
           .where(and(
             eq(offers.id, id),
@@ -560,7 +561,7 @@ export const atsRouter = router({
         const { limit, offset, status, candidateId } = input;
 
         let conditions = [eq(placements.orgId, orgId)];
-        if (status) conditions.push(eq(placements.placementStatus, status));
+        if (status) conditions.push(eq(placements.status, status));
         if (candidateId) conditions.push(eq(placements.candidateId, candidateId));
 
         const results = await db.select().from(placements)
@@ -628,8 +629,8 @@ export const atsRouter = router({
         const [updated] = await db.update(placements)
           .set({
             endDate: input.newEndDate,
-            placementStatus: 'extended',
-            internalNotes: input.extensionNotes,
+            status: 'extended',
+            extensionCount: sql`COALESCE(${placements.extensionCount}, 0) + 1`,
           })
           .where(and(
             eq(placements.id, input.id),
@@ -657,7 +658,7 @@ export const atsRouter = router({
           .from(placements)
           .where(and(
             eq(placements.orgId, orgId),
-            eq(placements.placementStatus, 'active')
+            eq(placements.status, 'active')
           ));
 
         return result?.count || 0;
@@ -686,14 +687,9 @@ export const atsRouter = router({
     getCandidateSkills: orgProtectedProcedure
       .input(z.object({ candidateId: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
-        const { orgId } = ctx;
-
         const results = await db.select()
           .from(candidateSkills)
-          .where(and(
-            eq(candidateSkills.candidateId, input.candidateId),
-            eq(candidateSkills.orgId, orgId)
-          ));
+          .where(eq(candidateSkills.candidateId, input.candidateId));
 
         return results;
       }),
@@ -701,7 +697,7 @@ export const atsRouter = router({
     /**
      * Add skill to candidate
      */
-    addToCandid: orgProtectedProcedure
+    addToCandidate: orgProtectedProcedure
       .input(z.object({
         candidateId: z.string().uuid(),
         skillId: z.string().uuid(),
@@ -709,11 +705,11 @@ export const atsRouter = router({
         yearsOfExperience: z.number().min(0).max(50),
       }))
       .mutation(async ({ ctx, input }) => {
-        const { orgId } = ctx;
-
         const [newSkill] = await db.insert(candidateSkills).values({
-          ...input,
-          orgId,
+          candidateId: input.candidateId,
+          skillId: input.skillId,
+          proficiencyLevel: input.proficiencyLevel,
+          yearsOfExperience: String(input.yearsOfExperience),
         }).returning();
 
         return newSkill;

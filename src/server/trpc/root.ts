@@ -36,6 +36,8 @@ import { crmRouter } from '../routers/crm';
 import { atsRouter } from '../routers/ats';
 import { benchRouter } from '../routers/bench';
 import { taHrRouter } from '../routers/ta-hr';
+import { dashboardRouter } from '../routers/dashboard';
+import { activitiesRouter } from '../routers/activities';
 
 /**
  * App Router
@@ -77,6 +79,8 @@ export const appRouter = router({
   ats: atsRouter,
   bench: benchRouter,
   taHr: taHrRouter,
+  dashboard: dashboardRouter,
+  activities: activitiesRouter,
 });
 
 /**

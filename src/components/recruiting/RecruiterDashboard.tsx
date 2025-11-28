@@ -107,7 +107,7 @@ const DashboardHome: React.FC<{ onSearchRequest: () => void }> = ({ onSearchRequ
   // Calculate stats from real data
   const activeJobs = jobs || [];
   const activeSubmissions = submissions?.filter(s =>
-    ['screening', 'submitted_to_client', 'client_interview', 'offer'].includes(s.submissionStatus)
+    ['screening', 'submitted_to_client', 'client_interview', 'offer'].includes(s.status)
   ) || [];
   const placements = placementsCount || 0;
 
@@ -358,7 +358,7 @@ const DashboardHome: React.FC<{ onSearchRequest: () => void }> = ({ onSearchRequ
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <div className="font-heading font-bold text-body text-charcoal-900 group-hover:text-forest-700 transition-colors mb-2">
-                        {job.jobTitle}
+                        {job.title}
                       </div>
                       <div className="flex items-center gap-4 text-caption text-charcoal-500">
                         <span className="flex items-center gap-2">
@@ -473,7 +473,7 @@ const DashboardHome: React.FC<{ onSearchRequest: () => void }> = ({ onSearchRequ
                       Submission #{sub.id.slice(0, 8)}
                     </p>
                     <p className="text-caption text-charcoal-500">
-                      {sub.submissionStatus.replace(/_/g, ' ')}
+                      {sub.status.replace(/_/g, ' ')}
                     </p>
                   </div>
                 ))}
@@ -508,9 +508,9 @@ const JobIntake: React.FC = () => {
 
   const [formData, setFormData] = useState({
     clientId: '',
-    jobTitle: '',
+    title: '',
     location: '',
-    employmentType: 'contract' as const,
+    jobType: 'contract' as const,
     salaryRange: '',
     description: ''
   });
@@ -519,15 +519,15 @@ const JobIntake: React.FC = () => {
     e.preventDefault();
 
     createJobMutation.mutate({
-      clientId: formData.clientId,
-      jobTitle: formData.jobTitle,
+      accountId: formData.clientId || undefined,
+      title: formData.title,
       location: formData.location,
-      employmentType: formData.employmentType,
-      salaryRange: formData.salaryRange,
+      jobType: formData.jobType,
       description: formData.description,
-      jobStatus: 'open',
+      status: 'open',
       priority: 'medium',
-      openings: 1
+      positionsCount: 1,
+      ownerId: '' // Will be set by the server from ctx.userId
     });
   };
 
@@ -555,12 +555,12 @@ const JobIntake: React.FC = () => {
                 className="w-full p-4 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-rust font-bold text-charcoal"
               >
                   <option value="">Select a client...</option>
-                  {accounts?.map(a => <option key={a.id} value={a.id}>{a.accountName}</option>)}
+                  {accounts?.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
               </select>
             </div>
             <div>
               <label className="block text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">Position Title</label>
-              <input required value={formData.jobTitle} onChange={e => setFormData({ ...formData, jobTitle: e.target.value })} className="w-full p-4 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-rust" placeholder="e.g. Senior Guidewire Developer" />
+              <input required value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} className="w-full p-4 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-rust" placeholder="e.g. Senior Guidewire Developer" />
             </div>
           </div>
 
@@ -571,10 +571,11 @@ const JobIntake: React.FC = () => {
             </div>
             <div>
               <label className="block text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">Employment Type</label>
-              <select value={formData.employmentType} onChange={e => setFormData({ ...formData, employmentType: e.target.value as 'contract' | 'full_time' | 'c2h' })} className="w-full p-4 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-rust">
+              <select value={formData.jobType} onChange={e => setFormData({ ...formData, jobType: e.target.value as 'contract' | 'contract_to_hire' | 'permanent' | 'temp' })} className="w-full p-4 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-rust">
                 <option value="contract">Contract</option>
-                <option value="full_time">Full-time</option>
-                <option value="c2h">C2H</option>
+                <option value="permanent">Full-time</option>
+                <option value="contract_to_hire">C2H</option>
+                <option value="temp">Temp</option>
               </select>
             </div>
             <div>

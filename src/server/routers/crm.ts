@@ -60,7 +60,7 @@ export const crmRouter = router({
         if (status) {
           query = query.where(and(
             eq(accounts.orgId, orgId),
-            eq(accounts.accountStatus, status)
+            eq(accounts.status, status)
           ));
         }
 
@@ -391,7 +391,7 @@ export const crmRouter = router({
         const summary = await db.select({
           stage: deals.stage,
           count: sql<number>`count(*)::int`,
-          totalValue: sql<number>`sum(${deals.dealValue})::int`,
+          totalValue: sql<number>`sum(${deals.value})::int`,
         })
           .from(deals)
           .where(and(
