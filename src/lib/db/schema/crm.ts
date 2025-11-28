@@ -366,7 +366,7 @@ export const DealStage = {
   CLOSED_LOST: 'closed_lost',
 } as const;
 
-export const ActivityType = {
+export const CRMActivityType = {
   EMAIL: 'email',
   CALL: 'call',
   MEETING: 'meeting',
@@ -377,4 +377,4 @@ export const ActivityType = {
 export type AccountStatusType = typeof AccountStatus[keyof typeof AccountStatus];
 export type LeadStatusType = typeof LeadStatus[keyof typeof LeadStatus];
 export type DealStageType = typeof DealStage[keyof typeof DealStage];
-export type ActivityTypeType = typeof ActivityType[keyof typeof ActivityType];
+export type CRMActivityTypeType = typeof CRMActivityType[keyof typeof CRMActivityType];
