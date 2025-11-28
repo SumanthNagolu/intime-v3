@@ -650,6 +650,35 @@ export const crmRouter = router({
 
         return summary;
       }),
+
+    /**
+     * Get deal statistics for dashboard
+     */
+    getStats: orgProtectedProcedure
+      .query(async ({ ctx }) => {
+        const { orgId } = ctx;
+
+        const allDeals = await db.select().from(deals)
+          .where(and(eq(deals.orgId, orgId), isNull(deals.deletedAt)));
+
+        const activeStages = ['discovery', 'qualification', 'proposal', 'negotiation'];
+        const activeDeals = allDeals.filter(d => activeStages.includes(d.stage));
+        const wonDeals = allDeals.filter(d => d.stage === 'closed_won');
+        const lostDeals = allDeals.filter(d => d.stage === 'closed_lost');
+
+        return {
+          total: allDeals.length,
+          discovery: allDeals.filter(d => d.stage === 'discovery').length,
+          qualification: allDeals.filter(d => d.stage === 'qualification').length,
+          proposal: allDeals.filter(d => d.stage === 'proposal').length,
+          negotiation: allDeals.filter(d => d.stage === 'negotiation').length,
+          won: wonDeals.length,
+          lost: lostDeals.length,
+          active: activeDeals.length,
+          pipelineValue: activeDeals.reduce((sum, d) => sum + (parseFloat(d.value || '0')), 0),
+          wonValue: wonDeals.reduce((sum, d) => sum + (parseFloat(d.value || '0')), 0),
+        };
+      }),
   }),
 
   // =====================================================

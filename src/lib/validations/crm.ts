@@ -227,7 +227,7 @@ export const baseDealSchema = z.object({
   value: z.number().min(0, 'Deal value must be positive'),
 
   // Pipeline stage
-  stage: z.enum(['discovery', 'proposal', 'negotiation', 'closed_won', 'closed_lost']).default('discovery'),
+  stage: z.enum(['discovery', 'qualification', 'proposal', 'negotiation', 'closed_won', 'closed_lost']).default('discovery'),
   probability: z.number().int().min(0).max(100).optional(),
   expectedCloseDate: z.coerce.date().optional(),
 

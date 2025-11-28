@@ -255,3 +255,57 @@ export type NotificationPriorityType = typeof NotificationPriority[keyof typeof 
 export type TaskStatusType = typeof TaskStatus[keyof typeof TaskStatus];
 export type TaskPriorityType = typeof TaskPriority[keyof typeof TaskPriority];
 export type RecurrencePatternType = typeof RecurrencePattern[keyof typeof RecurrencePattern];
+
+// =====================================================
+// FILE UPLOADS
+// =====================================================
+
+export const fileUploads = pgTable('file_uploads', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+
+  // Storage
+  bucket: text('bucket').notNull(), // 'avatars', 'resumes', 'documents', 'attachments', 'course-materials'
+  filePath: text('file_path').notNull(),
+  fileName: text('file_name').notNull(),
+  fileSize: integer('file_size').notNull(), // bytes
+  mimeType: text('mime_type').notNull(),
+
+  // Association (polymorphic)
+  entityType: text('entity_type'), // 'deal', 'lead', 'account', 'candidate', 'job', etc.
+  entityId: uuid('entity_id'),
+
+  // Uploader
+  uploadedBy: uuid('uploaded_by').notNull().references(() => userProfiles.id),
+  uploadedAt: timestamp('uploaded_at', { withTimezone: true }).defaultNow().notNull(),
+
+  // Soft delete
+  deletedAt: timestamp('deleted_at', { withTimezone: true }),
+
+  // Metadata
+  metadata: jsonb('metadata').default('{}'),
+});
+
+export const fileUploadsRelations = relations(fileUploads, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [fileUploads.orgId],
+    references: [organizations.id],
+  }),
+  uploader: one(userProfiles, {
+    fields: [fileUploads.uploadedBy],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type FileUpload = typeof fileUploads.$inferSelect;
+export type NewFileUpload = typeof fileUploads.$inferInsert;
+
+export const FileBucket = {
+  AVATARS: 'avatars',
+  RESUMES: 'resumes',
+  DOCUMENTS: 'documents',
+  ATTACHMENTS: 'attachments',
+  COURSE_MATERIALS: 'course-materials',
+} as const;
+
+export type FileBucketType = typeof FileBucket[keyof typeof FileBucket];

@@ -30,6 +30,8 @@ export interface DealsQueryOptions {
   accountId?: string;
 }
 
+export type DealStage = 'discovery' | 'qualification' | 'proposal' | 'negotiation' | 'closed_won' | 'closed_lost';
+
 export interface DealQueryOptions {
   enabled?: boolean;
 }
@@ -163,6 +165,41 @@ export function useDealPipeline(options: { enabled?: boolean } = {}) {
 
   return {
     pipeline: query.data ?? [],
+    isLoading: query.isLoading,
+    isError: query.isError,
+    error: query.error,
+    refetch: query.refetch,
+  };
+}
+
+// ============================================
+// STATS HOOKS
+// ============================================
+
+/**
+ * Get deal statistics for dashboard
+ */
+export function useDealStats(options: { enabled?: boolean } = {}) {
+  const { enabled = true } = options;
+
+  const query = trpc.crm.deals.getStats.useQuery(undefined, {
+    enabled,
+    staleTime: 60 * 1000, // 1 minute cache
+  });
+
+  return {
+    stats: query.data ?? {
+      total: 0,
+      discovery: 0,
+      qualification: 0,
+      proposal: 0,
+      negotiation: 0,
+      won: 0,
+      lost: 0,
+      active: 0,
+      pipelineValue: 0,
+      wonValue: 0,
+    },
     isLoading: query.isLoading,
     isError: query.isError,
     error: query.error,
