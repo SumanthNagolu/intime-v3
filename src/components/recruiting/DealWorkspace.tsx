@@ -10,6 +10,7 @@ import {
   useDealTasks,
 } from '@/hooks/mutations/deals';
 import { useCreateJob } from '@/hooks/mutations/jobs';
+import { useCreateAccount } from '@/hooks/mutations/accounts';
 import { trpc } from '@/lib/trpc/client';
 import {
   useCreateActivity,
@@ -107,13 +108,31 @@ export const DealWorkspace: React.FC = () => {
 
   // Job creation mutation
   const { createJob, isCreating: isCreatingJob } = useCreateJob({
-    onSuccess: (job: { id: string }) => {
+    onSuccess: (data) => {
+      const job = data as { id: string };
       // Update deal with linked job ID
       updateDeal.mutate({
         id: dealId,
         linkedJobIds: [...(deal?.linkedJobIds || []), job.id],
       });
       router.push(`/employee/recruiting/jobs/${job.id}`);
+    },
+  });
+
+  // Account creation mutation
+  const { createAccount, isCreating: isCreatingAccount } = useCreateAccount({
+    onSuccess: (data) => {
+      const account = data as { id: string };
+      // Update deal with linked account ID if not already linked
+      if (!deal?.accountId) {
+        updateDeal.mutate({
+          id: dealId,
+          accountId: account.id,
+        });
+      }
+      setShowCulminationModal(false);
+      setShowCreateAccountForm(false);
+      router.push(`/employee/recruiting/accounts/${account.id}`);
     },
   });
 
@@ -132,6 +151,12 @@ export const DealWorkspace: React.FC = () => {
   const [newJobIsRemote, setNewJobIsRemote] = useState(false);
   const [newJobDescription, setNewJobDescription] = useState('');
   const [showCreateJobForm, setShowCreateJobForm] = useState(false);
+
+  // Account creation form state
+  const [showCreateAccountForm, setShowCreateAccountForm] = useState(false);
+  const [newAccountName, setNewAccountName] = useState('');
+  const [newAccountIndustry, setNewAccountIndustry] = useState('');
+  const [newAccountType, setNewAccountType] = useState<'Direct Client' | 'Implementation Partner' | 'MSP/VMS'>('Direct Client');
 
   // Task form state
   const [newTaskTitle, setNewTaskTitle] = useState('');
@@ -367,15 +392,21 @@ export const DealWorkspace: React.FC = () => {
   const handleCreateJobFromDeal = async () => {
     if (!newJobTitle.trim()) return;
 
+    // Map job type to adapter expected format
+    const typeMap: Record<typeof newJobType, 'Contract' | 'Full-time' | 'C2H'> = {
+      'contract': 'Contract',
+      'contract_to_hire': 'C2H',
+      'permanent': 'Full-time',
+    };
+
     try {
       await createJob({
         title: newJobTitle.trim(),
         description: newJobDescription.trim() || undefined,
-        jobType: newJobType,
+        type: typeMap[newJobType],
         location: newJobLocation.trim() || undefined,
         isRemote: newJobIsRemote,
         accountId: deal?.accountId || undefined,
-        dealId: dealId,
         status: 'open',
       });
     } catch (error) {
@@ -1272,7 +1303,7 @@ export const DealWorkspace: React.FC = () => {
             </div>
 
             {/* Culmination Options */}
-            {!showCreateJobForm ? (
+            {!showCreateJobForm && !showCreateAccountForm ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 {/* Create Job Requisition */}
                 <button
@@ -1325,21 +1356,114 @@ export const DealWorkspace: React.FC = () => {
                   </div>
                 </button>
 
-                {/* Create Course */}
+                {/* Create Account */}
                 <button
-                  onClick={() => handleCulminationPath('/employee/academy/courses/new?dealId=' + dealId)}
+                  onClick={() => {
+                    setNewAccountName(deal?.title || '');
+                    setShowCreateAccountForm(true);
+                  }}
                   className="group p-6 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl border-2 border-emerald-200 hover:border-emerald-400 hover:shadow-lg transition-all text-left"
                 >
                   <div className="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Sparkles size={24} className="text-white" />
+                    <Building2 size={24} className="text-white" />
                   </div>
-                  <h3 className="font-bold text-charcoal mb-1">Create Training Course</h3>
+                  <h3 className="font-bold text-charcoal mb-1">Create Account</h3>
                   <p className="text-sm text-stone-500">
-                    Set up a new training course for this client engagement
+                    Create a client account from this deal
                   </p>
                   <div className="flex items-center gap-1 text-emerald-600 text-xs font-bold uppercase tracking-widest mt-4">
-                    Create Course <ArrowRightCircle size={14} />
+                    Create Account <ArrowRightCircle size={14} />
                   </div>
+                </button>
+              </div>
+            ) : showCreateAccountForm ? (
+              /* Create Account Form */
+              <div className="space-y-4 mb-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-bold text-charcoal flex items-center gap-2">
+                    <Building2 className="text-emerald-600" size={20} /> Create Account
+                  </h3>
+                  <button
+                    onClick={() => setShowCreateAccountForm(false)}
+                    className="text-xs font-bold uppercase tracking-widest text-stone-400 hover:text-charcoal"
+                  >
+                    Back to options
+                  </button>
+                </div>
+
+                {/* Account Name */}
+                <div>
+                  <label className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2 block">
+                    Account Name *
+                  </label>
+                  <input
+                    type="text"
+                    value={newAccountName}
+                    onChange={(e) => setNewAccountName(e.target.value)}
+                    placeholder="e.g., TechCorp Solutions"
+                    className="w-full p-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+
+                {/* Account Type */}
+                <div>
+                  <label className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2 block">
+                    Account Type
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      { value: 'Direct Client', label: 'Direct Client' },
+                      { value: 'Implementation Partner', label: 'Impl. Partner' },
+                      { value: 'MSP/VMS', label: 'MSP/VMS' },
+                    ].map((type) => (
+                      <button
+                        key={type.value}
+                        onClick={() => setNewAccountType(type.value as typeof newAccountType)}
+                        className={`px-3 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border-2 transition-all ${
+                          newAccountType === type.value
+                            ? 'bg-emerald-100 text-emerald-700 border-emerald-400'
+                            : 'bg-white border-stone-200 text-stone-500 hover:border-stone-400'
+                        }`}
+                      >
+                        {type.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Industry */}
+                <div>
+                  <label className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2 block">
+                    Industry
+                  </label>
+                  <input
+                    type="text"
+                    value={newAccountIndustry}
+                    onChange={(e) => setNewAccountIndustry(e.target.value)}
+                    placeholder="e.g., Technology, Healthcare"
+                    className="w-full p-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+
+                {/* Create Button */}
+                <button
+                  onClick={async () => {
+                    if (!newAccountName.trim()) return;
+                    await createAccount({
+                      name: newAccountName.trim(),
+                      type: newAccountType,
+                      industry: newAccountIndustry.trim() || undefined,
+                      status: 'Active',
+                    });
+                  }}
+                  disabled={!newAccountName.trim() || isCreatingAccount}
+                  className="w-full py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
+                >
+                  {isCreatingAccount ? (
+                    <><Loader2 size={16} className="animate-spin" /> Creating...</>
+                  ) : (
+                    <><Building2 size={16} /> Create Account</>
+                  )}
                 </button>
               </div>
             ) : (

@@ -64,7 +64,7 @@ export const filesRouter = router({
     .input(z.object({
       fileId: z.string().uuid(),
     }))
-    .query(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       const { orgId } = ctx;
 
       const [file] = await db.select()
@@ -110,11 +110,19 @@ export const filesRouter = router({
       const { orgId, userId } = ctx;
       const { fileName, mimeType, entityType, entityId } = input;
 
-      // Get user profile ID
-      const [userProfile] = await db.select({ id: userProfiles.id })
+      // Get user profile ID - try authId first, then id
+      let [userProfile] = await db.select({ id: userProfiles.id })
         .from(userProfiles)
         .where(eq(userProfiles.authId, userId))
         .limit(1);
+
+      // Fallback: try by profile id directly
+      if (!userProfile) {
+        [userProfile] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.id, userId))
+          .limit(1);
+      }
 
       if (!userProfile) {
         throw new Error('User profile not found');
@@ -161,11 +169,19 @@ export const filesRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { orgId, userId } = ctx;
 
-      // Get user profile ID
-      const [userProfile] = await db.select({ id: userProfiles.id })
+      // Get user profile ID - try authId first, then id
+      let [userProfile] = await db.select({ id: userProfiles.id })
         .from(userProfiles)
         .where(eq(userProfiles.authId, userId))
         .limit(1);
+
+      // Fallback: try by profile id directly
+      if (!userProfile) {
+        [userProfile] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.id, userId))
+          .limit(1);
+      }
 
       if (!userProfile) {
         throw new Error('User profile not found');
@@ -185,6 +201,43 @@ export const filesRouter = router({
       }).returning();
 
       return newFile;
+    }),
+
+  /**
+   * Update file metadata
+   */
+  updateMetadata: orgProtectedProcedure
+    .input(z.object({
+      fileId: z.string().uuid(),
+      metadata: z.record(z.any()),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+
+      // Verify file exists and belongs to org
+      const [file] = await db.select()
+        .from(fileUploads)
+        .where(and(
+          eq(fileUploads.id, input.fileId),
+          eq(fileUploads.orgId, orgId),
+          isNull(fileUploads.deletedAt)
+        ))
+        .limit(1);
+
+      if (!file) {
+        throw new Error('File not found');
+      }
+
+      // Merge new metadata with existing
+      const existingMetadata = (file.metadata as Record<string, any>) || {};
+      const newMetadata = { ...existingMetadata, ...input.metadata };
+
+      const [updated] = await db.update(fileUploads)
+        .set({ metadata: newMetadata })
+        .where(eq(fileUploads.id, input.fileId))
+        .returning();
+
+      return updated;
     }),
 
   /**

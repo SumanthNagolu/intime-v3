@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic";
-import { JobWorkspace } from '@/components/recruiting/JobWorkspace';
+import { TalentWorkspace } from '@/components/recruiting/TalentWorkspace';
 import { AppLayout } from '@/components/AppLayout';
 import { RecruitingLayout } from '@/components/layouts/RecruitingLayout';
 
@@ -13,7 +13,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <AppLayout>
       <RecruitingLayout>
-        <JobWorkspace jobId={id} />
+        <TalentWorkspace talentId={id} />
       </RecruitingLayout>
     </AppLayout>
   );

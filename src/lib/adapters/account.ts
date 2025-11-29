@@ -58,6 +58,11 @@ export function dbAccountToDisplay(
     markupPercentage: account.markupPercentage || undefined,
     jobsCount: account._count?.jobs,
     placementsCount: account._count?.placements,
+    // Contact info
+    website: account.website || undefined,
+    phone: account.phone || undefined,
+    headquartersLocation: account.headquartersLocation || undefined,
+    preferredQuality: account.preferredQuality || undefined,
   };
 }
 
@@ -234,6 +239,15 @@ export function dbPocToDisplay(poc: AlignedPointOfContact): DisplayPointOfContac
     phone: poc.phone || undefined,
     preference: mapContactMethodToFrontend(poc.preferredContactMethod),
     influence: mapDecisionAuthorityToFrontend(poc.decisionAuthority),
+    // Extended fields
+    firstName: poc.firstName,
+    lastName: poc.lastName,
+    title: poc.title || undefined,
+    isPrimary: poc.isPrimary,
+    isActive: poc.isActive,
+    decisionAuthority: poc.decisionAuthority || undefined,
+    notes: poc.notes || undefined,
+    linkedinUrl: poc.linkedinUrl || undefined,
   };
 }
 

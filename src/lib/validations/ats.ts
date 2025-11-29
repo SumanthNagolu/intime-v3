@@ -52,40 +52,40 @@ export const createJobSchema = z.object({
   // Job details
   title: z.string().min(1, 'Job title is required').max(255),
   description: z.string().optional(),
-  jobType: z.enum(['contract', 'contract_to_hire', 'permanent', 'temp']).default('contract'),
+  jobType: z.enum(['contract', 'contract_to_hire', 'permanent', 'temp', 'fulltime']).default('contract'),
 
-  // Requirements
-  requiredSkillIds: z.array(z.string().uuid()).optional(),
-  experienceYearsMin: z.number().int().min(0).max(50).optional(),
-  experienceYearsMax: z.number().int().min(0).max(50).optional(),
-  educationLevel: z.enum(['high_school', 'associate', 'bachelor', 'master', 'phd', 'none']).optional(),
+  // Requirements - using text array for skills (matching DB schema)
+  requiredSkills: z.array(z.string()).optional(),
+  niceToHaveSkills: z.array(z.string()).optional(),
+  minExperienceYears: z.number().int().min(0).max(50).optional(),
+  maxExperienceYears: z.number().int().min(0).max(50).optional(),
+  visaRequirements: z.array(z.string()).optional(),
 
   // Location
   location: z.string().optional(),
   isRemote: z.boolean().default(false),
-  allowedWorkLocations: z.array(z.string()).optional(),
+  hybridDays: z.number().int().min(0).max(7).optional(),
 
-  // Compensation
-  billRate: z.number().min(0).optional(),
-  payRate: z.number().min(0).optional(),
-  salaryMin: z.number().min(0).optional(),
-  salaryMax: z.number().min(0).optional(),
+  // Compensation (matching DB schema - rate_min, rate_max, rate_type)
+  rateMin: z.number().min(0).optional(),
+  rateMax: z.number().min(0).optional(),
+  rateType: z.enum(['hourly', 'annual']).default('hourly'),
   currency: z.string().default('USD'),
-
-  // Contract details
-  contractDuration: z.number().int().min(1).max(120).optional(),
-  extensionPossible: z.boolean().default(false),
 
   // Positions
   positionsCount: z.number().int().min(1).default(1),
 
-  // Priority
-  priority: z.enum(['low', 'medium', 'high', 'urgent']).default('medium'),
-  targetStartDate: z.coerce.date().optional(),
-  deadline: z.coerce.date().optional(),
+  // Status and urgency (matching DB schema)
+  status: z.enum(['draft', 'open', 'on_hold', 'filled', 'cancelled', 'closed']).default('draft'),
+  urgency: z.enum(['low', 'medium', 'high', 'urgent']).default('medium'),
 
-  // Status
-  status: z.enum(['draft', 'open', 'on_hold', 'filled', 'cancelled']).default('draft'),
+  // Dates
+  postedDate: z.coerce.date().optional(),
+  targetFillDate: z.coerce.date().optional(),
+
+  // Client interaction
+  clientSubmissionInstructions: z.string().optional(),
+  clientInterviewProcess: z.string().optional(),
 
   // Assignment (optional - router will use current user if not provided)
   ownerId: z.string().uuid().optional(),

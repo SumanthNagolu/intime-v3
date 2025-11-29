@@ -701,6 +701,7 @@ export const crmRouter = router({
   pocs: router({
     /**
      * Get all POCs for an account
+     * Security: Verifies account belongs to user's org through the account relationship
      */
     list: orgProtectedProcedure
       .input(z.object({
@@ -712,11 +713,21 @@ export const crmRouter = router({
         const { orgId } = ctx;
         const { accountId, limit, offset } = input;
 
-        const results = await db.select().from(pointOfContacts)
+        // First verify the account belongs to the user's org
+        const [account] = await db.select({ id: accounts.id })
+          .from(accounts)
           .where(and(
-            eq(pointOfContacts.accountId, accountId),
-            eq(pointOfContacts.orgId, orgId)
+            eq(accounts.id, accountId),
+            eq(accounts.orgId, orgId)
           ))
+          .limit(1);
+
+        if (!account) {
+          throw new Error('Account not found or unauthorized');
+        }
+
+        const results = await db.select().from(pointOfContacts)
+          .where(eq(pointOfContacts.accountId, accountId))
           .limit(limit)
           .offset(offset)
           .orderBy(desc(pointOfContacts.isPrimary));
@@ -726,16 +737,39 @@ export const crmRouter = router({
 
     /**
      * Create new POC
+     * Security: Verifies account belongs to user's org before creating
      */
     create: orgProtectedProcedure
       .input(createPointOfContactSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
 
+        // Verify the account belongs to the user's org
+        const [account] = await db.select({ id: accounts.id })
+          .from(accounts)
+          .where(and(
+            eq(accounts.id, input.accountId),
+            eq(accounts.orgId, orgId)
+          ))
+          .limit(1);
+
+        if (!account) {
+          throw new Error('Account not found or unauthorized');
+        }
+
+        // Get user profile ID from auth ID (userId is auth_id, not profile id)
+        const [userProfile] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId))
+          .limit(1);
+
+        if (!userProfile) {
+          throw new Error('User profile not found');
+        }
+
         const [newPOC] = await db.insert(pointOfContacts).values({
           ...input,
-          orgId,
-          createdBy: userId,
+          createdBy: userProfile.id,
         }).returning();
 
         return newPOC;
@@ -743,19 +777,42 @@ export const crmRouter = router({
 
     /**
      * Update POC
+     * Security: Verifies POC's account belongs to user's org before updating
      */
     update: orgProtectedProcedure
       .input(updatePointOfContactSchema)
       .mutation(async ({ ctx, input }) => {
-        const { userId, orgId } = ctx;
+        const { orgId } = ctx;
         const { id, ...data } = input;
+
+        // Get the POC and verify its account belongs to user's org
+        const [poc] = await db.select({
+          id: pointOfContacts.id,
+          accountId: pointOfContacts.accountId
+        })
+          .from(pointOfContacts)
+          .where(eq(pointOfContacts.id, id))
+          .limit(1);
+
+        if (!poc) {
+          throw new Error('POC not found');
+        }
+
+        const [account] = await db.select({ id: accounts.id })
+          .from(accounts)
+          .where(and(
+            eq(accounts.id, poc.accountId),
+            eq(accounts.orgId, orgId)
+          ))
+          .limit(1);
+
+        if (!account) {
+          throw new Error('Unauthorized');
+        }
 
         const [updated] = await db.update(pointOfContacts)
           .set(data)
-          .where(and(
-            eq(pointOfContacts.id, id),
-            eq(pointOfContacts.orgId, orgId)
-          ))
+          .where(eq(pointOfContacts.id, id))
           .returning();
 
         if (!updated) {
@@ -767,21 +824,44 @@ export const crmRouter = router({
 
     /**
      * Delete POC
+     * Security: Verifies POC's account belongs to user's org before deleting
      */
     delete: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
 
-        const [deleted] = await db.delete(pointOfContacts)
+        // Get the POC and verify its account belongs to user's org
+        const [poc] = await db.select({
+          id: pointOfContacts.id,
+          accountId: pointOfContacts.accountId
+        })
+          .from(pointOfContacts)
+          .where(eq(pointOfContacts.id, input.id))
+          .limit(1);
+
+        if (!poc) {
+          throw new Error('POC not found');
+        }
+
+        const [account] = await db.select({ id: accounts.id })
+          .from(accounts)
           .where(and(
-            eq(pointOfContacts.id, input.id),
-            eq(pointOfContacts.orgId, orgId)
+            eq(accounts.id, poc.accountId),
+            eq(accounts.orgId, orgId)
           ))
+          .limit(1);
+
+        if (!account) {
+          throw new Error('Unauthorized');
+        }
+
+        const [deleted] = await db.delete(pointOfContacts)
+          .where(eq(pointOfContacts.id, input.id))
           .returning();
 
         if (!deleted) {
-          throw new Error('POC not found or unauthorized');
+          throw new Error('POC not found');
         }
 
         return { success: true };

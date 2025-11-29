@@ -89,6 +89,14 @@ export {
   type CreatePOCInput,
 } from './account';
 
+// Re-export aligned types commonly used with adapters
+export type {
+  DisplayAccount,
+  DisplayPointOfContact,
+  AlignedAccount,
+  AlignedPointOfContact,
+} from '@/types/aligned/crm';
+
 // ============================================
 // COMBINED ADAPTER UTILITIES
 // ============================================

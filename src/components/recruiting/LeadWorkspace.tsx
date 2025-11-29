@@ -4,10 +4,10 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import { useLead, useLeadActivities } from '@/hooks/queries/leads';
-import { 
-  useUpdateLeadStatus, 
-  useConvertLead, 
-  useUpdateLead, 
+import {
+  useUpdateLeadStatus,
+  useConvertLead,
+  useUpdateLead,
   useCreateLeadActivity,
   useUpdateLeadBANT,
 } from '@/hooks/mutations/leads';
@@ -17,6 +17,8 @@ import {
   useCompleteActivity,
   useCancelActivity,
 } from '@/hooks/mutations/activities';
+import { useCreateAccount, useCreatePoc } from '@/hooks/mutations/accounts';
+import { useAccounts } from '@/hooks/queries/accounts';
 import { ActivityComposer } from '@/components/crm/ActivityComposer';
 import { ActivityTimeline } from '@/components/crm/ActivityTimeline';
 import { LeadStrategy } from '@/components/crm/LeadStrategy';
@@ -65,6 +67,9 @@ import {
   BarChart3,
   Activity,
   ExternalLink,
+  GraduationCap,
+  UserPlus,
+  ArrowRightCircle,
 } from 'lucide-react';
 
 type LeadStatus = 'new' | 'warm' | 'hot' | 'cold' | 'converted' | 'lost';
@@ -123,22 +128,57 @@ export const LeadWorkspace: React.FC = () => {
   const updateLead = useUpdateLead();
   const createActivity = useCreateLeadActivity();
   const updateBANT = useUpdateLeadBANT();
-  
+
   // Task mutations (using unified activities)
   const createTaskMutation = useCreateActivity();
   const completeTaskMutation = useCompleteActivity();
   const cancelTaskMutation = useCancelActivity();
 
-  // UI State
+  // UI State - define conversionType early so it can be used in hooks
   const [showLostModal, setShowLostModal] = useState(false);
   const [lostReason, setLostReason] = useState('');
   const [customLostReason, setCustomLostReason] = useState('');
   const [showConvertModal, setShowConvertModal] = useState(false);
+  const [showConversionMenu, setShowConversionMenu] = useState(false);
+  const [conversionType, setConversionType] = useState<'deal' | 'account' | 'candidate' | 'student' | 'poc' | null>(null);
+
+  // Account/POC creation mutations
+  const { createAccount, isCreating: isCreatingAccount } = useCreateAccount({
+    onSuccess: (data) => {
+      const account = data as { id: string };
+      // Mark lead as converted
+      updateStatus.mutate({ id: leadId, status: 'converted' });
+      setShowConvertModal(false);
+      setConversionType(null);
+      router.push(`/employee/recruiting/accounts/${account.id}`);
+    },
+  });
+
+  const { createPoc, isCreating: isCreatingPoc } = useCreatePoc({
+    onSuccess: () => {
+      // Mark lead as converted
+      updateStatus.mutate({ id: leadId, status: 'converted' });
+      setShowConvertModal(false);
+      setConversionType(null);
+      refetch();
+    },
+  });
+
+  // Fetch accounts for POC linking
+  const { accounts: existingAccounts } = useAccounts({ limit: 100, enabled: conversionType === 'poc' });
+
+  // UI State (continued)
   const [activeTab, setActiveTab] = useState<'activity' | 'research' | 'strategy' | 'tasks'>('activity');
   const [isEditingNotes, setIsEditingNotes] = useState(false);
   const [strategyNotes, setStrategyNotes] = useState('');
   const [showQuickNote, setShowQuickNote] = useState(false);
   const [quickNoteContent, setQuickNoteContent] = useState('');
+
+  // Conversion form state
+  const [selectedAccountId, setSelectedAccountId] = useState('');
+  const [newAccountName, setNewAccountName] = useState('');
+  const [newAccountIndustry, setNewAccountIndustry] = useState('');
+  const [newAccountType, setNewAccountType] = useState<'Direct Client' | 'Implementation Partner' | 'MSP/VMS'>('Direct Client');
   
   // BANT Qualification State - initialized from DB
   const [bantScore, setBantScore] = useState<BANTScore>({
@@ -398,8 +438,8 @@ export const LeadWorkspace: React.FC = () => {
   const StatusIcon = currentStatus.icon;
   const bantGrade = getBantGrade(bantPercentage);
   const taskList = pendingTasks || [];
-  const completedTasks = taskList.filter(t => t.completed).length;
-  const overdueTasks = taskList.filter(t => !t.completed && new Date(t.dueDate) < new Date()).length;
+  const completedTasks = taskList.filter(t => t.status === 'completed').length;
+  const overdueTasks = taskList.filter(t => t.status !== 'completed' && t.dueDate && new Date(t.dueDate) < new Date()).length;
 
   return (
     <div className="animate-fade-in pb-12">
@@ -446,23 +486,125 @@ export const LeadWorkspace: React.FC = () => {
               <Linkedin size={18} className="text-stone-400 group-hover:text-sky-600" />
             </a>
           )}
-          <button
-            onClick={() => {
-              // Pre-populate form data when opening modal
-              setConvertFormData({
-                dealTitle: `Deal with ${lead.companyName || 'Lead'}`,
-                dealValue: lead.estimatedValue || '0',
-                createAccount: true,
-              });
-              setShowConvertModal(true);
-            }}
-            disabled={lead.status === 'converted' || lead.status === 'lost'}
-            className="px-4 py-2.5 bg-gradient-to-r from-rust to-amber-600 text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:shadow-lg transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <Zap size={14} /> Convert to Deal
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => setShowConversionMenu(!showConversionMenu)}
+              disabled={lead.status === 'converted' || lead.status === 'lost'}
+              className="px-4 py-2.5 bg-gradient-to-r from-rust to-amber-600 text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:shadow-lg transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Zap size={14} /> Convert
+              <ChevronDown size={14} className={`transition-transform ${showConversionMenu ? 'rotate-180' : ''}`} />
+            </button>
+
+            {/* Conversion Menu Dropdown */}
+            {showConversionMenu && (
+              <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-xl shadow-2xl border border-stone-200 overflow-hidden z-50">
+                <div className="p-2">
+                  <button
+                    onClick={() => {
+                      setConvertFormData({
+                        dealTitle: `Deal with ${lead.companyName || 'Lead'}`,
+                        dealValue: lead.estimatedValue || '0',
+                        createAccount: true,
+                      });
+                      setConversionType('deal');
+                      setShowConvertModal(true);
+                      setShowConversionMenu(false);
+                    }}
+                    className="w-full p-3 flex items-center gap-3 hover:bg-amber-50 rounded-lg transition-colors text-left"
+                  >
+                    <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
+                      <DollarSign size={16} className="text-amber-600" />
+                    </div>
+                    <div>
+                      <div className="font-bold text-sm text-charcoal">Convert to Deal</div>
+                      <div className="text-xs text-stone-400">Create sales opportunity</div>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setConversionType('account');
+                      setShowConvertModal(true);
+                      setShowConversionMenu(false);
+                    }}
+                    className="w-full p-3 flex items-center gap-3 hover:bg-blue-50 rounded-lg transition-colors text-left"
+                  >
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <Building2 size={16} className="text-blue-600" />
+                    </div>
+                    <div>
+                      <div className="font-bold text-sm text-charcoal">Convert to Account</div>
+                      <div className="text-xs text-stone-400">Create client account</div>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setConversionType('candidate');
+                      setShowConvertModal(true);
+                      setShowConversionMenu(false);
+                    }}
+                    className="w-full p-3 flex items-center gap-3 hover:bg-emerald-50 rounded-lg transition-colors text-left"
+                  >
+                    <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
+                      <User size={16} className="text-emerald-600" />
+                    </div>
+                    <div>
+                      <div className="font-bold text-sm text-charcoal">Convert to Candidate</div>
+                      <div className="text-xs text-stone-400">Add to talent pool</div>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setConversionType('student');
+                      setShowConvertModal(true);
+                      setShowConversionMenu(false);
+                    }}
+                    className="w-full p-3 flex items-center gap-3 hover:bg-purple-50 rounded-lg transition-colors text-left"
+                  >
+                    <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                      <GraduationCap size={16} className="text-purple-600" />
+                    </div>
+                    <div>
+                      <div className="font-bold text-sm text-charcoal">Convert to Student</div>
+                      <div className="text-xs text-stone-400">Enroll in Academy</div>
+                    </div>
+                  </button>
+
+                  {lead.leadType === 'person' && (
+                    <button
+                      onClick={() => {
+                        setConversionType('poc');
+                        setShowConvertModal(true);
+                        setShowConversionMenu(false);
+                      }}
+                      className="w-full p-3 flex items-center gap-3 hover:bg-stone-50 rounded-lg transition-colors text-left"
+                    >
+                      <div className="w-8 h-8 bg-stone-100 rounded-lg flex items-center justify-center">
+                        <UserPlus size={16} className="text-stone-600" />
+                      </div>
+                      <div>
+                        <div className="font-bold text-sm text-charcoal">Add as POC</div>
+                        <div className="text-xs text-stone-400">Link to existing account</div>
+                      </div>
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
+
+      {/* Click outside to close menu */}
+      {showConversionMenu && (
+        <div
+          className="fixed inset-0 z-40"
+          onClick={() => setShowConversionMenu(false)}
+        />
+      )}
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-12 gap-6">
@@ -1079,70 +1221,357 @@ export const LeadWorkspace: React.FC = () => {
         </div>
       )}
 
-      {/* Convert to Deal Modal */}
+      {/* Conversion Modal - Handles all conversion types */}
       {showConvertModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+            {/* Header based on conversion type */}
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-xl font-serif font-bold text-charcoal flex items-center gap-2">
-                <Zap className="text-amber-500" size={20} /> Convert to Deal
+                {conversionType === 'deal' && <><DollarSign className="text-amber-500" size={20} /> Convert to Deal</>}
+                {conversionType === 'account' && <><Building2 className="text-blue-500" size={20} /> Convert to Account</>}
+                {conversionType === 'candidate' && <><User className="text-emerald-500" size={20} /> Convert to Candidate</>}
+                {conversionType === 'student' && <><GraduationCap className="text-purple-500" size={20} /> Convert to Student</>}
+                {conversionType === 'poc' && <><UserPlus className="text-stone-500" size={20} /> Add as POC</>}
               </h3>
-              <button onClick={() => setShowConvertModal(false)} className="text-stone-400 hover:text-charcoal">
+              <button onClick={() => { setShowConvertModal(false); setConversionType(null); }} className="text-stone-400 hover:text-charcoal">
                 <X size={20} />
               </button>
             </div>
-            <div className="space-y-4 mb-6">
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Deal Title</label>
-                <input
-                  type="text"
-                  placeholder={`Deal with ${lead.companyName}`}
-                  value={convertFormData.dealTitle}
-                  onChange={(e) => setConvertFormData({ ...convertFormData, dealTitle: e.target.value })}
-                  className="w-full p-3 border border-stone-200 rounded-xl focus:outline-none focus:border-rust"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Deal Value ($)</label>
-                <input
-                  type="number"
-                  placeholder={lead.estimatedValue || '0'}
-                  value={convertFormData.dealValue}
-                  onChange={(e) => setConvertFormData({ ...convertFormData, dealValue: e.target.value })}
-                  className="w-full p-3 border border-stone-200 rounded-xl focus:outline-none focus:border-rust"
-                />
-              </div>
-              <div className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  id="createAccount"
-                  checked={convertFormData.createAccount}
-                  onChange={(e) => setConvertFormData({ ...convertFormData, createAccount: e.target.checked })}
-                  className="w-5 h-5 rounded border-stone-300"
-                />
-                <label htmlFor="createAccount" className="text-sm text-stone-600">Create Account from this lead</label>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <button onClick={() => setShowConvertModal(false)} className="flex-1 py-3 border border-stone-200 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-stone-50">
-                Cancel
-              </button>
-              <button
-                onClick={handleConvertToDeal}
-                disabled={!convertFormData.dealTitle || !convertFormData.dealValue || convertLead.isPending}
-                className="flex-1 py-3 bg-gradient-to-r from-rust to-amber-600 text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
-              >
-                {convertLead.isPending ? (
-                  <>
-                    <Loader2 size={14} className="animate-spin" /> Converting...
-                  </>
-                ) : (
-                  <>
-                    Convert <ArrowRight size={14} />
-                  </>
-                )}
-              </button>
-            </div>
+
+            {/* Convert to Deal Form */}
+            {conversionType === 'deal' && (
+              <>
+                <div className="space-y-4 mb-6">
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Deal Title</label>
+                    <input
+                      type="text"
+                      placeholder={`Deal with ${lead.companyName}`}
+                      value={convertFormData.dealTitle}
+                      onChange={(e) => setConvertFormData({ ...convertFormData, dealTitle: e.target.value })}
+                      className="w-full p-3 border border-stone-200 rounded-xl focus:outline-none focus:border-rust"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Deal Value ($)</label>
+                    <input
+                      type="number"
+                      placeholder={lead.estimatedValue || '0'}
+                      value={convertFormData.dealValue}
+                      onChange={(e) => setConvertFormData({ ...convertFormData, dealValue: e.target.value })}
+                      className="w-full p-3 border border-stone-200 rounded-xl focus:outline-none focus:border-rust"
+                    />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="checkbox"
+                      id="createAccount"
+                      checked={convertFormData.createAccount}
+                      onChange={(e) => setConvertFormData({ ...convertFormData, createAccount: e.target.checked })}
+                      className="w-5 h-5 rounded border-stone-300"
+                    />
+                    <label htmlFor="createAccount" className="text-sm text-stone-600">Create Account from this lead</label>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <button onClick={() => { setShowConvertModal(false); setConversionType(null); }} className="flex-1 py-3 border border-stone-200 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-stone-50">
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleConvertToDeal}
+                    disabled={!convertFormData.dealTitle || !convertFormData.dealValue || convertLead.isPending}
+                    className="flex-1 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
+                  >
+                    {convertLead.isPending ? (
+                      <><Loader2 size={14} className="animate-spin" /> Converting...</>
+                    ) : (
+                      <>Convert <ArrowRight size={14} /></>
+                    )}
+                  </button>
+                </div>
+              </>
+            )}
+
+            {/* Convert to Account Form */}
+            {conversionType === 'account' && (
+              <>
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-blue-700">
+                    This will create a new client account from <span className="font-bold">{lead.companyName || 'this lead'}</span> and mark the lead as converted.
+                  </p>
+                </div>
+                <div className="space-y-4 mb-6">
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Account Name *</label>
+                    <input
+                      type="text"
+                      value={newAccountName || lead.companyName || ''}
+                      onChange={(e) => setNewAccountName(e.target.value)}
+                      className="w-full p-3 border border-stone-200 rounded-xl focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Account Type</label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {[
+                        { value: 'Direct Client', label: 'Direct Client' },
+                        { value: 'Implementation Partner', label: 'Impl. Partner' },
+                        { value: 'MSP/VMS', label: 'MSP/VMS' },
+                      ].map((type) => (
+                        <button
+                          key={type.value}
+                          onClick={() => setNewAccountType(type.value as typeof newAccountType)}
+                          className={`px-3 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border-2 transition-all ${
+                            newAccountType === type.value
+                              ? 'bg-blue-100 text-blue-700 border-blue-400'
+                              : 'bg-white border-stone-200 text-stone-500 hover:border-stone-400'
+                          }`}
+                        >
+                          {type.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Industry</label>
+                    <input
+                      type="text"
+                      value={newAccountIndustry || lead.industry || ''}
+                      onChange={(e) => setNewAccountIndustry(e.target.value)}
+                      className="w-full p-3 border border-stone-200 rounded-xl focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <button onClick={() => { setShowConvertModal(false); setConversionType(null); }} className="flex-1 py-3 border border-stone-200 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-stone-50">
+                    Cancel
+                  </button>
+                  <button
+                    onClick={async () => {
+                      const accountName = newAccountName || lead.companyName;
+                      if (!accountName?.trim()) return;
+                      await createAccount({
+                        name: accountName.trim(),
+                        type: newAccountType,
+                        industry: (newAccountIndustry || lead.industry)?.trim() || undefined,
+                        status: 'Active',
+                      });
+                    }}
+                    disabled={!(newAccountName || lead.companyName)?.trim() || isCreatingAccount}
+                    className="flex-1 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
+                  >
+                    {isCreatingAccount ? (
+                      <><Loader2 size={14} className="animate-spin" /> Creating...</>
+                    ) : (
+                      <>Create Account <ArrowRightCircle size={14} /></>
+                    )}
+                  </button>
+                </div>
+              </>
+            )}
+
+            {/* Convert to Candidate Form */}
+            {conversionType === 'candidate' && (
+              <>
+                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-emerald-700">
+                    This will add <span className="font-bold">{lead.firstName} {lead.lastName}</span> to the talent pool as a candidate.
+                  </p>
+                </div>
+                <div className="space-y-4 mb-6">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">First Name</label>
+                      <input
+                        type="text"
+                        defaultValue={lead.firstName || ''}
+                        className="w-full p-3 border border-stone-200 rounded-xl focus:outline-none focus:border-emerald-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Last Name</label>
+                      <input
+                        type="text"
+                        defaultValue={lead.lastName || ''}
+                        className="w-full p-3 border border-stone-200 rounded-xl focus:outline-none focus:border-emerald-500"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Email</label>
+                    <input
+                      type="email"
+                      defaultValue={lead.email || ''}
+                      className="w-full p-3 border border-stone-200 rounded-xl focus:outline-none focus:border-emerald-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Title / Role</label>
+                    <input
+                      type="text"
+                      defaultValue={lead.title || ''}
+                      className="w-full p-3 border border-stone-200 rounded-xl focus:outline-none focus:border-emerald-500"
+                    />
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <button onClick={() => { setShowConvertModal(false); setConversionType(null); }} className="flex-1 py-3 border border-stone-200 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-stone-50">
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => {
+                      router.push(`/employee/recruiting/candidates/new?leadId=${leadId}&firstName=${encodeURIComponent(lead.firstName || '')}&lastName=${encodeURIComponent(lead.lastName || '')}&email=${encodeURIComponent(lead.email || '')}`);
+                    }}
+                    className="flex-1 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:shadow-lg flex items-center justify-center gap-2"
+                  >
+                    Add to Talent <ArrowRightCircle size={14} />
+                  </button>
+                </div>
+              </>
+            )}
+
+            {/* Convert to Student Form */}
+            {conversionType === 'student' && (
+              <>
+                <div className="bg-purple-50 border border-purple-200 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-purple-700">
+                    This will enroll <span className="font-bold">{lead.firstName} {lead.lastName}</span> as a student in the Academy.
+                  </p>
+                </div>
+                <div className="space-y-4 mb-6">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">First Name</label>
+                      <input
+                        type="text"
+                        defaultValue={lead.firstName || ''}
+                        className="w-full p-3 border border-stone-200 rounded-xl focus:outline-none focus:border-purple-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Last Name</label>
+                      <input
+                        type="text"
+                        defaultValue={lead.lastName || ''}
+                        className="w-full p-3 border border-stone-200 rounded-xl focus:outline-none focus:border-purple-500"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Email</label>
+                    <input
+                      type="email"
+                      defaultValue={lead.email || ''}
+                      className="w-full p-3 border border-stone-200 rounded-xl focus:outline-none focus:border-purple-500"
+                    />
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <button onClick={() => { setShowConvertModal(false); setConversionType(null); }} className="flex-1 py-3 border border-stone-200 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-stone-50">
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => {
+                      router.push(`/employee/academy/students/new?leadId=${leadId}&firstName=${encodeURIComponent(lead.firstName || '')}&lastName=${encodeURIComponent(lead.lastName || '')}&email=${encodeURIComponent(lead.email || '')}`);
+                    }}
+                    className="flex-1 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:shadow-lg flex items-center justify-center gap-2"
+                  >
+                    Enroll Student <ArrowRightCircle size={14} />
+                  </button>
+                </div>
+              </>
+            )}
+
+            {/* Add as POC Form */}
+            {conversionType === 'poc' && (
+              <>
+                <div className="bg-stone-50 border border-stone-200 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-stone-700">
+                    Link <span className="font-bold">{lead.firstName} {lead.lastName}</span> as a Point of Contact to an existing account.
+                  </p>
+                </div>
+                <div className="space-y-4 mb-6">
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Select Account *</label>
+                    <select
+                      value={selectedAccountId}
+                      onChange={(e) => setSelectedAccountId(e.target.value)}
+                      className="w-full p-3 border border-stone-200 rounded-xl focus:outline-none focus:border-stone-500 bg-white"
+                    >
+                      <option value="">Select an account...</option>
+                      {existingAccounts.map((account) => (
+                        <option key={account.id} value={account.id}>
+                          {account.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">First Name</label>
+                      <input
+                        type="text"
+                        defaultValue={lead.firstName || ''}
+                        disabled
+                        className="w-full p-3 border border-stone-200 rounded-xl bg-stone-50 text-stone-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Last Name</label>
+                      <input
+                        type="text"
+                        defaultValue={lead.lastName || ''}
+                        disabled
+                        className="w-full p-3 border border-stone-200 rounded-xl bg-stone-50 text-stone-500"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Email</label>
+                    <input
+                      type="email"
+                      defaultValue={lead.email || ''}
+                      disabled
+                      className="w-full p-3 border border-stone-200 rounded-xl bg-stone-50 text-stone-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">Role / Title</label>
+                    <input
+                      type="text"
+                      defaultValue={lead.title || ''}
+                      className="w-full p-3 border border-stone-200 rounded-xl focus:outline-none focus:border-stone-500"
+                    />
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <button onClick={() => { setShowConvertModal(false); setConversionType(null); setSelectedAccountId(''); }} className="flex-1 py-3 border border-stone-200 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-stone-50">
+                    Cancel
+                  </button>
+                  <button
+                    onClick={async () => {
+                      if (!selectedAccountId || !lead.firstName || !lead.email) return;
+                      await createPoc({
+                        accountId: selectedAccountId,
+                        name: `${lead.firstName} ${lead.lastName || ''}`.trim(),
+                        email: lead.email,
+                        role: lead.title || undefined,
+                        phone: lead.phone || undefined,
+                      });
+                    }}
+                    disabled={!selectedAccountId || !lead.firstName || !lead.email || isCreatingPoc}
+                    className="flex-1 py-3 bg-gradient-to-r from-stone-600 to-stone-700 text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
+                  >
+                    {isCreatingPoc ? (
+                      <><Loader2 size={14} className="animate-spin" /> Adding...</>
+                    ) : (
+                      <>Add as POC <ArrowRightCircle size={14} /></>
+                    )}
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
