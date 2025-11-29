@@ -31,6 +31,22 @@ export function dbJobToDisplay(
     isRemote: job.isRemote,
     requiredSkills: job.requiredSkills || [],
     createdAt: job.createdAt.toISOString(),
+    // Additional display fields
+    accountName: account?.name || job.account?.name || undefined,
+    pipelineCount: job._count?.submissions ?? 0,
+    rateMin: job.rateMin,
+    rateMax: job.rateMax,
+    rateType: job.rateType,
+    niceToHaveSkills: job.niceToHaveSkills || [],
+    minExperienceYears: job.minExperienceYears,
+    maxExperienceYears: job.maxExperienceYears,
+    visaRequirements: job.visaRequirements || [],
+    targetFillDate: job.targetFillDate?.toISOString() || null,
+    postedDate: job.postedDate?.toISOString() || null,
+    clientSubmissionInstructions: job.clientSubmissionInstructions,
+    clientInterviewProcess: job.clientInterviewProcess,
+    ownerName: job.owner?.fullName,
+    updatedAt: job.updatedAt.toISOString(),
   };
 }
 

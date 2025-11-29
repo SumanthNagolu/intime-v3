@@ -174,26 +174,47 @@ export const LeadsList: React.FC = () => {
               className="bg-white p-6 rounded-[2rem] border border-stone-200 shadow-sm hover:shadow-xl hover:border-rust/30 transition-all group relative"
             >
               <div className="flex justify-between items-start mb-6">
-                <div className="w-12 h-12 bg-stone-50 rounded-xl flex items-center justify-center text-stone-400 group-hover:bg-rust group-hover:text-white transition-colors">
-                  <Building2 size={20} />
-                </div>
-                <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${
-                  lead.status === 'warm' ? 'bg-orange-50 text-orange-600' :
-                  lead.status === 'hot' ? 'bg-red-50 text-red-600' :
-                  lead.status === 'converted' ? 'bg-green-50 text-green-600' :
-                  lead.status === 'lost' ? 'bg-gray-50 text-gray-600' :
-                  lead.status === 'cold' ? 'bg-blue-50 text-blue-600' :
-                  'bg-stone-100 text-stone-500'
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+                  lead.leadType === 'person'
+                    ? 'bg-rust/10 text-rust group-hover:bg-rust group-hover:text-white'
+                    : 'bg-stone-50 text-stone-400 group-hover:bg-rust group-hover:text-white'
                 }`}>
-                  {lead.status}
-                </span>
+                  {lead.leadType === 'person' ? <User size={20} /> : <Building2 size={20} />}
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest ${
+                    lead.leadType === 'person' ? 'bg-rust/10 text-rust' : 'bg-charcoal/10 text-charcoal'
+                  }`}>
+                    {lead.leadType}
+                  </span>
+                  <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${
+                    lead.status === 'warm' ? 'bg-orange-50 text-orange-600' :
+                    lead.status === 'hot' ? 'bg-red-50 text-red-600' :
+                    lead.status === 'converted' ? 'bg-green-50 text-green-600' :
+                    lead.status === 'lost' ? 'bg-gray-50 text-gray-600' :
+                    lead.status === 'cold' ? 'bg-blue-50 text-blue-600' :
+                    'bg-stone-100 text-stone-500'
+                  }`}>
+                    {lead.status}
+                  </span>
+                </div>
               </div>
 
               <h3 className="font-serif font-bold text-xl text-charcoal mb-1 group-hover:text-rust transition-colors">
-                {lead.companyName || 'Unknown Company'}
+                {lead.leadType === 'person'
+                  ? `${lead.firstName || ''} ${lead.lastName || ''}`.trim() || 'Unknown Contact'
+                  : lead.companyName || 'Unknown Company'}
               </h3>
               <p className="text-sm text-stone-500 mb-4 flex items-center gap-1">
-                <User size={12}/> {lead.firstName} {lead.lastName}
+                {lead.leadType === 'person' ? (
+                  <>
+                    <Building2 size={12}/> {lead.companyName || 'No company linked'}
+                  </>
+                ) : (
+                  <>
+                    <User size={12}/> {lead.firstName} {lead.lastName}
+                  </>
+                )}
               </p>
 
               <div className="space-y-2 text-xs text-stone-500 mb-6">
@@ -218,7 +239,7 @@ export const LeadsList: React.FC = () => {
 
           {filtered.length === 0 && !isLoading && (
             <div className="col-span-full text-center py-12 text-stone-400">
-              <Building2 size={48} className="mx-auto mb-4 opacity-50" />
+              <Users size={48} className="mx-auto mb-4 opacity-50" />
               <p className="font-medium">No leads found matching your criteria.</p>
               <p className="text-sm mt-2">Try adjusting your filters or create a new lead.</p>
             </div>

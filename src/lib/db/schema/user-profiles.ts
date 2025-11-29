@@ -23,7 +23,7 @@ export const userProfiles = pgTable('user_profiles', {
   email: text('email').notNull().unique(),
   firstName: text('first_name'),
   lastName: text('last_name'),
-  fullName: text('full_name'), // Generated column in DB: first_name || ' ' || last_name
+  fullName: text('full_name'), // Populated by trigger from first_name || ' ' || last_name
   avatarUrl: text('avatar_url'),
   phone: text('phone'),
   timezone: text('timezone').default('America/New_York'),

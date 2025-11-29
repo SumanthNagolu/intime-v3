@@ -1,13 +1,20 @@
 export const dynamic = "force-dynamic";
-import { AccountDetail } from '@/components/recruiting/AccountDetail';
+
+import { AccountWorkspace } from '@/components/recruiting/AccountWorkspace';
 import { AppLayout } from '@/components/AppLayout';
 import { RecruitingLayout } from '@/components/layouts/RecruitingLayout';
 
-export default function Page() {
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function Page({ params }: PageProps) {
+  const { id } = await params;
+
   return (
     <AppLayout>
       <RecruitingLayout>
-        <AccountDetail />
+        <AccountWorkspace accountId={id} />
       </RecruitingLayout>
     </AppLayout>
   );

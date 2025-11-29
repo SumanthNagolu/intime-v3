@@ -1,19 +1,13 @@
 export const dynamic = "force-dynamic";
-import { JobWorkspace } from '@/components/recruiting/JobWorkspace';
+import { TalentList } from '@/components/recruiting/TalentList';
 import { AppLayout } from '@/components/AppLayout';
 import { RecruitingLayout } from '@/components/layouts/RecruitingLayout';
 
-interface PageProps {
-  params: Promise<{ id: string }>;
-}
-
-export default async function Page({ params }: PageProps) {
-  const { id } = await params;
-
+export default function Page() {
   return (
     <AppLayout>
       <RecruitingLayout>
-        <JobWorkspace jobId={id} />
+        <TalentList />
       </RecruitingLayout>
     </AppLayout>
   );

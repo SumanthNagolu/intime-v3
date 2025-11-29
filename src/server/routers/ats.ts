@@ -27,7 +27,9 @@ import {
   createPlacementSchema,
   updatePlacementSchema
 } from '@/lib/validations/ats';
-import { eq, and, desc, sql, inArray } from 'drizzle-orm';
+import { eq, and, desc, sql, inArray, isNull, or } from 'drizzle-orm';
+import { userProfiles } from '@/lib/db/schema/user-profiles';
+import { accounts } from '@/lib/db/schema/crm';
 
 export const atsRouter = router({
   // =====================================================
@@ -92,11 +94,17 @@ export const atsRouter = router({
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
 
+        // Extract rate fields that need string conversion for numeric columns
+        const { rateMin, rateMax, ...rest } = input;
+
         const [newJob] = await db.insert(jobs).values({
-          ...input,
+          ...rest,
           orgId,
           ownerId: input.ownerId || userId,
           createdBy: userId,
+          // Convert numbers to strings for numeric columns
+          rateMin: rateMin !== undefined ? String(rateMin) : undefined,
+          rateMax: rateMax !== undefined ? String(rateMax) : undefined,
         }).returning();
 
         return newJob;
@@ -238,10 +246,26 @@ export const atsRouter = router({
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
 
+        // Get user profile ID from auth ID
+        let [userProfile] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId))
+          .limit(1);
+
+        // Fallback: try by profile id directly
+        if (!userProfile) {
+          [userProfile] = await db.select({ id: userProfiles.id })
+            .from(userProfiles)
+            .where(eq(userProfiles.id, userId))
+            .limit(1);
+        }
+
+        const ownerId = userProfile?.id || userId;
+
         const [newSubmission] = await db.insert(submissions).values({
           ...input,
           orgId,
-          submittedBy: userId,
+          ownerId,
         }).returning();
 
         return newSubmission;
@@ -300,6 +324,44 @@ export const atsRouter = router({
         }
 
         return updated;
+      }),
+
+    /**
+     * Get submissions by account (for Talent tab)
+     */
+    listByAccount: orgProtectedProcedure
+      .input(z.object({
+        accountId: z.string().uuid(),
+        limit: z.number().min(1).max(100).default(50),
+        offset: z.number().min(0).default(0),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+        const { accountId, limit, offset } = input;
+
+        // Get submissions via jobs that belong to this account
+        const results = await db.select({
+          id: submissions.id,
+          status: submissions.status,
+          candidateId: submissions.candidateId,
+          candidateName: sql<string>`COALESCE((SELECT up.first_name || ' ' || up.last_name FROM user_profiles up WHERE up.id = ${submissions.candidateId}), 'Unknown')`,
+          jobId: submissions.jobId,
+          jobTitle: sql<string>`(SELECT j.title FROM jobs j WHERE j.id = ${submissions.jobId})`,
+          aiMatchScore: submissions.aiMatchScore,
+          recruiterMatchScore: submissions.recruiterMatchScore,
+          submittedToClientAt: submissions.submittedToClientAt,
+          createdAt: submissions.createdAt,
+        })
+          .from(submissions)
+          .where(and(
+            eq(submissions.orgId, orgId),
+            eq(submissions.accountId, accountId)
+          ))
+          .limit(limit)
+          .offset(offset)
+          .orderBy(desc(submissions.createdAt));
+
+        return results;
       }),
   }),
 
@@ -662,6 +724,400 @@ export const atsRouter = router({
           ));
 
         return result?.count || 0;
+      }),
+
+    /**
+     * Get placements by account (for Talent tab)
+     */
+    listByAccount: orgProtectedProcedure
+      .input(z.object({
+        accountId: z.string().uuid(),
+        limit: z.number().min(1).max(100).default(50),
+        offset: z.number().min(0).default(0),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+        const { accountId, limit, offset } = input;
+
+        const results = await db.select({
+          id: placements.id,
+          status: placements.status,
+          candidateId: placements.candidateId,
+          candidateName: sql<string>`COALESCE((SELECT up.first_name || ' ' || up.last_name FROM user_profiles up WHERE up.id = ${placements.candidateId}), 'Unknown')`,
+          jobId: placements.jobId,
+          jobTitle: sql<string>`(SELECT j.title FROM jobs j WHERE j.id = ${placements.jobId})`,
+          billRate: placements.billRate,
+          payRate: placements.payRate,
+          startDate: placements.startDate,
+          endDate: placements.endDate,
+          createdAt: placements.createdAt,
+        })
+          .from(placements)
+          .where(and(
+            eq(placements.orgId, orgId),
+            eq(placements.accountId, accountId)
+          ))
+          .limit(limit)
+          .offset(offset)
+          .orderBy(desc(placements.startDate));
+
+        return results;
+      }),
+  }),
+
+  // =====================================================
+  // CANDIDATES (Talent Management)
+  // =====================================================
+
+  candidates: router({
+    /**
+     * Search candidates for adding to account
+     */
+    search: orgProtectedProcedure
+      .input(z.object({
+        query: z.string().optional(),
+        skills: z.array(z.string()).optional(),
+        visaTypes: z.array(z.string()).optional(),
+        availability: z.enum(['immediate', '2_weeks', '1_month']).optional(),
+        limit: z.number().min(1).max(50).default(20),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+        const { query, skills, visaTypes, availability, limit } = input;
+
+        let conditions = [
+          eq(userProfiles.orgId, orgId),
+          isNull(userProfiles.deletedAt),
+          or(
+            eq(userProfiles.candidateStatus, 'active'),
+            eq(userProfiles.candidateStatus, 'bench')
+          ),
+        ];
+
+        if (availability) {
+          conditions.push(eq(userProfiles.candidateAvailability, availability));
+        }
+
+        const results = await db.select({
+          id: userProfiles.id,
+          fullName: userProfiles.fullName,
+          firstName: userProfiles.firstName,
+          lastName: userProfiles.lastName,
+          email: userProfiles.email,
+          phone: userProfiles.phone,
+          candidateStatus: userProfiles.candidateStatus,
+          candidateSkills: userProfiles.candidateSkills,
+          candidateExperienceYears: userProfiles.candidateExperienceYears,
+          candidateCurrentVisa: userProfiles.candidateCurrentVisa,
+          candidateVisaExpiry: userProfiles.candidateVisaExpiry,
+          candidateHourlyRate: userProfiles.candidateHourlyRate,
+          candidateAvailability: userProfiles.candidateAvailability,
+          candidateLocation: userProfiles.candidateLocation,
+          candidateWillingToRelocate: userProfiles.candidateWillingToRelocate,
+          candidateResumeUrl: userProfiles.candidateResumeUrl,
+        })
+          .from(userProfiles)
+          .where(and(...conditions))
+          .limit(limit)
+          .orderBy(userProfiles.fullName);
+
+        // Filter by search query (name or skills)
+        let filtered = results;
+        if (query) {
+          const q = query.toLowerCase();
+          filtered = results.filter(c =>
+            c.fullName?.toLowerCase().includes(q) ||
+            c.email?.toLowerCase().includes(q) ||
+            c.candidateSkills?.some(s => s.toLowerCase().includes(q))
+          );
+        }
+
+        // Filter by skills
+        if (skills && skills.length > 0) {
+          filtered = filtered.filter(c =>
+            skills.some(skill =>
+              c.candidateSkills?.some(s => s.toLowerCase().includes(skill.toLowerCase()))
+            )
+          );
+        }
+
+        // Filter by visa types
+        if (visaTypes && visaTypes.length > 0) {
+          filtered = filtered.filter(c =>
+            c.candidateCurrentVisa && visaTypes.includes(c.candidateCurrentVisa)
+          );
+        }
+
+        return filtered;
+      }),
+
+    /**
+     * Create new candidate (talent)
+     */
+    create: orgProtectedProcedure
+      .input(z.object({
+        // Core info
+        firstName: z.string().min(1, 'First name is required'),
+        lastName: z.string().min(1, 'Last name is required'),
+        email: z.string().email('Valid email required'),
+        phone: z.string().optional(),
+
+        // Candidate/bench specialist fields
+        candidateSkills: z.array(z.string()).min(1, 'At least one skill required'),
+        candidateExperienceYears: z.number().min(0).max(50),
+        candidateCurrentVisa: z.enum(['H1B', 'GC', 'USC', 'OPT', 'CPT', 'TN', 'L1', 'EAD', 'Other']),
+        candidateVisaExpiry: z.coerce.date().optional(),
+        candidateHourlyRate: z.number().min(0).optional(),
+        candidateAvailability: z.enum(['immediate', '2_weeks', '1_month']),
+        candidateLocation: z.string().optional(),
+        candidateWillingToRelocate: z.boolean().default(false),
+        candidateResumeUrl: z.string().url().optional(),
+
+        // Optional: link to account
+        accountId: z.string().uuid().optional(),
+        jobId: z.string().uuid().optional(),
+        submissionNotes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+        const { accountId, jobId, submissionNotes, candidateHourlyRate, phone, ...candidateData } = input;
+
+        // Sanitize phone to E.164 format (remove spaces, dashes, parentheses)
+        const sanitizedPhone = phone ? phone.replace(/[\s\-\(\)]/g, '') : null;
+
+        // Get user profile ID - try authId first, then id
+        let [userProfile] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId))
+          .limit(1);
+
+        // Fallback: try by profile id directly
+        if (!userProfile) {
+          [userProfile] = await db.select({ id: userProfiles.id })
+            .from(userProfiles)
+            .where(eq(userProfiles.id, userId))
+            .limit(1);
+        }
+
+        const creatorId = userProfile?.id || null;
+
+        // Check if email already exists
+        const [existing] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.email, input.email))
+          .limit(1);
+
+        if (existing) {
+          throw new Error('A candidate with this email already exists');
+        }
+
+        // Create the candidate
+        const [newCandidate] = await db.insert(userProfiles).values({
+          ...candidateData,
+          orgId,
+          phone: sanitizedPhone,
+          fullName: `${input.firstName} ${input.lastName}`,
+          candidateStatus: 'active',
+          candidateHourlyRate: candidateHourlyRate ? String(candidateHourlyRate) : null,
+          createdBy: creatorId,
+        }).returning();
+
+        // If accountId and jobId provided, create a submission to link candidate to job
+        if (accountId && jobId) {
+          await db.insert(submissions).values({
+            orgId,
+            jobId,
+            candidateId: newCandidate.id,
+            accountId,
+            status: 'sourced',
+            submissionNotes: submissionNotes || `Added via Account Talent Pool`,
+            ownerId: creatorId,
+            createdBy: creatorId,
+          });
+        } else if (accountId) {
+          // If only accountId, find the first open job for this account to create a submission
+          const [firstJob] = await db.select({ id: jobs.id })
+            .from(jobs)
+            .where(and(
+              eq(jobs.orgId, orgId),
+              eq(jobs.accountId, accountId),
+              eq(jobs.status, 'open')
+            ))
+            .limit(1);
+
+          if (firstJob) {
+            await db.insert(submissions).values({
+              orgId,
+              jobId: firstJob.id,
+              candidateId: newCandidate.id,
+              accountId,
+              status: 'sourced',
+              submissionNotes: submissionNotes || `Added via Account Talent Pool`,
+              ownerId: creatorId,
+              createdBy: creatorId,
+            });
+          }
+        }
+
+        return newCandidate;
+      }),
+
+    /**
+     * Update candidate
+     */
+    update: orgProtectedProcedure
+      .input(z.object({
+        id: z.string().uuid(),
+        firstName: z.string().optional(),
+        lastName: z.string().optional(),
+        phone: z.string().optional(),
+        candidateSkills: z.array(z.string()).optional(),
+        candidateExperienceYears: z.number().min(0).max(50).optional(),
+        candidateCurrentVisa: z.enum(['H1B', 'GC', 'USC', 'OPT', 'CPT', 'TN', 'L1', 'EAD', 'Other']).optional(),
+        candidateVisaExpiry: z.coerce.date().optional(),
+        candidateHourlyRate: z.number().min(0).optional(),
+        candidateAvailability: z.enum(['immediate', '2_weeks', '1_month']).optional(),
+        candidateLocation: z.string().optional(),
+        candidateWillingToRelocate: z.boolean().optional(),
+        candidateResumeUrl: z.string().url().optional(),
+        candidateStatus: z.enum(['active', 'placed', 'bench', 'inactive', 'blacklisted']).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, userId } = ctx;
+        const { id, candidateHourlyRate, ...data } = input;
+
+        const updateData: Record<string, any> = { ...data, updatedBy: userId };
+        if (candidateHourlyRate !== undefined) {
+          updateData.candidateHourlyRate = String(candidateHourlyRate);
+        }
+
+        const [updated] = await db.update(userProfiles)
+          .set(updateData)
+          .where(and(
+            eq(userProfiles.id, id),
+            eq(userProfiles.orgId, orgId)
+          ))
+          .returning();
+
+        if (!updated) {
+          throw new Error('Candidate not found');
+        }
+
+        return updated;
+      }),
+
+    /**
+     * Get candidate by ID
+     */
+    getById: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        const [candidate] = await db.select({
+          id: userProfiles.id,
+          fullName: userProfiles.fullName,
+          firstName: userProfiles.firstName,
+          lastName: userProfiles.lastName,
+          email: userProfiles.email,
+          phone: userProfiles.phone,
+          candidateStatus: userProfiles.candidateStatus,
+          candidateSkills: userProfiles.candidateSkills,
+          candidateExperienceYears: userProfiles.candidateExperienceYears,
+          candidateCurrentVisa: userProfiles.candidateCurrentVisa,
+          candidateVisaExpiry: userProfiles.candidateVisaExpiry,
+          candidateHourlyRate: userProfiles.candidateHourlyRate,
+          candidateAvailability: userProfiles.candidateAvailability,
+          candidateLocation: userProfiles.candidateLocation,
+          candidateWillingToRelocate: userProfiles.candidateWillingToRelocate,
+          candidateResumeUrl: userProfiles.candidateResumeUrl,
+          createdAt: userProfiles.createdAt,
+        })
+          .from(userProfiles)
+          .where(and(
+            eq(userProfiles.id, input.id),
+            eq(userProfiles.orgId, orgId)
+          ))
+          .limit(1);
+
+        if (!candidate) {
+          throw new Error('Candidate not found');
+        }
+
+        return candidate;
+      }),
+
+    /**
+     * Link existing candidate to account (via submission)
+     */
+    linkToAccount: orgProtectedProcedure
+      .input(z.object({
+        candidateId: z.string().uuid(),
+        accountId: z.string().uuid(),
+        jobId: z.string().uuid().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, userId } = ctx;
+        const { candidateId, accountId, jobId, notes } = input;
+
+        // Verify candidate exists
+        const [candidate] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(and(
+            eq(userProfiles.id, candidateId),
+            eq(userProfiles.orgId, orgId)
+          ))
+          .limit(1);
+
+        if (!candidate) {
+          throw new Error('Candidate not found');
+        }
+
+        // Find a job to link to
+        let targetJobId = jobId;
+        if (!targetJobId) {
+          const [firstJob] = await db.select({ id: jobs.id })
+            .from(jobs)
+            .where(and(
+              eq(jobs.orgId, orgId),
+              eq(jobs.accountId, accountId),
+              eq(jobs.status, 'open')
+            ))
+            .limit(1);
+
+          if (!firstJob) {
+            throw new Error('No open jobs found for this account. Please create a job first.');
+          }
+          targetJobId = firstJob.id;
+        }
+
+        // Check if already linked
+        const [existingSubmission] = await db.select({ id: submissions.id })
+          .from(submissions)
+          .where(and(
+            eq(submissions.candidateId, candidateId),
+            eq(submissions.jobId, targetJobId)
+          ))
+          .limit(1);
+
+        if (existingSubmission) {
+          throw new Error('Candidate is already linked to this job');
+        }
+
+        // Create submission
+        const [newSubmission] = await db.insert(submissions).values({
+          orgId,
+          jobId: targetJobId,
+          candidateId,
+          accountId,
+          status: 'sourced',
+          submissionNotes: notes || 'Linked from Account Talent Pool',
+          ownerId: userId,
+          createdBy: userId,
+        }).returning();
+
+        return newSubmission;
       }),
   }),
 

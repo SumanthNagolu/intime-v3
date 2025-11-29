@@ -107,3 +107,4 @@ CREATE TRIGGER trigger_task_completion
   FOR EACH ROW
   EXECUTE FUNCTION handle_task_completion();
 
+

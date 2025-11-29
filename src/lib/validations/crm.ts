@@ -160,7 +160,12 @@ const baseLeadSchema = z.object({
   preferredContactMethod: z.enum(['email', 'phone', 'linkedin', 'text']).default('email'),
 
   // Link to existing account (for person leads)
-  accountId: z.string().uuid().optional(),
+  // Allow empty string, null, undefined, or valid UUID
+  // Uses nullish() to allow null/undefined, and preprocess to clean empty strings
+  accountId: z.preprocess(
+    (val) => (val === '' || val === null ? undefined : val),
+    z.string().uuid().optional()
+  ),
 
   // Lead status
   status: z.enum(['new', 'warm', 'hot', 'cold', 'converted', 'lost']).default('new'),
@@ -230,6 +235,8 @@ export const baseDealSchema = z.object({
   stage: z.enum(['discovery', 'qualification', 'proposal', 'negotiation', 'closed_won', 'closed_lost']).default('discovery'),
   probability: z.number().int().min(0).max(100).optional(),
   expectedCloseDate: z.coerce.date().optional(),
+  actualCloseDate: z.coerce.date().optional(),
+  closeReason: z.string().optional(),
 
   // Assignment (optional - router will use current user if not provided)
   ownerId: z.string().uuid().optional(),

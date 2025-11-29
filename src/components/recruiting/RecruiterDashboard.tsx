@@ -827,7 +827,7 @@ export const RecruiterDashboard: React.FC = () => {
       {/* Hoisted Modals */}
       {isLeadModalOpen && <CreateLeadModal onClose={() => setIsLeadModalOpen(false)} onSave={addLead} />}
       {isDealModalOpen && <CreateDealModal leads={leads} onClose={() => setIsDealModalOpen(false)} onSave={addDeal} />}
-      {isAccountModalOpen && <CreateAccountModal onClose={() => setIsAccountModalOpen(false)} onSave={addAccount} />}
+      {isAccountModalOpen && <CreateAccountModal onClose={() => setIsAccountModalOpen(false)} onSuccess={(account) => { setIsAccountModalOpen(false); }} />}
       {isSourcingModalOpen && jobId && <SourcingModal isOpen={isSourcingModalOpen} onClose={() => setIsSourcingModalOpen(false)} jobId={jobId} />}
     </div>
   );

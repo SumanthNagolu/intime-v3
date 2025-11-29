@@ -40,6 +40,7 @@ export interface LeadQueryOptions {
 function toDisplayLead(lead: any): DisplayLead {
   return {
     id: lead.id,
+    leadType: lead.leadType || 'company',
     companyName: lead.companyName || '',
     firstName: lead.firstName || '',
     lastName: lead.lastName || '',

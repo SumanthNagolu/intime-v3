@@ -101,6 +101,22 @@ export interface DisplayJob {
   isRemote: boolean;
   requiredSkills: string[];
   createdAt: string;
+  // Additional display fields
+  accountName?: string;
+  pipelineCount?: number;
+  rateMin?: number | null;
+  rateMax?: number | null;
+  rateType?: RateType | null;
+  niceToHaveSkills?: string[];
+  minExperienceYears?: number | null;
+  maxExperienceYears?: number | null;
+  visaRequirements?: string[];
+  targetFillDate?: string | null;
+  postedDate?: string | null;
+  clientSubmissionInstructions?: string | null;
+  clientInterviewProcess?: string | null;
+  ownerName?: string;
+  updatedAt?: string;
 }
 
 // ============================================

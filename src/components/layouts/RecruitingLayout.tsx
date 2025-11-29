@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, Building2, Target, DollarSign, Briefcase, List, Plus, X, Loader2, Calendar } from 'lucide-react';
-import { CreateLeadModal } from '../recruiting/Modals';
+import { LayoutDashboard, Building2, Target, DollarSign, Briefcase, List, Plus, X, Loader2, Calendar, Users } from 'lucide-react';
+import { CreateLeadModal, CreateAccountModal } from '../recruiting/Modals';
 import { useAppStore } from '../../lib/store';
 import { Lead, Account } from '../../types';
 import { useAccounts } from '@/hooks/queries/accounts';
@@ -20,6 +20,7 @@ export const RecruitingLayout: React.FC<RecruitingLayoutProps> = ({ children }) 
   const { addLead, addAccount } = useAppStore();
   const [showLeadModal, setShowLeadModal] = useState(false);
   const [showDealModal, setShowDealModal] = useState(false);
+  const [showAccountModal, setShowAccountModal] = useState(false);
 
   // New Deal Modal State
   const [newDealTitle, setNewDealTitle] = useState('');
@@ -30,7 +31,9 @@ export const RecruitingLayout: React.FC<RecruitingLayoutProps> = ({ children }) 
 
   const isActive = (path: string) => pathname.includes(path);
   const isLeadsPage = pathname.includes('/leads');
-  const isDealsPage = pathname.includes('/deals') && !pathname.includes('/deals/');
+  const isDealsPage = pathname.includes('/deals');
+  const isAccountsPage = pathname.includes('/accounts');
+  const isTalentPage = pathname.includes('/talent');
 
   // Fetch accounts for deal modal
   const { accounts } = useAccounts({ limit: 100, enabled: showDealModal });
@@ -79,6 +82,10 @@ export const RecruitingLayout: React.FC<RecruitingLayoutProps> = ({ children }) 
       setShowLeadModal(true);
     } else if (isDealsPage) {
       setShowDealModal(true);
+    } else if (isAccountsPage) {
+      setShowAccountModal(true);
+    } else if (isTalentPage) {
+      router.push('/employee/recruiting/talent');
     } else {
       router.push('/employee/recruiting/post');
     }
@@ -87,7 +94,14 @@ export const RecruitingLayout: React.FC<RecruitingLayoutProps> = ({ children }) 
   const getActionButtonLabel = () => {
     if (isLeadsPage) return 'New Lead';
     if (isDealsPage) return 'New Deal';
+    if (isAccountsPage) return 'New Account';
+    if (isTalentPage) return 'Add Talent';
     return 'New Requisition';
+  };
+
+  const handleAccountCreated = (account: { id: string }) => {
+    setShowAccountModal(false);
+    router.push(`/employee/recruiting/accounts/${account.id}`);
   };
 
   return (
@@ -151,6 +165,14 @@ export const RecruitingLayout: React.FC<RecruitingLayoutProps> = ({ children }) 
             <Briefcase size={14} /> Jobs
           </Link>
           <Link
+            href="/employee/recruiting/talent"
+            className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
+              isActive('talent') ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
+            }`}
+          >
+            <Users size={14} /> Talent
+          </Link>
+          <Link
             href="/employee/recruiting/pipeline"
             className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
               isActive('pipeline') ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
@@ -169,6 +191,14 @@ export const RecruitingLayout: React.FC<RecruitingLayoutProps> = ({ children }) 
         <CreateLeadModal
           onClose={() => setShowLeadModal(false)}
           onSave={handleCreateLead}
+        />
+      )}
+
+      {/* Create Account Modal */}
+      {showAccountModal && (
+        <CreateAccountModal
+          onClose={() => setShowAccountModal(false)}
+          onSuccess={handleAccountCreated}
         />
       )}
 

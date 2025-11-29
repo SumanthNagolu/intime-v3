@@ -82,6 +82,11 @@ export interface DisplayAccount {
   markupPercentage?: number;
   jobsCount?: number;
   placementsCount?: number;
+  // Additional contact info
+  website?: string;
+  phone?: string;
+  headquartersLocation?: string;
+  preferredQuality?: string;
 }
 
 // ============================================
@@ -133,6 +138,15 @@ export interface DisplayPointOfContact {
   phone?: string;
   preference: 'Email' | 'Phone' | 'Text';
   influence: 'Decision Maker' | 'Influencer' | 'Gatekeeper';
+  // Extended fields
+  firstName?: string;
+  lastName?: string;
+  title?: string;
+  isPrimary?: boolean;
+  isActive?: boolean;
+  decisionAuthority?: string;
+  notes?: string;
+  linkedinUrl?: string;
 }
 
 // ============================================
@@ -199,6 +213,7 @@ export interface AlignedLead {
 // Frontend-compatible lead
 export interface DisplayLead {
   id: string;
+  leadType: 'company' | 'person';
   companyName: string;
   firstName: string;
   lastName: string;
