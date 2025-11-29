@@ -595,11 +595,24 @@ export const crmRouter = router({
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
 
+        // Get user profile ID for ownerId (FK references user_profiles.id, not auth.users.id)
+        const [userProfile] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId))
+          .limit(1);
+
+        const profileId = userProfile?.id;
+        if (!profileId) {
+          throw new Error('User profile not found');
+        }
+
         const [newDeal] = await db.insert(deals).values({
           ...input,
+          // Convert numeric value to string for database
+          value: String(input.value ?? 0),
           orgId,
-          ownerId: input.ownerId || userId,
-          createdBy: userId,
+          ownerId: input.ownerId || profileId,
+          createdBy: profileId,
         }).returning();
 
         return newDeal;

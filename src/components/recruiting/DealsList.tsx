@@ -239,7 +239,7 @@ export const DealsList: React.FC = () => {
 
               <div className="space-y-2 text-xs text-stone-500 mb-6">
                 <div className="flex items-center gap-2">
-                  <DollarSign size={12} /> Value: {formatCurrency(deal.value || 0)}
+                  <DollarSign size={12} /> Value: {formatCurrency(parseFloat(deal.value) || 0)}
                 </div>
                 <div className="flex items-center gap-2">
                   <TrendingUp size={12} /> Probability: {deal.probability || 0}%
@@ -253,7 +253,7 @@ export const DealsList: React.FC = () => {
 
               <div className="pt-4 border-t border-stone-100 flex justify-between items-center">
                 <div className="text-xs font-bold text-charcoal">
-                  {formatCurrency(deal.value || 0)}
+                  {formatCurrency(parseFloat(deal.value) || 0)}
                 </div>
                 <div className="flex items-center gap-1 text-xs font-bold text-stone-400 group-hover:text-charcoal transition-colors">
                   View Deal <ChevronRight size={12} />
@@ -266,7 +266,7 @@ export const DealsList: React.FC = () => {
             <div className="col-span-full text-center py-12 text-stone-400">
               <Briefcase size={48} className="mx-auto mb-4 opacity-50" />
               <p className="font-medium">No deals found matching your criteria.</p>
-              <p className="text-sm mt-2">Try adjusting your filters or create a new deal.</p>
+              <p className="text-sm mt-2">Try adjusting your filters or use the &quot;New Deal&quot; button above to create one.</p>
             </div>
           )}
         </div>
