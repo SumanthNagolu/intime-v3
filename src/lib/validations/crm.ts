@@ -224,28 +224,23 @@ export const baseDealSchema = z.object({
   // Deal details
   title: z.string().min(1, 'Deal title is required').max(255),
   description: z.string().optional(),
-  value: z.number().min(0, 'Deal value must be positive'),
+  value: z.number().min(0, 'Deal value must be positive').optional(),
 
   // Pipeline stage
   stage: z.enum(['discovery', 'qualification', 'proposal', 'negotiation', 'closed_won', 'closed_lost']).default('discovery'),
   probability: z.number().int().min(0).max(100).optional(),
   expectedCloseDate: z.coerce.date().optional(),
 
-  // Assignment
-  ownerId: z.string().uuid(),
+  // Assignment (optional - router will use current user if not provided)
+  ownerId: z.string().uuid().optional(),
 
   // Linked jobs
   linkedJobIds: z.array(z.string().uuid()).optional(),
 });
 
-// Create schema with refinement
-export const createDealSchema = baseDealSchema.refine(
-  (data) => !!(data.leadId || data.accountId),
-  {
-    message: 'Deal must be associated with either a lead or an account',
-    path: ['accountId'],
-  }
-);
+// Create schema - allow deals to be created without account/lead association
+// (orphan deals can be linked to accounts later)
+export const createDealSchema = baseDealSchema;
 
 // Update schema - partial of base schema, then extend with id
 export const updateDealSchema = baseDealSchema.partial().extend({

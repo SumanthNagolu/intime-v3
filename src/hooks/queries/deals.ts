@@ -40,21 +40,44 @@ export interface DealQueryOptions {
 // DISPLAY TYPE ADAPTER
 // ============================================
 
-function toDisplayDeal(deal: any): DisplayDeal {
+// Extended display deal with additional fields for list views
+export interface DealDisplayExtended extends DisplayDeal {
+  accountName?: string;
+  expectedCloseDate?: Date | string | null;
+  createdAt?: Date | string;
+}
+
+function toDisplayDeal(deal: any): DealDisplayExtended {
   return {
     id: deal.id,
+    leadId: deal.leadId || '',
+    company: deal.accountName || deal.company || '',
     title: deal.title || '',
-    value: deal.dealValue ? Number(deal.dealValue) : 0,
-    stage: deal.stage || 'discovery',
+    value: String(deal.dealValue || deal.value || '0'),
+    stage: mapStageToDisplay(deal.stage),
     probability: deal.probability || 0,
-    expectedCloseDate: deal.expectedCloseDate,
-    accountId: deal.accountId,
-    accountName: deal.accountName || '',
-    leadId: deal.leadId,
-    ownerId: deal.ownerId,
-    createdAt: deal.createdAt,
+    expectedClose: deal.expectedCloseDate ? new Date(deal.expectedCloseDate).toISOString() : '',
+    ownerId: deal.ownerId || '',
     notes: deal.notes,
+    accountId: deal.accountId,
+    linkedJobIds: deal.linkedJobIds,
+    // Extended fields for our list views
+    accountName: deal.accountName || '',
+    expectedCloseDate: deal.expectedCloseDate,
+    createdAt: deal.createdAt,
   };
+}
+
+function mapStageToDisplay(stage: string): DisplayDeal['stage'] {
+  const stageMap: Record<string, DisplayDeal['stage']> = {
+    discovery: 'Discovery',
+    qualification: 'Discovery',
+    proposal: 'Proposal',
+    negotiation: 'Negotiation',
+    closed_won: 'Won',
+    closed_lost: 'Lost',
+  };
+  return stageMap[stage] || 'Prospect';
 }
 
 // ============================================
@@ -64,7 +87,14 @@ function toDisplayDeal(deal: any): DisplayDeal {
 /**
  * Get list of deals with display formatting
  */
-export function useDeals(options: DealsQueryOptions = {}) {
+export function useDeals(options: DealsQueryOptions = {}): {
+  deals: DealDisplayExtended[];
+  isLoading: boolean;
+  isError: boolean;
+  error: any;
+  refetch: () => void;
+  isFetching: boolean;
+} {
   const { enabled = true, ...input } = options;
 
   const query = trpc.crm.deals.list.useQuery(
