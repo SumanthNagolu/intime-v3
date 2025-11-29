@@ -87,8 +87,8 @@ export const createJobSchema = z.object({
   // Status
   status: z.enum(['draft', 'open', 'on_hold', 'filled', 'cancelled']).default('draft'),
 
-  // Assignment
-  ownerId: z.string().uuid(),
+  // Assignment (optional - router will use current user if not provided)
+  ownerId: z.string().uuid().optional(),
   recruiterIds: z.array(z.string().uuid()).optional(),
 });
 

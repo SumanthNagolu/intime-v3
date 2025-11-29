@@ -15,6 +15,8 @@ if (!connectionString) {
     throw new Error('DATABASE_URL or SUPABASE_DB_URL must be set');
 }
 
+// Create a new pool only if one doesn't exist in the global cache
+// Force recreation if the connection string has sslmode in it
 const conn = globalForDb.conn ?? new Pool({
     connectionString,
     // SSL is handled via sslmode=require in connection string
