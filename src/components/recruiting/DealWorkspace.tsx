@@ -9,6 +9,7 @@ import {
   useDealActivities,
   useDealTasks,
 } from '@/hooks/mutations/deals';
+import { useCreateJob } from '@/hooks/mutations/jobs';
 import { trpc } from '@/lib/trpc/client';
 import {
   useCreateActivity,
@@ -54,6 +55,10 @@ import {
   Upload,
   File,
   Trash2,
+  GraduationCap,
+  Users,
+  Sparkles,
+  ArrowRightCircle,
 } from 'lucide-react';
 
 type DealStage = 'discovery' | 'qualification' | 'proposal' | 'negotiation' | 'closed_won' | 'closed_lost';
@@ -100,12 +105,33 @@ export const DealWorkspace: React.FC = () => {
   const completeTaskMutation = useCompleteActivity();
   const cancelTaskMutation = useCancelActivity();
 
+  // Job creation mutation
+  const { createJob, isCreating: isCreatingJob } = useCreateJob({
+    onSuccess: (job: { id: string }) => {
+      // Update deal with linked job ID
+      updateDeal.mutate({
+        id: dealId,
+        linkedJobIds: [...(deal?.linkedJobIds || []), job.id],
+      });
+      router.push(`/employee/recruiting/jobs/${job.id}`);
+    },
+  });
+
   // UI State
   const [showLostModal, setShowLostModal] = useState(false);
   const [closeReason, setCloseReason] = useState('');
   const [customCloseReason, setCustomCloseReason] = useState('');
   const [showWonModal, setShowWonModal] = useState(false);
+  const [showCulminationModal, setShowCulminationModal] = useState(false);
   const [activeTab, setActiveTab] = useState<'activity' | 'negotiation' | 'documents' | 'tasks'>('activity');
+
+  // Job creation form state
+  const [newJobTitle, setNewJobTitle] = useState('');
+  const [newJobType, setNewJobType] = useState<'contract' | 'contract_to_hire' | 'permanent'>('contract');
+  const [newJobLocation, setNewJobLocation] = useState('');
+  const [newJobIsRemote, setNewJobIsRemote] = useState(false);
+  const [newJobDescription, setNewJobDescription] = useState('');
+  const [showCreateJobForm, setShowCreateJobForm] = useState(false);
 
   // Task form state
   const [newTaskTitle, setNewTaskTitle] = useState('');
@@ -324,8 +350,44 @@ export const DealWorkspace: React.FC = () => {
         actualCloseDate: new Date(),
         probability: 100,
       },
-      { onSuccess: () => setShowWonModal(false) }
+      {
+        onSuccess: () => {
+          setShowWonModal(false);
+          // Show culmination options
+          setShowCulminationModal(true);
+          // Pre-populate job title from deal
+          setNewJobTitle(deal?.title || '');
+          setNewJobDescription(deal?.description || '');
+        }
+      }
     );
+  };
+
+  // Handle creating job from deal
+  const handleCreateJobFromDeal = async () => {
+    if (!newJobTitle.trim()) return;
+
+    try {
+      await createJob({
+        title: newJobTitle.trim(),
+        description: newJobDescription.trim() || undefined,
+        jobType: newJobType,
+        location: newJobLocation.trim() || undefined,
+        isRemote: newJobIsRemote,
+        accountId: deal?.accountId || undefined,
+        dealId: dealId,
+        status: 'open',
+      });
+    } catch (error) {
+      console.error('Failed to create job:', error);
+      alert('Failed to create job. Please try again.');
+    }
+  };
+
+  // Navigate to other culmination paths
+  const handleCulminationPath = (path: string) => {
+    setShowCulminationModal(false);
+    router.push(path);
   };
 
   // Toggle task completion (using unified activities)
@@ -1187,6 +1249,236 @@ export const DealWorkspace: React.FC = () => {
                   </>
                 )}
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Culmination Modal - What to do after winning */}
+      {showCulminationModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-8 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+            {/* Victory Header */}
+            <div className="text-center mb-8">
+              <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg animate-pulse">
+                <Trophy size={40} className="text-white" />
+              </div>
+              <h2 className="text-2xl font-serif font-bold text-charcoal mb-2">
+                Deal Won!
+              </h2>
+              <p className="text-stone-500">
+                <span className="font-bold text-green-600">{formatCurrency(deal.value)}</span> secured. What would you like to do next?
+              </p>
+            </div>
+
+            {/* Culmination Options */}
+            {!showCreateJobForm ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                {/* Create Job Requisition */}
+                <button
+                  onClick={() => setShowCreateJobForm(true)}
+                  className="group p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border-2 border-blue-200 hover:border-blue-400 hover:shadow-lg transition-all text-left"
+                >
+                  <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Briefcase size={24} className="text-white" />
+                  </div>
+                  <h3 className="font-bold text-charcoal mb-1">Create Job Requisition</h3>
+                  <p className="text-sm text-stone-500">
+                    Open a new job position linked to this deal for recruiting
+                  </p>
+                  <div className="flex items-center gap-1 text-blue-600 text-xs font-bold uppercase tracking-widest mt-4">
+                    Start Hiring <ArrowRightCircle size={14} />
+                  </div>
+                </button>
+
+                {/* Create Training Lead */}
+                <button
+                  onClick={() => handleCulminationPath('/employee/academy/students/new?dealId=' + dealId)}
+                  className="group p-6 bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl border-2 border-purple-200 hover:border-purple-400 hover:shadow-lg transition-all text-left"
+                >
+                  <div className="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <GraduationCap size={24} className="text-white" />
+                  </div>
+                  <h3 className="font-bold text-charcoal mb-1">Create Training Lead</h3>
+                  <p className="text-sm text-stone-500">
+                    Enroll a new student for training through this deal
+                  </p>
+                  <div className="flex items-center gap-1 text-purple-600 text-xs font-bold uppercase tracking-widest mt-4">
+                    Add Student <ArrowRightCircle size={14} />
+                  </div>
+                </button>
+
+                {/* Add to Bench */}
+                <button
+                  onClick={() => handleCulminationPath('/employee/bench/consultants/new?dealId=' + dealId)}
+                  className="group p-6 bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl border-2 border-amber-200 hover:border-amber-400 hover:shadow-lg transition-all text-left"
+                >
+                  <div className="w-12 h-12 bg-amber-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Users size={24} className="text-white" />
+                  </div>
+                  <h3 className="font-bold text-charcoal mb-1">Add Bench Consultant</h3>
+                  <p className="text-sm text-stone-500">
+                    Place a consultant on bench for this client engagement
+                  </p>
+                  <div className="flex items-center gap-1 text-amber-600 text-xs font-bold uppercase tracking-widest mt-4">
+                    Add to Bench <ArrowRightCircle size={14} />
+                  </div>
+                </button>
+
+                {/* Create Course */}
+                <button
+                  onClick={() => handleCulminationPath('/employee/academy/courses/new?dealId=' + dealId)}
+                  className="group p-6 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl border-2 border-emerald-200 hover:border-emerald-400 hover:shadow-lg transition-all text-left"
+                >
+                  <div className="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Sparkles size={24} className="text-white" />
+                  </div>
+                  <h3 className="font-bold text-charcoal mb-1">Create Training Course</h3>
+                  <p className="text-sm text-stone-500">
+                    Set up a new training course for this client engagement
+                  </p>
+                  <div className="flex items-center gap-1 text-emerald-600 text-xs font-bold uppercase tracking-widest mt-4">
+                    Create Course <ArrowRightCircle size={14} />
+                  </div>
+                </button>
+              </div>
+            ) : (
+              /* Create Job Form */
+              <div className="space-y-4 mb-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-bold text-charcoal flex items-center gap-2">
+                    <Briefcase className="text-blue-600" size={20} /> Create Job Requisition
+                  </h3>
+                  <button
+                    onClick={() => setShowCreateJobForm(false)}
+                    className="text-xs font-bold uppercase tracking-widest text-stone-400 hover:text-charcoal"
+                  >
+                    Back to options
+                  </button>
+                </div>
+
+                {/* Job Title */}
+                <div>
+                  <label className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2 block">
+                    Job Title *
+                  </label>
+                  <input
+                    type="text"
+                    value={newJobTitle}
+                    onChange={(e) => setNewJobTitle(e.target.value)}
+                    placeholder="e.g., Senior Software Engineer"
+                    className="w-full p-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+
+                {/* Job Type */}
+                <div>
+                  <label className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2 block">
+                    Job Type
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { value: 'contract', label: 'Contract' },
+                      { value: 'contract_to_hire', label: 'Contract to Hire' },
+                      { value: 'permanent', label: 'Permanent' },
+                    ].map((type) => (
+                      <button
+                        key={type.value}
+                        onClick={() => setNewJobType(type.value as typeof newJobType)}
+                        className={`px-3 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border-2 transition-all ${
+                          newJobType === type.value
+                            ? 'bg-blue-100 text-blue-700 border-blue-400'
+                            : 'bg-white border-stone-200 text-stone-500 hover:border-stone-400'
+                        }`}
+                      >
+                        {type.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Location */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2 block">
+                      Location
+                    </label>
+                    <input
+                      type="text"
+                      value={newJobLocation}
+                      onChange={(e) => setNewJobLocation(e.target.value)}
+                      placeholder="e.g., San Francisco, CA"
+                      className="w-full p-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                  <div className="flex items-end">
+                    <label className="flex items-center gap-3 p-3 border border-stone-200 rounded-xl cursor-pointer hover:bg-stone-50 w-full">
+                      <input
+                        type="checkbox"
+                        checked={newJobIsRemote}
+                        onChange={(e) => setNewJobIsRemote(e.target.checked)}
+                        className="w-4 h-4 text-blue-600 rounded"
+                      />
+                      <div className="flex items-center gap-2">
+                        <Globe size={16} className="text-stone-400" />
+                        <span className="text-sm font-medium text-stone-600">Remote</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <div>
+                  <label className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2 block">
+                    Description
+                  </label>
+                  <textarea
+                    value={newJobDescription}
+                    onChange={(e) => setNewJobDescription(e.target.value)}
+                    placeholder="Job description..."
+                    rows={3}
+                    className="w-full p-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-blue-500 resize-none"
+                  />
+                </div>
+
+                {/* Deal Link Info */}
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-3">
+                  <p className="text-xs text-blue-700">
+                    This job will be linked to the deal <span className="font-bold">&quot;{deal.title}&quot;</span>
+                    {deal.accountId && ' and its associated account.'}
+                  </p>
+                </div>
+
+                {/* Create Job Button */}
+                <button
+                  onClick={handleCreateJobFromDeal}
+                  disabled={!newJobTitle.trim() || isCreatingJob}
+                  className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl text-sm font-bold uppercase tracking-widest hover:shadow-lg disabled:opacity-50 flex items-center justify-center gap-2 transition-all"
+                >
+                  {isCreatingJob ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin" /> Creating Job...
+                    </>
+                  ) : (
+                    <>
+                      <Briefcase size={16} /> Create Job & Start Recruiting
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
+
+            {/* Close Without Action */}
+            <div className="border-t border-stone-200 pt-6">
+              <button
+                onClick={() => setShowCulminationModal(false)}
+                className="w-full py-3 border border-stone-200 rounded-xl text-xs font-bold uppercase tracking-widest text-stone-500 hover:bg-stone-50 transition-colors"
+              >
+                Close Without Action
+              </button>
+              <p className="text-xs text-stone-400 text-center mt-2">
+                You can always create jobs or take other actions from the deal page later.
+              </p>
             </div>
           </div>
         </div>
