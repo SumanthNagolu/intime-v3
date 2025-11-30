@@ -361,7 +361,7 @@ export interface BulkUpdateAccountsInput {
 }
 
 /**
- * Bulk update multiple accounts
+ * Bulk update multiple accounts (client-side iteration)
  */
 export function useBulkUpdateAccounts(options: UpdateAccountOptions = {}) {
   const { updateAccount, isUpdating } = useUpdateAccount(options);
@@ -383,6 +383,43 @@ export function useBulkUpdateAccounts(options: UpdateAccountOptions = {}) {
       return { successful, failed, total: input.ids.length };
     },
     isUpdating,
+  };
+}
+
+/**
+ * Bulk assign account manager to multiple accounts (server-side)
+ * More efficient than client-side iteration for large batches
+ *
+ * @example
+ * ```tsx
+ * const { bulkAssign, isAssigning } = useBulkAssignAccounts();
+ *
+ * await bulkAssign({
+ *   accountIds: ['id1', 'id2', 'id3'],
+ *   accountManagerId: 'manager-id',
+ * });
+ * ```
+ */
+export function useBulkAssignAccounts(options: { onSuccess?: (data: unknown) => void; onError?: (error: Error) => void } = {}) {
+  const invalidate = useInvalidateAccounts();
+
+  const mutation = trpc.crm.accounts.bulkAssign.useMutation({
+    onSuccess: (data) => {
+      invalidate.invalidateAll();
+      options.onSuccess?.(data);
+    },
+    onError: (error) => {
+      options.onError?.(error);
+    },
+  });
+
+  return {
+    bulkAssign: async (input: { accountIds: string[]; accountManagerId: string }) => {
+      return mutation.mutateAsync(input);
+    },
+    isAssigning: mutation.isPending,
+    error: mutation.error,
+    reset: mutation.reset,
   };
 }
 

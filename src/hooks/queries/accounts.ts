@@ -17,6 +17,7 @@ import type {
   AlignedPointOfContact,
   AccountStatus,
 } from '@/types/aligned/crm';
+import type { OwnershipFilter } from '@/lib/validations/ownership';
 
 // ============================================
 // QUERY OPTIONS TYPES
@@ -29,6 +30,7 @@ export interface AccountsQueryOptions {
   search?: string;
   tier?: string;
   enabled?: boolean;
+  ownership?: OwnershipFilter;
 }
 
 export interface AccountQueryOptions {
@@ -51,7 +53,7 @@ export interface AccountQueryOptions {
  * ```
  */
 export function useAccounts(options: AccountsQueryOptions = {}) {
-  const { enabled = true, ...input } = options;
+  const { enabled = true, ownership, ...input } = options;
 
   const query = trpc.crm.accounts.list.useQuery(
     {
@@ -59,6 +61,7 @@ export function useAccounts(options: AccountsQueryOptions = {}) {
       offset: input.offset ?? 0,
       status: input.status,
       search: input.search,
+      ownership: ownership ?? 'my_items',
     },
     {
       enabled,
@@ -277,13 +280,13 @@ export interface AccountStats {
 }
 
 /**
- * Calculate account statistics
+ * Calculate account statistics - client-side aggregation
  */
-export function useAccountStats(options: { enabled?: boolean } = {}) {
-  const { enabled = true } = options;
+export function useAccountStats(options: { enabled?: boolean; ownership?: OwnershipFilter } = {}) {
+  const { enabled = true, ownership } = options;
 
   const query = trpc.crm.accounts.list.useQuery(
-    { limit: 500, offset: 0 },
+    { limit: 500, offset: 0, ownership: ownership ?? 'my_items' },
     {
       enabled,
       staleTime: 60 * 1000,
@@ -293,8 +296,8 @@ export function useAccountStats(options: { enabled?: boolean } = {}) {
         let activeClients = 0;
 
         data.forEach(account => {
-          const status = account.accountStatus;
-          const tier = (account as AlignedAccount).tier || 'none';
+          const status = account.status || 'unknown';
+          const tier = account.tier || 'none';
 
           byStatus[status] = (byStatus[status] || 0) + 1;
           byTier[tier] = (byTier[tier] || 0) + 1;
@@ -326,6 +329,51 @@ export function useAccountStats(options: { enabled?: boolean } = {}) {
 }
 
 // ============================================
+// METRICS HOOKS (Server-side aggregation)
+// ============================================
+
+export interface AccountMetrics {
+  byStatus: Record<string, number>;
+  byTier: Record<string, number>;
+  byIndustry: Record<string, number>;
+  byCompanyType: Record<string, number>;
+  totalRevenueTarget: number;
+  avgRevenueTarget: number;
+}
+
+/**
+ * Fetch account metrics - server-side aggregation
+ * More efficient for large datasets compared to client-side aggregation
+ *
+ * @example
+ * ```tsx
+ * const { metrics } = useAccountMetrics();
+ * console.log(metrics.byStatus.active); // Number of active accounts
+ * console.log(metrics.totalRevenueTarget); // Total revenue target
+ * ```
+ */
+export function useAccountMetrics(options: { enabled?: boolean } = {}) {
+  const { enabled = true } = options;
+
+  const query = trpc.crm.accounts.getMetrics.useQuery(undefined, {
+    enabled,
+    staleTime: 60 * 1000,
+  });
+
+  return {
+    ...query,
+    metrics: query.data ?? {
+      byStatus: {},
+      byTier: {},
+      byIndustry: {},
+      byCompanyType: {},
+      totalRevenueTarget: 0,
+      avgRevenueTarget: 0,
+    },
+  };
+}
+
+// ============================================
 // ACCOUNT SELECT HOOKS
 // ============================================
 
@@ -350,7 +398,7 @@ export function useAccountOptions(options: { enabled?: boolean } = {}) {
         return data.map(account => ({
           value: account.id,
           label: account.name,
-          status: account.accountStatus,
+          status: account.status,
         }));
       },
     }
