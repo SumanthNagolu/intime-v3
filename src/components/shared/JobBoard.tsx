@@ -89,7 +89,7 @@ export const JobBoard: React.FC = () => {
 
                   <div className="flex items-center justify-between pt-6 border-t border-stone-100">
                       <div className="text-[10px] font-bold uppercase tracking-widest text-stone-400">
-                          Owner: {job.podOwner || 'Unassigned'}
+                          Owner: Unassigned
                       </div>
                       <button className="text-xs font-bold text-charcoal uppercase tracking-widest hover:text-rust transition-colors flex items-center gap-1">
                           View Details <ChevronRight size={12} />

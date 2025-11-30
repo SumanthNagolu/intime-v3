@@ -237,10 +237,10 @@ export async function getRoleAction(roleId: string): Promise<ActionResult<RoleWi
     displayName: role.display_name,
     description: role.description,
     parentRoleId: role.parent_role_id,
-    hierarchyLevel: role.hierarchy_level,
-    isSystemRole: role.is_system_role,
-    isActive: role.is_active,
-    colorCode: role.color_code,
+    hierarchyLevel: role.hierarchy_level ?? 0,
+    isSystemRole: role.is_system_role ?? false,
+    isActive: role.is_active ?? true,
+    colorCode: role.color_code ?? '#6366f1',
     createdAt: role.created_at,
     userCount: (role.user_roles || []).length,
     permissions: (role.role_permissions || []).map((rp: any) => ({
@@ -747,7 +747,7 @@ export async function getPermissionsGroupedAction(): Promise<
   const result = await listPermissionsAction();
 
   if (!result.success || !result.data) {
-    return result as ActionResult<Record<string, PermissionInfo[]>>;
+    return { success: false, error: result.error || 'Failed to fetch permissions' };
   }
 
   // Group permissions by resource

@@ -186,13 +186,13 @@ async function logAuditEvent(
 ) {
   const supabase = await createClient();
 
-  await supabase.from('audit_logs').insert({
+  await (supabase.from as any)('audit_logs').insert({
     user_id: userId,
     org_id: orgId,
     action,
     table_name: resourceType,
     record_id: resourceId,
-    metadata: details,
+    metadata: details as any,
     severity,
     user_ip_address: null,
     user_agent: null,
@@ -729,7 +729,7 @@ async function checkAndAwardBadges(userId: string): Promise<void> {
       case 'first_video':
       case 'first_quiz':
       case 'first_lab': {
-        const contentType = badge.trigger_type.replace('first_', '');
+        const contentType = badge.trigger_type.replace('first_', '') as 'video' | 'reading' | 'quiz' | 'lab' | 'project';
         const completions = await db
           .select({ count: sql<number>`count(*)` })
           .from(topicCompletions)

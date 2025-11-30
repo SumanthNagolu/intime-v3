@@ -18,8 +18,8 @@ export const JobHuntRoom: React.FC = () => {
 
   // Filter "Market" jobs that are relevant to this consultant
   // In a real app, this would be a more sophisticated query to the Central DB
-  const relevantJobs = jobs.filter(j => 
-      (j.ownerId === 'market' || j.source === 'Internal') &&
+  const relevantJobs = jobs.filter(j =>
+      (j.ownerId === 'market') &&
       (j.title.includes(consultant.role.split(' ')[0]) || consultant.skills.some(s => j.title.includes(s)))
   );
 

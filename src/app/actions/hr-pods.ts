@@ -10,6 +10,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { z } from 'zod';
 import type { ActionResult, PaginatedResult } from './types';
 import {
@@ -349,15 +350,15 @@ export async function getPodAction(podId: string): Promise<ActionResult<PodWithM
       podType: pod.pod_type,
       seniorMemberId: pod.senior_member_id,
       juniorMemberId: pod.junior_member_id,
-      sprintDurationWeeks: pod.sprint_duration_weeks,
-      placementsPerSprintTarget: pod.placements_per_sprint_target,
-      totalPlacements: pod.total_placements,
-      currentSprintPlacements: pod.current_sprint_placements,
+      sprintDurationWeeks: pod.sprint_duration_weeks ?? 2,
+      placementsPerSprintTarget: pod.placements_per_sprint_target ?? 2,
+      totalPlacements: pod.total_placements ?? 0,
+      currentSprintPlacements: pod.current_sprint_placements ?? 0,
       currentSprintStartDate: pod.current_sprint_start_date,
       averagePlacementsPerSprint: pod.average_placements_per_sprint
-        ? parseFloat(pod.average_placements_per_sprint)
+        ? parseFloat(String(pod.average_placements_per_sprint))
         : null,
-      isActive: pod.is_active,
+      isActive: pod.is_active ?? true,
       formedDate: pod.formed_date,
       dissolvedDate: pod.dissolved_date,
       orgId: pod.org_id,
@@ -489,11 +490,13 @@ export async function createPodAction(input: CreatePodInput): Promise<ActionResu
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'pods',
     action: 'create',
     recordId: newPod.id,
     userId: profile.id,
+    userEmail: profile.email,
     newValues: { name, podType, seniorMemberId, juniorMemberId },
     severity: 'info',
     orgId: profile.orgId,
@@ -507,13 +510,13 @@ export async function createPodAction(input: CreatePodInput): Promise<ActionResu
       podType: newPod.pod_type,
       seniorMemberId: newPod.senior_member_id,
       juniorMemberId: newPod.junior_member_id,
-      sprintDurationWeeks: newPod.sprint_duration_weeks,
-      placementsPerSprintTarget: newPod.placements_per_sprint_target,
-      totalPlacements: newPod.total_placements,
-      currentSprintPlacements: newPod.current_sprint_placements,
+      sprintDurationWeeks: newPod.sprint_duration_weeks ?? 2,
+      placementsPerSprintTarget: newPod.placements_per_sprint_target ?? 2,
+      totalPlacements: newPod.total_placements ?? 0,
+      currentSprintPlacements: newPod.current_sprint_placements ?? 0,
       currentSprintStartDate: newPod.current_sprint_start_date,
       averagePlacementsPerSprint: null,
-      isActive: newPod.is_active,
+      isActive: newPod.is_active ?? true,
       formedDate: newPod.formed_date,
       dissolvedDate: newPod.dissolved_date,
       orgId: newPod.org_id,
@@ -630,14 +633,16 @@ export async function updatePodAction(
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'pods',
     action: 'update',
     recordId: podId,
     userId: profile.id,
+    userEmail: profile.email,
     oldValues: existingPod,
     newValues: updates,
-    changedFields: Object.keys(updates),
+    metadata: { changedFields: Object.keys(updates) },
     severity: 'info',
     orgId: profile.orgId,
   });
@@ -698,11 +703,13 @@ export async function deletePodAction(podId: string): Promise<ActionResult<void>
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'pods',
     action: 'delete',
     recordId: podId,
     userId: profile.id,
+    userEmail: profile.email,
     oldValues: pod,
     severity: 'warning',
     orgId: profile.orgId,
@@ -760,11 +767,11 @@ export async function getPodPerformanceAction(
     return { success: false, error: 'Pod not found' };
   }
 
-  const totalPlacements = pod.total_placements || 0;
-  const currentSprintPlacements = pod.current_sprint_placements || 0;
-  const targetPlacements = pod.placements_per_sprint_target || 2;
+  const totalPlacements = pod.total_placements ?? 0;
+  const currentSprintPlacements = pod.current_sprint_placements ?? 0;
+  const targetPlacements = pod.placements_per_sprint_target ?? 2;
   const averagePerSprint = pod.average_placements_per_sprint
-    ? parseFloat(pod.average_placements_per_sprint)
+    ? parseFloat(String(pod.average_placements_per_sprint))
     : 0;
 
   const sprintProgress = Math.min(100, (currentSprintPlacements / targetPlacements) * 100);
@@ -820,8 +827,8 @@ export async function startNewSprintAction(podId: string): Promise<ActionResult<
   }
 
   // Update average placements per sprint
-  const totalSprints = Math.max(1, Math.floor(pod.total_placements / (pod.placements_per_sprint_target || 2)));
-  const newAverage = ((pod.average_placements_per_sprint || 0) * (totalSprints - 1) + pod.current_sprint_placements) / totalSprints;
+  const totalSprints = Math.max(1, Math.floor((pod.total_placements ?? 0) / (pod.placements_per_sprint_target ?? 2)));
+  const newAverage = (((pod.average_placements_per_sprint ?? 0) as number) * (totalSprints - 1) + (pod.current_sprint_placements ?? 0)) / totalSprints;
 
   // Reset sprint
   const { error: updateError } = await supabase
@@ -829,7 +836,7 @@ export async function startNewSprintAction(podId: string): Promise<ActionResult<
     .update({
       current_sprint_placements: 0,
       current_sprint_start_date: new Date().toISOString().split('T')[0],
-      average_placements_per_sprint: newAverage.toFixed(2),
+      average_placements_per_sprint: parseFloat(newAverage.toFixed(2)),
     })
     .eq('id', podId);
 
@@ -838,11 +845,13 @@ export async function startNewSprintAction(podId: string): Promise<ActionResult<
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'pods',
     action: 'start_sprint',
     recordId: podId,
     userId: profile.id,
+    userEmail: profile.email,
     metadata: { previousSprintPlacements: pod.current_sprint_placements },
     severity: 'info',
     orgId: profile.orgId,

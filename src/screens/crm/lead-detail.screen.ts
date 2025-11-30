@@ -16,14 +16,14 @@ const companyInfoFields: FieldDefinition[] = [
   {
     id: 'companyName',
     label: 'Company Name',
-    fieldType: 'text',
+    type: 'text',
     path: 'companyName',
     required: true,
   },
   {
     id: 'industry',
     label: 'Industry',
-    fieldType: 'enum',
+    type: 'enum',
     path: 'industry',
     config: {
       options: [
@@ -40,7 +40,7 @@ const companyInfoFields: FieldDefinition[] = [
   {
     id: 'companyType',
     label: 'Company Type',
-    fieldType: 'enum',
+    type: 'enum',
     path: 'companyType',
     config: {
       options: [
@@ -54,7 +54,7 @@ const companyInfoFields: FieldDefinition[] = [
   {
     id: 'companySize',
     label: 'Company Size',
-    fieldType: 'enum',
+    type: 'enum',
     path: 'companySize',
     config: {
       options: [
@@ -70,7 +70,7 @@ const companyInfoFields: FieldDefinition[] = [
   {
     id: 'tier',
     label: 'Tier',
-    fieldType: 'enum',
+    type: 'enum',
     path: 'tier',
     config: {
       options: [
@@ -90,13 +90,13 @@ const companyInfoFields: FieldDefinition[] = [
   {
     id: 'website',
     label: 'Website',
-    fieldType: 'url',
+    type: 'url',
     path: 'website',
   },
   {
     id: 'headquarters',
     label: 'Headquarters',
-    fieldType: 'text',
+    type: 'text',
     path: 'headquarters',
   },
 ];
@@ -105,43 +105,43 @@ const contactFields: FieldDefinition[] = [
   {
     id: 'firstName',
     label: 'First Name',
-    fieldType: 'text',
+    type: 'text',
     path: 'firstName',
   },
   {
     id: 'lastName',
     label: 'Last Name',
-    fieldType: 'text',
+    type: 'text',
     path: 'lastName',
   },
   {
     id: 'title',
     label: 'Title',
-    fieldType: 'text',
+    type: 'text',
     path: 'title',
   },
   {
     id: 'email',
     label: 'Email',
-    fieldType: 'email',
+    type: 'email',
     path: 'email',
   },
   {
     id: 'phone',
     label: 'Phone',
-    fieldType: 'phone',
+    type: 'phone',
     path: 'phone',
   },
   {
     id: 'linkedinUrl',
     label: 'LinkedIn',
-    fieldType: 'url',
+    type: 'url',
     path: 'linkedinUrl',
   },
   {
     id: 'decisionAuthority',
     label: 'Decision Authority',
-    fieldType: 'enum',
+    type: 'enum',
     path: 'decisionAuthority',
     config: {
       options: [
@@ -156,7 +156,7 @@ const contactFields: FieldDefinition[] = [
   {
     id: 'preferredContactMethod',
     label: 'Preferred Contact',
-    fieldType: 'enum',
+    type: 'enum',
     path: 'preferredContactMethod',
     config: {
       options: [
@@ -172,7 +172,7 @@ const bantFields: FieldDefinition[] = [
   {
     id: 'bantBudget',
     label: 'Budget Score',
-    fieldType: 'number',
+    type: 'number',
     path: 'bantBudget',
     description: '0-25: Has budget allocated for this need?',
     config: { min: 0, max: 25 },
@@ -180,13 +180,13 @@ const bantFields: FieldDefinition[] = [
   {
     id: 'bantBudgetNotes',
     label: 'Budget Notes',
-    fieldType: 'textarea',
+    type: 'textarea',
     path: 'bantBudgetNotes',
   },
   {
     id: 'bantAuthority',
     label: 'Authority Score',
-    fieldType: 'number',
+    type: 'number',
     path: 'bantAuthority',
     description: '0-25: Can they make the decision?',
     config: { min: 0, max: 25 },
@@ -194,13 +194,13 @@ const bantFields: FieldDefinition[] = [
   {
     id: 'bantAuthorityNotes',
     label: 'Authority Notes',
-    fieldType: 'textarea',
+    type: 'textarea',
     path: 'bantAuthorityNotes',
   },
   {
     id: 'bantNeed',
     label: 'Need Score',
-    fieldType: 'number',
+    type: 'number',
     path: 'bantNeed',
     description: '0-25: Is there a clear business need?',
     config: { min: 0, max: 25 },
@@ -208,13 +208,13 @@ const bantFields: FieldDefinition[] = [
   {
     id: 'bantNeedNotes',
     label: 'Need Notes',
-    fieldType: 'textarea',
+    type: 'textarea',
     path: 'bantNeedNotes',
   },
   {
     id: 'bantTimeline',
     label: 'Timeline Score',
-    fieldType: 'number',
+    type: 'number',
     path: 'bantTimeline',
     description: '0-25: When do they need to make a decision?',
     config: { min: 0, max: 25 },
@@ -222,7 +222,7 @@ const bantFields: FieldDefinition[] = [
   {
     id: 'bantTimelineNotes',
     label: 'Timeline Notes',
-    fieldType: 'textarea',
+    type: 'textarea',
     path: 'bantTimelineNotes',
   },
 ];
@@ -231,7 +231,7 @@ const leadStatusFields: FieldDefinition[] = [
   {
     id: 'status',
     label: 'Status',
-    fieldType: 'enum',
+    type: 'enum',
     path: 'status',
     config: {
       options: [
@@ -257,13 +257,13 @@ const leadStatusFields: FieldDefinition[] = [
   {
     id: 'estimatedValue',
     label: 'Estimated Value',
-    fieldType: 'currency',
+    type: 'currency',
     path: 'estimatedValue',
   },
   {
     id: 'source',
     label: 'Source',
-    fieldType: 'enum',
+    type: 'enum',
     path: 'source',
     config: {
       options: [
@@ -280,7 +280,7 @@ const leadStatusFields: FieldDefinition[] = [
   {
     id: 'ownerId',
     label: 'Owner',
-    fieldType: 'select',
+    type: 'select',
     path: 'owner.fullName',
     config: {
       entityType: 'user',
@@ -301,7 +301,7 @@ const sidebarSection: SectionDefinition = {
     {
       id: 'status',
       label: 'Status',
-      fieldType: 'enum',
+      type: 'enum',
       path: 'status',
       config: {
         options: [
@@ -318,13 +318,13 @@ const sidebarSection: SectionDefinition = {
     {
       id: 'estimatedValue',
       label: 'Est. Value',
-      fieldType: 'currency',
+      type: 'currency',
       path: 'estimatedValue',
     },
     {
       id: 'tier',
       label: 'Tier',
-      fieldType: 'enum',
+      type: 'enum',
       path: 'tier',
       config: {
         options: [
@@ -338,26 +338,26 @@ const sidebarSection: SectionDefinition = {
     {
       id: 'source',
       label: 'Source',
-      fieldType: 'text',
+      type: 'text',
       path: 'source',
     },
     {
       id: 'owner',
       label: 'Owner',
-      fieldType: 'text',
+      type: 'text',
       path: 'owner.fullName',
     },
     {
       id: 'lastContactedAt',
       label: 'Last Contact',
-      fieldType: 'date',
+      type: 'date',
       path: 'lastContactedAt',
       config: { format: 'relative' },
     },
     {
       id: 'createdAt',
       label: 'Created',
-      fieldType: 'date',
+      type: 'date',
       path: 'createdAt',
       config: { format: 'relative' },
     },
@@ -392,13 +392,13 @@ const overviewSections: SectionDefinition[] = [
       {
         id: 'notes',
         label: 'Notes',
-        fieldType: 'textarea',
+        type: 'textarea',
         path: 'notes',
       },
       {
         id: 'companyDescription',
         label: 'Company Description',
-        fieldType: 'textarea',
+        type: 'textarea',
         path: 'companyDescription',
       },
     ],
@@ -414,28 +414,28 @@ const qualificationSections: SectionDefinition[] = [
       {
         id: 'bantBudget',
         label: 'Budget',
-        fieldType: 'number',
+        type: 'number',
         path: 'bantBudget',
         config: { suffix: '/25' },
       },
       {
         id: 'bantAuthority',
         label: 'Authority',
-        fieldType: 'number',
+        type: 'number',
         path: 'bantAuthority',
         config: { suffix: '/25' },
       },
       {
         id: 'bantNeed',
         label: 'Need',
-        fieldType: 'number',
+        type: 'number',
         path: 'bantNeed',
         config: { suffix: '/25' },
       },
       {
         id: 'bantTimeline',
         label: 'Timeline',
-        fieldType: 'number',
+        type: 'number',
         path: 'bantTimeline',
         config: { suffix: '/25' },
       },
@@ -459,21 +459,21 @@ const activitySections: SectionDefinition[] = [
       {
         id: 'lastContactedAt',
         label: 'Last Contacted',
-        fieldType: 'date',
+        type: 'date',
         path: 'lastContactedAt',
         config: { format: 'relative' },
       },
       {
         id: 'lastResponseAt',
         label: 'Last Response',
-        fieldType: 'date',
+        type: 'date',
         path: 'lastResponseAt',
         config: { format: 'relative' },
       },
       {
         id: 'engagementScore',
         label: 'Engagement',
-        fieldType: 'number',
+        type: 'number',
         path: 'engagementScore',
         config: { suffix: '%' },
       },
@@ -483,24 +483,30 @@ const activitySections: SectionDefinition[] = [
     id: 'activity-timeline',
     type: 'timeline',
     title: 'Activity History',
-    dataPath: 'activities',
+    dataSource: {
+      type: 'query',
+      query: {
+        procedure: 'crm.getLeadActivities',
+        params: { leadId: paramValue('id') },
+      },
+    },
     fields: [
       {
         id: 'timestamp',
         label: 'Time',
-        fieldType: 'datetime',
+        type: 'datetime',
         path: 'activityDate',
       },
       {
         id: 'title',
         label: 'Activity',
-        fieldType: 'text',
+        type: 'text',
         path: 'subject',
       },
       {
         id: 'description',
         label: 'Details',
-        fieldType: 'text',
+        type: 'text',
         path: 'body',
       },
     ],
@@ -524,9 +530,8 @@ export const leadDetailScreen: ScreenDefinition = {
   dataSource: {
     type: 'query',
     query: {
-      router: 'crm',
-      procedure: 'getLeadById',
-      input: { id: paramValue('id') },
+      procedure: 'crm.getLeadById',
+      params: { id: paramValue('id') },
     },
   },
 
@@ -568,7 +573,7 @@ export const leadDetailScreen: ScreenDefinition = {
       type: 'custom',
       variant: 'primary',
       icon: 'ArrowRight',
-      showWhen: {
+      visible: {
         type: 'condition',
         condition: { field: 'status', operator: 'in', value: ['qualified', 'proposal', 'negotiation'] },
       },
@@ -585,8 +590,8 @@ export const leadDetailScreen: ScreenDefinition = {
   // Navigation
   navigation: {
     breadcrumbs: [
-      { label: 'CRM', path: '/employee/crm' },
-      { label: 'Leads', path: '/employee/crm/leads' },
+      { label: 'CRM', route: '/employee/crm' },
+      { label: 'Leads', route: '/employee/crm/leads' },
       { label: fieldValue('companyName', 'Lead') },
     ],
   },

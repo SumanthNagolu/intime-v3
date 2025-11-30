@@ -6,9 +6,10 @@
  */
 
 import { trpc } from '@/lib/trpc/client';
-import { submissionAdapter, type CreateSubmissionInput, PIPELINE_STAGES } from '@/lib/adapters';
+import { submissionAdapter, PIPELINE_STAGES } from '@/lib/adapters';
 import { useInvalidateSubmissions } from '../queries/submissions';
 import type { SubmissionStatus } from '@/types/aligned/ats';
+import type { CreateSubmissionInput, UpdateSubmissionInput } from '@/lib/validations/ats';
 
 // ============================================
 // CREATE HOOK
@@ -45,13 +46,13 @@ export function useCreateSubmission(options: CreateSubmissionOptions = {}) {
       options.onSuccess?.(data);
     },
     onError: (error) => {
-      options.onError?.(error);
+      options.onError?.(error as unknown as Error);
     },
   });
 
   return {
     createSubmission: async (input: CreateSubmissionInput) => {
-      return mutation.mutateAsync(input as Parameters<typeof mutation.mutateAsync>[0]);
+      return mutation.mutateAsync(input);
     },
     isCreating: mutation.isPending,
     error: mutation.error,
@@ -62,10 +63,6 @@ export function useCreateSubmission(options: CreateSubmissionOptions = {}) {
 // ============================================
 // UPDATE HOOK
 // ============================================
-
-export interface UpdateSubmissionInput extends Partial<CreateSubmissionInput> {
-  id: string;
-}
 
 export interface UpdateSubmissionOptions {
   onSuccess?: (data: unknown) => void;
@@ -98,23 +95,25 @@ export function useUpdateSubmission(options: UpdateSubmissionOptions = {}) {
       await utils.ats.submissions.getById.cancel({ id: newData.id });
       const previousSubmission = utils.ats.submissions.getById.getData({ id: newData.id });
 
-      if (previousSubmission) {
-        utils.ats.submissions.getById.setData(
-          { id: newData.id },
-          { ...previousSubmission, ...newData }
-        );
-      }
+      // Don't set data optimistically - wait for server response
+      // if (previousSubmission) {
+      //   utils.ats.submissions.getById.setData(
+      //     { id: newData.id },
+      //     { ...previousSubmission, ...newData }
+      //   );
+      // }
 
       return { previousSubmission };
     },
     onError: (error, newData, context) => {
-      if (options.optimistic && context?.previousSubmission) {
-        utils.ats.submissions.getById.setData(
-          { id: newData.id },
-          context.previousSubmission
-        );
-      }
-      options.onError?.(error);
+      // Rollback not needed since we're not setting optimistically
+      // if (options.optimistic && context?.previousSubmission) {
+      //   utils.ats.submissions.getById.setData(
+      //     { id: newData.id },
+      //     context.previousSubmission
+      //   );
+      // }
+      options.onError?.(error as unknown as Error);
     },
     onSuccess: (data, variables) => {
       invalidate.invalidateAll();
@@ -125,7 +124,7 @@ export function useUpdateSubmission(options: UpdateSubmissionOptions = {}) {
 
   return {
     updateSubmission: async (input: UpdateSubmissionInput) => {
-      return mutation.mutateAsync(input as Parameters<typeof mutation.mutateAsync>[0]);
+      return mutation.mutateAsync(input);
     },
     isUpdating: mutation.isPending,
     error: mutation.error,
@@ -172,17 +171,17 @@ export function useMoveSubmissionStage(options: UpdateSubmissionOptions = {}) {
       if (!nextStage) {
         throw new Error('Already at final stage');
       }
-      return updateSubmission({ id, status: nextStage });
+      return updateSubmission({ id, status: nextStage as UpdateSubmissionInput['status'] });
     },
     moveToPreviousStage: async (id: string, currentStatus: SubmissionStatus) => {
       const prevStage = getPreviousStage(currentStatus);
       if (!prevStage) {
         throw new Error('Already at first stage');
       }
-      return updateSubmission({ id, status: prevStage });
+      return updateSubmission({ id, status: prevStage as UpdateSubmissionInput['status'] });
     },
     moveToStage: async (id: string, stage: SubmissionStatus) => {
-      return updateSubmission({ id, status: stage });
+      return updateSubmission({ id, status: stage as UpdateSubmissionInput['status'] });
     },
     isMoving: isUpdating,
     error,
@@ -197,7 +196,7 @@ export function useUpdateSubmissionStatus(options: UpdateSubmissionOptions = {})
 
   return {
     updateStatus: async (id: string, status: SubmissionStatus) => {
-      return updateSubmission({ id, status });
+      return updateSubmission({ id, status: status as UpdateSubmissionInput['status'] });
     },
     isUpdating,
     error,
@@ -236,7 +235,7 @@ export function useRejectSubmission(options: UpdateSubmissionOptions = {}) {
       return updateSubmission({
         id: input.id,
         status: 'rejected',
-        notes: [input.reason, input.feedback].filter(Boolean).join(' - '),
+        submissionNotes: [input.reason, input.feedback].filter(Boolean).join(' - '),
       });
     },
     isRejecting: isUpdating,
@@ -279,8 +278,8 @@ export function useSubmitToClient(options: UpdateSubmissionOptions = {}) {
         id: input.id,
         status: 'submitted_to_client',
         submittedRate: input.submittedRate,
-        rateType: input.rateType,
-        notes: input.coverNote,
+        submittedRateType: input.rateType,
+        submissionNotes: input.coverNote,
       });
     },
     isSubmitting: isUpdating,
@@ -294,10 +293,11 @@ export function useSubmitToClient(options: UpdateSubmissionOptions = {}) {
 
 export interface ScheduleInterviewInput {
   submissionId: string;
-  type: 'phone' | 'video' | 'onsite' | 'technical';
+  jobId: string;
+  candidateId: string;
+  type: 'phone_screen' | 'technical' | 'behavioral' | 'panel' | 'final' | 'client';
   scheduledAt: Date;
   interviewerName?: string;
-  notes?: string;
 }
 
 /**
@@ -324,7 +324,7 @@ export function useScheduleInterview(options: { onSuccess?: () => void; onError?
       options.onSuccess?.();
     },
     onError: (error) => {
-      options.onError?.(error);
+      options.onError?.(error as unknown as Error);
     },
   });
 
@@ -332,11 +332,12 @@ export function useScheduleInterview(options: { onSuccess?: () => void; onError?
     scheduleInterview: async (input: ScheduleInterviewInput) => {
       return mutation.mutateAsync({
         submissionId: input.submissionId,
+        jobId: input.jobId,
+        candidateId: input.candidateId,
         interviewType: input.type,
-        scheduledAt: input.scheduledAt.toISOString(),
-        interviewerName: input.interviewerName,
-        notes: input.notes,
-      } as Parameters<typeof mutation.mutateAsync>[0]);
+        scheduledAt: input.scheduledAt,
+        interviewerNames: input.interviewerName ? [input.interviewerName] : undefined,
+      });
     },
     isScheduling: mutation.isPending,
     error: mutation.error,
@@ -349,7 +350,7 @@ export function useScheduleInterview(options: { onSuccess?: () => void; onError?
 
 export interface BulkUpdateSubmissionsInput {
   ids: string[];
-  update: Partial<CreateSubmissionInput>;
+  update: Omit<Partial<UpdateSubmissionInput>, 'id'>;
 }
 
 /**
@@ -390,7 +391,7 @@ export function useBulkRejectSubmissions(options: UpdateSubmissionOptions = {}) 
         ids,
         update: {
           status: 'rejected',
-          notes: reason,
+          submissionNotes: reason,
         },
       });
     },

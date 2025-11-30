@@ -277,7 +277,7 @@ export class OrganizationContext {
     await this.setInCache(orgId, 'cross_pollination', existing, 1);
 
     // Persist to database
-    await this.supabase.from('org_context_cache').upsert({
+    await (this.supabase.from as any)('org_context_cache').upsert({
       org_id: orgId,
       context_type: 'cross_pollination',
       data: existing as unknown as Record<string, unknown>,
@@ -312,7 +312,7 @@ export class OrganizationContext {
     }
 
     // Check database cache
-    const { data } = await this.supabase.rpc('get_org_context', {
+    const { data } = await (this.supabase.rpc as any)('get_org_context', {
       p_org_id: orgId,
       p_context_type: contextType,
     });
@@ -348,7 +348,7 @@ export class OrganizationContext {
     });
 
     // Update database cache
-    await this.supabase.rpc('set_org_context', {
+    await (this.supabase.rpc as any)('set_org_context', {
       p_org_id: orgId,
       p_context_type: contextType,
       p_data: data as unknown as Record<string, unknown>,
@@ -444,8 +444,7 @@ export class OrganizationContext {
     orgId: string
   ): Promise<CrossPollinationOpportunity[]> {
     // Query from twin_events for potential opportunities
-    const { data: events } = await this.supabase
-      .from('twin_events')
+    const { data: events } = await (this.supabase.from as any)('twin_events')
       .select('*')
       .eq('org_id', orgId)
       .eq('processed', false)
@@ -461,12 +460,12 @@ export class OrganizationContext {
 
     if (!events) return [];
 
-    return events.map(event => ({
+    return events.map((event: any) => ({
       id: event.id,
       type: this.mapEventTypeToOpportunityType(event.event_type),
       sourceRole: event.source_role as TwinRole,
       targetRole: (event.target_role || 'ceo') as TwinRole,
-      title: this.generateOpportunityTitle(event),
+      title: this.generateOpportunityTitle(event as any),
       description: (event.payload as Record<string, string>)?.description || '',
       priority: event.priority as 'low' | 'medium' | 'high',
       data: event.payload as Record<string, unknown>,

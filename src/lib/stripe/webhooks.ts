@@ -38,7 +38,7 @@ export async function handleCheckoutCompleted(
   const expiresAt =
     paymentType === 'one_time'
       ? new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
-      : null;
+      : undefined;
 
   // Enroll student
   const { data, error } = await supabase.rpc('enroll_student', {
@@ -58,7 +58,7 @@ export async function handleCheckoutCompleted(
   const enrollmentId = data;
 
   // Create payment transaction record
-  await supabase.from('payment_transactions').insert({
+  await (supabase.from as any)('payment_transactions').insert({
     user_id: userId,
     enrollment_id: enrollmentId,
     stripe_payment_id: paymentId,
@@ -117,7 +117,7 @@ export async function handleSubscriptionDeleted(
 
   // Update enrollment status to expired
   const { error } = await supabase.rpc('update_enrollment_status', {
-    p_enrollment_id: subscription.metadata?.enrollmentId || null,
+    p_enrollment_id: subscription.metadata?.enrollmentId || '',
     p_new_status: 'expired',
   });
 
@@ -126,8 +126,7 @@ export async function handleSubscriptionDeleted(
   }
 
   // Update payment transaction status
-  await supabase
-    .from('payment_transactions')
+  await (supabase.from as any)('payment_transactions')
     .update({ status: 'refunded' })
     .eq('stripe_subscription_id', subscription.id);
 
@@ -141,7 +140,8 @@ export async function handlePaymentFailed(invoice: Stripe.Invoice): Promise<void
   const supabase = await createClient();
 
   const customerId = invoice.customer as string;
-  const subscriptionId = invoice.subscription as string;
+  const invoiceAny = invoice as any;
+  const subscriptionId = typeof invoiceAny.subscription === 'string' ? invoiceAny.subscription : invoiceAny.subscription?.id;
 
   // Get user ID from customer
   const { data: profile } = await supabase
@@ -156,9 +156,9 @@ export async function handlePaymentFailed(invoice: Stripe.Invoice): Promise<void
   }
 
   // Create payment transaction record for failed payment
-  await supabase.from('payment_transactions').insert({
+  await (supabase.from as any)('payment_transactions').insert({
     user_id: profile.id,
-    stripe_payment_id: invoice.payment_intent as string,
+    stripe_payment_id: typeof invoiceAny.payment_intent === 'string' ? invoiceAny.payment_intent : invoiceAny.payment_intent?.id,
     stripe_customer_id: customerId,
     stripe_subscription_id: subscriptionId,
     amount: (invoice.amount_due || 0) / 100,
@@ -171,7 +171,7 @@ export async function handlePaymentFailed(invoice: Stripe.Invoice): Promise<void
   });
 
   // Queue email notification to student
-  await supabase.from('background_jobs').insert({
+  await (supabase.from as any)('background_jobs').insert({
     job_type: 'send_email',
     status: 'pending',
     payload: {
@@ -203,7 +203,8 @@ export async function handleInvoicePaymentSucceeded(
   const supabase = await createClient();
 
   const customerId = invoice.customer as string;
-  const subscriptionId = invoice.subscription as string;
+  const invoiceAny = invoice as any;
+  const subscriptionId = typeof invoiceAny.subscription === 'string' ? invoiceAny.subscription : invoiceAny.subscription?.id;
 
   // Get user ID from customer
   const { data: profile } = await supabase
@@ -218,9 +219,9 @@ export async function handleInvoicePaymentSucceeded(
   }
 
   // Create payment transaction record
-  await supabase.from('payment_transactions').insert({
+  await (supabase.from as any)('payment_transactions').insert({
     user_id: profile.id,
-    stripe_payment_id: invoice.payment_intent as string,
+    stripe_payment_id: typeof invoiceAny.payment_intent === 'string' ? invoiceAny.payment_intent : invoiceAny.payment_intent?.id,
     stripe_customer_id: customerId,
     stripe_subscription_id: subscriptionId,
     amount: (invoice.amount_paid || 0) / 100,
@@ -256,10 +257,12 @@ export async function handleSubscriptionUpdated(
   // If subscription is canceled but still active (cancel_at_period_end = true)
   if (subscription.cancel_at_period_end) {
     // Update enrollment with expiration notice
+    const subscriptionAny = subscription as any;
+    const currentPeriodEnd = subscriptionAny.current_period_end || subscriptionAny.currentPeriodEnd;
     await supabase
       .from('student_enrollments')
       .update({
-        expires_at: new Date(subscription.current_period_end * 1000).toISOString(),
+        expires_at: new Date((currentPeriodEnd || Date.now() / 1000) * 1000).toISOString(),
         updated_at: new Date().toISOString(),
       })
       .eq('id', enrollmentId);

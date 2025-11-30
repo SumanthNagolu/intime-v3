@@ -9,3 +9,8 @@ export default function EmployeeAuthPage() {
   redirect('/login');
 }
 
+
+
+
+
+

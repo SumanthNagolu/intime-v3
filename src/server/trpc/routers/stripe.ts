@@ -124,8 +124,8 @@ export const stripeRouter = router({
         subscriptions: subscriptions.map((sub) => ({
           id: sub.id,
           status: sub.status,
-          currentPeriodStart: new Date(sub.current_period_start * 1000),
-          currentPeriodEnd: new Date(sub.current_period_end * 1000),
+          currentPeriodStart: new Date((sub as any).current_period_start * 1000),
+          currentPeriodEnd: new Date((sub as any).current_period_end * 1000),
           cancelAtPeriodEnd: sub.cancel_at_period_end,
           canceledAt: sub.canceled_at ? new Date(sub.canceled_at * 1000) : null,
           items: sub.items.data.map((item) => ({
@@ -166,8 +166,8 @@ export const stripeRouter = router({
           subscription: {
             id: subscription.id,
             status: subscription.status,
-            currentPeriodStart: new Date(subscription.current_period_start * 1000),
-            currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+            currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
+            currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
             cancelAtPeriodEnd: subscription.cancel_at_period_end,
             canceledAt: subscription.canceled_at
               ? new Date(subscription.canceled_at * 1000)

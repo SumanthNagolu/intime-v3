@@ -667,6 +667,187 @@ When you need deep expertise:
 - UI components → Reference Frontend Developer (`.claude/agents/implementation/frontend-developer.md`)
 - Testing → Reference QA Engineer (`.claude/agents/operations/qa-engineer.md`)
 
-**Last Updated:** 2025-11-19
-**Version:** 3.0 (Comprehensive Multi-Agent Sync)
+**Last Updated:** 2025-11-29
+**Version:** 4.0 (Metadata-Driven UI Architecture)
 **Sync Status:** Mirrors `.claude/` configuration from Claude Code CLI
+
+---
+
+## 🎨 METADATA-DRIVEN UI ARCHITECTURE (Guidewire-Inspired)
+
+### Overview
+
+This project uses a **metadata-driven UI framework** where screens are defined via TypeScript configuration, NOT hardcoded JSX. This is inspired by Guidewire's PCF (Page Configuration Format) architecture.
+
+**Core Principle:** Define screens as metadata → ScreenRenderer interprets and renders components
+
+### CRITICAL: Before Creating Any UI
+
+1. **CHECK EXISTING INPUTSETS** in `src/lib/metadata/input-sets/`:
+   - `AddressInputSet` - street, city, state, zip, country
+   - `ContactInputSet` - firstName, lastName, email, phone
+   - `CompensationInputSet` - rateMin, rateMax, rateType, currency
+   - `SkillsInputSet` - requiredSkills, niceToHaveSkills
+   - `WorkAuthInputSet` - visaStatus, visaExpiry, workAuthorization
+   - `InterviewInputSet` - type, datetime, interviewers, location
+
+2. **CHECK EXISTING WIDGETS** in `src/lib/metadata/widgets/`
+
+3. **USE ENTITY REGISTRY** for entity-specific configuration
+
+### Screen Definition Pattern
+
+```typescript
+// src/screens/[domain]/[entity]-detail.screen.ts
+import type { ScreenDefinition } from '@/lib/metadata/types';
+
+export const entityDetailScreen: ScreenDefinition = {
+  id: 'entity-detail',
+  type: 'detail',         // detail | list | list-detail | wizard | dashboard
+  entityType: 'entity',
+  title: { type: 'field', path: 'title' },
+  dataSource: {
+    type: 'entity',
+    entityType: 'entity',
+    entityId: { type: 'param', path: 'id' },
+  },
+  layout: {
+    type: 'sidebar-main', // sidebar-main | tabs | single-column | wizard-steps
+    sidebar: { /* section definition */ },
+    tabs: [ /* tab definitions */ ],
+  },
+  actions: [ /* action definitions */ ],
+};
+```
+
+### Page Component Pattern (THIN WRAPPER)
+
+```typescript
+// src/app/employee/[domain]/[entity]/[id]/page.tsx
+import { ScreenRenderer } from '@/lib/metadata/renderers';
+import { entityDetailScreen } from '@/screens/[domain]/entity-detail.screen';
+
+export default function EntityDetailPage() {
+  return <ScreenRenderer definition={entityDetailScreen} />;
+}
+```
+
+### Screen Types
+
+| Type | Use For | Example |
+|------|---------|---------|
+| `detail` | Single entity view | JobDetail, TalentDetail |
+| `list` | Entity list/table | JobsList, LeadsList |
+| `list-detail` | Master-detail split | Pipeline, Kanban |
+| `wizard` | Multi-step workflow | PlacementWizard |
+| `dashboard` | KPIs and widgets | RecruiterDashboard |
+
+### Section Types
+
+| Type | Use For |
+|------|---------|
+| `info-card` | Key-value display, entity details |
+| `metrics-grid` | KPIs, statistics |
+| `table` | Data tables with sorting/filtering |
+| `form` | Editable forms |
+| `input-set` | Reusable form fragments |
+| `timeline` | Activity/event logs |
+| `custom` | Complex custom components |
+
+### Field Types
+
+| Type | Use For | Widget |
+|------|---------|--------|
+| `text` | Single line text | TextInput |
+| `textarea` | Multi-line text | TextareaInput |
+| `number` | Integers/decimals | NumberInput |
+| `currency` | Money values | CurrencyInput |
+| `date` | Date only | DatePicker |
+| `datetime` | Date + time | DateTimePicker |
+| `enum` | Fixed options | Select |
+| `select` | Entity reference | EntitySelect |
+| `boolean` | Yes/No | Checkbox/Toggle |
+| `tags` | String array | TagInput |
+
+### Dynamic Values
+
+```typescript
+// Entity field
+{ type: 'field', path: 'title' }
+
+// URL parameter
+{ type: 'param', path: 'id' }
+
+// User context
+{ type: 'context', path: 'user.id' }
+```
+
+### Visibility Rules
+
+```typescript
+// Permission-based
+visible: { type: 'permission', permission: 'job.compensation.view' }
+
+// Role-based
+visible: { type: 'role', roles: ['admin', 'manager'] }
+
+// Condition-based
+visible: {
+  type: 'condition',
+  condition: { operator: 'eq', field: 'status', value: 'active' },
+}
+```
+
+### Converting Existing Screens
+
+1. Identify screen type (detail, list, wizard, etc.)
+2. Map layout structure (sidebar, tabs, sections)
+3. Check for existing InputSets for form fragments
+4. Map fields to appropriate field types
+5. Add visibility rules for sensitive data
+6. Create screen definition in `src/screens/`
+7. Update page to use `ScreenRenderer`
+
+### Anti-Patterns
+
+❌ Hardcoding layout in JSX components
+❌ Creating duplicate form fragments (use InputSets)
+❌ Using `any` types (use proper TypeScript interfaces)
+❌ Putting business logic in screen definitions
+❌ Creating custom widgets when standard ones exist
+
+### File Structure
+
+```
+src/lib/metadata/        # Framework core
+├── types/               # TypeScript interfaces
+├── schemas/             # Zod validation
+├── registry/            # Entity, widget, screen registries
+├── renderers/           # ScreenRenderer, LayoutRenderer
+├── widgets/             # Widget components
+├── patterns/            # DetailView, ListView, Wizard
+├── input-sets/          # Reusable form fragments
+└── entities/            # Entity configurations
+
+src/screens/             # Screen definitions
+├── recruiting/          # ATS screens
+├── crm/                 # CRM screens
+└── academy/             # Academy screens
+```
+
+### Quick Commands for Conversion
+
+- "Convert this screen to metadata-driven using ScreenDefinition"
+- "Add [type]InputSet to this section"
+- "Add permission-based visibility to this field"
+- "Create a wizard for [workflow]"
+
+---
+
+## 📖 Full Frontend Architecture Reference
+
+For complete documentation, see:
+- `.claude/rules/frontend-architecture.md` - Complete Guidewire-inspired patterns
+- `.claude/plans/lucky-jumping-pumpkin.md` - Implementation plan
+- `src/lib/metadata/types/` - TypeScript interfaces
+- `src/lib/metadata/schemas/` - Zod validation schemas

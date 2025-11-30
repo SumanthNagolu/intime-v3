@@ -606,7 +606,7 @@ export const EngagementEventType = {
   UNSUBSCRIBED: 'unsubscribed',
 } as const;
 
-export const EmploymentType = {
+export const HREmploymentType = {
   FULL_TIME: 'full_time',
   PART_TIME: 'part_time',
   CONTRACTOR: 'contractor',
@@ -654,7 +654,7 @@ export type CampaignChannelType = typeof CampaignChannel[keyof typeof CampaignCh
 export type CampaignStatusType = typeof CampaignStatus[keyof typeof CampaignStatus];
 export type CampaignContactStatusType = typeof CampaignContactStatus[keyof typeof CampaignContactStatus];
 export type EngagementEventTypeType = typeof EngagementEventType[keyof typeof EngagementEventType];
-export type EmploymentTypeType = typeof EmploymentType[keyof typeof EmploymentType];
+export type HREmploymentTypeType = typeof HREmploymentType[keyof typeof HREmploymentType];
 export type PodTypeType = typeof PodType[keyof typeof PodType];
 export type PayrollRunStatusType = typeof PayrollRunStatus[keyof typeof PayrollRunStatus];
 export type ReviewTypeType = typeof ReviewType[keyof typeof ReviewType];

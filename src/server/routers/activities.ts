@@ -107,7 +107,7 @@ export const activitiesRouter = router({
       const { orgId } = ctx;
       
       const conditions = [
-        eq(activities.entityType, input.entityType),
+        eq(activities.entityType, input.entityType as string),
         eq(activities.entityId, input.entityId),
         eq(activities.orgId, orgId),
       ];
@@ -150,7 +150,7 @@ export const activitiesRouter = router({
       const result = await db.select()
         .from(activities)
         .where(and(
-          eq(activities.entityType, input.entityType),
+          eq(activities.entityType, input.entityType as string),
           eq(activities.entityId, input.entityId),
           eq(activities.orgId, orgId),
           inArray(activities.status, ['scheduled', 'open', 'in_progress']),
@@ -180,7 +180,7 @@ export const activitiesRouter = router({
       ];
       
       if (input.entityType) {
-        conditions.push(eq(activities.entityType, input.entityType));
+        conditions.push(eq(activities.entityType, input.entityType as string));
       }
       
       const result = await db.select()
@@ -228,7 +228,7 @@ export const activitiesRouter = router({
       // Get user profile for assignedTo and createdBy
       const [userProfile] = await db.select({ id: userProfiles.id })
         .from(userProfiles)
-        .where(eq(userProfiles.authId, userId))
+        .where(eq(userProfiles.authId, userId as string))
         .limit(1);
       
       if (!userProfile) {
@@ -238,19 +238,19 @@ export const activitiesRouter = router({
       const [newActivity] = await db.insert(activities)
         .values({
           orgId,
-          entityType: input.entityType,
+          entityType: input.entityType as string,
           entityId: input.entityId,
-          activityType: input.activityType,
-          status: input.status,
-          priority: input.priority,
+          activityType: input.activityType as string,
+          status: input.status as string,
+          priority: input.priority as string,
           subject: input.subject,
           body: input.body,
-          direction: input.direction,
+          direction: input.direction as string | undefined,
           dueDate: input.dueDate,
           scheduledAt: input.scheduledAt,
           escalationDate: input.escalationDate,
           durationMinutes: input.durationMinutes,
-          outcome: input.outcome,
+          outcome: input.outcome as string | undefined,
           assignedTo: userProfile.id,
           createdBy: userProfile.id,
           pocId: input.pocId,
@@ -292,35 +292,35 @@ export const activitiesRouter = router({
     }))
     .mutation(async ({ ctx, input }) => {
       const { userId, orgId } = ctx;
-      
+
       // Get user profile
       const [userProfile] = await db.select({ id: userProfiles.id })
         .from(userProfiles)
-        .where(eq(userProfiles.authId, userId))
+        .where(eq(userProfiles.authId, userId as string))
         .limit(1);
-      
+
       if (!userProfile) {
         throw new Error('User profile not found');
       }
-      
+
       const now = new Date();
-      
+
       // Create the completed activity
       const [activity] = await db.insert(activities)
         .values({
           orgId,
-          entityType: input.entityType,
+          entityType: input.entityType as string,
           entityId: input.entityId,
-          activityType: input.activityType,
+          activityType: input.activityType as string,
           status: 'completed',
           priority: 'medium',
           subject: input.subject,
           body: input.body,
-          direction: input.direction,
+          direction: input.direction as string | undefined,
           dueDate: now,
           completedAt: now,
           durationMinutes: input.durationMinutes,
-          outcome: input.outcome,
+          outcome: input.outcome as string | undefined,
           assignedTo: userProfile.id,
           performedBy: userProfile.id,
           createdBy: userProfile.id,
@@ -334,7 +334,7 @@ export const activitiesRouter = router({
         const [newFollowUp] = await db.insert(activities)
           .values({
             orgId,
-            entityType: input.entityType,
+            entityType: input.entityType as string,
             entityId: input.entityId,
             activityType: 'follow_up',
             status: 'scheduled',
@@ -375,19 +375,19 @@ export const activitiesRouter = router({
       const updateData: Partial<Activity> = {
         updatedAt: new Date(),
       };
-      
-      if (input.status !== undefined) updateData.status = input.status;
-      if (input.priority !== undefined) updateData.priority = input.priority;
+
+      if (input.status !== undefined) updateData.status = input.status as string;
+      if (input.priority !== undefined) updateData.priority = input.priority as string;
       if (input.subject !== undefined) updateData.subject = input.subject;
       if (input.body !== undefined) updateData.body = input.body;
-      if (input.direction !== undefined) updateData.direction = input.direction;
+      if (input.direction !== undefined) updateData.direction = input.direction as string;
       if (input.dueDate !== undefined) updateData.dueDate = input.dueDate;
       if (input.scheduledAt !== undefined) updateData.scheduledAt = input.scheduledAt;
       if (input.escalationDate !== undefined) updateData.escalationDate = input.escalationDate;
       if (input.completedAt !== undefined) updateData.completedAt = input.completedAt;
       if (input.skippedAt !== undefined) updateData.skippedAt = input.skippedAt;
       if (input.durationMinutes !== undefined) updateData.durationMinutes = input.durationMinutes;
-      if (input.outcome !== undefined) updateData.outcome = input.outcome;
+      if (input.outcome !== undefined) updateData.outcome = input.outcome as string;
       if (input.assignedTo !== undefined) updateData.assignedTo = input.assignedTo;
       
       const [updated] = await db.update(activities)
@@ -421,19 +421,19 @@ export const activitiesRouter = router({
     }))
     .mutation(async ({ ctx, input }) => {
       const { userId, orgId } = ctx;
-      
+
       // Get user profile
       const [userProfile] = await db.select({ id: userProfiles.id })
         .from(userProfiles)
-        .where(eq(userProfiles.authId, userId))
+        .where(eq(userProfiles.authId, userId as string))
         .limit(1);
-      
+
       if (!userProfile) {
         throw new Error('User profile not found');
       }
-      
+
       const now = new Date();
-      
+
       // Get the activity first
       const [activity] = await db.select()
         .from(activities)
@@ -442,25 +442,25 @@ export const activitiesRouter = router({
           eq(activities.orgId, orgId)
         ))
         .limit(1);
-      
+
       if (!activity) {
         throw new Error('Activity not found');
       }
-      
+
       // Complete the activity
       const [completed] = await db.update(activities)
         .set({
           status: 'completed',
           completedAt: now,
           performedBy: userProfile.id,
-          outcome: input.outcome,
+          outcome: input.outcome as string | undefined,
           body: input.body ? `${activity.body || ''}\n\n---\nCompletion Notes: ${input.body}` : activity.body,
           durationMinutes: input.durationMinutes,
           updatedAt: now,
         })
         .where(eq(activities.id, input.id))
         .returning();
-      
+
       // Create follow-up if requested
       let followUp: Activity | null = null;
       if (input.createFollowUp && input.followUpDueDate) {
@@ -471,7 +471,7 @@ export const activitiesRouter = router({
             entityId: activity.entityId,
             activityType: 'follow_up',
             status: 'scheduled',
-            priority: activity.priority as ActivityPriority,
+            priority: activity.priority,
             subject: input.followUpSubject || `Follow up on: ${activity.subject || activity.activityType}`,
             dueDate: input.followUpDueDate,
             scheduledAt: input.followUpDueDate,

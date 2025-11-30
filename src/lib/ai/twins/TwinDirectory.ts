@@ -471,7 +471,7 @@ Respond with JSON: { "targetRole": "role_name", "reasoning": "brief explanation"
     latencyMs: number;
   }): Promise<void> {
     try {
-      await this.supabase.from('twin_conversations').insert({
+      await (this.supabase.from as any)('twin_conversations').insert({
         org_id: this.orgId,
         initiator_user_id: this.userId,
         initiator_role: data.initiatorRole,

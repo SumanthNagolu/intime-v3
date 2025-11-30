@@ -83,15 +83,37 @@ describe('ats.jobs', () => {
 
 ## Playwright E2E Patterns
 
+### Login Helper (Use in All Tests)
+```typescript
+// tests/e2e/helpers.ts
+import { Page } from '@playwright/test';
+
+export async function loginAs(
+  page: Page,
+  role: 'recruiter' | 'admin' | 'manager' | 'ceo'
+) {
+  const credentials = {
+    recruiter: { email: 'jr_rec@intime.com', password: 'TestPass123!' },
+    admin: { email: 'admin@intime.com', password: 'TestPass123!' },
+    manager: { email: 'hr_admin@intime.com', password: 'TestPass123!' },
+    ceo: { email: 'ceo@intime.com', password: 'TestPass123!' },
+  };
+
+  await page.goto('/auth/employee');
+  await page.fill('[data-testid="email"]', credentials[role].email);
+  await page.fill('[data-testid="password"]', credentials[role].password);
+  await page.click('[data-testid="submit"]');
+  await page.waitForURL(/\/employee\//);
+}
+```
+
 ### Basic Test
 ```typescript
 import { test, expect } from '@playwright/test';
+import { loginAs } from './helpers';
 
 test('should navigate and interact', async ({ page }) => {
-  await page.goto('/auth/employee');
-  await page.getByRole('textbox', { name: /email/i }).fill('jr_rec@intime.com');
-  await page.getByRole('textbox', { name: /password/i }).fill('TestPass123!');
-  await page.getByRole('button', { name: /sign in/i }).click();
+  await loginAs(page, 'recruiter');
   await expect(page.getByText('Dashboard')).toBeVisible();
 });
 ```
@@ -205,6 +227,137 @@ Then use Playwright MCP tools:
 - `mcp__playwright__browser_take_screenshot` - Capture screenshot
 - `mcp__playwright__browser_console_messages` - View console
 
+## Complete Entity E2E Test Pattern
+
+For each entity, create: `tests/e2e/[domain]/[entity]-complete-flow.spec.ts`
+
+```typescript
+import { test, expect } from '@playwright/test';
+import { loginAs } from '../helpers';
+
+test.describe('[Entity] - Complete Flow', () => {
+
+  test.beforeEach(async ({ page }) => {
+    await loginAs(page, 'recruiter');
+    await page.goto('/employee/[module]/[entity]');
+  });
+
+  // ==========================================
+  // CRUD OPERATIONS
+  // ==========================================
+  test.describe('CRUD Operations', () => {
+    test('should display list with data', async ({ page }) => {
+      await expect(page.locator('[data-testid="[entity]-list"]')).toBeVisible();
+      await page.screenshot({ path: 'test-results/[entity]-list.png' });
+    });
+
+    test('should create [entity]', async ({ page }) => {
+      await page.click('[data-testid="create-button"]');
+      await page.fill('[data-testid="name"]', 'Test Entity');
+      await page.click('[data-testid="submit"]');
+      await expect(page.locator('[data-testid="toast-success"]')).toBeVisible();
+    });
+
+    test('should update [entity]', async ({ page }) => {
+      await page.click('[data-testid="[entity]-row"]:first-child');
+      await page.click('[data-testid="edit-button"]');
+      await page.fill('[data-testid="name"]', 'Updated Name');
+      await page.click('[data-testid="save-button"]');
+      await expect(page.locator('[data-testid="name"]')).toContainText('Updated');
+    });
+
+    test('should delete [entity]', async ({ page }) => {
+      await page.click('[data-testid="[entity]-row"]:first-child');
+      await page.click('[data-testid="delete-button"]');
+      await page.click('[data-testid="confirm-delete"]');
+      await expect(page).toHaveURL(/\/[entity]$/);
+    });
+  });
+
+  // ==========================================
+  // LIST OPERATIONS
+  // ==========================================
+  test.describe('List Operations', () => {
+    test('should paginate', async ({ page }) => {
+      await expect(page.locator('[data-testid="pagination"]')).toBeVisible();
+    });
+
+    test('should filter by status', async ({ page }) => {
+      await page.click('[data-testid="filter-status"]');
+      await page.click('[data-testid="status-active"]');
+      await page.click('[data-testid="apply-filters"]');
+    });
+
+    test('should search', async ({ page }) => {
+      await page.fill('[data-testid="search-input"]', 'test');
+      await page.press('[data-testid="search-input"]', 'Enter');
+    });
+  });
+
+  // ==========================================
+  // ACTIVITY TRACKING (ROOT ENTITIES ONLY)
+  // ==========================================
+  test.describe('Activity Tracking', () => {
+    test('should show workplan progress', async ({ page }) => {
+      await page.click('[data-testid="[entity]-row"]:first-child');
+      await expect(page.locator('[data-testid="workplan-progress"]')).toBeVisible();
+    });
+
+    test('should display activity timeline', async ({ page }) => {
+      await page.click('[data-testid="[entity]-row"]:first-child');
+      await page.click('[data-testid="tab-activity"]');
+      await expect(page.locator('[data-testid="activity-timeline"]')).toBeVisible();
+    });
+
+    test('should log manual activity', async ({ page }) => {
+      await page.click('[data-testid="[entity]-row"]:first-child');
+      await page.click('[data-testid="log-activity"]');
+      await page.fill('[data-testid="activity-subject"]', 'Test Activity');
+      await page.click('[data-testid="save-activity"]');
+      await expect(page.locator('[data-testid="activity-timeline"]'))
+        .toContainText('Test Activity');
+    });
+
+    test('should complete workplan activity', async ({ page }) => {
+      await page.click('[data-testid="[entity]-row"]:first-child');
+      await page.click('[data-testid="tab-activity"]');
+      const openActivity = page.locator('[data-testid="activity-item"][data-status="open"]').first();
+      if (await openActivity.isVisible()) {
+        await openActivity.click();
+        await page.click('[data-testid="complete-activity"]');
+        await page.fill('[data-testid="outcome-notes"]', 'Completed');
+        await page.click('[data-testid="confirm-complete"]');
+      }
+    });
+  });
+
+  // ==========================================
+  // VISUAL VERIFICATION
+  // ==========================================
+  test.describe('Screenshots', () => {
+    test('capture all states', async ({ page }) => {
+      // List
+      await page.screenshot({ path: 'test-results/[entity]-list.png' });
+
+      // Detail
+      await page.click('[data-testid="[entity]-row"]:first-child');
+      await page.screenshot({ path: 'test-results/[entity]-detail.png' });
+
+      // Activity tab
+      await page.click('[data-testid="tab-activity"]');
+      await page.screenshot({ path: 'test-results/[entity]-activity.png' });
+    });
+  });
+});
+```
+
+## Entity Test Categories
+
+| Category | Entities | Test Activity/Workplan? |
+|----------|----------|------------------------|
+| **Root** | lead, job, submission, deal, placement | Yes - full workplan tests |
+| **Supporting** | account, contact, candidate, interview, offer | No - skip activity section |
+
 ## Common Test Scenarios
 
 ### Auth Flow
@@ -222,6 +375,14 @@ Then use Playwright MCP tools:
 6. Click item
 7. Edit
 8. Delete
+
+### Activity/Workplan (Root Entities)
+1. Create entity
+2. Verify workplan created
+3. Check activity timeline
+4. Complete an activity
+5. Log manual activity
+6. Verify successor activities trigger
 
 ### Error Handling
 1. Mock API failure

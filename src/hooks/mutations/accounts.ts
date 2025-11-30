@@ -42,7 +42,7 @@ export function useCreateAccount(options: CreateAccountOptions = {}) {
       options.onSuccess?.(data);
     },
     onError: (error) => {
-      options.onError?.(error);
+      options.onError?.(error as unknown as Error);
     },
   });
 
@@ -111,7 +111,7 @@ export function useUpdateAccount(options: UpdateAccountOptions = {}) {
           context.previousAccount
         );
       }
-      options.onError?.(error);
+      options.onError?.(error as unknown as Error);
     },
     onSuccess: (data, variables) => {
       invalidate.invalidateAll();
@@ -158,7 +158,7 @@ export function useDeleteAccount(options: DeleteAccountOptions = {}) {
       options.onSuccess?.();
     },
     onError: (error) => {
-      options.onError?.(error);
+      options.onError?.(error as unknown as Error);
     },
   });
 
@@ -266,13 +266,25 @@ export function useCreatePoc(options: { onSuccess?: (data: unknown) => void; onE
       options.onSuccess?.(data);
     },
     onError: (error) => {
-      options.onError?.(error);
+      options.onError?.(error as unknown as Error);
     },
   });
 
   return {
     createPoc: async (input: CreatePOCInput) => {
-      return mutation.mutateAsync(input as Parameters<typeof mutation.mutateAsync>[0]);
+      // Transform CreatePOCInput to match backend schema
+      const [firstName, ...lastNameParts] = input.name.split(' ');
+      const lastName = lastNameParts.join(' ') || firstName;
+
+      return mutation.mutateAsync({
+        accountId: input.accountId,
+        firstName,
+        lastName,
+        email: input.email,
+        phone: input.phone,
+        title: input.role,
+        isPrimary: input.isPrimary,
+      } as Parameters<typeof mutation.mutateAsync>[0]);
     },
     isCreating: mutation.isPending,
     error: mutation.error,
@@ -298,7 +310,7 @@ export function useUpdatePoc(options: { onSuccess?: (data: unknown) => void; onE
       options.onSuccess?.(data);
     },
     onError: (error) => {
-      options.onError?.(error);
+      options.onError?.(error as unknown as Error);
     },
   });
 
@@ -323,7 +335,7 @@ export function useDeletePoc(options: { onSuccess?: () => void; onError?: (error
       options.onSuccess?.();
     },
     onError: (error) => {
-      options.onError?.(error);
+      options.onError?.(error as unknown as Error);
     },
   });
 
@@ -409,7 +421,7 @@ export function useBulkAssignAccounts(options: { onSuccess?: (data: unknown) => 
       options.onSuccess?.(data);
     },
     onError: (error) => {
-      options.onError?.(error);
+      options.onError?.(error as unknown as Error);
     },
   });
 
@@ -452,20 +464,21 @@ export function useLogAccountActivity(options: { onSuccess?: () => void; onError
 
   const mutation = trpc.crm.activities.create.useMutation({
     onSuccess: (data, variables) => {
-      invalidate.invalidateAccount(variables.accountId);
+      invalidate.invalidateAccount(variables.entityId);
       options.onSuccess?.();
     },
     onError: (error) => {
-      options.onError?.(error);
+      options.onError?.(error as unknown as Error);
     },
   });
 
   return {
     logActivity: async (input: LogActivityInput) => {
       return mutation.mutateAsync({
-        accountId: input.accountId,
+        entityType: 'account',
+        entityId: input.accountId,
         activityType: input.type,
-        description: input.description,
+        body: input.description,
       } as Parameters<typeof mutation.mutateAsync>[0]);
     },
     isLogging: mutation.isPending,

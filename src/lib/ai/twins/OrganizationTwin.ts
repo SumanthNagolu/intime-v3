@@ -241,7 +241,7 @@ export class OrganizationTwin extends BaseAgent<string, string> {
    */
   async getTodayStandup(forceRegenerate = false): Promise<StandupReport | null> {
     if (!forceRegenerate) {
-      const { data } = await this.supabase.rpc('get_today_standup', {
+      const { data } = await (this.supabase.rpc as any)('get_today_standup', {
         p_org_id: this.orgId,
       });
 
@@ -340,8 +340,8 @@ If the question is general organizational or strategic, route to CEO.`,
     ]);
 
     // Query communication metrics
-    const { count: queriesThisWeek } = await this.supabase
-      .from('twin_conversations')
+    const { count: queriesThisWeek } = await (this.supabase
+      .from as any)('twin_conversations')
       .select('*', { count: 'exact', head: true })
       .eq('org_id', this.orgId)
       .gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString());
@@ -671,7 +671,7 @@ Write in a professional, concise tone. Highlight the most important items.`;
    */
   private async saveStandup(report: StandupReport): Promise<void> {
     try {
-      await this.supabase.from('org_standups').upsert({
+      await (this.supabase.from as any)('org_standups').upsert({
         org_id: this.orgId,
         standup_date: report.date,
         generated_by: 'organization_twin',

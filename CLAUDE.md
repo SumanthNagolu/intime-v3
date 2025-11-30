@@ -15,25 +15,100 @@
 - **CRM:** Client relationship management
 - **Client Portal:** External client access
 
-## Available Skills
-Load domain expertise with: "Use the [skill-name] skill"
-- `database` - Drizzle/Supabase patterns, migrations, schema design
-- `trpc` - Router development, procedures, validation
-- `recruiting` - ATS workflows, jobs, submissions, interviews
-- `academy` - Training features, courses, XP, certificates
-- `testing` - Vitest + Playwright patterns
-- `bench-sales` - Bench consultant management
-- `ai-twins` - AI Twin system architecture
-- `hr` - HR/TA features
-- `crm` - CRM features
+---
+
+## MCP Preset System
+
+### Quick Reference
+
+| Preset | Command | Best For |
+|--------|---------|----------|
+| **Coding** | `pnpm claude:coding` | Daily development (default) |
+| **Testing** | `pnpm claude:testing` | E2E tests, debugging |
+| **Full** | `pnpm claude:full` | Architecture, planning |
+
+**After switching, restart Claude Code.**
+
+### Preset Details
+
+#### CODING (Default)
+```
+postgres      → Direct SQL queries, schema inspection
+filesystem    → File operations, project navigation
+seq-thinking  → Multi-step problem decomposition
+```
+
+#### TESTING
+```
+postgres      → Test data verification
+playwright    → E2E browser automation, screenshots
+seq-thinking  → Test planning, debugging
+```
+
+#### FULL (Architecture/Planning)
+```
+postgres      → Database operations
+filesystem    → Project navigation
+playwright    → Visual testing
+github        → PRs, issues, repo insights
+seq-thinking  → Complex reasoning
+```
+
+---
+
+## Skills System
+
+### Available Skills
+Load with: `Use the [skill-name] skill`
+
+| Skill | Domain | Key Topics |
+|-------|--------|------------|
+| `database` | Infrastructure | Drizzle ORM, migrations, schema design |
+| `trpc` | Infrastructure | Router development, procedures, validation |
+| `recruiting` | Business | ATS workflows, jobs, submissions, interviews |
+| `academy` | Business | Training, courses, XP, certificates |
+| `crm` | Business | Leads, deals, accounts, activities |
+| `bench-sales` | Business | Consultant marketing, placements |
+| `hr` | Business | People ops, talent acquisition |
+| `ai-twins` | AI | Twin system architecture |
+| `testing` | Quality | Vitest unit tests, Playwright E2E |
+
+### Auto-Load by Context
+
+| When Working On | Load Skills |
+|-----------------|-------------|
+| `**/recruiting/**`, `schema/ats` | `recruiting`, `database` |
+| `**/academy/**`, `schema/academy` | `academy`, `database` |
+| `**/crm/**`, `schema/crm` | `crm`, `database` |
+| `**/bench/**`, `schema/bench` | `bench-sales`, `database` |
+| `**/*.test.ts`, `**/e2e/**` | `testing` |
+| `**/routers/**`, `trpc` | `trpc`, `database` |
+
+### Keyword Triggers
+
+| Keywords | Skill |
+|----------|-------|
+| migration, schema, drizzle, table | `database` |
+| router, trpc, procedure, mutation | `trpc` |
+| job, candidate, submission, interview | `recruiting` |
+| course, enrollment, xp, certificate | `academy` |
+| lead, deal, account, pipeline | `crm` |
+| bench, hotlist, consultant | `bench-sales` |
+| test, e2e, playwright, coverage | `testing` |
+
+---
 
 ## Key File Locations
-- **Schemas:** `src/lib/db/schema/` (ats.ts, academy.ts, crm.ts, bench.ts)
-- **Routers:** `src/server/routers/`, `src/server/trpc/routers/`
-- **Components:** `src/components/[module]/`
-- **Hooks:** `src/hooks/queries/`, `src/hooks/mutations/`
-- **Adapters:** `src/lib/adapters/`
-- **Actions:** `src/app/actions/`
+
+```
+src/lib/db/schema/     → Database schemas (ats.ts, academy.ts, crm.ts)
+src/server/routers/    → tRPC routers
+src/components/        → React components by module
+src/hooks/queries/     → React Query hooks
+src/hooks/mutations/   → Mutation hooks
+src/lib/adapters/      → Data adapters
+src/app/actions/       → Server actions
+```
 
 ## Rollout Commands
 - `/rollout/00-master-rollout` - Full workflow
@@ -41,6 +116,7 @@ Load domain expertise with: "Use the [skill-name] skill"
 - `/workflows/integrate-component` - Integration pattern
 
 ## Test Users (password: TestPass123!)
+
 | Role | Email | Dashboard |
 |------|-------|-----------|
 | CEO | ceo@intime.com | /employee/ceo/dashboard |
@@ -51,77 +127,26 @@ Load domain expertise with: "Use the [skill-name] skill"
 
 ---
 
-## Auto-Detection Rules
+## Database Migration Rules
 
-When I see these keywords in your message, I will take these actions:
+**Use the `execute-sql` Edge Function. Never use `npx supabase db push` directly.**
 
-### Testing Keywords
-**Trigger:** "test", "e2e", "playwright", "browser", "click", "screenshot", "spec"
-**Action:**
-- If Playwright MCP tools aren't available, I'll suggest: `npm run claude:testing`
-- I'll load the `testing` skill for patterns
-
-### Database Keywords
-**Trigger:** "migration", "schema", "drizzle", "table", "column", "relation", "insert", "query"
-**Action:** Load the `database` skill
-
-### API Keywords
-**Trigger:** "router", "trpc", "endpoint", "mutation", "procedure", "api"
-**Action:** Load the `trpc` skill
-
-### Module-Specific Keywords
-- "recruiting", "job", "candidate", "submission", "interview", "offer", "placement" → `recruiting` skill
-- "academy", "course", "enrollment", "xp", "cohort", "certificate", "lesson" → `academy` skill
-- "bench", "hotlist", "consultant", "marketing" → `bench-sales` skill
-- "twin", "briefing", "ai assistant", "employee twin" → `ai-twins` skill
-- "hr", "employee", "payroll", "review" → `hr` skill
-- "crm", "lead", "deal", "account", "poc" → `crm` skill
-
-### Complex Planning Keywords
-**Trigger:** "plan", "architect", "design", "complex", "multi-step"
-**Action:** For complex planning with extended reasoning, suggest: `npm run claude:full`
-
----
-
-## MCP Preset Switching
-
-```bash
-# Default (coding mode - Supabase + Context7)
-npm run claude:coding
-
-# Testing (Supabase + Playwright)
-npm run claude:testing
-
-# Full (all servers for complex work)
-npm run claude:full
-```
-### Playwiight Default Browser
-- Always use broswer extension built in cursor ide for testing
-
-After switching presets, restart Claude Code to apply changes.
-
----
-
-## Database Migration Rules (IMPORTANT)
-
-**ALWAYS use the `execute-sql` Edge Function for database migrations. NEVER use `npx supabase db push` directly.**
-
-### How to Run Migrations
+### Run Migrations
 
 ```bash
 # 1. Source environment variables
 source .env.local
 
-# 2. Execute SQL via the Edge Function
+# 2. Execute SQL via Edge Function
 curl -X POST 'https://gkwhxmvugnjwwwiufmdy.supabase.co/functions/v1/execute-sql' \
   -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
   -H 'Content-Type: application/json' \
   -d '{"sql":"YOUR SQL STATEMENT HERE"}'
 ```
 
-### Migration Workflow
+### Migration Best Practices
 
-1. **Check current schema first:**
+1. **Check schema first:**
    ```bash
    source .env.local && curl -X POST 'https://gkwhxmvugnjwwwiufmdy.supabase.co/functions/v1/execute-sql' \
      -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
@@ -129,20 +154,19 @@ curl -X POST 'https://gkwhxmvugnjwwwiufmdy.supabase.co/functions/v1/execute-sql'
      -d '{"sql":"SELECT column_name FROM information_schema.columns WHERE table_name = '\''TABLE_NAME'\'' ORDER BY ordinal_position"}'
    ```
 
-2. **Add columns with IF NOT EXISTS:**
+2. **Use idempotent DDL:**
    ```sql
    ALTER TABLE table_name ADD COLUMN IF NOT EXISTS column_name TYPE;
-   ```
-
-3. **Create indexes:**
-   ```sql
    CREATE INDEX IF NOT EXISTS idx_name ON table_name(column_name);
    ```
 
-4. **Always update local migration files** in `supabase/migrations/` after applying changes
+3. **Keep in sync:** Update `supabase/migrations/` and `src/lib/db/schema/`
 
-### Key Points
-- The `execute-sql` function requires the `SUPABASE_SERVICE_ROLE_KEY` for authorization
-- Always use `IF NOT EXISTS` / `IF EXISTS` for idempotent migrations
-- Test queries before running DDL statements
-- Keep Drizzle schema (`src/lib/db/schema/`) in sync with database
+---
+
+## Core Capabilities (All Sessions)
+
+- Sequential thinking for multi-step reasoning
+- Parallel agent execution via Task tool
+- TodoWrite for progress tracking
+- Enterprise SaaS expertise (ATS, CRM, Staffing)

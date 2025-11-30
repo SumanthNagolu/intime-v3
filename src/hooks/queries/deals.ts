@@ -17,6 +17,7 @@
 
 import { trpc } from '@/lib/trpc/client';
 import type { DisplayDeal } from '@/types/aligned';
+import type { OwnershipFilter } from '@/lib/validations/ownership';
 
 // ============================================
 // QUERY OPTIONS TYPES
@@ -28,6 +29,7 @@ export interface DealsQueryOptions {
   offset?: number;
   stage?: 'discovery' | 'qualification' | 'proposal' | 'negotiation' | 'closed_won' | 'closed_lost';
   accountId?: string;
+  ownership?: OwnershipFilter;
 }
 
 export type DealStage = 'discovery' | 'qualification' | 'proposal' | 'negotiation' | 'closed_won' | 'closed_lost';
@@ -95,7 +97,7 @@ export function useDeals(options: DealsQueryOptions = {}): {
   refetch: () => void;
   isFetching: boolean;
 } {
-  const { enabled = true, ...input } = options;
+  const { enabled = true, ownership, ...input } = options;
 
   const query = trpc.crm.deals.list.useQuery(
     {
@@ -103,6 +105,7 @@ export function useDeals(options: DealsQueryOptions = {}): {
       offset: input.offset ?? 0,
       stage: input.stage,
       accountId: input.accountId,
+      ownership: ownership ?? 'my_items',
     },
     {
       enabled,
@@ -209,13 +212,53 @@ export function useDealPipeline(options: { enabled?: boolean } = {}) {
 /**
  * Get deal statistics for dashboard
  */
-export function useDealStats(options: { enabled?: boolean } = {}) {
-  const { enabled = true } = options;
+export function useDealStats(options: { enabled?: boolean; ownership?: OwnershipFilter } = {}) {
+  const { enabled = true, ownership } = options;
 
-  const query = trpc.crm.deals.getStats.useQuery(undefined, {
-    enabled,
-    staleTime: 60 * 1000, // 1 minute cache
-  });
+  const query = trpc.crm.deals.list.useQuery(
+    { limit: 500, offset: 0, ownership: ownership ?? 'my_items' },
+    {
+      enabled,
+      staleTime: 60 * 1000, // 1 minute cache
+      select: (data) => {
+        let discovery = 0;
+        let qualification = 0;
+        let proposal = 0;
+        let negotiation = 0;
+        let won = 0;
+        let lost = 0;
+        let pipelineValue = 0;
+        let wonValue = 0;
+
+        data.forEach(deal => {
+          const value = Number(deal.value || 0);
+          switch (deal.stage) {
+            case 'discovery': discovery++; pipelineValue += value; break;
+            case 'qualification': qualification++; pipelineValue += value; break;
+            case 'proposal': proposal++; pipelineValue += value; break;
+            case 'negotiation': negotiation++; pipelineValue += value; break;
+            case 'closed_won': won++; wonValue += value; break;
+            case 'closed_lost': lost++; break;
+          }
+        });
+
+        const active = discovery + qualification + proposal + negotiation;
+
+        return {
+          total: data.length,
+          discovery,
+          qualification,
+          proposal,
+          negotiation,
+          won,
+          lost,
+          active,
+          pipelineValue,
+          wonValue,
+        };
+      },
+    }
+  );
 
   return {
     stats: query.data ?? {

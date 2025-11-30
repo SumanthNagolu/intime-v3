@@ -62,9 +62,9 @@ export async function getCurrentUserContext(): Promise<{
     user,
     profile: {
       id: profile.id,
-      authId: profile.auth_id,
-      email: profile.email,
-      fullName: profile.full_name,
+      authId: profile.auth_id || '',
+      email: profile.email || '',
+      fullName: profile.full_name || '',
       orgId: profile.org_id,
     },
   };
@@ -227,7 +227,7 @@ export async function logAuditEvent(
   } = params;
 
   try {
-    await adminSupabase.from('audit_logs').insert({
+    await (adminSupabase.from as any)('audit_logs').insert({
       table_name: tableName,
       action,
       record_id: recordId,
@@ -269,7 +269,7 @@ export async function logAuditEventBatch(
       severity: getSeverityForAction(params.action),
     }));
 
-    await adminSupabase.from('audit_logs').insert(rows);
+    await (adminSupabase.from as any)('audit_logs').insert(rows);
   } catch (error) {
     console.error('Failed to log audit events batch:', error);
   }

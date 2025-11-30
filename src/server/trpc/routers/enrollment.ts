@@ -186,9 +186,10 @@ export const enrollmentRouter = router({
         .single();
 
       // Publish enrollment event (ACAD-024: triggers welcome email, onboarding checklist)
-      await supabase.rpc('publish_event', {
+      await (supabase.rpc as any)('publish_event', {
+        p_aggregate_id: enrollmentId,
         p_event_type: 'course.enrolled',
-        p_payload: JSON.stringify({
+        p_payload: {
           studentId: ctx.userId,
           enrollmentId,
           courseId: input.courseId,
@@ -196,7 +197,7 @@ export const enrollmentRouter = router({
           enrolledAt: input.startsAt || new Date().toISOString(),
           paymentType: input.paymentType,
           paymentAmount: input.paymentAmount,
-        }),
+        },
         p_user_id: ctx.userId,
       });
 
@@ -359,8 +360,7 @@ export const enrollmentRouter = router({
     .query(async ({ input, ctx }) => {
       const supabase = await createClient();
 
-      const { data, error } = await supabase
-        .from('onboarding_checklist')
+      const { data, error } = await (supabase.from as any)('onboarding_checklist')
         .select('*')
         .eq('enrollment_id', input.enrollmentId)
         .eq('user_id', ctx.userId)
@@ -386,8 +386,7 @@ export const enrollmentRouter = router({
     .mutation(async ({ input, ctx }) => {
       const supabase = await createClient();
 
-      const { error } = await supabase
-        .from('onboarding_checklist')
+      const { error } = await (supabase.from as any)('onboarding_checklist')
         .update({
           is_completed: true,
           completed_at: new Date().toISOString(),
@@ -502,8 +501,7 @@ export const enrollmentRouter = router({
           }
 
           // ACAD-027: Check AI mentor escalations
-          const { count: escalationCount } = await supabase
-            .from('escalations')
+          const { count: escalationCount } = await (supabase.from as any)('escalations')
             .select('id', { count: 'exact', head: true })
             .eq('student_id', enrollment.user_id)
             .eq('enrollment_id', enrollment.id)
@@ -623,8 +621,7 @@ export const enrollmentRouter = router({
       const { count: pendingGrades } = await gradingQuery;
 
       // Get escalation count
-      const { count: pendingEscalations } = await supabase
-        .from('escalations')
+      const { count: pendingEscalations } = await (supabase.from as any)('escalations')
         .select('id', { count: 'exact', head: true })
         .in('status', ['pending', 'in_progress']);
 
@@ -672,8 +669,7 @@ export const enrollmentRouter = router({
         throw new Error('Enrollment not found');
       }
 
-      const { data, error } = await supabase
-        .from('student_interventions')
+      const { data, error } = await (supabase.from as any)('student_interventions')
         .insert({
           enrollment_id: input.enrollmentId,
           student_id: input.studentId,
@@ -697,9 +693,10 @@ export const enrollmentRouter = router({
         .eq('id', input.enrollmentId);
 
       // Publish student.at_risk_detected event (ACAD-027: triggers trainer notification)
-      await supabase.rpc('publish_event', {
+      await (supabase.rpc as any)('publish_event', {
+        p_aggregate_id: input.enrollmentId,
         p_event_type: 'student.at_risk_detected',
-        p_payload: JSON.stringify({
+        p_payload: {
           studentId: input.studentId,
           studentName: enrollment.student.full_name,
           studentEmail: enrollment.student.email,
@@ -711,7 +708,7 @@ export const enrollmentRouter = router({
           interventionId: data.id,
           trainerId: ctx.userId,
           detectedAt: new Date().toISOString(),
-        }),
+        },
         p_user_id: input.studentId,
       });
 
@@ -732,8 +729,7 @@ export const enrollmentRouter = router({
     .query(async ({ input }) => {
       const supabase = await createClient();
 
-      let query = supabase
-        .from('student_interventions')
+      let query = (supabase.from as any)('student_interventions')
         .select(
           `
           *,
@@ -798,8 +794,7 @@ export const enrollmentRouter = router({
         updateData.resolved_at = input.resolvedAt;
       }
 
-      const { error } = await supabase
-        .from('student_interventions')
+      const { error } = await (supabase.from as any)('student_interventions')
         .update(updateData)
         .eq('id', input.interventionId);
 
@@ -809,8 +804,7 @@ export const enrollmentRouter = router({
 
       // If completed, check if student is still at risk
       if (input.status === 'completed' && input.resolvedAt) {
-        const { data: intervention } = await supabase
-          .from('student_interventions')
+        const { data: intervention } = await (supabase.from as any)('student_interventions')
           .select('enrollment_id')
           .eq('id', input.interventionId)
           .single();

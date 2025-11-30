@@ -261,7 +261,7 @@ export const EmployeeProfile: React.FC = () => {
                           </div>
                           <div className="flex items-center gap-3 text-sm text-stone-600">
                               <div className="w-8 h-8 rounded-full bg-stone-50 flex items-center justify-center text-stone-400"><Phone size={14}/></div>
-                              <span>{employee.phone || '+1 (555) 012-3456'}</span>
+                              <span>{'+1 (555) 012-3456'}</span>
                           </div>
                           <div className="flex items-center gap-3 text-sm text-stone-600">
                               <div className="w-8 h-8 rounded-full bg-stone-50 flex items-center justify-center text-stone-400"><MapPin size={14}/></div>

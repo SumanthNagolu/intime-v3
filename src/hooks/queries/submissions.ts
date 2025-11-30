@@ -8,12 +8,11 @@
 import { trpc } from '@/lib/trpc/client';
 import {
   submissionAdapter,
-  type DisplaySubmission,
   type PipelineData,
   type SubmissionStats,
   PIPELINE_STAGES,
 } from '@/lib/adapters';
-import type { AlignedSubmission, SubmissionStatus } from '@/types/aligned/ats';
+import type { AlignedSubmission, DisplaySubmission, SubmissionStatus } from '@/types/aligned/ats';
 
 // ============================================
 // QUERY OPTIONS TYPES
@@ -67,7 +66,7 @@ export function useSubmissions(options: SubmissionsQueryOptions = {}) {
       staleTime: 30 * 1000,
       select: (data): DisplaySubmission[] => {
         return data.map(sub =>
-          submissionAdapter.toDisplay(sub as AlignedSubmission)
+          submissionAdapter.toDisplay(sub as unknown as AlignedSubmission)
         );
       },
     }
@@ -120,7 +119,7 @@ export function useSubmission(id: string | undefined, options: SubmissionQueryOp
       enabled: enabled && !!id,
       staleTime: 30 * 1000,
       select: (data): DisplaySubmission => {
-        return submissionAdapter.toDisplay(data as AlignedSubmission);
+        return submissionAdapter.toDisplay(data as unknown as AlignedSubmission);
       },
     }
   );
@@ -158,7 +157,7 @@ export function useSubmissionPipeline(options: PipelineQueryOptions = {}) {
       staleTime: 30 * 1000,
       select: (data): PipelineData => {
         // Group submissions by stage
-        return submissionAdapter.groupByStage(data as AlignedSubmission[]);
+        return submissionAdapter.groupByStage(data as unknown as AlignedSubmission[]);
       },
     }
   );
@@ -207,7 +206,7 @@ export function useSubmissionStats(options: PipelineQueryOptions = {}) {
       enabled,
       staleTime: 60 * 1000,
       select: (data): SubmissionStats => {
-        return submissionAdapter.calculateStats(data as AlignedSubmission[]);
+        return submissionAdapter.calculateStats(data as unknown as AlignedSubmission[]);
       },
     }
   );

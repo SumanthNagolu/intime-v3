@@ -411,16 +411,16 @@ async function logAuditEvent(
 ) {
   const { tableName, action, recordId, userId, userEmail, orgId, oldValues, newValues, metadata } = params;
 
-  await adminSupabase.from('audit_logs').insert({
+  await (adminSupabase.from as any)('audit_logs').insert({
     table_name: tableName,
     action,
     record_id: recordId,
     user_id: userId,
     user_email: userEmail,
     org_id: orgId,
-    old_values: oldValues || null,
-    new_values: newValues || null,
-    metadata: metadata || {},
+    old_values: oldValues ?? null,
+    new_values: newValues ?? null,
+    metadata: metadata ?? {},
     severity: action === 'DELETE' ? 'warning' : 'info',
   });
 }
@@ -593,6 +593,8 @@ export async function getLeadAction(leadId: string): Promise<ActionResult<Lead>>
     return { success: false, error: 'Lead not found' };
   }
 
+  const fullName = lead.first_name && lead.last_name ? `${lead.first_name} ${lead.last_name}` : null;
+
   return {
     success: true,
     data: {
@@ -603,17 +605,17 @@ export async function getLeadAction(leadId: string): Promise<ActionResult<Lead>>
       companySize: lead.company_size,
       firstName: lead.first_name,
       lastName: lead.last_name,
-      fullName: lead.full_name,
+      fullName,
       title: lead.title,
       email: lead.email,
       phone: lead.phone,
       linkedinUrl: lead.linkedin_url,
       status: lead.status,
-      estimatedValue: lead.estimated_value ? parseFloat(lead.estimated_value) : null,
+      estimatedValue: typeof lead.estimated_value === 'string' ? parseFloat(lead.estimated_value) : lead.estimated_value,
       source: lead.source,
       sourceCampaignId: lead.source_campaign_id,
       ownerId: lead.owner_id,
-      ownerName: lead.owner?.full_name || null,
+      ownerName: lead.owner?.full_name ?? null,
       lastContactedAt: lead.last_contacted_at,
       lastResponseAt: lead.last_response_at,
       engagementScore: lead.engagement_score,
@@ -825,7 +827,7 @@ export async function deleteLeadAction(leadId: string): Promise<ActionResult<{ d
 
   const { data: existingLead, error: fetchError } = await supabase
     .from('leads')
-    .select('company_name, full_name')
+    .select('company_name, first_name, last_name')
     .eq('id', leadId)
     .is('deleted_at', null)
     .single();
@@ -851,7 +853,7 @@ export async function deleteLeadAction(leadId: string): Promise<ActionResult<{ d
     userId: profile.id,
     userEmail: profile.email,
     orgId: profile.org_id,
-    oldValues: existingLead,
+    oldValues: existingLead as Record<string, unknown>,
     metadata: { source: 'ta_delete_lead' },
   });
 
@@ -930,11 +932,12 @@ export async function convertLeadAction(
 
     // Create POC from lead contact info
     if (lead.first_name && lead.email) {
+      const pocFullName = lead.first_name && lead.last_name ? `${lead.first_name} ${lead.last_name}` : lead.first_name;
       await adminSupabase.from('point_of_contacts').insert({
         account_id: accountId,
         first_name: lead.first_name,
-        last_name: lead.last_name || '',
-        full_name: lead.full_name,
+        last_name: lead.last_name ?? '',
+        full_name: pocFullName,
         title: lead.title,
         email: lead.email,
         phone: lead.phone,
@@ -947,16 +950,17 @@ export async function convertLeadAction(
 
   // Create deal if requested
   if (options.createDeal) {
+    const leadFullName = lead.first_name && lead.last_name ? `${lead.first_name} ${lead.last_name}` : lead.first_name;
     const { data: deal, error: dealError } = await adminSupabase
       .from('deals')
       .insert({
         org_id: profile.org_id,
         lead_id: leadId,
-        account_id: accountId || null,
-        title: options.dealTitle || `Deal from ${lead.company_name || lead.full_name}`,
-        value: options.dealValue || lead.estimated_value || 0,
+        account_id: accountId ?? null,
+        title: options.dealTitle ?? `Deal from ${lead.company_name ?? leadFullName}`,
+        value: options.dealValue ?? lead.estimated_value ?? 0,
         stage: 'discovery',
-        owner_id: lead.owner_id || profile.id,
+        owner_id: lead.owner_id ?? profile.id,
         created_by: profile.id,
       })
       .select()
@@ -1211,7 +1215,7 @@ export async function getDealAction(dealId: string): Promise<ActionResult<Deal>>
       id: deal.id,
       title: deal.title,
       description: deal.description,
-      value: parseFloat(deal.value),
+      value: typeof deal.value === 'string' ? parseFloat(deal.value) : deal.value,
       stage: deal.stage,
       probability: deal.probability,
       expectedCloseDate: deal.expected_close_date,
@@ -1219,9 +1223,9 @@ export async function getDealAction(dealId: string): Promise<ActionResult<Deal>>
       closeReason: deal.close_reason,
       leadId: deal.lead_id,
       accountId: deal.account_id,
-      accountName: deal.account?.name || null,
+      accountName: deal.account?.name ?? null,
       ownerId: deal.owner_id,
-      ownerName: deal.owner?.full_name || null,
+      ownerName: deal.owner?.full_name ?? null,
       linkedJobIds: deal.linked_job_ids,
       createdAt: deal.created_at,
       updatedAt: deal.updated_at,
@@ -1768,24 +1772,24 @@ export async function getAccountAction(accountId: string): Promise<ActionResult<
       id: account.id,
       name: account.name,
       industry: account.industry,
-      companyType: account.company_type,
-      status: account.status,
+      companyType: account.company_type ?? 'direct_client',
+      status: account.status ?? 'prospect',
       tier: account.tier,
       accountManagerId: account.account_manager_id,
-      accountManagerName: account.account_manager?.full_name || null,
+      accountManagerName: account.account_manager?.full_name ?? null,
       responsiveness: account.responsiveness,
       preferredQuality: account.preferred_quality,
       description: account.description,
       contractStartDate: account.contract_start_date,
       contractEndDate: account.contract_end_date,
-      paymentTermsDays: account.payment_terms_days,
-      markupPercentage: account.markup_percentage ? parseFloat(account.markup_percentage) : null,
-      annualRevenueTarget: account.annual_revenue_target ? parseFloat(account.annual_revenue_target) : null,
+      paymentTermsDays: account.payment_terms_days ?? 30,
+      markupPercentage: typeof account.markup_percentage === 'string' ? parseFloat(account.markup_percentage) : account.markup_percentage,
+      annualRevenueTarget: typeof account.annual_revenue_target === 'string' ? parseFloat(account.annual_revenue_target) : account.annual_revenue_target,
       website: account.website,
       headquartersLocation: account.headquarters_location,
       phone: account.phone,
-      contactCount: account.point_of_contacts?.length || 0,
-      dealCount: account.deals?.length || 0,
+      contactCount: account.point_of_contacts?.length ?? 0,
+      dealCount: account.deals?.length ?? 0,
       createdAt: account.created_at,
       updatedAt: account.updated_at,
     },
@@ -2170,7 +2174,7 @@ export async function createContactAction(
     data: {
       id: newContact.id,
       accountId: newContact.account_id,
-      accountName: newContact.account?.name || null,
+      accountName: newContact.account?.name ?? null,
       firstName: newContact.first_name,
       lastName: newContact.last_name,
       fullName: newContact.full_name,
@@ -2179,11 +2183,11 @@ export async function createContactAction(
       email: newContact.email,
       phone: newContact.phone,
       linkedinUrl: newContact.linkedin_url,
-      preferredContactMethod: newContact.preferred_contact_method,
+      preferredContactMethod: newContact.preferred_contact_method ?? 'email',
       decisionAuthority: newContact.decision_authority,
       notes: newContact.notes,
-      isPrimary: newContact.is_primary,
-      isActive: newContact.is_active,
+      isPrimary: newContact.is_primary ?? false,
+      isActive: newContact.is_active ?? true,
       createdAt: newContact.created_at,
     },
   };
@@ -2294,7 +2298,7 @@ export async function updateContactAction(
     data: {
       id: updatedContact.id,
       accountId: updatedContact.account_id,
-      accountName: updatedContact.account?.name || null,
+      accountName: updatedContact.account?.name ?? null,
       firstName: updatedContact.first_name,
       lastName: updatedContact.last_name,
       fullName: updatedContact.full_name,
@@ -2303,11 +2307,11 @@ export async function updateContactAction(
       email: updatedContact.email,
       phone: updatedContact.phone,
       linkedinUrl: updatedContact.linkedin_url,
-      preferredContactMethod: updatedContact.preferred_contact_method,
+      preferredContactMethod: updatedContact.preferred_contact_method ?? 'email',
       decisionAuthority: updatedContact.decision_authority,
       notes: updatedContact.notes,
-      isPrimary: updatedContact.is_primary,
-      isActive: updatedContact.is_active,
+      isPrimary: updatedContact.is_primary ?? false,
+      isActive: updatedContact.is_active ?? true,
       createdAt: updatedContact.created_at,
     },
   };

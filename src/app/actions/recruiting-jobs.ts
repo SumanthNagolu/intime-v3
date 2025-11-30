@@ -37,18 +37,18 @@ export interface Job {
   id: string;
   title: string;
   description: string | null;
-  jobType: string;
+  jobType: string | null;
   location: string | null;
-  isRemote: boolean;
+  isRemote: boolean | null;
   hybridDays: number | null;
   rateMin: number | null;
   rateMax: number | null;
-  rateType: string;
-  currency: string;
-  status: string;
-  urgency: string;
-  positionsCount: number;
-  positionsFilled: number;
+  rateType: string | null;
+  currency: string | null;
+  status: string | null;
+  urgency: string | null;
+  positionsCount: number | null;
+  positionsFilled: number | null;
   requiredSkills: string[] | null;
   niceToHaveSkills: string[] | null;
   minExperienceYears: number | null;
@@ -217,16 +217,16 @@ async function logAuditEvent(
 ) {
   const { tableName, action, recordId, userId, userEmail, orgId, oldValues, newValues, metadata } = params;
 
-  await adminSupabase.from('audit_logs').insert({
+  await (adminSupabase.from as any)('audit_logs').insert({
     table_name: tableName,
     action,
     record_id: recordId,
     user_id: userId,
     user_email: userEmail,
     org_id: orgId,
-    old_values: oldValues || null,
-    new_values: newValues || null,
-    metadata: metadata || {},
+    old_values: oldValues ?? null,
+    new_values: newValues ?? null,
+    metadata: metadata ?? {},
     severity: action === 'DELETE' ? 'warning' : 'info',
   });
 }
@@ -264,8 +264,8 @@ export async function listJobsAction(
     return { success: false, error: 'Permission denied: jobs:read required' };
   }
 
-  let query = supabase
-    .from('jobs')
+  const baseQuery = supabase.from('jobs') as any;
+  let query = baseQuery
     .select(`
       id,
       title,
@@ -340,8 +340,8 @@ export async function listJobsAction(
     location: job.location,
     isRemote: job.is_remote,
     hybridDays: job.hybrid_days,
-    rateMin: job.rate_min ? parseFloat(job.rate_min) : null,
-    rateMax: job.rate_max ? parseFloat(job.rate_max) : null,
+    rateMin: job.rate_min ? (typeof job.rate_min === 'string' ? parseFloat(job.rate_min) : job.rate_min) : null,
+    rateMax: job.rate_max ? (typeof job.rate_max === 'string' ? parseFloat(job.rate_max) : job.rate_max) : null,
     rateType: job.rate_type,
     currency: job.currency,
     status: job.status,
@@ -402,8 +402,7 @@ export async function getJobAction(jobId: string): Promise<ActionResult<Job>> {
     return { success: false, error: 'Permission denied: jobs:read required' };
   }
 
-  const { data: job, error } = await supabase
-    .from('jobs')
+  const { data: job, error } = await (supabase.from('jobs') as any)
     .select(`
       *,
       account:accounts!account_id(name),
@@ -430,8 +429,8 @@ export async function getJobAction(jobId: string): Promise<ActionResult<Job>> {
       location: job.location,
       isRemote: job.is_remote,
       hybridDays: job.hybrid_days,
-      rateMin: job.rate_min ? parseFloat(job.rate_min) : null,
-      rateMax: job.rate_max ? parseFloat(job.rate_max) : null,
+      rateMin: job.rate_min ? (typeof job.rate_min === 'string' ? parseFloat(job.rate_min) : job.rate_min) : null,
+      rateMax: job.rate_max ? (typeof job.rate_max === 'string' ? parseFloat(job.rate_max) : job.rate_max) : null,
       rateType: job.rate_type,
       currency: job.currency,
       status: job.status,
@@ -678,8 +677,7 @@ export async function deleteJobAction(jobId: string): Promise<ActionResult<{ del
     return { success: false, error: 'Permission denied: jobs:delete required' };
   }
 
-  const { data: existingJob, error: fetchError } = await supabase
-    .from('jobs')
+  const { data: existingJob, error: fetchError } = await (supabase.from('jobs') as any)
     .select('title, submissions(id)')
     .eq('id', jobId)
     .is('deleted_at', null)
@@ -1069,8 +1067,7 @@ export async function getJobMetricsAction(): Promise<ActionResult<JobMetrics>> {
   const supabase = await createClient();
 
   // Get all jobs
-  const { data: jobs, error } = await supabase
-    .from('jobs')
+  const { data: jobs, error } = await (supabase.from('jobs') as any)
     .select('id, status, filled_date, created_at, submissions(id)')
     .is('deleted_at', null);
 
@@ -1134,8 +1131,7 @@ export async function getJobsByAccountAction(accountId: string): Promise<ActionR
 
   const supabase = await createClient();
 
-  const { data: jobs, error } = await supabase
-    .from('jobs')
+  const { data: jobs, error } = await (supabase.from('jobs') as any)
     .select(`
       *,
       account:accounts!account_id(name),
@@ -1161,8 +1157,8 @@ export async function getJobsByAccountAction(accountId: string): Promise<ActionR
     location: job.location,
     isRemote: job.is_remote,
     hybridDays: job.hybrid_days,
-    rateMin: job.rate_min ? parseFloat(job.rate_min) : null,
-    rateMax: job.rate_max ? parseFloat(job.rate_max) : null,
+    rateMin: job.rate_min ? (typeof job.rate_min === 'string' ? parseFloat(job.rate_min) : job.rate_min) : null,
+    rateMax: job.rate_max ? (typeof job.rate_max === 'string' ? parseFloat(job.rate_max) : job.rate_max) : null,
     rateType: job.rate_type,
     currency: job.currency,
     status: job.status,

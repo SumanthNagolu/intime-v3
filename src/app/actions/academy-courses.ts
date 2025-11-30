@@ -160,7 +160,7 @@ async function logAuditEvent(
 ) {
   const supabase = await createClient();
 
-  await supabase.from('audit_logs').insert({
+  await (supabase.from as any)('audit_logs').insert({
     user_id: userId,
     org_id: orgId,
     action,

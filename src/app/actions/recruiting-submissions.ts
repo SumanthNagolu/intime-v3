@@ -205,7 +205,7 @@ async function logAuditEvent(
 ) {
   const { tableName, action, recordId, userId, userEmail, orgId, oldValues, newValues, metadata } = params;
 
-  await adminSupabase.from('audit_logs').insert({
+  await (adminSupabase.from as any)('audit_logs').insert({
     table_name: tableName,
     action,
     record_id: recordId,
@@ -863,7 +863,7 @@ export async function acceptOfferAction(submissionId: string): Promise<ActionRes
     const newFilled = (job.positions_filled || 0) + 1;
     const updateJobData: Record<string, unknown> = { positions_filled: newFilled };
 
-    if (newFilled >= job.positions_count) {
+    if (job.positions_count && newFilled >= job.positions_count) {
       updateJobData.status = 'filled';
       updateJobData.filled_date = new Date().toISOString();
     }

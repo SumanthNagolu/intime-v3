@@ -292,7 +292,7 @@ async function logAuditEvent(
     new_values: newValues || null,
     metadata: metadata || {},
     severity: action.includes('CANCEL') ? 'warning' : 'info',
-  });
+  } as any);
 }
 
 // ============================================================================
@@ -327,9 +327,9 @@ export async function listInterviewsAction(
     .from('interviews')
     .select(`
       *,
-      job:jobs!job_id(title),
-      candidate:user_profiles!candidate_id(full_name, email),
-      scheduler:user_profiles!scheduled_by(full_name)
+      job:jobs!interviews_job_id_fkey(title),
+      candidate:user_profiles!interviews_candidate_id_fkey(full_name, email),
+      scheduler:user_profiles!interviews_scheduled_by_fkey(full_name)
     `, { count: 'exact' });
 
   if (status) query = query.eq('status', status);
@@ -415,9 +415,9 @@ export async function getInterviewAction(interviewId: string): Promise<ActionRes
     .from('interviews')
     .select(`
       *,
-      job:jobs!job_id(title),
-      candidate:user_profiles!candidate_id(full_name, email),
-      scheduler:user_profiles!scheduled_by(full_name)
+      job:jobs!interviews_job_id_fkey(title),
+      candidate:user_profiles!interviews_candidate_id_fkey(full_name, email),
+      scheduler:user_profiles!interviews_scheduled_by_fkey(full_name)
     `)
     .eq('id', interviewId)
     .single();
@@ -437,10 +437,10 @@ export async function getInterviewAction(interviewId: string): Promise<ActionRes
       candidateName: interview.candidate?.full_name || null,
       candidateEmail: interview.candidate?.email || null,
       roundNumber: interview.round_number,
-      interviewType: interview.interview_type,
+      interviewType: interview.interview_type as string,
       scheduledAt: interview.scheduled_at,
-      durationMinutes: interview.duration_minutes,
-      timezone: interview.timezone,
+      durationMinutes: interview.duration_minutes as number,
+      timezone: interview.timezone as string,
       meetingLink: interview.meeting_link,
       meetingLocation: interview.meeting_location,
       interviewerNames: interview.interviewer_names,
@@ -504,6 +504,7 @@ export async function createInterviewAction(
   const { data: newInterview, error } = await adminSupabase
     .from('interviews')
     .insert({
+      org_id: profile.org_id,
       submission_id: data.submissionId,
       job_id: submission.job_id,
       candidate_id: submission.candidate_id,
@@ -528,7 +529,16 @@ export async function createInterviewAction(
   }
 
   // Update submission interview count
-  await adminSupabase.rpc('increment_interview_count', { submission_id: data.submissionId });
+  await adminSupabase
+    .from('submissions')
+    .update({
+      interview_count: (await adminSupabase
+        .from('interviews')
+        .select('id', { count: 'exact', head: true })
+        .eq('submission_id', data.submissionId)
+      ).count || 0
+    })
+    .eq('id', data.submissionId);
 
   await logAuditEvent(adminSupabase, {
     tableName: 'interviews',
@@ -799,9 +809,9 @@ export async function getSubmissionInterviewsAction(
     .from('interviews')
     .select(`
       *,
-      job:jobs!job_id(title),
-      candidate:user_profiles!candidate_id(full_name, email),
-      scheduler:user_profiles!scheduled_by(full_name)
+      job:jobs!interviews_job_id_fkey(title),
+      candidate:user_profiles!interviews_candidate_id_fkey(full_name, email),
+      scheduler:user_profiles!interviews_scheduled_by_fkey(full_name)
     `)
     .eq('submission_id', submissionId)
     .order('round_number', { ascending: true });
@@ -862,9 +872,9 @@ export async function getUpcomingInterviewsAction(): Promise<ActionResult<Interv
     .from('interviews')
     .select(`
       *,
-      job:jobs!job_id(title),
-      candidate:user_profiles!candidate_id(full_name, email),
-      scheduler:user_profiles!scheduled_by(full_name)
+      job:jobs!interviews_job_id_fkey(title),
+      candidate:user_profiles!interviews_candidate_id_fkey(full_name, email),
+      scheduler:user_profiles!interviews_scheduled_by_fkey(full_name)
     `)
     .eq('status', 'scheduled')
     .gte('scheduled_at', now.toISOString())
@@ -957,6 +967,7 @@ export async function createOfferAction(
   const { data: newOffer, error } = await adminSupabase
     .from('offers')
     .insert({
+      org_id: profile.org_id,
       submission_id: data.submissionId,
       job_id: submission.job_id,
       candidate_id: submission.candidate_id,
@@ -1017,8 +1028,8 @@ export async function getOfferAction(offerId: string): Promise<ActionResult<Offe
     .from('offers')
     .select(`
       *,
-      job:jobs!job_id(title),
-      candidate:user_profiles!candidate_id(full_name)
+      job:jobs!offers_job_id_fkey(title),
+      candidate:user_profiles!offers_candidate_id_fkey(full_name)
     `)
     .eq('id', offerId)
     .single();
@@ -1036,19 +1047,19 @@ export async function getOfferAction(offerId: string): Promise<ActionResult<Offe
       jobTitle: offer.job?.title || null,
       candidateId: offer.candidate_id,
       candidateName: offer.candidate?.full_name || null,
-      offerType: offer.offer_type,
-      rate: parseFloat(offer.rate),
-      rateType: offer.rate_type,
+      offerType: offer.offer_type as string,
+      rate: typeof offer.rate === 'string' ? parseFloat(offer.rate) : offer.rate,
+      rateType: offer.rate_type as string,
       startDate: offer.start_date,
       endDate: offer.end_date,
-      bonus: offer.bonus ? parseFloat(offer.bonus) : null,
+      bonus: offer.bonus ? (typeof offer.bonus === 'string' ? parseFloat(offer.bonus) : offer.bonus) : null,
       benefits: offer.benefits,
-      relocationAssistance: offer.relocation_assistance,
-      signOnBonus: offer.sign_on_bonus ? parseFloat(offer.sign_on_bonus) : null,
+      relocationAssistance: offer.relocation_assistance as boolean,
+      signOnBonus: offer.sign_on_bonus ? (typeof offer.sign_on_bonus === 'string' ? parseFloat(offer.sign_on_bonus) : offer.sign_on_bonus) : null,
       status: offer.status,
       sentAt: offer.sent_at,
       expiresAt: offer.expires_at,
-      candidateCounterOffer: offer.candidate_counter_offer ? parseFloat(offer.candidate_counter_offer) : null,
+      candidateCounterOffer: offer.candidate_counter_offer ? (typeof offer.candidate_counter_offer === 'string' ? parseFloat(offer.candidate_counter_offer) : offer.candidate_counter_offer) : null,
       negotiationNotes: offer.negotiation_notes,
       acceptedAt: offer.accepted_at,
       declinedAt: offer.declined_at,
@@ -1250,10 +1261,10 @@ export async function getPlacementAction(placementId: string): Promise<ActionRes
     .from('placements')
     .select(`
       *,
-      job:jobs!job_id(title),
-      candidate:user_profiles!candidate_id(full_name),
-      account:accounts!account_id(name),
-      recruiter:user_profiles!recruiter_id(full_name)
+      job:jobs!placements_job_id_fkey(title),
+      candidate:user_profiles!placements_candidate_id_fkey(full_name),
+      account:accounts!placements_account_id_fkey(name),
+      recruiter:user_profiles!placements_recruiter_id_fkey(full_name)
     `)
     .eq('id', placementId)
     .single();
@@ -1274,21 +1285,21 @@ export async function getPlacementAction(placementId: string): Promise<ActionRes
       candidateName: placement.candidate?.full_name || null,
       accountId: placement.account_id,
       accountName: placement.account?.name || null,
-      placementType: placement.placement_type,
+      placementType: placement.placement_type as string,
       startDate: placement.start_date,
       endDate: placement.end_date,
-      billRate: parseFloat(placement.bill_rate),
-      payRate: parseFloat(placement.pay_rate),
-      markupPercentage: placement.markup_percentage ? parseFloat(placement.markup_percentage) : null,
+      billRate: typeof placement.bill_rate === 'string' ? parseFloat(placement.bill_rate) : placement.bill_rate,
+      payRate: typeof placement.pay_rate === 'string' ? parseFloat(placement.pay_rate) : placement.pay_rate,
+      markupPercentage: placement.markup_percentage ? (typeof placement.markup_percentage === 'string' ? parseFloat(placement.markup_percentage) : placement.markup_percentage) : null,
       status: placement.status,
       endReason: placement.end_reason,
       actualEndDate: placement.actual_end_date,
-      totalRevenue: placement.total_revenue ? parseFloat(placement.total_revenue) : null,
-      totalPaid: placement.total_paid ? parseFloat(placement.total_paid) : null,
-      onboardingStatus: placement.onboarding_status,
+      totalRevenue: placement.total_revenue ? (typeof placement.total_revenue === 'string' ? parseFloat(placement.total_revenue) : placement.total_revenue) : null,
+      totalPaid: placement.total_paid ? (typeof placement.total_paid === 'string' ? parseFloat(placement.total_paid) : placement.total_paid) : null,
+      onboardingStatus: placement.onboarding_status as string,
       onboardingCompletedAt: placement.onboarding_completed_at,
       performanceRating: placement.performance_rating,
-      extensionCount: placement.extension_count,
+      extensionCount: placement.extension_count as number,
       recruiterId: placement.recruiter_id,
       recruiterName: placement.recruiter?.full_name || null,
       accountManagerId: placement.account_manager_id,
@@ -1318,10 +1329,10 @@ export async function listPlacementsAction(
     .from('placements')
     .select(`
       *,
-      job:jobs!job_id(title),
-      candidate:user_profiles!candidate_id(full_name),
-      account:accounts!account_id(name),
-      recruiter:user_profiles!recruiter_id(full_name)
+      job:jobs!placements_job_id_fkey(title),
+      candidate:user_profiles!placements_candidate_id_fkey(full_name),
+      account:accounts!placements_account_id_fkey(name),
+      recruiter:user_profiles!placements_recruiter_id_fkey(full_name)
     `, { count: 'exact' });
 
   if (filters.status) query = query.eq('status', filters.status);
@@ -1353,14 +1364,14 @@ export async function listPlacementsAction(
     placementType: p.placement_type,
     startDate: p.start_date,
     endDate: p.end_date,
-    billRate: parseFloat(p.bill_rate),
-    payRate: parseFloat(p.pay_rate),
-    markupPercentage: p.markup_percentage ? parseFloat(p.markup_percentage) : null,
+    billRate: typeof p.bill_rate === 'string' ? parseFloat(p.bill_rate) : p.bill_rate,
+    payRate: typeof p.pay_rate === 'string' ? parseFloat(p.pay_rate) : p.pay_rate,
+    markupPercentage: p.markup_percentage ? (typeof p.markup_percentage === 'string' ? parseFloat(p.markup_percentage) : p.markup_percentage) : null,
     status: p.status,
     endReason: p.end_reason,
     actualEndDate: p.actual_end_date,
-    totalRevenue: p.total_revenue ? parseFloat(p.total_revenue) : null,
-    totalPaid: p.total_paid ? parseFloat(p.total_paid) : null,
+    totalRevenue: p.total_revenue ? (typeof p.total_revenue === 'string' ? parseFloat(p.total_revenue) : p.total_revenue) : null,
+    totalPaid: p.total_paid ? (typeof p.total_paid === 'string' ? parseFloat(p.total_paid) : p.total_paid) : null,
     onboardingStatus: p.onboarding_status,
     onboardingCompletedAt: p.onboarding_completed_at,
     performanceRating: p.performance_rating,

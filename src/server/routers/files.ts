@@ -110,6 +110,10 @@ export const filesRouter = router({
       const { orgId, userId } = ctx;
       const { fileName, mimeType, entityType, entityId } = input;
 
+      if (!userId) {
+        throw new Error('User ID not found in context');
+      }
+
       // Get user profile ID - try authId first, then id
       let [userProfile] = await db.select({ id: userProfiles.id })
         .from(userProfiles)
@@ -168,6 +172,10 @@ export const filesRouter = router({
     }))
     .mutation(async ({ ctx, input }) => {
       const { orgId, userId } = ctx;
+
+      if (!userId) {
+        throw new Error('User ID not found in context');
+      }
 
       // Get user profile ID - try authId first, then id
       let [userProfile] = await db.select({ id: userProfiles.id })

@@ -1,14 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   ArrowLeft, User, MapPin, Briefcase, Clock, Phone, Mail, Calendar,
   FileText, Activity, Building2, DollarSign, ChevronRight, Plus,
-  Loader2, X, Search, ExternalLink, Edit, MoreHorizontal
+  Loader2, X, Search, ExternalLink, Edit, MoreHorizontal, Upload, CheckCircle, Send,
+  PhoneCall, Eye, Download, History, Sparkles, Copy, RefreshCw, FileUp, ChevronDown
 } from 'lucide-react';
 import { trpc } from '@/lib/trpc/client';
+import { EditTalentModal } from './EditTalentModal';
 
 interface TalentWorkspaceProps {
   talentId: string;
@@ -49,6 +51,1314 @@ const STATUS_COLORS: Record<string, string> = {
 
 type TabType = 'overview' | 'jobs' | 'submissions' | 'documents' | 'activity';
 
+// Resume Upload Modal Component with Versioning Support
+const ResumeUploadModal: React.FC<{
+  talentId: string;
+  talentName: string;
+  onClose: () => void;
+  onSuccess: () => void;
+}> = ({ talentId, talentName, onClose, onSuccess }) => {
+  const [step, setStep] = useState<'upload' | 'uploading' | 'success'>('upload');
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [dragActive, setDragActive] = useState(false);
+  const [resumeType, setResumeType] = useState<'master' | 'formatted' | 'client_specific'>('master');
+  const [title, setTitle] = useState('');
+  const [notes, setNotes] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const utils = trpc.useUtils();
+  const getUploadUrl = trpc.files.getUploadUrl.useMutation();
+  const recordUpload = trpc.files.recordUpload.useMutation();
+  const createResume = trpc.ats.resumes.create.useMutation();
+
+  const handleDrag = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === 'dragenter' || e.type === 'dragover') {
+      setDragActive(true);
+    } else if (e.type === 'dragleave') {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      setSelectedFile(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!selectedFile) return;
+    setStep('uploading');
+    setError(null);
+
+    try {
+      // 1. Get upload URL
+      const { uploadUrl, filePath, bucket } = await getUploadUrl.mutateAsync({
+        fileName: selectedFile.name,
+        mimeType: selectedFile.type,
+        entityType: 'candidate_resume',
+        entityId: talentId,
+      });
+
+      // 2. Upload file to storage
+      const uploadResponse = await fetch(uploadUrl, {
+        method: 'PUT',
+        body: selectedFile,
+        headers: {
+          'Content-Type': selectedFile.type,
+        },
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error('Failed to upload file to storage');
+      }
+
+      // 3. Record the file upload
+      await recordUpload.mutateAsync({
+        bucket,
+        filePath,
+        fileName: selectedFile.name,
+        fileSize: selectedFile.size,
+        mimeType: selectedFile.type,
+        entityType: 'candidate_resume',
+        entityId: talentId,
+        metadata: { resumeType, title, notes },
+      });
+
+      // 4. Create resume version record
+      await createResume.mutateAsync({
+        candidateId: talentId,
+        bucket,
+        filePath,
+        fileName: selectedFile.name,
+        fileSize: selectedFile.size,
+        mimeType: selectedFile.type,
+        resumeType,
+        title: title || undefined,
+        notes: notes || undefined,
+      });
+
+      // Invalidate queries to refresh data
+      utils.ats.resumes.list.invalidate({ candidateId: talentId });
+
+      setStep('success');
+      setTimeout(() => {
+        onSuccess();
+        onClose();
+      }, 1500);
+    } catch (err) {
+      console.error('Upload failed:', err);
+      setError(err instanceof Error ? err.message : 'Upload failed. Please try again.');
+      setStep('upload');
+    }
+  };
+
+  const resumeTypeOptions = [
+    { value: 'master', label: 'Master Resume', description: 'Original/primary resume' },
+    { value: 'formatted', label: 'Formatted', description: 'Internal formatted version' },
+    { value: 'client_specific', label: 'Client-Specific', description: 'Tailored for specific client' },
+  ] as const;
+
+  return (
+    <div className="fixed inset-0 bg-charcoal/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in" onClick={onClose}>
+      <div className="bg-white w-full max-w-lg rounded-[2rem] shadow-2xl relative max-h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-6 right-6 text-stone-400 hover:text-charcoal z-10">
+          <X size={24} />
+        </button>
+
+        {step === 'upload' && (
+          <>
+            <div className="p-8 pb-4">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 bg-rust/10 text-rust rounded-xl flex items-center justify-center">
+                  <FileUp size={20} />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-serif font-bold text-charcoal">Upload Resume</h2>
+                  <p className="text-xs text-stone-500">New version for {talentName}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex-1 overflow-y-auto px-8 pb-8 space-y-5">
+              {error && (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
+                  {error}
+                </div>
+              )}
+
+              {/* File Drop Zone */}
+              <div
+                onDragEnter={handleDrag}
+                onDragLeave={handleDrag}
+                onDragOver={handleDrag}
+                onDrop={handleDrop}
+                onClick={() => fileInputRef.current?.click()}
+                className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
+                  dragActive
+                    ? 'border-rust bg-rust/10'
+                    : selectedFile
+                      ? 'border-green-400 bg-green-50'
+                      : 'border-stone-300 bg-stone-50 hover:border-rust hover:bg-rust/5'
+                }`}
+              >
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".pdf,.doc,.docx"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
+                {selectedFile ? (
+                  <>
+                    <CheckCircle size={28} className="mx-auto text-green-500 mb-2" />
+                    <p className="text-sm font-medium text-charcoal">{selectedFile.name}</p>
+                    <p className="text-xs text-stone-500 mt-1">
+                      {(selectedFile.size / 1024).toFixed(1)} KB • Click to change
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <Upload size={28} className="mx-auto text-stone-400 mb-2" />
+                    <p className="text-xs font-bold text-stone-500 uppercase tracking-widest">Drag & Drop or Click</p>
+                    <p className="text-xs text-stone-400 mt-2">PDF, DOC, DOCX (Max 10MB)</p>
+                  </>
+                )}
+              </div>
+
+              {/* Resume Type Selection */}
+              <div>
+                <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
+                  Resume Type
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {resumeTypeOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => setResumeType(option.value)}
+                      className={`p-3 rounded-xl border text-left transition-all ${
+                        resumeType === option.value
+                          ? 'border-rust bg-rust/5 ring-1 ring-rust'
+                          : 'border-stone-200 hover:border-stone-300'
+                      }`}
+                    >
+                      <div className="text-xs font-bold text-charcoal">{option.label}</div>
+                      <div className="text-[10px] text-stone-500 mt-0.5">{option.description}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Optional Title */}
+              <div>
+                <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
+                  Title (Optional)
+                </label>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="e.g., Java Developer Resume - Updated Skills"
+                  className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
+                />
+              </div>
+
+              {/* Optional Notes */}
+              <div>
+                <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
+                  Notes (Optional)
+                </label>
+                <textarea
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  placeholder="Any notes about this version..."
+                  rows={2}
+                  className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust resize-none"
+                />
+              </div>
+
+              {/* Version Notice */}
+              <div className="flex items-start gap-2 p-3 bg-blue-50 rounded-xl border border-blue-100">
+                <History size={16} className="text-blue-600 mt-0.5 flex-shrink-0" />
+                <p className="text-xs text-blue-700">
+                  Previous versions are preserved and can be accessed from the version history.
+                </p>
+              </div>
+
+              <button
+                onClick={handleUpload}
+                disabled={!selectedFile}
+                className="w-full py-3 bg-charcoal text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-rust disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
+              >
+                <FileUp size={14} /> Upload New Version
+              </button>
+            </div>
+          </>
+        )}
+
+        {step === 'uploading' && (
+          <div className="p-8 text-center">
+            <div className="w-16 h-16 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Loader2 size={32} className="text-rust animate-spin" />
+            </div>
+            <h3 className="text-xl font-bold text-charcoal">Uploading...</h3>
+            <p className="text-stone-500 text-sm mt-2">Please wait while we process your resume.</p>
+          </div>
+        )}
+
+        {step === 'success' && (
+          <div className="p-8 text-center">
+            <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle size={32} />
+            </div>
+            <h3 className="text-xl font-bold text-charcoal">Upload Complete</h3>
+            <p className="text-stone-500 text-sm mt-2">
+              Resume v{resumeType === 'master' ? 'new' : resumeType} has been added to the profile.
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// EditTalentModal is now imported from ./EditTalentModal.tsx
+
+// Placeholder to mark where old inline EditTalentModal was removed
+const _EditTalentModalRemoved = ({ talent, onClose, onSuccess }: {
+  talent: {
+    id: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    email?: string | null;
+    phone?: string | null;
+    candidateSkills?: string[] | null;
+    candidateExperienceYears?: number | null;
+    candidateCurrentVisa?: string | null;
+    candidateVisaExpiry?: Date | null;
+    candidateHourlyRate?: string | null;
+    candidateAvailability?: string | null;
+    candidateLocation?: string | null;
+    candidateWillingToRelocate?: boolean | null;
+    candidateStatus?: string | null;
+  };
+  onClose: () => void;
+  onSuccess: () => void;
+}) => {
+  const [step, setStep] = useState<'edit' | 'saving' | 'success'>('edit');
+  const [error, setError] = useState<string | null>(null);
+  const [skillInput, setSkillInput] = useState('');
+
+  // Form state
+  const [form, setForm] = useState({
+    firstName: talent.firstName || '',
+    lastName: talent.lastName || '',
+    phone: talent.phone || '',
+    candidateSkills: talent.candidateSkills || [],
+    candidateExperienceYears: talent.candidateExperienceYears || 0,
+    candidateCurrentVisa: talent.candidateCurrentVisa || 'H1B',
+    candidateVisaExpiry: talent.candidateVisaExpiry ? new Date(talent.candidateVisaExpiry).toISOString().split('T')[0] : '',
+    candidateHourlyRate: talent.candidateHourlyRate ? parseFloat(talent.candidateHourlyRate) : 0,
+    candidateAvailability: talent.candidateAvailability || 'immediate',
+    candidateLocation: talent.candidateLocation || '',
+    candidateWillingToRelocate: talent.candidateWillingToRelocate || false,
+    candidateStatus: talent.candidateStatus || 'active',
+  });
+
+  const utils = trpc.useUtils();
+  const updateMutation = trpc.ats.candidates.update.useMutation({
+    onSuccess: () => {
+      utils.ats.candidates.getById.invalidate({ id: talent.id });
+      setStep('success');
+      setTimeout(() => {
+        onSuccess();
+        onClose();
+      }, 1500);
+    },
+    onError: (err) => {
+      setError(err.message || 'Failed to update talent');
+      setStep('edit');
+    },
+  });
+
+  const handleChange = (field: keyof typeof form, value: any) => {
+    setForm(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleAddSkill = () => {
+    if (skillInput.trim() && !form.candidateSkills.includes(skillInput.trim())) {
+      setForm(prev => ({
+        ...prev,
+        candidateSkills: [...prev.candidateSkills, skillInput.trim()],
+      }));
+      setSkillInput('');
+    }
+  };
+
+  const handleRemoveSkill = (skillToRemove: string) => {
+    setForm(prev => ({
+      ...prev,
+      candidateSkills: prev.candidateSkills.filter(s => s !== skillToRemove),
+    }));
+  };
+
+  const handleSubmit = async () => {
+    setStep('saving');
+    setError(null);
+
+    updateMutation.mutate({
+      id: talent.id,
+      firstName: form.firstName || undefined,
+      lastName: form.lastName || undefined,
+      phone: form.phone || undefined,
+      candidateSkills: form.candidateSkills.length > 0 ? form.candidateSkills : undefined,
+      candidateExperienceYears: form.candidateExperienceYears > 0 ? form.candidateExperienceYears : undefined,
+      candidateCurrentVisa: form.candidateCurrentVisa as any,
+      candidateVisaExpiry: form.candidateVisaExpiry ? new Date(form.candidateVisaExpiry) : undefined,
+      candidateHourlyRate: form.candidateHourlyRate > 0 ? form.candidateHourlyRate : undefined,
+      candidateAvailability: form.candidateAvailability as any,
+      candidateLocation: form.candidateLocation || undefined,
+      candidateWillingToRelocate: form.candidateWillingToRelocate,
+      candidateStatus: form.candidateStatus as any,
+    });
+  };
+
+  const visaOptions = [
+    { value: 'H1B', label: 'H1B' },
+    { value: 'GC', label: 'Green Card' },
+    { value: 'USC', label: 'US Citizen' },
+    { value: 'OPT', label: 'OPT' },
+    { value: 'CPT', label: 'CPT' },
+    { value: 'TN', label: 'TN Visa' },
+    { value: 'L1', label: 'L1 Visa' },
+    { value: 'EAD', label: 'EAD' },
+    { value: 'Other', label: 'Other' },
+  ];
+
+  const availabilityOptions = [
+    { value: 'immediate', label: 'Immediate' },
+    { value: '2_weeks', label: '2 Weeks Notice' },
+    { value: '1_month', label: '1 Month Notice' },
+  ];
+
+  const statusOptions = [
+    { value: 'active', label: 'Active', color: 'bg-green-100 text-green-700' },
+    { value: 'placed', label: 'Placed', color: 'bg-blue-100 text-blue-700' },
+    { value: 'bench', label: 'On Bench', color: 'bg-amber-100 text-amber-700' },
+    { value: 'inactive', label: 'Inactive', color: 'bg-gray-100 text-gray-700' },
+    { value: 'blacklisted', label: 'Blacklisted', color: 'bg-red-100 text-red-700' },
+  ];
+
+  return (
+    <div className="fixed inset-0 bg-charcoal/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in" onClick={onClose}>
+      <div className="bg-white w-full max-w-2xl rounded-[2rem] shadow-2xl relative max-h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-6 right-6 text-stone-400 hover:text-charcoal z-10">
+          <X size={24} />
+        </button>
+
+        {step === 'edit' && (
+          <>
+            <div className="p-8 pb-4 border-b border-stone-100">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-rust/10 text-rust rounded-xl flex items-center justify-center">
+                  <Edit size={20} />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-serif font-bold text-charcoal">Edit Talent Profile</h2>
+                  <p className="text-xs text-stone-500">{talent.email}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex-1 overflow-y-auto px-8 pb-8 pt-6 space-y-6">
+              {error && (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
+                  {error}
+                </div>
+              )}
+
+              {/* Basic Info Section */}
+              <div className="space-y-4">
+                <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest flex items-center gap-2">
+                  <User size={14} /> Basic Information
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
+                      First Name *
+                    </label>
+                    <input
+                      type="text"
+                      value={form.firstName}
+                      onChange={(e) => handleChange('firstName', e.target.value)}
+                      className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
+                      Last Name *
+                    </label>
+                    <input
+                      type="text"
+                      value={form.lastName}
+                      onChange={(e) => handleChange('lastName', e.target.value)}
+                      className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    value={form.phone}
+                    onChange={(e) => handleChange('phone', e.target.value)}
+                    placeholder="+1 (555) 123-4567"
+                    className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
+                  />
+                </div>
+              </div>
+
+              {/* Professional Details Section */}
+              <div className="space-y-4 pt-4 border-t border-stone-100">
+                <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest flex items-center gap-2">
+                  <Briefcase size={14} /> Professional Details
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
+                      Years of Experience
+                    </label>
+                    <input
+                      type="number"
+                      min="0"
+                      max="50"
+                      value={form.candidateExperienceYears}
+                      onChange={(e) => handleChange('candidateExperienceYears', parseInt(e.target.value) || 0)}
+                      className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
+                      Hourly Rate ($)
+                    </label>
+                    <div className="relative">
+                      <DollarSign size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
+                      <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        value={form.candidateHourlyRate}
+                        onChange={(e) => handleChange('candidateHourlyRate', parseFloat(e.target.value) || 0)}
+                        className="w-full p-3 pl-8 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Skills */}
+                <div>
+                  <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
+                    Skills
+                  </label>
+                  <div className="flex gap-2 mb-2">
+                    <input
+                      type="text"
+                      value={skillInput}
+                      onChange={(e) => setSkillInput(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddSkill())}
+                      placeholder="Type a skill and press Enter"
+                      className="flex-1 p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleAddSkill}
+                      className="px-4 py-3 bg-charcoal text-white rounded-xl text-xs font-bold hover:bg-rust transition-colors"
+                    >
+                      <Plus size={14} />
+                    </button>
+                  </div>
+                  {form.candidateSkills.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {form.candidateSkills.map((skill, idx) => (
+                        <span
+                          key={idx}
+                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-rust/10 text-rust rounded-full text-xs font-medium"
+                        >
+                          {skill}
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveSkill(skill)}
+                            className="hover:bg-rust/20 rounded-full p-0.5"
+                          >
+                            <X size={12} />
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Visa & Availability Section */}
+              <div className="space-y-4 pt-4 border-t border-stone-100">
+                <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest flex items-center gap-2">
+                  <Calendar size={14} /> Visa & Availability
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
+                      Visa Status
+                    </label>
+                    <select
+                      value={form.candidateCurrentVisa}
+                      onChange={(e) => handleChange('candidateCurrentVisa', e.target.value)}
+                      className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
+                    >
+                      {visaOptions.map(opt => (
+                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
+                      Visa Expiry Date
+                    </label>
+                    <input
+                      type="date"
+                      value={form.candidateVisaExpiry}
+                      onChange={(e) => handleChange('candidateVisaExpiry', e.target.value)}
+                      className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
+                    Availability
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {availabilityOptions.map(opt => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => handleChange('candidateAvailability', opt.value)}
+                        className={`p-3 rounded-xl border text-xs font-bold transition-all ${
+                          form.candidateAvailability === opt.value
+                            ? 'border-rust bg-rust/5 text-rust ring-1 ring-rust'
+                            : 'border-stone-200 text-stone-600 hover:border-stone-300'
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Location Section */}
+              <div className="space-y-4 pt-4 border-t border-stone-100">
+                <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest flex items-center gap-2">
+                  <MapPin size={14} /> Location
+                </h3>
+                <div>
+                  <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
+                    Current Location
+                  </label>
+                  <input
+                    type="text"
+                    value={form.candidateLocation}
+                    onChange={(e) => handleChange('candidateLocation', e.target.value)}
+                    placeholder="City, State"
+                    className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
+                  />
+                </div>
+                <div className="flex items-center gap-3 p-4 bg-stone-50 rounded-xl border border-stone-200">
+                  <input
+                    type="checkbox"
+                    id="willingToRelocate"
+                    checked={form.candidateWillingToRelocate}
+                    onChange={(e) => handleChange('candidateWillingToRelocate', e.target.checked)}
+                    className="w-5 h-5 rounded border-stone-300 text-rust focus:ring-rust"
+                  />
+                  <label htmlFor="willingToRelocate" className="text-sm text-charcoal cursor-pointer">
+                    Willing to Relocate
+                  </label>
+                </div>
+              </div>
+
+              {/* Status Section */}
+              <div className="space-y-4 pt-4 border-t border-stone-100">
+                <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest flex items-center gap-2">
+                  <Activity size={14} /> Status
+                </h3>
+                <div>
+                  <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
+                    Candidate Status
+                  </label>
+                  <div className="grid grid-cols-5 gap-2">
+                    {statusOptions.map(opt => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => handleChange('candidateStatus', opt.value)}
+                        className={`p-2 rounded-xl border text-[10px] font-bold transition-all ${
+                          form.candidateStatus === opt.value
+                            ? `${opt.color} border-transparent ring-2 ring-offset-1 ring-current`
+                            : 'border-stone-200 text-stone-500 hover:border-stone-300'
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <div className="pt-4">
+                <button
+                  onClick={handleSubmit}
+                  disabled={!form.firstName || !form.lastName}
+                  className="w-full py-3 bg-charcoal text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-rust disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
+                >
+                  <CheckCircle size={14} /> Save Changes
+                </button>
+              </div>
+            </div>
+          </>
+        )}
+
+        {step === 'saving' && (
+          <div className="p-8 text-center">
+            <div className="w-16 h-16 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Loader2 size={32} className="text-rust animate-spin" />
+            </div>
+            <h3 className="text-xl font-bold text-charcoal">Saving Changes...</h3>
+            <p className="text-stone-500 text-sm mt-2">Updating talent profile</p>
+          </div>
+        )}
+
+        {step === 'success' && (
+          <div className="p-8 text-center">
+            <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle size={32} />
+            </div>
+            <h3 className="text-xl font-bold text-charcoal">Profile Updated</h3>
+            <p className="text-stone-500 text-sm mt-2">
+              {form.firstName} {form.lastName}&apos;s profile has been updated.
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Email Composer Modal Component
+const EmailComposerModal: React.FC<{
+  recipientEmail: string;
+  recipientName: string;
+  onClose: () => void;
+  onSuccess: () => void;
+}> = ({ recipientEmail, recipientName, onClose, onSuccess }) => {
+  const [subject, setSubject] = useState('');
+  const [body, setBody] = useState('');
+  const [isSending, setIsSending] = useState(false);
+  const [step, setStep] = useState<'compose' | 'success'>('compose');
+
+  const templates = [
+    { label: 'Introduction', subject: 'Job Opportunity - InTime Solutions', body: `Hi ${recipientName.split(' ')[0]},\n\nI hope this message finds you well. I came across your profile and wanted to reach out regarding an exciting opportunity that matches your skill set.\n\nWould you be available for a brief call to discuss further?\n\nBest regards` },
+    { label: 'Follow Up', subject: `Following Up - ${recipientName}`, body: `Hi ${recipientName.split(' ')[0]},\n\nI wanted to follow up on my previous message regarding the job opportunity.\n\nAre you still interested in exploring this position? Please let me know a convenient time to connect.\n\nBest regards` },
+    { label: 'Interview Confirmation', subject: 'Interview Confirmation', body: `Hi ${recipientName.split(' ')[0]},\n\nI'm pleased to confirm your interview scheduled for [DATE] at [TIME].\n\nPlease join using the following link: [MEETING LINK]\n\nLet me know if you have any questions.\n\nBest regards` },
+  ];
+
+  const handleSend = () => {
+    if (!subject || !body) return;
+    setIsSending(true);
+
+    // Simulate sending
+    setTimeout(() => {
+      setIsSending(false);
+      setStep('success');
+      setTimeout(() => {
+        onSuccess();
+        onClose();
+      }, 1500);
+    }, 1000);
+  };
+
+  const applyTemplate = (template: typeof templates[0]) => {
+    setSubject(template.subject);
+    setBody(template.body);
+  };
+
+  return (
+    <div className="fixed inset-0 bg-charcoal/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in" onClick={onClose}>
+      <div className="bg-white w-full max-w-2xl rounded-[2rem] shadow-2xl relative max-h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-6 right-6 text-stone-400 hover:text-charcoal z-10">
+          <X size={24} />
+        </button>
+
+        {step === 'compose' ? (
+          <>
+            <div className="p-6 pb-4 border-b border-stone-100">
+              <h2 className="text-2xl font-serif font-bold text-charcoal">Send Email</h2>
+              <p className="text-sm text-stone-500">to {recipientEmail}</p>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-6 space-y-4">
+              {/* Quick Templates */}
+              <div>
+                <label className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2 block">Quick Templates</label>
+                <div className="flex gap-2">
+                  {templates.map((template, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => applyTemplate(template)}
+                      className="px-3 py-1.5 text-xs font-medium bg-stone-100 hover:bg-rust/10 hover:text-rust rounded-lg transition-colors"
+                    >
+                      {template.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2 block">Subject</label>
+                <input
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                  placeholder="Email subject..."
+                  className="w-full p-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2 block">Message</label>
+                <textarea
+                  value={body}
+                  onChange={(e) => setBody(e.target.value)}
+                  placeholder="Write your message..."
+                  rows={10}
+                  className="w-full p-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust resize-none"
+                />
+              </div>
+            </div>
+
+            <div className="p-6 pt-4 border-t border-stone-100 flex gap-4">
+              <button
+                onClick={onClose}
+                className="flex-1 py-3 border border-stone-200 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-stone-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSend}
+                disabled={!subject || !body || isSending}
+                className="flex-1 py-3 bg-charcoal text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-rust disabled:opacity-50 flex items-center justify-center gap-2"
+              >
+                {isSending ? (
+                  <>
+                    <Loader2 size={14} className="animate-spin" /> Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send size={14} /> Send Email
+                  </>
+                )}
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="p-8 text-center">
+            <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle size={32} />
+            </div>
+            <h3 className="text-xl font-bold text-charcoal">Email Sent</h3>
+            <p className="text-stone-500 text-sm mt-2">Your message has been sent to {recipientName}.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Resume Preview Component
+const ResumePreviewSection: React.FC<{
+  talentId: string;
+  talentName: string;
+  onUploadClick: () => void;
+}> = ({ talentId, talentName, onUploadClick }) => {
+  const [showVersions, setShowVersions] = useState(false);
+
+  // Fetch resumes for this candidate
+  const { data: resumes = [], isLoading } = trpc.ats.resumes.list.useQuery(
+    { candidateId: talentId },
+    { enabled: !!talentId }
+  );
+
+  const latestResume = resumes.find(r => r.isLatest);
+  const olderVersions = resumes.filter(r => !r.isLatest);
+
+  const getDownloadUrl = trpc.files.getDownloadUrl.useMutation();
+
+  const handleDownload = async (fileId: string) => {
+    try {
+      const result = await getDownloadUrl.mutateAsync({ fileId });
+      window.open(result.url, '_blank');
+    } catch (error) {
+      console.error('Failed to get download URL:', error);
+    }
+  };
+
+  const handlePreview = async (fileId: string) => {
+    try {
+      const result = await getDownloadUrl.mutateAsync({ fileId });
+      window.open(result.url, '_blank');
+    } catch (error) {
+      console.error('Failed to get preview URL:', error);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="bg-white rounded-2xl p-6 border border-stone-100 animate-pulse">
+        <div className="h-6 bg-stone-100 rounded w-32 mb-4" />
+        <div className="h-48 bg-stone-50 rounded-xl" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white rounded-2xl p-6 border border-stone-100">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="font-bold text-charcoal flex items-center gap-2">
+          <FileText size={16} /> Resume
+        </h3>
+        <button
+          onClick={onUploadClick}
+          className="text-xs font-bold text-rust hover:underline flex items-center gap-1"
+        >
+          <FileUp size={12} /> New Version
+        </button>
+      </div>
+
+      {latestResume ? (
+        <div className="space-y-4">
+          {/* Current Resume Card */}
+          <div className="bg-gradient-to-br from-stone-50 to-stone-100/50 rounded-xl p-4 border border-stone-200">
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-white rounded-lg border border-stone-200 flex items-center justify-center">
+                  <FileText size={20} className="text-rust" />
+                </div>
+                <div>
+                  <p className="font-medium text-charcoal text-sm">{latestResume.fileName}</p>
+                  <p className="text-xs text-stone-500">
+                    v{latestResume.version} • {(latestResume.fileSize / 1024).toFixed(1)} KB
+                  </p>
+                </div>
+              </div>
+              <span className="px-2 py-0.5 bg-green-100 text-green-700 rounded text-[10px] font-bold uppercase">
+                Latest
+              </span>
+            </div>
+
+            {/* Resume Type Badge */}
+            <div className="flex gap-2 mb-3">
+              <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${
+                latestResume.resumeType === 'master' ? 'bg-blue-100 text-blue-700' :
+                latestResume.resumeType === 'formatted' ? 'bg-purple-100 text-purple-700' :
+                'bg-amber-100 text-amber-700'
+              }`}>
+                {latestResume.resumeType?.replace('_', ' ') || 'Master'}
+              </span>
+              {latestResume.title && (
+                <span className="px-2 py-1 bg-stone-100 text-stone-600 rounded text-[10px]">
+                  {latestResume.title}
+                </span>
+              )}
+            </div>
+
+            {/* AI Summary if available */}
+            {latestResume.aiSummary && (
+              <div className="mb-3 p-3 bg-white rounded-lg border border-stone-100">
+                <p className="text-xs text-stone-600 line-clamp-3">{latestResume.aiSummary}</p>
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex gap-2">
+              <button
+                onClick={() => handlePreview(latestResume.id)}
+                className="flex-1 py-2 bg-charcoal text-white rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors flex items-center justify-center gap-2"
+              >
+                <Eye size={12} /> View
+              </button>
+              <button
+                onClick={() => handleDownload(latestResume.id)}
+                className="flex-1 py-2 border border-stone-200 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-stone-50 transition-colors flex items-center justify-center gap-2"
+              >
+                <Download size={12} /> Download
+              </button>
+            </div>
+          </div>
+
+          {/* Version History Toggle */}
+          {olderVersions.length > 0 && (
+            <div>
+              <button
+                onClick={() => setShowVersions(!showVersions)}
+                className="w-full flex items-center justify-between py-2 text-xs text-stone-500 hover:text-charcoal transition-colors"
+              >
+                <span className="flex items-center gap-1">
+                  <History size={12} /> {olderVersions.length} previous version{olderVersions.length > 1 ? 's' : ''}
+                </span>
+                <ChevronDown size={14} className={`transition-transform ${showVersions ? 'rotate-180' : ''}`} />
+              </button>
+
+              {showVersions && (
+                <div className="space-y-2 mt-2">
+                  {olderVersions.map((resume) => (
+                    <div key={resume.id} className="flex items-center justify-between p-3 bg-stone-50 rounded-lg border border-stone-100">
+                      <div>
+                        <p className="text-xs font-medium text-charcoal">{resume.fileName}</p>
+                        <p className="text-[10px] text-stone-500">
+                          v{resume.version} • {new Date(resume.uploadedAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div className="flex gap-1">
+                        <button
+                          onClick={() => handlePreview(resume.id)}
+                          className="p-1.5 hover:bg-stone-200 rounded transition-colors"
+                          title="View"
+                        >
+                          <Eye size={12} className="text-stone-500" />
+                        </button>
+                        <button
+                          onClick={() => handleDownload(resume.id)}
+                          className="p-1.5 hover:bg-stone-200 rounded transition-colors"
+                          title="Download"
+                        >
+                          <Download size={12} className="text-stone-500" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="text-center py-8 bg-stone-50 rounded-xl border border-dashed border-stone-200">
+          <FileText size={32} className="mx-auto text-stone-300 mb-2" />
+          <p className="text-sm text-stone-500 mb-3">No resume uploaded</p>
+          <button
+            onClick={onUploadClick}
+            className="px-4 py-2 bg-charcoal text-white rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors"
+          >
+            Upload Resume
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Submission Write-Up Component
+const SubmissionWriteUpSection: React.FC<{
+  talent: {
+    fullName?: string | null;
+    firstName?: string | null;
+    lastName?: string | null;
+    candidateLocation?: string | null;
+    candidateCurrentVisa?: string | null;
+    candidateExperienceYears?: number | null;
+    candidateHourlyRate?: string | null;
+    candidateAvailability?: string | null;
+    candidateSkills?: string[] | null;
+  };
+}> = ({ talent }) => {
+  const [copied, setCopied] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [customWriteUp, setCustomWriteUp] = useState('');
+
+  const name = talent.fullName || `${talent.firstName} ${talent.lastName}`;
+  const availability = talent.candidateAvailability?.replace('_', ' ') || 'Available';
+
+  const defaultWriteUp = `**${name}**
+${talent.candidateLocation ? `Location: ${talent.candidateLocation}` : ''}
+${talent.candidateCurrentVisa ? `Visa: ${talent.candidateCurrentVisa}` : ''}
+${talent.candidateExperienceYears ? `Experience: ${talent.candidateExperienceYears}+ years` : ''}
+${talent.candidateHourlyRate ? `Rate: $${talent.candidateHourlyRate}/hr` : ''}
+Availability: ${availability}
+
+${talent.candidateSkills?.length ? `**Key Skills:** ${talent.candidateSkills.slice(0, 8).join(', ')}` : ''}
+
+---
+*Submitted by InTime Solutions*`;
+
+  const writeUp = customWriteUp || defaultWriteUp;
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(writeUp);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleGenerate = async () => {
+    setIsGenerating(true);
+    // Simulate AI generation - in production this would call an AI endpoint
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setCustomWriteUp(`**${name}** is a highly skilled ${talent.candidateCurrentVisa || ''} professional with ${talent.candidateExperienceYears || 'several'}+ years of hands-on experience. ${talent.candidateLocation ? `Based in ${talent.candidateLocation}, ` : ''}they are ${availability.toLowerCase()} to start and seeking ${talent.candidateHourlyRate ? `$${talent.candidateHourlyRate}/hr` : 'competitive compensation'}.
+
+${talent.candidateSkills?.length ? `Their core competencies include ${talent.candidateSkills.slice(0, 5).join(', ')}, making them an excellent fit for roles requiring deep technical expertise.` : ''}
+
+*Recommended for immediate consideration.*`);
+    setIsGenerating(false);
+  };
+
+  return (
+    <div className="bg-gradient-to-br from-amber-50/50 to-amber-100/30 rounded-2xl p-6 border border-amber-100/50">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="font-bold text-charcoal flex items-center gap-2">
+          <Sparkles size={16} className="text-amber-600" /> Submission Write-Up
+        </h3>
+        <button
+          onClick={handleGenerate}
+          disabled={isGenerating}
+          className="text-xs font-bold text-amber-700 hover:text-amber-900 flex items-center gap-1 disabled:opacity-50"
+        >
+          {isGenerating ? (
+            <>
+              <Loader2 size={12} className="animate-spin" /> Generating...
+            </>
+          ) : (
+            <>
+              <RefreshCw size={12} /> AI Generate
+            </>
+          )}
+        </button>
+      </div>
+
+      <div className="bg-white rounded-xl p-4 border border-amber-100 mb-3 max-h-48 overflow-y-auto">
+        <pre className="text-xs text-stone-700 whitespace-pre-wrap font-sans leading-relaxed">
+          {writeUp}
+        </pre>
+      </div>
+
+      <button
+        onClick={handleCopy}
+        className="w-full py-2.5 bg-amber-600 text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-amber-700 transition-colors flex items-center justify-center gap-2"
+      >
+        {copied ? (
+          <>
+            <CheckCircle size={14} /> Copied!
+          </>
+        ) : (
+          <>
+            <Copy size={14} /> Copy to Clipboard
+          </>
+        )}
+      </button>
+    </div>
+  );
+};
+
+// Quick Job Creation Modal
+const CreateQuickJobModal: React.FC<{
+  onClose: () => void;
+  onSuccess: (jobId: string) => void;
+}> = ({ onClose, onSuccess }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const [form, setForm] = useState({
+    title: '',
+    location: '',
+    isRemote: false,
+    jobType: 'contract' as 'contract' | 'fulltime' | 'contract_to_hire',
+    rateMin: '',
+    rateMax: '',
+    rateType: 'hourly' as 'hourly' | 'annual',
+    status: 'open' as 'draft' | 'open',
+  });
+
+  const createJobMutation = trpc.ats.jobs.create.useMutation({
+    onSuccess: (job) => {
+      onSuccess(job.id);
+      onClose();
+    },
+    onError: (err) => {
+      setError(err.message || 'Failed to create job');
+      setIsSubmitting(false);
+    }
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      await createJobMutation.mutateAsync({
+        title: form.title,
+        location: form.location || undefined,
+        isRemote: form.isRemote,
+        jobType: form.jobType,
+        rateMin: form.rateMin ? parseFloat(form.rateMin) : undefined,
+        rateMax: form.rateMax ? parseFloat(form.rateMax) : undefined,
+        rateType: form.rateType,
+        status: form.status,
+      });
+    } catch (err) {
+      console.error('Failed to create job:', err);
+    }
+  };
+
+  const inputClass = "w-full p-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-rust text-sm";
+  const labelClass = "block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1.5";
+
+  return (
+    <div className="fixed inset-0 bg-charcoal/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4 animate-fade-in" onClick={onClose}>
+      <div className="bg-white w-full max-w-md rounded-[2rem] shadow-2xl relative" onClick={e => e.stopPropagation()}>
+        <div className="p-6 pb-4 border-b border-stone-100">
+          <button onClick={onClose} className="absolute top-6 right-6 text-stone-400 hover:text-charcoal">
+            <X size={24} />
+          </button>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-green-100 text-green-600 rounded-xl flex items-center justify-center">
+              <Briefcase size={20} />
+            </div>
+            <div>
+              <h2 className="text-xl font-serif font-bold text-charcoal">Quick Add Job</h2>
+              <p className="text-xs text-stone-500">Create a new job opening</p>
+            </div>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          {error && (
+            <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
+              {error}
+            </div>
+          )}
+
+          <div>
+            <label className={labelClass}>Job Title *</label>
+            <input
+              required
+              className={inputClass}
+              placeholder="e.g. Senior Java Developer"
+              value={form.title}
+              onChange={e => setForm({...form, title: e.target.value})}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className={labelClass}>Location</label>
+              <input
+                className={inputClass}
+                placeholder="e.g. Houston, TX"
+                value={form.location}
+                onChange={e => setForm({...form, location: e.target.value})}
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Job Type</label>
+              <select
+                className={inputClass}
+                value={form.jobType}
+                onChange={e => setForm({...form, jobType: e.target.value as typeof form.jobType})}
+              >
+                <option value="contract">Contract</option>
+                <option value="fulltime">Full-Time</option>
+                <option value="contract_to_hire">Contract-to-Hire</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              id="isRemote"
+              checked={form.isRemote}
+              onChange={e => setForm({...form, isRemote: e.target.checked})}
+              className="w-4 h-4 rounded border-stone-300 text-rust focus:ring-rust"
+            />
+            <label htmlFor="isRemote" className="text-sm text-charcoal">Remote position</label>
+          </div>
+
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <label className={labelClass}>Min Rate</label>
+              <input
+                type="number"
+                className={inputClass}
+                placeholder="50"
+                value={form.rateMin}
+                onChange={e => setForm({...form, rateMin: e.target.value})}
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Max Rate</label>
+              <input
+                type="number"
+                className={inputClass}
+                placeholder="75"
+                value={form.rateMax}
+                onChange={e => setForm({...form, rateMax: e.target.value})}
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Rate Type</label>
+              <select
+                className={inputClass}
+                value={form.rateType}
+                onChange={e => setForm({...form, rateType: e.target.value as typeof form.rateType})}
+              >
+                <option value="hourly">Hourly</option>
+                <option value="annual">Annual</option>
+              </select>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={!form.title || isSubmitting}
+            className="w-full py-3 bg-charcoal text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-rust disabled:opacity-50 flex items-center justify-center gap-2"
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 size={14} className="animate-spin" /> Creating...
+              </>
+            ) : (
+              <>
+                <Plus size={14} /> Create Job
+              </>
+            )}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
 // Attach Job Modal Component
 const AttachJobModal: React.FC<{
   talentId: string;
@@ -58,9 +1368,10 @@ const AttachJobModal: React.FC<{
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedJob, setSelectedJob] = useState<string | null>(null);
   const [notes, setNotes] = useState('');
+  const [showCreateJobModal, setShowCreateJobModal] = useState(false);
 
   // Fetch open jobs
-  const { data: jobs = [], isLoading: loadingJobs } = trpc.ats.jobs.list.useQuery({
+  const { data: jobs = [], isLoading: loadingJobs, refetch: refetchJobs } = trpc.ats.jobs.list.useQuery({
     status: 'open',
     limit: 50,
   });
@@ -90,122 +1401,152 @@ const AttachJobModal: React.FC<{
     });
   };
 
+  const handleJobCreated = (jobId: string) => {
+    setSelectedJob(jobId);
+    refetchJobs();
+    setShowCreateJobModal(false);
+  };
+
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl p-8 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
-        <div className="flex justify-between items-center mb-6">
-          <div>
-            <h2 className="text-2xl font-serif font-bold text-charcoal">Attach to Job</h2>
-            <p className="text-sm text-stone-500">Link this talent to a job opportunity</p>
+    <>
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-2xl p-8 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="flex justify-between items-center mb-6">
+            <div>
+              <h2 className="text-2xl font-serif font-bold text-charcoal">Attach to Job</h2>
+              <p className="text-sm text-stone-500">Link this talent to a job opportunity</p>
+            </div>
+            <button onClick={onClose} className="text-stone-400 hover:text-charcoal">
+              <X size={20} />
+            </button>
           </div>
-          <button onClick={onClose} className="text-stone-400 hover:text-charcoal">
-            <X size={20} />
-          </button>
-        </div>
 
-        {/* Search */}
-        <div className="flex items-center gap-3 bg-stone-50 p-3 rounded-xl border border-stone-200 mb-4">
-          <Search size={18} className="text-stone-400" />
-          <input
-            type="text"
-            placeholder="Search jobs by title or location..."
-            className="flex-1 bg-transparent outline-none text-sm"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-
-        {/* Jobs List */}
-        {loadingJobs ? (
-          <div className="flex justify-center py-8">
-            <Loader2 size={24} className="animate-spin text-stone-400" />
+          {/* Search and Add Job */}
+          <div className="flex gap-3 mb-4">
+            <div className="flex-1 flex items-center gap-3 bg-stone-50 p-3 rounded-xl border border-stone-200">
+              <Search size={18} className="text-stone-400" />
+              <input
+                type="text"
+                placeholder="Search jobs by title or location..."
+                className="flex-1 bg-transparent outline-none text-sm"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <button
+              onClick={() => setShowCreateJobModal(true)}
+              className="px-4 py-3 bg-green-100 text-green-700 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-green-200 transition-colors flex items-center gap-2 whitespace-nowrap"
+            >
+              <Plus size={14} /> New Job
+            </button>
           </div>
-        ) : (
-          <div className="space-y-2 max-h-64 overflow-y-auto mb-6">
-            {filteredJobs.map(job => (
-              <button
-                key={job.id}
-                onClick={() => setSelectedJob(job.id)}
-                className={`w-full text-left p-4 rounded-xl border transition-all ${
-                  selectedJob === job.id
-                    ? 'border-rust bg-rust/5'
-                    : 'border-stone-200 hover:border-stone-300'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="font-bold text-charcoal">{job.title}</h4>
-                    <div className="flex items-center gap-3 text-xs text-stone-500 mt-1">
-                      {job.location && (
-                        <span className="flex items-center gap-1">
-                          <MapPin size={10} /> {job.location}
+
+          {/* Jobs List */}
+          {loadingJobs ? (
+            <div className="flex justify-center py-8">
+              <Loader2 size={24} className="animate-spin text-stone-400" />
+            </div>
+          ) : (
+            <div className="space-y-2 max-h-64 overflow-y-auto mb-6">
+              {filteredJobs.map(job => (
+                <button
+                  key={job.id}
+                  onClick={() => setSelectedJob(job.id)}
+                  className={`w-full text-left p-4 rounded-xl border transition-all ${
+                    selectedJob === job.id
+                      ? 'border-rust bg-rust/5'
+                      : 'border-stone-200 hover:border-stone-300'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-bold text-charcoal">{job.title}</h4>
+                      <div className="flex items-center gap-3 text-xs text-stone-500 mt-1">
+                        {job.location && (
+                          <span className="flex items-center gap-1">
+                            <MapPin size={10} /> {job.location}
+                          </span>
+                        )}
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                          job.status === 'open' ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-600'
+                        }`}>
+                          {job.status}
                         </span>
-                      )}
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                        job.status === 'open' ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-600'
-                      }`}>
-                        {job.status}
-                      </span>
+                      </div>
                     </div>
+                    {selectedJob === job.id && (
+                      <div className="w-5 h-5 bg-rust rounded-full flex items-center justify-center">
+                        <span className="text-white text-xs">✓</span>
+                      </div>
+                    )}
                   </div>
-                  {selectedJob === job.id && (
-                    <div className="w-5 h-5 bg-rust rounded-full flex items-center justify-center">
-                      <span className="text-white text-xs">✓</span>
-                    </div>
-                  )}
+                </button>
+              ))}
+              {filteredJobs.length === 0 && (
+                <div className="text-center py-8 text-stone-500">
+                  <p>No open jobs found</p>
+                  <button
+                    onClick={() => setShowCreateJobModal(true)}
+                    className="mt-2 text-rust font-bold hover:underline text-sm"
+                  >
+                    Create a new job
+                  </button>
                 </div>
-              </button>
-            ))}
-            {filteredJobs.length === 0 && (
-              <div className="text-center py-8 text-stone-500">
-                No open jobs found
-              </div>
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
 
-        {/* Notes */}
-        {selectedJob && (
-          <div className="mb-6">
-            <label className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2 block">
-              Submission Notes
-            </label>
-            <textarea
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder="Add notes about why this talent is a good fit..."
-              rows={3}
-              className="w-full p-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust resize-none"
-            />
-          </div>
-        )}
+          {/* Notes */}
+          {selectedJob && (
+            <div className="mb-6">
+              <label className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2 block">
+                Submission Notes
+              </label>
+              <textarea
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Add notes about why this talent is a good fit..."
+                rows={3}
+                className="w-full p-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust resize-none"
+              />
+            </div>
+          )}
 
-        {/* Actions */}
-        <div className="flex gap-4">
-          <button
-            onClick={onClose}
-            className="flex-1 py-3 border border-stone-200 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-stone-50"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleSubmit}
-            disabled={!selectedJob || createSubmission.isPending}
-            className="flex-1 py-3 bg-charcoal text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-rust disabled:opacity-50 flex items-center justify-center gap-2"
-          >
-            {createSubmission.isPending ? (
-              <>
-                <Loader2 size={14} className="animate-spin" /> Attaching...
-              </>
-            ) : (
-              <>
-                <Briefcase size={14} /> Attach to Job
-              </>
-            )}
-          </button>
+          {/* Actions */}
+          <div className="flex gap-4">
+            <button
+              onClick={onClose}
+              className="flex-1 py-3 border border-stone-200 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-stone-50"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSubmit}
+              disabled={!selectedJob || createSubmission.isPending}
+              className="flex-1 py-3 bg-charcoal text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-rust disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              {createSubmission.isPending ? (
+                <>
+                  <Loader2 size={14} className="animate-spin" /> Attaching...
+                </>
+              ) : (
+                <>
+                  <Briefcase size={14} /> Attach to Job
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Create Job Modal */}
+      {showCreateJobModal && (
+        <CreateQuickJobModal
+          onClose={() => setShowCreateJobModal(false)}
+          onSuccess={handleJobCreated}
+        />
+      )}
+    </>
   );
 };
 
@@ -213,6 +1554,9 @@ export const TalentWorkspace: React.FC<TalentWorkspaceProps> = ({ talentId }) =>
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [showAttachJobModal, setShowAttachJobModal] = useState(false);
+  const [showResumeUploadModal, setShowResumeUploadModal] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   // Fetch talent details
   const { data: talent, isLoading, error, refetch } = trpc.ats.candidates.getById.useQuery({ id: talentId });
@@ -302,7 +1646,11 @@ export const TalentWorkspace: React.FC<TalentWorkspaceProps> = ({ talentId }) =>
                   )}
                 </div>
               </div>
-              <button className="p-2 text-stone-400 hover:text-charcoal hover:bg-stone-100 rounded-lg transition-colors">
+              <button
+                onClick={() => setShowEditModal(true)}
+                className="p-2 text-stone-400 hover:text-charcoal hover:bg-stone-100 rounded-lg transition-colors"
+                title="Edit Profile"
+              >
                 <Edit size={18} />
               </button>
             </div>
@@ -475,8 +1823,9 @@ export const TalentWorkspace: React.FC<TalentWorkspaceProps> = ({ talentId }) =>
                 </div>
               </div>
 
-              {/* Right Column - Actions */}
+              {/* Right Column - Actions & Resume */}
               <div className="space-y-6">
+                {/* Quick Actions */}
                 <div className="bg-rust/5 rounded-2xl p-6 border border-rust/10">
                   <h3 className="font-bold text-charcoal mb-4 flex items-center gap-2">
                     <Activity size={16} /> Quick Actions
@@ -488,14 +1837,47 @@ export const TalentWorkspace: React.FC<TalentWorkspaceProps> = ({ talentId }) =>
                     >
                       <Briefcase size={14} /> Attach to Job
                     </button>
-                    <button className="w-full py-3 border border-stone-200 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-stone-50 transition-colors flex items-center justify-center gap-2">
-                      <FileText size={14} /> Upload Resume
+                    <button
+                      onClick={() => setShowResumeUploadModal(true)}
+                      className="w-full py-3 border border-stone-200 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-stone-50 transition-colors flex items-center justify-center gap-2"
+                    >
+                      <FileUp size={14} /> Upload Resume
                     </button>
-                    <button className="w-full py-3 border border-stone-200 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-stone-50 transition-colors flex items-center justify-center gap-2">
-                      <Mail size={14} /> Send Email
-                    </button>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        onClick={() => setShowEmailModal(true)}
+                        disabled={!talent.email}
+                        className="py-3 border border-stone-200 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-stone-50 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <Mail size={14} /> Email
+                      </button>
+                      <a
+                        href={talent.phone ? `tel:${talent.phone}` : '#'}
+                        onClick={(e) => {
+                          if (!talent.phone) {
+                            e.preventDefault();
+                            return;
+                          }
+                        }}
+                        className={`py-3 border border-stone-200 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-green-50 hover:border-green-200 hover:text-green-700 transition-colors flex items-center justify-center gap-2 ${
+                          !talent.phone ? 'opacity-50 cursor-not-allowed' : ''
+                        }`}
+                      >
+                        <PhoneCall size={14} /> Call
+                      </a>
+                    </div>
                   </div>
                 </div>
+
+                {/* Resume Preview */}
+                <ResumePreviewSection
+                  talentId={talentId}
+                  talentName={talent.fullName || `${talent.firstName} ${talent.lastName}`}
+                  onUploadClick={() => setShowResumeUploadModal(true)}
+                />
+
+                {/* Submission Write-Up */}
+                <SubmissionWriteUpSection talent={talent} />
 
                 {/* Visa Expiry Warning */}
                 {talent.candidateVisaExpiry && (
@@ -633,6 +2015,42 @@ export const TalentWorkspace: React.FC<TalentWorkspaceProps> = ({ talentId }) =>
           talentId={talentId}
           onClose={() => setShowAttachJobModal(false)}
           onSuccess={handleJobAttached}
+        />
+      )}
+
+      {/* Resume Upload Modal */}
+      {showResumeUploadModal && (
+        <ResumeUploadModal
+          talentId={talentId}
+          talentName={talent.fullName || `${talent.firstName} ${talent.lastName}`}
+          onClose={() => setShowResumeUploadModal(false)}
+          onSuccess={() => {
+            refetch();
+          }}
+        />
+      )}
+
+      {/* Email Composer Modal */}
+      {showEmailModal && talent.email && (
+        <EmailComposerModal
+          recipientEmail={talent.email}
+          recipientName={talent.fullName || `${talent.firstName} ${talent.lastName}`}
+          onClose={() => setShowEmailModal(false)}
+          onSuccess={() => {
+            // Could log activity here
+          }}
+        />
+      )}
+
+      {/* Edit Talent Modal */}
+      {showEditModal && talent && (
+        <EditTalentModal
+          talentId={talent.id}
+          talentName={talent.fullName || `${talent.firstName} ${talent.lastName}`}
+          onClose={() => setShowEditModal(false)}
+          onSuccess={() => {
+            refetch();
+          }}
         />
       )}
     </div>

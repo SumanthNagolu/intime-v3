@@ -23,11 +23,31 @@ export * from './bench';
 export * from './ta-hr';
 export * from './shared';
 
-// Unified Activity System
+// Unified Activity System (primary activities table)
 export * from './activities';
+
+// Workplan & Activity Pattern System (Guidewire-inspired)
+// Note: workplan.ts has its own activities - we selectively export to avoid conflicts
+export {
+  activityPatterns,
+  activityPatternsRelations,
+  activityPatternSuccessors,
+  activityPatternSuccessorsRelations,
+  workplanTemplates,
+  workplanTemplatesRelations,
+  workplanTemplateActivities,
+  workplanTemplateActivitiesRelations,
+  workplanInstances,
+  workplanInstancesRelations,
+  activityHistory,
+  activityHistoryRelations,
+} from './workplan';
 
 // Sales Strategy System
 export * from './strategy';
+
+// Unified Workspace System (RCAI, Contacts, Job Orders)
+export * from './workspace';
 
 // Re-export commonly used types
 export type {
@@ -62,3 +82,20 @@ export type {
   EventSubscription,
   NewEventSubscription,
 } from './events';
+
+export type {
+  ActivityPattern,
+  NewActivityPattern,
+  ActivityPatternSuccessor,
+  NewActivityPatternSuccessor,
+  WorkplanTemplate,
+  NewWorkplanTemplate,
+  WorkplanTemplateActivity,
+  NewWorkplanTemplateActivity,
+  WorkplanInstance,
+  NewWorkplanInstance,
+  Activity,
+  NewActivity,
+  ActivityHistory,
+  NewActivityHistory,
+} from './workplan';

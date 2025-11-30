@@ -9,3 +9,8 @@ export default function AcademyAuthPage() {
   redirect('/login');
 }
 
+
+
+
+
+

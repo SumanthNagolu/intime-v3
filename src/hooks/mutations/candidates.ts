@@ -13,12 +13,12 @@ import { useInvalidateCandidates } from '../queries/candidates';
 // ============================================
 
 export interface CreateConsultantInput {
-  userProfileId: string;
-  benchStartDate?: Date;
-  benchStatus?: 'bench' | 'marketing' | 'interview_process' | 'offer_stage';
-  targetRate?: number;
-  preferredLocations?: string[];
-  notes?: string;
+  userId: string;
+  benchStartDate: Date;
+  contactFrequencyDays?: number;
+  isResponsive?: boolean;
+  responsivenessScore?: number;
+  benchSalesRepId?: string;
 }
 
 export interface CreateCandidateOptions {
@@ -49,13 +49,13 @@ export function useCreateCandidate(options: CreateCandidateOptions = {}) {
       options.onSuccess?.(data);
     },
     onError: (error) => {
-      options.onError?.(error);
+      options.onError?.(error as unknown as Error);
     },
   });
 
   return {
     createCandidate: async (input: CreateConsultantInput) => {
-      return mutation.mutateAsync(input as Parameters<typeof mutation.mutateAsync>[0]);
+      return mutation.mutateAsync(input);
     },
     isCreating: mutation.isPending,
     error: mutation.error,
@@ -67,8 +67,8 @@ export function useCreateCandidate(options: CreateCandidateOptions = {}) {
 // UPDATE HOOK
 // ============================================
 
-export interface UpdateCandidateInput extends Partial<CreateConsultantInput> {
-  id: string;
+export interface UpdateCandidateInput extends Partial<Omit<CreateConsultantInput, 'userId'>> {
+  userId: string;
 }
 
 export interface UpdateCandidateOptions {
@@ -85,9 +85,9 @@ export interface UpdateCandidateOptions {
  * const { updateCandidate, isUpdating } = useUpdateCandidate();
  *
  * await updateCandidate({
- *   id: 'consultant-id',
- *   targetRate: 90,
- *   benchStatus: 'marketing',
+ *   userId: 'consultant-id',
+ *   contactFrequencyDays: 5,
+ *   isResponsive: true,
  * });
  * ```
  */
@@ -99,12 +99,12 @@ export function useUpdateCandidate(options: UpdateCandidateOptions = {}) {
     onMutate: async (newData) => {
       if (!options.optimistic) return;
 
-      await utils.bench.consultants.getById.cancel({ id: newData.id });
-      const previousCandidate = utils.bench.consultants.getById.getData({ id: newData.id });
+      await utils.bench.consultants.getById.cancel({ userId: newData.userId });
+      const previousCandidate = utils.bench.consultants.getById.getData({ userId: newData.userId });
 
       if (previousCandidate) {
         utils.bench.consultants.getById.setData(
-          { id: newData.id },
+          { userId: newData.userId },
           { ...previousCandidate, ...newData }
         );
       }
@@ -114,22 +114,22 @@ export function useUpdateCandidate(options: UpdateCandidateOptions = {}) {
     onError: (error, newData, context) => {
       if (options.optimistic && context?.previousCandidate) {
         utils.bench.consultants.getById.setData(
-          { id: newData.id },
+          { userId: newData.userId },
           context.previousCandidate
         );
       }
-      options.onError?.(error);
+      options.onError?.(error as unknown as Error);
     },
     onSuccess: (data, variables) => {
       invalidate.invalidateAll();
-      invalidate.invalidateCandidate(variables.id);
+      invalidate.invalidateCandidate(variables.userId);
       options.onSuccess?.(data);
     },
   });
 
   return {
     updateCandidate: async (input: UpdateCandidateInput) => {
-      return mutation.mutateAsync(input as Parameters<typeof mutation.mutateAsync>[0]);
+      return mutation.mutateAsync(input);
     },
     isUpdating: mutation.isPending,
     error: mutation.error,
@@ -138,55 +138,28 @@ export function useUpdateCandidate(options: UpdateCandidateOptions = {}) {
 }
 
 // ============================================
-// STATUS UPDATE HOOKS
-// ============================================
-
-export type ConsultantStatusAction =
-  | 'bench'
-  | 'marketing'
-  | 'interview_process'
-  | 'offer_stage';
-
-/**
- * Quick status update for consultants
- *
- * @example
- * ```tsx
- * const { updateStatus } = useUpdateCandidateStatus();
- *
- * await updateStatus('consultant-id', 'marketing');
- * ```
- */
-export function useUpdateCandidateStatus(options: UpdateCandidateOptions = {}) {
-  const { updateCandidate, isUpdating, error } = useUpdateCandidate(options);
-
-  return {
-    updateStatus: async (id: string, status: ConsultantStatusAction) => {
-      return updateCandidate({
-        id,
-        benchStatus: status,
-      });
-    },
-    isUpdating,
-    error,
-  };
-}
-
-// ============================================
 // BENCH OPERATIONS
 // ============================================
 
 /**
- * Move consultant to marketing status
+ * Update consultant responsiveness
+ *
+ * @example
+ * ```tsx
+ * const { updateResponsiveness } = useUpdateResponsiveness();
+ *
+ * await updateResponsiveness('consultant-id', true, 85);
+ * ```
  */
-export function useStartMarketing(options: UpdateCandidateOptions = {}) {
+export function useUpdateResponsiveness(options: UpdateCandidateOptions = {}) {
   const { updateCandidate, isUpdating, error } = useUpdateCandidate(options);
 
   return {
-    startMarketing: async (id: string) => {
+    updateResponsiveness: async (userId: string, isResponsive: boolean, score?: number) => {
       return updateCandidate({
-        id,
-        benchStatus: 'marketing',
+        userId,
+        isResponsive,
+        responsivenessScore: score,
       });
     },
     isUpdating,
@@ -195,16 +168,16 @@ export function useStartMarketing(options: UpdateCandidateOptions = {}) {
 }
 
 /**
- * Move consultant to interview process
+ * Update contact frequency for consultant
  */
-export function useMoveToInterview(options: UpdateCandidateOptions = {}) {
+export function useUpdateContactFrequency(options: UpdateCandidateOptions = {}) {
   const { updateCandidate, isUpdating, error } = useUpdateCandidate(options);
 
   return {
-    moveToInterview: async (id: string) => {
+    updateContactFrequency: async (userId: string, frequencyDays: number) => {
       return updateCandidate({
-        id,
-        benchStatus: 'interview_process',
+        userId,
+        contactFrequencyDays: frequencyDays,
       });
     },
     isUpdating,
@@ -217,11 +190,13 @@ export function useMoveToInterview(options: UpdateCandidateOptions = {}) {
 // ============================================
 
 export interface CreateHotlistInput {
-  consultantIds: string[];
-  recipientEmails: string[];
-  subject: string;
-  messageBody: string;
-  includeResumes?: boolean;
+  title: string;
+  description?: string;
+  candidateIds: string[];
+  targetAccounts?: string[];
+  targetSkills?: string[];
+  targetRoles?: string[];
+  sentToEmails?: string[];
 }
 
 /**
@@ -232,10 +207,10 @@ export interface CreateHotlistInput {
  * const { createHotlist } = useCreateHotlist();
  *
  * await createHotlist({
- *   consultantIds: ['id1', 'id2'],
- *   recipientEmails: ['client@example.com'],
- *   subject: 'Available Java Developers',
- *   messageBody: 'Here are available candidates...',
+ *   title: 'Available Java Developers',
+ *   candidateIds: ['id1', 'id2'],
+ *   sentToEmails: ['client@example.com'],
+ *   description: 'Here are available candidates...',
  * });
  * ```
  */
@@ -248,19 +223,13 @@ export function useCreateHotlist(options: { onSuccess?: () => void; onError?: (e
       options.onSuccess?.();
     },
     onError: (error) => {
-      options.onError?.(error);
+      options.onError?.(error as unknown as Error);
     },
   });
 
   return {
     createHotlist: async (input: CreateHotlistInput) => {
-      return mutation.mutateAsync({
-        consultantIds: input.consultantIds,
-        recipientEmails: input.recipientEmails,
-        subject: input.subject,
-        messageBody: input.messageBody,
-        includeResumes: input.includeResumes ?? true,
-      });
+      return mutation.mutateAsync(input);
     },
     isCreating: mutation.isPending,
     error: mutation.error,
@@ -272,8 +241,8 @@ export function useCreateHotlist(options: { onSuccess?: () => void; onError?: (e
 // ============================================
 
 export interface BulkUpdateCandidatesInput {
-  ids: string[];
-  update: Partial<CreateConsultantInput>;
+  userIds: string[];
+  update: Partial<Omit<CreateConsultantInput, 'userId'>>;
 }
 
 /**
@@ -286,8 +255,8 @@ export function useBulkUpdateCandidates(options: UpdateCandidateOptions = {}) {
   return {
     bulkUpdate: async (input: BulkUpdateCandidatesInput) => {
       const results = await Promise.allSettled(
-        input.ids.map(id =>
-          updateCandidate({ id, ...input.update })
+        input.userIds.map(userId =>
+          updateCandidate({ userId, ...input.update })
         )
       );
 
@@ -296,7 +265,7 @@ export function useBulkUpdateCandidates(options: UpdateCandidateOptions = {}) {
       const successful = results.filter(r => r.status === 'fulfilled').length;
       const failed = results.filter(r => r.status === 'rejected').length;
 
-      return { successful, failed, total: input.ids.length };
+      return { successful, failed, total: input.userIds.length };
     },
     isUpdating,
   };

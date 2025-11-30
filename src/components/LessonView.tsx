@@ -2,7 +2,7 @@
 
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { MOCK_MODULES } from '@/lib/constants';
 import { ChevronRight, ChevronLeft, CheckCircle, PlayCircle, Lock, Terminal, BookOpen, Star, ShieldCheck, Play, Pause, Copy, RotateCcw, Upload, FileCode, Sparkles, Maximize2, Monitor, Download, FileText, Server, Database } from 'lucide-react';
 import { Lesson } from '@/lib/types';
@@ -23,7 +23,9 @@ const shuffleArray = (array: any[]) => {
 };
 
 export const LessonView: React.FC = () => {
-  const { moduleId, lessonId } = useParams();
+  const params = useParams();
+  const moduleId = typeof params.moduleId === 'string' ? params.moduleId : params.moduleId?.[0];
+  const lessonId = typeof params.lessonId === 'string' ? params.lessonId : params.lessonId?.[0];
   const router = useRouter();
   const { updateLessonStatus, academyProgress, setMentorContext, setMentorOpen, hasKey } = useAppStore();
   
@@ -112,19 +114,21 @@ export const LessonView: React.FC = () => {
     
     if (stage === 'lab') {
         // Mark lesson as complete in store
-        updateLessonStatus(Number(moduleId), lessonId!, 'completed', quizScore, labCode);
-        
+        if (moduleId && lessonId) {
+          updateLessonStatus(Number(moduleId), lessonId, 'completed', quizScore, labCode);
+        }
+
         // Find next lesson to unlock
         const currentIdx = module?.lessons.findIndex(l => l.id === lessonId) ?? -1;
         const nextLesson = module?.lessons[currentIdx + 1];
-        
-        if (nextLesson) {
+
+        if (nextLesson && moduleId) {
            updateLessonStatus(Number(moduleId), nextLesson.id, 'unlocked');
         }
 
         // Show confetti or success modal here (optional), then redirect
         setTimeout(() => {
-            if (nextLesson) {
+            if (nextLesson && moduleId) {
                router.push(`/academy/lesson/${moduleId}/${nextLesson.id}`);
                // Reset local state for next lesson
                setCurrentStage('theory');

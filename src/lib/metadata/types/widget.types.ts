@@ -209,6 +209,9 @@ export interface FieldDefinition {
   /** Is disabled */
   disabled?: boolean | VisibilityRule;
 
+  /** Is computed/derived field */
+  computed?: boolean;
+
   /** Default value */
   defaultValue?: unknown | DynamicValue;
 

@@ -6,8 +6,11 @@
  */
 
 import { trpc } from '@/lib/trpc/client';
-import { jobAdapter, type DisplayJob } from '@/lib/adapters';
+import { jobAdapter } from '@/lib/adapters';
 import type { AlignedJob } from '@/types/aligned/ats';
+
+// DisplayJob type from adapter
+type DisplayJob = ReturnType<typeof jobAdapter.toDisplay>;
 
 // ============================================
 // QUERY OPTIONS TYPES

@@ -95,11 +95,13 @@ const DashboardHome: React.FC<{ onSearchRequest: () => void }> = ({ onSearchRequ
   // Fetch real data from backend using tRPC
   const { data: jobs, isLoading: jobsLoading } = trpc.ats.jobs.list.useQuery({
     limit: 50,
+    offset: 0,
     status: 'open'
   });
 
   const { data: submissions, isLoading: submissionsLoading } = trpc.ats.submissions.list.useQuery({
-    limit: 50
+    limit: 50,
+    offset: 0
   });
 
   const { data: placementsCount, isLoading: placementsLoading } = trpc.ats.placements.activeCount.useQuery();
@@ -363,7 +365,7 @@ const DashboardHome: React.FC<{ onSearchRequest: () => void }> = ({ onSearchRequ
                       <div className="flex items-center gap-4 text-caption text-charcoal-500">
                         <span className="flex items-center gap-2">
                           <Building2 size={14} strokeWidth={2} />
-                          {job.clientId || 'Client'}
+                          {job.accountId || 'Client'}
                         </span>
                         <span>•</span>
                         <span className="flex items-center gap-2">
@@ -493,7 +495,8 @@ const JobIntake: React.FC = () => {
   const router = useRouter();
 
   // Fetch accounts for dropdown
-  const { data: accounts } = trpc.crm.accounts.list.useQuery({ limit: 100 });
+  const { data: accountsData } = trpc.crm.accounts.list.useQuery({ page: 1, pageSize: 100 });
+  const accounts = accountsData?.items;
 
   // Create job mutation
   const createJobMutation = trpc.ats.jobs.create.useMutation({
@@ -510,7 +513,7 @@ const JobIntake: React.FC = () => {
     clientId: '',
     title: '',
     location: '',
-    jobType: 'contract' as const,
+    jobType: 'contract' as 'contract' | 'contract_to_hire' | 'permanent' | 'temp' | 'fulltime',
     salaryRange: '',
     description: ''
   });
@@ -525,7 +528,7 @@ const JobIntake: React.FC = () => {
       jobType: formData.jobType,
       description: formData.description,
       status: 'open',
-      priority: 'medium',
+      urgency: 'medium',
       positionsCount: 1,
       ownerId: '' // Will be set by the server from ctx.userId
     });
@@ -571,7 +574,7 @@ const JobIntake: React.FC = () => {
             </div>
             <div>
               <label className="block text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">Employment Type</label>
-              <select value={formData.jobType} onChange={e => setFormData({ ...formData, jobType: e.target.value as 'contract' | 'contract_to_hire' | 'permanent' | 'temp' })} className="w-full p-4 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-rust">
+              <select value={formData.jobType} onChange={e => setFormData({ ...formData, jobType: e.target.value as 'contract' | 'contract_to_hire' | 'permanent' | 'temp' | 'fulltime' })} className="w-full p-4 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-rust">
                 <option value="contract">Contract</option>
                 <option value="permanent">Full-time</option>
                 <option value="contract_to_hire">C2H</option>
@@ -590,8 +593,8 @@ const JobIntake: React.FC = () => {
           </div>
 
           <div className="flex items-center justify-end pt-6 border-t border-stone-100">
-            <button type="submit" disabled={createJobMutation.isLoading} className="px-10 py-4 bg-charcoal text-white rounded-full text-sm font-bold uppercase tracking-widest hover:bg-rust transition-all shadow-lg flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
-              {createJobMutation.isLoading ? 'Processing...' : 'Submit Requisition'} <Send size={16} />
+            <button type="submit" disabled={createJobMutation.isPending} className="px-10 py-4 bg-charcoal text-white rounded-full text-sm font-bold uppercase tracking-widest hover:bg-rust transition-all shadow-lg flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+              {createJobMutation.isPending ? 'Processing...' : 'Submit Requisition'} <Send size={16} />
             </button>
           </div>
         </form>
@@ -828,7 +831,7 @@ export const RecruiterDashboard: React.FC = () => {
       {isLeadModalOpen && <CreateLeadModal onClose={() => setIsLeadModalOpen(false)} onSave={addLead} />}
       {isDealModalOpen && <CreateDealModal leads={leads} onClose={() => setIsDealModalOpen(false)} onSave={addDeal} />}
       {isAccountModalOpen && <CreateAccountModal onClose={() => setIsAccountModalOpen(false)} onSuccess={(account) => { setIsAccountModalOpen(false); }} />}
-      {isSourcingModalOpen && jobId && <SourcingModal isOpen={isSourcingModalOpen} onClose={() => setIsSourcingModalOpen(false)} jobId={jobId} />}
+      {isSourcingModalOpen && jobId && typeof jobId === 'string' && <SourcingModal isOpen={isSourcingModalOpen} onClose={() => setIsSourcingModalOpen(false)} jobId={jobId} />}
     </div>
   );
 };

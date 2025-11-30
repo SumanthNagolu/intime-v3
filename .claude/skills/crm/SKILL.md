@@ -8,15 +8,23 @@ description: CRM (Customer Relationship Management) domain expertise for InTime 
 ## Domain Overview
 Client relationship management: accounts, leads, deals, contacts.
 
+## Entity Categories
+
+| Category | Entities | Workplan | Activity Logging |
+|----------|----------|----------|------------------|
+| **Root** | lead, deal | Yes - auto-created | Yes - all operations |
+| **Supporting** | account, contact (poc) | No | Optional |
+
+**Root entities** get automatic workplan creation and activity logging.
+
 ## Key Tables (src/lib/db/schema/crm.ts)
 
-| Table | Purpose |
-|-------|---------|
-| `accounts` | Client companies |
-| `leads` | Sales leads |
-| `deals` | Active deals/opportunities |
-| `pocs` | Points of contact |
-| `activities` | Activity logging |
+| Table | Purpose | Category |
+|-------|---------|----------|
+| `accounts` | Client companies | Supporting |
+| `leads` | Sales leads | **Root** |
+| `deals` | Active deals/opportunities | **Root** |
+| `pocs` | Points of contact | Supporting |
 
 ## Workflow
 ```
@@ -105,8 +113,41 @@ trpc.crm.activities.getByEntity({ entityType, entityId })
 }
 ```
 
+## Workplan Templates (Root Entities)
+
+### Lead Workflow (`lead_workflow`)
+```
+lead_created
+  → initial_contact (Day 0) - First outreach
+  → qualification_call (Day 1) - BANT qualification
+  → follow_up_email (Day 3) - If no response
+  → second_follow_up (Day 7) - Final attempt
+  → lead_review (Day 14) - Convert or disqualify
+```
+
+### Deal Workflow (`deal_workflow`)
+```
+deal_created
+  → discovery_meeting (Day 0) - Requirements gathering
+  → proposal_preparation (Day 3) - Draft proposal
+  → proposal_presentation (Day 7) - Present to client
+  → negotiation_call (on proposal_sent) - Address concerns
+  → close_attempt (Day 14) - Push for decision
+  → win_loss_review (on closed) - Analyze outcome
+```
+
+### Activity Categories
+- `call` - Phone calls
+- `email` - Email communications
+- `meeting` - In-person or video meetings
+- `task` - Internal tasks
+- `follow_up` - Follow-up activities
+- `note` - General notes
+- `lifecycle` - Status changes, creation, etc.
+
 ## Integration Points
 - Deals link to Jobs in ATS
 - Accounts link to Jobs for requisitions
-- Activity logging across all entities
+- Lead/Deal creation → triggers workplan
+- Status changes → trigger successor activities
 - AI Twin for deal insights and follow-ups

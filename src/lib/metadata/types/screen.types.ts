@@ -309,9 +309,6 @@ export interface TableColumnDefinition {
   /** Widget type for rendering */
   type?: string;
 
-  /** Alias for type - for compatibility */
-  fieldType?: string;
-
   /** Widget config */
   config?: Record<string, unknown>;
 
@@ -324,8 +321,8 @@ export interface TableColumnDefinition {
   /** Column width */
   width?: string | number;
 
-  /** Visibility rule */
-  visible?: VisibilityRule;
+  /** Is column visible */
+  visible?: boolean | VisibilityRule;
 }
 
 // ==========================================
@@ -443,17 +440,17 @@ export interface ScreenHooks {
 // WIZARD SCREEN DEFINITION (Extended)
 // ==========================================
 
-export interface WizardScreenDefinition extends Omit<ScreenDefinition, 'type' | 'layout'> {
+export interface WizardScreenDefinition extends Omit<ScreenDefinition, 'type' | 'layout' | 'navigation'> {
   type: 'wizard';
 
   /** Wizard steps */
   steps: WizardStepDefinition[];
 
   /** Wizard navigation options */
-  navigation: WizardNavigation;
+  navigation?: WizardNavigation;
 
   /** On complete action */
-  onComplete: WizardCompleteAction;
+  onComplete?: WizardCompleteAction;
 }
 
 export interface WizardNavigation {

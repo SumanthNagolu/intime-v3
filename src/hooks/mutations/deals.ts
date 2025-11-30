@@ -117,7 +117,7 @@ export function useCloseDealLost() {
 export function useCreateDealActivity() {
   const utils = trpc.useUtils();
 
-  return trpc.activities.log.useMutation({
+  return trpc.activities.create.useMutation({
     onSuccess: (data, variables) => {
       // Refresh activities list
       utils.activities.list.invalidate({

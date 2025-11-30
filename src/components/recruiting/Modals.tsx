@@ -74,10 +74,10 @@ export const CreateLeadModal: React.FC<{
 
     // Fetch real accounts from database
     const { data: dbAccounts } = trpc.crm.accounts.list.useQuery(
-        { limit: 100, search: accountSearch || undefined },
+        { page: 1, pageSize: 100, search: accountSearch || undefined },
         { enabled: leadType === 'person' || !!defaultAccountId } // Fetch when person tab is active OR when defaultAccountId is provided
     );
-    const accounts = dbAccounts || [];
+    const accounts = dbAccounts?.items || [];
 
     // tRPC mutation for creating leads
     const createLeadMutation = trpc.crm.leads.create.useMutation({
@@ -765,32 +765,38 @@ export const CreateDealModal: React.FC<{ leads: any[], onClose: () => void, onSa
 
 // Industry options for accounts
 const ACCOUNT_INDUSTRIES = [
-    'Insurance (P&C)',
-    'Insurance (Life)',
-    'Insurance (Health)',
-    'Financial Services',
-    'Banking',
-    'Healthcare',
-    'Technology',
-    'Manufacturing',
-    'Retail',
-    'Government',
-    'Other'
+    { value: 'technology', label: 'Technology' },
+    { value: 'healthcare', label: 'Healthcare' },
+    { value: 'finance', label: 'Financial Services' },
+    { value: 'banking', label: 'Banking' },
+    { value: 'insurance', label: 'Insurance' },
+    { value: 'manufacturing', label: 'Manufacturing' },
+    { value: 'retail', label: 'Retail' },
+    { value: 'consulting', label: 'Consulting' },
+    { value: 'government', label: 'Government' },
+    { value: 'education', label: 'Education' },
+    { value: 'energy', label: 'Energy' },
+    { value: 'telecommunications', label: 'Telecommunications' },
+    { value: 'pharmaceutical', label: 'Pharmaceutical' },
+    { value: 'other', label: 'Other' },
 ];
 
 // Account tiers
 const ACCOUNT_TIERS_OPTIONS = [
-    { value: 'platinum', label: 'Platinum' },
-    { value: 'gold', label: 'Gold' },
-    { value: 'silver', label: 'Silver' },
-    { value: 'bronze', label: 'Bronze' },
+    { value: 'enterprise', label: 'Enterprise' },
+    { value: 'mid_market', label: 'Mid Market' },
+    { value: 'smb', label: 'SMB' },
+    { value: 'strategic', label: 'Strategic' },
 ];
 
 // Account types
 const ACCOUNT_TYPES = [
     { value: 'direct_client', label: 'Direct Client' },
-    { value: 'vendor', label: 'MSP/VMS' },
-    { value: 'partner', label: 'Implementation Partner' },
+    { value: 'vendor', label: 'Vendor' },
+    { value: 'implementation_partner', label: 'Implementation Partner' },
+    { value: 'msp_vms', label: 'MSP/VMS' },
+    { value: 'system_integrator', label: 'System Integrator' },
+    { value: 'staffing_agency', label: 'Staffing Agency' },
 ];
 
 // Responsiveness levels
@@ -816,10 +822,10 @@ export const CreateAccountModal: React.FC<{
 
     const [form, setForm] = useState({
         name: '',
-        industry: '',
-        companyType: 'direct_client',
+        industry: '' as '' | 'technology' | 'healthcare' | 'finance' | 'banking' | 'insurance' | 'manufacturing' | 'retail' | 'consulting' | 'government' | 'education' | 'energy' | 'telecommunications' | 'pharmaceutical' | 'other',
+        companyType: 'direct_client' as 'direct_client' | 'implementation_partner' | 'msp_vms' | 'system_integrator' | 'staffing_agency' | 'vendor',
         status: 'prospect' as 'prospect' | 'active' | 'inactive' | 'churned',
-        tier: '' as '' | 'platinum' | 'gold' | 'silver' | 'bronze',
+        tier: '' as '' | 'enterprise' | 'mid_market' | 'smb' | 'strategic',
         responsiveness: '' as '' | 'high' | 'medium' | 'low',
         preferredQuality: '' as '' | 'premium' | 'standard' | 'budget',
         website: '',
@@ -849,7 +855,7 @@ export const CreateAccountModal: React.FC<{
             await createAccountMutation.mutateAsync({
                 name: form.name,
                 industry: form.industry || undefined,
-                companyType: form.companyType as 'direct_client' | 'vendor' | 'partner' | 'prospect',
+                companyType: form.companyType,
                 status: form.status,
                 tier: form.tier || undefined,
                 responsiveness: form.responsiveness || undefined,
@@ -913,10 +919,10 @@ export const CreateAccountModal: React.FC<{
                                     <select
                                         className={inputClass}
                                         value={form.industry}
-                                        onChange={e => setForm({...form, industry: e.target.value})}
+                                        onChange={e => setForm({...form, industry: e.target.value as typeof form.industry})}
                                     >
                                         <option value="">Select Industry...</option>
-                                        {ACCOUNT_INDUSTRIES.map(i => <option key={i} value={i}>{i}</option>)}
+                                        {ACCOUNT_INDUSTRIES.map(i => <option key={i.value} value={i.value}>{i.label}</option>)}
                                     </select>
                                 </div>
 
@@ -926,7 +932,7 @@ export const CreateAccountModal: React.FC<{
                                         required
                                         className={inputClass}
                                         value={form.companyType}
-                                        onChange={e => setForm({...form, companyType: e.target.value})}
+                                        onChange={e => setForm({...form, companyType: e.target.value as typeof form.companyType})}
                                     >
                                         {ACCOUNT_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
                                     </select>
@@ -1514,7 +1520,7 @@ export const CreateDealFromAccountModal: React.FC<{
 
     const [form, setForm] = useState({
         title: '',
-        stage: 'prospect' as 'prospect' | 'discovery' | 'proposal' | 'negotiation' | 'closed_won' | 'closed_lost',
+        stage: 'discovery' as 'discovery' | 'qualification' | 'proposal' | 'negotiation' | 'closed_won' | 'closed_lost',
         value: '',
         probability: '20',
         expectedCloseDate: '',
@@ -1523,7 +1529,7 @@ export const CreateDealFromAccountModal: React.FC<{
     });
 
     // Fetch POCs for this account
-    const { data: pocs = [] } = trpc.crm.pocs.listByAccount.useQuery(
+    const { data: pocs = [] } = trpc.crm.pocs.list.useQuery(
         { accountId },
         { enabled: !!accountId }
     );
@@ -1556,8 +1562,6 @@ export const CreateDealFromAccountModal: React.FC<{
                 probability: parseInt(form.probability),
                 expectedCloseDate: form.expectedCloseDate ? new Date(form.expectedCloseDate) : undefined,
                 description: form.description || undefined,
-                dealType: form.dealType,
-                primaryPocId: selectedPocId || undefined,
             });
         } catch (err) {
             console.error('Failed to create deal:', err);
@@ -1775,7 +1779,7 @@ export const CreateJobFromAccountModal: React.FC<{
     });
 
     // Fetch deals for this account (to optionally link job to deal)
-    const { data: deals = [] } = trpc.crm.deals.listByAccount.useQuery(
+    const { data: deals = [] } = trpc.crm.deals.list.useQuery(
         { accountId },
         { enabled: !!accountId }
     );

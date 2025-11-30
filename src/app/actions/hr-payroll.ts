@@ -10,6 +10,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { z } from 'zod';
 import type { ActionResult, PaginatedResult } from './types';
 import {
@@ -398,9 +399,9 @@ export async function getPayrollRunAction(
       payDate: run.pay_date,
       status: run.status,
       employeeCount: run.employee_count,
-      totalGrossPay: run.total_gross_pay ? parseFloat(run.total_gross_pay) : 0,
-      totalTaxes: run.total_taxes ? parseFloat(run.total_taxes) : 0,
-      totalNetPay: run.total_net_pay ? parseFloat(run.total_net_pay) : 0,
+      totalGrossPay: run.total_gross_pay ? parseFloat(String(run.total_gross_pay)) : 0,
+      totalTaxes: run.total_taxes ? parseFloat(String(run.total_taxes)) : 0,
+      totalNetPay: run.total_net_pay ? parseFloat(String(run.total_net_pay)) : 0,
       approvedBy: run.approved_by,
       approvedAt: run.approved_at,
       processedAt: run.processed_at,
@@ -491,41 +492,40 @@ export async function createPayrollRunAction(
       return {
         payroll_run_id: newRun.id,
         employee_id: emp.id,
-        base_salary: baseSalary.toFixed(2),
-        gross_pay: baseSalary.toFixed(2),
-        taxes_withheld: estimatedTax.toFixed(2),
-        benefits_deductions: estimatedBenefits.toFixed(2),
-        net_pay: (baseSalary - estimatedTax - estimatedBenefits).toFixed(2),
+        base_salary: baseSalary,
+        gross_pay: baseSalary,
+        taxes_withheld: estimatedTax,
+        benefits_deductions: estimatedBenefits,
+        net_pay: baseSalary - estimatedTax - estimatedBenefits,
       };
     });
 
     await supabase.from('payroll_items').insert(payrollItems);
 
     // Update totals on payroll run
-    const totalGross = payrollItems.reduce((sum, item) => sum + parseFloat(item.gross_pay), 0);
-    const totalTaxes = payrollItems.reduce(
-      (sum, item) => sum + parseFloat(item.taxes_withheld || '0'),
-      0
-    );
-    const totalNet = payrollItems.reduce((sum, item) => sum + parseFloat(item.net_pay), 0);
+    const totalGross = payrollItems.reduce((sum, item) => sum + item.gross_pay, 0);
+    const totalTaxes = payrollItems.reduce((sum, item) => sum + item.taxes_withheld, 0);
+    const totalNet = payrollItems.reduce((sum, item) => sum + item.net_pay, 0);
 
     await supabase
       .from('payroll_runs')
       .update({
         employee_count: employees.length,
-        total_gross_pay: totalGross.toFixed(2),
-        total_taxes: totalTaxes.toFixed(2),
-        total_net_pay: totalNet.toFixed(2),
+        total_gross_pay: totalGross,
+        total_taxes: totalTaxes,
+        total_net_pay: totalNet,
       })
       .eq('id', newRun.id);
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'payroll_runs',
     action: 'create',
     recordId: newRun.id,
     userId: profile.id,
+    userEmail: profile.email,
     newValues: { periodStartDate, periodEndDate, payDate },
     severity: 'info',
     orgId: profile.orgId,
@@ -612,33 +612,33 @@ export async function updatePayrollItemAction(
 
   // Build update object
   const updates: Record<string, any> = {};
-  if (input.baseSalary !== undefined) updates.base_salary = input.baseSalary.toFixed(2);
-  if (input.commission !== undefined) updates.commission = input.commission.toFixed(2);
-  if (input.bonus !== undefined) updates.bonus = input.bonus.toFixed(2);
-  if (input.overtimeHours !== undefined) updates.overtime_hours = input.overtimeHours.toFixed(2);
-  if (input.overtimePay !== undefined) updates.overtime_pay = input.overtimePay.toFixed(2);
-  if (input.otherEarnings !== undefined) updates.other_earnings = input.otherEarnings.toFixed(2);
-  if (input.taxesWithheld !== undefined) updates.taxes_withheld = input.taxesWithheld.toFixed(2);
+  if (input.baseSalary !== undefined) updates.base_salary = input.baseSalary;
+  if (input.commission !== undefined) updates.commission = input.commission;
+  if (input.bonus !== undefined) updates.bonus = input.bonus;
+  if (input.overtimeHours !== undefined) updates.overtime_hours = input.overtimeHours;
+  if (input.overtimePay !== undefined) updates.overtime_pay = input.overtimePay;
+  if (input.otherEarnings !== undefined) updates.other_earnings = input.otherEarnings;
+  if (input.taxesWithheld !== undefined) updates.taxes_withheld = input.taxesWithheld;
   if (input.benefitsDeductions !== undefined)
-    updates.benefits_deductions = input.benefitsDeductions.toFixed(2);
+    updates.benefits_deductions = input.benefitsDeductions;
   if (input.otherDeductions !== undefined)
-    updates.other_deductions = input.otherDeductions.toFixed(2);
+    updates.other_deductions = input.otherDeductions;
 
   // Recalculate gross and net pay
-  const baseSalary = input.baseSalary ?? parseFloat(item.base_salary || '0');
-  const commission = input.commission ?? parseFloat(item.commission || '0');
-  const bonus = input.bonus ?? parseFloat(item.bonus || '0');
-  const overtimePay = input.overtimePay ?? parseFloat(item.overtime_pay || '0');
-  const otherEarnings = input.otherEarnings ?? parseFloat(item.other_earnings || '0');
-  const taxesWithheld = input.taxesWithheld ?? parseFloat(item.taxes_withheld || '0');
-  const benefitsDeductions = input.benefitsDeductions ?? parseFloat(item.benefits_deductions || '0');
-  const otherDeductions = input.otherDeductions ?? parseFloat(item.other_deductions || '0');
+  const baseSalary = input.baseSalary ?? (item.base_salary ? parseFloat(String(item.base_salary)) : 0);
+  const commission = input.commission ?? (item.commission ? parseFloat(String(item.commission)) : 0);
+  const bonus = input.bonus ?? (item.bonus ? parseFloat(String(item.bonus)) : 0);
+  const overtimePay = input.overtimePay ?? (item.overtime_pay ? parseFloat(String(item.overtime_pay)) : 0);
+  const otherEarnings = input.otherEarnings ?? (item.other_earnings ? parseFloat(String(item.other_earnings)) : 0);
+  const taxesWithheld = input.taxesWithheld ?? (item.taxes_withheld ? parseFloat(String(item.taxes_withheld)) : 0);
+  const benefitsDeductions = input.benefitsDeductions ?? (item.benefits_deductions ? parseFloat(String(item.benefits_deductions)) : 0);
+  const otherDeductions = input.otherDeductions ?? (item.other_deductions ? parseFloat(String(item.other_deductions)) : 0);
 
   const grossPay = baseSalary + commission + bonus + overtimePay + otherEarnings;
   const netPay = grossPay - taxesWithheld - benefitsDeductions - otherDeductions;
 
-  updates.gross_pay = grossPay.toFixed(2);
-  updates.net_pay = netPay.toFixed(2);
+  updates.gross_pay = grossPay;
+  updates.net_pay = netPay;
 
   const { error: updateError } = await supabase
     .from('payroll_items')
@@ -654,24 +654,30 @@ export async function updatePayrollItemAction(
   await recalculatePayrollRunTotals(supabase, item.payroll_run_id);
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'payroll_items',
     action: 'update',
     recordId: itemId,
     userId: profile.id,
+    userEmail: profile.email,
     oldValues: item,
     newValues: updates,
-    changedFields: Object.keys(updates),
+    metadata: { changedFields: Object.keys(updates) },
     severity: 'info',
     orgId: profile.orgId,
   });
 
   // Fetch updated item
-  const { data: updatedItem } = await supabase
+  const { data: updatedItem, error: fetchError } = await supabase
     .from('payroll_items')
     .select('*')
     .eq('id', itemId)
     .single();
+
+  if (fetchError || !updatedItem) {
+    return { success: false, error: 'Failed to fetch updated payroll item' };
+  }
 
   return {
     success: true,
@@ -679,21 +685,21 @@ export async function updatePayrollItemAction(
       id: updatedItem.id,
       payrollRunId: updatedItem.payroll_run_id,
       employeeId: updatedItem.employee_id,
-      baseSalary: updatedItem.base_salary ? parseFloat(updatedItem.base_salary) : null,
-      commission: updatedItem.commission ? parseFloat(updatedItem.commission) : null,
-      bonus: updatedItem.bonus ? parseFloat(updatedItem.bonus) : null,
-      overtimeHours: updatedItem.overtime_hours ? parseFloat(updatedItem.overtime_hours) : null,
-      overtimePay: updatedItem.overtime_pay ? parseFloat(updatedItem.overtime_pay) : null,
-      otherEarnings: updatedItem.other_earnings ? parseFloat(updatedItem.other_earnings) : null,
-      grossPay: parseFloat(updatedItem.gross_pay),
-      taxesWithheld: updatedItem.taxes_withheld ? parseFloat(updatedItem.taxes_withheld) : null,
+      baseSalary: updatedItem.base_salary ? parseFloat(String(updatedItem.base_salary)) : null,
+      commission: updatedItem.commission ? parseFloat(String(updatedItem.commission)) : null,
+      bonus: updatedItem.bonus ? parseFloat(String(updatedItem.bonus)) : null,
+      overtimeHours: updatedItem.overtime_hours ? parseFloat(String(updatedItem.overtime_hours)) : null,
+      overtimePay: updatedItem.overtime_pay ? parseFloat(String(updatedItem.overtime_pay)) : null,
+      otherEarnings: updatedItem.other_earnings ? parseFloat(String(updatedItem.other_earnings)) : null,
+      grossPay: parseFloat(String(updatedItem.gross_pay)),
+      taxesWithheld: updatedItem.taxes_withheld ? parseFloat(String(updatedItem.taxes_withheld)) : null,
       benefitsDeductions: updatedItem.benefits_deductions
-        ? parseFloat(updatedItem.benefits_deductions)
+        ? parseFloat(String(updatedItem.benefits_deductions))
         : null,
       otherDeductions: updatedItem.other_deductions
-        ? parseFloat(updatedItem.other_deductions)
+        ? parseFloat(String(updatedItem.other_deductions))
         : null,
-      netPay: parseFloat(updatedItem.net_pay),
+      netPay: parseFloat(String(updatedItem.net_pay)),
     },
   };
 }
@@ -744,11 +750,13 @@ export async function submitPayrollRunAction(runId: string): Promise<ActionResul
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'payroll_runs',
     action: 'submit',
     recordId: runId,
     userId: profile.id,
+    userEmail: profile.email,
     metadata: { previousStatus: 'draft', newStatus: 'ready_for_approval' },
     severity: 'info',
     orgId: profile.orgId,
@@ -807,11 +815,13 @@ export async function approvePayrollRunAction(runId: string): Promise<ActionResu
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'payroll_runs',
     action: 'approve',
     recordId: runId,
     userId: profile.id,
+    userEmail: profile.email,
     metadata: {
       totalGrossPay: run.total_gross_pay,
       totalNetPay: run.total_net_pay,
@@ -880,11 +890,13 @@ export async function rejectPayrollRunAction(
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'payroll_runs',
     action: 'reject',
     recordId: runId,
     userId: profile.id,
+    userEmail: profile.email,
     metadata: { reason },
     severity: 'warning',
     orgId: profile.orgId,
@@ -955,11 +967,13 @@ export async function processPayrollRunAction(runId: string): Promise<ActionResu
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'payroll_runs',
     action: 'process',
     recordId: runId,
     userId: profile.id,
+    userEmail: profile.email,
     metadata: {
       totalGrossPay: run.total_gross_pay,
       totalNetPay: run.total_net_pay,
@@ -1019,11 +1033,13 @@ export async function deletePayrollRunAction(runId: string): Promise<ActionResul
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'payroll_runs',
     action: 'delete',
     recordId: runId,
     userId: profile.id,
+    userEmail: profile.email,
     oldValues: run,
     severity: 'warning',
     orgId: profile.orgId,

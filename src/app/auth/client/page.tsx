@@ -9,3 +9,8 @@ export default function ClientAuthPage() {
   redirect('/login');
 }
 
+
+
+
+
+

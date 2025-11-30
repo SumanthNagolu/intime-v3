@@ -7,35 +7,38 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ActivityClassifierAgent, ActivityCategory } from '../ActivityClassifierAgent';
 
+// Create mock Supabase client
+const mockSupabaseClient = {
+  from: vi.fn().mockReturnThis(),
+  select: vi.fn().mockReturnThis(),
+  eq: vi.fn().mockReturnThis(),
+  gte: vi.fn().mockReturnThis(),
+  lt: vi.fn().mockReturnThis(),
+  is: vi.fn().mockReturnThis(),
+  order: vi.fn().mockReturnThis(),
+  single: vi.fn().mockResolvedValue({
+    data: {
+      id: 'test-screenshot-id',
+      filename: 'test-user/2025-01-01T10-00-00.jpg',
+      user_id: 'test-user',
+      analyzed: false,
+    },
+    error: null,
+  }),
+  update: vi.fn().mockReturnThis(),
+  storage: {
+    from: vi.fn(() => ({
+      createSignedUrl: vi.fn().mockResolvedValue({
+        data: { signedUrl: 'https://test-url.com/screenshot.jpg' },
+        error: null,
+      }),
+    })),
+  },
+} as any;
+
 // Mock dependencies
 vi.mock('@/lib/supabase/client', () => ({
-  createClient: vi.fn(() => ({
-    from: vi.fn().mockReturnThis(),
-    select: vi.fn().mockReturnThis(),
-    eq: vi.fn().mockReturnThis(),
-    gte: vi.fn().mockReturnThis(),
-    lt: vi.fn().mockReturnThis(),
-    is: vi.fn().mockReturnThis(),
-    order: vi.fn().mockReturnThis(),
-    single: vi.fn().mockResolvedValue({
-      data: {
-        id: 'test-screenshot-id',
-        filename: 'test-user/2025-01-01T10-00-00.jpg',
-        user_id: 'test-user',
-        analyzed: false,
-      },
-      error: null,
-    }),
-    update: vi.fn().mockReturnThis(),
-    storage: {
-      from: vi.fn(() => ({
-        createSignedUrl: vi.fn().mockResolvedValue({
-          data: { signedUrl: 'https://test-url.com/screenshot.jpg' },
-          error: null,
-        }),
-      })),
-    },
-  })),
+  createClient: vi.fn(() => mockSupabaseClient),
 }));
 
 vi.mock('openai', () => ({
@@ -64,7 +67,7 @@ describe('ActivityClassifierAgent', () => {
   let classifier: ActivityClassifierAgent;
 
   beforeEach(() => {
-    classifier = new ActivityClassifierAgent();
+    classifier = new ActivityClassifierAgent(mockSupabaseClient);
   });
 
   afterEach(() => {

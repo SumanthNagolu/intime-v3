@@ -189,7 +189,7 @@ async function logAuditEvent(
 ) {
   const { tableName, action, recordId, userId, userEmail, orgId, oldValues, newValues, metadata } = params;
 
-  await adminSupabase.from('audit_logs').insert({
+  await (adminSupabase.from as any)('audit_logs').insert({
     table_name: tableName,
     action,
     record_id: recordId,
@@ -400,7 +400,7 @@ export async function getUserAction(userId: string): Promise<ActionResult<UserWi
       employee_position,
       recruiter_territory,
       recruiter_specialization,
-      user_roles (
+      user_roles!user_roles_user_id_fkey (
         role_id,
         is_primary,
         assigned_at,
@@ -458,12 +458,12 @@ export async function getUserAction(userId: string): Promise<ActionResult<UserWi
     fullName: user.full_name,
     avatarUrl: user.avatar_url,
     phone: user.phone,
-    isActive: user.is_active,
+    isActive: user.is_active ?? false,
     createdAt: user.created_at,
     updatedAt: user.updated_at,
     deletedAt: user.deleted_at,
     orgId: user.org_id,
-    roles: (user.user_roles || [])
+    roles: ((user.user_roles || []) as any[])
       .filter((ur: any) => !ur.deleted_at)
       .map((ur: any) => ({
         id: ur.roles?.id,
@@ -546,7 +546,7 @@ export async function createUserAction(
       email,
       full_name: fullName,
       phone: phone || null,
-      org_id: profile.orgId,
+      org_id: profile.org_id,
       is_active: true,
       created_by: profile.id,
     })
@@ -581,7 +581,7 @@ export async function createUserAction(
     recordId: newProfile.id,
     userId: profile.id,
     userEmail: profile.email,
-    orgId: profile.orgId,
+    orgId: profile.org_id,
     newValues: { email, fullName, role: role.name },
     metadata: { source: 'admin_create', roleAssigned: role.name },
   });
@@ -680,7 +680,7 @@ export async function updateUserAction(
     recordId: userId,
     userId: profile.id,
     userEmail: profile.email,
-    orgId: profile.orgId,
+    orgId: profile.org_id,
     oldValues: existingUser,
     newValues: updateData,
     metadata: { source: isSelf ? 'self_update' : 'admin_update' },
@@ -753,7 +753,7 @@ export async function deactivateUserAction(userId: string): Promise<ActionResult
     recordId: userId,
     userId: profile.id,
     userEmail: profile.email,
-    orgId: profile.orgId,
+    orgId: profile.org_id,
     oldValues: { is_active: true, deleted_at: null },
     newValues: { is_active: false, deleted_at: new Date().toISOString() },
     metadata: { source: 'admin_deactivate', deactivatedUser: existingUser.email },
@@ -825,7 +825,7 @@ export async function reactivateUserAction(userId: string): Promise<ActionResult
     recordId: userId,
     userId: profile.id,
     userEmail: profile.email,
-    orgId: profile.orgId,
+    orgId: profile.org_id,
     oldValues: { is_active: existingUser.is_active, deleted_at: existingUser.deleted_at },
     newValues: { is_active: true, deleted_at: null },
     metadata: { source: 'admin_reactivate', reactivatedUser: existingUser.email },
@@ -928,7 +928,7 @@ export async function assignRoleAction(
     recordId: userId,
     userId: profile.id,
     userEmail: profile.email,
-    orgId: profile.orgId,
+    orgId: profile.org_id,
     newValues: { roleId, roleName: role.name, isPrimary, expiresAt },
     metadata: { source: 'admin_assign', targetUser: targetUser.email, roleName: role.name },
   });
@@ -1010,7 +1010,7 @@ export async function removeRoleAction(
     recordId: userId,
     userId: profile.id,
     userEmail: profile.email,
-    orgId: profile.orgId,
+    orgId: profile.org_id,
     oldValues: { roleId, roleName: (assignment.roles as any)?.name, isPrimary: assignment.is_primary },
     metadata: {
       source: 'admin_remove',
@@ -1063,8 +1063,8 @@ export async function listRolesAction(): Promise<ActionResult<Array<{
       name: r.name,
       displayName: r.display_name,
       description: r.description,
-      hierarchyLevel: r.hierarchy_level,
-      colorCode: r.color_code,
+      hierarchyLevel: r.hierarchy_level ?? 0,
+      colorCode: r.color_code ?? '#000000',
     })),
   };
 }

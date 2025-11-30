@@ -41,8 +41,7 @@ export async function getGlobalLeaderboard(
   const supabase = await createClient();
 
   // Fetch leaderboard entries
-  const { data: entries, error: entriesError } = await supabase
-    .from('leaderboard_global')
+  const { data: entries, error: entriesError } = await (supabase.from as any)('leaderboard_global')
     .select('*')
     .range(offset, offset + limit - 1);
 
@@ -51,8 +50,7 @@ export async function getGlobalLeaderboard(
   }
 
   // Get total count
-  const { count, error: countError } = await supabase
-    .from('leaderboard_global')
+  const { count, error: countError } = await (supabase.from as any)('leaderboard_global')
     .select('*', { count: 'exact', head: true });
 
   if (countError) {
@@ -64,7 +62,7 @@ export async function getGlobalLeaderboard(
   let userPercentile: number | null = null;
 
   if (userId) {
-    const { data: rankData, error: rankError } = await supabase.rpc(
+    const { data: rankData, error: rankError } = await (supabase.rpc as any)(
       'get_user_global_rank',
       { p_user_id: userId }
     );
@@ -96,8 +94,7 @@ export async function getCourseLeaderboard(
   const supabase = await createClient();
 
   // Fetch leaderboard entries for this course
-  const { data: entries, error: entriesError } = await supabase
-    .from('leaderboard_by_course')
+  const { data: entries, error: entriesError } = await (supabase.from as any)('leaderboard_by_course')
     .select('*')
     .eq('course_id', courseId)
     .range(offset, offset + limit - 1);
@@ -117,15 +114,15 @@ export async function getCourseLeaderboard(
     };
   }
 
-  const courseTitle = entries[0].course_title;
-  const totalStudents = entries[0].total_students;
+  const courseTitle = entries[0].course_title ?? 'Unknown Course';
+  const totalStudents = entries[0].total_students ?? 0;
 
   // Get user's rank if userId provided
   let userRank: number | null = null;
   let userPercentile: number | null = null;
 
   if (userId) {
-    const { data: rankData, error: rankError } = await supabase.rpc(
+    const { data: rankData, error: rankError } = await (supabase.rpc as any)(
       'get_user_course_rank',
       {
         p_user_id: userId,
@@ -162,8 +159,7 @@ export async function getCohortLeaderboard(
 
   // If cohortMonth not provided, get user's cohort
   if (!cohortMonth) {
-    const { data: enrollment, error: enrollmentError } = await supabase
-      .from('enrollments')
+    const { data: enrollment, error: enrollmentError } = await (supabase.from as any)('enrollments')
       .select('enrolled_at')
       .eq('user_id', userId)
       .eq('course_id', courseId)
@@ -179,8 +175,7 @@ export async function getCohortLeaderboard(
   }
 
   // Fetch cohort leaderboard
-  const { data: entries, error: entriesError } = await supabase
-    .from('leaderboard_by_cohort')
+  const { data: entries, error: entriesError } = await (supabase.from as any)('leaderboard_by_cohort')
     .select('*')
     .eq('course_id', courseId)
     .gte('cohort_month', cohortMonth)
@@ -203,15 +198,15 @@ export async function getCohortLeaderboard(
     };
   }
 
-  const courseTitle = entries[0].course_title;
-  const cohortName = entries[0].cohort_name;
-  const cohortSize = entries[0].cohort_size;
+  const courseTitle = entries[0].course_title ?? 'Unknown Course';
+  const cohortName = entries[0].cohort_name ?? 'No Cohort';
+  const cohortSize = entries[0].cohort_size ?? 0;
 
   // Get user's rank
   let userRank: number | null = null;
   let userPercentile: number | null = null;
 
-  const { data: rankData, error: rankError } = await supabase.rpc(
+  const { data: rankData, error: rankError } = await (supabase.rpc as any)(
     'get_user_cohort_rank',
     {
       p_user_id: userId,
@@ -258,8 +253,7 @@ export async function getWeeklyLeaderboard(
   const weekStartStr = targetWeekStart.toISOString().split('T')[0];
 
   // Fetch weekly leaderboard
-  const { data: entries, error: entriesError } = await supabase
-    .from('leaderboard_weekly')
+  const { data: entries, error: entriesError } = await (supabase.from as any)('leaderboard_weekly')
     .select('*')
     .eq('week_start', weekStartStr)
     .order('rank', { ascending: true })
@@ -280,16 +274,16 @@ export async function getWeeklyLeaderboard(
     };
   }
 
-  const weekLabel = entries[0].week_label;
-  const isCurrentWeek = entries[0].is_current_week;
-  const totalParticipants = entries[0].participants;
+  const weekLabel = entries[0].week_label ?? 'No Data';
+  const isCurrentWeek = entries[0].is_current_week ?? false;
+  const totalParticipants = entries[0].participants ?? 0;
 
   // Get user's rank for this week
   let userRank: number | null = null;
   let userWeeklyXp: number | null = null;
 
   if (userId) {
-    const userEntry = entries.find((e) => e.user_id === userId);
+    const userEntry = entries.find((e: any) => e.user_id === userId);
     if (userEntry) {
       userRank = userEntry.rank;
       userWeeklyXp = userEntry.weekly_xp;
@@ -316,8 +310,7 @@ export async function getAllTimeLeaderboard(
   const supabase = await createClient();
 
   // Fetch all-time top 100
-  const { data: entries, error: entriesError } = await supabase
-    .from('leaderboard_all_time')
+  const { data: entries, error: entriesError } = await (supabase.from as any)('leaderboard_all_time')
     .select('*')
     .order('rank', { ascending: true });
 
@@ -330,7 +323,7 @@ export async function getAllTimeLeaderboard(
   let userRank: number | null = null;
 
   if (userId && entries) {
-    const userEntry = entries.find((e) => e.user_id === userId);
+    const userEntry = entries.find((e: any) => e.user_id === userId);
     if (userEntry) {
       userInTop100 = true;
       userRank = userEntry.rank;
@@ -351,7 +344,7 @@ export async function getAllTimeLeaderboard(
 export async function getUserGlobalRank(userId: string): Promise<UserGlobalRank | null> {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.rpc('get_user_global_rank', {
+  const { data, error } = await (supabase.rpc as any)('get_user_global_rank', {
     p_user_id: userId,
   });
 
@@ -368,7 +361,7 @@ export async function getUserCourseRank(
 ): Promise<UserCourseRank | null> {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.rpc('get_user_course_rank', {
+  const { data, error } = await (supabase.rpc as any)('get_user_course_rank', {
     p_user_id: userId,
     p_course_id: courseId,
   });
@@ -386,7 +379,7 @@ export async function getUserCohortRank(
 ): Promise<UserCohortRank | null> {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.rpc('get_user_cohort_rank', {
+  const { data, error } = await (supabase.rpc as any)('get_user_cohort_rank', {
     p_user_id: userId,
     p_course_id: courseId,
   });
@@ -403,7 +396,7 @@ export async function getUserWeeklyPerformance(
 ): Promise<UserWeeklyPerformance[]> {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.rpc('get_user_weekly_performance', {
+  const { data, error } = await (supabase.rpc as any)('get_user_weekly_performance', {
     p_user_id: userId,
   });
 
@@ -419,7 +412,7 @@ export async function getUserLeaderboardSummary(
 ): Promise<UserLeaderboardSummary | null> {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.rpc('get_user_leaderboard_summary', {
+  const { data, error } = await (supabase.rpc as any)('get_user_leaderboard_summary', {
     p_user_id: userId,
   });
 
@@ -440,7 +433,7 @@ export async function updateLeaderboardVisibility(
 ): Promise<void> {
   const supabase = await createClient();
 
-  const { error } = await supabase.rpc('update_leaderboard_visibility', {
+  const { error } = await (supabase.rpc as any)('update_leaderboard_visibility', {
     p_user_id: userId,
     p_visible: visible,
   });

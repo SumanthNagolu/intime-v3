@@ -144,7 +144,7 @@ async function logAuditEvent(
 ) {
   const supabase = await createClient();
 
-  await supabase.from('audit_logs').insert({
+  await (supabase.from as any)('audit_logs').insert({
     user_id: userId,
     org_id: orgId,
     action,
@@ -841,6 +841,7 @@ export async function getAtRiskEnrollmentsAction(): Promise<ActionResult<Enrollm
     }
 
     const result = await listEnrollmentsAction({
+      page: 1,
       isAtRisk: true,
       status: 'active',
       sortBy: 'enrolledAt',

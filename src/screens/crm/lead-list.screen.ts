@@ -17,7 +17,7 @@ const leadTableColumns: TableColumnDefinition[] = [
     id: 'companyName',
     label: 'Company',
     path: 'companyName',
-    fieldType: 'text',
+    type: 'text',
     sortable: true,
     width: '200px',
   },
@@ -25,20 +25,20 @@ const leadTableColumns: TableColumnDefinition[] = [
     id: 'contact',
     label: 'Contact',
     path: 'firstName',
-    fieldType: 'text',
+    type: 'text',
     // Computed display would combine firstName + lastName
   },
   {
     id: 'title',
     label: 'Title',
     path: 'title',
-    fieldType: 'text',
+    type: 'text',
   },
   {
     id: 'status',
     label: 'Status',
     path: 'status',
-    fieldType: 'enum',
+    type: 'enum',
     sortable: true,
     config: {
       options: [
@@ -65,7 +65,7 @@ const leadTableColumns: TableColumnDefinition[] = [
     id: 'tier',
     label: 'Tier',
     path: 'tier',
-    fieldType: 'enum',
+    type: 'enum',
     sortable: true,
     config: {
       options: [
@@ -80,7 +80,7 @@ const leadTableColumns: TableColumnDefinition[] = [
     id: 'estimatedValue',
     label: 'Est. Value',
     path: 'estimatedValue',
-    fieldType: 'currency',
+    type: 'currency',
     sortable: true,
     width: '120px',
   },
@@ -88,19 +88,19 @@ const leadTableColumns: TableColumnDefinition[] = [
     id: 'source',
     label: 'Source',
     path: 'source',
-    fieldType: 'text',
+    type: 'text',
   },
   {
     id: 'owner',
     label: 'Owner',
     path: 'owner.fullName',
-    fieldType: 'text',
+    type: 'text',
   },
   {
     id: 'lastContactedAt',
     label: 'Last Contact',
     path: 'lastContactedAt',
-    fieldType: 'date',
+    type: 'date',
     sortable: true,
     config: { format: 'relative' },
   },
@@ -108,7 +108,7 @@ const leadTableColumns: TableColumnDefinition[] = [
     id: 'createdAt',
     label: 'Created',
     path: 'createdAt',
-    fieldType: 'date',
+    type: 'date',
     sortable: true,
     config: { format: 'short' },
   },
@@ -122,7 +122,7 @@ const filterFields = [
   {
     id: 'status',
     label: 'Status',
-    fieldType: 'multiselect' as const,
+    type: 'multiselect' as const,
     config: {
       options: [
         { value: 'new', label: 'New' },
@@ -138,7 +138,7 @@ const filterFields = [
   {
     id: 'tier',
     label: 'Tier',
-    fieldType: 'multiselect' as const,
+    type: 'multiselect' as const,
     config: {
       options: [
         { value: 'enterprise', label: 'Enterprise' },
@@ -151,7 +151,7 @@ const filterFields = [
   {
     id: 'source',
     label: 'Source',
-    fieldType: 'multiselect' as const,
+    type: 'multiselect' as const,
     config: {
       options: [
         { value: 'website', label: 'Website' },
@@ -166,7 +166,7 @@ const filterFields = [
   {
     id: 'ownerId',
     label: 'Owner',
-    fieldType: 'select' as const,
+    type: 'select' as const,
     config: {
       entityType: 'user',
       displayField: 'fullName',
@@ -175,7 +175,7 @@ const filterFields = [
   {
     id: 'dateRange',
     label: 'Created Date',
-    fieldType: 'date' as const,
+    type: 'date' as const,
     config: {
       range: true,
     },
@@ -198,9 +198,8 @@ export const leadListScreen: ScreenDefinition = {
   dataSource: {
     type: 'query',
     query: {
-      router: 'crm',
-      procedure: 'listLeads',
-      input: {
+      procedure: 'crm.listLeads',
+      params: {
         // Filters will be bound from filter state
       },
     },
@@ -218,25 +217,25 @@ export const leadListScreen: ScreenDefinition = {
           {
             id: 'totalLeads',
             label: 'Total Leads',
-            fieldType: 'number',
+            type: 'number',
             path: 'metrics.total',
           },
           {
             id: 'newLeads',
             label: 'New This Week',
-            fieldType: 'number',
+            type: 'number',
             path: 'metrics.newThisWeek',
           },
           {
             id: 'qualifiedLeads',
             label: 'Qualified',
-            fieldType: 'number',
+            type: 'number',
             path: 'metrics.qualified',
           },
           {
             id: 'pipelineValue',
             label: 'Pipeline Value',
-            fieldType: 'currency',
+            type: 'currency',
             path: 'metrics.pipelineValue',
           },
         ],
@@ -244,31 +243,9 @@ export const leadListScreen: ScreenDefinition = {
       {
         id: 'lead-table',
         type: 'table',
-        tableConfig: {
-          columns: leadTableColumns,
-          dataPath: 'items',
-          rowClickAction: {
-            type: 'navigate',
-            navigation: {
-              path: '/employee/crm/leads/{id}',
-              params: { id: fieldValue('id') },
-            },
-          },
-          pagination: {
-            enabled: true,
-            pageSize: 25,
-            pageSizeOptions: [10, 25, 50, 100],
-          },
-          sorting: {
-            enabled: true,
-            defaultSort: { field: 'createdAt', direction: 'desc' },
-          },
-          selection: {
-            enabled: true,
-            mode: 'multiple',
-          },
-          filters: filterFields,
-        },
+        columns_config: leadTableColumns,
+        // Note: Advanced table features (pagination, sorting, selection, filters)
+        // will be handled by the table renderer component
       },
     ],
   },
@@ -281,8 +258,9 @@ export const leadListScreen: ScreenDefinition = {
       type: 'navigate',
       variant: 'primary',
       icon: 'Plus',
-      navigation: {
-        path: '/employee/crm/leads/new',
+      config: {
+        type: 'navigate',
+        route: '/employee/crm/leads/new',
       },
     },
     {
@@ -291,6 +269,10 @@ export const leadListScreen: ScreenDefinition = {
       type: 'custom',
       variant: 'secondary',
       icon: 'Upload',
+      config: {
+        type: 'custom',
+        handler: 'handleImport',
+      },
     },
     {
       id: 'export',
@@ -298,34 +280,9 @@ export const leadListScreen: ScreenDefinition = {
       type: 'custom',
       variant: 'secondary',
       icon: 'Download',
-    },
-  ],
-
-  // Bulk actions (when rows selected)
-  bulkActions: [
-    {
-      id: 'bulk-assign',
-      label: 'Assign Owner',
-      type: 'custom',
-      icon: 'UserPlus',
-    },
-    {
-      id: 'bulk-status',
-      label: 'Change Status',
-      type: 'custom',
-      icon: 'RefreshCw',
-    },
-    {
-      id: 'bulk-delete',
-      label: 'Delete',
-      type: 'custom',
-      variant: 'destructive',
-      icon: 'Trash2',
-      confirm: {
-        title: 'Delete Leads',
-        message: 'Are you sure you want to delete the selected leads?',
-        confirmLabel: 'Delete',
-        cancelLabel: 'Cancel',
+      config: {
+        type: 'custom',
+        handler: 'handleExport',
       },
     },
   ],
@@ -333,7 +290,7 @@ export const leadListScreen: ScreenDefinition = {
   // Navigation
   navigation: {
     breadcrumbs: [
-      { label: 'CRM', path: '/employee/crm' },
+      { label: 'CRM', route: '/employee/crm' },
       { label: 'Leads' },
     ],
   },

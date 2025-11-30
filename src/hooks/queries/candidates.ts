@@ -11,10 +11,9 @@
 import { trpc } from '@/lib/trpc/client';
 import {
   candidateAdapter,
-  type DisplayCandidate,
   type DisplayBenchCandidate,
 } from '@/lib/adapters';
-import type { AlignedCandidate } from '@/types/aligned/ats';
+import type { AlignedCandidate, DisplayCandidate } from '@/types/aligned/ats';
 
 // ============================================
 // QUERY OPTIONS TYPES
@@ -54,7 +53,6 @@ export function useCandidates(options: CandidatesQueryOptions = {}) {
     {
       limit: input.limit ?? 50,
       offset: input.offset ?? 0,
-      status: input.status,
       minDaysOnBench: input.minDaysOnBench,
       maxDaysOnBench: input.maxDaysOnBench,
     },
@@ -63,7 +61,7 @@ export function useCandidates(options: CandidatesQueryOptions = {}) {
       staleTime: 30 * 1000,
       select: (data): DisplayBenchCandidate[] => {
         return data.map(consultant => ({
-          id: consultant.id,
+          id: consultant.userId,
           name: 'Consultant', // Would need user profile join
           role: 'Consultant',
           status: 'bench' as const,
@@ -74,10 +72,10 @@ export function useCandidates(options: CandidatesQueryOptions = {}) {
           rate: 'N/A',
           email: '',
           score: 0,
+          willingToRelocate: false,
           daysOnBench: consultant.daysOnBench || 0,
           lastContact: consultant.lastContactedAt?.toISOString() || '',
-          benchStartDate: consultant.benchStartDate?.toISOString().split('T')[0],
-          benchStatus: consultant.benchStatus,
+          benchStartDate: consultant.benchStartDate,
         }));
       },
     }
@@ -100,7 +98,6 @@ export function useCandidatesRaw(options: CandidatesQueryOptions = {}) {
     {
       limit: input.limit ?? 50,
       offset: input.offset ?? 0,
-      status: input.status,
       minDaysOnBench: input.minDaysOnBench,
       maxDaysOnBench: input.maxDaysOnBench,
     },
@@ -125,12 +122,12 @@ export function useCandidate(id: string | undefined, options: CandidateQueryOpti
   const { enabled = true } = options;
 
   const query = trpc.bench.consultants.getById.useQuery(
-    { id: id! },
+    { userId: id! },
     {
       enabled: enabled && !!id,
       staleTime: 30 * 1000,
       select: (data): DisplayBenchCandidate => ({
-        id: data.id,
+        id: data.userId,
         name: 'Consultant',
         role: 'Consultant',
         status: 'bench' as const,
@@ -141,10 +138,10 @@ export function useCandidate(id: string | undefined, options: CandidateQueryOpti
         rate: 'N/A',
         email: '',
         score: 0,
+        willingToRelocate: false,
         daysOnBench: data.daysOnBench || 0,
         lastContact: data.lastContactedAt?.toISOString() || '',
-        benchStartDate: data.benchStartDate?.toISOString().split('T')[0],
-        benchStatus: data.benchStatus,
+        benchStartDate: data.benchStartDate,
       }),
     }
   );
@@ -162,7 +159,7 @@ export function useCandidateRaw(id: string | undefined, options: CandidateQueryO
   const { enabled = true } = options;
 
   return trpc.bench.consultants.getById.useQuery(
-    { id: id! },
+    { userId: id! },
     { enabled: enabled && !!id }
   );
 }
@@ -191,12 +188,11 @@ export interface BenchCandidatesOptions {
 export function useBenchCandidates(options: BenchCandidatesOptions = {}) {
   const { enabled = true, ...input } = options;
 
-  // Uses bench.consultants router with status filter
+  // Uses bench.consultants router
   const query = trpc.bench.consultants.list.useQuery(
     {
       limit: input.limit ?? 50,
       offset: input.offset ?? 0,
-      status: 'bench',
       minDaysOnBench: input.minDaysOnBench,
       maxDaysOnBench: input.maxDaysOnBench,
     },
@@ -205,7 +201,7 @@ export function useBenchCandidates(options: BenchCandidatesOptions = {}) {
       staleTime: 30 * 1000,
       select: (data): DisplayBenchCandidate[] => {
         return data.map(consultant => ({
-          id: consultant.id,
+          id: consultant.userId,
           name: 'Consultant',
           role: 'Consultant',
           status: 'bench' as const,
@@ -216,10 +212,10 @@ export function useBenchCandidates(options: BenchCandidatesOptions = {}) {
           rate: 'N/A',
           email: '',
           score: 0,
+          willingToRelocate: false,
           daysOnBench: consultant.daysOnBench || 0,
           lastContact: consultant.lastContactedAt?.toISOString() || '',
-          benchStartDate: consultant.benchStartDate?.toISOString().split('T')[0],
-          benchStatus: consultant.benchStatus,
+          benchStartDate: consultant.benchStartDate,
         }));
       },
     }
@@ -282,13 +278,12 @@ export function usePrefetchCandidates() {
       return utils.bench.consultants.list.prefetch({
         limit: options.limit ?? 50,
         offset: options.offset ?? 0,
-        status: options.status,
         minDaysOnBench: options.minDaysOnBench,
         maxDaysOnBench: options.maxDaysOnBench,
       });
     },
-    prefetchCandidate: (id: string) => {
-      return utils.bench.consultants.getById.prefetch({ id });
+    prefetchCandidate: (userId: string) => {
+      return utils.bench.consultants.getById.prefetch({ userId });
     },
   };
 }
@@ -305,7 +300,7 @@ export function useInvalidateCandidates() {
 
   return {
     invalidateAll: () => utils.bench.consultants.list.invalidate(),
-    invalidateCandidate: (id: string) => utils.bench.consultants.getById.invalidate({ id }),
+    invalidateCandidate: (userId: string) => utils.bench.consultants.getById.invalidate({ userId }),
     invalidateHotlist: () => utils.bench.hotlist.list.invalidate(),
     invalidateAgingReport: () => utils.bench.consultants.agingReport.invalidate(),
   };
