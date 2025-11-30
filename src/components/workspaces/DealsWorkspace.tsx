@@ -11,7 +11,6 @@ import React, { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Building2,
-  User,
   Mail,
   Phone,
   Calendar,
@@ -30,14 +29,13 @@ import {
   ArrowRight,
   BarChart3,
   Clock,
-  Users,
   Link2,
   History,
   PieChart,
   Percent,
   CreditCard,
 } from 'lucide-react';
-import { format, formatDistanceToNow, differenceInDays } from 'date-fns';
+import { format, differenceInDays } from 'date-fns';
 import { trpc } from '@/lib/trpc/client';
 import { cn } from '@/lib/utils';
 
@@ -47,8 +45,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   Dialog,
   DialogContent,
@@ -116,13 +113,6 @@ const CLOSE_REASONS = {
   lost_internal: 'Lost - Hired Internally',
 };
 
-const PRIORITY_LEVELS = {
-  critical: { label: 'Critical', color: 'bg-red-100 text-red-700' },
-  high: { label: 'High', color: 'bg-orange-100 text-orange-700' },
-  medium: { label: 'Medium', color: 'bg-amber-100 text-amber-700' },
-  low: { label: 'Low', color: 'bg-green-100 text-green-700' },
-};
-
 // =====================================================
 // SUB-COMPONENTS
 // =====================================================
@@ -178,7 +168,7 @@ function DealPipeline({ stage }: { stage: string }) {
   );
 }
 
-function OverviewTab({ deal, canEdit }: { deal: NonNullable<ReturnType<typeof useDeal>['data']>; canEdit: boolean }) {
+function OverviewTab({ deal, canEdit: _canEdit }: { deal: NonNullable<ReturnType<typeof useDeal>['data']>; canEdit: boolean }) {
   const daysInPipeline = differenceInDays(new Date(), new Date(deal.createdAt));
   const daysToClose = deal.expectedCloseDate
     ? differenceInDays(new Date(deal.expectedCloseDate), new Date())
@@ -502,7 +492,7 @@ function StageHistoryTab({ deal }: { deal: NonNullable<ReturnType<typeof useDeal
     { stage: 'discovery', enteredAt: deal.createdAt, duration: '3 days' },
     { stage: 'qualification', enteredAt: new Date(new Date(deal.createdAt).getTime() + 3 * 24 * 60 * 60 * 1000).toISOString(), duration: '5 days' },
     { stage: deal.stage, enteredAt: new Date(new Date(deal.createdAt).getTime() + 8 * 24 * 60 * 60 * 1000).toISOString(), duration: 'Current' },
-  ].filter((_, i, arr) => {
+  ].filter((_, i, _arr) => {
     const stageOrder = DEAL_STAGES[deal.stage as keyof typeof DEAL_STAGES]?.order || 1;
     return i < stageOrder;
   });
@@ -753,7 +743,7 @@ function useDeal(dealId: string) {
 
 export function DealsWorkspace({ dealId }: DealsWorkspaceProps) {
   const router = useRouter();
-  const { context, canEdit, canDelete, isLoading: contextLoading } = useWorkspaceContext('deal', dealId);
+  const { canEdit, canDelete, isLoading: contextLoading } = useWorkspaceContext('deal', dealId);
 
   // Fetch deal data
   const { data: deal, isLoading: dealLoading, error } = useDeal(dealId);

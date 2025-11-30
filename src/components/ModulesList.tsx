@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { MOCK_MODULES } from '@/lib/constants';
-import { CheckCircle, Lock, PlayCircle, ChevronRight, Code, FileText, Star, Search } from 'lucide-react';
+import { CheckCircle, Lock, PlayCircle, ChevronRight, Code, Star, Search } from 'lucide-react';
 import { useAppStore } from '@/lib/store';
 
 export const ModulesList: React.FC = () => {
@@ -133,7 +133,7 @@ export const ModulesList: React.FC = () => {
             </div>
           )) : (
               <div className="text-center py-12 text-stone-400">
-                  <p>No modules found matching "{searchTerm}"</p>
+                  <p>No modules found matching &quot;{searchTerm}&quot;</p>
               </div>
           )}
         </div>

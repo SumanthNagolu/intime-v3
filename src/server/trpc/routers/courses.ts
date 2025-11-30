@@ -13,7 +13,16 @@ import { z } from 'zod';
 import { router, publicProcedure, protectedProcedure } from '@/lib/trpc/trpc';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
-import type { Course, CourseModule, ModuleTopic } from '@/types/academy';
+
+interface ModuleRow {
+  id: string;
+  topics?: TopicRow[];
+}
+
+interface TopicRow {
+  id: string;
+  [key: string]: unknown;
+}
 
 export const coursesRouter = router({
   /**
@@ -265,7 +274,7 @@ export const coursesRouter = router({
       }
 
       // Create duplicate
-      const { id, created_at, updated_at, deleted_at, ...courseData } = original;
+      const { id: _id, created_at: _created_at, updated_at: _updated_at, deleted_at: _deleted_at, ...courseData } = original;
       const { data: duplicate, error: createError } = await supabase
         .from('courses')
         .insert({
@@ -610,21 +619,23 @@ export const coursesRouter = router({
 
       // Check unlock status for each topic
       const modulesWithProgress = await Promise.all(
-        (course.modules || []).map(async (module: any) => {
+        (course.modules || []).map(async (module: unknown) => {
+          const mod = module as ModuleRow;
           const topicsWithProgress = await Promise.all(
-            (module.topics || []).map(async (topic: any) => {
-              const isCompleted = completedTopicIds.has(topic.id);
+            (mod.topics || []).map(async (topic: unknown) => {
+              const top = topic as TopicRow;
+              const isCompleted = completedTopicIds.has(top.id);
 
               // Check if topic is unlocked
               const { data: isUnlocked } = await supabase.rpc('is_topic_unlocked', {
                 p_user_id: ctx.userId,
-                p_topic_id: topic.id,
+                p_topic_id: top.id,
               });
 
-              const completion = completions?.find((c) => c.topic_id === topic.id);
+              const completion = completions?.find((c) => c.topic_id === top.id);
 
               return {
-                ...topic,
+                ...top,
                 is_completed: isCompleted,
                 is_unlocked: isUnlocked || false,
                 completion_data: completion
@@ -644,7 +655,7 @@ export const coursesRouter = router({
           const moduleProgress = totalTopics > 0 ? (completedTopics / totalTopics) * 100 : 0;
 
           return {
-            ...module,
+            ...mod,
             topics: topicsWithProgress,
             progress_percentage: Math.round(moduleProgress),
             completed_topics: completedTopics,
@@ -686,10 +697,12 @@ export const coursesRouter = router({
       }
 
       // Flatten topics array
-      const allTopics: any[] = [];
-      modules.forEach((module: any) => {
-        (module.topics || []).forEach((topic: any) => {
-          allTopics.push({ ...topic, module_id: module.id });
+      const allTopics: (TopicRow & { module_id: string })[] = [];
+      modules.forEach((module: unknown) => {
+        const mod = module as ModuleRow;
+        (mod.topics || []).forEach((topic: unknown) => {
+          const top = topic as TopicRow;
+          allTopics.push({ ...top, module_id: mod.id });
         });
       });
 

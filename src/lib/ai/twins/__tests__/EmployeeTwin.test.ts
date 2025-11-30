@@ -130,7 +130,7 @@ describe('EmployeeTwin', () => {
   describe('Proactive Suggestions', () => {
     it('should generate proactive suggestion when actionable items exist', async () => {
       // Mock hasActionableItems to return true
-      vi.spyOn(recruiterTwin as any, 'hasActionableItems').mockResolvedValue(true);
+      vi.spyOn(recruiterTwin as unknown as { hasActionableItems: () => Promise<boolean> }, 'hasActionableItems').mockResolvedValue(true);
 
       const suggestion = await recruiterTwin.generateProactiveSuggestion();
 
@@ -143,7 +143,7 @@ describe('EmployeeTwin', () => {
 
     it('should return null when no actionable items', async () => {
       // Mock hasActionableItems to return false
-      vi.spyOn(recruiterTwin as any, 'hasActionableItems').mockResolvedValue(false);
+      vi.spyOn(recruiterTwin as unknown as { hasActionableItems: () => Promise<boolean> }, 'hasActionableItems').mockResolvedValue(false);
 
       const suggestion = await recruiterTwin.generateProactiveSuggestion();
 
@@ -151,7 +151,7 @@ describe('EmployeeTwin', () => {
     });
 
     it('should be concise (1-2 sentences)', async () => {
-      vi.spyOn(recruiterTwin as any, 'hasActionableItems').mockResolvedValue(true);
+      vi.spyOn(recruiterTwin as unknown as { hasActionableItems: () => Promise<boolean> }, 'hasActionableItems').mockResolvedValue(true);
 
       const suggestion = await recruiterTwin.generateProactiveSuggestion();
 
@@ -336,7 +336,7 @@ describe('EmployeeTwin', () => {
           },
           error: null,
         }),
-      } as any);
+      } as ReturnType<typeof mockSupabase.from>);
 
       const briefing = await recruiterTwin.generateMorningBriefing();
 

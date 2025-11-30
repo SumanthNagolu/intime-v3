@@ -2,7 +2,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { Search, User, Briefcase, Building2, ArrowRight, Command, X, DollarSign, FileText } from 'lucide-react';
+import { Search, User, Briefcase, Building2, ArrowRight, DollarSign } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAppStore } from '@/lib/store';
 
@@ -10,7 +10,7 @@ export const GlobalCommand: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const router = useRouter();
-  const { candidates, jobs, leads, accounts } = useAppStore();
+  const { candidates, jobs, leads } = useAppStore();
 
   // Toggle on Cmd+K / Ctrl+K
   useEffect(() => {
@@ -123,7 +123,7 @@ export const GlobalCommand: React.FC = () => {
         </div>
         
         <div className="bg-stone-50 p-2 border-t border-stone-100 flex justify-between px-4 py-3">
-            <span className="text-[10px] text-stone-400"><strong>Tip:</strong> Search 'Senior' to find developers</span>
+            <span className="text-[10px] text-stone-400"><strong>Tip:</strong> Search &apos;Senior&apos; to find developers</span>
             <span className="text-[10px] text-stone-400">InTime OS v3.2</span>
         </div>
       </div>
@@ -131,8 +131,8 @@ export const GlobalCommand: React.FC = () => {
   );
 };
 
-const CommandItem: React.FC<{ icon: any, label: string, subLabel?: string, onClick: () => void }> = ({ icon: Icon, label, subLabel, onClick }) => (
-    <button 
+const CommandItem: React.FC<{ icon: React.ElementType, label: string, subLabel?: string, onClick: () => void }> = ({ icon: Icon, label, subLabel, onClick }) => (
+    <button
         onClick={onClick}
         className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-stone-100 transition-colors text-left group"
     >

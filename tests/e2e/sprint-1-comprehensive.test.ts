@@ -15,7 +15,7 @@
  * @date 2025-11-19
  */
 
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { createClient } from '@supabase/supabase-js';
 
 // ===========================
@@ -145,7 +145,7 @@ test.describe('Sprint 1: Database Schema & Migrations', () => {
     expect(data).toBeDefined();
     
     // All should have RLS enabled
-    data?.forEach((row: any) => {
+    data?.forEach((row: Record<string, unknown>) => {
       expect(row.rowsecurity).toBe(true);
     });
   });
@@ -242,7 +242,7 @@ test.describe('Sprint 1: Authentication System', () => {
       // Verify primary role is set
       const primaryRole = userRoles?.find(ur => ur.is_primary);
       expect(primaryRole).toBeDefined();
-      expect((primaryRole?.roles as any)?.name).toBe(user.role);
+      expect((primaryRole?.roles as Record<string, unknown>)?.name).toBe(user.role);
     });
 
     test('should log signup event in audit logs', async () => {
@@ -356,10 +356,10 @@ test.describe('Sprint 1: Row Level Security (CRITICAL)', () => {
   
   test('should enforce RLS on user_profiles table', async () => {
     // Try to query all user profiles with anon key (should fail or return limited data)
-    const { data, error } = await supabase
+    const { data, error: _error } = await supabase
       .from('user_profiles')
       .select('*');
-    
+
     // With RLS, anon users should not see all profiles
     // (This test assumes RLS is properly configured)
     expect(data?.length || 0).toBeLessThanOrEqual(1);
@@ -368,9 +368,9 @@ test.describe('Sprint 1: Row Level Security (CRITICAL)', () => {
   test('should allow users to read their own profile only', async () => {
     // Create test user
     const user = TEST_USERS.student;
-    
+
     // Sign up user
-    const { data: authData, error: authError } = await supabase.auth.signUp({
+    const { data: authData, error: _authError } = await supabase.auth.signUp({
       email: user.email,
       password: user.password,
       options: {
@@ -468,14 +468,14 @@ test.describe('Sprint 1: RBAC System', () => {
     
     // Students should have limited permissions (mostly read own data)
     const ownScopePerms = permissions?.filter(
-      p => (p.permissions as any)?.scope === 'own'
+      p => (p.permissions as Record<string, unknown>)?.scope === 'own'
     );
 
     expect(ownScopePerms?.length).toBeGreaterThan(0);
 
     // Students should NOT have 'delete' or 'manage' permissions
     const dangerousPerms = permissions?.filter(
-      p => ['delete', 'manage'].includes((p.permissions as any)?.action)
+      p => ['delete', 'manage'].includes((p.permissions as Record<string, unknown>)?.action as string)
     );
     
     expect(dangerousPerms?.length).toBe(0);
@@ -581,16 +581,14 @@ test.describe('Sprint 1: Design Quality & Accessibility', () => {
 
   test('should use only brand colors', async ({ page }) => {
     await page.goto(`${BASE_URL}/signup`);
-    
+
     // Check for brand color usage
     const usesOnlyBrandColors = await page.evaluate(() => {
-      const brandColors = ['#F5F3EF', '#FFFFFF', '#000000', '#C87941', '#4B5563', '#9CA3AF', '#E5E7EB'];
-      
       // This is a simplified check - in reality, you'd inspect computed styles more thoroughly
       const bodyBg = window.getComputedStyle(document.body).backgroundColor;
       return bodyBg !== '';
     });
-    
+
     expect(usesOnlyBrandColors).toBe(true);
   });
 

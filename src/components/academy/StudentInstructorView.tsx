@@ -4,8 +4,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { ChevronLeft, Mail, Calendar, Clock, Award, CheckCircle, AlertCircle, FileText, MessageSquare, X, Send, Check, Zap, Users, Activity, Unlock, StickyNote } from 'lucide-react';
-import { CommunicationLog } from '../shared/CommunicationLog';
+import { ChevronLeft, Mail, Calendar, Clock, CheckCircle, AlertCircle, FileText, X, Zap, Activity, Unlock, StickyNote } from 'lucide-react';
+import { CommunicationLog, type LogEntry } from '../shared/CommunicationLog';
 import { GradingModal } from './AcademyModals';
 
 export const StudentInstructorView: React.FC = () => {
@@ -21,7 +21,7 @@ export const StudentInstructorView: React.FC = () => {
       { id: 2, name: 'Data Model Entity Extension', date: 'Oct 15', status: 'Approved', score: '95/100' },
   ];
 
-  const communicationLogs = [
+  const communicationLogs: LogEntry[] = [
       { id: '1', type: 'email', subject: 'Missing Lab Submission', content: 'Hi Alex, noticed you missed the deadline for Module 3. Is everything okay?', date: '2 days ago', author: 'You' },
       { id: '2', type: 'meeting', subject: '1:1 Sync', content: 'Discussed struggles with Gosu generics. Recommended extra reading material.', date: '1 week ago', author: 'You' },
       { id: '3', type: 'note', content: 'Escalated to Student Success due to consecutive low quiz scores.', date: '1 week ago', author: 'AI Mentor' }
@@ -85,10 +85,10 @@ export const StudentInstructorView: React.FC = () => {
           <div className="flex-1">
               {/* Tabs */}
               <div className="flex gap-6 border-b border-stone-200 mb-8 overflow-x-auto">
-                  {['Progress', 'Assignments', 'Communication', 'Engagement'].map(tab => (
+                  {(['Progress', 'Assignments', 'Communication', 'Engagement'] as const).map(tab => (
                       <button
                          key={tab}
-                         onClick={() => setActiveTab(tab as any)}
+                         onClick={() => setActiveTab(tab)}
                          className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors whitespace-nowrap ${
                              activeTab === tab ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
                          }`}
@@ -142,7 +142,7 @@ export const StudentInstructorView: React.FC = () => {
               )}
 
               {activeTab === 'Communication' && (
-                  <CommunicationLog logs={communicationLogs as any} />
+                  <CommunicationLog logs={communicationLogs} />
               )}
 
               {activeTab === 'Engagement' && (

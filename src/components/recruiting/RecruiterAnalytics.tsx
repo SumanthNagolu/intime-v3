@@ -1,7 +1,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ChevronLeft, TrendingUp, Users, Clock, Target, DollarSign, Activity } from 'lucide-react';
+import { ChevronLeft, Users, Clock, DollarSign, Activity } from 'lucide-react';
 
 export const RecruiterAnalytics: React.FC = () => {
   return (

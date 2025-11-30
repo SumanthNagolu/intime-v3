@@ -331,8 +331,6 @@ export function calculateCost(inputTokens: number, outputTokens: number): number
  * Check if user has exceeded rate limits
  */
 export function isRateLimited(rateLimit: AIMentorRateLimit): boolean {
-  const now = new Date();
-
   return (
     rateLimit.hourlyCount >= RATE_LIMITS.HOURLY ||
     rateLimit.dailyCount >= RATE_LIMITS.DAILY ||
@@ -345,8 +343,6 @@ export function isRateLimited(rateLimit: AIMentorRateLimit): boolean {
  * Get time until rate limit resets
  */
 export function getResetTime(rateLimit: AIMentorRateLimit): Date {
-  const now = new Date();
-
   // Return the earliest reset time
   const resets = [
     rateLimit.hourlyResetAt,

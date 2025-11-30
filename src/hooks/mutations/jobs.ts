@@ -6,7 +6,7 @@
  */
 
 import { trpc } from '@/lib/trpc/client';
-import { jobAdapter, type CreateJobInput } from '@/lib/adapters';
+import { type CreateJobInput } from '@/lib/adapters';
 import { useInvalidateJobs } from '../queries/jobs';
 
 // ============================================

@@ -12,11 +12,11 @@
 import { z } from 'zod';
 import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
-import { jobs, submissions, interviews, placements, offers } from '@/lib/db/schema/ats';
+import { jobs, submissions, interviews, placements } from '@/lib/db/schema/ats';
 import { activities } from '@/lib/db/schema/activities';
 import { userProfiles } from '@/lib/db/schema/user-profiles';
 import { accounts } from '@/lib/db/schema/crm';
-import { eq, and, desc, sql, inArray, isNull, or, gte, lte, count, ne } from 'drizzle-orm';
+import { eq, and, desc, sql, inArray, isNull, or, gte, lte } from 'drizzle-orm';
 
 // =====================================================
 // WORKSPACE DASHBOARD ROUTER

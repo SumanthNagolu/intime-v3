@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  Mic,
   Play,
   Pause,
   RefreshCcw,
@@ -75,7 +74,7 @@ const TRAINING_MODES = [
 
 export function InterviewDojo() {
   const { state, theme, statusMessage } = useBiometric();
-  const { xp, addXP } = useGamification();
+  const { addXP } = useGamification();
   const { streakDays } = useAcademyStore();
 
   const [isPlaying, setIsPlaying] = useState(false);

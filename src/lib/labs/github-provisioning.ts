@@ -41,8 +41,9 @@ export async function provisionLabEnvironment(
       forkedRepoUrl: fork.html_url,
       expiresAt,
     };
-  } catch (error: any) {
-    throw new Error(`Failed to provision lab: ${error.message}`);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    throw new Error(`Failed to provision lab: ${message}`);
   }
 }
 
@@ -72,8 +73,9 @@ async function forkRepository(
         username: studentUsername,
         permission: 'push',
       });
-    } catch (error: any) {
-      console.warn('Could not add collaborator:', error.message);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      console.warn('Could not add collaborator:', message);
       // Non-critical error, continue
     }
 
@@ -81,8 +83,9 @@ async function forkRepository(
       html_url: fork.html_url,
       full_name: fork.full_name,
     };
-  } catch (error: any) {
-    throw new Error(`Failed to fork repository: ${error.message}`);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    throw new Error(`Failed to fork repository: ${message}`);
   }
 }
 
@@ -94,7 +97,7 @@ async function waitForFork(owner: string, repo: string, maxAttempts: number = 10
     try {
       await octokit.repos.get({ owner, repo });
       return; // Fork is ready
-    } catch (error: any) {
+    } catch {
       if (i === maxAttempts - 1) {
         throw new Error('Timeout waiting for fork to be ready');
       }
@@ -127,8 +130,9 @@ export async function triggerAutoGrading(
     });
 
     return true;
-  } catch (error: any) {
-    console.error('Failed to trigger auto-grading:', error.message);
+  } catch (_error: unknown) {
+    const message = _error instanceof Error ? _error.message : 'Unknown error';
+    console.error('Failed to trigger auto-grading:', message);
     return false;
   }
 }
@@ -175,15 +179,16 @@ export async function getTestResults(
       testsFailed: testResults.failed,
       logs: testResults.logs,
     };
-  } catch (error: any) {
-    throw new Error(`Failed to get test results: ${error.message}`);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    throw new Error(`Failed to get test results: ${message}`);
   }
 }
 
 /**
  * Parse test results from job data
  */
-function parseTestResultsFromJobs(jobs: any[]): {
+function parseTestResultsFromJobs(jobs: Array<Record<string, unknown>>): {
   passed: number;
   failed: number;
   logs: string[];
@@ -202,7 +207,7 @@ function parseTestResultsFromJobs(jobs: any[]): {
       failed += 1;
     }
 
-    logs.push(`${job.name}: ${job.conclusion}`);
+    logs.push(`${job.name as string}: ${job.conclusion as string}`);
   }
 
   return { passed, failed, logs };
@@ -226,8 +231,9 @@ export async function cleanupLabEnvironment(repoUrl: string): Promise<boolean> {
     });
 
     return true;
-  } catch (error: any) {
-    console.error('Failed to cleanup lab:', error.message);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Failed to cleanup lab:', message);
     return false;
   }
 }
@@ -246,7 +252,7 @@ export async function checkRepositoryExists(repoUrl: string): Promise<boolean> {
   try {
     await octokit.repos.get({ owner, repo });
     return true;
-  } catch (error: any) {
+  } catch {
     return false;
   }
 }
@@ -273,8 +279,9 @@ export async function getLatestCommitSha(
     });
 
     return ref.object.sha;
-  } catch (error: any) {
-    console.error('Failed to get commit SHA:', error.message);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Failed to get commit SHA:', message);
     return null;
   }
 }
@@ -286,7 +293,7 @@ export async function validateGitHubUsername(username: string): Promise<boolean>
   try {
     await octokit.users.getByUsername({ username });
     return true;
-  } catch (error: any) {
+  } catch {
     return false;
   }
 }
@@ -319,8 +326,9 @@ export async function getFileContents(
     }
 
     return null;
-  } catch (error: any) {
-    console.error('Failed to get file contents:', error.message);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Failed to get file contents:', message);
     return null;
   }
 }
@@ -349,8 +357,9 @@ export async function createLabIssue(
     });
 
     return issue.html_url;
-  } catch (error: any) {
-    console.error('Failed to create issue:', error.message);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Failed to create issue:', message);
     return null;
   }
 }

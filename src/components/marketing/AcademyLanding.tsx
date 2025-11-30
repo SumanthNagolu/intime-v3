@@ -164,6 +164,7 @@ export const AcademyLanding: React.FC = () => {
       stats.placement.start();
       stats.rating.start();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statsSection.inView]);
 
   // Scroll-based page flip effect

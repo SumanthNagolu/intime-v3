@@ -158,7 +158,10 @@ export class ResumeBuilderAgent extends BaseAgent<
   /**
    * Get student data
    */
-  private async getStudentData(studentId: string): Promise<any> {
+  private async getStudentData(studentId: string): Promise<{
+    profile: Record<string, unknown>;
+    progress: Record<string, unknown> | null;
+  }> {
     try {
       const supabase = getSupabaseClient();
 
@@ -170,7 +173,7 @@ export class ResumeBuilderAgent extends BaseAgent<
 
       if (profileError) throw profileError;
 
-      const { data: progress, error: progressError } = await supabase
+      const { data: progress, error: _progressError } = await supabase
         .from('student_progress')
         .select('*')
         .eq('student_id', studentId)
@@ -194,10 +197,13 @@ export class ResumeBuilderAgent extends BaseAgent<
    * Generate resume content using GPT-4o
    */
   private async generateResumeContent(
-    studentData: any,
+    studentData: {
+      profile: Record<string, unknown>;
+      progress: Record<string, unknown> | null;
+    },
     input: ResumeBuilderInput,
     promptTemplate: string,
-    model: string
+    _model: string
   ): Promise<string> {
     const prompt = `${promptTemplate}
 
@@ -375,7 +381,7 @@ Optimized for ATS systems
    */
   private async saveResumeVersion(
     studentId: string,
-    content: any,
+    content: string,
     format: ResumeFormat,
     atsScore: number
   ): Promise<string> {
@@ -408,7 +414,7 @@ Optimized for ATS systems
   private createGuruError(
     message: string,
     code: keyof typeof GuruErrorCodes,
-    details?: any
+    details?: Record<string, unknown>
   ): GuruError {
     const error = new Error(message) as GuruError;
     error.name = 'GuruError';

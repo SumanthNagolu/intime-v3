@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { User, Mail, Phone, MapPin, FileText, Download, Award, Shield, Plus, Trash2, Edit2, Save, Briefcase, GraduationCap, Github, Linkedin, Upload, TrendingUp } from 'lucide-react';
+import { Mail, Phone, MapPin, FileText, Download, Award, Plus, Trash2, Edit2, Save, Briefcase, GraduationCap, Github, Linkedin, Upload, TrendingUp } from 'lucide-react';
 import { useAcademyStore, useBiometric, useGamification } from '@/lib/store/academy-store';
 import { BiometricStatusIndicator } from './academy/BiometricBackground';
 
@@ -64,7 +64,7 @@ export const ProfileView: React.FC = () => {
     { id: 2, role: "Intern", company: "StartUp Hub", duration: "2019 - 2020", description: "Assisted in frontend development using React and TypeScript." }
   ]);
 
-  const [education, setEducation] = useState<Education[]>([
+  const [education] = useState<Education[]>([
     { id: 1, degree: "B.S. Computer Science", school: "University of Illinois", year: "2019" }
   ]);
 

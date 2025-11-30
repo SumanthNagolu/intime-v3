@@ -81,8 +81,8 @@ export const eventSchema = z.object({
   id: uuid,
   event_type: nonEmptyString.max(255),
   event_category: nonEmptyString.max(100).optional(),
-  payload: z.record(z.any()),
-  metadata: z.record(z.any()).optional(),
+  payload: z.record(z.unknown()),
+  metadata: z.record(z.unknown()).optional(),
   user_email: email.optional(),
   status: z.enum(['pending', 'processing', 'completed', 'failed', 'dead_letter']),
   retry_count: z.number().int().min(0).default(0),
@@ -218,7 +218,7 @@ export const organizationSchema = z.object({
     .string()
     .regex(/^[a-z0-9-]+$/, 'Subdomain must contain only lowercase letters, numbers, and hyphens')
     .max(63),
-  settings: z.record(z.any()).optional(),
+  settings: z.record(z.unknown()).optional(),
   created_at: dateString,
   updated_at: dateString,
 });
@@ -251,9 +251,9 @@ export function createPartialSchema<T extends z.ZodRawShape>(
 
   const requiredFields = Object.fromEntries(
     required.map((key) => [key, schema.shape[key]])
-  ) as Partial<T>;
+  ) as z.ZodRawShape;
 
-  return partial.extend(requiredFields as any);
+  return partial.extend(requiredFields);
 }
 
 /**
@@ -271,7 +271,7 @@ export const paginationSchema = z.object({
  */
 export const searchSchema = paginationSchema.extend({
   query: z.string().optional(),
-  filters: z.record(z.any()).optional(),
+  filters: z.record(z.unknown()).optional(),
 });
 
 // ============================================================================

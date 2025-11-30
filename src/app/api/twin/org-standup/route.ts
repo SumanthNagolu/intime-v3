@@ -16,7 +16,7 @@ import { OrganizationTwin } from '@/lib/ai/twins/OrganizationTwin';
 /**
  * Get today's standup (generates if not exists)
  */
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     const supabase = await createClient();
 
@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
 /**
  * Force regenerate today's standup
  */
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     const supabase = await createClient();
 

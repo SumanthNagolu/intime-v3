@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
-  ArrowDown,
   Brain,
   TrendingUp,
   Shield,
@@ -19,18 +18,11 @@ import {
   GraduationCap,
   ShoppingCart,
   Settings,
-  Lightbulb,
-  Phone,
   Globe,
   Zap,
   Target,
-  Clock,
   DollarSign,
-  ChevronRight,
-  Award,
-  Coffee,
-  Utensils,
-  MapPin
+  Award
 } from 'lucide-react';
 import { MarketingNavbar, Footer } from '@/components/templates';
 
@@ -617,7 +609,7 @@ export const ConsultingPage: React.FC = () => {
                 {' '}Your Business?
               </h2>
               <p className="text-xl text-forest-200 font-light max-w-2xl mx-auto mb-12">
-                Whether you need enterprise strategy or a custom POS for your coffee shop—let's talk.
+                Whether you need enterprise strategy or a custom POS for your coffee shop—let&apos;s talk.
                 Free 30-minute strategy session. No sales pitch. Just honest advice.
               </p>
 

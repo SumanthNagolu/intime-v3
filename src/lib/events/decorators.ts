@@ -24,7 +24,7 @@ import type { Event, EventPayload } from './types';
  */
 export function EventHandler(eventType: string, handlerName: string) {
   return function (
-    target: any,
+    target: unknown,
     propertyKey: string,
     descriptor: PropertyDescriptor
   ) {

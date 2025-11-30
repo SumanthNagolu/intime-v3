@@ -2,7 +2,6 @@
  * List all tables in production database
  */
 
-const GREEN = '\x1b[32m';
 const BLUE = '\x1b[34m';
 const RESET = '\x1b[0m';
 const BOLD = '\x1b[1m';

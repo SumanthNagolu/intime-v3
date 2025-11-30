@@ -1,7 +1,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { CheckCircle, Search, ArrowRight, Shield, Users, Clock, Zap } from 'lucide-react';
+import { CheckCircle, ArrowRight, Shield, Users, Zap } from 'lucide-react';
 
 export const ClientLanding: React.FC = () => {
   return (
@@ -14,7 +14,7 @@ export const ClientLanding: React.FC = () => {
             </div>
             
             <h1 className="text-5xl md:text-7xl font-serif font-bold text-charcoal mb-8 leading-tight">
-               Your Pipeline is <br/> <span className="text-blue-600 italic">Empty.</span> Let's fix that.
+               Your Pipeline is <br/> <span className="text-blue-600 italic">Empty.</span> Let&apos;s fix that.
             </h1>
             
             <p className="text-xl text-stone-500 font-light max-w-2xl mx-auto leading-relaxed mb-12">
@@ -40,7 +40,7 @@ export const ClientLanding: React.FC = () => {
                      <CheckCircle size={32} />
                  </div>
                  <h3 className="text-2xl font-serif font-bold text-charcoal mb-3">Pre-Vetted Artifacts</h3>
-                 <p className="text-stone-500 leading-relaxed">Every candidate has a deployed PolicyCenter artifact (The "HomeProtect" Capstone) you can inspect before the first interview.</p>
+                 <p className="text-stone-500 leading-relaxed">Every candidate has a deployed PolicyCenter artifact (The &quot;HomeProtect&quot; Capstone) you can inspect before the first interview.</p>
              </div>
              
              <div className="group p-8 rounded-[2rem] hover:bg-stone-50 transition-colors">
@@ -56,7 +56,7 @@ export const ClientLanding: React.FC = () => {
                      <Zap size={32} />
                  </div>
                  <h3 className="text-2xl font-serif font-bold text-charcoal mb-3">Instant Deployment</h3>
-                 <p className="text-stone-500 leading-relaxed">Candidates are "Day 1 Ready" with environment setup, Jira workflows, and CI/CD pipelines already mastered.</p>
+                 <p className="text-stone-500 leading-relaxed">Candidates are &quot;Day 1 Ready&quot; with environment setup, Jira workflows, and CI/CD pipelines already mastered.</p>
              </div>
          </div>
       </div>

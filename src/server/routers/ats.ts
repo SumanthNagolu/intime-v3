@@ -56,7 +56,7 @@ import {
   updateComplianceDocumentSchema,
   updateCandidateProfileSchema,
 } from '@/lib/validations/ats';
-import { eq, and, desc, sql, inArray, isNull, or, SQL } from 'drizzle-orm';
+import { eq, and, desc, sql, isNull, or, SQL } from 'drizzle-orm';
 import { userProfiles } from '@/lib/db/schema/user-profiles';
 import { accounts } from '@/lib/db/schema/crm';
 
@@ -146,9 +146,9 @@ export const atsRouter = router({
           ownerId: input.ownerId || userId,
           createdBy: userId,
           // Convert numbers to strings for numeric columns
-          ...(rateMin !== undefined && { rateMin: String(rateMin) as any }),
-          ...(rateMax !== undefined && { rateMax: String(rateMax) as any }),
-        } as any).returning();
+          ...(rateMin !== undefined && { rateMin: String(rateMin) }),
+          ...(rateMax !== undefined && { rateMax: String(rateMax) }),
+        }).returning();
 
         return newJob;
       }),
@@ -159,7 +159,7 @@ export const atsRouter = router({
     update: orgProtectedProcedure
       .input(updateJobSchema)
       .mutation(async ({ ctx, input }) => {
-        const { userId, orgId } = ctx;
+        const { orgId } = ctx;
         const { id, rateMin, rateMax, ...data } = input;
 
         const [updated] = await db.update(jobs)
@@ -396,7 +396,7 @@ export const atsRouter = router({
         const ownerId = userProfile?.id ?? userId;
 
         const [newSubmission] = await db.insert(submissions).values({
-          ...input as any,
+          ...input,
           orgId,
           ownerId,
         }).returning();
@@ -410,11 +410,11 @@ export const atsRouter = router({
     update: orgProtectedProcedure
       .input(updateSubmissionSchema)
       .mutation(async ({ ctx, input }) => {
-        const { userId, orgId } = ctx;
+        const { orgId } = ctx;
         const { id, ...data } = input;
 
         const [updated] = await db.update(submissions)
-          .set(data as any)
+          .set(data)
           .where(and(
             eq(submissions.id, id),
             eq(submissions.orgId, orgId)
@@ -482,7 +482,7 @@ export const atsRouter = router({
           ))
           .limit(1);
 
-        const updateData: any = {
+        const updateData: Record<string, unknown> = {
             status: 'vendor_pending',
             vendorSubmittedAt: new Date(),
             vendorSubmittedBy: userProfile?.id ?? userId,
@@ -533,7 +533,7 @@ export const atsRouter = router({
 
         const newStatus = decision === 'accepted' ? 'vendor_accepted' : 'vendor_rejected';
 
-        const updateData: any = {
+        const updateData: Record<string, unknown> = {
             status: newStatus,
             vendorDecision: decision,
             vendorDecisionAt: new Date(),
@@ -587,7 +587,7 @@ export const atsRouter = router({
           ))
           .limit(1);
 
-        const updateData: any = {
+        const updateData: Record<string, unknown> = {
             status: 'submitted_to_client',
             submittedToClientAt: new Date(),
             submittedToClientBy: userProfile?.id ?? userId,
@@ -834,7 +834,7 @@ export const atsRouter = router({
         const { orgId } = ctx;
         const { limit, offset, status, submissionId } = input;
 
-        let conditions = [eq(interviews.orgId, orgId)];
+        const conditions = [eq(interviews.orgId, orgId)];
         if (status) conditions.push(eq(interviews.status, status));
         if (submissionId) conditions.push(eq(interviews.submissionId, submissionId));
 
@@ -959,7 +959,7 @@ export const atsRouter = router({
         const { userId, orgId } = ctx;
 
         const [newOffer] = await db.insert(offers).values({
-          ...input as any,
+          ...input,
           orgId,
           createdBy: userId,
         }).returning();
@@ -977,7 +977,7 @@ export const atsRouter = router({
         const { id, ...data } = input;
 
         const [updated] = await db.update(offers)
-          .set(data as any)
+          .set(data)
           .where(and(
             eq(offers.id, id),
             eq(offers.orgId, orgId)
@@ -1094,7 +1094,7 @@ export const atsRouter = router({
         const { userId, orgId } = ctx;
 
         const [newPlacement] = await db.insert(placements).values({
-          ...input as any,
+          ...input,
           orgId,
           createdBy: userId,
         }).returning();
@@ -1112,7 +1112,7 @@ export const atsRouter = router({
         const { id, ...data } = input;
 
         const [updated] = await db.update(placements)
-          .set(data as any)
+          .set(data)
           .where(and(
             eq(placements.id, id),
             eq(placements.orgId, orgId)
@@ -1307,7 +1307,7 @@ export const atsRouter = router({
         const { orgId } = ctx;
         const { query, skills, visaTypes, availability, limit } = input;
 
-        let conditions = [
+        const conditions = [
           eq(userProfiles.orgId, orgId),
           isNull(userProfiles.deletedAt),
           or(
@@ -1431,7 +1431,7 @@ export const atsRouter = router({
 
         // Create the candidate
         const [newCandidate] = await db.insert(userProfiles).values({
-          ...candidateData as any,
+          ...candidateData,
           orgId,
           phone: sanitizedPhone,
           fullName: `${input.firstName} ${input.lastName}`,
@@ -1447,11 +1447,11 @@ export const atsRouter = router({
             jobId,
             candidateId: newCandidate.id,
             accountId,
-            status: 'sourced' as any,
+            status: 'sourced',
             submissionNotes: submissionNotes ?? `Added via Account Talent Pool`,
             ownerId: creatorId ?? userId,
             createdBy: creatorId ?? userId,
-          } as any);
+          });
         } else if (accountId) {
           // If only accountId, find the first open job for this account to create a submission
           const [firstJob] = await db.select({ id: jobs.id })
@@ -1469,11 +1469,11 @@ export const atsRouter = router({
               jobId: firstJob.id,
               candidateId: newCandidate.id,
               accountId,
-              status: 'sourced' as any,
+              status: 'sourced',
               submissionNotes: submissionNotes ?? `Added via Account Talent Pool`,
               ownerId: creatorId ?? userId,
               createdBy: creatorId ?? userId,
-            } as any);
+            });
           }
         }
 
@@ -1504,7 +1504,7 @@ export const atsRouter = router({
         const { orgId, userId } = ctx;
         const { id, candidateHourlyRate, ...data } = input;
 
-        const updateData: Record<string, any> = { ...data, updatedBy: userId };
+        const updateData: Record<string, unknown> = { ...data, updatedBy: userId };
         if (candidateHourlyRate !== undefined) {
           updateData.candidateHourlyRate = String(candidateHourlyRate);
         }
@@ -1699,7 +1699,7 @@ export const atsRouter = router({
         const { id, candidateHourlyRate, minimumHourlyRate, desiredSalaryAnnual, minimumAnnualSalary, ...data } = input;
 
         // Convert numeric fields to strings for DB
-        const updateData: Record<string, any> = {
+        const updateData: Record<string, unknown> = {
           ...data,
           updatedBy: userId,
           updatedAt: new Date(),
@@ -1816,11 +1816,11 @@ export const atsRouter = router({
           jobId: targetJobId,
           candidateId,
           accountId,
-          status: 'sourced' as any,
+          status: 'sourced',
           submissionNotes: notes ?? 'Linked from Account Talent Pool',
           ownerId: userId,
           createdBy: userId,
-        } as any).returning();
+        }).returning();
 
         return newSubmission;
       }),
@@ -1835,7 +1835,7 @@ export const atsRouter = router({
      * Get all skills
      */
     list: orgProtectedProcedure
-      .query(async ({ ctx }) => {
+      .query(async () => {
         const results = await db.select().from(skills)
           .orderBy(skills.name);
 
@@ -1847,7 +1847,7 @@ export const atsRouter = router({
      */
     getCandidateSkills: orgProtectedProcedure
       .input(z.object({ candidateId: z.string().uuid() }))
-      .query(async ({ ctx, input }) => {
+      .query(async ({ input }) => {
         const results = await db.select()
           .from(candidateSkills)
           .where(eq(candidateSkills.candidateId, input.candidateId));
@@ -1865,7 +1865,7 @@ export const atsRouter = router({
         proficiencyLevel: z.enum(['beginner', 'intermediate', 'advanced', 'expert']),
         yearsOfExperience: z.number().min(0).max(50),
       }))
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ input }) => {
         const [newSkill] = await db.insert(candidateSkills).values({
           candidateId: input.candidateId,
           skillId: input.skillId,
@@ -1993,7 +1993,7 @@ export const atsRouter = router({
           version: newVersion,
           isLatest: true,
           previousVersionId: currentLatest?.id ?? null,
-          resumeType: resumeType as any,
+          resumeType: resumeType,
           bucket,
           filePath,
           fileName,
@@ -2006,7 +2006,7 @@ export const atsRouter = router({
           aiSummary: aiSummary ?? null,
           submissionWriteUp: submissionWriteUp ?? null,
           uploadedBy: userId,
-        } as any).returning();
+        }).returning();
 
         return newResume;
       }),
@@ -2286,7 +2286,7 @@ export const atsRouter = router({
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
 
-        let conditions = [
+        const conditions = [
           eq(candidateWorkAuthorizations.orgId, orgId),
           eq(candidateWorkAuthorizations.candidateId, input.candidateId),
         ];
@@ -2877,7 +2877,7 @@ export const atsRouter = router({
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
 
-        let conditions = [
+        const conditions = [
           eq(candidateBackgroundChecks.orgId, orgId),
           eq(candidateBackgroundChecks.candidateId, input.candidateId),
         ];
@@ -3042,7 +3042,7 @@ export const atsRouter = router({
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
 
-        let conditions = [
+        const conditions = [
           eq(candidateComplianceDocuments.orgId, orgId),
           eq(candidateComplianceDocuments.candidateId, input.candidateId),
         ];

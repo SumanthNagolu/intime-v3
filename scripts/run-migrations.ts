@@ -43,8 +43,8 @@ async function executeSqlQuery(sql: string): Promise<{ success: boolean; error?:
     }
 
     return { success: true };
-  } catch (error: any) {
-    return { success: false, error: error.message };
+  } catch (error) {
+    return { success: false, error: error instanceof Error ? error.message : String(error) };
   }
 }
 

@@ -1,11 +1,8 @@
 'use client';
 
 
-import React, { useState, useEffect } from 'react';
-import { useAppStore } from '../../lib/store';
-import { Activity, Server, ShieldCheck, HardDrive, AlertTriangle, Users, FileText, UserPlus, LayoutDashboard, Settings, Lock, Shield, BookOpen, X, CheckCircle, XCircle, ChevronRight, Clock, Search, Filter, BarChart3, Cpu, Database, ArrowLeft, Eye } from 'lucide-react';
-import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import React, { useState } from 'react';
+import { Activity, Server, ShieldCheck, HardDrive, AlertTriangle, Users, FileText, UserPlus, Settings, BookOpen, X, CheckCircle, XCircle, ChevronRight, Cpu } from 'lucide-react';
 
 // Import Sub-Components
 import { UserManagement } from './UserManagement';
@@ -13,6 +10,28 @@ import { Permissions } from './Permissions';
 import { SystemSettings } from './SystemSettings';
 import { AuditLogs } from './AuditLogs';
 import { CourseManagement } from './CourseManagement';
+
+// --- TYPES ---
+
+interface ApprovalItem {
+  id: number;
+  title: string;
+  type: 'User' | 'Content';
+  user: string;
+  time: string;
+  role?: string;
+  desc?: string;
+}
+
+interface ActivityItem {
+  id: number;
+  user: string;
+  action: string;
+  target: string;
+  time: string;
+  type: string;
+  timestamp?: string;
+}
 
 // --- MODALS ---
 
@@ -118,7 +137,7 @@ const SystemHealthModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
     );
 };
 
-const ApprovalReviewModal: React.FC<{ isOpen: boolean; onClose: () => void; onAction: (action: 'approve' | 'deny') => void; item: any }> = ({ isOpen, onClose, onAction, item }) => {
+const ApprovalReviewModal: React.FC<{ isOpen: boolean; onClose: () => void; onAction: (_action: 'approve' | 'deny') => void; item: ApprovalItem | null }> = ({ isOpen, onClose, onAction, item }) => {
     const [comment, setComment] = useState('');
 
     if (!isOpen || !item) return null;
@@ -177,7 +196,7 @@ const ApprovalReviewModal: React.FC<{ isOpen: boolean; onClose: () => void; onAc
     );
 };
 
-const ActivityDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; activity: any }> = ({ isOpen, onClose, activity }) => {
+const ActivityDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; activity: ActivityItem | null }> = ({ isOpen, onClose, activity }) => {
     if (!isOpen || !activity) return null;
 
     return (
@@ -238,17 +257,17 @@ const MissionControl: React.FC<{
 }> = ({ handleTabChange, triggerCreateUser }) => {
   
   const [isHealthModalOpen, setIsHealthModalOpen] = useState(false);
-  const [reviewItem, setReviewItem] = useState<any | null>(null);
-  const [selectedActivity, setSelectedActivity] = useState<any | null>(null);
+  const [reviewItem, setReviewItem] = useState<ApprovalItem | null>(null);
+  const [selectedActivity, setSelectedActivity] = useState<ActivityItem | null>(null);
   const [activityFilter, setActivityFilter] = useState('All');
 
   // Mock Pending Approvals
-  const [pendingApprovals, setPendingApprovals] = useState([
+  const [pendingApprovals, setPendingApprovals] = useState<ApprovalItem[]>([
       { id: 1, title: 'New User Request', type: 'User', user: 'Sarah Lao', time: '5 min ago', role: 'Junior Recruiter' },
       { id: 2, title: 'Course Publish Request', type: 'Content', user: 'David Kim', time: '2 hours ago', desc: 'Advanced PolicyCenter • 8 Modules' }
   ]);
 
-  const handleReviewAction = (action: 'approve' | 'deny') => {
+  const handleReviewAction = (_action: 'approve' | 'deny') => {
       if (reviewItem) {
           setPendingApprovals(prev => prev.filter(item => item.id !== reviewItem.id));
           setReviewItem(null);
@@ -363,9 +382,9 @@ const MissionControl: React.FC<{
                   </div>
                   
                   <div className="space-y-2 max-h-[400px] overflow-y-auto pr-2">
-                      {filteredActivity.map((item, i) => (
-                          <div 
-                            key={item.id} 
+                      {filteredActivity.map((item) => (
+                          <div
+                            key={item.id}
                             onClick={() => setSelectedActivity(item)}
                             className="flex items-center justify-between p-3 rounded-xl hover:bg-stone-50 transition-colors cursor-pointer group border border-transparent hover:border-stone-100"
                           >

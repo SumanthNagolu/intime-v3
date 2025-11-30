@@ -3,11 +3,10 @@
  * Provides real-time dashboard metrics for HR role
  */
 
-import { z } from 'zod';
 import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
 import { userProfiles } from '@/lib/db/schema/user-profiles';
-import { eq, and, sql, gte, lte, desc, isNull, isNotNull } from 'drizzle-orm';
+import { eq, and, sql, desc, isNull, isNotNull } from 'drizzle-orm';
 
 export const hrMetricsRouter = router({
   /**
@@ -163,7 +162,7 @@ export const hrMetricsRouter = router({
   /**
    * Get pending approvals (PTO, expenses, etc.)
    */
-  getPendingApprovals: orgProtectedProcedure.query(async ({ ctx }) => {
+  getPendingApprovals: orgProtectedProcedure.query(async ({ ctx: _ctx }) => {
     // For now return mock data - would need time_attendance or approval tables
     return [
       {
@@ -230,7 +229,7 @@ export const hrMetricsRouter = router({
   /**
    * Get retention trend data
    */
-  getRetentionTrend: orgProtectedProcedure.query(async ({ ctx }) => {
+  getRetentionTrend: orgProtectedProcedure.query(async ({ ctx: _ctx }) => {
     // Return monthly retention rates (mock data for now)
     return [
       { label: 'Jan', value: 95, color: '#10B981' },

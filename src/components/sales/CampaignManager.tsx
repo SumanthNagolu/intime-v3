@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Plus, Search, Filter, Megaphone, MoreHorizontal, TrendingUp, Users, Mail, Calendar, ArrowRight } from 'lucide-react';
+import { Plus, Search, MoreHorizontal, Users, Mail, Calendar, ArrowRight } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 
 export const CampaignManager: React.FC = () => {

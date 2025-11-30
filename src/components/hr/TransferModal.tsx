@@ -2,7 +2,7 @@
 
 
 import React, { useState } from 'react';
-import { X, TrendingUp, Briefcase, ArrowRight, CheckCircle } from 'lucide-react';
+import { X, TrendingUp, ArrowRight, CheckCircle } from 'lucide-react';
 
 interface TransferModalProps {
   isOpen: boolean;

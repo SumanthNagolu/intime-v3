@@ -190,7 +190,11 @@ async function login(page: Page, email: string, password: string): Promise<boole
 
     return !page.url().includes('/login');
   } catch (error) {
-    console.error(`Login error for ${email}:`, error);
+    if (error instanceof Error) {
+      console.error(`Login error for ${email}:`, error.message);
+    } else {
+      console.error(`Login error for ${email}:`, String(error));
+    }
     return false;
   }
 }
@@ -211,7 +215,7 @@ async function checkElement(page: Page, selector: string): Promise<{ found: bool
     }
 
     // Handle regular selectors with optional text
-    const [sel, textPart] = selector.split(', text=');
+    const [sel] = selector.split(', text=');
     const element = page.locator(sel).first();
 
     if (await element.isVisible({ timeout: 2000 }).catch(() => false)) {
@@ -220,7 +224,7 @@ async function checkElement(page: Page, selector: string): Promise<{ found: bool
     }
 
     return { found: false };
-  } catch (error) {
+  } catch {
     return { found: false };
   }
 }
@@ -330,7 +334,11 @@ test.describe('Workspace Dashboard Tests - All Roles', () => {
       result.dataSync = determineDataSyncStatus(result.elementsFound);
 
     } catch (error) {
-      result.errors.push(String(error));
+      if (error instanceof Error) {
+        result.errors.push(error.message);
+      } else {
+        result.errors.push(String(error));
+      }
       result.dataSync = 'error';
     }
 
@@ -383,7 +391,11 @@ test.describe('Workspace Dashboard Tests - All Roles', () => {
       result.dataSync = determineDataSyncStatus(result.elementsFound);
 
     } catch (error) {
-      result.errors.push(String(error));
+      if (error instanceof Error) {
+        result.errors.push(error.message);
+      } else {
+        result.errors.push(String(error));
+      }
       result.dataSync = 'error';
     }
 
@@ -435,7 +447,11 @@ test.describe('Workspace Dashboard Tests - All Roles', () => {
       result.dataSync = determineDataSyncStatus(result.elementsFound);
 
     } catch (error) {
-      result.errors.push(String(error));
+      if (error instanceof Error) {
+        result.errors.push(error.message);
+      } else {
+        result.errors.push(String(error));
+      }
       result.dataSync = 'error';
     }
 
@@ -487,7 +503,11 @@ test.describe('Workspace Dashboard Tests - All Roles', () => {
       result.dataSync = determineDataSyncStatus(result.elementsFound);
 
     } catch (error) {
-      result.errors.push(String(error));
+      if (error instanceof Error) {
+        result.errors.push(error.message);
+      } else {
+        result.errors.push(String(error));
+      }
       result.dataSync = 'error';
     }
 
@@ -532,7 +552,11 @@ test.describe('Workspace Dashboard Tests - All Roles', () => {
       result.dataSync = determineDataSyncStatus(result.elementsFound);
 
     } catch (error) {
-      result.errors.push(String(error));
+      if (error instanceof Error) {
+        result.errors.push(error.message);
+      } else {
+        result.errors.push(String(error));
+      }
       result.dataSync = 'error';
     }
 
@@ -577,7 +601,11 @@ test.describe('Workspace Dashboard Tests - All Roles', () => {
       result.dataSync = determineDataSyncStatus(result.elementsFound);
 
     } catch (error) {
-      result.errors.push(String(error));
+      if (error instanceof Error) {
+        result.errors.push(error.message);
+      } else {
+        result.errors.push(String(error));
+      }
       result.dataSync = 'error';
     }
 
@@ -622,7 +650,11 @@ test.describe('Workspace Dashboard Tests - All Roles', () => {
       result.dataSync = determineDataSyncStatus(result.elementsFound);
 
     } catch (error) {
-      result.errors.push(String(error));
+      if (error instanceof Error) {
+        result.errors.push(error.message);
+      } else {
+        result.errors.push(String(error));
+      }
       result.dataSync = 'error';
     }
 
@@ -667,7 +699,11 @@ test.describe('Workspace Dashboard Tests - All Roles', () => {
       result.dataSync = determineDataSyncStatus(result.elementsFound);
 
     } catch (error) {
-      result.errors.push(String(error));
+      if (error instanceof Error) {
+        result.errors.push(error.message);
+      } else {
+        result.errors.push(String(error));
+      }
       result.dataSync = 'error';
     }
 
@@ -712,7 +748,11 @@ test.describe('Workspace Dashboard Tests - All Roles', () => {
       result.dataSync = determineDataSyncStatus(result.elementsFound);
 
     } catch (error) {
-      result.errors.push(String(error));
+      if (error instanceof Error) {
+        result.errors.push(error.message);
+      } else {
+        result.errors.push(String(error));
+      }
       result.dataSync = 'error';
     }
 
@@ -757,7 +797,11 @@ test.describe('Workspace Dashboard Tests - All Roles', () => {
       result.dataSync = determineDataSyncStatus(result.elementsFound);
 
     } catch (error) {
-      result.errors.push(String(error));
+      if (error instanceof Error) {
+        result.errors.push(error.message);
+      } else {
+        result.errors.push(String(error));
+      }
       result.dataSync = 'error';
     }
 
@@ -809,7 +853,11 @@ test.describe('Workspace Dashboard Tests - All Roles', () => {
       result.dataSync = determineDataSyncStatus(result.elementsFound);
 
     } catch (error) {
-      result.errors.push(String(error));
+      if (error instanceof Error) {
+        result.errors.push(error.message);
+      } else {
+        result.errors.push(String(error));
+      }
       result.dataSync = 'error';
     }
 

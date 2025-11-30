@@ -94,7 +94,7 @@ export const escalationRouter = router({
   /**
    * Get escalation queue (pending/in-progress)
    */
-  getQueue: protectedProcedure.query(async ({ ctx }) => {
+  getQueue: protectedProcedure.query(async ({ ctx: _ctx }) => {
     // TODO: Check if user is trainer/admin
 
     const sql = `SELECT * FROM escalation_queue ORDER BY wait_time_minutes DESC`;
@@ -122,7 +122,7 @@ export const escalationRouter = router({
    */
   getDetails: protectedProcedure
     .input(z.object({ escalationId: z.string().uuid() }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ ctx: _ctx, input }) => {
       const sql = `SELECT * FROM get_escalation_details($1)`;
       const params = [input.escalationId];
 
@@ -147,7 +147,7 @@ export const escalationRouter = router({
   /**
    * Assign escalation to trainer
    */
-  assign: protectedProcedure.input(assignEscalationSchema).mutation(async ({ ctx, input }) => {
+  assign: protectedProcedure.input(assignEscalationSchema).mutation(async ({ ctx: _ctx, input }) => {
     // TODO: Check if user is trainer/admin
 
     const sql = `SELECT assign_escalation($1, $2)`;
@@ -176,7 +176,7 @@ export const escalationRouter = router({
    */
   autoAssign: protectedProcedure
     .input(z.object({ escalationId: z.string().uuid() }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ ctx: _ctx, input }) => {
       const sql = `SELECT auto_assign_escalation($1)`;
       const params = [input.escalationId];
 
@@ -238,7 +238,7 @@ export const escalationRouter = router({
         includeInternal: z.boolean().default(true),
       })
     )
-    .query(async ({ ctx, input }) => {
+    .query(async ({ ctx: _ctx, input }) => {
       const sql = `SELECT * FROM get_trainer_responses($1, $2)`;
       const params = [input.escalationId, input.includeInternal];
 
@@ -323,7 +323,7 @@ export const escalationRouter = router({
   /**
    * Get daily escalation statistics
    */
-  getDailyStats: protectedProcedure.query(async ({ ctx }) => {
+  getDailyStats: protectedProcedure.query(async ({ ctx: _ctx }) => {
     // TODO: Check if user is admin/trainer
 
     const sql = `SELECT * FROM escalation_daily_stats ORDER BY date DESC LIMIT 30`;
@@ -349,7 +349,7 @@ export const escalationRouter = router({
   /**
    * Get trainer performance statistics
    */
-  getTrainerStats: protectedProcedure.query(async ({ ctx }) => {
+  getTrainerStats: protectedProcedure.query(async ({ ctx: _ctx }) => {
     // TODO: Check if user is admin
 
     const sql = `SELECT * FROM trainer_escalation_stats ORDER BY total_assigned DESC`;
@@ -375,7 +375,7 @@ export const escalationRouter = router({
   /**
    * Get topic difficulty statistics
    */
-  getTopicDifficultyStats: protectedProcedure.query(async ({ ctx }) => {
+  getTopicDifficultyStats: protectedProcedure.query(async ({ ctx: _ctx }) => {
     // TODO: Check if user is admin/trainer
 
     const sql = `SELECT * FROM topic_difficulty_stats ORDER BY escalation_count DESC LIMIT 20`;

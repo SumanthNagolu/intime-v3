@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import { useAppStore } from '../../lib/store';
-import { ChevronLeft, FileText, Mail, Send, Wand2, CheckCircle, Eye, Paperclip, Calendar, MessageSquare, ThumbsUp, ThumbsDown, DollarSign, Award, ArrowRight } from 'lucide-react';
+import { ChevronLeft, FileText, Mail, Send, Wand2, CheckCircle, Eye, Paperclip, Calendar, ThumbsDown, Award, ArrowRight } from 'lucide-react';
 import { Submission } from '../../types';
 
 export const SubmissionBuilder: React.FC = () => {
@@ -143,10 +143,10 @@ export const SubmissionBuilder: React.FC = () => {
                   </div>
               </div>
               <div className="flex bg-stone-100 p-1 rounded-full">
-                  {['resume', 'documents', 'email', 'review'].map((s) => (
-                      <div 
+                  {(['resume', 'documents', 'email', 'review'] as const).map((s) => (
+                      <div
                           key={s}
-                          onClick={() => setStep(s as any)}
+                          onClick={() => setStep(s)}
                           className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all cursor-pointer ${
                               step === s ? 'bg-white text-charcoal shadow-sm' : 'text-stone-400 hover:text-stone-600'
                           }`}
@@ -189,7 +189,7 @@ export const SubmissionBuilder: React.FC = () => {
                               <div className="flex items-center justify-between p-4 bg-stone-50 rounded-xl border border-stone-200">
                                   <div className="flex items-center gap-3">
                                       <CheckCircle size={18} className="text-green-500" />
-                                      <span className="text-sm font-bold text-charcoal">Highlight "Migration" Skills</span>
+                                      <span className="text-sm font-bold text-charcoal">Highlight &quot;Migration&quot; Skills</span>
                                   </div>
                                   <span className="text-xs text-stone-400">Applied (Matches JD)</span>
                               </div>

@@ -45,9 +45,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { SlidePanelProvider } from '@/components/workspaces/unified';
-import { useWorkspaceStore, usePinnedItems, useRecentItems } from '@/stores/workspace-store';
+import { usePinnedItems, useRecentItems } from '@/stores/workspace-store';
 import { getEntityConfig, type EntityType } from '@/lib/workspace';
-import { trpc } from '@/lib/trpc/client';
 import { createClient } from '@/lib/supabase/client';
 
 // Navigation items

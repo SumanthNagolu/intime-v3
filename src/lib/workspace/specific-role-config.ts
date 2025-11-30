@@ -5,8 +5,7 @@
  * quick actions, and permissions. Extends the base WorkspaceRole system.
  */
 
-import type { LucideIcon } from 'lucide-react';
-import type { WorkspaceRole, QuickAction, DashboardWidget, TabConfig } from './role-config';
+import type { WorkspaceRole, QuickAction, DashboardWidget } from './role-config';
 import {
   UserPlus,
   Send,
@@ -29,9 +28,6 @@ import {
   Megaphone,
   Mail,
   Phone,
-  Zap,
-  Award,
-  UserCheck,
   FileSpreadsheet,
   Activity,
 } from 'lucide-react';

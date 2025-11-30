@@ -8,7 +8,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Users, Pencil, Plus, X, Check, ChevronDown } from 'lucide-react';
+import { Users, Pencil, Plus, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Popover,
@@ -194,7 +194,7 @@ function AssignDialog({
   open,
   onOpenChange,
   entityType,
-  entityId,
+  _entityId,
   currentOwners,
   onAssign,
 }: AssignDialogProps) {
@@ -316,7 +316,6 @@ export function RCAIBar({
 
   const {
     owners,
-    primaryOwner,
     isLoading,
     assignOwner,
     removeOwner,

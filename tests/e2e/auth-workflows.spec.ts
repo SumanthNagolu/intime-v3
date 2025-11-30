@@ -10,7 +10,7 @@
  * Run: pnpm playwright test tests/e2e/auth-workflows.spec.ts
  */
 
-import { test, expect, Page, BrowserContext } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 
 // ============================================================================
 // Test User Credentials - InTime Production Users

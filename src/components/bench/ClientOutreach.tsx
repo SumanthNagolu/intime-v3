@@ -2,7 +2,7 @@
 
 
 import React, { useState } from 'react';
-import { Megaphone, Send, Sparkles, Users, Mail, CheckCircle } from 'lucide-react';
+import { Megaphone, Send, Sparkles } from 'lucide-react';
 
 export const ClientOutreach: React.FC = () => {
   const [step, setStep] = useState<'setup' | 'draft' | 'review'>('setup');
@@ -97,7 +97,7 @@ export const ClientOutreach: React.FC = () => {
                           <div>
                               <h4 className="font-bold text-blue-900 text-sm mb-1">AI Draft Generated</h4>
                               <p className="text-blue-800 text-xs leading-relaxed">
-                                  Based on Vikram's profile and the "Previous Clients" segment, I've drafted a personalized email emphasizing his specific rating engine expertise which is in high demand.
+                                  Based on Vikram&apos;s profile and the &quot;Previous Clients&quot; segment, I&apos;ve drafted a personalized email emphasizing his specific rating engine expertise which is in high demand.
                               </p>
                           </div>
                       </div>

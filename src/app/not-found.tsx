@@ -36,8 +36,8 @@ export default function NotFound() {
               Page Not Found
             </h1>
             <p className="text-lg text-charcoal-500 mb-10 max-w-md mx-auto">
-              The page you're looking for doesn't exist or has been moved.
-              Let's get you back on track.
+              The page you&apos;re looking for doesn&apos;t exist or has been moved.
+              Let&apos;s get you back on track.
             </p>
 
             {/* Action Buttons */}
@@ -90,7 +90,7 @@ export default function NotFound() {
                 <div className="text-left">
                   <h3 className="font-bold text-charcoal-900 mb-1">Need help?</h3>
                   <p className="text-sm text-charcoal-600">
-                    Can't find what you're looking for? Contact our team at{' '}
+                    Can&apos;t find what you&apos;re looking for? Contact our team at{' '}
                     <a href="mailto:info@intimeesolutions.com" className="text-forest-600 hover:underline">
                       info@intimeesolutions.com
                     </a>

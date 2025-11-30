@@ -18,18 +18,18 @@ export const SystemSettings: React.FC = () => {
           
           {/* Sidebar Tabs */}
           <div className="lg:w-64 shrink-0 space-y-2">
-              {[
-                  { id: 'General', icon: Settings },
-                  { id: 'Auth', icon: Shield },
-                  { id: 'Integrations', icon: Globe },
-                  { id: 'Backup', icon: Database }
-              ].map(tab => (
+              {([
+                  { id: 'General' as const, icon: Settings },
+                  { id: 'Auth' as const, icon: Shield },
+                  { id: 'Integrations' as const, icon: Globe },
+                  { id: 'Backup' as const, icon: Database }
+              ] as const).map(tab => (
                   <button
                     key={tab.id}
-                    onClick={() => setActiveTab(tab.id as any)}
+                    onClick={() => setActiveTab(tab.id)}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${
-                        activeTab === tab.id 
-                        ? 'bg-charcoal text-white shadow-lg' 
+                        activeTab === tab.id
+                        ? 'bg-charcoal text-white shadow-lg'
                         : 'bg-white text-stone-500 hover:bg-stone-50'
                     }`}
                   >

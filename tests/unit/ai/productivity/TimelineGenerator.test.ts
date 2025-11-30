@@ -17,9 +17,9 @@ vi.mock('@/lib/ai/productivity/ActivityClassifier');
 
 describe('TimelineGenerator', () => {
   let generator: TimelineGenerator;
-  let mockClassifier: any;
-  let mockOpenAI: any;
-  let mockSupabase: any;
+  let mockClassifier: Record<string, unknown>;
+  let mockOpenAI: Record<string, unknown>;
+  let mockSupabase: Record<string, unknown>;
 
   beforeEach(() => {
     // Mock Supabase client
@@ -49,8 +49,8 @@ describe('TimelineGenerator', () => {
     // Create generator instance WITH mocked dependencies
     generator = new TimelineGenerator(undefined, {
       classifier: mockClassifier,
-      openai: mockOpenAI as any,
-      supabase: mockSupabase as any,
+      openai: mockOpenAI as never,
+      supabase: mockSupabase as never,
     });
   });
 

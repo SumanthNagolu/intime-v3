@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import { useAppStore } from '../../lib/store';
-import { ChevronLeft, MapPin, Briefcase, DollarSign, Mail, Phone, Calendar, Clock, FileText, Star, Send, Plus, CheckCircle, Globe, Search, ArrowRight } from 'lucide-react';
+import { ChevronLeft, MapPin, Briefcase, Mail, Phone, Clock, FileText, Send, CheckCircle, Search } from 'lucide-react';
 
 export const BenchTalentDetail: React.FC = () => {
   const { candidateId } = useParams();
@@ -62,12 +62,12 @@ export const BenchTalentDetail: React.FC = () => {
 
       {/* Tabs */}
       <div className="flex gap-6 border-b border-stone-200 mb-8">
-          {['Overview', 'Job Hunt', 'Pipeline'].map(tab => (
+          {(['Overview', 'Job Hunt', 'Pipeline'] as const).map(tab => (
               <button
                  key={tab}
                  onClick={() => {
                      if (tab === 'Job Hunt') router.push(`/employee/bench/hunt/${consultant.id}`);
-                     else setActiveTab(tab as any);
+                     else if (tab === 'Overview' || tab === 'Pipeline') setActiveTab(tab);
                  }}
                  className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors ${
                      activeTab === tab ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'

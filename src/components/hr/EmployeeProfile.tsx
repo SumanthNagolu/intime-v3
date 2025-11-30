@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useAppStore } from '../../lib/store';
-import { ChevronLeft, Mail, Phone, MapPin, Building2, Calendar, DollarSign, Award, Clock, FileText, Download, UserPlus, UserMinus, TrendingUp, Laptop, Smartphone, Key, X, Plus, Target, Upload, Edit2, Save } from 'lucide-react';
+import { ChevronLeft, Mail, Phone, MapPin, Building2, Calendar, DollarSign, FileText, Download, UserMinus, TrendingUp, Laptop, Smartphone, Key, X, Plus, Target, Upload, Edit2, Save } from 'lucide-react';
 import { OffboardingModal } from './OffboardingModal';
 import { TransferModal } from './TransferModal';
 
@@ -52,7 +52,16 @@ const AddReviewModal: React.FC<{ isOpen: boolean; onClose: () => void; employeeN
     )
 }
 
-const GoalDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; goal: any }> = ({ isOpen, onClose, goal }) => {
+interface Goal {
+  id: number;
+  title: string;
+  target: string;
+  targetVal: number;
+  current: string;
+  currentVal: number;
+}
+
+const GoalDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; goal: Goal | null }> = ({ isOpen, onClose, goal }) => {
     if (!isOpen || !goal) return null;
     return (
         <div className="fixed inset-0 bg-charcoal/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
@@ -106,7 +115,15 @@ const DocumentUploadModal: React.FC<{ isOpen: boolean; onClose: () => void }> = 
     )
 }
 
-const AddAssetModal: React.FC<{ isOpen: boolean; onClose: () => void; onAssign: (asset: any) => void }> = ({ isOpen, onClose, onAssign }) => {
+interface Asset {
+  type: string;
+  model: string;
+  serial: string;
+  status: string;
+  icon: React.ElementType;
+}
+
+const AddAssetModal: React.FC<{ isOpen: boolean; onClose: () => void; onAssign: (asset: Asset) => void }> = ({ isOpen, onClose, onAssign }) => {
     const [type, setType] = useState('Laptop');
     const [model, setModel] = useState('');
     const [serial, setSerial] = useState('');
@@ -159,13 +176,13 @@ export const EmployeeProfile: React.FC = () => {
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [isDocUploadOpen, setIsDocUploadOpen] = useState(false);
   const [isAddAssetOpen, setIsAddAssetOpen] = useState(false);
-  const [selectedGoal, setSelectedGoal] = useState<any>(null);
+  const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null);
   const [activeTab, setActiveTab] = useState<'Overview' | 'Personal' | 'Assets'>('Overview');
   const [isEditing, setIsEditing] = useState(false);
 
   // Local State for Edit Mode
-  const [editData, setEditData] = useState<any>(employee || {});
-  const [assets, setAssets] = useState([
+  const [editData, setEditData] = useState(employee || {});
+  const [assets, setAssets] = useState<Asset[]>([
       { type: 'Laptop', model: 'MacBook Pro 16"', serial: 'C02TG0...', status: 'Assigned', icon: Laptop },
       { type: 'Phone', model: 'iPhone 15 Pro', serial: 'F19GL...', status: 'Assigned', icon: Smartphone },
       { type: 'Access', model: 'Office Badge', serial: '#4921', status: 'Active', icon: Key },
@@ -178,7 +195,7 @@ export const EmployeeProfile: React.FC = () => {
       setIsEditing(false);
   };
 
-  const handleAddAsset = (newAsset: any) => {
+  const handleAddAsset = (newAsset: Asset) => {
       setAssets([...assets, newAsset]);
   };
 
@@ -295,9 +312,9 @@ export const EmployeeProfile: React.FC = () => {
           <div className="lg:col-span-8">
               <div className="flex gap-4 border-b border-stone-200 mb-8">
                   {['Overview', 'Personal', 'Assets'].map(tab => (
-                      <button 
-                        key={tab} 
-                        onClick={() => setActiveTab(tab as any)}
+                      <button
+                        key={tab}
+                        onClick={() => setActiveTab(tab as 'Overview' | 'Personal' | 'Assets')}
                         className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors ${activeTab === tab ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'}`}
                       >
                           {tab} Info

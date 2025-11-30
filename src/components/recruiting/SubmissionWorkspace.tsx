@@ -2,19 +2,41 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import {
   ArrowLeft, User, MapPin, Briefcase, Clock, Phone, Mail, Calendar,
-  FileText, Activity, Building2, DollarSign, ChevronRight, Plus,
-  Loader2, X, Video, Send, CheckCircle, XCircle, Star, AlertTriangle,
-  Award, ThumbsUp, ThumbsDown, Eye, MessageSquare, ClipboardList,
-  PlayCircle, PauseCircle, UserCheck, Building, Target, Sparkles,
+  FileText, Activity, Building2, DollarSign, Plus,
+  Loader2, X, Video, Send, CheckCircle, XCircle, Star,
+  ThumbsUp, ThumbsDown, Eye, MessageSquare, ClipboardList,
+  Building, Target, Sparkles,
   ExternalLink, Edit3, RefreshCw, ArrowRight, Check, Ban
 } from 'lucide-react';
 import { trpc } from '@/lib/trpc/client';
 
 interface SubmissionWorkspaceProps {
   submissionId: string;
+}
+
+// Type definitions - using unknown for fields we don't know the exact shape
+interface SubmissionData {
+  id: string;
+  status: string;
+  candidateId: string;
+  jobId: string;
+  [key: string]: unknown;  // Allow other fields
+}
+
+interface InterviewData {
+  id: string;
+  status: string;
+  roundNumber: number;
+  [key: string]: unknown;  // Allow other fields
+}
+
+interface ActivityData {
+  id: string;
+  activityType: string;
+  status: string;
+  [key: string]: unknown;  // Allow other fields
 }
 
 // Complete status configuration with workflow stages
@@ -55,7 +77,6 @@ const PIPELINE_STAGES = [
 type TabType = 'overview' | 'interviews' | 'documents' | 'activity' | 'tasks';
 
 export const SubmissionWorkspace: React.FC<SubmissionWorkspaceProps> = ({ submissionId }) => {
-  const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabType>('overview');
 
   // Modal states
@@ -106,9 +127,6 @@ export const SubmissionWorkspace: React.FC<SubmissionWorkspaceProps> = ({ submis
     onSuccess: () => { refetch(); refetchActivities(); setShowClientDecisionModal(false); },
   });
 
-  const moveToInterview = trpc.ats.submissions.moveToInterview.useMutation({
-    onSuccess: () => { refetch(); refetchActivities(); },
-  });
 
   const moveToOffer = trpc.ats.submissions.moveToOffer.useMutation({
     onSuccess: () => { refetch(); refetchActivities(); },
@@ -147,7 +165,7 @@ export const SubmissionWorkspace: React.FC<SubmissionWorkspaceProps> = ({ submis
       <div className="text-center py-24">
         <Briefcase size={48} className="mx-auto text-stone-300 mb-4" />
         <h2 className="text-xl font-bold text-charcoal mb-2">Submission Not Found</h2>
-        <p className="text-stone-500 mb-4">The submission you're looking for doesn't exist.</p>
+        <p className="text-stone-500 mb-4">The submission you&apos;re looking for doesn&apos;t exist.</p>
         <Link
           href="/employee/recruiting/submissions"
           className="text-rust font-bold hover:underline"
@@ -555,7 +573,7 @@ export const SubmissionWorkspace: React.FC<SubmissionWorkspaceProps> = ({ submis
 // ============================================================================
 
 const OverviewTab: React.FC<{
-  submission: any;
+  submission: SubmissionData;
   candidateName: string;
   onAddNote: () => void;
   onAddTask: () => void;
@@ -631,10 +649,10 @@ const OverviewTab: React.FC<{
             {submission.interviews?.length > 0 && (
               <div className="mt-4 pt-4 border-t border-orange-200">
                 <p className="text-xs text-orange-600 uppercase tracking-widest mb-2">Upcoming</p>
-                {submission.interviews.filter((i: any) => i.status === 'scheduled').slice(0, 2).map((interview: any) => (
+                {submission.interviews.filter((i) => i.status === 'scheduled').slice(0, 2).map((interview) => (
                   <div key={interview.id} className="flex items-center justify-between py-2">
                     <span className="text-orange-800 font-medium">Round {interview.roundNumber}</span>
-                    <span className="text-orange-600">{new Date(interview.scheduledAt).toLocaleDateString()}</span>
+                    <span className="text-orange-600">{interview.scheduledAt && new Date(interview.scheduledAt).toLocaleDateString()}</span>
                   </div>
                 ))}
               </div>
@@ -887,11 +905,11 @@ const OverviewTab: React.FC<{
 // ============================================================================
 
 const InterviewsTab: React.FC<{
-  submission: any;
-  interviews: any[];
+  submission: SubmissionData;
+  interviews: InterviewData[];
   onScheduleInterview: () => void;
   isActive: boolean;
-}> = ({ submission, interviews, onScheduleInterview, isActive }) => {
+}> = ({ interviews, onScheduleInterview, isActive }) => {
   if (interviews.length === 0) {
     return (
       <div className="text-center py-16 bg-stone-50 rounded-2xl border border-stone-200">
@@ -1006,8 +1024,8 @@ const InterviewsTab: React.FC<{
 // ============================================================================
 
 const TasksTab: React.FC<{
-  tasks: any[];
-  activities: any[];
+  tasks: ActivityData[];
+  activities: ActivityData[];
   onAddTask: () => void;
   onCompleteTask: (id: string) => void;
   isLoading: boolean;
@@ -1093,7 +1111,7 @@ const TasksTab: React.FC<{
 // ============================================================================
 
 const ActivityTab: React.FC<{
-  activities: any[];
+  activities: ActivityData[];
   onAddNote: () => void;
 }> = ({ activities, onAddNote }) => {
   const ACTIVITY_ICONS: Record<string, React.ReactNode> = {
@@ -1180,7 +1198,7 @@ const ActivityTab: React.FC<{
 // Documents Tab
 // ============================================================================
 
-const DocumentsTab: React.FC<{ submission: any }> = ({ submission }) => {
+const DocumentsTab: React.FC<{ submission: SubmissionData }> = ({ submission }) => {
   return (
     <div className="text-center py-16 bg-stone-50 rounded-2xl border border-stone-200">
       <FileText size={48} className="mx-auto text-stone-300 mb-4" />
@@ -1232,7 +1250,7 @@ const VendorSubmitModal: React.FC<{
             />
             <select
               value={rateType}
-              onChange={(e) => setRateType(e.target.value as any)}
+              onChange={(e) => setRateType(e.target.value as 'hourly' | 'daily' | 'weekly' | 'monthly' | 'annual')}
               className="p-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
             >
               <option value="hourly">Per Hour</option>
@@ -1286,7 +1304,7 @@ const VendorDecisionModal: React.FC<{
 
   return (
     <ModalWrapper onClose={onClose} title="Vendor Decision">
-      <p className="text-stone-500 text-sm mb-6">Record the vendor's decision on this candidate</p>
+      <p className="text-stone-500 text-sm mb-6">Record the vendor&apos;s decision on this candidate</p>
 
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
@@ -1370,7 +1388,7 @@ const ClientSubmitModal: React.FC<{
 
   return (
     <ModalWrapper onClose={onClose} title="Submit to Client">
-      <p className="text-stone-500 text-sm mb-6">Submit this candidate's profile to the client</p>
+      <p className="text-stone-500 text-sm mb-6">Submit this candidate&apos;s profile to the client</p>
 
       {instructions && (
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4">
@@ -1431,7 +1449,7 @@ const ClientDecisionModal: React.FC<{
 
   return (
     <ModalWrapper onClose={onClose} title="Client Decision">
-      <p className="text-stone-500 text-sm mb-6">Record the client's response to this submission</p>
+      <p className="text-stone-500 text-sm mb-6">Record the client&apos;s response to this submission</p>
 
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
@@ -1507,10 +1525,17 @@ const ClientDecisionModal: React.FC<{
 // Schedule Interview Modal
 const ScheduleInterviewModal: React.FC<{
   onClose: () => void;
-  onSchedule: (data: any) => void;
+  onSchedule: (data: {
+    interviewType: string;
+    scheduledAt: Date;
+    durationMinutes: number;
+    meetingLink?: string;
+    interviewerNames?: string[];
+    roundNumber: number;
+  }) => void;
   isLoading: boolean;
   interviewProcess?: string;
-  existingInterviews: any[];
+  existingInterviews: InterviewData[];
 }> = ({ onClose, onSchedule, isLoading, interviewProcess, existingInterviews }) => {
   const nextRound = existingInterviews.length + 1;
   const [interviewType, setInterviewType] = useState<string>('technical');

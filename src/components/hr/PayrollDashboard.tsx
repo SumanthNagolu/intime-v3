@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAppStore } from '../../lib/store';
-import { DollarSign, Calendar, CheckCircle, AlertCircle, ChevronRight, ArrowRight, Download, Send, Lock, Edit2, RefreshCcw, FileText, AlertTriangle, X, ChevronLeft, Search } from 'lucide-react';
+import { CheckCircle, AlertCircle, ArrowRight, Download, Send, RefreshCcw, FileText, AlertTriangle, X, ChevronLeft, Search } from 'lucide-react';
 
 // PDF Preview Modal
 const FilePreviewModal: React.FC<{ isOpen: boolean; onClose: () => void; title: string }> = ({ isOpen, onClose, title }) => {
@@ -28,12 +28,19 @@ const FilePreviewModal: React.FC<{ isOpen: boolean; onClose: () => void; title: 
     )
 }
 
-export const PayrollDashboard: React.FC = () => {
-  const { payrollRun, updatePayrollStatus } = useAppStore();
-  const [view, setView] = useState<'Dashboard' | 'Wizard' | 'HistoryDetail'>('Dashboard');
-  const [selectedHistory, setSelectedHistory] = useState<any>(null);
+interface HistoryRun {
+  period: string;
+  payDate: string;
+  total: string;
+  employees: number;
+}
 
-  const handleViewHistory = (run: any) => {
+export const PayrollDashboard: React.FC = () => {
+  const { payrollRun } = useAppStore();
+  const [view, setView] = useState<'Dashboard' | 'Wizard' | 'HistoryDetail'>('Dashboard');
+  const [selectedHistory, setSelectedHistory] = useState<HistoryRun | null>(null);
+
+  const handleViewHistory = (run: HistoryRun) => {
       setSelectedHistory(run);
       setView('HistoryDetail');
   };
@@ -159,7 +166,7 @@ export const PayrollDashboard: React.FC = () => {
   );
 };
 
-const HistoryDetailView: React.FC<{ run: any, onBack: () => void }> = ({ run, onBack }) => {
+const HistoryDetailView: React.FC<{ run: HistoryRun, onBack: () => void }> = ({ run, onBack }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [previewFile, setPreviewFile] = useState<string | null>(null);
 
@@ -261,7 +268,7 @@ const PayrollWizard: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     // Update store step when local step changes
     useEffect(() => {
         updatePayrollStatus('In Progress', step);
-    }, [step]);
+    }, [step, updatePayrollStatus]);
 
     const handleNext = () => {
         setIsProcessing(true);
@@ -330,7 +337,7 @@ const PayrollWizard: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                             <div className="p-4 bg-red-50 border border-red-100 rounded-xl flex gap-3 items-start text-red-700 text-sm">
                                 <AlertCircle size={18} className="shrink-0 mt-0.5" />
                                 <div>
-                                    <strong>Action Required:</strong> You cannot proceed until all timesheets are approved. Use "Force Approve" for demo.
+                                    <strong>Action Required:</strong> You cannot proceed until all timesheets are approved. Use &quot;Force Approve&quot; for demo.
                                 </div>
                             </div>
                         )}
@@ -519,7 +526,7 @@ const PayrollWizard: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                         </div>
                         <h3 className="text-2xl font-serif font-bold text-charcoal mb-2">Step 7: Confirm & Close</h3>
                         <p className="text-stone-500 text-sm mb-8 max-w-xs mx-auto">
-                            Bank confirms deposits have been scheduled. Click below to mark this period as "Paid" and lock edits.
+                            Bank confirms deposits have been scheduled. Click below to mark this period as &quot;Paid&quot; and lock edits.
                         </p>
                         <div className="p-4 bg-blue-50 rounded-xl border border-blue-100 text-blue-800 text-xs font-bold max-w-sm mx-auto mb-8">
                             Paystub emails will be sent automatically upon completion.

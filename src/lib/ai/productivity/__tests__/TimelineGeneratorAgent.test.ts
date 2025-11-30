@@ -5,7 +5,7 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { TimelineGeneratorAgent, type DailyReport } from '../TimelineGeneratorAgent';
+import { TimelineGeneratorAgent } from '../TimelineGeneratorAgent';
 
 // Mock dependencies
 vi.mock('@/lib/supabase/client', () => ({
@@ -64,7 +64,19 @@ vi.mock('openai', () => ({
 
 describe('TimelineGeneratorAgent', () => {
   let generator: TimelineGeneratorAgent;
-  let mockSupabase: any;
+  let mockSupabase: {
+    from: ReturnType<typeof vi.fn>;
+    select: ReturnType<typeof vi.fn>;
+    eq: ReturnType<typeof vi.fn>;
+    gte: ReturnType<typeof vi.fn>;
+    lt: ReturnType<typeof vi.fn>;
+    is: ReturnType<typeof vi.fn>;
+    single: ReturnType<typeof vi.fn>;
+    upsert: ReturnType<typeof vi.fn>;
+    auth: {
+      getUser: ReturnType<typeof vi.fn>;
+    };
+  };
 
   beforeEach(() => {
     // Create mock Supabase client
@@ -90,7 +102,8 @@ describe('TimelineGeneratorAgent', () => {
       },
     };
 
-    generator = new TimelineGeneratorAgent(mockSupabase);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    generator = new TimelineGeneratorAgent(mockSupabase as any);
   });
 
   afterEach(() => {
@@ -235,13 +248,20 @@ describe('TimelineGeneratorAgent', () => {
             lt: vi.fn().mockReturnThis(),
             eq: vi.fn().mockReturnThis(),
             is: vi.fn().mockResolvedValue({ data: mockEmployees, error: null }),
-          } as any;
+          };
         } else if (tableName === 'productivity_reports') {
           return {
             upsert: vi.fn().mockResolvedValue({ error: null }),
-          } as any;
+          };
         }
-        return {} as any;
+        return {
+          select: vi.fn().mockReturnThis(),
+          gte: vi.fn().mockReturnThis(),
+          lt: vi.fn().mockReturnThis(),
+          eq: vi.fn().mockReturnThis(),
+          is: vi.fn().mockReturnThis(),
+          upsert: vi.fn().mockReturnThis(),
+        };
       });
 
       vi.spyOn(generator['classifier'], 'getDailySummary').mockResolvedValue(mockSummary);
@@ -276,13 +296,20 @@ describe('TimelineGeneratorAgent', () => {
             lt: vi.fn().mockReturnThis(),
             eq: vi.fn().mockReturnThis(),
             is: vi.fn().mockResolvedValue({ data: mockEmployees, error: null }),
-          } as any;
+          };
         } else if (tableName === 'productivity_reports') {
           return {
             upsert: vi.fn().mockResolvedValue({ error: null }),
-          } as any;
+          };
         }
-        return {} as any;
+        return {
+          select: vi.fn().mockReturnThis(),
+          gte: vi.fn().mockReturnThis(),
+          lt: vi.fn().mockReturnThis(),
+          eq: vi.fn().mockReturnThis(),
+          is: vi.fn().mockReturnThis(),
+          upsert: vi.fn().mockReturnThis(),
+        };
       });
 
       // Make getDailySummary fail for one user
@@ -307,28 +334,32 @@ describe('TimelineGeneratorAgent', () => {
         byCategory: { coding: 624, email: 192, meeting: 96, documentation: 48, research: 0, social_media: 0, idle: 0 },
       };
 
-      let savedReport: any = null;
+      type SavedReportData = Record<string, unknown>;
+      let savedReport: SavedReportData | null = null;
 
       vi.spyOn(generator['classifier'], 'getDailySummary').mockResolvedValue(mockSummary);
 
       // Mock upsert to capture saved data
       vi.spyOn(mockSupabase, 'from').mockReturnValue({
-        upsert: vi.fn().mockImplementation((data) => {
-          savedReport = data;
+        upsert: vi.fn().mockImplementation((data: unknown) => {
+          savedReport = data as SavedReportData;
           return Promise.resolve({ error: null });
         }),
-      } as any);
+      } as unknown as ReturnType<typeof mockSupabase.from>);
 
       await generator.generateDailyReport('test-user-id', '2025-01-15');
 
       expect(savedReport).toBeDefined();
-      expect(savedReport.user_id).toBe('test-user-id');
-      expect(savedReport.date).toBe('2025-01-15');
-      expect(savedReport.summary).toBeTruthy();
-      expect(savedReport.productive_hours).toBe(6.5);
-      expect(Array.isArray(savedReport.top_activities)).toBe(true);
-      expect(Array.isArray(savedReport.insights)).toBe(true);
-      expect(Array.isArray(savedReport.recommendations)).toBe(true);
+      expect(savedReport).not.toBeNull();
+
+      const report = savedReport as unknown as SavedReportData;
+      expect(report.user_id).toBe('test-user-id');
+      expect(report.date).toBe('2025-01-15');
+      expect(report.summary).toBeTruthy();
+      expect(report.productive_hours).toBe(6.5);
+      expect(Array.isArray(report.top_activities)).toBe(true);
+      expect(Array.isArray(report.insights)).toBe(true);
+      expect(Array.isArray(report.recommendations)).toBe(true);
     });
   });
 
@@ -469,7 +500,7 @@ describe('TimelineGeneratorAgent', () => {
       // Mock database save to fail
       vi.spyOn(mockSupabase, 'from').mockReturnValue({
         upsert: vi.fn().mockResolvedValue({ error: new Error('Database error') }),
-      } as any);
+      } as unknown as ReturnType<typeof mockSupabase.from>);
 
       await expect(
         generator.generateDailyReport('test-user-id', '2025-01-15')
@@ -591,7 +622,6 @@ describe('Employee UI', () => {
 
   it('should allow date selection', () => {
     // Verify date range handling
-    const today = new Date();
     const selectedDate = new Date('2025-01-15');
 
     expect(selectedDate instanceof Date).toBe(true);

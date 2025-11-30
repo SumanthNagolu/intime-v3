@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
-  ArrowDown,
   ShieldCheck,
   Award,
   CheckCircle2,
@@ -15,14 +14,11 @@ import {
   Clock,
   Sparkles,
   Globe,
-  Target,
   GraduationCap,
   UserCheck,
   HandshakeIcon,
   Users,
   Briefcase,
-  Phone,
-  MapPin,
   ChevronRight
 } from 'lucide-react';
 import { MarketingNavbar, Footer } from '@/components/templates';
@@ -68,7 +64,6 @@ const useInView = (threshold = 0.2) => {
 
 export const LandingPage: React.FC = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [hasScrolledPastHero, setHasScrolledPastHero] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -88,6 +83,7 @@ export const LandingPage: React.FC = () => {
       stats.placements.start();
       stats.countries.start();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statsSection.inView]);
 
   // Scroll-based page flip effect
@@ -98,9 +94,8 @@ export const LandingPage: React.FC = () => {
       const heroHeight = heroRef.current.offsetHeight;
       const scrollY = window.scrollY;
       const progress = Math.min(scrollY / (heroHeight * 0.5), 1);
-      
+
       setScrollProgress(progress);
-      setHasScrolledPastHero(scrollY > heroHeight * 0.3);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -505,7 +500,7 @@ export const LandingPage: React.FC = () => {
                 </h2>
                 
                 <p className="text-lg text-charcoal-300 mb-10 leading-relaxed">
-                  We don't just fill positions. We build careers, transform organizations, and create lasting partnerships.
+                  We don&apos;t just fill positions. We build careers, transform organizations, and create lasting partnerships.
                 </p>
 
                 <div className="space-y-6">
@@ -597,14 +592,14 @@ export const LandingPage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {[
                 {
-                  quote: "InTime's Academy transformed my career trajectory. From a career changer with no tech background to a Senior Developer at Deloitte in 10 weeks. The ROI was immediate.",
+                  quote: "InTime&apos;s Academy transformed my career trajectory. From a career changer with no tech background to a Senior Developer at Deloitte in 10 weeks. The ROI was immediate.",
                   author: "Priya Sharma",
                   role: "Sr. Developer, Deloitte",
                   highlight: "$145K first-year salary",
                   type: "Graduate"
                 },
                 {
-                  quote: "We've hired 12 InTime professionals this year. Unlike other agencies, every candidate arrives with a verified portfolio we can inspect. The quality is unmatched.",
+                  quote: "We&apos;ve hired 12 InTime professionals this year. Unlike other agencies, every candidate arrives with a verified portfolio we can inspect. The quality is unmatched.",
                   author: "Michael Chen",
                   role: "VP Engineering, Capgemini",
                   highlight: "48hr avg fill time",
@@ -632,7 +627,7 @@ export const LandingPage: React.FC = () => {
 
                   {/* Quote Text */}
                   <p className="text-charcoal-700 leading-relaxed mb-6 text-[15px]">
-                    "{testimonial.quote}"
+                    {testimonial.quote}
                   </p>
 
                   {/* Highlight Badge */}
@@ -677,7 +672,7 @@ export const LandingPage: React.FC = () => {
                 {' '}Your Future?
               </h2>
               <p className="text-xl text-forest-200 font-light max-w-2xl mx-auto mb-12">
-                Whether you're launching your career, building your team, or scaling globally—we're your partner in excellence.
+                Whether you&apos;re launching your career, building your team, or scaling globally—we&apos;re your partner in excellence.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">

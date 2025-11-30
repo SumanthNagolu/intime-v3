@@ -9,7 +9,7 @@
 import { useMemo } from 'react';
 import { useWorkspaceStore } from '@/stores/workspace-store';
 import { roleConfigs, type WorkspaceRole } from '@/lib/workspace/role-config';
-import { entityRegistry, type EntityType } from '@/lib/workspace/entity-registry';
+import { type EntityType } from '@/lib/workspace/entity-registry';
 
 // ============================================
 // TYPES
@@ -40,8 +40,8 @@ export interface WorkspaceContextResult {
  * Returns role-based permissions and context
  */
 export function useWorkspaceContext(
-  entityType: EntityType | string,
-  entityId?: string
+  _entityType: EntityType | string,
+  _entityId?: string
 ): WorkspaceContextResult {
   const store = useWorkspaceStore();
 

@@ -25,6 +25,40 @@ import {
 // Types
 // ============================================================================
 
+// Database row types
+interface UserProfileRow {
+  id: string;
+  email: string;
+  full_name: string;
+  avatar_url: string | null;
+  department: string | null;
+  position: string | null;
+  hire_date: string | null;
+  status: string;
+  salary: string | null;
+  manager_id: string | null;
+  performance_rating: string | null;
+  org_id: string;
+  created_at: string;
+  employee_metadata?: {
+    employment_type: string | null;
+    employee_id_number: string | null;
+    pod_id: string | null;
+    pod_role: string | null;
+  } | null;
+  manager?: {
+    id: string;
+    full_name: string;
+    email: string;
+  } | null;
+}
+
+interface PodRow {
+  id: string;
+  name: string;
+  pod_type: string;
+}
+
 export interface Employee {
   id: string;
   email: string;
@@ -225,7 +259,7 @@ export async function listEmployeesAction(
   }
 
   // Transform data
-  const transformedEmployees: Employee[] = (employees || []).map((emp: any) => ({
+  const transformedEmployees: Employee[] = (employees || []).map((emp: UserProfileRow) => ({
     id: emp.id,
     email: emp.email,
     fullName: emp.full_name,
@@ -236,7 +270,7 @@ export async function listEmployeesAction(
     status: emp.status,
     salary: emp.salary ? parseFloat(emp.salary) : null,
     managerId: emp.manager_id,
-    performanceRating: emp.performance_rating,
+    performanceRating: emp.performance_rating ? parseFloat(emp.performance_rating) : null,
     orgId: emp.org_id,
     createdAt: emp.created_at,
     employmentType: emp.employee_metadata?.employment_type || null,
@@ -286,7 +320,7 @@ export async function getEmployeeAction(
   }
 
   // Fetch employee with relations
-  const { data: emp, error } = await (supabase as any)
+  const { data: emp, error } = await supabase
     .from('user_profiles')
     .select(
       `
@@ -318,7 +352,7 @@ export async function getEmployeeAction(
     )
     .eq('id', employeeId)
     .eq('org_id', profile.orgId)
-    .single();
+    .single() as { data: UserProfileRow | null; error: unknown };
 
   if (error || !emp) {
     return { success: false, error: 'Employee not found' };
@@ -337,7 +371,7 @@ export async function getEmployeeAction(
       .from('pods')
       .select('id, name, pod_type')
       .eq('id', emp.employee_metadata.pod_id)
-      .single();
+      .single() as { data: PodRow | null; error: unknown };
 
     if (podData) {
       pod = {
@@ -359,7 +393,7 @@ export async function getEmployeeAction(
     status: emp.status,
     salary: emp.salary ? parseFloat(emp.salary) : null,
     managerId: emp.manager_id,
-    performanceRating: emp.performance_rating,
+    performanceRating: emp.performance_rating ? parseFloat(emp.performance_rating) : null,
     orgId: emp.org_id,
     createdAt: emp.created_at,
     employmentType: emp.employee_metadata?.employment_type || null,
@@ -368,9 +402,9 @@ export async function getEmployeeAction(
     podRole: emp.employee_metadata?.pod_role || null,
     manager: emp.manager
       ? {
-          id: (emp.manager as any).id,
-          fullName: (emp.manager as any).full_name,
-          email: (emp.manager as any).email,
+          id: emp.manager.id,
+          fullName: emp.manager.full_name,
+          email: emp.manager.email,
         }
       : null,
     pod,
@@ -465,22 +499,25 @@ export async function createEmployeeAction(
     orgId: profile.orgId,
   });
 
+  // Cast to UserProfileRow for type safety
+  const empRow = newEmployee as unknown as UserProfileRow;
+
   return {
     success: true,
     data: {
-      id: newEmployee.id,
-      email: newEmployee.email,
-      fullName: newEmployee.full_name,
-      avatarUrl: newEmployee.avatar_url,
-      department: (newEmployee as any).department ?? null,
-      position: (newEmployee as any).position ?? null,
-      hireDate: (newEmployee as any).hire_date ?? null,
-      status: (newEmployee as any).status ?? 'active',
-      salary: (newEmployee as any).salary ? parseFloat((newEmployee as any).salary) : null,
-      managerId: (newEmployee as any).manager_id ?? null,
-      performanceRating: (newEmployee as any).performance_rating ?? null,
-      orgId: newEmployee.org_id,
-      createdAt: newEmployee.created_at,
+      id: empRow.id,
+      email: empRow.email,
+      fullName: empRow.full_name,
+      avatarUrl: empRow.avatar_url,
+      department: empRow.department ?? null,
+      position: empRow.position ?? null,
+      hireDate: empRow.hire_date ?? null,
+      status: empRow.status ?? 'active',
+      salary: empRow.salary ? parseFloat(empRow.salary) : null,
+      managerId: empRow.manager_id ?? null,
+      performanceRating: empRow.performance_rating ? parseFloat(empRow.performance_rating) : null,
+      orgId: empRow.org_id,
+      createdAt: empRow.created_at,
       employmentType: employmentType ?? null,
       employeeIdNumber: null,
       podId: null,
@@ -537,7 +574,7 @@ export async function updateEmployeeAction(
   }
 
   // Build update object for user_profiles
-  const profileUpdates: Record<string, any> = {};
+  const profileUpdates: Record<string, string | number | null | undefined> = {};
   if (fullName !== undefined) profileUpdates.full_name = fullName;
   if (department !== undefined) profileUpdates.department = department;
   if (position !== undefined) profileUpdates.position = position;
@@ -560,7 +597,7 @@ export async function updateEmployeeAction(
   }
 
   // Build update object for employee_metadata
-  const metadataUpdates: Record<string, any> = {};
+  const metadataUpdates: Record<string, string | null | undefined> = {};
   if (employmentType !== undefined) metadataUpdates.employment_type = employmentType;
   if (podId !== undefined) metadataUpdates.pod_id = podId;
   if (podRole !== undefined) metadataUpdates.pod_role = podRole;
@@ -663,7 +700,7 @@ export async function getOrgChartAction(): Promise<
   const employeeMap = new Map<string, EmployeeWithMetadata>();
   const departments = new Set<string>();
 
-  (employees || []).forEach((emp: any) => {
+  (employees || []).forEach((emp: UserProfileRow) => {
     if (emp.department) departments.add(emp.department);
 
     employeeMap.set(emp.id, {
@@ -677,7 +714,7 @@ export async function getOrgChartAction(): Promise<
       status: emp.status,
       salary: null,
       managerId: emp.manager_id,
-      performanceRating: emp.performance_rating,
+      performanceRating: emp.performance_rating ? parseFloat(emp.performance_rating) : null,
       orgId: emp.org_id,
       createdAt: emp.created_at,
       employmentType: null,
@@ -720,13 +757,13 @@ export async function getDepartmentsAction(): Promise<ActionResult<string[]>> {
     .from('user_profiles')
     .select('department')
     .eq('org_id', profile.orgId)
-    .not('department', 'is', null);
+    .not('department', 'is', null) as { data: { department: string | null }[] | null; error: unknown };
 
   if (error) {
     return { success: false, error: 'Failed to fetch departments' };
   }
 
-  const departments = [...new Set((data || []).map((d: any) => d.department).filter(Boolean))].sort();
+  const departments = [...new Set((data || []).map((d) => d.department).filter((dept): dept is string => dept !== null))].sort();
 
   return { success: true, data: departments };
 }
@@ -767,7 +804,7 @@ export async function terminateEmployeeAction(
   }
 
   // Update status to terminated
-  const { error: updateError } = await (supabase as any)
+  const { error: updateError } = await supabase
     .from('user_profiles')
     .update({ status: 'terminated' })
     .eq('id', employeeId);
@@ -775,6 +812,9 @@ export async function terminateEmployeeAction(
   if (updateError) {
     return { success: false, error: 'Failed to terminate employee' };
   }
+
+  // Cast employee to UserProfileRow for type safety
+  const empRow = employee as unknown as UserProfileRow;
 
   // Log audit event
   const adminSupabase = createAdminClient();
@@ -784,7 +824,7 @@ export async function terminateEmployeeAction(
     recordId: employeeId,
     userId: profile.id,
     userEmail: profile.email,
-    oldValues: { status: (employee as any).status },
+    oldValues: { status: empRow.status },
     newValues: { status: 'terminated' },
     metadata: { reason },
     severity: 'warning',

@@ -16,8 +16,8 @@ vi.mock('openai', () => ({
   default: vi.fn(() => ({
     chat: {
       completions: {
-        create: vi.fn((params: any) => {
-          const userMessage = params.messages.find((m: any) => m.role === 'user')?.content || '';
+        create: vi.fn((params: { messages: Array<{ role: string; content?: string }> }) => {
+          const userMessage = params.messages.find((m) => m.role === 'user')?.content || '';
 
           // Generate question
           if (userMessage.includes('Generate a')) {

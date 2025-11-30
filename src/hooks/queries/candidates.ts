@@ -10,10 +10,8 @@
 
 import { trpc } from '@/lib/trpc/client';
 import {
-  candidateAdapter,
   type DisplayBenchCandidate,
 } from '@/lib/adapters';
-import type { AlignedCandidate, DisplayCandidate } from '@/types/aligned/ats';
 
 // ============================================
 // QUERY OPTIONS TYPES

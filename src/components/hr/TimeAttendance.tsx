@@ -2,7 +2,7 @@
 
 
 import React, { useState } from 'react';
-import { Calendar, Clock, CheckCircle, AlertCircle, ChevronLeft, ChevronRight, Briefcase, Users, CheckSquare, AlertTriangle, X } from 'lucide-react';
+import { CheckSquare, X } from 'lucide-react';
 import { ApprovalModal } from './ApprovalModal';
 
 const TimesheetDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; employeeName: string }> = ({ isOpen, onClose, employeeName }) => {
@@ -51,10 +51,10 @@ export const TimeAttendance: React.FC = () => {
 
       {/* Tabs */}
       <div className="flex gap-6 border-b border-stone-100 mb-8">
-          {['Review Timesheets', 'Time Off Requests', 'Availability'].map(tab => (
+          {(['Review Timesheets', 'Time Off Requests', 'Availability'] as const).map(tab => (
               <button
                  key={tab}
-                 onClick={() => setActiveTab(tab as any)}
+                 onClick={() => setActiveTab(tab)}
                  className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors ${
                      activeTab === tab ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
                  }`}
@@ -140,7 +140,7 @@ const TimesheetReviewView: React.FC = () => {
 };
 
 const TimeOffRequestView: React.FC = () => {
-    const [approvalRequest, setApprovalRequest] = useState<any>(null);
+    const [approvalRequest, setApprovalRequest] = useState<{ id: string; type: string; employeeName: string; date: string; status: string; details: Record<string, unknown> } | null>(null);
 
     const handleOpenApproval = () => {
         setApprovalRequest({
@@ -179,7 +179,7 @@ const TimeOffRequestView: React.FC = () => {
                                 </div>
                                 <span className="px-2 py-1 bg-yellow-50 text-yellow-700 text-[10px] font-bold uppercase tracking-widest rounded">Conflict Warning</span>
                             </div>
-                            <p className="text-xs text-stone-600 italic mb-4">"Family vacation for holidays."</p>
+                            <p className="text-xs text-stone-600 italic mb-4">&quot;Family vacation for holidays.&quot;</p>
                             <div className="flex gap-3">
                                 <button onClick={handleOpenApproval} className="px-4 py-2 bg-charcoal text-white rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-rust">Review Request</button>
                             </div>

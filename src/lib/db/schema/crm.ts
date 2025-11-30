@@ -3,7 +3,7 @@
  * Tables: accounts, point_of_contacts, activity_log, leads, deals
  */
 
-import { pgTable, uuid, text, timestamp, numeric, integer, boolean, date } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, timestamp, numeric, integer, boolean } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { userProfiles } from './user-profiles';
 import { organizations } from './organizations';
@@ -249,7 +249,7 @@ export const leads = pgTable('leads', {
   // Note: search_vector column removed - not needed for MVP, can be re-added with proper tsvector type later
 });
 
-export const leadsRelations = relations(leads, ({ one, many }) => ({
+export const leadsRelations = relations(leads, ({ one, many: _many }) => ({
   organization: one(organizations, {
     fields: [leads.orgId],
     references: [organizations.id],

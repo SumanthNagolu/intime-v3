@@ -32,6 +32,17 @@ export interface EnrollmentStatus {
   }>;
 }
 
+interface EnrollmentWithCourse {
+  id: string;
+  course_id: string;
+  status: string;
+  enrolled_at: string | null;
+  completion_percentage: number | null;
+  courses: {
+    title: string;
+  } | null;
+}
+
 // ============================================================================
 // Check Student Enrollment Status
 // ============================================================================
@@ -99,12 +110,12 @@ export async function getStudentEnrollmentStatus(): Promise<ActionResult<Enrollm
     success: true,
     data: {
       hasActiveEnrollment,
-      enrollments: (enrollments || []).map((e: any) => ({
+      enrollments: (enrollments || []).map((e: EnrollmentWithCourse) => ({
         id: e.id,
         courseId: e.course_id,
         courseTitle: e.courses?.title || 'Unknown Course',
         status: e.status,
-        enrolledAt: e.enrolled_at,
+        enrolledAt: e.enrolled_at || new Date().toISOString(),
         completionPercentage: e.completion_percentage || 0,
       })),
     },

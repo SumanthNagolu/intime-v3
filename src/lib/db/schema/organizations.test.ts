@@ -5,7 +5,7 @@
  * These tests verify that users can only access data from their own organization.
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import type { Organization, NewOrganization } from './organizations';
 import type { UserProfile } from './user-profiles';
 

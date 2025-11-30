@@ -280,7 +280,7 @@ export interface ApprovalRequest {
   employeeId: string;
   date: string;
   status: 'Pending' | 'Approved' | 'Denied';
-  details: any; // Flexible payload for specific request types: { start, end, days, reason, conflict? } or { amount, client, placement }
+  details: Record<string, unknown>; // Flexible payload for specific request types: { start, end, days, reason, conflict? } or { amount, client, placement }
 }
 
 export interface PayrollRun {

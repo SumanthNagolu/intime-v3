@@ -5,13 +5,12 @@
  * This allows easy customization of which tabs appear for each entity.
  */
 
-import React, { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import {
   MessageSquare,
   Users,
   FolderOpen,
   CheckSquare,
-  FileText,
   Briefcase,
   Calendar,
   LayoutGrid,

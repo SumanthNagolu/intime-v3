@@ -12,7 +12,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import {
   TrendingUp,
-  TrendingDown,
   ArrowRight,
   DollarSign,
   Award,
@@ -23,19 +22,16 @@ import {
   BarChart3,
   Zap,
   Lightbulb,
-  Calendar,
   FileSpreadsheet,
   Megaphone,
   Activity,
   Briefcase,
-  Clock,
 } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { trpc } from '@/lib/trpc/client';
 
@@ -220,7 +216,14 @@ export function CEOConsole() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {(revenueDivision || mockDivisionPerformance).map((div: any) => (
+            {(revenueDivision || mockDivisionPerformance).map((div: {
+              name?: string;
+              label?: string;
+              revenue?: number;
+              value?: number;
+              target?: number;
+              color: string;
+            }) => (
               <div key={div.name || div.label} className="space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -231,7 +234,7 @@ export function CEOConsole() {
                     <span className="font-medium">{div.name || div.label}</span>
                   </div>
                   <div className="text-right">
-                    <span className="font-bold">${((div.revenue || div.value) / 1000).toFixed(0)}k</span>
+                    <span className="font-bold">${((div.revenue || div.value || 0) / 1000).toFixed(0)}k</span>
                     {div.target && (
                       <span className="text-muted-foreground text-sm ml-2">
                         / ${(div.target / 1000).toFixed(0)}k
@@ -240,7 +243,7 @@ export function CEOConsole() {
                   </div>
                 </div>
                 {div.target && (
-                  <Progress value={((div.revenue || div.value) / div.target) * 100} className="h-2" />
+                  <Progress value={((div.revenue || div.value || 0) / div.target) * 100} className="h-2" />
                 )}
               </div>
             ))}

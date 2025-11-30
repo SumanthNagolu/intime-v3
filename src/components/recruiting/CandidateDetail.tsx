@@ -2,11 +2,10 @@
 
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import { useAppStore } from '../../lib/store';
-import { ChevronLeft, MapPin, Briefcase, DollarSign, Mail, Phone, Calendar, Clock, FileText, Star, Send, Plus, CheckCircle } from 'lucide-react';
-import { CommunicationLog } from '../shared/CommunicationLog';
+import { ChevronLeft, MapPin, Briefcase, DollarSign, Mail, Phone, Calendar, FileText, Star, Send, Plus, CheckCircle } from 'lucide-react';
+import { CommunicationLog, LogEntry } from '../shared/CommunicationLog';
 
 export const CandidateDetail: React.FC = () => {
   const { candidateId } = useParams();
@@ -26,7 +25,7 @@ export const CandidateDetail: React.FC = () => {
       }
   };
 
-  const mockLogs = [
+  const mockLogs: LogEntry[] = [
       { id: '1', type: 'note', content: 'Screened by Sarah - Strong cultural fit.', date: '2 days ago', author: 'Sarah Lao' }
   ];
 
@@ -134,7 +133,7 @@ export const CandidateDetail: React.FC = () => {
                   <div className="space-y-6 relative">
                       <div className="absolute left-4 top-2 bottom-2 w-px bg-stone-100"></div>
                       
-                      {candidateSubmissions.map((sub, i) => {
+                      {candidateSubmissions.map((sub) => {
                           const job = jobs.find(j => j.id === sub.jobId);
                           return (
                               <div key={sub.id} className="relative pl-10">
@@ -167,7 +166,7 @@ export const CandidateDetail: React.FC = () => {
                   </div>
               </div>
 
-              <CommunicationLog logs={mockLogs as any} />
+              <CommunicationLog logs={mockLogs} />
           </div>
       </div>
     </div>

@@ -5,7 +5,7 @@
  * Tests: Classification accuracy, routing logic, escalation detection
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { CoordinatorAgent } from '@/lib/ai/agents/guru/CoordinatorAgent';
 
 describe('CoordinatorAgent', () => {

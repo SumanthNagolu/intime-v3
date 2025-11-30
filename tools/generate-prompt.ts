@@ -543,7 +543,7 @@ program
   .option('-o, --output <type>', 'Output type: console (default), file, clipboard', 'console')
   .option('-f, --file <path>', 'Custom output file path')
   .description('Generate implementation prompt for an epic or story')
-  .action((epicId: string, options: { story?: string; output: string; file?: string }) => {
+  .action((epicId: string, options: { story?: string; output: 'console' | 'file' | 'clipboard'; file?: string }) => {
     try {
       // Find epic file
       const epicFiles = getAllEpicFiles();
@@ -588,7 +588,7 @@ program
             process.exit(1);
           }
           console.log('✅ Prompt copied to clipboard!');
-        } catch (error) {
+        } catch {
           console.error('❌ Failed to copy to clipboard. Install pbcopy (macOS) or xclip (Linux).');
           console.log('\nPrompt output:\n');
           console.log(prompt);

@@ -8,7 +8,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { Calendar, MessageSquare, Plus } from 'lucide-react';
+import { Calendar, MessageSquare } from 'lucide-react';
 import { trpc } from '@/lib/trpc/client';
 import {
   useCreateActivity,
@@ -63,7 +63,7 @@ export function UnifiedSubmissionWorkspace({ submissionId }: UnifiedSubmissionWo
   // Modal states
   const [showTransitionModal, setShowTransitionModal] = useState(false);
   const [currentTransition, setCurrentTransition] = useState<WorkflowTransition | null>(null);
-  const [showScheduleInterviewModal, setShowScheduleInterviewModal] = useState(false);
+  const [_showScheduleInterviewModal, setShowScheduleInterviewModal] = useState(false);
 
   // Fetch submission details
   const { data: submission, isLoading, error, refetch } = trpc.ats.submissions.getById.useQuery(
@@ -72,25 +72,25 @@ export function UnifiedSubmissionWorkspace({ submissionId }: UnifiedSubmissionWo
   );
 
   // Fetch interviews
-  const { data: interviews = [], refetch: refetchInterviews } = trpc.ats.interviews.list.useQuery(
+  const { data: interviews = [] } = trpc.ats.interviews.list.useQuery(
     { submissionId },
     { enabled: !!submissionId }
   );
 
   // Fetch activities
-  const { data: activities, isLoading: activitiesLoading, refetch: refetchActivities } = trpc.activities.list.useQuery(
+  const { refetch: refetchActivities } = trpc.activities.list.useQuery(
     { entityType: 'submission', entityId: submissionId, includeCompleted: true, limit: 50, offset: 0 },
     { enabled: !!submissionId }
   );
 
   // Fetch tasks
-  const { data: tasks, isLoading: tasksLoading, refetch: refetchTasks } = trpc.activities.list.useQuery(
+  const { data: tasks, refetch: refetchTasks } = trpc.activities.list.useQuery(
     { entityType: 'submission', entityId: submissionId, activityTypes: ['task', 'follow_up'], includeCompleted: true, limit: 100, offset: 0 },
     { enabled: !!submissionId }
   );
 
   // Fetch documents
-  const { data: documents, isLoading: documentsLoading, refetch: refetchDocuments } = trpc.files.list.useQuery(
+  const { data: documents, refetch: refetchDocuments } = trpc.files.list.useQuery(
     { entityType: 'submission', entityId: submissionId },
     { enabled: !!submissionId }
   );
@@ -189,7 +189,7 @@ export function UnifiedSubmissionWorkspace({ submissionId }: UnifiedSubmissionWo
   }, [interviews]);
 
   // Transform documents
-  const documentsList = useMemo(() => {
+  const _documentsList = useMemo(() => {
     return (documents || []).map((doc) => ({
       id: doc.id,
       fileName: doc.fileName,
@@ -326,7 +326,7 @@ export function UnifiedSubmissionWorkspace({ submissionId }: UnifiedSubmissionWo
   };
 
   // Handle document upload
-  const handleUploadDocument = async (files: File[], metadata: { category: string; description: string; tags: string[] }) => {
+  const _handleUploadDocument = async (files: File[], metadata: { category: string; description: string; tags: string[] }) => {
     for (const file of files) {
       const { uploadUrl, filePath, bucket } = await getUploadUrl.mutateAsync({
         fileName: file.name,
@@ -356,13 +356,13 @@ export function UnifiedSubmissionWorkspace({ submissionId }: UnifiedSubmissionWo
   };
 
   // Handle document delete
-  const handleDeleteDocument = async (documentId: string) => {
+  const _handleDeleteDocument = async (documentId: string) => {
     await deleteFile.mutateAsync({ fileId: documentId });
     refetchDocuments();
   };
 
   // Handle task operations
-  const handleCreateTask = async (task: { title: string; priority: string; dueDate?: Date }) => {
+  const _handleCreateTask = async (task: { title: string; priority: string; dueDate?: Date }) => {
     await createActivity.mutateAsync({
       entityType: 'submission',
       entityId: submissionId,
@@ -376,7 +376,7 @@ export function UnifiedSubmissionWorkspace({ submissionId }: UnifiedSubmissionWo
     refetchActivities();
   };
 
-  const handleCompleteTask = async (taskId: string) => {
+  const _handleCompleteTask = async (taskId: string) => {
     await completeActivity.mutateAsync({ id: taskId });
     refetchTasks();
     refetchActivities();

@@ -2,8 +2,50 @@
 
 import React, { useState } from 'react';
 import { useAppStore } from '../../lib/store';
-import { UserPlus, Search, Filter, ChevronRight, CheckCircle, Clock, Calendar, MoreHorizontal, Briefcase, MapPin, DollarSign, Users, Zap, Mail, X, Play, FileText, Brain, MessageSquare, Video, Star, Phone, Check } from 'lucide-react';
-import Link from 'next/link';
+import { UserPlus, Search, ChevronRight, CheckCircle, MoreHorizontal, Briefcase, Users, Zap, Mail, X, FileText, Brain, MessageSquare } from 'lucide-react';
+
+interface Requisition {
+  id: string;
+  title: string;
+  pod: string;
+  status: string;
+  posted: string;
+  applicants: number;
+  description: string;
+  type: string;
+  department: string;
+}
+
+interface Candidate {
+  id?: number;
+  name: string;
+  role: string;
+  stage?: string;
+  score?: number;
+  email: string;
+  status?: string;
+  date?: string;
+  comm?: number;
+  skill?: number;
+  growth?: number;
+}
+
+interface Employee {
+  id: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  department: string;
+  status: string;
+  startDate?: string;
+}
+
+interface NewReqData {
+  title: string;
+  department: string;
+  type: string;
+  pod: string;
+}
 
 export const Recruitment: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'Requisitions' | 'Candidates' | 'Screening' | 'Onboarding'>('Requisitions');
@@ -11,9 +53,9 @@ export const Recruitment: React.FC = () => {
   
   // Modal States
   const [showCreateReqModal, setShowCreateReqModal] = useState(false);
-  const [selectedReq, setSelectedReq] = useState<any>(null);
-  const [selectedCandidate, setSelectedCandidate] = useState<any>(null);
-  const [selectedOnboarding, setSelectedOnboarding] = useState<any>(null);
+  const [selectedReq, setSelectedReq] = useState<Requisition | null>(null);
+  const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(null);
+  const [selectedOnboarding, setSelectedOnboarding] = useState<Employee | null>(null);
   const [showScheduleModal, setShowScheduleModal] = useState(false);
 
   // Mock Data Updates (Simulated)
@@ -23,8 +65,8 @@ export const Recruitment: React.FC = () => {
       { id: 'REQ-103', title: 'HR Generalist', pod: 'HR & Ops', status: 'Hold', posted: '1 week ago', applicants: 45, description: 'General HR duties and employee relations.', type: 'Contract', department: 'HR' },
   ]);
 
-  const handleCreateRequisition = (newReq: any) => {
-      setRequisitions([...requisitions, { ...newReq, id: `REQ-${100 + requisitions.length + 1}`, status: 'Open', posted: 'Just now', applicants: 0 }]);
+  const handleCreateRequisition = (newReq: NewReqData) => {
+      setRequisitions([...requisitions, { ...newReq, id: `REQ-${100 + requisitions.length + 1}`, status: 'Open', posted: 'Just now', applicants: 0, description: '' }]);
       setShowCreateReqModal(false);
   };
 
@@ -38,10 +80,10 @@ export const Recruitment: React.FC = () => {
 
        {/* Tabs */}
        <div className="flex gap-6 border-b border-stone-100 mb-8">
-          {['Requisitions', 'Candidates', 'Screening', 'Onboarding'].map(tab => (
+          {(['Requisitions', 'Candidates', 'Screening', 'Onboarding'] as const).map(tab => (
               <button
                  key={tab}
-                 onClick={() => setActiveTab(tab as any)}
+                 onClick={() => setActiveTab(tab)}
                  className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors ${
                      activeTab === tab ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
                  }`}
@@ -117,7 +159,7 @@ export const Recruitment: React.FC = () => {
 
 // --- Views ---
 
-const RequisitionsView: React.FC<{ reqs: any[], onCreate: () => void, onSelect: (req: any) => void }> = ({ reqs, onCreate, onSelect }) => {
+const RequisitionsView: React.FC<{ reqs: Requisition[], onCreate: () => void, onSelect: (req: Requisition) => void }> = ({ reqs, onCreate, onSelect }) => {
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center">
@@ -162,7 +204,7 @@ const RequisitionsView: React.FC<{ reqs: any[], onCreate: () => void, onSelect: 
     )
 }
 
-const CandidatesView: React.FC<{ onSelect: (c: any) => void }> = ({ onSelect }) => {
+const CandidatesView: React.FC<{ onSelect: (c: Candidate) => void }> = ({ onSelect }) => {
     return (
         <div className="bg-white rounded-[2.5rem] shadow-xl border border-stone-200 overflow-hidden">
              <div className="p-8 border-b border-stone-100 flex justify-between items-center">
@@ -211,7 +253,7 @@ const CandidatesView: React.FC<{ onSelect: (c: any) => void }> = ({ onSelect }) 
     )
 }
 
-const ScreeningView: React.FC<{ onSelect: (c: any) => void, onSchedule: (c: any) => void }> = ({ onSelect, onSchedule }) => {
+const ScreeningView: React.FC<{ onSelect: (c: Candidate) => void, onSchedule: (c: Candidate) => void }> = ({ onSelect, onSchedule }) => {
     const candidates = [
         { id: 1, name: "Sarah Jenkins", role: "Senior Recruiter", score: 94, status: "Passed", date: "2h ago", comm: 95, skill: 92, growth: 96, email: 'sarah.j@example.com' },
         { id: 2, name: "Michael Chen", role: "Bench Sales Lead", score: 88, status: "Reviewing", date: "5h ago", comm: 85, skill: 90, growth: 89, email: 'michael.c@example.com' },
@@ -292,7 +334,7 @@ const ScreeningView: React.FC<{ onSelect: (c: any) => void, onSchedule: (c: any)
     )
 }
 
-const OnboardingView: React.FC<{ employees: any[], onSelect: (e: any) => void }> = ({ employees, onSelect }) => {
+const OnboardingView: React.FC<{ employees: Employee[], onSelect: (e: Employee) => void }> = ({ employees, onSelect }) => {
     const onboardingEmployees = employees.filter(e => e.status === 'Onboarding');
     
     return (
@@ -337,7 +379,7 @@ const OnboardingView: React.FC<{ employees: any[], onSelect: (e: any) => void }>
 
 // --- Modals ---
 
-const CreateRequisitionModal: React.FC<{ onClose: () => void, onSubmit: (data: any) => void }> = ({ onClose, onSubmit }) => {
+const CreateRequisitionModal: React.FC<{ onClose: () => void, onSubmit: (data: NewReqData) => void }> = ({ onClose, onSubmit }) => {
     const [form, setForm] = useState({
         title: '',
         department: '',
@@ -449,7 +491,7 @@ const CreateRequisitionModal: React.FC<{ onClose: () => void, onSubmit: (data: a
     )
 }
 
-const RequisitionDetailModal: React.FC<{ req: any, onClose: () => void }> = ({ req, onClose }) => {
+const RequisitionDetailModal: React.FC<{ req: Requisition, onClose: () => void }> = ({ req, onClose }) => {
     return (
         <div className="fixed inset-0 bg-charcoal/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
             <div className="bg-white w-full max-w-2xl rounded-[2rem] p-8 shadow-2xl relative">
@@ -492,7 +534,7 @@ const RequisitionDetailModal: React.FC<{ req: any, onClose: () => void }> = ({ r
     )
 }
 
-const CandidateDetailModal: React.FC<{ candidate: any, onClose: () => void, onSchedule: () => void }> = ({ candidate, onClose, onSchedule }) => {
+const CandidateDetailModal: React.FC<{ candidate: Candidate, onClose: () => void, onSchedule: () => void }> = ({ candidate, onClose, onSchedule }) => {
     return (
         <div className="fixed inset-0 bg-charcoal/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
             <div className="bg-white w-full max-w-4xl rounded-[2rem] p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
@@ -563,8 +605,8 @@ const CandidateDetailModal: React.FC<{ candidate: any, onClose: () => void, onSc
                     <div className="bg-stone-50 p-6 rounded-2xl border border-stone-100">
                          <h3 className="font-bold text-charcoal mb-4">Screening Transcript (AI Summary)</h3>
                          <div className="space-y-4 text-sm text-stone-600">
-                             <p>"Candidate demonstrated strong understanding of the core technical requirements. Articulated past experience clearly."</p>
-                             <p>"Showed high curiosity about company culture and growth opportunities. Communication was clear and concise."</p>
+                             <p>&quot;Candidate demonstrated strong understanding of the core technical requirements. Articulated past experience clearly.&quot;</p>
+                             <p>&quot;Showed high curiosity about company culture and growth opportunities. Communication was clear and concise.&quot;</p>
                              <div className="p-3 bg-white rounded-lg border border-stone-200 mt-4">
                                  <div className="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-1">Key Strength</div>
                                  <div className="font-bold text-charcoal">Strategic Thinking & Articulation</div>
@@ -586,7 +628,7 @@ const CandidateDetailModal: React.FC<{ candidate: any, onClose: () => void, onSc
     )
 }
 
-const ScheduleInterviewModal: React.FC<{ candidate: any, onClose: () => void, onConfirm: () => void }> = ({ candidate, onClose, onConfirm }) => {
+const ScheduleInterviewModal: React.FC<{ candidate: Candidate, onClose: () => void, onConfirm: () => void }> = ({ candidate, onClose, onConfirm }) => {
     return (
         <div className="fixed inset-0 bg-charcoal/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
             <div className="bg-white w-full max-w-lg rounded-[2rem] p-8 shadow-2xl relative">
@@ -644,7 +686,7 @@ const ScheduleInterviewModal: React.FC<{ candidate: any, onClose: () => void, on
     )
 }
 
-const OnboardingDetailModal: React.FC<{ employee: any, onClose: () => void }> = ({ employee, onClose }) => {
+const OnboardingDetailModal: React.FC<{ employee: Employee, onClose: () => void }> = ({ employee, onClose }) => {
     const CheckItem: React.FC<{ text: string; isCompleted: boolean }> = ({ text, isCompleted }) => (
         <div className={`p-3 rounded-lg border flex items-center gap-3 ${isCompleted ? 'bg-green-50 border-green-100' : 'bg-stone-50 border-stone-100'}`}>
             {isCompleted ? <CheckCircle size={16} className="text-green-600" /> : <div className="w-4 h-4 rounded-full border-2 border-stone-300" />}
@@ -718,9 +760,9 @@ const OnboardingDetailModal: React.FC<{ employee: any, onClose: () => void }> = 
                                  <Zap size={14} /> Automation Triggers
                              </div>
                              <div className="space-y-2 text-xs text-blue-700">
-                                 <div className="flex items-center gap-2"><Mail size={12}/> "Benefits enrollment opens tomorrow" (Scheduled: 2 days before start)</div>
-                                 <div className="flex items-center gap-2"><Mail size={12}/> "Welcome & Login Credentials" (Scheduled: Day 1)</div>
-                                 <div className="flex items-center gap-2"><Mail size={12}/> "How's your first week?" (Scheduled: Day 7)</div>
+                                 <div className="flex items-center gap-2"><Mail size={12}/> &quot;Benefits enrollment opens tomorrow&quot; (Scheduled: 2 days before start)</div>
+                                 <div className="flex items-center gap-2"><Mail size={12}/> &quot;Welcome &amp; Login Credentials&quot; (Scheduled: Day 1)</div>
+                                 <div className="flex items-center gap-2"><Mail size={12}/> &quot;How&apos;s your first week?&quot; (Scheduled: Day 7)</div>
                              </div>
                          </div>
                      </div>

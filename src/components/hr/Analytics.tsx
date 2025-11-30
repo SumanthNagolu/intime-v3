@@ -2,7 +2,7 @@
 
 
 import React, { useState } from 'react';
-import { BarChart3, TrendingUp, DollarSign, Users, Activity, PieChart, Clock, ArrowUpRight, Download, Calendar, X, ChevronRight, AlertTriangle, CheckCircle, Search } from 'lucide-react';
+import { TrendingUp, Users, Clock, ArrowUpRight, Download, X, AlertTriangle, CheckCircle, Search } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 
 // --- REUSABLE DETAIL MODAL ---
@@ -11,11 +11,11 @@ interface DetailModalProps {
     onClose: () => void;
     title: string;
     columns: string[];
-    data: any[];
-    type?: 'list' | 'financial'; 
+    data: Record<string, unknown>[];
+    type?: 'list' | 'financial';
 }
 
-const AnalyticsDetailModal: React.FC<DetailModalProps> = ({ isOpen, onClose, title, columns, data, type = 'list' }) => {
+const AnalyticsDetailModal: React.FC<DetailModalProps> = ({ isOpen, onClose, title, columns, data, type: _type = 'list' }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     if (!isOpen) return null;
@@ -63,9 +63,9 @@ const AnalyticsDetailModal: React.FC<DetailModalProps> = ({ isOpen, onClose, tit
                         <tbody className="divide-y divide-stone-100">
                             {filteredData.length > 0 ? filteredData.map((row, i) => (
                                 <tr key={i} className="hover:bg-stone-50 transition-colors">
-                                    {Object.values(row).map((val: any, j) => (
+                                    {Object.values(row).map((val: unknown, j) => (
                                         <td key={j} className="p-4 text-sm text-charcoal font-medium">
-                                            {val}
+                                            {String(val)}
                                         </td>
                                     ))}
                                 </tr>
@@ -86,7 +86,7 @@ const AnalyticsDetailModal: React.FC<DetailModalProps> = ({ isOpen, onClose, tit
 
 export const Analytics: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'Headcount' | 'Turnover' | 'Compensation' | 'Performance' | 'Time'>('Headcount');
-  const [modalConfig, setModalConfig] = useState<{isOpen: boolean, title: string, columns: string[], data: any[]} | null>(null);
+  const [modalConfig, setModalConfig] = useState<{isOpen: boolean, title: string, columns: string[], data: Record<string, unknown>[]} | null>(null);
   const [isExporting, setIsExporting] = useState(false);
 
   const handleExport = () => {
@@ -97,7 +97,7 @@ export const Analytics: React.FC = () => {
       }, 1500);
   };
 
-  const openDrillDown = (title: string, columns: string[], data: any[]) => {
+  const openDrillDown = (title: string, columns: string[], data: Record<string, unknown>[]) => {
       setModalConfig({ isOpen: true, title, columns, data });
   };
 
@@ -132,7 +132,7 @@ export const Analytics: React.FC = () => {
           {['Headcount', 'Turnover', 'Compensation', 'Performance', 'Time'].map(tab => (
               <button
                  key={tab}
-                 onClick={() => setActiveTab(tab as any)}
+                 onClick={() => setActiveTab(tab as 'Headcount' | 'Turnover' | 'Compensation' | 'Performance' | 'Time')}
                  className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors whitespace-nowrap ${
                      activeTab === tab ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
                  }`}
@@ -153,7 +153,7 @@ export const Analytics: React.FC = () => {
 
 // --- SUB-VIEWS ---
 
-const HeadcountView: React.FC<{ onDrillDown: (t: string, c: string[], d: any[]) => void }> = ({ onDrillDown }) => {
+const HeadcountView: React.FC<{ onDrillDown: (t: string, c: string[], d: Record<string, unknown>[]) => void }> = ({ onDrillDown }) => {
     const { employees } = useAppStore();
 
     // Mock Data for Drilldowns
@@ -260,7 +260,7 @@ const HeadcountView: React.FC<{ onDrillDown: (t: string, c: string[], d: any[]) 
     );
 };
 
-const TurnoverView: React.FC<{ onDrillDown: (t: string, c: string[], d: any[]) => void }> = ({ onDrillDown }) => {
+const TurnoverView: React.FC<{ onDrillDown: (t: string, c: string[], d: Record<string, unknown>[]) => void }> = ({ onDrillDown }) => {
     const exitData = [
         { Name: 'John Doe', Role: 'Junior Dev', Dept: 'Engineering', Date: 'Oct 15, 2025', Reason: 'Better Offer', Type: 'Voluntary' },
         { Name: 'Jane Smith', Role: 'Recruiter', Dept: 'Recruiting', Date: 'Sep 01, 2025', Reason: 'Performance', Type: 'Involuntary' },
@@ -320,7 +320,7 @@ const TurnoverView: React.FC<{ onDrillDown: (t: string, c: string[], d: any[]) =
     );
 };
 
-const CompensationView: React.FC<{ onDrillDown: (t: string, c: string[], d: any[]) => void }> = ({ onDrillDown }) => {
+const CompensationView: React.FC<{ onDrillDown: (t: string, c: string[], d: Record<string, unknown>[]) => void }> = ({ onDrillDown }) => {
     const payrollHistory = [
         { Month: 'Oct', Amount: '$220,000', Employees: 47 },
         { Month: 'Sep', Amount: '$218,000', Employees: 45 },
@@ -385,7 +385,7 @@ const CompensationView: React.FC<{ onDrillDown: (t: string, c: string[], d: any[
     );
 };
 
-const PerformanceView: React.FC<{ onDrillDown: (t: string, c: string[], d: any[]) => void }> = ({ onDrillDown }) => {
+const PerformanceView: React.FC<{ onDrillDown: (t: string, c: string[], d: Record<string, unknown>[]) => void }> = ({ onDrillDown }) => {
     const reviews = [
         { Name: 'David Kim', Role: 'Manager', Status: 'Completed', Rating: '4.5' },
         { Name: 'Sarah Lao', Role: 'Recruiter', Status: 'Pending', Rating: '-' },
@@ -433,7 +433,7 @@ const PerformanceView: React.FC<{ onDrillDown: (t: string, c: string[], d: any[]
     );
 };
 
-const TimeAttendanceView: React.FC<{ onDrillDown: (t: string, c: string[], d: any[]) => void }> = ({ onDrillDown }) => {
+const TimeAttendanceView: React.FC<{ onDrillDown: (t: string, c: string[], d: Record<string, unknown>[]) => void }> = ({ onDrillDown }) => {
     const [reminderSent, setReminderSent] = useState(false);
 
     const highPTO = [

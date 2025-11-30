@@ -23,18 +23,10 @@ import { DealNegotiation } from './DealNegotiation';
 import {
   ChevronLeft,
   Building2,
-  Mail,
-  Phone,
-  Calendar,
-  CheckCircle,
-  ArrowRight,
-  User,
-  DollarSign,
   Loader2,
   AlertCircle,
   X,
   Target,
-  TrendingUp,
   Clock,
   MessageSquare,
   FileText,
@@ -47,19 +39,16 @@ import {
   XCircle,
   Percent,
   FolderOpen,
-  ChevronDown,
-  ChevronUp,
   Briefcase,
   Globe,
   ExternalLink,
   Pencil,
   Upload,
-  File,
   Trash2,
   GraduationCap,
   Users,
-  Sparkles,
   ArrowRightCircle,
+  Calendar,
 } from 'lucide-react';
 
 type DealStage = 'discovery' | 'qualification' | 'proposal' | 'negotiation' | 'closed_won' | 'closed_lost';
@@ -198,7 +187,6 @@ export const DealWorkspace: React.FC = () => {
   const recordUploadMutation = trpc.files.recordUpload.useMutation();
   const deleteFileMutation = trpc.files.delete.useMutation();
   const getDownloadUrlMutation = trpc.files.getDownloadUrl.useMutation();
-  const utils = trpc.useUtils();
 
   // Handle deal value save
   const handleSaveValue = () => {

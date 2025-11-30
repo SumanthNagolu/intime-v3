@@ -2,12 +2,9 @@
 
 
 import React, { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { Play, ChevronRight, CheckCircle, Users, Star, ShieldCheck, X, AlertCircle } from 'lucide-react';
 
 export const PublicAcademy: React.FC = () => {
-  const router = useRouter();
   const [showDemo, setShowDemo] = useState(false);
   const [showApply, setShowApply] = useState(false);
   const [applicationStep, setApplicationStep] = useState<'form' | 'success'>('form');
@@ -40,7 +37,7 @@ export const PublicAcademy: React.FC = () => {
             </h1>
             
             <p className="max-w-2xl mx-auto text-xl text-stone-500 mb-12 leading-relaxed font-light">
-                We don't sell courses. We manufacture Senior Developers. 
+                We don&apos;t sell courses. We manufacture Senior Developers.
                 Join the only program that gives you a 7-year experience profile on Day 1.
             </p>
 
@@ -80,7 +77,7 @@ export const PublicAcademy: React.FC = () => {
       <div className="py-24 container mx-auto px-4">
          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
              {[
-                 { icon: ShieldCheck, title: "Senior Identity", desc: "You don't start as a student. You start as 'Priya Sharma, Sr. Developer'. We give you the resume first, then fill in the skills." },
+                 { icon: ShieldCheck, title: "Senior Identity", desc: "You don&apos;t start as a student. You start as &apos;Priya Sharma, Sr. Developer&apos;. We give you the resume first, then fill in the skills." },
                  { icon: Users, title: "Peer Pressure", desc: "No self-paced isolation. You join a Sprint Team. If you miss a deadline, your team sees it. Accountability is the only way." },
                  { icon: Star, title: "The Blueprint", desc: "Walk away with a 60-page technical specification document authored by you. Proof of experience that beats any certificate." }
              ].map((item, i) => (

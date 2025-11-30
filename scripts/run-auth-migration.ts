@@ -8,8 +8,6 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
-import * as fs from 'fs';
-import * as path from 'path';
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
@@ -47,7 +45,7 @@ async function runMigration() {
     }
 
     // Add new constraint with expanded actions
-    const { error: constraintError } = await supabase.rpc('exec_sql', {
+    const { error: _constraintError } = await supabase.rpc('exec_sql', {
       sql: `
         ALTER TABLE permissions
         ADD CONSTRAINT valid_action CHECK (

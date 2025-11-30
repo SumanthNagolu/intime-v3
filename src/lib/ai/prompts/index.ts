@@ -10,6 +10,7 @@
  */
 
 import { join } from 'path';
+import * as fs from 'fs';
 
 export * from './library';
 
@@ -21,7 +22,6 @@ export * from './library';
  * @returns Template content as string
  */
 export function loadPromptTemplate(templateName: string): string {
-  const fs = require('fs');
   const templatesDir = join(process.cwd(), 'src/lib/ai/prompts/templates');
   const filePath = join(templatesDir, `${templateName}.txt`);
 

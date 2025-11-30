@@ -21,19 +21,13 @@ import {
   Briefcase,
   Target,
   Clock,
-  CheckCircle,
   AlertTriangle,
   Activity,
   UserCheck,
   PieChart,
-  UserPlus,
   Building2,
   Send,
-  FileText,
-  Phone,
-  Mail,
   Megaphone,
-  Zap,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -43,7 +37,6 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
-import { trpc } from '@/lib/trpc/client';
 
 // =====================================================
 // TYPES

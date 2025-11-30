@@ -2,13 +2,13 @@
 
 
 import React, { useState } from 'react';
-import { Shield, Lock, Check, Plus, ChevronRight, Users, ChevronDown, Eye, Edit2, Trash2, X, Search, User } from 'lucide-react';
+import { Shield, Lock, Check, Plus, Users, ChevronDown, Edit2, Trash2, X, Search } from 'lucide-react';
 
 export const Permissions: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'Roles' | 'User Overrides'>('Roles');
   const [isCreateRoleOpen, setIsCreateRoleOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
-  const [viewRoleDetail, setViewRoleDetail] = useState<any | null>(null);
+  const [viewRoleDetail, setViewRoleDetail] = useState<{ name: string; desc: string; users: number; color: string } | null>(null);
 
   // Use a mock list of roles to coordinate between components if needed
   const roles = [
@@ -31,7 +31,7 @@ export const Permissions: React.FC = () => {
           {['Roles', 'User Overrides'].map(tab => (
               <button
                  key={tab}
-                 onClick={() => setActiveTab(tab as any)}
+                 onClick={() => setActiveTab(tab as 'Roles' | 'User Overrides')}
                  className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors ${
                      activeTab === tab ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
                  }`}
@@ -42,11 +42,11 @@ export const Permissions: React.FC = () => {
       </div>
 
       {activeTab === 'Roles' ? (
-          <RolesView 
+          <RolesView
             roles={roles}
-            onCreate={() => setIsCreateRoleOpen(true)} 
+            onCreate={() => setIsCreateRoleOpen(true)}
             onEdit={(role) => { setSelectedRole(role); setIsCreateRoleOpen(true); }}
-            onView={(role) => setViewRoleDetail(role)}
+            onView={(role: { name: string; desc: string; users: number; color: string }) => setViewRoleDetail(role)}
           />
       ) : (
           <UserOverridesView />
@@ -71,7 +71,12 @@ export const Permissions: React.FC = () => {
   );
 };
 
-const RolesView: React.FC<{ roles: any[], onCreate: () => void, onEdit: (role: string) => void, onView: (role: any) => void }> = ({ roles, onCreate, onEdit, onView }) => {
+const RolesView: React.FC<{
+  roles: { name: string; desc: string; users: number; color: string }[];
+  onCreate: () => void;
+  onEdit: (role: string) => void;
+  onView: (role: { name: string; desc: string; users: number; color: string }) => void;
+}> = ({ roles, onCreate, onEdit, onView }) => {
     return (
         <div>
             <div className="flex justify-end mb-8">
@@ -226,10 +231,14 @@ const AddOverrideModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     )
 }
 
-const RoleDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; role: any }> = ({ isOpen, onClose, role }) => {
+const RoleDetailModal: React.FC<{
+  isOpen: boolean;
+  onClose: () => void;
+  role: { name: string; desc: string; users: number; color: string } | null;
+}> = ({ _isOpen, onClose, role }) => {
     const [tab, setTab] = useState<'Users' | 'Permissions'>('Users');
 
-    if (!isOpen || !role) return null;
+    if (!_isOpen || !role) return null;
 
     // Mock Users
     const assignedUsers = [
@@ -275,7 +284,7 @@ const RoleDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; role: an
                     ) : (
                         <div className="bg-stone-50 p-6 rounded-xl border border-stone-200 text-center text-stone-500">
                             <Lock size={32} className="mx-auto mb-4 text-stone-300" />
-                            <p>Read-only view of permissions. To edit, use the "Edit Permissions" action.</p>
+                            <p>Read-only view of permissions. To edit, use the &quot;Edit Permissions&quot; action.</p>
                         </div>
                     )}
                 </div>
@@ -284,7 +293,7 @@ const RoleDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; role: an
     )
 }
 
-const RoleModal: React.FC<{ isOpen: boolean; onClose: () => void; editRole: string | null }> = ({ isOpen, onClose, editRole }) => {
+const RoleModal: React.FC<{ isOpen: boolean; onClose: () => void; editRole: string | null }> = ({ isOpen: _isOpen, onClose, editRole }) => {
     const [expandedModule, setExpandedModule] = useState<string | null>('Academy');
 
     const permissionTree = [

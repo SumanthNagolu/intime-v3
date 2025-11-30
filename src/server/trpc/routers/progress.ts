@@ -13,8 +13,6 @@ import { z } from 'zod';
 import { router, protectedProcedure } from '../trpc';
 import { createClient } from '@/lib/supabase/server';
 import {
-  TopicCompletion,
-  XPTransaction,
   StudentProgressSummary,
   LeaderboardEntry,
   XPBreakdown,
@@ -181,11 +179,12 @@ export const progressRouter = router({
         }
       }
 
+      const course = enrollment.course as { total_topics?: number } | null | undefined;
       const summary: StudentProgressSummary = {
         enrollment_id: enrollment.id,
         user_id: enrollment.user_id,
         course_id: enrollment.course_id,
-        total_topics: (enrollment.course as any)?.total_topics || 0,
+        total_topics: course?.total_topics || 0,
         completed_topics: completedTopics || 0,
         completion_percentage: enrollment.completion_percentage ?? 0,
         total_xp_earned: totalXP,
@@ -325,15 +324,15 @@ export const progressRouter = router({
         .select('*', { count: 'exact', head: true });
 
       const entries: LeaderboardEntry[] =
-        leaderboard?.map((entry: any) => ({
-          rank: entry.leaderboard_rank,
-          user_id: entry.user_id,
+        leaderboard?.map((entry) => ({
+          rank: entry.leaderboard_rank ?? 0,
+          user_id: entry.user_id ?? '',
           full_name: entry.profile?.full_name || 'Unknown',
           email: entry.profile?.email || '',
-          avatar_url: entry.profile?.avatar_url || null,
-          total_xp: entry.total_xp,
-          transaction_count: entry.transaction_count,
-          last_xp_earned_at: entry.last_xp_earned_at,
+          avatar_url: entry.profile?.avatar_url ?? null,
+          total_xp: entry.total_xp ?? 0,
+          transaction_count: entry.transaction_count ?? 0,
+          last_xp_earned_at: entry.last_xp_earned_at ?? new Date().toISOString(),
         })) || [];
 
       return {
@@ -510,8 +509,6 @@ export const progressRouter = router({
         throw new Error('Enrollment not found');
       }
 
-      const course = enrollment.course as any;
-
       // Check if already graduated
       if (enrollment.status === 'completed') {
         return {
@@ -582,7 +579,11 @@ export const progressRouter = router({
         throw new Error('Enrollment not found');
       }
 
-      const course = enrollment.course as any;
+      const course = enrollment.course as { id: string; title: string } | null | undefined;
+
+      if (!course) {
+        throw new Error('Course information not found');
+      }
 
       // Check if already graduated
       if (enrollment.status === 'completed') {

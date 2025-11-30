@@ -51,10 +51,10 @@ describe('Server Auth Functions', () => {
     it('should return user when authenticated', async () => {
       // Note: This test requires mocking Supabase response
       try {
-        const user = await getUser();
+        const _user = await getUser();
         // In real test with mocks, would verify user object
         expect(true).toBe(true);
-      } catch (error) {
+      } catch {
         // Expected in test environment without real Supabase
       }
     });
@@ -62,42 +62,42 @@ describe('Server Auth Functions', () => {
     it('should return null when not authenticated', async () => {
       // Note: This test requires mocking Supabase response
       try {
-        const user = await getUser();
+        const _user = await getUser();
         expect(true).toBe(true);
-      } catch (error) {
+      } catch {
         // Expected in test environment
       }
     });
   });
 
   describe('getUserProfile', () => {
-    
+
     it('should return user profile for authenticated user', async () => {
       try {
-        const profile = await getUserProfile();
+        const _profile = await getUserProfile();
         expect(true).toBe(true);
-      } catch (error) {
+      } catch {
         // Expected in test environment
       }
     });
 
     it('should return null when user not found', async () => {
       try {
-        const profile = await getUserProfile();
+        const _profile = await getUserProfile();
         expect(true).toBe(true);
-      } catch (error) {
+      } catch {
         // Expected in test environment
       }
     });
   });
 
   describe('getUserRoles', () => {
-    
+
     it('should return array of user roles', async () => {
       try {
         const roles = await getUserRoles();
         expect(Array.isArray(roles) || roles === null).toBe(true);
-      } catch (error) {
+      } catch {
         // Expected in test environment
       }
     });
@@ -106,14 +106,14 @@ describe('Server Auth Functions', () => {
       try {
         const roles = await getUserRoles();
         expect(Array.isArray(roles) || roles === null).toBe(true);
-      } catch (error) {
+      } catch {
         // Expected in test environment
       }
     });
   });
 
   describe('requireAuth', () => {
-    
+
     it('should redirect to login when not authenticated', async () => {
       try {
         await requireAuth();
@@ -126,16 +126,16 @@ describe('Server Auth Functions', () => {
 
     it('should return user when authenticated', async () => {
       try {
-        const user = await requireAuth();
+        const _user = await requireAuth();
         expect(true).toBe(true);
-      } catch (error) {
+      } catch {
         // Expected in test environment
       }
     });
   });
 
   describe('requireRole', () => {
-    
+
     it('should redirect when user does not have required role', async () => {
       try {
         await requireRole(['admin']);
@@ -148,18 +148,18 @@ describe('Server Auth Functions', () => {
 
     it('should return user when user has required role', async () => {
       try {
-        const user = await requireRole(['student']);
+        const _user = await requireRole(['student']);
         expect(true).toBe(true);
-      } catch (error) {
+      } catch {
         // Expected in test environment
       }
     });
 
     it('should accept multiple role options', async () => {
       try {
-        const user = await requireRole(['admin', 'recruiter', 'trainer']);
+        const _user = await requireRole(['admin', 'recruiter', 'trainer']);
         expect(true).toBe(true);
-      } catch (error) {
+      } catch {
         // Expected in test environment
       }
     });

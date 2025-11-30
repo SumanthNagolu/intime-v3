@@ -16,6 +16,12 @@ import { ResumeBuilderAgent } from './ResumeBuilderAgent';
 import { ProjectPlannerAgent } from './ProjectPlannerAgent';
 import { InterviewCoachAgent } from './InterviewCoachAgent';
 import { getSupabaseClient } from "./supabase-client";
+import type {
+  CodeMentorOutput,
+  ResumeBuilderOutput,
+  ProjectPlannerOutput,
+  InterviewCoachOutput,
+} from '@/types/guru';
 import OpenAI from 'openai';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -100,7 +106,7 @@ export class CoordinatorAgent extends BaseAgent<CoordinatorInput, CoordinatorOut
       const classification = await this.classifyQuery(input.question);
 
       // Step 2: Route to appropriate specialist agent
-      let result: any;
+      let result: CodeMentorOutput | ResumeBuilderOutput | ProjectPlannerOutput | InterviewCoachOutput;
       let agentUsed: CoordinatorOutput['agentUsed'];
 
       switch (classification.category) {
@@ -163,7 +169,7 @@ export class CoordinatorAgent extends BaseAgent<CoordinatorInput, CoordinatorOut
 
       // Step 4: Build response
       const output: CoordinatorOutput = {
-        answer: result.response || result.content || 'Response generated',
+        answer: ('response' in result ? result.response : 'content' in result ? String(result.content) : 'Response generated'),
         agentUsed,
         conversationId,
         escalated: shouldEscalate,
@@ -305,7 +311,7 @@ Respond ONLY with valid JSON:
    */
   private async escalateToTrainer(
     input: CoordinatorInput,
-    result: any,
+    result: CodeMentorOutput | ResumeBuilderOutput | ProjectPlannerOutput | InterviewCoachOutput,
     classification: Classification
   ): Promise<void> {
     if (!process.env.SLACK_WEBHOOK_URL) {
@@ -347,7 +353,7 @@ Respond ONLY with valid JSON:
               type: 'section',
               text: {
                 type: 'mrkdwn',
-                text: `*AI Response:*\n>${result.response?.substring(0, 200) || 'No response'}...`,
+                text: `*AI Response:*\n>${('response' in result ? result.response?.substring(0, 200) : 'No response') || 'No response'}...`,
               },
             },
             {
@@ -387,18 +393,18 @@ Respond ONLY with valid JSON:
   }): Promise<void> {
     try {
       console.log('[CoordinatorAgent] Logging interaction for:', data.studentId);
-      const { error } = await getSupabaseClient().from('guru_interactions').insert({
-        org_id: this.config.orgId || 'default',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error } = await (getSupabaseClient().from('guru_interactions') as any).insert({
         student_id: data.studentId,
         agent_type: data.output.agentUsed,
         conversation_id: data.output.conversationId,
-        input: data.input as any,
+        input: data.input,
         output: {
           ...data.output,
           classification: data.classification,
           routed_to: data.output.agentUsed,
           escalated: data.output.escalated,
-        } as any,
+        },
         model_used: 'gpt-4o-mini',
         tokens_used: 100, // Estimated
         cost_usd: 0.00002, // Estimated

@@ -354,8 +354,7 @@ export async function generateCertificatePDF(certificateId: string): Promise<str
   try {
     // Get certificate data - query without relations first
     // Note: student_certificates table may not exist in types yet
-    const { data: certificate, error: certError } = await supabase
-      .from('student_certificates' as any)
+    const { data: certificate, error: certError } = await (supabase.from as (table: string) => ReturnType<typeof supabase.from>)('student_certificates')
       .select('*')
       .eq('id', certificateId)
       .single();
@@ -458,8 +457,7 @@ export async function generateCertificatePDF(certificateId: string): Promise<str
     const pdfUrl = urlData.publicUrl;
 
     // Update certificate record
-    await supabase
-      .from('student_certificates' as any)
+    await (supabase.from as (table: string) => ReturnType<typeof supabase.from>)('student_certificates')
       .update({
         pdf_url: pdfUrl,
         status: 'issued',
@@ -473,8 +471,7 @@ export async function generateCertificatePDF(certificateId: string): Promise<str
     console.error(`[Certificate] Failed to generate PDF for ${certificateId}:`, error);
 
     // Update certificate status to failed
-    await supabase
-      .from('student_certificates' as any)
+    await (supabase.from as (table: string) => ReturnType<typeof supabase.from>)('student_certificates')
       .update({
         status: 'failed',
       })
@@ -492,8 +489,7 @@ export async function verifyCertificate(certificateNumber: string) {
 
   // Get certificate data
   // Note: student_certificates table may not exist in types yet
-  const { data: certificate, error } = await supabase
-    .from('student_certificates' as any)
+  const { data: certificate, error } = await (supabase.from as (table: string) => ReturnType<typeof supabase.from>)('student_certificates')
     .select('*')
     .eq('certificate_number', certificateNumber)
     .eq('status', 'issued')

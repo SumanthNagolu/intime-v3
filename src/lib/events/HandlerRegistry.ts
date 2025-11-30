@@ -5,15 +5,15 @@
  * Handlers are registered at app startup and stored in memory for fast lookup.
  */
 
-import type { Event, EventPayload, EventHandler } from './types';
+import type { EventHandler, EventPayload } from './types';
 import type { Pool } from 'pg';
 
 /**
  * Handler information stored in registry
  */
-export interface HandlerInfo {
+export interface HandlerInfo<T extends EventPayload = EventPayload> {
   name: string;
-  handler: EventHandler<any>;
+  handler: EventHandler<T>;
   subscriptionId: string | null; // Set after DB registration
   eventType: string;
   registeredAt: Date;
@@ -34,7 +34,7 @@ export class HandlerRegistry {
     handlerName: string,
     handler: EventHandler<T>
   ): void {
-    const handlerInfo: HandlerInfo = {
+    const handlerInfo: HandlerInfo<T> = {
       name: handlerName,
       handler,
       subscriptionId: null,
@@ -43,7 +43,7 @@ export class HandlerRegistry {
     };
 
     const existing = this.handlers.get(eventType) || [];
-    existing.push(handlerInfo);
+    existing.push(handlerInfo as HandlerInfo);
     this.handlers.set(eventType, existing);
 
     console.log(`[HandlerRegistry] Registered handler: ${handlerName} for event type: ${eventType}`);

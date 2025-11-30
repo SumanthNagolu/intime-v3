@@ -63,8 +63,8 @@ async function runMigrations() {
     .filter(f => f.endsWith('.sql') && !f.includes('rollback'))
     .sort();
 
-  const results: any[] = [];
-  
+  const results: Array<{ filename: string; success: boolean; error?: string }> = [];
+
   for (const filename of files) {
     console.log(`   Processing: ${filename}`);
     
@@ -84,9 +84,10 @@ async function runMigrations() {
         console.log(`   ✅ ${filename}`);
         results.push({ filename, success: true });
       }
-    } catch (e: any) {
-      console.log(`   ❌ ${filename}: ${e.message.substring(0, 100)}`);
-      results.push({ filename, success: false, error: e.message });
+    } catch (e: unknown) {
+      const errorMessage = e instanceof Error ? e.message : String(e);
+      console.log(`   ❌ ${filename}: ${errorMessage.substring(0, 100)}`);
+      results.push({ filename, success: false, error: errorMessage });
     }
   }
   
@@ -121,9 +122,10 @@ async function seedRoles() {
       } else {
         console.log(`   ✅ ${role.name}`);
       }
-    } catch (e: any) {
-      if (!e.message.includes('duplicate')) {
-        console.log(`   ⚠️  ${role.name}: ${e.message}`);
+    } catch (e) {
+      const errorMsg = e instanceof Error ? e.message : String(e);
+      if (!errorMsg.includes('duplicate')) {
+        console.log(`   ⚠️  ${role.name}: ${errorMsg}`);
       } else {
         console.log(`   ✅ ${role.name} (already exists)`);
       }
@@ -192,9 +194,9 @@ async function main() {
     } else {
       console.log('\n⚠️  Some migrations failed. Check errors above.\n');
     }
-    
-  } catch (error: any) {
-    console.error('\n❌ Fatal error:', error.message);
+
+  } catch (error) {
+    console.error('\n❌ Fatal error:', error instanceof Error ? error.message : String(error));
     process.exit(1);
   }
 }

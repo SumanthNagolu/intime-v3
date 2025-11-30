@@ -6,7 +6,6 @@
  */
 
 import type { ScreenDefinition, TableColumnDefinition } from '@/lib/metadata';
-import { fieldValue } from '@/lib/metadata';
 
 // ==========================================
 // TABLE COLUMNS
@@ -111,74 +110,6 @@ const leadTableColumns: TableColumnDefinition[] = [
     type: 'date',
     sortable: true,
     config: { format: 'short' },
-  },
-];
-
-// ==========================================
-// FILTER FIELDS
-// ==========================================
-
-const filterFields = [
-  {
-    id: 'status',
-    label: 'Status',
-    type: 'multiselect' as const,
-    config: {
-      options: [
-        { value: 'new', label: 'New' },
-        { value: 'contacted', label: 'Contacted' },
-        { value: 'qualified', label: 'Qualified' },
-        { value: 'proposal', label: 'Proposal' },
-        { value: 'negotiation', label: 'Negotiation' },
-        { value: 'converted', label: 'Converted' },
-        { value: 'lost', label: 'Lost' },
-      ],
-    },
-  },
-  {
-    id: 'tier',
-    label: 'Tier',
-    type: 'multiselect' as const,
-    config: {
-      options: [
-        { value: 'enterprise', label: 'Enterprise' },
-        { value: 'mid_market', label: 'Mid-Market' },
-        { value: 'smb', label: 'SMB' },
-        { value: 'strategic', label: 'Strategic' },
-      ],
-    },
-  },
-  {
-    id: 'source',
-    label: 'Source',
-    type: 'multiselect' as const,
-    config: {
-      options: [
-        { value: 'website', label: 'Website' },
-        { value: 'referral', label: 'Referral' },
-        { value: 'linkedin', label: 'LinkedIn' },
-        { value: 'cold_outreach', label: 'Cold Outreach' },
-        { value: 'event', label: 'Event' },
-        { value: 'inbound', label: 'Inbound' },
-      ],
-    },
-  },
-  {
-    id: 'ownerId',
-    label: 'Owner',
-    type: 'select' as const,
-    config: {
-      entityType: 'user',
-      displayField: 'fullName',
-    },
-  },
-  {
-    id: 'dateRange',
-    label: 'Created Date',
-    type: 'date' as const,
-    config: {
-      range: true,
-    },
   },
 ];
 

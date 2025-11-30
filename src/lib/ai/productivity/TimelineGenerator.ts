@@ -119,7 +119,7 @@ export class TimelineGenerator
       const total = summary.totalScreenshots;
       const topActivities: ActivityBreakdown[] = Object.entries(summary.byCategory)
         .map(([category, count]) => ({
-          category: category as any,
+          category: category as ActivityBreakdown['category'],
           count,
           percentage: Math.round((count / total) * 100),
           hours: Math.round(((count * 30) / 3600) * 100) / 100, // 30s per screenshot
@@ -289,7 +289,7 @@ Your tone is positive, constructive, and focused on growth. You celebrate wins a
           insights: Array.isArray(parsed.insights) ? parsed.insights : [],
           recommendations: Array.isArray(parsed.recommendations) ? parsed.recommendations : [],
         };
-      } catch (parseError) {
+      } catch {
         console.error('[TimelineGenerator] Failed to parse AI response:', content);
 
         // Fallback narrative
@@ -406,7 +406,7 @@ Your tone is positive, constructive, and focused on growth. You celebrate wins a
   private createError(
     message: string,
     code: keyof typeof ProductivityErrorCodes,
-    details?: any
+    details?: Record<string, unknown>
   ): ProductivityError {
     const error = new Error(message) as ProductivityError;
     error.name = 'ProductivityError';

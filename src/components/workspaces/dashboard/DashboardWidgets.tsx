@@ -16,10 +16,6 @@ import {
   ArrowRight,
   Calendar,
   User,
-  Briefcase,
-  Target,
-  Building2,
-  DollarSign,
   Send,
   Clock,
   CheckCircle2,
@@ -370,8 +366,8 @@ export function ChartWidget({
       <CardContent>
         {type === 'bar' ? (
           <div className="space-y-3">
-            {data.map((item, index) => (
-              <div key={index}>
+            {data.map((item) => (
+              <div key={item.label}>
                 <div className="flex justify-between text-xs mb-1">
                   <span className="text-muted-foreground">{item.label}</span>
                   <span className="font-medium">{item.value}</span>
@@ -495,7 +491,7 @@ export function PipelineWidget({
       <CardContent>
         {/* Pipeline bar */}
         <div className="h-3 flex rounded-full overflow-hidden mb-4">
-          {stages.map((stage, index) => {
+          {stages.map((stage) => {
             const width = totalCount > 0 ? (stage.count / totalCount) * 100 : 0;
             return (
               <div
@@ -626,7 +622,7 @@ export function ActivityWidget({
 
               {/* Activity items */}
               <div className="space-y-4">
-                {activities.map((activity, index) => {
+                {activities.map((activity) => {
                   const Icon = ACTIVITY_ICONS[activity.type];
                   return (
                     <div key={activity.id} className="relative pl-10">

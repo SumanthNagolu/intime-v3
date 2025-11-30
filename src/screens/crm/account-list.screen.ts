@@ -6,7 +6,6 @@
  */
 
 import type { ScreenDefinition, TableColumnDefinition } from '@/lib/metadata';
-import { fieldValue } from '@/lib/metadata';
 
 // ==========================================
 // TABLE COLUMNS
@@ -131,86 +130,6 @@ const accountTableColumns: TableColumnDefinition[] = [
     type: 'date',
     sortable: true,
     config: { format: 'short' },
-  },
-];
-
-// ==========================================
-// FILTER FIELDS
-// ==========================================
-
-const filterFields = [
-  {
-    id: 'status',
-    label: 'Status',
-    type: 'multiselect' as const,
-    config: {
-      options: [
-        { value: 'prospect', label: 'Prospect' },
-        { value: 'active', label: 'Active' },
-        { value: 'inactive', label: 'Inactive' },
-        { value: 'churned', label: 'Churned' },
-      ],
-    },
-  },
-  {
-    id: 'tier',
-    label: 'Tier',
-    type: 'multiselect' as const,
-    config: {
-      options: [
-        { value: 'enterprise', label: 'Enterprise' },
-        { value: 'mid_market', label: 'Mid-Market' },
-        { value: 'smb', label: 'SMB' },
-        { value: 'strategic', label: 'Strategic' },
-      ],
-    },
-  },
-  {
-    id: 'industry',
-    label: 'Industry',
-    type: 'multiselect' as const,
-    config: {
-      options: [
-        { value: 'technology', label: 'Technology' },
-        { value: 'healthcare', label: 'Healthcare' },
-        { value: 'finance', label: 'Finance' },
-        { value: 'manufacturing', label: 'Manufacturing' },
-        { value: 'consulting', label: 'Consulting' },
-        { value: 'other', label: 'Other' },
-      ],
-    },
-  },
-  {
-    id: 'companyType',
-    label: 'Company Type',
-    type: 'multiselect' as const,
-    config: {
-      options: [
-        { value: 'direct_client', label: 'Direct Client' },
-        { value: 'implementation_partner', label: 'Implementation Partner' },
-        { value: 'msp_vms', label: 'MSP/VMS' },
-        { value: 'system_integrator', label: 'System Integrator' },
-        { value: 'staffing_agency', label: 'Staffing Agency' },
-        { value: 'vendor', label: 'Vendor' },
-      ],
-    },
-  },
-  {
-    id: 'accountManagerId',
-    label: 'Account Manager',
-    type: 'select' as const,
-    config: {
-      entityType: 'user',
-      displayField: 'fullName',
-    },
-  },
-  {
-    id: 'dateRange',
-    label: 'Created Date',
-    type: 'date' as const,
-    config: {
-      range: true,
-    },
   },
 ];
 

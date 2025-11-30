@@ -6,7 +6,6 @@
  */
 
 import type {
-  Badge,
   BadgeAwardResult,
   BadgeProgress,
   BadgeTriggerType,

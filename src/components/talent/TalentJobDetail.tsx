@@ -2,12 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
 import { ChevronLeft, MapPin, DollarSign, Clock, Briefcase, CheckCircle } from 'lucide-react';
 
 export const TalentJobDetail: React.FC = () => {
-  const { id } = useParams();
-  const router = useRouter();
   const [applied, setApplied] = useState(false);
 
   const handleApply = () => {

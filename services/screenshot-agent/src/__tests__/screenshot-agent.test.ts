@@ -14,7 +14,12 @@ vi.mock('sharp');
 vi.mock('node-machine-id');
 
 describe('Screenshot Agent', () => {
-  let mockSupabase: any;
+  let mockSupabase: {
+    storage: {
+      from: ReturnType<typeof vi.fn>;
+    };
+    from: ReturnType<typeof vi.fn>;
+  };
 
   beforeEach(() => {
     // Mock Supabase client
@@ -32,7 +37,7 @@ describe('Screenshot Agent', () => {
       }),
     };
 
-    (createClient as any).mockReturnValue(mockSupabase);
+    (createClient as unknown as ReturnType<typeof vi.fn>).mockReturnValue(mockSupabase);
   });
 
   afterEach(() => {
@@ -55,6 +60,7 @@ describe('Screenshot Agent', () => {
 
       // Should fail without env vars
       expect(() => {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         require('../index');
       }).toThrow();
 
@@ -70,11 +76,11 @@ describe('Screenshot Agent', () => {
 
       // Mock screenshot-desktop
       const screenshot = await import('screenshot-desktop');
-      (screenshot.default as any).mockResolvedValue(mockScreenshot);
+      (screenshot.default as unknown as ReturnType<typeof vi.fn>).mockResolvedValue(mockScreenshot);
 
       // Mock sharp
       const sharp = await import('sharp');
-      (sharp.default as any).mockReturnValue({
+      (sharp.default as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
         resize: vi.fn().mockReturnThis(),
         jpeg: vi.fn().mockReturnThis(),
         toBuffer: vi.fn().mockResolvedValue(mockCompressed),
@@ -134,7 +140,7 @@ describe('Screenshot Agent', () => {
   describe('Error Handling', () => {
     it('should handle screenshot capture errors gracefully', async () => {
       const screenshot = await import('screenshot-desktop');
-      (screenshot.default as any).mockRejectedValue(new Error('Capture failed'));
+      (screenshot.default as unknown as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('Capture failed'));
 
       // TODO: Test error handling
     });

@@ -7,22 +7,18 @@ import {
   MapPin,
   Clock,
   DollarSign,
-  Building2,
   Heart,
   Users,
   Zap,
-  Award,
   Coffee,
   Globe,
   Laptop,
   GraduationCap,
   TrendingUp,
-  CheckCircle2,
   Briefcase,
   Rocket,
   Shield,
   Trophy,
-  Lightbulb,
   ChevronRight,
   Sparkles
 } from 'lucide-react';
@@ -104,7 +100,7 @@ const VALUES = [
   { 
     icon: Trophy, 
     title: 'Excellence', 
-    description: "We don't settle for \"good enough.\" Every interaction matters.",
+    description: "We don&apos;t settle for &apos;good enough.&apos; Every interaction matters.",
     accent: 'emerald'
   },
   { 
@@ -192,7 +188,7 @@ export const JoinOurTeamPage: React.FC = () => {
               <div className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-sm">
                 <Rocket size={16} className="text-emerald-400" />
                 <span className="text-emerald-400 text-xs font-bold uppercase tracking-widest">
-                  We're Hiring
+                  We&apos;re Hiring
                 </span>
               </div>
               <div className="h-6 w-px bg-white/20" />
@@ -336,10 +332,10 @@ export const JoinOurTeamPage: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div>
                 <h3 className="text-lg font-heading font-bold text-charcoal-900 mb-2">
-                  Don't see your role?
+                  Don&apos;t see your role?
                 </h3>
                 <p className="text-charcoal-500">
-                  We're always looking for talented people. Send us your resume.
+                  We&apos;re always looking for talented people. Send us your resume.
                 </p>
               </div>
               <Link
@@ -495,9 +491,9 @@ export const JoinOurTeamPage: React.FC = () => {
               <Sparkles size={28} className="text-emerald-200 mb-6" />
               
               <blockquote className="text-2xl md:text-3xl font-heading font-bold text-charcoal-900 leading-tight mb-8">
-                "I came here because the interview felt like a real conversation, not a checklist. 
-                Two years in, that authenticity hasn't changed. We disagree, we debate, we build—and 
-                we actually ship."
+                &quot;I came here because the interview felt like a real conversation, not a checklist.
+                Two years in, that authenticity hasn&apos;t changed. We disagree, we debate, we build—and
+                we actually ship.&quot;
               </blockquote>
 
               <div className="flex items-center gap-4">

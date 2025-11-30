@@ -6,7 +6,7 @@
  */
 
 import { trpc } from '@/lib/trpc/client';
-import { submissionAdapter, PIPELINE_STAGES } from '@/lib/adapters';
+import { PIPELINE_STAGES } from '@/lib/adapters';
 import { useInvalidateSubmissions } from '../queries/submissions';
 import type { SubmissionStatus } from '@/types/aligned/ats';
 import type { CreateSubmissionInput, UpdateSubmissionInput } from '@/lib/validations/ats';
@@ -105,7 +105,7 @@ export function useUpdateSubmission(options: UpdateSubmissionOptions = {}) {
 
       return { previousSubmission };
     },
-    onError: (error, newData, context) => {
+    onError: (error, _newData, _context) => {
       // Rollback not needed since we're not setting optimistically
       // if (options.optimistic && context?.previousSubmission) {
       //   utils.ats.submissions.getById.setData(
@@ -319,7 +319,7 @@ export function useScheduleInterview(options: { onSuccess?: () => void; onError?
   const invalidate = useInvalidateSubmissions();
 
   const mutation = trpc.ats.interviews.create.useMutation({
-    onSuccess: (data, variables) => {
+    onSuccess: (_data, _variables) => {
       invalidate.invalidateAll();
       options.onSuccess?.();
     },

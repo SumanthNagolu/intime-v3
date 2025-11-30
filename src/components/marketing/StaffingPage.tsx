@@ -8,7 +8,6 @@ import {
   Clock,
   Target,
   ArrowRight,
-  ArrowDown,
   CheckCircle2,
   Award,
   ShieldCheck,
@@ -179,6 +178,7 @@ export const StaffingPage: React.FC = () => {
       stats.hours.start();
       stats.clients.start();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statsSection.inView]);
 
   // Scroll-based page flip effect
@@ -632,7 +632,7 @@ export const StaffingPage: React.FC = () => {
                 </span>?
               </h2>
               <p className="text-xl text-forest-200 font-light max-w-2xl mx-auto mb-12">
-                Tell us what you need. We'll have qualified candidates in your inbox within 48 hours.
+                Tell us what you need. We&apos;ll have qualified candidates in your inbox within 48 hours.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">

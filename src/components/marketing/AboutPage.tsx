@@ -3,9 +3,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import {
-  Target,
-  Eye,
-  Heart,
   Users,
   ArrowRight,
   Award,
@@ -17,10 +14,7 @@ import {
   MapPin,
   Linkedin,
   Quote,
-  Sparkles,
-  CheckCircle2,
-  TrendingUp,
-  ChevronRight
+  TrendingUp
 } from 'lucide-react';
 import { MarketingNavbar, Footer } from '@/components/templates';
 
@@ -214,8 +208,8 @@ export const AboutPage: React.FC = () => {
 
             {/* Subheadline */}
             <p className="text-lg md:text-xl text-charcoal-300/90 font-light max-w-2xl mb-12 leading-relaxed">
-              We're on a mission to bridge the gap between exceptional talent and transformative 
-              opportunities. Technology careers shouldn't be limited by circumstance—only ability.
+              We&apos;re on a mission to bridge the gap between exceptional talent and transformative
+              opportunities. Technology careers shouldn&apos;t be limited by circumstance—only ability.
             </p>
 
             {/* CTA Section */}
@@ -313,7 +307,7 @@ export const AboutPage: React.FC = () => {
 
                   <p className="text-lg text-charcoal-500 leading-relaxed mb-8">
                     We believe that with the right training, mentorship, and opportunities, anyone can
-                    build a rewarding career in technology. That's why we've invested heavily in our
+                    build a rewarding career in technology. That&apos;s why we&apos;ve invested heavily in our
                     Academy program and our talent development initiatives.
                   </p>
 
@@ -403,7 +397,7 @@ export const AboutPage: React.FC = () => {
               </h2>
 
               <p className="text-xl text-charcoal-300 leading-relaxed mb-12">
-                We envision a world where geographic boundaries don't limit career opportunities,
+                We envision a world where geographic boundaries don&apos;t limit career opportunities,
                 where talent is recognized for its potential, and where continuous learning is the
                 pathway to success. By 2030, we aim to have transformed 10,000 careers and become
                 the most trusted name in technology staffing and training.
@@ -447,7 +441,7 @@ export const AboutPage: React.FC = () => {
                   What We <span className="text-forest-600">Stand For</span>
                 </h2>
                 <p className="text-lg text-charcoal-500 leading-relaxed">
-                  These aren't just words on a wall. They're the principles that guide every decision, every hire, every partnership.
+                  These aren&apos;t just words on a wall. They&apos;re the principles that guide every decision, every hire, every partnership.
                 </p>
               </div>
 
@@ -520,9 +514,9 @@ export const AboutPage: React.FC = () => {
                   <Quote size={40} className="text-gold-500/30 mb-6" />
 
                   <blockquote className="text-2xl md:text-3xl text-white font-light leading-relaxed mb-10">
-                    "When I started InTime, I had a simple belief: that everyone deserves access to
+                    &quot;When I started InTime, I had a simple belief: that everyone deserves access to
                     quality training and meaningful career opportunities. Too many talented individuals
-                    are held back by circumstances, not ability. We're here to change that equation."
+                    are held back by circumstances, not ability. We&apos;re here to change that equation.&quot;
                   </blockquote>
 
                   <div className="flex items-center gap-6">
@@ -559,7 +553,7 @@ export const AboutPage: React.FC = () => {
                   Meet the <span className="text-gold-500">Team</span>
                 </h2>
                 <p className="text-lg text-charcoal-500 max-w-2xl mx-auto">
-                  The people driving InTime's mission forward.
+                  The people driving InTime&apos;s mission forward.
                 </p>
               </div>
 
@@ -731,7 +725,7 @@ export const AboutPage: React.FC = () => {
                 ?
               </h2>
               <p className="text-xl text-forest-200/80 font-light max-w-2xl mx-auto mb-12">
-                Whether you're looking to transform your career or partner with us, we'd love to hear from you.
+                Whether you&apos;re looking to transform your career or partner with us, we&apos;d love to hear from you.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">

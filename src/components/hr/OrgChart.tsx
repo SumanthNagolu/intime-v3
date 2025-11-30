@@ -1,20 +1,16 @@
 'use client';
 
 import React from 'react';
-import { useAppStore } from '../../lib/store';
-import { Network, Users, User, ChevronDown, Briefcase } from 'lucide-react';
+import { Network, Users, Briefcase } from 'lucide-react';
 
 export const OrgChart: React.FC = () => {
-  const { employees } = useAppStore();
-
-  const getPodMembers = (podName: string) => employees.filter(e => e.pod === podName);
 
   return (
     <div className="animate-fade-in pt-4">
       <div className="mb-10 border-b border-stone-200 pb-6">
         <div className="text-rust font-bold text-xs uppercase tracking-[0.2em] mb-2">PeopleOS</div>
         <h1 className="text-4xl font-serif font-bold text-charcoal">Organizational Structure</h1>
-        <p className="text-stone-500 mt-2">Visualizing the InTime "Two-Person Pod" Scalable Architecture</p>
+        <p className="text-stone-500 mt-2">Visualizing the InTime &quot;Two-Person Pod&quot; Scalable Architecture</p>
       </div>
 
       <div className="overflow-x-auto pb-12">
@@ -37,7 +33,7 @@ export const OrgChart: React.FC = () => {
                   {/* Connector Line */}
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px bg-stone-300 -mt-px"></div>
                   
-                  {['Recruiting', 'Bench Sales', 'Engineering', 'HR & Ops'].map((dept, i) => (
+                  {['Recruiting', 'Bench Sales', 'Engineering', 'HR & Ops'].map((dept, _i) => (
                       <div key={dept} className="flex flex-col items-center relative">
                           <div className="h-8 w-px bg-stone-300 absolute -top-8 left-1/2"></div>
                           <div className="bg-white p-4 rounded-xl border border-stone-200 shadow-sm w-48 text-center z-10">

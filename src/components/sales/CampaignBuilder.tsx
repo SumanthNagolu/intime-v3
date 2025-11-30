@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { UserPlus, Linkedin, Mail, Sparkles, Target, Send, ChevronLeft, CheckCircle, Users, ArrowRight, Wand2, LayoutTemplate } from 'lucide-react';
+import { UserPlus, Linkedin, Mail, Sparkles, Target, Send, ChevronLeft, CheckCircle, ArrowRight } from 'lucide-react';
 
 export const CampaignBuilder: React.FC = () => {
   const router = useRouter();
@@ -18,8 +18,8 @@ export const CampaignBuilder: React.FC = () => {
       setIsGenerating(true);
       setTimeout(() => {
           setGeneratedContent(
-              targetType === 'Candidate' 
-              ? "Hi {{FirstName}}, came across your profile and noticed your deep expertise in Guidewire PolicyCenter. We are building a specialized practice and looking for leaders. Would you be open to a chat?" 
+              targetType === 'Candidate'
+              ? "Hi {{FirstName}}, came across your profile and noticed your deep expertise in Guidewire PolicyCenter. We are building a specialized practice and looking for leaders. Would you be open to a chat?"
               : "Hi {{FirstName}}, I noticed {{Company}} is undergoing digital transformation. We have a bench of Senior PC 10 Certified devs ready to deploy in 48 hours. Worth a discussion?"
           );
           setIsGenerating(false);
@@ -152,7 +152,7 @@ export const CampaignBuilder: React.FC = () => {
                           
                           <h3 className="font-bold text-charcoal text-sm mt-8 mb-4">AI Tips</h3>
                           <p className="text-xs text-stone-500 leading-relaxed">
-                              Keep subject lines under 50 characters. Mentioning the candidate's specific tech stack increases reply rates by 22%.
+                              Keep subject lines under 50 characters. Mentioning the candidate&apos;s specific tech stack increases reply rates by 22%.
                           </p>
                       </div>
                   </div>

@@ -97,7 +97,7 @@ describe('Authentication Server Actions', () => {
       // and fail at Supabase auth level in test environment
       try {
         await signUpAction(invalidData);
-      } catch (error) {
+      } catch {
         // Expected in test environment without real Supabase
       }
     });
@@ -115,7 +115,7 @@ describe('Authentication Server Actions', () => {
       // but validates the input parsing logic
       try {
         await signUpAction(validData);
-      } catch (error) {
+      } catch {
         // Expected in test environment
       }
     });
@@ -155,7 +155,7 @@ describe('Authentication Server Actions', () => {
       // Note: Will fail without real Supabase connection
       try {
         await signInAction(validData);
-      } catch (error) {
+      } catch {
         // Expected in test environment
       }
     });
@@ -167,7 +167,7 @@ describe('Authentication Server Actions', () => {
       // Note: In real environment, this would be mocked properly
       try {
         await signOutAction();
-      } catch (error) {
+      } catch {
         // Expected in test environment
       }
     });
@@ -260,7 +260,7 @@ describe('Authentication Security Tests', () => {
       // XSS protection happens at rendering level (React escapes by default)
       try {
         await signUpAction(maliciousData);
-      } catch (error) {
+      } catch {
         // Expected in test environment without real Supabase
       }
     });
@@ -288,7 +288,7 @@ describe('Authentication Security Tests', () => {
 
       try {
         await signUpAction(data);
-      } catch (error) {
+      } catch {
         // Expected in test environment without real Supabase
       }
 

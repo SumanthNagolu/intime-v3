@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useAppStore } from '../../lib/store';
-import { TrendingUp, Users, AlertTriangle, CheckCircle, DollarSign, Activity, Zap, ChevronDown, Target, BarChart3, Globe, Brain, ArrowRight, LayoutDashboard, PieChart, Lightbulb, Download, TrendingDown, Award, Sparkles } from 'lucide-react';
+import { TrendingUp, Users, AlertTriangle, CheckCircle, Activity, Zap, Target, BarChart3, Globe, Brain, ArrowRight, LayoutDashboard, Lightbulb, Download, TrendingDown, Award, Sparkles } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/card';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
@@ -50,6 +49,7 @@ export const CEODashboard: React.FC = () => {
     }, stepDuration);
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -87,7 +87,7 @@ export const CEODashboard: React.FC = () => {
         ].map(tab => (
           <button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id as any)}
+            onClick={() => setActiveTab(tab.id as 'Console' | 'Strategy' | 'Intel')}
             className={cn(
               "flex items-center gap-2 px-6 py-4 text-caption font-bold transition-all duration-300 border-b-2",
               activeTab === tab.id
@@ -109,8 +109,20 @@ export const CEODashboard: React.FC = () => {
 };
 
 const ConsoleView: React.FC<{
-  metrics: any;
-  animatedMetrics: any;
+  metrics: {
+    revenue: number;
+    target: number;
+    placements: number;
+    placementsTarget: number;
+    benchUtil: number;
+    revPerEmp: number;
+  };
+  animatedMetrics: {
+    revenue: number;
+    placements: number;
+    benchUtil: number;
+    revPerEmp: number;
+  };
 }> = ({ metrics, animatedMetrics }) => {
   return (
     <div className="space-y-8">
@@ -276,7 +288,7 @@ const ConsoleView: React.FC<{
                   <div className="flex-1">
                     <div className="text-body-sm font-bold text-white mb-2">Risk Alert</div>
                     <p className="text-body-sm text-white/80 leading-relaxed">
-                      Recruiting Pod B has 0 placements this sprint. Recommendation: Reassign Senior's top client to Pod A temporarily.
+                      Recruiting Pod B has 0 placements this sprint. Recommendation: Reassign Senior&apos;s top client to Pod A temporarily.
                     </p>
                   </div>
                 </div>

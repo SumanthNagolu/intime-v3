@@ -3,14 +3,12 @@ import { persist } from 'zustand/middleware';
 import { useMemo } from 'react';
 import {
   BiometricState,
-  BiometricScore,
   calculateBiometricScore,
   getBiometricState,
   getBiometricTheme
 } from '@/lib/academy/biometric';
 import {
   getRankFromXP,
-  Achievement,
   ACHIEVEMENTS,
   XP_ACTIONS
 } from '@/lib/academy/gamification';
@@ -159,7 +157,7 @@ export const useAcademyStore = create<AcademyState & AcademyActions>()(
       // GAMIFICATION ACTIONS
       // ============================================
 
-      addXP: (amount, reason) => {
+      addXP: (amount, _reason) => {
         set((state) => ({ xp: state.xp + amount }));
         get().recalculateBiometric();
       },

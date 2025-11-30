@@ -25,7 +25,7 @@ interface MigrationResult {
 /**
  * Execute SQL using Supabase client (uses HTTP, no DNS issues!)
  */
-async function executeSqlChunk(sql: string) {
+async function _executeSqlChunk(sql: string) {
   const supabase = createClient(supabaseUrl, serviceRoleKey, {
     auth: {
       autoRefreshToken: false,
@@ -44,7 +44,7 @@ async function executeSqlChunk(sql: string) {
   for (const statement of statements) {
     try {
       // Use the service role to execute raw SQL via a temporary function
-      const { data, error } = await supabase.rpc('exec_sql', { sql: statement });
+      const { error } = await supabase.rpc('exec_sql', { sql: statement });
 
       if (error) {
         // If exec_sql doesn't exist, we'll create it dynamically
@@ -53,12 +53,12 @@ async function executeSqlChunk(sql: string) {
       }
 
       results.push({ success: true, statement: statement.substring(0, 50) });
-    } catch (error: any) {
+    } catch (error) {
       // Store error but continue
       results.push({
         success: false,
         statement: statement.substring(0, 50),
-        error: error.message
+        error: error instanceof Error ? error.message : String(error)
       });
     }
   }
@@ -142,13 +142,14 @@ export async function POST(request: Request) {
         });
 
         console.log(`✅ ${filename} completed`);
-      } catch (error: any) {
-        console.error(`❌ ${filename} failed:`, error.message);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        console.error(`❌ ${filename} failed:`, errorMessage);
 
         results.push({
           filename,
           success: false,
-          error: error.message,
+          error: errorMessage,
           timestamp: new Date().toISOString()
         });
       }
@@ -157,22 +158,8 @@ export async function POST(request: Request) {
     // Seed roles
     console.log('🌱 Seeding roles...');
 
-    const seedSql = `
-      INSERT INTO roles (name, display_name, description, is_system_role, hierarchy_level, color_code)
-      VALUES
-        ('super_admin', 'Super Administrator', 'Full system access with all permissions', TRUE, 0, '#dc2626'),
-        ('admin', 'Administrator', 'Administrative access to manage users and settings', TRUE, 1, '#ea580c'),
-        ('recruiter', 'Recruiter', 'Manages candidates, placements, and client relationships', TRUE, 2, '#0891b2'),
-        ('trainer', 'Trainer', 'Manages training courses and student progress', TRUE, 2, '#7c3aed'),
-        ('student', 'Student', 'Enrolled in training academy courses', TRUE, 3, '#2563eb'),
-        ('candidate', 'Candidate', 'Job seeker available for placement', TRUE, 3, '#16a34a'),
-        ('employee', 'Employee', 'Internal team member', TRUE, 3, '#4f46e5'),
-        ('client', 'Client', 'Hiring company representative', TRUE, 3, '#9333ea')
-      ON CONFLICT (name) DO NOTHING;
-    `;
-
     try {
-      const { data: seedData, error: seedError } = await supabase
+      await supabase
         .from('roles')
         .insert([
           { name: 'super_admin', display_name: 'Super Administrator', description: 'Full system access with all permissions', is_system_role: true, hierarchy_level: 0, color_code: '#dc2626' },
@@ -187,8 +174,9 @@ export async function POST(request: Request) {
         .select();
 
       console.log('✅ Roles seeded');
-    } catch (seedError: any) {
-      console.log('⚠️  Roles already exist or error:', seedError.message);
+    } catch (seedError) {
+      const errorMessage = seedError instanceof Error ? seedError.message : String(seedError);
+      console.log('⚠️  Roles already exist or error:', errorMessage);
     }
 
     const successCount = results.filter(r => r.success).length;
@@ -201,13 +189,13 @@ export async function POST(request: Request) {
       timestamp: new Date().toISOString()
     });
 
-  } catch (error: any) {
+  } catch (error) {
     console.error('💥 Migration error:', error);
 
     return NextResponse.json(
       {
         success: false,
-        error: error.message,
+        error: error instanceof Error ? error.message : String(error),
         timestamp: new Date().toISOString()
       },
       { status: 500 }
@@ -247,11 +235,11 @@ export async function GET() {
           count: count || 0,
           error: error?.message
         });
-      } catch (err: any) {
+      } catch (err) {
         tableStatus.push({
           table,
           exists: false,
-          error: err.message
+          error: err instanceof Error ? err.message : String(err)
         });
       }
     }
@@ -262,11 +250,11 @@ export async function GET() {
       timestamp: new Date().toISOString()
     });
 
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
       {
         status: 'error',
-        error: error.message
+        error: error instanceof Error ? error.message : String(error)
       },
       { status: 500 }
     );

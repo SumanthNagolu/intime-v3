@@ -7,16 +7,15 @@
 
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
-import { createAdminClient } from '@/lib/supabase/admin';
+import { createAdminClient, type UntypedFromFunction } from '@/lib/supabase/admin';
 import { db } from '@/lib/db';
 import {
   immigrationCases,
   benchMetadata,
-  ImmigrationCaseType,
   ImmigrationCaseStatus
 } from '@/lib/db/schema/bench';
 import { userProfiles } from '@/lib/db/schema/user-profiles';
-import { eq, and, or, ilike, desc, asc, sql, gte, lte, isNull, isNotNull } from 'drizzle-orm';
+import { eq, and, or, ilike, desc, asc, sql, lte, isNull, isNotNull } from 'drizzle-orm';
 
 // =====================================================
 // Types
@@ -151,7 +150,7 @@ async function logAuditEvent(
 ) {
   const adminSupabase = createAdminClient();
 
-  await (adminSupabase.from as any)('audit_logs').insert({
+  await (adminSupabase.from as unknown as UntypedFromFunction)('audit_logs').insert({
     user_id: userId,
     user_email: userEmail,
     org_id: orgId,

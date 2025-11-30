@@ -39,7 +39,28 @@ export interface LeadQueryOptions {
 // DISPLAY TYPE ADAPTER
 // ============================================
 
-function toDisplayLead(lead: any): DisplayLead {
+interface LeadData {
+  id: string;
+  leadType?: string;
+  companyName?: string;
+  firstName?: string;
+  lastName?: string;
+  title?: string;
+  email?: string;
+  phone?: string;
+  status?: string;
+  source?: string;
+  estimatedValue?: string | number;
+  accountId?: string;
+  ownerId?: string;
+  createdAt: string;
+  notes?: string;
+  industry?: string;
+  companySize?: string;
+  engagementScore?: number;
+}
+
+function toDisplayLead(lead: LeadData): DisplayLead {
   return {
     id: lead.id,
     leadType: lead.leadType || 'company',

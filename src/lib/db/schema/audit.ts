@@ -37,8 +37,8 @@ export const auditLogs = pgTable('audit_logs', {
   userAgent: text('user_agent'),
 
   // Change details
-  oldValues: jsonb('old_values').$type<Record<string, any>>(),
-  newValues: jsonb('new_values').$type<Record<string, any>>(),
+  oldValues: jsonb('old_values').$type<Record<string, unknown>>(),
+  newValues: jsonb('new_values').$type<Record<string, unknown>>(),
   changedFields: text('changed_fields').array(),
 
   // Context
@@ -48,7 +48,7 @@ export const auditLogs = pgTable('audit_logs', {
   requestMethod: text('request_method'),
 
   // Metadata
-  metadata: jsonb('metadata').$type<Record<string, any>>().default({}),
+  metadata: jsonb('metadata').$type<Record<string, unknown>>().default({}),
 
   // Severity
   severity: text('severity').default('info'), // 'debug', 'info', 'warning', 'error', 'critical'
@@ -129,8 +129,8 @@ export interface AuditLogEntry {
   action: AuditActionType;
   recordId?: string;
   userId?: string;
-  oldValues?: Record<string, any>;
-  newValues?: Record<string, any>;
-  metadata?: Record<string, any>;
+  oldValues?: Record<string, unknown>;
+  newValues?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   severity?: AuditSeverityType;
 }

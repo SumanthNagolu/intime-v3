@@ -17,7 +17,6 @@ import type {
 } from '@/types/guru';
 import { GuruErrorCodes } from '@/types/guru';
 import { loadPromptTemplate } from '../../prompts';
-import { getSupabaseClient } from "./supabase-client";
 import OpenAI from 'openai';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -111,7 +110,7 @@ export class InterviewCoachAgent extends BaseAgent<
    */
   private async generateQuestion(
     input: InterviewCoachInput,
-    model: string
+    _model: string
   ): Promise<InterviewCoachOutput> {
     const sessionId = input.sessionId || `session-${Date.now()}`;
     const promptTemplate = loadPromptTemplate('interview_coach');
@@ -163,7 +162,7 @@ Return JSON format:
    */
   private async evaluateAnswer(
     input: InterviewCoachInput,
-    model: string
+    _model: string
   ): Promise<InterviewCoachOutput> {
     const promptTemplate = loadPromptTemplate('interview_coach');
 
@@ -231,7 +230,7 @@ Return JSON format:
   private createGuruError(
     message: string,
     code: keyof typeof GuruErrorCodes,
-    details?: any
+    details?: Record<string, unknown>
   ): GuruError {
     const error = new Error(message) as GuruError;
     error.name = 'GuruError';

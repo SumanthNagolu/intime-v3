@@ -10,7 +10,6 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
 import {
   Search,
   ChevronRight,
@@ -28,17 +27,12 @@ import {
   MapPin,
   Calendar,
   Clock,
-  Flame,
-  Snowflake,
-  Sparkles,
   Crown,
-  X,
   CheckCircle,
   AlertCircle,
   ClipboardList,
   Megaphone,
   Plus,
-  Filter,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -50,6 +44,39 @@ import { useLeads, useLeadStats } from '@/hooks/queries/leads';
 import { useAccounts, useAccountStats } from '@/hooks/queries/accounts';
 import { useDeals, useDealStats } from '@/hooks/queries/deals';
 import { trpc } from '@/lib/trpc/client';
+
+// Types for tRPC data
+interface JobData {
+  id: string;
+  title: string | null;
+  location: string | null;
+  status: string | null;
+  jobType: string | null;
+  billRate?: string | number | null;
+  openPositions?: number | null;
+}
+
+interface CandidateData {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string | null;
+  phone: string | null;
+  title: string | null;
+  location: string | null;
+  status: string | null;
+  visaStatus?: string | null;
+}
+
+interface SubmissionData {
+  id: string;
+  candidateName: string | null;
+  jobTitle: string | null;
+  status: string | null;
+  createdAt: string;
+  billRate?: string | number | null;
+  stage?: string | null;
+}
 
 // ============================================
 // TYPES
@@ -303,7 +330,7 @@ function StatsCard({ label, value, icon, color = 'text-stone-400', isLoading }: 
 
 function LeadsList({ searchTerm, filterStatus, ownership }: { searchTerm: string; filterStatus: string; ownership: OwnershipFilter }) {
   const { leads, isLoading, isError, error } = useLeads({
-    status: filterStatus === 'all' ? undefined : (filterStatus as any),
+    status: filterStatus === 'all' ? undefined : filterStatus,
     limit: 100,
     ownership,
   });
@@ -433,7 +460,7 @@ function LeadsList({ searchTerm, filterStatus, ownership }: { searchTerm: string
 
 function AccountsList({ searchTerm, filterStatus, ownership }: { searchTerm: string; filterStatus: string; ownership: OwnershipFilter }) {
   const { accounts, isLoading, isError, error } = useAccounts({
-    status: filterStatus === 'all' ? undefined : (filterStatus as any),
+    status: filterStatus === 'all' ? undefined : filterStatus,
     limit: 100,
     ownership,
   });
@@ -553,7 +580,7 @@ function AccountsList({ searchTerm, filterStatus, ownership }: { searchTerm: str
 
 function DealsList({ searchTerm, filterStatus, ownership }: { searchTerm: string; filterStatus: string; ownership: OwnershipFilter }) {
   const { deals, isLoading, isError, error } = useDeals({
-    stage: filterStatus === 'all' ? undefined : (filterStatus as any),
+    stage: filterStatus === 'all' ? undefined : filterStatus,
     limit: 100,
     ownership,
   });
@@ -686,7 +713,7 @@ function JobsList({ searchTerm, filterStatus, ownership }: { searchTerm: string;
     if (!jobs || !searchTerm) return jobs || [];
     const search = searchTerm.toLowerCase();
     return jobs.filter(
-      (j: any) =>
+      (j: JobData) =>
         j.title?.toLowerCase().includes(search) ||
         j.location?.toLowerCase().includes(search)
     );
@@ -696,12 +723,12 @@ function JobsList({ searchTerm, filterStatus, ownership }: { searchTerm: string;
     return (
       <div className="text-center py-12 text-red-500">
         <AlertCircle size={48} className="mx-auto mb-4" />
-        <p>Error loading jobs: {(error as any)?.message || 'Unknown error'}</p>
+        <p>Error loading jobs: {error instanceof Error ? error.message : 'Unknown error'}</p>
       </div>
     );
   }
 
-  const activeCount = jobs?.filter((j: any) => j.status === 'active' || j.status === 'open').length || 0;
+  const activeCount = jobs?.filter((j: JobData) => j.status === 'active' || j.status === 'open').length || 0;
 
   return (
     <>
@@ -722,14 +749,14 @@ function JobsList({ searchTerm, filterStatus, ownership }: { searchTerm: string;
         />
         <StatsCard
           label="Filled"
-          value={jobs?.filter((j: any) => j.status === 'filled').length || 0}
+          value={jobs?.filter((j: JobData) => j.status === 'filled').length || 0}
           icon={<Crown size={16} />}
           color="text-purple-500"
           isLoading={isLoading}
         />
         <StatsCard
           label="On Hold"
-          value={jobs?.filter((j: any) => j.status === 'on_hold').length || 0}
+          value={jobs?.filter((j: JobData) => j.status === 'on_hold').length || 0}
           icon={<Clock size={16} />}
           color="text-amber-500"
           isLoading={isLoading}
@@ -743,7 +770,7 @@ function JobsList({ searchTerm, filterStatus, ownership }: { searchTerm: string;
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((job: any) => (
+          {filtered.map((job: JobData) => (
             <Link
               href={`/employee/workspace/jobs/${job.id}`}
               key={job.id}
@@ -809,7 +836,7 @@ function TalentList({ searchTerm, filterStatus, ownership }: { searchTerm: strin
     if (!candidates || !searchTerm) return candidates || [];
     const search = searchTerm.toLowerCase();
     return candidates.filter(
-      (c: any) =>
+      (c: CandidateData) =>
         c.firstName?.toLowerCase().includes(search) ||
         c.lastName?.toLowerCase().includes(search) ||
         c.email?.toLowerCase().includes(search) ||
@@ -821,7 +848,7 @@ function TalentList({ searchTerm, filterStatus, ownership }: { searchTerm: strin
     return (
       <div className="text-center py-12 text-red-500">
         <AlertCircle size={48} className="mx-auto mb-4" />
-        <p>Error loading talent: {(error as any)?.message || 'Unknown error'}</p>
+        <p>Error loading talent: {error instanceof Error ? error.message : 'Unknown error'}</p>
       </div>
     );
   }
@@ -838,21 +865,21 @@ function TalentList({ searchTerm, filterStatus, ownership }: { searchTerm: strin
         />
         <StatsCard
           label="Available"
-          value={candidates?.filter((c: any) => c.status === 'available' || c.status === 'active').length || 0}
+          value={candidates?.filter((c: CandidateData) => c.status === 'available' || c.status === 'active').length || 0}
           icon={<CheckCircle size={16} />}
           color="text-green-500"
           isLoading={isLoading}
         />
         <StatsCard
           label="Placed"
-          value={candidates?.filter((c: any) => c.status === 'placed').length || 0}
+          value={candidates?.filter((c: CandidateData) => c.status === 'placed').length || 0}
           icon={<Crown size={16} />}
           color="text-purple-500"
           isLoading={isLoading}
         />
         <StatsCard
           label="In Pipeline"
-          value={candidates?.filter((c: any) => c.status === 'interviewing' || c.status === 'submitted').length || 0}
+          value={candidates?.filter((c: CandidateData) => c.status === 'interviewing' || c.status === 'submitted').length || 0}
           icon={<TrendingUp size={16} />}
           color="text-blue-500"
           isLoading={isLoading}
@@ -866,7 +893,7 @@ function TalentList({ searchTerm, filterStatus, ownership }: { searchTerm: strin
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((candidate: any) => (
+          {filtered.map((candidate: CandidateData) => (
             <Link
               href={`/employee/workspace/talent/${candidate.id}`}
               key={candidate.id}
@@ -933,7 +960,7 @@ function SubmissionsList({ searchTerm, filterStatus, ownership }: { searchTerm: 
     if (!submissions || !searchTerm) return submissions || [];
     const search = searchTerm.toLowerCase();
     return submissions.filter(
-      (s: any) =>
+      (s: SubmissionData) =>
         s.candidateName?.toLowerCase().includes(search) ||
         s.jobTitle?.toLowerCase().includes(search)
     );
@@ -943,7 +970,7 @@ function SubmissionsList({ searchTerm, filterStatus, ownership }: { searchTerm: 
     return (
       <div className="text-center py-12 text-red-500">
         <AlertCircle size={48} className="mx-auto mb-4" />
-        <p>Error loading submissions: {(error as any)?.message || 'Unknown error'}</p>
+        <p>Error loading submissions: {error instanceof Error ? error.message : 'Unknown error'}</p>
       </div>
     );
   }
@@ -960,21 +987,21 @@ function SubmissionsList({ searchTerm, filterStatus, ownership }: { searchTerm: 
         />
         <StatsCard
           label="Interviewing"
-          value={submissions?.filter((s: any) => s.status === 'interviewing').length || 0}
+          value={submissions?.filter((s: SubmissionData) => s.status === 'interviewing').length || 0}
           icon={<TrendingUp size={16} />}
           color="text-purple-500"
           isLoading={isLoading}
         />
         <StatsCard
           label="Offered"
-          value={submissions?.filter((s: any) => s.status === 'offered').length || 0}
+          value={submissions?.filter((s: SubmissionData) => s.status === 'offered').length || 0}
           icon={<Target size={16} />}
           color="text-amber-500"
           isLoading={isLoading}
         />
         <StatsCard
           label="Placed"
-          value={submissions?.filter((s: any) => s.status === 'placed').length || 0}
+          value={submissions?.filter((s: SubmissionData) => s.status === 'placed').length || 0}
           icon={<Crown size={16} />}
           color="text-green-500"
           isLoading={isLoading}
@@ -988,7 +1015,7 @@ function SubmissionsList({ searchTerm, filterStatus, ownership }: { searchTerm: 
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((submission: any) => (
+          {filtered.map((submission: SubmissionData) => (
             <Link
               href={`/employee/workspace/submissions/${submission.id}`}
               key={submission.id}

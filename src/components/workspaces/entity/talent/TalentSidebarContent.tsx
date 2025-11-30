@@ -9,16 +9,13 @@
 
 import React from 'react';
 import {
-  User,
   MapPin,
   Phone,
   Mail,
   DollarSign,
   Clock,
-  Globe,
   Briefcase,
   Calendar,
-  ExternalLink,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -90,7 +87,6 @@ const AVAILABILITY_CONFIG: Record<string, { label: string; color: string }> = {
 
 export function TalentSidebarContent({
   talent,
-  onEdit,
   onEmail,
   onCall,
   className,

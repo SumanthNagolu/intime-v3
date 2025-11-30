@@ -246,7 +246,7 @@ test.describe('Email Verification Flow', () => {
 });
 
 test.describe('Post-Signup Login Flow', () => {
-  test('should be able to login after successful signup', async ({ page, context }) => {
+  test('should be able to login after successful signup', async ({ page }) => {
     // Create a new user
     const newUserEmail = `login.test.${Date.now()}@example.com`;
 

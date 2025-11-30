@@ -2,7 +2,6 @@
 
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import { CheckCircle, Calendar, FileText, Users, PartyPopper, ArrowRight } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
@@ -89,7 +88,7 @@ export const PlacementWorkflow: React.FC = () => {
                   <div className="space-y-8 animate-slide-up">
                       <div className="text-center mb-8">
                           <h3 className="text-2xl font-serif font-bold text-charcoal mb-2">Confirm Start Date</h3>
-                          <p className="text-stone-500">When is the candidate's Day 1?</p>
+                          <p className="text-stone-500">When is the candidate&apos;s Day 1?</p>
                       </div>
                       
                       <div className="flex justify-center">

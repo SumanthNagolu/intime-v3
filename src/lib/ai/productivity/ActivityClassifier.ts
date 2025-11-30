@@ -164,7 +164,7 @@ export class ActivityClassifier
    * Calculate GPT cost (helper method)
    * @private
    */
-  private calculateGPTCost(tokens: number, model: string): number {
+  private calculateGPTCost(tokens: number, _model: string): number {
     // GPT-4o-mini: $0.15/M input + $0.60/M output (assume 50/50 split)
     const avgCostPerToken = ((0.15 + 0.60) / 2) / 1_000_000;
     return tokens * avgCostPerToken;
@@ -234,7 +234,7 @@ Return ONLY a JSON object:
           confidence: Number(parsed.confidence),
           reasoning: parsed.reasoning,
         };
-      } catch (parseError) {
+      } catch {
         console.error('[ActivityClassifier] Failed to parse OpenAI response:', content);
 
         // Fallback classification
@@ -307,7 +307,7 @@ Return ONLY a JSON object:
         );
 
         // Count successes
-        results.forEach((result: PromiseSettledResult<any>, index: number) => {
+        results.forEach((result: PromiseSettledResult<ActivityClassification>, index: number) => {
           if (result.status === 'fulfilled') {
             classifiedCount++;
           } else {
@@ -400,7 +400,7 @@ Return ONLY a JSON object:
         idle: 0,
       };
 
-      screenshots.forEach((s: any) => {
+      screenshots.forEach((s: { activity_category?: string | null; analyzed: boolean }) => {
         if (s.activity_category) {
           byCategory[s.activity_category as ActivityCategory]++;
         }
@@ -453,7 +453,7 @@ Return ONLY a JSON object:
   private createError(
     message: string,
     code: keyof typeof ProductivityErrorCodes,
-    details?: any
+    details?: unknown
   ): ProductivityError {
     const error = new Error(message) as ProductivityError;
     error.name = 'ProductivityError';

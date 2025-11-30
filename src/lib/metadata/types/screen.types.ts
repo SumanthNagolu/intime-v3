@@ -5,7 +5,6 @@
  * Screens are top-level navigable containers that define layout, data binding, and actions.
  */
 
-import type { LucideIcon } from 'lucide-react';
 import type { EntityType } from '@/lib/workspace/entity-registry';
 import type { FieldDefinition, WidgetDefinition } from './widget.types';
 import type { DataSourceDefinition, DynamicValue, VisibilityRule, PermissionRule } from './data.types';

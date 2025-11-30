@@ -12,6 +12,11 @@ import { z } from 'zod';
 import { router, publicProcedure, protectedProcedure } from '../trpc';
 import { TRPCError } from '@trpc/server';
 
+interface UserRoleRow {
+  role_id: string;
+  roles?: { name?: string } | null;
+}
+
 export const discountsRouter = router({
   /**
    * Validate discount code
@@ -135,7 +140,7 @@ export const discountsRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur: UserRoleRow) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
       );
 
       if (!isAdmin) {
@@ -209,7 +214,7 @@ export const discountsRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur: UserRoleRow) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
       );
 
       if (!isAdmin) {
@@ -310,7 +315,7 @@ export const discountsRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur: UserRoleRow) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
       );
 
       if (!isAdmin) {
@@ -376,7 +381,7 @@ export const discountsRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur: UserRoleRow) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
       );
 
       if (!isAdmin) {
@@ -428,7 +433,7 @@ export const discountsRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur: UserRoleRow) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
       );
 
       if (!isAdmin) {

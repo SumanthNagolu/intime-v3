@@ -2,8 +2,9 @@
 
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useAppStore } from '../../lib/store';
-import { Search, Filter, Plus, MoreHorizontal, Mail, MapPin, Building2, ChevronRight } from 'lucide-react';
+import { Search, Plus, MoreHorizontal, Mail, MapPin, Building2, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { Employee } from '../../types';
 
@@ -57,9 +58,9 @@ export const PeopleDirectory: React.FC = () => {
                   </div>
                   
                   <div className="flex flex-col items-center text-center mb-6">
-                      <div className="w-20 h-20 rounded-full bg-stone-100 text-charcoal flex items-center justify-center text-2xl font-serif font-bold mb-4 border-4 border-white shadow-lg group-hover:scale-105 transition-transform">
+                      <div className="relative w-20 h-20 rounded-full bg-stone-100 text-charcoal flex items-center justify-center text-2xl font-serif font-bold mb-4 border-4 border-white shadow-lg group-hover:scale-105 transition-transform overflow-hidden">
                           {employee.image ? (
-                              <img src={employee.image} alt={employee.firstName} className="w-full h-full rounded-full object-cover" />
+                              <Image src={employee.image} alt={employee.firstName} fill unoptimized className="rounded-full object-cover" />
                           ) : (
                               employee.firstName.charAt(0)
                           )}
@@ -133,7 +134,7 @@ export const AddEmployeeModal: React.FC<{ isOpen: boolean; onClose: () => void; 
             ...formData,
             status: 'Onboarding',
             pod: 'Unassigned',
-            department: formData.department as any
+            department: formData.department as Employee['department']
         };
         onAdd(newEmployee);
         onClose();

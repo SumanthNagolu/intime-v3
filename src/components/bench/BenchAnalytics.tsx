@@ -1,7 +1,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ChevronLeft, TrendingUp, Clock, DollarSign, Users, BarChart3 } from 'lucide-react';
+import { ChevronLeft, TrendingUp, Clock, DollarSign, Users } from 'lucide-react';
 
 export const BenchAnalytics: React.FC = () => {
   return (

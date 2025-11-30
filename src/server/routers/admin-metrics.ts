@@ -3,11 +3,10 @@
  * Provides real-time dashboard metrics for System Administrator role
  */
 
-import { z } from 'zod';
 import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
 import { userProfiles } from '@/lib/db/schema/user-profiles';
-import { eq, and, sql, gte, desc, isNotNull } from 'drizzle-orm';
+import { eq, and, sql, desc, isNotNull } from 'drizzle-orm';
 
 export const adminMetricsRouter = router({
   /**
@@ -45,7 +44,7 @@ export const adminMetricsRouter = router({
   /**
    * Get active sessions (mock - would need session tracking)
    */
-  getActiveSessions: orgProtectedProcedure.query(async ({ ctx }) => {
+  getActiveSessions: orgProtectedProcedure.query(async ({ ctx: _ctx }) => {
     // Mock data - would need session tracking table
     return {
       value: 24,
@@ -58,7 +57,7 @@ export const adminMetricsRouter = router({
   /**
    * Get system health metrics
    */
-  getSystemHealth: orgProtectedProcedure.query(async ({ ctx }) => {
+  getSystemHealth: orgProtectedProcedure.query(async ({ ctx: _ctx }) => {
     // Mock system health - would integrate with monitoring
     return {
       value: 99.9,
@@ -70,7 +69,7 @@ export const adminMetricsRouter = router({
   /**
    * Get pending user requests
    */
-  getPendingUserRequests: orgProtectedProcedure.query(async ({ ctx }) => {
+  getPendingUserRequests: orgProtectedProcedure.query(async ({ ctx: _ctx }) => {
     // Mock data - would need user_requests table
     return [
       {
@@ -135,7 +134,7 @@ export const adminMetricsRouter = router({
   /**
    * Get audit activity log
    */
-  getAuditActivity: orgProtectedProcedure.query(async ({ ctx }) => {
+  getAuditActivity: orgProtectedProcedure.query(async ({ ctx: _ctx }) => {
     // Mock audit log - would need audit_logs table
     return [
       {
@@ -176,7 +175,7 @@ export const adminMetricsRouter = router({
   /**
    * Get integration status
    */
-  getIntegrationStatus: orgProtectedProcedure.query(async ({ ctx }) => {
+  getIntegrationStatus: orgProtectedProcedure.query(async ({ ctx: _ctx }) => {
     // Mock integration status - would check actual integrations
     return [
       {
@@ -251,7 +250,7 @@ export const adminMetricsRouter = router({
   /**
    * Get storage usage (mock)
    */
-  getStorageUsage: orgProtectedProcedure.query(async ({ ctx }) => {
+  getStorageUsage: orgProtectedProcedure.query(async ({ ctx: _ctx }) => {
     // Mock storage data
     return [
       { label: 'Resumes', value: 2.4, color: '#D87254' },
@@ -264,7 +263,7 @@ export const adminMetricsRouter = router({
   /**
    * Get security alerts
    */
-  getSecurityAlerts: orgProtectedProcedure.query(async ({ ctx }) => {
+  getSecurityAlerts: orgProtectedProcedure.query(async ({ ctx: _ctx }) => {
     // Mock security alerts
     return [
       {

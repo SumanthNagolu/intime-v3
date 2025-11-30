@@ -12,7 +12,6 @@ import {
   type HierarchyLevel,
   type DataScope,
   specificRoleConfigs,
-  getSpecificRoleConfig,
   getDashboardSections,
 } from './specific-role-config';
 

@@ -18,14 +18,14 @@ export async function checkPermission(
   return data === true;
 }
 
-export async function isAdmin(userId: string): Promise<boolean> {
+export async function isAdmin(_userId: string): Promise<boolean> {
   const supabase = await createClient();
   // user_is_admin works with the authenticated user from JWT context
   const { data } = await supabase.rpc('user_is_admin');
   return data === true;
 }
 
-export async function hasRole(userId: string, roleName: string): Promise<boolean> {
+export async function hasRole(_userId: string, roleName: string): Promise<boolean> {
   const supabase = await createClient();
   // user_has_role works with the authenticated user from JWT context
   const { data } = await supabase.rpc('user_has_role', {

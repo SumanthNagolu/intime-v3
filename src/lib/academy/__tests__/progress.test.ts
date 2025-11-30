@@ -104,7 +104,7 @@ describe('Progress Tracking System', () => {
 
     it('should prevent duplicate completion', async () => {
       // Try to complete same topic again
-      const { error } = await supabase.rpc('complete_topic', {
+      const { error: _error } = await supabase.rpc('complete_topic', {
         p_user_id: testUserId,
         p_enrollment_id: testEnrollmentId,
         p_topic_id: testTopicId,

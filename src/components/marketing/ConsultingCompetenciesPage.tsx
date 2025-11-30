@@ -11,11 +11,7 @@ import {
   Code,
   Brain,
   Layers,
-  Settings,
   GitBranch,
-  Server,
-  Lock,
-  Zap,
   Award
 } from 'lucide-react';
 import { MarketingNavbar, Footer } from '@/components/templates';
@@ -298,7 +294,7 @@ export const ConsultingCompetenciesPage: React.FC = () => {
               Need Specialized Expertise?
             </h2>
             <p className="text-lg text-charcoal-300 mb-8">
-              Tell us about your project and we'll match you with the right consultants.
+              Tell us about your project and we&apos;ll match you with the right consultants.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link

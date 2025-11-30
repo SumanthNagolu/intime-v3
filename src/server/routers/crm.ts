@@ -15,10 +15,6 @@ import {
   deals,
   pointOfContacts,
   activityLog,
-  type Account,
-  type Lead,
-  type Deal,
-  type PointOfContact,
 } from '@/lib/db/schema/crm';
 // Note: leadTasks has been migrated to the unified activities system
 import { userProfiles } from '@/lib/db/schema/user-profiles';
@@ -26,7 +22,6 @@ import {
   createLeadSchema,
   updateLeadSchema,
   createDealSchema,
-  baseDealSchema,
   updateDealSchema,
   createPointOfContactSchema,
   updatePointOfContactSchema
@@ -38,7 +33,6 @@ import {
   bulkAssignAccountsInput,
 } from '@/lib/validations/account';
 import { eq, and, desc, asc, sql, isNull, ilike, or, inArray, gte, lte } from 'drizzle-orm';
-import { createActivityLogSchema } from '@/lib/validations/crm';
 
 export const crmRouter = router({
   // =====================================================
@@ -52,7 +46,7 @@ export const crmRouter = router({
     list: ownershipProcedure
       .input(listAccountsInput)
       .query(async ({ ctx, input }) => {
-        const { orgId, profileId, isManager, managedUserIds } = ctx;
+        const { orgId } = ctx;
         const { page, pageSize, sortBy, sortDirection, search, filters } = input;
         const offset = (page - 1) * pageSize;
 
@@ -509,7 +503,7 @@ export const crmRouter = router({
         const { orgId, profileId, isManager, managedUserIds } = ctx;
         const { limit, offset, status, accountId, ownership } = input;
 
-        let conditions = [eq(leads.orgId, orgId!), isNull(leads.deletedAt)];
+        const conditions = [eq(leads.orgId, orgId!), isNull(leads.deletedAt)];
         if (status) conditions.push(eq(leads.status, status));
         if (accountId) conditions.push(eq(leads.accountId, accountId));
 
@@ -619,7 +613,7 @@ export const crmRouter = router({
     update: orgProtectedProcedure
       .input(updateLeadSchema)
       .mutation(async ({ ctx, input }) => {
-        const { userId, orgId } = ctx;
+        const { orgId } = ctx;
         const { id, ...data } = input;
 
         const updateData: Partial<typeof leads.$inferInsert> = {
@@ -628,13 +622,13 @@ export const crmRouter = router({
 
         // Manually copy fields to ensure proper type conversion
         Object.keys(data).forEach((key) => {
-          const value = (data as any)[key];
+          const value = data[key as keyof typeof data];
           if (key === 'estimatedValue' && value !== undefined) {
             // Convert number to string for database
-            updateData.estimatedValue = value !== null ? value.toString() : null;
+            updateData.estimatedValue = value !== null ? String(value) : null;
           } else if (key !== 'id') {
             // Copy other fields directly
-            (updateData as any)[key] = value;
+            updateData[key as keyof typeof updateData] = value as never;
           }
         });
 
@@ -673,7 +667,7 @@ export const crmRouter = router({
 
         const profileId = userProfileResult[0]?.id;
 
-        const updateData: Record<string, any> = {
+        const updateData: Partial<typeof leads.$inferInsert> = {
           status: input.status,
           updatedAt: new Date(),
         };
@@ -814,7 +808,7 @@ export const crmRouter = router({
     delete: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .mutation(async ({ ctx, input }) => {
-        const { userId, orgId } = ctx;
+        const { orgId } = ctx;
 
         const [deleted] = await db.update(leads)
           .set({
@@ -903,7 +897,7 @@ export const crmRouter = router({
         const { orgId, profileId, isManager, managedUserIds } = ctx;
         const { limit, offset, stage, accountId, ownership } = input;
 
-        let conditions = [eq(deals.orgId, orgId!)];
+        const conditions = [eq(deals.orgId, orgId!)];
         if (stage) conditions.push(eq(deals.stage, stage));
         if (accountId) conditions.push(eq(deals.accountId, accountId));
 
@@ -986,7 +980,7 @@ export const crmRouter = router({
     update: orgProtectedProcedure
       .input(updateDealSchema)
       .mutation(async ({ ctx, input }) => {
-        const { userId, orgId } = ctx;
+        const { orgId } = ctx;
         const { id, ...data } = input;
 
         // Prepare update data with proper type handling

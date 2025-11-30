@@ -3,18 +3,16 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter, useParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useAppStore } from '../../lib/store';
-import { ChevronLeft, MapPin, DollarSign, Clock, Calendar, ArrowRight, MoreHorizontal, Search, Plus, Briefcase, FileText, List, Square, CheckSquare, UserPlus, MessageSquare, CheckCircle, XCircle, X, Settings, Building2, TrendingUp, Users, Sparkles } from 'lucide-react';
+import { ChevronLeft, MapPin, DollarSign, Clock, Calendar, MoreHorizontal, Search, Plus, Briefcase, FileText, List, Square, CheckSquare, UserPlus, CheckCircle, Settings, Building2, TrendingUp, Users, Sparkles } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { InterviewScheduler } from './InterviewScheduler';
-import { Submission } from '../../types';
 
 type Tab = 'Sourcing' | 'Screening' | 'Submission Ready' | 'Submitted' | 'Interview';
 
 export const JobDetail: React.FC = () => {
   const { jobId } = useParams();
-  const router = useRouter();
   const { jobs, submissions, accounts, candidates, updateSubmission } = useAppStore();
   const [activeTab, setActiveTab] = useState<Tab>('Sourcing');
   const [isInterviewModalOpen, setIsInterviewModalOpen] = useState(false);
@@ -420,7 +418,7 @@ export const JobDetail: React.FC = () => {
                       </div>
                       
                       <p className="text-sm text-purple-800 font-medium leading-relaxed mb-6">
-                          Based on the "Migration" requirement, I found <span className="font-bold">3 strong matches</span> in our Bench.
+                          Based on the &quot;Migration&quot; requirement, I found <span className="font-bold">3 strong matches</span> in our Bench.
                       </p>
                       
                       <div className="space-y-3">

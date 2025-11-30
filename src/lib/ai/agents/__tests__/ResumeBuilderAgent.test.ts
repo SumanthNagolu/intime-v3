@@ -240,6 +240,7 @@ describe('ResumeBuilderAgent', () => {
     it('should throw error if format is invalid', async () => {
       const input = {
         studentId: 'test-student',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         format: 'invalid' as any,
       };
 

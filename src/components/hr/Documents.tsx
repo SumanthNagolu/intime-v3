@@ -2,7 +2,7 @@
 
 
 import React, { useState } from 'react';
-import { FileText, Download, Search, Folder, Plus, Shield, Upload, Users, Eye, X, CheckCircle } from 'lucide-react';
+import { FileText, Download, Search, Shield, Upload, Users, Eye, X, CheckCircle } from 'lucide-react';
 
 const DocPreviewModal: React.FC<{ isOpen: boolean; onClose: () => void; docName: string }> = ({ isOpen, onClose, docName }) => {
     if (!isOpen) return null;
@@ -193,7 +193,14 @@ export const Documents: React.FC = () => {
   );
 };
 
-const DocumentRow: React.FC<{ doc: any; onPreview: () => void }> = ({ doc, onPreview }) => (
+interface DocumentItem {
+  name: string;
+  size: string;
+  category: string;
+  date: string;
+}
+
+const DocumentRow: React.FC<{ doc: DocumentItem; onPreview: () => void }> = ({ doc, onPreview }) => (
     <tr className="hover:bg-stone-50 transition-colors group cursor-pointer" onClick={onPreview}>
         <td className="p-6">
             <div className="flex items-center gap-3">

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { INTERVIEW_SCRIPT } from '@/lib/constants';
-import { Mic, Play, Pause, RefreshCcw, User, Award, Volume2, Circle } from 'lucide-react';
+import { Play, Pause, RefreshCcw, User, Award, Volume2, Circle } from 'lucide-react';
 
 export const InterviewStudio: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -11,7 +11,7 @@ export const InterviewStudio: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let interval: any;
+    let interval: ReturnType<typeof setInterval> | undefined;
     if (isPlaying) {
         if (currentLineIndex >= INTERVIEW_SCRIPT.length) {
             setIsPlaying(false);
@@ -117,7 +117,7 @@ export const InterviewStudio: React.FC = () => {
                              </div>
                              
                              <p className={`font-serif text-4xl leading-tight max-w-3xl ${isActive && isSenior ? 'text-charcoal font-semibold' : isActive ? 'text-stone-600 italic' : 'text-stone-400'}`}>
-                                 "{line.text}"
+                                 &quot;{line.text}&quot;
                              </p>
 
                              {isActive && (
@@ -164,10 +164,10 @@ export const InterviewStudio: React.FC = () => {
               <div className="bg-blue-50 p-8 rounded-3xl border border-blue-100 flex-1 shadow-inner">
                   <h3 className="font-serif text-lg font-bold text-blue-900 mb-4 flex items-center gap-2">
                       <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                      Coach's Note
+                      Coach&apos;s Note
                   </h3>
                   <p className="text-blue-800 italic text-sm leading-relaxed font-serif">
-                      "Notice how the senior developer pivots from the technical detail (JSON vs XML) to the business value (200ms latency reduction). Always tie your code to money or time."
+                      &quot;Notice how the senior developer pivots from the technical detail (JSON vs XML) to the business value (200ms latency reduction). Always tie your code to money or time.&quot;
                   </p>
               </div>
           </div>

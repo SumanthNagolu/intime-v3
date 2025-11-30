@@ -189,7 +189,7 @@ export const ContactPage: React.FC = () => {
             {/* Main Headline */}
             <h1 className="mb-8">
               <span className="block text-[clamp(2.5rem,6vw,5rem)] font-heading font-black text-white leading-[0.95] tracking-tight">
-                Let's Build
+                Let&apos;s Build
               </span>
               <span className="block text-[clamp(2.5rem,6vw,5rem)] font-heading font-black leading-[0.95] tracking-tight">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-amber-400 to-gold-500">
@@ -200,7 +200,7 @@ export const ContactPage: React.FC = () => {
 
             {/* Subheadline */}
             <p className="text-lg md:text-xl text-charcoal-300/90 font-light max-w-2xl mb-12 leading-relaxed">
-              Whether you need world-class talent, enterprise solutions, or career guidance—we're here. 
+              Whether you need world-class talent, enterprise solutions, or career guidance—we&apos;re here.
               Real people, real conversations, real results.
             </p>
 
@@ -416,7 +416,7 @@ export const ContactPage: React.FC = () => {
                 <h2 className="text-4xl md:text-5xl font-heading font-black text-white mb-6 leading-tight">
                   Wherever You Are,{' '}
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-amber-400">
-                    We're There
+                    We&apos;re There
                   </span>
                 </h2>
                 
@@ -577,7 +577,7 @@ export const ContactPage: React.FC = () => {
                 </span>
               </h2>
               <p className="text-lg text-charcoal-500">
-                We believe in real connections. Here's what happens when you contact InTime.
+                We believe in real connections. Here&apos;s what happens when you contact InTime.
               </p>
             </div>
 

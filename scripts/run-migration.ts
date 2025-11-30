@@ -23,7 +23,7 @@ async function runMigration() {
   console.log('Running interviews org_id migration...');
 
   // Check if org_id column already exists
-  const { data: columns, error: columnError } = await supabase.rpc('exec_sql', {
+  const { data: _columns, error: _columnError } = await supabase.rpc('exec_sql', {
     sql: `
       SELECT column_name
       FROM information_schema.columns
@@ -34,7 +34,7 @@ async function runMigration() {
 
   // If rpc doesn't work, try direct query approach
   // First check if interviews table exists
-  const { data: tableCheck, error: tableError } = await supabase
+  const { data: _tableCheck, error: tableError } = await supabase
     .from('interviews')
     .select('id')
     .limit(1);
@@ -52,7 +52,7 @@ async function runMigration() {
   console.log('Interviews table exists. Checking org_id column...');
 
   // Try to select org_id to see if it exists
-  const { data: orgIdCheck, error: orgIdError } = await supabase
+  const { data: _orgIdCheck, error: orgIdError } = await supabase
     .from('interviews')
     .select('org_id')
     .limit(1);

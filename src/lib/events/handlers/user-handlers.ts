@@ -13,7 +13,7 @@ import type { Event, UserCreatedPayload } from '../types';
  * @param event - user.created event
  */
 export async function handleUserCreated(event: Event<UserCreatedPayload>) {
-  const { email, fullName } = event.payload;
+  const { email, fullName: _fullName } = event.payload;
 
   console.log(`[Handler:send_welcome_email] Processing user.created for ${email}`);
 

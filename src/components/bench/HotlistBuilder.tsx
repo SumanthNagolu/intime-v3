@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, CheckSquare, Square, Copy, Send, User, Filter, RefreshCcw, CheckCircle } from 'lucide-react';
+import { ChevronLeft, CheckSquare, Square, Copy, Send, Filter, RefreshCcw } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 
 export const HotlistBuilder: React.FC = () => {

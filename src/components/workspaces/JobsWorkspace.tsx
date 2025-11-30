@@ -11,21 +11,15 @@ import React, { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Building2,
-  User,
-  Mail,
-  Phone,
   Calendar,
   DollarSign,
   Target,
-  TrendingUp,
   Briefcase,
   FileText,
   Activity,
   FolderOpen,
-  Lightbulb,
   MessageSquare,
   CheckCircle,
-  XCircle,
   AlertTriangle,
   ArrowRight,
   BarChart3,
@@ -41,12 +35,11 @@ import {
   Video,
   FileCheck,
   ThumbsUp,
-  ThumbsDown,
   Star,
   Zap,
   Globe,
 } from 'lucide-react';
-import { format, formatDistanceToNow, differenceInDays } from 'date-fns';
+import { format, differenceInDays } from 'date-fns';
 import { trpc } from '@/lib/trpc/client';
 import { cn } from '@/lib/utils';
 
@@ -65,7 +58,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -94,6 +86,41 @@ import { useWorkspaceContext } from './hooks';
 
 interface JobsWorkspaceProps {
   jobId: string;
+}
+
+interface Submission {
+  id: string;
+  status: string;
+  candidate?: {
+    firstName?: string;
+    lastName?: string;
+    avatarUrl?: string;
+  };
+  aiMatchScore?: number;
+  submittedRate?: string;
+  submittedRateType?: string;
+}
+
+interface Interview {
+  id: string;
+  status: string;
+  scheduledAt?: string;
+  roundNumber?: number;
+  interviewType?: string;
+  durationMinutes?: number;
+  recommendation?: string;
+}
+
+interface Offer {
+  id: string;
+  status: string;
+  candidate?: {
+    firstName?: string;
+    lastName?: string;
+  };
+  rate?: string;
+  rateType?: string;
+  startDate?: string;
 }
 
 // =====================================================
@@ -168,7 +195,7 @@ function FillProgress({ positionsCount, positionsFilled }: { positionsCount: num
   );
 }
 
-function OverviewTab({ job, canEdit }: { job: NonNullable<ReturnType<typeof useJob>['data']>; canEdit: boolean }) {
+function OverviewTab({ job }: { job: NonNullable<ReturnType<typeof useJob>['data']>; canEdit: boolean }) {
   const daysOpen = differenceInDays(new Date(), new Date(job.createdAt));
   const daysToTarget = job.targetFillDate
     ? differenceInDays(new Date(job.targetFillDate), new Date())
@@ -581,16 +608,16 @@ function SkillsTab({ job, canEdit }: { job: NonNullable<ReturnType<typeof useJob
   );
 }
 
-function SubmissionsTab({ job, canEdit }: { job: NonNullable<ReturnType<typeof useJob>['data']>; canEdit: boolean }) {
-  const submissions: any[] = [];
+function SubmissionsTab({ canEdit }: { job: NonNullable<ReturnType<typeof useJob>['data']>; canEdit: boolean }) {
+  const submissions: Submission[] = [];
 
   // Group submissions by status
-  const submissionsByStatus = submissions.reduce((acc: Record<string, any[]>, sub: any) => {
+  const submissionsByStatus = submissions.reduce((acc: Record<string, Submission[]>, sub: Submission) => {
     const status = sub.status;
     if (!acc[status]) acc[status] = [];
     acc[status].push(sub);
     return acc;
-  }, {} as Record<string, any[]>);
+  }, {} as Record<string, Submission[]>);
 
   const pipelineStages = [
     { key: 'sourced', label: 'Sourced' },
@@ -663,7 +690,7 @@ function SubmissionsTab({ job, canEdit }: { job: NonNullable<ReturnType<typeof u
             </div>
           ) : (
             <div className="space-y-3">
-              {submissions.map((submission: any) => {
+              {submissions.map((submission: Submission) => {
                 const statusConfig = SUBMISSION_STATUSES[submission.status as keyof typeof SUBMISSION_STATUSES];
                 return (
                   <div
@@ -717,10 +744,10 @@ function SubmissionsTab({ job, canEdit }: { job: NonNullable<ReturnType<typeof u
   );
 }
 
-function InterviewsTab({ job }: { job: NonNullable<ReturnType<typeof useJob>['data']> }) {
-  const interviews: any[] = [];
-  const upcoming = interviews.filter((i: any) => i.status === 'scheduled' && new Date(i.scheduledAt!) >= new Date());
-  const completed = interviews.filter((i: any) => i.status === 'completed');
+function InterviewsTab() {
+  const interviews: Interview[] = [];
+  const upcoming = interviews.filter((i: Interview) => i.status === 'scheduled' && i.scheduledAt && new Date(i.scheduledAt) >= new Date());
+  const completed = interviews.filter((i: Interview) => i.status === 'completed');
 
   return (
     <div className="space-y-6">
@@ -758,7 +785,7 @@ function InterviewsTab({ job }: { job: NonNullable<ReturnType<typeof useJob>['da
             <div className="text-center">
               <ThumbsUp className="w-6 h-6 mx-auto mb-2 text-purple-600" />
               <p className="text-2xl font-bold">
-                {completed.filter((i: any) => i.recommendation === 'hire').length}
+                {completed.filter((i: Interview) => i.recommendation === 'hire').length}
               </p>
               <p className="text-xs text-muted-foreground">Positive Feedback</p>
             </div>
@@ -782,7 +809,7 @@ function InterviewsTab({ job }: { job: NonNullable<ReturnType<typeof useJob>['da
             </div>
           ) : (
             <div className="space-y-3">
-              {upcoming.map((interview: any) => (
+              {upcoming.map((interview: Interview) => (
                 <div
                   key={interview.id}
                   className="flex items-center justify-between p-3 border rounded-lg"
@@ -809,10 +836,10 @@ function InterviewsTab({ job }: { job: NonNullable<ReturnType<typeof useJob>['da
   );
 }
 
-function OffersTab({ job }: { job: NonNullable<ReturnType<typeof useJob>['data']> }) {
-  const offers: any[] = [];
-  const accepted = offers.filter((o: any) => o.status === 'accepted');
-  const pending = offers.filter((o: any) => o.status === 'sent' || o.status === 'negotiating');
+function OffersTab() {
+  const offers: Offer[] = [];
+  const accepted = offers.filter((o: Offer) => o.status === 'accepted');
+  const pending = offers.filter((o: Offer) => o.status === 'sent' || o.status === 'negotiating');
 
   return (
     <div className="space-y-6">
@@ -864,7 +891,7 @@ function OffersTab({ job }: { job: NonNullable<ReturnType<typeof useJob>['data']
             </div>
           ) : (
             <div className="space-y-3">
-              {offers.map((offer: any) => (
+              {offers.map((offer: Offer) => (
                 <div
                   key={offer.id}
                   className="flex items-center justify-between p-3 border rounded-lg"
@@ -915,7 +942,7 @@ function useJob(jobId: string) {
 
 export function JobsWorkspace({ jobId }: JobsWorkspaceProps) {
   const router = useRouter();
-  const { context, canEdit, canDelete, isLoading: contextLoading } = useWorkspaceContext('job', jobId);
+  const { canEdit, canDelete, isLoading: contextLoading } = useWorkspaceContext('job', jobId);
 
   // Fetch job data
   const { data: job, isLoading: jobLoading, error } = useJob(jobId);
@@ -956,14 +983,14 @@ export function JobsWorkspace({ jobId }: JobsWorkspaceProps) {
         label: 'Interviews',
         icon: <Video className="w-4 h-4" />,
         badge: interviewCount || undefined,
-        content: <InterviewsTab job={job} />,
+        content: <InterviewsTab />,
       },
       {
         id: 'offers',
         label: 'Offers',
         icon: <FileCheck className="w-4 h-4" />,
         badge: offerCount || undefined,
-        content: <OffersTab job={job} />,
+        content: <OffersTab />,
       },
       {
         id: 'activity',

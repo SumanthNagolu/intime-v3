@@ -11,7 +11,7 @@
  */
 
 import { BaseAgent } from './agents/BaseAgent';
-import { AIRouter, type AITask } from './router';
+import { AIRouter } from './router';
 import OpenAI from 'openai';
 
 /**
@@ -62,7 +62,7 @@ const INTENT_AGENT_MAP: Record<string, string> = {
  * Intelligently routes queries to specialist agents.
  */
 export class Orchestrator {
-  private agents: Map<string, BaseAgent<any, any>>;
+  private agents: Map<string, BaseAgent<unknown, unknown>>;
   private router: AIRouter;
   private openai: OpenAI;
 
@@ -84,7 +84,7 @@ export class Orchestrator {
    * orchestrator.register('CodeMentorAgent', new CodeMentorAgent());
    * ```
    */
-  register(name: string, agent: BaseAgent<any, any>): void {
+  register(name: string, agent: BaseAgent<unknown, unknown>): void {
     this.agents.set(name, agent);
     console.log(`[Orchestrator] Registered agent: ${name}`);
   }
@@ -135,9 +135,18 @@ export class Orchestrator {
     try {
       const result = await agent.execute({ query, userId, context });
 
+      // Type guard for result
+      const response =
+        typeof result === 'object' &&
+        result !== null &&
+        'response' in result &&
+        typeof result.response === 'string'
+          ? result.response
+          : String(result);
+
       return {
         agentName: classification.agentName,
-        response: result.response || result.toString(),
+        response,
         confidence: classification.confidence,
         metadata: {
           intent: classification.intent,
@@ -258,7 +267,7 @@ Return ONLY a JSON object:
   async handoff(
     fromAgent: string,
     toAgent: string,
-    context: any
+    context: Record<string, unknown>
   ): Promise<void> {
     console.log(`[Orchestrator] Handoff: ${fromAgent} → ${toAgent}`);
 

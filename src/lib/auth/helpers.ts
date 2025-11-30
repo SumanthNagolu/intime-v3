@@ -149,29 +149,50 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
     return null;
   }
 
+  // Define types for the nested Supabase query result
+  type UserRoleRecord = {
+    role_id: string;
+    is_primary: boolean;
+    deleted_at: string | null;
+    expires_at: string | null;
+    roles: {
+      id: string;
+      name: string;
+      display_name: string;
+      hierarchy_level: number;
+      role_permissions: Array<{
+        permissions: {
+          resource: string;
+          action: string;
+          scope: string;
+        };
+      }>;
+    } | null;
+  };
+
   // Extract roles (filter out deleted/expired)
   const now = new Date();
-  const activeRoles = ((profile.user_roles as unknown as any[]) || [])
-    .filter((ur: any) => {
+  const activeRoles = ((profile.user_roles as unknown as UserRoleRecord[]) || [])
+    .filter((ur) => {
       if (ur.deleted_at) return false;
       if (ur.expires_at && new Date(ur.expires_at) < now) return false;
       return true;
     })
-    .map((ur: any) => ({
-      id: ur.roles?.id,
-      name: ur.roles?.name,
-      displayName: ur.roles?.display_name,
+    .map((ur) => ({
+      id: ur.roles?.id ?? '',
+      name: ur.roles?.name ?? '',
+      displayName: ur.roles?.display_name ?? '',
       isPrimary: ur.is_primary,
-      hierarchyLevel: ur.roles?.hierarchy_level || 99,
+      hierarchyLevel: ur.roles?.hierarchy_level ?? 99,
     }));
 
   // Extract unique permissions from all roles
   const permissionsMap = new Map<string, { resource: string; action: string; scope: string }>();
 
-  ((profile.user_roles as unknown as any[]) || [])
-    .filter((ur: any) => !ur.deleted_at && (!ur.expires_at || new Date(ur.expires_at) >= now))
-    .forEach((ur: any) => {
-      (ur.roles?.role_permissions || []).forEach((rp: any) => {
+  ((profile.user_roles as unknown as UserRoleRecord[]) || [])
+    .filter((ur) => !ur.deleted_at && (!ur.expires_at || new Date(ur.expires_at) >= now))
+    .forEach((ur) => {
+      (ur.roles?.role_permissions || []).forEach((rp) => {
         const perm = rp.permissions;
         if (perm) {
           const key = `${perm.resource}:${perm.action}:${perm.scope}`;
@@ -187,8 +208,8 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
     });
 
   // Find primary role
-  const primaryRole = activeRoles.find((r: any) => r.isPrimary)?.name ||
-                      activeRoles.sort((a: any, b: any) => a.hierarchyLevel - b.hierarchyLevel)[0]?.name ||
+  const primaryRole = activeRoles.find((r) => r.isPrimary)?.name ||
+                      activeRoles.sort((a, b) => a.hierarchyLevel - b.hierarchyLevel)[0]?.name ||
                       null;
 
   return {

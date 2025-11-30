@@ -2,7 +2,7 @@
 
 
 import React, { useState } from 'react';
-import { X, User, CheckCircle, ArrowRight, Users } from 'lucide-react';
+import { X, User, ArrowRight, Users } from 'lucide-react';
 
 interface HandoffModalProps {
   isOpen: boolean;
@@ -12,7 +12,7 @@ interface HandoffModalProps {
   onSubmit: (toRole: string, note: string) => void;
 }
 
-export const HandoffModal: React.FC<HandoffModalProps> = ({ isOpen, onClose, type, entityName, onSubmit }) => {
+export const HandoffModal: React.FC<HandoffModalProps> = ({ isOpen, onClose, type: _type, entityName, onSubmit }) => {
   const [selectedRole, setSelectedRole] = useState<'recruiter' | 'bench'>('recruiter');
   const [note, setNote] = useState('');
 

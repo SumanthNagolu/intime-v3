@@ -234,6 +234,7 @@ describe('Courses Router', () => {
           slug: 'invalid-topic',
           title: 'Invalid Topic',
           topic_number: 2,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           content_type: 'invalid_type' as any,
         });
 

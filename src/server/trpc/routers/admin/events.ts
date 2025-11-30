@@ -128,7 +128,15 @@ export const adminEventsRouter = router({
     }
 
     // Aggregate metrics in JavaScript
-    const metrics = (data || []).reduce((acc: any, event) => {
+    interface EventMetric {
+      event_name: string;
+      total: number;
+      pending: number;
+      completed: number;
+      failed: number;
+    }
+
+    const metrics = (data || []).reduce((acc: Record<string, EventMetric>, event) => {
       const name = `${event.event_category}.${event.event_type}`;
       if (!acc[name]) {
         acc[name] = { event_name: name, total: 0, pending: 0, completed: 0, failed: 0 };

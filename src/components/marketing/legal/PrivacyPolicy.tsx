@@ -41,7 +41,7 @@ export const PrivacyPolicy: React.FC = () => {
           <div className="max-w-4xl mx-auto prose prose-lg prose-charcoal">
             <h2>1. Introduction</h2>
             <p>
-              InTime Solutions ("we," "our," or "us") respects your privacy and is committed to protecting
+              InTime Solutions (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) respects your privacy and is committed to protecting
               your personal data. This privacy policy explains how we collect, use, disclose, and safeguard
               your information when you visit our website or use our services.
             </p>
@@ -117,7 +117,7 @@ export const PrivacyPolicy: React.FC = () => {
               practices of these external sites.
             </p>
 
-            <h2>9. Children's Privacy</h2>
+            <h2>9. Children&apos;s Privacy</h2>
             <p>
               Our services are not intended for individuals under 18 years of age. We do not knowingly
               collect personal information from children.
@@ -126,7 +126,7 @@ export const PrivacyPolicy: React.FC = () => {
             <h2>10. Changes to This Policy</h2>
             <p>
               We may update this privacy policy from time to time. We will notify you of any changes by
-              posting the new policy on this page and updating the "Last updated" date.
+              posting the new policy on this page and updating the &quot;Last updated&quot; date.
             </p>
 
             <h2>11. Contact Us</h2>

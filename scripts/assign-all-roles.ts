@@ -79,8 +79,10 @@ const verify = await exec(`
 
 if (verify.success && verify.rows) {
   console.log('\n📊 Role assignments:');
-  verify.rows.forEach((r: any) => {
-    console.log(`   ${r.role.padEnd(35)} ${r.user_count} users`);
+  verify.rows.forEach((r: Record<string, unknown>) => {
+    const role = String(r.role || '');
+    const userCount = Number(r.user_count || 0);
+    console.log(`   ${role.padEnd(35)} ${userCount} users`);
   });
 }
 

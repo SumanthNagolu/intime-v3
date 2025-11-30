@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { useAppStore } from '../../lib/store';
 import Link from 'next/link';
-import { MoreHorizontal, DollarSign, Search, Filter, ArrowUpRight, GripVertical } from 'lucide-react';
+import { MoreHorizontal, Search } from 'lucide-react';
 import { Deal } from '../../types';
 
 const STAGES: Deal['stage'][] = ['Prospect', 'Discovery', 'Proposal', 'Negotiation', 'Won', 'Lost'];

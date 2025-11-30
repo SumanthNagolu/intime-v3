@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useAppStore } from '../../lib/store';
-import { Globe, FileText, Check, Clock, AlertTriangle } from 'lucide-react';
+import { Globe, FileText, Clock } from 'lucide-react';
 
 export const CrossBorderDashboard: React.FC = () => {
   const { immigrationCases } = useAppStore();

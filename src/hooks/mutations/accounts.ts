@@ -6,7 +6,7 @@
  */
 
 import { trpc } from '@/lib/trpc/client';
-import { accountAdapter, type CreateAccountInput, type CreatePOCInput } from '@/lib/adapters';
+import { type CreateAccountInput, type CreatePOCInput } from '@/lib/adapters';
 import { useInvalidateAccounts } from '../queries/accounts';
 
 // ============================================
@@ -303,7 +303,7 @@ export function useUpdatePoc(options: { onSuccess?: (data: unknown) => void; onE
   const invalidate = useInvalidateAccounts();
 
   const mutation = trpc.crm.pocs.update.useMutation({
-    onSuccess: (data, variables) => {
+    onSuccess: (data, _variables) => {
       // POC update needs accountId for cache invalidation
       // This might need adjustment based on actual return type
       invalidate.invalidateAll();

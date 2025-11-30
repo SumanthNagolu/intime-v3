@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import {
   ArrowLeft, User, MapPin, Briefcase, Clock, Phone, Mail, Calendar,
   FileText, Activity, Building2, DollarSign, ChevronRight, Plus,
-  Loader2, X, Search, ExternalLink, Edit, MoreHorizontal, Upload, CheckCircle, Send,
+  Loader2, X, Search, Edit, Upload, CheckCircle, Send,
   PhoneCall, Eye, Download, History, Sparkles, Copy, RefreshCw, FileUp, ChevronDown
 } from 'lucide-react';
 import { trpc } from '@/lib/trpc/client';
@@ -57,7 +56,7 @@ const ResumeUploadModal: React.FC<{
   talentName: string;
   onClose: () => void;
   onSuccess: () => void;
-}> = ({ talentId, talentName, onClose, onSuccess }) => {
+}> = ({ talentId, _talentName, onClose, onSuccess }) => {
   const [step, setStep] = useState<'upload' | 'uploading' | 'success'>('upload');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState(false);
@@ -186,7 +185,7 @@ const ResumeUploadModal: React.FC<{
                 </div>
                 <div>
                   <h2 className="text-2xl font-serif font-bold text-charcoal">Upload Resume</h2>
-                  <p className="text-xs text-stone-500">New version for {talentName}</p>
+                  <p className="text-xs text-stone-500">New version for {_talentName}</p>
                 </div>
               </div>
             </div>
@@ -336,437 +335,6 @@ const ResumeUploadModal: React.FC<{
 
 // EditTalentModal is now imported from ./EditTalentModal.tsx
 
-// Placeholder to mark where old inline EditTalentModal was removed
-const _EditTalentModalRemoved = ({ talent, onClose, onSuccess }: {
-  talent: {
-    id: string;
-    firstName?: string | null;
-    lastName?: string | null;
-    email?: string | null;
-    phone?: string | null;
-    candidateSkills?: string[] | null;
-    candidateExperienceYears?: number | null;
-    candidateCurrentVisa?: string | null;
-    candidateVisaExpiry?: Date | null;
-    candidateHourlyRate?: string | null;
-    candidateAvailability?: string | null;
-    candidateLocation?: string | null;
-    candidateWillingToRelocate?: boolean | null;
-    candidateStatus?: string | null;
-  };
-  onClose: () => void;
-  onSuccess: () => void;
-}) => {
-  const [step, setStep] = useState<'edit' | 'saving' | 'success'>('edit');
-  const [error, setError] = useState<string | null>(null);
-  const [skillInput, setSkillInput] = useState('');
-
-  // Form state
-  const [form, setForm] = useState({
-    firstName: talent.firstName || '',
-    lastName: talent.lastName || '',
-    phone: talent.phone || '',
-    candidateSkills: talent.candidateSkills || [],
-    candidateExperienceYears: talent.candidateExperienceYears || 0,
-    candidateCurrentVisa: talent.candidateCurrentVisa || 'H1B',
-    candidateVisaExpiry: talent.candidateVisaExpiry ? new Date(talent.candidateVisaExpiry).toISOString().split('T')[0] : '',
-    candidateHourlyRate: talent.candidateHourlyRate ? parseFloat(talent.candidateHourlyRate) : 0,
-    candidateAvailability: talent.candidateAvailability || 'immediate',
-    candidateLocation: talent.candidateLocation || '',
-    candidateWillingToRelocate: talent.candidateWillingToRelocate || false,
-    candidateStatus: talent.candidateStatus || 'active',
-  });
-
-  const utils = trpc.useUtils();
-  const updateMutation = trpc.ats.candidates.update.useMutation({
-    onSuccess: () => {
-      utils.ats.candidates.getById.invalidate({ id: talent.id });
-      setStep('success');
-      setTimeout(() => {
-        onSuccess();
-        onClose();
-      }, 1500);
-    },
-    onError: (err) => {
-      setError(err.message || 'Failed to update talent');
-      setStep('edit');
-    },
-  });
-
-  const handleChange = (field: keyof typeof form, value: any) => {
-    setForm(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleAddSkill = () => {
-    if (skillInput.trim() && !form.candidateSkills.includes(skillInput.trim())) {
-      setForm(prev => ({
-        ...prev,
-        candidateSkills: [...prev.candidateSkills, skillInput.trim()],
-      }));
-      setSkillInput('');
-    }
-  };
-
-  const handleRemoveSkill = (skillToRemove: string) => {
-    setForm(prev => ({
-      ...prev,
-      candidateSkills: prev.candidateSkills.filter(s => s !== skillToRemove),
-    }));
-  };
-
-  const handleSubmit = async () => {
-    setStep('saving');
-    setError(null);
-
-    updateMutation.mutate({
-      id: talent.id,
-      firstName: form.firstName || undefined,
-      lastName: form.lastName || undefined,
-      phone: form.phone || undefined,
-      candidateSkills: form.candidateSkills.length > 0 ? form.candidateSkills : undefined,
-      candidateExperienceYears: form.candidateExperienceYears > 0 ? form.candidateExperienceYears : undefined,
-      candidateCurrentVisa: form.candidateCurrentVisa as any,
-      candidateVisaExpiry: form.candidateVisaExpiry ? new Date(form.candidateVisaExpiry) : undefined,
-      candidateHourlyRate: form.candidateHourlyRate > 0 ? form.candidateHourlyRate : undefined,
-      candidateAvailability: form.candidateAvailability as any,
-      candidateLocation: form.candidateLocation || undefined,
-      candidateWillingToRelocate: form.candidateWillingToRelocate,
-      candidateStatus: form.candidateStatus as any,
-    });
-  };
-
-  const visaOptions = [
-    { value: 'H1B', label: 'H1B' },
-    { value: 'GC', label: 'Green Card' },
-    { value: 'USC', label: 'US Citizen' },
-    { value: 'OPT', label: 'OPT' },
-    { value: 'CPT', label: 'CPT' },
-    { value: 'TN', label: 'TN Visa' },
-    { value: 'L1', label: 'L1 Visa' },
-    { value: 'EAD', label: 'EAD' },
-    { value: 'Other', label: 'Other' },
-  ];
-
-  const availabilityOptions = [
-    { value: 'immediate', label: 'Immediate' },
-    { value: '2_weeks', label: '2 Weeks Notice' },
-    { value: '1_month', label: '1 Month Notice' },
-  ];
-
-  const statusOptions = [
-    { value: 'active', label: 'Active', color: 'bg-green-100 text-green-700' },
-    { value: 'placed', label: 'Placed', color: 'bg-blue-100 text-blue-700' },
-    { value: 'bench', label: 'On Bench', color: 'bg-amber-100 text-amber-700' },
-    { value: 'inactive', label: 'Inactive', color: 'bg-gray-100 text-gray-700' },
-    { value: 'blacklisted', label: 'Blacklisted', color: 'bg-red-100 text-red-700' },
-  ];
-
-  return (
-    <div className="fixed inset-0 bg-charcoal/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in" onClick={onClose}>
-      <div className="bg-white w-full max-w-2xl rounded-[2rem] shadow-2xl relative max-h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute top-6 right-6 text-stone-400 hover:text-charcoal z-10">
-          <X size={24} />
-        </button>
-
-        {step === 'edit' && (
-          <>
-            <div className="p-8 pb-4 border-b border-stone-100">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-rust/10 text-rust rounded-xl flex items-center justify-center">
-                  <Edit size={20} />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-serif font-bold text-charcoal">Edit Talent Profile</h2>
-                  <p className="text-xs text-stone-500">{talent.email}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex-1 overflow-y-auto px-8 pb-8 pt-6 space-y-6">
-              {error && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm">
-                  {error}
-                </div>
-              )}
-
-              {/* Basic Info Section */}
-              <div className="space-y-4">
-                <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest flex items-center gap-2">
-                  <User size={14} /> Basic Information
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
-                      First Name *
-                    </label>
-                    <input
-                      type="text"
-                      value={form.firstName}
-                      onChange={(e) => handleChange('firstName', e.target.value)}
-                      className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
-                      Last Name *
-                    </label>
-                    <input
-                      type="text"
-                      value={form.lastName}
-                      onChange={(e) => handleChange('lastName', e.target.value)}
-                      className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    value={form.phone}
-                    onChange={(e) => handleChange('phone', e.target.value)}
-                    placeholder="+1 (555) 123-4567"
-                    className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
-                  />
-                </div>
-              </div>
-
-              {/* Professional Details Section */}
-              <div className="space-y-4 pt-4 border-t border-stone-100">
-                <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest flex items-center gap-2">
-                  <Briefcase size={14} /> Professional Details
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
-                      Years of Experience
-                    </label>
-                    <input
-                      type="number"
-                      min="0"
-                      max="50"
-                      value={form.candidateExperienceYears}
-                      onChange={(e) => handleChange('candidateExperienceYears', parseInt(e.target.value) || 0)}
-                      className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
-                      Hourly Rate ($)
-                    </label>
-                    <div className="relative">
-                      <DollarSign size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
-                      <input
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        value={form.candidateHourlyRate}
-                        onChange={(e) => handleChange('candidateHourlyRate', parseFloat(e.target.value) || 0)}
-                        className="w-full p-3 pl-8 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Skills */}
-                <div>
-                  <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
-                    Skills
-                  </label>
-                  <div className="flex gap-2 mb-2">
-                    <input
-                      type="text"
-                      value={skillInput}
-                      onChange={(e) => setSkillInput(e.target.value)}
-                      onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddSkill())}
-                      placeholder="Type a skill and press Enter"
-                      className="flex-1 p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleAddSkill}
-                      className="px-4 py-3 bg-charcoal text-white rounded-xl text-xs font-bold hover:bg-rust transition-colors"
-                    >
-                      <Plus size={14} />
-                    </button>
-                  </div>
-                  {form.candidateSkills.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-3">
-                      {form.candidateSkills.map((skill, idx) => (
-                        <span
-                          key={idx}
-                          className="inline-flex items-center gap-1 px-3 py-1.5 bg-rust/10 text-rust rounded-full text-xs font-medium"
-                        >
-                          {skill}
-                          <button
-                            type="button"
-                            onClick={() => handleRemoveSkill(skill)}
-                            className="hover:bg-rust/20 rounded-full p-0.5"
-                          >
-                            <X size={12} />
-                          </button>
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Visa & Availability Section */}
-              <div className="space-y-4 pt-4 border-t border-stone-100">
-                <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest flex items-center gap-2">
-                  <Calendar size={14} /> Visa & Availability
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
-                      Visa Status
-                    </label>
-                    <select
-                      value={form.candidateCurrentVisa}
-                      onChange={(e) => handleChange('candidateCurrentVisa', e.target.value)}
-                      className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
-                    >
-                      {visaOptions.map(opt => (
-                        <option key={opt.value} value={opt.value}>{opt.label}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
-                      Visa Expiry Date
-                    </label>
-                    <input
-                      type="date"
-                      value={form.candidateVisaExpiry}
-                      onChange={(e) => handleChange('candidateVisaExpiry', e.target.value)}
-                      className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
-                    Availability
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {availabilityOptions.map(opt => (
-                      <button
-                        key={opt.value}
-                        type="button"
-                        onClick={() => handleChange('candidateAvailability', opt.value)}
-                        className={`p-3 rounded-xl border text-xs font-bold transition-all ${
-                          form.candidateAvailability === opt.value
-                            ? 'border-rust bg-rust/5 text-rust ring-1 ring-rust'
-                            : 'border-stone-200 text-stone-600 hover:border-stone-300'
-                        }`}
-                      >
-                        {opt.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Location Section */}
-              <div className="space-y-4 pt-4 border-t border-stone-100">
-                <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest flex items-center gap-2">
-                  <MapPin size={14} /> Location
-                </h3>
-                <div>
-                  <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
-                    Current Location
-                  </label>
-                  <input
-                    type="text"
-                    value={form.candidateLocation}
-                    onChange={(e) => handleChange('candidateLocation', e.target.value)}
-                    placeholder="City, State"
-                    className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-rust"
-                  />
-                </div>
-                <div className="flex items-center gap-3 p-4 bg-stone-50 rounded-xl border border-stone-200">
-                  <input
-                    type="checkbox"
-                    id="willingToRelocate"
-                    checked={form.candidateWillingToRelocate}
-                    onChange={(e) => handleChange('candidateWillingToRelocate', e.target.checked)}
-                    className="w-5 h-5 rounded border-stone-300 text-rust focus:ring-rust"
-                  />
-                  <label htmlFor="willingToRelocate" className="text-sm text-charcoal cursor-pointer">
-                    Willing to Relocate
-                  </label>
-                </div>
-              </div>
-
-              {/* Status Section */}
-              <div className="space-y-4 pt-4 border-t border-stone-100">
-                <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest flex items-center gap-2">
-                  <Activity size={14} /> Status
-                </h3>
-                <div>
-                  <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">
-                    Candidate Status
-                  </label>
-                  <div className="grid grid-cols-5 gap-2">
-                    {statusOptions.map(opt => (
-                      <button
-                        key={opt.value}
-                        type="button"
-                        onClick={() => handleChange('candidateStatus', opt.value)}
-                        className={`p-2 rounded-xl border text-[10px] font-bold transition-all ${
-                          form.candidateStatus === opt.value
-                            ? `${opt.color} border-transparent ring-2 ring-offset-1 ring-current`
-                            : 'border-stone-200 text-stone-500 hover:border-stone-300'
-                        }`}
-                      >
-                        {opt.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Submit Button */}
-              <div className="pt-4">
-                <button
-                  onClick={handleSubmit}
-                  disabled={!form.firstName || !form.lastName}
-                  className="w-full py-3 bg-charcoal text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-rust disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
-                >
-                  <CheckCircle size={14} /> Save Changes
-                </button>
-              </div>
-            </div>
-          </>
-        )}
-
-        {step === 'saving' && (
-          <div className="p-8 text-center">
-            <div className="w-16 h-16 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Loader2 size={32} className="text-rust animate-spin" />
-            </div>
-            <h3 className="text-xl font-bold text-charcoal">Saving Changes...</h3>
-            <p className="text-stone-500 text-sm mt-2">Updating talent profile</p>
-          </div>
-        )}
-
-        {step === 'success' && (
-          <div className="p-8 text-center">
-            <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle size={32} />
-            </div>
-            <h3 className="text-xl font-bold text-charcoal">Profile Updated</h3>
-            <p className="text-stone-500 text-sm mt-2">
-              {form.firstName} {form.lastName}&apos;s profile has been updated.
-            </p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
 // Email Composer Modal Component
 const EmailComposerModal: React.FC<{
   recipientEmail: string;
@@ -901,7 +469,7 @@ const ResumePreviewSection: React.FC<{
   talentId: string;
   talentName: string;
   onUploadClick: () => void;
-}> = ({ talentId, talentName, onUploadClick }) => {
+}> = ({ talentId, _talentName, onUploadClick }) => {
   const [showVersions, setShowVersions] = useState(false);
 
   // Fetch resumes for this candidate
@@ -1551,7 +1119,6 @@ const AttachJobModal: React.FC<{
 };
 
 export const TalentWorkspace: React.FC<TalentWorkspaceProps> = ({ talentId }) => {
-  const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [showAttachJobModal, setShowAttachJobModal] = useState(false);
   const [showResumeUploadModal, setShowResumeUploadModal] = useState(false);
@@ -1580,7 +1147,7 @@ export const TalentWorkspace: React.FC<TalentWorkspaceProps> = ({ talentId }) =>
       <div className="text-center py-24">
         <User size={48} className="mx-auto text-stone-300 mb-4" />
         <h2 className="text-xl font-bold text-charcoal mb-2">Talent Not Found</h2>
-        <p className="text-stone-500 mb-4">The talent profile you're looking for doesn't exist.</p>
+        <p className="text-stone-500 mb-4">The talent profile you&apos;re looking for doesn&apos;t exist.</p>
         <Link
           href="/employee/recruiting/talent"
           className="text-rust font-bold hover:underline"

@@ -202,8 +202,8 @@ function ResumeCard({
 // =====================================================
 
 export function TalentResumeSection({
-  talentId,
-  talentName,
+  talentId: _talentId,
+  talentName: _talentName,
   resumes,
   isLoading = false,
   onUpload,

@@ -27,10 +27,6 @@ import {
   Building2,
   Mail,
   Phone,
-  Calendar,
-  CheckCircle,
-  ArrowRight,
-  User,
   Linkedin,
   Globe,
   MapPin,
@@ -42,7 +38,6 @@ import {
   Target,
   TrendingUp,
   Clock,
-  Users,
   MessageSquare,
   FileText,
   Star,
@@ -51,15 +46,10 @@ import {
   Square,
   Plus,
   Save,
-  Edit3,
   Send,
   PhoneCall,
-  Video,
   Sparkles,
-  Award,
-  CircleDot,
   ChevronDown,
-  ChevronUp,
   Flame,
   Snowflake,
   Crown,
@@ -70,6 +60,7 @@ import {
   GraduationCap,
   UserPlus,
   ArrowRightCircle,
+  User,
 } from 'lucide-react';
 
 type LeadStatus = 'new' | 'warm' | 'hot' | 'cold' | 'converted' | 'lost';
@@ -99,15 +90,6 @@ interface BANTScore {
   authority: number; // 0-25
   need: number; // 0-25
   timeline: number; // 0-25
-}
-
-// Task Interface
-interface Task {
-  id: string;
-  title: string;
-  dueDate: string;
-  completed: boolean;
-  priority: 'low' | 'medium' | 'high';
 }
 
 export const LeadWorkspace: React.FC = () => {
@@ -169,7 +151,6 @@ export const LeadWorkspace: React.FC = () => {
 
   // UI State (continued)
   const [activeTab, setActiveTab] = useState<'activity' | 'research' | 'strategy' | 'tasks'>('activity');
-  const [isEditingNotes, setIsEditingNotes] = useState(false);
   const [strategyNotes, setStrategyNotes] = useState('');
   const [showQuickNote, setShowQuickNote] = useState(false);
   const [quickNoteContent, setQuickNoteContent] = useState('');
@@ -290,10 +271,10 @@ export const LeadWorkspace: React.FC = () => {
   };
 
   // Handle save strategy notes
-  const handleSaveNotes = () => {
+  const _handleSaveNotes = () => {
     updateLead.mutate(
       { id: leadId, notes: strategyNotes },
-      { onSuccess: () => setIsEditingNotes(false) }
+      { onSuccess: () => {} }
     );
   };
 
@@ -770,17 +751,17 @@ export const LeadWorkspace: React.FC = () => {
           {/* Tabs */}
           <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
             <div className="flex border-b border-stone-100">
-              {[
+              {([
                 { id: 'activity', label: 'Activity', icon: MessageSquare },
                 { id: 'research', label: 'Research', icon: Target },
                 { id: 'strategy', label: 'Strategy', icon: BarChart3 },
                 { id: 'tasks', label: 'Tasks', icon: CheckSquare },
-              ].map((tab) => {
+              ] as const).map((tab) => {
                 const Icon = tab.icon;
                 return (
                   <button
                     key={tab.id}
-                    onClick={() => setActiveTab(tab.id as any)}
+                    onClick={() => setActiveTab(tab.id)}
                     className={`flex-1 py-4 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2 transition-all ${
                       activeTab === tab.id
                         ? 'bg-white text-charcoal border-b-2 border-rust'

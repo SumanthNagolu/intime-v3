@@ -29,7 +29,7 @@ export interface WorkflowState {
   is_initial: boolean;
   is_terminal: boolean;
   actions: string[];
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
   created_at: string;
 }
 
@@ -41,9 +41,9 @@ export interface WorkflowTransition {
   action: string;
   display_name: string;
   required_permission: string | null;
-  conditions: Record<string, any>;
+  conditions: Record<string, unknown>;
   auto_transition: boolean;
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
   created_at: string;
 }
 
@@ -58,7 +58,7 @@ export interface WorkflowInstance {
   completed_at: string | null;
   cancelled_at: string | null;
   status: 'active' | 'completed' | 'cancelled' | 'failed';
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
   version: number;
   created_by: string;
   created_at: string;
@@ -73,7 +73,7 @@ export interface WorkflowHistoryEntry {
   action: string;
   performed_by: string;
   notes: string | null;
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
   created_at: string;
 }
 

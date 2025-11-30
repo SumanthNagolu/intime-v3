@@ -1,14 +1,73 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { X, Loader2, Save, User, MapPin, Briefcase, GraduationCap, Award, Users, Shield, FileCheck, Phone, DollarSign, Globe, AlertCircle, Plus, Trash2, ChevronDown, FileText } from 'lucide-react';
+import { X, Loader2, Save, User, GraduationCap, Shield, DollarSign, AlertCircle, Plus, Trash2, FileText } from 'lucide-react';
 import { trpc } from '@/lib/trpc/client';
+import type { Address, CandidateEducation, CandidateWorkHistory, CandidateWorkAuthorization, CandidateCertification, CandidateReference, CandidateResume, CandidateBackgroundCheck, CandidateComplianceDocument } from '@/lib/db/schema/ats';
 
 interface EditTalentModalProps {
   talentId: string;
   talentName: string;
   onClose: () => void;
   onSuccess: () => void;
+}
+
+// Type for form data used in the component
+interface TalentFormData {
+  firstName?: string;
+  middleName?: string;
+  lastName?: string;
+  preferredName?: string;
+  dateOfBirth?: string;
+  gender?: string;
+  nationality?: string;
+  email?: string;
+  emailSecondary?: string;
+  phone?: string;
+  phoneHome?: string;
+  phoneWork?: string;
+  preferredContactMethod?: string;
+  preferredCallTime?: string;
+  doNotContact?: boolean;
+  doNotEmail?: boolean;
+  doNotText?: boolean;
+  linkedinUrl?: string;
+  githubUrl?: string;
+  portfolioUrl?: string;
+  emergencyContactName?: string;
+  emergencyContactRelationship?: string;
+  emergencyContactPhone?: string;
+  emergencyContactEmail?: string;
+  professionalHeadline?: string;
+  professionalSummary?: string;
+  careerObjectives?: string;
+  candidateSkills?: string[];
+  candidateExperienceYears?: number;
+  candidateStatus?: string;
+  candidateAvailability?: string;
+  currentEmploymentStatus?: string;
+  noticePeriodDays?: number;
+  earliestStartDate?: string;
+  preferredEmploymentType?: string[];
+  candidateWillingToRelocate?: boolean;
+  preferredLocations?: string[];
+  relocationAssistanceRequired?: boolean;
+  candidateHourlyRate?: string | number;
+  minimumHourlyRate?: string | number;
+  desiredSalaryAnnual?: string | number;
+  minimumAnnualSalary?: string | number;
+  desiredSalaryCurrency?: string;
+  benefitsRequired?: string[];
+  compensationNotes?: string;
+  leadSource?: string;
+  leadSourceDetail?: string;
+  marketingStatus?: string;
+  isOnHotlist?: boolean;
+  hotlistNotes?: string;
+  languages?: string[];
+  recruiterRating?: number;
+  recruiterRatingNotes?: string;
+  tags?: string[];
 }
 
 // Consolidated tabs: 5 tabs instead of 12
@@ -71,7 +130,7 @@ export const EditTalentModal: React.FC<EditTalentModalProps> = ({
   const [hasChanges, setHasChanges] = useState(false);
 
   // Form state for the main profile
-  const [formData, setFormData] = useState<Record<string, any>>({});
+  const [formData, setFormData] = useState<TalentFormData>({});
 
   // Fetch full profile data
   const { data: profile, isLoading, refetch } = trpc.ats.candidates.getFullProfile.useQuery(
@@ -178,7 +237,7 @@ export const EditTalentModal: React.FC<EditTalentModalProps> = ({
     }
   }, [profile]);
 
-  const handleFieldChange = (field: string, value: any) => {
+  const handleFieldChange = (field: string, value: unknown) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     setHasChanges(true);
   };
@@ -201,8 +260,9 @@ export const EditTalentModal: React.FC<EditTalentModalProps> = ({
       setHasChanges(false);
       refetch();
       onSuccess();
-    } catch (err: any) {
-      setError(err.message || 'Failed to save profile');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to save profile';
+      setError(errorMessage);
     } finally {
       setIsSaving(false);
     }
@@ -390,7 +450,7 @@ export const EditTalentModal: React.FC<EditTalentModalProps> = ({
 // TAB COMPONENTS
 // ============================================
 
-const PersonalTab: React.FC<{ formData: any; onChange: (field: string, value: any) => void }> = ({ formData, onChange }) => (
+const PersonalTab: React.FC<{ formData: TalentFormData; onChange: (field: string, value: unknown) => void }> = ({ formData, onChange }) => (
   <div className="space-y-6">
     <h3 className="text-lg font-medium text-gray-900">Personal Information</h3>
 
@@ -517,7 +577,7 @@ const PersonalTab: React.FC<{ formData: any; onChange: (field: string, value: an
   </div>
 );
 
-const ContactTab: React.FC<{ formData: any; onChange: (field: string, value: any) => void }> = ({ formData, onChange }) => (
+const ContactTab: React.FC<{ formData: TalentFormData; onChange: (field: string, value: unknown) => void }> = ({ formData, onChange }) => (
   <div className="space-y-6">
     <h3 className="text-lg font-medium text-gray-900">Contact Information</h3>
 
@@ -669,7 +729,7 @@ const ContactTab: React.FC<{ formData: any; onChange: (field: string, value: any
   </div>
 );
 
-const ProfessionalTab: React.FC<{ formData: any; onChange: (field: string, value: any) => void }> = ({ formData, onChange }) => (
+const ProfessionalTab: React.FC<{ formData: TalentFormData; onChange: (field: string, value: unknown) => void }> = ({ formData, onChange }) => (
   <div className="space-y-6">
     <h3 className="text-lg font-medium text-gray-900">Professional Information</h3>
 
@@ -811,7 +871,7 @@ const ProfessionalTab: React.FC<{ formData: any; onChange: (field: string, value
   </div>
 );
 
-const CompensationTab: React.FC<{ formData: any; onChange: (field: string, value: any) => void }> = ({ formData, onChange }) => (
+const CompensationTab: React.FC<{ formData: TalentFormData; onChange: (field: string, value: unknown) => void }> = ({ formData, onChange }) => (
   <div className="space-y-6">
     <h3 className="text-lg font-medium text-gray-900">Compensation & Benefits</h3>
 
@@ -910,7 +970,7 @@ const CompensationTab: React.FC<{ formData: any; onChange: (field: string, value
   </div>
 );
 
-const SourceTab: React.FC<{ formData: any; onChange: (field: string, value: any) => void }> = ({ formData, onChange }) => (
+const SourceTab: React.FC<{ formData: TalentFormData; onChange: (field: string, value: unknown) => void }> = ({ formData, onChange }) => (
   <div className="space-y-6">
     <h3 className="text-lg font-medium text-gray-900">Source & Marketing</h3>
 
@@ -1037,12 +1097,12 @@ const SourceTab: React.FC<{ formData: any; onChange: (field: string, value: any)
 
 const AddressesTab: React.FC<{
   candidateId: string;
-  addresses: any[];
-  onCreate: (data: any) => Promise<any>;
-  onUpdate: (data: any) => Promise<any>;
-  onDelete: (data: { id: string }) => Promise<any>;
+  addresses: Address[];
+  onCreate: (data: unknown) => Promise<unknown>;
+  onUpdate: (data: unknown) => Promise<unknown>;
+  onDelete: (data: { id: string }) => Promise<unknown>;
   onRefresh: () => void;
-}> = ({ candidateId, addresses, onCreate, onUpdate, onDelete, onRefresh }) => {
+}> = ({ candidateId: _candidateId, addresses, onCreate, onUpdate, onDelete, onRefresh: _onRefresh }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -1094,7 +1154,7 @@ const AddressesTab: React.FC<{
     }
   };
 
-  const handleEdit = (addr: any) => {
+  const handleEdit = (addr: Address) => {
     setForm({
       addressType: addr.addressType || 'current',
       addressLine1: addr.addressLine1 || '',
@@ -1289,11 +1349,11 @@ const AddressesTab: React.FC<{
 
 const WorkAuthTab: React.FC<{
   candidateId: string;
-  workAuthorizations: any[];
-  onCreate: (data: any) => Promise<any>;
-  onUpdate: (data: any) => Promise<any>;
+  workAuthorizations: CandidateWorkAuthorization[];
+  onCreate: (data: unknown) => Promise<unknown>;
+  onUpdate: (data: unknown) => Promise<unknown>;
   onRefresh: () => void;
-}> = ({ candidateId, workAuthorizations, onCreate, onUpdate, onRefresh }) => {
+}> = ({ candidateId, workAuthorizations, onCreate, onUpdate: _onUpdate, onRefresh }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -1501,12 +1561,12 @@ const WorkAuthTab: React.FC<{
 
 const EducationTab: React.FC<{
   candidateId: string;
-  education: any[];
-  onCreate: (data: any) => Promise<any>;
-  onUpdate: (data: any) => Promise<any>;
-  onDelete: (data: { id: string }) => Promise<any>;
+  education: CandidateEducation[];
+  onCreate: (data: unknown) => Promise<unknown>;
+  onUpdate: (data: unknown) => Promise<unknown>;
+  onDelete: (data: { id: string }) => Promise<unknown>;
   onRefresh: () => void;
-}> = ({ candidateId, education, onCreate, onUpdate, onDelete, onRefresh }) => {
+}> = ({ candidateId: _candidateId, education, onCreate, onUpdate: _onUpdate, onDelete, onRefresh: _onRefresh }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -1716,12 +1776,12 @@ const EducationTab: React.FC<{
 
 const ExperienceTab: React.FC<{
   candidateId: string;
-  workHistory: any[];
-  onCreate: (data: any) => Promise<any>;
-  onUpdate: (data: any) => Promise<any>;
-  onDelete: (data: { id: string }) => Promise<any>;
+  workHistory: CandidateWorkHistory[];
+  onCreate: (data: unknown) => Promise<unknown>;
+  onUpdate: (data: unknown) => Promise<unknown>;
+  onDelete: (data: { id: string }) => Promise<unknown>;
   onRefresh: () => void;
-}> = ({ candidateId, workHistory, onCreate, onUpdate, onDelete, onRefresh }) => {
+}> = ({ candidateId: _candidateId, workHistory, onCreate, onUpdate: _onUpdate, onDelete, onRefresh: _onRefresh }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -1935,12 +1995,12 @@ const ExperienceTab: React.FC<{
 
 const CertificationsTab: React.FC<{
   candidateId: string;
-  certifications: any[];
-  onCreate: (data: any) => Promise<any>;
-  onUpdate: (data: any) => Promise<any>;
-  onDelete: (data: { id: string }) => Promise<any>;
+  certifications: CandidateCertification[];
+  onCreate: (data: unknown) => Promise<unknown>;
+  onUpdate: (data: unknown) => Promise<unknown>;
+  onDelete: (data: { id: string }) => Promise<unknown>;
   onRefresh: () => void;
-}> = ({ candidateId, certifications, onCreate, onUpdate, onDelete, onRefresh }) => {
+}> = ({ candidateId: _candidateId, certifications, onCreate, onUpdate: _onUpdate, onDelete, onRefresh: _onRefresh }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -2144,12 +2204,12 @@ const CertificationsTab: React.FC<{
 
 const ReferencesTab: React.FC<{
   candidateId: string;
-  references: any[];
-  onCreate: (data: any) => Promise<any>;
-  onUpdate: (data: any) => Promise<any>;
-  onDelete: (data: { id: string }) => Promise<any>;
+  references: CandidateReference[];
+  onCreate: (data: unknown) => Promise<unknown>;
+  onUpdate: (data: unknown) => Promise<unknown>;
+  onDelete: (data: { id: string }) => Promise<unknown>;
   onRefresh: () => void;
-}> = ({ candidateId, references, onCreate, onUpdate, onDelete, onRefresh }) => {
+}> = ({ candidateId: _candidateId, references, onCreate, onUpdate: _onUpdate, onDelete, onRefresh: _onRefresh }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -2373,10 +2433,10 @@ const ReferencesTab: React.FC<{
 
 // Documents Section - Shows resumes and allows uploads
 const DocumentsSection: React.FC<{
-  resumes: any[];
+  resumes: CandidateResume[];
   candidateId: string;
   onRefresh: () => void;
-}> = ({ resumes, candidateId, onRefresh }) => {
+}> = ({ resumes, candidateId: _candidateId, onRefresh: _onRefresh }) => {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
@@ -2395,7 +2455,7 @@ const DocumentsSection: React.FC<{
         </div>
       ) : (
         <div className="space-y-3">
-          {resumes.map((resume: any) => (
+          {resumes.map((resume: CandidateResume) => (
             <div key={resume.id} className="bg-white border rounded-lg p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <FileText className="w-8 h-8 text-blue-500" />
@@ -2423,9 +2483,9 @@ const DocumentsSection: React.FC<{
 
 const ComplianceTab: React.FC<{
   candidateId: string;
-  backgroundChecks: any[];
-  complianceDocuments: any[];
-}> = ({ candidateId, backgroundChecks, complianceDocuments }) => {
+  backgroundChecks: CandidateBackgroundCheck[];
+  complianceDocuments: CandidateComplianceDocument[];
+}> = ({ candidateId: _candidateId, backgroundChecks, complianceDocuments }) => {
   return (
     <div className="space-y-8">
       <div>

@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Users } from 'lucide-react';
 
 export const ClientPipeline: React.FC = () => {
   const stages = [

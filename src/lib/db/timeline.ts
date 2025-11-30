@@ -253,7 +253,7 @@ export async function getTimelineStats() {
 /**
  * Archive old entries (soft delete)
  */
-export async function archiveOldEntries(beforeDate: Date): Promise<number> {
+export async function archiveOldEntries(_beforeDate: Date): Promise<number> {
 
 
   try {
@@ -319,7 +319,7 @@ export async function readFileTimeline(sessionId?: string): Promise<TimelineInpu
       return b.sessionId.localeCompare(a.sessionId);
     });
   } catch (error) {
-    if ((error as any).code === 'ENOENT') {
+    if (error instanceof Error && 'code' in error && (error as NodeJS.ErrnoException).code === 'ENOENT') {
       return [];
     }
     console.error('Error reading file timeline:', error);

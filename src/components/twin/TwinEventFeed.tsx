@@ -10,7 +10,6 @@
 import React from 'react';
 import {
   Bell,
-  Users,
   Briefcase,
   GraduationCap,
   Handshake,

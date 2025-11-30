@@ -53,7 +53,7 @@ export interface AccountQueryOptions {
  * ```
  */
 export function useAccounts(options: AccountsQueryOptions = {}) {
-  const { enabled = true, ownership, limit, offset, status, search, tier } = options;
+  const { enabled = true, ownership: _ownership, limit, offset, status, search, tier } = options;
 
   // Convert limit/offset to page/pageSize for the API
   const pageSize = limit ?? 50;

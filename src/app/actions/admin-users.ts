@@ -166,7 +166,7 @@ async function checkPermission(
       .eq('user_id', userId)
       .is('deleted_at', null);
 
-    const roleNames = roles?.map((r: any) => r.role?.name) || [];
+    const roleNames = roles?.map((r: { role?: { name?: string } | null }) => r.role?.name) || [];
     return roleNames.includes('super_admin') || roleNames.includes('admin');
   }
 
@@ -189,7 +189,7 @@ async function logAuditEvent(
 ) {
   const { tableName, action, recordId, userId, userEmail, orgId, oldValues, newValues, metadata } = params;
 
-  await (adminSupabase.from as any)('audit_logs').insert({
+  await (adminSupabase.from as unknown as (table: string) => { insert: (data: unknown) => Promise<unknown> })('audit_logs').insert({
     table_name: tableName,
     action,
     record_id: recordId,
@@ -315,24 +315,50 @@ export async function listUsersAction(
   }
 
   // Transform data
-  const transformedUsers: UserWithRoles[] = (users || []).map((user: any) => ({
+  interface UserQueryResult {
+    id: string;
+    auth_id: string | null;
+    email: string;
+    full_name: string;
+    avatar_url: string | null;
+    phone: string | null;
+    is_active: boolean | null;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
+    org_id: string;
+    user_roles: Array<{
+      role_id: string;
+      is_primary: boolean;
+      assigned_at: string;
+      expires_at: string | null;
+      deleted_at: string | null;
+      roles: {
+        id: string;
+        name: string;
+        display_name: string;
+      } | null;
+    }>;
+  }
+
+  const transformedUsers: UserWithRoles[] = (users || []).map((user: UserQueryResult) => ({
     id: user.id,
     authId: user.auth_id,
     email: user.email,
     fullName: user.full_name,
     avatarUrl: user.avatar_url,
     phone: user.phone,
-    isActive: user.is_active,
+    isActive: user.is_active ?? false,
     createdAt: user.created_at,
     updatedAt: user.updated_at,
     deletedAt: user.deleted_at,
     orgId: user.org_id,
     roles: (user.user_roles || [])
-      .filter((ur: any) => !ur.deleted_at)
-      .map((ur: any) => ({
-        id: ur.roles?.id,
-        name: ur.roles?.name,
-        displayName: ur.roles?.display_name,
+      .filter((ur) => !ur.deleted_at && ur.roles)
+      .map((ur) => ({
+        id: ur.roles!.id,
+        name: ur.roles!.name,
+        displayName: ur.roles!.display_name,
         isPrimary: ur.is_primary,
         assignedAt: ur.assigned_at,
         expiresAt: ur.expires_at,
@@ -432,10 +458,30 @@ export async function getUserAction(userId: string): Promise<ActionResult<UserWi
   const permissionsSet = new Set<string>();
   const permissions: Array<{ resource: string; action: string; scope: string }> = [];
 
-  (user.user_roles || [])
-    .filter((ur: any) => !ur.deleted_at)
-    .forEach((ur: any) => {
-      (ur.roles?.role_permissions || []).forEach((rp: any) => {
+  interface UserRoleWithPermissions {
+    role_id: string;
+    is_primary: boolean;
+    assigned_at: string;
+    expires_at: string | null;
+    deleted_at: string | null;
+    roles: {
+      id: string;
+      name: string;
+      display_name: string;
+      role_permissions?: Array<{
+        permissions: {
+          resource: string;
+          action: string;
+          scope: string;
+        } | null;
+      }>;
+    } | null;
+  }
+
+  ((user.user_roles || []) as UserRoleWithPermissions[])
+    .filter((ur) => !ur.deleted_at)
+    .forEach((ur) => {
+      (ur.roles?.role_permissions || []).forEach((rp) => {
         const perm = rp.permissions;
         if (perm) {
           const key = `${perm.resource}:${perm.action}:${perm.scope}`;
@@ -463,12 +509,12 @@ export async function getUserAction(userId: string): Promise<ActionResult<UserWi
     updatedAt: user.updated_at,
     deletedAt: user.deleted_at,
     orgId: user.org_id,
-    roles: ((user.user_roles || []) as any[])
-      .filter((ur: any) => !ur.deleted_at)
-      .map((ur: any) => ({
-        id: ur.roles?.id,
-        name: ur.roles?.name,
-        displayName: ur.roles?.display_name,
+    roles: ((user.user_roles || []) as UserRoleWithPermissions[])
+      .filter((ur) => !ur.deleted_at && ur.roles)
+      .map((ur) => ({
+        id: ur.roles!.id,
+        name: ur.roles!.name,
+        displayName: ur.roles!.display_name,
         isPrimary: ur.is_primary,
         assignedAt: ur.assigned_at,
         expiresAt: ur.expires_at,
@@ -1004,6 +1050,16 @@ export async function removeRoleAction(
   }
 
   // Audit log
+  interface AssignmentWithRoles {
+    user_id: string;
+    role_id: string;
+    is_primary: boolean;
+    roles: { name: string; display_name: string } | null;
+    user_profiles: { email: string } | null;
+  }
+
+  const typedAssignment = assignment as unknown as AssignmentWithRoles;
+
   await logAuditEvent(adminSupabase, {
     tableName: 'user_roles',
     action: 'REMOVE_ROLE',
@@ -1011,11 +1067,11 @@ export async function removeRoleAction(
     userId: profile.id,
     userEmail: profile.email,
     orgId: profile.org_id,
-    oldValues: { roleId, roleName: (assignment.roles as any)?.name, isPrimary: assignment.is_primary },
+    oldValues: { roleId, roleName: typedAssignment.roles?.name, isPrimary: assignment.is_primary },
     metadata: {
       source: 'admin_remove',
-      targetUser: (assignment.user_profiles as any)?.email,
-      roleName: (assignment.roles as any)?.name,
+      targetUser: typedAssignment.user_profiles?.email,
+      roleName: typedAssignment.roles?.name,
     },
   });
 

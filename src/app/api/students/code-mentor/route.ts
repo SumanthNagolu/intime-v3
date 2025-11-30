@@ -135,12 +135,23 @@ export async function GET(req: NextRequest) {
       success: true,
       data: {
         conversationId,
-        messages: interactions?.map((i) => ({
-          role: 'assistant',
-          content: typeof i.output === 'string' ? i.output : (i.output as any)?.response || JSON.stringify(i.output),
-          timestamp: i.created_at,
-          helpful: i.was_helpful,
-        })) || [],
+        messages: interactions?.map((i) => {
+          const output = i.output;
+          let content: string;
+          if (typeof output === 'string') {
+            content = output;
+          } else if (output && typeof output === 'object' && 'response' in output && typeof output.response === 'string') {
+            content = output.response;
+          } else {
+            content = JSON.stringify(output);
+          }
+          return {
+            role: 'assistant',
+            content,
+            timestamp: i.created_at,
+            helpful: i.was_helpful,
+          };
+        }) || [],
       },
     });
   } catch (error) {

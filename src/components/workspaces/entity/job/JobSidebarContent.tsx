@@ -17,7 +17,6 @@ import {
   Calendar,
   Users,
   AlertCircle,
-  CheckSquare,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';

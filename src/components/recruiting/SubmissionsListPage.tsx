@@ -3,8 +3,8 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import {
-  Send, Search, Filter, ChevronRight, Loader2, User, Briefcase, MapPin,
-  Calendar, Star, Clock
+  Send, Search, ChevronRight, Loader2, User, Briefcase,
+  Calendar, Star
 } from 'lucide-react';
 import { trpc } from '@/lib/trpc/client';
 

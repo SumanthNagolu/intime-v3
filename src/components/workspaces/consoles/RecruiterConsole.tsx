@@ -14,9 +14,7 @@ import {
   Briefcase,
   Users,
   FileText,
-  Target,
   TrendingUp,
-  Clock,
   CheckCircle,
   ArrowRight,
   Plus,
@@ -28,14 +26,13 @@ import {
   UserCheck,
   Building2,
   Search,
-  Filter,
   Loader2,
 } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { trpc } from '@/lib/trpc/client';
@@ -105,8 +102,6 @@ export function RecruiterConsole() {
   const jobsList = priorityJobs || [];
   const tasksList = tasks || [];
   const submissionsList = recentSubmissions || [];
-
-  const isLoading = metricsLoading || pipelineLoading;
 
   const toggleTask = (id: string) => {
     toggleTaskMutation.mutate({ taskId: id });
@@ -319,7 +314,7 @@ export function RecruiterConsole() {
             <div className="flex items-center justify-between">
               <CardTitle className="text-base flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
-                Today's Tasks
+                Today&apos;s Tasks
               </CardTitle>
               <Badge variant="outline" className="text-xs">
                 {tasksList.filter(t => !t.done).length} pending

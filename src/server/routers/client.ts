@@ -142,7 +142,7 @@ export const clientRouter = router({
         const { orgId } = ctx;
         const { clientId, limit, offset, status } = input;
 
-        let conditions = [
+        const conditions = [
           eq(jobs.clientId, clientId),
           eq(jobs.orgId, orgId)
         ];
@@ -294,7 +294,7 @@ export const clientRouter = router({
           return [];
         }
 
-        let conditions = [
+        const conditions = [
           inArray(submissions.jobId, jobIds),
           eq(submissions.orgId, orgId)
         ];
@@ -391,7 +391,7 @@ export const clientRouter = router({
           return [];
         }
 
-        let conditions = [
+        const conditions = [
           inArray(interviews.jobId, jobIds),
           eq(interviews.orgId, orgId)
         ];

@@ -18,6 +18,160 @@ import { z } from 'zod';
 // Types
 // ============================================================================
 
+// Database Row Types (from Supabase queries)
+interface RoleRow {
+  role?: {
+    name?: string;
+  } | null;
+}
+
+interface LeadRow {
+  id: string;
+  lead_type: string;
+  company_name: string | null;
+  industry: string | null;
+  company_size: string | null;
+  first_name: string | null;
+  last_name: string | null;
+  full_name: string | null;
+  title: string | null;
+  email: string | null;
+  phone: string | null;
+  linkedin_url: string | null;
+  status: string;
+  estimated_value: number | null;
+  source: string | null;
+  source_campaign_id: string | null;
+  owner_id: string | null;
+  owner?: { full_name?: string | null };
+  last_contacted_at: string | null;
+  last_response_at: string | null;
+  engagement_score: number | null;
+  converted_to_deal_id: string | null;
+  converted_to_account_id: string | null;
+  converted_at: string | null;
+  lost_reason: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+interface DealRow {
+  id: string;
+  title: string;
+  description: string | null;
+  value: string | number;
+  stage: string;
+  probability: number | null;
+  expected_close_date: string | null;
+  actual_close_date: string | null;
+  close_reason: string | null;
+  lead_id: string | null;
+  account_id: string | null;
+  account?: { name?: string | null };
+  owner_id: string;
+  owner?: { full_name?: string | null };
+  linked_job_ids: string[] | null;
+  created_at: string;
+  updated_at: string;
+}
+
+interface AccountRow {
+  id: string;
+  name: string;
+  industry: string | null;
+  company_type: string;
+  status: string;
+  tier: string | null;
+  account_manager_id: string | null;
+  account_manager?: { full_name?: string | null };
+  responsiveness: string | null;
+  preferred_quality: string | null;
+  description: string | null;
+  contract_start_date: string | null;
+  contract_end_date: string | null;
+  payment_terms_days: number;
+  markup_percentage: number | null;
+  annual_revenue_target: number | null;
+  website: string | null;
+  headquarters_location: string | null;
+  phone: string | null;
+  contact_count: number;
+  deal_count: number;
+  created_at: string;
+  updated_at: string;
+}
+
+interface ContactRow {
+  id: string;
+  account_id: string;
+  account?: { name?: string | null };
+  first_name: string;
+  last_name: string;
+  full_name: string | null;
+  title: string | null;
+  role: string | null;
+  email: string;
+  phone: string | null;
+  linkedin_url: string | null;
+  preferred_contact_method: string;
+  decision_authority: string | null;
+  notes: string | null;
+  is_primary: boolean;
+  is_active: boolean;
+  created_at: string;
+}
+
+interface ActivityRow {
+  id: string;
+  entity_type: string;
+  entity_id: string;
+  activity_type: string;
+  subject: string | null;
+  body: string | null;
+  direction: string | null;
+  performed_by: string | null;
+  performed_by_user?: { full_name?: string | null };
+  poc_id: string | null;
+  poc?: { full_name?: string | null };
+  activity_date: string;
+  duration_minutes: number | null;
+  outcome: string | null;
+  next_action: string | null;
+  next_action_date: string | null;
+  created_at: string;
+}
+
+interface UserRoleRow {
+  roles?: {
+    name?: string;
+  } | null;
+}
+
+interface TeamMemberRow {
+  id?: string;
+  full_name?: string | null;
+  user_roles?: UserRoleRow[];
+}
+
+// Partial row types for metrics queries
+interface LeadStatusRow {
+  status: string;
+}
+
+interface DealStageValueRow {
+  stage: string;
+  value: string | number;
+}
+
+interface AccountStatusRow {
+  status: string;
+}
+
+interface ActivityDateTypeRow {
+  activity_date: string;
+  activity_type: string;
+}
+
 export interface ActionResult<T = unknown> {
   success: boolean;
   data?: T;
@@ -388,7 +542,7 @@ async function checkPermission(
       .eq('user_id', userId)
       .is('deleted_at', null);
 
-    const roleNames = roles?.map((r: any) => r.role?.name) || [];
+    const roleNames = roles?.map((r: RoleRow) => r.role?.name) || [];
     return roleNames.includes('super_admin') || roleNames.includes('admin') || roleNames.includes('ta_manager') || roleNames.includes('sales');
   }
 
@@ -411,7 +565,7 @@ async function logAuditEvent(
 ) {
   const { tableName, action, recordId, userId, userEmail, orgId, oldValues, newValues, metadata } = params;
 
-  await (adminSupabase.from as any)('audit_logs').insert({
+  await (adminSupabase.from as (table: string) => ReturnType<typeof adminSupabase.from>)('audit_logs').insert({
     table_name: tableName,
     action,
     record_id: recordId,
@@ -517,7 +671,7 @@ export async function listLeadsAction(
     return { success: false, error: 'Failed to fetch leads' };
   }
 
-  const transformedLeads: Lead[] = (leads || []).map((lead: any) => ({
+  const transformedLeads: Lead[] = (leads || []).map((lead: LeadRow) => ({
     id: lead.id,
     leadType: lead.lead_type,
     companyName: lead.company_name,
@@ -1021,7 +1175,6 @@ export async function recordLeadContactAction(
     return { success: false, error: authError || 'Not authenticated' };
   }
 
-  const supabase = await createClient();
   const adminSupabase = createAdminClient();
 
   const updateData: Record<string, unknown> = {
@@ -1142,7 +1295,7 @@ export async function listDealsAction(
     return { success: false, error: 'Failed to fetch deals' };
   }
 
-  const transformedDeals: Deal[] = (deals || []).map((deal: any) => ({
+  const transformedDeals: Deal[] = (deals || []).map((deal: DealRow) => ({
     id: deal.id,
     title: deal.title,
     description: deal.description,
@@ -1577,7 +1730,7 @@ export async function getDealPipelineAction(): Promise<ActionResult<{
   let totalPipelineValue = 0;
   let totalWeightedValue = 0;
 
-  (deals || []).forEach((deal: any) => {
+  (deals || []).forEach((deal: DealRow) => {
     const value = parseFloat(deal.value) || 0;
     const probability = deal.probability || 0;
     const weighted = value * (probability / 100);
@@ -1692,7 +1845,7 @@ export async function listAccountsAction(
     return { success: false, error: 'Failed to fetch accounts' };
   }
 
-  const transformedAccounts: Account[] = (accounts || []).map((account: any) => ({
+  const transformedAccounts: Account[] = (accounts || []).map((account: AccountRow) => ({
     id: account.id,
     name: account.name,
     industry: account.industry,
@@ -2062,7 +2215,7 @@ export async function listAccountContactsAction(
     return { success: false, error: 'Failed to fetch contacts' };
   }
 
-  const transformedContacts: PointOfContact[] = (contacts || []).map((contact: any) => ({
+  const transformedContacts: PointOfContact[] = (contacts || []).map((contact: ContactRow) => ({
     id: contact.id,
     accountId: contact.account_id,
     accountName: contact.account?.name || null,
@@ -2409,7 +2562,7 @@ export async function listActivitiesAction(
     return { success: false, error: 'Failed to fetch activities' };
   }
 
-  const transformedActivities: Activity[] = (activities || []).map((activity: any) => ({
+  const transformedActivities: Activity[] = (activities || []).map((activity: ActivityRow) => ({
     id: activity.id,
     entityType: activity.entity_type,
     entityId: activity.entity_id,
@@ -2570,9 +2723,9 @@ export async function getTADashboardMetricsAction(): Promise<ActionResult<{
 
   const leadStats = {
     total: leads?.length || 0,
-    new: leads?.filter((l: any) => l.status === 'new').length || 0,
-    hot: leads?.filter((l: any) => l.status === 'hot').length || 0,
-    converted: leads?.filter((l: any) => l.status === 'converted').length || 0,
+    new: leads?.filter((l: LeadStatusRow) => l.status === 'new').length || 0,
+    hot: leads?.filter((l: LeadStatusRow) => l.status === 'hot').length || 0,
+    converted: leads?.filter((l: LeadStatusRow) => l.status === 'converted').length || 0,
     conversionRate: 0,
   };
   if (leadStats.total > 0) {
@@ -2585,14 +2738,14 @@ export async function getTADashboardMetricsAction(): Promise<ActionResult<{
     .select('stage, value')
     .is('deleted_at', null);
 
-  const openDeals = deals?.filter((d: any) => !['closed_won', 'closed_lost'].includes(d.stage)) || [];
-  const closedWonDeals = deals?.filter((d: any) => d.stage === 'closed_won') || [];
-  const closedDeals = deals?.filter((d: any) => ['closed_won', 'closed_lost'].includes(d.stage)) || [];
+  const openDeals = deals?.filter((d: DealStageValueRow) => !['closed_won', 'closed_lost'].includes(d.stage)) || [];
+  const closedWonDeals = deals?.filter((d: DealStageValueRow) => d.stage === 'closed_won') || [];
+  const closedDeals = deals?.filter((d: DealStageValueRow) => ['closed_won', 'closed_lost'].includes(d.stage)) || [];
 
   const dealStats = {
     total: deals?.length || 0,
-    pipelineValue: openDeals.reduce((sum: number, d: any) => sum + parseFloat(d.value || 0), 0),
-    closedWonValue: closedWonDeals.reduce((sum: number, d: any) => sum + parseFloat(d.value || 0), 0),
+    pipelineValue: openDeals.reduce((sum: number, d: DealStageValueRow) => sum + parseFloat(String(d.value || 0)), 0),
+    closedWonValue: closedWonDeals.reduce((sum: number, d: DealStageValueRow) => sum + parseFloat(String(d.value || 0)), 0),
     avgDealSize: 0,
     winRate: 0,
   };
@@ -2611,8 +2764,8 @@ export async function getTADashboardMetricsAction(): Promise<ActionResult<{
 
   const accountStats = {
     total: accounts?.length || 0,
-    active: accounts?.filter((a: any) => a.status === 'active').length || 0,
-    prospect: accounts?.filter((a: any) => a.status === 'prospect').length || 0,
+    active: accounts?.filter((a: AccountStatusRow) => a.status === 'active').length || 0,
+    prospect: accounts?.filter((a: AccountStatusRow) => a.status === 'prospect').length || 0,
   };
 
   // Fetch activities stats
@@ -2629,19 +2782,19 @@ export async function getTADashboardMetricsAction(): Promise<ActionResult<{
     .select('activity_type, activity_date')
     .gte('activity_date', lastWeekStart.toISOString());
 
-  const thisWeekActivities = activities?.filter((a: any) =>
+  const thisWeekActivities = activities?.filter((a: ActivityDateTypeRow) =>
     new Date(a.activity_date) >= thisWeekStart
   ) || [];
-  const lastWeekActivities = activities?.filter((a: any) =>
+  const lastWeekActivities = activities?.filter((a: ActivityDateTypeRow) =>
     new Date(a.activity_date) >= lastWeekStart && new Date(a.activity_date) < thisWeekStart
   ) || [];
 
   const activityStats = {
     thisWeek: thisWeekActivities.length,
     lastWeek: lastWeekActivities.length,
-    callsMade: thisWeekActivities.filter((a: any) => a.activity_type === 'call').length,
-    emailsSent: thisWeekActivities.filter((a: any) => a.activity_type === 'email').length,
-    meetingsHeld: thisWeekActivities.filter((a: any) => a.activity_type === 'meeting').length,
+    callsMade: thisWeekActivities.filter((a: ActivityDateTypeRow) => a.activity_type === 'call').length,
+    emailsSent: thisWeekActivities.filter((a: ActivityDateTypeRow) => a.activity_type === 'email').length,
+    meetingsHeld: thisWeekActivities.filter((a: ActivityDateTypeRow) => a.activity_type === 'meeting').length,
   };
 
   return {
@@ -2685,12 +2838,12 @@ export async function getTeamLeaderboardAction(): Promise<ActionResult<Array<{
     `)
     .is('deleted_at', null);
 
-  const salesTeam = (teamMembers || []).filter((m: any) => {
-    const roles = m.user_roles?.map((ur: any) => ur.roles?.name) || [];
-    return roles.some((r: string) => ['ta_manager', 'sales', 'recruiter'].includes(r));
+  const salesTeam = (teamMembers || []).filter((m: TeamMemberRow) => {
+    const roles = m.user_roles?.map((ur: UserRoleRow) => ur.roles?.name) || [];
+    return roles.some((r: string | undefined) => r && ['ta_manager', 'sales', 'recruiter'].includes(r));
   });
 
-  const leaderboard = await Promise.all(salesTeam.map(async (member: any) => {
+  const leaderboard = await Promise.all(salesTeam.map(async (member: TeamMemberRow) => {
     // Get deals won
     const { data: deals } = await supabase
       .from('deals')
@@ -2721,7 +2874,7 @@ export async function getTeamLeaderboardAction(): Promise<ActionResult<Array<{
       userId: member.id,
       userName: member.full_name,
       dealsWon: deals?.length || 0,
-      revenue: deals?.reduce((sum: number, d: any) => sum + parseFloat(d.value || 0), 0) || 0,
+      revenue: deals?.reduce((sum: number, d: DealStageValueRow) => sum + parseFloat(String(d.value || 0)), 0) || 0,
       leadsConverted: leads?.length || 0,
       activitiesLogged: activities?.length || 0,
     };

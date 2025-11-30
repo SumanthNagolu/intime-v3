@@ -16,8 +16,6 @@ import {
   Phone,
   Calendar,
   DollarSign,
-  Target,
-  TrendingUp,
   Briefcase,
   FileText,
   Activity,
@@ -29,19 +27,13 @@ import {
   ArrowRight,
   BarChart3,
   Clock,
-  Users,
   Video,
   FileCheck,
-  ThumbsUp,
-  ThumbsDown,
   Zap,
   Send,
   ExternalLink,
   Star,
-  Award,
   UserCheck,
-  ChevronRight,
-  Link2,
 } from 'lucide-react';
 import { format, formatDistanceToNow, differenceInDays } from 'date-fns';
 import { trpc } from '@/lib/trpc/client';
@@ -62,7 +54,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -187,7 +178,7 @@ function SubmissionPipeline({ status }: { status: string }) {
   );
 }
 
-function OverviewTab({ submission, canEdit }: { submission: NonNullable<ReturnType<typeof useSubmission>['data']>; canEdit: boolean }) {
+function OverviewTab({ submission }: { submission: NonNullable<ReturnType<typeof useSubmission>['data']>; canEdit: boolean }) {
   const daysInPipeline = differenceInDays(new Date(), new Date(submission.createdAt));
 
   return (
@@ -776,6 +767,8 @@ function OffersTab({ submission, canEdit }: { submission: NonNullable<ReturnType
 
 function TimelineTab({ submission }: { submission: NonNullable<ReturnType<typeof useSubmission>['data']> }) {
   // Build timeline from submission data
+  type IconComponent = React.ComponentType<{ className?: string }>;
+
   const events = [
     { date: submission.createdAt, label: 'Candidate Sourced', icon: UserCheck },
     submission.submittedToClientAt && {
@@ -808,7 +801,7 @@ function TimelineTab({ submission }: { submission: NonNullable<ReturnType<typeof
       label: 'Submission Rejected',
       icon: XCircle,
     },
-  ].filter(Boolean) as Array<{ date: string | Date; label: string; icon: any }>;
+  ].filter(Boolean) as Array<{ date: string | Date; label: string; icon: IconComponent }>;
 
   // Sort by date
   events.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
@@ -822,7 +815,7 @@ function TimelineTab({ submission }: { submission: NonNullable<ReturnType<typeof
             Submission Timeline
           </CardTitle>
           <CardDescription>
-            Key milestones in this submission's journey
+            Key milestones in this submission&apos;s journey
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -877,7 +870,7 @@ function useSubmission(submissionId: string) {
 
 export function SubmissionsWorkspace({ submissionId }: SubmissionsWorkspaceProps) {
   const router = useRouter();
-  const { context, canEdit, canDelete, isLoading: contextLoading } = useWorkspaceContext('submission', submissionId);
+  const { canEdit, canDelete, isLoading: contextLoading } = useWorkspaceContext('submission', submissionId);
 
   // Fetch submission data
   const { data: submission, isLoading: submissionLoading, error } = useSubmission(submissionId);

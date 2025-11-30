@@ -220,12 +220,12 @@ interface ActionBarProps {
 
 function ActionBar({
   actions,
-  entity,
+  entity: _entity,
   formState,
   onAction,
-  isEditing,
-  onSave,
-  onCancel,
+  isEditing: _isEditing,
+  onSave: _onSave,
+  onCancel: _onCancel,
 }: ActionBarProps) {
   const router = useRouter();
 

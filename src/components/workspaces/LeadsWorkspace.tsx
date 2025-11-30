@@ -7,7 +7,7 @@
 
 'use client';
 
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
@@ -20,16 +20,11 @@ import {
   MapPin,
   DollarSign,
   Target,
-  Calendar,
-  CheckCircle,
   ArrowRight,
   AlertTriangle,
   TrendingUp,
-  Briefcase,
   FileText,
   Activity,
-  FolderOpen,
-  Lightbulb,
   MessageSquare,
   ChevronLeft,
   Loader2,
@@ -54,34 +49,12 @@ import {
   Star,
   BarChart3,
 } from 'lucide-react';
-import { format } from 'date-fns';
-import { trpc } from '@/lib/trpc/client';
-import { cn } from '@/lib/utils';
-
-// UI Components
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { Separator } from '@/components/ui/separator';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
 
 // Hooks
 import { useLead, useLeadActivities } from '@/hooks/queries/leads';
 import {
   useUpdateLeadStatus,
   useConvertLead,
-  useUpdateLead,
   useCreateLeadActivity,
   useUpdateLeadBANT,
 } from '@/hooks/mutations/leads';
@@ -178,7 +151,6 @@ export function LeadsWorkspace({ leadId }: LeadsWorkspaceProps) {
   // Mutations
   const updateStatus = useUpdateLeadStatus();
   const convertLead = useConvertLead();
-  const updateLead = useUpdateLead();
   const createActivity = useCreateLeadActivity();
   const updateBANT = useUpdateLeadBANT();
   const createTaskMutation = useCreateActivity();

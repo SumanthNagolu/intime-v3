@@ -208,13 +208,13 @@ export async function getTopicLessons(topicId: string): Promise<TopicLesson[]> {
 export async function checkPrerequisites(
   userId: string,
   prerequisiteIds: string[],
-  type: 'course' | 'module' | 'topic'
+  _type: 'course' | 'module' | 'topic'
 ): Promise<boolean> {
   if (!prerequisiteIds || prerequisiteIds.length === 0) {
     return true;
   }
 
-  const supabase = await createClient();
+  const _supabase = await createClient();
 
   // This will be implemented in ACAD-003 (Progress Tracking)
   // For now, return true to allow access

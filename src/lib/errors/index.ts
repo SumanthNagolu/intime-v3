@@ -12,7 +12,7 @@ export class ApplicationError extends Error {
     message: string,
     public code: string,
     public statusCode: number = 500,
-    public details?: Record<string, any>
+    public details?: Record<string, unknown>
   ) {
     super(message);
     this.name = this.constructor.name;
@@ -35,7 +35,7 @@ export class ApplicationError extends Error {
  * Thrown when user is not authenticated
  */
 export class AuthenticationError extends ApplicationError {
-  constructor(message: string = 'Authentication required', details?: Record<string, any>) {
+  constructor(message: string = 'Authentication required', details?: Record<string, unknown>) {
     super(message, 'AUTHENTICATION_REQUIRED', 401, details);
   }
 }
@@ -45,7 +45,7 @@ export class AuthenticationError extends ApplicationError {
  * Thrown when user lacks required permissions
  */
 export class AuthorizationError extends ApplicationError {
-  constructor(message: string = 'Permission denied', details?: Record<string, any>) {
+  constructor(message: string = 'Permission denied', details?: Record<string, unknown>) {
     super(message, 'PERMISSION_DENIED', 403, details);
   }
 }
@@ -55,7 +55,7 @@ export class AuthorizationError extends ApplicationError {
  * Thrown when input validation fails
  */
 export class ValidationError extends ApplicationError {
-  constructor(message: string = 'Validation failed', details?: Record<string, any>) {
+  constructor(message: string = 'Validation failed', details?: Record<string, unknown>) {
     super(message, 'VALIDATION_ERROR', 400, details);
   }
 }
@@ -68,7 +68,7 @@ export class NotFoundError extends ApplicationError {
   constructor(
     resource: string = 'Resource',
     identifier?: string,
-    details?: Record<string, any>
+    details?: Record<string, unknown>
   ) {
     const message = identifier
       ? `${resource} with identifier '${identifier}' not found`
@@ -82,7 +82,7 @@ export class NotFoundError extends ApplicationError {
  * Thrown when operation conflicts with existing state
  */
 export class ConflictError extends ApplicationError {
-  constructor(message: string = 'Resource already exists', details?: Record<string, any>) {
+  constructor(message: string = 'Resource already exists', details?: Record<string, unknown>) {
     super(message, 'CONFLICT', 409, details);
   }
 }
@@ -92,7 +92,7 @@ export class ConflictError extends ApplicationError {
  * Thrown when rate limit is exceeded
  */
 export class RateLimitError extends ApplicationError {
-  constructor(message: string = 'Rate limit exceeded', details?: Record<string, any>) {
+  constructor(message: string = 'Rate limit exceeded', details?: Record<string, unknown>) {
     super(message, 'RATE_LIMIT_EXCEEDED', 429, details);
   }
 }
@@ -105,7 +105,7 @@ export class ExternalServiceError extends ApplicationError {
   constructor(
     service: string,
     message: string = 'External service error',
-    details?: Record<string, any>
+    details?: Record<string, unknown>
   ) {
     super(`${service}: ${message}`, 'EXTERNAL_SERVICE_ERROR', 502, {
       service,
@@ -119,7 +119,7 @@ export class ExternalServiceError extends ApplicationError {
  * Thrown when database operation fails
  */
 export class DatabaseError extends ApplicationError {
-  constructor(message: string = 'Database operation failed', details?: Record<string, any>) {
+  constructor(message: string = 'Database operation failed', details?: Record<string, unknown>) {
     super(message, 'DATABASE_ERROR', 500, details);
   }
 }
@@ -129,7 +129,7 @@ export class DatabaseError extends ApplicationError {
  * Thrown when event bus operation fails
  */
 export class EventBusError extends ApplicationError {
-  constructor(message: string = 'Event bus operation failed', details?: Record<string, any>) {
+  constructor(message: string = 'Event bus operation failed', details?: Record<string, unknown>) {
     super(message, 'EVENT_BUS_ERROR', 500, details);
   }
 }

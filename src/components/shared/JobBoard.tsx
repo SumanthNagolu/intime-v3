@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { useAppStore } from '../../lib/store';
-import { Search, Briefcase, MapPin, DollarSign, Clock, Filter, ChevronRight, Sparkles } from 'lucide-react';
+import { Search, Briefcase, MapPin, DollarSign, Clock, ChevronRight, Sparkles } from 'lucide-react';
 
 export const JobBoard: React.FC = () => {
   const { jobs } = useAppStore();
@@ -83,7 +83,7 @@ export const JobBoard: React.FC = () => {
                           <span className="text-xs font-bold uppercase tracking-widest text-purple-700">AI Insight</span>
                       </div>
                       <p className="text-xs text-stone-500 leading-relaxed">
-                          "3 bench consultants match this role. Recommend submitting Amit Kumar."
+                          &quot;3 bench consultants match this role. Recommend submitting Amit Kumar.&quot;
                       </p>
                   </div>
 

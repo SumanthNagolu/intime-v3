@@ -222,49 +222,62 @@ export async function listPodsAction(
   }
 
   // Transform data
-  const transformedPods: PodWithMembers[] = (pods || []).map((pod: any) => ({
-    id: pod.id,
-    name: pod.name,
-    podType: pod.pod_type,
-    seniorMemberId: pod.senior_member_id,
-    juniorMemberId: pod.junior_member_id,
-    sprintDurationWeeks: pod.sprint_duration_weeks,
-    placementsPerSprintTarget: pod.placements_per_sprint_target,
-    totalPlacements: pod.total_placements,
-    currentSprintPlacements: pod.current_sprint_placements,
-    currentSprintStartDate: pod.current_sprint_start_date,
-    averagePlacementsPerSprint: pod.average_placements_per_sprint
-      ? parseFloat(pod.average_placements_per_sprint)
-      : null,
-    isActive: pod.is_active,
-    formedDate: pod.formed_date,
-    dissolvedDate: pod.dissolved_date,
-    orgId: pod.org_id,
-    createdAt: pod.created_at,
-    seniorMember: pod.senior_member
-      ? {
-          id: pod.senior_member.id,
-          fullName: pod.senior_member.full_name,
-          email: pod.senior_member.email,
-          position: pod.senior_member.position,
-          avatarUrl: pod.senior_member.avatar_url,
-        }
-      : null,
-    juniorMember: pod.junior_member
-      ? {
-          id: pod.junior_member.id,
-          fullName: pod.junior_member.full_name,
-          email: pod.junior_member.email,
-          position: pod.junior_member.position,
-          avatarUrl: pod.junior_member.avatar_url,
-        }
-      : null,
-    performance: {
-      thisWeekPlacements: pod.current_sprint_placements || 0,
-      thisMonthPlacements: pod.total_placements || 0,
-      onTrack: (pod.current_sprint_placements || 0) >= (pod.placements_per_sprint_target || 2) / 2,
-    },
-  }));
+  interface PodMemberData {
+    id: string;
+    full_name: string;
+    email: string;
+    position: string | null;
+    avatar_url: string | null;
+  }
+
+  const transformedPods = (pods || []).map((pod): PodWithMembers => {
+    const seniorMember = pod.senior_member as unknown as PodMemberData | null | undefined;
+    const juniorMember = pod.junior_member as unknown as PodMemberData | null | undefined;
+
+    return {
+      id: pod.id,
+      name: pod.name,
+      podType: pod.pod_type,
+      seniorMemberId: pod.senior_member_id,
+      juniorMemberId: pod.junior_member_id,
+      sprintDurationWeeks: pod.sprint_duration_weeks ?? 2,
+      placementsPerSprintTarget: pod.placements_per_sprint_target ?? 2,
+      totalPlacements: pod.total_placements ?? 0,
+      currentSprintPlacements: pod.current_sprint_placements ?? 0,
+      currentSprintStartDate: pod.current_sprint_start_date,
+      averagePlacementsPerSprint: pod.average_placements_per_sprint
+        ? parseFloat(String(pod.average_placements_per_sprint))
+        : null,
+      isActive: pod.is_active ?? true,
+      formedDate: pod.formed_date,
+      dissolvedDate: pod.dissolved_date,
+      orgId: pod.org_id,
+      createdAt: pod.created_at,
+      seniorMember: seniorMember
+        ? {
+            id: seniorMember.id,
+            fullName: seniorMember.full_name,
+            email: seniorMember.email,
+            position: seniorMember.position,
+            avatarUrl: seniorMember.avatar_url,
+          }
+        : null,
+      juniorMember: juniorMember
+        ? {
+            id: juniorMember.id,
+            fullName: juniorMember.full_name,
+            email: juniorMember.email,
+            position: juniorMember.position,
+            avatarUrl: juniorMember.avatar_url,
+          }
+        : null,
+      performance: {
+        thisWeekPlacements: pod.current_sprint_placements ?? 0,
+        thisMonthPlacements: pod.total_placements ?? 0,
+        onTrack: (pod.current_sprint_placements ?? 0) >= (pod.placements_per_sprint_target ?? 2) / 2,
+      },
+    };
+  });
 
   const total = count || 0;
   const pagination = calculatePagination(total, page, pageSize);
@@ -342,6 +355,17 @@ export async function getPodAction(podId: string): Promise<ActionResult<PodWithM
     return { success: false, error: 'Pod not found' };
   }
 
+  interface PodMember {
+    id: string;
+    full_name: string;
+    email: string;
+    position: string | null;
+    avatar_url: string | null;
+  }
+
+  const seniorMember = pod.senior_member as PodMember | null | undefined;
+  const juniorMember = pod.junior_member as PodMember | null | undefined;
+
   return {
     success: true,
     data: {
@@ -363,22 +387,22 @@ export async function getPodAction(podId: string): Promise<ActionResult<PodWithM
       dissolvedDate: pod.dissolved_date,
       orgId: pod.org_id,
       createdAt: pod.created_at,
-      seniorMember: pod.senior_member
+      seniorMember: seniorMember
         ? {
-            id: (pod.senior_member as any).id,
-            fullName: (pod.senior_member as any).full_name,
-            email: (pod.senior_member as any).email,
-            position: (pod.senior_member as any).position,
-            avatarUrl: (pod.senior_member as any).avatar_url,
+            id: seniorMember.id,
+            fullName: seniorMember.full_name,
+            email: seniorMember.email,
+            position: seniorMember.position,
+            avatarUrl: seniorMember.avatar_url,
           }
         : null,
-      juniorMember: pod.junior_member
+      juniorMember: juniorMember
         ? {
-            id: (pod.junior_member as any).id,
-            fullName: (pod.junior_member as any).full_name,
-            email: (pod.junior_member as any).email,
-            position: (pod.junior_member as any).position,
-            avatarUrl: (pod.junior_member as any).avatar_url,
+            id: juniorMember.id,
+            fullName: juniorMember.full_name,
+            email: juniorMember.email,
+            position: juniorMember.position,
+            avatarUrl: juniorMember.avatar_url,
           }
         : null,
     },
@@ -570,7 +594,7 @@ export async function updatePodAction(
   }
 
   // Build update object
-  const updates: Record<string, any> = {};
+  const updates: Record<string, string | number | boolean | null> = {};
   if (input.name !== undefined) updates.name = input.name;
   if (input.podType !== undefined) updates.pod_type = input.podType;
   if (input.seniorMemberId !== undefined) updates.senior_member_id = input.seniorMemberId;
@@ -828,7 +852,10 @@ export async function startNewSprintAction(podId: string): Promise<ActionResult<
 
   // Update average placements per sprint
   const totalSprints = Math.max(1, Math.floor((pod.total_placements ?? 0) / (pod.placements_per_sprint_target ?? 2)));
-  const newAverage = (((pod.average_placements_per_sprint ?? 0) as number) * (totalSprints - 1) + (pod.current_sprint_placements ?? 0)) / totalSprints;
+  const currentAvg = typeof pod.average_placements_per_sprint === 'number'
+    ? pod.average_placements_per_sprint
+    : parseFloat(String(pod.average_placements_per_sprint ?? 0));
+  const newAverage = (currentAvg * (totalSprints - 1) + (pod.current_sprint_placements ?? 0)) / totalSprints;
 
   // Reset sprint
   const { error: updateError } = await supabase

@@ -272,9 +272,9 @@ describe('Capstone Project System', () => {
       expect(error).toBeNull();
       expect(submissions).toBeInstanceOf(Array);
       // Should include the submission (already reviewed is tracked separately)
-      const found = submissions!.find((s: any) => s.id === testSubmissionId);
+      const found = submissions!.find((s: { id: string }) => s.id === testSubmissionId);
       expect(found).toBeTruthy();
-      expect(found.already_reviewed).toBe(true);
+      expect(found).toHaveProperty('already_reviewed', true);
     });
   });
 
@@ -365,7 +365,9 @@ describe('Capstone Project System', () => {
         .select('*, roles(*)')
         .eq('user_id', testUserId);
 
-      const candidateRole = userRoles?.find((ur: any) => ur.roles.name === 'candidate');
+      const candidateRole = userRoles?.find(
+        (ur: { roles: { name: string } }) => ur.roles.name === 'candidate'
+      );
       expect(candidateRole).toBeTruthy();
     });
   });

@@ -16,11 +16,12 @@ import { z } from 'zod';
  * const form = useForm(schemas.login);
  * ```
  */
-export function useForm<T extends z.ZodType<any, any, any>>(
+export function useForm<T extends z.ZodType>(
   schema: T,
   options?: Omit<UseFormProps<z.infer<T>>, 'resolver'>
 ) {
   return useHookForm<z.infer<T>>({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resolver: zodResolver(schema) as any,
     ...options,
   });
@@ -97,8 +98,8 @@ export function formatValidationError(error: z.ZodError): string {
  * const validated = schemas.login.parse(data);
  * ```
  */
-export function formDataToObject(formData: FormData): Record<string, any> {
-  const object: Record<string, any> = {};
+export function formDataToObject(formData: FormData): Record<string, unknown> {
+  const object: Record<string, unknown> = {};
 
   formData.forEach((value, key) => {
     // Handle array fields (e.g., "tags[]")
@@ -107,17 +108,17 @@ export function formDataToObject(formData: FormData): Record<string, any> {
       if (!object[arrayKey]) {
         object[arrayKey] = [];
       }
-      object[arrayKey].push(value);
+      (object[arrayKey] as unknown[]).push(value);
     } else {
       // Handle nested fields (e.g., "address.street")
       if (key.includes('.')) {
         const keys = key.split('.');
-        let current = object;
+        let current: Record<string, unknown> = object;
         for (let i = 0; i < keys.length - 1; i++) {
           if (!current[keys[i]]) {
             current[keys[i]] = {};
           }
-          current = current[keys[i]];
+          current = current[keys[i]] as Record<string, unknown>;
         }
         current[keys[keys.length - 1]] = value;
       } else {
@@ -146,7 +147,7 @@ export function createFormHandler<T extends z.ZodType>(
   schema: T,
   handler: (data: z.infer<T>) => Promise<void> | void
 ) {
-  return async (formData: FormData | Record<string, any>) => {
+  return async (formData: FormData | Record<string, unknown>) => {
     try {
       const data =
         formData instanceof FormData ? formDataToObject(formData) : formData;

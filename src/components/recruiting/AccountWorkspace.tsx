@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import {
     ChevronLeft,
     Building2,
@@ -29,29 +28,23 @@ import {
     Clock,
     Calendar,
     MessageSquare,
-    TrendingUp,
     DollarSign,
     Upload,
     File,
-    MoreHorizontal,
     Search,
-    Filter,
     ChevronRight,
     AlertCircle,
     CheckCircle2,
-    XCircle,
     Linkedin,
     Send,
-    PlayCircle,
     Award,
     BarChart3,
-    Eye,
     Download,
 } from 'lucide-react';
 import { useAccount, useAccountPocs } from '@/hooks/queries/accounts';
-import { useUpdateAccount, useUpdateAccountStatus, useUpdateAccountTier, useDeletePoc, useSetPrimaryPoc, useCreatePoc } from '@/hooks/mutations/accounts';
+import { useUpdateAccount, useUpdateAccountStatus, useUpdateAccountTier, useDeletePoc, useSetPrimaryPoc } from '@/hooks/mutations/accounts';
 import { useDeals } from '@/hooks/queries/deals';
-import { useLeads, useAccountLeads } from '@/hooks/queries/leads';
+import { useAccountLeads } from '@/hooks/queries/leads';
 import { useJobsByClient } from '@/hooks/queries/jobs';
 import { CreatePOCModal, CreateLeadModal, CreateDealFromAccountModal, CreateJobFromAccountModal } from './Modals';
 import { trpc } from '@/lib/trpc/client';
@@ -90,7 +83,6 @@ const STATUS_COLORS: Record<string, string> = {
 // ============================================
 
 export const AccountWorkspace: React.FC<AccountWorkspaceProps> = ({ accountId }) => {
-    const router = useRouter();
     const [activeTab, setActiveTab] = useState<TabKey>('overview');
     const [showPocModal, setShowPocModal] = useState(false);
     const [showLeadModal, setShowLeadModal] = useState(false);
@@ -102,7 +94,6 @@ export const AccountWorkspace: React.FC<AccountWorkspaceProps> = ({ accountId })
     // ============================================
     // QUERIES
     // ============================================
-    const utils = trpc.useUtils();
     const { account, isLoading, error, refetch } = useAccount(accountId);
     const { pocs, refetch: refetchPocs, isLoading: pocsLoading } = useAccountPocs(accountId);
     const { deals, isLoading: dealsLoading, refetch: refetchDeals } = useDeals({ accountId, enabled: !!accountId });
@@ -336,17 +327,17 @@ export const AccountWorkspace: React.FC<AccountWorkspaceProps> = ({ accountId })
                             <div className="flex items-center gap-3 mt-4 pt-4 border-t border-stone-100">
                                 <div className="flex gap-1">
                                     <span className="text-xs text-stone-400 mr-1">Status:</span>
-                                    {['activate', 'hold', 'churn'].map(action => {
+                                    {(['activate', 'hold', 'churn'] as const).map(action => {
                                         const config = {
                                             activate: { label: 'Activate', current: 'Active', color: 'text-green-600 bg-green-50 hover:bg-green-100' },
                                             hold: { label: 'Hold', current: 'Hold', color: 'text-amber-600 bg-amber-50 hover:bg-amber-100' },
                                             churn: { label: 'Churn', current: 'Churned', color: 'text-red-600 bg-red-50 hover:bg-red-100' },
-                                        }[action]!;
+                                        }[action];
                                         if (account.status === config.current) return null;
                                         return (
                                             <button
                                                 key={action}
-                                                onClick={() => handleStatusChange(action as any)}
+                                                onClick={() => handleStatusChange(action)}
                                                 className={`px-2 py-0.5 text-[10px] font-bold rounded uppercase ${config.color}`}
                                             >
                                                 {config.label}
@@ -359,10 +350,10 @@ export const AccountWorkspace: React.FC<AccountWorkspaceProps> = ({ accountId })
 
                                 <div className="flex gap-1">
                                     <span className="text-xs text-stone-400 mr-1">Tier:</span>
-                                    {['platinum', 'gold', 'silver', 'bronze'].map(tier => (
+                                    {(['platinum', 'gold', 'silver', 'bronze'] as const).map(tier => (
                                         <button
                                             key={tier}
-                                            onClick={() => handleTierChange(tier as any)}
+                                            onClick={() => handleTierChange(tier)}
                                             className={`px-2 py-0.5 text-[9px] font-bold uppercase rounded transition-all ${
                                                 account.tier?.toLowerCase() === tier
                                                     ? TIER_COLORS[tier]
@@ -703,7 +694,7 @@ const ContactsTab: React.FC<{
     onDeletePoc: (id: string) => Promise<unknown>;
     onSetPrimary: (pocId: string) => Promise<unknown>;
     isDeleting: boolean;
-}> = ({ accountId, accountName, pocs, isLoading, onAddPoc, onDeletePoc, onSetPrimary, isDeleting }) => {
+}> = ({ accountId: _accountId, accountName, pocs, isLoading, onAddPoc, onDeletePoc, onSetPrimary, isDeleting }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const filteredPocs = pocs.filter(poc =>
@@ -803,7 +794,7 @@ const ContactsTab: React.FC<{
                             </div>
 
                             {poc.notes && (
-                                <div className="mt-3 text-sm text-stone-500 italic bg-stone-50 p-3 rounded-lg">"{poc.notes}"</div>
+                                <div className="mt-3 text-sm text-stone-500 italic bg-stone-50 p-3 rounded-lg">&quot;{poc.notes}&quot;</div>
                             )}
                         </div>
                     ))}
@@ -832,8 +823,7 @@ const LeadsTab: React.FC<{
     leads: Array<{ id: string; companyName: string; firstName: string; lastName: string; status: string; estimatedValue?: number }>;
     isLoading: boolean;
     onNewLead: () => void;
-}> = ({ accountId, accountName, leads, isLoading, onNewLead }) => {
-    const router = useRouter();
+}> = ({ accountId: _accountId, accountName, leads, isLoading, onNewLead }) => {
 
     const statusColors: Record<string, string> = {
         new: 'bg-blue-100 text-blue-700',
@@ -911,8 +901,7 @@ const DealsTab: React.FC<{
     deals: Array<{ id: string; title: string; value: string; stage: string }>;
     isLoading: boolean;
     onNewDeal: () => void;
-}> = ({ accountId, accountName, deals, isLoading, onNewDeal }) => {
-    const router = useRouter();
+}> = ({ accountId: _accountId, accountName, deals, isLoading, onNewDeal }) => {
 
     const stageColors: Record<string, string> = {
         discovery: 'bg-blue-100 text-blue-700',
@@ -1000,8 +989,7 @@ const JobsTab: React.FC<{
     jobs: Array<{ id: string; title: string; status: string; location?: string; jobType?: string }>;
     isLoading: boolean;
     onNewJob: () => void;
-}> = ({ accountId, accountName, jobs, isLoading, onNewJob }) => {
-    const router = useRouter();
+}> = ({ accountId: _accountId, accountName, jobs, isLoading, onNewJob }) => {
 
     const statusColors: Record<string, string> = {
         draft: 'bg-stone-100 text-stone-600',
@@ -1076,7 +1064,6 @@ const JobsTab: React.FC<{
 // TALENT TAB
 // ============================================
 const TalentTab: React.FC<{ accountId: string; accountName: string }> = ({ accountId, accountName }) => {
-    const router = useRouter();
     const [activeFilter, setActiveFilter] = useState<'all' | 'submitted' | 'interviewing' | 'placed'>('all');
     const [showAddTalentModal, setShowAddTalentModal] = useState(false);
     const [showLinkCandidateModal, setShowLinkCandidateModal] = useState(false);
@@ -1093,8 +1080,8 @@ const TalentTab: React.FC<{ accountId: string; accountName: string }> = ({ accou
         { enabled: !!accountId }
     );
 
-    const submissions = submissionsQuery.data || [];
-    const placements = placementsQuery.data || [];
+    const submissions = useMemo(() => submissionsQuery.data || [], [submissionsQuery.data]);
+    const placements = useMemo(() => placementsQuery.data || [], [placementsQuery.data]);
     const isLoading = submissionsQuery.isLoading || placementsQuery.isLoading;
 
     const refetchAll = () => {
@@ -1226,7 +1213,7 @@ const TalentTab: React.FC<{ accountId: string; accountName: string }> = ({ accou
                     <p className="text-stone-500 mb-2">
                         {activeFilter === 'all' ? 'No candidates submitted to this account yet' : `No ${activeFilter} candidates`}
                     </p>
-                    <p className="text-xs text-stone-400 mb-4">Add talent to build your account's candidate pool</p>
+                    <p className="text-xs text-stone-400 mb-4">Add talent to build your account&apos;s candidate pool</p>
                     <button
                         onClick={() => setShowAddTalentModal(true)}
                         className="px-4 py-2 bg-charcoal text-white rounded-lg text-sm font-medium hover:bg-rust transition-colors"
@@ -1397,7 +1384,7 @@ const AddTalentModal: React.FC<{
                 <div className="sticky top-0 bg-white border-b border-stone-200 p-4 flex justify-between items-center">
                     <div>
                         <h2 className="text-xl font-serif font-bold text-charcoal">Add Candidate</h2>
-                        <p className="text-sm text-stone-500">Adding to {accountName}'s talent pool</p>
+                        <p className="text-sm text-stone-500">Adding to {accountName}&apos;s talent pool</p>
                     </div>
                     <button onClick={onClose} className="p-2 hover:bg-stone-100 rounded-lg">
                         <X size={20} className="text-stone-500" />
@@ -1536,7 +1523,7 @@ const AddTalentModal: React.FC<{
                                 <label className="block text-xs font-bold text-stone-600 mb-1">Visa Type *</label>
                                 <select
                                     value={form.candidateCurrentVisa}
-                                    onChange={e => setForm(f => ({ ...f, candidateCurrentVisa: e.target.value as any }))}
+                                    onChange={e => setForm(f => ({ ...f, candidateCurrentVisa: e.target.value as typeof form.candidateCurrentVisa }))}
                                     className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:border-rust bg-white"
                                 >
                                     {visaTypes.map(v => (
@@ -1566,7 +1553,7 @@ const AddTalentModal: React.FC<{
                                 <label className="block text-xs font-bold text-stone-600 mb-1">Availability *</label>
                                 <select
                                     value={form.candidateAvailability}
-                                    onChange={e => setForm(f => ({ ...f, candidateAvailability: e.target.value as any }))}
+                                    onChange={e => setForm(f => ({ ...f, candidateAvailability: e.target.value as typeof form.candidateAvailability }))}
                                     className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:border-rust bg-white"
                                 >
                                     {availabilityOptions.map(a => (
@@ -1789,12 +1776,27 @@ const LinkCandidateModal: React.FC<{
 // ============================================
 // DOCUMENTS TAB
 // ============================================
+interface DocumentFile {
+    id: string;
+    bucket: string;
+    filePath: string;
+    fileName: string;
+    fileSize: number;
+    mimeType: string;
+    entityType: string | null;
+    entityId: string | null;
+    uploadedBy: string;
+    uploadedAt: Date;
+    metadata: unknown;
+    uploaderName: string | null;
+}
+
 const DocumentsTab: React.FC<{ accountId: string; accountName: string }> = ({ accountId, accountName }) => {
     const [dragOver, setDragOver] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [showUploadModal, setShowUploadModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
-    const [editingDoc, setEditingDoc] = useState<any>(null);
+    const [editingDoc, setEditingDoc] = useState<DocumentFile | null>(null);
     const [pendingFiles, setPendingFiles] = useState<File[]>([]);
     const [isUploading, setIsUploading] = useState(false);
     const fileInputRef = React.useRef<HTMLInputElement>(null);
@@ -1931,7 +1933,7 @@ const DocumentsTab: React.FC<{ accountId: string; accountName: string }> = ({ ac
         }
     };
 
-    const handleEditMetadata = (doc: any) => {
+    const handleEditMetadata = (doc: DocumentFile) => {
         setEditingDoc(doc);
         setShowEditModal(true);
     };
@@ -1950,11 +1952,24 @@ const DocumentsTab: React.FC<{ accountId: string; accountName: string }> = ({ ac
         return <File size={20} className="text-stone-500" />;
     };
 
+    const getMetadata = (doc: DocumentFile): { category?: string; description?: string; tags?: string[] } | null => {
+        if (doc.metadata && typeof doc.metadata === 'object' && doc.metadata !== null) {
+            return doc.metadata as { category?: string; description?: string; tags?: string[] };
+        }
+        return null;
+    };
+
     const filteredDocs = selectedCategory
-        ? documents.filter(d => (d.metadata as any)?.category === selectedCategory)
+        ? documents.filter(d => {
+            const meta = getMetadata(d);
+            return meta?.category === selectedCategory;
+        })
         : documents;
 
-    const getCategoryCount = (key: string) => documents.filter(d => (d.metadata as any)?.category === key).length;
+    const getCategoryCount = (key: string) => documents.filter(d => {
+        const meta = getMetadata(d);
+        return meta?.category === key;
+    }).length;
 
     return (
         <div className="space-y-4">
@@ -2147,7 +2162,7 @@ const DocumentsTab: React.FC<{ accountId: string; accountName: string }> = ({ ac
 // Document Upload Modal Component
 const DocumentUploadModal: React.FC<{
     files: File[];
-    categories: Array<{ key: string; label: string; icon: any; color: string }>;
+    categories: Array<{ key: string; label: string; icon: React.ComponentType<{ size?: number; className?: string }>; color: string }>;
     isUploading: boolean;
     onUpload: (metadata: { category: string; description?: string; tags?: string[] }) => void;
     onCancel: () => void;
@@ -2276,12 +2291,14 @@ const DocumentUploadModal: React.FC<{
 
 // Document Edit Modal Component
 const DocumentEditModal: React.FC<{
-    document: any;
-    categories: Array<{ key: string; label: string; icon: any; color: string }>;
+    document: DocumentFile;
+    categories: Array<{ key: string; label: string; icon: React.ComponentType<{ size?: number; className?: string }>; color: string }>;
     onSave: (metadata: { category: string; description?: string; tags?: string[] }) => void;
     onCancel: () => void;
 }> = ({ document, categories, onSave, onCancel }) => {
-    const meta = document.metadata as { category?: string; description?: string; tags?: string[] } | null;
+    const meta = (document.metadata && typeof document.metadata === 'object' && document.metadata !== null)
+        ? document.metadata as { category?: string; description?: string; tags?: string[] }
+        : null;
     const [category, setCategory] = useState(meta?.category || 'other');
     const [description, setDescription] = useState(meta?.description || '');
     const [tagsInput, setTagsInput] = useState((meta?.tags || []).join(', '));

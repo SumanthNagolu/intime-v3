@@ -25,6 +25,85 @@ import {
 // Types
 // ============================================================================
 
+// Database row types (as returned from Supabase)
+interface DatabaseEmployee {
+  id: string;
+  full_name: string;
+  email: string;
+  department: string | null;
+  position: string | null;
+  avatar_url: string | null;
+}
+
+interface DatabaseReviewer {
+  id: string;
+  full_name: string;
+  email: string;
+  avatar_url: string | null;
+}
+
+interface DatabaseReviewRow {
+  id: string;
+  employee_id: string;
+  reviewer_id: string;
+  review_cycle: string;
+  review_type: string | null;
+  period_start_date: string;
+  period_end_date: string;
+  overall_rating: number | null;
+  quality_of_work: number | null;
+  communication: number | null;
+  teamwork: number | null;
+  initiative: number | null;
+  reliability: number | null;
+  goals_achieved: unknown;
+  goals_next_period: unknown;
+  strengths: string | null;
+  areas_for_improvement: string | null;
+  manager_comments: string | null;
+  employee_self_assessment: string | null;
+  employee_comments: string | null;
+  status: string;
+  scheduled_date: string | null;
+  completed_at: string | null;
+  employee_acknowledged_at: string | null;
+  org_id: string;
+  created_at: string;
+  employee?: DatabaseEmployee;
+  reviewer?: DatabaseReviewer;
+}
+
+interface DatabasePendingReviewerRow {
+  id: string;
+  employee_id: string;
+  reviewer_id: string;
+  review_cycle: string;
+  review_type: string | null;
+  period_start_date: string;
+  period_end_date: string;
+  status: string;
+  scheduled_date: string | null;
+  org_id: string;
+  created_at: string;
+  employee?: DatabaseEmployee;
+}
+
+interface DatabasePendingEmployeeRow {
+  id: string;
+  employee_id: string;
+  reviewer_id: string;
+  review_cycle: string;
+  review_type: string | null;
+  period_start_date: string;
+  period_end_date: string;
+  overall_rating: number | null;
+  status: string;
+  scheduled_date: string | null;
+  org_id: string;
+  created_at: string;
+  reviewer?: DatabaseReviewer;
+}
+
 export interface PerformanceReview {
   id: string;
   employeeId: string;
@@ -39,8 +118,8 @@ export interface PerformanceReview {
   teamwork: number | null;
   initiative: number | null;
   reliability: number | null;
-  goalsAchieved: any | null;
-  goalsNextPeriod: any | null;
+  goalsAchieved: string[] | null;
+  goalsNextPeriod: string[] | null;
   strengths: string | null;
   areasForImprovement: string | null;
   managerComments: string | null;
@@ -150,6 +229,23 @@ const submitSelfAssessmentSchema = z.object({
   employeeSelfAssessment: z.string().min(10, 'Self assessment must be at least 10 characters'),
   goalsAchieved: z.array(z.string()).optional(),
 });
+
+// ============================================================================
+// Helper Functions
+// ============================================================================
+
+/**
+ * Safely parse goals field from database (can be JSON array or null).
+ */
+function parseGoalsField(value: unknown): string[] | null {
+  if (value === null || value === undefined) {
+    return null;
+  }
+  if (Array.isArray(value)) {
+    return value.filter((item): item is string => typeof item === 'string');
+  }
+  return null;
+}
 
 // ============================================================================
 // Actions
@@ -268,52 +364,55 @@ export async function listReviewsAction(
   }
 
   // Transform data
-  const transformedReviews: PerformanceReviewWithDetails[] = (reviews || []).map((review: any) => ({
-    id: review.id,
-    employeeId: review.employee_id,
-    reviewerId: review.reviewer_id,
-    reviewCycle: review.review_cycle,
-    reviewType: review.review_type,
-    periodStartDate: review.period_start_date,
-    periodEndDate: review.period_end_date,
-    overallRating: review.overall_rating,
-    qualityOfWork: review.quality_of_work,
-    communication: review.communication,
-    teamwork: review.teamwork,
-    initiative: review.initiative,
-    reliability: review.reliability,
-    goalsAchieved: review.goals_achieved,
-    goalsNextPeriod: review.goals_next_period,
-    strengths: review.strengths,
-    areasForImprovement: review.areas_for_improvement,
-    managerComments: review.manager_comments,
-    employeeSelfAssessment: review.employee_self_assessment,
-    employeeComments: review.employee_comments,
-    status: review.status,
-    scheduledDate: review.scheduled_date,
-    completedAt: review.completed_at,
-    employeeAcknowledgedAt: review.employee_acknowledged_at,
-    orgId: review.org_id,
-    createdAt: review.created_at,
-    employee: review.employee
-      ? {
-          id: review.employee.id,
-          fullName: review.employee.full_name,
-          email: review.employee.email,
-          department: review.employee.department,
-          position: review.employee.position,
-          avatarUrl: review.employee.avatar_url,
-        }
-      : null,
-    reviewer: review.reviewer
-      ? {
-          id: review.reviewer.id,
-          fullName: review.reviewer.full_name,
-          email: review.reviewer.email,
-          avatarUrl: review.reviewer.avatar_url,
-        }
-      : null,
-  }));
+  const transformedReviews: PerformanceReviewWithDetails[] = (reviews || []).map((review) => {
+    const typedReview = review as unknown as DatabaseReviewRow;
+    return {
+      id: typedReview.id,
+      employeeId: typedReview.employee_id,
+      reviewerId: typedReview.reviewer_id,
+      reviewCycle: typedReview.review_cycle,
+      reviewType: typedReview.review_type,
+      periodStartDate: typedReview.period_start_date,
+      periodEndDate: typedReview.period_end_date,
+      overallRating: typedReview.overall_rating,
+      qualityOfWork: typedReview.quality_of_work,
+      communication: typedReview.communication,
+      teamwork: typedReview.teamwork,
+      initiative: typedReview.initiative,
+      reliability: typedReview.reliability,
+      goalsAchieved: parseGoalsField(typedReview.goals_achieved),
+      goalsNextPeriod: parseGoalsField(typedReview.goals_next_period),
+      strengths: typedReview.strengths,
+      areasForImprovement: typedReview.areas_for_improvement,
+      managerComments: typedReview.manager_comments,
+      employeeSelfAssessment: typedReview.employee_self_assessment,
+      employeeComments: typedReview.employee_comments,
+      status: typedReview.status,
+      scheduledDate: typedReview.scheduled_date,
+      completedAt: typedReview.completed_at,
+      employeeAcknowledgedAt: typedReview.employee_acknowledged_at,
+      orgId: typedReview.org_id,
+      createdAt: typedReview.created_at,
+      employee: typedReview.employee
+        ? {
+            id: typedReview.employee.id,
+            fullName: typedReview.employee.full_name,
+            email: typedReview.employee.email,
+            department: typedReview.employee.department,
+            position: typedReview.employee.position,
+            avatarUrl: typedReview.employee.avatar_url,
+          }
+        : null,
+      reviewer: typedReview.reviewer
+        ? {
+            id: typedReview.reviewer.id,
+            fullName: typedReview.reviewer.full_name,
+            email: typedReview.reviewer.email,
+            avatarUrl: typedReview.reviewer.avatar_url,
+          }
+        : null,
+    };
+  });
 
   const total = count || 0;
   const pagination = calculatePagination(total, page, pageSize);
@@ -403,51 +502,53 @@ export async function getReviewAction(
     return { success: false, error: 'Review not found' };
   }
 
+  const typedReview = review as unknown as DatabaseReviewRow;
+
   return {
     success: true,
     data: {
-      id: review.id,
-      employeeId: review.employee_id,
-      reviewerId: review.reviewer_id,
-      reviewCycle: review.review_cycle,
-      reviewType: review.review_type,
-      periodStartDate: review.period_start_date,
-      periodEndDate: review.period_end_date,
-      overallRating: review.overall_rating,
-      qualityOfWork: review.quality_of_work,
-      communication: review.communication,
-      teamwork: review.teamwork,
-      initiative: review.initiative,
-      reliability: review.reliability,
-      goalsAchieved: review.goals_achieved,
-      goalsNextPeriod: review.goals_next_period,
-      strengths: review.strengths,
-      areasForImprovement: review.areas_for_improvement,
-      managerComments: review.manager_comments,
-      employeeSelfAssessment: review.employee_self_assessment,
-      employeeComments: review.employee_comments,
-      status: review.status,
-      scheduledDate: review.scheduled_date,
-      completedAt: review.completed_at,
-      employeeAcknowledgedAt: review.employee_acknowledged_at,
-      orgId: review.org_id,
-      createdAt: review.created_at,
-      employee: review.employee
+      id: typedReview.id,
+      employeeId: typedReview.employee_id,
+      reviewerId: typedReview.reviewer_id,
+      reviewCycle: typedReview.review_cycle,
+      reviewType: typedReview.review_type,
+      periodStartDate: typedReview.period_start_date,
+      periodEndDate: typedReview.period_end_date,
+      overallRating: typedReview.overall_rating,
+      qualityOfWork: typedReview.quality_of_work,
+      communication: typedReview.communication,
+      teamwork: typedReview.teamwork,
+      initiative: typedReview.initiative,
+      reliability: typedReview.reliability,
+      goalsAchieved: parseGoalsField(typedReview.goals_achieved),
+      goalsNextPeriod: parseGoalsField(typedReview.goals_next_period),
+      strengths: typedReview.strengths,
+      areasForImprovement: typedReview.areas_for_improvement,
+      managerComments: typedReview.manager_comments,
+      employeeSelfAssessment: typedReview.employee_self_assessment,
+      employeeComments: typedReview.employee_comments,
+      status: typedReview.status,
+      scheduledDate: typedReview.scheduled_date,
+      completedAt: typedReview.completed_at,
+      employeeAcknowledgedAt: typedReview.employee_acknowledged_at,
+      orgId: typedReview.org_id,
+      createdAt: typedReview.created_at,
+      employee: typedReview.employee
         ? {
-            id: (review.employee as any).id,
-            fullName: (review.employee as any).full_name,
-            email: (review.employee as any).email,
-            department: (review.employee as any).department,
-            position: (review.employee as any).position,
-            avatarUrl: (review.employee as any).avatar_url,
+            id: typedReview.employee.id,
+            fullName: typedReview.employee.full_name,
+            email: typedReview.employee.email,
+            department: typedReview.employee.department,
+            position: typedReview.employee.position,
+            avatarUrl: typedReview.employee.avatar_url,
           }
         : null,
-      reviewer: review.reviewer
+      reviewer: typedReview.reviewer
         ? {
-            id: (review.reviewer as any).id,
-            fullName: (review.reviewer as any).full_name,
-            email: (review.reviewer as any).email,
-            avatarUrl: (review.reviewer as any).avatar_url,
+            id: typedReview.reviewer.id,
+            fullName: typedReview.reviewer.full_name,
+            email: typedReview.reviewer.email,
+            avatarUrl: typedReview.reviewer.avatar_url,
           }
         : null,
     },
@@ -659,8 +760,9 @@ export async function submitReviewFeedbackAction(
   }
 
   // Update employee's performance rating
-  await (supabase.from as any)('user_profiles')
-    .update({ performance_rating: input.overallRating })
+  // Note: Using type assertion since performance_rating column may not be in generated types
+  await (supabase as { from: (table: string) => ReturnType<typeof supabase.from> }).from('user_profiles')
+    .update({ performance_rating: input.overallRating } as Record<string, unknown>)
     .eq('id', review.employee_id);
 
   // Log audit event
@@ -1043,81 +1145,87 @@ export async function getMyPendingReviewsAction(): Promise<
     .eq('status', 'pending_employee_review')
     .order('completed_at', { ascending: false });
 
-  const asReviewer: PerformanceReviewWithDetails[] = (reviewerReviews || []).map((r: any) => ({
-    id: r.id,
-    employeeId: r.employee_id,
-    reviewerId: r.reviewer_id,
-    reviewCycle: r.review_cycle,
-    reviewType: r.review_type,
-    periodStartDate: r.period_start_date,
-    periodEndDate: r.period_end_date,
-    overallRating: null,
-    qualityOfWork: null,
-    communication: null,
-    teamwork: null,
-    initiative: null,
-    reliability: null,
-    goalsAchieved: null,
-    goalsNextPeriod: null,
-    strengths: null,
-    areasForImprovement: null,
-    managerComments: null,
-    employeeSelfAssessment: null,
-    employeeComments: null,
-    status: r.status,
-    scheduledDate: r.scheduled_date,
-    completedAt: null,
-    employeeAcknowledgedAt: null,
-    orgId: r.org_id,
-    createdAt: r.created_at,
-    employee: r.employee
-      ? {
-          id: r.employee.id,
-          fullName: r.employee.full_name,
-          email: r.employee.email,
-          department: r.employee.department,
-          position: r.employee.position,
-          avatarUrl: r.employee.avatar_url,
-        }
-      : null,
-  }));
+  const asReviewer: PerformanceReviewWithDetails[] = (reviewerReviews || []).map((r) => {
+    const typedR = r as unknown as DatabasePendingReviewerRow;
+    return {
+      id: typedR.id,
+      employeeId: typedR.employee_id,
+      reviewerId: typedR.reviewer_id,
+      reviewCycle: typedR.review_cycle,
+      reviewType: typedR.review_type,
+      periodStartDate: typedR.period_start_date,
+      periodEndDate: typedR.period_end_date,
+      overallRating: null,
+      qualityOfWork: null,
+      communication: null,
+      teamwork: null,
+      initiative: null,
+      reliability: null,
+      goalsAchieved: null,
+      goalsNextPeriod: null,
+      strengths: null,
+      areasForImprovement: null,
+      managerComments: null,
+      employeeSelfAssessment: null,
+      employeeComments: null,
+      status: typedR.status,
+      scheduledDate: typedR.scheduled_date,
+      completedAt: null,
+      employeeAcknowledgedAt: null,
+      orgId: typedR.org_id,
+      createdAt: typedR.created_at,
+      employee: typedR.employee
+        ? {
+            id: typedR.employee.id,
+            fullName: typedR.employee.full_name,
+            email: typedR.employee.email,
+            department: typedR.employee.department,
+            position: typedR.employee.position,
+            avatarUrl: typedR.employee.avatar_url,
+          }
+        : null,
+    };
+  });
 
-  const asEmployee: PerformanceReviewWithDetails[] = (employeeReviews || []).map((r: any) => ({
-    id: r.id,
-    employeeId: r.employee_id,
-    reviewerId: r.reviewer_id,
-    reviewCycle: r.review_cycle,
-    reviewType: r.review_type,
-    periodStartDate: r.period_start_date,
-    periodEndDate: r.period_end_date,
-    overallRating: r.overall_rating,
-    qualityOfWork: null,
-    communication: null,
-    teamwork: null,
-    initiative: null,
-    reliability: null,
-    goalsAchieved: null,
-    goalsNextPeriod: null,
-    strengths: null,
-    areasForImprovement: null,
-    managerComments: null,
-    employeeSelfAssessment: null,
-    employeeComments: null,
-    status: r.status,
-    scheduledDate: r.scheduled_date,
-    completedAt: null,
-    employeeAcknowledgedAt: null,
-    orgId: r.org_id,
-    createdAt: r.created_at,
-    reviewer: r.reviewer
-      ? {
-          id: r.reviewer.id,
-          fullName: r.reviewer.full_name,
-          email: r.reviewer.email,
-          avatarUrl: r.reviewer.avatar_url,
-        }
-      : null,
-  }));
+  const asEmployee: PerformanceReviewWithDetails[] = (employeeReviews || []).map((r) => {
+    const typedR = r as unknown as DatabasePendingEmployeeRow;
+    return {
+      id: typedR.id,
+      employeeId: typedR.employee_id,
+      reviewerId: typedR.reviewer_id,
+      reviewCycle: typedR.review_cycle,
+      reviewType: typedR.review_type,
+      periodStartDate: typedR.period_start_date,
+      periodEndDate: typedR.period_end_date,
+      overallRating: typedR.overall_rating,
+      qualityOfWork: null,
+      communication: null,
+      teamwork: null,
+      initiative: null,
+      reliability: null,
+      goalsAchieved: null,
+      goalsNextPeriod: null,
+      strengths: null,
+      areasForImprovement: null,
+      managerComments: null,
+      employeeSelfAssessment: null,
+      employeeComments: null,
+      status: typedR.status,
+      scheduledDate: typedR.scheduled_date,
+      completedAt: null,
+      employeeAcknowledgedAt: null,
+      orgId: typedR.org_id,
+      createdAt: typedR.created_at,
+      reviewer: typedR.reviewer
+        ? {
+            id: typedR.reviewer.id,
+            fullName: typedR.reviewer.full_name,
+            email: typedR.reviewer.email,
+            avatarUrl: typedR.reviewer.avatar_url,
+          }
+        : null,
+    };
+  });
 
   return {
     success: true,

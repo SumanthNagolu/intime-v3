@@ -117,7 +117,7 @@ export interface ResumeVersion {
   studentId: string;
   version: number;
   format: ResumeFormat;
-  content: any;
+  content: Record<string, unknown>;
   atsScore: number;
   createdAt: string;
   updatedAt: string;
@@ -268,8 +268,8 @@ export interface GuruInteraction {
   studentId: string;
   agentType: 'code_mentor' | 'resume_builder' | 'project_planner' | 'interview_coach';
   conversationId?: string;
-  input: any;
-  output: any;
+  input: Record<string, unknown>;
+  output: Record<string, unknown>;
   wasHelpful?: boolean;
   userFeedback?: string;
   modelUsed: string;

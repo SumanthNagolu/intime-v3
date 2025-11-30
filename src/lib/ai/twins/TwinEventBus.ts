@@ -133,7 +133,8 @@ export class TwinEventBus {
    * ```
    */
   async emit(input: CreateEventInput): Promise<string> {
-    const { data, error } = await (this.supabase.rpc as any)('emit_twin_event', {
+    type RpcFunction = (name: string, params: Record<string, unknown>) => Promise<{ data: unknown; error: unknown }>;
+    const { data, error } = await (this.supabase.rpc as unknown as RpcFunction)('emit_twin_event', {
       p_org_id: this.orgId,
       p_source_user_id: this.userId,
       p_source_role: input.sourceRole,
@@ -144,7 +145,7 @@ export class TwinEventBus {
     });
 
     if (error) {
-      throw new Error(`Failed to emit event: ${error.message}`);
+      throw new Error(`Failed to emit event: ${(error as Error).message}`);
     }
 
     console.log(
@@ -216,17 +217,18 @@ export class TwinEventBus {
     role: TwinRole,
     options?: EventQueryOptions
   ): Promise<TwinEvent[]> {
-    const { data, error } = await (this.supabase.rpc as any)('get_twin_events_for_role', {
+    type RpcFunction = (name: string, params: Record<string, unknown>) => Promise<{ data: unknown; error: unknown }>;
+    const { data, error } = await (this.supabase.rpc as unknown as RpcFunction)('get_twin_events_for_role', {
       p_org_id: this.orgId,
       p_role: role,
       p_limit: options?.limit || 50,
     });
 
     if (error) {
-      throw new Error(`Failed to get events: ${error.message}`);
+      throw new Error(`Failed to get events: ${(error as Error).message}`);
     }
 
-    return (data || []).map((row: any) => this.mapEventRow(row));
+    return (data as Record<string, unknown>[] || []).map((row) => this.mapEventRow(row));
   }
 
   /**
@@ -236,7 +238,18 @@ export class TwinEventBus {
    * @returns Array of events
    */
   async getUnprocessedEvents(options?: EventQueryOptions): Promise<TwinEvent[]> {
-    let query = (this.supabase.from as any)('twin_events')
+    type QueryBuilder = {
+      select: (columns: string) => QueryBuilder;
+      eq: (column: string, value: unknown) => QueryBuilder;
+      limit: (count: number) => QueryBuilder;
+      in: (column: string, values: unknown[]) => QueryBuilder;
+      gte: (column: string, value: string) => QueryBuilder;
+      order: (column: string, opts: { ascending: boolean }) => QueryBuilder;
+      then: <T>(onfulfilled: (value: { data: unknown; error: unknown }) => T) => Promise<T>;
+    };
+    type FromFunction = (table: string) => QueryBuilder;
+
+    let query = (this.supabase.from as unknown as FromFunction)('twin_events')
       .select('*')
       .eq('org_id', this.orgId)
       .eq('processed', false)
@@ -258,13 +271,13 @@ export class TwinEventBus {
       query = query.gte('created_at', options.since.toISOString());
     }
 
-    const { data, error } = await query;
+    const { data, error } = await query.then((result) => result);
 
     if (error) {
-      throw new Error(`Failed to get unprocessed events: ${error.message}`);
+      throw new Error(`Failed to get unprocessed events: ${(error as Error).message}`);
     }
 
-    return (data || []).map((row: any) => this.mapEventRow(row));
+    return (data as Record<string, unknown>[] || []).map((row) => this.mapEventRow(row));
   }
 
   /**
@@ -274,7 +287,17 @@ export class TwinEventBus {
    * @returns Array of broadcast events
    */
   async getBroadcasts(options?: EventQueryOptions): Promise<TwinEvent[]> {
-    let query = (this.supabase.from as any)('twin_events')
+    type QueryBuilder = {
+      select: (columns: string) => QueryBuilder;
+      eq: (column: string, value: unknown) => QueryBuilder;
+      is: (column: string, value: null) => QueryBuilder;
+      limit: (count: number) => QueryBuilder;
+      order: (column: string, opts: { ascending: boolean }) => QueryBuilder;
+      then: <T>(onfulfilled: (value: { data: unknown; error: unknown }) => T) => Promise<T>;
+    };
+    type FromFunction = (table: string) => QueryBuilder;
+
+    let query = (this.supabase.from as unknown as FromFunction)('twin_events')
       .select('*')
       .eq('org_id', this.orgId)
       .is('target_role', null)
@@ -288,13 +311,13 @@ export class TwinEventBus {
       query = query.limit(options.limit);
     }
 
-    const { data, error } = await query;
+    const { data, error } = await query.then((result) => result);
 
     if (error) {
-      throw new Error(`Failed to get broadcasts: ${error.message}`);
+      throw new Error(`Failed to get broadcasts: ${(error as Error).message}`);
     }
 
-    return (data || []).map((row: any) => this.mapEventRow(row));
+    return (data as Record<string, unknown>[] || []).map((row) => this.mapEventRow(row));
   }
 
   /**
@@ -304,7 +327,14 @@ export class TwinEventBus {
    * @returns Event or null
    */
   async getEvent(eventId: string): Promise<TwinEvent | null> {
-    const { data, error } = await (this.supabase.from as any)('twin_events')
+    type QueryBuilder = {
+      select: (columns: string) => QueryBuilder;
+      eq: (column: string, value: unknown) => QueryBuilder;
+      single: () => Promise<{ data: unknown; error: unknown }>;
+    };
+    type FromFunction = (table: string) => QueryBuilder;
+
+    const { data, error } = await (this.supabase.from as unknown as FromFunction)('twin_events')
       .select('*')
       .eq('id', eventId)
       .single();
@@ -313,7 +343,7 @@ export class TwinEventBus {
       return null;
     }
 
-    return this.mapEventRow(data as any);
+    return this.mapEventRow(data as Record<string, unknown>);
   }
 
   // ==========================================================================
@@ -327,7 +357,8 @@ export class TwinEventBus {
    * @returns Success status
    */
   async markProcessed(eventId: string): Promise<boolean> {
-    const { data, error } = await (this.supabase.rpc as any)('mark_twin_event_processed', {
+    type RpcFunction = (name: string, params: Record<string, unknown>) => Promise<{ data: unknown; error: unknown }>;
+    const { data, error } = await (this.supabase.rpc as unknown as RpcFunction)('mark_twin_event_processed', {
       p_event_id: eventId,
       p_processed_by: this.userId,
     });
@@ -428,9 +459,17 @@ export class TwinEventBus {
     byType: Record<string, number>;
     byPriority: Record<EventPriority, number>;
   }> {
-    const { data: events } = await (this.supabase.from as any)('twin_events')
+    type QueryBuilder = {
+      select: (columns: string) => QueryBuilder;
+      eq: (column: string, value: unknown) => QueryBuilder;
+      then: <T>(onfulfilled: (value: { data: unknown; error: unknown }) => T) => Promise<T>;
+    };
+    type FromFunction = (table: string) => QueryBuilder;
+
+    const { data: events } = await (this.supabase.from as unknown as FromFunction)('twin_events')
       .select('event_type, priority, processed')
-      .eq('org_id', this.orgId);
+      .eq('org_id', this.orgId)
+      .then((result) => result);
 
     if (!events) {
       return {
@@ -450,14 +489,15 @@ export class TwinEventBus {
     };
     let unprocessed = 0;
 
-    for (const event of events as any[]) {
+    type EventRow = { event_type: string; priority: EventPriority; processed: boolean };
+    for (const event of events as EventRow[]) {
       byType[event.event_type] = (byType[event.event_type] || 0) + 1;
       byPriority[event.priority as EventPriority]++;
       if (!event.processed) unprocessed++;
     }
 
     return {
-      total: events.length,
+      total: (events as EventRow[]).length,
       unprocessed,
       byType,
       byPriority,

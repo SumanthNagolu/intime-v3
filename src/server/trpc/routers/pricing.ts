@@ -12,6 +12,10 @@ import { z } from 'zod';
 import { router, publicProcedure, protectedProcedure } from '../trpc';
 import { TRPCError } from '@trpc/server';
 
+// Minimal type for Supabase client to avoid 'any'
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type SupabaseClient = any;
+
 // Type assertion for tables not yet in Supabase generated types
 type CoursePricingTable = {
   id: string;
@@ -46,7 +50,7 @@ type PricingPlanTable = {
   stripe_price_id_annual: string | null;
   stripe_price_id_one_time: string | null;
   stripe_product_id: string | null;
-  features: any;
+  features: string[] | Record<string, unknown>;
   max_courses: number | null;
   max_users: number | null;
   display_order: number;
@@ -66,12 +70,12 @@ export const pricingRouter = router({
    */
   getPlans: publicProcedure.query(async ({ ctx }) => {
     try {
-      const { data: plans, error } = await (ctx.supabase as any)
+      const { data: plans, error } = await (ctx.supabase as SupabaseClient)
         .from('pricing_plans')
         .select('*')
         .is('deleted_at', null)
         .eq('is_active', true)
-        .order('display_order', { ascending: true }) as { data: PricingPlanTable[] | null; error: any };
+        .order('display_order', { ascending: true }) as { data: PricingPlanTable[] | null; error: unknown };
 
       if (error) throw error;
 
@@ -112,7 +116,7 @@ export const pricingRouter = router({
       }
 
       try {
-        let query = (ctx.supabase as any)
+        let query = (ctx.supabase as SupabaseClient)
           .from('pricing_plans')
           .select('*')
           .is('deleted_at', null)
@@ -124,10 +128,10 @@ export const pricingRouter = router({
           query = query.eq('slug', input.slug);
         }
 
-        const { data: plan, error } = await query.single() as { data: PricingPlanTable | null; error: any };
+        const { data: plan, error } = await query.single() as { data: PricingPlanTable | null; error: unknown };
 
         if (error) {
-          if (error.code === 'PGRST116') {
+          if (typeof error === 'object' && error !== null && 'code' in error && error.code === 'PGRST116') {
             throw new TRPCError({
               code: 'NOT_FOUND',
               message: 'Pricing plan not found',
@@ -165,13 +169,13 @@ export const pricingRouter = router({
     )
     .query(async ({ ctx, input }) => {
       try {
-        const { data: pricing, error } = await (ctx.supabase as any)
+        const { data: pricing, error } = await (ctx.supabase as SupabaseClient)
           .from('course_pricing')
           .select('*')
           .eq('course_id', input.courseId)
-          .single() as { data: CoursePricingTable | null; error: any };
+          .single() as { data: CoursePricingTable | null; error: unknown };
 
-        if (error && error.code !== 'PGRST116') {
+        if (error && typeof error === 'object' && error !== null && 'code' in error && error.code !== 'PGRST116') {
           throw error;
         }
 
@@ -233,7 +237,10 @@ export const pricingRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur: Record<string, unknown>) => {
+          const roles = ur.roles as Record<string, unknown> | null;
+          return roles?.name === 'admin' || roles?.name === 'super_admin';
+        }
       );
 
       if (!isAdmin) {
@@ -244,7 +251,7 @@ export const pricingRouter = router({
       }
 
       try {
-        const { data: plan, error } = await (ctx.supabase as any)
+        const { data: plan, error } = await (ctx.supabase as SupabaseClient)
           .from('pricing_plans')
           .insert({
             name: input.name,
@@ -266,7 +273,7 @@ export const pricingRouter = router({
             badge_text: input.badge_text,
           })
           .select()
-          .single() as { data: PricingPlanTable | null; error: any };
+          .single() as { data: PricingPlanTable | null; error: unknown };
 
         if (error) throw error;
 
@@ -323,7 +330,10 @@ export const pricingRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur: Record<string, unknown>) => {
+          const roles = ur.roles as Record<string, unknown> | null;
+          return roles?.name === 'admin' || roles?.name === 'super_admin';
+        }
       );
 
       if (!isAdmin) {
@@ -336,16 +346,16 @@ export const pricingRouter = router({
       try {
         const { id, ...updates } = input;
 
-        const { data: plan, error } = await (ctx.supabase as any)
+        const { data: plan, error } = await (ctx.supabase as SupabaseClient)
           .from('pricing_plans')
           .update(updates)
           .eq('id', id)
           .is('deleted_at', null)
           .select()
-          .single() as { data: PricingPlanTable | null; error: any };
+          .single() as { data: PricingPlanTable | null; error: unknown };
 
         if (error) {
-          if (error.code === 'PGRST116') {
+          if (typeof error === 'object' && error !== null && 'code' in error && error.code === 'PGRST116') {
             throw new TRPCError({
               code: 'NOT_FOUND',
               message: 'Pricing plan not found',
@@ -389,7 +399,10 @@ export const pricingRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur: Record<string, unknown>) => {
+          const roles = ur.roles as Record<string, unknown> | null;
+          return roles?.name === 'admin' || roles?.name === 'super_admin';
+        }
       );
 
       if (!isAdmin) {
@@ -400,7 +413,7 @@ export const pricingRouter = router({
       }
 
       try {
-        const { error } = await (ctx.supabase as any)
+        const { error } = await (ctx.supabase as SupabaseClient)
           .from('pricing_plans')
           .update({ deleted_at: new Date().toISOString() })
           .eq('id', input.id)
@@ -455,7 +468,10 @@ export const pricingRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur: Record<string, unknown>) => {
+          const roles = ur.roles as Record<string, unknown> | null;
+          return roles?.name === 'admin' || roles?.name === 'super_admin';
+        }
       );
 
       if (!isAdmin) {
@@ -468,7 +484,7 @@ export const pricingRouter = router({
       try {
         const { courseId, ...pricingData } = input;
 
-        const { data: pricing, error } = await (ctx.supabase as any)
+        const { data: pricing, error } = await (ctx.supabase as SupabaseClient)
           .from('course_pricing')
           .upsert(
             {
@@ -478,7 +494,7 @@ export const pricingRouter = router({
             { onConflict: 'course_id' }
           )
           .select()
-          .single() as { data: CoursePricingTable | null; error: any };
+          .single() as { data: CoursePricingTable | null; error: unknown };
 
         if (error) throw error;
 

@@ -3,11 +3,10 @@
  * Provides real-time dashboard metrics for CFO role
  */
 
-import { z } from 'zod';
 import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
 import { placements } from '@/lib/db/schema/ats';
-import { accounts, deals } from '@/lib/db/schema/crm';
+import { accounts } from '@/lib/db/schema/crm';
 import { eq, and, sql, gte, lte, desc } from 'drizzle-orm';
 
 export const financeMetricsRouter = router({
@@ -137,7 +136,7 @@ export const financeMetricsRouter = router({
   /**
    * Get Days Sales Outstanding (DSO)
    */
-  getDSO: orgProtectedProcedure.query(async ({ ctx }) => {
+  getDSO: orgProtectedProcedure.query(async ({ ctx: _ctx }) => {
     // Mock DSO calculation - would need invoices table
     const dso = 42; // days
     const target = 45;
@@ -154,7 +153,7 @@ export const financeMetricsRouter = router({
   /**
    * Get Revenue vs Expenses trend
    */
-  getRevenueTrend: orgProtectedProcedure.query(async ({ ctx }) => {
+  getRevenueTrend: orgProtectedProcedure.query(async ({ ctx: _ctx }) => {
     // Return monthly data (mock for now)
     return [
       { label: 'Jan', value: 850000, color: '#10B981' },
@@ -201,7 +200,7 @@ export const financeMetricsRouter = router({
   /**
    * Get Revenue by Division
    */
-  getRevenueByDivision: orgProtectedProcedure.query(async ({ ctx }) => {
+  getRevenueByDivision: orgProtectedProcedure.query(async ({ ctx: _ctx }) => {
     // Mock data for division breakdown
     return [
       { label: 'Recruiting', value: 2500000, color: '#D87254' },
@@ -213,7 +212,7 @@ export const financeMetricsRouter = router({
   /**
    * Get Outstanding Invoices (AR Aging)
    */
-  getOutstandingInvoices: orgProtectedProcedure.query(async ({ ctx }) => {
+  getOutstandingInvoices: orgProtectedProcedure.query(async ({ ctx: _ctx }) => {
     // Mock data - would need invoices table
     return [
       {
@@ -278,7 +277,7 @@ export const financeMetricsRouter = router({
   /**
    * Get Cash Flow Projection
    */
-  getCashFlowProjection: orgProtectedProcedure.query(async ({ ctx }) => {
+  getCashFlowProjection: orgProtectedProcedure.query(async ({ ctx: _ctx }) => {
     // Mock data for cash flow projection
     return [
       { label: 'Week 1', value: 250000, color: '#10B981' },

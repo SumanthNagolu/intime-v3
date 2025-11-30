@@ -380,9 +380,9 @@ export function SelectInput({
 export function MultiselectInput({
   value,
   onChange,
-  onBlur,
+  onBlur: _onBlur,
   disabled,
-  error,
+  error: _error,
   definition,
   className,
 }: WidgetRenderProps<string[] | null>) {
@@ -505,11 +505,9 @@ export function DateTimeInput({
   onBlur,
   disabled,
   error,
-  definition,
+  definition: _definition,
   className,
 }: WidgetRenderProps<string | Date | null>) {
-  const fieldDef = definition as FieldDefinition;
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value ? new Date(e.target.value).toISOString() : null;
     onChange?.(newValue);
@@ -541,11 +539,9 @@ export function TimeInput({
   onBlur,
   disabled,
   error,
-  definition,
+  definition: _definition,
   className,
 }: WidgetRenderProps<string | null>) {
-  const fieldDef = definition as FieldDefinition;
-
   return (
     <Input
       type="time"
@@ -573,7 +569,7 @@ export function TagsInput({
 }: WidgetRenderProps<string[] | null>) {
   const fieldDef = definition as FieldDefinition;
   const [inputValue, setInputValue] = useState('');
-  const tags = value || [];
+  const tags = React.useMemo(() => value || [], [value]);
 
   const addTag = useCallback(() => {
     const trimmed = inputValue.trim();
@@ -650,7 +646,7 @@ export function RadioInput({
   value,
   onChange,
   disabled,
-  error,
+  error: _error,
   definition,
   className,
 }: WidgetRenderProps<string | null>) {
@@ -696,7 +692,7 @@ export function CheckboxGroupInput({
   value,
   onChange,
   disabled,
-  error,
+  error: _error,
   definition,
   className,
 }: WidgetRenderProps<string[] | null>) {
@@ -744,7 +740,7 @@ export function EntitySelect({
   disabled,
   error,
   definition,
-  entity,
+  entity: _entity,
   className,
 }: WidgetRenderProps<string | null>) {
   const fieldDef = definition as FieldDefinition;
@@ -814,10 +810,9 @@ export function FileInput({
   onBlur,
   disabled,
   error,
-  definition,
+  definition: _definition,
   className,
 }: WidgetRenderProps<File | string | null>) {
-  const fieldDef = definition as FieldDefinition;
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -855,7 +850,7 @@ export function JsonInput({
   onBlur,
   disabled,
   error,
-  definition,
+  definition: _definition,
   className,
 }: WidgetRenderProps<Record<string, unknown> | null>) {
   const [textValue, setTextValue] = useState(

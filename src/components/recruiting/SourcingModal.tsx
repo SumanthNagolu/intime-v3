@@ -2,9 +2,9 @@
 
 
 import React, { useState } from 'react';
-import { X, Search, Users, Linkedin, Database, CheckCircle, Plus } from 'lucide-react';
+import { X, Linkedin, Database, CheckCircle, Plus } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
-import { Candidate, Submission } from '../../types';
+import { Submission } from '../../types';
 
 interface SourcingModalProps {
   isOpen: boolean;

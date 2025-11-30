@@ -27,7 +27,7 @@ export const analyticsRouter = router({
       .eq('user_id', ctx.session.user.id);
 
     const isAdmin = userRoles?.some(
-      (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+      (ur: { role_id: string; roles: { name: string } | null }) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
     );
 
     if (!isAdmin) {
@@ -39,19 +39,19 @@ export const analyticsRouter = router({
 
     try {
       // Get MRR
-      const { data: mrr } = await (ctx.supabase.rpc as any)('calculate_mrr');
+      const { data: mrr } = await (ctx.supabase.rpc as (name: string, params?: Record<string, unknown>) => Promise<{ data: number | null; error: unknown }>)('calculate_mrr');
 
       // Get churn rate (last 3 months)
-      const { data: churnRate } = await (ctx.supabase.rpc as any)('calculate_churn_rate', {
+      const { data: churnRate } = await (ctx.supabase.rpc as (name: string, params?: Record<string, unknown>) => Promise<{ data: number | null; error: unknown }>)('calculate_churn_rate', {
         p_period_months: 3,
       });
 
       // Get average LTV
-      const { data: avgLtv } = await (ctx.supabase.rpc as any)('calculate_avg_student_ltv');
+      const { data: avgLtv } = await (ctx.supabase.rpc as (name: string, params?: Record<string, unknown>) => Promise<{ data: number | null; error: unknown }>)('calculate_avg_student_ltv');
 
       // Get current month analytics from materialized view
       const { data: currentMonth } = await (ctx.supabase
-        .from as any)('revenue_analytics')
+        .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => { limit: (n: number) => { single: () => Promise<{ data: Record<string, unknown> | null; error: unknown }> } } } })('revenue_analytics')
         .select('*')
         .order('month', { ascending: false })
         .limit(1)
@@ -94,7 +94,7 @@ export const analyticsRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur: { role_id: string; roles: { name: string } | null }) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
       );
 
       if (!isAdmin) {
@@ -106,7 +106,7 @@ export const analyticsRouter = router({
 
       try {
         const { data: trend, error } = await (ctx.supabase
-          .from as any)('revenue_analytics')
+          .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => { limit: (n: number) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } } })('revenue_analytics')
           .select('*')
           .order('month', { ascending: false })
           .limit(input.months);
@@ -151,7 +151,7 @@ export const analyticsRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur: { role_id: string; roles: { name: string } | null }) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
       );
 
       if (!isAdmin) {
@@ -163,7 +163,7 @@ export const analyticsRouter = router({
 
       try {
         const { data: courses, error } = await (ctx.supabase
-          .from as any)('course_revenue_analytics')
+          .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => { limit: (n: number) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } } })('course_revenue_analytics')
           .select('*')
           .order(input.sortBy, { ascending: false })
           .limit(input.limit);
@@ -206,7 +206,7 @@ export const analyticsRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur: { role_id: string; roles: { name: string } | null }) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
       );
 
       if (!isAdmin) {
@@ -218,7 +218,7 @@ export const analyticsRouter = router({
 
       try {
         let query = (ctx.supabase
-          .from as any)('student_ltv_analytics')
+          .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => { limit: (n: number) => { gte: (column: string, value: number) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } & Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } } })('student_ltv_analytics')
           .select('*')
           .order('lifetime_revenue', { ascending: false })
           .limit(input.limit);
@@ -265,7 +265,7 @@ export const analyticsRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur: { role_id: string; roles: { name: string } | null }) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
       );
 
       if (!isAdmin) {
@@ -277,7 +277,7 @@ export const analyticsRouter = router({
 
       try {
         // Get success rate
-        const { data: successRate } = await (ctx.supabase.rpc as any)(
+        const { data: successRate } = await (ctx.supabase.rpc as (name: string, params?: Record<string, unknown>) => Promise<{ data: number | null; error: unknown }>)(
           'calculate_payment_success_rate',
           {
             p_period_days: input.periodDays,
@@ -285,7 +285,7 @@ export const analyticsRouter = router({
         );
 
         // Get refund rate
-        const { data: refundRate } = await (ctx.supabase.rpc as any)('calculate_refund_rate', {
+        const { data: refundRate } = await (ctx.supabase.rpc as (name: string, params?: Record<string, unknown>) => Promise<{ data: number | null; error: unknown }>)('calculate_refund_rate', {
           p_period_days: input.periodDays,
         });
 
@@ -325,7 +325,7 @@ export const analyticsRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur: { role_id: string; roles: { name: string } | null }) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
       );
 
       if (!isAdmin) {
@@ -336,7 +336,7 @@ export const analyticsRouter = router({
       }
 
       try {
-        const { data: funnel, error } = await (ctx.supabase.rpc as any)('get_enrollment_funnel', {
+        const { data: funnel, error } = await (ctx.supabase.rpc as (name: string, params?: Record<string, unknown>) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }>)('get_enrollment_funnel', {
           p_period_days: input.periodDays,
         });
 
@@ -378,7 +378,7 @@ export const analyticsRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur: { role_id: string; roles: { name: string } | null }) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
       );
 
       if (!isAdmin) {
@@ -390,7 +390,7 @@ export const analyticsRouter = router({
 
       try {
         const { data: discounts, error } = await (ctx.supabase
-          .from as any)('discount_effectiveness_analytics')
+          .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean; nullsFirst: boolean }) => { limit: (n: number) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } } })('discount_effectiveness_analytics')
           .select('*')
           .order(input.sortBy, { ascending: false, nullsFirst: false })
           .limit(input.limit);
@@ -424,7 +424,7 @@ export const analyticsRouter = router({
       .eq('user_id', ctx.session.user.id);
 
     const isAdmin = userRoles?.some(
-      (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+      (ur: { role_id: string; roles: { name: string } | null }) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
     );
 
     if (!isAdmin) {
@@ -435,7 +435,7 @@ export const analyticsRouter = router({
     }
 
     try {
-      const { error } = await (ctx.supabase.rpc as any)('refresh_revenue_analytics');
+      const { error } = await (ctx.supabase.rpc as (name: string, params?: Record<string, unknown>) => Promise<{ data: unknown; error: unknown }>)('refresh_revenue_analytics');
 
       if (error) throw error;
 
@@ -475,7 +475,7 @@ export const analyticsRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur: { role_id: string; roles: { name: string } | null }) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
       );
 
       if (!isAdmin) {
@@ -486,13 +486,13 @@ export const analyticsRouter = router({
       }
 
       try {
-        let data: any[] = [];
+        let data: Record<string, unknown>[] = [];
         let headers: string[] = [];
 
         switch (input.type) {
           case 'revenue':
             const { data: revenue } = await (ctx.supabase
-              .from as any)('revenue_analytics')
+              .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => { limit: (n: number) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } } })('revenue_analytics')
               .select('*')
               .order('month', { ascending: false })
               .limit(input.months);
@@ -509,7 +509,7 @@ export const analyticsRouter = router({
 
           case 'courses':
             const { data: courses } = await (ctx.supabase
-              .from as any)('course_revenue_analytics')
+              .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } })('course_revenue_analytics')
               .select('*')
               .order('total_revenue', { ascending: false });
             data = courses || [];
@@ -523,7 +523,7 @@ export const analyticsRouter = router({
 
           case 'students':
             const { data: students } = await (ctx.supabase
-              .from as any)('student_ltv_analytics')
+              .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } })('student_ltv_analytics')
               .select('*')
               .order('lifetime_revenue', { ascending: false });
             data = students || [];
@@ -537,7 +537,7 @@ export const analyticsRouter = router({
 
           case 'discounts':
             const { data: discounts } = await (ctx.supabase
-              .from as any)('discount_effectiveness_analytics')
+              .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean; nullsFirst: boolean }) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } })('discount_effectiveness_analytics')
               .select('*')
               .order('roi_ratio', { ascending: false, nullsFirst: false });
             data = discounts || [];
@@ -554,7 +554,7 @@ export const analyticsRouter = router({
         // Convert to CSV
         const csv = [
           headers.join(','),
-          ...data.map((row) => headers.map((h) => row[h] || '').join(',')),
+          ...data.map((row) => headers.map((h) => (row[h] as string | number | undefined) ?? '').join(',')),
         ].join('\n');
 
         return {

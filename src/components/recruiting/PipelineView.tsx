@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useAppStore } from '../../lib/store';
-import { Search, Filter, MoreHorizontal, MapPin, Clock, CheckCircle, XCircle, Calendar, DollarSign, User, FileText, Edit3, Briefcase, TrendingUp, Star, Building2 } from 'lucide-react';
+import { Search, Filter, MoreHorizontal, MapPin, Clock, CheckCircle, DollarSign, FileText, Edit3, Briefcase, Star, Building2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { cn } from '../../lib/utils';

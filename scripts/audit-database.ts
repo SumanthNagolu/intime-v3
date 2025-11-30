@@ -33,7 +33,7 @@ async function auditDatabase() {
 
   console.log('📊 TABLES:');
   if (tablesData.rows) {
-    tablesData.rows.forEach((row: any) => console.log(`  ✓ ${row.table_name}`));
+    tablesData.rows.forEach((row: Record<string, unknown>) => console.log(`  ✓ ${row.table_name}`));
   }
   console.log(`\nTotal: ${tablesData.rows?.length || 0} tables\n`);
 
@@ -62,7 +62,7 @@ async function auditDatabase() {
 
   console.log('⚙️  FUNCTIONS:');
   if (functionsData.rows) {
-    functionsData.rows.forEach((row: any) => console.log(`  ✓ ${row.function_name}(${row.arguments || ''})`));
+    functionsData.rows.forEach((row: Record<string, unknown>) => console.log(`  ✓ ${row.function_name}(${row.arguments || ''})`));
   }
   console.log(`\nTotal: ${functionsData.rows?.length || 0} functions\n`);
 
@@ -87,7 +87,7 @@ async function auditDatabase() {
 
   console.log('👁️  VIEWS:');
   if (viewsData.rows) {
-    viewsData.rows.forEach((row: any) => console.log(`  ✓ ${row.table_name}`));
+    viewsData.rows.forEach((row: Record<string, unknown>) => console.log(`  ✓ ${row.table_name}`));
   }
   console.log(`\nTotal: ${viewsData.rows?.length || 0} views\n`);
 }

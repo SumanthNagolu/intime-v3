@@ -23,7 +23,7 @@ async function check() {
     console.log('🎯 Value Proposition:', s.valueProposition || '(empty)');
     console.log('\n💬 Talking Points:');
     if (Array.isArray(s.talkingPoints) && s.talkingPoints.length > 0) {
-      (s.talkingPoints as any[]).forEach((tp, i) => {
+      (s.talkingPoints as Array<Record<string, unknown>>).forEach((tp, i) => {
         console.log(`   ${i + 1}. ${tp.title}: ${tp.description}`);
       });
     } else {
@@ -31,7 +31,7 @@ async function check() {
     }
     console.log('\n👥 Stakeholders:');
     if (Array.isArray(s.stakeholders) && s.stakeholders.length > 0) {
-      (s.stakeholders as any[]).forEach(sh => {
+      (s.stakeholders as Array<Record<string, unknown>>).forEach(sh => {
         console.log(`   • ${sh.name} (${sh.role}) - Influence: ${sh.influence}, Stance: ${sh.stance}`);
       });
     } else {
@@ -39,7 +39,7 @@ async function check() {
     }
     console.log('\n⚠️ Objections:');
     if (Array.isArray(s.objections) && s.objections.length > 0) {
-      (s.objections as any[]).forEach(obj => {
+      (s.objections as Array<Record<string, unknown>>).forEach(obj => {
         console.log(`   ❓ ${obj.objection}`);
         console.log(`   ✅ ${obj.response}`);
       });
@@ -48,10 +48,12 @@ async function check() {
     }
     console.log('\n⚔️ Competitors:');
     if (Array.isArray(s.competitors) && s.competitors.length > 0) {
-      (s.competitors as any[]).forEach(c => {
+      (s.competitors as Array<Record<string, unknown>>).forEach(c => {
         console.log(`   📌 ${c.name}`);
-        console.log(`      Their Strengths: ${c.theirStrengths.join(', ') || '(none)'}`);
-        console.log(`      Our Advantages: ${c.ourAdvantages.join(', ') || '(none)'}`);
+        const theirStrengths = Array.isArray(c.theirStrengths) ? c.theirStrengths.join(', ') : '';
+        const ourAdvantages = Array.isArray(c.ourAdvantages) ? c.ourAdvantages.join(', ') : '';
+        console.log(`      Their Strengths: ${theirStrengths || '(none)'}`);
+        console.log(`      Our Advantages: ${ourAdvantages || '(none)'}`);
       });
     } else {
       console.log('   (none)');
@@ -66,6 +68,8 @@ async function check() {
 }
 
 check();
+
+
 
 
 

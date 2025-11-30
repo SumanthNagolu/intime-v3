@@ -204,22 +204,22 @@ export async function getAuditLogsAction(
   }
 
   // Transform data
-  const transformedLogs: AuditLogEntry[] = (logs || []).map((log: any) => ({
-    id: log.id,
-    createdAt: log.created_at,
-    tableName: log.table_name,
-    action: log.action,
-    recordId: log.record_id,
-    userId: log.user_id,
-    userEmail: log.user_email,
+  const transformedLogs: AuditLogEntry[] = (logs || []).map((log: Record<string, unknown>) => ({
+    id: log.id as string,
+    createdAt: log.created_at as string,
+    tableName: log.table_name as string,
+    action: log.action as string,
+    recordId: (log.record_id as string | null) ?? null,
+    userId: (log.user_id as string | null) ?? null,
+    userEmail: (log.user_email as string | null) ?? null,
     userIpAddress: (log.user_ip_address as string | null) ?? null,
-    userAgent: log.user_agent ?? null,
+    userAgent: (log.user_agent as string | null) ?? null,
     oldValues: (log.old_values as Record<string, unknown> | null) ?? null,
     newValues: (log.new_values as Record<string, unknown> | null) ?? null,
-    changedFields: log.changed_fields,
+    changedFields: (log.changed_fields as string[] | null) ?? null,
     metadata: (log.metadata as Record<string, unknown> | null) ?? null,
-    severity: log.severity ?? null,
-    orgId: log.org_id ?? null,
+    severity: (log.severity as string | null) ?? null,
+    orgId: (log.org_id as string | null) ?? null,
   }));
 
   const total = count || 0;
@@ -310,9 +310,9 @@ export async function getAuditLogDetailAction(
     orgId: log.org_id ?? null,
     user: log.user_profiles
       ? {
-          id: (log.user_profiles as any).id,
-          email: (log.user_profiles as any).email,
-          fullName: (log.user_profiles as any).full_name,
+          id: (log.user_profiles as Record<string, unknown>).id as string,
+          email: (log.user_profiles as Record<string, unknown>).email as string,
+          fullName: (log.user_profiles as Record<string, unknown>).full_name as string,
         }
       : null,
   };
@@ -410,15 +410,15 @@ export async function exportAuditLogsAction(
     'Severity',
   ];
 
-  const rows = logs.map((log: any) => [
-    log.id,
-    log.created_at,
-    log.table_name,
-    log.action,
-    log.record_id || '',
-    log.user_email || '',
-    log.user_ip_address || '',
-    log.severity,
+  const rows = logs.map((log: Record<string, unknown>) => [
+    log.id as string,
+    log.created_at as string,
+    log.table_name as string,
+    log.action as string,
+    (log.record_id as string | null) || '',
+    (log.user_email as string | null) || '',
+    (log.user_ip_address as string | null) || '',
+    log.severity as string,
   ]);
 
   const csvContent = [
@@ -479,8 +479,8 @@ export async function getAuditLogFilterOptionsAction(): Promise<
     .order('table_name', { ascending: true });
 
   // Extract unique values
-  const actions = [...new Set((actionsData || []).map((a: any) => a.action))];
-  const tableNames = [...new Set((tablesData || []).map((t: any) => t.table_name))];
+  const actions = [...new Set((actionsData || []).map((a: Record<string, unknown>) => a.action as string))];
+  const tableNames = [...new Set((tablesData || []).map((t: Record<string, unknown>) => t.table_name as string))];
   const severities = ['debug', 'info', 'warning', 'error', 'critical'];
 
   return {
@@ -561,8 +561,9 @@ export async function getAuditLogStatsAction(): Promise<
 
   // Count actions
   const actionCounts: Record<string, number> = {};
-  (actionsData || []).forEach((a: any) => {
-    actionCounts[a.action] = (actionCounts[a.action] || 0) + 1;
+  (actionsData || []).forEach((a: Record<string, unknown>) => {
+    const action = a.action as string;
+    actionCounts[action] = (actionCounts[action] || 0) + 1;
   });
 
   const topActions = Object.entries(actionCounts)
@@ -579,9 +580,10 @@ export async function getAuditLogStatsAction(): Promise<
 
   // Count users
   const userCounts: Record<string, number> = {};
-  (usersData || []).forEach((u: any) => {
-    if (u.user_email) {
-      userCounts[u.user_email] = (userCounts[u.user_email] || 0) + 1;
+  (usersData || []).forEach((u: Record<string, unknown>) => {
+    const userEmail = u.user_email as string | null;
+    if (userEmail) {
+      userCounts[userEmail] = (userCounts[userEmail] || 0) + 1;
     }
   });
 

@@ -227,7 +227,7 @@ export function EmployeePortal({ userRole, userName, userRoles = [], error }: Em
           <div className="max-w-4xl mx-auto flex items-center gap-3">
             <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0" />
             <p className="text-amber-800 text-sm flex-1">
-              <span className="font-semibold">Wrong portal:</span> You tried to access the Academy Portal, but your account is an employee account. You've been redirected to the Employee Portal.
+              <span className="font-semibold">Wrong portal:</span> You tried to access the Academy Portal, but your account is an employee account. You&apos;ve been redirected to the Employee Portal.
             </p>
             <button
               onClick={() => setShowError(false)}
@@ -326,7 +326,7 @@ export function EmployeePortal({ userRole, userName, userRoles = [], error }: Em
                   <Sparkles size={14} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-charcoal-900 mb-1">Today's Priority</h3>
+                  <h3 className="font-semibold text-charcoal-900 mb-1">Today&apos;s Priority</h3>
                   <p className="text-charcoal-600 text-sm leading-relaxed">
                     Focus on following up with 3 high-priority submissions from yesterday.
                     Two candidates are awaiting feedback from client interviews scheduled for this morning.

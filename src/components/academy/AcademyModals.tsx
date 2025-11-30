@@ -2,7 +2,7 @@
 
 
 import React, { useState } from 'react';
-import { X, Send, Bell, Download, Calendar, CheckCircle, FileText, Users, Check } from 'lucide-react';
+import { X, Send, Bell, Download, CheckCircle, FileText, Users, Check } from 'lucide-react';
 
 // --- MESSAGE MODAL ---
 interface MessageModalProps {
@@ -238,7 +238,7 @@ export const GradingModal: React.FC<GradingModalProps> = ({ isOpen, onClose, stu
                       <div className="flex items-center justify-between p-4 bg-stone-50 rounded-xl border border-stone-200">
                           <div>
                               <div className="font-bold text-charcoal text-sm">Existence Logic</div>
-                              <div className="text-xs text-stone-500">Set to 'Electable'</div>
+                              <div className="text-xs text-stone-500">Set to &apos;Electable&apos;</div>
                           </div>
                           <div className="flex gap-2">
                               <button className="px-3 py-1 bg-white border border-stone-200 rounded text-xs font-bold hover:bg-green-50 hover:text-green-700 hover:border-green-200">25 pts</button>

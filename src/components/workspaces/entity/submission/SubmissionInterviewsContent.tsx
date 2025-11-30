@@ -9,7 +9,6 @@
 import React from 'react';
 import {
   Calendar,
-  Clock,
   Video,
   Phone,
   MapPin,
@@ -100,7 +99,6 @@ function InterviewCard({
   const resultConfig = interview.result ? RESULT_CONFIG[interview.result] : null;
   const TypeIcon = typeConfig.icon;
   const scheduledDate = new Date(interview.scheduledAt);
-  const isPast = scheduledDate < new Date();
 
   return (
     <div

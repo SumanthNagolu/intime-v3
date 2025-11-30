@@ -2,9 +2,9 @@
 
 
 import React, { useState } from 'react';
-import { Search, Filter, Download, Clock, User, ShieldAlert, FileText, X, ChevronDown } from 'lucide-react';
+import { Search, Filter, Download, Clock, User, FileText, X } from 'lucide-react';
 
-const LogDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; log: any }> = ({ isOpen, onClose, log }) => {
+const LogDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; log: unknown }> = ({ isOpen, onClose, log }) => {
     if (!isOpen || !log) return null;
 
     return (
@@ -75,7 +75,7 @@ const LogDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; log: any 
 
 export const AuditLogs: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedLog, setSelectedLog] = useState<any | null>(null);
+  const [selectedLog, setSelectedLog] = useState<unknown | null>(null);
   const [activeFilter, setActiveFilter] = useState('All');
 
   const logs = [

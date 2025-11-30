@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Search, User, MapPin, Linkedin, MoreHorizontal } from 'lucide-react';
+import { Search, MapPin, Linkedin, MoreHorizontal } from 'lucide-react';
 
 export const SourcedCandidates: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');

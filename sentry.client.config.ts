@@ -53,21 +53,25 @@ Sentry.init({
 
     // Remove phone numbers from payload
     if (event.extra) {
-      const scrubPhone = (obj: any): any => {
+      const scrubPhone = (obj: unknown): unknown => {
         if (typeof obj !== 'object' || obj === null) return obj;
-        const scrubbed: any = Array.isArray(obj) ? [] : {};
-        for (const key in obj) {
+        if (Array.isArray(obj)) {
+          return obj.map(item => scrubPhone(item));
+        }
+        const scrubbed: Record<string, unknown> = {};
+        for (const key in obj as Record<string, unknown>) {
+          const typedObj = obj as Record<string, unknown>;
           if (key.toLowerCase().includes('phone')) {
             scrubbed[key] = '***-***-****';
-          } else if (typeof obj[key] === 'object') {
-            scrubbed[key] = scrubPhone(obj[key]);
+          } else if (typeof typedObj[key] === 'object') {
+            scrubbed[key] = scrubPhone(typedObj[key]);
           } else {
-            scrubbed[key] = obj[key];
+            scrubbed[key] = typedObj[key];
           }
         }
         return scrubbed;
       };
-      event.extra = scrubPhone(event.extra);
+      event.extra = scrubPhone(event.extra) as Record<string, unknown>;
     }
 
     return event;

@@ -49,10 +49,10 @@ export const benchRouter = router({
         minDaysOnBench: z.number().optional(),
         maxDaysOnBench: z.number().optional(),
       }))
-      .query(async ({ ctx, input }) => {
+      .query(async ({ ctx: _ctx, input }) => {
         const { limit, offset, minDaysOnBench, maxDaysOnBench } = input;
 
-        let conditions = [];
+        const conditions = [];
         if (minDaysOnBench !== undefined) conditions.push(gte(benchMetadata.daysOnBench, minDaysOnBench));
         if (maxDaysOnBench !== undefined) conditions.push(lte(benchMetadata.daysOnBench, maxDaysOnBench));
 
@@ -70,7 +70,7 @@ export const benchRouter = router({
      */
     getById: orgProtectedProcedure
       .input(z.object({ userId: z.string().uuid() }))
-      .query(async ({ ctx, input }) => {
+      .query(async ({ ctx: _ctx, input }) => {
         const [consultant] = await db.select().from(benchMetadata)
           .where(eq(benchMetadata.userId, input.userId))
           .limit(1);
@@ -87,7 +87,7 @@ export const benchRouter = router({
      */
     create: orgProtectedProcedure
       .input(createBenchMetadataSchema)
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ ctx: _ctx, input }) => {
         const [newConsultant] = await db.insert(benchMetadata).values({
           userId: input.userId,
           benchStartDate: formatDate(input.benchStartDate),
@@ -105,7 +105,7 @@ export const benchRouter = router({
      */
     update: orgProtectedProcedure
       .input(updateBenchMetadataSchema)
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ ctx: _ctx, input }) => {
         const { userId, ...data } = input;
 
         const [updated] = await db.update(benchMetadata)
@@ -124,7 +124,7 @@ export const benchRouter = router({
      * Get bench aging report
      */
     agingReport: orgProtectedProcedure
-      .query(async ({ ctx }) => {
+      .query(async ({ ctx: _ctx }) => {
         const report = await db.select({
           ageRange: sql<string>`
             CASE
@@ -168,7 +168,7 @@ export const benchRouter = router({
         const { orgId } = ctx;
         const { limit, offset, search } = input;
 
-        let conditions = [eq(externalJobs.orgId, orgId)];
+        const conditions = [eq(externalJobs.orgId, orgId)];
         if (search) {
           conditions.push(sql`${externalJobs.title} ILIKE ${`%${search}%`}`);
         }
@@ -321,7 +321,7 @@ export const benchRouter = router({
         const { orgId } = ctx;
         const { limit, offset, status, candidateId } = input;
 
-        let conditions = [eq(benchSubmissions.orgId, orgId)];
+        const conditions = [eq(benchSubmissions.orgId, orgId)];
         if (status) conditions.push(eq(benchSubmissions.status, status));
         if (candidateId) conditions.push(eq(benchSubmissions.candidateId, candidateId));
 
@@ -478,7 +478,7 @@ export const benchRouter = router({
         const { orgId } = ctx;
         const { limit, offset, status, candidateId } = input;
 
-        let conditions = [eq(immigrationCases.orgId, orgId)];
+        const conditions = [eq(immigrationCases.orgId, orgId)];
         if (status) conditions.push(eq(immigrationCases.status, status));
         if (candidateId) conditions.push(eq(immigrationCases.candidateId, candidateId));
 

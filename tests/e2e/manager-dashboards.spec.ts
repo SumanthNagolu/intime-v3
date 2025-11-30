@@ -3,7 +3,7 @@
  * Tests manager-specific dashboards with role switching functionality
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -28,7 +28,7 @@ const MANAGER_USERS = {
   },
 };
 
-async function loginAndNavigate(page: any, email: string) {
+async function loginAndNavigate(page: Page, email: string): Promise<void> {
   await page.goto('/auth/employee');
   await page.waitForLoadState('networkidle');
   await page.fill('input[type="email"]', email);

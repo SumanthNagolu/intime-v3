@@ -18,7 +18,6 @@ import {
   MapPin,
   DollarSign,
   Calendar,
-  Clock,
   SortAsc,
   SortDesc,
 } from 'lucide-react';

@@ -2,7 +2,7 @@
 
 
 import React, { useState } from 'react';
-import { X, CheckCircle, XCircle, AlertTriangle, Calendar, DollarSign, FileText, User, Receipt, ArrowRight, MessageSquare, HelpCircle, CheckSquare, Eye } from 'lucide-react';
+import { X, CheckCircle, XCircle, AlertTriangle, Calendar, DollarSign, FileText, Receipt, MessageSquare, CheckSquare, Eye } from 'lucide-react';
 import { ApprovalRequest } from '../../types';
 
 interface ApprovalModalProps {
@@ -101,7 +101,7 @@ export const ApprovalModal: React.FC<ApprovalModalProps> = ({ isOpen, onClose, r
                       
                       <div>
                           <h4 className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">Reason</h4>
-                          <p className="text-sm text-stone-600 italic bg-stone-50 p-3 rounded-lg border border-stone-100">"{request.details.reason}"</p>
+                          <p className="text-sm text-stone-600 italic bg-stone-50 p-3 rounded-lg border border-stone-100">&quot;{request.details.reason}&quot;</p>
                       </div>
 
                       {/* Conflict Check */}

@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react';
-import { 
-  Mail, Phone, Calendar, FileText, Linkedin, User, Clock, ArrowRight, 
+import {
+  Mail, Phone, Calendar, FileText, Linkedin, Clock, ArrowRight,
   Loader2, CheckCircle, XCircle, AlertCircle, CircleDashed, Play, SkipForward,
   ChevronRight
 } from 'lucide-react';
 import { formatDistanceToNow, format, isPast, isToday } from 'date-fns';
-import type { Activity, ActivityStatus, ActivityType } from '@/lib/db/schema/activities';
+import type { Activity, ActivityStatus } from '@/lib/db/schema/activities';
 
 interface ActivityTimelineProps {
   activities: Activity[];

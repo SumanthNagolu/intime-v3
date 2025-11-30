@@ -1,7 +1,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ChevronLeft, Megaphone, Users, MousePointer, MessageSquare } from 'lucide-react';
+import { ChevronLeft, Megaphone } from 'lucide-react';
 
 export const SalesAnalytics: React.FC = () => {
   return (

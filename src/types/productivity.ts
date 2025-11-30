@@ -224,7 +224,7 @@ export interface TwinInteraction {
   interactionType: InteractionType;
   prompt?: string; // NULL for briefings
   response: string;
-  context?: Record<string, any>;
+  context?: Record<string, unknown>;
   wasHelpful?: boolean;
   userFeedback?: string;
   modelUsed: string;
@@ -363,7 +363,7 @@ export class ProductivityError extends Error {
   constructor(
     message: string,
     public code: keyof typeof ProductivityErrorCodes,
-    public details?: any
+    public details?: unknown
   ) {
     super(message);
     this.name = 'ProductivityError';
@@ -443,7 +443,7 @@ export interface DailyActivitySummary {
 export interface TwinContext {
   employeeName?: string;
   role: TwinRole;
-  [key: string]: any; // Role-specific fields
+  [key: string]: unknown; // Role-specific fields
 }
 
 /**

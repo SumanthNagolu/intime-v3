@@ -12,7 +12,7 @@ import type { CostTrackingRequest, DateRange } from '@/lib/ai/monitoring/types';
 // Mock Supabase
 vi.mock('@supabase/supabase-js', () => ({
   createClient: vi.fn(() => ({
-    from: vi.fn((table: string) => ({
+    from: vi.fn((_table: string) => ({
       insert: vi.fn(() => ({ error: null })),
       select: vi.fn(() => ({
         eq: vi.fn(() => ({

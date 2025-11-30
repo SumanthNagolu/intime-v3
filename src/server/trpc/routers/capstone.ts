@@ -29,17 +29,17 @@ export const capstoneRouter = router({
     .mutation(async ({ ctx, input }) => {
       const supabase = await createClient();
 
-      const { data, error } = await (supabase.rpc as any)('submit_capstone', {
+      const { data, error } = await supabase.rpc('submit_capstone', {
         p_user_id: ctx.userId,
         p_enrollment_id: input.enrollmentId,
         p_course_id: input.courseId,
         p_repository_url: input.repositoryUrl,
-        p_demo_video_url: input.demoVideoUrl ?? null,
-        p_description: input.description ?? null,
-      });
+        p_demo_video_url: input.demoVideoUrl,
+        p_description: input.description,
+      }) as { data: unknown; error: unknown };
 
       if (error) {
-        throw new Error(`Failed to submit capstone: ${error.message}`);
+        throw new Error(`Failed to submit capstone: ${(error as { message: string }).message}`);
       }
 
       return { submissionId: data as string };
@@ -61,17 +61,17 @@ export const capstoneRouter = router({
     .mutation(async ({ ctx, input }) => {
       const supabase = await createClient();
 
-      const { data, error } = await (supabase.rpc as any)('submit_peer_review', {
+      const { data, error } = await supabase.rpc('submit_peer_review', {
         p_submission_id: input.submissionId,
         p_reviewer_id: ctx.userId,
         p_rating: input.rating,
         p_comments: input.comments,
-        p_strengths: input.strengths ?? null,
-        p_improvements: input.improvements ?? null,
-      });
+        p_strengths: input.strengths,
+        p_improvements: input.improvements,
+      }) as { data: unknown; error: unknown };
 
       if (error) {
-        throw new Error(`Failed to submit peer review: ${error.message}`);
+        throw new Error(`Failed to submit peer review: ${(error as { message: string }).message}`);
       }
 
       return { reviewId: data as string };
@@ -117,21 +117,21 @@ export const capstoneRouter = router({
         .eq('id', ctx.userId)
         .single();
 
-      const { data, error } = await (supabase.rpc as any)('grade_capstone', {
+      const { data, error } = await supabase.rpc('grade_capstone', {
         p_submission_id: input.submissionId,
         p_grader_id: ctx.userId,
         p_grade: input.grade,
         p_feedback: input.feedback,
         p_rubric_scores: input.rubricScores || null,
         p_status: input.status,
-      });
+      }) as { data: unknown; error: unknown };
 
       if (error) {
-        throw new Error(`Failed to grade capstone: ${error.message}`);
+        throw new Error(`Failed to grade capstone: ${(error as { message: string }).message}`);
       }
 
       // Publish capstone.graded event (ACAD-026: triggers student notification)
-      await (supabase.rpc as any)('publish_event', {
+      await supabase.rpc('publish_event', {
         p_aggregate_id: input.submissionId,
         p_event_type: 'capstone.graded',
         p_payload: {
@@ -176,19 +176,19 @@ export const capstoneRouter = router({
         offset: z.number().min(0).default(0),
       })
     )
-    .query(async ({ ctx, input }) => {
+    .query(async ({ ctx: _ctx, input }) => {
       const supabase = await createClient();
 
-      const { data, error } = await (supabase.rpc as any)('get_capstone_submissions', {
-        p_user_id: input.userId ?? null,
-        p_course_id: input.courseId ?? null,
-        p_status: input.status ?? null,
+      const { data, error } = await supabase.rpc('get_capstone_submissions', {
+        p_user_id: input.userId,
+        p_course_id: input.courseId,
+        p_status: input.status,
         p_limit: input.limit,
         p_offset: input.offset,
-      });
+      }) as { data: unknown; error: unknown };
 
       if (error) {
-        throw new Error(`Failed to get submissions: ${error.message}`);
+        throw new Error(`Failed to get submissions: ${(error as { message: string }).message}`);
       }
 
       return (data || []) as unknown as CapstoneSubmissionWithDetails[];
@@ -199,7 +199,7 @@ export const capstoneRouter = router({
    */
   getSubmissionById: protectedProcedure
     .input(z.object({ submissionId: z.string().uuid() }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ ctx: _ctx, input }) => {
       const supabase = await createClient();
 
       const { data, error } = await supabase
@@ -255,15 +255,15 @@ export const capstoneRouter = router({
    */
   getPeerReviews: protectedProcedure
     .input(z.object({ submissionId: z.string().uuid() }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ ctx: _ctx, input }) => {
       const supabase = await createClient();
 
-      const { data, error } = await (supabase.rpc as any)('get_peer_reviews_for_submission', {
+      const { data, error } = await supabase.rpc('get_peer_reviews_for_submission', {
         p_submission_id: input.submissionId,
-      });
+      }) as { data: unknown; error: unknown };
 
       if (error) {
-        throw new Error(`Failed to get peer reviews: ${error.message}`);
+        throw new Error(`Failed to get peer reviews: ${(error as { message: string }).message}`);
       }
 
       return (data || []) as unknown as PeerReviewWithReviewer[];
@@ -282,17 +282,17 @@ export const capstoneRouter = router({
     .query(async ({ ctx, input }) => {
       const supabase = await createClient();
 
-      const { data, error } = await (supabase.rpc as any)('get_submissions_for_peer_review', {
+      const { data, error } = await supabase.rpc('get_submissions_for_peer_review', {
         p_reviewer_id: ctx.userId,
         p_course_id: input.courseId,
         p_limit: input.limit,
-      });
+      }) as { data: unknown; error: unknown };
 
       if (error) {
-        throw new Error(`Failed to get submissions for peer review: ${error.message}`);
+        throw new Error(`Failed to get submissions for peer review: ${(error as { message: string }).message}`);
       }
 
-      return data || [];
+      return (data || []) as unknown[];
     }),
 
   /**
@@ -300,15 +300,15 @@ export const capstoneRouter = router({
    */
   checkGraduationEligibility: protectedProcedure
     .input(z.object({ enrollmentId: z.string().uuid() }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ ctx: _ctx, input }) => {
       const supabase = await createClient();
 
-      const { data, error } = await (supabase.rpc as any)('check_graduation_eligibility', {
+      const { data, error } = await supabase.rpc('check_graduation_eligibility', {
         p_enrollment_id: input.enrollmentId,
-      });
+      }) as { data: unknown; error: unknown };
 
       if (error) {
-        throw new Error(`Failed to check graduation eligibility: ${error.message}`);
+        throw new Error(`Failed to check graduation eligibility: ${(error as { message: string }).message}`);
       }
 
       // Also get the enrollment details
@@ -343,7 +343,7 @@ export const capstoneRouter = router({
    */
   getStatistics: protectedProcedure
     .input(z.object({ courseId: z.string().uuid() }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ ctx: _ctx, input }) => {
       const supabase = await createClient();
 
       const { data, error } = await supabase
@@ -363,7 +363,7 @@ export const capstoneRouter = router({
   /**
    * Get grading queue (trainers only)
    */
-  getGradingQueue: protectedProcedure.query(async ({ ctx }) => {
+  getGradingQueue: protectedProcedure.query(async ({ ctx: _ctx }) => {
     const supabase = await createClient();
 
     const { data, error } = await supabase.from('capstone_grading_queue').select('*');
@@ -384,7 +384,7 @@ export const capstoneRouter = router({
         limit: z.number().min(1).max(100).default(20),
       })
     )
-    .query(async ({ ctx, input }) => {
+    .query(async ({ ctx: _ctx, input }) => {
       const supabase = await createClient();
 
       const { data, error } = await supabase

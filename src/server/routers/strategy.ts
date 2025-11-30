@@ -401,7 +401,7 @@ export const strategyRouter = router({
     .query(async ({ ctx, input }) => {
       const { orgId } = ctx;
       
-      let query = db.select()
+      const query = db.select()
         .from(talkingPointTemplates)
         .where(and(
           eq(talkingPointTemplates.orgId, orgId),
@@ -517,6 +517,8 @@ export const strategyRouter = router({
 });
 
 export type StrategyRouter = typeof strategyRouter;
+
+
 
 
 

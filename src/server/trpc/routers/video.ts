@@ -107,7 +107,7 @@ export const videoRouter = router({
         courseId: z.string().uuid(),
       })
     )
-    .query(async ({ input, ctx }) => {
+    .query(async ({ input, ctx: _ctx }) => {
       const supabase = createAdminClient();
 
       // TODO: Add authorization check (admin/trainer only)

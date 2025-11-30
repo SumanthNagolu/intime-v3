@@ -565,8 +565,8 @@ function CollapsibleSection({
  */
 function CustomSection({
   definition,
-  entity,
-  context,
+  entity: _entity,
+  context: _context,
 }: SectionRendererProps) {
   // For custom sections, we'd need a registry of custom section components
   // For now, just render a placeholder

@@ -125,7 +125,7 @@ export const TermsOfService: React.FC = () => {
 
             <h2>8. Disclaimer of Warranties</h2>
             <p>
-              Our services are provided "as is" without warranties of any kind, either express or implied.
+              Our services are provided &quot;as is&quot; without warranties of any kind, either express or implied.
               We do not guarantee employment outcomes or specific results from our training programs.
             </p>
 

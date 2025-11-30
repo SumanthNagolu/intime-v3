@@ -3,7 +3,6 @@
  * Provides authentication-related queries and mutations
  */
 
-import { z } from 'zod';
 import { router, protectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
 import { userRoles, roles } from '@/lib/db/schema/rbac';

@@ -11,7 +11,6 @@ import {
   ExportTransactionsInputSchema,
   type XPTransaction,
   type XPSummary,
-  type TransactionStats,
   calculateLevel,
   getLevelName,
   calculateXpToNextLevel,

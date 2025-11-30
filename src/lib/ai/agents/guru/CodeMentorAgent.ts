@@ -214,7 +214,7 @@ export class CodeMentorAgent extends BaseAgent<CodeMentorInput, CodeMentorOutput
   private async searchDocumentation(
     query: string,
     module: string
-  ): Promise<any[]> {
+  ): Promise<Array<{ content: string; source: string; similarity: number }>> {
     if (!this.hasRAG()) {
       return [];
     }
@@ -227,7 +227,7 @@ export class CodeMentorAgent extends BaseAgent<CodeMentorInput, CodeMentorOutput
 
       return docs.map((doc) => ({
         content: doc.content,
-        source: doc.metadata?.source || 'Unknown',
+        source: (doc.metadata?.source as string) || 'Unknown',
         similarity: doc.similarity,
       }));
     } catch (error) {
@@ -241,8 +241,8 @@ export class CodeMentorAgent extends BaseAgent<CodeMentorInput, CodeMentorOutput
    */
   private buildUserPrompt(
     input: CodeMentorInput,
-    relevantDocs: any[],
-    conversationHistory: any[]
+    relevantDocs: Array<{ content: string; source: string; similarity: number }>,
+    conversationHistory: Array<{ role: string; content: string }>
   ): string {
     let prompt = `STUDENT QUESTION:\n${input.question}\n\n`;
 
@@ -273,7 +273,7 @@ export class CodeMentorAgent extends BaseAgent<CodeMentorInput, CodeMentorOutput
   /**
    * Extract documentation hints
    */
-  private extractDocumentationHints(docs: any[]): string[] {
+  private extractDocumentationHints(docs: Array<{ content: string; source: string; similarity: number }>): string[] {
     return docs
       .slice(0, 3)
       .map((doc) => `${doc.source}: ${doc.content.substring(0, 100)}...`);
@@ -313,8 +313,8 @@ export class CodeMentorAgent extends BaseAgent<CodeMentorInput, CodeMentorOutput
     studentId: string;
     agentType: string;
     conversationId?: string;
-    input: any;
-    output: any;
+    input: CodeMentorInput;
+    output: CodeMentorOutput;
     modelUsed: string;
     tokensUsed: number;
     costUsd: number;
@@ -372,7 +372,7 @@ export class CodeMentorAgent extends BaseAgent<CodeMentorInput, CodeMentorOutput
   private createGuruError(
     message: string,
     code: keyof typeof GuruErrorCodes,
-    details?: any
+    details?: unknown
   ): GuruError {
     const error = new Error(message) as GuruError;
     error.name = 'GuruError';

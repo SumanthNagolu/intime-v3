@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import { useAppStore } from '../../lib/store';
-import { ChevronLeft, CheckCircle, XCircle, Zap, Briefcase, User, HelpCircle, Star } from 'lucide-react';
+import { ChevronLeft, CheckCircle, XCircle, Zap, Briefcase, User, HelpCircle } from 'lucide-react';
 
 export const ScreeningRoom: React.FC = () => {
   const { candidateId, jobId } = useParams();
@@ -167,10 +167,10 @@ export const ScreeningRoom: React.FC = () => {
                       </h4>
                       <ul className="space-y-2 text-sm text-stone-600">
                           <li className="p-3 bg-stone-50 rounded-lg border border-stone-100">
-                              "Can you elaborate on the specific integration patterns you used at Global Insure?"
+                              &quot;Can you elaborate on the specific integration patterns you used at Global Insure?&quot;
                           </li>
                           <li className="p-3 bg-stone-50 rounded-lg border border-stone-100">
-                              "Describe a challenging rating engine configuration you solved."
+                              &quot;Describe a challenging rating engine configuration you solved.&quot;
                           </li>
                       </ul>
                   </div>

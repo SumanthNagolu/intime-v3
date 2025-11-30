@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Update feedback
-    const updateData: Record<string, any> = {
+    const updateData: Record<string, unknown> = {
       updated_at: new Date().toISOString(),
     };
 
