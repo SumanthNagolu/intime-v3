@@ -84,6 +84,9 @@ export interface AuditEventParams {
   oldValues?: Record<string, unknown>;
   newValues?: Record<string, unknown>;
   metadata?: Record<string, unknown>;
+  severity?: 'debug' | 'info' | 'warning' | 'error' | 'critical';
+  description?: string;
+  category?: string;
 }
 
 /**

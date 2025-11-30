@@ -7,7 +7,7 @@
  * @module schema/user-profiles
  */
 
-import { pgTable, uuid, text, timestamp, numeric, integer, boolean, jsonb, varchar } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, timestamp, numeric, integer, boolean, jsonb, varchar, date } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 import { organizations } from './organizations';
 
@@ -60,8 +60,84 @@ export const userProfiles = pgTable('user_profiles', {
   candidateHourlyRate: numeric('candidate_hourly_rate', { precision: 10, scale: 2 }),
   candidateBenchStartDate: timestamp('candidate_bench_start_date', { withTimezone: true }),
   candidateAvailability: text('candidate_availability'), // 'immediate', '2_weeks', '1_month'
-  candidateLocation: text('candidate_location'),
+  candidateLocation: text('candidate_location'), // @deprecated - Use addresses table
   candidateWillingToRelocate: boolean('candidate_willing_to_relocate').default(false),
+
+  // Enhanced Candidate Personal Details
+  middleName: text('middle_name'),
+  preferredName: text('preferred_name'),
+  dateOfBirth: date('date_of_birth'),
+  gender: text('gender'),
+  nationality: text('nationality'),
+
+  // Enhanced Candidate Contact
+  emailSecondary: text('email_secondary'),
+  phoneHome: text('phone_home'),
+  phoneWork: text('phone_work'),
+  preferredContactMethod: text('preferred_contact_method'), // 'email', 'phone', 'text'
+  preferredCallTime: text('preferred_call_time'),
+  doNotContact: boolean('do_not_contact').default(false),
+  doNotEmail: boolean('do_not_email').default(false),
+  doNotText: boolean('do_not_text').default(false),
+  linkedinUrl: text('linkedin_url'),
+  githubUrl: text('github_url'),
+  portfolioUrl: text('portfolio_url'),
+  personalWebsite: text('personal_website'),
+
+  // Emergency Contact
+  emergencyContactName: text('emergency_contact_name'),
+  emergencyContactRelationship: text('emergency_contact_relationship'),
+  emergencyContactPhone: text('emergency_contact_phone'),
+  emergencyContactEmail: text('emergency_contact_email'),
+
+  // Source/Marketing
+  leadSource: text('lead_source'), // 'job_board', 'linkedin', 'referral', 'direct', 'agency'
+  leadSourceDetail: text('lead_source_detail'), // Specific source (e.g., "Indeed", "Employee John Doe")
+  marketingStatus: text('marketing_status'), // 'active', 'passive', 'do_not_contact'
+  isOnHotlist: boolean('is_on_hotlist').default(false),
+  hotlistAddedAt: timestamp('hotlist_added_at', { withTimezone: true }),
+  hotlistAddedBy: uuid('hotlist_added_by'),
+  hotlistNotes: text('hotlist_notes'),
+
+  // Enhanced Availability
+  currentEmploymentStatus: text('current_employment_status'), // 'employed', 'unemployed', 'student', 'freelance'
+  noticePeriodDays: integer('notice_period_days'),
+  earliestStartDate: date('earliest_start_date'),
+  preferredEmploymentType: text('preferred_employment_type').array(), // ['contract', 'permanent', 'part_time']
+
+  // Enhanced Relocation
+  preferredLocations: text('preferred_locations').array(),
+  relocationAssistanceRequired: boolean('relocation_assistance_required').default(false),
+  relocationNotes: text('relocation_notes'),
+
+  // Enhanced Compensation
+  desiredSalaryAnnual: numeric('desired_salary_annual', { precision: 12, scale: 2 }),
+  desiredSalaryCurrency: text('desired_salary_currency').default('USD'),
+  minimumHourlyRate: numeric('minimum_hourly_rate', { precision: 10, scale: 2 }),
+  minimumAnnualSalary: numeric('minimum_annual_salary', { precision: 12, scale: 2 }),
+  benefitsRequired: text('benefits_required').array(),
+  compensationNotes: text('compensation_notes'),
+
+  // Languages
+  languages: jsonb('languages').$type<Array<{ language: string; proficiency: string }>>().default([]),
+
+  // Rating/Quality
+  recruiterRating: integer('recruiter_rating'), // 1-5
+  recruiterRatingNotes: text('recruiter_rating_notes'),
+  profileCompletenessScore: integer('profile_completeness_score').default(0),
+  lastProfileUpdate: timestamp('last_profile_update', { withTimezone: true }),
+  lastActivityDate: timestamp('last_activity_date', { withTimezone: true }),
+  lastContactedAt: timestamp('last_contacted_at', { withTimezone: true }),
+  lastContactedBy: uuid('last_contacted_by'),
+
+  // Professional Summary
+  professionalHeadline: text('professional_headline'),
+  professionalSummary: text('professional_summary'),
+  careerObjectives: text('career_objectives'),
+
+  // Tags/Categories
+  tags: text('tags').array(),
+  categories: text('categories').array(),
 
   // Client fields (Client Companies)
   clientCompanyName: text('client_company_name'),
@@ -77,6 +153,19 @@ export const userProfiles = pgTable('user_profiles', {
   recruiterSpecialization: text('recruiter_specialization').array(),
   recruiterMonthlyPlacementTarget: integer('recruiter_monthly_placement_target').default(2),
   recruiterPodId: uuid('recruiter_pod_id'),
+
+  // Employee role (for access control)
+  employeeRole: text('employee_role'),
+  title: text('title'),
+
+  // Billing integration
+  stripeCustomerId: text('stripe_customer_id'),
+
+  // Recruiter metrics
+  totalPlacements: integer('total_placements').default(0),
+
+  // Leaderboard visibility
+  leaderboardVisible: boolean('leaderboard_visible').default(true),
 
   // Metadata & audit
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),

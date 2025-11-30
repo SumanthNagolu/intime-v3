@@ -108,8 +108,8 @@ async function checkPermission(
   const { data, error } = await supabase.rpc('check_user_permission', {
     p_user_id: userId,
     p_permission: permission,
-    p_resource_type: resourceType || null,
-    p_resource_id: resourceId || null,
+    p_table_name: resourceType || null,
+    p_record_id: resourceId || null,
   });
 
   if (error) {
@@ -135,11 +135,11 @@ async function logAuditEvent(
     user_id: userId,
     org_id: orgId,
     action,
-    resource_type: resourceType,
-    resource_id: resourceId,
-    details,
+    table_name: resourceType,
+    record_id: resourceId,
+    metadata: details,
     severity,
-    ip_address: null,
+    user_ip_address: null,
     user_agent: null,
   });
 }
