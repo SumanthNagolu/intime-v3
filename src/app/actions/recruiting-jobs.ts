@@ -14,6 +14,9 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type UnsafePostgrestQueryBuilder = any;
+
 // ============================================================================
 // Types
 // ============================================================================
@@ -302,8 +305,8 @@ export async function listJobsAction(
     submissions(id, status)
   `;
 
-  const baseQuery = (supabase.from('jobs') as any).select(selectQuery, { count: 'exact' });
-  let query: any = baseQuery.is('deleted_at', null);
+  const baseQuery = (supabase.from('jobs') as UnsafePostgrestQueryBuilder).select(selectQuery, { count: 'exact' });
+  let query: UnsafePostgrestQueryBuilder = baseQuery.is('deleted_at', null);
 
   if (search) {
     query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
@@ -441,7 +444,7 @@ export async function getJobAction(jobId: string): Promise<ActionResult<Job>> {
   }
 
   const { data: job, error } = await (supabase
-    .from('jobs') as any)
+    .from('jobs') as UnsafePostgrestQueryBuilder)
     .select(`
       *,
       account:accounts!account_id(name),
@@ -756,7 +759,7 @@ export async function deleteJobAction(jobId: string): Promise<ActionResult<{ del
   }
 
   const { data: existingJob, error: fetchError } = await (supabase
-    .from('jobs') as any)
+    .from('jobs') as UnsafePostgrestQueryBuilder)
     .select('title, submissions(id)')
     .eq('id', jobId)
     .is('deleted_at', null)
@@ -1147,7 +1150,7 @@ export async function getJobMetricsAction(): Promise<ActionResult<JobMetrics>> {
 
   // Get all jobs
   const { data: jobs, error } = await (supabase
-    .from('jobs') as any)
+    .from('jobs') as UnsafePostgrestQueryBuilder)
     .select('id, status, filled_date, created_at, submissions(id)')
     .is('deleted_at', null);
 
@@ -1167,27 +1170,29 @@ export async function getJobMetricsAction(): Promise<ActionResult<JobMetrics>> {
     submissions?: Array<{ id: string }> | null;
   }
 
-  const totalJobs = jobs?.length || 0;
-  const openJobs = jobs?.filter((j: MetricJobRow) => j.status === 'open').length || 0;
-  const urgentJobs = jobs?.filter((j: MetricJobRow) => j.status === 'urgent').length || 0;
-  const filledThisMonth = jobs?.filter((j: MetricJobRow) =>
-    j.status === 'filled' && j.filled_date && new Date(j.filled_date) >= startOfMonth
-  ).length || 0;
+  const metricJobs = (jobs ?? []) as MetricJobRow[];
+
+  const totalJobs = metricJobs.length;
+  const openJobs = metricJobs.filter((job) => job.status === 'open').length;
+  const urgentJobs = metricJobs.filter((job) => job.status === 'urgent').length;
+  const filledThisMonth = metricJobs.filter(
+    (job) => job.status === 'filled' && job.filled_date && new Date(job.filled_date) >= startOfMonth
+  ).length;
 
   // Calculate avg time to fill (for filled jobs)
-  const filledJobs = jobs?.filter((j: MetricJobRow) => j.status === 'filled' && j.filled_date) || [];
+  const filledJobs = metricJobs.filter((job) => job.status === 'filled' && job.filled_date);
   let totalDays = 0;
-  filledJobs.forEach((j: any) => {
-    const created = new Date(j.created_at);
-    const filled = new Date(j.filled_date!);
+  filledJobs.forEach((job) => {
+    const created = new Date(job.created_at);
+    const filled = new Date(job.filled_date!);
     totalDays += Math.ceil((filled.getTime() - created.getTime()) / (1000 * 60 * 60 * 24));
   });
   const avgTimeToFill = filledJobs.length > 0 ? Math.round(totalDays / filledJobs.length) : 0;
 
   // Calculate avg submissions per job
   let totalSubmissions = 0;
-  jobs?.forEach((j: MetricJobRow) => {
-    totalSubmissions += j.submissions?.length || 0;
+  metricJobs.forEach((job) => {
+    totalSubmissions += job.submissions?.length || 0;
   });
   const avgSubmissionsPerJob = totalJobs > 0 ? Math.round((totalSubmissions / totalJobs) * 10) / 10 : 0;
 
@@ -1220,7 +1225,7 @@ export async function getJobsByAccountAction(accountId: string): Promise<ActionR
   const supabase = await createClient();
 
   const { data: jobs, error } = await (supabase
-    .from('jobs') as any)
+    .from('jobs') as UnsafePostgrestQueryBuilder)
     .select(`
       *,
       account:accounts!account_id(name),

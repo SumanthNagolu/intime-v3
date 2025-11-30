@@ -660,7 +660,7 @@ function DealsTab({ account, canEdit }: { account: NonNullable<ReturnType<typeof
 
 function JobsTab({ account, canEdit }: { account: NonNullable<ReturnType<typeof useAccount>['data']>; canEdit: boolean }) {
   // In a real implementation, this would fetch jobs linked to the account
-  const jobs: Array<{ id: string; title: string; status: string }> = [];
+  const jobs: Array<{ id: string; title: string; status: string; location?: string }> = [];
   void account;
 
   return (
@@ -699,7 +699,7 @@ function JobsTab({ account, canEdit }: { account: NonNullable<ReturnType<typeof 
                 >
                   <div>
                     <p className="font-medium">{job.title}</p>
-                    <p className="text-sm text-muted-foreground">{(job as any).location || 'Remote'}</p>
+                    <p className="text-sm text-muted-foreground">{job.location ?? 'Remote'}</p>
                   </div>
                   <Badge>{job.status}</Badge>
                 </div>
