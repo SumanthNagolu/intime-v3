@@ -181,7 +181,21 @@ export const EmployeeProfile: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   // Local State for Edit Mode
-  const [editData, setEditData] = useState(employee || {});
+  const [editData, setEditData] = useState(employee || {
+    id: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    role: 'Recruiter',
+    department: 'Recruiting' as const,
+    salary: '0',
+    status: 'Active' as const,
+    startDate: '',
+    manager: '',
+    location: '',
+    pod: '',
+    image: ''
+  });
   const [assets, setAssets] = useState<Asset[]>([
       { type: 'Laptop', model: 'MacBook Pro 16"', serial: 'C02TG0...', status: 'Assigned', icon: Laptop },
       { type: 'Phone', model: 'iPhone 15 Pro', serial: 'F19GL...', status: 'Assigned', icon: Smartphone },

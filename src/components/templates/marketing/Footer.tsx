@@ -46,7 +46,6 @@ const defaultColumns: FooterColumn[] = [
 
 export const Footer: React.FC<FooterProps> = ({
   columns = defaultColumns,
-  _socialLinks = []
 }) => {
   return (
     <footer className="bg-charcoal-900 text-white">

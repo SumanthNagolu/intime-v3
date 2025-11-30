@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import { CheckSquare, X } from 'lucide-react';
 import { ApprovalModal } from './ApprovalModal';
+import type { ApprovalRequest } from '@/lib/types';
 
 const TimesheetDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; employeeName: string }> = ({ isOpen, onClose, employeeName }) => {
     if (!isOpen) return null;
@@ -156,11 +157,11 @@ const TimeOffRequestView: React.FC = () => {
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* We reuse the ApprovalModal here via portal or state lifting if needed, but for this view we simulate local usage */}
-            <ApprovalModal 
-                isOpen={!!approvalRequest} 
-                onClose={() => setApprovalRequest(null)} 
-                request={approvalRequest} 
-                onApprove={() => setApprovalRequest(null)} 
+            <ApprovalModal
+                isOpen={!!approvalRequest}
+                onClose={() => setApprovalRequest(null)}
+                request={approvalRequest as ApprovalRequest | null}
+                onApprove={() => setApprovalRequest(null)}
                 onDeny={() => setApprovalRequest(null)} 
             />
 

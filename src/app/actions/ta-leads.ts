@@ -9,7 +9,7 @@
 
 'use server';
 
-import { createClient } from '@/lib/supabase/server';
+import { createClient, type UntypedFromFunction } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
@@ -39,7 +39,7 @@ interface LeadRow {
   phone: string | null;
   linkedin_url: string | null;
   status: string;
-  estimated_value: number | null;
+  estimated_value: string | number | null;
   source: string | null;
   source_campaign_id: string | null;
   owner_id: string | null;
@@ -90,13 +90,15 @@ interface AccountRow {
   contract_start_date: string | null;
   contract_end_date: string | null;
   payment_terms_days: number;
-  markup_percentage: number | null;
-  annual_revenue_target: number | null;
+  markup_percentage: string | number | null;
+  annual_revenue_target: string | number | null;
   website: string | null;
   headquarters_location: string | null;
   phone: string | null;
   contact_count: number;
   deal_count: number;
+  point_of_contacts?: unknown[];
+  deals?: unknown[];
   created_at: string;
   updated_at: string;
 }
@@ -130,6 +132,7 @@ interface ActivityRow {
   body: string | null;
   direction: string | null;
   performed_by: string | null;
+  performer?: { full_name?: string | null };
   performed_by_user?: { full_name?: string | null };
   poc_id: string | null;
   poc?: { full_name?: string | null };
@@ -148,8 +151,8 @@ interface UserRoleRow {
 }
 
 interface TeamMemberRow {
-  id?: string;
-  full_name?: string | null;
+  id: string;
+  full_name: string | null;
   user_roles?: UserRoleRow[];
 }
 
@@ -161,6 +164,7 @@ interface LeadStatusRow {
 interface DealStageValueRow {
   stage: string;
   value: string | number;
+  probability?: number | null;
 }
 
 interface AccountStatusRow {
@@ -565,7 +569,7 @@ async function logAuditEvent(
 ) {
   const { tableName, action, recordId, userId, userEmail, orgId, oldValues, newValues, metadata } = params;
 
-  await (adminSupabase.from as (table: string) => ReturnType<typeof adminSupabase.from>)('audit_logs').insert({
+  await (adminSupabase.from as unknown as UntypedFromFunction)('audit_logs').insert({
     table_name: tableName,
     action,
     record_id: recordId,
@@ -671,7 +675,7 @@ export async function listLeadsAction(
     return { success: false, error: 'Failed to fetch leads' };
   }
 
-  const transformedLeads: Lead[] = (leads || []).map((lead: LeadRow) => ({
+  const transformedLeads: Lead[] = (leads || []).map((lead: any) => ({
     id: lead.id,
     leadType: lead.lead_type,
     companyName: lead.company_name,
@@ -685,7 +689,7 @@ export async function listLeadsAction(
     phone: lead.phone,
     linkedinUrl: lead.linkedin_url,
     status: lead.status,
-    estimatedValue: lead.estimated_value ? parseFloat(lead.estimated_value) : null,
+    estimatedValue: lead.estimated_value ? parseFloat(String(lead.estimated_value)) : null,
     source: lead.source,
     sourceCampaignId: lead.source_campaign_id,
     ownerId: lead.owner_id,
@@ -1295,11 +1299,11 @@ export async function listDealsAction(
     return { success: false, error: 'Failed to fetch deals' };
   }
 
-  const transformedDeals: Deal[] = (deals || []).map((deal: DealRow) => ({
+  const transformedDeals: Deal[] = (deals || []).map((deal: any) => ({
     id: deal.id,
     title: deal.title,
     description: deal.description,
-    value: parseFloat(deal.value),
+    value: parseFloat(String(deal.value)),
     stage: deal.stage,
     probability: deal.probability,
     expectedCloseDate: deal.expected_close_date,
@@ -1730,8 +1734,8 @@ export async function getDealPipelineAction(): Promise<ActionResult<{
   let totalPipelineValue = 0;
   let totalWeightedValue = 0;
 
-  (deals || []).forEach((deal: DealRow) => {
-    const value = parseFloat(deal.value) || 0;
+  (deals || []).forEach((deal: DealStageValueRow) => {
+    const value = parseFloat(String(deal.value)) || 0;
     const probability = deal.probability || 0;
     const weighted = value * (probability / 100);
 
@@ -1845,7 +1849,7 @@ export async function listAccountsAction(
     return { success: false, error: 'Failed to fetch accounts' };
   }
 
-  const transformedAccounts: Account[] = (accounts || []).map((account: AccountRow) => ({
+  const transformedAccounts: Account[] = (accounts || []).map((account: any) => ({
     id: account.id,
     name: account.name,
     industry: account.industry,
@@ -1860,8 +1864,8 @@ export async function listAccountsAction(
     contractStartDate: account.contract_start_date,
     contractEndDate: account.contract_end_date,
     paymentTermsDays: account.payment_terms_days,
-    markupPercentage: account.markup_percentage ? parseFloat(account.markup_percentage) : null,
-    annualRevenueTarget: account.annual_revenue_target ? parseFloat(account.annual_revenue_target) : null,
+    markupPercentage: account.markup_percentage ? parseFloat(String(account.markup_percentage)) : null,
+    annualRevenueTarget: account.annual_revenue_target ? parseFloat(String(account.annual_revenue_target)) : null,
     website: account.website,
     headquartersLocation: account.headquarters_location,
     phone: account.phone,
@@ -2215,7 +2219,7 @@ export async function listAccountContactsAction(
     return { success: false, error: 'Failed to fetch contacts' };
   }
 
-  const transformedContacts: PointOfContact[] = (contacts || []).map((contact: ContactRow) => ({
+  const transformedContacts: PointOfContact[] = (contacts || []).map((contact: any) => ({
     id: contact.id,
     accountId: contact.account_id,
     accountName: contact.account?.name || null,
@@ -2562,7 +2566,7 @@ export async function listActivitiesAction(
     return { success: false, error: 'Failed to fetch activities' };
   }
 
-  const transformedActivities: Activity[] = (activities || []).map((activity: ActivityRow) => ({
+  const transformedActivities: Activity[] = (activities || []).map((activity: any) => ({
     id: activity.id,
     entityType: activity.entity_type,
     entityId: activity.entity_id,
@@ -2838,12 +2842,19 @@ export async function getTeamLeaderboardAction(): Promise<ActionResult<Array<{
     `)
     .is('deleted_at', null);
 
-  const salesTeam = (teamMembers || []).filter((m: TeamMemberRow) => {
-    const roles = m.user_roles?.map((ur: UserRoleRow) => ur.roles?.name) || [];
+  const salesTeam = (teamMembers || []).filter((m: any) => {
+    const roles = m.user_roles?.map((ur: any) => ur.roles?.name) || [];
     return roles.some((r: string | undefined) => r && ['ta_manager', 'sales', 'recruiter'].includes(r));
   });
 
-  const leaderboard = await Promise.all(salesTeam.map(async (member: TeamMemberRow) => {
+  const leaderboard = await Promise.all(salesTeam.map(async (member: any): Promise<{
+    userId: string;
+    userName: string;
+    dealsWon: number;
+    revenue: number;
+    leadsConverted: number;
+    activitiesLogged: number;
+  }> => {
     // Get deals won
     const { data: deals } = await supabase
       .from('deals')
@@ -2872,9 +2883,9 @@ export async function getTeamLeaderboardAction(): Promise<ActionResult<Array<{
 
     return {
       userId: member.id,
-      userName: member.full_name,
+      userName: member.full_name || '',
       dealsWon: deals?.length || 0,
-      revenue: deals?.reduce((sum: number, d: DealStageValueRow) => sum + parseFloat(String(d.value || 0)), 0) || 0,
+      revenue: deals?.reduce((sum: number, d: any) => sum + parseFloat(String(d.value || 0)), 0) || 0,
       leadsConverted: leads?.length || 0,
       activitiesLogged: activities?.length || 0,
     };

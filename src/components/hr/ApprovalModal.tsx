@@ -67,6 +67,7 @@ export const ApprovalModal: React.FC<ApprovalModalProps> = ({ isOpen, onClose, r
   };
 
   const renderContent = () => {
+      const details = request.details as Record<string, unknown>;
       switch(request.type) {
           case 'Time Off':
               return (
@@ -88,9 +89,9 @@ export const ApprovalModal: React.FC<ApprovalModalProps> = ({ isOpen, onClose, r
                               <div className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-1">Dates</div>
                               <div className="text-lg font-bold text-charcoal flex items-center gap-2">
                                   <Calendar size={18} className="text-rust" />
-                                  {request.details.start} - {request.details.end}
+                                  {String(details.start)} - {String(details.end)}
                               </div>
-                              <div className="text-xs text-stone-500 mt-1">{request.details.days} Days Total</div>
+                              <div className="text-xs text-stone-500 mt-1">{String(details.days)} Days Total</div>
                           </div>
                           <div className="p-4 bg-white rounded-xl border border-stone-200 shadow-sm">
                               <div className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-1">PTO Balance</div>
@@ -101,7 +102,7 @@ export const ApprovalModal: React.FC<ApprovalModalProps> = ({ isOpen, onClose, r
                       
                       <div>
                           <h4 className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">Reason</h4>
-                          <p className="text-sm text-stone-600 italic bg-stone-50 p-3 rounded-lg border border-stone-100">&quot;{request.details.reason}&quot;</p>
+                          <p className="text-sm text-stone-600 italic bg-stone-50 p-3 rounded-lg border border-stone-100">&quot;{String(details.reason)}&quot;</p>
                       </div>
 
                       {/* Conflict Check */}
@@ -131,7 +132,7 @@ export const ApprovalModal: React.FC<ApprovalModalProps> = ({ isOpen, onClose, r
                           </div>
                           <div className="text-right">
                               <div className="text-xs font-bold text-stone-400 uppercase tracking-widest">Commission Amount</div>
-                              <div className="text-xl font-serif font-bold text-green-600">{request.details.amount}</div>
+                              <div className="text-xl font-serif font-bold text-green-600">{String(details.amount)}</div>
                           </div>
                       </div>
 
@@ -140,11 +141,11 @@ export const ApprovalModal: React.FC<ApprovalModalProps> = ({ isOpen, onClose, r
                           <div className="grid grid-cols-2 gap-4 text-sm">
                               <div>
                                   <div className="text-stone-500 text-xs">Candidate</div>
-                                  <div className="font-bold text-charcoal">{request.details.placement}</div>
+                                  <div className="font-bold text-charcoal">{String(details.placement)}</div>
                               </div>
                               <div>
                                   <div className="text-stone-500 text-xs">Client</div>
-                                  <div className="font-bold text-charcoal">{request.details.client}</div>
+                                  <div className="font-bold text-charcoal">{String(details.client)}</div>
                               </div>
                               <div>
                                   <div className="text-stone-500 text-xs">Position</div>
@@ -160,8 +161,8 @@ export const ApprovalModal: React.FC<ApprovalModalProps> = ({ isOpen, onClose, r
                       <div className="p-4 bg-stone-50 rounded-xl border border-stone-100">
                           <h4 className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">Calculation</h4>
                           <div className="flex justify-between items-center text-sm font-mono">
-                              <span>{request.details.dealValue} (Contract) × 2% (Rate)</span>
-                              <span className="font-bold">= {request.details.amount}</span>
+                              <span>{String(details.dealValue)} (Contract) × 2% (Rate)</span>
+                              <span className="font-bold">= {String(details.amount)}</span>
                           </div>
                       </div>
 
@@ -181,11 +182,11 @@ export const ApprovalModal: React.FC<ApprovalModalProps> = ({ isOpen, onClose, r
                       <div className="flex justify-between items-center p-4 bg-stone-50 rounded-xl border border-stone-200">
                           <div>
                               <div className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-1">Total Reimbursement</div>
-                              <div className="text-2xl font-bold text-charcoal">{request.details.amount}</div>
+                              <div className="text-2xl font-bold text-charcoal">{String(details.amount)}</div>
                           </div>
                           <div className="text-right">
-                              <div className="text-xs text-stone-500">{request.details.items} Items</div>
-                              <div className="text-xs font-bold text-charcoal">{request.details.category}</div>
+                              <div className="text-xs text-stone-500">{String(details.items)} Items</div>
+                              <div className="text-xs font-bold text-charcoal">{String(details.category)}</div>
                           </div>
                       </div>
 

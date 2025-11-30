@@ -253,10 +253,17 @@ const SalesConsole: React.FC = () => {
                   </CardHeader>
 
                   <CardContent className="space-y-4">
-                      {(mode === 'business' ? leads.slice(0,3) : [
-                          { id: 'c1', name: 'Priya Sharma', role: 'Sr. Dev', status: 'Active' },
-                          { id: 'c2', name: 'Mike Chen', role: 'Architect', status: 'New' }
-                      ] as Array<{ id: string; name: string; company?: string; role?: string; status: string; contact?: string }>).map((item) => (
+                      {(mode === 'business' ? leads.slice(0,3).map(l => ({
+                          id: l.id,
+                          name: l.company || 'Unknown',
+                          company: l.company,
+                          role: undefined,
+                          status: l.status || 'new',
+                          contact: l.contact || l.email
+                      })) : [
+                          { id: 'c1', name: 'Priya Sharma', role: 'Sr. Dev', status: 'Active', company: undefined, contact: undefined },
+                          { id: 'c2', name: 'Mike Chen', role: 'Architect', status: 'New', company: undefined, contact: undefined }
+                      ]).map((item) => (
                           <div
                               key={item.id}
                               className="flex items-center justify-between p-6 bg-charcoal-50 rounded-xl hover:bg-forest-50 transition-all duration-300 border border-charcoal-100 hover:border-forest-200 hover:-translate-y-0.5 group cursor-pointer"

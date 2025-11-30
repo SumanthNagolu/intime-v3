@@ -4,7 +4,8 @@
 import React, { useState } from 'react';
 import { Search, Filter, Download, Clock, User, FileText, X } from 'lucide-react';
 
-const LogDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; log: unknown }> = ({ isOpen, onClose, log }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const LogDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; log: any }> = ({ isOpen, onClose, log }) => {
     if (!isOpen || !log) return null;
 
     return (
@@ -13,7 +14,7 @@ const LogDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; log: unkn
                 <button onClick={onClose} className="absolute top-6 right-6 text-stone-400 hover:text-charcoal transition-colors">
                     <X size={24} />
                 </button>
-                
+
                 <div className="mb-6">
                     <div className="text-rust font-bold text-xs uppercase tracking-[0.2em] mb-2">Audit Trail</div>
                     <h2 className="text-2xl font-serif font-bold text-charcoal">Event Details</h2>

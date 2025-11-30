@@ -48,7 +48,7 @@ describe('TimelineGenerator', () => {
 
     // Create generator instance WITH mocked dependencies
     generator = new TimelineGenerator(undefined, {
-      classifier: mockClassifier,
+      classifier: mockClassifier as never,
       openai: mockOpenAI as never,
       supabase: mockSupabase as never,
     });

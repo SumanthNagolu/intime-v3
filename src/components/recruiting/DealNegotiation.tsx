@@ -95,7 +95,7 @@ function Section({
   );
 }
 
-export function DealNegotiation({ _dealId, _dealTitle, leadId }: DealNegotiationProps) {
+export function DealNegotiation({ dealId: _dealId, dealTitle: _dealTitle, leadId }: DealNegotiationProps) {
   // Fetch lead strategy if deal was converted from lead (to inherit data)
   const { data: leadStrategy, isLoading: leadStrategyLoading } = trpc.strategy.get.useQuery(
     { leadId: leadId! },

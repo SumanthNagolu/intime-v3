@@ -235,10 +235,10 @@ const RoleDetailModal: React.FC<{
   isOpen: boolean;
   onClose: () => void;
   role: { name: string; desc: string; users: number; color: string } | null;
-}> = ({ _isOpen, onClose, role }) => {
+}> = ({ isOpen, onClose, role }) => {
     const [tab, setTab] = useState<'Users' | 'Permissions'>('Users');
 
-    if (!_isOpen || !role) return null;
+    if (!isOpen || !role) return null;
 
     // Mock Users
     const assignedUsers = [

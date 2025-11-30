@@ -159,7 +159,7 @@ async function checkPermission(
 ): Promise<{ allowed: boolean; scope?: string }> {
   const supabase = await createClient();
 
-  const { data, error } = await (supabase.rpc as (name: string, params: Record<string, string | null>) => Promise<{ data: boolean | null; error: unknown }>)('check_user_permission', {
+  const { data, error } = await (supabase.rpc as unknown as (name: string, params: Record<string, string | null>) => Promise<{ data: boolean | null; error: unknown }>)('check_user_permission', {
     p_user_id: userId,
     p_permission: permission,
     p_table_name: resourceType || null,
@@ -186,7 +186,7 @@ async function logAuditEvent(
 ) {
   const supabase = await createClient();
 
-  await (supabase.from as (table: string) => { insert: (data: Record<string, unknown>) => Promise<void> })('audit_logs').insert({
+  await (supabase.from as unknown as (table: string) => { insert: (data: Record<string, unknown>) => Promise<void> })('audit_logs').insert({
     user_id: userId,
     org_id: orgId,
     action,

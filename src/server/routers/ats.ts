@@ -92,7 +92,7 @@ export const atsRouter = router({
           const ownershipCondition = await buildOwnershipCondition(
             { userId: profileId, orgId, isManager: isManager ?? false, managedUserIds },
             'job',
-            jobs,
+            { id: jobs.id as unknown as SQL<unknown>, ownerId: jobs.ownerId as unknown as SQL<unknown> },
             ownership
           );
           conditions.push(ownershipCondition);
@@ -138,12 +138,12 @@ export const atsRouter = router({
         const { userId, orgId } = ctx;
 
         // Extract rate fields that need string conversion for numeric columns
-        const { rateMin, rateMax, ...rest } = input;
+        const { rateMin, rateMax, ownerId, ...rest } = input;
 
         const [newJob] = await db.insert(jobs).values({
-          ...rest,
+          ...(rest as any),
           orgId,
-          ownerId: input.ownerId || userId,
+          ownerId: ownerId ?? userId,
           createdBy: userId,
           // Convert numbers to strings for numeric columns
           ...(rateMin !== undefined && { rateMin: String(rateMin) }),
@@ -262,7 +262,7 @@ export const atsRouter = router({
           const ownershipCondition = await buildOwnershipCondition(
             { userId: profileId, orgId, isManager: isManager ?? false, managedUserIds },
             'submission',
-            submissions,
+            { id: submissions.id as unknown as SQL<unknown>, ownerId: submissions.ownerId as unknown as SQL<unknown> },
             ownership
           );
           conditions.push(ownershipCondition);
@@ -395,10 +395,14 @@ export const atsRouter = router({
 
         const ownerId = userProfile?.id ?? userId;
 
+        // Extract fields that need conversion
+        const { submittedRate, ...rest } = input;
+
         const [newSubmission] = await db.insert(submissions).values({
-          ...input,
+          ...rest,
           orgId,
           ownerId,
+          ...(submittedRate !== undefined && { submittedRate: String(submittedRate) }),
         }).returning();
 
         return newSubmission;
@@ -411,10 +415,15 @@ export const atsRouter = router({
       .input(updateSubmissionSchema)
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
-        const { id, ...data } = input;
+        const { id, submittedRate, ...data } = input;
+
+        const updateData = {
+          ...data,
+          ...(submittedRate !== undefined && { submittedRate: String(submittedRate) }),
+        };
 
         const [updated] = await db.update(submissions)
-          .set(data)
+          .set(updateData)
           .where(and(
             eq(submissions.id, id),
             eq(submissions.orgId, orgId)
@@ -957,9 +966,11 @@ export const atsRouter = router({
       .input(createOfferSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
+        const { billRate, ...rest } = input;
 
         const [newOffer] = await db.insert(offers).values({
-          ...input,
+          ...(rest as any),
+          rate: billRate !== undefined ? String(billRate) : '0',
           orgId,
           createdBy: userId,
         }).returning();
@@ -974,10 +985,16 @@ export const atsRouter = router({
       .input(updateOfferSchema)
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
-        const { id, ...data } = input;
+        const { id, billRate, benefits, ...data } = input;
+
+        const updateData = {
+          ...data,
+          ...(billRate !== undefined && { rate: String(billRate) }),
+          ...(benefits !== undefined && { benefits: Array.isArray(benefits) ? benefits.join(', ') : benefits }),
+        };
 
         const [updated] = await db.update(offers)
-          .set(data)
+          .set(updateData)
           .where(and(
             eq(offers.id, id),
             eq(offers.orgId, orgId)
@@ -1092,9 +1109,13 @@ export const atsRouter = router({
       .input(createPlacementSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
+        const { billRate, payRate, ...rest } = input;
 
         const [newPlacement] = await db.insert(placements).values({
-          ...input,
+          ...(rest as any),
+          recruiterId: userId,
+          billRate: String(billRate),
+          payRate: String(payRate),
           orgId,
           createdBy: userId,
         }).returning();
@@ -1109,10 +1130,16 @@ export const atsRouter = router({
       .input(updatePlacementSchema)
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
-        const { id, ...data } = input;
+        const { id, billRate, payRate, ...data } = input;
+
+        const updateData = {
+          ...data,
+          ...(billRate !== undefined && { billRate: String(billRate) }),
+          ...(payRate !== undefined && { payRate: String(payRate) }),
+        };
 
         const [updated] = await db.update(placements)
-          .set(data)
+          .set(updateData)
           .where(and(
             eq(placements.id, id),
             eq(placements.orgId, orgId)
@@ -1260,7 +1287,7 @@ export const atsRouter = router({
           const ownershipCondition = await buildOwnershipCondition(
             { userId: profileId, orgId, isManager: isManager ?? false, managedUserIds },
             'candidate',
-            { id: userProfiles.id, ownerId: userProfiles.createdBy },
+            { id: userProfiles.id as unknown as SQL<unknown>, ownerId: userProfiles.createdBy as unknown as SQL<unknown> },
             ownership
           );
           conditions.push(ownershipCondition);
@@ -1818,8 +1845,8 @@ export const atsRouter = router({
           accountId,
           status: 'sourced',
           submissionNotes: notes ?? 'Linked from Account Talent Pool',
-          ownerId: userId,
-          createdBy: userId,
+          ownerId: userId as string,
+          createdBy: userId as string,
         }).returning();
 
         return newSubmission;
@@ -1997,16 +2024,16 @@ export const atsRouter = router({
           bucket,
           filePath,
           fileName,
-          fileSize,
+          fileSize: String(fileSize),
           mimeType,
-          title: title ?? null,
-          notes: notes ?? null,
-          parsedContent: parsedContent ?? null,
-          parsedSkills: parsedSkills ?? null,
-          aiSummary: aiSummary ?? null,
-          submissionWriteUp: submissionWriteUp ?? null,
+          ...(title !== undefined && { title }),
+          ...(notes !== undefined && { notes }),
+          ...(parsedContent !== undefined && { parsedContent }),
+          ...(parsedSkills !== undefined && { parsedSkills }),
+          ...(aiSummary !== undefined && { aiSummary }),
+          ...(submissionWriteUp !== undefined && { submissionWriteUp }),
           uploadedBy: userId,
-        }).returning();
+        } as any).returning();
 
         return newResume;
       }),

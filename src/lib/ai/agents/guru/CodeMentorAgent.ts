@@ -321,7 +321,8 @@ export class CodeMentorAgent extends BaseAgent<CodeMentorInput, CodeMentorOutput
     latencyMs: number;
   }): Promise<void> {
     try {
-      await getSupabaseClient().from('guru_interactions').insert({
+      const supabase = getSupabaseClient();
+      await (supabase.from as any)('guru_interactions').insert({
         org_id: this.config.orgId || 'default',
         student_id: data.studentId,
         agent_type: data.agentType,

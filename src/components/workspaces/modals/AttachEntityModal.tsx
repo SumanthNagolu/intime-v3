@@ -153,7 +153,7 @@ export function AttachEntityModal({
   isOpen,
   onClose,
   sourceType,
-  _sourceId,
+  sourceId: _sourceId,
   targetType,
   title,
   description,
@@ -168,7 +168,7 @@ export function AttachEntityModal({
   allowCreate = false,
   createForm,
   createLabel = 'Create New',
-  _onCreateSuccess,
+  onCreateSuccess: _onCreateSuccess,
 }: AttachEntityModalProps) {
   const [mode, setMode] = useState<'search' | 'create'>('search');
   const [searchQuery, setSearchQuery] = useState('');

@@ -74,7 +74,7 @@ vi.mock('openai', () => {
   const OpenAI = vi.fn();
   OpenAI.prototype.chat = {
     completions: {
-      create: vi.fn((params: { messages?: Array<{ role: string; content: string }> }) => {
+      create: vi.fn((params: { messages?: Array<{ role: string; content: string }>; model?: string; response_format?: { type: string } }) => {
         // Smart classification based on input content
         const userMessage = params.messages?.find((m: { role: string; content: string }) => m.role === 'user')?.content || '';
         let responseContent = 'This is a test response from mocked OpenAI';

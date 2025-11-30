@@ -25,19 +25,19 @@ import {
 // Types
 // ============================================================================
 
-// Database row types
+// Database row types - using proper column names from schema
 interface UserProfileRow {
   id: string;
   email: string;
   full_name: string;
   avatar_url: string | null;
-  department: string | null;
-  position: string | null;
-  hire_date: string | null;
-  status: string;
-  salary: string | null;
-  manager_id: string | null;
-  performance_rating: string | null;
+  employee_department: string | null;
+  employee_position: string | null;
+  employee_hire_date: string | null;
+  employee_status: string | null;
+  employee_salary: string | null;
+  employee_manager_id: string | null;
+  employee_performance_rating: string | null;
   org_id: string;
   created_at: string;
   employee_metadata?: {
@@ -208,13 +208,13 @@ export async function listEmployeesAction(
       email,
       full_name,
       avatar_url,
-      department,
-      position,
-      hire_date,
-      status,
-      salary,
-      manager_id,
-      performance_rating,
+      employee_department,
+      employee_position,
+      employee_hire_date,
+      employee_status,
+      employee_salary,
+      employee_manager_id,
+      employee_performance_rating,
       org_id,
       created_at,
       employee_metadata (
@@ -231,20 +231,20 @@ export async function listEmployeesAction(
   // Apply filters
   if (search) {
     query = query.or(
-      `full_name.ilike.%${search}%,email.ilike.%${search}%,position.ilike.%${search}%`
+      `full_name.ilike.%${search}%,email.ilike.%${search}%,employee_position.ilike.%${search}%`
     );
   }
 
   if (department) {
-    query = query.eq('department', department);
+    query = query.eq('employee_department', department);
   }
 
   if (status) {
-    query = query.eq('status', status);
+    query = query.eq('employee_status', status);
   }
 
   if (managerId) {
-    query = query.eq('manager_id', managerId);
+    query = query.eq('employee_manager_id', managerId);
   }
 
   // Apply pagination
@@ -259,18 +259,18 @@ export async function listEmployeesAction(
   }
 
   // Transform data
-  const transformedEmployees: Employee[] = (employees || []).map((emp: UserProfileRow) => ({
+  const transformedEmployees: Employee[] = (employees || []).map((emp) => ({
     id: emp.id,
     email: emp.email,
     fullName: emp.full_name,
     avatarUrl: emp.avatar_url,
-    department: emp.department,
-    position: emp.position,
-    hireDate: emp.hire_date,
-    status: emp.status,
-    salary: emp.salary ? parseFloat(emp.salary) : null,
-    managerId: emp.manager_id,
-    performanceRating: emp.performance_rating ? parseFloat(emp.performance_rating) : null,
+    department: emp.employee_department,
+    position: emp.employee_position,
+    hireDate: emp.employee_hire_date,
+    status: emp.employee_status ?? 'active',
+    salary: emp.employee_salary ? parseFloat(emp.employee_salary as unknown as string) : null,
+    managerId: emp.employee_manager_id,
+    performanceRating: emp.employee_performance_rating ? parseFloat(emp.employee_performance_rating as unknown as string) : null,
     orgId: emp.org_id,
     createdAt: emp.created_at,
     employmentType: emp.employee_metadata?.employment_type || null,
@@ -320,6 +320,7 @@ export async function getEmployeeAction(
   }
 
   // Fetch employee with relations
+  // @ts-ignore - Complex query causes "Type instantiation is excessively deep" error
   const { data: emp, error } = await supabase
     .from('user_profiles')
     .select(
@@ -328,13 +329,13 @@ export async function getEmployeeAction(
       email,
       full_name,
       avatar_url,
-      department,
-      position,
-      hire_date,
-      status,
-      salary,
-      manager_id,
-      performance_rating,
+      employee_department,
+      employee_position,
+      employee_hire_date,
+      employee_status,
+      employee_salary,
+      employee_manager_id,
+      employee_performance_rating,
       org_id,
       created_at,
       employee_metadata (
@@ -343,7 +344,7 @@ export async function getEmployeeAction(
         pod_id,
         pod_role
       ),
-      manager:user_profiles!user_profiles_manager_id_fkey (
+      manager:user_profiles!user_profiles_employee_manager_id_fkey (
         id,
         full_name,
         email
@@ -352,7 +353,7 @@ export async function getEmployeeAction(
     )
     .eq('id', employeeId)
     .eq('org_id', profile.orgId)
-    .single() as { data: UserProfileRow | null; error: unknown };
+    .single();
 
   if (error || !emp) {
     return { success: false, error: 'Employee not found' };
@@ -362,7 +363,7 @@ export async function getEmployeeAction(
   const { count: directReports } = await supabase
     .from('user_profiles')
     .select('*', { count: 'exact', head: true })
-    .eq('manager_id', employeeId);
+    .eq('employee_manager_id', employeeId);
 
   // Get pod info if assigned
   let pod = null;
@@ -387,13 +388,13 @@ export async function getEmployeeAction(
     email: emp.email,
     fullName: emp.full_name,
     avatarUrl: emp.avatar_url,
-    department: emp.department,
-    position: emp.position,
-    hireDate: emp.hire_date,
-    status: emp.status,
-    salary: emp.salary ? parseFloat(emp.salary) : null,
-    managerId: emp.manager_id,
-    performanceRating: emp.performance_rating ? parseFloat(emp.performance_rating) : null,
+    department: emp.employee_department,
+    position: emp.employee_position,
+    hireDate: emp.employee_hire_date,
+    status: emp.employee_status ?? 'active',
+    salary: emp.employee_salary ? parseFloat(emp.employee_salary) : null,
+    managerId: emp.employee_manager_id,
+    performanceRating: emp.employee_performance_rating ? parseFloat(emp.employee_performance_rating as unknown as string) : null,
     orgId: emp.org_id,
     createdAt: emp.created_at,
     employmentType: emp.employee_metadata?.employment_type || null,
@@ -509,13 +510,13 @@ export async function createEmployeeAction(
       email: empRow.email,
       fullName: empRow.full_name,
       avatarUrl: empRow.avatar_url,
-      department: empRow.department ?? null,
-      position: empRow.position ?? null,
-      hireDate: empRow.hire_date ?? null,
-      status: empRow.status ?? 'active',
-      salary: empRow.salary ? parseFloat(empRow.salary) : null,
-      managerId: empRow.manager_id ?? null,
-      performanceRating: empRow.performance_rating ? parseFloat(empRow.performance_rating) : null,
+      department: empRow.employee_department ?? null,
+      position: empRow.employee_position ?? null,
+      hireDate: empRow.employee_hire_date ?? null,
+      status: empRow.employee_status ?? 'active',
+      salary: empRow.employee_salary ? parseFloat(empRow.employee_salary) : null,
+      managerId: empRow.employee_manager_id ?? null,
+      performanceRating: empRow.employee_performance_rating ? parseFloat(empRow.employee_performance_rating as unknown as string) : null,
       orgId: empRow.org_id,
       createdAt: empRow.created_at,
       employmentType: employmentType ?? null,
@@ -674,13 +675,14 @@ export async function getOrgChartAction(): Promise<
       email,
       full_name,
       avatar_url,
-      department,
-      position,
-      hire_date,
-      status,
-      manager_id,
-      performance_rating,
+      employee_department,
+      employee_position,
+      employee_hire_date,
+      employee_status,
+      employee_manager_id,
+      employee_performance_rating,
       org_id,
+      created_at,
       employee_metadata (
         pod_id,
         pod_role
@@ -688,7 +690,7 @@ export async function getOrgChartAction(): Promise<
     `
     )
     .eq('org_id', profile.orgId)
-    .eq('status', 'active')
+    .eq('employee_status', 'active')
     .order('full_name');
 
   if (error) {
@@ -700,21 +702,21 @@ export async function getOrgChartAction(): Promise<
   const employeeMap = new Map<string, EmployeeWithMetadata>();
   const departments = new Set<string>();
 
-  (employees || []).forEach((emp: UserProfileRow) => {
-    if (emp.department) departments.add(emp.department);
+  (employees || []).forEach((emp) => {
+    if (emp.employee_department) departments.add(emp.employee_department);
 
     employeeMap.set(emp.id, {
       id: emp.id,
       email: emp.email,
       fullName: emp.full_name,
       avatarUrl: emp.avatar_url,
-      department: emp.department,
-      position: emp.position,
-      hireDate: emp.hire_date,
-      status: emp.status,
+      department: emp.employee_department,
+      position: emp.employee_position,
+      hireDate: emp.employee_hire_date,
+      status: emp.employee_status ?? 'active',
       salary: null,
-      managerId: emp.manager_id,
-      performanceRating: emp.performance_rating ? parseFloat(emp.performance_rating) : null,
+      managerId: emp.employee_manager_id,
+      performanceRating: emp.employee_performance_rating ? parseFloat(emp.employee_performance_rating as unknown as string) : null,
       orgId: emp.org_id,
       createdAt: emp.created_at,
       employmentType: null,
@@ -806,7 +808,7 @@ export async function terminateEmployeeAction(
   // Update status to terminated
   const { error: updateError } = await supabase
     .from('user_profiles')
-    .update({ status: 'terminated' })
+    .update({ employee_status: 'terminated' })
     .eq('id', employeeId);
 
   if (updateError) {
@@ -824,8 +826,8 @@ export async function terminateEmployeeAction(
     recordId: employeeId,
     userId: profile.id,
     userEmail: profile.email,
-    oldValues: { status: empRow.status },
-    newValues: { status: 'terminated' },
+    oldValues: { employee_status: empRow.employee_status },
+    newValues: { employee_status: 'terminated' },
     metadata: { reason },
     severity: 'warning',
     orgId: profile.orgId,

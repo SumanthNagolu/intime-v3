@@ -56,7 +56,7 @@ const ResumeUploadModal: React.FC<{
   talentName: string;
   onClose: () => void;
   onSuccess: () => void;
-}> = ({ talentId, _talentName, onClose, onSuccess }) => {
+}> = ({ talentId, talentName: _talentName, onClose, onSuccess }) => {
   const [step, setStep] = useState<'upload' | 'uploading' | 'success'>('upload');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState(false);
@@ -469,7 +469,7 @@ const ResumePreviewSection: React.FC<{
   talentId: string;
   talentName: string;
   onUploadClick: () => void;
-}> = ({ talentId, _talentName, onUploadClick }) => {
+}> = ({ talentId, talentName: _talentName, onUploadClick }) => {
   const [showVersions, setShowVersions] = useState(false);
 
   // Fetch resumes for this candidate

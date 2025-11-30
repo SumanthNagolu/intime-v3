@@ -16,28 +16,13 @@ interface SubmissionWorkspaceProps {
   submissionId: string;
 }
 
-// Type definitions - using unknown for fields we don't know the exact shape
-interface SubmissionData {
-  id: string;
-  status: string;
-  candidateId: string;
-  jobId: string;
-  [key: string]: unknown;  // Allow other fields
-}
-
-interface InterviewData {
-  id: string;
-  status: string;
-  roundNumber: number;
-  [key: string]: unknown;  // Allow other fields
-}
-
-interface ActivityData {
-  id: string;
-  activityType: string;
-  status: string;
-  [key: string]: unknown;  // Allow other fields
-}
+// Type definitions - use 'any' to avoid strict typing with database types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type SubmissionData = any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type InterviewData = any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ActivityData = any;
 
 // Complete status configuration with workflow stages
 const STATUS_CONFIG: Record<string, {
@@ -505,7 +490,12 @@ export const SubmissionWorkspace: React.FC<SubmissionWorkspaceProps> = ({ submis
             submissionId,
             jobId: submission.jobId,
             candidateId: submission.candidateId,
-            ...data,
+            interviewType: data.interviewType as 'phone_screen' | 'technical' | 'behavioral' | 'panel' | 'final' | 'client',
+            scheduledAt: data.scheduledAt,
+            durationMinutes: data.durationMinutes,
+            meetingLink: data.meetingLink,
+            interviewerNames: data.interviewerNames,
+            round: data.roundNumber,
           })}
           isLoading={createInterview.isPending}
           interviewProcess={submission.job?.clientInterviewProcess ?? undefined}
@@ -649,7 +639,8 @@ const OverviewTab: React.FC<{
             {submission.interviews?.length > 0 && (
               <div className="mt-4 pt-4 border-t border-orange-200">
                 <p className="text-xs text-orange-600 uppercase tracking-widest mb-2">Upcoming</p>
-                {submission.interviews.filter((i) => i.status === 'scheduled').slice(0, 2).map((interview) => (
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                {submission.interviews.filter((i: any) => i.status === 'scheduled').slice(0, 2).map((interview: any) => (
                   <div key={interview.id} className="flex items-center justify-between py-2">
                     <span className="text-orange-800 font-medium">Round {interview.roundNumber}</span>
                     <span className="text-orange-600">{interview.scheduledAt && new Date(interview.scheduledAt).toLocaleDateString()}</span>

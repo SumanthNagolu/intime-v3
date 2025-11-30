@@ -360,20 +360,26 @@ export const enrollmentRouter = router({
     .query(async ({ input, ctx }) => {
       const supabase = await createClient();
 
-      const { data, error } = await (supabase.from as unknown as (table: string) => {
+      const query = (supabase.from as unknown as (table: string) => {
         select: (columns: string) => {
           eq: (column: string, value: string) => {
-            order: (column: string, options: { ascending: boolean }) => Promise<{ data: unknown; error: unknown }>;
+            eq: (column: string, value: string) => {
+              order: (column: string, options: { ascending: boolean }) => Promise<{ data: unknown; error: unknown }>;
+            };
           };
         };
       })('onboarding_checklist')
-        .select('*')
+        .select('*');
+
+      const result = await query
         .eq('enrollment_id', input.enrollmentId)
         .eq('user_id', ctx.userId)
         .order('sort_order', { ascending: true });
 
+      const { data, error } = result as { data: unknown; error: unknown };
+
       if (error) {
-        throw new Error(`Failed to fetch checklist: ${error.message}`);
+        throw new Error(`Failed to fetch checklist: ${(error as Error).message}`);
       }
 
       return data || [];
@@ -392,21 +398,29 @@ export const enrollmentRouter = router({
     .mutation(async ({ input, ctx }) => {
       const supabase = await createClient();
 
-      const { error } = await (supabase.from as unknown as (table: string) => {
+      const query = (supabase.from as unknown as (table: string) => {
         update: (data: Record<string, unknown>) => {
-          eq: (column: string, value: string) => Promise<{ error: unknown }>;
+          eq: (column: string, value: string) => {
+            eq: (column: string, value: string) => {
+              eq: (column: string, value: string) => Promise<{ error: unknown }>;
+            };
+          };
         };
       })('onboarding_checklist')
         .update({
           is_completed: true,
           completed_at: new Date().toISOString(),
-        })
+        });
+
+      const result = await query
         .eq('enrollment_id', input.enrollmentId)
         .eq('user_id', ctx.userId)
         .eq('item_key', input.itemKey);
 
+      const { error } = result as { error: unknown };
+
       if (error) {
-        throw new Error(`Failed to complete item: ${error.message}`);
+        throw new Error(`Failed to complete item: ${(error as Error).message}`);
       }
 
       return { success: true };
@@ -530,20 +544,26 @@ export const enrollmentRouter = router({
           }
 
           // ACAD-027: Check AI mentor escalations
-          const { count: escalationCount } = await (supabase.from as unknown as (table: string) => {
+          const escalationQuery = (supabase.from as unknown as (table: string) => {
             select: (columns: string, options: { count: string; head: boolean }) => {
               eq: (column: string, value: string) => {
-                gte: (column: string, value: string) => Promise<{ count: number | null; error: unknown }>;
+                eq: (column: string, value: string) => {
+                  gte: (column: string, value: string) => Promise<{ count: number | null; error: unknown }>;
+                };
               };
             };
           })('escalations')
-            .select('id', { count: 'exact', head: true })
+            .select('id', { count: 'exact', head: true });
+
+          const escalationResult = await escalationQuery
             .eq('student_id', enrollment.user_id)
             .eq('enrollment_id', enrollment.id)
             .gte(
               'created_at',
               new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
             );
+
+          const { count: escalationCount } = escalationResult as { count: number | null; error: unknown };
 
           if (escalationCount && escalationCount >= 5) {
             risks.push(`${escalationCount} AI escalations`);
@@ -653,16 +673,19 @@ export const enrollmentRouter = router({
         gradingQuery = gradingQuery.eq('course_id', input.courseId);
       }
 
-      const { count: pendingGrades } = await gradingQuery;
+      const gradingResult = await gradingQuery;
+      const { count: pendingGrades } = gradingResult as { count: number | null; error: unknown };
 
       // Get escalation count
-      const { count: pendingEscalations } = await (supabase.from as unknown as (table: string) => {
+      const escalationQuery = (supabase.from as unknown as (table: string) => {
         select: (columns: string, options: { count: string; head: boolean }) => {
           in: (column: string, values: string[]) => Promise<{ count: number | null; error: unknown }>;
         };
       })('escalations')
-        .select('id', { count: 'exact', head: true })
-        .in('status', ['pending', 'in_progress']);
+        .select('id', { count: 'exact', head: true });
+
+      const escalationResult = await escalationQuery.in('status', ['pending', 'in_progress']);
+      const { count: pendingEscalations } = escalationResult as { count: number | null; error: unknown };
 
       return {
         totalStudents,
@@ -708,7 +731,7 @@ export const enrollmentRouter = router({
         throw new Error('Enrollment not found');
       }
 
-      const { data, error } = await (supabase.from as unknown as (table: string) => {
+      const insertQuery = (supabase.from as unknown as (table: string) => {
         insert: (data: Record<string, unknown>) => {
           select: () => {
             single: () => Promise<{ data: { id: string } | null; error: unknown }>;
@@ -723,12 +746,17 @@ export const enrollmentRouter = router({
           notes: input.notes,
           status: 'pending',
           created_at: new Date().toISOString(),
-        })
-        .select()
-        .single();
+        });
+
+      const selectResult = await insertQuery.select().single();
+      const { data, error } = selectResult as { data: { id: string } | null; error: unknown };
 
       if (error) {
-        throw new Error(`Failed to create intervention: ${error.message}`);
+        throw new Error(`Failed to create intervention: ${(error as Error).message}`);
+      }
+
+      if (!data) {
+        throw new Error('Failed to create intervention: No data returned');
       }
 
       // Update enrollment with at-risk flag
@@ -774,12 +802,9 @@ export const enrollmentRouter = router({
     .query(async ({ input }) => {
       const supabase = await createClient();
 
-      let query = (supabase.from as unknown as (table: string) => {
-        select: (columns: string) => {
-          order: (column: string, options: { ascending: boolean }) => {
-            eq?: (column: string, value: string) => unknown;
-          };
-        };
+      // Build query step by step
+      let queryBuilder = (supabase.from as unknown as (table: string) => {
+        select: (columns: string) => unknown;
       })('student_interventions')
         .select(
           `
@@ -788,25 +813,28 @@ export const enrollmentRouter = router({
           trainer:user_profiles!student_interventions_trainer_id_fkey(id, full_name),
           enrollment:student_enrollments(id, course_id, courses(title))
         `
-        )
-        .order('created_at', { ascending: false });
+        ) as unknown as {
+          eq: (column: string, value: string) => unknown;
+          order: (column: string, options: { ascending: boolean }) => Promise<{ data: unknown; error: unknown }>;
+        };
 
       if (input.studentId) {
-        query = query.eq('student_id', input.studentId);
+        queryBuilder = queryBuilder.eq('student_id', input.studentId) as typeof queryBuilder;
       }
 
       if (input.enrollmentId) {
-        query = query.eq('enrollment_id', input.enrollmentId);
+        queryBuilder = queryBuilder.eq('enrollment_id', input.enrollmentId) as typeof queryBuilder;
       }
 
       if (input.status) {
-        query = query.eq('status', input.status);
+        queryBuilder = queryBuilder.eq('status', input.status) as typeof queryBuilder;
       }
 
-      const { data, error } = await query;
+      const result = await queryBuilder.order('created_at', { ascending: false });
+      const { data, error } = result as { data: unknown; error: unknown };
 
       if (error) {
-        throw new Error(`Failed to fetch interventions: ${error.message}`);
+        throw new Error(`Failed to fetch interventions: ${(error as Error).message}`);
       }
 
       return data || [];
@@ -845,30 +873,33 @@ export const enrollmentRouter = router({
         updateData.resolved_at = input.resolvedAt;
       }
 
-      const { error } = await (supabase.from as unknown as (table: string) => {
+      const updateQuery = (supabase.from as unknown as (table: string) => {
         update: (data: Record<string, string>) => {
           eq: (column: string, value: string) => Promise<{ error: unknown }>;
         };
       })('student_interventions')
-        .update(updateData)
-        .eq('id', input.interventionId);
+        .update(updateData);
+
+      const updateResult = await updateQuery.eq('id', input.interventionId);
+      const { error } = updateResult as { error: unknown };
 
       if (error) {
-        throw new Error(`Failed to update intervention: ${error.message}`);
+        throw new Error(`Failed to update intervention: ${(error as Error).message}`);
       }
 
       // If completed, check if student is still at risk
       if (input.status === 'completed' && input.resolvedAt) {
-        const { data: intervention } = await (supabase.from as unknown as (table: string) => {
+        const selectQuery = (supabase.from as unknown as (table: string) => {
           select: (columns: string) => {
             eq: (column: string, value: string) => {
               single: () => Promise<{ data: { enrollment_id: string } | null; error: unknown }>;
             };
           };
         })('student_interventions')
-          .select('enrollment_id')
-          .eq('id', input.interventionId)
-          .single();
+          .select('enrollment_id');
+
+        const singleResult = await selectQuery.eq('id', input.interventionId).single();
+        const { data: intervention } = singleResult as { data: { enrollment_id: string } | null; error: unknown };
 
         if (intervention) {
           // Clear at-risk flag

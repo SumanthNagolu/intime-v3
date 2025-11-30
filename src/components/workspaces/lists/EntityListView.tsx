@@ -330,7 +330,7 @@ function StatsCard({ label, value, icon, color = 'text-stone-400', isLoading }: 
 
 function LeadsList({ searchTerm, filterStatus, ownership }: { searchTerm: string; filterStatus: string; ownership: OwnershipFilter }) {
   const { leads, isLoading, isError, error } = useLeads({
-    status: filterStatus === 'all' ? undefined : filterStatus,
+    status: filterStatus === 'all' ? undefined : filterStatus as 'new' | 'warm' | 'hot' | 'cold' | 'converted' | 'lost',
     limit: 100,
     ownership,
   });
@@ -460,7 +460,7 @@ function LeadsList({ searchTerm, filterStatus, ownership }: { searchTerm: string
 
 function AccountsList({ searchTerm, filterStatus, ownership }: { searchTerm: string; filterStatus: string; ownership: OwnershipFilter }) {
   const { accounts, isLoading, isError, error } = useAccounts({
-    status: filterStatus === 'all' ? undefined : filterStatus,
+    status: filterStatus === 'all' ? undefined : filterStatus as 'prospect' | 'active' | 'inactive' | 'churned',
     limit: 100,
     ownership,
   });
@@ -580,7 +580,7 @@ function AccountsList({ searchTerm, filterStatus, ownership }: { searchTerm: str
 
 function DealsList({ searchTerm, filterStatus, ownership }: { searchTerm: string; filterStatus: string; ownership: OwnershipFilter }) {
   const { deals, isLoading, isError, error } = useDeals({
-    stage: filterStatus === 'all' ? undefined : filterStatus,
+    stage: filterStatus === 'all' ? undefined : filterStatus as 'discovery' | 'qualification' | 'proposal' | 'negotiation' | 'closed_won' | 'closed_lost',
     limit: 100,
     ownership,
   });
@@ -601,7 +601,7 @@ function DealsList({ searchTerm, filterStatus, ownership }: { searchTerm: string
     return (
       <div className="text-center py-12 text-red-500">
         <AlertCircle size={48} className="mx-auto mb-4" />
-        <p>Error loading deals: {error?.message || 'Unknown error'}</p>
+        <p>Error loading deals: {(error as Error)?.message || 'Unknown error'}</p>
       </div>
     );
   }
@@ -713,7 +713,7 @@ function JobsList({ searchTerm, filterStatus, ownership }: { searchTerm: string;
     if (!jobs || !searchTerm) return jobs || [];
     const search = searchTerm.toLowerCase();
     return jobs.filter(
-      (j: JobData) =>
+      (j) =>
         j.title?.toLowerCase().includes(search) ||
         j.location?.toLowerCase().includes(search)
     );
@@ -728,7 +728,7 @@ function JobsList({ searchTerm, filterStatus, ownership }: { searchTerm: string;
     );
   }
 
-  const activeCount = jobs?.filter((j: JobData) => j.status === 'active' || j.status === 'open').length || 0;
+  const activeCount = jobs?.filter((j) => j.status === 'active' || j.status === 'open').length || 0;
 
   return (
     <>
@@ -749,14 +749,14 @@ function JobsList({ searchTerm, filterStatus, ownership }: { searchTerm: string;
         />
         <StatsCard
           label="Filled"
-          value={jobs?.filter((j: JobData) => j.status === 'filled').length || 0}
+          value={jobs?.filter((j) => j.status === 'filled').length || 0}
           icon={<Crown size={16} />}
           color="text-purple-500"
           isLoading={isLoading}
         />
         <StatsCard
           label="On Hold"
-          value={jobs?.filter((j: JobData) => j.status === 'on_hold').length || 0}
+          value={jobs?.filter((j) => j.status === 'on_hold').length || 0}
           icon={<Clock size={16} />}
           color="text-amber-500"
           isLoading={isLoading}
@@ -770,7 +770,7 @@ function JobsList({ searchTerm, filterStatus, ownership }: { searchTerm: string;
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((job: JobData) => (
+          {filtered.map((job) => (
             <Link
               href={`/employee/workspace/jobs/${job.id}`}
               key={job.id}
@@ -796,15 +796,15 @@ function JobsList({ searchTerm, filterStatus, ownership }: { searchTerm: string;
                 <div className="flex items-center gap-2">
                   <Briefcase size={12} /> {job.jobType || 'Full-time'}
                 </div>
-                {job.billRate && (
+                {job.rateMin && (
                   <div className="flex items-center gap-2">
-                    <DollarSign size={12} /> {formatCurrency(job.billRate)}/hr
+                    <DollarSign size={12} /> {formatCurrency(parseFloat(String(job.rateMin)))}/hr
                   </div>
                 )}
               </div>
               <div className="pt-4 border-t border-stone-100 flex justify-between items-center">
                 <div className="text-xs text-stone-400">
-                  {job.openPositions || 1} position(s)
+                  {job.positionsCount || 1} position(s)
                 </div>
                 <div className="flex items-center gap-1 text-xs font-bold text-stone-400 group-hover:text-charcoal transition-colors">
                   Details <ChevronRight size={12} />
@@ -836,7 +836,7 @@ function TalentList({ searchTerm, filterStatus, ownership }: { searchTerm: strin
     if (!candidates || !searchTerm) return candidates || [];
     const search = searchTerm.toLowerCase();
     return candidates.filter(
-      (c: CandidateData) =>
+      (c) =>
         c.firstName?.toLowerCase().includes(search) ||
         c.lastName?.toLowerCase().includes(search) ||
         c.email?.toLowerCase().includes(search) ||
@@ -865,21 +865,21 @@ function TalentList({ searchTerm, filterStatus, ownership }: { searchTerm: strin
         />
         <StatsCard
           label="Available"
-          value={candidates?.filter((c: CandidateData) => c.status === 'available' || c.status === 'active').length || 0}
+          value={candidates?.filter((c) => c.status === 'available' || c.status === 'active').length || 0}
           icon={<CheckCircle size={16} />}
           color="text-green-500"
           isLoading={isLoading}
         />
         <StatsCard
           label="Placed"
-          value={candidates?.filter((c: CandidateData) => c.status === 'placed').length || 0}
+          value={candidates?.filter((c) => c.status === 'placed').length || 0}
           icon={<Crown size={16} />}
           color="text-purple-500"
           isLoading={isLoading}
         />
         <StatsCard
           label="In Pipeline"
-          value={candidates?.filter((c: CandidateData) => c.status === 'interviewing' || c.status === 'submitted').length || 0}
+          value={candidates?.filter((c) => c.status === 'interviewing' || c.status === 'submitted').length || 0}
           icon={<TrendingUp size={16} />}
           color="text-blue-500"
           isLoading={isLoading}
@@ -893,7 +893,7 @@ function TalentList({ searchTerm, filterStatus, ownership }: { searchTerm: strin
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((candidate: CandidateData) => (
+          {filtered.map((candidate) => (
             <Link
               href={`/employee/workspace/talent/${candidate.id}`}
               key={candidate.id}
@@ -960,9 +960,9 @@ function SubmissionsList({ searchTerm, filterStatus, ownership }: { searchTerm: 
     if (!submissions || !searchTerm) return submissions || [];
     const search = searchTerm.toLowerCase();
     return submissions.filter(
-      (s: SubmissionData) =>
-        s.candidateName?.toLowerCase().includes(search) ||
-        s.jobTitle?.toLowerCase().includes(search)
+      (s) =>
+        (s as any).candidateName?.toLowerCase().includes(search) ||
+        (s as any).jobTitle?.toLowerCase().includes(search)
     );
   }, [submissions, searchTerm]);
 
@@ -987,21 +987,21 @@ function SubmissionsList({ searchTerm, filterStatus, ownership }: { searchTerm: 
         />
         <StatsCard
           label="Interviewing"
-          value={submissions?.filter((s: SubmissionData) => s.status === 'interviewing').length || 0}
+          value={submissions?.filter((s) => s.status === 'interviewing').length || 0}
           icon={<TrendingUp size={16} />}
           color="text-purple-500"
           isLoading={isLoading}
         />
         <StatsCard
           label="Offered"
-          value={submissions?.filter((s: SubmissionData) => s.status === 'offered').length || 0}
+          value={submissions?.filter((s) => s.status === 'offered').length || 0}
           icon={<Target size={16} />}
           color="text-amber-500"
           isLoading={isLoading}
         />
         <StatsCard
           label="Placed"
-          value={submissions?.filter((s: SubmissionData) => s.status === 'placed').length || 0}
+          value={submissions?.filter((s) => s.status === 'placed').length || 0}
           icon={<Crown size={16} />}
           color="text-green-500"
           isLoading={isLoading}
@@ -1015,7 +1015,7 @@ function SubmissionsList({ searchTerm, filterStatus, ownership }: { searchTerm: 
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((submission: SubmissionData) => (
+          {filtered.map((submission) => (
             <Link
               href={`/employee/workspace/submissions/${submission.id}`}
               key={submission.id}
@@ -1030,24 +1030,24 @@ function SubmissionsList({ searchTerm, filterStatus, ownership }: { searchTerm: 
                 </Badge>
               </div>
               <h3 className="font-serif font-bold text-lg text-charcoal mb-1 group-hover:text-rust transition-colors">
-                {submission.candidateName || 'Unknown Candidate'}
+                {(submission as any).candidateName || 'Unknown Candidate'}
               </h3>
               <p className="text-sm text-stone-500 mb-4 flex items-center gap-1">
-                <Briefcase size={12} /> {submission.jobTitle || 'Unknown Job'}
+                <Briefcase size={12} /> {(submission as any).jobTitle || 'Unknown Job'}
               </p>
               <div className="space-y-2 text-xs text-stone-500 mb-4">
                 <div className="flex items-center gap-2">
                   <Calendar size={12} /> Submitted: {new Date(submission.createdAt).toLocaleDateString()}
                 </div>
-                {submission.billRate && (
+                {submission.submittedRate && (
                   <div className="flex items-center gap-2">
-                    <DollarSign size={12} /> {formatCurrency(submission.billRate)}/hr
+                    <DollarSign size={12} /> {formatCurrency(parseFloat(String(submission.submittedRate)))}/hr
                   </div>
                 )}
               </div>
               <div className="pt-4 border-t border-stone-100 flex justify-between items-center">
                 <div className="text-xs text-stone-400">
-                  {submission.stage || 'Initial'}
+                  {(submission as any).stage || submission.status || 'Initial'}
                 </div>
                 <div className="flex items-center gap-1 text-xs font-bold text-stone-400 group-hover:text-charcoal transition-colors">
                   Details <ChevronRight size={12} />

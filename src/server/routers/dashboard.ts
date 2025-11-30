@@ -104,20 +104,22 @@ export const dashboardRouter = router({
       placed: 0,
     };
 
-    for (const stage of pipelineData) {
-      const status = stage.status as string;
+    for (const stage of pipelineData as Array<{ status: string; count: number }>) {
+      const status = stage.status;
+      const count = stage.count;
       if (status in pipelineStages) {
-        pipelineStages[status as keyof typeof pipelineStages] = stage.count;
+        pipelineStages[status as keyof typeof pipelineStages] = count;
       } else if (status === 'screening') {
-        pipelineStages.screened = stage.count;
+        pipelineStages.screened = count;
       } else if (status === 'interview') {
-        pipelineStages.interviewing = stage.count;
+        pipelineStages.interviewing = count;
       }
     }
 
     // Calculate conversion rate
-    const totalSubmissions = conversionData[0]?.totalSubmissions || 0;
-    const placedSubmissions = conversionData[0]?.placedSubmissions || 0;
+    const conversionRecord = conversionData[0] as { totalSubmissions?: number; placedSubmissions?: number } | undefined;
+    const totalSubmissions = conversionRecord?.totalSubmissions || 0;
+    const placedSubmissions = conversionRecord?.placedSubmissions || 0;
     const conversionRate = totalSubmissions > 0
       ? Math.round((placedSubmissions / totalSubmissions) * 100)
       : 0;
@@ -125,10 +127,12 @@ export const dashboardRouter = router({
     // Calculate average time-to-fill (mock for now - would need placement dates)
     const avgTimeToFill = 21; // days - would be calculated from actual data
 
+    const placementRecord = placementsData[0] as { count?: number; totalValue?: number } | undefined;
+
     return {
       activeJobs: jobsData[0]?.count || 0,
-      placementsThisQuarter: placementsData[0]?.count || 0,
-      revenueGenerated: placementsData[0]?.totalValue || 0,
+      placementsThisQuarter: placementRecord?.count || 0,
+      revenueGenerated: placementRecord?.totalValue || 0,
       interviewsToday: interviewsTodayData[0]?.count || 0,
       pipeline: pipelineStages,
       conversionRate,

@@ -9,7 +9,7 @@
 
 'use server';
 
-import { createClient } from '@/lib/supabase/server';
+import { createClient, type UntypedFromFunction } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
@@ -283,7 +283,7 @@ async function logAuditEvent(
 ) {
   const { tableName, action, recordId, userId, userEmail, orgId, oldValues, newValues, metadata } = params;
 
-  await adminSupabase.from('audit_logs').insert({
+  await (adminSupabase.from as unknown as UntypedFromFunction)('audit_logs').insert({
     table_name: tableName,
     action,
     record_id: recordId,
@@ -294,7 +294,7 @@ async function logAuditEvent(
     new_values: newValues ?? null,
     metadata: metadata ?? {},
     severity: action.includes('CANCEL') ? 'warning' : 'info',
-  } as Record<string, unknown>);
+  });
 }
 
 // ============================================================================

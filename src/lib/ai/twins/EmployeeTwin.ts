@@ -326,7 +326,7 @@ Provide a helpful, specific answer based on the employee's role and context.`;
         throw this.createError(
           'Failed to fetch interaction history',
           'TWIN_QUERY_FAILED',
-          { employeeId: this.employeeId, error: error as Record<string, unknown> }
+          { employeeId: this.employeeId, error: error as unknown as Record<string, unknown> }
         );
       }
 
@@ -348,8 +348,8 @@ Provide a helpful, specific answer based on the employee's role and context.`;
           costUsd: row.cost_usd,
           latencyMs: row.latency_ms,
           createdAt: row.created_at,
-        };
-      }) satisfies TwinInteraction[];
+        } as TwinInteraction;
+      });
     } catch (error) {
       throw this.createError(
         `Failed to get interaction history: ${error instanceof Error ? error.message : 'Unknown error'}`,
@@ -777,7 +777,9 @@ TONE: Technical, precise, systems-thinking`,
     latencyMs: number;
   }): Promise<void> {
     try {
-      await this.supabase.from('employee_twin_interactions').insert({
+      await (this.supabase.from as unknown as (table: string) => {
+        insert: (data: Record<string, unknown>) => Promise<{ error: Error | null }>
+      })('employee_twin_interactions').insert({
         org_id: this.orgId,
         user_id: this.employeeId,
         twin_role: this.role,

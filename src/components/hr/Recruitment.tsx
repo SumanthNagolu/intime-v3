@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useAppStore } from '../../lib/store';
-import { UserPlus, Search, ChevronRight, CheckCircle, MoreHorizontal, Briefcase, Users, Zap, Mail, X, FileText, Brain, MessageSquare } from 'lucide-react';
+import { UserPlus, Search, ChevronRight, CheckCircle, MoreHorizontal, Briefcase, Users, Zap, Mail, X, FileText, Brain, MessageSquare, Calendar } from 'lucide-react';
 
 interface Requisition {
   id: string;

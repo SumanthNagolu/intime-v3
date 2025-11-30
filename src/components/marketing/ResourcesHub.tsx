@@ -12,7 +12,9 @@ import {
   TrendingUp,
   Clock,
   ChevronRight,
-  Play
+  Play,
+  Award,
+  Mail
 } from 'lucide-react';
 import { MarketingNavbar, Footer } from '@/components/templates';
 
