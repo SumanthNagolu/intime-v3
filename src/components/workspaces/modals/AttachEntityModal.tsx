@@ -8,10 +8,10 @@
 'use client';
 
 import React, { useState, useCallback, ReactNode } from 'react';
+import Image from 'next/image';
 import {
   Search,
   Plus,
-  X,
   Loader2,
   Check,
   ChevronRight,
@@ -100,13 +100,13 @@ function SearchResultRow({
         {/* Avatar */}
         <div
           className={cn(
-            'w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0',
+            'relative w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0 overflow-hidden',
             config.bgColor,
             config.color
           )}
         >
           {item.avatar ? (
-            <img src={item.avatar} alt="" className="w-full h-full rounded-lg object-cover" />
+            <Image src={item.avatar} alt="" fill unoptimized className="rounded-lg object-cover" />
           ) : (
             item.initials || item.title.slice(0, 2).toUpperCase()
           )}
@@ -153,7 +153,7 @@ export function AttachEntityModal({
   isOpen,
   onClose,
   sourceType,
-  sourceId,
+  _sourceId,
   targetType,
   title,
   description,
@@ -168,7 +168,7 @@ export function AttachEntityModal({
   allowCreate = false,
   createForm,
   createLabel = 'Create New',
-  onCreateSuccess,
+  _onCreateSuccess,
 }: AttachEntityModalProps) {
   const [mode, setMode] = useState<'search' | 'create'>('search');
   const [searchQuery, setSearchQuery] = useState('');

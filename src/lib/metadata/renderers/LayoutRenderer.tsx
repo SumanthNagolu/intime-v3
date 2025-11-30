@@ -11,8 +11,6 @@ import React from 'react';
 import type {
   LayoutDefinition,
   SectionDefinition,
-  TabDefinition,
-  WizardStepDefinition,
   RenderContext,
   FormState,
   DynamicValue,

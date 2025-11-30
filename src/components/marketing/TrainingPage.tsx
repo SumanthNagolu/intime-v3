@@ -4,19 +4,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import {
   GraduationCap,
-  BookOpen,
   Building2,
   ArrowRight,
-  ArrowDown,
   CheckCircle2,
   Target,
   Award,
   Brain,
   Users,
-  Clock,
   TrendingUp,
-  Sparkles,
-  ChevronRight,
   Star,
   Lightbulb,
   Code2,
@@ -147,6 +142,7 @@ export const TrainingPage: React.FC = () => {
       stats.placement.start();
       stats.rating.start();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statsSection.inView]);
 
   // Scroll-based page flip effect
@@ -433,7 +429,7 @@ export const TrainingPage: React.FC = () => {
                 </span>
               </h2>
               <p className="text-lg text-charcoal-500 leading-relaxed">
-                Whether you're starting out, leveling up, or leading teams—we have a program designed for your goals.
+                Whether you&apos;re starting out, leveling up, or leading teams—we have a program designed for your goals.
               </p>
             </div>
 
@@ -525,7 +521,7 @@ export const TrainingPage: React.FC = () => {
                 </h2>
                 
                 <p className="text-lg text-charcoal-300 mb-10 leading-relaxed">
-                  We've refined our methodology over 500+ graduates and thousands of hours of instruction. 
+                  We&apos;ve refined our methodology over 500+ graduates and thousands of hours of instruction.
                   No fluff, no filler—just results.
                 </p>
 
@@ -688,7 +684,7 @@ export const TrainingPage: React.FC = () => {
                 {' '}Your Future?
               </h2>
               <p className="text-xl text-forest-200 font-light max-w-2xl mx-auto mb-12">
-                Join 500+ professionals who've accelerated their careers through our programs.
+                Join 500+ professionals who&apos;ve accelerated their careers through our programs.
                 Your transformation starts with a single step.
               </p>
 

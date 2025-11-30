@@ -9,7 +9,6 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { EmployeeTwin } from '@/lib/ai/twins/EmployeeTwin';
-import type { TwinRole } from '@/types/productivity';
 
 // Mock dependencies
 vi.mock('@supabase/supabase-js');
@@ -17,33 +16,11 @@ vi.mock('openai');
 
 describe('EmployeeTwin', () => {
   let twin: EmployeeTwin;
-  let mockOpenAI: any;
-  let mockSupabase: any;
+  let mockOpenAI: Record<string, unknown>;
+  let mockSupabase: Record<string, unknown>;
 
   beforeEach(() => {
-    // Mock Supabase client with proper query chain
-    const mockQueryChain = {
-      select: vi.fn().mockReturnThis(),
-      eq: vi.fn().mockReturnThis(),
-      gte: vi.fn().mockReturnThis(),
-      lt: vi.fn().mockReturnThis(),
-      order: vi.fn().mockReturnThis(),
-      limit: vi.fn().mockReturnThis(),
-      single: vi.fn().mockResolvedValue({
-        data: {
-          id: 'test-employee-id',
-          org_id: 'test-org-id',
-          full_name: 'Test Employee',
-          email: 'test@example.com',
-        },
-        error: null,
-      }),
-      insert: vi.fn().mockResolvedValue({
-        data: { id: 'new-id' },
-        error: null,
-      }),
-    };
-
+    // Mock Supabase client
     mockSupabase = {
       from: vi.fn().mockReturnValue({
         select: vi.fn().mockReturnValue({
@@ -96,8 +73,8 @@ describe('EmployeeTwin', () => {
 
     // Create twin instance WITH mocked dependencies
     twin = new EmployeeTwin('test-employee-id', 'recruiter', undefined, {
-      openai: mockOpenAI as any,
-      supabase: mockSupabase as any,
+      openai: mockOpenAI as never,
+      supabase: mockSupabase as never,
     });
   });
 
@@ -120,7 +97,7 @@ describe('EmployeeTwin', () => {
   describe('generateProactiveSuggestion', () => {
     it('should generate a suggestion when actionable items exist', async () => {
       // Mock hasActionableItems to return true
-      vi.spyOn(twin as any, 'hasActionableItems').mockResolvedValue(true);
+      vi.spyOn(twin as unknown as { hasActionableItems: () => Promise<boolean> }, 'hasActionableItems').mockResolvedValue(true);
 
       const suggestion = await twin.generateProactiveSuggestion();
 
@@ -132,7 +109,7 @@ describe('EmployeeTwin', () => {
 
     it('should return null when no actionable items exist', async () => {
       // Mock hasActionableItems to return false
-      vi.spyOn(twin as any, 'hasActionableItems').mockResolvedValue(false);
+      vi.spyOn(twin as unknown as { hasActionableItems: () => Promise<boolean> }, 'hasActionableItems').mockResolvedValue(false);
 
       const suggestion = await twin.generateProactiveSuggestion();
 

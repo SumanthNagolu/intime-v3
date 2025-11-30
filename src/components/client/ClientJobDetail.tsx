@@ -2,11 +2,9 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
-import { ChevronLeft, MapPin, DollarSign, Calendar, Users, Briefcase } from 'lucide-react';
+import { ChevronLeft, MapPin, DollarSign, Calendar, Briefcase } from 'lucide-react';
 
 export const ClientJobDetail: React.FC = () => {
-  const { id } = useParams();
 
   const candidates = [
     { id: '1', name: 'John Smith', status: 'Submitted', date: 'Nov 20' },

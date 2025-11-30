@@ -7,11 +7,10 @@
 
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { trpc } from '@/lib/trpc/client';
 import {
-  Megaphone,
   Users,
   BarChart3,
   Mail,
@@ -23,10 +22,8 @@ import {
   Play,
   Pause,
   Calendar,
-  Settings,
   FileText,
   ArrowUpRight,
-  Percent,
   Send,
   Eye,
   MousePointer,
@@ -44,7 +41,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   Dialog,
   DialogContent,
@@ -52,7 +49,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import {
   Select,
@@ -117,25 +113,19 @@ function useCampaignContacts(campaignId: string) {
   return trpc.taHr.campaignContacts.list.useQuery({ campaignId, limit: 100 });
 }
 
-function useCampaignMetrics(campaignId: string) {
-  return trpc.taHr.campaigns.metrics.useQuery({ campaignId });
-}
-
 // =====================================================
 // MAIN COMPONENT
 // =====================================================
 
 export function CampaignsWorkspace({ campaignId }: CampaignsWorkspaceProps) {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState('overview');
   const [statusDialogOpen, setStatusDialogOpen] = useState(false);
 
-  const context = useWorkspaceContext('campaign', campaignId);
+  useWorkspaceContext('campaign', campaignId);
 
   // Fetch campaign data from database
   const { data: campaign, isLoading: campaignLoading, error } = useCampaign(campaignId);
   const { data: contactsData } = useCampaignContacts(campaignId);
-  const { data: metrics } = useCampaignMetrics(campaignId);
 
   const contacts = contactsData || [];
   const [selectedStatus, setSelectedStatus] = useState(campaign?.status || 'draft');
@@ -175,7 +165,6 @@ export function CampaignsWorkspace({ campaignId }: CampaignsWorkspaceProps) {
     : 0;
 
   const campaignStatus = campaign.status || 'draft';
-  const StatusIcon = CAMPAIGN_STATUSES[campaignStatus as keyof typeof CAMPAIGN_STATUSES]?.icon || Clock;
   const ChannelIcon = CAMPAIGN_CHANNELS[campaign.channel as keyof typeof CAMPAIGN_CHANNELS]?.icon || Send;
 
   // =====================================================
@@ -678,7 +667,7 @@ export function CampaignsWorkspace({ campaignId }: CampaignsWorkspaceProps) {
               { label: 'Clicked', value: Math.round((campaign.contactsReached || 0) * 0.234), percent: 23.4 },
               { label: 'Responded', value: campaign.responsesReceived || 0, percent: currentResponseRate },
               { label: 'Converted', value: campaign.conversions || 0, percent: (campaign.contactsReached || 0) > 0 ? ((campaign.conversions || 0) / (campaign.contactsReached || 1)) * 100 : 0 },
-            ].map((step, i) => (
+            ].map((step) => (
               <div key={step.label}>
                 <div className="flex justify-between text-sm mb-1">
                   <span>{step.label}</span>

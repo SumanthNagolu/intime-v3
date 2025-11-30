@@ -18,7 +18,6 @@ import type {
 } from '@/types/guru';
 import { GuruErrorCodes } from '@/types/guru';
 import { loadPromptTemplate } from '../../prompts';
-import { getSupabaseClient } from "./supabase-client";
 import OpenAI from 'openai';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -109,7 +108,7 @@ export class ProjectPlannerAgent extends BaseAgent<
   private async generateProjectPlan(
     input: ProjectPlannerInput,
     promptTemplate: string,
-    model: string
+    _model: string
   ): Promise<ProjectPlannerOutput> {
     const skillLevel = input.skillLevel || 3; // Default: intermediate
 
@@ -167,18 +166,23 @@ Return JSON format:
 
     // Calculate total estimated hours
     const totalHours = parsed.milestones.reduce(
-      (sum: number, m: any) => sum + (m.estimatedHours || 0),
+      (sum: number, m: { estimatedHours?: number }) => sum + (m.estimatedHours || 0),
       0
     );
 
     // Format milestones
-    const milestones: ProjectMilestone[] = parsed.milestones.map((m: any, i: number) => ({
+    const milestones: ProjectMilestone[] = parsed.milestones.map((m: {
+      title: string;
+      description: string;
+      estimatedHours: number;
+      tasks: Array<{ description: string; estimatedMinutes: number }>;
+    }, i: number) => ({
       id: `milestone-${i + 1}`,
       title: m.title,
       description: m.description,
       estimatedHours: m.estimatedHours,
       status: 'pending' as const,
-      tasks: m.tasks.map((t: any, j: number) => ({
+      tasks: m.tasks.map((t: { description: string; estimatedMinutes: number }, j: number) => ({
         id: `task-${i + 1}-${j + 1}`,
         description: t.description,
         estimatedMinutes: t.estimatedMinutes,
@@ -209,7 +213,7 @@ Return JSON format:
   private createGuruError(
     message: string,
     code: keyof typeof GuruErrorCodes,
-    details?: any
+    details?: Record<string, unknown>
   ): GuruError {
     const error = new Error(message) as GuruError;
     error.name = 'GuruError';

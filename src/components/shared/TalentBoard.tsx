@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { useAppStore } from '../../lib/store';
-import { Search, Filter, MapPin, Briefcase, Clock, Star, ChevronRight } from 'lucide-react';
+import { Search, MapPin, Clock, Star, ChevronRight } from 'lucide-react';
 
 export const TalentBoard: React.FC = () => {
   const { candidates, bench } = useAppStore();

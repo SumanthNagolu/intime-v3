@@ -74,9 +74,9 @@ vi.mock('openai', () => {
   const OpenAI = vi.fn();
   OpenAI.prototype.chat = {
     completions: {
-      create: vi.fn((params: any) => {
+      create: vi.fn((params: { messages?: Array<{ role: string; content: string }> }) => {
         // Smart classification based on input content
-        const userMessage = params.messages?.find((m: any) => m.role === 'user')?.content || '';
+        const userMessage = params.messages?.find((m: { role: string; content: string }) => m.role === 'user')?.content || '';
         let responseContent = 'This is a test response from mocked OpenAI';
 
         // Classification logic for CoordinatorAgent
@@ -169,7 +169,7 @@ vi.mock('@anthropic-ai/sdk', () => {
 // Suppress console errors in tests (optional, remove if you want to see them)
 const originalError = console.error;
 beforeAll(() => {
-  console.error = (...args: any[]) => {
+  console.error = (...args: unknown[]) => {
     if (
       typeof args[0] === 'string' &&
       (args[0].includes('Warning: ReactDOM.render') ||

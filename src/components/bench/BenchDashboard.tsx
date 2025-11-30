@@ -3,9 +3,9 @@
 
 import React, { useState } from 'react';
 import { useAppStore } from '../../lib/store';
-import { Clock, AlertTriangle, CheckCircle, Briefcase, MapPin, DollarSign, Search, Calendar, FileText, X, ChevronRight, Upload, Zap, Download, Award, Filter, ArrowUpRight, Plus, LayoutDashboard, Target, List, User, Flame } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter, usePathname, useParams } from 'next/navigation';
+import { usePathname, useParams } from 'next/navigation';
 import { BenchTalentList } from './BenchTalentList';
 import { BenchTalentDetail } from './BenchTalentDetail';
 import { JobHuntRoom } from './JobHuntRoom';
@@ -13,9 +13,7 @@ import { LeadsList } from '../recruiting/LeadsList';
 import { LeadDetail } from '../recruiting/LeadDetail';
 import { DealsPipeline } from '../recruiting/DealsPipeline';
 import { DealDetail } from '../recruiting/DealDetail';
-import { AccountsList } from '../recruiting/AccountsList'; // We might need this for "My Vendors" in future, but sticking to scope
 import { PipelineView } from '../recruiting/PipelineView';
-import { SubmissionBuilder } from '../recruiting/SubmissionBuilder';
 import { JobCollector } from './JobCollector';
 import { CreateLeadModal, CreateDealModal } from '../recruiting/Modals';
 import { HotlistBuilder } from './HotlistBuilder';
@@ -144,15 +142,14 @@ const DashboardHome: React.FC = () => {
 
 export const BenchDashboard: React.FC = () => {
     const pathname = usePathname();
-    const { candidateId, leadId, dealId, jobId } = useParams(); // Reuse params logic
+    const { candidateId, leadId, dealId } = useParams();
     const { addLead, addDeal } = useAppStore();
-    
+
     const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
     const [isDealModalOpen, setIsDealModalOpen] = useState(false);
 
     // Router Logic
     let content;
-    let actionButton = null;
     const currentPath = pathname;
 
     if (currentPath.includes('/talent/') && candidateId) {
@@ -165,20 +162,10 @@ export const BenchDashboard: React.FC = () => {
         content = <LeadDetail />;
     } else if (currentPath.includes('/leads')) {
         content = <LeadsList />;
-        actionButton = (
-            <button onClick={() => setIsLeadModalOpen(true)} className="px-6 py-3 bg-charcoal text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors shadow-lg flex items-center gap-2">
-                <Plus size={16} /> Add Lead
-            </button>
-        );
     } else if (currentPath.includes('/deals/') && dealId) {
         content = <DealDetail />;
     } else if (currentPath.includes('/deals')) {
         content = <DealsPipeline />;
-        actionButton = (
-            <button onClick={() => setIsDealModalOpen(true)} className="px-6 py-3 bg-charcoal text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors shadow-lg flex items-center gap-2">
-                <Plus size={16} /> New Deal
-            </button>
-        );
     } else if (currentPath.includes('/jobs')) {
         // In bench context, "Jobs" often means the Market Job Board
         content = <JobCollector />; 
@@ -192,14 +179,7 @@ export const BenchDashboard: React.FC = () => {
         content = <HotlistBuilder />;
     } else {
         content = <DashboardHome />;
-        actionButton = (
-             <Link href="/employee/bench/hotlist" className="px-6 py-3 bg-charcoal text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors flex items-center gap-2 shadow-lg">
-                 <Flame size={16} /> Create Hotlist
-             </Link>
-        );
     }
-
-    const isActive = (path: string) => pathname.includes(path);
 
     return (
         <div>

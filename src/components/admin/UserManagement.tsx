@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAppStore } from '../../lib/store';
-import { Search, Filter, Plus, MoreHorizontal, Mail, Shield, CheckCircle, XCircle, Edit3, Lock, Trash2, ChevronRight, Square, CheckSquare, Clock, History, ShieldAlert, ArrowLeft, ArrowRight, Unlock, ChevronDown, X } from 'lucide-react';
+import { Search, Plus, XCircle, Edit3, Lock, Square, CheckSquare, Clock, History, ShieldAlert, Unlock, ChevronDown, X, ChevronRight } from 'lucide-react';
 import { Employee } from '../../types';
 
 interface UserManagementProps {
@@ -310,7 +310,7 @@ const CreateUserModal: React.FC<{ onClose: () => void; onSave: (e: Employee) => 
             ...form,
             status: 'Onboarding',
             pod: 'Unassigned',
-            department: form.department as any
+            department: form.department as Employee['department']
         };
         onSave(newUser);
         onClose();
@@ -476,7 +476,7 @@ const EditUserModal: React.FC<{ user: Employee; onClose: () => void; onUpdate: (
                                 </div>
                                 <div>
                                     <label className="block text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">Department</label>
-                                    <input value={formData.department} onChange={(e) => setFormData({...formData, department: e.target.value as any})} className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-rust" />
+                                    <input value={formData.department} onChange={(e) => setFormData({...formData, department: e.target.value as Employee['department']})} className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-rust" />
                                 </div>
                             </div>
                             
@@ -494,9 +494,9 @@ const EditUserModal: React.FC<{ user: Employee; onClose: () => void; onUpdate: (
 
                             <div>
                                 <label className="block text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">Status</label>
-                                <select 
-                                    value={formData.status} 
-                                    onChange={(e) => setFormData({...formData, status: e.target.value as any})}
+                                <select
+                                    value={formData.status}
+                                    onChange={(e) => setFormData({...formData, status: e.target.value as Employee['status']})}
                                     className="w-full p-3 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-rust"
                                 >
                                     <option value="Active">Active</option>

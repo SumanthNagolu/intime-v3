@@ -80,10 +80,10 @@ export const labsRouter = router({
           forkedRepoUrl: result.forkedRepoUrl,
           expiresAt: result.expiresAt,
         };
-      } catch (error: any) {
+      } catch (error) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: error.message,
+          message: error instanceof Error ? error.message : 'Failed to start lab',
         });
       }
     }),
@@ -199,8 +199,8 @@ export const labsRouter = router({
       // Note: This would be better handled via a webhook or background job
       try {
         await triggerAutoGrading(input.repositoryUrl);
-      } catch (error: any) {
-        console.error('Failed to trigger auto-grading:', error);
+      } catch (error) {
+        console.error('Failed to trigger auto-grading:', error instanceof Error ? error.message : String(error));
         // Non-critical, continue
       }
 
@@ -426,8 +426,8 @@ export const labsRouter = router({
       if (input.deleteRepo) {
         try {
           await cleanupLabEnvironment(instance.forked_repo_url);
-        } catch (error: any) {
-          console.error('Failed to delete forked repo:', error);
+        } catch (error) {
+          console.error('Failed to delete forked repo:', error instanceof Error ? error.message : String(error));
           // Non-critical, continue with database cleanup
         }
       }

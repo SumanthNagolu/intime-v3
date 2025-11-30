@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
-import { ChevronLeft, DollarSign, Calendar, FileText, CheckCircle, Send, Download } from 'lucide-react';
+import { ChevronLeft, DollarSign, Calendar, Send, Download } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 
 export const OfferBuilder: React.FC = () => {

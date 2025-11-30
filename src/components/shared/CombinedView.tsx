@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { useAppStore } from '../../lib/store';
-import { Search, Briefcase, Users, Zap, ChevronRight, CheckCircle, AlertTriangle, Send, ArrowRight, Globe } from 'lucide-react';
+import { Search, Zap, AlertTriangle, Send, ArrowRight, Globe } from 'lucide-react';
 
 export const CombinedView: React.FC = () => {
   const { jobs, bench, candidates } = useAppStore();
@@ -160,8 +160,8 @@ export const CombinedView: React.FC = () => {
                       <div>
                           <h4 className="font-bold text-blue-900 text-sm mb-1">Pipeline Gap Detected</h4>
                           <p className="text-blue-800 text-xs leading-relaxed mb-3">
-                              We have 2 other jobs similar to this but no exact matches in the bench. 
-                              Recommendation: Trigger a TA campaign for "Senior PolicyCenter Developers".
+                              We have 2 other jobs similar to this but no exact matches in the bench.
+                              Recommendation: Trigger a TA campaign for &quot;Senior PolicyCenter Developers&quot;.
                           </p>
                           <button className="text-xs font-bold text-blue-700 underline hover:text-blue-900">Launch Campaign</button>
                       </div>

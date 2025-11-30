@@ -154,7 +154,7 @@ export function registerAllWidgets() {
   });
 
   registerWidget('number-input', {
-    Display: TextDisplay as any,
+    Display: TextDisplay as unknown as typeof NumberInput,
     Input: NumberInput,
   });
 
@@ -229,13 +229,13 @@ export function registerAllWidgets() {
   });
 
   registerWidget('file-input', {
-    Display: TextDisplay as any,
+    Display: TextDisplay as unknown as typeof FileInput,
     Input: FileInput,
   });
 
   registerWidget('image-input', {
-    Display: ImageDisplay,
-    Input: FileInput as any,
+    Display: ImageDisplay as unknown as typeof FileInput,
+    Input: FileInput,
   });
 
   registerWidget('json-input', {
@@ -244,12 +244,12 @@ export function registerAllWidgets() {
   });
 
   registerWidget('entity-select', {
-    Display: EntityLinkDisplay as any,
+    Display: EntityLinkDisplay as unknown as typeof EntitySelect,
     Input: EntitySelect,
   });
 
   registerWidget('entity-multiselect', {
-    Display: EntityListDisplay as any,
+    Display: EntityListDisplay as unknown as typeof EntityMultiselect,
     Input: EntityMultiselect,
   });
 
@@ -261,7 +261,7 @@ export function registerAllWidgets() {
 
   // Files input (multiple files)
   registerWidget('files-input', {
-    Display: TextDisplay as any,
+    Display: TextDisplay as unknown as typeof FileInput,
     Input: FileInput,
   });
 }

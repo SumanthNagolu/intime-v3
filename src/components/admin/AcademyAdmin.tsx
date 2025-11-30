@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useAppStore } from '../../lib/store';
-import { Users, BookOpen, Award, Plus, MoreHorizontal, Calendar } from 'lucide-react';
+import { Users, Plus, MoreHorizontal, Calendar } from 'lucide-react';
 
 export const AcademyAdmin: React.FC = () => {
   const { cohorts } = useAppStore();

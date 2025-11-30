@@ -79,7 +79,7 @@ async function runSafetyChecks() {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Test connection
-    const { data, error } = await supabase.from('_drizzle_migrations').select('*').limit(1);
+    const { error } = await supabase.from('_drizzle_migrations').select('*').limit(1);
 
     if (error) {
       addCheck({
@@ -179,8 +179,8 @@ async function runSafetyChecks() {
       });
 
       console.log(`\n${BLUE}Recent migrations:${RESET}`);
-      migrations.forEach((m: any, i: number) => {
-        console.log(`  ${i + 1}. ${m.name || 'unnamed'} (${new Date(m.created_at).toLocaleString()})`);
+      migrations.forEach((m: Record<string, unknown>, i: number) => {
+        console.log(`  ${i + 1}. ${m.name || 'unnamed'} (${new Date(String(m.created_at)).toLocaleString()})`);
       });
     } else {
       addCheck({

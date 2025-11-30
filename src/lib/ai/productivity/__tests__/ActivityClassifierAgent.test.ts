@@ -34,6 +34,7 @@ const mockSupabaseClient = {
       }),
     })),
   },
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 } as any;
 
 // Mock dependencies
@@ -120,7 +121,7 @@ describe('ActivityClassifierAgent', () => {
   describe('Batch Processing', () => {
     it('should batch classify multiple screenshots', async () => {
       // Mock multiple screenshots
-      const mockScreenshots = [
+      const _mockScreenshots = [
         { id: 'screenshot-1' },
         { id: 'screenshot-2' },
         { id: 'screenshot-3' },

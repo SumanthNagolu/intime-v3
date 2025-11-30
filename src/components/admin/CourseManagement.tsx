@@ -2,16 +2,24 @@
 
 
 import React, { useState } from 'react';
-import { Search, Filter, CheckCircle, XCircle, Eye, MoreHorizontal, FileText, Archive, Download, Clock, AlertCircle, ArrowRight, Trash2, Play, X } from 'lucide-react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { Search, CheckCircle, Eye, FileText, Archive, Download, ArrowRight, Trash2, Play, X } from 'lucide-react';
+
+interface Course {
+  id: number;
+  title: string;
+  author: string;
+  status: string;
+  modules: number;
+  students: number;
+  updated: string;
+}
 
 export const CourseManagement: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCourseIds, setSelectedCourseIds] = useState<number[]>([]);
-  const [reviewModalCourse, setReviewModalCourse] = useState<any | null>(null);
-  const [detailModalCourse, setDetailModalCourse] = useState<any | null>(null);
+  const [reviewModalCourse, setReviewModalCourse] = useState<Course | null>(null);
+  const [detailModalCourse, setDetailModalCourse] = useState<Course | null>(null);
 
   // Mock Courses Data
   const [courses, setCourses] = useState([
@@ -223,7 +231,7 @@ const ContentPreviewModal: React.FC<{ isOpen: boolean; onClose: () => void; titl
     )
 }
 
-const CourseDetailModal: React.FC<{ course: any; onClose: () => void }> = ({ course, onClose }) => {
+const CourseDetailModal: React.FC<{ course: Course; onClose: () => void }> = ({ course, onClose }) => {
     const [previewItem, setPreviewItem] = useState<{ title: string; type: 'module' | 'slides' } | null>(null);
 
     if (!course) return null;
@@ -290,7 +298,7 @@ const CourseDetailModal: React.FC<{ course: any; onClose: () => void }> = ({ cou
     )
 }
 
-const CourseReviewModal: React.FC<{ course: any; onClose: () => void }> = ({ course, onClose }) => {
+const CourseReviewModal: React.FC<{ course: Course; onClose: () => void }> = ({ course, onClose }) => {
     const [previewItem, setPreviewItem] = useState<{ title: string; type: 'module' | 'slides' } | null>(null);
 
     return (

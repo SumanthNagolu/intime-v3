@@ -22,7 +22,7 @@ export interface Event<T extends EventPayload> {
 /**
  * Event payload (type-safe per event type)
  */
-export type EventPayload = Record<string, any>;
+export type EventPayload = Record<string, unknown>;
 
 /**
  * Event metadata (additional context)
@@ -33,7 +33,7 @@ export interface EventMetadata {
   source?: string;
   replayed?: boolean;
   replayedAt?: Date;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 /**
@@ -112,7 +112,7 @@ export interface StudentAtRiskPayload {
 /**
  * Event handler function type
  */
-export type EventHandler<T extends EventPayload = any> = (
+export type EventHandler<T extends EventPayload = EventPayload> = (
   event: Event<T>
 ) => Promise<void>;
 

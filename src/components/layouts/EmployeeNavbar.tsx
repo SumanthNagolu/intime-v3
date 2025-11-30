@@ -4,12 +4,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Shield,
-  Users,
-  TrendingUp,
   Target,
   Briefcase,
-  GraduationCap,
-  Database,
   LogOut,
   LayoutDashboard,
   Building2,
@@ -17,44 +13,6 @@ import {
   List
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-const navigationLinks = [
-  {
-    name: 'Portal',
-    href: '/employee/portal',
-    icon: Shield,
-  },
-  {
-    name: 'Recruiting',
-    href: '/employee/recruiting/dashboard',
-    icon: Users,
-  },
-  {
-    name: 'Bench Sales',
-    href: '/employee/bench/dashboard',
-    icon: TrendingUp,
-  },
-  {
-    name: 'Talent Acquisition',
-    href: '/employee/ta/dashboard',
-    icon: Target,
-  },
-  {
-    name: 'HR',
-    href: '/employee/hr/dashboard',
-    icon: Briefcase,
-  },
-  {
-    name: 'Academy',
-    href: '/employee/academy/admin/dashboard',
-    icon: GraduationCap,
-  },
-  {
-    name: 'Shared',
-    href: '/employee/shared/combined',
-    icon: Database,
-  },
-];
 
 // Sub-navigation for recruiting
 const recruitingSubNav = [

@@ -2,15 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  FileText, MessageSquare, Target, Users, Swords, Trophy,
+  FileText, Users, Swords, Trophy,
   Plus, Trash2, Save, Edit3, Loader2, ChevronDown, ChevronRight,
   AlertCircle, CheckCircle, HelpCircle, XCircle, DollarSign,
-  Scale, Handshake, FileCheck, ListChecks
+  FileCheck, ListChecks
 } from 'lucide-react';
 import { trpc } from '@/lib/trpc/client';
 import { v4 as uuidv4 } from 'uuid';
 import type {
-  TalkingPoint,
   Objection,
   Stakeholder,
   Competitor,
@@ -96,7 +95,7 @@ function Section({
   );
 }
 
-export function DealNegotiation({ dealId, dealTitle, leadId }: DealNegotiationProps) {
+export function DealNegotiation({ _dealId, _dealTitle, leadId }: DealNegotiationProps) {
   // Fetch lead strategy if deal was converted from lead (to inherit data)
   const { data: leadStrategy, isLoading: leadStrategyLoading } = trpc.strategy.get.useQuery(
     { leadId: leadId! },

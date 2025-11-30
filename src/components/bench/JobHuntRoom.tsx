@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import { useAppStore } from '../../lib/store';
-import { ChevronLeft, Search, Globe, MapPin, DollarSign, Briefcase, Plus, CheckCircle, ExternalLink, ArrowRight, Database } from 'lucide-react';
+import { ChevronLeft, Search, MapPin, DollarSign, Briefcase, CheckCircle, ExternalLink, ArrowRight, Database } from 'lucide-react';
 
 export const JobHuntRoom: React.FC = () => {
   const { candidateId } = useParams();

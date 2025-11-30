@@ -5,7 +5,7 @@
  * Story: AI-INF-005 - Base Agent Framework
  */
 
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { BaseAgent, ExampleAgent, type AgentConfig } from '@/lib/ai/agents/BaseAgent';
 
 // Test implementation

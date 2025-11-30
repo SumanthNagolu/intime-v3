@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { MOCK_MODULES } from '@/lib/constants';
-import { Check, Clock, Database, Download, Loader2, Lock, Filter, Search, Terminal, TrendingUp, Briefcase } from 'lucide-react';
+import { Check, Clock, Database, Download, Loader2, Filter, Search, Terminal, TrendingUp, Briefcase } from 'lucide-react';
 import Link from 'next/link';
 import { useAppStore } from '@/lib/store';
 import { useAcademyStore, useBiometric } from '@/lib/store/academy-store';

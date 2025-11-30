@@ -33,7 +33,7 @@ interface MigrationResult {
 /**
  * Execute SQL using Supabase Database REST API
  */
-async function executeSql(sql: string): Promise<{ success: boolean; error?: string; data?: any }> {
+async function executeSql(sql: string): Promise<{ success: boolean; error?: string; data?: unknown }> {
   try {
     // Use Supabase Database API endpoint
     const url = `https://${SUPABASE_PROJECT_REF}.supabase.co/rest/v1/rpc/exec_sql`;
@@ -62,15 +62,15 @@ async function executeSql(sql: string): Promise<{ success: boolean; error?: stri
 
     const data = await response.json();
     return { success: true, data };
-  } catch (error: any) {
-    return { success: false, error: error.message };
+  } catch (error) {
+    return { success: false, error: error instanceof Error ? error.message : String(error) };
   }
 }
 
 /**
  * Fallback: Execute SQL using @supabase/supabase-js client
  */
-async function executeSqlViaClient(sql: string): Promise<{ success: boolean; error?: string; data?: any }> {
+async function executeSqlViaClient(sql: string): Promise<{ success: boolean; error?: string; data?: unknown }> {
   try {
     const { createClient } = await import('@supabase/supabase-js');
     const supabase = createClient(
@@ -107,8 +107,8 @@ async function executeSqlViaClient(sql: string): Promise<{ success: boolean; err
     }
 
     return { success: true };
-  } catch (error: any) {
-    return { success: false, error: error.message };
+  } catch (error) {
+    return { success: false, error: error instanceof Error ? error.message : String(error) };
   }
 }
 

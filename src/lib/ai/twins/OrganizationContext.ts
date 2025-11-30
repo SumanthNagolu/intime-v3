@@ -98,7 +98,7 @@ export class OrganizationContext {
 
   constructor(
     supabase?: SupabaseClient<Database>,
-    options?: { defaultTTLHours?: number }
+    _options?: { defaultTTLHours?: number }
   ) {
     this.supabase =
       supabase ||
@@ -107,7 +107,7 @@ export class OrganizationContext {
         process.env.SUPABASE_SERVICE_KEY!
       );
     this.localCache = new Map();
-    this.defaultTTLHours = options?.defaultTTLHours || 24;
+    this.defaultTTLHours = _options?.defaultTTLHours || 24;
   }
 
   // ==========================================================================
@@ -122,7 +122,7 @@ export class OrganizationContext {
    * @returns Array of organization priorities
    */
   async getOrgPriorities(orgId: string, forceRefresh = false): Promise<OrgPriority[]> {
-    const cacheKey = `${orgId}:priorities`;
+    const _cacheKey = `${orgId}:priorities`;
 
     if (!forceRefresh) {
       const cached = await this.getFromCache<OrgPriority[]>(orgId, 'priorities');
@@ -146,7 +146,7 @@ export class OrganizationContext {
    * @returns Organization-wide metrics
    */
   async getOrgMetrics(orgId: string, forceRefresh = false): Promise<OrgMetrics> {
-    const cacheKey = `${orgId}:metrics`;
+    const _cacheKey = `${orgId}:metrics`;
 
     if (!forceRefresh) {
       const cached = await this.getFromCache<OrgMetrics>(orgId, 'metrics');
@@ -223,7 +223,7 @@ export class OrganizationContext {
   async searchOrgKnowledge(
     query: string,
     orgId: string,
-    options?: { limit?: number; threshold?: number }
+    _options?: { limit?: number; threshold?: number }
   ): Promise<{ content: string; source: string; score: number }[]> {
     // TODO: Integrate with existing RAG system
     // For now, return empty array
@@ -231,7 +231,7 @@ export class OrganizationContext {
 
     // This would use the RAGRetriever from the existing infrastructure
     // const retriever = new RAGRetriever(this.supabase);
-    // return retriever.search(query, { namespace: `org:${orgId}`, ...options });
+    // return retriever.search(query, { namespace: `org:${orgId}`, ..._options });
 
     return [];
   }
@@ -277,7 +277,7 @@ export class OrganizationContext {
     await this.setInCache(orgId, 'cross_pollination', existing, 1);
 
     // Persist to database
-    await (this.supabase.from as any)('org_context_cache').upsert({
+    await (this.supabase.from as (table: string) => unknown)('org_context_cache').upsert({
       org_id: orgId,
       context_type: 'cross_pollination',
       data: existing as unknown as Record<string, unknown>,
@@ -312,7 +312,7 @@ export class OrganizationContext {
     }
 
     // Check database cache
-    const { data } = await (this.supabase.rpc as any)('get_org_context', {
+    const { data } = await (this.supabase.rpc as (fn: string, params: Record<string, unknown>) => Promise<{ data: unknown }>)('get_org_context', {
       p_org_id: orgId,
       p_context_type: contextType,
     });
@@ -348,7 +348,7 @@ export class OrganizationContext {
     });
 
     // Update database cache
-    await (this.supabase.rpc as any)('set_org_context', {
+    await (this.supabase.rpc as (fn: string, params: Record<string, unknown>) => Promise<unknown>)('set_org_context', {
       p_org_id: orgId,
       p_context_type: contextType,
       p_data: data as unknown as Record<string, unknown>,
@@ -363,7 +363,7 @@ export class OrganizationContext {
   /**
    * Fetch organization priorities from database
    */
-  private async fetchOrgPriorities(orgId: string): Promise<OrgPriority[]> {
+  private async fetchOrgPriorities(_orgId: string): Promise<OrgPriority[]> {
     // TODO: Query actual priorities table when available
     // For now, return placeholder data
     return [
@@ -396,7 +396,7 @@ export class OrganizationContext {
   /**
    * Fetch organization metrics from database
    */
-  private async fetchOrgMetrics(orgId: string): Promise<OrgMetrics> {
+  private async fetchOrgMetrics(_orgId: string): Promise<OrgMetrics> {
     // TODO: Query actual metrics from various tables
     // For now, return placeholder data
     return {
@@ -416,7 +416,7 @@ export class OrganizationContext {
   /**
    * Fetch pillar health from database
    */
-  private async fetchPillarHealth(orgId: string): Promise<PillarHealth[]> {
+  private async fetchPillarHealth(_orgId: string): Promise<PillarHealth[]> {
     const pillars: TwinRole[] = [
       'recruiter',
       'bench_sales',
@@ -443,8 +443,32 @@ export class OrganizationContext {
   private async fetchCrossPollinationOpportunities(
     orgId: string
   ): Promise<CrossPollinationOpportunity[]> {
+    // Define the expected event structure
+    interface TwinEvent {
+      id: string;
+      event_type: string;
+      source_role: string;
+      target_role?: string;
+      priority: string;
+      payload: Record<string, unknown>;
+      created_at: string;
+      expires_at?: string;
+    }
+
     // Query from twin_events for potential opportunities
-    const { data: events } = await (this.supabase.from as any)('twin_events')
+    const { data: events } = await (this.supabase.from as (table: string) => {
+      select: (columns: string) => {
+        eq: (column: string, value: unknown) => {
+          eq: (column: string, value: unknown) => {
+            in: (column: string, values: string[]) => {
+              order: (column: string, options: { ascending: boolean }) => {
+                limit: (count: number) => Promise<{ data: TwinEvent[] | null }>;
+              };
+            };
+          };
+        };
+      };
+    })('twin_events')
       .select('*')
       .eq('org_id', orgId)
       .eq('processed', false)
@@ -460,12 +484,12 @@ export class OrganizationContext {
 
     if (!events) return [];
 
-    return events.map((event: any) => ({
+    return events.map((event: TwinEvent) => ({
       id: event.id,
       type: this.mapEventTypeToOpportunityType(event.event_type),
       sourceRole: event.source_role as TwinRole,
       targetRole: (event.target_role || 'ceo') as TwinRole,
-      title: this.generateOpportunityTitle(event as any),
+      title: this.generateOpportunityTitle(event as unknown as Record<string, unknown>),
       description: (event.payload as Record<string, string>)?.description || '',
       priority: event.priority as 'low' | 'medium' | 'high',
       data: event.payload as Record<string, unknown>,

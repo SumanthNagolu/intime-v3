@@ -6,7 +6,7 @@
  */
 
 import type { ScreenDefinition, FieldDefinition, SectionDefinition } from '@/lib/metadata';
-import { fieldValue, paramValue, conditionVisible, roleVisible } from '@/lib/metadata';
+import { fieldValue, paramValue } from '@/lib/metadata';
 
 // ==========================================
 // FIELD DEFINITIONS
@@ -227,67 +227,69 @@ const bantFields: FieldDefinition[] = [
   },
 ];
 
-const leadStatusFields: FieldDefinition[] = [
-  {
-    id: 'status',
-    label: 'Status',
-    type: 'enum',
-    path: 'status',
-    config: {
-      options: [
-        { value: 'new', label: 'New' },
-        { value: 'contacted', label: 'Contacted' },
-        { value: 'qualified', label: 'Qualified' },
-        { value: 'proposal', label: 'Proposal' },
-        { value: 'negotiation', label: 'Negotiation' },
-        { value: 'converted', label: 'Converted' },
-        { value: 'lost', label: 'Lost' },
-      ],
-      badgeColors: {
-        new: 'blue',
-        contacted: 'yellow',
-        qualified: 'green',
-        proposal: 'purple',
-        negotiation: 'orange',
-        converted: 'green',
-        lost: 'red',
-      },
-    },
-  },
-  {
-    id: 'estimatedValue',
-    label: 'Estimated Value',
-    type: 'currency',
-    path: 'estimatedValue',
-  },
-  {
-    id: 'source',
-    label: 'Source',
-    type: 'enum',
-    path: 'source',
-    config: {
-      options: [
-        { value: 'website', label: 'Website' },
-        { value: 'referral', label: 'Referral' },
-        { value: 'linkedin', label: 'LinkedIn' },
-        { value: 'cold_outreach', label: 'Cold Outreach' },
-        { value: 'event', label: 'Event' },
-        { value: 'inbound', label: 'Inbound' },
-        { value: 'partner', label: 'Partner' },
-      ],
-    },
-  },
-  {
-    id: 'ownerId',
-    label: 'Owner',
-    type: 'select',
-    path: 'owner.fullName',
-    config: {
-      entityType: 'user',
-      displayField: 'fullName',
-    },
-  },
-];
+// Note: This field group is not currently used in the screen definition
+// Keeping it for potential future use
+// const leadStatusFields: FieldDefinition[] = [
+//   {
+//     id: 'status',
+//     label: 'Status',
+//     type: 'enum',
+//     path: 'status',
+//     config: {
+//       options: [
+//         { value: 'new', label: 'New' },
+//         { value: 'contacted', label: 'Contacted' },
+//         { value: 'qualified', label: 'Qualified' },
+//         { value: 'proposal', label: 'Proposal' },
+//         { value: 'negotiation', label: 'Negotiation' },
+//         { value: 'converted', label: 'Converted' },
+//         { value: 'lost', label: 'Lost' },
+//       ],
+//       badgeColors: {
+//         new: 'blue',
+//         contacted: 'yellow',
+//         qualified: 'green',
+//         proposal: 'purple',
+//         negotiation: 'orange',
+//         converted: 'green',
+//         lost: 'red',
+//       },
+//     },
+//   },
+//   {
+//     id: 'estimatedValue',
+//     label: 'Estimated Value',
+//     type: 'currency',
+//     path: 'estimatedValue',
+//   },
+//   {
+//     id: 'source',
+//     label: 'Source',
+//     type: 'enum',
+//     path: 'source',
+//     config: {
+//       options: [
+//         { value: 'website', label: 'Website' },
+//         { value: 'referral', label: 'Referral' },
+//         { value: 'linkedin', label: 'LinkedIn' },
+//         { value: 'cold_outreach', label: 'Cold Outreach' },
+//         { value: 'event', label: 'Event' },
+//         { value: 'inbound', label: 'Inbound' },
+//         { value: 'partner', label: 'Partner' },
+//       ],
+//     },
+//   },
+//   {
+//     id: 'ownerId',
+//     label: 'Owner',
+//     type: 'select',
+//     path: 'owner.fullName',
+//     config: {
+//       entityType: 'user',
+//       displayField: 'fullName',
+//     },
+//   },
+// ];
 
 // ==========================================
 // SIDEBAR SECTION

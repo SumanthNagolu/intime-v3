@@ -2,8 +2,7 @@
 
 
 import React, { useState } from 'react';
-import Link from 'next/link';
-import { ChevronLeft, Award, CheckCircle, Search, Download, Send, FileText, Loader2, Users, Clock, ArrowRight, RefreshCcw, MoreHorizontal, Check } from 'lucide-react';
+import { ChevronLeft, Award, CheckCircle, Search, Download, Send, Loader2, Users, RefreshCcw } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 
 export const CertificateGenerator: React.FC = () => {
@@ -80,10 +79,10 @@ export const CertificateGenerator: React.FC = () => {
                   <div className="lg:col-span-4 space-y-8">
                       
                       <div className="flex bg-stone-100 p-1 rounded-full mb-2">
-                          {['Generate', 'History'].map(tab => (
-                              <button 
+                          {(['Generate', 'History'] as const).map(tab => (
+                              <button
                                   key={tab}
-                                  onClick={() => setActiveTab(tab as any)}
+                                  onClick={() => setActiveTab(tab)}
                                   className={`flex-1 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${activeTab === tab ? 'bg-white shadow-sm text-charcoal' : 'text-stone-400 hover:text-stone-600'}`}
                               >
                                   {tab}

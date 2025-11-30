@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
-import { ChevronLeft, Users, Calendar, MoreHorizontal, Search, MessageSquare, Eye, AlertCircle, CheckCircle, Clock, Award, Video, Edit3, Download, Megaphone } from 'lucide-react';
+import { ChevronLeft, Users, Calendar, Search, MessageSquare, Eye, CheckCircle, Clock, Award, Video, Edit3, Download, Megaphone } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 import { ScheduleSessionModal } from './ScheduleSessionModal';
 import { AnnouncementModal, ExportModal } from './AcademyModals';

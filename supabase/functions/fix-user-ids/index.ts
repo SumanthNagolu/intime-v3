@@ -74,7 +74,7 @@ Deno.serve(async (req) => {
     const results = {
       mismatchedUsers: mismatchedUsers.length,
       usersWithoutRoles: usersWithoutRoles.length,
-      fixes: [] as any[],
+      fixes: [] as Record<string, unknown>[],
       dryRun,
     }
 
@@ -126,11 +126,12 @@ Deno.serve(async (req) => {
             newId: user.auth_id,
             role: inferredRole
           })
-        } catch (err) {
+        } catch (err: unknown) {
+          const errorMessage = err instanceof Error ? err.message : 'Unknown error';
           results.fixes.push({
             email: user.email,
             action: 'error',
-            error: err.message
+            error: errorMessage
           })
         }
       }
@@ -150,11 +151,12 @@ Deno.serve(async (req) => {
               action: 'assigned_role',
               role: inferredRole
             })
-          } catch (err) {
+          } catch (err: unknown) {
+            const errorMessage = err instanceof Error ? err.message : 'Unknown error';
             results.fixes.push({
               email: user.email,
               action: 'error',
-              error: err.message
+              error: errorMessage
             })
           }
         } else {
@@ -194,9 +196,10 @@ Deno.serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     )
 
-  } catch (error) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: errorMessage }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
     )
   }

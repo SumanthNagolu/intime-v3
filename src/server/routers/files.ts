@@ -108,7 +108,7 @@ export const filesRouter = router({
     }))
     .mutation(async ({ ctx, input }) => {
       const { orgId, userId } = ctx;
-      const { fileName, mimeType, entityType, entityId } = input;
+      const { fileName, mimeType: _mimeType, entityType, entityId } = input;
 
       if (!userId) {
         throw new Error('User ID not found in context');
@@ -168,7 +168,7 @@ export const filesRouter = router({
       mimeType: z.string(),
       entityType: z.string(),
       entityId: z.string().uuid(),
-      metadata: z.record(z.any()).optional(),
+      metadata: z.record(z.unknown()).optional(),
     }))
     .mutation(async ({ ctx, input }) => {
       const { orgId, userId } = ctx;
@@ -217,7 +217,7 @@ export const filesRouter = router({
   updateMetadata: orgProtectedProcedure
     .input(z.object({
       fileId: z.string().uuid(),
-      metadata: z.record(z.any()),
+      metadata: z.record(z.unknown()),
     }))
     .mutation(async ({ ctx, input }) => {
       const { orgId } = ctx;
@@ -237,7 +237,7 @@ export const filesRouter = router({
       }
 
       // Merge new metadata with existing
-      const existingMetadata = (file.metadata as Record<string, any>) || {};
+      const existingMetadata = (file.metadata as Record<string, unknown>) || {};
       const newMetadata = { ...existingMetadata, ...input.metadata };
 
       const [updated] = await db.update(fileUploads)

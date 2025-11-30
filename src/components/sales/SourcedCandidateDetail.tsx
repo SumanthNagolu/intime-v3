@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
-import { ChevronLeft, MapPin, Linkedin, Mail, Phone, Calendar, User, ArrowRight, CheckCircle } from 'lucide-react';
+import { ChevronLeft, MapPin, Linkedin, Mail, Phone, ArrowRight } from 'lucide-react';
 import { HandoffModal } from './HandoffModal';
 
 export const SourcedCandidateDetail: React.FC = () => {
@@ -110,7 +110,7 @@ export const SourcedCandidateDetail: React.FC = () => {
                   <div className="relative pl-8">
                       <div className="absolute left-0 top-0 w-6 h-6 bg-stone-100 text-stone-500 rounded-full flex items-center justify-center text-xs font-bold">2</div>
                       <div className="text-sm font-bold text-charcoal">Sent Intro InMail</div>
-                      <div className="text-xs text-stone-400">Campaign: "Q4 Tech Leads"</div>
+                      <div className="text-xs text-stone-400">Campaign: &quot;Q4 Tech Leads&quot;</div>
                   </div>
               </div>
           </div>

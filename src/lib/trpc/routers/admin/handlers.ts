@@ -52,7 +52,7 @@ export const adminHandlersRouter = router({
   enable: adminProcedure
     .input(schemas.handlerAction)
     .mutation(async ({ ctx, input }) => {
-      const { data, error } = await ctx.supabase
+      const { data: _data, error } = await ctx.supabase
         .rpc('admin_enable_handler', {
           p_handler_id: input.handlerId,
         });
@@ -67,7 +67,7 @@ export const adminHandlersRouter = router({
   disable: adminProcedure
     .input(schemas.handlerAction)
     .mutation(async ({ ctx, input }) => {
-      const { data, error } = await ctx.supabase
+      const { data: _data, error } = await ctx.supabase
         .rpc('admin_disable_handler', {
           p_handler_id: input.handlerId,
           p_reason: input.reason || 'Manually disabled by admin',

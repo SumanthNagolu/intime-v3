@@ -155,8 +155,6 @@ export const LeadDetail: React.FC = () => {
     );
   }
 
-  const currentStatus = STATUS_OPTIONS.find((s) => s.value === lead.status) || STATUS_OPTIONS[0];
-
   return (
     <div className="animate-fade-in">
       <Link

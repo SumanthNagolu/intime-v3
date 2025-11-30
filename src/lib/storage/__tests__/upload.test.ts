@@ -188,7 +188,7 @@ describe('Content Upload System', () => {
       });
 
       // All returned assets should be current
-      data?.forEach((asset: any) => {
+      data?.forEach((asset: { is_current?: boolean }) => {
         expect(asset.is_current).not.toBe(false);
       });
     });

@@ -2,7 +2,7 @@
 
 
 import React, { useState } from 'react';
-import { Search, Filter, Building2, MapPin, Globe, MoreHorizontal } from 'lucide-react';
+import { Search, Building2, MapPin, Globe, MoreHorizontal } from 'lucide-react';
 
 export const AccountProspects: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');

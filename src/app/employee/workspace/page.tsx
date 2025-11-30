@@ -27,9 +27,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ChevronDown, Settings, Users, Briefcase, TrendingUp, Shield, Building2, DollarSign, UserCog } from 'lucide-react';
-import { RoleDashboard } from '@/components/workspaces/dashboard';
-import { roleConfigs, type WorkspaceRole } from '@/lib/workspace/role-config';
-import { getWorkspaceRole } from '@/lib/workspace/role-mapping';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { trpc } from '@/lib/trpc/client';
 
@@ -50,14 +47,11 @@ import {
 // Import role hierarchy utilities
 import {
   getSpecificRolesForUser,
-  getPrimarySpecificRole,
-  getCombinedRoleTitle,
-  getSpecificRoleLabel,
 } from '@/lib/workspace/role-hierarchy';
 import type { SpecificRole } from '@/lib/workspace/specific-role-config';
 
 // Map specific roles to their console components
-const SPECIFIC_ROLE_CONSOLES: Record<SpecificRole, React.ComponentType<any>> = {
+const SPECIFIC_ROLE_CONSOLES: Record<SpecificRole, React.ComponentType<Record<string, unknown>>> = {
   technical_recruiter: RecruiterConsole,
   bench_sales_recruiter: BenchSalesConsole,
   ta_specialist: TAConsole,
@@ -130,9 +124,6 @@ function WorkspaceDashboardContent() {
 
   // Check if user has multiple roles
   const hasMultipleRoles = specificRoles.length > 1;
-
-  // Check if current role is a manager role
-  const isManagerRole = ['recruiting_manager', 'bench_manager', 'ta_manager'].includes(currentRole);
 
   // Check if user has IC role in addition to manager role
   const hasICRole = useMemo(() => {

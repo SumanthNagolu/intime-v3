@@ -76,6 +76,54 @@ export interface PipelineStage {
   submissions: Submission[];
 }
 
+interface UserRole {
+  role: {
+    name: string;
+  } | null;
+}
+
+interface SubmissionRow {
+  id: string;
+  job_id: string;
+  job?: { title: string } | null;
+  candidate_id: string;
+  candidate?: { full_name: string; email: string } | null;
+  account_id: string | null;
+  account?: { name: string } | null;
+  status: string;
+  ai_match_score: number | null;
+  recruiter_match_score: number | null;
+  match_explanation: string | null;
+  submitted_rate: string | null;
+  submitted_rate_type: string;
+  submission_notes: string | null;
+  submitted_to_client_at: string | null;
+  submitted_to_client_by: string | null;
+  client_resume_file_id: string | null;
+  client_profile_url: string | null;
+  interview_count: number | null;
+  last_interview_date: string | null;
+  interview_feedback: string | null;
+  offer_extended_at: string | null;
+  offer_accepted_at: string | null;
+  offer_declined_at: string | null;
+  offer_decline_reason: string | null;
+  rejected_at: string | null;
+  rejection_reason: string | null;
+  rejection_source: string | null;
+  owner_id: string;
+  owner?: { full_name: string } | null;
+  created_at: string;
+  updated_at: string;
+  // Additional fields that may be present from database
+  client_decision?: string | null;
+  client_decision_at?: string | null;
+  client_decision_notes?: string | null;
+  org_id?: string;
+  deleted_at?: string | null;
+  [key: string]: unknown;
+}
+
 // ============================================================================
 // Validation Schemas
 // ============================================================================
@@ -182,7 +230,7 @@ async function checkPermission(
       .eq('user_id', userId)
       .is('deleted_at', null);
 
-    const roleNames = roles?.map((r: any) => r.role?.name) || [];
+    const roleNames = roles?.map((r: UserRole) => r.role?.name) || [];
     return roleNames.includes('super_admin') || roleNames.includes('admin') || roleNames.includes('recruiter') || roleNames.includes('sr_recruiter');
   }
 
@@ -205,7 +253,7 @@ async function logAuditEvent(
 ) {
   const { tableName, action, recordId, userId, userEmail, orgId, oldValues, newValues, metadata } = params;
 
-  await (adminSupabase.from as any)('audit_logs').insert({
+  await (adminSupabase.from as unknown as (table: string) => { insert: (data: Record<string, unknown>) => Promise<unknown> })('audit_logs').insert({
     table_name: tableName,
     action,
     record_id: recordId,
@@ -219,7 +267,7 @@ async function logAuditEvent(
   });
 }
 
-function transformSubmission(sub: any): Submission {
+function transformSubmission(sub: SubmissionRow): Submission {
   return {
     id: sub.id,
     jobId: sub.job_id,
@@ -328,7 +376,7 @@ export async function listSubmissionsAction(
     return { success: false, error: 'Failed to fetch submissions' };
   }
 
-  let transformedSubmissions = (submissions || []).map(transformSubmission);
+  let transformedSubmissions = (submissions || []).map(sub => transformSubmission(sub as SubmissionRow));
 
   // Apply search filter on results if search term provided
   if (search) {
@@ -388,7 +436,7 @@ export async function getSubmissionAction(submissionId: string): Promise<ActionR
     return { success: false, error: 'Submission not found' };
   }
 
-  return { success: true, data: transformSubmission(submission) };
+  return { success: true, data: transformSubmission(submission as SubmissionRow) };
 }
 
 /**
@@ -1098,11 +1146,12 @@ export async function getSubmissionPipelineAction(
     submissions: [],
   }));
 
-  (submissions || []).forEach((sub: any) => {
-    const stageIndex = pipeline.findIndex(p => p.status === sub.status);
+  (submissions || []).forEach(sub => {
+    const typedSub = sub as SubmissionRow;
+    const stageIndex = pipeline.findIndex(p => p.status === typedSub.status);
     if (stageIndex !== -1) {
       pipeline[stageIndex].count++;
-      pipeline[stageIndex].submissions.push(transformSubmission(sub));
+      pipeline[stageIndex].submissions.push(transformSubmission(typedSub));
     }
   });
 
@@ -1142,7 +1191,7 @@ export async function getJobSubmissionsAction(jobId: string): Promise<ActionResu
     return { success: false, error: 'Failed to fetch submissions' };
   }
 
-  return { success: true, data: (submissions || []).map(transformSubmission) };
+  return { success: true, data: (submissions || []).map(sub => transformSubmission(sub as SubmissionRow)) };
 }
 
 /**
@@ -1161,7 +1210,6 @@ export async function updateMatchScoresAction(
     return { success: false, error: authError || 'Not authenticated' };
   }
 
-  const supabase = await createClient();
   const adminSupabase = createAdminClient();
 
   const updateData: Record<string, unknown> = {

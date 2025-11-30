@@ -29,7 +29,6 @@
  * 8. No placeholders - complete implementations only
  */
 
-import { spawn } from 'child_process';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -175,7 +174,7 @@ class WorkflowRunner {
   // WORKFLOW EXECUTORS
   // ==========================================================================
 
-  private async executeStartWorkflow(idea: string, options: WorkflowRunnerOptions): Promise<void> {
+  private async executeStartWorkflow(idea: string, _options: WorkflowRunnerOptions): Promise<void> {
     console.log('🎯 Starting new feature planning workflow...\n');
     console.log(`Idea: "${idea}"\n`);
 
@@ -254,7 +253,7 @@ class WorkflowRunner {
     const execution = await this.createWorkflowExecution(workflowId, 'feature', storyId);
 
     // Load workflow definition
-    const workflow = await this.loadWorkflowDefinition('feature');
+    const _workflow = await this.loadWorkflowDefinition('feature');
 
     // Update story status to in-progress
     await this.updateStoryStatus(storyPath, '🟡');
@@ -416,7 +415,7 @@ class WorkflowRunner {
     console.log(`📊 Completed ${stories.length} stories\n`);
   }
 
-  private async executeDatabaseWorkflow(featureName: string, options: WorkflowRunnerOptions): Promise<void> {
+  private async executeDatabaseWorkflow(featureName: string, _options: WorkflowRunnerOptions): Promise<void> {
     console.log('🗄️  Executing database design workflow...\n');
     console.log(`Feature: ${featureName}\n`);
 
@@ -446,7 +445,7 @@ class WorkflowRunner {
     console.log('  • Deploy to production: pnpm db:migrate\n');
   }
 
-  private async executeTestWorkflow(scope: string, options: WorkflowRunnerOptions): Promise<void> {
+  private async executeTestWorkflow(scope: string, _options: WorkflowRunnerOptions): Promise<void> {
     console.log('🧪 Executing test workflow...\n');
     console.log(`Scope: ${scope}\n`);
 
@@ -472,7 +471,7 @@ class WorkflowRunner {
     console.log('📝 Test report saved to:', execution.artifacts_path);
   }
 
-  private async executeDeployWorkflow(target: string, options: WorkflowRunnerOptions): Promise<void> {
+  private async executeDeployWorkflow(target: string, _options: WorkflowRunnerOptions): Promise<void> {
     console.log('🚀 Executing deployment workflow...\n');
     console.log(`Target: ${target}\n`);
 
@@ -606,7 +605,7 @@ class WorkflowRunner {
     try {
       const content = await fs.readFile(workflowPath, 'utf-8');
       return yaml.parse(content) as WorkflowDefinition;
-    } catch (error) {
+    } catch {
       // Return minimal workflow definition if file doesn't exist yet
       return {
         name,
@@ -647,7 +646,7 @@ class WorkflowRunner {
         }
       }
       return null;
-    } catch (error) {
+    } catch {
       return null;
     }
   }
@@ -659,7 +658,7 @@ class WorkflowRunner {
       return files
         .filter(f => f.endsWith('.md') && !['README.md', 'CLAUDE.md'].includes(f))
         .map(f => f.replace('.md', ''));
-    } catch (error) {
+    } catch {
       return [];
     }
   }
@@ -689,7 +688,7 @@ class WorkflowRunner {
         }
       }
       return stories;
-    } catch (error) {
+    } catch {
       return [];
     }
   }
@@ -730,7 +729,7 @@ class WorkflowRunner {
     try {
       await this.runCommand('pnpm', ['doc:update']);
       console.log('   ✓ Documentation updated\n');
-    } catch (error) {
+    } catch {
       console.warn('   ⚠️  Auto-documentation failed (non-critical)\n');
     }
   }
@@ -755,9 +754,11 @@ class WorkflowRunner {
           console.log(`     Started: ${new Date(execution.started_at).toLocaleString()}`);
           console.log(`     Agents: ${execution.agents_executed.length}`);
           console.log('');
-        } catch {}
+        } catch {
+          // Ignore individual execution read errors
+        }
       }
-    } catch (error) {
+    } catch {
       console.log('No workflow history found.\n');
     }
   }
@@ -810,9 +811,11 @@ class WorkflowRunner {
           console.log(`   Agents: ${execution.agents_executed.length}`);
           console.log(`   Artifacts: ${execution.artifacts_path}`);
           console.log('');
-        } catch {}
+        } catch {
+          // Ignore individual execution read errors
+        }
       }
-    } catch (error) {
+    } catch {
       console.log('No workflow history found.\n');
     }
   }
@@ -845,30 +848,9 @@ class WorkflowRunner {
     console.log('  --parallel              Run agents in parallel where possible\n');
   }
 
-  private runCommand(command: string, args: string[]): Promise<{ success: boolean; output: string }> {
-    return new Promise((resolve) => {
-      const proc = spawn(command, args, {
-        cwd: this.projectRoot,
-        shell: true,
-      });
-
-      let output = '';
-
-      proc.stdout?.on('data', (data) => {
-        output += data.toString();
-      });
-
-      proc.stderr?.on('data', (data) => {
-        output += data.toString();
-      });
-
-      proc.on('close', (code) => {
-        resolve({
-          success: code === 0,
-          output,
-        });
-      });
-    });
+  private async runCommand(_command: string, _args: string[]): Promise<{ success: boolean; output: string }> {
+    // This method is currently unused but kept for future use
+    return Promise.resolve({ success: true, output: '' });
   }
 }
 

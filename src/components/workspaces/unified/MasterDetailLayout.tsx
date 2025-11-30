@@ -131,7 +131,7 @@ export function MasterDetailLayout({
       setSelectedIdState(urlSelectedId);
       onSelectionChange?.(urlSelectedId);
     }
-  }, [urlSelectedId, syncToUrl]);
+  }, [urlSelectedId, syncToUrl, selectedId, onSelectionChange]);
 
   // Observe container width for responsive behavior
   useEffect(() => {
@@ -154,7 +154,7 @@ export function MasterDetailLayout({
 
     observer.observe(container);
     return () => observer.disconnect();
-  }, [defaultSplit, minListWidth, maxListWidth]);
+  }, [defaultSplit, minListWidth, maxListWidth, listWidth]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -170,11 +170,7 @@ export function MasterDetailLayout({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Drag resize handler
-  const handleDragStart = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  }, []);
+  // Drag resize handler (removed - not currently used)
 
   useEffect(() => {
     if (!isDragging) return;
@@ -238,7 +234,7 @@ export function MasterDetailLayout({
 // =====================================================
 
 export function MasterList({ children, className, header, footer }: MasterListProps) {
-  const { isListCollapsed, toggleListCollapsed, listWidth } = useMasterDetail();
+  const { isListCollapsed, listWidth } = useMasterDetail();
 
   return (
     <div

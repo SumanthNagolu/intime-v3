@@ -12,10 +12,8 @@
 import { z } from 'zod';
 import { router, protectedProcedure } from '../trpc';
 import {
-  uploadCourseContent,
   getSignedUrl,
   deleteContentAsset,
-  replaceContentAsset,
   getTopicAssets,
   getCourseStorageUsage,
   canUserUpload,

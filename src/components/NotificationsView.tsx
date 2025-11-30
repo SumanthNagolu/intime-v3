@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Bell, MessageCircle, CheckCircle, AlertCircle, Clock, TrendingUp, Trash2, MoreHorizontal } from 'lucide-react';
+import { Bell, MessageCircle, CheckCircle, Clock, TrendingUp, Trash2, MoreHorizontal } from 'lucide-react';
 import { useAcademyStore, useBiometric } from '@/lib/store/academy-store';
 import { BiometricStatusIndicator } from './academy/BiometricBackground';
 import { cn } from '@/lib/utils';

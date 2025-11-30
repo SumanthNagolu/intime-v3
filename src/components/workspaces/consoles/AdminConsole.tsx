@@ -15,7 +15,6 @@ import {
   Settings,
   Activity,
   Server,
-  Database,
   Link2,
   AlertTriangle,
   CheckCircle2,

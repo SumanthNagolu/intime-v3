@@ -10,9 +10,9 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { db } from '@/lib/db';
 import { accounts, pointOfContacts, activityLog } from '@/lib/db/schema/crm';
-import { jobs, submissions, interviews, offers, placements } from '@/lib/db/schema/ats';
+import { jobs, submissions, interviews, placements } from '@/lib/db/schema/ats';
 import { userProfiles } from '@/lib/db/schema/user-profiles';
-import { eq, and, or, ilike, desc, asc, sql, isNull, inArray, gte } from 'drizzle-orm';
+import { eq, and, or, ilike, desc, asc, sql, isNull, inArray } from 'drizzle-orm';
 
 // =====================================================
 // Types
@@ -556,7 +556,7 @@ export async function listClientSubmissionsAction(
     }
 
     const validated = listClientSubmissionsSchema.parse(input);
-    const { page, pageSize, jobId, status, sortBy, sortOrder } = validated;
+    const { page, pageSize, jobId, status, sortOrder } = validated;
     const offset = (page - 1) * pageSize;
 
     // Get jobs for this account

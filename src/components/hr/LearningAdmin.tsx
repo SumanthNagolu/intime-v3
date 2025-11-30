@@ -2,7 +2,7 @@
 
 
 import React, { useState } from 'react';
-import { GraduationCap, Users, CheckCircle, Clock, BookOpen, ArrowRight, X, Calendar, Send, User, Filter } from 'lucide-react';
+import { CheckCircle, Clock, BookOpen, X, Calendar } from 'lucide-react';
 import { MOCK_MODULES } from '@/lib/constants';
 import { useAppStore } from '../../lib/store';
 

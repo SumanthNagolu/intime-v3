@@ -11,7 +11,7 @@
  * - Orchestrator routing
  */
 
-import { describe, it, expect, beforeAll, vi } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { BaseAgent } from '@/lib/ai/agents/BaseAgent';
 import { AIRouter } from '@/lib/ai/router';
 import { PromptLibrary } from '@/lib/ai/prompts/library';
@@ -64,7 +64,7 @@ describe('Sprint 2 Integration', () => {
           super({ agentName: 'TestAgent' }, { router });
         }
 
-        async execute(input: string): Promise<string> {
+        async execute(_input: string): Promise<string> {
           const model = await this.routeModel('test task');
           return `Using ${model.model}`;
         }
@@ -89,8 +89,8 @@ describe('Sprint 2 Integration', () => {
 
   describe('Orchestrator', () => {
     it('should route to agents', async () => {
-      class TestAgent extends BaseAgent<any, any> {
-        async execute(input: any): Promise<any> {
+      class TestAgent extends BaseAgent<unknown, unknown> {
+        async execute(_input: unknown): Promise<unknown> {
           return { response: 'Test response' };
         }
       }
@@ -123,7 +123,7 @@ describe('Sprint 2 Integration', () => {
           );
         }
 
-        async execute(input: string): Promise<string> {
+        async execute(_input: string): Promise<string> {
           // Use router
           const model = await this.routeModel('test task');
 

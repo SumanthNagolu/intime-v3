@@ -16,7 +16,6 @@ import {
   Loader2,
   Calendar,
   AlertCircle,
-  Filter,
 } from 'lucide-react';
 import { format, isPast, isToday } from 'date-fns';
 import { Button } from '@/components/ui/button';
@@ -264,7 +263,23 @@ export function TasksTab({
   };
 
   // Map and filter tasks
-  const tasks: Task[] = (tasksData || []).map((item: any) => ({
+  interface ActivityData {
+    id: string;
+    subject: string | null;
+    body?: string | null;
+    status: string;
+    priority?: string | null;
+    dueDate?: string | Date | null;
+    completedAt?: string | Date | null;
+    assignee?: {
+      id: string;
+      firstName?: string;
+      lastName?: string;
+      avatarUrl?: string;
+    } | null;
+  }
+
+  const tasks: Task[] = (tasksData || []).map((item: ActivityData) => ({
     id: item.id,
     subject: item.subject,
     body: item.body,

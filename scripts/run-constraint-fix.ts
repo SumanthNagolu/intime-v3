@@ -46,8 +46,8 @@ async function execSQL(sql: string, description: string): Promise<boolean> {
 
     console.log(`   ✅ Done (${result.rowCount || 0} rows affected)`);
     return true;
-  } catch (error: any) {
-    console.error(`   ❌ Fetch error: ${error.message}`);
+  } catch (error) {
+    console.error(`   ❌ Fetch error: ${error instanceof Error ? error.message : String(error)}`);
     return false;
   }
 }

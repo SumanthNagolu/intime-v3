@@ -15,6 +15,11 @@
 - **CRM:** Client relationship management
 - **Client Portal:** External client access
 
+## Key Business Rules
+
+- **Pods = Teams**: In InTime v3, the `pods` table represents teams. Each pod has a senior member (manager) and junior member (recruiter). Pod types: `recruiting`, `bench_sales`, `ta`.
+- **DB Changes Rule**: Before running ANY script that modifies the database (users, profiles, seed data), ALWAYS confirm exactly what will be added/deleted/modified. Never run bulk operations without explicitly listing affected records first. ADD means add only - don't touch existing data.
+
 ---
 
 ## MCP Preset System
@@ -118,13 +123,18 @@ src/app/actions/       → Server actions
 
 ## Test Users (password: TestPass123!)
 
-| Role | Email | Dashboard |
-|------|-------|-----------|
-| CEO | ceo@intime.com | /employee/ceo/dashboard |
-| Admin | admin@intime.com | /employee/admin/dashboard |
-| Recruiter | jr_rec@intime.com | /employee/recruiting/dashboard |
-| Trainer | trainer@intime.com | /employee/portal |
-| Student | student@intime.com | /academy/dashboard |
+| Role | Email |
+|------|-------|
+| Admin | admin@intime.com |
+| HR Manager | hr@intime.com |
+| Recruiting Mgr 1 | rec_mgr1@intime.com |
+| Recruiter 1 | rec1@intime.com |
+| Recruiting Mgr 2 | rec_mgr2@intime.com |
+| Recruiter 2 | rec2@intime.com |
+| Bench Sales Mgr 1 | bs_mgr1@intime.com |
+| Bench Sales 1 | bs1@intime.com |
+| Bench Sales Mgr 2 | bs_mgr2@intime.com |
+| Bench Sales 2 | bs2@intime.com |
 
 ---
 

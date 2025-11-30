@@ -3,7 +3,7 @@
  * Creates 5 leads per role with activities, notes, and strategy
  */
 
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -83,28 +83,28 @@ const LEAD_TEMPLATES = [
   },
 ];
 
-// Activity templates
-const ACTIVITY_TEMPLATES = [
-  { type: 'call', subject: 'Initial discovery call', notes: 'Discussed current tech stack and hiring needs. Very engaged.' },
-  { type: 'email', subject: 'Follow-up with company overview', notes: 'Sent company profile and case studies.' },
-  { type: 'meeting', subject: 'Requirements gathering session', notes: 'Deep dive into technical requirements. Identified 3 key positions.' },
-  { type: 'note', subject: 'Research findings', notes: 'Company recently received Series B funding. Aggressive growth planned.' },
-  { type: 'task', subject: 'Prepare proposal', notes: 'Need to prepare staffing proposal by end of week.' },
-];
+// Activity templates (for future use with addActivitiesToLead function)
+// const ACTIVITY_TEMPLATES = [
+//   { type: 'call', subject: 'Initial discovery call', notes: 'Discussed current tech stack and hiring needs. Very engaged.' },
+//   { type: 'email', subject: 'Follow-up with company overview', notes: 'Sent company profile and case studies.' },
+//   { type: 'meeting', subject: 'Requirements gathering session', notes: 'Deep dive into technical requirements. Identified 3 key positions.' },
+//   { type: 'note', subject: 'Research findings', notes: 'Company recently received Series B funding. Aggressive growth planned.' },
+//   { type: 'task', subject: 'Prepare proposal', notes: 'Need to prepare staffing proposal by end of week.' },
+// ];
 
-// Strategy notes templates
-const STRATEGY_NOTES = [
-  'Focus on highlighting our insurance domain expertise and successful placements at similar companies.',
-  'Key decision maker is the VP. Need to schedule executive briefing with our leadership.',
-  'Timeline is Q2. Push for MSA signing by end of month to start placements.',
-  'Budget approved for 5 contractors. Opportunity to expand to full team if successful.',
-  'Competition includes 2 other staffing firms. Our differentiator is technical screening quality.',
-];
+// Strategy notes templates (for future use)
+// const STRATEGY_NOTES = [
+//   'Focus on highlighting our insurance domain expertise and successful placements at similar companies.',
+//   'Key decision maker is the VP. Need to schedule executive briefing with our leadership.',
+//   'Timeline is Q2. Push for MSA signing by end of month to start placements.',
+//   'Budget approved for 5 contractors. Opportunity to expand to full team if successful.',
+//   'Competition includes 2 other staffing firms. Our differentiator is technical screening quality.',
+// ];
 
-// Random outcomes
-const OUTCOMES = ['converted', 'hot', 'warm', 'cold', 'lost'];
+// Random outcomes (for future use)
+// const OUTCOMES = ['converted', 'hot', 'warm', 'cold', 'lost'];
 
-async function login(page: any, email: string) {
+async function login(page: Page, email: string): Promise<void> {
   await page.goto('/auth/employee');
   await page.waitForLoadState('networkidle');
   await page.fill('input[type="email"]', email);
@@ -113,7 +113,7 @@ async function login(page: any, email: string) {
   await page.waitForTimeout(3000);
 }
 
-async function createLead(page: any, leadData: typeof LEAD_TEMPLATES[0], index: number) {
+async function createLead(page: Page, leadData: typeof LEAD_TEMPLATES[0], index: number): Promise<boolean> {
   // Navigate to leads page
   await page.goto('/employee/workspace/leads');
   await page.waitForLoadState('networkidle');
@@ -192,41 +192,46 @@ async function createLead(page: any, leadData: typeof LEAD_TEMPLATES[0], index: 
   return true;
 }
 
-async function addActivitiesToLead(page: any, leadId: string, activityIndex: number) {
-  // Navigate to lead detail
-  await page.goto(`/employee/workspace/leads/${leadId}`);
-  await page.waitForLoadState('networkidle');
-  await page.waitForTimeout(1500);
-
-  const activity = ACTIVITY_TEMPLATES[activityIndex % ACTIVITY_TEMPLATES.length];
-
-  // Look for activity composer or add activity button
-  const addActivityBtn = page.locator('button:has-text("Add Activity"), button:has-text("Log Activity"), button:has-text("New Activity")');
-  if (await addActivityBtn.count() > 0) {
-    await addActivityBtn.first().click();
-    await page.waitForTimeout(500);
-
-    // Fill activity details
-    const subjectInput = page.locator('input[placeholder*="Subject"], input[name="subject"]');
-    if (await subjectInput.count() > 0) {
-      await subjectInput.fill(activity.subject);
-    }
-
-    const notesInput = page.locator('textarea[placeholder*="Notes"], textarea[name="notes"]');
-    if (await notesInput.count() > 0) {
-      await notesInput.fill(activity.notes);
-    }
-
-    // Save activity
-    const saveBtn = page.locator('button:has-text("Save"), button:has-text("Add"), button[type="submit"]');
-    if (await saveBtn.count() > 0) {
-      await saveBtn.first().click();
-      await page.waitForTimeout(1000);
-    }
-  }
-
-  return true;
-}
+// Helper function for adding activities (currently unused, kept for future expansion)
+// async function addActivitiesToLead(page: Page, leadId: string, activityIndex: number): Promise<boolean> {
+//   // Navigate to lead detail
+//   await page.goto(`/employee/workspace/leads/${leadId}`);
+//   await page.waitForLoadState('networkidle');
+//   await page.waitForTimeout(1500);
+//
+//   const ACTIVITY_TEMPLATES = [
+//     { type: 'call', subject: 'Discovery call', notes: 'Discussed current hiring needs and timeline. Good engagement from hiring manager.' },
+//     { type: 'meeting', subject: 'In-person meeting', notes: 'Met with VP Engineering to discuss contractor requirements. Very interested.' },
+//   ];
+//   const activity = ACTIVITY_TEMPLATES[activityIndex % ACTIVITY_TEMPLATES.length];
+//
+//   // Look for activity composer or add activity button
+//   const addActivityBtn = page.locator('button:has-text("Add Activity"), button:has-text("Log Activity"), button:has-text("New Activity")');
+//   if (await addActivityBtn.count() > 0) {
+//     await addActivityBtn.first().click();
+//     await page.waitForTimeout(500);
+//
+//     // Fill activity details
+//     const subjectInput = page.locator('input[placeholder*="Subject"], input[name="subject"]');
+//     if (await subjectInput.count() > 0) {
+//       await subjectInput.fill(activity.subject);
+//     }
+//
+//     const notesInput = page.locator('textarea[placeholder*="Notes"], textarea[name="notes"]');
+//     if (await notesInput.count() > 0) {
+//       await notesInput.fill(activity.notes);
+//     }
+//
+//     // Save activity
+//     const saveBtn = page.locator('button:has-text("Save"), button:has-text("Add"), button[type="submit"]');
+//     if (await saveBtn.count() > 0) {
+//       await saveBtn.first().click();
+//       await page.waitForTimeout(1000);
+//     }
+//   }
+//
+//   return true;
+// }
 
 test.describe('Lead Creation for All Roles', () => {
   test.beforeAll(async () => {

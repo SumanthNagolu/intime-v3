@@ -18,18 +18,14 @@ import {
   Plus,
   Search,
   Send,
-  Eye,
   MessageSquare,
   UserPlus,
   BarChart3,
-  Calendar,
   Mail,
   Linkedin,
-  CheckCircle,
-  Clock,
   Globe,
 } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';

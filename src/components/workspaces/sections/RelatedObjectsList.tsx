@@ -8,11 +8,11 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ChevronRight, ExternalLink, type LucideIcon } from 'lucide-react';
+import { ChevronRight, ExternalLink } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { getEntityConfig, getEntityIcon, type EntityType } from '@/lib/workspace/entity-registry';
+import { getEntityConfig, type EntityType } from '@/lib/workspace/entity-registry';
 
 // =====================================================
 // TYPES

@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAppStore } from '../../lib/store';
-import { Search, User, ChevronRight, Clock, MapPin, Briefcase, MoreHorizontal } from 'lucide-react';
+import { Search, ChevronRight, Clock, MapPin, Briefcase, MoreHorizontal } from 'lucide-react';
 
 const TIME_FILTERS = ['Available', 'Rolling Off', 'Placed'];
 

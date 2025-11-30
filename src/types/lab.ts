@@ -46,7 +46,7 @@ export interface LabInstance {
   timeSpentSeconds: number;
   lastActivityAt: Date;
   githubUsername: string | null;
-  provisioningMetadata: Record<string, any> | null;
+  provisioningMetadata: Record<string, unknown> | null;
   createdAt: Date;
   updatedAt: Date;
 }

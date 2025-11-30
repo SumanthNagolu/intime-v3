@@ -13,13 +13,11 @@ import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
-import type { ActionResult, PaginatedResult } from './types';
+import type { ActionResult } from './types';
 import {
   getCurrentUserContext,
   checkPermission,
   logAuditEvent,
-  calculatePagination,
-  calculateRange,
 } from './helpers';
 
 // ============================================================================
@@ -148,7 +146,31 @@ export async function listRolesAction(): Promise<ActionResult<RoleWithPermission
   }
 
   // Transform data
-  const transformedRoles: RoleWithPermissions[] = (roles || []).map((role: any) => ({
+  interface RoleQueryResult {
+    id: string;
+    name: string;
+    display_name: string;
+    description: string | null;
+    parent_role_id: string | null;
+    hierarchy_level: number;
+    is_system_role: boolean;
+    is_active: boolean;
+    color_code: string;
+    created_at: string;
+    user_roles: Array<{ user_id: string; deleted_at?: string | null }>;
+    role_permissions: Array<{
+      permissions?: {
+        id: string;
+        resource: string;
+        action: string;
+        scope: string;
+        display_name: string;
+        is_dangerous: boolean;
+      } | null;
+    }>;
+  }
+
+  const transformedRoles: RoleWithPermissions[] = (roles as unknown as RoleQueryResult[] || []).map((role) => ({
     id: role.id,
     name: role.name,
     displayName: role.display_name,
@@ -159,15 +181,17 @@ export async function listRolesAction(): Promise<ActionResult<RoleWithPermission
     isActive: role.is_active,
     colorCode: role.color_code,
     createdAt: role.created_at,
-    userCount: (role.user_roles || []).filter((ur: any) => !ur.deleted_at).length,
-    permissions: (role.role_permissions || []).map((rp: any) => ({
-      id: rp.permissions?.id,
-      resource: rp.permissions?.resource,
-      action: rp.permissions?.action,
-      scope: rp.permissions?.scope,
-      displayName: rp.permissions?.display_name,
-      isDangerous: rp.permissions?.is_dangerous,
-    })).filter((p: any) => p.id),
+    userCount: (role.user_roles || []).filter((ur) => !ur.deleted_at).length,
+    permissions: (role.role_permissions || [])
+      .map((rp) => rp.permissions ? {
+        id: rp.permissions.id,
+        resource: rp.permissions.resource,
+        action: rp.permissions.action,
+        scope: rp.permissions.scope,
+        displayName: rp.permissions.display_name,
+        isDangerous: rp.permissions.is_dangerous,
+      } : null)
+      .filter((p): p is NonNullable<typeof p> => p !== null),
   }));
 
   return { success: true, data: transformedRoles };
@@ -231,26 +255,54 @@ export async function getRoleAction(roleId: string): Promise<ActionResult<RoleWi
     return { success: false, error: 'Role not found' };
   }
 
+  interface SingleRoleQueryResult {
+    id: string;
+    name: string;
+    display_name: string;
+    description: string | null;
+    parent_role_id: string | null;
+    hierarchy_level: number;
+    is_system_role: boolean;
+    is_active: boolean;
+    color_code: string;
+    created_at: string;
+    user_roles: Array<{ user_id: string }>;
+    role_permissions: Array<{
+      permissions?: {
+        id: string;
+        resource: string;
+        action: string;
+        scope: string;
+        display_name: string;
+        is_dangerous: boolean;
+      } | null;
+    }>;
+  }
+
+  const typedRole = role as unknown as SingleRoleQueryResult;
+
   const transformedRole: RoleWithPermissions = {
-    id: role.id,
-    name: role.name,
-    displayName: role.display_name,
-    description: role.description,
-    parentRoleId: role.parent_role_id,
-    hierarchyLevel: role.hierarchy_level ?? 0,
-    isSystemRole: role.is_system_role ?? false,
-    isActive: role.is_active ?? true,
-    colorCode: role.color_code ?? '#6366f1',
-    createdAt: role.created_at,
-    userCount: (role.user_roles || []).length,
-    permissions: (role.role_permissions || []).map((rp: any) => ({
-      id: rp.permissions?.id,
-      resource: rp.permissions?.resource,
-      action: rp.permissions?.action,
-      scope: rp.permissions?.scope,
-      displayName: rp.permissions?.display_name,
-      isDangerous: rp.permissions?.is_dangerous,
-    })).filter((p: any) => p.id),
+    id: typedRole.id,
+    name: typedRole.name,
+    displayName: typedRole.display_name,
+    description: typedRole.description,
+    parentRoleId: typedRole.parent_role_id,
+    hierarchyLevel: typedRole.hierarchy_level ?? 0,
+    isSystemRole: typedRole.is_system_role ?? false,
+    isActive: typedRole.is_active ?? true,
+    colorCode: typedRole.color_code ?? '#6366f1',
+    createdAt: typedRole.created_at,
+    userCount: (typedRole.user_roles || []).length,
+    permissions: (typedRole.role_permissions || [])
+      .map((rp) => rp.permissions ? {
+        id: rp.permissions.id,
+        resource: rp.permissions.resource,
+        action: rp.permissions.action,
+        scope: rp.permissions.scope,
+        displayName: rp.permissions.display_name,
+        isDangerous: rp.permissions.is_dangerous,
+      } : null)
+      .filter((p): p is NonNullable<typeof p> => p !== null),
   };
 
   return { success: true, data: transformedRole };
@@ -534,7 +586,17 @@ export async function listPermissionsAction(): Promise<ActionResult<PermissionIn
     return { success: false, error: 'Failed to fetch permissions' };
   }
 
-  const transformedPermissions: PermissionInfo[] = (permissions || []).map((p: any) => ({
+  interface PermissionQueryResult {
+    id: string;
+    resource: string;
+    action: string;
+    scope: string;
+    display_name: string;
+    description: string | null;
+    is_dangerous: boolean;
+  }
+
+  const transformedPermissions: PermissionInfo[] = (permissions as unknown as PermissionQueryResult[] || []).map((p) => ({
     id: p.id,
     resource: p.resource,
     action: p.action,
@@ -703,6 +765,15 @@ export async function removePermissionFromRoleAction(
     return { success: false, error: 'Permission assignment not found' };
   }
 
+  interface AssignmentQueryResult {
+    role_id: string;
+    permission_id: string;
+    roles: { name: string } | null;
+    permissions: { resource: string; action: string } | null;
+  }
+
+  const typedAssignment = assignment as unknown as AssignmentQueryResult;
+
   // Remove permission assignment
   const { error: deleteError } = await adminSupabase
     .from('role_permissions')
@@ -725,9 +796,9 @@ export async function removePermissionFromRoleAction(
     orgId: profile.orgId,
     oldValues: {
       roleId,
-      roleName: (assignment.roles as any)?.name,
+      roleName: typedAssignment.roles?.name,
       permissionId,
-      permission: `${(assignment.permissions as any)?.resource}:${(assignment.permissions as any)?.action}`,
+      permission: `${typedAssignment.permissions?.resource}:${typedAssignment.permissions?.action}`,
     },
     metadata: { source: 'admin_remove' },
   });

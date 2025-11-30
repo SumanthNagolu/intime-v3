@@ -2,7 +2,7 @@
 
 
 import React, { useState } from 'react';
-import { X, UserMinus, Calendar, CheckCircle, FileText, Lock, Mail, ArrowRight, MessageSquare } from 'lucide-react';
+import { X, UserMinus, CheckCircle, Lock, ArrowRight, MessageSquare } from 'lucide-react';
 
 interface OffboardingModalProps {
   isOpen: boolean;

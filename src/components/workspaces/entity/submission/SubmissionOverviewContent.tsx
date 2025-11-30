@@ -13,11 +13,8 @@ import {
   User,
   Briefcase,
   Building2,
-  MapPin,
-  DollarSign,
   Calendar,
   Clock,
-  FileText,
   ChevronRight,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';

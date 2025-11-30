@@ -117,7 +117,7 @@ export function TwinChat({
             : msg
         )
       );
-    } catch (error) {
+    } catch {
       // Replace loading message with error
       setMessages(prev =>
         prev.map(msg =>

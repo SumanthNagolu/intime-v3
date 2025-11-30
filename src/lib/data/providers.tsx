@@ -24,16 +24,11 @@ import { useFeatureFlag, FeatureFlags } from '@/lib/features';
 import {
   useJobs,
   useJob,
-  useJobMetrics,
   useAccounts,
   useAccount,
-  useAccountPocs,
   useSubmissions,
-  useSubmission,
   useSubmissionPipeline,
   useCandidates,
-  useCandidate,
-  useBenchCandidates,
   type JobsQueryOptions,
   type AccountsQueryOptions,
   type SubmissionsQueryOptions,
@@ -828,7 +823,7 @@ export function useDealsData(options: Omit<DealsQueryOptions, 'enabled'> = {}): 
   }
 
   // Filter mock data based on options
-  let filtered = [...MOCK_DEALS];
+  const filtered = [...MOCK_DEALS];
   // Note: options.stage would be lowercase like 'discovery', DisplayDeal.stage is capitalized
   // We'll skip the filtering for now to avoid type mismatch
   // if (options.stage) {

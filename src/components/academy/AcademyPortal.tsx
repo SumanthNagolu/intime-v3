@@ -10,7 +10,6 @@ import {
   Target,
   Brain,
   Sparkles,
-  Activity,
   TrendingUp,
   BookOpen,
   AlertCircle,
@@ -50,10 +49,10 @@ export function AcademyPortal({ error }: AcademyPortalProps) {
 
   // Determine motivational message based on state
   const motivationalMessages: Record<typeof state, string> = {
-    ember: "Every expert was once a beginner. Let's build momentum today.",
+    ember: "Every expert was once a beginner. Let&apos;s build momentum today.",
     neutral: "Consistency beats intensity. Your next lesson awaits.",
-    ascent: "You're building something special. Keep the momentum going.",
-    apex: "You're performing at elite level. Time to push your limits."
+    ascent: "You&apos;re building something special. Keep the momentum going.",
+    apex: "You&apos;re performing at elite level. Time to push your limits."
   };
 
   return (
@@ -65,7 +64,7 @@ export function AcademyPortal({ error }: AcademyPortalProps) {
           <div className="max-w-4xl mx-auto flex items-center gap-3">
             <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0" />
             <p className="text-amber-800 text-sm flex-1">
-              <span className="font-semibold">Wrong portal:</span> You tried to access the Employee Portal, but your account is registered as a student. You've been redirected to the Academy Portal.
+              <span className="font-semibold">Wrong portal:</span> You tried to access the Employee Portal, but your account is registered as a student. You&apos;ve been redirected to the Academy Portal.
             </p>
             <button
               onClick={() => setShowError(false)}
@@ -238,9 +237,9 @@ export function AcademyPortal({ error }: AcademyPortalProps) {
                   <Sparkles size={14} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-charcoal-900 mb-1">Today's Focus</h3>
+                  <h3 className="font-semibold text-charcoal-900 mb-1">Today&apos;s Focus</h3>
                   <p className="text-charcoal-600 text-sm leading-relaxed">
-                    Continue with Module 3: API Integration. You're 60% through and showing strong comprehension.
+                    Continue with Module 3: API Integration. You&apos;re 60% through and showing strong comprehension.
                     Complete 2 more lessons to unlock the practice project.
                   </p>
                 </div>
@@ -271,7 +270,7 @@ export function AcademyPortal({ error }: AcademyPortalProps) {
                 <div>
                   <h3 className="font-semibold text-charcoal-900 mb-1">Week Progress</h3>
                   <p className="text-charcoal-600 text-sm leading-relaxed">
-                    You've completed 8 lessons this week, earning 450 XP. Just 2 more lessons to hit your weekly goal!
+                    You&apos;ve completed 8 lessons this week, earning 450 XP. Just 2 more lessons to hit your weekly goal!
                   </p>
                 </div>
               </div>
@@ -295,6 +294,8 @@ export function AcademyPortal({ error }: AcademyPortalProps) {
 }
 
 export default AcademyPortal;
+
+
 
 
 

@@ -71,7 +71,7 @@ export default function WorkspaceListPage({
     }
   };
 
-  const handleLeadSave = (lead: Lead, account?: Account) => {
+  const handleLeadSave = (_lead: Lead, _account?: Account) => {
     // Refresh the page to show new lead
     router.refresh();
   };

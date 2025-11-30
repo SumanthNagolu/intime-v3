@@ -69,7 +69,7 @@ Deno.serve(async (req) => {
       totalUsers: allUsers.length,
       usersWithRoles: 0,
       usersWithoutRoles: 0,
-      roleAssignments: [] as any[],
+      roleAssignments: [] as Record<string, unknown>[],
       dryRun,
     }
 
@@ -111,12 +111,13 @@ Deno.serve(async (req) => {
             action: 'assigned',
             role: inferredRole,
           })
-        } catch (err) {
+        } catch (err: unknown) {
+          const errorMessage = err instanceof Error ? err.message : 'Unknown error';
           results.roleAssignments.push({
             email: user.email,
             profileId: user.profile_id,
             action: 'error',
-            error: err.message,
+            error: errorMessage,
           })
         }
       } else {
@@ -136,9 +137,10 @@ Deno.serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     )
 
-  } catch (error) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: errorMessage }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
     )
   }

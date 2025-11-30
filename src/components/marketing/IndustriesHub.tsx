@@ -19,7 +19,6 @@ import {
   ShoppingBag,
   Landmark,
   ArrowRight,
-  ArrowDown,
   CheckCircle2,
   Layers,
   ChevronRight,
@@ -190,7 +189,7 @@ export const IndustriesHub: React.FC = () => {
 
             {/* Subheadline */}
             <p className="text-lg md:text-xl text-charcoal-300/90 font-light max-w-2xl mb-12 leading-relaxed">
-              We don't just understand technology. We understand your industry's unique 
+              We don&apos;t just understand technology. We understand your industry&apos;s unique
               challenges, regulatory landscape, and competitive pressures.
             </p>
 
@@ -354,8 +353,8 @@ export const IndustriesHub: React.FC = () => {
                 </h2>
                 
                 <p className="text-lg text-charcoal-300 mb-10 leading-relaxed">
-                  We don't just match skills to job descriptions. We understand the nuances 
-                  of each industry—the regulatory requirements, the competitive dynamics, 
+                  We don&apos;t just match skills to job descriptions. We understand the nuances
+                  of each industry—the regulatory requirements, the competitive dynamics,
                   and the critical success factors that separate good hires from great ones.
                 </p>
 
@@ -507,14 +506,14 @@ export const IndustriesHub: React.FC = () => {
           <div className="container mx-auto px-6 lg:px-12 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-white mb-8 leading-tight">
-                Don't See Your{' '}
+                Don&apos;t See Your{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-300 to-blue-400">
                   Industry?
                 </span>
               </h2>
               <p className="text-xl text-slate-300 font-light max-w-2xl mx-auto mb-12">
-                Our expertise extends beyond these verticals. Contact us to discuss 
-                your sector's specific talent requirements.
+                Our expertise extends beyond these verticals. Contact us to discuss
+                your sector&apos;s specific talent requirements.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">

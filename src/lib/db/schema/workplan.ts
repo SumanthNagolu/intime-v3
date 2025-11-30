@@ -284,6 +284,7 @@ export type NewWorkplanInstance = typeof workplanInstances.$inferInsert;
 // ACTIVITIES (Runtime)
 // =====================================================
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Required for Drizzle self-referencing table (predecessorActivityId references activities.id)
 export const activities: any = pgTable('activities', {
   id: uuid('id').primaryKey().defaultRandom(),
   orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),

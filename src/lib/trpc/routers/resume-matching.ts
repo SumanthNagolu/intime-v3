@@ -10,7 +10,7 @@
  */
 
 import { z } from 'zod';
-import { router, protectedProcedure, hasPermission } from '../trpc';
+import { router, hasPermission } from '../trpc';
 import { ResumeMatchingService } from '@/lib/ai/resume-matching';
 import { TRPCError } from '@trpc/server';
 
@@ -277,7 +277,7 @@ export const resumeMatchingRouter = router({
       }
 
       try {
-        const updateData: any = {
+        const updateData: Record<string, unknown> = {
           is_relevant: input.isRelevant,
           recruiter_feedback: input.feedback,
         };

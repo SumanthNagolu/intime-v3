@@ -8,7 +8,6 @@ import {
   Globe,
   Users,
   ArrowRight,
-  ArrowDown,
   CheckCircle2,
   Building2,
   Layers,
@@ -490,7 +489,7 @@ export const SolutionsHub: React.FC = () => {
                 </h2>
                 
                 <p className="text-lg text-charcoal-500 mb-10 leading-relaxed">
-                  We don't just fill positions. We build careers, transform organizations, and create lasting partnerships.
+                  We don&apos;t just fill positions. We build careers, transform organizations, and create lasting partnerships.
                 </p>
 
                 <div className="space-y-6">
@@ -579,7 +578,7 @@ export const SolutionsHub: React.FC = () => {
                 {' '}Your Workforce Strategy?
               </h2>
               <p className="text-xl text-forest-200 font-light max-w-2xl mx-auto mb-12">
-                Let's discuss how our solutions can drive measurable results for your organization.
+                Let&apos;s discuss how our solutions can drive measurable results for your organization.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">

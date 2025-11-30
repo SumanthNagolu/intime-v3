@@ -11,9 +11,7 @@ import React, { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Building2,
-  User,
   Mail,
-  Phone,
   Calendar,
   DollarSign,
   Target,
@@ -24,18 +22,13 @@ import {
   FolderOpen,
   MessageSquare,
   CheckCircle,
-  XCircle,
   AlertTriangle,
-  ArrowRight,
-  BarChart3,
-  Clock,
   Users,
   MapPin,
   Code,
   Award,
   Star,
   Globe,
-  FileCheck,
   Send,
   Shield,
   CreditCard,
@@ -47,17 +40,16 @@ import {
   PieChart,
   Layers,
 } from 'lucide-react';
-import { format, formatDistanceToNow, differenceInDays } from 'date-fns';
+import { format, differenceInDays } from 'date-fns';
 import { trpc } from '@/lib/trpc/client';
 import { cn } from '@/lib/utils';
 
 // UI Components
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Dialog,
   DialogContent,
@@ -66,7 +58,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -171,7 +162,7 @@ function FillProgress({ positionsCount, positionsFilled }: { positionsCount: num
   );
 }
 
-function OverviewTab({ jobOrder, canEdit }: { jobOrder: NonNullable<ReturnType<typeof useJobOrder>['data']>; canEdit: boolean }) {
+function OverviewTab({ jobOrder, canEdit: _canEdit }: { jobOrder: NonNullable<ReturnType<typeof useJobOrder>['data']>; canEdit: boolean }) {
   const daysOpen = differenceInDays(new Date(), new Date(jobOrder.receivedDate || jobOrder.createdAt));
   const daysToTarget = jobOrder.targetFillDate
     ? differenceInDays(new Date(jobOrder.targetFillDate), new Date())
@@ -530,7 +521,7 @@ function OverviewTab({ jobOrder, canEdit }: { jobOrder: NonNullable<ReturnType<t
   );
 }
 
-function RequirementsTab({ jobOrder, canEdit }: { jobOrder: NonNullable<ReturnType<typeof useJobOrder>['data']>; canEdit: boolean }) {
+function RequirementsTab({ jobOrder, canEdit: _canEdit }: { jobOrder: NonNullable<ReturnType<typeof useJobOrder>['data']>; canEdit: boolean }) {
   const requiredSkills = jobOrder.requiredSkills || [];
   const niceToHaveSkills = jobOrder.niceToHaveSkills || [];
   const certifications = jobOrder.certificationsRequired || [];
@@ -928,7 +919,7 @@ function useJobOrder(jobOrderId: string) {
 
 export function JobOrdersWorkspace({ jobOrderId }: JobOrdersWorkspaceProps) {
   const router = useRouter();
-  const { context, canEdit, canDelete, isLoading: contextLoading } = useWorkspaceContext('job_order', jobOrderId);
+  const { canEdit, canDelete, isLoading: contextLoading } = useWorkspaceContext('job_order', jobOrderId);
 
   // Fetch job order data
   const { data: jobOrder, isLoading: jobOrderLoading, error } = useJobOrder(jobOrderId);

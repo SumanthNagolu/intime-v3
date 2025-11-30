@@ -8,16 +8,13 @@
 import { z } from 'zod';
 import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
-import { 
-  activities, 
-  type Activity, 
-  type ActivityStatus, 
-  type ActivityType,
-  type ActivityPriority 
+import {
+  activities,
+  type Activity,
 } from '@/lib/db/schema/activities';
 import { userProfiles } from '@/lib/db/schema/user-profiles';
 import { leads } from '@/lib/db/schema/crm';
-import { eq, and, desc, asc, isNull, or, lte, gte, inArray } from 'drizzle-orm';
+import { eq, and, desc, asc, or, lte, inArray } from 'drizzle-orm';
 
 // =====================================================
 // VALIDATION SCHEMAS
@@ -370,8 +367,8 @@ export const activitiesRouter = router({
   update: orgProtectedProcedure
     .input(updateActivitySchema)
     .mutation(async ({ ctx, input }) => {
-      const { userId, orgId } = ctx;
-      
+      const { orgId } = ctx;
+
       const updateData: Partial<Activity> = {
         updatedAt: new Date(),
       };

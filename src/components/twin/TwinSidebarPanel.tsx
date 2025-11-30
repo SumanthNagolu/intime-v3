@@ -62,7 +62,7 @@ interface OrganismHealth {
 
 export function TwinSidebarPanel({
   userRole = 'employee',
-  userName,
+  userName: _userName,
   defaultCollapsed = false,
   expandedWidth = '360px',
   collapsedWidth = '48px',

@@ -82,7 +82,7 @@ async function fixSQLSyntax(sql: string, filename: string): Promise<string> {
   return fixed;
 }
 
-async function executeSQLDirect(supabase: any, sql: string): Promise<void> {
+async function executeSQLDirect(supabase: unknown, sql: string): Promise<void> {
   // Split SQL into individual statements (crude but effective)
   const statements = sql
     .split(/;\s*(?=CREATE|ALTER|INSERT|DROP|GRANT|COMMENT|SELECT)/gi)
@@ -98,7 +98,7 @@ async function executeSQLDirect(supabase: any, sql: string): Promise<void> {
     if (!trimmed) continue;
 
     // Execute via Supabase's RPC (we'll create this function first)
-    const { error } = await supabase.rpc('exec_sql', {
+    const { error } = await (supabase as Record<string, unknown>).rpc('exec_sql', {
       sql: trimmed + ';'
     });
 
@@ -119,7 +119,7 @@ async function executeSQLDirect(supabase: any, sql: string): Promise<void> {
   }
 }
 
-async function createBootstrapFunction(supabase: any): Promise<void> {
+async function createBootstrapFunction(supabase: unknown): Promise<void> {
   console.log('\n🔧 Setting up bootstrap function...\n');
 
   // Check if function already exists
@@ -152,7 +152,7 @@ async function createBootstrapFunction(supabase: any): Promise<void> {
     if (!error) {
       console.log('   ✅ Bootstrap function created\n');
     }
-  } catch (err: any) {
+  } catch {
     console.log('   ⚠️  Could not create bootstrap function automatically');
     console.log('   ℹ️  This is expected on first run\n');
     console.log('   📋 Please run this SQL once in Supabase Dashboard:\n');
@@ -210,12 +210,13 @@ async function runMigrations(): Promise<void> {
         timestamp: new Date().toISOString()
       });
 
-    } catch (error: any) {
-      console.log(`   ❌ Failed: ${error.message}\n`);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      console.log(`   ❌ Failed: ${errorMessage}\n`);
       results.push({
         filename: file,
         success: false,
-        error: error.message,
+        error: errorMessage,
         timestamp: new Date().toISOString()
       });
     }
@@ -244,8 +245,8 @@ async function runMigrations(): Promise<void> {
         console.log(`   ✅ ${role.name.padEnd(15)} - Created`);
         rolesSuccess++;
       }
-    } catch (err: any) {
-      console.log(`   ❌ ${role.name.padEnd(15)} - Exception: ${err.message}`);
+    } catch (err) {
+      console.log(`   ❌ ${role.name.padEnd(15)} - Exception: ${err instanceof Error ? err.message : String(err)}`);
     }
   }
 
@@ -290,8 +291,8 @@ async function runMigrations(): Promise<void> {
       } else {
         console.log(`   ✅ ${table.padEnd(25)} - ${count || 0} rows`);
       }
-    } catch (err: any) {
-      console.log(`   ❌ ${table.padEnd(25)} - Exception: ${err.message}`);
+    } catch (err) {
+      console.log(`   ❌ ${table.padEnd(25)} - Exception: ${err instanceof Error ? err.message : String(err)}`);
     }
   }
 

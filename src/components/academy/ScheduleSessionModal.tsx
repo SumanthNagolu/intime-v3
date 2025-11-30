@@ -2,7 +2,7 @@
 
 
 import React, { useState } from 'react';
-import { X, Calendar, Clock, Video, Users, CheckCircle, Send } from 'lucide-react';
+import { X, Calendar, Clock, Video, CheckCircle, Send } from 'lucide-react';
 
 interface ScheduleSessionModalProps {
   isOpen: boolean;

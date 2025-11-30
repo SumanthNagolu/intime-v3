@@ -26,9 +26,9 @@ vi.mock('openai', () => {
   const MockOpenAI = vi.fn().mockImplementation(() => ({
     chat: {
       completions: {
-        create: vi.fn().mockImplementation((params) => {
+        create: vi.fn().mockImplementation((params: { messages: { content: string }[] }) => {
           const content = params.messages[1].content.toLowerCase();
-          let response;
+          let response: Record<string, unknown>;
 
           if (content.includes('project details:')) {
             response = {
@@ -297,7 +297,7 @@ describe('Guidewire Guru Integration Flow', () => {
       }
 
       // 6th time should trigger escalation
-      const response = await coordinator.execute({
+      await coordinator.execute({
         question,
         studentId: `escalation-test-${Date.now()}`,
       });

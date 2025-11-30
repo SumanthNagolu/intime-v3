@@ -9,7 +9,7 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { getEntityConfig, type EntityType, type EntityStatus } from '@/lib/workspace/entity-registry';
+import { getEntityConfig, type EntityType } from '@/lib/workspace/entity-registry';
 
 // =====================================================
 // TYPES

@@ -35,8 +35,8 @@ vi.mock('openai', () => ({
 }));
 
 // Test agent
-class MockAgent extends BaseAgent<any, any> {
-  async execute(input: any): Promise<any> {
+class MockAgent extends BaseAgent<Record<string, unknown>, Record<string, unknown>> {
+  async execute(input: Record<string, unknown>): Promise<Record<string, unknown>> {
     return { response: `Mock response for: ${input.query}` };
   }
 }

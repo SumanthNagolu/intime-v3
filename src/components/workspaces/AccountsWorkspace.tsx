@@ -11,7 +11,6 @@ import React, { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Building2,
-  User,
   Mail,
   Phone,
   Globe,
@@ -29,8 +28,6 @@ import {
   Activity,
   FolderOpen,
   Lightbulb,
-  MessageSquare,
-  CreditCard,
   Clock,
   Star,
   Award,
@@ -663,7 +660,8 @@ function DealsTab({ account, canEdit }: { account: NonNullable<ReturnType<typeof
 
 function JobsTab({ account, canEdit }: { account: NonNullable<ReturnType<typeof useAccount>['data']>; canEdit: boolean }) {
   // In a real implementation, this would fetch jobs linked to the account
-  const jobs: any[] = [];
+  const jobs: Array<{ id: string; title: string; status: string }> = [];
+  void account;
 
   return (
     <div className="space-y-6">
@@ -830,7 +828,7 @@ function useAccount(accountId: string) {
 
 export function AccountsWorkspace({ accountId }: AccountsWorkspaceProps) {
   const router = useRouter();
-  const { context, canEdit, canDelete, isLoading: contextLoading } = useWorkspaceContext('account', accountId);
+  const { canEdit, canDelete, isLoading: contextLoading } = useWorkspaceContext('account', accountId);
 
   // Fetch account data
   const { data: account, isLoading: accountLoading, error } = useAccount(accountId);

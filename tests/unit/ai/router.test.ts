@@ -1,8 +1,7 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import {
   AIRouter,
   type AITask,
-  type ModelSelection,
   getDefaultRouter,
   resetDefaultRouter,
 } from '@/lib/ai/router';

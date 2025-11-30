@@ -495,7 +495,7 @@ export const OpenPositionsPage: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div>
                 <h3 className="text-lg font-heading font-bold text-charcoal-900 mb-2">
-                  Don't see the right fit?
+                  Don&apos;t see the right fit?
                 </h3>
                 <p className="text-charcoal-500">
                   We have many more positions not listed here. Send us your resume.

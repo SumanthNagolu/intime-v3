@@ -3,10 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { useAppStore } from '../../lib/store';
 import { trpc } from '../../lib/trpc/client';
-import { Briefcase, Users, Clock, CheckCircle, AlertCircle, ArrowRight, Plus, Search, MapPin, DollarSign, FileText, ChevronLeft, Send, Calendar, Mail, Phone, Download, Award, Star, X, CheckSquare, ArrowLeft, Building2, Activity, Filter, LayoutDashboard, List, Target, Check, TrendingUp, TrendingDown, Zap, UserCheck, FileCheck } from 'lucide-react';
+import { Briefcase, ArrowRight, Plus, MapPin, ChevronLeft, Send, Award, Star, Building2, Activity, Check, TrendingUp, Zap, FileCheck } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter, usePathname, useParams } from 'next/navigation';
-import { Candidate, Job, Submission } from '../../types';
+import { usePathname, useParams } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/card';
 import { cn } from '../../lib/utils';
 
@@ -25,7 +24,7 @@ import { AccountDetail } from './AccountDetail';
 import { ScreeningRoom } from './ScreeningRoom';
 import { SourcingRoom } from './SourcingRoom';
 import { SubmissionBuilder } from './SubmissionBuilder';
-import { CreateLeadModal, CreateDealModal, CreateAccountModal } from './Modals';
+import { CreateLeadModal, CreateDealModal } from './Modals';
 import { SourcingModal } from './SourcingModal';
 
 // --- DAILY PLANNER WIDGET - CLEAN PREMIUM ---
@@ -91,7 +90,7 @@ const DailyPlanner: React.FC = () => {
 
 // --- DASHBOARD HOME ---
 
-const DashboardHome: React.FC<{ onSearchRequest: () => void }> = ({ onSearchRequest }) => {
+const DashboardHome: React.FC<{ onSearchRequest: () => void }> = ({ onSearchRequest: _onSearchRequest }) => {
   // Fetch real data from backend using tRPC
   const { data: jobs, isLoading: jobsLoading } = trpc.ats.jobs.list.useQuery({
     limit: 50,
@@ -155,6 +154,7 @@ const DashboardHome: React.FC<{ onSearchRequest: () => void }> = ({ onSearchRequ
     }, duration / steps);
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Show loading state
@@ -739,65 +739,39 @@ const JobsList: React.FC = () => {
 
 export const RecruiterDashboard: React.FC = () => {
   const pathname = usePathname();
-  const router = useRouter();
   const { jobId, candidateId, leadId, dealId, accountId, submissionId } = useParams();
-  const { addLead, addDeal, addAccount, leads } = useAppStore();
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+  const { addLead, addDeal, leads } = useAppStore();
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
   const [isDealModalOpen, setIsDealModalOpen] = useState(false);
-  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const [isSourcingModalOpen, setIsSourcingModalOpen] = useState(false);
 
   // Router Logic to switch views
   let content;
-  let actionButton = null;
-  
+
   const currentPath = pathname;
 
   if (currentPath.includes('/post')) {
       content = <JobIntake />;
   } else if (jobId && currentPath.includes('/jobs/')) {
       content = <JobDetail />;
-      actionButton = (
-          <button onClick={() => setIsSourcingModalOpen(true)} className="px-6 py-3 bg-charcoal text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors shadow-lg flex items-center gap-2">
-              <Plus size={16} /> Add Candidates
-          </button>
-      );
   } else if (candidateId && currentPath.includes('/sourcing/')) { // Sourcing Room
       content = <SourcingRoom />;
   } else if (candidateId && currentPath.includes('/screening/')) {
       content = <ScreeningRoom />;
-  } else if (candidateId && currentPath.includes('/submit/')) {
-      content = <SubmissionBuilder />;
   } else if (candidateId && currentPath.includes('/candidate/')) {
       content = <CandidateDetail />;
   } else if (leadId && currentPath.includes('/leads/')) {
       content = <LeadDetail />;
   } else if (currentPath.includes('/leads')) {
       content = <LeadsList />;
-      actionButton = (
-          <button onClick={() => setIsLeadModalOpen(true)} className="px-6 py-3 bg-charcoal text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors shadow-lg flex items-center gap-2">
-              <Plus size={16} /> Add Lead
-          </button>
-      );
   } else if (dealId && currentPath.includes('/deals/')) {
       content = <DealDetail />;
   } else if (currentPath.includes('/deals')) {
       content = <DealsPipeline />;
-      actionButton = (
-          <button onClick={() => setIsDealModalOpen(true)} className="px-6 py-3 bg-charcoal text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors shadow-lg flex items-center gap-2">
-              <Plus size={16} /> New Deal
-          </button>
-      );
   } else if (accountId && currentPath.includes('/accounts/')) {
       content = <AccountDetail />;
   } else if (currentPath.includes('/accounts')) {
       content = <AccountsList />;
-      actionButton = (
-          <button onClick={() => setIsAccountModalOpen(true)} className="px-6 py-3 bg-charcoal text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors shadow-lg flex items-center gap-2">
-              <Plus size={16} /> Add Account
-          </button>
-      );
   } else if (submissionId && currentPath.includes('/offer/')) { 
       content = <OfferBuilder />;
   } else if (submissionId && currentPath.includes('/placement/')) {
@@ -806,22 +780,11 @@ export const RecruiterDashboard: React.FC = () => {
       content = <PipelineView />;
   } else if (currentPath.includes('/jobs')) {
       content = <JobsList />;
-      actionButton = (
-          <Link href="/employee/recruiting/post" className="px-6 py-3 bg-charcoal text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors shadow-lg flex items-center gap-2">
-              <Plus size={16} /> New Requisition
-          </Link>
-      );
+  } else if (candidateId && currentPath.includes('/submit/')) {
+      content = <SubmissionBuilder />;
   } else {
-      content = <DashboardHome onSearchRequest={() => setIsSearchModalOpen(true)} />;
-      actionButton = (
-          <Link href="/employee/recruiting/post" className="px-6 py-3 bg-charcoal text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors shadow-lg flex items-center gap-2">
-              <Plus size={16} /> New Requisition
-          </Link>
-      );
+      content = <DashboardHome onSearchRequest={() => {}} />;
   }
-
-  // Active Tab Logic
-  const isActive = (path: string) => pathname.includes(path);
 
   return (
     <div>
@@ -830,7 +793,6 @@ export const RecruiterDashboard: React.FC = () => {
       {/* Hoisted Modals */}
       {isLeadModalOpen && <CreateLeadModal onClose={() => setIsLeadModalOpen(false)} onSave={addLead} />}
       {isDealModalOpen && <CreateDealModal leads={leads} onClose={() => setIsDealModalOpen(false)} onSave={addDeal} />}
-      {isAccountModalOpen && <CreateAccountModal onClose={() => setIsAccountModalOpen(false)} onSuccess={(account) => { setIsAccountModalOpen(false); }} />}
       {isSourcingModalOpen && jobId && typeof jobId === 'string' && <SourcingModal isOpen={isSourcingModalOpen} onClose={() => setIsSourcingModalOpen(false)} jobId={jobId} />}
     </div>
   );

@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { useRouter, usePathname, useParams } from 'next/navigation';
+import { usePathname, useParams, useRouter } from 'next/navigation';
 import { useAppStore } from '../../lib/store';
-import { Users, UserPlus, Clock, TrendingUp, Briefcase, ChevronRight, Activity, Calendar, CheckCircle, AlertCircle, LayoutDashboard, Network, FileText, GraduationCap, BarChart3, Search, DollarSign, Download, X, MapPin, ArrowRight, TrendingDown, Award } from 'lucide-react';
+import { Users, UserPlus, Clock, TrendingUp, Briefcase, ChevronRight, Activity, Calendar, CheckCircle, LayoutDashboard, Network, FileText, GraduationCap, BarChart3, DollarSign, Download, X, MapPin, Award } from 'lucide-react';
 import { ApprovalModal } from './ApprovalModal';
 import { ApprovalRequest } from '../../types';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/card';
@@ -198,7 +197,16 @@ const RunOffCyclePayrollModal: React.FC<{ isOpen: boolean; onClose: () => void }
     );
 }
 
-const EventDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; event: any }> = ({ isOpen, onClose, event }) => {
+interface CalendarEvent {
+    id: number;
+    title: string;
+    date: string;
+    time: string;
+    color: string;
+    location?: string;
+}
+
+const EventDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; event: CalendarEvent | null }> = ({ isOpen, onClose, event }) => {
     if (!isOpen || !event) return null;
 
     return (
@@ -245,7 +253,7 @@ const HROverview: React.FC = () => {
   const [isAddEmployeeOpen, setIsAddEmployeeOpen] = useState(false);
   const [isPayrollOpen, setIsPayrollOpen] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState<any>(null);
+  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
 
   // Drill Down States
   const [drillDownType, setDrillDownType] = useState<'onboarding' | 'roles' | null>(null);
@@ -299,6 +307,7 @@ const HROverview: React.FC = () => {
     }, duration / steps);
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleApprove = (id: string) => {
@@ -671,20 +680,13 @@ const HROverview: React.FC = () => {
 
 export const HRDashboard: React.FC = () => {
   const pathname = usePathname();
-  const router = useRouter();
   const { employeeId } = useParams();
-  
+
   // Determine Active Group based on path
   const currentPath = pathname;
-  let activeGroup = 'Overview';
-  
-  if (currentPath.includes('/people') || currentPath.includes('/org') || currentPath.includes('/profile')) activeGroup = 'Workforce';
-  if (currentPath.includes('/time') || currentPath.includes('/payroll') || currentPath.includes('/documents')) activeGroup = 'Operations';
-  if (currentPath.includes('/performance') || currentPath.includes('/learning') || currentPath.includes('/recruitment')) activeGroup = 'Growth';
-  if (currentPath.includes('/analytics')) activeGroup = 'Intelligence';
 
-  // Navigation Configuration
-  const navGroups = [
+  // Navigation Configuration (kept for future use)
+  const _navGroups = [
       { 
           id: 'Overview', 
           label: 'Console', 

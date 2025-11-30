@@ -26,7 +26,7 @@ export const SourcingRoom: React.FC = () => {
       { text: 'Location Match', met: candidate.location.includes('Remote') || candidate.location === job.location },
       { text: 'Rate within Budget', met: true },
       { text: 'Experience Level', met: true },
-      { text: 'Visa Status', met: candidate.type !== 'internal_bench' || (candidate as any).visaStatus === 'H-1B' },
+      { text: 'Visa Status', met: candidate.type !== 'internal_bench' || ('visaStatus' in candidate && candidate.visaStatus === 'H-1B') },
   ];
 
   const handleShortlistToScreening = () => {

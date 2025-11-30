@@ -5,7 +5,7 @@
  * Tests: Embedding generation, semantic search, deep analysis, accuracy tracking
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { ResumeMatchingService } from '@/lib/ai/resume-matching';
 
 describe('ResumeMatchingService', () => {

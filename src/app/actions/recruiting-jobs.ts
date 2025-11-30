@@ -194,7 +194,7 @@ async function checkPermission(
       .eq('user_id', userId)
       .is('deleted_at', null);
 
-    const roleNames = roles?.map((r: any) => r.role?.name) || [];
+    const roleNames = roles?.map((r: { role?: { name?: string } | null }) => r.role?.name) || [];
     return roleNames.includes('super_admin') || roleNames.includes('admin') || roleNames.includes('recruiter') || roleNames.includes('sr_recruiter');
   }
 
@@ -217,7 +217,7 @@ async function logAuditEvent(
 ) {
   const { tableName, action, recordId, userId, userEmail, orgId, oldValues, newValues, metadata } = params;
 
-  await (adminSupabase.from as any)('audit_logs').insert({
+  await (adminSupabase.from as unknown as (table: string) => ReturnType<typeof adminSupabase.from>)('audit_logs').insert({
     table_name: tableName,
     action,
     record_id: recordId,
@@ -264,7 +264,7 @@ export async function listJobsAction(
     return { success: false, error: 'Permission denied: jobs:read required' };
   }
 
-  const baseQuery = supabase.from('jobs') as any;
+  const baseQuery = supabase.from('jobs');
   let query = baseQuery
     .select(`
       id,
@@ -332,7 +332,44 @@ export async function listJobsAction(
 
   const activeStatuses = ['sourced', 'screening', 'submission_ready', 'submitted_to_client', 'client_review', 'client_interview', 'offer_stage'];
 
-  const transformedJobs: Job[] = (jobs || []).map((job: any) => ({
+  interface JobRow {
+    id: string;
+    title: string;
+    description: string | null;
+    job_type: string | null;
+    location: string | null;
+    is_remote: boolean | null;
+    hybrid_days: number | null;
+    rate_min: number | string | null;
+    rate_max: number | string | null;
+    rate_type: string | null;
+    currency: string | null;
+    status: string | null;
+    urgency: string | null;
+    positions_count: number | null;
+    positions_filled: number | null;
+    required_skills: string[] | null;
+    nice_to_have_skills: string[] | null;
+    min_experience_years: number | null;
+    max_experience_years: number | null;
+    visa_requirements: string[] | null;
+    account_id: string | null;
+    deal_id: string | null;
+    owner_id: string;
+    recruiter_ids: string[] | null;
+    posted_date: string | null;
+    target_fill_date: string | null;
+    filled_date: string | null;
+    client_submission_instructions: string | null;
+    client_interview_process: string | null;
+    created_at: string;
+    updated_at: string;
+    account?: { name?: string } | null;
+    owner?: { full_name?: string } | null;
+    submissions?: Array<{ id: string; status: string }> | null;
+  }
+
+  const transformedJobs: Job[] = (jobs || []).map((job: JobRow) => ({
     id: job.id,
     title: job.title,
     description: job.description,
@@ -365,7 +402,7 @@ export async function listJobsAction(
     clientSubmissionInstructions: job.client_submission_instructions,
     clientInterviewProcess: job.client_interview_process,
     submissionCount: job.submissions?.length || 0,
-    activeSubmissions: job.submissions?.filter((s: any) => activeStatuses.includes(s.status)).length || 0,
+    activeSubmissions: job.submissions?.filter((s) => activeStatuses.includes(s.status)).length || 0,
     createdAt: job.created_at,
     updatedAt: job.updated_at,
   }));
@@ -402,7 +439,8 @@ export async function getJobAction(jobId: string): Promise<ActionResult<Job>> {
     return { success: false, error: 'Permission denied: jobs:read required' };
   }
 
-  const { data: job, error } = await (supabase.from('jobs') as any)
+  const { data: job, error } = await supabase
+    .from('jobs')
     .select(`
       *,
       account:accounts!account_id(name),
@@ -419,44 +457,83 @@ export async function getJobAction(jobId: string): Promise<ActionResult<Job>> {
 
   const activeStatuses = ['sourced', 'screening', 'submission_ready', 'submitted_to_client', 'client_review', 'client_interview', 'offer_stage'];
 
+  interface SingleJobRow {
+    id: string;
+    title: string;
+    description: string | null;
+    job_type: string | null;
+    location: string | null;
+    is_remote: boolean | null;
+    hybrid_days: number | null;
+    rate_min: number | string | null;
+    rate_max: number | string | null;
+    rate_type: string | null;
+    currency: string | null;
+    status: string | null;
+    urgency: string | null;
+    positions_count: number | null;
+    positions_filled: number | null;
+    required_skills: string[] | null;
+    nice_to_have_skills: string[] | null;
+    min_experience_years: number | null;
+    max_experience_years: number | null;
+    visa_requirements: string[] | null;
+    account_id: string | null;
+    deal_id: string | null;
+    owner_id: string;
+    recruiter_ids: string[] | null;
+    posted_date: string | null;
+    target_fill_date: string | null;
+    filled_date: string | null;
+    client_submission_instructions: string | null;
+    client_interview_process: string | null;
+    created_at: string;
+    updated_at: string;
+    account?: { name?: string } | null;
+    owner?: { full_name?: string } | null;
+    submissions?: Array<{ id: string; status: string }> | null;
+  }
+
+  const jobRow = job as SingleJobRow;
+
   return {
     success: true,
     data: {
-      id: job.id,
-      title: job.title,
-      description: job.description,
-      jobType: job.job_type,
-      location: job.location,
-      isRemote: job.is_remote,
-      hybridDays: job.hybrid_days,
-      rateMin: job.rate_min ? (typeof job.rate_min === 'string' ? parseFloat(job.rate_min) : job.rate_min) : null,
-      rateMax: job.rate_max ? (typeof job.rate_max === 'string' ? parseFloat(job.rate_max) : job.rate_max) : null,
-      rateType: job.rate_type,
-      currency: job.currency,
-      status: job.status,
-      urgency: job.urgency,
-      positionsCount: job.positions_count,
-      positionsFilled: job.positions_filled,
-      requiredSkills: job.required_skills,
-      niceToHaveSkills: job.nice_to_have_skills,
-      minExperienceYears: job.min_experience_years,
-      maxExperienceYears: job.max_experience_years,
-      visaRequirements: job.visa_requirements,
-      accountId: job.account_id,
-      accountName: job.account?.name || null,
-      dealId: job.deal_id,
-      ownerId: job.owner_id,
-      ownerName: job.owner?.full_name || null,
-      recruiterIds: job.recruiter_ids,
-      postedDate: job.posted_date,
-      targetFillDate: job.target_fill_date,
-      filledDate: job.filled_date,
-      clientSubmissionInstructions: job.client_submission_instructions,
-      clientInterviewProcess: job.client_interview_process,
-      submissionCount: job.submissions?.length || 0,
-      activeSubmissions: job.submissions?.filter((s: any) => activeStatuses.includes(s.status)).length || 0,
-      createdAt: job.created_at,
-      updatedAt: job.updated_at,
+      id: jobRow.id,
+      title: jobRow.title,
+      description: jobRow.description,
+      jobType: jobRow.job_type,
+      location: jobRow.location,
+      isRemote: jobRow.is_remote,
+      hybridDays: jobRow.hybrid_days,
+      rateMin: jobRow.rate_min ? (typeof jobRow.rate_min === 'string' ? parseFloat(jobRow.rate_min) : jobRow.rate_min) : null,
+      rateMax: jobRow.rate_max ? (typeof jobRow.rate_max === 'string' ? parseFloat(jobRow.rate_max) : jobRow.rate_max) : null,
+      rateType: jobRow.rate_type,
+      currency: jobRow.currency,
+      status: jobRow.status,
+      urgency: jobRow.urgency,
+      positionsCount: jobRow.positions_count,
+      positionsFilled: jobRow.positions_filled,
+      requiredSkills: jobRow.required_skills,
+      niceToHaveSkills: jobRow.nice_to_have_skills,
+      minExperienceYears: jobRow.min_experience_years,
+      maxExperienceYears: jobRow.max_experience_years,
+      visaRequirements: jobRow.visa_requirements,
+      accountId: jobRow.account_id,
+      accountName: jobRow.account?.name || null,
+      dealId: jobRow.deal_id,
+      ownerId: jobRow.owner_id,
+      ownerName: jobRow.owner?.full_name || null,
+      recruiterIds: jobRow.recruiter_ids,
+      postedDate: jobRow.posted_date,
+      targetFillDate: jobRow.target_fill_date,
+      filledDate: jobRow.filled_date,
+      clientSubmissionInstructions: jobRow.client_submission_instructions,
+      clientInterviewProcess: jobRow.client_interview_process,
+      submissionCount: jobRow.submissions?.length || 0,
+      activeSubmissions: jobRow.submissions?.filter((s) => activeStatuses.includes(s.status)).length || 0,
+      createdAt: jobRow.created_at,
+      updatedAt: jobRow.updated_at,
     },
   };
 }
@@ -677,7 +754,8 @@ export async function deleteJobAction(jobId: string): Promise<ActionResult<{ del
     return { success: false, error: 'Permission denied: jobs:delete required' };
   }
 
-  const { data: existingJob, error: fetchError } = await (supabase.from('jobs') as any)
+  const { data: existingJob, error: fetchError } = await supabase
+    .from('jobs')
     .select('title, submissions(id)')
     .eq('id', jobId)
     .is('deleted_at', null)
@@ -1067,7 +1145,8 @@ export async function getJobMetricsAction(): Promise<ActionResult<JobMetrics>> {
   const supabase = await createClient();
 
   // Get all jobs
-  const { data: jobs, error } = await (supabase.from('jobs') as any)
+  const { data: jobs, error } = await supabase
+    .from('jobs')
     .select('id, status, filled_date, created_at, submissions(id)')
     .is('deleted_at', null);
 
@@ -1079,26 +1158,34 @@ export async function getJobMetricsAction(): Promise<ActionResult<JobMetrics>> {
   const now = new Date();
   const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
+  interface MetricJobRow {
+    id: string;
+    status: string | null;
+    filled_date: string | null;
+    created_at: string;
+    submissions?: Array<{ id: string }> | null;
+  }
+
   const totalJobs = jobs?.length || 0;
-  const openJobs = jobs?.filter((j: any) => j.status === 'open').length || 0;
-  const urgentJobs = jobs?.filter((j: any) => j.status === 'urgent').length || 0;
-  const filledThisMonth = jobs?.filter((j: any) =>
+  const openJobs = jobs?.filter((j: MetricJobRow) => j.status === 'open').length || 0;
+  const urgentJobs = jobs?.filter((j: MetricJobRow) => j.status === 'urgent').length || 0;
+  const filledThisMonth = jobs?.filter((j: MetricJobRow) =>
     j.status === 'filled' && j.filled_date && new Date(j.filled_date) >= startOfMonth
   ).length || 0;
 
   // Calculate avg time to fill (for filled jobs)
-  const filledJobs = jobs?.filter((j: any) => j.status === 'filled' && j.filled_date) || [];
+  const filledJobs = jobs?.filter((j: MetricJobRow) => j.status === 'filled' && j.filled_date) || [];
   let totalDays = 0;
-  filledJobs.forEach((j: any) => {
+  filledJobs.forEach((j) => {
     const created = new Date(j.created_at);
-    const filled = new Date(j.filled_date);
+    const filled = new Date(j.filled_date!);
     totalDays += Math.ceil((filled.getTime() - created.getTime()) / (1000 * 60 * 60 * 24));
   });
   const avgTimeToFill = filledJobs.length > 0 ? Math.round(totalDays / filledJobs.length) : 0;
 
   // Calculate avg submissions per job
   let totalSubmissions = 0;
-  jobs?.forEach((j: any) => {
+  jobs?.forEach((j: MetricJobRow) => {
     totalSubmissions += j.submissions?.length || 0;
   });
   const avgSubmissionsPerJob = totalJobs > 0 ? Math.round((totalSubmissions / totalJobs) * 10) / 10 : 0;
@@ -1131,7 +1218,8 @@ export async function getJobsByAccountAction(accountId: string): Promise<ActionR
 
   const supabase = await createClient();
 
-  const { data: jobs, error } = await (supabase.from('jobs') as any)
+  const { data: jobs, error } = await supabase
+    .from('jobs')
     .select(`
       *,
       account:accounts!account_id(name),
@@ -1149,7 +1237,44 @@ export async function getJobsByAccountAction(accountId: string): Promise<ActionR
 
   const activeStatuses = ['sourced', 'screening', 'submission_ready', 'submitted_to_client', 'client_review', 'client_interview', 'offer_stage'];
 
-  const transformedJobs: Job[] = (jobs || []).map((job: any) => ({
+  interface AccountJobRow {
+    id: string;
+    title: string;
+    description: string | null;
+    job_type: string | null;
+    location: string | null;
+    is_remote: boolean | null;
+    hybrid_days: number | null;
+    rate_min: number | string | null;
+    rate_max: number | string | null;
+    rate_type: string | null;
+    currency: string | null;
+    status: string | null;
+    urgency: string | null;
+    positions_count: number | null;
+    positions_filled: number | null;
+    required_skills: string[] | null;
+    nice_to_have_skills: string[] | null;
+    min_experience_years: number | null;
+    max_experience_years: number | null;
+    visa_requirements: string[] | null;
+    account_id: string | null;
+    deal_id: string | null;
+    owner_id: string;
+    recruiter_ids: string[] | null;
+    posted_date: string | null;
+    target_fill_date: string | null;
+    filled_date: string | null;
+    client_submission_instructions: string | null;
+    client_interview_process: string | null;
+    created_at: string;
+    updated_at: string;
+    account?: { name?: string } | null;
+    owner?: { full_name?: string } | null;
+    submissions?: Array<{ id: string; status: string }> | null;
+  }
+
+  const transformedJobs: Job[] = (jobs || []).map((job: AccountJobRow) => ({
     id: job.id,
     title: job.title,
     description: job.description,
@@ -1182,7 +1307,7 @@ export async function getJobsByAccountAction(accountId: string): Promise<ActionR
     clientSubmissionInstructions: job.client_submission_instructions,
     clientInterviewProcess: job.client_interview_process,
     submissionCount: job.submissions?.length || 0,
-    activeSubmissions: job.submissions?.filter((s: any) => activeStatuses.includes(s.status)).length || 0,
+    activeSubmissions: job.submissions?.filter((s) => activeStatuses.includes(s.status)).length || 0,
     createdAt: job.created_at,
     updatedAt: job.updated_at,
   }));

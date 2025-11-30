@@ -2,8 +2,8 @@
 
 
 import React, { useState } from 'react';
-import { X, Building2, GraduationCap, User, CheckCircle, Search, Linkedin, Globe, MapPin, DollarSign, Users, ChevronDown, ChevronUp, Loader2, Zap } from 'lucide-react';
-import { Lead, Deal, Account, Candidate } from '../../types';
+import { X, Building2, GraduationCap, User, CheckCircle, Search, Linkedin, Globe, MapPin, DollarSign, ChevronDown, ChevronUp, Loader2, Zap } from 'lucide-react';
+import { Lead, Deal, Account } from '../../types';
 import { useAppStore } from '../../lib/store';
 import { trpc } from '../../lib/trpc/client';
 
@@ -96,7 +96,7 @@ export const CreateLeadModal: React.FC<{
                 contact: (dbLead.firstName && dbLead.lastName)
                     ? `${dbLead.firstName} ${dbLead.lastName}`
                     : dbLead.companyName || '',
-                status: dbLead.status as any,
+                status: dbLead.status as Lead['status'],
                 lastAction: 'Created just now',
                 notes: dbLead.notes || ''
             };
@@ -208,7 +208,7 @@ export const CreateLeadModal: React.FC<{
 
         try {
             // Prepare the data for the API
-            const leadData: any = {
+            const leadData: Record<string, unknown> = {
                 leadType: leadType,
                 status: 'new',
                 source: form.source ? mapSourceToApi(form.source) : undefined,
@@ -696,7 +696,7 @@ export const CreateLeadModal: React.FC<{
     );
 };
 
-export const CreateDealModal: React.FC<{ leads: any[], onClose: () => void, onSave: (deal: Deal) => void }> = ({ leads, onClose, onSave }) => {
+export const CreateDealModal: React.FC<{ leads: Lead[], onClose: () => void, onSave: (deal: Deal) => void }> = ({ leads, onClose, onSave }) => {
     const [form, setForm] = useState({
         title: '',
         leadId: '',
@@ -1372,7 +1372,7 @@ export const CreatePOCModal: React.FC<{
 interface ConvertOutcomeProps {
     deal: Deal;
     onClose: () => void;
-    onConvert: (type: 'account' | 'bench' | 'academy', data: any) => void;
+    onConvert: (type: 'account' | 'bench' | 'academy', data: Record<string, unknown>) => void;
     prefillData?: { name: string, email?: string };
 }
 
@@ -1451,7 +1451,7 @@ export const ConvertOutcomeModal: React.FC<ConvertOutcomeProps> = ({ deal, onClo
                                 onChange={(e) => setAccountName(e.target.value)}
                                 className="w-full p-4 bg-white border border-stone-200 rounded-xl font-bold text-charcoal focus:outline-none focus:border-charcoal"
                             />
-                            <p className="text-xs text-stone-500 mt-3">Will be added to CRM as an Active Account with 'Direct Client' status.</p>
+                            <p className="text-xs text-stone-500 mt-3">Will be added to CRM as an Active Account with &apos;Direct Client&apos; status.</p>
                         </div>
                     )}
 

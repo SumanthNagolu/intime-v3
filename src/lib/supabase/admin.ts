@@ -11,6 +11,9 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from '@/types/supabase';
 
+// Re-export UntypedFromFunction for use with admin client
+export type { UntypedFromFunction } from './server';
+
 let adminClient: ReturnType<typeof createClient<Database>> | null = null;
 
 /**

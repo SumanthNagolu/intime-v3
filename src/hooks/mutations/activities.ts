@@ -6,11 +6,8 @@
  */
 
 import { trpc } from '@/lib/trpc/client';
-import type { 
-  ActivityStatus, 
-  ActivityType, 
-  ActivityPriority,
-  ActivityOutcome
+import type {
+  ActivityType,
 } from '@/lib/db/schema/activities';
 
 // ============================================
@@ -270,6 +267,8 @@ export function useLeadPendingTasks(leadId: string) {
 export function useCreateLeadActivity() {
   return useLogActivity();
 }
+
+
 
 
 

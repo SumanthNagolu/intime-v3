@@ -7,7 +7,7 @@
  */
 
 import { processTriggerEvent } from './badge-service';
-import type { BadgeTriggerType, BadgeAwardResult } from '@/types/badges';
+import type { BadgeAwardResult } from '@/types/badges';
 
 // ============================================================================
 // TRIGGER EVENT HANDLERS

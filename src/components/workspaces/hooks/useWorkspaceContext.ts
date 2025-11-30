@@ -11,7 +11,15 @@ import { useMemo } from 'react';
 import { trpc } from '@/lib/trpc/client';
 
 // Mock useSession for now - replace with actual auth when available
-const useSession = (): { data: any; status: 'loading' | 'authenticated' | 'unauthenticated' } => ({
+interface SessionData {
+  user?: {
+    id?: string;
+    orgId?: string;
+    roles?: string[];
+  };
+}
+
+const useSession = (): { data: SessionData | null; status: 'loading' | 'authenticated' | 'unauthenticated' } => ({
   data: null,
   status: 'unauthenticated',
 });
@@ -114,10 +122,10 @@ export function useWorkspaceContext(
   const result = useMemo(() => {
     const isLoading = status === 'loading' || (!!entityId && rcaiLoading);
     const userId = session?.user?.id || null;
-    const orgId = (session?.user as { orgId?: string })?.orgId || null;
+    const orgId = session?.user?.orgId || null;
 
     // Get user's roles from session
-    const userRoles: string[] = (session?.user as { roles?: string[] })?.roles || [];
+    const userRoles: string[] = session?.user?.roles || [];
     const primaryRole = userRoles[0] || 'employee';
 
     // Determine context from primary role

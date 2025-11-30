@@ -22,11 +22,11 @@ const result = await executeSql(`
 `);
 
 console.log('All columns in user_profiles:');
-result.rows?.forEach((r: any) => console.log(`  - ${r.column_name}`));
+result.rows?.forEach((r: Record<string, unknown>) => console.log(`  - ${r.column_name}`));
 
 console.log('\nChecking for meta columns:');
 const metaCols = ['org_id', 'created_at', 'updated_at', 'created_by', 'updated_by', 'deleted_at', 'is_active'];
 for (const col of metaCols) {
-  const exists = result.rows?.some((r: any) => r.column_name === col);
+  const exists = result.rows?.some((r: Record<string, unknown>) => r.column_name === col);
   console.log(`  ${exists ? '✅' : '❌'} ${col}`);
 }

@@ -8,14 +8,10 @@ import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
 import {
   objectOwners,
-  type ObjectOwner,
-  RCAIRole,
-  RCAIPermission,
-  RCAIEntityType,
   RCAI_DEFAULT_PERMISSIONS,
 } from '@/lib/db/schema/workspace';
 import { userProfiles } from '@/lib/db/schema/user-profiles';
-import { eq, and, desc, sql, inArray, SQL } from 'drizzle-orm';
+import { eq, and, desc, sql, SQL } from 'drizzle-orm';
 
 // =====================================================
 // VALIDATION SCHEMAS
@@ -241,11 +237,11 @@ export const objectOwnersRouter = router({
   update: orgProtectedProcedure
     .input(updateOwnerSchema)
     .mutation(async ({ ctx, input }) => {
-      const { userId, orgId } = ctx;
+      const { orgId } = ctx;
       const { id, ...data } = input;
 
       // If role is being changed, update permission accordingly
-      let updateData: Record<string, unknown> = { ...data };
+      const updateData: Record<string, unknown> = { ...data };
       if (data.role && !data.permission) {
         updateData.permission = RCAI_DEFAULT_PERMISSIONS[data.role as keyof typeof RCAI_DEFAULT_PERMISSIONS];
       }
@@ -505,8 +501,6 @@ export const objectOwnersRouter = router({
   getMySummary: orgProtectedProcedure
     .query(async ({ ctx }) => {
       const { orgId, userId } = ctx;
-      // userId is guaranteed to be string by orgProtectedProcedure
-      const userIdStr = userId as string;
 
       const summary = await db
         .select({
@@ -518,7 +512,7 @@ export const objectOwnersRouter = router({
         .where(
           and(
             eq(objectOwners.orgId, orgId),
-            eq(objectOwners.userId, userIdStr)
+            eq(objectOwners.userId, userId as string)
           )
         )
         .groupBy(objectOwners.entityType, objectOwners.role);

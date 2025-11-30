@@ -95,6 +95,29 @@ const updateBrandingSchema = z.object({
 });
 
 // ============================================================================
+// Metadata Types
+// ============================================================================
+
+interface OrgMetadata {
+  passwordMinLength?: number;
+  passwordRequireSpecialChars?: boolean;
+  mfaRequired?: boolean;
+  sessionTimeoutMinutes?: number;
+  features?: {
+    academyEnabled?: boolean;
+    recruitingEnabled?: boolean;
+    benchSalesEnabled?: boolean;
+    crmEnabled?: boolean;
+    hrEnabled?: boolean;
+  };
+  branding?: {
+    primaryColor?: string;
+    accentColor?: string;
+    darkMode?: boolean;
+  };
+}
+
+// ============================================================================
 // Default Settings
 // ============================================================================
 
@@ -175,7 +198,7 @@ export async function getOrgSettingsAction(): Promise<ActionResult<OrgSettings>>
     .eq('is_active', true);
 
   // Parse metadata (stored settings)
-  const metadata = (org.metadata as Record<string, any>) || {};
+  const metadata = (org.metadata as OrgMetadata) || {};
 
   const settings: OrgSettings = {
     orgId: org.id,
@@ -341,7 +364,7 @@ export async function updateAuthSettingsAction(
     .eq('id', profile.orgId)
     .single();
 
-  const currentMetadata = (currentOrg?.metadata as Record<string, any>) || {};
+  const currentMetadata = (currentOrg?.metadata as OrgMetadata) || {};
 
   // Update metadata with auth settings
   const newMetadata = {
@@ -427,7 +450,7 @@ export async function updateFeaturesAction(
     .eq('id', profile.orgId)
     .single();
 
-  const currentMetadata = (currentOrg?.metadata as Record<string, any>) || {};
+  const currentMetadata = (currentOrg?.metadata as OrgMetadata) || {};
   const currentFeatures = currentMetadata.features || {};
 
   // Update features in metadata
@@ -510,7 +533,7 @@ export async function updateBrandingAction(
     .eq('id', profile.orgId)
     .single();
 
-  const currentMetadata = (currentOrg?.metadata as Record<string, any>) || {};
+  const currentMetadata = (currentOrg?.metadata as OrgMetadata) || {};
   const currentBranding = currentMetadata.branding || {};
 
   // Update branding in metadata

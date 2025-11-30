@@ -208,8 +208,8 @@ const activityContent = {
   ],
 };
 
-// Sample strategies
-const strategies = [
+// Sample strategies (not currently used - table not yet created)
+const _strategies = [
   {
     name: 'Enterprise Account Penetration',
     description: 'Focus on building relationships with multiple stakeholders across the organization. Target IT, HR, and Procurement for a multi-threaded approach.',

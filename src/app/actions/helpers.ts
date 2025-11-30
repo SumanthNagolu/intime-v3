@@ -119,7 +119,7 @@ export async function checkPermission(
       .eq('user_id', userId)
       .is('deleted_at', null);
 
-    const roleNames = roles?.map((r: any) => r.role?.name) || [];
+    const roleNames = roles?.map((r: { role?: { name?: string } | null }) => r.role?.name).filter((name): name is string => !!name) || [];
     return roleNames.includes('super_admin') || roleNames.includes('admin');
   }
 
@@ -147,7 +147,7 @@ export async function hasAnyRole(
     .eq('user_id', userId)
     .is('deleted_at', null);
 
-  const userRoleNames = roles?.map((r: any) => r.role?.name) || [];
+  const userRoleNames = roles?.map((r: { role?: { name?: string } | null }) => r.role?.name).filter((name): name is string => !!name) || [];
   return roleNames.some(roleName => userRoleNames.includes(roleName));
 }
 
@@ -227,6 +227,7 @@ export async function logAuditEvent(
   } = params;
 
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await (adminSupabase.from as any)('audit_logs').insert({
       table_name: tableName,
       action,
@@ -269,6 +270,7 @@ export async function logAuditEventBatch(
       severity: getSeverityForAction(params.action),
     }));
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await (adminSupabase.from as any)('audit_logs').insert(rows);
   } catch (error) {
     console.error('Failed to log audit events batch:', error);
@@ -285,8 +287,8 @@ export async function logAuditEventBatch(
  * @param obj - Object with snake_case keys
  * @returns Object with camelCase keys
  */
-export function snakeToCamel<T extends Record<string, any>>(obj: T): Record<string, any> {
-  const result: Record<string, any> = {};
+export function snakeToCamel<T extends Record<string, unknown>>(obj: T): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
 
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
@@ -304,8 +306,8 @@ export function snakeToCamel<T extends Record<string, any>>(obj: T): Record<stri
  * @param obj - Object with camelCase keys
  * @returns Object with snake_case keys
  */
-export function camelToSnake<T extends Record<string, any>>(obj: T): Record<string, any> {
-  const result: Record<string, any> = {};
+export function camelToSnake<T extends Record<string, unknown>>(obj: T): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
 
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {

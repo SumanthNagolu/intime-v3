@@ -354,7 +354,6 @@ test.describe('Talent Profile Data Persistence', () => {
 
     // Click on first talent
     const talentRow = page.locator('tr').first();
-    const talentName = await talentRow.locator('td').first().textContent();
 
     if (await talentRow.isVisible()) {
       await talentRow.click();

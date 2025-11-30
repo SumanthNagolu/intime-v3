@@ -58,7 +58,7 @@ export const academyRouter = router({
       }
 
       // Get student's enrollment
-      const { data: enrollment } = await supabase
+      const { data: _enrollment } = await supabase
         .from('student_enrollments')
         .select('id')
         .eq('user_id', ctx.userId)
@@ -75,15 +75,15 @@ export const academyRouter = router({
 
       // Transform to Academy UI format
       const academyModules: AcademyModule[] = await Promise.all(
-        (course.modules || []).map(async (module: any, idx: number) => {
+        (course.modules || []).map(async (module: Record<string, unknown>) => {
           const lessons: AcademyLesson[] = await Promise.all(
-            (module.topics || []).map(async (topic: any, topicIdx: number) => {
-              const isCompleted = completedTopicIds.has(topic.id);
+            ((module.topics as Array<Record<string, unknown>>) || []).map(async (topic: Record<string, unknown>, topicIdx: number) => {
+              const isCompleted = completedTopicIds.has(topic.id as string);
 
               // Check if unlocked
               const { data: isUnlocked } = await supabase.rpc('is_topic_unlocked', {
                 p_user_id: ctx.userId,
-                p_topic_id: topic.id,
+                p_topic_id: topic.id as string,
               });
 
               // Determine status
@@ -100,16 +100,16 @@ export const academyRouter = router({
               const lessonType = topic.content_type === 'lab' ? 'lab' : topic.content_type === 'quiz' ? 'quiz' : 'standard';
 
               return {
-                id: topic.id,
-                title: topic.title,
-                description: topic.description || undefined,
+                id: topic.id as string,
+                title: topic.title as string,
+                description: (topic.description as string | undefined) || undefined,
                 status,
-                duration: `${topic.estimated_duration_minutes || 45} min`,
+                duration: `${(topic.estimated_duration_minutes as number) || 45} min`,
                 type: lessonType,
                 // Mock content structure - will be populated from lesson details
                 content: {
                   theory: {
-                    slides: [topic.title],
+                    slides: [topic.title as string],
                     duration: "20 min"
                   },
                   demo: {
@@ -121,9 +121,9 @@ export const academyRouter = router({
                     passingScore: 80
                   },
                   lab: {
-                    title: topic.title,
-                    instructions: topic.description || "Complete this lab exercise.",
-                    userStoryId: `US-${module.module_number}${topic.topic_number}`
+                    title: topic.title as string,
+                    instructions: (topic.description as string | undefined) || "Complete this lab exercise.",
+                    userStoryId: `US-${module.module_number as number}${topic.topic_number as number}`
                   }
                 }
               };
@@ -136,11 +136,11 @@ export const academyRouter = router({
           const progress = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
           return {
-            id: module.module_number,
-            title: module.title,
-            description: module.description || undefined,
+            id: module.module_number as number,
+            title: module.title as string,
+            description: (module.description as string | undefined) || undefined,
             progress,
-            week: `Week ${module.module_number}`,
+            week: `Week ${module.module_number as number}`,
             lessons
           };
         })
@@ -189,9 +189,9 @@ export const academyRouter = router({
         .maybeSingle();
 
       // Transform lessons to content stages
-      const lessons = topic.lessons || [];
-      const theoryLessons = lessons.filter((l: any) => l.content_type === 'markdown' || l.content_type === 'video');
-      const labLessons = lessons.filter((l: any) => l.content_type === 'lab');
+      const lessons = (topic.lessons as Array<Record<string, unknown>>) || [];
+      const theoryLessons = lessons.filter((l: Record<string, unknown>) => l.content_type === 'markdown' || l.content_type === 'video');
+      const labLessons = lessons.filter((l: Record<string, unknown>) => l.content_type === 'lab');
 
       return {
         id: topic.id,
@@ -202,15 +202,15 @@ export const academyRouter = router({
         type: topic.content_type === 'lab' ? 'lab' : topic.content_type === 'quiz' ? 'quiz' : 'standard',
         content: {
           theory: {
-            slides: theoryLessons.map((l: any) => ({
-              title: l.title,
-              bullets: l.content_markdown ? l.content_markdown.split('\n').filter((line: string) => line.startsWith('-')).map((line: string) => line.substring(2)) : [],
+            slides: theoryLessons.map((l: Record<string, unknown>) => ({
+              title: l.title as string,
+              bullets: l.content_markdown ? (l.content_markdown as string).split('\n').filter((line: string) => line.startsWith('-')).map((line: string) => line.substring(2)) : [],
               context: "Real-world implementation context for this concept."
             })),
             duration: "25 min"
           },
           demo: {
-            videoUrl: theoryLessons.find((l: any) => l.content_url)?.content_url || "",
+            videoUrl: (theoryLessons.find((l: Record<string, unknown>) => l.content_url)?.content_url as string) || "",
             duration: "30 min",
             transcript: "This demo shows the practical implementation of the concepts."
           },
@@ -219,10 +219,10 @@ export const academyRouter = router({
             passingScore: 80
           },
           lab: {
-            title: labLessons[0]?.title || topic.title,
-            instructions: labLessons[0]?.content_markdown || topic.description || "Complete this lab exercise.",
-            codeSnippet: labLessons[0]?.lab_environment_template || "// Your code here",
-            userStoryId: `US-${(topic.module as any)?.module_number || '1'}${topic.topic_number}`
+            title: (labLessons[0]?.title as string) || topic.title,
+            instructions: (labLessons[0]?.content_markdown as string) || topic.description || "Complete this lab exercise.",
+            codeSnippet: (labLessons[0]?.lab_environment_template as string) || "// Your code here",
+            userStoryId: `US-${((topic.module as Record<string, unknown>)?.module_number as number) || 1}${topic.topic_number}`
           }
         }
       };
@@ -274,9 +274,8 @@ export const academyRouter = router({
         `)
         .eq('user_id', ctx.userId);
 
-      const labsCompleted = completions?.filter((c: any) => c.topic?.content_type === 'lab').length || 0;
-      const quizzesCompleted = completions?.filter((c: any) => c.topic?.content_type === 'quiz').length || 0;
-      const totalCompleted = completions?.length || 0;
+      const labsCompleted = completions?.filter((c: Record<string, unknown>) => (c.topic as Record<string, unknown>)?.content_type === 'lab').length || 0;
+      const quizzesCompleted = completions?.filter((c: Record<string, unknown>) => (c.topic as Record<string, unknown>)?.content_type === 'quiz').length || 0;
 
       // Calculate scores
       const techScore = Math.round(completionPercentage);
@@ -315,7 +314,7 @@ export const academyRouter = router({
           .eq('id', input.topicId)
           .single();
 
-        const courseId = (topic?.module as any)?.course_id;
+        const courseId = (topic?.module as Record<string, unknown>)?.course_id as string;
 
         const { data: enrollment } = await supabase
           .from('student_enrollments')

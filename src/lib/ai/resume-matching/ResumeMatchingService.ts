@@ -89,6 +89,39 @@ export interface IndexRequisitionInput {
 }
 
 /**
+ * Requisition embedding data
+ */
+interface RequisitionEmbedding {
+  requisitionId: string;
+  embedding: number[];
+  description: string;
+  requiredSkills: string[];
+  niceToHaveSkills: string[];
+  experienceLevel: string;
+}
+
+/**
+ * Candidate semantic match
+ */
+interface CandidateSemanticMatch {
+  candidate_id: string;
+  resume_text: string;
+  skills: string[];
+  experience_level: string;
+  availability: string;
+  similarity: number;
+}
+
+/**
+ * Matching accuracy result
+ */
+interface MatchingAccuracy {
+  accuracy: number;
+  total_matches: number;
+  relevant_matches: number;
+}
+
+/**
  * Resume Matching Service
  *
  * Features:
@@ -270,7 +303,7 @@ export class ResumeMatchingService {
   /**
    * Get requisition embedding from database
    */
-  private async getRequisitionEmbedding(requisitionId: string): Promise<any> {
+  private async getRequisitionEmbedding(requisitionId: string): Promise<RequisitionEmbedding | null> {
     const { data, error } = await supabase
       .from('requisition_embeddings')
       .select('*')
@@ -307,7 +340,7 @@ export class ResumeMatchingService {
     queryEmbedding: number[],
     topK: number,
     threshold: number
-  ): Promise<any[]> {
+  ): Promise<CandidateSemanticMatch[]> {
     try {
       const { data, error } = await supabase.rpc('search_candidates', {
         p_org_id: this.config.orgId,
@@ -340,8 +373,8 @@ export class ResumeMatchingService {
    * @returns Analyzed matches with scores
    */
   private async analyzeMatches(
-    requisition: any,
-    candidates: any[]
+    requisition: RequisitionEmbedding,
+    candidates: CandidateSemanticMatch[]
   ): Promise<CandidateMatch[]> {
     const matches: CandidateMatch[] = [];
 
@@ -498,7 +531,7 @@ Respond with valid JSON:
    * @param startDate - Start date for accuracy calculation
    * @returns Accuracy metrics
    */
-  async getAccuracy(startDate?: Date): Promise<any> {
+  async getAccuracy(startDate?: Date): Promise<MatchingAccuracy> {
     const start = startDate || new Date(Date.now() - 30 * 24 * 60 * 60 * 1000); // 30 days ago
 
     try {

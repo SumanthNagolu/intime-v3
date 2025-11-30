@@ -17,8 +17,8 @@ vi.mock('@supabase/supabase-js');
 
 describe('ActivityClassifier', () => {
   let classifier: ActivityClassifier;
-  let mockSupabase: any;
-  let mockOpenAI: any;
+  let mockSupabase: Record<string, unknown>;
+  let mockOpenAI: Record<string, unknown>;
 
   beforeEach(() => {
     // Mock Supabase client
@@ -48,8 +48,8 @@ describe('ActivityClassifier', () => {
 
     // Create classifier instance WITH mocked dependencies
     classifier = new ActivityClassifier(undefined, {
-      supabase: mockSupabase as any,
-      openai: mockOpenAI as any,
+      supabase: mockSupabase as never,
+      openai: mockOpenAI as never,
     });
   });
 

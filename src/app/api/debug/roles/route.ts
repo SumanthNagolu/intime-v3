@@ -25,9 +25,9 @@ export async function GET() {
       } : null,
       roles,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { error: 'Internal error', message: error.message },
+      { error: 'Internal error', message: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }

@@ -7,14 +7,13 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { format, differenceInDays } from 'date-fns';
 import {
   User,
   Mail,
   Phone,
   MapPin,
-  Calendar,
   Globe,
   Linkedin,
   Github,
@@ -42,18 +41,14 @@ import {
   Eye,
   Star,
   Lock,
-  Unlock,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Progress } from '@/components/ui/progress';
 import {
   Table,
   TableBody,
@@ -565,7 +560,7 @@ interface Address {
   isVerified: boolean;
 }
 
-export function AddressesSection({ talent, canEdit, addresses = [] }: SectionProps & { addresses?: Address[] }) {
+export function AddressesSection({ talent: _talent, canEdit, addresses = [] }: SectionProps & { addresses?: Address[] }) {
   return (
     <div className="space-y-6">
       <Card>
@@ -1172,7 +1167,7 @@ export function ReferencesSection({ canEdit, references = [] }: SectionProps & {
                       )}
                       {ref.feedbackSummary && (
                         <p className="text-sm mt-2 italic text-muted-foreground">
-                          "{ref.feedbackSummary}"
+                          &quot;{ref.feedbackSummary}&quot;
                         </p>
                       )}
                     </div>

@@ -244,7 +244,7 @@ export const useAppStore = create<AppState>()(
 
       checkKey: async () => {
         try {
-          const win = window as any;
+          const win = window as Window & { aistudio?: { hasSelectedApiKey?: () => Promise<boolean> } };
           if (win.aistudio && win.aistudio.hasSelectedApiKey) {
             const hasKey = await win.aistudio.hasSelectedApiKey();
             set({ hasKey });

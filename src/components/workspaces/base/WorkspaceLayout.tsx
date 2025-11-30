@@ -10,7 +10,6 @@
 import React, { useState, ReactNode } from 'react';
 import { ArrowLeft, MoreHorizontal, Star, StarOff, Share2, Archive, Trash2 } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -173,7 +172,6 @@ export function WorkspaceLayout({
   className,
   children,
 }: WorkspaceLayoutProps) {
-  const router = useRouter();
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id || 'overview');
 
   const sidebarWidthClasses = {

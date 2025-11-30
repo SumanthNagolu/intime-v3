@@ -168,7 +168,7 @@ export class EventBus {
       }
 
       const eventRow = result.rows[0];
-      const event: Event<any> = {
+      const event: Event<EventPayload> = {
         id: eventRow.id,
         type: eventRow.event_type,
         category: eventRow.event_category,
@@ -218,13 +218,14 @@ export class EventBus {
           );
 
           console.log(`[EventBus] Handler ${handlerInfo.name} processed event ${eventId} successfully`);
-        } catch (error: any) {
+        } catch (error: unknown) {
           console.error(`[EventBus] Handler ${handlerInfo.name} failed for event ${eventId}:`, error);
 
           // Mark event as failed for this handler
+          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
           await client.query(
             'SELECT mark_event_failed($1, $2, $3)',
-            [eventId, error.message, handlerInfo.subscriptionId]
+            [eventId, errorMessage, handlerInfo.subscriptionId]
           );
         }
       }

@@ -9,7 +9,7 @@ interface SqlRequest {
 
 interface SqlResponse {
   success: boolean;
-  rows?: any[];
+  rows?: Record<string, unknown>[];
   rowCount?: number;
   error?: string;
 }
@@ -91,13 +91,14 @@ Deno.serve(async (req) => {
           }
         }
       );
-    } catch (sqlError: any) {
+    } catch (sqlError: unknown) {
       await client.end();
 
+      const errorMessage = sqlError instanceof Error ? sqlError.message : 'Unknown SQL error';
       return new Response(
         JSON.stringify({
           success: false,
-          error: `SQL Error: ${sqlError.message}`
+          error: `SQL Error: ${errorMessage}`
         }),
         {
           status: 500,
@@ -105,11 +106,12 @@ Deno.serve(async (req) => {
         }
       );
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
       JSON.stringify({
         success: false,
-        error: error.message
+        error: errorMessage
       }),
       {
         status: 500,

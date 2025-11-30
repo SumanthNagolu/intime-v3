@@ -9,20 +9,7 @@
 
 import React, { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import {
-  Target,
-  Building2,
-  DollarSign,
-  Briefcase,
-  Users,
-  Send,
-  Plus,
-  Calendar,
-  TrendingUp,
-  Clock,
-} from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
   MetricWidget,

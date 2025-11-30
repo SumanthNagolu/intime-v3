@@ -88,7 +88,7 @@ export function WidgetRenderer({
   disabled = false,
   error,
   entity,
-  context,
+  context: _context,
   className,
 }: WidgetRendererProps) {
   // Determine which widget to use

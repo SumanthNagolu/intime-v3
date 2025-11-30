@@ -279,7 +279,7 @@ describe('Quiz Engine System', () => {
         p_topic_id: testTopicId,
       });
 
-      const attemptNumbers = attempts!.map((a: any) => a.attempt_number);
+      const attemptNumbers = attempts!.map((a: { attempt_number: number }) => a.attempt_number);
       expect(attemptNumbers).toContain(1);
       expect(attemptNumbers).toContain(2);
       expect(attemptNumbers).toContain(3);
@@ -324,7 +324,7 @@ describe('Quiz Engine System', () => {
       });
 
       // Try to start 4th attempt (should fail)
-      const { data, error } = await supabase.rpc('start_quiz_attempt', {
+      const { data: _data, error } = await supabase.rpc('start_quiz_attempt', {
         p_user_id: testUserId,
         p_topic_id: testTopicId,
         p_enrollment_id: testEnrollmentId,

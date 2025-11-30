@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { MOCK_MODULES, COHORT_ACTIVITY } from '@/lib/academy/constants';
 import { ChevronRight, Target, Briefcase, Terminal } from 'lucide-react';
@@ -12,7 +11,7 @@ import { cn } from '@/lib/utils';
 export const CandidateDashboard: React.FC = () => {
   const router = useRouter();
   const { isSprintActive, joinSprint } = useAppStore();
-  const [modules, setModules] = useState<AcademyModule[]>(MOCK_MODULES);
+  const [modules] = useState<AcademyModule[]>(MOCK_MODULES);
   const [isSyncing, setIsSyncing] = useState(false);
   const [liveActivity, setLiveActivity] = useState(COHORT_ACTIVITY);
 
@@ -24,6 +23,7 @@ export const CandidateDashboard: React.FC = () => {
     if (Object.keys(academyProgress).length === 0) {
       setAcademyProgress({ 'm1-l1': { status: 'unlocked' } });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export const CandidateDashboard: React.FC = () => {
       };
   });
 
-  let currentModule = mergedModules.find(m => m.progress < 100) || mergedModules[mergedModules.length - 1];
+  const currentModule = mergedModules.find(m => m.progress < 100) || mergedModules[mergedModules.length - 1];
   let currentLesson = currentModule.lessons.find(l => l.status === 'unlocked' || l.status === 'current') || currentModule.lessons[currentModule.lessons.length - 1];
   if (!currentLesson) currentLesson = currentModule.lessons[0];
 

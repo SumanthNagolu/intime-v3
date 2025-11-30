@@ -3,9 +3,8 @@
 
 import React, { useState } from 'react';
 import { useAppStore } from '../../lib/store';
-import { Clock, AlertTriangle, CheckCircle, Briefcase, MapPin, DollarSign, Calendar, FileText, X, ChevronRight, Upload, Award, Filter, ArrowUpRight } from 'lucide-react';
+import { Clock, AlertTriangle, CheckCircle, MapPin, DollarSign, Calendar, FileText, X, ChevronRight, Upload, Award, Filter, ArrowUpRight } from 'lucide-react';
 import { Job } from '../../types';
-import Link from 'next/link';
 
 // --- TYPES & MOCK DATA ---
 
@@ -241,7 +240,7 @@ const ActivityHistoryModal: React.FC<{ isOpen: boolean; onClose: () => void; ini
 
                                     {activity.notes && (
                                         <div className="p-3 bg-yellow-50 border border-yellow-100 rounded-lg text-xs text-yellow-700 italic">
-                                            " {activity.notes} "
+                                            &quot; {activity.notes} &quot;
                                         </div>
                                     )}
 

@@ -102,7 +102,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ type: string; id: string }>;
 }) {
-  const { type, id } = await params;
+  const { type } = await params;
   const normalizedType = WORKSPACE_TYPES[type as WorkspaceType];
 
   if (!normalizedType) {
@@ -162,9 +162,12 @@ export default async function WorkspacePage({
 
     const propName = propMap[normalizedType as UnifiedEntityType];
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const props = { [propName]: id } as any;
+
     return (
       <Suspense fallback={<WorkspaceLoading />}>
-        <UnifiedComponent {...{ [propName]: id } as any} />
+        <UnifiedComponent {...props} />
       </Suspense>
     );
   }
@@ -178,10 +181,12 @@ export default async function WorkspacePage({
 
   // Map prop names based on entity type for legacy components
   const propName = `${normalizedType}Id` as const;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const props = { [propName]: id } as any;
 
   return (
     <Suspense fallback={<WorkspaceLoading />}>
-      <WorkspaceComponent {...{ [propName]: id } as any} />
+      <WorkspaceComponent {...props} />
     </Suspense>
   );
 }

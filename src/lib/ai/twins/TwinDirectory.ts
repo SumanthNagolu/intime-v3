@@ -13,7 +13,7 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import OpenAI from 'openai';
 import type { Database } from '@/types/supabase';
-import type { TwinRole, TWIN_HIERARCHY } from '@/types/productivity';
+import type { TwinRole } from '@/types/productivity';
 import { EmployeeTwin } from './EmployeeTwin';
 
 // ============================================================================
@@ -471,7 +471,9 @@ Respond with JSON: { "targetRole": "role_name", "reasoning": "brief explanation"
     latencyMs: number;
   }): Promise<void> {
     try {
-      await (this.supabase.from as any)('twin_conversations').insert({
+      // Note: twin_conversations table is not in the Database type yet
+      // Using type assertion as a temporary solution until table is added to schema
+      await (this.supabase.from as (table: string) => unknown)('twin_conversations').insert({
         org_id: this.orgId,
         initiator_user_id: this.userId,
         initiator_role: data.initiatorRole,

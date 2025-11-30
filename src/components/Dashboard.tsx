@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { MOCK_MODULES, COHORT_ACTIVITY } from '@/lib/constants';
-import { ChevronRight, Lock, Clock, Target, Briefcase, Activity, Users, Zap, Calendar, Check, Loader2, ArrowUpRight, Terminal, TrendingUp, Award, Sparkles } from 'lucide-react';
+import { ChevronRight, Clock, Target, Briefcase, Activity, Users, Zap, Check, Loader2, Terminal, TrendingUp, Award, Sparkles } from 'lucide-react';
 import { Module } from '@/lib/types';
 import { useAppStore } from '@/lib/store';
 import { cn } from '@/lib/utils';
@@ -14,7 +13,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 export const Dashboard: React.FC = () => {
   const router = useRouter();
   const { isSprintActive, joinSprint, academyProgress, initializeAcademy } = useAppStore();
-  const [modules, setModules] = useState<Module[]>(MOCK_MODULES);
+  const [modules] = useState<Module[]>(MOCK_MODULES);
   const [isSyncing, setIsSyncing] = useState(false);
   const [liveActivity, setLiveActivity] = useState(COHORT_ACTIVITY);
   const [animatedStats, setAnimatedStats] = useState({ techScore: 0, portfolioScore: 0, commScore: 0, overall: 0 });
@@ -23,6 +22,7 @@ export const Dashboard: React.FC = () => {
     if (Object.keys(academyProgress).length === 0) {
         initializeAcademy();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export const Dashboard: React.FC = () => {
       };
   });
 
-  let currentModule = mergedModules.find(m => m.progress < 100) || mergedModules[mergedModules.length - 1];
+  const currentModule = mergedModules.find(m => m.progress < 100) || mergedModules[mergedModules.length - 1];
   let currentLesson = currentModule.lessons.find(l => l.status === 'unlocked' || l.status === 'completed') || currentModule.lessons[currentModule.lessons.length - 1];
   if (!currentLesson) currentLesson = currentModule.lessons[0];
 
@@ -144,7 +144,7 @@ export const Dashboard: React.FC = () => {
           </h1>
 
           <p className="text-body-lg text-charcoal-600 max-w-2xl leading-relaxed border-l-4 border-gold-500 pl-6 italic">
-            "Consistency is the bridge between where you are and where you want to be."
+            &quot;Consistency is the bridge between where you are and where you want to be.&quot;
           </p>
         </div>
 

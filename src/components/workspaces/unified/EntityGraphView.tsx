@@ -14,7 +14,7 @@
 
 'use client';
 
-import React, { useCallback, useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import {
   ReactFlow,
   Node,
@@ -41,8 +41,6 @@ import {
   Users,
   Maximize2,
   Minimize2,
-  ZoomIn,
-  ZoomOut,
   type LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -275,7 +273,7 @@ export function EntityGraphView({
   );
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialLayout.nodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialLayout.edges);
+  const [edges, , onEdgesChange] = useEdgesState(initialLayout.edges);
 
   // Update nodes with click handler
   useEffect(() => {

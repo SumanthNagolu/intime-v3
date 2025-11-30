@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import { useAppStore } from '../../lib/store';
-import { ChevronLeft, Building2, Users, Briefcase, Target, Plus, Mail, Phone, ArrowUpRight, Activity, Zap, Star } from 'lucide-react';
+import { ChevronLeft, Building2, Plus, Mail, Phone, ArrowUpRight, Activity, Zap } from 'lucide-react';
 
 export const AccountDetail: React.FC = () => {
   const { accountId } = useParams();
@@ -59,10 +59,10 @@ export const AccountDetail: React.FC = () => {
 
       {/* Tabs */}
       <div className="flex gap-6 border-b border-stone-200 mb-8">
-          {['Overview', 'Jobs', 'Pipeline'].map(tab => (
+          {(['Overview', 'Jobs', 'Pipeline'] as const).map(tab => (
               <button
                  key={tab}
-                 onClick={() => setActiveTab(tab as any)}
+                 onClick={() => setActiveTab(tab)}
                  className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors ${
                      activeTab === tab ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
                  }`}

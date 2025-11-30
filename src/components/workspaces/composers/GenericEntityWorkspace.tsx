@@ -143,7 +143,7 @@ function QuickActions({ actions }: { actions: WorkspaceAction[] }) {
 export function GenericEntityWorkspace({
   entityType,
   entityId,
-  entityName,
+  entityName: _entityName,
   isLoading = false,
   error = null,
   backLink,

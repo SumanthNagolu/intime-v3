@@ -4,15 +4,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { MOCK_MODULES } from '@/lib/constants';
-import { ChevronRight, ChevronLeft, CheckCircle, PlayCircle, Lock, Terminal, BookOpen, Star, ShieldCheck, Play, Pause, Copy, RotateCcw, Upload, FileCode, Sparkles, Maximize2, Monitor, Download, FileText, Server, Database } from 'lucide-react';
-import { Lesson } from '@/lib/types';
+import { ChevronRight, ChevronLeft, CheckCircle, PlayCircle, Terminal, BookOpen, Star, ShieldCheck, Play, Pause, Copy, RotateCcw, Upload, FileCode, Sparkles, Monitor, Download, FileText, Server } from 'lucide-react';
+import { Lesson, QuizQuestion, QuizOption, Slide } from '@/lib/types';
 import { useAppStore } from '@/lib/store';
 import { generateMentorResponse } from '@/services/geminiService';
 
 type Stage = 'theory' | 'demo' | 'quiz' | 'lab';
 
 // Shuffle utility
-const shuffleArray = (array: any[]) => {
+const shuffleArray = <T,>(array: T[]): T[] => {
     let currentIndex = array.length, randomIndex;
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -42,7 +42,7 @@ export const LessonView: React.FC = () => {
   const [canCompleteDemo, setCanCompleteDemo] = useState(false);
 
   // Quiz State
-  const [randomizedQuestions, setRandomizedQuestions] = useState<any[]>([]);
+  const [randomizedQuestions, setRandomizedQuestions] = useState<QuizQuestion[]>([]);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [showQuizFeedback, setShowQuizFeedback] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
@@ -70,14 +70,14 @@ export const LessonView: React.FC = () => {
         if (progress?.status === 'completed') {
             setCompletedStages(['theory', 'demo', 'quiz', 'lab']);
         }
-        
+
         // Initialize lab code
         if (lesson.content.lab.codeSnippet && !labCode) {
             setLabCode(lesson.content.lab.codeSnippet);
         }
       }
     }
-  }, [moduleId, lessonId, module, academyProgress, lessonKey]);
+  }, [moduleId, lessonId, module, academyProgress, lessonKey, labCode]);
 
   // Initialize Quiz with Randomization
   useEffect(() => {
@@ -88,7 +88,7 @@ export const LessonView: React.FC = () => {
 
   // Video Simulator Logic
   useEffect(() => {
-      let interval: any;
+      let interval: NodeJS.Timeout | undefined;
       if (isVideoPlaying && videoProgress < 100) {
           interval = setInterval(() => {
               setVideoProgress(p => {
@@ -214,12 +214,12 @@ export const LessonView: React.FC = () => {
               
               const aiResponse = await generateMentorResponse([{role: 'user', content: prompt}], prompt);
               feedback = aiResponse;
-          } catch (e) {
+          } catch {
               console.log("AI grading failed, using mock");
           }
       } else {
           // Mock Logic for demo
-          feedback = "Approved: Great job configuring the Coverage Pattern. You correctly set the existence type to 'Electable' and included the required OptionCovTerm.";
+          feedback = "Approved: Great job configuring the Coverage Pattern. You correctly set the existence type to &apos;Electable&apos; and included the required OptionCovTerm.";
       }
 
       setLabFeedback(feedback);
@@ -304,12 +304,12 @@ export const LessonView: React.FC = () => {
                     <div className="flex-1 flex flex-col justify-center relative z-10">
                        <span className="text-rust font-mono text-xs mb-4 block">SLIDE 0{currentSlide + 1} / 0{activeLesson.content.theory.slides.length}</span>
                        <h2 className="text-4xl md:text-5xl font-serif font-bold leading-tight mb-8">
-                           {typeof activeLesson.content.theory.slides[currentSlide] === 'string' 
-                             ? activeLesson.content.theory.slides[currentSlide] 
-                             : (activeLesson.content.theory.slides[currentSlide] as any).title}
+                           {typeof activeLesson.content.theory.slides[currentSlide] === 'string'
+                             ? activeLesson.content.theory.slides[currentSlide]
+                             : (activeLesson.content.theory.slides[currentSlide] as Slide).title}
                        </h2>
                        <div className="space-y-6">
-                          {(activeLesson.content.theory.slides[currentSlide] as any).bullets?.map((bullet: string, i: number) => (
+                          {(activeLesson.content.theory.slides[currentSlide] as Slide).bullets?.map((bullet: string, i: number) => (
                               <div key={i} className="flex items-start gap-4 text-stone-300 text-lg font-light animate-slide-up" style={{animationDelay: `${i * 100}ms`}}>
                                  <div className="w-1.5 h-1.5 bg-rust rounded-full mt-2.5 shrink-0"></div>
                                  <p>{bullet}</p>
@@ -361,7 +361,7 @@ export const LessonView: React.FC = () => {
 
                      <div className={`flex-1 overflow-y-auto`}>
                         <p className="font-serif text-xl text-charcoal leading-relaxed mb-6">
-                           "{(activeLesson.content.theory.slides[currentSlide] as any).context || "Focus on the relationship between these entities. In a production environment, misconfiguring this leads to significant performance drag."}"
+                           &quot;{(activeLesson.content.theory.slides[currentSlide] as Slide).context || "Focus on the relationship between these entities. In a production environment, misconfiguring this leads to significant performance drag."}&quot;
                         </p>
                         <div className="bg-white p-6 rounded-xl border border-stone-100 shadow-sm">
                            <h4 className="font-bold text-xs uppercase text-stone-400 mb-2">Real World Impact</h4>
@@ -458,7 +458,7 @@ export const LessonView: React.FC = () => {
                  <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/90 to-transparent p-12 pt-32 transition-transform duration-500 ${canCompleteDemo ? 'translate-y-0' : 'translate-y-full opacity-0'}`}>
                      <div className="flex flex-col items-center text-center">
                          <p className="text-stone-300 font-serif text-2xl leading-relaxed max-w-3xl italic opacity-80 mb-8">
-                             "Notice how we defined the Coverage Pattern before adding the Option terms. That hierarchy is critical."
+                             &quot;Notice how we defined the Coverage Pattern before adding the Option terms. That hierarchy is critical.&quot;
                          </p>
                          <button 
                             onClick={() => completeStage('demo')}
@@ -498,7 +498,7 @@ export const LessonView: React.FC = () => {
                                  <div key={q.id} className="animate-slide-up" style={{ animationDelay: `${idx * 100}ms` }}>
                                      <p className="text-lg font-medium text-charcoal mb-4 font-serif"><span className="text-rust mr-2">{idx+1}.</span> {q.question}</p>
                                      <div className="space-y-3 pl-6">
-                                         {q.options.map((opt: any) => (
+                                         {q.options.map((opt: QuizOption) => (
                                              <button
                                                  key={opt.id}
                                                  onClick={() => handleQuizAnswer(q.id, opt.id)}

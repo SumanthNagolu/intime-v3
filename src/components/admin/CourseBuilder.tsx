@@ -2,7 +2,7 @@
 
 
 import React, { useState } from 'react';
-import { Layers, Plus, BookOpen, Video, ShieldCheck, Terminal, Save, ChevronLeft, GripVertical, Trash2, Upload, FileText, CheckSquare, Play, ListPlus } from 'lucide-react';
+import { Plus, BookOpen, Video, ShieldCheck, Terminal, ChevronLeft, GripVertical, Trash2, Upload, Play, ListPlus } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -84,7 +84,7 @@ export const CourseBuilder: React.FC = () => {
                       ].map(tab => (
                           <button
                             key={tab.id}
-                            onClick={() => setActiveTab(tab.id as any)}
+                            onClick={() => setActiveTab(tab.id as 'theory' | 'demo' | 'verify' | 'build')}
                             className={`pb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors ${
                                 activeTab === tab.id 
                                 ? 'border-rust text-rust' 

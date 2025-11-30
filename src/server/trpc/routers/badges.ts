@@ -114,7 +114,7 @@ export const badgeRouter = router({
    */
   awardBadge: adminProcedure
     .input(AwardBadgeManualInputSchema)
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ ctx: _ctx, input }) => {
       const badgeId = await awardBadgeManual(input.userId, input.badgeSlug);
       return { success: true, badgeId };
     }),
@@ -125,7 +125,7 @@ export const badgeRouter = router({
    */
   checkTrigger: adminProcedure
     .input(CheckBadgeAwardInputSchema)
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx: _ctx, input }) => {
       const newBadges = await checkAndAwardBadges(
         input.userId,
         input.triggerType,

@@ -144,7 +144,7 @@ export function useSubmission(id: string | undefined, options: SubmissionQueryOp
  * ```
  */
 export function useSubmissionPipeline(options: PipelineQueryOptions = {}) {
-  const { enabled = true, jobId, accountId } = options;
+  const { enabled = true, jobId, accountId: _accountId } = options;
 
   const query = trpc.ats.submissions.list.useQuery(
     {

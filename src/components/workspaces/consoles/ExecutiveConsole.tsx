@@ -23,11 +23,8 @@ import {
   PieChart,
   Activity,
   Calendar,
-  Globe,
-  Percent,
-  Clock,
 } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
@@ -64,13 +61,6 @@ const mockTopClients = [
   { name: 'CloudScale Systems', revenue: 342000, placements: 8, change: 15 },
   { name: 'DataForge', revenue: 278000, placements: 6, change: -5 },
   { name: 'InnovateTech', revenue: 215000, placements: 5, change: 42 },
-];
-
-const mockQuarterlyTrend = [
-  { quarter: 'Q1', revenue: 580000, placements: 11 },
-  { quarter: 'Q2', revenue: 620000, placements: 13 },
-  { quarter: 'Q3', revenue: 710000, placements: 14 },
-  { quarter: 'Q4 (proj)', revenue: 540000, placements: 10 },
 ];
 
 const mockKPIs = [

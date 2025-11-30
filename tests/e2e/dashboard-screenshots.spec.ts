@@ -3,7 +3,7 @@
  * Captures screenshots of all role-specific dashboards for verification.
  */
 
-import { test, expect } from '@playwright/test';
+import { test, type Page } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -23,14 +23,23 @@ const TEST_USERS = {
 
 const SCREENSHOT_DIR = 'test-results/dashboard-screenshots';
 
-async function loginAndCapture(page: any, user: typeof TEST_USERS.ceo, outputName: string) {
-  const results = {
+interface CaptureResult {
+  user: string;
+  role: string;
+  loginSuccess: boolean;
+  screenshotPath: string;
+  dashboardElements: string[];
+  errors: string[];
+}
+
+async function loginAndCapture(page: Page, user: typeof TEST_USERS.ceo, outputName: string): Promise<CaptureResult> {
+  const results: CaptureResult = {
     user: user.email,
     role: user.role,
     loginSuccess: false,
     screenshotPath: '',
-    dashboardElements: [] as string[],
-    errors: [] as string[],
+    dashboardElements: [],
+    errors: [],
   };
 
   try {
@@ -99,15 +108,19 @@ async function loginAndCapture(page: any, user: typeof TEST_USERS.ceo, outputNam
     await page.screenshot({ path: screenshotPath, fullPage: true });
     results.screenshotPath = screenshotPath;
 
-  } catch (error: any) {
-    results.errors.push(error.message);
+  } catch (error) {
+    if (error instanceof Error) {
+      results.errors.push(error.message);
+    } else {
+      results.errors.push(String(error));
+    }
   }
 
   return results;
 }
 
 test.describe('Dashboard Screenshots - All Roles', () => {
-  const allResults: any[] = [];
+  const allResults: CaptureResult[] = [];
 
   test.afterAll(async () => {
     // Generate summary report

@@ -2,7 +2,7 @@
 
 
 import React, { useState } from 'react';
-import { Target, Star, Users, ArrowUpRight, MessageSquare, CheckCircle, Plus, Calendar, X, Edit2, MoreHorizontal, AlertCircle, FileText } from 'lucide-react';
+import { Target, CheckCircle, Plus, X, FileText } from 'lucide-react';
 
 // --- MODALS ---
 
@@ -63,7 +63,15 @@ const LaunchCycleModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
     );
 };
 
-const CycleDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; cycle: any }> = ({ isOpen, onClose, cycle }) => {
+interface Cycle {
+    id: number;
+    name: string;
+    status: string;
+    dates: string;
+    completion: number;
+}
+
+const CycleDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; cycle: Cycle | null }> = ({ isOpen, onClose, cycle }) => {
     if (!isOpen || !cycle) return null;
 
     return (
@@ -113,7 +121,15 @@ const CycleDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; cycle: 
     );
 };
 
-const GoalDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; goal: any }> = ({ isOpen, onClose, goal }) => {
+interface Goal {
+    id: number;
+    title: string;
+    status: string;
+    progress: number;
+    owner: string;
+}
+
+const GoalDetailModal: React.FC<{ isOpen: boolean; onClose: () => void; goal: Goal | null }> = ({ isOpen, onClose, goal }) => {
     if (!isOpen || !goal) return null;
 
     return (
@@ -214,10 +230,10 @@ export const PerformanceReviews: React.FC = () => {
 
        {/* Tabs */}
        <div className="flex gap-6 border-b border-stone-100 mb-8">
-          {['Cycles', 'Goals', 'Feedback'].map(tab => (
+          {(['Cycles', 'Goals', 'Feedback'] as const).map(tab => (
               <button
                  key={tab}
-                 onClick={() => setActiveTab(tab as any)}
+                 onClick={() => setActiveTab(tab)}
                  className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors ${
                      activeTab === tab ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
                  }`}
@@ -236,7 +252,7 @@ export const PerformanceReviews: React.FC = () => {
 
 const ReviewCyclesView: React.FC = () => {
     const [isLaunchOpen, setIsLaunchOpen] = useState(false);
-    const [selectedCycle, setSelectedCycle] = useState<any>(null);
+    const [selectedCycle, setSelectedCycle] = useState<Cycle | null>(null);
 
     const cycles = [
         { id: 1, name: 'Q4 2025 Performance Review', status: 'Active', dates: 'Dec 1 - Dec 31, 2025', completion: 68 },
@@ -314,7 +330,7 @@ const ReviewCyclesView: React.FC = () => {
 };
 
 const CompanyGoalsView: React.FC = () => {
-    const [selectedGoal, setSelectedGoal] = useState<any>(null);
+    const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null);
 
     const goals = [
         { id: 1, title: 'Expand Engineering Team', status: 'On Track', progress: 85, owner: 'CTO' },

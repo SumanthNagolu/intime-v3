@@ -7,7 +7,6 @@ import {
   FileText,
   Building2,
   ArrowRight,
-  ArrowDown,
   CheckCircle2,
   Shield,
   Clock,
@@ -17,7 +16,6 @@ import {
   Users,
   MapPin,
   Briefcase,
-  TrendingUp,
   ChevronRight,
   Star,
   Scale
@@ -157,6 +155,7 @@ export const CrossBorderPage: React.FC = () => {
       stats.success.start();
       stats.hires.start();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statsSection.inView]);
 
   // Scroll-based page flip effect
@@ -762,7 +761,7 @@ export const CrossBorderPage: React.FC = () => {
                 </div>
 
                 <blockquote className="text-xl md:text-2xl font-heading text-charcoal-800 leading-relaxed mb-8">
-                  "The cross-border team handled my H1B transfer seamlessly. From India to a senior role in California in 90 days. They managed every detail of the process—legal paperwork, relocation support, even helping my family settle in."
+                  &quot;The cross-border team handled my H1B transfer seamlessly. From India to a senior role in California in 90 days. They managed every detail of the process—legal paperwork, relocation support, even helping my family settle in.&quot;
                 </blockquote>
 
                 <div className="flex flex-wrap gap-4">

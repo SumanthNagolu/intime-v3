@@ -1,10 +1,10 @@
 'use client';
 
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, Database, ArrowRight, Cpu, CheckCircle, Loader2, Briefcase, User, Zap, Plus, ExternalLink, Search, Filter } from 'lucide-react';
+import { ChevronLeft, Database, ArrowRight, Loader2, User, Plus, Search, Filter } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 import { Job } from '../../types';
 

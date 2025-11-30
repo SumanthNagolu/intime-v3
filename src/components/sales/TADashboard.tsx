@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter, usePathname, useParams } from 'next/navigation';
+import { usePathname, useParams } from 'next/navigation';
 import { useAppStore } from '../../lib/store';
-import { TrendingUp, Megaphone, Target, Building2, UserPlus, Filter, ArrowRight, Database, Activity, Users, Briefcase, Plus, LayoutDashboard, DollarSign, Zap, CheckCircle, TrendingDown } from 'lucide-react';
+import { TrendingUp, Megaphone, Target, Building2, UserPlus, ArrowRight, Activity, Users, Plus, DollarSign, Zap, CheckCircle } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/card';
 import { cn } from '../../lib/utils';
 
@@ -74,6 +74,7 @@ const SalesConsole: React.FC = () => {
     }, duration / steps);
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode]);
 
   return (
@@ -255,7 +256,7 @@ const SalesConsole: React.FC = () => {
                       {(mode === 'business' ? leads.slice(0,3) : [
                           { id: 'c1', name: 'Priya Sharma', role: 'Sr. Dev', status: 'Active' },
                           { id: 'c2', name: 'Mike Chen', role: 'Architect', status: 'New' }
-                      ]).map((item: any) => (
+                      ] as Array<{ id: string; name: string; company?: string; role?: string; status: string; contact?: string }>).map((item) => (
                           <div
                               key={item.id}
                               className="flex items-center justify-between p-6 bg-charcoal-50 rounded-xl hover:bg-forest-50 transition-all duration-300 border border-charcoal-100 hover:border-forest-200 hover:-translate-y-0.5 group cursor-pointer"
@@ -379,37 +380,25 @@ const SalesConsole: React.FC = () => {
 
 export const TADashboard: React.FC = () => {
   const pathname = usePathname();
-  const router = useRouter();
   const { leadId, dealId } = useParams();
   const { addLead, addDeal, leads } = useAppStore();
-  
+
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
   const [isDealModalOpen, setIsDealModalOpen] = useState(false);
 
   // Router Logic
   let content;
-  let actionButton = null;
-  
+
   const currentPath = pathname;
 
   if (leadId && currentPath.includes('/leads/')) {
       content = <LeadDetail />;
   } else if (currentPath.includes('/leads')) {
       content = <LeadsList />;
-      actionButton = (
-          <button onClick={() => setIsLeadModalOpen(true)} className="px-6 py-3 bg-charcoal text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors shadow-lg flex items-center gap-2">
-              <Plus size={16} /> Add Lead
-          </button>
-      );
   } else if (dealId && currentPath.includes('/deals/')) {
       content = <DealDetail />;
   } else if (currentPath.includes('/deals')) {
       content = <DealsPipeline />;
-      actionButton = (
-          <button onClick={() => setIsDealModalOpen(true)} className="px-6 py-3 bg-charcoal text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors shadow-lg flex items-center gap-2">
-              <Plus size={16} /> New Deal
-          </button>
-      );
   } else if (currentPath.includes('/campaigns')) {
       content = <CampaignManager />;
   } else if (currentPath.includes('/prospects')) {
@@ -420,14 +409,7 @@ export const TADashboard: React.FC = () => {
       content = <SalesAnalytics />;
   } else {
       content = <SalesConsole />;
-      actionButton = (
-          <button onClick={() => setIsLeadModalOpen(true)} className="px-6 py-3 bg-charcoal text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-rust transition-colors shadow-lg flex items-center gap-2">
-              <Plus size={16} /> Add Lead
-          </button>
-      );
   }
-
-  const isActive = (path: string) => pathname.includes(path);
 
   return (
     <div>

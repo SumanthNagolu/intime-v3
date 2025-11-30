@@ -40,57 +40,79 @@ interface ExistingUser {
   fullName: string;
   roleName: string;
   roleDisplayName: string;
+  additionalRoles?: string[]; // For users with multiple roles (e.g., manager + recruiter)
 }
 
-// Your existing users in Supabase
+// Admin, HR + 8 new team members (10 total)
 const EXISTING_USERS: ExistingUser[] = [
-  {
-    email: 'ceo@intime.com',
-    fullName: 'InTime CEO',
-    roleName: 'super_admin',
-    roleDisplayName: 'CEO / Super Admin',
-  },
+  // Core Users
   {
     email: 'admin@intime.com',
-    fullName: 'InTime Admin',
+    fullName: 'System Administrator',
     roleName: 'admin',
     roleDisplayName: 'Admin',
   },
   {
-    email: 'hr_admin@intime.com',
-    fullName: 'HR Administrator',
+    email: 'hr@intime.com',
+    fullName: 'HR Manager',
     roleName: 'hr_manager',
     roleDisplayName: 'HR Manager',
   },
+  // Recruiting Pod 1
   {
-    email: 'jr_rec@intime.com',
-    fullName: 'Junior Recruiter',
+    email: 'rec_mgr1@intime.com',
+    fullName: 'Recruiting Manager 1',
+    roleName: 'recruiter',
+    roleDisplayName: 'Recruiting Manager',
+    additionalRoles: ['recruiting_manager'],
+  },
+  {
+    email: 'rec1@intime.com',
+    fullName: 'Recruiter 1',
     roleName: 'recruiter',
     roleDisplayName: 'Recruiter',
   },
+  // Recruiting Pod 2
   {
-    email: 'jr_bs@intime.com',
-    fullName: 'Junior Bench Sales',
+    email: 'rec_mgr2@intime.com',
+    fullName: 'Recruiting Manager 2',
+    roleName: 'recruiter',
+    roleDisplayName: 'Recruiting Manager',
+    additionalRoles: ['recruiting_manager'],
+  },
+  {
+    email: 'rec2@intime.com',
+    fullName: 'Recruiter 2',
+    roleName: 'recruiter',
+    roleDisplayName: 'Recruiter',
+  },
+  // Bench Sales Pod 1
+  {
+    email: 'bs_mgr1@intime.com',
+    fullName: 'Bench Sales Manager 1',
+    roleName: 'bench_sales',
+    roleDisplayName: 'Bench Sales Manager',
+    additionalRoles: ['bench_sales_manager'],
+  },
+  {
+    email: 'bs1@intime.com',
+    fullName: 'Bench Sales Rep 1',
     roleName: 'bench_sales',
     roleDisplayName: 'Bench Sales',
   },
+  // Bench Sales Pod 2
   {
-    email: 'jr_ta@intime.com',
-    fullName: 'Junior Talent Acquisition',
-    roleName: 'ta_sales',
-    roleDisplayName: 'Talent Acquisition / Sales',
+    email: 'bs_mgr2@intime.com',
+    fullName: 'Bench Sales Manager 2',
+    roleName: 'bench_sales',
+    roleDisplayName: 'Bench Sales Manager',
+    additionalRoles: ['bench_sales_manager'],
   },
   {
-    email: 'trainer@intime.com',
-    fullName: 'InTime Trainer',
-    roleName: 'trainer',
-    roleDisplayName: 'Trainer',
-  },
-  {
-    email: 'student@intime.com',
-    fullName: 'InTime Student',
-    roleName: 'student',
-    roleDisplayName: 'Student',
+    email: 'bs2@intime.com',
+    fullName: 'Bench Sales Rep 2',
+    roleName: 'bench_sales',
+    roleDisplayName: 'Bench Sales',
   },
 ];
 
@@ -108,6 +130,8 @@ const SYSTEM_ROLES = [
   { name: 'recruiter', displayName: 'Recruiter', hierarchyLevel: 2, isSystemRole: true, colorCode: '#2563eb' },
   { name: 'bench_sales', displayName: 'Bench Sales', hierarchyLevel: 2, isSystemRole: true, colorCode: '#7c3aed' },
   { name: 'ta_sales', displayName: 'Talent Acquisition / Sales', hierarchyLevel: 2, isSystemRole: true, colorCode: '#0891b2' },
+  { name: 'recruiting_manager', displayName: 'Recruiting Manager', hierarchyLevel: 2, isSystemRole: true, colorCode: '#1d4ed8' },
+  { name: 'bench_sales_manager', displayName: 'Bench Sales Manager', hierarchyLevel: 2, isSystemRole: true, colorCode: '#6d28d9' },
   { name: 'trainer', displayName: 'Trainer', hierarchyLevel: 3, isSystemRole: true, colorCode: '#ca8a04' },
   { name: 'student', displayName: 'Student', hierarchyLevel: 4, isSystemRole: true, colorCode: '#64748b' },
   { name: 'employee', displayName: 'Employee', hierarchyLevel: 3, isSystemRole: true, colorCode: '#059669' },
@@ -147,6 +171,8 @@ const PERMISSIONS = [
   { resource: 'submissions', action: 'create', scope: 'all', displayName: 'Create Submissions', isDangerous: false },
   { resource: 'submissions', action: 'read', scope: 'all', displayName: 'View All Submissions', isDangerous: false },
   { resource: 'submissions', action: 'update', scope: 'all', displayName: 'Update Submissions', isDangerous: false },
+  { resource: 'submissions', action: 'approve', scope: 'team', displayName: 'Approve Team Submissions', isDangerous: false },
+  { resource: 'submissions', action: 'reject', scope: 'team', displayName: 'Reject Team Submissions', isDangerous: false },
   
   // Placements
   { resource: 'placements', action: 'create', scope: 'all', displayName: 'Create Placements', isDangerous: false },
@@ -169,6 +195,12 @@ const PERMISSIONS = [
   { resource: 'payroll', action: 'manage', scope: 'all', displayName: 'Manage Payroll', isDangerous: true },
   { resource: 'reviews', action: 'manage', scope: 'all', displayName: 'Manage Reviews', isDangerous: false },
   { resource: 'pods', action: 'manage', scope: 'all', displayName: 'Manage Pods', isDangerous: false },
+  { resource: 'pods', action: 'read', scope: 'team', displayName: 'View Own Pod', isDangerous: false },
+  { resource: 'pods', action: 'update', scope: 'team', displayName: 'Update Own Pod', isDangerous: false },
+
+  // Team-scoped permissions (for managers)
+  { resource: 'users', action: 'read', scope: 'team', displayName: 'View Team Members', isDangerous: false },
+  { resource: 'analytics', action: 'read', scope: 'team', displayName: 'View Team Analytics', isDangerous: false },
   
   // TA/Sales specific
   { resource: 'campaigns', action: 'create', scope: 'all', displayName: 'Create Campaigns', isDangerous: false },
@@ -224,6 +256,18 @@ const ROLE_PERMISSIONS: Record<string, string[]> = {
     'hotlists:create:all', 'hotlists:send:all',
     'submissions:create:all', 'submissions:read:all', 'submissions:update:all',
     'analytics:read:all',
+  ],
+  recruiting_manager: [
+    // Team-scoped management permissions (in addition to recruiter role)
+    'submissions:approve:team', 'submissions:reject:team',
+    'pods:read:team', 'pods:update:team',
+    'users:read:team', 'analytics:read:team',
+  ],
+  bench_sales_manager: [
+    // Team-scoped management permissions (in addition to bench_sales role)
+    'submissions:approve:team', 'submissions:reject:team',
+    'pods:read:team', 'pods:update:team',
+    'users:read:team', 'analytics:read:team',
   ],
   ta_sales: [
     'users:read:own', 'users:update:own',
@@ -355,7 +399,7 @@ async function seedPermissions(): Promise<Map<string, string>> {
   
   for (const perm of PERMISSIONS) {
     const permKey = `${perm.resource}:${perm.action}:${perm.scope}`;
-    
+
     // Check if permission exists
     const { data: existingPerm } = await supabase
       .from('permissions')
@@ -405,7 +449,7 @@ async function assignRolePermissions(roleMap: Map<string, string>, permissionMap
     
     // Handle super_admin with all permissions
     if (permPatterns.includes('*')) {
-      for (const [permKey, permId] of permissionMap.entries()) {
+      for (const [_permKey, permId] of permissionMap.entries()) {
         await assignPermissionToRole(roleId, permId);
       }
       console.log(`   ✓ ${roleName}: All permissions`);
@@ -543,7 +587,149 @@ async function assignRolesToUsers(roleMap: Map<string, string>, orgId: string): 
     if (roleError && roleError.code !== '23505') {
       console.error(`   ❌ Failed to assign role: ${roleError.message}`);
     } else {
-      console.log(`   ✓ Assigned role: ${user.roleDisplayName}`);
+      console.log(`   ✓ Assigned primary role: ${user.roleDisplayName}`);
+    }
+
+    // Assign additional roles if any
+    if (user.additionalRoles && user.additionalRoles.length > 0) {
+      for (const additionalRoleName of user.additionalRoles) {
+        const additionalRoleId = roleMap.get(additionalRoleName);
+        if (!additionalRoleId) {
+          console.error(`   ❌ Additional role not found: ${additionalRoleName}`);
+          continue;
+        }
+
+        const { error: additionalRoleError } = await supabase
+          .from('user_roles')
+          .insert({
+            user_id: profileId,
+            role_id: additionalRoleId,
+            is_primary: false,
+            assigned_at: new Date().toISOString(),
+          });
+
+        if (additionalRoleError && additionalRoleError.code !== '23505') {
+          console.error(`   ❌ Failed to assign additional role ${additionalRoleName}: ${additionalRoleError.message}`);
+        } else {
+          console.log(`   ✓ Assigned additional role: ${additionalRoleName}`);
+        }
+      }
+    }
+  }
+}
+
+// ============================================================================
+// Pod Definitions
+// ============================================================================
+
+interface PodDefinition {
+  name: string;
+  podType: string;
+  seniorEmail: string;  // Manager
+  juniorEmail: string;  // Recruiter
+}
+
+const PODS: PodDefinition[] = [
+  {
+    name: 'Recruiting Pod 1',
+    podType: 'recruiting',
+    seniorEmail: 'rec_mgr1@intime.com',
+    juniorEmail: 'rec1@intime.com',
+  },
+  {
+    name: 'Recruiting Pod 2',
+    podType: 'recruiting',
+    seniorEmail: 'rec_mgr2@intime.com',
+    juniorEmail: 'rec2@intime.com',
+  },
+  {
+    name: 'Bench Pod 1',
+    podType: 'bench_sales',
+    seniorEmail: 'bs_mgr1@intime.com',
+    juniorEmail: 'bs1@intime.com',
+  },
+  {
+    name: 'Bench Pod 2',
+    podType: 'bench_sales',
+    seniorEmail: 'bs_mgr2@intime.com',
+    juniorEmail: 'bs2@intime.com',
+  },
+];
+
+async function seedPods(orgId: string): Promise<void> {
+  console.log(`\n🏢 Seeding pods (teams)...`);
+
+  for (const pod of PODS) {
+    // Get senior member profile ID
+    const { data: seniorProfile } = await supabase
+      .from('user_profiles')
+      .select('id')
+      .eq('email', pod.seniorEmail)
+      .single();
+
+    // Get junior member profile ID
+    const { data: juniorProfile } = await supabase
+      .from('user_profiles')
+      .select('id')
+      .eq('email', pod.juniorEmail)
+      .single();
+
+    if (!seniorProfile || !juniorProfile) {
+      console.log(`   ⚠️ Skipping pod ${pod.name}: Missing member profiles`);
+      continue;
+    }
+
+    // Check if pod already exists
+    const { data: existingPod } = await supabase
+      .from('pods')
+      .select('id')
+      .eq('name', pod.name)
+      .eq('org_id', orgId)
+      .single();
+
+    if (existingPod) {
+      // Update existing pod
+      await supabase
+        .from('pods')
+        .update({
+          pod_type: pod.podType,
+          senior_member_id: seniorProfile.id,
+          junior_member_id: juniorProfile.id,
+          is_active: true,
+        })
+        .eq('id', existingPod.id);
+      console.log(`   ✓ Updated pod: ${pod.name}`);
+    } else {
+      // Create new pod
+      const { data: newPod, error: podError } = await supabase
+        .from('pods')
+        .insert({
+          org_id: orgId,
+          name: pod.name,
+          pod_type: pod.podType,
+          senior_member_id: seniorProfile.id,
+          junior_member_id: juniorProfile.id,
+          is_active: true,
+          formed_date: new Date().toISOString().split('T')[0],
+          placements_per_sprint_target: 2,
+          sprint_duration_weeks: 2,
+        })
+        .select('id')
+        .single();
+
+      if (podError) {
+        console.error(`   ❌ Failed to create pod ${pod.name}: ${podError.message}`);
+      } else {
+        console.log(`   ✓ Created pod: ${pod.name} (${newPod?.id})`);
+
+        // Update employee_metadata with pod assignment
+        await supabase
+          .from('employee_metadata')
+          .upsert([
+            { user_id: seniorProfile.id, pod_id: newPod?.id, pod_role: 'senior' },
+            { user_id: juniorProfile.id, pod_id: newPod?.id, pod_role: 'junior' },
+          ], { onConflict: 'user_id' });
+      }
     }
   }
 }
@@ -571,9 +757,12 @@ async function main(): Promise<void> {
     
     // Assign roles to existing users
     await assignRolesToUsers(roleMap, orgId);
-    
+
+    // Seed pods (teams)
+    await seedPods(orgId);
+
     console.log('\n' + '='.repeat(60));
-    console.log('✅ Role and permission assignment complete!\n');
+    console.log('✅ Role, permission, and pod assignment complete!\n');
     
     // Print user summary
     console.log('📝 User Role Assignments:');
@@ -593,6 +782,16 @@ async function main(): Promise<void> {
       console.log(`  ${roleName.padEnd(20)} | ${permCount} permissions`);
     }
     console.log('─'.repeat(50));
+
+    // Print pod summary
+    console.log('\n🏢 Pod (Team) Summary:');
+    console.log('─'.repeat(70));
+    console.log('  Pod Name'.padEnd(25) + '| Type'.padEnd(15) + '| Senior'.padEnd(25) + '| Junior');
+    console.log('─'.repeat(70));
+    for (const pod of PODS) {
+      console.log(`  ${pod.name.padEnd(23)} | ${pod.podType.padEnd(13)} | ${pod.seniorEmail.padEnd(23)} | ${pod.juniorEmail}`);
+    }
+    console.log('─'.repeat(70));
     
   } catch (error) {
     console.error('\n❌ Seeding failed:', error);

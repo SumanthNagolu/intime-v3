@@ -7,8 +7,7 @@
  * @module schema/user-profiles
  */
 
-import { pgTable, uuid, text, timestamp, numeric, integer, boolean, jsonb, varchar, date } from 'drizzle-orm/pg-core';
-import { sql } from 'drizzle-orm';
+import { pgTable, uuid, text, timestamp, numeric, integer, boolean, jsonb, date } from 'drizzle-orm/pg-core';
 import { organizations } from './organizations';
 
 export const userProfiles = pgTable('user_profiles', {

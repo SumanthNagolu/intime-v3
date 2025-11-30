@@ -8,6 +8,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import {
@@ -315,7 +316,7 @@ export function TagsDisplay({
 
 export function EntityLinkDisplay({
   value,
-  definition,
+  definition: _definition,
   className,
 }: WidgetRenderProps<{ id: string; name?: string; title?: string } | string | null>) {
   if (!value) return <span className="text-muted-foreground text-sm">-</span>;
@@ -498,7 +499,7 @@ export function NumberDisplay({
 
 export function AvatarDisplay({
   value,
-  definition,
+  definition: _definition,
   className,
 }: WidgetRenderProps<{ name?: string; avatarUrl?: string; initials?: string } | string | null>) {
   if (!value) return <span className="text-muted-foreground text-sm">-</span>;
@@ -511,11 +512,15 @@ export function AvatarDisplay({
 
   if (avatarUrl) {
     return (
-      <img
-        src={avatarUrl}
-        alt={name}
-        className={cn('w-8 h-8 rounded-full object-cover', className)}
-      />
+      <div className={cn('relative w-8 h-8 rounded-full overflow-hidden', className)}>
+        <Image
+          src={avatarUrl}
+          alt={name}
+          fill
+          unoptimized
+          className="object-cover"
+        />
+      </div>
     );
   }
 
@@ -542,11 +547,16 @@ export function ImageDisplay({
   if (!value) return <span className="text-muted-foreground text-sm">-</span>;
 
   return (
-    <img
-      src={value}
-      alt=""
-      className={cn('max-w-full h-auto rounded', className)}
-    />
+    <div className={cn('relative max-w-full h-auto', className)}>
+      <Image
+        src={value}
+        alt=""
+        width={200}
+        height={150}
+        unoptimized
+        className="rounded object-contain"
+      />
+    </div>
   );
 }
 
@@ -556,7 +566,7 @@ export function ImageDisplay({
 
 export function IconDisplay({
   value,
-  definition,
+  definition: _definition,
   className,
 }: WidgetRenderProps<string | null>) {
   if (!value) return null;

@@ -72,7 +72,7 @@ async function main() {
         result.totalFiles++;
 
         try {
-          let content = await fs.readFile(storyPath, 'utf-8');
+          const content = await fs.readFile(storyPath, 'utf-8');
 
           // Check if file already has status badge
           if (content.includes('**Status:**')) {

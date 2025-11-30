@@ -23,6 +23,17 @@ import {
 } from '@/lib/stripe/subscriptions';
 import { createRefund, getRefund } from '@/lib/stripe/refunds';
 import { TRPCError } from '@trpc/server';
+import type Stripe from 'stripe';
+
+/**
+ * Extended Stripe Subscription type with period properties
+ * Note: These properties exist in the Stripe API response but may not be
+ * properly typed in the current Stripe SDK version
+ */
+type StripeSubscriptionWithPeriod = Stripe.Subscription & {
+  current_period_start: number;
+  current_period_end: number;
+};
 
 export const stripeRouter = router({
   /**
@@ -121,19 +132,22 @@ export const stripeRouter = router({
 
       return {
         success: true,
-        subscriptions: subscriptions.map((sub) => ({
-          id: sub.id,
-          status: sub.status,
-          currentPeriodStart: new Date((sub as any).current_period_start * 1000),
-          currentPeriodEnd: new Date((sub as any).current_period_end * 1000),
-          cancelAtPeriodEnd: sub.cancel_at_period_end,
-          canceledAt: sub.canceled_at ? new Date(sub.canceled_at * 1000) : null,
-          items: sub.items.data.map((item) => ({
-            priceId: item.price.id,
-            productId: item.price.product as string,
-            quantity: item.quantity,
-          })),
-        })),
+        subscriptions: subscriptions.map((sub) => {
+          const subWithPeriod = sub as StripeSubscriptionWithPeriod;
+          return {
+            id: subWithPeriod.id,
+            status: subWithPeriod.status,
+            currentPeriodStart: new Date(subWithPeriod.current_period_start * 1000),
+            currentPeriodEnd: new Date(subWithPeriod.current_period_end * 1000),
+            cancelAtPeriodEnd: subWithPeriod.cancel_at_period_end,
+            canceledAt: subWithPeriod.canceled_at ? new Date(subWithPeriod.canceled_at * 1000) : null,
+            items: subWithPeriod.items.data.map((item) => ({
+              priceId: item.price.id,
+              productId: item.price.product as string,
+              quantity: item.quantity,
+            })),
+          };
+        }),
       };
     } catch (error) {
       console.error('[stripe.getSubscriptions] Error:', error);
@@ -160,19 +174,20 @@ export const stripeRouter = router({
     .query(async ({ input }) => {
       try {
         const subscription = await getSubscription(input.subscriptionId);
+        const subWithPeriod = subscription as StripeSubscriptionWithPeriod;
 
         return {
           success: true,
           subscription: {
-            id: subscription.id,
-            status: subscription.status,
-            currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
-            currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
-            cancelAtPeriodEnd: subscription.cancel_at_period_end,
-            canceledAt: subscription.canceled_at
-              ? new Date(subscription.canceled_at * 1000)
+            id: subWithPeriod.id,
+            status: subWithPeriod.status,
+            currentPeriodStart: new Date(subWithPeriod.current_period_start * 1000),
+            currentPeriodEnd: new Date(subWithPeriod.current_period_end * 1000),
+            cancelAtPeriodEnd: subWithPeriod.cancel_at_period_end,
+            canceledAt: subWithPeriod.canceled_at
+              ? new Date(subWithPeriod.canceled_at * 1000)
               : null,
-            items: subscription.items.data.map((item) => ({
+            items: subWithPeriod.items.data.map((item) => ({
               priceId: item.price.id,
               productId: item.price.product as string,
               quantity: item.quantity,
@@ -306,7 +321,10 @@ export const stripeRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur) => {
+          const roles = ur.roles as { name: string } | null;
+          return roles?.name === 'admin' || roles?.name === 'super_admin';
+        }
       );
 
       if (!isAdmin) {
@@ -364,7 +382,10 @@ export const stripeRouter = router({
         .eq('user_id', ctx.session.user.id);
 
       const isAdmin = userRoles?.some(
-        (ur: any) => ur.roles?.name === 'admin' || ur.roles?.name === 'super_admin'
+        (ur) => {
+          const roles = ur.roles as { name: string } | null;
+          return roles?.name === 'admin' || roles?.name === 'super_admin';
+        }
       );
 
       if (!isAdmin) {

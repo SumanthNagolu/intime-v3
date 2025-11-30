@@ -160,7 +160,7 @@ Keep it concise (200-300 words), friendly, and actionable.`;
       throw this.createError(
         `Failed to generate morning briefing: ${error instanceof Error ? error.message : 'Unknown error'}`,
         'TWIN_QUERY_FAILED',
-        { employeeId: this.employeeId, role: this.role, error }
+        { employeeId: this.employeeId, role: this.role, error: error instanceof Error ? { message: error.message, name: error.name } : { error: String(error) } }
       );
     }
   }
@@ -233,7 +233,7 @@ Return only the suggestion text.`;
       throw this.createError(
         `Failed to generate proactive suggestion: ${error instanceof Error ? error.message : 'Unknown error'}`,
         'TWIN_QUERY_FAILED',
-        { employeeId: this.employeeId, role: this.role, error }
+        { employeeId: this.employeeId, role: this.role, error: error instanceof Error ? { message: error.message, name: error.name } : { error: String(error) } }
       );
     }
   }
@@ -301,7 +301,7 @@ Provide a helpful, specific answer based on the employee's role and context.`;
       throw this.createError(
         `Failed to process query: ${error instanceof Error ? error.message : 'Unknown error'}`,
         'TWIN_QUERY_FAILED',
-        { employeeId: this.employeeId, role: this.role, question, error }
+        { employeeId: this.employeeId, role: this.role, question, error: error instanceof Error ? { message: error.message, name: error.name } : { error: String(error) } }
       );
     }
   }
@@ -326,32 +326,35 @@ Provide a helpful, specific answer based on the employee's role and context.`;
         throw this.createError(
           'Failed to fetch interaction history',
           'TWIN_QUERY_FAILED',
-          { employeeId: this.employeeId, error }
+          { employeeId: this.employeeId, error: error as Record<string, unknown> }
         );
       }
 
-      return (data || []).map((row) => ({
-        id: row.id,
-        orgId: row.org_id,
-        userId: row.user_id || '',
-        twinRole: this.role,
-        interactionType: row.interaction_type as 'morning_briefing' | 'suggestion' | 'question' | 'feedback',
-        prompt: row.input || '',
-        response: row.output || '',
-        context: (row.metadata as any)?.context || {},
-        wasHelpful: (row.metadata as any)?.was_helpful,
-        userFeedback: (row.metadata as any)?.user_feedback,
-        modelUsed: row.model_used,
-        tokensUsed: row.tokens_used,
-        costUsd: row.cost_usd,
-        latencyMs: row.latency_ms,
-        createdAt: row.created_at,
-      })) as any;
+      return (data || []).map((row) => {
+        const metadata = row.metadata as Record<string, unknown> | null;
+        return {
+          id: row.id,
+          orgId: row.org_id,
+          userId: row.user_id || '',
+          twinRole: this.role,
+          interactionType: row.interaction_type as 'morning_briefing' | 'suggestion' | 'question' | 'feedback',
+          prompt: row.input || '',
+          response: row.output || '',
+          context: (metadata?.context as Record<string, unknown>) || {},
+          wasHelpful: metadata?.was_helpful as boolean | undefined,
+          userFeedback: metadata?.user_feedback as string | undefined,
+          modelUsed: row.model_used,
+          tokensUsed: row.tokens_used,
+          costUsd: row.cost_usd,
+          latencyMs: row.latency_ms,
+          createdAt: row.created_at,
+        };
+      }) satisfies TwinInteraction[];
     } catch (error) {
       throw this.createError(
         `Failed to get interaction history: ${error instanceof Error ? error.message : 'Unknown error'}`,
         'TWIN_QUERY_FAILED',
-        { employeeId: this.employeeId, error }
+        { employeeId: this.employeeId, error: error instanceof Error ? { message: error.message, name: error.name } : { error: String(error) } }
       );
     }
   }
@@ -579,7 +582,7 @@ TONE: Technical, precise, systems-thinking`,
    * @returns Role-specific context data
    * @private
    */
-  private async gatherRoleSpecificContext(): Promise<Record<string, any>> {
+  private async gatherRoleSpecificContext(): Promise<Record<string, unknown>> {
     switch (this.role) {
       case 'ceo':
         return this.gatherCEOContext();
@@ -605,7 +608,7 @@ TONE: Technical, precise, systems-thinking`,
   /**
    * CEO context: Organization-wide metrics and pillar health
    */
-  private async gatherCEOContext(): Promise<Record<string, any>> {
+  private async gatherCEOContext(): Promise<Record<string, unknown>> {
     // TODO: Query actual pillar metrics from database
     return {
       pillarHealth: {
@@ -624,7 +627,7 @@ TONE: Technical, precise, systems-thinking`,
   /**
    * Recruiter context: Candidates, jobs, pipeline
    */
-  private async gatherRecruiterContext(): Promise<Record<string, any>> {
+  private async gatherRecruiterContext(): Promise<Record<string, unknown>> {
     // TODO: Query actual recruiting data
     return {
       activeCandidates: 0,
@@ -645,7 +648,7 @@ TONE: Technical, precise, systems-thinking`,
   /**
    * Bench Sales context: Consultants, placements, market
    */
-  private async gatherBenchSalesContext(): Promise<Record<string, any>> {
+  private async gatherBenchSalesContext(): Promise<Record<string, unknown>> {
     // TODO: Query actual bench data
     return {
       benchCount: 0,
@@ -661,7 +664,7 @@ TONE: Technical, precise, systems-thinking`,
   /**
    * Talent Acquisition context: Prospects, deals, campaigns
    */
-  private async gatherTAContext(): Promise<Record<string, any>> {
+  private async gatherTAContext(): Promise<Record<string, unknown>> {
     // TODO: Query actual TA data
     return {
       activeProspects: 0,
@@ -677,7 +680,7 @@ TONE: Technical, precise, systems-thinking`,
   /**
    * HR context: Employees, compliance, reviews
    */
-  private async gatherHRContext(): Promise<Record<string, any>> {
+  private async gatherHRContext(): Promise<Record<string, unknown>> {
     // TODO: Query actual HR data
     return {
       totalEmployees: 0,
@@ -693,7 +696,7 @@ TONE: Technical, precise, systems-thinking`,
   /**
    * Immigration context: Cases, visas, deadlines
    */
-  private async gatherImmigrationContext(): Promise<Record<string, any>> {
+  private async gatherImmigrationContext(): Promise<Record<string, unknown>> {
     // TODO: Query actual immigration data
     return {
       activeCases: 0,
@@ -709,7 +712,7 @@ TONE: Technical, precise, systems-thinking`,
   /**
    * Trainer context: Students, cohorts, progress
    */
-  private async gatherTrainerContext(): Promise<Record<string, any>> {
+  private async gatherTrainerContext(): Promise<Record<string, unknown>> {
     // TODO: Query actual training data
     return {
       cohortName: '',
@@ -725,7 +728,7 @@ TONE: Technical, precise, systems-thinking`,
   /**
    * Admin context: System health, users, metrics
    */
-  private async gatherAdminContext(): Promise<Record<string, any>> {
+  private async gatherAdminContext(): Promise<Record<string, unknown>> {
     // TODO: Query actual system metrics
     return {
       activeUsers: 0,
@@ -742,11 +745,11 @@ TONE: Technical, precise, systems-thinking`,
   /**
    * Check if there are actionable items for proactive suggestions
    *
-   * @param context - Employee context
+   * @param _context - Employee context
    * @returns True if there are actionable items
    * @private
    */
-  private async hasActionableItems(context: TwinContext): Promise<boolean> {
+  private async hasActionableItems(_context: TwinContext): Promise<boolean> {
     // Placeholder logic - in production, this would check actual business rules
     // For example:
     // - Recruiter: candidates needing follow-up > 0
@@ -767,7 +770,7 @@ TONE: Technical, precise, systems-thinking`,
     interactionType: string;
     prompt: string | null;
     response: string;
-    context: any;
+    context: Record<string, unknown>;
     modelUsed: string;
     tokensUsed: number;
     costUsd: number;
@@ -797,11 +800,11 @@ TONE: Technical, precise, systems-thinking`,
    * Calculate cost of AI request
    *
    * @param tokens - Total tokens used
-   * @param model - Model name
+   * @param _model - Model name
    * @returns Cost in USD
    * @private
    */
-  private calculateCost(tokens: number, model: string): number {
+  private calculateCost(tokens: number, _model: string): number {
     // GPT-4o-mini pricing: $0.15 per 1M input tokens, $0.60 per 1M output tokens
     // Simplified: assume 50/50 split for approximation
     const avgCostPerToken = ((0.15 + 0.60) / 2) / 1_000_000;
@@ -820,7 +823,7 @@ TONE: Technical, precise, systems-thinking`,
   private createError(
     message: string,
     code: keyof typeof ProductivityErrorCodes,
-    details?: any
+    details?: Record<string, unknown>
   ): ProductivityError {
     const error = new Error(message) as ProductivityError;
     error.name = 'ProductivityError';

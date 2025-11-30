@@ -321,42 +321,42 @@ export async function listCampaignsAction(
   }
 
   // Transform data
-  const transformedCampaigns: CampaignWithOwner[] = (campaigns || []).map((c: any) => ({
-    id: c.id,
-    name: c.name,
-    description: c.description,
-    campaignType: c.campaign_type,
-    channel: c.channel,
-    status: c.status,
-    targetAudience: c.target_audience,
-    targetLocations: c.target_locations,
-    targetSkills: c.target_skills,
-    targetCompanySizes: c.target_company_sizes,
-    isAbTest: c.is_ab_test ?? false,
-    variantATemplateId: c.variant_a_template_id,
-    variantBTemplateId: c.variant_b_template_id,
-    abSplitPercentage: c.ab_split_percentage ?? 50,
-    targetContactsCount: c.target_contacts_count,
+  const transformedCampaigns: CampaignWithOwner[] = (campaigns || []).map((c: Record<string, unknown>) => ({
+    id: c.id as string,
+    name: c.name as string,
+    description: c.description as string | null,
+    campaignType: c.campaign_type as string,
+    channel: c.channel as string,
+    status: c.status as string,
+    targetAudience: c.target_audience as string | null,
+    targetLocations: c.target_locations as string[] | null,
+    targetSkills: c.target_skills as string[] | null,
+    targetCompanySizes: c.target_company_sizes as string[] | null,
+    isAbTest: (c.is_ab_test as boolean | null) ?? false,
+    variantATemplateId: c.variant_a_template_id as string | null,
+    variantBTemplateId: c.variant_b_template_id as string | null,
+    abSplitPercentage: (c.ab_split_percentage as number | null) ?? 50,
+    targetContactsCount: c.target_contacts_count as number | null,
     targetResponseRate: c.target_response_rate ? parseFloat(String(c.target_response_rate)) : null,
-    targetConversionCount: c.target_conversion_count,
-    contactsReached: c.contacts_reached || 0,
-    emailsSent: c.emails_sent || 0,
-    linkedinMessagesSent: c.linkedin_messages_sent || 0,
-    responsesReceived: c.responses_received || 0,
-    conversions: c.conversions || 0,
+    targetConversionCount: c.target_conversion_count as number | null,
+    contactsReached: (c.contacts_reached as number | null) || 0,
+    emailsSent: (c.emails_sent as number | null) || 0,
+    linkedinMessagesSent: (c.linkedin_messages_sent as number | null) || 0,
+    responsesReceived: (c.responses_received as number | null) || 0,
+    conversions: (c.conversions as number | null) || 0,
     responseRate: c.response_rate ? parseFloat(String(c.response_rate)) : null,
-    startDate: c.start_date,
-    endDate: c.end_date,
-    ownerId: c.owner_id,
-    orgId: c.org_id,
-    createdAt: c.created_at,
-    createdBy: c.created_by,
+    startDate: c.start_date as string | null,
+    endDate: c.end_date as string | null,
+    ownerId: c.owner_id as string,
+    orgId: c.org_id as string,
+    createdAt: c.created_at as string,
+    createdBy: c.created_by as string | null,
     owner: c.owner
       ? {
-          id: c.owner.id,
-          fullName: c.owner.full_name,
-          email: c.owner.email,
-          avatarUrl: c.owner.avatar_url,
+          id: (c.owner as Record<string, unknown>).id as string,
+          fullName: (c.owner as Record<string, unknown>).full_name as string,
+          email: (c.owner as Record<string, unknown>).email as string,
+          avatarUrl: (c.owner as Record<string, unknown>).avatar_url as string | null,
         }
       : null,
   }));
@@ -450,10 +450,10 @@ export async function getCampaignAction(
       createdBy: c.created_by,
       owner: c.owner
         ? {
-            id: (c.owner as any).id,
-            fullName: (c.owner as any).full_name,
-            email: (c.owner as any).email,
-            avatarUrl: (c.owner as any).avatar_url,
+            id: (c.owner as Record<string, unknown>).id as string,
+            fullName: (c.owner as Record<string, unknown>).full_name as string,
+            email: (c.owner as Record<string, unknown>).email as string,
+            avatarUrl: (c.owner as Record<string, unknown>).avatar_url as string | null,
           }
         : null,
     },
@@ -505,7 +505,7 @@ export async function createCampaignAction(
     endDate,
   } = validation.data;
 
-  const { data: newCampaign, error } = await (supabase.from as any)('campaigns')
+  const { data: newCampaign, error } = await (supabase.from as (table: string) => ReturnType<typeof supabase.from>)('campaigns')
     .insert({
       name,
       description,
@@ -535,11 +535,13 @@ export async function createCampaignAction(
     return { success: false, error: 'Failed to create campaign' };
   }
 
+  const campaign = newCampaign as Record<string, unknown>;
+
   // Log audit event
   await logAuditEvent(supabase, {
     tableName: 'campaigns',
     action: 'create',
-    recordId: newCampaign.id,
+    recordId: campaign.id as string,
     userId: profile.id,
     userEmail: profile.email,
     severity: 'info',
@@ -549,35 +551,35 @@ export async function createCampaignAction(
   return {
     success: true,
     data: {
-      id: newCampaign.id,
-      name: newCampaign.name,
-      description: newCampaign.description,
-      campaignType: newCampaign.campaign_type,
-      channel: newCampaign.channel,
-      status: newCampaign.status,
-      targetAudience: newCampaign.target_audience,
-      targetLocations: newCampaign.target_locations,
-      targetSkills: newCampaign.target_skills,
-      targetCompanySizes: newCampaign.target_company_sizes,
-      isAbTest: newCampaign.is_ab_test ?? false,
-      variantATemplateId: newCampaign.variant_a_template_id,
-      variantBTemplateId: newCampaign.variant_b_template_id,
-      abSplitPercentage: newCampaign.ab_split_percentage ?? 50,
-      targetContactsCount: newCampaign.target_contacts_count,
+      id: campaign.id as string,
+      name: campaign.name as string,
+      description: campaign.description as string | null,
+      campaignType: campaign.campaign_type as string,
+      channel: campaign.channel as string,
+      status: campaign.status as string,
+      targetAudience: campaign.target_audience as string | null,
+      targetLocations: campaign.target_locations as string[] | null,
+      targetSkills: campaign.target_skills as string[] | null,
+      targetCompanySizes: campaign.target_company_sizes as string[] | null,
+      isAbTest: (campaign.is_ab_test as boolean | null) ?? false,
+      variantATemplateId: campaign.variant_a_template_id as string | null,
+      variantBTemplateId: campaign.variant_b_template_id as string | null,
+      abSplitPercentage: (campaign.ab_split_percentage as number | null) ?? 50,
+      targetContactsCount: campaign.target_contacts_count as number | null,
       targetResponseRate: null,
-      targetConversionCount: newCampaign.target_conversion_count,
+      targetConversionCount: campaign.target_conversion_count as number | null,
       contactsReached: 0,
       emailsSent: 0,
       linkedinMessagesSent: 0,
       responsesReceived: 0,
       conversions: 0,
       responseRate: null,
-      startDate: newCampaign.start_date,
-      endDate: newCampaign.end_date,
-      ownerId: newCampaign.owner_id,
-      orgId: newCampaign.org_id,
-      createdAt: newCampaign.created_at,
-      createdBy: newCampaign.created_by,
+      startDate: campaign.start_date as string | null,
+      endDate: campaign.end_date as string | null,
+      ownerId: campaign.owner_id as string,
+      orgId: campaign.org_id as string,
+      createdAt: campaign.created_at as string,
+      createdBy: campaign.created_by as string | null,
     },
   };
 }
@@ -627,7 +629,7 @@ export async function updateCampaignAction(
   }
 
   // Build update object
-  const updates: Record<string, any> = {};
+  const updates: Record<string, unknown> = {};
   if (input.name !== undefined) updates.name = input.name;
   if (input.description !== undefined) updates.description = input.description;
   if (input.status !== undefined) updates.status = input.status;
@@ -974,28 +976,28 @@ export async function getCampaignContactsAction(
     return { success: false, error: 'Failed to fetch contacts' };
   }
 
-  const transformedContacts: CampaignContact[] = (contacts || []).map((c: any) => ({
-    id: c.id,
-    campaignId: c.campaign_id,
-    contactType: c.contact_type,
-    userId: c.user_id,
-    leadId: c.lead_id,
-    firstName: c.first_name,
-    lastName: c.last_name,
-    email: c.email,
-    linkedinUrl: c.linkedin_url,
-    companyName: c.company_name,
-    title: c.title,
-    status: c.status,
-    abVariant: c.ab_variant,
-    sentAt: c.sent_at,
-    openedAt: c.opened_at,
-    clickedAt: c.clicked_at,
-    respondedAt: c.responded_at,
-    responseText: c.response_text,
-    convertedAt: c.converted_at,
-    conversionType: c.conversion_type,
-    createdAt: c.created_at,
+  const transformedContacts: CampaignContact[] = (contacts || []).map((c: Record<string, unknown>) => ({
+    id: c.id as string,
+    campaignId: c.campaign_id as string,
+    contactType: c.contact_type as string,
+    userId: c.user_id as string | null,
+    leadId: c.lead_id as string | null,
+    firstName: c.first_name as string | null,
+    lastName: c.last_name as string | null,
+    email: c.email as string | null,
+    linkedinUrl: c.linkedin_url as string | null,
+    companyName: c.company_name as string | null,
+    title: c.title as string | null,
+    status: c.status as string,
+    abVariant: c.ab_variant as string | null,
+    sentAt: c.sent_at as string | null,
+    openedAt: c.opened_at as string | null,
+    clickedAt: c.clicked_at as string | null,
+    respondedAt: c.responded_at as string | null,
+    responseText: c.response_text as string | null,
+    convertedAt: c.converted_at as string | null,
+    conversionType: c.conversion_type as string | null,
+    createdAt: c.created_at as string,
   }));
 
   const total = count || 0;
@@ -1095,7 +1097,7 @@ export async function addCampaignContactAction(
 
   // Update campaign contacts_reached count
   try {
-    await (supabase.rpc as any)('increment_campaign_contacts', { campaign_id: campaignId });
+    await (supabase.rpc as unknown as (fn: string, params: Record<string, unknown>) => Promise<unknown>)('increment_campaign_contacts', { campaign_id: campaignId });
   } catch {
     // Fallback: Use raw SQL or skip increment
     // RPC function may not exist yet
@@ -1159,7 +1161,7 @@ export async function updateContactStatusAction(
   }
 
   // Build update object with timestamp
-  const updates: Record<string, any> = { status };
+  const updates: Record<string, unknown> = { status };
   const now = new Date().toISOString();
 
   switch (status) {

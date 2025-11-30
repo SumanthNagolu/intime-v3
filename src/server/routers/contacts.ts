@@ -6,7 +6,7 @@
 import { z } from 'zod';
 import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
-import { contacts, type Contact, ContactType, ContactStatus } from '@/lib/db/schema/workspace';
+import { contacts } from '@/lib/db/schema/workspace';
 import { accounts } from '@/lib/db/schema/crm';
 import { userProfiles } from '@/lib/db/schema/user-profiles';
 import { eq, and, desc, sql, isNull, or, ilike, inArray } from 'drizzle-orm';

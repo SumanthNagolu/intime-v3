@@ -9,7 +9,6 @@ import {
   DollarSign,
   Search,
   CheckCircle2,
-  Star,
   Award,
   Calendar,
   User,
@@ -464,7 +463,7 @@ export const AvailableTalentPage: React.FC = () => {
                         </div>
 
                         <p className="text-sm text-charcoal-500 italic">
-                          "{consultant.highlights}"
+                          &quot;{consultant.highlights}&quot;
                         </p>
                       </div>
                     </div>
@@ -531,9 +530,9 @@ export const AvailableTalentPage: React.FC = () => {
               <Sparkles size={28} className="text-emerald-200 mb-6" />
               
               <blockquote className="text-2xl md:text-3xl font-heading font-bold text-charcoal-900 leading-tight mb-8">
-                "We needed a Guidewire expert urgently for our PolicyCenter migration. InTime 
-                delivered a verified consultant within 36 hours. The quality was exceptional—it 
-                felt like hiring from our own bench."
+                &quot;We needed a Guidewire expert urgently for our PolicyCenter migration. InTime
+                delivered a verified consultant within 36 hours. The quality was exceptional—it
+                felt like hiring from our own bench.&quot;
               </blockquote>
 
               <div className="flex items-center gap-4">
@@ -570,7 +569,7 @@ export const AvailableTalentPage: React.FC = () => {
               ?
             </h2>
             <p className="text-lg text-emerald-200/80 font-light max-w-xl mx-auto mb-10">
-              We have 500+ consultants in our network. Tell us what you need and we'll 
+              We have 500+ consultants in our network. Tell us what you need and we&apos;ll
               match you within 24 hours.
             </p>
 

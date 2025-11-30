@@ -7,13 +7,8 @@ import {
   Briefcase,
   Heart,
   ArrowRight,
-  ArrowDown,
   CheckCircle2,
-  MapPin,
   Clock,
-  Star,
-  Building2,
-  Zap,
   Rocket,
   Trophy,
   Target,
@@ -21,11 +16,9 @@ import {
   GraduationCap,
   TrendingUp,
   Globe,
-  ChevronRight,
   UserPlus,
   Lightbulb,
-  Shield,
-  HandshakeIcon
+  Shield
 } from 'lucide-react';
 import { MarketingNavbar, Footer } from '@/components/templates';
 
@@ -75,7 +68,7 @@ const VALUES = [
   { 
     icon: Lightbulb, 
     title: 'Innovation', 
-    description: 'We challenge convention and build what doesn\'t exist yet.',
+    description: 'We challenge convention and build what doesn&apos;t exist yet.',
     color: 'gold'
   },
   { 
@@ -212,8 +205,8 @@ export const CareersHub: React.FC = () => {
 
             {/* Subheadline */}
             <p className="text-lg md:text-xl text-charcoal-300/90 font-light max-w-2xl mb-12 leading-relaxed">
-              Join the team transforming how technology talent finds opportunity. 
-              Whether you're building our platform or building your career through us—this is where it starts.
+              Join the team transforming how technology talent finds opportunity.
+              Whether you&apos;re building our platform or building your career through us—this is where it starts.
             </p>
 
             {/* CTA Section */}
@@ -301,7 +294,7 @@ export const CareersHub: React.FC = () => {
                 <span className="text-emerald-600">Starts Here</span>
               </h2>
               <p className="text-lg text-charcoal-500 leading-relaxed">
-                Three distinct pathways to opportunity. Whether you're joining our mission or finding placement through us.
+                Three distinct pathways to opportunity. Whether you&apos;re joining our mission or finding placement through us.
               </p>
             </div>
 
@@ -406,7 +399,7 @@ export const CareersHub: React.FC = () => {
                 </h2>
                 
                 <p className="text-lg text-charcoal-500 mb-10 leading-relaxed">
-                  We're building a company where ambitious people can do the best work of their careers. 
+                  We&apos;re building a company where ambitious people can do the best work of their careers.
                   The perks are nice—but the real benefit is being part of something meaningful.
                 </p>
 
@@ -467,7 +460,7 @@ export const CareersHub: React.FC = () => {
                 </span>
               </h2>
               <p className="text-lg text-charcoal-300">
-                These aren't wall decorations. They're the filter for every hire, every decision, every action.
+                These aren&apos;t wall decorations. They&apos;re the filter for every hire, every decision, every action.
               </p>
             </div>
 
@@ -531,8 +524,8 @@ export const CareersHub: React.FC = () => {
                 <Sparkles size={32} className="text-emerald-200 mb-6" />
                 
                 <blockquote className="text-3xl md:text-4xl font-heading font-bold text-charcoal-900 leading-tight mb-8">
-                  "I joined InTime because I wanted to build, not just execute. Two years later, I've helped shape our 
-                  entire recruiting process and grown a team of 8. This is what a meritocracy actually looks like."
+                  &quot;I joined InTime because I wanted to build, not just execute. Two years later, I&apos;ve helped shape our
+                  entire recruiting process and grown a team of 8. This is what a meritocracy actually looks like.&quot;
                 </blockquote>
 
                 <div className="flex items-center gap-4">
@@ -569,7 +562,7 @@ export const CareersHub: React.FC = () => {
                 ?
               </h2>
               <p className="text-xl text-emerald-200/80 font-light max-w-2xl mx-auto mb-12">
-                Whether you're looking to join our team or find your next opportunity through our network—the time is now.
+                Whether you&apos;re looking to join our team or find your next opportunity through our network—the time is now.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">

@@ -14,7 +14,6 @@ import type {
   AccountTier,
   Responsiveness,
   PreferredQuality,
-  POCRole,
   DecisionAuthority,
   ContactMethod,
   AlignedActivityLog,

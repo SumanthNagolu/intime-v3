@@ -3,15 +3,18 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
-import { User, Mic, Map, Menu, X, Cpu, ChevronDown, List, Layers, Sparkles, LogOut, FileText, Bell, Briefcase, Users, Globe, TrendingUp, LayoutDashboard, Search, Clock, Activity, Plus, DollarSign, UserPlus, Network, BarChart3, GraduationCap, Settings, Award, Rocket, Megaphone, Plane, CheckCircle, Building2, Download, ShieldCheck, Target, Lock, Terminal, BookOpen } from 'lucide-react';
+import { User, Mic, Map, Menu, X, Cpu, ChevronDown, List, Layers, Sparkles, LogOut, FileText, Bell, Briefcase, Users, Globe, TrendingUp, LayoutDashboard, Clock, Activity, DollarSign, UserPlus, Network, GraduationCap, Settings, Award, Megaphone, Plane, ShieldCheck, Target, Lock, Terminal, BookOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAppStore } from '@/lib/store';
 import { Role } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { signOut } from '@/lib/auth/client';
 
+// Icon type from lucide-react
+type IconType = React.ComponentType<{ size?: number; className?: string; strokeWidth?: number }>;
+
 // Navigation structures based on 4 Parent Categories
-const ROLE_NAV: Record<Role, { title: string; icon: any; items: { label: string; path: string; icon: any }[] }[]> = {
+const ROLE_NAV: Record<Role, { title: string; icon: IconType; items: { label: string; path: string; icon: IconType }[] }[]> = {
   // --- 1. ACADEMY (Student) ---
   student: [
     {

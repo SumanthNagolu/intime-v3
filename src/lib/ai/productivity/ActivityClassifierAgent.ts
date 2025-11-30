@@ -217,7 +217,7 @@ Return ONLY a valid JSON object (no markdown, no code blocks):
           confidence,
           reasoning: parsed.reasoning,
         };
-      } catch (parseError) {
+      } catch {
         console.error('[ActivityClassifierAgent] Failed to parse response:', content);
 
         // Fallback classification

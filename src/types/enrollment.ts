@@ -164,5 +164,5 @@ export interface EnrollmentEvent {
   userId: string;
   courseId: string;
   timestamp: string;
-  data: Record<string, any>;
+  data: Record<string, unknown>;
 }

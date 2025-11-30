@@ -6,7 +6,7 @@
 import { z } from 'zod';
 import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
-import { jobOrders, contacts, type JobOrder, JobOrderStatus, JobOrderPriority, JobOrderJobType } from '@/lib/db/schema/workspace';
+import { jobOrders, contacts } from '@/lib/db/schema/workspace';
 import { accounts } from '@/lib/db/schema/crm';
 import { jobs } from '@/lib/db/schema/ats';
 import { externalJobs } from '@/lib/db/schema/bench';
@@ -393,7 +393,7 @@ export const jobOrdersRouter = router({
         orgId,
         accountableId: input.accountableId || userId!,
         createdBy: userId!,
-      } as any).returning();
+      } as typeof jobOrders.$inferInsert).returning();
 
       return newJobOrder;
     }),
@@ -452,7 +452,7 @@ export const jobOrdersRouter = router({
         visaRequirements: sourceJob.visaRequirements || undefined,
         accountableId: input.additionalData?.accountableId || sourceJob.ownerId || userId!,
         createdBy: userId!,
-      } as any).returning();
+      } as typeof jobOrders.$inferInsert).returning();
 
       return newJobOrder;
     }),
@@ -503,7 +503,7 @@ export const jobOrdersRouter = router({
         visaRequirements: sourceExtJob.visaRequirements || undefined,
         accountableId: input.additionalData?.accountableId || userId!,
         createdBy: userId!,
-      } as any).returning();
+      } as typeof jobOrders.$inferInsert).returning();
 
       return newJobOrder;
     }),
@@ -533,7 +533,7 @@ export const jobOrdersRouter = router({
         .set({
           ...updateData,
           updatedBy: userId!,
-        } as any)
+        } as Partial<typeof jobOrders.$inferInsert>)
         .where(
           and(
             eq(jobOrders.id, id),

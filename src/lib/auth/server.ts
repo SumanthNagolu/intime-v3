@@ -201,7 +201,7 @@ export async function getUserRoles(userId?: string): Promise<string[]> {
     return [];
   }
 
-  return data.map((item: any) => item.role.name);
+  return data.map((item: { role: { name: string } }) => item.role.name);
 }
 
 /**
@@ -320,7 +320,9 @@ export async function requirePortalAccess(
       .is('deleted_at', null);
 
     if (rolesData) {
-      roles = rolesData.map((item: any) => item.role?.name).filter(Boolean);
+      roles = rolesData
+        .map((item: { role?: { name?: string } | null }) => item.role?.name)
+        .filter((name): name is string => Boolean(name));
     }
   }
 

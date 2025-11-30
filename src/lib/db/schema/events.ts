@@ -28,8 +28,8 @@ export const events = pgTable('events', {
   aggregateId: uuid('aggregate_id'), // Entity ID this event relates to
 
   // Event payload
-  payload: jsonb('payload').$type<Record<string, any>>().notNull().default({}),
-  metadata: jsonb('metadata').$type<Record<string, any>>().default({}),
+  payload: jsonb('payload').$type<Record<string, unknown>>().notNull().default({}),
+  metadata: jsonb('metadata').$type<Record<string, unknown>>().default({}),
 
   // Actor information
   userId: uuid('user_id'),
@@ -177,12 +177,12 @@ export type DeliveryStatusType = typeof DeliveryStatus[keyof typeof DeliveryStat
 export interface PublishEventParams {
   eventType: string;
   aggregateId?: string;
-  payload: Record<string, any>;
+  payload: Record<string, unknown>;
   userId?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
-export interface EventPayload<T = any> {
+export interface EventPayload<T = unknown> {
   data: T;
   timestamp: string;
   correlationId?: string;

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Linkedin, Twitter, Youtube, Mail, Phone, MapPin } from 'lucide-react';
+import { Linkedin, Twitter, Youtube, Mail } from 'lucide-react';
 
 interface FooterColumn {
   title: string;
@@ -46,7 +46,7 @@ const defaultColumns: FooterColumn[] = [
 
 export const Footer: React.FC<FooterProps> = ({
   columns = defaultColumns,
-  socialLinks = []
+  _socialLinks = []
 }) => {
   return (
     <footer className="bg-charcoal-900 text-white">

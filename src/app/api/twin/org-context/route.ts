@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
     // Get context
     const context = new OrganizationContext(supabase);
 
-    let data: Record<string, unknown> = {};
+    const data: Record<string, unknown> = {};
 
     if (contextType === 'all' || contextType === 'priorities') {
       data.priorities = await context.getOrgPriorities(profile.org_id, forceRefresh);

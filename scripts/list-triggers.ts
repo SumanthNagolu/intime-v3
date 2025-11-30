@@ -23,7 +23,7 @@ for (const table of tables) {
 
   if (result.success && result.rows?.length > 0) {
     console.log(`\n${table}:`);
-    result.rows.forEach((r: any) => {
+    result.rows.forEach((r: Record<string, unknown>) => {
       console.log(`  - ${r.tgname} (${r.tgenabled === 'O' ? 'enabled' : 'disabled'})`);
     });
   }

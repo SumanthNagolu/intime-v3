@@ -72,10 +72,13 @@ async function checkUserRoles() {
       console.log('   To assign, you may need to check user_profiles and roles tables');
     } else {
       console.log(`✅ Assigned Roles (${userRoles.length}):`);
-      userRoles.forEach((ur: any) => {
-        console.log(`   - ${ur.role.display_name} (${ur.role.name})`);
-        console.log(`     Primary: ${ur.is_primary ? 'Yes' : 'No'}`);
-        console.log(`     Assigned: ${new Date(ur.created_at).toLocaleDateString()}`);
+      userRoles.forEach((ur: Record<string, unknown>) => {
+        const role = ur.role as Record<string, unknown> | undefined;
+        if (role) {
+          console.log(`   - ${role.display_name} (${role.name})`);
+          console.log(`     Primary: ${ur.is_primary ? 'Yes' : 'No'}`);
+          console.log(`     Assigned: ${new Date(String(ur.created_at)).toLocaleDateString()}`);
+        }
       });
     }
 
@@ -94,7 +97,7 @@ async function checkUserRoles() {
     }
 
   } catch (err) {
-    console.error('💥 Unexpected error:', err);
+    console.error('💥 Unexpected error:', err instanceof Error ? err.message : String(err));
     process.exit(1);
   }
 }
@@ -104,7 +107,7 @@ checkUserRoles()
     console.log('\n✨ Done!');
     process.exit(0);
   })
-  .catch((err) => {
-    console.error('💥 Fatal error:', err);
+  .catch((err: unknown) => {
+    console.error('💥 Fatal error:', err instanceof Error ? err.message : String(err));
     process.exit(1);
   });

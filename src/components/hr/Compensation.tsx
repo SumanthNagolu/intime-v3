@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { DollarSign, PieChart, Download, ExternalLink, Shield } from 'lucide-react';
+import { DollarSign, Download, ExternalLink, Shield } from 'lucide-react';
 
 export const Compensation: React.FC = () => {
   return (

@@ -18,14 +18,16 @@ const data = await result.json();
 if (data.success && data.rows) {
   console.log(`\n📊 Found ${data.rows.length} users:\n`);
 
-  data.rows.forEach((u: any) => {
+  data.rows.forEach((u: Record<string, unknown>) => {
     const status = u.deleted_at ? '❌ DELETED' : (u.is_active ? '✅ ACTIVE' : '⏸️  INACTIVE');
-    console.log(`  ${status} ${u.email.padEnd(30)} - ${u.full_name}`);
+    const email = String(u.email || '');
+    const fullName = String(u.full_name || '');
+    console.log(`  ${status} ${email.padEnd(30)} - ${fullName}`);
   });
 
-  const active = data.rows.filter((u: any) => !u.deleted_at && u.is_active).length;
-  const deleted = data.rows.filter((u: any) => u.deleted_at).length;
-  const inactive = data.rows.filter((u: any) => !u.deleted_at && !u.is_active).length;
+  const active = data.rows.filter((u: Record<string, unknown>) => !u.deleted_at && u.is_active).length;
+  const deleted = data.rows.filter((u: Record<string, unknown>) => u.deleted_at).length;
+  const inactive = data.rows.filter((u: Record<string, unknown>) => !u.deleted_at && !u.is_active).length;
 
   console.log(`\n📈 Summary:`);
   console.log(`   Active: ${active}`);

@@ -172,16 +172,15 @@ export function BiometricBackground({ biometricScore, className }: BiometricBack
 }
 
 // Export status indicator component
-export function BiometricStatusIndicator({ 
-  state, 
+export function BiometricStatusIndicator({
+  state,
   statusMessage,
-  compact = false 
-}: { 
-  state: BiometricState; 
+  compact = false
+}: {
+  state: BiometricState;
   statusMessage: string;
   compact?: boolean;
 }) {
-  const theme = getBiometricTheme(state);
   
   const dotClass = cn(
     "rounded-full",
@@ -208,6 +207,8 @@ export function BiometricStatusIndicator({
     </div>
   );
 }
+
+
 
 
 

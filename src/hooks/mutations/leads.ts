@@ -15,7 +15,6 @@
  */
 
 import { trpc } from '@/lib/trpc/client';
-import type { CreateLeadInput, UpdateLeadInput } from '@/lib/validations/crm';
 
 // ============================================
 // CREATE LEAD

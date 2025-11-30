@@ -260,7 +260,7 @@ export function formatFileSize(bytes: number): string {
  * Error types
  */
 export class FileUploadError extends Error {
-  constructor(message: string, public code: string, public details?: any) {
+  constructor(message: string, public code: string, public details?: unknown) {
     super(message);
     this.name = 'FileUploadError';
   }

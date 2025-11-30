@@ -22,7 +22,7 @@ import {
   moduleTopics,
 } from '@/lib/db/schema/academy';
 import { userProfiles } from '@/lib/db/schema/user-profiles';
-import { eq, and, desc, asc, sql, inArray, gte, lte } from 'drizzle-orm';
+import { eq, and, desc, asc, sql } from 'drizzle-orm';
 
 // =====================================================
 // Types
@@ -159,7 +159,7 @@ async function checkPermission(
 ): Promise<{ allowed: boolean; scope?: string }> {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.rpc('check_user_permission' as any, {
+  const { data, error } = await (supabase.rpc as (name: string, params: Record<string, string | null>) => Promise<{ data: boolean | null; error: unknown }>)('check_user_permission', {
     p_user_id: userId,
     p_permission: permission,
     p_table_name: resourceType || null,
@@ -186,13 +186,13 @@ async function logAuditEvent(
 ) {
   const supabase = await createClient();
 
-  await (supabase.from as any)('audit_logs').insert({
+  await (supabase.from as (table: string) => { insert: (data: Record<string, unknown>) => Promise<void> })('audit_logs').insert({
     user_id: userId,
     org_id: orgId,
     action,
     table_name: resourceType,
     record_id: resourceId,
-    metadata: details as any,
+    metadata: details as Record<string, unknown>,
     severity,
     user_ip_address: null,
     user_agent: null,
@@ -1272,7 +1272,6 @@ export async function getMyProgressDashboardAction(): Promise<ActionResult<Stude
       .limit(30);
 
     let streak = 0;
-    const today = new Date().toISOString().split('T')[0];
     const dates = recentActivity.map(a => a.date);
 
     for (let i = 0; i < 30; i++) {

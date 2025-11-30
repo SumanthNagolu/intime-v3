@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { SENIOR_PERSONA, MOCK_MODULES } from '@/lib/constants';
-import { Shield, Briefcase, CheckCircle, AlertCircle, Download, Edit3, Save, X, TrendingUp, Award } from 'lucide-react';
+import { Shield, Briefcase, CheckCircle, AlertCircle, Edit3, Save, X, TrendingUp, Award } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAppStore } from '@/lib/store';
 import { useAcademyStore, useBiometric } from '@/lib/store/academy-store';

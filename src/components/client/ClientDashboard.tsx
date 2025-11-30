@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useAppStore } from '../../lib/store';
-import { Briefcase, AlertCircle, ArrowRight, Plus, Search, MapPin, DollarSign, ChevronLeft, Send, Clock, Calendar, Mail, Phone, Download, Award, Star, X, CheckCircle } from 'lucide-react';
+import { Briefcase, AlertCircle, ArrowRight, Plus, Search, MapPin, DollarSign, ChevronLeft, Send, Clock, Calendar, Mail, Phone, Download, Star, X, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, usePathname, useParams } from 'next/navigation';
 import { Job } from '../../types';
@@ -533,7 +533,7 @@ const CustomSearchModal: React.FC<{ isOpen: boolean, onClose: () => void }> = ({
                 </button>
                 
                 <h2 className="text-3xl font-serif font-bold text-charcoal mb-2">Request Custom Search</h2>
-                <p className="text-stone-500 mb-8">Tell our account team what you need. We'll manually curate a list for you.</p>
+                <p className="text-stone-500 mb-8">Tell our account team what you need. We&apos;ll manually curate a list for you.</p>
 
                 <div className="space-y-6">
                     <div>

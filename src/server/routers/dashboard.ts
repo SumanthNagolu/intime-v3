@@ -3,14 +3,12 @@
  * Provides real-time dashboard metrics for recruiting module
  */
 
-import { z } from 'zod';
 import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
 import {
   jobs,
   submissions,
   interviews,
-  offers,
   placements,
 } from '@/lib/db/schema/ats';
 import { accounts, leads, deals } from '@/lib/db/schema/crm';
@@ -22,19 +20,17 @@ export const dashboardRouter = router({
    * Returns all metrics needed for the recruiting dashboard
    */
   recruiterMetrics: orgProtectedProcedure.query(async ({ ctx }) => {
-    const { userId, orgId } = ctx;
+    const { orgId } = ctx;
 
     // Get current date ranges
     const now = new Date();
     const quarterStart = new Date(now.getFullYear(), Math.floor(now.getMonth() / 3) * 3, 1);
-    const yearStart = new Date(now.getFullYear(), 0, 1);
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
 
     // Fetch all metrics in parallel
     const [
       jobsData,
-      submissionsData,
       placementsData,
       interviewsTodayData,
       pipelineData,
@@ -210,9 +206,7 @@ export const dashboardRouter = router({
   /**
    * Get activity summary for daily planner
    */
-  activitySummary: orgProtectedProcedure.query(async ({ ctx }) => {
-    const { userId, orgId } = ctx;
-
+  activitySummary: orgProtectedProcedure.query(async () => {
     // For now return mock data - activities table needs to be created first
     return {
       pending: 0,

@@ -15,7 +15,7 @@
 import { createClient } from '@/lib/supabase/client';
 import type { AuthError, Provider } from '@supabase/supabase-js';
 
-export interface AuthResult<T = any> {
+export interface AuthResult<T = unknown> {
   data: T | null;
   error: AuthError | null;
 }

@@ -182,6 +182,8 @@ export const SystemRoles = {
   ADMIN: 'admin',
   RECRUITER: 'recruiter',
   BENCH_SALES: 'bench_sales',
+  RECRUITING_MANAGER: 'recruiting_manager',
+  BENCH_SALES_MANAGER: 'bench_sales_manager',
   TRAINER: 'trainer',
   STUDENT: 'student',
   EMPLOYEE: 'employee',

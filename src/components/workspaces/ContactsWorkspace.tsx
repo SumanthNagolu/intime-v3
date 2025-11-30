@@ -7,17 +7,15 @@
 
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   User,
   Mail,
   Phone,
-  Globe,
   Linkedin,
   Building2,
   MapPin,
-  Clock,
   Calendar,
   MessageSquare,
   Activity,
@@ -34,7 +32,7 @@ import {
   Twitter,
   Github,
 } from 'lucide-react';
-import { format, formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 import { trpc } from '@/lib/trpc/client';
 import { cn } from '@/lib/utils';
 
@@ -99,8 +97,7 @@ const DECISION_AUTHORITY_LABELS = {
 // SUB-COMPONENTS
 // =====================================================
 
-function OverviewTab({ contact, canEdit }: { contact: NonNullable<ReturnType<typeof useContact>['data']>; canEdit: boolean }) {
-  const TypeIcon = CONTACT_TYPE_CONFIG[contact.contactType as keyof typeof CONTACT_TYPE_CONFIG]?.icon || User;
+function OverviewTab({ contact, canEdit: _canEdit }: { contact: NonNullable<ReturnType<typeof useContact>['data']>; canEdit: boolean }) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -372,7 +369,7 @@ function OverviewTab({ contact, canEdit }: { contact: NonNullable<ReturnType<typ
   );
 }
 
-function InteractionsTab({ contact, canEdit }: { contact: NonNullable<ReturnType<typeof useContact>['data']>; canEdit: boolean }) {
+function InteractionsTab({ contact: _contact, canEdit: _canEdit }: { contact: NonNullable<ReturnType<typeof useContact>['data']>; canEdit: boolean }) {
   return (
     <div className="text-center py-8 text-muted-foreground">
       <MessageSquare className="w-12 h-12 mx-auto mb-4 opacity-50" />
@@ -382,7 +379,7 @@ function InteractionsTab({ contact, canEdit }: { contact: NonNullable<ReturnType
   );
 }
 
-function LinkedEntitiesTab({ contact, canEdit }: { contact: NonNullable<ReturnType<typeof useContact>['data']>; canEdit: boolean }) {
+function LinkedEntitiesTab({ contact: _contact, canEdit: _canEdit }: { contact: NonNullable<ReturnType<typeof useContact>['data']>; canEdit: boolean }) {
   return (
     <div className="space-y-4">
       <Card>
@@ -414,7 +411,7 @@ function useContact(contactId: string) {
 
 export function ContactsWorkspace({ contactId }: ContactsWorkspaceProps) {
   const router = useRouter();
-  const { context, canEdit, canDelete, isLoading: contextLoading } = useWorkspaceContext('contact', contactId);
+  const { canEdit, canDelete, isLoading: contextLoading } = useWorkspaceContext('contact', contactId);
 
   // Fetch contact data
   const { data: contact, isLoading: contactLoading, error } = useContact(contactId);
@@ -545,8 +542,6 @@ export function ContactsWorkspace({ contactId }: ContactsWorkspaceProps) {
     );
   }
 
-  const typeConfig = CONTACT_TYPE_CONFIG[contact.contactType as keyof typeof CONTACT_TYPE_CONFIG] ||
-    CONTACT_TYPE_CONFIG.general;
   const statusConfig = CONTACT_STATUS_CONFIG[contact.status as keyof typeof CONTACT_STATUS_CONFIG] ||
     CONTACT_STATUS_CONFIG.active;
 

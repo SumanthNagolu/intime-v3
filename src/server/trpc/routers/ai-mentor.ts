@@ -10,8 +10,6 @@ import { router, protectedProcedure } from '../trpc';
 import {
   askMentor,
   askMentorStream,
-  getChatHistory,
-  getUserSessions,
   getRateLimitStatus,
 } from '@/lib/ai/mentor-service';
 import { observable } from '@trpc/server/observable';
@@ -267,7 +265,7 @@ export const aiMentorRouter = router({
    */
   getDailyStats: protectedProcedure
     .input(getStatisticsSchema)
-    .query(async ({ ctx, input }) => {
+    .query(async ({ ctx: _ctx, input }) => {
       // TODO: Check if user is admin/trainer
 
       const SUPABASE_URL = 'https://gkwhxmvugnjwwwiufmdy.supabase.co';
@@ -306,7 +304,7 @@ export const aiMentorRouter = router({
   /**
    * Get student statistics (Admin/Trainer only)
    */
-  getStudentStats: protectedProcedure.query(async ({ ctx }) => {
+  getStudentStats: protectedProcedure.query(async ({ ctx: _ctx }) => {
     // TODO: Check if user is admin/trainer
 
     const SUPABASE_URL = 'https://gkwhxmvugnjwwwiufmdy.supabase.co';
@@ -335,7 +333,7 @@ export const aiMentorRouter = router({
   /**
    * Get topic statistics (Admin/Trainer only)
    */
-  getTopicStats: protectedProcedure.query(async ({ ctx }) => {
+  getTopicStats: protectedProcedure.query(async ({ ctx: _ctx }) => {
     // TODO: Check if user is admin/trainer
 
     const SUPABASE_URL = 'https://gkwhxmvugnjwwwiufmdy.supabase.co';
@@ -370,7 +368,7 @@ export const aiMentorRouter = router({
    */
   getQualityMetrics: protectedProcedure
     .input(z.object({ days: z.number().int().min(1).max(90).default(7) }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ ctx: _ctx, input }) => {
       const SUPABASE_URL = 'https://gkwhxmvugnjwwwiufmdy.supabase.co';
       const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
@@ -398,7 +396,7 @@ export const aiMentorRouter = router({
   /**
    * Get topic quality analysis
    */
-  getTopicQuality: protectedProcedure.query(async ({ ctx }) => {
+  getTopicQuality: protectedProcedure.query(async ({ ctx: _ctx }) => {
     const SUPABASE_URL = 'https://gkwhxmvugnjwwwiufmdy.supabase.co';
     const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
@@ -425,7 +423,7 @@ export const aiMentorRouter = router({
   /**
    * Get prompt variant performance
    */
-  getPromptVariantPerformance: protectedProcedure.query(async ({ ctx }) => {
+  getPromptVariantPerformance: protectedProcedure.query(async ({ ctx: _ctx }) => {
     const SUPABASE_URL = 'https://gkwhxmvugnjwwwiufmdy.supabase.co';
     const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
@@ -460,7 +458,7 @@ export const aiMentorRouter = router({
         trafficPercentage: z.number().int().min(0).max(100).default(0),
       })
     )
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ ctx: _ctx, input }) => {
       const SUPABASE_URL = 'https://gkwhxmvugnjwwwiufmdy.supabase.co';
       const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
@@ -495,7 +493,7 @@ export const aiMentorRouter = router({
         trafficPercentage: z.number().int().min(0).max(100),
       })
     )
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ ctx: _ctx, input }) => {
       const SUPABASE_URL = 'https://gkwhxmvugnjwwwiufmdy.supabase.co';
       const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
@@ -525,7 +523,7 @@ export const aiMentorRouter = router({
    */
   deactivatePromptVariant: protectedProcedure
     .input(z.object({ variantId: z.string().uuid() }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ ctx: _ctx, input }) => {
       const SUPABASE_URL = 'https://gkwhxmvugnjwwwiufmdy.supabase.co';
       const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 

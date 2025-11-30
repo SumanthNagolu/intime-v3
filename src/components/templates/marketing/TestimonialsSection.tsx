@@ -83,7 +83,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
 
               {/* Quote */}
               <p className={`mb-6 leading-relaxed ${isDark ? 'text-charcoal-300' : 'text-charcoal-600'}`}>
-                "{testimonial.quote}"
+                &quot;{testimonial.quote}&quot;
               </p>
 
               {/* Rating */}

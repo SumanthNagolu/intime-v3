@@ -43,7 +43,7 @@ const signInSchema = z.object({
 type SignUpInput = z.infer<typeof signUpSchema>;
 type SignInInput = z.infer<typeof signInSchema>;
 
-export interface ActionResult<T = any> {
+export interface ActionResult<T = unknown> {
   success: boolean;
   data?: T;
   error?: string;
@@ -336,7 +336,7 @@ export async function getUserPortalAction(): Promise<ActionResult<{ portal: stri
     .eq('user_id', profile.id)
     .is('deleted_at', null);
 
-  const roles = rolesData?.map((item: any) => item.role?.name).filter(Boolean) || [];
+  const roles = rolesData?.map((item: { role?: { name?: string } | null }) => item.role?.name).filter((role): role is string => Boolean(role)) || [];
 
   // Determine correct portal based on roles
   const portalRoles: Record<string, string[]> = {

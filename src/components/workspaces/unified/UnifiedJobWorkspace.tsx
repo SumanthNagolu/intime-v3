@@ -22,7 +22,6 @@ import { GenericEntityWorkspace, buildJobTabs } from '../composers';
 // Entity content
 import {
   JobOverviewContent,
-  JobPipelineContent,
   JobSubmissionsContent,
   JobSidebarContent,
 } from '../entity/job';
@@ -62,7 +61,7 @@ export function UnifiedJobWorkspace({ jobId }: UnifiedJobWorkspaceProps) {
   const [showAttachCandidateModal, setShowAttachCandidateModal] = useState(false);
 
   // Fetch job details
-  const { data: job, isLoading, error, refetch } = useJobRaw(jobId);
+  const { data: job, isLoading, error } = useJobRaw(jobId);
 
   // Fetch job metrics
   const { data: metrics } = useJobMetrics(jobId);
@@ -80,25 +79,24 @@ export function UnifiedJobWorkspace({ jobId }: UnifiedJobWorkspaceProps) {
   );
 
   // Fetch activities
-  const { data: activities, isLoading: activitiesLoading, refetch: refetchActivities } = trpc.activities.list.useQuery(
+  const { refetch: refetchActivities } = trpc.activities.list.useQuery(
     { entityType: 'job', entityId: jobId, includeCompleted: true, limit: 50, offset: 0 },
     { enabled: !!jobId }
   );
 
   // Fetch tasks
-  const { data: tasks, isLoading: tasksLoading, refetch: refetchTasks } = trpc.activities.list.useQuery(
+  const { data: tasks, refetch: refetchTasks } = trpc.activities.list.useQuery(
     { entityType: 'job', entityId: jobId, activityTypes: ['task', 'follow_up'], includeCompleted: true, limit: 100, offset: 0 },
     { enabled: !!jobId }
   );
 
   // Fetch documents
-  const { data: documents, isLoading: documentsLoading, refetch: refetchDocuments } = trpc.files.list.useQuery(
+  const { data: documents, refetch: refetchDocuments } = trpc.files.list.useQuery(
     { entityType: 'job', entityId: jobId },
     { enabled: !!jobId }
   );
 
   // Candidate search for attach modal
-  const [candidateSearch, setCandidateSearch] = useState('');
   const { data: searchResults = [], isLoading: isSearching } = trpc.ats.candidates.search.useQuery(
     { limit: 20 },
     { enabled: showAttachCandidateModal }
@@ -121,7 +119,8 @@ export function UnifiedJobWorkspace({ jobId }: UnifiedJobWorkspaceProps) {
 
   // Transform submissions for pipeline
   // Note: candidate relation may or may not be included depending on the query
-  const pipelineCandidates = useMemo(() => {
+  // Currently unused but kept for future pipeline visualization
+  const _pipelineCandidates = useMemo(() => {
     return submissions.map((sub) => {
       const candidate = (sub as { candidate?: { firstName?: string; lastName?: string; candidateLocation?: string; candidateCurrentVisa?: string; candidateHourlyRate?: number; candidateSkills?: string[] } }).candidate;
       return {
@@ -170,7 +169,8 @@ export function UnifiedJobWorkspace({ jobId }: UnifiedJobWorkspaceProps) {
   }, [submissions]);
 
   // Transform documents
-  const documentsList = useMemo(() => {
+  // Currently unused but kept for future document list rendering
+  const _documentsList = useMemo(() => {
     return (documents || []).map((doc) => ({
       id: doc.id,
       fileName: doc.fileName,
@@ -208,7 +208,8 @@ export function UnifiedJobWorkspace({ jobId }: UnifiedJobWorkspaceProps) {
   }, [tasksList]);
 
   // Handle document upload
-  const handleUploadDocument = async (files: File[], metadata: { category: string; description: string; tags: string[] }) => {
+  // Currently unused but kept for future document upload feature
+  const _handleUploadDocument = async (files: File[], metadata: { category: string; description: string; tags: string[] }) => {
     for (const file of files) {
       const { uploadUrl, filePath, bucket } = await getUploadUrl.mutateAsync({
         fileName: file.name,
@@ -238,13 +239,15 @@ export function UnifiedJobWorkspace({ jobId }: UnifiedJobWorkspaceProps) {
   };
 
   // Handle document delete
-  const handleDeleteDocument = async (documentId: string) => {
+  // Currently unused but kept for future document delete feature
+  const _handleDeleteDocument = async (documentId: string) => {
     await deleteFile.mutateAsync({ fileId: documentId });
     refetchDocuments();
   };
 
   // Handle task operations
-  const handleCreateTask = async (task: { title: string; priority: string; dueDate?: Date }) => {
+  // Currently unused but kept for future task creation feature
+  const _handleCreateTask = async (task: { title: string; priority: string; dueDate?: Date }) => {
     if (!task.dueDate) {
       throw new Error('Due date is required');
     }
@@ -261,7 +264,8 @@ export function UnifiedJobWorkspace({ jobId }: UnifiedJobWorkspaceProps) {
     refetchActivities();
   };
 
-  const handleCompleteTask = async (taskId: string) => {
+  // Currently unused but kept for future task completion feature
+  const _handleCompleteTask = async (taskId: string) => {
     await completeActivity.mutateAsync({ id: taskId });
     refetchTasks();
     refetchActivities();
@@ -399,7 +403,7 @@ export function UnifiedJobWorkspace({ jobId }: UnifiedJobWorkspaceProps) {
         description="Link a candidate from the talent pool to this job"
         searchResults={attachSearchResults}
         isSearching={isSearching}
-        onSearch={setCandidateSearch}
+        onSearch={() => {}}
         onAttach={handleAttachCandidate}
         isAttaching={createSubmission.isPending}
         allowCreate

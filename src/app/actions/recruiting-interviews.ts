@@ -186,6 +186,8 @@ const createOfferSchema = z.object({
   expiresAt: z.string().optional(),
 });
 
+// Schema defined for future use
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const updateOfferSchema = z.object({
   rate: z.number().min(0).optional(),
   rateType: z.enum(['hourly', 'annual']).optional(),
@@ -258,7 +260,7 @@ async function checkPermission(
       .eq('user_id', userId)
       .is('deleted_at', null);
 
-    const roleNames = roles?.map((r: any) => r.role?.name) || [];
+    const roleNames = roles?.map((r: { role?: { name?: string } }) => r.role?.name) || [];
     return roleNames.includes('super_admin') || roleNames.includes('admin') || roleNames.includes('recruiter') || roleNames.includes('sr_recruiter');
   }
 
@@ -288,16 +290,44 @@ async function logAuditEvent(
     user_id: userId,
     user_email: userEmail,
     org_id: orgId,
-    old_values: oldValues || null,
-    new_values: newValues || null,
-    metadata: metadata || {},
+    old_values: oldValues ?? null,
+    new_values: newValues ?? null,
+    metadata: metadata ?? {},
     severity: action.includes('CANCEL') ? 'warning' : 'info',
-  } as any);
+  } as Record<string, unknown>);
 }
 
 // ============================================================================
 // INTERVIEW ACTIONS
 // ============================================================================
+
+interface InterviewRow {
+  id: string;
+  submission_id: string;
+  job_id: string;
+  job?: { title?: string } | null;
+  candidate_id: string;
+  candidate?: { full_name?: string; email?: string } | null;
+  round_number: number;
+  interview_type: string;
+  scheduled_at: string | null;
+  duration_minutes: number;
+  timezone: string;
+  meeting_link: string | null;
+  meeting_location: string | null;
+  interviewer_names: string[] | null;
+  interviewer_emails: string[] | null;
+  scheduled_by: string | null;
+  scheduler?: { full_name?: string } | null;
+  status: string;
+  cancellation_reason: string | null;
+  feedback: string | null;
+  rating: number | null;
+  recommendation: string | null;
+  feedback_submitted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
 
 /**
  * List interviews with pagination and filtering
@@ -355,34 +385,37 @@ export async function listInterviewsAction(
     return { success: false, error: 'Failed to fetch interviews' };
   }
 
-  const transformedInterviews: Interview[] = (interviews || []).map((i: any) => ({
-    id: i.id,
-    submissionId: i.submission_id,
-    jobId: i.job_id,
-    jobTitle: i.job?.title || null,
-    candidateId: i.candidate_id,
-    candidateName: i.candidate?.full_name || null,
-    candidateEmail: i.candidate?.email || null,
-    roundNumber: i.round_number,
-    interviewType: i.interview_type,
-    scheduledAt: i.scheduled_at,
-    durationMinutes: i.duration_minutes,
-    timezone: i.timezone,
-    meetingLink: i.meeting_link,
-    meetingLocation: i.meeting_location,
-    interviewerNames: i.interviewer_names,
-    interviewerEmails: i.interviewer_emails,
-    scheduledBy: i.scheduled_by,
-    scheduledByName: i.scheduler?.full_name || null,
-    status: i.status,
-    cancellationReason: i.cancellation_reason,
-    feedback: i.feedback,
-    rating: i.rating,
-    recommendation: i.recommendation,
-    feedbackSubmittedAt: i.feedback_submitted_at,
-    createdAt: i.created_at,
-    updatedAt: i.updated_at,
-  }));
+  const transformedInterviews: Interview[] = (interviews || []).map((i: unknown) => {
+    const interview = i as InterviewRow;
+    return {
+      id: interview.id,
+      submissionId: interview.submission_id,
+      jobId: interview.job_id,
+      jobTitle: interview.job?.title ?? null,
+      candidateId: interview.candidate_id,
+      candidateName: interview.candidate?.full_name ?? null,
+      candidateEmail: interview.candidate?.email ?? null,
+      roundNumber: interview.round_number,
+      interviewType: interview.interview_type,
+      scheduledAt: interview.scheduled_at,
+      durationMinutes: interview.duration_minutes,
+      timezone: interview.timezone,
+      meetingLink: interview.meeting_link,
+      meetingLocation: interview.meeting_location,
+      interviewerNames: interview.interviewer_names,
+      interviewerEmails: interview.interviewer_emails,
+      scheduledBy: interview.scheduled_by,
+      scheduledByName: interview.scheduler?.full_name ?? null,
+      status: interview.status,
+      cancellationReason: interview.cancellation_reason,
+      feedback: interview.feedback,
+      rating: interview.rating,
+      recommendation: interview.recommendation,
+      feedbackSubmittedAt: interview.feedback_submitted_at,
+      createdAt: interview.created_at,
+      updatedAt: interview.updated_at,
+    };
+  });
 
   return {
     success: true,
@@ -821,34 +854,37 @@ export async function getSubmissionInterviewsAction(
     return { success: false, error: 'Failed to fetch interviews' };
   }
 
-  const transformedInterviews: Interview[] = (interviews || []).map((i: any) => ({
-    id: i.id,
-    submissionId: i.submission_id,
-    jobId: i.job_id,
-    jobTitle: i.job?.title || null,
-    candidateId: i.candidate_id,
-    candidateName: i.candidate?.full_name || null,
-    candidateEmail: i.candidate?.email || null,
-    roundNumber: i.round_number,
-    interviewType: i.interview_type,
-    scheduledAt: i.scheduled_at,
-    durationMinutes: i.duration_minutes,
-    timezone: i.timezone,
-    meetingLink: i.meeting_link,
-    meetingLocation: i.meeting_location,
-    interviewerNames: i.interviewer_names,
-    interviewerEmails: i.interviewer_emails,
-    scheduledBy: i.scheduled_by,
-    scheduledByName: i.scheduler?.full_name || null,
-    status: i.status,
-    cancellationReason: i.cancellation_reason,
-    feedback: i.feedback,
-    rating: i.rating,
-    recommendation: i.recommendation,
-    feedbackSubmittedAt: i.feedback_submitted_at,
-    createdAt: i.created_at,
-    updatedAt: i.updated_at,
-  }));
+  const transformedInterviews: Interview[] = (interviews || []).map((i: unknown) => {
+    const interview = i as InterviewRow;
+    return {
+      id: interview.id,
+      submissionId: interview.submission_id,
+      jobId: interview.job_id,
+      jobTitle: interview.job?.title ?? null,
+      candidateId: interview.candidate_id,
+      candidateName: interview.candidate?.full_name ?? null,
+      candidateEmail: interview.candidate?.email ?? null,
+      roundNumber: interview.round_number,
+      interviewType: interview.interview_type,
+      scheduledAt: interview.scheduled_at,
+      durationMinutes: interview.duration_minutes,
+      timezone: interview.timezone,
+      meetingLink: interview.meeting_link,
+      meetingLocation: interview.meeting_location,
+      interviewerNames: interview.interviewer_names,
+      interviewerEmails: interview.interviewer_emails,
+      scheduledBy: interview.scheduled_by,
+      scheduledByName: interview.scheduler?.full_name ?? null,
+      status: interview.status,
+      cancellationReason: interview.cancellation_reason,
+      feedback: interview.feedback,
+      rating: interview.rating,
+      recommendation: interview.recommendation,
+      feedbackSubmittedAt: interview.feedback_submitted_at,
+      createdAt: interview.created_at,
+      updatedAt: interview.updated_at,
+    };
+  });
 
   return { success: true, data: transformedInterviews };
 }
@@ -886,34 +922,37 @@ export async function getUpcomingInterviewsAction(): Promise<ActionResult<Interv
     return { success: false, error: 'Failed to fetch interviews' };
   }
 
-  const transformedInterviews: Interview[] = (interviews || []).map((i: any) => ({
-    id: i.id,
-    submissionId: i.submission_id,
-    jobId: i.job_id,
-    jobTitle: i.job?.title || null,
-    candidateId: i.candidate_id,
-    candidateName: i.candidate?.full_name || null,
-    candidateEmail: i.candidate?.email || null,
-    roundNumber: i.round_number,
-    interviewType: i.interview_type,
-    scheduledAt: i.scheduled_at,
-    durationMinutes: i.duration_minutes,
-    timezone: i.timezone,
-    meetingLink: i.meeting_link,
-    meetingLocation: i.meeting_location,
-    interviewerNames: i.interviewer_names,
-    interviewerEmails: i.interviewer_emails,
-    scheduledBy: i.scheduled_by,
-    scheduledByName: i.scheduler?.full_name || null,
-    status: i.status,
-    cancellationReason: i.cancellation_reason,
-    feedback: i.feedback,
-    rating: i.rating,
-    recommendation: i.recommendation,
-    feedbackSubmittedAt: i.feedback_submitted_at,
-    createdAt: i.created_at,
-    updatedAt: i.updated_at,
-  }));
+  const transformedInterviews: Interview[] = (interviews || []).map((i: unknown) => {
+    const interview = i as InterviewRow;
+    return {
+      id: interview.id,
+      submissionId: interview.submission_id,
+      jobId: interview.job_id,
+      jobTitle: interview.job?.title ?? null,
+      candidateId: interview.candidate_id,
+      candidateName: interview.candidate?.full_name ?? null,
+      candidateEmail: interview.candidate?.email ?? null,
+      roundNumber: interview.round_number,
+      interviewType: interview.interview_type,
+      scheduledAt: interview.scheduled_at,
+      durationMinutes: interview.duration_minutes,
+      timezone: interview.timezone,
+      meetingLink: interview.meeting_link,
+      meetingLocation: interview.meeting_location,
+      interviewerNames: interview.interviewer_names,
+      interviewerEmails: interview.interviewer_emails,
+      scheduledBy: interview.scheduled_by,
+      scheduledByName: interview.scheduler?.full_name ?? null,
+      status: interview.status,
+      cancellationReason: interview.cancellation_reason,
+      feedback: interview.feedback,
+      rating: interview.rating,
+      recommendation: interview.recommendation,
+      feedbackSubmittedAt: interview.feedback_submitted_at,
+      createdAt: interview.created_at,
+      updatedAt: interview.updated_at,
+    };
+  });
 
   return { success: true, data: transformedInterviews };
 }
@@ -1136,6 +1175,38 @@ export async function sendOfferAction(offerId: string): Promise<ActionResult<Off
 // PLACEMENT ACTIONS
 // ============================================================================
 
+interface PlacementRow {
+  id: string;
+  submission_id: string;
+  offer_id: string | null;
+  job_id: string;
+  job?: { title?: string } | null;
+  candidate_id: string;
+  candidate?: { full_name?: string } | null;
+  account_id: string;
+  account?: { name?: string } | null;
+  placement_type: string;
+  start_date: string;
+  end_date: string | null;
+  bill_rate: string | number;
+  pay_rate: string | number;
+  markup_percentage: string | number | null;
+  status: string;
+  end_reason: string | null;
+  actual_end_date: string | null;
+  total_revenue: string | number | null;
+  total_paid: string | number | null;
+  onboarding_status: string;
+  onboarding_completed_at: string | null;
+  performance_rating: number | null;
+  extension_count: number;
+  recruiter_id: string;
+  recruiter?: { full_name?: string } | null;
+  account_manager_id: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 /**
  * Create a placement
  */
@@ -1351,37 +1422,40 @@ export async function listPlacementsAction(
     return { success: false, error: 'Failed to fetch placements' };
   }
 
-  const transformedPlacements: Placement[] = (placements || []).map((p: any) => ({
-    id: p.id,
-    submissionId: p.submission_id,
-    offerId: p.offer_id,
-    jobId: p.job_id,
-    jobTitle: p.job?.title || null,
-    candidateId: p.candidate_id,
-    candidateName: p.candidate?.full_name || null,
-    accountId: p.account_id,
-    accountName: p.account?.name || null,
-    placementType: p.placement_type,
-    startDate: p.start_date,
-    endDate: p.end_date,
-    billRate: typeof p.bill_rate === 'string' ? parseFloat(p.bill_rate) : p.bill_rate,
-    payRate: typeof p.pay_rate === 'string' ? parseFloat(p.pay_rate) : p.pay_rate,
-    markupPercentage: p.markup_percentage ? (typeof p.markup_percentage === 'string' ? parseFloat(p.markup_percentage) : p.markup_percentage) : null,
-    status: p.status,
-    endReason: p.end_reason,
-    actualEndDate: p.actual_end_date,
-    totalRevenue: p.total_revenue ? (typeof p.total_revenue === 'string' ? parseFloat(p.total_revenue) : p.total_revenue) : null,
-    totalPaid: p.total_paid ? (typeof p.total_paid === 'string' ? parseFloat(p.total_paid) : p.total_paid) : null,
-    onboardingStatus: p.onboarding_status,
-    onboardingCompletedAt: p.onboarding_completed_at,
-    performanceRating: p.performance_rating,
-    extensionCount: p.extension_count,
-    recruiterId: p.recruiter_id,
-    recruiterName: p.recruiter?.full_name || null,
-    accountManagerId: p.account_manager_id,
-    createdAt: p.created_at,
-    updatedAt: p.updated_at,
-  }));
+  const transformedPlacements: Placement[] = (placements || []).map((p: unknown) => {
+    const placement = p as PlacementRow;
+    return {
+      id: placement.id,
+      submissionId: placement.submission_id,
+      offerId: placement.offer_id,
+      jobId: placement.job_id,
+      jobTitle: placement.job?.title ?? null,
+      candidateId: placement.candidate_id,
+      candidateName: placement.candidate?.full_name ?? null,
+      accountId: placement.account_id,
+      accountName: placement.account?.name ?? null,
+      placementType: placement.placement_type,
+      startDate: placement.start_date,
+      endDate: placement.end_date,
+      billRate: typeof placement.bill_rate === 'string' ? parseFloat(placement.bill_rate) : placement.bill_rate,
+      payRate: typeof placement.pay_rate === 'string' ? parseFloat(placement.pay_rate) : placement.pay_rate,
+      markupPercentage: placement.markup_percentage ? (typeof placement.markup_percentage === 'string' ? parseFloat(placement.markup_percentage) : placement.markup_percentage) : null,
+      status: placement.status,
+      endReason: placement.end_reason,
+      actualEndDate: placement.actual_end_date,
+      totalRevenue: placement.total_revenue ? (typeof placement.total_revenue === 'string' ? parseFloat(placement.total_revenue) : placement.total_revenue) : null,
+      totalPaid: placement.total_paid ? (typeof placement.total_paid === 'string' ? parseFloat(placement.total_paid) : placement.total_paid) : null,
+      onboardingStatus: placement.onboarding_status,
+      onboardingCompletedAt: placement.onboarding_completed_at,
+      performanceRating: placement.performance_rating,
+      extensionCount: placement.extension_count,
+      recruiterId: placement.recruiter_id,
+      recruiterName: placement.recruiter?.full_name ?? null,
+      accountManagerId: placement.account_manager_id,
+      createdAt: placement.created_at,
+      updatedAt: placement.updated_at,
+    };
+  });
 
   return {
     success: true,

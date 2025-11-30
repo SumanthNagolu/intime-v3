@@ -15,7 +15,7 @@ import {
   topicLessons,
 } from '@/lib/db/schema/academy';
 import { userProfiles } from '@/lib/db/schema/user-profiles';
-import { eq, and, or, ilike, desc, asc, sql, isNull, inArray } from 'drizzle-orm';
+import { eq, and, or, ilike, desc, asc, sql, isNull } from 'drizzle-orm';
 
 // =====================================================
 // Types
@@ -133,7 +133,9 @@ async function checkPermission(
 ): Promise<{ allowed: boolean; scope?: string }> {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.rpc('check_user_permission' as any, {
+  // Type assertion needed for Supabase RPC with dynamic table names
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data, error } = await (supabase.rpc as any)('check_user_permission', {
     p_user_id: userId,
     p_permission: permission,
     p_resource_type: resourceType || null,
@@ -160,6 +162,8 @@ async function logAuditEvent(
 ) {
   const supabase = await createClient();
 
+  // Type assertion needed for Supabase table not in generated types
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   await (supabase.from as any)('audit_logs').insert({
     user_id: userId,
     org_id: orgId,

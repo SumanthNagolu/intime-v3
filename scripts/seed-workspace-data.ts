@@ -86,8 +86,6 @@ const SKILLS = [
   'PostgreSQL', 'MongoDB', 'GraphQL', 'REST API', 'Git', 'CI/CD', 'Agile', 'Scrum',
 ];
 
-const VISA_STATUSES = ['US Citizen', 'Green Card', 'H1B', 'OPT', 'L1'];
-
 // =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
@@ -338,7 +336,7 @@ async function seedWorkspaceData() {
   // If not enough candidates, use recruiters as candidates too (for testing)
   if (candidateIds.length < 10) {
     console.log('  ℹ️  Adding recruiters as additional candidates for testing...');
-    recruiters.forEach((id, i) => {
+    recruiters.forEach((id, _i) => {
       if (!candidateIds.includes(id)) {
         candidateIds.push(id);
         console.log(`  ✅ Added recruiter as candidate: [TALENT-${candidateIds.length}]`);
@@ -558,7 +556,7 @@ async function seedWorkspaceData() {
     const payRate = Math.round(billRate * 0.7);
     const startDate = randomDate(60, 0);
 
-    const { data: placement, error } = await supabase
+    const { data: _placement, error } = await supabase
       .from('placements')
       .insert({
         org_id: orgId,

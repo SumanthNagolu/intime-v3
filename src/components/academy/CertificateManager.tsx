@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { Award, Download, Eye, Search, Filter } from 'lucide-react';
 
 export const CertificateManager: React.FC = () => {

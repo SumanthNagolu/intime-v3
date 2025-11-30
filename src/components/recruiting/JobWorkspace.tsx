@@ -2,9 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useJobRaw, useJobMetrics } from '@/hooks/queries/jobs';
-import { useUpdateJob } from '@/hooks/mutations/jobs';
+import { useJobRaw } from '@/hooks/queries/jobs';
 import { trpc } from '@/lib/trpc/client';
 import {
   useCreateActivity,
@@ -20,11 +18,8 @@ import {
   DollarSign,
   Briefcase,
   Calendar,
-  Clock,
   Users,
-  Target,
   FileText,
-  Activity,
   Loader2,
   AlertCircle,
   X,
@@ -36,10 +31,6 @@ import {
   User,
   Search,
   ChevronRight,
-  Edit,
-  Zap,
-  Award,
-  Globe,
   Upload,
   Trash2,
   ExternalLink,
@@ -726,15 +717,11 @@ const UploadMetadataForm: React.FC<{
 };
 
 export const JobWorkspace: React.FC<JobWorkspaceProps> = ({ jobId }) => {
-  const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabType>('activity');
   const [showAttachCandidateModal, setShowAttachCandidateModal] = useState(false);
 
   // Fetch job details
-  const { data: job, isLoading, error, refetch } = useJobRaw(jobId);
-
-  // Fetch job metrics
-  const { data: metrics } = useJobMetrics(jobId);
+  const { data: job, isLoading, error } = useJobRaw(jobId);
 
   // Fetch submissions for this job
   const { data: submissions = [], refetch: refetchSubmissions } = trpc.ats.submissions.list.useQuery({
@@ -767,7 +754,6 @@ export const JobWorkspace: React.FC<JobWorkspaceProps> = ({ jobId }) => {
   );
 
   // Mutations
-  const updateJob = useUpdateJob();
   const createTaskMutation = useCreateActivity();
   const completeTaskMutation = useCompleteActivity();
   const cancelTaskMutation = useCancelActivity();
@@ -788,7 +774,6 @@ export const JobWorkspace: React.FC<JobWorkspaceProps> = ({ jobId }) => {
   const [pendingFiles, setPendingFiles] = useState<File[]>([]);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [selectedDocCategory, setSelectedDocCategory] = useState<string | null>(null);
-  const updateMetadataMutation = trpc.files.updateMetadata.useMutation();
 
   // Job document categories
   const documentCategories = [
@@ -1000,7 +985,6 @@ export const JobWorkspace: React.FC<JobWorkspaceProps> = ({ jobId }) => {
   ).length;
 
   const activeSubmissions = submissions.filter((s: { status: string }) => s.status !== 'rejected' && s.status !== 'withdrawn');
-  const placedCount = submissions.filter((s: { status: string }) => s.status === 'placed').length;
 
   return (
     <div className="animate-fade-in pb-12">

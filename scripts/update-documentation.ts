@@ -99,7 +99,7 @@ interface EpicMetadata {
   progress: number;
 }
 
-interface FeatureMetadata {
+interface _FeatureMetadata {
   name: string;
   path: string;
   epics: EpicMetadata[];
@@ -116,7 +116,7 @@ const PLANNING_ROOT = path.join(DOCS_ROOT, 'planning');
 const FEATURES_DIR = path.join(PLANNING_ROOT, 'features');
 const EPICS_DIR = path.join(PLANNING_ROOT, 'epics');
 const STORIES_DIR = path.join(PLANNING_ROOT, 'stories');
-const SPRINTS_DIR = path.join(PLANNING_ROOT, 'sprints');
+const _SPRINTS_DIR = path.join(PLANNING_ROOT, 'sprints');
 
 // ============================================================================
 // MAIN ENTRY POINT
@@ -198,7 +198,7 @@ async function main() {
 // UPDATE DOCUMENTATION
 // ============================================================================
 
-async function updateDocumentation(options: any, report: UpdateReport): Promise<void> {
+async function updateDocumentation(options: Record<string, unknown>, report: UpdateReport): Promise<void> {
   console.log('📝 Updating documentation...\n');
 
   // 1. Detect changes
@@ -311,8 +311,8 @@ async function parseFileMetadata(filePath: string): Promise<FileMetadata | null>
       progress,
       modifiedTime: stats.mtime,
     };
-  } catch (error) {
-    console.warn(`⚠️  Could not parse file: ${filePath}`, error);
+  } catch {
+    // Silently ignore parse errors
     return null;
   }
 }
@@ -684,7 +684,7 @@ async function updateLinks(
       // Check if target exists
       try {
         await fs.access(absoluteTarget);
-      } catch (error) {
+      } catch {
         // Link is broken - try to fix it
         const fixedLink = await attemptToFixBrokenLink(linkTarget, filePath, projectRoot);
 
@@ -774,7 +774,7 @@ async function attemptToFixBrokenLink(
       const relativePath = path.relative(path.dirname(sourceFile), targetFile);
       return relativePath;
     }
-  } catch (error) {
+  } catch {
     // File not found
   }
 
@@ -946,7 +946,7 @@ async function updateTimelines(
             timestamp: new Date(timestampMatch[1])
           });
         }
-      } catch (error) {
+      } catch {
         // Skip invalid session files
       }
     }
@@ -1020,7 +1020,7 @@ async function updateTimelines(
             }
 
             report.updates.timelines.items.push(`Updated STATUS.md for Sprint ${sprintNumber}`);
-          } catch (error) {
+          } catch {
             // STATUS.md doesn't exist or can't be read
           }
         }
@@ -1028,13 +1028,13 @@ async function updateTimelines(
     }
   } catch (error) {
     // Timeline directory doesn't exist or can't be read
-    console.error('Timeline update error:', error);
+    console.error('Timeline update error:', error instanceof Error ? error.message : String(error));
   }
 }
 
 // Helper function to group sessions by sprint
-function groupSessionsBySprint(sessions: any[]): Record<string, any[]> {
-  const sprintTimelines: Record<string, any[]> = {};
+function groupSessionsBySprint(sessions: Array<Record<string, unknown>>): Record<string, Array<Record<string, unknown>>> {
+  const sprintTimelines: Record<string, Array<Record<string, unknown>>> = {};
 
   // Group sessions by date (assuming 2-week sprints)
   for (const session of sessions) {
@@ -1064,14 +1064,14 @@ function inferSprintFromTimestamp(timestamp: Date): string {
 }
 
 // Helper function to generate timeline markdown
-function generateTimelineMarkdown(sessions: any[]): string {
+function generateTimelineMarkdown(sessions: Array<Record<string, unknown>>): string {
   let markdown = '# Sprint Timeline\n\n';
   markdown += `**Generated:** ${new Date().toISOString()}\n`;
   markdown += `**Total Sessions:** ${sessions.length}\n\n`;
   markdown += '---\n\n';
 
   // Group by date
-  const sessionsByDate: Record<string, any[]> = {};
+  const sessionsByDate: Record<string, TimelineSession[]> = {};
   for (const session of sessions) {
     const dateKey = session.timestamp.toISOString().split('T')[0];
     if (!sessionsByDate[dateKey]) {
@@ -1113,7 +1113,7 @@ function generateTimelineMarkdown(sessions: any[]): string {
 }
 
 // Helper function to generate recent activity section
-function generateRecentActivitySection(recentSessions: any[]): string {
+function generateRecentActivitySection(recentSessions: Array<Record<string, unknown>>): string {
   let section = '## Recent Activity\n\n';
 
   if (recentSessions.length === 0) {
@@ -1205,11 +1205,11 @@ async function findDuplicateFiles(
   }
 
   // Find duplicates (same hash, different paths)
-  for (const [hash, group] of Object.entries(hashGroups)) {
+  for (const [_hash, group] of Object.entries(hashGroups)) {
     if (group.length > 1) {
       // Found duplicates - keep the one with shortest path (usually the primary)
       group.sort((a, b) => a.path.length - b.path.length);
-      const keep = group[0];
+      const _keep = group[0];
       const duplicates = group.slice(1);
 
       for (const duplicate of duplicates) {
@@ -1318,7 +1318,7 @@ async function cleanupOldTimelineSessions(
         }
       }
     }
-  } catch (error) {
+  } catch {
     // Timeline directory doesn't exist or can't be accessed
   }
 }
@@ -1408,7 +1408,7 @@ async function validateStoryFiles(projectRoot: string, errors: string[]): Promis
       }
     }
   } catch (error) {
-    errors.push(`Error validating story files: ${error}`);
+    errors.push(`Error validating story files: ${error instanceof Error ? error.message : String(error)}`);
   }
 }
 
@@ -1457,7 +1457,7 @@ async function validateEpicFiles(projectRoot: string, errors: string[]): Promise
       }
     }
   } catch (error) {
-    errors.push(`Error validating epic files: ${error}`);
+    errors.push(`Error validating epic files: ${error instanceof Error ? error.message : String(error)}`);
   }
 }
 
@@ -1493,7 +1493,7 @@ async function validateHierarchyIntegrity(projectRoot: string, errors: string[])
       }
     }
   } catch (error) {
-    errors.push(`Error validating hierarchy integrity: ${error}`);
+    errors.push(`Error validating hierarchy integrity: ${error instanceof Error ? error.message : String(error)}`);
   }
 }
 
@@ -1576,7 +1576,7 @@ async function checkEmptyDirectories(dir: string, errors: string[], prefix = '')
         }
       }
     }
-  } catch (error) {
+  } catch {
     // Can't access directory
   }
 }

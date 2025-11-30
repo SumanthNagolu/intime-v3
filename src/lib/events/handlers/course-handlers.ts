@@ -6,7 +6,7 @@
 
 import { registerEventHandler } from '../decorators';
 import type { Event, CourseGraduatedPayload, CourseEnrolledPayload, CapstoneGradedPayload, StudentAtRiskPayload } from '../types';
-import { createClient } from '@/lib/supabase/server';
+import { createClient, type UntypedFromFunction } from '@/lib/supabase/server';
 
 /**
  * When student graduates, create candidate profile
@@ -106,7 +106,7 @@ export async function sendGraduationEmail(event: Event<CourseGraduatedPayload>) 
     }
 
     // Queue email job (will be processed by background job system)
-    await (supabase.from as any)('background_jobs').insert({
+    await (supabase.from as unknown as UntypedFromFunction)('background_jobs').insert({
       job_type: 'send_email',
       status: 'pending',
       payload: {
@@ -136,7 +136,7 @@ export async function sendGraduationEmail(event: Event<CourseGraduatedPayload>) 
  * @param event - course.graduated event
  */
 export async function generateCertificate(event: Event<CourseGraduatedPayload>) {
-  const { studentId, courseName, grade, courseId } = event.payload;
+  const { studentId, courseName: _courseName, grade, courseId } = event.payload;
 
   console.log(`[Handler:generate_certificate] Generating certificate for student ${studentId}`);
 
@@ -165,7 +165,7 @@ export async function generateCertificate(event: Event<CourseGraduatedPayload>) 
     const course = courseResult.data;
 
     // Create certificate record (will trigger actual PDF generation via webhook/job)
-    const { data: certificate, error } = await (supabase.from as any)('student_certificates')
+    const { data: certificate, error } = await (supabase.from as unknown as UntypedFromFunction)('student_certificates')
       .insert({
         student_id: studentId,
         course_id: courseId,
@@ -181,16 +181,16 @@ export async function generateCertificate(event: Event<CourseGraduatedPayload>) 
       .select()
       .single();
 
-    if (error) {
-      throw error;
+    if (error || !certificate) {
+      throw error || new Error('Failed to create certificate record');
     }
 
     // Queue certificate generation job
-    await (supabase.from as any)('background_jobs').insert({
+    await (supabase.from as unknown as UntypedFromFunction)('background_jobs').insert({
       job_type: 'generate_certificate_pdf',
       status: 'pending',
       payload: {
-        certificate_id: certificate.id,
+        certificate_id: certificate.id as string,
         student_name: student.full_name,
         course_name: course.title,
         grade,
@@ -200,7 +200,7 @@ export async function generateCertificate(event: Event<CourseGraduatedPayload>) 
       max_attempts: 3,
     });
 
-    console.log(`[Handler:generate_certificate] Created certificate record ${certificate.id} for student ${studentId}`);
+    console.log(`[Handler:generate_certificate] Created certificate record ${certificate.id as string} for student ${studentId}`);
   } catch (error) {
     console.error(`[Handler:generate_certificate] Failed to generate certificate:`, error);
     throw error;
@@ -232,7 +232,7 @@ export async function sendWelcomeEmail(event: Event<CourseEnrolledPayload>) {
     }
 
     // Queue welcome email job
-    await (supabase.from as any)('background_jobs').insert({
+    await (supabase.from as unknown as UntypedFromFunction)('background_jobs').insert({
       job_type: 'send_email',
       status: 'pending',
       payload: {
@@ -262,7 +262,7 @@ export async function sendWelcomeEmail(event: Event<CourseEnrolledPayload>) {
  * @param event - course.enrolled event
  */
 export async function createOnboardingChecklist(event: Event<CourseEnrolledPayload>) {
-  const { studentId, enrollmentId, courseId } = event.payload;
+  const { studentId, enrollmentId } = event.payload;
 
   console.log(`[Handler:create_onboarding_checklist] Creating checklist for student ${studentId}`);
 
@@ -318,7 +318,7 @@ export async function createOnboardingChecklist(event: Event<CourseEnrolledPaylo
       },
     ];
 
-    await (supabase.from as any)('onboarding_checklist').insert(checklistItems);
+    await (supabase.from as unknown as UntypedFromFunction)('onboarding_checklist').insert(checklistItems as unknown as Record<string, unknown>);
 
     console.log(`[Handler:create_onboarding_checklist] Created ${checklistItems.length} checklist items for enrollment ${enrollmentId}`);
   } catch (error) {
@@ -357,7 +357,7 @@ export async function sendGradeNotification(event: Event<CapstoneGradedPayload>)
     };
 
     // Queue grade notification email
-    await (supabase.from as any)('background_jobs').insert({
+    await (supabase.from as unknown as UntypedFromFunction)('background_jobs').insert({
       job_type: 'send_email',
       status: 'pending',
       payload: {
@@ -420,7 +420,7 @@ export async function sendAtRiskAlert(event: Event<StudentAtRiskPayload>) {
     }
 
     // Queue at-risk alert email to trainer
-    await (supabase.from as any)('background_jobs').insert({
+    await (supabase.from as unknown as UntypedFromFunction)('background_jobs').insert({
       job_type: 'send_email',
       status: 'pending',
       payload: {

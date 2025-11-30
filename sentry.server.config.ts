@@ -27,26 +27,30 @@ Sentry.init({
 
     // Scrub database connection strings
     if (event.extra) {
-      const scrubConnectionString = (obj: any): any => {
+      const scrubConnectionString = (obj: unknown): unknown => {
         if (typeof obj !== 'object' || obj === null) return obj;
-        const scrubbed: any = Array.isArray(obj) ? [] : {};
-        for (const key in obj) {
+        if (Array.isArray(obj)) {
+          return obj.map(item => scrubConnectionString(item));
+        }
+        const scrubbed: Record<string, unknown> = {};
+        for (const key in obj as Record<string, unknown>) {
+          const typedObj = obj as Record<string, unknown>;
           if (
-            typeof obj[key] === 'string' &&
+            typeof typedObj[key] === 'string' &&
             (key.toLowerCase().includes('database') ||
               key.toLowerCase().includes('connection') ||
               key.toLowerCase().includes('url'))
           ) {
             scrubbed[key] = '[REDACTED]';
-          } else if (typeof obj[key] === 'object') {
-            scrubbed[key] = scrubConnectionString(obj[key]);
+          } else if (typeof typedObj[key] === 'object') {
+            scrubbed[key] = scrubConnectionString(typedObj[key]);
           } else {
-            scrubbed[key] = obj[key];
+            scrubbed[key] = typedObj[key];
           }
         }
         return scrubbed;
       };
-      event.extra = scrubConnectionString(event.extra);
+      event.extra = scrubConnectionString(event.extra) as Record<string, unknown>;
     }
 
     return event;

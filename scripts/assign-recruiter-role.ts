@@ -98,13 +98,16 @@ async function assignRecruiterRole() {
 
     if (!verifyError && roles) {
       console.log('\n📋 User roles:');
-      roles.forEach((r: any) => {
-        console.log(`   - ${r.role.display_name} (${r.role.name})`);
+      roles.forEach((r: Record<string, unknown>) => {
+        const role = r.role as Record<string, unknown> | undefined;
+        if (role) {
+          console.log(`   - ${role.display_name} (${role.name})`);
+        }
       });
     }
 
   } catch (err) {
-    console.error('💥 Unexpected error:', err);
+    console.error('💥 Unexpected error:', err instanceof Error ? err.message : String(err));
     process.exit(1);
   }
 }
@@ -114,7 +117,7 @@ assignRecruiterRole()
     console.log('\n✨ Done!');
     process.exit(0);
   })
-  .catch((err) => {
-    console.error('💥 Fatal error:', err);
+  .catch((err: unknown) => {
+    console.error('💥 Fatal error:', err instanceof Error ? err.message : String(err));
     process.exit(1);
   });

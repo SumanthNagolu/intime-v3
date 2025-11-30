@@ -9,7 +9,7 @@
  * This replaces both `activity_log` and `lead_tasks` tables.
  */
 
-import { pgTable, uuid, text, timestamp, integer, boolean, pgEnum } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, timestamp, integer, pgEnum } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { organizations } from './organizations';
 import { userProfiles } from './user-profiles';

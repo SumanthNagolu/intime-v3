@@ -5,10 +5,10 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAppStore } from '../../lib/store';
-import { Users, AlertCircle, Calendar, CheckCircle, ChevronRight, MessageSquare, Video, BookOpen, TrendingUp, LayoutDashboard, Award, Layers, Plus, MoreHorizontal, Search, Filter, Clock, Activity, Zap, CheckSquare, ArrowUp, ArrowDown } from 'lucide-react';
+import { Users, AlertCircle, Calendar, CheckCircle, ChevronRight, MessageSquare, Video, BookOpen, LayoutDashboard, Award, Layers, Plus, MoreHorizontal, Search, Clock, Activity, CheckSquare, ArrowUp, ArrowDown } from 'lucide-react';
 import { CourseBuilder } from '../admin/CourseBuilder';
 import { CertificateGenerator } from './CertificateGenerator';
-import { MessageModal, AnnouncementModal, GradingModal } from './AcademyModals';
+import { MessageModal, GradingModal } from './AcademyModals';
 import { ScheduleSessionModal } from './ScheduleSessionModal';
 
 // --- SUB-VIEWS ---
@@ -137,7 +137,7 @@ const ConsoleView: React.FC = () => {
               {/* Schedule */}
               <div className="bg-stone-900 text-white p-8 rounded-[2.5rem] shadow-xl relative overflow-hidden bg-noise">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-rust/20 rounded-full blur-2xl -mr-10 -mt-10"></div>
-                  <h3 className="font-serif text-xl font-bold mb-6 relative z-10">Today's Schedule</h3>
+                  <h3 className="font-serif text-xl font-bold mb-6 relative z-10">Today&apos;s Schedule</h3>
                   
                   <div className="space-y-4 relative z-10">
                       <div className="p-4 bg-white/10 rounded-xl border border-white/10 backdrop-blur-sm">
@@ -200,7 +200,6 @@ const ConsoleView: React.FC = () => {
 };
 
 const AssignmentsView: React.FC = () => {
-    const router = useRouter();
     const [isGradingModalOpen, setIsGradingModalOpen] = useState(false);
     const [selectedSubmission, setSelectedSubmission] = useState<{student: string, title: string} | null>(null);
     const [filter, setFilter] = useState<'All' | 'Pending'>('All');
@@ -428,7 +427,7 @@ const CoursesView: React.FC = () => {
                     </div>
                 </div>
                 <div className="divide-y divide-stone-100">
-                    {filteredCourses.length > 0 ? filteredCourses.map((course, i) => (
+                    {filteredCourses.length > 0 ? filteredCourses.map((course) => (
                         <div key={course.id} className="p-6 hover:bg-stone-50 transition-colors flex items-center justify-between group">
                             <div className="flex items-center gap-6">
                                 <div className="w-14 h-14 bg-stone-100 rounded-xl flex items-center justify-center text-stone-400 font-serif font-bold text-lg border border-stone-200">

@@ -26,7 +26,7 @@ export async function createClient() {
         set(name: string, value: string, options: CookieOptions) {
           try {
             cookieStore.set({ name, value, ...options });
-          } catch (error) {
+          } catch {
             // The `set` method was called from a Server Component.
             // This can be ignored if you have middleware refreshing
             // user sessions.
@@ -35,7 +35,7 @@ export async function createClient() {
         remove(name: string, options: CookieOptions) {
           try {
             cookieStore.set({ name, value: '', ...options });
-          } catch (error) {
+          } catch {
             // The `delete` method was called from a Server Component.
             // This can be ignored if you have middleware refreshing
             // user sessions.
@@ -68,3 +68,28 @@ export function createAdminClient() {
     }
   );
 }
+
+/**
+ * Type for Supabase query builder on tables not in generated types
+ * Use this for tables like audit_logs, background_jobs, etc. that aren't in Database types
+ */
+export interface UntypedQueryBuilder {
+  insert: (data: Record<string, unknown>) => {
+    select: () => { single: () => Promise<{ data: Record<string, unknown> | null; error: Error | null }> };
+  };
+  select: (columns?: string) => {
+    eq: (column: string, value: unknown) => UntypedQueryBuilder;
+    order: (column: string, options?: { ascending?: boolean }) => UntypedQueryBuilder;
+    limit: (count: number) => UntypedQueryBuilder;
+    single: () => Promise<{ data: Record<string, unknown> | null; error: Error | null }>;
+    maybeSingle: () => Promise<{ data: Record<string, unknown> | null; error: Error | null }>;
+  };
+  update: (data: Record<string, unknown>) => {
+    eq: (column: string, value: unknown) => Promise<{ data: unknown; error: Error | null }>;
+  };
+  delete: () => {
+    eq: (column: string, value: unknown) => Promise<{ data: unknown; error: Error | null }>;
+  };
+}
+
+export type UntypedFromFunction = (table: string) => UntypedQueryBuilder;

@@ -6,12 +6,12 @@
  */
 
 import { z } from 'zod';
-import { createClient } from '@/lib/supabase/server';
+import { createClient, type UntypedFromFunction } from '@/lib/supabase/server';
 import { db } from '@/lib/db';
 import { hotlists, HotlistStatus } from '@/lib/db/schema/bench';
 import { userProfiles } from '@/lib/db/schema/user-profiles';
 import { accounts } from '@/lib/db/schema/crm';
-import { eq, and, desc, asc, sql, ilike, inArray, isNull } from 'drizzle-orm';
+import { eq, and, desc, asc, sql, ilike, inArray } from 'drizzle-orm';
 
 // =====================================================
 // Types
@@ -100,8 +100,8 @@ async function getCurrentUserContext() {
 async function checkPermission(
   userId: string,
   permission: string,
-  resourceType?: string,
-  resourceId?: string
+  _resourceType?: string,
+  _resourceId?: string
 ): Promise<{ allowed: boolean; scope?: string }> {
   const supabase = await createClient();
 
@@ -132,7 +132,7 @@ async function logAuditEvent(
 ) {
   const supabase = await createClient();
 
-  await (supabase.from as any)('audit_logs').insert({
+  await (supabase.from as unknown as UntypedFromFunction)('audit_logs').insert({
     user_id: userId,
     org_id: orgId,
     user_email: userEmail,
@@ -682,7 +682,7 @@ export async function sendHotlistAction(
     }
 
     // Get account emails if accountIds provided
-    let allEmails = validated.emails || [];
+    const allEmails = validated.emails || [];
     if (validated.accountIds?.length) {
       // Would typically get POC emails from accounts
       // For now, just track the account IDs

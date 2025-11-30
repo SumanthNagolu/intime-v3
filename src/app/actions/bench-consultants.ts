@@ -6,7 +6,7 @@
  */
 
 import { z } from 'zod';
-import { createClient, createAdminClient } from '@/lib/supabase/server';
+import { createClient, createAdminClient, type UntypedFromFunction } from '@/lib/supabase/server';
 import { db } from '@/lib/db';
 import {
   benchMetadata,
@@ -14,10 +14,9 @@ import {
   jobSources,
   benchSubmissions,
   BenchSubmissionStatus,
-  ExternalJobStatus
 } from '@/lib/db/schema/bench';
 import { userProfiles } from '@/lib/db/schema/user-profiles';
-import { eq, and, or, ilike, desc, asc, sql, gte, lte, isNull, inArray } from 'drizzle-orm';
+import { eq, and, or, ilike, desc, asc, sql, gte, lte, isNull } from 'drizzle-orm';
 
 // =====================================================
 // Types
@@ -209,7 +208,7 @@ async function logAuditEvent(
   } = params;
 
   try {
-    await (adminSupabase.from as any)('audit_logs').insert({
+    await (adminSupabase.from as unknown as UntypedFromFunction)('audit_logs').insert({
       table_name: tableName,
       action,
       record_id: recordId,
@@ -1803,7 +1802,7 @@ export async function findMatchingJobsAction(
 
     const submittedJobIds = existingSubmissions.map(s => s.jobId);
 
-    let conditions = [
+    const conditions = [
       eq(externalJobs.orgId, context.orgId),
       eq(externalJobs.status, 'active'),
       isNull(externalJobs.deletedAt),
@@ -1889,7 +1888,7 @@ export async function findMatchingCandidatesAction(
     const submittedCandidateIds = existingSubmissions.map(s => s.candidateId);
 
     // Get all bench consultants not already submitted
-    let conditions = [eq(userProfiles.orgId, context.orgId)];
+    const conditions = [eq(userProfiles.orgId, context.orgId)];
 
     if (submittedCandidateIds.length > 0) {
       conditions.push(sql`${benchMetadata.userId} not in (${sql.join(submittedCandidateIds.map(id => sql`${id}`), sql`, `)})`);

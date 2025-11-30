@@ -8,19 +8,14 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import {
   TrendingUp,
-  TrendingDown,
-  ArrowRight,
   Activity,
   Clock,
   Users,
   Target,
   AlertTriangle,
   CheckCircle2,
-  BarChart3,
-  PieChart,
   Zap,
   Timer,
   Gauge,
@@ -30,9 +25,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { trpc } from '@/lib/trpc/client';
 
@@ -198,7 +191,7 @@ export function COOConsole() {
         <CardContent>
           {/* Pipeline bar */}
           <div className="h-4 flex rounded-full overflow-hidden mb-4">
-            {mockPipelineHealth.map((stage, index) => {
+            {mockPipelineHealth.map((stage) => {
               const total = mockPipelineHealth.reduce((sum, s) => sum + s.count, 0);
               const width = (stage.count / total) * 100;
               return (

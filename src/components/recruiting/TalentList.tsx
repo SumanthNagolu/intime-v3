@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   Search, User, ChevronRight, MapPin, Briefcase, Clock,
-  MoreHorizontal, Plus, Loader2, Building2, Filter, Users
+  MoreHorizontal, Plus, Loader2, Users
 } from 'lucide-react';
 import { trpc } from '@/lib/trpc/client';
 

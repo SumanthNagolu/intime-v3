@@ -150,7 +150,7 @@ async function main() {
 
   // Step 4: Migrate data from activity_log
   console.log('📤 Step 4: Migrating data from activity_log...');
-  const activityLogCount = await db.execute(sql`
+  const _activityLogCount = await db.execute(sql`
     INSERT INTO activities (
       id, org_id, entity_type, entity_id, activity_type, status, priority,
       subject, body, direction, due_date, completed_at, duration_minutes,

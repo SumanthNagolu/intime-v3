@@ -8,18 +8,11 @@ import {
   Video,
   Download,
   ArrowRight,
-  ArrowDown,
   Calendar,
-  Layers,
-  Sparkles,
   TrendingUp,
   Clock,
-  Award,
   ChevronRight,
-  Play,
-  ExternalLink,
-  Mail,
-  Bookmark
+  Play
 } from 'lucide-react';
 import { MarketingNavbar, Footer } from '@/components/templates';
 

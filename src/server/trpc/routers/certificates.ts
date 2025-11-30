@@ -12,7 +12,6 @@
 import { z } from 'zod';
 import { router, publicProcedure, protectedProcedure } from '../trpc';
 import { createClient } from '@/lib/supabase/server';
-import { createAdminClient } from '@/lib/supabase/admin';
 import { generateCertificatePDF, verifyCertificate } from '@/lib/certificates/generator';
 
 export const certificatesRouter = router({
@@ -22,6 +21,7 @@ export const certificatesRouter = router({
   getMyCertificates: protectedProcedure.query(async ({ ctx }) => {
     const supabase = await createClient();
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { data: certificates, error } = await (supabase.from as any)('student_certificates')
       .select(
         `
@@ -48,6 +48,7 @@ export const certificatesRouter = router({
     .query(async ({ ctx, input }) => {
       const supabase = await createClient();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data: certificate, error } = await (supabase.from as any)('student_certificates')
         .select(
           `
@@ -76,6 +77,7 @@ export const certificatesRouter = router({
       const supabase = await createClient();
 
       // Verify ownership
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data: certificate } = await (supabase.from as any)('student_certificates')
         .select('id, student_id, status, pdf_url')
         .eq('id', input.certificate_id)
@@ -104,8 +106,9 @@ export const certificatesRouter = router({
           pdf_url: pdfUrl,
           already_generated: false,
         };
-      } catch (error: any) {
-        throw new Error(`Failed to generate PDF: ${error.message}`);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        throw new Error(`Failed to generate PDF: ${errorMessage}`);
       }
     }),
 
@@ -117,6 +120,7 @@ export const certificatesRouter = router({
     .query(async ({ ctx, input }) => {
       const supabase = await createClient();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data: certificate } = await (supabase.from as any)('student_certificates')
         .select('id, student_id, pdf_url, status')
         .eq('id', input.certificate_id)
@@ -162,6 +166,7 @@ export const certificatesRouter = router({
     .query(async ({ ctx, input }) => {
       const supabase = await createClient();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data: certificate } = await (supabase.from as any)('student_certificates')
         .select(
           `
@@ -178,8 +183,11 @@ export const certificatesRouter = router({
         throw new Error('Certificate not found');
       }
 
-      const course = certificate.course as any;
-      const student = certificate.student as any;
+      interface CourseData { title: string }
+      interface StudentData { full_name: string }
+
+      const course = certificate.course as CourseData;
+      const student = certificate.student as StudentData;
 
       // LinkedIn share URL format
       const certUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify/${certificate.certificate_number}`;
@@ -212,6 +220,7 @@ export const certificatesRouter = router({
     .query(async ({ input }) => {
       const supabase = await createClient();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let query = (supabase.from as any)('student_certificates')
         .select(
           `

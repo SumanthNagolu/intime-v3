@@ -98,7 +98,7 @@ export const tasks = pgTable('tasks', {
   // Recurrence
   isRecurring: boolean('is_recurring').default(false),
   recurrencePattern: text('recurrence_pattern'),
-  parentTaskId: uuid('parent_task_id').references((): any => tasks.id),
+  parentTaskId: uuid('parent_task_id'),
 
   // Metadata
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
@@ -147,7 +147,7 @@ export const comments = pgTable('comments', {
   content: text('content').notNull(),
 
   // Threading
-  parentCommentId: uuid('parent_comment_id').references((): any => comments.id),
+  parentCommentId: uuid('parent_comment_id'),
   replyCount: integer('reply_count').default(0),
 
   // Author

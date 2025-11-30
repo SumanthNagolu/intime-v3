@@ -8,12 +8,8 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { Edit, Mail, Phone, Plus } from 'lucide-react';
+import { Edit, Mail } from 'lucide-react';
 import { trpc } from '@/lib/trpc/client';
-import {
-  useCreateActivity,
-  useCompleteActivity,
-} from '@/hooks/mutations/activities';
 
 // Composers
 import { GenericEntityWorkspace, buildTalentTabs } from '../composers';
@@ -54,54 +50,41 @@ const TALENT_DOCUMENT_CATEGORIES: DocumentCategory[] = [
 // =====================================================
 
 export function UnifiedTalentWorkspace({ talentId }: UnifiedTalentWorkspaceProps) {
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [showEmailModal, setShowEmailModal] = useState(false);
-  const [showResumeUploadModal, setShowResumeUploadModal] = useState(false);
+  const [_showEditModal, setShowEditModal] = useState(false);
+  const [_showEmailModal, setShowEmailModal] = useState(false);
+  const [_showResumeUploadModal, setShowResumeUploadModal] = useState(false);
 
   // Fetch talent details
-  const { data: talent, isLoading, error, refetch } = trpc.ats.candidates.getById.useQuery(
+  const { data: talent, isLoading, error } = trpc.ats.candidates.getById.useQuery(
     { id: talentId },
     { enabled: !!talentId }
   );
 
   // Fetch submissions for this talent
-  const { data: submissions = [], refetch: refetchSubmissions } = trpc.ats.submissions.list.useQuery(
+  const { data: submissions = [] } = trpc.ats.submissions.list.useQuery(
     { candidateId: talentId, limit: 50 },
     { enabled: !!talentId }
   );
 
   // Fetch resumes
-  const { data: resumes = [], refetch: refetchResumes } = trpc.ats.resumes.list.useQuery(
+  const { data: resumes = [] } = trpc.ats.resumes.list.useQuery(
     { candidateId: talentId },
     { enabled: !!talentId }
   );
 
-  // Fetch activities
-  const { data: activities, isLoading: activitiesLoading, refetch: refetchActivities } = trpc.activities.list.useQuery(
-    { entityType: 'candidate', entityId: talentId, includeCompleted: true, limit: 50, offset: 0 },
-    { enabled: !!talentId }
-  );
-
   // Fetch tasks
-  const { data: tasks, isLoading: tasksLoading, refetch: refetchTasks } = trpc.activities.list.useQuery(
+  const { data: tasks } = trpc.activities.list.useQuery(
     { entityType: 'candidate', entityId: talentId, activityTypes: ['task', 'follow_up'], includeCompleted: true, limit: 100, offset: 0 },
     { enabled: !!talentId }
   );
 
   // Fetch documents
-  const { data: documents, isLoading: documentsLoading, refetch: refetchDocuments } = trpc.files.list.useQuery(
+  const { data: documents } = trpc.files.list.useQuery(
     { entityType: 'candidate', entityId: talentId },
     { enabled: !!talentId }
   );
 
-  // Mutations
-  const createActivity = useCreateActivity();
-  const completeActivity = useCompleteActivity();
-
   // File mutations
-  const getUploadUrl = trpc.files.getUploadUrl.useMutation();
-  const recordUpload = trpc.files.recordUpload.useMutation();
-  const deleteFile = trpc.files.delete.useMutation();
   const getDownloadUrl = trpc.files.getDownloadUrl.useMutation();
 
   // Transform talent data
@@ -163,20 +146,6 @@ export function UnifiedTalentWorkspace({ talentId }: UnifiedTalentWorkspaceProps
     }));
   }, [resumes]);
 
-  // Transform documents
-  const documentsList = useMemo(() => {
-    return (documents || []).map((doc) => ({
-      id: doc.id,
-      fileName: doc.fileName,
-      fileSize: doc.fileSize,
-      mimeType: doc.mimeType,
-      category: (doc.metadata as { category?: string })?.category || 'other',
-      description: (doc.metadata as { description?: string })?.description,
-      tags: (doc.metadata as { tags?: string[] })?.tags,
-      uploadedAt: doc.uploadedAt,
-      uploadedBy: doc.uploaderName,
-    }));
-  }, [documents]);
 
   // Transform tasks
   const tasksList = useMemo(() => {
@@ -205,41 +174,6 @@ export function UnifiedTalentWorkspace({ talentId }: UnifiedTalentWorkspaceProps
     };
   }, [submissions]);
 
-  // Handle document upload
-  const handleUploadDocument = async (files: File[], metadata: { category: string; description: string; tags: string[] }) => {
-    for (const file of files) {
-      const { uploadUrl, filePath, bucket } = await getUploadUrl.mutateAsync({
-        fileName: file.name,
-        mimeType: file.type || 'application/octet-stream',
-        entityType: 'candidate',
-        entityId: talentId,
-      });
-
-      await fetch(uploadUrl, {
-        method: 'PUT',
-        body: file,
-        headers: { 'Content-Type': file.type || 'application/octet-stream' },
-      });
-
-      await recordUpload.mutateAsync({
-        bucket,
-        filePath,
-        fileName: file.name,
-        fileSize: file.size,
-        mimeType: file.type || 'application/octet-stream',
-        entityType: 'candidate',
-        entityId: talentId,
-        metadata,
-      });
-    }
-    refetchDocuments();
-  };
-
-  // Handle document delete
-  const handleDeleteDocument = async (documentId: string) => {
-    await deleteFile.mutateAsync({ fileId: documentId });
-    refetchDocuments();
-  };
 
   // Handle resume download/preview
   const handleResumeDownload = async (fileId: string) => {
@@ -247,26 +181,6 @@ export function UnifiedTalentWorkspace({ talentId }: UnifiedTalentWorkspaceProps
     window.open(result.url, '_blank');
   };
 
-  // Handle task operations
-  const handleCreateTask = async (task: { title: string; priority: string; dueDate?: Date }) => {
-    await createActivity.mutateAsync({
-      entityType: 'candidate',
-      entityId: talentId,
-      activityType: 'task',
-      subject: task.title,
-      priority: task.priority as 'low' | 'medium' | 'high' | 'urgent',
-      dueDate: task.dueDate || new Date(),
-      status: 'open',
-    });
-    refetchTasks();
-    refetchActivities();
-  };
-
-  const handleCompleteTask = async (taskId: string) => {
-    await completeActivity.mutateAsync({ id: taskId });
-    refetchTasks();
-    refetchActivities();
-  };
 
   // Build tabs
   const tabs = buildTalentTabs({

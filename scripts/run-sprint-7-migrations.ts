@@ -62,10 +62,10 @@ async function executeSql(sql: string): Promise<{ success: boolean; error?: stri
 
     const result = await response.json();
     return result;
-  } catch (error: any) {
+  } catch (error) {
     return {
       success: false,
-      error: error.message
+      error: error instanceof Error ? error.message : String(error)
     };
   }
 }
@@ -102,8 +102,8 @@ async function runMigrations() {
         console.error(`❌ Migration failed: ${result.error}\n`);
         failureCount++;
       }
-    } catch (error: any) {
-      console.error(`❌ Error processing migration: ${error.message}\n`);
+    } catch (error) {
+      console.error(`❌ Error processing migration: ${error instanceof Error ? error.message : String(error)}\n`);
       failureCount++;
     }
   }

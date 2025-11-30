@@ -29,8 +29,8 @@ export interface OwnershipContext {
  * Must have an 'id' column and 'ownerId' column.
  */
 export interface OwnershipTable {
-  id: any;
-  ownerId: any;
+  id: SQL<unknown>;
+  ownerId: SQL<unknown>;
 }
 
 /**

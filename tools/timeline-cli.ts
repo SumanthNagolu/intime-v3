@@ -15,7 +15,7 @@
  */
 
 import { Command } from 'commander';
-import { createTimelineEntry, upsertSession, readFileTimeline, writeToFileTimeline, type TimelineInput, type SessionInput } from '../src/lib/db/timeline';
+import { readFileTimeline, writeToFileTimeline, type TimelineInput, type SessionInput } from '../src/lib/db/timeline';
 import { execSync } from 'child_process';
 import { randomUUID } from 'crypto';
 import fs from 'fs';
@@ -33,7 +33,7 @@ function getCurrentSessionId(): string {
     if (fs.existsSync(sessionFile)) {
       return fs.readFileSync(sessionFile, 'utf-8').trim();
     }
-  } catch (error) {
+  } catch {
     // Ignore
   }
 
@@ -63,7 +63,7 @@ function getGitInfo() {
       changedFiles,
       untrackedFiles,
     };
-  } catch (error) {
+  } catch {
     return {
       branch: 'unknown',
       hash: 'unknown',
@@ -149,7 +149,7 @@ program
       if (options.tags) {
         console.log(`   Tags: ${options.tags.join(', ')}`);
       }
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('❌ Error adding timeline entry:', error);
       process.exit(1);
     }
@@ -184,7 +184,7 @@ program
         }
         console.log('');
       });
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('❌ Error listing timeline entries:', error);
       process.exit(1);
     }
@@ -218,7 +218,7 @@ program
         }
         console.log('');
       });
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('❌ Error searching timeline:', error);
       process.exit(1);
     }
@@ -257,7 +257,7 @@ sessionCmd
       console.log(`   Session ID: ${sessionId}`);
       console.log(`   Goal: ${goal}`);
       console.log(`   Branch: ${gitInfo.branch}`);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('❌ Error starting session:', error);
       process.exit(1);
     }
@@ -293,7 +293,7 @@ sessionCmd
       } else {
         console.log('⚠️  No active session found.');
       }
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('❌ Error ending session:', error);
       process.exit(1);
     }
@@ -340,7 +340,7 @@ program
         .forEach(([tag, count]) => {
           console.log(`     ${tag}: ${count}`);
         });
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('❌ Error fetching stats:', error);
       process.exit(1);
     }

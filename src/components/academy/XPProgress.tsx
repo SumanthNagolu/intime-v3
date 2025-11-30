@@ -3,7 +3,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Star, TrendingUp } from 'lucide-react';
-import { getRankFromXP, getXPToNextRank, getNextRank, Rank } from '@/lib/academy/gamification';
+import { getRankFromXP, getXPToNextRank, getNextRank } from '@/lib/academy/gamification';
 
 interface XPProgressProps {
   xp: number;
@@ -115,6 +115,8 @@ export function XPGainAnimation({
     </div>
   );
 }
+
+
 
 
 

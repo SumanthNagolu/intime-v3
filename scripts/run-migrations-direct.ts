@@ -69,9 +69,9 @@ async function runMigration(filename: string, sql: string): Promise<boolean> {
     
     console.log(`   ✅ ${filename} completed`);
     return true;
-    
-  } catch (error: any) {
-    console.log(`   ❌ ${filename} failed: ${error.message}`);
+
+  } catch (error) {
+    console.log(`   ❌ ${filename} failed: ${error instanceof Error ? error.message : String(error)}`);
     return false;
   }
 }
@@ -87,8 +87,8 @@ async function main() {
 
   console.log(`\nFound ${files.length} migration files\n`);
   
-  const results: any[] = [];
-  
+  const results: Array<{ filename: string; success: boolean }> = [];
+
   // Run each migration
   for (const filename of files) {
     const filePath = path.join(migrationsDir, filename);
@@ -136,8 +136,8 @@ async function main() {
       } else {
         console.log(`✅ ${role.name}`);
       }
-    } catch (e: any) {
-      console.log(`⚠️  ${role.name}: ${e.message}`);
+    } catch (e) {
+      console.log(`⚠️  ${role.name}: ${e instanceof Error ? e.message : String(e)}`);
     }
   }
   
@@ -150,10 +150,10 @@ async function main() {
     .from('information_schema.tables')
     .select('table_name')
     .eq('table_schema', 'public');
-  
+
   console.log(`Tables created: ${tables?.length || 0}`);
-  
-  const { data: rolesData, count: rolesCount } = await supabase
+
+  const { count: rolesCount } = await supabase
     .from('roles')
     .select('*', { count: 'exact' });
   

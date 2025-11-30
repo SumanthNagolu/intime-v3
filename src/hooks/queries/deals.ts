@@ -49,24 +49,51 @@ export interface DealDisplayExtended extends DisplayDeal {
   createdAt?: Date | string;
 }
 
-function toDisplayDeal(deal: any): DealDisplayExtended {
+type DealRawData = Record<string, unknown> & {
+  id: string;
+  stage: string;
+};
+
+function toDisplayDeal(deal: DealRawData): DealDisplayExtended {
+  const leadId = typeof deal.leadId === 'string' ? deal.leadId : (deal.lead_id as string | undefined);
+  const accountName = typeof deal.accountName === 'string' ? deal.accountName : (deal.account_name as string | undefined);
+  const company = typeof deal.company === 'string' ? deal.company : undefined;
+  const title = typeof deal.title === 'string' ? deal.title : '';
+  const dealValue = typeof deal.dealValue === 'number' || typeof deal.dealValue === 'string'
+    ? deal.dealValue
+    : (deal.deal_value as number | string | undefined);
+  const value = typeof deal.value === 'number' || typeof deal.value === 'string'
+    ? deal.value
+    : undefined;
+  const probability = typeof deal.probability === 'number' ? deal.probability : 0;
+  const expectedCloseDate = deal.expectedCloseDate instanceof Date || typeof deal.expectedCloseDate === 'string'
+    ? deal.expectedCloseDate
+    : (deal.expected_close_date as Date | string | null | undefined);
+  const ownerId = typeof deal.ownerId === 'string' ? deal.ownerId : (deal.owner_id as string | undefined);
+  const notes = typeof deal.notes === 'string' ? deal.notes : undefined;
+  const accountId = typeof deal.accountId === 'string' ? deal.accountId : (deal.account_id as string | undefined);
+  const linkedJobIds = Array.isArray(deal.linkedJobIds) ? deal.linkedJobIds as string[] : (deal.linked_job_ids as string[] | undefined);
+  const createdAt = deal.createdAt instanceof Date || typeof deal.createdAt === 'string'
+    ? deal.createdAt
+    : (deal.created_at as Date | string | undefined);
+
   return {
     id: deal.id,
-    leadId: deal.leadId || '',
-    company: deal.accountName || deal.company || '',
-    title: deal.title || '',
-    value: String(deal.dealValue || deal.value || '0'),
+    leadId: leadId ?? '',
+    company: accountName ?? company ?? '',
+    title: title ?? '',
+    value: String(dealValue ?? value ?? '0'),
     stage: mapStageToDisplay(deal.stage),
-    probability: deal.probability || 0,
-    expectedClose: deal.expectedCloseDate ? new Date(deal.expectedCloseDate).toISOString() : '',
-    ownerId: deal.ownerId || '',
-    notes: deal.notes,
-    accountId: deal.accountId,
-    linkedJobIds: deal.linkedJobIds,
+    probability: probability ?? 0,
+    expectedClose: expectedCloseDate ? new Date(expectedCloseDate).toISOString() : '',
+    ownerId: ownerId ?? '',
+    notes,
+    accountId,
+    linkedJobIds,
     // Extended fields for our list views
-    accountName: deal.accountName || '',
-    expectedCloseDate: deal.expectedCloseDate,
-    createdAt: deal.createdAt,
+    accountName: accountName ?? '',
+    expectedCloseDate,
+    createdAt,
   };
 }
 
@@ -93,7 +120,7 @@ export function useDeals(options: DealsQueryOptions = {}): {
   deals: DealDisplayExtended[];
   isLoading: boolean;
   isError: boolean;
-  error: any;
+  error: unknown;
   refetch: () => void;
   isFetching: boolean;
 } {

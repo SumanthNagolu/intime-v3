@@ -19,7 +19,6 @@ import {
   calculateCost,
   formatConversationContext,
   validateQuestion,
-  generateSessionTitle,
 } from '@/types/ai-mentor';
 
 // Initialize OpenAI client
@@ -82,7 +81,7 @@ async function buildMessages(
 /**
  * Check rate limits before allowing request
  */
-async function checkRateLimits(userId: string): Promise<RateLimitStatus> {
+async function checkRateLimits(_userId: string): Promise<RateLimitStatus> {
   // TODO: Implement rate limit check via database function
   // For now, return mock data
   return {
@@ -99,9 +98,9 @@ async function checkRateLimits(userId: string): Promise<RateLimitStatus> {
  * Increment rate limit counters after successful request
  */
 async function incrementRateLimits(
-  userId: string,
-  tokensUsed: number,
-  costUsd: number
+  _userId: string,
+  _tokensUsed: number,
+  _costUsd: number
 ): Promise<void> {
   // TODO: Implement rate limit increment via database function
   // This should update hourly/daily/monthly counts and cost
@@ -114,7 +113,7 @@ async function incrementRateLimits(
 /**
  * Store chat in database
  */
-async function storeChat(data: {
+async function storeChat(_data: {
   userId: string;
   topicId: string | null;
   courseId: string | null;
@@ -351,7 +350,7 @@ export async function* askMentorStream(
     });
 
     // Update or create session
-    const sessionId = await updateSession({
+    await updateSession({
       sessionId: input.sessionId || null,
       userId,
       topicId: input.topicId || null,
@@ -387,8 +386,8 @@ export async function* askMentorStream(
  * Get chat history for a session
  */
 export async function getChatHistory(
-  userId: string,
-  sessionId: string
+  _userId: string,
+  _sessionId: string
 ): Promise<ConversationMessage[]> {
   // TODO: Implement via database query
   return [];
@@ -397,7 +396,7 @@ export async function getChatHistory(
 /**
  * Get active sessions for user
  */
-export async function getUserSessions(userId: string, limit: number = 10) {
+export async function getUserSessions(_userId: string, _limit: number = 10) {
   // TODO: Implement via database query
   return [];
 }

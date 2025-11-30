@@ -52,7 +52,7 @@ export const taHrRouter = router({
         const { orgId } = ctx;
         const { limit, offset, status } = input;
 
-        let conditions = [eq(campaigns.orgId, orgId)];
+        const conditions = [eq(campaigns.orgId, orgId)];
         if (status) conditions.push(eq(campaigns.status, status));
 
         const results = await db.select().from(campaigns)
@@ -148,8 +148,7 @@ export const taHrRouter = router({
      */
     metrics: orgProtectedProcedure
       .input(z.object({ campaignId: z.string().uuid() }))
-      .query(async ({ ctx, input }) => {
-        const { orgId } = ctx;
+      .query(async ({ input }) => {
 
         // Get contact stats
         const [contactStats] = await db.select({
@@ -193,11 +192,10 @@ export const taHrRouter = router({
         offset: z.number().min(0).default(0),
         status: z.enum(['new', 'contacted', 'responded', 'qualified', 'not_interested']).optional(),
       }))
-      .query(async ({ ctx, input }) => {
-        const { orgId } = ctx;
+      .query(async ({ input }) => {
         const { campaignId, limit, offset, status } = input;
 
-        let conditions = [
+        const conditions = [
           eq(campaignContacts.campaignId, campaignId)
         ];
         if (status) conditions.push(eq(campaignContacts.status, status));
@@ -223,7 +221,7 @@ export const taHrRouter = router({
         lastName: z.string().optional(),
         email: z.string().optional(),
       }))
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ input }) => {
         const [newContact] = await db.insert(campaignContacts).values({
           ...input,
         }).returning();
@@ -240,7 +238,7 @@ export const taHrRouter = router({
         status: z.enum(['pending', 'sent', 'opened', 'clicked', 'responded', 'converted']),
         responseText: z.string().optional(),
       }))
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ input }) => {
         const { id, status, responseText } = input;
 
         const updateData: Record<string, unknown> = {
@@ -279,7 +277,7 @@ export const taHrRouter = router({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
       }))
-      .query(async ({ ctx, input }) => {
+      .query(async ({ input }) => {
         const { limit, offset } = input;
 
         const results = await db.select().from(employeeMetadata)
@@ -295,7 +293,7 @@ export const taHrRouter = router({
      */
     getById: orgProtectedProcedure
       .input(z.object({ userId: z.string().uuid() }))
-      .query(async ({ ctx, input }) => {
+      .query(async ({ input }) => {
         const [employee] = await db.select().from(employeeMetadata)
           .where(eq(employeeMetadata.userId, input.userId))
           .limit(1);
@@ -312,7 +310,7 @@ export const taHrRouter = router({
      */
     create: orgProtectedProcedure
       .input(createEmployeeMetadataSchema)
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ input }) => {
         const { bonusTarget, benefitsStartDate, ...rest } = input;
 
         const [newEmployee] = await db.insert(employeeMetadata).values({
@@ -329,7 +327,7 @@ export const taHrRouter = router({
      */
     update: orgProtectedProcedure
       .input(updateEmployeeMetadataSchema)
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ input }) => {
         const { userId, bonusTarget, benefitsStartDate, ...data } = input;
 
         const updateData: Record<string, unknown> = {
@@ -359,7 +357,7 @@ export const taHrRouter = router({
      * Get organization chart data
      */
     orgChart: orgProtectedProcedure
-      .query(async ({ ctx }) => {
+      .query(async () => {
         const employees = await db.select().from(employeeMetadata)
           .orderBy(employeeMetadata.userId);
 
@@ -442,8 +440,7 @@ export const taHrRouter = router({
         startDate: z.date(),
         endDate: z.date(),
       }))
-      .query(async ({ ctx, input }) => {
-        const { orgId } = ctx;
+      .query(async ({ input }) => {
 
         // TODO: Aggregate pod performance metrics
         // - Placements count
@@ -481,7 +478,7 @@ export const taHrRouter = router({
         const { orgId } = ctx;
         const { limit, offset, status } = input;
 
-        let conditions = [eq(payrollRuns.orgId, orgId)];
+        const conditions = [eq(payrollRuns.orgId, orgId)];
         if (status) conditions.push(eq(payrollRuns.status, status));
 
         const results = await db.select().from(payrollRuns)
@@ -519,7 +516,7 @@ export const taHrRouter = router({
      */
     items: orgProtectedProcedure
       .input(z.object({ payrollRunId: z.string().uuid() }))
-      .query(async ({ ctx, input }) => {
+      .query(async ({ input }) => {
         const results = await db.select().from(payrollItems)
           .where(eq(payrollItems.payrollRunId, input.payrollRunId))
           .orderBy(payrollItems.employeeId);
@@ -547,7 +544,7 @@ export const taHrRouter = router({
         const { orgId } = ctx;
         const { limit, offset, employeeId, status } = input;
 
-        let conditions = [eq(performanceReviews.orgId, orgId)];
+        const conditions = [eq(performanceReviews.orgId, orgId)];
         if (employeeId) conditions.push(eq(performanceReviews.employeeId, employeeId));
         if (status) conditions.push(eq(performanceReviews.status, status));
 
@@ -619,7 +616,7 @@ export const taHrRouter = router({
         startDate: z.string(),
         endDate: z.string(),
       }))
-      .query(async ({ ctx, input }) => {
+      .query(async ({ input }) => {
         const { employeeId, startDate, endDate } = input;
 
         const results = await db.select().from(timeAttendance)
@@ -638,7 +635,7 @@ export const taHrRouter = router({
      */
     submit: orgProtectedProcedure
       .input(submitTimesheetSchema)
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ input }) => {
         const { date, regularHours, overtimeHours, ptoHours, sickHours, holidayHours, ...rest } = input;
 
         const [record] = await db.insert(timeAttendance).values({
@@ -752,8 +749,7 @@ export const taHrRouter = router({
         hoursRequested: z.number(),
         notes: z.string().optional(),
       }))
-      .mutation(async ({ ctx, input }) => {
-        const { userId, orgId } = ctx;
+      .mutation(async ({ input: _input }) => {
 
         // TODO: Create PTO request and deduct from balance
 

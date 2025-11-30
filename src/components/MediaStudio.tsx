@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Wand2, Video, Image as ImageIcon, Loader2, Upload, AlertCircle, CheckCircle, Monitor, Smartphone, Briefcase, TrendingUp, Sparkles } from 'lucide-react';
 import { editImage, generateVideo } from '@/services/geminiService';
 import { useAppStore } from '@/lib/store';
@@ -351,7 +352,7 @@ export const MediaStudio: React.FC = () => {
                       Your browser does not support the video tag.
                     </video>
                   ) : (
-                    <img src={resultUrl} alt="Result" className="w-full h-full object-contain bg-charcoal-900" />
+                    <Image src={resultUrl} alt="Result" fill unoptimized className="object-contain bg-charcoal-900" />
                   )}
                 </div>
                 <div className="mt-8 flex gap-4">
@@ -365,7 +366,9 @@ export const MediaStudio: React.FC = () => {
               </div>
             ) : previewUrl ? (
               <div className="relative w-full h-full flex items-center justify-center">
-                <img src={previewUrl} alt="Original Preview" className="max-w-full max-h-full object-contain rounded-xl shadow-sm opacity-50 grayscale" />
+                <div className="relative w-full h-full">
+                  <Image src={previewUrl} alt="Original Preview" fill unoptimized className="object-contain rounded-xl shadow-sm opacity-50 grayscale" />
+                </div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="bg-white/90 backdrop-blur px-6 py-2 rounded-xl text-sm font-bold text-charcoal-900 shadow-elevation-sm font-body">
                     Original Source

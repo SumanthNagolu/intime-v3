@@ -25,6 +25,79 @@ import {
 // Types
 // ============================================================================
 
+// Database row types (as returned from Supabase)
+interface DatabaseApprover {
+  id: string;
+  full_name: string;
+  email: string;
+}
+
+interface DatabaseCreator {
+  id: string;
+  full_name: string;
+  email: string;
+}
+
+interface DatabasePayrollRunRow {
+  id: string;
+  period_start_date: string;
+  period_end_date: string;
+  pay_date: string;
+  status: string;
+  employee_count: number;
+  total_gross_pay: string | number;
+  total_taxes: string | number;
+  total_net_pay: string | number;
+  approved_by: string | null;
+  approved_at: string | null;
+  processed_at: string | null;
+  processing_error: string | null;
+  org_id: string;
+  created_at: string;
+  created_by: string | null;
+  approver?: DatabaseApprover;
+  creator?: DatabaseCreator;
+}
+
+interface DatabaseEmployeeForPayroll {
+  id: string;
+  full_name: string;
+  email: string;
+  department: string | null;
+  position: string | null;
+}
+
+interface DatabasePayrollItemRow {
+  id: string;
+  payroll_run_id: string;
+  employee_id: string;
+  base_salary: string | number | null;
+  commission: string | number | null;
+  bonus: string | number | null;
+  overtime_hours: string | number | null;
+  overtime_pay: string | number | null;
+  other_earnings: string | number | null;
+  gross_pay: string | number;
+  taxes_withheld: string | number | null;
+  benefits_deductions: string | number | null;
+  other_deductions: string | number | null;
+  net_pay: string | number;
+  employee?: DatabaseEmployeeForPayroll;
+}
+
+interface DatabasePayrollItemWithRun extends DatabasePayrollItemRow {
+  payroll_runs: {
+    id: string;
+    org_id: string;
+    status: string;
+  };
+}
+
+interface DatabaseEmployeeWithSalary {
+  id: string;
+  salary: string | number | null;
+}
+
 export interface PayrollRun {
   id: string;
   periodStartDate: string;
@@ -225,38 +298,41 @@ export async function listPayrollRunsAction(
   }
 
   // Transform data
-  const transformedRuns: PayrollRunWithDetails[] = (runs || []).map((run: any) => ({
-    id: run.id,
-    periodStartDate: run.period_start_date,
-    periodEndDate: run.period_end_date,
-    payDate: run.pay_date,
-    status: run.status,
-    employeeCount: run.employee_count,
-    totalGrossPay: run.total_gross_pay ? parseFloat(run.total_gross_pay) : 0,
-    totalTaxes: run.total_taxes ? parseFloat(run.total_taxes) : 0,
-    totalNetPay: run.total_net_pay ? parseFloat(run.total_net_pay) : 0,
-    approvedBy: run.approved_by,
-    approvedAt: run.approved_at,
-    processedAt: run.processed_at,
-    processingError: run.processing_error,
-    orgId: run.org_id,
-    createdAt: run.created_at,
-    createdBy: run.created_by,
-    approver: run.approver
-      ? {
-          id: run.approver.id,
-          fullName: run.approver.full_name,
-          email: run.approver.email,
-        }
-      : null,
-    creator: run.creator
-      ? {
-          id: run.creator.id,
-          fullName: run.creator.full_name,
-          email: run.creator.email,
-        }
-      : null,
-  }));
+  const transformedRuns: PayrollRunWithDetails[] = (runs || []).map((run) => {
+    const typedRun = run as unknown as DatabasePayrollRunRow;
+    return {
+      id: typedRun.id,
+      periodStartDate: typedRun.period_start_date,
+      periodEndDate: typedRun.period_end_date,
+      payDate: typedRun.pay_date,
+      status: typedRun.status,
+      employeeCount: typedRun.employee_count,
+      totalGrossPay: typedRun.total_gross_pay ? parseFloat(String(typedRun.total_gross_pay)) : 0,
+      totalTaxes: typedRun.total_taxes ? parseFloat(String(typedRun.total_taxes)) : 0,
+      totalNetPay: typedRun.total_net_pay ? parseFloat(String(typedRun.total_net_pay)) : 0,
+      approvedBy: typedRun.approved_by,
+      approvedAt: typedRun.approved_at,
+      processedAt: typedRun.processed_at,
+      processingError: typedRun.processing_error,
+      orgId: typedRun.org_id,
+      createdAt: typedRun.created_at,
+      createdBy: typedRun.created_by,
+      approver: typedRun.approver
+        ? {
+            id: typedRun.approver.id,
+            fullName: typedRun.approver.full_name,
+            email: typedRun.approver.email,
+          }
+        : null,
+      creator: typedRun.creator
+        ? {
+            id: typedRun.creator.id,
+            fullName: typedRun.creator.full_name,
+            email: typedRun.creator.email,
+          }
+        : null,
+    };
+  });
 
   const total = count || 0;
   const pagination = calculatePagination(total, page, pageSize);
@@ -364,63 +440,68 @@ export async function getPayrollRunAction(
     .eq('payroll_run_id', runId)
     .order('employee_id');
 
-  const transformedItems: PayrollItem[] = (items || []).map((item: any) => ({
-    id: item.id,
-    payrollRunId: item.payroll_run_id,
-    employeeId: item.employee_id,
-    baseSalary: item.base_salary ? parseFloat(item.base_salary) : null,
-    commission: item.commission ? parseFloat(item.commission) : null,
-    bonus: item.bonus ? parseFloat(item.bonus) : null,
-    overtimeHours: item.overtime_hours ? parseFloat(item.overtime_hours) : null,
-    overtimePay: item.overtime_pay ? parseFloat(item.overtime_pay) : null,
-    otherEarnings: item.other_earnings ? parseFloat(item.other_earnings) : null,
-    grossPay: parseFloat(item.gross_pay),
-    taxesWithheld: item.taxes_withheld ? parseFloat(item.taxes_withheld) : null,
-    benefitsDeductions: item.benefits_deductions ? parseFloat(item.benefits_deductions) : null,
-    otherDeductions: item.other_deductions ? parseFloat(item.other_deductions) : null,
-    netPay: parseFloat(item.net_pay),
-    employee: item.employee
-      ? {
-          id: item.employee.id,
-          fullName: item.employee.full_name,
-          email: item.employee.email,
-          department: item.employee.department,
-          position: item.employee.position,
-        }
-      : undefined,
-  }));
+  const transformedItems: PayrollItem[] = (items || []).map((item) => {
+    const typedItem = item as unknown as DatabasePayrollItemRow;
+    return {
+      id: typedItem.id,
+      payrollRunId: typedItem.payroll_run_id,
+      employeeId: typedItem.employee_id,
+      baseSalary: typedItem.base_salary ? parseFloat(String(typedItem.base_salary)) : null,
+      commission: typedItem.commission ? parseFloat(String(typedItem.commission)) : null,
+      bonus: typedItem.bonus ? parseFloat(String(typedItem.bonus)) : null,
+      overtimeHours: typedItem.overtime_hours ? parseFloat(String(typedItem.overtime_hours)) : null,
+      overtimePay: typedItem.overtime_pay ? parseFloat(String(typedItem.overtime_pay)) : null,
+      otherEarnings: typedItem.other_earnings ? parseFloat(String(typedItem.other_earnings)) : null,
+      grossPay: parseFloat(String(typedItem.gross_pay)),
+      taxesWithheld: typedItem.taxes_withheld ? parseFloat(String(typedItem.taxes_withheld)) : null,
+      benefitsDeductions: typedItem.benefits_deductions ? parseFloat(String(typedItem.benefits_deductions)) : null,
+      otherDeductions: typedItem.other_deductions ? parseFloat(String(typedItem.other_deductions)) : null,
+      netPay: parseFloat(String(typedItem.net_pay)),
+      employee: typedItem.employee
+        ? {
+            id: typedItem.employee.id,
+            fullName: typedItem.employee.full_name,
+            email: typedItem.employee.email,
+            department: typedItem.employee.department,
+            position: typedItem.employee.position,
+          }
+        : undefined,
+    };
+  });
+
+  const typedRun = run as unknown as DatabasePayrollRunRow;
 
   return {
     success: true,
     data: {
-      id: run.id,
-      periodStartDate: run.period_start_date,
-      periodEndDate: run.period_end_date,
-      payDate: run.pay_date,
-      status: run.status,
-      employeeCount: run.employee_count,
-      totalGrossPay: run.total_gross_pay ? parseFloat(String(run.total_gross_pay)) : 0,
-      totalTaxes: run.total_taxes ? parseFloat(String(run.total_taxes)) : 0,
-      totalNetPay: run.total_net_pay ? parseFloat(String(run.total_net_pay)) : 0,
-      approvedBy: run.approved_by,
-      approvedAt: run.approved_at,
-      processedAt: run.processed_at,
-      processingError: run.processing_error,
-      orgId: run.org_id,
-      createdAt: run.created_at,
-      createdBy: run.created_by,
-      approver: run.approver
+      id: typedRun.id,
+      periodStartDate: typedRun.period_start_date,
+      periodEndDate: typedRun.period_end_date,
+      payDate: typedRun.pay_date,
+      status: typedRun.status,
+      employeeCount: typedRun.employee_count,
+      totalGrossPay: typedRun.total_gross_pay ? parseFloat(String(typedRun.total_gross_pay)) : 0,
+      totalTaxes: typedRun.total_taxes ? parseFloat(String(typedRun.total_taxes)) : 0,
+      totalNetPay: typedRun.total_net_pay ? parseFloat(String(typedRun.total_net_pay)) : 0,
+      approvedBy: typedRun.approved_by,
+      approvedAt: typedRun.approved_at,
+      processedAt: typedRun.processed_at,
+      processingError: typedRun.processing_error,
+      orgId: typedRun.org_id,
+      createdAt: typedRun.created_at,
+      createdBy: typedRun.created_by,
+      approver: typedRun.approver
         ? {
-            id: (run.approver as any).id,
-            fullName: (run.approver as any).full_name,
-            email: (run.approver as any).email,
+            id: typedRun.approver.id,
+            fullName: typedRun.approver.full_name,
+            email: typedRun.approver.email,
           }
         : null,
-      creator: run.creator
+      creator: typedRun.creator
         ? {
-            id: (run.creator as any).id,
-            fullName: (run.creator as any).full_name,
-            email: (run.creator as any).email,
+            id: typedRun.creator.id,
+            fullName: typedRun.creator.full_name,
+            email: typedRun.creator.email,
           }
         : null,
       items: transformedItems,
@@ -484,14 +565,15 @@ export async function createPayrollRunAction(
     .eq('status', 'active');
 
   if (employees && employees.length > 0) {
-    const payrollItems = employees.map((emp: any) => {
-      const baseSalary = emp.salary ? parseFloat(emp.salary) / 24 : 0; // Bi-weekly
+    const payrollItems = employees.map((emp) => {
+      const typedEmp = emp as unknown as DatabaseEmployeeWithSalary;
+      const baseSalary = typedEmp.salary ? parseFloat(String(typedEmp.salary)) / 24 : 0; // Bi-weekly
       const estimatedTax = baseSalary * 0.25; // 25% estimated tax
       const estimatedBenefits = baseSalary * 0.05; // 5% benefits
 
       return {
         payroll_run_id: newRun.id,
-        employee_id: emp.id,
+        employee_id: typedEmp.id,
         base_salary: baseSalary,
         gross_pay: baseSalary,
         taxes_withheld: estimatedTax,
@@ -602,16 +684,18 @@ export async function updatePayrollItemAction(
     .eq('id', itemId)
     .single();
 
-  if (!item || (item.payroll_runs as any).org_id !== profile.orgId) {
+  const typedItem = item as unknown as DatabasePayrollItemWithRun;
+
+  if (!typedItem || typedItem.payroll_runs.org_id !== profile.orgId) {
     return { success: false, error: 'Payroll item not found' };
   }
 
-  if ((item.payroll_runs as any).status !== 'draft') {
+  if (typedItem.payroll_runs.status !== 'draft') {
     return { success: false, error: 'Cannot edit items in a non-draft payroll run' };
   }
 
   // Build update object
-  const updates: Record<string, any> = {};
+  const updates: Record<string, number> = {};
   if (input.baseSalary !== undefined) updates.base_salary = input.baseSalary;
   if (input.commission !== undefined) updates.commission = input.commission;
   if (input.bonus !== undefined) updates.bonus = input.bonus;
@@ -625,14 +709,14 @@ export async function updatePayrollItemAction(
     updates.other_deductions = input.otherDeductions;
 
   // Recalculate gross and net pay
-  const baseSalary = input.baseSalary ?? (item.base_salary ? parseFloat(String(item.base_salary)) : 0);
-  const commission = input.commission ?? (item.commission ? parseFloat(String(item.commission)) : 0);
-  const bonus = input.bonus ?? (item.bonus ? parseFloat(String(item.bonus)) : 0);
-  const overtimePay = input.overtimePay ?? (item.overtime_pay ? parseFloat(String(item.overtime_pay)) : 0);
-  const otherEarnings = input.otherEarnings ?? (item.other_earnings ? parseFloat(String(item.other_earnings)) : 0);
-  const taxesWithheld = input.taxesWithheld ?? (item.taxes_withheld ? parseFloat(String(item.taxes_withheld)) : 0);
-  const benefitsDeductions = input.benefitsDeductions ?? (item.benefits_deductions ? parseFloat(String(item.benefits_deductions)) : 0);
-  const otherDeductions = input.otherDeductions ?? (item.other_deductions ? parseFloat(String(item.other_deductions)) : 0);
+  const baseSalary = input.baseSalary ?? (typedItem.base_salary ? parseFloat(String(typedItem.base_salary)) : 0);
+  const commission = input.commission ?? (typedItem.commission ? parseFloat(String(typedItem.commission)) : 0);
+  const bonus = input.bonus ?? (typedItem.bonus ? parseFloat(String(typedItem.bonus)) : 0);
+  const overtimePay = input.overtimePay ?? (typedItem.overtime_pay ? parseFloat(String(typedItem.overtime_pay)) : 0);
+  const otherEarnings = input.otherEarnings ?? (typedItem.other_earnings ? parseFloat(String(typedItem.other_earnings)) : 0);
+  const taxesWithheld = input.taxesWithheld ?? (typedItem.taxes_withheld ? parseFloat(String(typedItem.taxes_withheld)) : 0);
+  const benefitsDeductions = input.benefitsDeductions ?? (typedItem.benefits_deductions ? parseFloat(String(typedItem.benefits_deductions)) : 0);
+  const otherDeductions = input.otherDeductions ?? (typedItem.other_deductions ? parseFloat(String(typedItem.other_deductions)) : 0);
 
   const grossPay = baseSalary + commission + bonus + overtimePay + otherEarnings;
   const netPay = grossPay - taxesWithheld - benefitsDeductions - otherDeductions;
@@ -651,7 +735,7 @@ export async function updatePayrollItemAction(
   }
 
   // Recalculate payroll run totals
-  await recalculatePayrollRunTotals(supabase, item.payroll_run_id);
+  await recalculatePayrollRunTotals(supabase, typedItem.payroll_run_id);
 
   // Log audit event
   const adminSupabase = createAdminClient();
@@ -661,7 +745,7 @@ export async function updatePayrollItemAction(
     recordId: itemId,
     userId: profile.id,
     userEmail: profile.email,
-    oldValues: item,
+    oldValues: typedItem as unknown as Record<string, unknown>,
     newValues: updates,
     metadata: { changedFields: Object.keys(updates) },
     severity: 'info',
@@ -1052,28 +1136,35 @@ export async function deletePayrollRunAction(runId: string): Promise<ActionResul
 // Helper Functions
 // ============================================================================
 
-async function recalculatePayrollRunTotals(supabase: any, runId: string): Promise<void> {
+interface PayrollItemTotals {
+  gross_pay: string | number;
+  taxes_withheld: string | number | null;
+  net_pay: string | number;
+}
+
+async function recalculatePayrollRunTotals(supabase: Awaited<ReturnType<typeof createClient>>, runId: string): Promise<void> {
   const { data: items } = await supabase
     .from('payroll_items')
     .select('gross_pay, taxes_withheld, net_pay')
     .eq('payroll_run_id', runId);
 
   if (items && items.length > 0) {
-    const totalGross = items.reduce((sum: number, item: any) => sum + parseFloat(item.gross_pay), 0);
-    const totalTaxes = items.reduce(
-      (sum: number, item: any) => sum + parseFloat(item.taxes_withheld || '0'),
+    const typedItems = items as unknown as PayrollItemTotals[];
+    const totalGross = typedItems.reduce((sum: number, item: PayrollItemTotals) => sum + parseFloat(String(item.gross_pay)), 0);
+    const totalTaxes = typedItems.reduce(
+      (sum: number, item: PayrollItemTotals) => sum + parseFloat(item.taxes_withheld ? String(item.taxes_withheld) : '0'),
       0
     );
-    const totalNet = items.reduce((sum: number, item: any) => sum + parseFloat(item.net_pay), 0);
+    const totalNet = typedItems.reduce((sum: number, item: PayrollItemTotals) => sum + parseFloat(String(item.net_pay)), 0);
 
     await supabase
       .from('payroll_runs')
       .update({
         employee_count: items.length,
-        total_gross_pay: totalGross.toFixed(2),
-        total_taxes: totalTaxes.toFixed(2),
-        total_net_pay: totalNet.toFixed(2),
-      })
+        total_gross_pay: parseFloat(totalGross.toFixed(2)),
+        total_taxes: parseFloat(totalTaxes.toFixed(2)),
+        total_net_pay: parseFloat(totalNet.toFixed(2)),
+      } as Record<string, unknown>)
       .eq('id', runId);
   }
 }

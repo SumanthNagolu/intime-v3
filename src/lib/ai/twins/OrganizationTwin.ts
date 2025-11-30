@@ -17,7 +17,7 @@ import type { TwinRole } from '@/types/productivity';
 import { BaseAgent, type AgentConfig } from '../agents/BaseAgent';
 import { TwinEventBus, type TwinEvent } from './TwinEventBus';
 import { TwinDirectory } from './TwinDirectory';
-import { OrganizationContext, type PillarHealth, type OrgMetrics } from './OrganizationContext';
+import { OrganizationContext, type PillarHealth } from './OrganizationContext';
 
 // ============================================================================
 // TYPES
@@ -192,7 +192,7 @@ export class OrganizationTwin extends BaseAgent<string, string> {
     console.log(`[OrganizationTwin] Generating daily standup for org ${this.orgId}`);
 
     // 1. Gather data from all sources
-    const [metrics, pillarHealth, events, opportunities] = await Promise.all([
+    const [_metrics, pillarHealth, events, opportunities] = await Promise.all([
       this.context.getOrgMetrics(this.orgId),
       this.context.getPillarHealth(this.orgId) as Promise<PillarHealth[]>,
       this.eventBus.getUnprocessedEvents({ limit: 50 }),
@@ -241,7 +241,7 @@ export class OrganizationTwin extends BaseAgent<string, string> {
    */
   async getTodayStandup(forceRegenerate = false): Promise<StandupReport | null> {
     if (!forceRegenerate) {
-      const { data } = await (this.supabase.rpc as any)('get_today_standup', {
+      const { data } = await (this.supabase.rpc as (name: string, params: Record<string, unknown>) => Promise<{ data: unknown }> )('get_today_standup', {
         p_org_id: this.orgId,
       });
 
@@ -341,7 +341,13 @@ If the question is general organizational or strategic, route to CEO.`,
 
     // Query communication metrics
     const { count: queriesThisWeek } = await (this.supabase
-      .from as any)('twin_conversations')
+      .from as (table: string) => {
+        select: (cols: string, opts?: { count?: string; head?: boolean }) => {
+          eq: (col: string, val: string) => {
+            gte: (col: string, val: string) => Promise<{ count: number | null }>
+          }
+        }
+      })('twin_conversations')
       .select('*', { count: 'exact', head: true })
       .eq('org_id', this.orgId)
       .gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString());
@@ -561,7 +567,7 @@ Write in a professional, concise tone. Highlight the most important items.`;
       });
 
       return response.choices[0].message.content || 'Unable to generate summary.';
-    } catch (error) {
+    } catch {
       return 'Daily standup summary unavailable.';
     }
   }
@@ -671,7 +677,7 @@ Write in a professional, concise tone. Highlight the most important items.`;
    */
   private async saveStandup(report: StandupReport): Promise<void> {
     try {
-      await (this.supabase.from as any)('org_standups').upsert({
+      await (this.supabase.from as (table: string) => { upsert: (data: Record<string, unknown>) => Promise<void> })('org_standups').upsert({
         org_id: this.orgId,
         standup_date: report.date,
         generated_by: 'organization_twin',

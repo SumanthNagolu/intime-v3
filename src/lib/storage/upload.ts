@@ -34,7 +34,7 @@ export async function uploadCourseContent(
     uploadedBy?: string;
   } = {}
 ): Promise<UploadResult> {
-  const { topicId, lessonId, isPublic = false, uploadedBy } = options;
+  const { topicId, lessonId, isPublic: _isPublic = false, uploadedBy } = options;
 
   // Validate file type
   const fileType = getFileType(file.type);
@@ -56,7 +56,7 @@ export async function uploadCourseContent(
 
   try {
     // Upload to Supabase Storage
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const { data: _uploadData, error: uploadError } = await supabase.storage
       .from(STORAGE_BUCKET)
       .upload(storagePath, file, {
         cacheControl: '3600',
@@ -301,7 +301,7 @@ function generateStoragePath(topicId: string | undefined, timestamp: number, fil
  * Helper: Extract text from PDF for searchability (placeholder)
  * TODO: Implement PDF text extraction
  */
-export async function extractPDFText(file: File): Promise<string> {
+export async function extractPDFText(_file: File): Promise<string> {
   // Placeholder - implement with pdf-parse or similar
   return '';
 }
@@ -322,7 +322,7 @@ export async function canUserUpload(userId: string): Promise<boolean> {
     return false;
   }
 
-  return data.some((ur: any) =>
-    ['admin', 'course_admin'].includes(ur.roles?.name)
+  return data.some((ur: { roles?: { name?: string } }) =>
+    ['admin', 'course_admin'].includes(ur.roles?.name ?? '')
   );
 }

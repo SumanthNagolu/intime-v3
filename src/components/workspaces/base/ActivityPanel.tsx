@@ -18,7 +18,6 @@ import {
   Plus,
   Send,
   Paperclip,
-  X,
   ChevronUp,
   ChevronDown,
   MoreHorizontal,
@@ -30,12 +29,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Separator } from '@/components/ui/separator';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
 import {
   Select,
   SelectContent,
@@ -134,7 +127,6 @@ function ActivityComposer({
   const [selectedType, setSelectedType] = useState<ActivityType>('note');
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
-  const [showDueDate, setShowDueDate] = useState(false);
   const [dueDate, setDueDate] = useState<string>('');
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -152,7 +144,6 @@ function ActivityComposer({
     setSubject('');
     setBody('');
     setDueDate('');
-    setShowDueDate(false);
     setIsExpanded(false);
   };
 

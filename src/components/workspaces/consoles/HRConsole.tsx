@@ -8,9 +8,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import {
-  TrendingUp,
   TrendingDown,
   ArrowRight,
   Users,
@@ -25,12 +23,10 @@ import {
   Building2,
   DollarSign,
   Award,
-  Activity,
 } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
@@ -50,8 +46,6 @@ export function HRConsole() {
   const { data: onboardingList } = trpc.hrMetrics.getOnboardingList.useQuery();
   const { data: pendingApprovals } = trpc.hrMetrics.getPendingApprovals.useQuery();
   const { data: complianceAlerts } = trpc.hrMetrics.getComplianceAlerts.useQuery();
-  const { data: retentionTrend } = trpc.hrMetrics.getRetentionTrend.useQuery();
-  const { data: recentActivity } = trpc.hrMetrics.getRecentActivity.useQuery();
   const { data: departmentData } = trpc.hrMetrics.getHeadcountByDepartment.useQuery();
 
   // =====================================================

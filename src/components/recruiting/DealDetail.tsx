@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import { useAppStore } from '../../lib/store';
-import { ChevronLeft, Briefcase, DollarSign, Calendar, CheckCircle, XCircle, ArrowRight, Percent, TrendingUp, Building2, Loader2 } from 'lucide-react';
+import { ChevronLeft, Briefcase, DollarSign, Calendar, CheckCircle, ArrowRight, Percent, TrendingUp } from 'lucide-react';
 import { Account, Candidate } from '../../types';
 import { ConvertOutcomeModal } from './Modals';
 
@@ -23,17 +23,18 @@ export const DealDetail: React.FC = () => {
   
   if (!deal) return <div className="p-8 text-center text-stone-500">Deal not found. Check ID: {dealId}</div>;
 
-  const handleStageChange = (newStage: any) => {
+  const handleStageChange = (newStage: 'Prospect' | 'Discovery' | 'Proposal' | 'Negotiation' | 'Won' | 'Lost') => {
       updateDeal({ ...deal, stage: newStage });
   };
 
-  const handleConversion = (type: 'account' | 'bench' | 'academy', data: any) => {
+  const handleConversion = (type: 'account' | 'bench' | 'academy', data: Record<string, unknown>) => {
+      const { name } = data as { name: string };
       updateDeal({ ...deal, stage: 'Won' });
 
       if (type === 'account') {
           const newAccount: Account = {
               id: `a${Date.now()}`,
-              name: data.name,
+              name: name,
               industry: 'Insurance', // Default
               status: 'Active',
               accountManagerId: 'current-user',
@@ -49,7 +50,7 @@ export const DealDetail: React.FC = () => {
           // Both Bench and Academy create a Candidate record
           const newCandidate: Candidate = {
               id: `c${Date.now()}`,
-              name: data.name,
+              name: name,
               role: type === 'bench' ? 'Guidewire Consultant' : 'Trainee',
               status: type === 'bench' ? 'bench' : 'active',
               type: type === 'bench' ? 'internal_bench' : 'student',

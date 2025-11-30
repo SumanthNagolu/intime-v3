@@ -10,14 +10,10 @@
 import React, { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  Building2,
   User,
   Mail,
   Phone,
-  Calendar,
   DollarSign,
-  Target,
-  TrendingUp,
   Briefcase,
   FileText,
   Activity,
@@ -26,36 +22,26 @@ import {
   CheckCircle,
   XCircle,
   AlertTriangle,
-  ArrowRight,
   Clock,
-  Users,
   MapPin,
   Code,
   Award,
   Star,
-  Globe,
-  Linkedin,
-  FileCode,
-  GraduationCap,
   Shield,
   Plane,
   Timer,
   Send,
-  Zap,
   BarChart3,
-  ExternalLink,
   UserCheck,
-  PieChart,
 } from 'lucide-react';
-import { format, formatDistanceToNow, differenceInDays } from 'date-fns';
+import { format, differenceInDays } from 'date-fns';
 import { trpc } from '@/lib/trpc/client';
 import { cn } from '@/lib/utils';
 
 // UI Components
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -66,7 +52,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -130,7 +115,7 @@ const AVAILABILITY_OPTIONS = {
 // SUB-COMPONENTS
 // =====================================================
 
-function OverviewTab({ talent, canEdit }: { talent: NonNullable<ReturnType<typeof useTalent>['data']>; canEdit: boolean }) {
+function OverviewTab({ talent, canEdit: _canEdit }: { talent: NonNullable<ReturnType<typeof useTalent>['data']>; canEdit: boolean }) {
   const visaConfig = VISA_TYPES[talent.candidateCurrentVisa as keyof typeof VISA_TYPES];
   const availabilityConfig = AVAILABILITY_OPTIONS[talent.candidateAvailability as keyof typeof AVAILABILITY_OPTIONS];
 
@@ -444,9 +429,20 @@ function SkillsTab({ talent, canEdit }: { talent: NonNullable<ReturnType<typeof 
   );
 }
 
-function SubmissionsTab({ talent }: { talent: NonNullable<ReturnType<typeof useTalent>['data']> }) {
+interface Submission {
+  id: string;
+  status: string;
+  job?: {
+    title: string;
+    account?: {
+      name: string;
+    };
+  };
+}
+
+function SubmissionsTab({ talent: _talent }: { talent: NonNullable<ReturnType<typeof useTalent>['data']> }) {
   // In production, this would fetch submissions from tRPC
-  const submissions: any[] = [];
+  const submissions: Submission[] = [];
 
   return (
     <div className="space-y-6">
@@ -527,9 +523,22 @@ function SubmissionsTab({ talent }: { talent: NonNullable<ReturnType<typeof useT
   );
 }
 
-function PlacementsTab({ talent }: { talent: NonNullable<ReturnType<typeof useTalent>['data']> }) {
+interface Placement {
+  id: string;
+  status: string;
+  startDate: string;
+  endDate?: string;
+  job?: {
+    title: string;
+  };
+  account?: {
+    name: string;
+  };
+}
+
+function PlacementsTab({ talent: _talent }: { talent: NonNullable<ReturnType<typeof useTalent>['data']> }) {
   // In production, this would fetch placements from tRPC
-  const placements: any[] = [];
+  const placements: Placement[] = [];
 
   return (
     <div className="space-y-6">
@@ -696,7 +705,7 @@ function useTalent(talentId: string) {
 
 export function TalentWorkspace({ talentId }: TalentWorkspaceProps) {
   const router = useRouter();
-  const { context, canEdit, canDelete, isLoading: contextLoading } = useWorkspaceContext('talent', talentId);
+  const { canEdit, canDelete, isLoading: contextLoading } = useWorkspaceContext('talent', talentId);
 
   // Fetch talent data
   const { data: talent, isLoading: talentLoading, error } = useTalent(talentId);

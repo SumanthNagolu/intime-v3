@@ -77,7 +77,7 @@ export async function middleware(request: NextRequest) {
   try {
     const { data } = await supabase.auth.getUser();
     user = data.user;
-  } catch (error) {
+  } catch {
     // If there's an auth error (e.g., invalid refresh token), clear the user
     // Silently handle auth errors to avoid excessive logging
     user = null;
