@@ -9,7 +9,7 @@
 
 'use server';
 
-import { createClient } from '@/lib/supabase/server';
+import { createClient, type UntypedFromFunction } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
@@ -217,7 +217,7 @@ async function logAuditEvent(
 ) {
   const { tableName, action, recordId, userId, userEmail, orgId, oldValues, newValues, metadata } = params;
 
-  await (adminSupabase.from as unknown as (table: string) => ReturnType<typeof adminSupabase.from>)('audit_logs').insert({
+  await (adminSupabase.from as unknown as UntypedFromFunction)('audit_logs').insert({
     table_name: tableName,
     action,
     record_id: recordId,
@@ -264,45 +264,46 @@ export async function listJobsAction(
     return { success: false, error: 'Permission denied: jobs:read required' };
   }
 
-  const baseQuery = supabase.from('jobs');
-  let query = baseQuery
-    .select(`
-      id,
-      title,
-      description,
-      job_type,
-      location,
-      is_remote,
-      hybrid_days,
-      rate_min,
-      rate_max,
-      rate_type,
-      currency,
-      status,
-      urgency,
-      positions_count,
-      positions_filled,
-      required_skills,
-      nice_to_have_skills,
-      min_experience_years,
-      max_experience_years,
-      visa_requirements,
-      account_id,
-      deal_id,
-      owner_id,
-      recruiter_ids,
-      posted_date,
-      target_fill_date,
-      filled_date,
-      client_submission_instructions,
-      client_interview_process,
-      created_at,
-      updated_at,
-      account:accounts!account_id(name),
-      owner:user_profiles!owner_id(full_name),
-      submissions(id, status)
-    `, { count: 'exact' })
-    .is('deleted_at', null);
+  // Use explicit 'any' type to avoid excessive type instantiation depth
+  const selectQuery = `
+    id,
+    title,
+    description,
+    job_type,
+    location,
+    is_remote,
+    hybrid_days,
+    rate_min,
+    rate_max,
+    rate_type,
+    currency,
+    status,
+    urgency,
+    positions_count,
+    positions_filled,
+    required_skills,
+    nice_to_have_skills,
+    min_experience_years,
+    max_experience_years,
+    visa_requirements,
+    account_id,
+    deal_id,
+    owner_id,
+    recruiter_ids,
+    posted_date,
+    target_fill_date,
+    filled_date,
+    client_submission_instructions,
+    client_interview_process,
+    created_at,
+    updated_at,
+    account:accounts!account_id(name),
+    owner:user_profiles!owner_id(full_name),
+    submissions(id, status)
+  `;
+
+  const baseQuery = (supabase.from('jobs') as any).select(selectQuery, { count: 'exact' });
+  let query: any = baseQuery.is('deleted_at', null);
 
   if (search) {
     query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
@@ -439,8 +440,8 @@ export async function getJobAction(jobId: string): Promise<ActionResult<Job>> {
     return { success: false, error: 'Permission denied: jobs:read required' };
   }
 
-  const { data: job, error } = await supabase
-    .from('jobs')
+  const { data: job, error } = await (supabase
+    .from('jobs') as any)
     .select(`
       *,
       account:accounts!account_id(name),
@@ -754,8 +755,8 @@ export async function deleteJobAction(jobId: string): Promise<ActionResult<{ del
     return { success: false, error: 'Permission denied: jobs:delete required' };
   }
 
-  const { data: existingJob, error: fetchError } = await supabase
-    .from('jobs')
+  const { data: existingJob, error: fetchError } = await (supabase
+    .from('jobs') as any)
     .select('title, submissions(id)')
     .eq('id', jobId)
     .is('deleted_at', null)
@@ -1145,8 +1146,8 @@ export async function getJobMetricsAction(): Promise<ActionResult<JobMetrics>> {
   const supabase = await createClient();
 
   // Get all jobs
-  const { data: jobs, error } = await supabase
-    .from('jobs')
+  const { data: jobs, error } = await (supabase
+    .from('jobs') as any)
     .select('id, status, filled_date, created_at, submissions(id)')
     .is('deleted_at', null);
 
@@ -1176,7 +1177,7 @@ export async function getJobMetricsAction(): Promise<ActionResult<JobMetrics>> {
   // Calculate avg time to fill (for filled jobs)
   const filledJobs = jobs?.filter((j: MetricJobRow) => j.status === 'filled' && j.filled_date) || [];
   let totalDays = 0;
-  filledJobs.forEach((j) => {
+  filledJobs.forEach((j: any) => {
     const created = new Date(j.created_at);
     const filled = new Date(j.filled_date!);
     totalDays += Math.ceil((filled.getTime() - created.getTime()) / (1000 * 60 * 60 * 24));
@@ -1218,8 +1219,8 @@ export async function getJobsByAccountAction(accountId: string): Promise<ActionR
 
   const supabase = await createClient();
 
-  const { data: jobs, error } = await supabase
-    .from('jobs')
+  const { data: jobs, error } = await (supabase
+    .from('jobs') as any)
     .select(`
       *,
       account:accounts!account_id(name),

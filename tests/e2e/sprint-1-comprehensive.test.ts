@@ -242,7 +242,7 @@ test.describe('Sprint 1: Authentication System', () => {
       // Verify primary role is set
       const primaryRole = userRoles?.find(ur => ur.is_primary);
       expect(primaryRole).toBeDefined();
-      expect((primaryRole?.roles as Record<string, unknown>)?.name).toBe(user.role);
+      expect((primaryRole?.roles as unknown as Record<string, unknown>)?.name).toBe(user.role);
     });
 
     test('should log signup event in audit logs', async () => {
@@ -380,8 +380,8 @@ test.describe('Sprint 1: Row Level Security (CRITICAL)', () => {
         }
       }
     });
-    
-    expect(authError).toBeNull();
+
+    expect(_authError).toBeNull();
     expect(authData.user).toBeDefined();
     
     // Try to fetch own profile
@@ -468,14 +468,14 @@ test.describe('Sprint 1: RBAC System', () => {
     
     // Students should have limited permissions (mostly read own data)
     const ownScopePerms = permissions?.filter(
-      p => (p.permissions as Record<string, unknown>)?.scope === 'own'
+      p => (p.permissions as unknown as Record<string, unknown>)?.scope === 'own'
     );
 
     expect(ownScopePerms?.length).toBeGreaterThan(0);
 
     // Students should NOT have 'delete' or 'manage' permissions
     const dangerousPerms = permissions?.filter(
-      p => ['delete', 'manage'].includes((p.permissions as Record<string, unknown>)?.action as string)
+      p => ['delete', 'manage'].includes((p.permissions as unknown as Record<string, unknown>)?.action as string)
     );
     
     expect(dangerousPerms?.length).toBe(0);

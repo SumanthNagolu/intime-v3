@@ -699,7 +699,7 @@ function JobsTab({ account, canEdit }: { account: NonNullable<ReturnType<typeof 
                 >
                   <div>
                     <p className="font-medium">{job.title}</p>
-                    <p className="text-sm text-muted-foreground">{job.location}</p>
+                    <p className="text-sm text-muted-foreground">{(job as any).location || 'Remote'}</p>
                   </div>
                   <Badge>{job.status}</Badge>
                 </div>

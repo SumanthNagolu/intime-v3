@@ -39,19 +39,19 @@ export const analyticsRouter = router({
 
     try {
       // Get MRR
-      const { data: mrr } = await (ctx.supabase.rpc as (name: string, params?: Record<string, unknown>) => Promise<{ data: number | null; error: unknown }>)('calculate_mrr');
+      const { data: mrr } = await (ctx.supabase.rpc as unknown as (name: string, params?: Record<string, unknown>) => Promise<{ data: number | null; error: unknown }>)('calculate_mrr');
 
       // Get churn rate (last 3 months)
-      const { data: churnRate } = await (ctx.supabase.rpc as (name: string, params?: Record<string, unknown>) => Promise<{ data: number | null; error: unknown }>)('calculate_churn_rate', {
+      const { data: churnRate } = await (ctx.supabase.rpc as unknown as (name: string, params?: Record<string, unknown>) => Promise<{ data: number | null; error: unknown }>)('calculate_churn_rate', {
         p_period_months: 3,
       });
 
       // Get average LTV
-      const { data: avgLtv } = await (ctx.supabase.rpc as (name: string, params?: Record<string, unknown>) => Promise<{ data: number | null; error: unknown }>)('calculate_avg_student_ltv');
+      const { data: avgLtv } = await (ctx.supabase.rpc as unknown as (name: string, params?: Record<string, unknown>) => Promise<{ data: number | null; error: unknown }>)('calculate_avg_student_ltv');
 
       // Get current month analytics from materialized view
       const { data: currentMonth } = await (ctx.supabase
-        .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => { limit: (n: number) => { single: () => Promise<{ data: Record<string, unknown> | null; error: unknown }> } } } })('revenue_analytics')
+        .from as unknown as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => { limit: (n: number) => { single: () => Promise<{ data: Record<string, unknown> | null; error: unknown }> } } } })('revenue_analytics')
         .select('*')
         .order('month', { ascending: false })
         .limit(1)
@@ -106,7 +106,7 @@ export const analyticsRouter = router({
 
       try {
         const { data: trend, error } = await (ctx.supabase
-          .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => { limit: (n: number) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } } })('revenue_analytics')
+          .from as unknown as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => { limit: (n: number) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } } })('revenue_analytics')
           .select('*')
           .order('month', { ascending: false })
           .limit(input.months);
@@ -163,7 +163,7 @@ export const analyticsRouter = router({
 
       try {
         const { data: courses, error } = await (ctx.supabase
-          .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => { limit: (n: number) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } } })('course_revenue_analytics')
+          .from as unknown as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => { limit: (n: number) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } } })('course_revenue_analytics')
           .select('*')
           .order(input.sortBy, { ascending: false })
           .limit(input.limit);
@@ -217,17 +217,22 @@ export const analyticsRouter = router({
       }
 
       try {
-        let query = (ctx.supabase
-          .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => { limit: (n: number) => { gte: (column: string, value: number) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } & Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } } })('student_ltv_analytics')
-          .select('*')
-          .order('lifetime_revenue', { ascending: false })
-          .limit(input.limit);
+        let queryBuilder = (ctx.supabase
+          .from as unknown as (table: string) => { select: (columns: string) => unknown })('student_ltv_analytics')
+          .select('*') as unknown as {
+            order: (column: string, options: { ascending: boolean }) => unknown;
+            limit: (n: number) => unknown;
+            gte: (column: string, value: number) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }>;
+          };
+
+        queryBuilder = queryBuilder.order('lifetime_revenue', { ascending: false }) as unknown as typeof queryBuilder;
+        queryBuilder = queryBuilder.limit(input.limit) as unknown as typeof queryBuilder;
 
         if (input.minRevenue) {
-          query = query.gte('lifetime_revenue', input.minRevenue);
+          queryBuilder = queryBuilder.gte('lifetime_revenue', input.minRevenue) as unknown as typeof queryBuilder;
         }
 
-        const { data: students, error } = await query;
+        const { data: students, error } = await (queryBuilder as unknown as Promise<{ data: Record<string, unknown>[] | null; error: unknown }>);
 
         if (error) throw error;
 
@@ -277,7 +282,7 @@ export const analyticsRouter = router({
 
       try {
         // Get success rate
-        const { data: successRate } = await (ctx.supabase.rpc as (name: string, params?: Record<string, unknown>) => Promise<{ data: number | null; error: unknown }>)(
+        const { data: successRate } = await (ctx.supabase.rpc as unknown as (name: string, params?: Record<string, unknown>) => Promise<{ data: number | null; error: unknown }>)(
           'calculate_payment_success_rate',
           {
             p_period_days: input.periodDays,
@@ -285,7 +290,7 @@ export const analyticsRouter = router({
         );
 
         // Get refund rate
-        const { data: refundRate } = await (ctx.supabase.rpc as (name: string, params?: Record<string, unknown>) => Promise<{ data: number | null; error: unknown }>)('calculate_refund_rate', {
+        const { data: refundRate } = await (ctx.supabase.rpc as unknown as (name: string, params?: Record<string, unknown>) => Promise<{ data: number | null; error: unknown }>)('calculate_refund_rate', {
           p_period_days: input.periodDays,
         });
 
@@ -336,7 +341,7 @@ export const analyticsRouter = router({
       }
 
       try {
-        const { data: funnel, error } = await (ctx.supabase.rpc as (name: string, params?: Record<string, unknown>) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }>)('get_enrollment_funnel', {
+        const { data: funnel, error } = await (ctx.supabase.rpc as unknown as (name: string, params?: Record<string, unknown>) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }>)('get_enrollment_funnel', {
           p_period_days: input.periodDays,
         });
 
@@ -390,7 +395,7 @@ export const analyticsRouter = router({
 
       try {
         const { data: discounts, error } = await (ctx.supabase
-          .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean; nullsFirst: boolean }) => { limit: (n: number) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } } })('discount_effectiveness_analytics')
+          .from as unknown as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean; nullsFirst: boolean }) => { limit: (n: number) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } } })('discount_effectiveness_analytics')
           .select('*')
           .order(input.sortBy, { ascending: false, nullsFirst: false })
           .limit(input.limit);
@@ -435,7 +440,7 @@ export const analyticsRouter = router({
     }
 
     try {
-      const { error } = await (ctx.supabase.rpc as (name: string, params?: Record<string, unknown>) => Promise<{ data: unknown; error: unknown }>)('refresh_revenue_analytics');
+      const { error } = await (ctx.supabase.rpc as unknown as (name: string, params?: Record<string, unknown>) => Promise<{ data: unknown; error: unknown }>)('refresh_revenue_analytics');
 
       if (error) throw error;
 
@@ -492,7 +497,7 @@ export const analyticsRouter = router({
         switch (input.type) {
           case 'revenue':
             const { data: revenue } = await (ctx.supabase
-              .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => { limit: (n: number) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } } })('revenue_analytics')
+              .from as unknown as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => { limit: (n: number) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } } })('revenue_analytics')
               .select('*')
               .order('month', { ascending: false })
               .limit(input.months);
@@ -509,7 +514,7 @@ export const analyticsRouter = router({
 
           case 'courses':
             const { data: courses } = await (ctx.supabase
-              .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } })('course_revenue_analytics')
+              .from as unknown as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } })('course_revenue_analytics')
               .select('*')
               .order('total_revenue', { ascending: false });
             data = courses || [];
@@ -523,7 +528,7 @@ export const analyticsRouter = router({
 
           case 'students':
             const { data: students } = await (ctx.supabase
-              .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } })('student_ltv_analytics')
+              .from as unknown as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean }) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } })('student_ltv_analytics')
               .select('*')
               .order('lifetime_revenue', { ascending: false });
             data = students || [];
@@ -537,7 +542,7 @@ export const analyticsRouter = router({
 
           case 'discounts':
             const { data: discounts } = await (ctx.supabase
-              .from as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean; nullsFirst: boolean }) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } })('discount_effectiveness_analytics')
+              .from as unknown as (table: string) => { select: (columns: string) => { order: (column: string, options: { ascending: boolean; nullsFirst: boolean }) => Promise<{ data: Record<string, unknown>[] | null; error: unknown }> } })('discount_effectiveness_analytics')
               .select('*')
               .order('roi_ratio', { ascending: false, nullsFirst: false });
             data = discounts || [];

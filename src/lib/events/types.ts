@@ -39,40 +39,40 @@ export interface EventMetadata {
 /**
  * Event types (expand as modules are built)
  */
-export interface UserCreatedPayload {
+export interface UserCreatedPayload extends EventPayload {
   userId: string;
   email: string;
   fullName: string;
   role: string;
 }
 
-export interface CourseGraduatedPayload {
+export interface CourseGraduatedPayload extends EventPayload {
   studentId: string;
   courseId: string;
   courseName: string;
-  completedAt: Date;
+  completedAt: string;
   grade: number;
 }
 
-export interface CourseEnrolledPayload {
+export interface CourseEnrolledPayload extends EventPayload {
   studentId: string;
   enrollmentId: string;
   courseId: string;
   courseName: string;
-  enrolledAt: Date;
+  enrolledAt: string;
   paymentType: 'subscription' | 'one_time' | 'free' | 'scholarship';
   paymentAmount: number;
 }
 
-export interface CandidatePlacedPayload {
+export interface CandidatePlacedPayload extends EventPayload {
   candidateId: string;
   jobId: string;
   clientId: string;
-  startDate: Date;
+  startDate: string;
   salary: number;
 }
 
-export interface JobCreatedPayload {
+export interface JobCreatedPayload extends EventPayload {
   jobId: string;
   title: string;
   clientId: string;
@@ -80,7 +80,7 @@ export interface JobCreatedPayload {
   experienceYears: { min: number; max: number };
 }
 
-export interface CapstoneGradedPayload {
+export interface CapstoneGradedPayload extends EventPayload {
   submissionId: string;
   studentId: string;
   studentName: string;
@@ -95,7 +95,7 @@ export interface CapstoneGradedPayload {
   gradedAt: string;
 }
 
-export interface StudentAtRiskPayload {
+export interface StudentAtRiskPayload extends EventPayload {
   studentId: string;
   studentName: string;
   studentEmail: string;

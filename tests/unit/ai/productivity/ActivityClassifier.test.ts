@@ -7,7 +7,7 @@
  * @module tests/unit/ai/productivity/ActivityClassifier.test
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach, type Mock } from 'vitest';
 import { ActivityClassifier } from '@/lib/ai/productivity/ActivityClassifier';
 import type { ActivityCategory } from '@/types/productivity';
 
@@ -70,18 +70,18 @@ describe('ActivityClassifier', () => {
       };
 
       // Mock signed URL
-      mockSupabase.single.mockResolvedValue({
+      (mockSupabase.single as Mock).mockResolvedValue({
         data: mockScreenshot,
         error: null,
       });
 
-      mockSupabase.storage.createSignedUrl.mockResolvedValue({
+      ((mockSupabase.storage as Record<string, unknown>).createSignedUrl as Mock).mockResolvedValue({
         data: { signedUrl: 'https://test.com/image.jpg' },
         error: null,
       });
 
       // Mock OpenAI response
-      mockOpenAI.chat.completions.create.mockResolvedValue({
+      (((mockOpenAI.chat as Record<string, unknown>).completions as Record<string, unknown>).create as Mock).mockResolvedValue({
         choices: [
           {
             message: {
@@ -97,7 +97,7 @@ describe('ActivityClassifier', () => {
       });
 
       // Mock update
-      mockSupabase.update.mockResolvedValue({ error: null });
+      (mockSupabase.update as Mock).mockResolvedValue({ error: null });
 
       // Execute classification
       const result = await classifier.classifyScreenshot('test-screenshot-id');
@@ -111,7 +111,7 @@ describe('ActivityClassifier', () => {
 
     it('should handle classification errors gracefully', async () => {
       // Mock screenshot not found
-      mockSupabase.single.mockResolvedValue({
+      (mockSupabase.single as Mock).mockResolvedValue({
         data: null,
         error: new Error('Screenshot not found'),
       });
@@ -124,7 +124,7 @@ describe('ActivityClassifier', () => {
 
     it('should fallback to idle classification on API failure', async () => {
       // Mock successful screenshot fetch
-      mockSupabase.single.mockResolvedValue({
+      (mockSupabase.single as Mock).mockResolvedValue({
         data: {
           id: 'test-screenshot-id',
           filename: 'test.jpg',
@@ -132,18 +132,18 @@ describe('ActivityClassifier', () => {
         error: null,
       });
 
-      mockSupabase.storage.createSignedUrl.mockResolvedValue({
+      ((mockSupabase.storage as Record<string, unknown>).createSignedUrl as Mock).mockResolvedValue({
         data: { signedUrl: 'https://test.com/image.jpg' },
         error: null,
       });
 
       // Mock OpenAI API error
-      mockOpenAI.chat.completions.create.mockRejectedValue(
+      (((mockOpenAI.chat as Record<string, unknown>).completions as Record<string, unknown>).create as Mock).mockRejectedValue(
         new Error('API error')
       );
 
       // Mock update
-      mockSupabase.update.mockResolvedValue({ error: null });
+      (mockSupabase.update as Mock).mockResolvedValue({ error: null });
 
       // Execute classification
       const result = await classifier.classifyScreenshot('test-screenshot-id');
@@ -161,7 +161,7 @@ describe('ActivityClassifier', () => {
         id: `screenshot-${i}`,
       }));
 
-      mockSupabase.select.mockResolvedValue({
+      (mockSupabase.select as Mock).mockResolvedValue({
         data: mockScreenshots,
         error: null,
       });
@@ -189,7 +189,7 @@ describe('ActivityClassifier', () => {
         { id: 'screenshot-3' },
       ];
 
-      mockSupabase.select.mockResolvedValue({
+      (mockSupabase.select as Mock).mockResolvedValue({
         data: mockScreenshots,
         error: null,
       });
@@ -218,7 +218,7 @@ describe('ActivityClassifier', () => {
     });
 
     it('should return 0 when no unanalyzed screenshots exist', async () => {
-      mockSupabase.select.mockResolvedValue({
+      (mockSupabase.select as Mock).mockResolvedValue({
         data: [],
         error: null,
       });
@@ -240,7 +240,7 @@ describe('ActivityClassifier', () => {
         { activity_category: 'idle', confidence: 0.85, analyzed: true },
       ];
 
-      mockSupabase.select.mockResolvedValue({
+      (mockSupabase.select as Mock).mockResolvedValue({
         data: mockScreenshots,
         error: null,
       });
@@ -264,7 +264,7 @@ describe('ActivityClassifier', () => {
     });
 
     it('should return empty summary for no data', async () => {
-      mockSupabase.select.mockResolvedValue({
+      (mockSupabase.select as Mock).mockResolvedValue({
         data: [],
         error: null,
       });
@@ -283,17 +283,17 @@ describe('ActivityClassifier', () => {
   describe('Performance', () => {
     it('should classify screenshot in less than 2 seconds', async () => {
       // Mock fast responses
-      mockSupabase.single.mockResolvedValue({
+      (mockSupabase.single as Mock).mockResolvedValue({
         data: { id: 'test', filename: 'test.jpg' },
         error: null,
       });
 
-      mockSupabase.storage.createSignedUrl.mockResolvedValue({
+      ((mockSupabase.storage as Record<string, unknown>).createSignedUrl as Mock).mockResolvedValue({
         data: { signedUrl: 'https://test.com/image.jpg' },
         error: null,
       });
 
-      mockOpenAI.chat.completions.create.mockResolvedValue({
+      (((mockOpenAI.chat as Record<string, unknown>).completions as Record<string, unknown>).create as Mock).mockResolvedValue({
         choices: [
           {
             message: {
@@ -307,7 +307,7 @@ describe('ActivityClassifier', () => {
         ],
       });
 
-      mockSupabase.update.mockResolvedValue({ error: null });
+      (mockSupabase.update as Mock).mockResolvedValue({ error: null });
 
       const start = Date.now();
       await classifier.classifyScreenshot('test-screenshot-id');
@@ -323,7 +323,7 @@ describe('ActivityClassifier', () => {
         id: `screenshot-${i}`,
       }));
 
-      mockSupabase.select.mockResolvedValue({
+      (mockSupabase.select as Mock).mockResolvedValue({
         data: mockScreenshots,
         error: null,
       });

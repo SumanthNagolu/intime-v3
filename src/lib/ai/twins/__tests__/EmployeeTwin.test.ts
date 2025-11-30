@@ -336,7 +336,7 @@ describe('EmployeeTwin', () => {
           },
           error: null,
         }),
-      } as ReturnType<typeof mockSupabase.from>);
+      } as unknown as ReturnType<typeof mockSupabase.from>);
 
       const briefing = await recruiterTwin.generateMorningBriefing();
 

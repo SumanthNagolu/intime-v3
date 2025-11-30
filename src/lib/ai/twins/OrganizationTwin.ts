@@ -241,7 +241,7 @@ export class OrganizationTwin extends BaseAgent<string, string> {
    */
   async getTodayStandup(forceRegenerate = false): Promise<StandupReport | null> {
     if (!forceRegenerate) {
-      const { data } = await (this.supabase.rpc as (name: string, params: Record<string, unknown>) => Promise<{ data: unknown }> )('get_today_standup', {
+      const { data } = await (this.supabase.rpc as unknown as (name: string, params: Record<string, unknown>) => Promise<{ data: unknown }> )('get_today_standup', {
         p_org_id: this.orgId,
       });
 
@@ -341,7 +341,7 @@ If the question is general organizational or strategic, route to CEO.`,
 
     // Query communication metrics
     const { count: queriesThisWeek } = await (this.supabase
-      .from as (table: string) => {
+      .from as unknown as (table: string) => {
         select: (cols: string, opts?: { count?: string; head?: boolean }) => {
           eq: (col: string, val: string) => {
             gte: (col: string, val: string) => Promise<{ count: number | null }>
@@ -677,7 +677,7 @@ Write in a professional, concise tone. Highlight the most important items.`;
    */
   private async saveStandup(report: StandupReport): Promise<void> {
     try {
-      await (this.supabase.from as (table: string) => { upsert: (data: Record<string, unknown>) => Promise<void> })('org_standups').upsert({
+      await (this.supabase.from as unknown as (table: string) => { upsert: (data: Record<string, unknown>) => Promise<void> })('org_standups').upsert({
         org_id: this.orgId,
         standup_date: report.date,
         generated_by: 'organization_twin',

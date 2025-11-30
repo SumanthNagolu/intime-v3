@@ -32,7 +32,7 @@ import {
   listAccountsInput,
   bulkAssignAccountsInput,
 } from '@/lib/validations/account';
-import { eq, and, desc, asc, sql, isNull, ilike, or, inArray, gte, lte } from 'drizzle-orm';
+import { eq, and, desc, asc, sql, isNull, ilike, or, inArray, gte, lte, type SQL } from 'drizzle-orm';
 
 export const crmRouter = router({
   // =====================================================
@@ -512,7 +512,7 @@ export const crmRouter = router({
           const ownershipCondition = await buildOwnershipCondition(
             { userId: profileId, orgId: orgId!, isManager: isManager ?? false, managedUserIds: managedUserIds ?? [] },
             'lead',
-            leads,
+            { id: leads.id as unknown as SQL<unknown>, ownerId: leads.ownerId as unknown as SQL<unknown> },
             ownership
           );
           conditions.push(ownershipCondition);
@@ -906,7 +906,7 @@ export const crmRouter = router({
           const ownershipCondition = await buildOwnershipCondition(
             { userId: profileId, orgId: orgId!, isManager: isManager ?? false, managedUserIds: managedUserIds ?? [] },
             'deal',
-            deals,
+            { id: deals.id as unknown as SQL<unknown>, ownerId: deals.ownerId as unknown as SQL<unknown> },
             ownership
           );
           conditions.push(ownershipCondition);

@@ -41,45 +41,68 @@ export interface LeadQueryOptions {
 
 interface LeadData {
   id: string;
-  leadType?: string;
-  companyName?: string;
-  firstName?: string;
-  lastName?: string;
-  title?: string;
-  email?: string;
-  phone?: string;
-  status?: string;
-  source?: string;
-  estimatedValue?: string | number;
-  accountId?: string;
-  ownerId?: string;
+  orgId: string;
+  leadType: string;
+  companyName: string | null;
+  industry: string | null;
+  companyType: string | null;
+  companySize: string | null;
+  website: string | null;
+  headquarters: string | null;
+  contactRole: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  fullName: string | null;
+  title: string | null;
+  email: string | null;
+  phone: string | null;
+  phoneExt: string | null;
+  linkedinUrl: string | null;
+  decisionAuthority: string | null;
+  status: string;
+  source: string | null;
+  sourceDetails: string | null;
+  estimatedValue: number | null;
+  expectedCloseDate: string | null;
+  lastContactDate: string | null;
+  notes: string | null;
+  accountId: string | null;
+  pocId: string | null;
+  ownerId: string | null;
+  assignedToId: string | null;
+  conversionDate: string | null;
+  lostReason: string | null;
+  engagementScore: number | null;
+  qualificationNotes: string | null;
+  tags: string[] | null;
+  customFields: Record<string, unknown> | null;
   createdAt: string;
-  notes?: string;
-  industry?: string;
-  companySize?: string;
-  engagementScore?: number;
+  updatedAt: string;
+  createdBy: string | null;
+  updatedBy: string | null;
+  deletedAt: Date | null;
 }
 
 function toDisplayLead(lead: LeadData): DisplayLead {
   return {
     id: lead.id,
-    leadType: lead.leadType || 'company',
-    companyName: lead.companyName || '',
-    firstName: lead.firstName || '',
-    lastName: lead.lastName || '',
-    title: lead.title || undefined,
-    email: lead.email || undefined,
-    phone: lead.phone || undefined,
-    status: lead.status || 'new',
-    source: lead.source || undefined,
-    estimatedValue: lead.estimatedValue ? Number(lead.estimatedValue) : undefined,
-    accountId: lead.accountId || undefined,
-    ownerId: lead.ownerId || undefined,
-    createdAt: lead.createdAt,
-    notes: lead.notes || undefined,
-    industry: lead.industry || undefined,
-    companySize: lead.companySize || undefined,
-    engagementScore: lead.engagementScore || undefined,
+    leadType: lead.leadType as 'company' | 'person',
+    companyName: lead.companyName ?? '',
+    firstName: lead.firstName ?? '',
+    lastName: lead.lastName ?? '',
+    title: lead.title ?? undefined,
+    email: lead.email ?? undefined,
+    phone: lead.phone ?? undefined,
+    status: lead.status as 'new' | 'warm' | 'hot' | 'cold' | 'converted' | 'lost',
+    source: lead.source ?? undefined,
+    estimatedValue: lead.estimatedValue ?? undefined,
+    accountId: lead.accountId ?? undefined,
+    ownerId: lead.ownerId ?? undefined,
+    createdAt: new Date(lead.createdAt),
+    notes: lead.notes ?? undefined,
+    industry: lead.industry ?? undefined,
+    companySize: lead.companySize ?? undefined,
+    engagementScore: lead.engagementScore ?? undefined,
   };
 }
 
@@ -108,7 +131,7 @@ export function useLeads(options: LeadsQueryOptions = {}) {
   );
 
   return {
-    leads: (query.data ?? []).map(toDisplayLead),
+    leads: (query.data ?? []).map((lead) => toDisplayLead(lead as unknown as LeadData)),
     isLoading: query.isLoading,
     isError: query.isError,
     error: query.error,
@@ -219,7 +242,7 @@ export function useLead(id: string | undefined, options: LeadQueryOptions = {}) 
   );
 
   return {
-    lead: query.data ? toDisplayLead(query.data) : null,
+    lead: query.data ? toDisplayLead(query.data as unknown as LeadData) : null,
     leadRaw: query.data,
     isLoading: query.isLoading,
     isError: query.isError,

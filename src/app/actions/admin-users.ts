@@ -341,7 +341,7 @@ export async function listUsersAction(
     }>;
   }
 
-  const transformedUsers: UserWithRoles[] = (users || []).map((user: UserQueryResult) => ({
+  const transformedUsers: UserWithRoles[] = (users || []).map((user) => ({
     id: user.id,
     authId: user.auth_id,
     email: user.email,
@@ -353,9 +353,9 @@ export async function listUsersAction(
     updatedAt: user.updated_at,
     deletedAt: user.deleted_at,
     orgId: user.org_id,
-    roles: (user.user_roles || [])
-      .filter((ur) => !ur.deleted_at && ur.roles)
-      .map((ur) => ({
+    roles: (Array.isArray(user.user_roles) ? user.user_roles : [])
+      .filter((ur: any) => !ur.deleted_at && ur.roles)
+      .map((ur: any) => ({
         id: ur.roles!.id,
         name: ur.roles!.name,
         displayName: ur.roles!.display_name,

@@ -108,7 +108,7 @@ export const DealsList: React.FC = () => {
   if (isError) {
     return (
       <div className="text-center py-12 text-red-500">
-        <p>Error loading deals: {error?.message || 'Unknown error'}</p>
+        <p>Error loading deals: {(error as Error)?.message || 'Unknown error'}</p>
       </div>
     );
   }

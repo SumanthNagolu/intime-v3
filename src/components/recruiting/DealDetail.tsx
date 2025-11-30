@@ -23,8 +23,8 @@ export const DealDetail: React.FC = () => {
   
   if (!deal) return <div className="p-8 text-center text-stone-500">Deal not found. Check ID: {dealId}</div>;
 
-  const handleStageChange = (newStage: 'Prospect' | 'Discovery' | 'Proposal' | 'Negotiation' | 'Won' | 'Lost') => {
-      updateDeal({ ...deal, stage: newStage });
+  const handleStageChange = (newStage: string) => {
+      updateDeal({ ...deal, stage: newStage as 'Prospect' | 'Discovery' | 'Proposal' | 'Negotiation' | 'Won' | 'Lost' });
   };
 
   const handleConversion = (type: 'account' | 'bench' | 'academy', data: Record<string, unknown>) => {

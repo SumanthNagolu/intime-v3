@@ -28,6 +28,7 @@ import {
   Mail,
   Phone,
   Linkedin,
+  ArrowRight,
   Globe,
   MapPin,
   Briefcase,

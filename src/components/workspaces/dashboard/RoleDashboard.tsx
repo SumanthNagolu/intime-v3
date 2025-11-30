@@ -11,6 +11,7 @@ import React, { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
+import { Briefcase, Users, Target, Clock, DollarSign } from 'lucide-react';
 import {
   MetricWidget,
   ListWidget,

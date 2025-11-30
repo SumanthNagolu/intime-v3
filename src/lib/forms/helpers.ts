@@ -21,8 +21,8 @@ export function useForm<T extends z.ZodType>(
   options?: Omit<UseFormProps<z.infer<T>>, 'resolver'>
 ) {
   return useHookForm<z.infer<T>>({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    resolver: zodResolver(schema) as any,
+    // @ts-ignore - zodResolver type compatibility issue with react-hook-form
+    resolver: zodResolver(schema),
     ...options,
   });
 }

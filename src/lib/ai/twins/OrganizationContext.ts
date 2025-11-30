@@ -277,7 +277,7 @@ export class OrganizationContext {
     await this.setInCache(orgId, 'cross_pollination', existing, 1);
 
     // Persist to database
-    await (this.supabase.from as (table: string) => unknown)('org_context_cache').upsert({
+    await (this.supabase.from as unknown as (table: string) => { upsert: (data: Record<string, unknown>) => Promise<void> })('org_context_cache').upsert({
       org_id: orgId,
       context_type: 'cross_pollination',
       data: existing as unknown as Record<string, unknown>,
@@ -312,7 +312,7 @@ export class OrganizationContext {
     }
 
     // Check database cache
-    const { data } = await (this.supabase.rpc as (fn: string, params: Record<string, unknown>) => Promise<{ data: unknown }>)('get_org_context', {
+    const { data } = await (this.supabase.rpc as unknown as (fn: string, params: Record<string, unknown>) => Promise<{ data: unknown }>)('get_org_context', {
       p_org_id: orgId,
       p_context_type: contextType,
     });
@@ -348,7 +348,7 @@ export class OrganizationContext {
     });
 
     // Update database cache
-    await (this.supabase.rpc as (fn: string, params: Record<string, unknown>) => Promise<unknown>)('set_org_context', {
+    await (this.supabase.rpc as unknown as (fn: string, params: Record<string, unknown>) => Promise<unknown>)('set_org_context', {
       p_org_id: orgId,
       p_context_type: contextType,
       p_data: data as unknown as Record<string, unknown>,
@@ -456,7 +456,7 @@ export class OrganizationContext {
     }
 
     // Query from twin_events for potential opportunities
-    const { data: events } = await (this.supabase.from as (table: string) => {
+    const { data: events } = await (this.supabase.from as unknown as (table: string) => {
       select: (columns: string) => {
         eq: (column: string, value: unknown) => {
           eq: (column: string, value: unknown) => {

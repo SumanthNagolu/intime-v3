@@ -194,7 +194,6 @@ function AssignDialog({
   open,
   onOpenChange,
   entityType,
-  _entityId,
   currentOwners,
   onAssign,
 }: AssignDialogProps) {

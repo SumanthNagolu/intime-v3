@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { useAppStore } from '../../lib/store';
 import { trpc } from '../../lib/trpc/client';
-import { Briefcase, ArrowRight, Plus, MapPin, ChevronLeft, Send, Award, Star, Building2, Activity, Check, TrendingUp, Zap, FileCheck } from 'lucide-react';
+import { Briefcase, ArrowRight, Plus, MapPin, ChevronLeft, Send, Award, Star, Building2, Activity, Check, TrendingUp, Zap, FileCheck, Calendar, DollarSign } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname, useParams } from 'next/navigation';
+import { usePathname, useParams, useRouter } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../ui/card';
 import { cn } from '../../lib/utils';
 
