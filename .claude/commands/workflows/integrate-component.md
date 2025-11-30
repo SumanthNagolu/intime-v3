@@ -161,7 +161,24 @@ function EmptyState() {
 }
 ```
 
-### Step 7: Write Comprehensive E2E Tests
+### Step 7: Verify TypeScript Compilation
+
+**CRITICAL**: Before writing tests, verify TypeScript compiles without errors:
+
+```bash
+pnpm tsc --noEmit
+```
+
+If errors occur, fix them following patterns in `.claude/rules/typescript-patterns.md`:
+
+| Common Error | Fix |
+|--------------|-----|
+| `Type 'string' is not assignable to type 'number'` | Use `parseFloat()` for Drizzle numeric columns |
+| `Property 'X' does not exist on type` | Don't access relations directly, use ID fields |
+| `TRPCClientError not assignable to Error` | Use `error as unknown as Error` in onError |
+| No overload matches (Supabase) | Use `(supabase.from as any)('table')` |
+
+### Step 8: Write Comprehensive E2E Tests
 
 Create test file: `tests/e2e/[module]/[component].spec.ts`
 
@@ -436,7 +453,7 @@ test.describe('[ComponentName] - Complete Flow', () => {
 - [ ] Screenshots captured
 - [ ] All states documented
 
-### Step 8: Add Feature Flag
+### Step 9: Add Feature Flag
 
 Add migration flag in `src/lib/featureFlags.ts`:
 
@@ -447,16 +464,17 @@ export const MIGRATION_FLAGS = {
 };
 ```
 
-### Step 9: Test and Validate
+### Step 10: Test and Validate
 
-1. Run unit tests
-2. Run integration tests
-3. Run E2E tests
-4. Manual testing with real data
-5. Performance check
-6. Enable feature flag
+1. **TypeScript check**: `pnpm tsc --noEmit` (must pass)
+2. Run unit tests
+3. Run integration tests
+4. Run E2E tests
+5. Manual testing with real data
+6. Performance check
+7. Enable feature flag
 
-### Step 10: Documentation
+### Step 11: Documentation
 
 Update component documentation:
 - Data sources
@@ -475,11 +493,12 @@ Update component documentation:
 - [ ] Loading state added
 - [ ] Error state added
 - [ ] Empty state added
+- [ ] **TypeScript check passing** (`pnpm tsc --noEmit`)
 - [ ] Unit tests written
 - [ ] Integration tests written
 - [ ] E2E tests written
 - [ ] Feature flag added
-- [ ] Tests passing
+- [ ] All tests passing
 - [ ] Manual testing done
 - [ ] Feature flag enabled
 - [ ] Documentation updated

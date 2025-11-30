@@ -543,10 +543,23 @@ test.describe('[COMPONENT_NAME] Workflows', () => {
 
 ### Phase 6: Verification & Signoff (15 minutes)
 
+**CRITICAL: TypeScript Verification (MUST PASS)**
+
+```bash
+pnpm tsc --noEmit
+```
+
+If errors occur, fix them following patterns in `.claude/rules/typescript-patterns.md`.
+
 **Checklist for each component:**
 
 ```markdown
 ## [COMPONENT_NAME] Production Readiness Checklist
+
+### TypeScript
+- [ ] `pnpm tsc --noEmit` passes with no errors
+- [ ] No `any` types without explicit comment justifying usage
+- [ ] Proper type assertions for Drizzle/tRPC patterns (see `.claude/rules/typescript-patterns.md`)
 
 ### Database
 - [ ] All tables have RLS enabled
@@ -952,6 +965,7 @@ Focus areas:
 5. Identify gaps between database schema and UI functionality
 6. Document what's currently mocked vs database-connected
 ```
+
 
 
 

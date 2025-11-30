@@ -153,6 +153,75 @@ npx drizzle-kit push
 npx supabase gen types typescript --project-id gkwhxmvugnjwwwiufmdy > src/types/supabase.ts
 ```
 
+## TypeScript Type Handling (CRITICAL)
+
+Drizzle ORM has specific type behaviors that differ from what you might expect:
+
+### Numeric Columns Return Strings
+```typescript
+// Schema: numeric('rate_min', { precision: 10, scale: 2 })
+// Runtime type: string (not number!)
+
+// BAD - TypeScript error
+const rate: number = job.rateMin;
+
+// GOOD - Parse when needed for calculations
+const rate = job.rateMin ? parseFloat(job.rateMin) : null;
+
+// GOOD - Keep as string for display
+const display = job.rateMin ?? 'N/A';
+```
+
+### Date/Timestamp Columns Return Strings
+```typescript
+// Schema: timestamp('created_at', { withTimezone: true })
+// Runtime type: string (ISO format)
+
+// BAD - No .toISOString() method
+job.createdAt.toISOString();
+
+// GOOD - Already a string
+const dateStr = job.createdAt;
+
+// GOOD - Convert when Date object needed
+const date = new Date(job.createdAt);
+```
+
+### Relations Are NOT Loaded By Default
+```typescript
+// BAD - Relations don't exist on query results
+const clientName = job.account.name; // Error!
+
+// GOOD - Use the ID field instead
+const accountId = job.accountId;
+
+// GOOD - Explicitly include relations (with caution - see above warning)
+const [job] = await db.select()
+  .from(jobs)
+  .leftJoin(accounts, eq(jobs.accountId, accounts.id))
+  .where(eq(jobs.id, jobId));
+```
+
+### Self-Referential Foreign Keys Need Type Hint
+```typescript
+// BAD - Circular type inference error
+parentTaskId: uuid('parent_task_id').references(() => tasks.id),
+
+// GOOD - Add explicit return type
+parentTaskId: uuid('parent_task_id').references((): any => tasks.id),
+```
+
+### Nullable Field Handling
+```typescript
+// BAD - Type mismatch
+const status: string = record.status; // Error if nullable!
+
+// GOOD - Provide defaults with nullish coalescing
+const status = record.status ?? 'pending';
+const isActive = record.isActive ?? false;
+const count = record.count ?? 0;
+```
+
 ## Common Enums (from academy.ts)
 ```typescript
 export const skillLevelEnum = pgEnum('skill_level', ['beginner', 'intermediate', 'advanced']);
