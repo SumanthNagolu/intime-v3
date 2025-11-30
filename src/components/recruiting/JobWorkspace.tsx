@@ -1328,7 +1328,7 @@ export const JobWorkspace: React.FC<JobWorkspaceProps> = ({ jobId }) => {
                       All ({documents?.length || 0})
                     </button>
                     {documentCategories.map(cat => {
-                      const count = documents?.filter((d: { metadata?: { category?: string } | null }) =>
+                      const count = documents?.filter(d =>
                         (d.metadata as { category?: string } | null)?.category === cat.key
                       ).length || 0;
                       return (
@@ -1355,21 +1355,13 @@ export const JobWorkspace: React.FC<JobWorkspaceProps> = ({ jobId }) => {
                       </div>
                     ) : (() => {
                       const filteredDocs = selectedDocCategory
-                        ? documents?.filter((d: { metadata?: { category?: string } | null }) =>
+                        ? documents?.filter(d =>
                             (d.metadata as { category?: string } | null)?.category === selectedDocCategory
                           )
                         : documents;
 
                       return filteredDocs && filteredDocs.length > 0 ? (
-                        filteredDocs.map((doc: {
-                          id: string;
-                          fileName: string;
-                          mimeType: string;
-                          fileSize: number;
-                          uploadedAt: string | Date;
-                          uploaderName?: string | null;
-                          metadata?: { category?: string; description?: string; tags?: string[] } | null;
-                        }) => {
+                        filteredDocs.map(doc => {
                           const meta = doc.metadata as { category?: string; description?: string; tags?: string[] } | null;
                           const category = documentCategories.find(c => c.key === meta?.category);
 

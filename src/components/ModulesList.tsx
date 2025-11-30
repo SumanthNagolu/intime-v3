@@ -100,7 +100,7 @@ export const ModulesList: React.FC = () => {
                      <div key={lesson.id} className="flex items-center gap-4 p-3 rounded-xl hover:bg-stone-50 transition-colors">
                         <div className="shrink-0">
                            {lesson.status === 'completed' ? <div className="w-6 h-6 rounded-full bg-forest/10 text-forest flex items-center justify-center"><CheckCircle size={14} /></div> :
-                            lesson.status === 'current' || lesson.status === 'unlocked' ? <div className="w-6 h-6 rounded-full border-2 border-rust flex items-center justify-center"><div className="w-2 h-2 bg-rust rounded-full"></div></div> :
+                            lesson.status === 'unlocked' ? <div className="w-6 h-6 rounded-full border-2 border-rust flex items-center justify-center"><div className="w-2 h-2 bg-rust rounded-full"></div></div> :
                             <div className="w-6 h-6 rounded-full border border-stone-200 flex items-center justify-center"><Lock size={14} className="text-stone-300" /></div>}
                         </div>
                         <div className="flex-1">
@@ -110,7 +110,7 @@ export const ModulesList: React.FC = () => {
                               {lesson.type === 'quiz' && <Star size={12} className="text-yellow-500" />}
                            </div>
                         </div>
-                        {lesson.status !== 'locked' && (
+                        {(lesson.status !== 'locked') && (
                            <Link href={`/academy/lesson/${module.id}/${lesson.id}`} className="w-8 h-8 flex items-center justify-center rounded-full bg-white border border-stone-200 text-stone-400 hover:border-rust hover:text-rust hover:bg-rust/5 transition-all">
                               <PlayCircle size={16} />
                            </Link>

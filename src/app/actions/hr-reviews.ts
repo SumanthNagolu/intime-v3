@@ -10,6 +10,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { z } from 'zod';
 import type { ActionResult, PaginatedResult } from './types';
 import {
@@ -29,7 +30,7 @@ export interface PerformanceReview {
   employeeId: string;
   reviewerId: string;
   reviewCycle: string;
-  reviewType: string;
+  reviewType: string | null;
   periodStartDate: string;
   periodEndDate: string;
   overallRating: number | null;
@@ -536,11 +537,13 @@ export async function createReviewAction(
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'performance_reviews',
     action: 'create',
     recordId: newReview.id,
     userId: profile.id,
+    userEmail: profile.email,
     newValues: { employeeId, reviewerId, reviewCycle, reviewType },
     severity: 'info',
     orgId: profile.orgId,
@@ -656,17 +659,18 @@ export async function submitReviewFeedbackAction(
   }
 
   // Update employee's performance rating
-  await supabase
-    .from('user_profiles')
+  await (supabase.from as any)('user_profiles')
     .update({ performance_rating: input.overallRating })
     .eq('id', review.employee_id);
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'performance_reviews',
     action: 'submit_feedback',
     recordId: reviewId,
     userId: profile.id,
+    userEmail: profile.email,
     newValues: { overallRating: input.overallRating },
     severity: 'info',
     orgId: profile.orgId,
@@ -733,11 +737,13 @@ export async function submitSelfAssessmentAction(
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'performance_reviews',
     action: 'submit_self_assessment',
     recordId: reviewId,
     userId: profile.id,
+    userEmail: profile.email,
     severity: 'info',
     orgId: profile.orgId,
   });
@@ -799,11 +805,13 @@ export async function acknowledgeReviewAction(
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'performance_reviews',
     action: 'acknowledge',
     recordId: reviewId,
     userId: profile.id,
+    userEmail: profile.email,
     severity: 'info',
     orgId: profile.orgId,
   });
@@ -858,11 +866,13 @@ export async function deleteReviewAction(reviewId: string): Promise<ActionResult
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'performance_reviews',
     action: 'delete',
     recordId: reviewId,
     userId: profile.id,
+    userEmail: profile.email,
     oldValues: review,
     severity: 'warning',
     orgId: profile.orgId,
@@ -933,7 +943,8 @@ export async function getReviewStatsAction(): Promise<
   // Group by type
   const typeGroups: Record<string, number> = {};
   reviews.forEach((r) => {
-    typeGroups[r.review_type] = (typeGroups[r.review_type] || 0) + 1;
+    const reviewType = r.review_type ?? 'unknown';
+    typeGroups[reviewType] = (typeGroups[reviewType] ?? 0) + 1;
   });
   const reviewsByType = Object.entries(typeGroups).map(([type, count]) => ({ type, count }));
 

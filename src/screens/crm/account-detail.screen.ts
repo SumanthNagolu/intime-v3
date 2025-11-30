@@ -12,19 +12,19 @@ import { fieldValue } from '@/lib/metadata';
 // SIDEBAR FIELDS
 // ==========================================
 
-const sidebarFields = [
+const sidebarFields: import('@/lib/metadata').FieldDefinition[] = [
   {
     id: 'status',
     label: 'Status',
-    fieldType: 'enum',
+    type: 'enum',
     path: 'status',
+    options: [
+      { value: 'prospect', label: 'Prospect' },
+      { value: 'active', label: 'Active' },
+      { value: 'inactive', label: 'Inactive' },
+      { value: 'churned', label: 'Churned' },
+    ],
     config: {
-      options: [
-        { value: 'prospect', label: 'Prospect' },
-        { value: 'active', label: 'Active' },
-        { value: 'inactive', label: 'Inactive' },
-        { value: 'churned', label: 'Churned' },
-      ],
       badgeColors: {
         prospect: 'blue',
         active: 'green',
@@ -36,15 +36,15 @@ const sidebarFields = [
   {
     id: 'tier',
     label: 'Tier',
-    fieldType: 'enum',
+    type: 'enum',
     path: 'tier',
+    options: [
+      { value: 'enterprise', label: 'Enterprise' },
+      { value: 'mid_market', label: 'Mid-Market' },
+      { value: 'smb', label: 'SMB' },
+      { value: 'strategic', label: 'Strategic' },
+    ],
     config: {
-      options: [
-        { value: 'enterprise', label: 'Enterprise' },
-        { value: 'mid_market', label: 'Mid-Market' },
-        { value: 'smb', label: 'SMB' },
-        { value: 'strategic', label: 'Strategic' },
-      ],
       badgeColors: {
         enterprise: 'purple',
         mid_market: 'blue',
@@ -56,38 +56,38 @@ const sidebarFields = [
   {
     id: 'accountManager',
     label: 'Account Manager',
-    fieldType: 'user',
+    type: 'text',
     path: 'accountManager',
   },
   {
     id: 'annualRevenueTarget',
     label: 'Revenue Target',
-    fieldType: 'currency',
+    type: 'currency',
     path: 'annualRevenueTarget',
   },
   {
     id: 'phone',
     label: 'Phone',
-    fieldType: 'phone',
+    type: 'phone',
     path: 'phone',
   },
   {
     id: 'website',
     label: 'Website',
-    fieldType: 'url',
+    type: 'url',
     path: 'website',
   },
   {
     id: 'createdAt',
     label: 'Created',
-    fieldType: 'date',
+    type: 'date',
     path: 'createdAt',
     config: { format: 'relative' },
   },
   {
     id: 'updatedAt',
     label: 'Updated',
-    fieldType: 'date',
+    type: 'date',
     path: 'updatedAt',
     config: { format: 'relative' },
   },
@@ -97,11 +97,11 @@ const sidebarFields = [
 // COMPANY INFO FIELDS
 // ==========================================
 
-const companyInfoFields = [
+const companyInfoFields: import('@/lib/metadata').FieldDefinition[] = [
   {
     id: 'name',
     label: 'Company Name',
-    fieldType: 'text',
+    type: 'text',
     path: 'name',
     required: true,
     editable: true,
@@ -110,80 +110,72 @@ const companyInfoFields = [
   {
     id: 'industry',
     label: 'Industry',
-    fieldType: 'select',
+    type: 'select',
     path: 'industry',
     editable: true,
-    config: {
-      options: [
-        { value: 'technology', label: 'Technology' },
-        { value: 'healthcare', label: 'Healthcare' },
-        { value: 'finance', label: 'Finance' },
-        { value: 'banking', label: 'Banking' },
-        { value: 'insurance', label: 'Insurance' },
-        { value: 'manufacturing', label: 'Manufacturing' },
-        { value: 'retail', label: 'Retail' },
-        { value: 'consulting', label: 'Consulting' },
-        { value: 'government', label: 'Government' },
-        { value: 'education', label: 'Education' },
-        { value: 'energy', label: 'Energy' },
-        { value: 'telecommunications', label: 'Telecom' },
-        { value: 'pharmaceutical', label: 'Pharmaceutical' },
-        { value: 'other', label: 'Other' },
-      ],
-    },
+    options: [
+      { value: 'technology', label: 'Technology' },
+      { value: 'healthcare', label: 'Healthcare' },
+      { value: 'finance', label: 'Finance' },
+      { value: 'banking', label: 'Banking' },
+      { value: 'insurance', label: 'Insurance' },
+      { value: 'manufacturing', label: 'Manufacturing' },
+      { value: 'retail', label: 'Retail' },
+      { value: 'consulting', label: 'Consulting' },
+      { value: 'government', label: 'Government' },
+      { value: 'education', label: 'Education' },
+      { value: 'energy', label: 'Energy' },
+      { value: 'telecommunications', label: 'Telecom' },
+      { value: 'pharmaceutical', label: 'Pharmaceutical' },
+      { value: 'other', label: 'Other' },
+    ],
   },
   {
     id: 'companyType',
     label: 'Company Type',
-    fieldType: 'select',
+    type: 'select',
     path: 'companyType',
     editable: true,
-    config: {
-      options: [
-        { value: 'direct_client', label: 'Direct Client' },
-        { value: 'implementation_partner', label: 'Implementation Partner' },
-        { value: 'msp_vms', label: 'MSP/VMS' },
-        { value: 'system_integrator', label: 'System Integrator' },
-        { value: 'staffing_agency', label: 'Staffing Agency' },
-        { value: 'vendor', label: 'Vendor' },
-      ],
-    },
+    options: [
+      { value: 'direct_client', label: 'Direct Client' },
+      { value: 'implementation_partner', label: 'Implementation Partner' },
+      { value: 'msp_vms', label: 'MSP/VMS' },
+      { value: 'system_integrator', label: 'System Integrator' },
+      { value: 'staffing_agency', label: 'Staffing Agency' },
+      { value: 'vendor', label: 'Vendor' },
+    ],
   },
   {
     id: 'status',
     label: 'Status',
-    fieldType: 'select',
+    type: 'select',
     path: 'status',
     required: true,
     editable: true,
-    config: {
-      options: [
-        { value: 'prospect', label: 'Prospect' },
-        { value: 'active', label: 'Active' },
-        { value: 'inactive', label: 'Inactive' },
-        { value: 'churned', label: 'Churned' },
-      ],
-    },
+    options: [
+      { value: 'prospect', label: 'Prospect' },
+      { value: 'active', label: 'Active' },
+      { value: 'inactive', label: 'Inactive' },
+      { value: 'churned', label: 'Churned' },
+    ],
   },
   {
     id: 'tier',
     label: 'Tier',
-    fieldType: 'select',
+    type: 'select',
     path: 'tier',
     editable: true,
-    config: {
-      options: [
-        { value: 'enterprise', label: 'Enterprise' },
-        { value: 'mid_market', label: 'Mid-Market' },
-        { value: 'smb', label: 'SMB' },
-        { value: 'strategic', label: 'Strategic' },
-      ],
-    },
+    options: [
+      { value: 'enterprise', label: 'Enterprise' },
+      { value: 'mid_market', label: 'Mid-Market' },
+      { value: 'smb', label: 'SMB' },
+      { value: 'strategic', label: 'Strategic' },
+    ],
   },
   {
     id: 'description',
     label: 'Description',
-    fieldType: 'textarea',
+    type: 'textarea',
     path: 'description',
     editable: true,
     span: 2,
@@ -195,25 +187,25 @@ const companyInfoFields = [
 // CONTACT INFO FIELDS
 // ==========================================
 
-const contactInfoFields = [
+const contactInfoFields: import('@/lib/metadata').FieldDefinition[] = [
   {
     id: 'phone',
     label: 'Phone',
-    fieldType: 'phone',
+    type: 'phone',
     path: 'phone',
     editable: true,
   },
   {
     id: 'website',
     label: 'Website',
-    fieldType: 'url',
+    type: 'url',
     path: 'website',
     editable: true,
   },
   {
     id: 'headquartersLocation',
     label: 'Headquarters',
-    fieldType: 'text',
+    type: 'text',
     path: 'headquartersLocation',
     editable: true,
     span: 2,
@@ -224,11 +216,11 @@ const contactInfoFields = [
 // ACCOUNT MANAGEMENT FIELDS
 // ==========================================
 
-const accountManagementFields = [
+const accountManagementFields: import('@/lib/metadata').FieldDefinition[] = [
   {
     id: 'accountManagerId',
     label: 'Account Manager',
-    fieldType: 'user-select',
+    type: 'select',
     path: 'accountManagerId',
     editable: true,
     config: {
@@ -239,30 +231,26 @@ const accountManagementFields = [
   {
     id: 'responsiveness',
     label: 'Responsiveness',
-    fieldType: 'select',
+    type: 'select',
     path: 'responsiveness',
     editable: true,
-    config: {
-      options: [
-        { value: 'high', label: 'High' },
-        { value: 'medium', label: 'Medium' },
-        { value: 'low', label: 'Low' },
-      ],
-    },
+    options: [
+      { value: 'high', label: 'High' },
+      { value: 'medium', label: 'Medium' },
+      { value: 'low', label: 'Low' },
+    ],
   },
   {
     id: 'preferredQuality',
     label: 'Preferred Quality',
-    fieldType: 'select',
+    type: 'select',
     path: 'preferredQuality',
     editable: true,
-    config: {
-      options: [
-        { value: 'premium', label: 'Premium' },
-        { value: 'standard', label: 'Standard' },
-        { value: 'budget', label: 'Budget' },
-      ],
-    },
+    options: [
+      { value: 'premium', label: 'Premium' },
+      { value: 'standard', label: 'Standard' },
+      { value: 'budget', label: 'Budget' },
+    ],
   },
 ];
 
@@ -270,40 +258,41 @@ const accountManagementFields = [
 // BUSINESS TERMS FIELDS
 // ==========================================
 
-const businessTermsFields = [
+const businessTermsFields: import('@/lib/metadata').FieldDefinition[] = [
   {
     id: 'contractStartDate',
     label: 'Contract Start',
-    fieldType: 'date',
+    type: 'date',
     path: 'contractStartDate',
     editable: true,
   },
   {
     id: 'contractEndDate',
     label: 'Contract End',
-    fieldType: 'date',
+    type: 'date',
     path: 'contractEndDate',
     editable: true,
   },
   {
     id: 'paymentTermsDays',
     label: 'Payment Terms (Days)',
-    fieldType: 'number',
+    type: 'number',
     path: 'paymentTermsDays',
     editable: true,
-    config: { min: 0, max: 180 },
+    min: 0,
+    max: 180,
   },
   {
     id: 'markupPercentage',
     label: 'Markup %',
-    fieldType: 'percent',
+    type: 'percentage',
     path: 'markupPercentage',
     editable: true,
   },
   {
     id: 'annualRevenueTarget',
     label: 'Annual Revenue Target',
-    fieldType: 'currency',
+    type: 'currency',
     path: 'annualRevenueTarget',
     editable: true,
   },
@@ -313,12 +302,12 @@ const businessTermsFields = [
 // RELATED CONTACTS TABLE
 // ==========================================
 
-const contactsTableColumns = [
+const contactsTableColumns: import('@/lib/metadata').TableColumnDefinition[] = [
   {
     id: 'name',
     label: 'Name',
     path: 'name',
-    fieldType: 'text',
+    type: 'text',
     sortable: true,
     width: '200px',
   },
@@ -326,25 +315,25 @@ const contactsTableColumns = [
     id: 'title',
     label: 'Title',
     path: 'title',
-    fieldType: 'text',
+    type: 'text',
   },
   {
     id: 'email',
     label: 'Email',
     path: 'email',
-    fieldType: 'email',
+    type: 'email',
   },
   {
     id: 'phone',
     label: 'Phone',
     path: 'phone',
-    fieldType: 'phone',
+    type: 'phone',
   },
   {
     id: 'isPrimary',
     label: 'Primary',
     path: 'isPrimary',
-    fieldType: 'boolean',
+    type: 'boolean',
     width: '80px',
   },
 ];
@@ -353,12 +342,12 @@ const contactsTableColumns = [
 // RELATED DEALS TABLE
 // ==========================================
 
-const dealsTableColumns = [
+const dealsTableColumns: import('@/lib/metadata').TableColumnDefinition[] = [
   {
     id: 'name',
     label: 'Deal Name',
     path: 'name',
-    fieldType: 'text',
+    type: 'text',
     sortable: true,
     width: '200px',
   },
@@ -366,7 +355,7 @@ const dealsTableColumns = [
     id: 'stage',
     label: 'Stage',
     path: 'stage',
-    fieldType: 'enum',
+    type: 'enum',
     sortable: true,
     config: {
       badgeColors: {
@@ -382,20 +371,20 @@ const dealsTableColumns = [
     id: 'value',
     label: 'Value',
     path: 'value',
-    fieldType: 'currency',
+    type: 'currency',
     sortable: true,
   },
   {
     id: 'probability',
     label: 'Probability',
     path: 'probability',
-    fieldType: 'percent',
+    type: 'percentage',
   },
   {
     id: 'expectedCloseDate',
     label: 'Expected Close',
     path: 'expectedCloseDate',
-    fieldType: 'date',
+    type: 'date',
     sortable: true,
   },
 ];
@@ -404,12 +393,12 @@ const dealsTableColumns = [
 // RELATED LEADS TABLE
 // ==========================================
 
-const leadsTableColumns = [
+const leadsTableColumns: import('@/lib/metadata').TableColumnDefinition[] = [
   {
     id: 'title',
     label: 'Title',
     path: 'title',
-    fieldType: 'text',
+    type: 'text',
     sortable: true,
     width: '200px',
   },
@@ -417,7 +406,7 @@ const leadsTableColumns = [
     id: 'status',
     label: 'Status',
     path: 'status',
-    fieldType: 'enum',
+    type: 'enum',
     sortable: true,
     config: {
       badgeColors: {
@@ -433,13 +422,13 @@ const leadsTableColumns = [
     id: 'source',
     label: 'Source',
     path: 'source',
-    fieldType: 'text',
+    type: 'text',
   },
   {
     id: 'createdAt',
     label: 'Created',
     path: 'createdAt',
-    fieldType: 'date',
+    type: 'date',
     sortable: true,
   },
 ];
@@ -460,9 +449,8 @@ export const accountDetailScreen: ScreenDefinition = {
   dataSource: {
     type: 'query',
     query: {
-      router: 'crm',
-      procedure: 'accounts.getById',
-      input: { id: fieldValue('id') },
+      procedure: 'crm.accounts.getById',
+      params: { id: fieldValue('id') },
     },
   },
 
@@ -547,8 +535,11 @@ export const accountDetailScreen: ScreenDefinition = {
             title: 'Points of Contact',
             columns_config: contactsTableColumns,
             dataSource: {
-              type: 'relation',
-              relation: 'pointOfContacts',
+              type: 'query',
+              query: {
+                procedure: 'crm.accounts.getContacts',
+                params: { accountId: fieldValue('id') },
+              },
             },
             actions: [
               {
@@ -582,8 +573,11 @@ export const accountDetailScreen: ScreenDefinition = {
             title: 'Associated Deals',
             columns_config: dealsTableColumns,
             dataSource: {
-              type: 'relation',
-              relation: 'deals',
+              type: 'query',
+              query: {
+                procedure: 'crm.accounts.getDeals',
+                params: { accountId: fieldValue('id') },
+              },
             },
             actions: [
               {
@@ -592,8 +586,9 @@ export const accountDetailScreen: ScreenDefinition = {
                 type: 'navigate',
                 variant: 'primary',
                 icon: 'Plus',
-                navigation: {
-                  path: '/employee/crm/deals/new',
+                config: {
+                  type: 'navigate',
+                  route: '/employee/crm/deals/new',
                   params: { accountId: fieldValue('id') },
                 },
               },
@@ -616,8 +611,11 @@ export const accountDetailScreen: ScreenDefinition = {
             title: 'Associated Leads',
             columns_config: leadsTableColumns,
             dataSource: {
-              type: 'relation',
-              relation: 'leads',
+              type: 'query',
+              query: {
+                procedure: 'crm.accounts.getLeads',
+                params: { accountId: fieldValue('id') },
+              },
             },
             actions: [
               {
@@ -626,8 +624,9 @@ export const accountDetailScreen: ScreenDefinition = {
                 type: 'navigate',
                 variant: 'primary',
                 icon: 'Plus',
-                navigation: {
-                  path: '/employee/crm/leads/new',
+                config: {
+                  type: 'navigate',
+                  route: '/employee/crm/leads/new',
                   params: { accountId: fieldValue('id') },
                 },
               },
@@ -646,6 +645,10 @@ export const accountDetailScreen: ScreenDefinition = {
       type: 'custom',
       variant: 'primary',
       icon: 'Pencil',
+      config: {
+        type: 'custom',
+        handler: 'handleEdit',
+      },
     },
     {
       id: 'create-deal',
@@ -653,8 +656,9 @@ export const accountDetailScreen: ScreenDefinition = {
       type: 'navigate',
       variant: 'secondary',
       icon: 'Handshake',
-      navigation: {
-        path: '/employee/crm/deals/new',
+      config: {
+        type: 'navigate',
+        route: '/employee/crm/deals/new',
         params: { accountId: fieldValue('id') },
       },
     },
@@ -664,8 +668,9 @@ export const accountDetailScreen: ScreenDefinition = {
       type: 'navigate',
       variant: 'secondary',
       icon: 'Target',
-      navigation: {
-        path: '/employee/crm/leads/new',
+      config: {
+        type: 'navigate',
+        route: '/employee/crm/leads/new',
         params: { accountId: fieldValue('id') },
       },
     },

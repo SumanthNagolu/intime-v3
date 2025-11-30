@@ -11,6 +11,7 @@ import type {
   DisplayPointOfContact,
   AccountStatus,
   AccountType,
+  AccountTier,
   Responsiveness,
   PreferredQuality,
   POCRole,
@@ -24,26 +25,39 @@ import type {
 // ============================================
 
 export function dbAccountToDisplay(
-  account: AlignedAccount,
+  account: AlignedAccount | Record<string, unknown>,
   options?: {
     pocs?: AlignedPointOfContact[];
     activities?: AlignedActivityLog[];
   }
 ): DisplayAccount {
-  const pocs = options?.pocs || account.pocs || [];
+  // Support both AlignedAccount properties and raw database properties
+  const rawAccount = account as Record<string, unknown>;
+  const pocs = options?.pocs || (rawAccount.pocs as AlignedPointOfContact[] | undefined) || [];
   const activities = options?.activities || [];
 
+  // Handle both property naming conventions (database vs aligned)
+  const status = (rawAccount.status ?? rawAccount.accountStatus) as AccountStatus | undefined;
+  const companyType = (rawAccount.companyType ?? rawAccount.type) as AccountType | undefined;
+  const accountManagerId = (rawAccount.accountManagerId ?? rawAccount.ownerId) as string | null | undefined;
+  const responsiveness = rawAccount.responsiveness as Responsiveness | null | undefined;
+  const preferredQuality = rawAccount.preferredQuality as PreferredQuality | null | undefined;
+  const tier = rawAccount.tier as AccountTier | string | null | undefined;
+  const contractStartDate = rawAccount.contractStartDate as Date | null | undefined;
+  const contractEndDate = rawAccount.contractEndDate as Date | null | undefined;
+  const _count = rawAccount._count as { jobs?: number; placements?: number; deals?: number } | undefined;
+
   return {
-    id: account.id,
-    name: account.name,
-    industry: account.industry || '',
-    status: mapAccountStatusToFrontend(account.accountStatus),
-    type: mapAccountTypeToFrontend(account.companyType),
-    accountManagerId: account.ownerId || '',
+    id: rawAccount.id as string,
+    name: rawAccount.name as string,
+    industry: (rawAccount.industry as string) || '',
+    status: mapAccountStatusToFrontend(status || 'prospect'),
+    type: mapAccountTypeToFrontend(companyType || 'direct_client'),
+    accountManagerId: accountManagerId || '',
     logo: undefined, // Would need to be added to schema
-    responsiveness: mapResponsivenessToFrontend(account.responsiveness),
-    preference: mapPreferredQualityToFrontend(account.preferredQuality),
-    description: account.description || undefined,
+    responsiveness: mapResponsivenessToFrontend(responsiveness ?? null),
+    preference: mapPreferredQualityToFrontend(preferredQuality ?? null),
+    description: (rawAccount.description as string | null) || undefined,
     pocs: pocs.map(dbPocToDisplay),
     activityLog: activities.map(activity => ({
       date: activity.activityDate.toISOString(),
@@ -51,18 +65,18 @@ export function dbAccountToDisplay(
       note: activity.description || undefined,
     })),
     // Extended fields
-    tier: account.tier || undefined,
-    contractStartDate: account.contractStartDate?.toISOString().split('T')[0],
-    contractEndDate: account.contractEndDate?.toISOString().split('T')[0],
-    paymentTermsDays: account.paymentTermsDays,
-    markupPercentage: account.markupPercentage || undefined,
-    jobsCount: account._count?.jobs,
-    placementsCount: account._count?.placements,
+    tier: (tier as string) || undefined,
+    contractStartDate: contractStartDate instanceof Date ? contractStartDate.toISOString().split('T')[0] : undefined,
+    contractEndDate: contractEndDate instanceof Date ? contractEndDate.toISOString().split('T')[0] : undefined,
+    paymentTermsDays: rawAccount.paymentTermsDays as number | undefined,
+    markupPercentage: rawAccount.markupPercentage != null ? Number(rawAccount.markupPercentage) : undefined,
+    jobsCount: _count?.jobs,
+    placementsCount: _count?.placements,
     // Contact info
-    website: account.website || undefined,
-    phone: account.phone || undefined,
-    headquartersLocation: account.headquartersLocation || undefined,
-    preferredQuality: account.preferredQuality || undefined,
+    website: (rawAccount.website as string | null) || undefined,
+    phone: (rawAccount.phone as string | null) || undefined,
+    headquartersLocation: (rawAccount.headquartersLocation as string | null) || undefined,
+    preferredQuality: (preferredQuality as string) || undefined,
   };
 }
 

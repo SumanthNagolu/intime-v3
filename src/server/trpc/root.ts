@@ -41,6 +41,18 @@ import { activitiesRouter } from '../routers/activities';
 import { strategyRouter } from '../routers/strategy';
 import { filesRouter } from '../routers/files';
 
+// Unified Workspace routers
+import { contactsRouter } from '../routers/contacts';
+import { jobOrdersRouter } from '../routers/job-orders';
+import { objectOwnersRouter } from '../routers/object-owners';
+import { authRouter } from '../routers/auth';
+import { workspaceRouter } from '../routers/workspace';
+
+// Role-based dashboard routers
+import { hrMetricsRouter } from '../routers/hr-metrics';
+import { financeMetricsRouter } from '../routers/finance-metrics';
+import { adminMetricsRouter } from '../routers/admin-metrics';
+
 /**
  * App Router
  *
@@ -85,6 +97,20 @@ export const appRouter = router({
   activities: activitiesRouter,
   strategy: strategyRouter,
   files: filesRouter,
+
+  // Unified Workspace routers
+  contacts: contactsRouter,
+  jobOrders: jobOrdersRouter,
+  objectOwners: objectOwnersRouter,
+  workspace: workspaceRouter,
+
+  // Auth router
+  auth: authRouter,
+
+  // Role-based dashboard routers
+  hrMetrics: hrMetricsRouter,
+  financeMetrics: financeMetricsRouter,
+  adminMetrics: adminMetricsRouter,
 });
 
 /**

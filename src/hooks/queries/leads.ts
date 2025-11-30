@@ -16,6 +16,7 @@
 
 import { trpc } from '@/lib/trpc/client';
 import type { DisplayLead } from '@/types/aligned';
+import type { OwnershipFilter } from '@/lib/validations/ownership';
 
 // ============================================
 // QUERY OPTIONS TYPES
@@ -27,6 +28,7 @@ export interface LeadsQueryOptions {
   offset?: number;
   status?: 'new' | 'warm' | 'hot' | 'cold' | 'converted' | 'lost';
   accountId?: string;
+  ownership?: OwnershipFilter;
 }
 
 export interface LeadQueryOptions {
@@ -68,7 +70,7 @@ function toDisplayLead(lead: any): DisplayLead {
  * Get list of leads with display formatting
  */
 export function useLeads(options: LeadsQueryOptions = {}) {
-  const { enabled = true, ...input } = options;
+  const { enabled = true, ownership, ...input } = options;
 
   const query = trpc.crm.leads.list.useQuery(
     {
@@ -76,6 +78,7 @@ export function useLeads(options: LeadsQueryOptions = {}) {
       offset: input.offset ?? 0,
       status: input.status,
       accountId: input.accountId,
+      ownership: ownership ?? 'my_items',
     },
     {
       enabled,
@@ -226,13 +229,50 @@ export function useLeadRaw(id: string | undefined, options: LeadQueryOptions = {
 /**
  * Get lead statistics for dashboard
  */
-export function useLeadStats(options: { enabled?: boolean } = {}) {
-  const { enabled = true } = options;
+export function useLeadStats(options: { enabled?: boolean; ownership?: OwnershipFilter } = {}) {
+  const { enabled = true, ownership } = options;
 
-  const query = trpc.crm.leads.getStats.useQuery(undefined, {
-    enabled,
-    staleTime: 60 * 1000, // 1 minute cache
-  });
+  const query = trpc.crm.leads.list.useQuery(
+    { limit: 500, offset: 0, ownership: ownership ?? 'my_items' },
+    {
+      enabled,
+      staleTime: 60 * 1000, // 1 minute cache
+      select: (data) => {
+        let newCount = 0;
+        let warm = 0;
+        let hot = 0;
+        let cold = 0;
+        let converted = 0;
+        let lost = 0;
+        let totalValue = 0;
+
+        data.forEach(lead => {
+          switch (lead.status) {
+            case 'new': newCount++; break;
+            case 'warm': warm++; break;
+            case 'hot': hot++; break;
+            case 'cold': cold++; break;
+            case 'converted': converted++; break;
+            case 'lost': lost++; break;
+          }
+          if (lead.estimatedValue) {
+            totalValue += Number(lead.estimatedValue);
+          }
+        });
+
+        return {
+          total: data.length,
+          new: newCount,
+          warm,
+          hot,
+          cold,
+          converted,
+          lost,
+          totalValue,
+        };
+      },
+    }
+  );
 
   return {
     stats: query.data ?? {

@@ -22,8 +22,7 @@ export const certificatesRouter = router({
   getMyCertificates: protectedProcedure.query(async ({ ctx }) => {
     const supabase = await createClient();
 
-    const { data: certificates, error } = await supabase
-      .from('student_certificates')
+    const { data: certificates, error } = await (supabase.from as any)('student_certificates')
       .select(
         `
         *,
@@ -49,8 +48,7 @@ export const certificatesRouter = router({
     .query(async ({ ctx, input }) => {
       const supabase = await createClient();
 
-      const { data: certificate, error } = await supabase
-        .from('student_certificates')
+      const { data: certificate, error } = await (supabase.from as any)('student_certificates')
         .select(
           `
           *,
@@ -78,8 +76,7 @@ export const certificatesRouter = router({
       const supabase = await createClient();
 
       // Verify ownership
-      const { data: certificate } = await supabase
-        .from('student_certificates')
+      const { data: certificate } = await (supabase.from as any)('student_certificates')
         .select('id, student_id, status, pdf_url')
         .eq('id', input.certificate_id)
         .eq('student_id', ctx.userId)
@@ -120,8 +117,7 @@ export const certificatesRouter = router({
     .query(async ({ ctx, input }) => {
       const supabase = await createClient();
 
-      const { data: certificate } = await supabase
-        .from('student_certificates')
+      const { data: certificate } = await (supabase.from as any)('student_certificates')
         .select('id, student_id, pdf_url, status')
         .eq('id', input.certificate_id)
         .eq('student_id', ctx.userId)
@@ -166,8 +162,7 @@ export const certificatesRouter = router({
     .query(async ({ ctx, input }) => {
       const supabase = await createClient();
 
-      const { data: certificate } = await supabase
-        .from('student_certificates')
+      const { data: certificate } = await (supabase.from as any)('student_certificates')
         .select(
           `
           *,
@@ -217,8 +212,7 @@ export const certificatesRouter = router({
     .query(async ({ input }) => {
       const supabase = await createClient();
 
-      let query = supabase
-        .from('student_certificates')
+      let query = (supabase.from as any)('student_certificates')
         .select(
           `
           *,

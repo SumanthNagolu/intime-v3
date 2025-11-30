@@ -6,7 +6,7 @@
  */
 
 import { z } from 'zod';
-import { createClient } from '@/lib/supabase/server';
+import { createClient, createAdminClient } from '@/lib/supabase/server';
 import { db } from '@/lib/db';
 import {
   benchMetadata,
@@ -157,54 +157,73 @@ async function getCurrentUserContext() {
     where: eq(userProfiles.id, user.id),
   });
 
-  return profile ? { userId: user.id, orgId: profile.orgId } : null;
+  return profile ? { userId: user.id, userEmail: user.email ?? '', orgId: profile.orgId } : null;
 }
 
 async function checkPermission(
   userId: string,
-  permission: string,
-  resourceType?: string,
-  resourceId?: string
-): Promise<{ allowed: boolean; scope?: string }> {
+  resource: string,
+  action: string
+): Promise<boolean> {
   const supabase = await createClient();
 
   const { data, error } = await supabase.rpc('check_user_permission', {
     p_user_id: userId,
-    p_permission: permission,
-    p_table_name: resourceType || null,
-    p_record_id: resourceId || null,
+    p_resource: resource,
+    p_action: action,
+    p_required_scope: 'own',
   });
 
   if (error) {
     console.error('Permission check error:', error);
-    return { allowed: false };
+    return false;
   }
 
-  return { allowed: data?.allowed ?? false, scope: data?.scope };
+  return data === true;
 }
 
 async function logAuditEvent(
-  userId: string,
-  orgId: string,
-  action: string,
-  resourceType: string,
-  resourceId: string | null,
-  details: Record<string, unknown>,
-  severity: 'info' | 'warning' | 'critical' = 'info'
+  adminSupabase: ReturnType<typeof createAdminClient>,
+  params: {
+    tableName: string;
+    action: string;
+    recordId: string | null;
+    userId: string;
+    userEmail: string;
+    orgId: string;
+    oldValues?: Record<string, unknown>;
+    newValues?: Record<string, unknown>;
+    metadata?: Record<string, unknown>;
+  }
 ) {
-  const supabase = await createClient();
-
-  await supabase.from('audit_logs').insert({
-    user_id: userId,
-    org_id: orgId,
+  const {
+    tableName,
     action,
-    table_name: resourceType,
-    record_id: resourceId,
-    metadata: details,
-    severity,
-    user_ip_address: null,
-    user_agent: null,
-  });
+    recordId,
+    userId,
+    userEmail,
+    orgId,
+    oldValues,
+    newValues,
+    metadata,
+  } = params;
+
+  try {
+    await (adminSupabase.from as any)('audit_logs').insert({
+      table_name: tableName,
+      action,
+      record_id: recordId,
+      user_id: userId,
+      user_email: userEmail,
+      org_id: orgId,
+      old_values: oldValues ?? null,
+      new_values: newValues ?? null,
+      metadata: metadata ?? {},
+      severity: 'info',
+    });
+  } catch (error) {
+    console.error('Failed to log audit event:', error);
+  }
 }
 
 // =====================================================
@@ -233,7 +252,7 @@ export async function listBenchConsultantsAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:read');
+    const allowed = await checkPermission(context.userId, 'bench', 'read');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -284,7 +303,7 @@ export async function listBenchConsultantsAction(
         email: userProfiles.email,
         phone: userProfiles.phone,
         title: userProfiles.title,
-        location: userProfiles.location,
+        location: userProfiles.candidateLocation,
         benchStartDate: benchMetadata.benchStartDate,
         daysOnBench: benchMetadata.daysOnBench,
         alert30DaySent: benchMetadata.alert30DaySent,
@@ -409,7 +428,7 @@ export async function getBenchConsultantAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:read');
+    const allowed = await checkPermission(context.userId, 'bench', 'read');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -422,7 +441,7 @@ export async function getBenchConsultantAction(
         email: userProfiles.email,
         phone: userProfiles.phone,
         title: userProfiles.title,
-        location: userProfiles.location,
+        location: userProfiles.candidateLocation,
         benchStartDate: benchMetadata.benchStartDate,
         daysOnBench: benchMetadata.daysOnBench,
         alert30DaySent: benchMetadata.alert30DaySent,
@@ -523,7 +542,7 @@ export async function addToBenchAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:write');
+    const allowed = await checkPermission(context.userId, 'bench', 'write');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -559,14 +578,16 @@ export async function addToBenchAction(
       contactFrequencyDays: validated.contactFrequencyDays,
     });
 
-    await logAuditEvent(
-      context.userId,
-      context.orgId,
-      'bench.consultant.added',
-      'bench_metadata',
-      validated.userId,
-      { benchStartDate: validated.benchStartDate, benchSalesRepId: validated.benchSalesRepId }
-    );
+    const adminSupabase = createAdminClient();
+    await logAuditEvent(adminSupabase, {
+      tableName: 'bench_metadata',
+      action: 'INSERT',
+      recordId: validated.userId,
+      userId: context.userId,
+      userEmail: context.userEmail,
+      orgId: context.orgId,
+      newValues: { benchStartDate: validated.benchStartDate, benchSalesRepId: validated.benchSalesRepId },
+    });
 
     return { success: true, data: { userId: validated.userId } };
   } catch (error) {
@@ -592,7 +613,7 @@ export async function updateBenchConsultantAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:write');
+    const allowed = await checkPermission(context.userId, 'bench', 'write');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -617,14 +638,16 @@ export async function updateBenchConsultantAction(
       })
       .where(eq(benchMetadata.userId, userId));
 
-    await logAuditEvent(
-      context.userId,
-      context.orgId,
-      'bench.consultant.updated',
-      'bench_metadata',
-      userId,
-      { updates }
-    );
+    const adminSupabase = createAdminClient();
+    await logAuditEvent(adminSupabase, {
+      tableName: 'bench_metadata',
+      action: 'UPDATE',
+      recordId: userId,
+      userId: context.userId,
+      userEmail: context.userEmail,
+      orgId: context.orgId,
+      newValues: updates,
+    });
 
     return { success: true, data: { userId } };
   } catch (error) {
@@ -643,7 +666,7 @@ export async function recordContactAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:write');
+    const allowed = await checkPermission(context.userId, 'bench', 'write');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -655,14 +678,16 @@ export async function recordContactAction(
       })
       .where(eq(benchMetadata.userId, userId));
 
-    await logAuditEvent(
-      context.userId,
-      context.orgId,
-      'bench.consultant.contacted',
-      'bench_metadata',
-      userId,
-      { notes }
-    );
+    const adminSupabase = createAdminClient();
+    await logAuditEvent(adminSupabase, {
+      tableName: 'bench_metadata',
+      action: 'UPDATE',
+      recordId: userId,
+      userId: context.userId,
+      userEmail: context.userEmail,
+      orgId: context.orgId,
+      metadata: { notes },
+    });
 
     return { success: true, data: { userId } };
   } catch (error) {
@@ -681,7 +706,7 @@ export async function removeFromBenchAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:delete');
+    const allowed = await checkPermission(context.userId, 'bench', 'delete');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -689,15 +714,16 @@ export async function removeFromBenchAction(
     // Delete bench metadata (keeps user profile)
     await db.delete(benchMetadata).where(eq(benchMetadata.userId, userId));
 
-    await logAuditEvent(
-      context.userId,
-      context.orgId,
-      'bench.consultant.removed',
-      'bench_metadata',
-      userId,
-      { reason },
-      'warning'
-    );
+    const adminSupabase = createAdminClient();
+    await logAuditEvent(adminSupabase, {
+      tableName: 'bench_metadata',
+      action: 'DELETE',
+      recordId: userId,
+      userId: context.userId,
+      userEmail: context.userEmail,
+      orgId: context.orgId,
+      metadata: { reason },
+    });
 
     return { success: true, data: { userId } };
   } catch (error) {
@@ -733,7 +759,7 @@ export async function listExternalJobsAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:read');
+    const allowed = await checkPermission(context.userId, 'bench', 'read');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -868,7 +894,7 @@ export async function getExternalJobAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:read');
+    const allowed = await checkPermission(context.userId, 'bench', 'read');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -945,7 +971,7 @@ export async function createExternalJobAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:write');
+    const allowed = await checkPermission(context.userId, 'bench', 'write');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -973,14 +999,16 @@ export async function createExternalJobAction(
       expiresAt: validated.expiresAt ? new Date(validated.expiresAt) : null,
     }).returning({ id: externalJobs.id });
 
-    await logAuditEvent(
-      context.userId,
-      context.orgId,
-      'bench.external_job.created',
-      'external_jobs',
-      job.id,
-      { title: validated.title, sourceName: validated.sourceName }
-    );
+    const adminSupabase = createAdminClient();
+    await logAuditEvent(adminSupabase, {
+      tableName: 'external_jobs',
+      action: 'INSERT',
+      recordId: job.id,
+      userId: context.userId,
+      userEmail: context.userEmail,
+      orgId: context.orgId,
+      newValues: { title: validated.title, sourceName: validated.sourceName },
+    });
 
     return { success: true, data: { id: job.id } };
   } catch (error) {
@@ -999,7 +1027,7 @@ export async function updateExternalJobStatusAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:write');
+    const allowed = await checkPermission(context.userId, 'bench', 'write');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -1011,14 +1039,16 @@ export async function updateExternalJobStatusAction(
         eq(externalJobs.orgId, context.orgId)
       ));
 
-    await logAuditEvent(
-      context.userId,
-      context.orgId,
-      'bench.external_job.status_updated',
-      'external_jobs',
-      jobId,
-      { status }
-    );
+    const adminSupabase = createAdminClient();
+    await logAuditEvent(adminSupabase, {
+      tableName: 'external_jobs',
+      action: 'UPDATE',
+      recordId: jobId,
+      userId: context.userId,
+      userEmail: context.userEmail,
+      orgId: context.orgId,
+      newValues: { status },
+    });
 
     return { success: true, data: { id: jobId } };
   } catch (error) {
@@ -1055,7 +1085,7 @@ export async function listBenchSubmissionsAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:read');
+    const allowed = await checkPermission(context.userId, 'bench', 'read');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -1208,7 +1238,7 @@ export async function createBenchSubmissionAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:write');
+    const allowed = await checkPermission(context.userId, 'bench', 'write');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -1244,14 +1274,16 @@ export async function createBenchSubmissionAction(
       })
       .where(eq(externalJobs.id, validated.externalJobId));
 
-    await logAuditEvent(
-      context.userId,
-      context.orgId,
-      'bench.submission.created',
-      'bench_submissions',
-      submission.id,
-      { externalJobId: validated.externalJobId, candidateId: validated.candidateId }
-    );
+    const adminSupabase = createAdminClient();
+    await logAuditEvent(adminSupabase, {
+      tableName: 'bench_submissions',
+      action: 'INSERT',
+      recordId: submission.id,
+      userId: context.userId,
+      userEmail: context.userEmail,
+      orgId: context.orgId,
+      newValues: { externalJobId: validated.externalJobId, candidateId: validated.candidateId },
+    });
 
     return { success: true, data: { id: submission.id } };
   } catch (error) {
@@ -1289,7 +1321,7 @@ export async function updateBenchSubmissionStatusAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:write');
+    const allowed = await checkPermission(context.userId, 'bench', 'write');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -1351,14 +1383,16 @@ export async function updateBenchSubmissionStatusAction(
         eq(benchSubmissions.orgId, context.orgId)
       ));
 
-    await logAuditEvent(
-      context.userId,
-      context.orgId,
-      'bench.submission.status_updated',
-      'bench_submissions',
-      submissionId,
-      { status, ...updates }
-    );
+    const adminSupabase = createAdminClient();
+    await logAuditEvent(adminSupabase, {
+      tableName: 'bench_submissions',
+      action: 'UPDATE',
+      recordId: submissionId,
+      userId: context.userId,
+      userEmail: context.userEmail,
+      orgId: context.orgId,
+      newValues: { status, ...updates },
+    });
 
     return { success: true, data: { id: submissionId } };
   } catch (error) {
@@ -1378,7 +1412,7 @@ export async function listJobSourcesAction(): Promise<ActionResult<JobSource[]>>
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:read');
+    const allowed = await checkPermission(context.userId, 'bench', 'read');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -1431,7 +1465,7 @@ export async function createJobSourceAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:admin');
+    const allowed = await checkPermission(context.userId, 'bench', 'admin');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -1448,14 +1482,16 @@ export async function createJobSourceAction(
       createdBy: context.userId,
     }).returning({ id: jobSources.id });
 
-    await logAuditEvent(
-      context.userId,
-      context.orgId,
-      'bench.job_source.created',
-      'job_sources',
-      source.id,
-      { name: validated.name, sourceType: validated.sourceType }
-    );
+    const adminSupabase = createAdminClient();
+    await logAuditEvent(adminSupabase, {
+      tableName: 'job_sources',
+      action: 'INSERT',
+      recordId: source.id,
+      userId: context.userId,
+      userEmail: context.userEmail,
+      orgId: context.orgId,
+      newValues: { name: validated.name, sourceType: validated.sourceType },
+    });
 
     return { success: true, data: { id: source.id } };
   } catch (error) {
@@ -1474,7 +1510,7 @@ export async function toggleJobSourceAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:admin');
+    const allowed = await checkPermission(context.userId, 'bench', 'admin');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -1486,14 +1522,16 @@ export async function toggleJobSourceAction(
         eq(jobSources.orgId, context.orgId)
       ));
 
-    await logAuditEvent(
-      context.userId,
-      context.orgId,
-      'bench.job_source.toggled',
-      'job_sources',
-      sourceId,
-      { isActive }
-    );
+    const adminSupabase = createAdminClient();
+    await logAuditEvent(adminSupabase, {
+      tableName: 'job_sources',
+      action: 'UPDATE',
+      recordId: sourceId,
+      userId: context.userId,
+      userEmail: context.userEmail,
+      orgId: context.orgId,
+      newValues: { isActive },
+    });
 
     return { success: true, data: { id: sourceId } };
   } catch (error) {
@@ -1526,7 +1564,7 @@ export async function getBenchDashboardMetricsAction(): Promise<ActionResult<Ben
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:read');
+    const allowed = await checkPermission(context.userId, 'bench', 'read');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -1616,7 +1654,7 @@ export async function getBenchSubmissionPipelineAction(): Promise<ActionResult<B
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:read');
+    const allowed = await checkPermission(context.userId, 'bench', 'read');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -1650,7 +1688,7 @@ export async function getConsultantsNeedingContactAction(): Promise<ActionResult
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:read');
+    const allowed = await checkPermission(context.userId, 'bench', 'read');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -1664,7 +1702,7 @@ export async function getConsultantsNeedingContactAction(): Promise<ActionResult
         email: userProfiles.email,
         phone: userProfiles.phone,
         title: userProfiles.title,
-        location: userProfiles.location,
+        location: userProfiles.candidateLocation,
         benchStartDate: benchMetadata.benchStartDate,
         daysOnBench: benchMetadata.daysOnBench,
         alert30DaySent: benchMetadata.alert30DaySent,
@@ -1740,7 +1778,7 @@ export async function findMatchingJobsAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:read');
+    const allowed = await checkPermission(context.userId, 'bench', 'read');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -1825,7 +1863,7 @@ export async function findMatchingCandidatesAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'bench:read');
+    const allowed = await checkPermission(context.userId, 'bench', 'read');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -1865,7 +1903,7 @@ export async function findMatchingCandidatesAction(
         email: userProfiles.email,
         phone: userProfiles.phone,
         title: userProfiles.title,
-        location: userProfiles.location,
+        location: userProfiles.candidateLocation,
         benchStartDate: benchMetadata.benchStartDate,
         daysOnBench: benchMetadata.daysOnBench,
         alert30DaySent: benchMetadata.alert30DaySent,

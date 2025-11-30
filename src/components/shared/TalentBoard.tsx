@@ -100,7 +100,7 @@ export const TalentBoard: React.FC = () => {
                   </div>
 
                   <div className="pt-4 border-t border-stone-100 flex justify-between items-center">
-                      <span className="text-[10px] font-bold text-stone-300 uppercase tracking-widest">{talent.podOwner || 'Unassigned'}</span>
+                      <span className="text-[10px] font-bold text-stone-300 uppercase tracking-widest">Unassigned</span>
                       <button className="text-xs font-bold text-rust uppercase tracking-widest flex items-center gap-1 hover:underline">
                           View Profile <ChevronRight size={12} />
                       </button>

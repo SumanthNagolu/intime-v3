@@ -16,7 +16,7 @@ export const CertificateVerification: React.FC = () => {
     const timer = setTimeout(() => {
       setVerifying(false);
       // Mock validation: IDs starting with 'X' are valid
-      setIsValid(id?.startsWith('X') || false);
+      setIsValid(typeof id === 'string' && id.startsWith('X'));
     }, 1500);
     return () => clearTimeout(timer);
   }, [id]);

@@ -10,17 +10,26 @@ description: ATS (Applicant Tracking System) domain expertise for InTime v3
 Sourcing → Screening → Interview → Offer → Placement
 ```
 
+## Entity Categories
+
+| Category | Entities | Workplan | Activity Logging |
+|----------|----------|----------|------------------|
+| **Root** | job, submission, placement | Yes - auto-created | Yes - all operations |
+| **Supporting** | candidate, interview, offer | No | Optional |
+
+**Root entities** get automatic workplan creation and activity logging.
+
 ## Key Tables (src/lib/db/schema/ats.ts)
 
-| Table | Purpose |
-|-------|---------|
-| `skills` | Global skill taxonomy |
-| `candidate_skills` | Candidate-skill mappings with proficiency |
-| `jobs` | Job requisitions |
-| `submissions` | Candidate-job applications |
-| `interviews` | Scheduled interviews |
-| `offers` | Job offers |
-| `placements` | Active placements |
+| Table | Purpose | Category |
+|-------|---------|----------|
+| `skills` | Global skill taxonomy | Platform |
+| `candidate_skills` | Candidate-skill mappings with proficiency | Supporting |
+| `jobs` | Job requisitions | **Root** |
+| `submissions` | Candidate-job applications | **Root** |
+| `interviews` | Scheduled interviews | Supporting |
+| `offers` | Job offers | Supporting |
+| `placements` | Active placements | **Root** |
 
 ## Status Workflows
 
@@ -131,11 +140,47 @@ trpc.ats.placements.terminate({ id, reason })
 }
 ```
 
+## Workplan Templates (Root Entities)
+
+### Job Workflow (`job_workflow`)
+```
+job_created
+  → job_requirements_review (Day 0)
+  → job_sourcing_kickoff (Day 1)
+  → job_first_submission_check (Day 3)
+  → job_weekly_review (Day 7, recurring)
+```
+
+### Submission Workflow (`submission_workflow`)
+```
+submission_created
+  → candidate_prep_call (Day 0)
+  → client_submission (Day 1)
+  → client_follow_up (Day 3)
+  → interview_scheduling (on client_review)
+  → post_interview_debrief (on interview_complete)
+```
+
+### Placement Workflow (`placement_workflow`)
+```
+placement_started
+  → onboarding_check (Day 1)
+  → first_week_check (Day 7)
+  → monthly_check (Day 30, recurring)
+  → extension_review (30 days before end)
+```
+
 ## Integration Points
 
 ### With CRM
 - Jobs linked to Accounts (clients) and Deals
 - Activity logging on submissions
+
+### With Workplan System
+- Job creation → triggers `job_workflow`
+- Submission creation → triggers `submission_workflow`
+- Placement start → triggers `placement_workflow`
+- Status changes → trigger successor activities
 
 ### With AI Twins
 - Recruiter Twin provides:

@@ -15,6 +15,7 @@ import {
   AlertCircle,
   X
 } from 'lucide-react';
+import { getWorkspaceRole } from '@/lib/workspace/role-mapping';
 
 // Role configuration - maps role to personalized content
 const ROLE_CONFIG: Record<string, {
@@ -178,9 +179,9 @@ const DEFAULT_CONFIG = {
   title: 'Employee',
   dashboardPath: '/employee/shared/combined',
   metrics: [
-    { label: 'Active Jobs', value: '127', icon: Activity },
-    { label: 'Placements MTD', value: '18', icon: Target },
-    { label: 'System Status', value: 'Online', icon: TrendingUp },
+    { label: 'Active Jobs', value: '127', trend: undefined, icon: Activity },
+    { label: 'Placements MTD', value: '18', trend: undefined, icon: Target },
+    { label: 'System Status', value: 'Online', trend: undefined, icon: TrendingUp },
   ],
 };
 
@@ -371,7 +372,11 @@ export function EmployeePortal({ userRole, userName, userRoles = [], error }: Em
         {/* Go to Dashboard Button */}
         <div className="px-8 md:px-12 py-6 border-t border-charcoal-200 bg-charcoal-50">
           <button
-            onClick={() => router.push(config.dashboardPath)}
+            onClick={() => {
+              // Map user's system role to workspace role and navigate to workspace
+              const workspaceRole = getWorkspaceRole(userRoles.length > 0 ? userRoles : [userRole || 'employee']);
+              router.push(`/employee/workspace?role=${workspaceRole}`);
+            }}
             className="w-full flex items-center justify-center gap-3 px-6 py-5 bg-forest-600 hover:bg-forest-700 text-white rounded-2xl font-semibold text-lg transition-colors shadow-lg shadow-forest-600/20"
           >
             Open Dashboard

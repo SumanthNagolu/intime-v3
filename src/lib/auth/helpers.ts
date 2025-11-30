@@ -151,7 +151,7 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
 
   // Extract roles (filter out deleted/expired)
   const now = new Date();
-  const activeRoles = (profile.user_roles || [])
+  const activeRoles = ((profile.user_roles as unknown as any[]) || [])
     .filter((ur: any) => {
       if (ur.deleted_at) return false;
       if (ur.expires_at && new Date(ur.expires_at) < now) return false;
@@ -168,7 +168,7 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
   // Extract unique permissions from all roles
   const permissionsMap = new Map<string, { resource: string; action: string; scope: string }>();
 
-  (profile.user_roles || [])
+  ((profile.user_roles as unknown as any[]) || [])
     .filter((ur: any) => !ur.deleted_at && (!ur.expires_at || new Date(ur.expires_at) >= now))
     .forEach((ur: any) => {
       (ur.roles?.role_permissions || []).forEach((rp: any) => {
@@ -193,13 +193,13 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
 
   return {
     id: profile.id,
-    authId: profile.auth_id,
+    authId: profile.auth_id || '',
     email: profile.email,
     fullName: profile.full_name,
     avatarUrl: profile.avatar_url,
     phone: profile.phone,
     orgId: profile.org_id,
-    isActive: profile.is_active,
+    isActive: profile.is_active ?? false,
     roles: activeRoles,
     permissions: Array.from(permissionsMap.values()),
     primaryRole,

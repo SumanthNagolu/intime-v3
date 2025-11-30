@@ -330,3 +330,8 @@ export const AuthPage: React.FC<AuthPageProps> = ({ portal, mode: initialMode = 
 
 export default AuthPage;
 
+
+
+
+
+

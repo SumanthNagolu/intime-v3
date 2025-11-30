@@ -32,7 +32,7 @@ export const CandidateDetail: React.FC = () => {
 
   return (
     <div className="animate-fade-in">
-      <button onClick={() => router.push(-1)} className="inline-flex items-center gap-2 text-stone-400 hover:text-charcoal text-xs font-bold uppercase tracking-widest mb-6">
+      <button onClick={() => router.back()} className="inline-flex items-center gap-2 text-stone-400 hover:text-charcoal text-xs font-bold uppercase tracking-widest mb-6">
         <ChevronLeft size={14} /> Back
       </button>
 

@@ -28,8 +28,8 @@ import {
   createPayrollRunSchema,
   createPerformanceReviewSchema,
   updatePerformanceReviewSchema,
-  createTimeAttendanceSchema,
-  updateTimeAttendanceSchema
+  submitTimesheetSchema,
+  updateTimesheetSchema
 } from '@/lib/validations/ta-hr';
 import { eq, and, desc, sql, gte, lte } from 'drizzle-orm';
 
@@ -53,7 +53,7 @@ export const taHrRouter = router({
         const { limit, offset, status } = input;
 
         let conditions = [eq(campaigns.orgId, orgId)];
-        if (status) conditions.push(eq(campaigns.campaignStatus, status));
+        if (status) conditions.push(eq(campaigns.status, status));
 
         const results = await db.select().from(campaigns)
           .where(and(...conditions))
@@ -94,11 +94,15 @@ export const taHrRouter = router({
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
 
+        const { targetResponseRate, startDate, endDate, ...rest } = input;
+
         const [newCampaign] = await db.insert(campaigns).values({
-          ...input,
+          ...rest,
           orgId,
-          ownerId: input.ownerId || userId,
           createdBy: userId,
+          targetResponseRate: targetResponseRate?.toString(),
+          startDate: startDate ? new Date(startDate).toISOString().split('T')[0] : undefined,
+          endDate: endDate ? new Date(endDate).toISOString().split('T')[0] : undefined,
         }).returning();
 
         return newCampaign;
@@ -111,10 +115,21 @@ export const taHrRouter = router({
       .input(updateCampaignSchema)
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
-        const { id, ...data } = input;
+        const { id, targetResponseRate, ownerId, ...data } = input;
+
+        const updateData: Record<string, unknown> = {
+          ...data,
+        };
+
+        if (targetResponseRate !== undefined) {
+          updateData.targetResponseRate = targetResponseRate?.toString();
+        }
+        if (ownerId !== undefined) {
+          updateData.ownerId = ownerId;
+        }
 
         const [updated] = await db.update(campaigns)
-          .set(data)
+          .set(updateData)
           .where(and(
             eq(campaigns.id, id),
             eq(campaigns.orgId, orgId)
@@ -139,27 +154,22 @@ export const taHrRouter = router({
         // Get contact stats
         const [contactStats] = await db.select({
           totalContacts: sql<number>`count(*)::int`,
-          responded: sql<number>`count(*) FILTER (WHERE ${campaignContacts.hasResponded} = true)::int`,
-          interested: sql<number>`count(*) FILTER (WHERE ${campaignContacts.responseType} = 'interested')::int`,
+          responded: sql<number>`count(*) FILTER (WHERE ${campaignContacts.respondedAt} IS NOT NULL)::int`,
+          interested: sql<number>`count(*) FILTER (WHERE ${campaignContacts.conversionType} = 'interested')::int`,
         })
           .from(campaignContacts)
-          .where(and(
-            eq(campaignContacts.campaignId, input.campaignId),
-            eq(campaignContacts.orgId, orgId)
-          ));
+          .where(eq(campaignContacts.campaignId, input.campaignId));
 
         // Get engagement stats
         const [engagementStats] = await db.select({
           totalEngagements: sql<number>`count(*)::int`,
-          emails: sql<number>`count(*) FILTER (WHERE ${engagementTracking.engagementType} = 'email')::int`,
-          calls: sql<number>`count(*) FILTER (WHERE ${engagementTracking.engagementType} = 'phone')::int`,
-          messages: sql<number>`count(*) FILTER (WHERE ${engagementTracking.engagementType} = 'sms')::int`,
+          emails: sql<number>`count(*) FILTER (WHERE ${engagementTracking.eventType} = 'email')::int`,
+          calls: sql<number>`count(*) FILTER (WHERE ${engagementTracking.eventType} = 'phone')::int`,
+          messages: sql<number>`count(*) FILTER (WHERE ${engagementTracking.eventType} = 'sms')::int`,
         })
           .from(engagementTracking)
-          .where(and(
-            eq(engagementTracking.campaignId, input.campaignId),
-            eq(engagementTracking.orgId, orgId)
-          ));
+          .innerJoin(campaignContacts, eq(engagementTracking.campaignContactId, campaignContacts.id))
+          .where(eq(campaignContacts.campaignId, input.campaignId));
 
         return {
           contacts: contactStats,
@@ -188,16 +198,15 @@ export const taHrRouter = router({
         const { campaignId, limit, offset, status } = input;
 
         let conditions = [
-          eq(campaignContacts.campaignId, campaignId),
-          eq(campaignContacts.orgId, orgId)
+          eq(campaignContacts.campaignId, campaignId)
         ];
-        if (status) conditions.push(eq(campaignContacts.contactStatus, status));
+        if (status) conditions.push(eq(campaignContacts.status, status));
 
         const results = await db.select().from(campaignContacts)
           .where(and(...conditions))
           .limit(limit)
           .offset(offset)
-          .orderBy(desc(campaignContacts.addedAt));
+          .orderBy(desc(campaignContacts.createdAt));
 
         return results;
       }),
@@ -208,16 +217,15 @@ export const taHrRouter = router({
     add: orgProtectedProcedure
       .input(z.object({
         campaignId: z.string().uuid(),
-        prospectId: z.string().uuid(),
-        sequencePosition: z.number().default(1),
+        userId: z.string().uuid().optional(),
+        leadId: z.string().uuid().optional(),
+        firstName: z.string().optional(),
+        lastName: z.string().optional(),
+        email: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
-        const { userId, orgId } = ctx;
-
         const [newContact] = await db.insert(campaignContacts).values({
           ...input,
-          orgId,
-          addedBy: userId,
         }).returning();
 
         return newContact;
@@ -229,26 +237,25 @@ export const taHrRouter = router({
     updateStatus: orgProtectedProcedure
       .input(z.object({
         id: z.string().uuid(),
-        status: z.enum(['new', 'contacted', 'responded', 'qualified', 'not_interested']),
-        responseType: z.enum(['interested', 'not_interested', 'maybe', 'do_not_contact']).optional(),
-        responseNotes: z.string().optional(),
+        status: z.enum(['pending', 'sent', 'opened', 'clicked', 'responded', 'converted']),
+        responseText: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
-        const { orgId } = ctx;
-        const { id, status, responseType, responseNotes } = input;
+        const { id, status, responseText } = input;
+
+        const updateData: Record<string, unknown> = {
+          status,
+          updatedAt: new Date(),
+        };
+
+        if (status === 'responded' && responseText) {
+          updateData.respondedAt = new Date();
+          updateData.responseText = responseText;
+        }
 
         const [updated] = await db.update(campaignContacts)
-          .set({
-            contactStatus: status,
-            responseType,
-            responseNotes,
-            hasResponded: status === 'responded',
-            lastContactedAt: new Date(),
-          })
-          .where(and(
-            eq(campaignContacts.id, id),
-            eq(campaignContacts.orgId, orgId)
-          ))
+          .set(updateData)
+          .where(eq(campaignContacts.id, id))
           .returning();
 
         if (!updated) {
@@ -271,19 +278,11 @@ export const taHrRouter = router({
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        department: z.string().optional(),
-        jobTitle: z.string().optional(),
       }))
       .query(async ({ ctx, input }) => {
-        const { orgId } = ctx;
-        const { limit, offset, department, jobTitle } = input;
-
-        let conditions = [eq(employeeMetadata.orgId, orgId)];
-        if (department) conditions.push(eq(employeeMetadata.department, department));
-        if (jobTitle) conditions.push(eq(employeeMetadata.jobTitle, jobTitle));
+        const { limit, offset } = input;
 
         const results = await db.select().from(employeeMetadata)
-          .where(and(...conditions))
           .limit(limit)
           .offset(offset)
           .orderBy(employeeMetadata.userId);
@@ -292,18 +291,13 @@ export const taHrRouter = router({
       }),
 
     /**
-     * Get employee by ID
+     * Get employee by user ID
      */
     getById: orgProtectedProcedure
-      .input(z.object({ id: z.string().uuid() }))
+      .input(z.object({ userId: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
-        const { orgId } = ctx;
-
         const [employee] = await db.select().from(employeeMetadata)
-          .where(and(
-            eq(employeeMetadata.id, input.id),
-            eq(employeeMetadata.orgId, orgId)
-          ))
+          .where(eq(employeeMetadata.userId, input.userId))
           .limit(1);
 
         if (!employee) {
@@ -319,12 +313,12 @@ export const taHrRouter = router({
     create: orgProtectedProcedure
       .input(createEmployeeMetadataSchema)
       .mutation(async ({ ctx, input }) => {
-        const { userId, orgId } = ctx;
+        const { bonusTarget, benefitsStartDate, ...rest } = input;
 
         const [newEmployee] = await db.insert(employeeMetadata).values({
-          ...input,
-          orgId,
-          createdBy: userId,
+          ...rest,
+          bonusTarget: bonusTarget?.toString(),
+          benefitsStartDate: benefitsStartDate ? new Date(benefitsStartDate).toISOString().split('T')[0] : undefined,
         }).returning();
 
         return newEmployee;
@@ -336,15 +330,22 @@ export const taHrRouter = router({
     update: orgProtectedProcedure
       .input(updateEmployeeMetadataSchema)
       .mutation(async ({ ctx, input }) => {
-        const { orgId } = ctx;
-        const { id, ...data } = input;
+        const { userId, bonusTarget, benefitsStartDate, ...data } = input;
+
+        const updateData: Record<string, unknown> = {
+          ...data,
+        };
+
+        if (bonusTarget !== undefined) {
+          updateData.bonusTarget = bonusTarget?.toString();
+        }
+        if (benefitsStartDate !== undefined) {
+          updateData.benefitsStartDate = benefitsStartDate ? new Date(benefitsStartDate).toISOString().split('T')[0] : undefined;
+        }
 
         const [updated] = await db.update(employeeMetadata)
-          .set(data)
-          .where(and(
-            eq(employeeMetadata.id, id),
-            eq(employeeMetadata.orgId, orgId)
-          ))
+          .set(updateData)
+          .where(eq(employeeMetadata.userId, userId))
           .returning();
 
         if (!updated) {
@@ -359,10 +360,7 @@ export const taHrRouter = router({
      */
     orgChart: orgProtectedProcedure
       .query(async ({ ctx }) => {
-        const { orgId } = ctx;
-
         const employees = await db.select().from(employeeMetadata)
-          .where(eq(employeeMetadata.orgId, orgId))
           .orderBy(employeeMetadata.userId);
 
         return employees;
@@ -383,7 +381,7 @@ export const taHrRouter = router({
 
         const results = await db.select().from(pods)
           .where(eq(pods.orgId, orgId))
-          .orderBy(pods.podName);
+          .orderBy(pods.name);
 
         return results;
       }),
@@ -395,11 +393,13 @@ export const taHrRouter = router({
       .input(createPodSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
+        const { formedDate, ...rest } = input;
 
         const [newPod] = await db.insert(pods).values({
-          ...input,
+          ...rest,
           orgId,
           createdBy: userId,
+          formedDate: formedDate ? new Date(formedDate).toISOString().split('T')[0] : undefined,
         }).returning();
 
         return newPod;
@@ -412,10 +412,14 @@ export const taHrRouter = router({
       .input(updatePodSchema)
       .mutation(async ({ ctx, input }) => {
         const { orgId } = ctx;
-        const { id, ...data } = input;
+        const { id, formedDate, dissolvedDate, ...data } = input;
 
         const [updated] = await db.update(pods)
-          .set(data)
+          .set({
+            ...data,
+            formedDate: formedDate ? new Date(formedDate).toISOString().split('T')[0] : undefined,
+            dissolvedDate: dissolvedDate ? new Date(dissolvedDate).toISOString().split('T')[0] : undefined,
+          })
           .where(and(
             eq(pods.id, id),
             eq(pods.orgId, orgId)
@@ -484,7 +488,7 @@ export const taHrRouter = router({
           .where(and(...conditions))
           .limit(limit)
           .offset(offset)
-          .orderBy(desc(payrollRuns.payPeriodEnd));
+          .orderBy(desc(payrollRuns.periodEndDate));
 
         return results;
       }),
@@ -496,11 +500,15 @@ export const taHrRouter = router({
       .input(createPayrollRunSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
+        const { periodStartDate, periodEndDate, payDate, ...rest } = input;
 
         const [newRun] = await db.insert(payrollRuns).values({
-          ...input,
+          ...rest,
           orgId,
-          processedBy: userId,
+          createdBy: userId,
+          periodStartDate: new Date(periodStartDate).toISOString().split('T')[0],
+          periodEndDate: new Date(periodEndDate).toISOString().split('T')[0],
+          payDate: new Date(payDate).toISOString().split('T')[0],
         }).returning();
 
         return newRun;
@@ -512,13 +520,8 @@ export const taHrRouter = router({
     items: orgProtectedProcedure
       .input(z.object({ payrollRunId: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
-        const { orgId } = ctx;
-
         const results = await db.select().from(payrollItems)
-          .where(and(
-            eq(payrollItems.payrollRunId, input.payrollRunId),
-            eq(payrollItems.orgId, orgId)
-          ))
+          .where(eq(payrollItems.payrollRunId, input.payrollRunId))
           .orderBy(payrollItems.employeeId);
 
         return results;
@@ -546,13 +549,13 @@ export const taHrRouter = router({
 
         let conditions = [eq(performanceReviews.orgId, orgId)];
         if (employeeId) conditions.push(eq(performanceReviews.employeeId, employeeId));
-        if (status) conditions.push(eq(performanceReviews.reviewStatus, status));
+        if (status) conditions.push(eq(performanceReviews.status, status));
 
         const results = await db.select().from(performanceReviews)
           .where(and(...conditions))
           .limit(limit)
           .offset(offset)
-          .orderBy(desc(performanceReviews.reviewDate));
+          .orderBy(desc(performanceReviews.scheduledDate));
 
         return results;
       }),
@@ -563,12 +566,15 @@ export const taHrRouter = router({
     create: orgProtectedProcedure
       .input(createPerformanceReviewSchema)
       .mutation(async ({ ctx, input }) => {
-        const { userId, orgId } = ctx;
+        const { orgId } = ctx;
+        const { periodStartDate, periodEndDate, scheduledDate, ...rest } = input;
 
         const [newReview] = await db.insert(performanceReviews).values({
-          ...input,
+          ...rest,
           orgId,
-          createdBy: userId,
+          periodStartDate: new Date(periodStartDate).toISOString().split('T')[0],
+          periodEndDate: new Date(periodEndDate).toISOString().split('T')[0],
+          scheduledDate: scheduledDate ? new Date(scheduledDate).toISOString().split('T')[0] : undefined,
         }).returning();
 
         return newReview;
@@ -610,17 +616,15 @@ export const taHrRouter = router({
     list: orgProtectedProcedure
       .input(z.object({
         employeeId: z.string().uuid(),
-        startDate: z.date(),
-        endDate: z.date(),
+        startDate: z.string(),
+        endDate: z.string(),
       }))
       .query(async ({ ctx, input }) => {
-        const { orgId } = ctx;
         const { employeeId, startDate, endDate } = input;
 
         const results = await db.select().from(timeAttendance)
           .where(and(
             eq(timeAttendance.employeeId, employeeId),
-            eq(timeAttendance.orgId, orgId),
             gte(timeAttendance.date, startDate),
             lte(timeAttendance.date, endDate)
           ))
@@ -630,47 +634,70 @@ export const taHrRouter = router({
       }),
 
     /**
-     * Clock in
+     * Submit timesheet
      */
-    clockIn: orgProtectedProcedure
-      .input(z.object({
-        date: z.date().default(() => new Date()),
-        notes: z.string().optional(),
-      }))
+    submit: orgProtectedProcedure
+      .input(submitTimesheetSchema)
       .mutation(async ({ ctx, input }) => {
-        const { userId, orgId } = ctx;
+        const { date, regularHours, overtimeHours, ptoHours, sickHours, holidayHours, ...rest } = input;
 
         const [record] = await db.insert(timeAttendance).values({
-          employeeId: userId,
-          orgId,
-          date: input.date,
-          clockIn: new Date(),
-          notes: input.notes,
+          ...rest,
+          date: new Date(date).toISOString().split('T')[0],
+          regularHours: regularHours?.toString(),
+          overtimeHours: overtimeHours?.toString(),
+          ptoHours: ptoHours?.toString(),
+          sickHours: sickHours?.toString(),
+          holidayHours: holidayHours?.toString(),
+          status: 'submitted',
         }).returning();
 
         return record;
       }),
 
     /**
-     * Clock out
+     * Update timesheet
      */
-    clockOut: orgProtectedProcedure
-      .input(z.object({
-        id: z.string().uuid(),
-        notes: z.string().optional(),
-      }))
+    update: orgProtectedProcedure
+      .input(updateTimesheetSchema)
       .mutation(async ({ ctx, input }) => {
-        const { userId, orgId } = ctx;
+        const { userId } = ctx;
+        const { id, date, regularHours, overtimeHours, ptoHours, sickHours, holidayHours, employeeId, ...data } = input;
+
+        const updateData: Record<string, unknown> = {
+          ...data,
+        };
+
+        if (date !== undefined) {
+          updateData.date = date ? new Date(date).toISOString().split('T')[0] : undefined;
+        }
+        if (regularHours !== undefined) {
+          updateData.regularHours = regularHours?.toString();
+        }
+        if (overtimeHours !== undefined) {
+          updateData.overtimeHours = overtimeHours?.toString();
+        }
+        if (ptoHours !== undefined) {
+          updateData.ptoHours = ptoHours?.toString();
+        }
+        if (sickHours !== undefined) {
+          updateData.sickHours = sickHours?.toString();
+        }
+        if (holidayHours !== undefined) {
+          updateData.holidayHours = holidayHours?.toString();
+        }
+
+        // Use employeeId from input or fallback to userId from context
+        const targetEmployeeId = employeeId || userId;
+        if (!targetEmployeeId) {
+          throw new Error('Employee ID is required');
+        }
 
         const [updated] = await db.update(timeAttendance)
-          .set({
-            clockOut: new Date(),
-            notes: input.notes,
-          })
+          .set(updateData)
           .where(and(
-            eq(timeAttendance.id, input.id),
-            eq(timeAttendance.employeeId, userId),
-            eq(timeAttendance.orgId, orgId)
+            eq(timeAttendance.id, id),
+            eq(timeAttendance.employeeId, targetEmployeeId)
           ))
           .returning();
 
@@ -693,15 +720,21 @@ export const taHrRouter = router({
     balance: orgProtectedProcedure
       .input(z.object({
         employeeId: z.string().uuid().optional(),
+        year: z.number().int().optional(),
       }))
       .query(async ({ ctx, input }) => {
-        const { userId, orgId } = ctx;
+        const { userId } = ctx;
         const employeeId = input.employeeId || userId;
+        const year = input.year || new Date().getFullYear();
+
+        if (!employeeId) {
+          throw new Error('Employee ID is required');
+        }
 
         const [balance] = await db.select().from(ptoBalances)
           .where(and(
             eq(ptoBalances.employeeId, employeeId),
-            eq(ptoBalances.orgId, orgId)
+            eq(ptoBalances.year, year)
           ))
           .limit(1);
 

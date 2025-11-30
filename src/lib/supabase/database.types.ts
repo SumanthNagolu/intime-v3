@@ -29593,6 +29593,15 @@ export type Database = {
         Returns: boolean
       }
       check_rate_limits: { Args: { p_user_id: string }; Returns: Json }
+      check_user_permission: {
+        Args: {
+          p_action: string
+          p_required_scope?: string
+          p_resource: string
+          p_user_id: string
+        }
+        Returns: boolean
+      }
       cleanup_old_audit_partitions: {
         Args: never
         Returns: {

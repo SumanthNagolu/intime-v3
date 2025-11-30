@@ -43,7 +43,7 @@ export function useCreateJob(options: CreateJobOptions = {}) {
       options.onSuccess?.(data);
     },
     onError: (error) => {
-      options.onError?.(error);
+      options.onError?.(error as unknown as Error);
     },
   });
 
@@ -105,7 +105,7 @@ export function useUpdateJob(options: UpdateJobOptions = {}) {
       if (previousJob) {
         utils.ats.jobs.getById.setData(
           { id: newData.id },
-          { ...previousJob, ...newData }
+          { ...previousJob, ...newData } as typeof previousJob
         );
       }
 
@@ -119,7 +119,7 @@ export function useUpdateJob(options: UpdateJobOptions = {}) {
           context.previousJob
         );
       }
-      options.onError?.(error);
+      options.onError?.(error as unknown as Error);
     },
     onSuccess: (data, variables) => {
       // Invalidate relevant queries
@@ -168,7 +168,7 @@ export function useDeleteJob(options: DeleteJobOptions = {}) {
       options.onSuccess?.();
     },
     onError: (error) => {
-      options.onError?.(error);
+      options.onError?.(error as unknown as Error);
     },
   });
 

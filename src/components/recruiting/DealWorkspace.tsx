@@ -197,6 +197,7 @@ export const DealWorkspace: React.FC = () => {
   const getUploadUrlMutation = trpc.files.getUploadUrl.useMutation();
   const recordUploadMutation = trpc.files.recordUpload.useMutation();
   const deleteFileMutation = trpc.files.delete.useMutation();
+  const getDownloadUrlMutation = trpc.files.getDownloadUrl.useMutation();
   const utils = trpc.useUtils();
 
   // Handle deal value save
@@ -295,7 +296,7 @@ export const DealWorkspace: React.FC = () => {
   // Handle file download
   const handleFileDownload = async (fileId: string) => {
     try {
-      const result = await utils.files.getDownloadUrl.fetch({ fileId });
+      const result = await getDownloadUrlMutation.mutateAsync({ fileId });
       window.open(result.url, '_blank');
     } catch (error) {
       console.error('Download error:', error);

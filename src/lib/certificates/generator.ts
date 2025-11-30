@@ -20,6 +20,28 @@ export interface CertificateData {
   skills?: string[];
 }
 
+// Database row types for certificate queries
+interface StudentCertificateRow {
+  id: string;
+  certificate_number: string;
+  student_id: string;
+  course_id: string;
+  completion_date: string;
+  issued_date: string;
+  grade_achieved?: number | string | null;
+  skills_mastered?: string[] | null;
+  pdf_url?: string | null;
+  status: string;
+}
+
+interface UserProfileRow {
+  full_name: string | null;
+}
+
+interface CourseRow {
+  title: string | null;
+}
+
 /**
  * Generate certificate HTML template
  */
@@ -330,16 +352,11 @@ export async function generateCertificatePDF(certificateId: string): Promise<str
   const supabase = createAdminClient();
 
   try {
-    // Get certificate data
+    // Get certificate data - query without relations first
+    // Note: student_certificates table may not exist in types yet
     const { data: certificate, error: certError } = await supabase
-      .from('student_certificates')
-      .select(
-        `
-        *,
-        student:user_profiles!student_id(full_name),
-        course:courses(title)
-      `
-      )
+      .from('student_certificates' as any)
+      .select('*')
       .eq('id', certificateId)
       .single();
 
@@ -347,19 +364,44 @@ export async function generateCertificatePDF(certificateId: string): Promise<str
       throw new Error(`Certificate ${certificateId} not found`);
     }
 
-    const student = certificate.student as any;
-    const course = certificate.course as any;
+    // Type assertion for the certificate row
+    const certRow = certificate as unknown as StudentCertificateRow;
+
+    // Get student data
+    const { data: student } = await supabase
+      .from('user_profiles')
+      .select('full_name')
+      .eq('id', certRow.student_id)
+      .single();
+
+    const studentRow = student as unknown as UserProfileRow | null;
+
+    // Get course data
+    const { data: course } = await supabase
+      .from('courses')
+      .select('title')
+      .eq('id', certRow.course_id)
+      .single();
+
+    const courseRow = course as unknown as CourseRow | null;
+
+    // Parse grade if it's a string (Drizzle numeric columns return strings)
+    const gradeValue = certRow.grade_achieved
+      ? (typeof certRow.grade_achieved === 'string'
+          ? parseFloat(certRow.grade_achieved)
+          : certRow.grade_achieved)
+      : undefined;
 
     // Prepare certificate data
     const certData: CertificateData = {
-      certificateId: certificate.id,
-      certificateNumber: certificate.certificate_number,
-      studentName: student.full_name || 'Student Name',
-      courseName: course.title || 'Course Name',
-      completionDate: certificate.completion_date,
-      issueDate: certificate.issued_date,
-      grade: certificate.grade_achieved,
-      skills: certificate.skills_mastered || [],
+      certificateId: certRow.id,
+      certificateNumber: certRow.certificate_number,
+      studentName: studentRow?.full_name || 'Student Name',
+      courseName: courseRow?.title || 'Course Name',
+      completionDate: certRow.completion_date,
+      issueDate: certRow.issued_date,
+      grade: gradeValue,
+      skills: certRow.skills_mastered || [],
     };
 
     // Generate HTML
@@ -417,7 +459,7 @@ export async function generateCertificatePDF(certificateId: string): Promise<str
 
     // Update certificate record
     await supabase
-      .from('student_certificates')
+      .from('student_certificates' as any)
       .update({
         pdf_url: pdfUrl,
         status: 'issued',
@@ -432,7 +474,7 @@ export async function generateCertificatePDF(certificateId: string): Promise<str
 
     // Update certificate status to failed
     await supabase
-      .from('student_certificates')
+      .from('student_certificates' as any)
       .update({
         status: 'failed',
       })
@@ -448,15 +490,11 @@ export async function generateCertificatePDF(certificateId: string): Promise<str
 export async function verifyCertificate(certificateNumber: string) {
   const supabase = await createClient();
 
+  // Get certificate data
+  // Note: student_certificates table may not exist in types yet
   const { data: certificate, error } = await supabase
-    .from('student_certificates')
-    .select(
-      `
-      *,
-      student:user_profiles!student_id(full_name),
-      course:courses(title)
-    `
-    )
+    .from('student_certificates' as any)
+    .select('*')
     .eq('certificate_number', certificateNumber)
     .eq('status', 'issued')
     .single();
@@ -465,16 +503,41 @@ export async function verifyCertificate(certificateNumber: string) {
     return null;
   }
 
-  const student = certificate.student as any;
-  const course = certificate.course as any;
+  // Type assertion for the certificate row
+  const certRow = certificate as unknown as StudentCertificateRow;
+
+  // Get student data
+  const { data: student } = await supabase
+    .from('user_profiles')
+    .select('full_name')
+    .eq('id', certRow.student_id)
+    .single();
+
+  const studentRow = student as unknown as UserProfileRow | null;
+
+  // Get course data
+  const { data: course } = await supabase
+    .from('courses')
+    .select('title')
+    .eq('id', certRow.course_id)
+    .single();
+
+  const courseRow = course as unknown as CourseRow | null;
+
+  // Parse grade if it's a string (Drizzle numeric columns return strings)
+  const gradeValue = certRow.grade_achieved
+    ? (typeof certRow.grade_achieved === 'string'
+        ? parseFloat(certRow.grade_achieved)
+        : certRow.grade_achieved)
+    : null;
 
   return {
-    certificate_number: certificate.certificate_number,
-    student_name: student.full_name,
-    course_name: course.title,
-    completion_date: certificate.completion_date,
-    issued_date: certificate.issued_date,
-    grade: certificate.grade_achieved,
+    certificate_number: certRow.certificate_number,
+    student_name: studentRow?.full_name || null,
+    course_name: courseRow?.title || null,
+    completion_date: certRow.completion_date,
+    issued_date: certRow.issued_date,
+    grade: gradeValue,
     is_valid: true,
   };
 }

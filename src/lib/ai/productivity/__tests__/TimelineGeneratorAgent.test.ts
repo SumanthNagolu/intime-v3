@@ -64,9 +64,33 @@ vi.mock('openai', () => ({
 
 describe('TimelineGeneratorAgent', () => {
   let generator: TimelineGeneratorAgent;
+  let mockSupabase: any;
 
   beforeEach(() => {
-    generator = new TimelineGeneratorAgent();
+    // Create mock Supabase client
+    mockSupabase = {
+      from: vi.fn().mockReturnThis(),
+      select: vi.fn().mockReturnThis(),
+      eq: vi.fn().mockReturnThis(),
+      gte: vi.fn().mockReturnThis(),
+      lt: vi.fn().mockReturnThis(),
+      is: vi.fn().mockReturnThis(),
+      single: vi.fn().mockResolvedValue({
+        data: {
+          id: 'test-report-id',
+          date: '2025-01-15',
+        },
+        error: null,
+      }),
+      upsert: vi.fn().mockResolvedValue({ error: null }),
+      auth: {
+        getUser: vi.fn().mockResolvedValue({
+          data: { user: { id: 'test-user-id' } },
+        }),
+      },
+    };
+
+    generator = new TimelineGeneratorAgent(mockSupabase);
   });
 
   afterEach(() => {
@@ -201,7 +225,7 @@ describe('TimelineGeneratorAgent', () => {
       };
 
       // Mock Supabase from calls with different behaviors for different methods
-      const fromMock = vi.spyOn(generator['supabase'], 'from');
+      const fromMock = vi.spyOn(mockSupabase, 'from');
 
       fromMock.mockImplementation((tableName) => {
         if (tableName === 'employee_screenshots') {
@@ -242,7 +266,7 @@ describe('TimelineGeneratorAgent', () => {
         byCategory: { coding: 624, email: 192, meeting: 96, documentation: 48, research: 0, social_media: 0, idle: 0 },
       };
 
-      const fromMock = vi.spyOn(generator['supabase'], 'from');
+      const fromMock = vi.spyOn(mockSupabase, 'from');
 
       fromMock.mockImplementation((tableName) => {
         if (tableName === 'employee_screenshots') {
@@ -288,7 +312,7 @@ describe('TimelineGeneratorAgent', () => {
       vi.spyOn(generator['classifier'], 'getDailySummary').mockResolvedValue(mockSummary);
 
       // Mock upsert to capture saved data
-      vi.spyOn(generator['supabase'], 'from').mockReturnValue({
+      vi.spyOn(mockSupabase, 'from').mockReturnValue({
         upsert: vi.fn().mockImplementation((data) => {
           savedReport = data;
           return Promise.resolve({ error: null });
@@ -443,7 +467,7 @@ describe('TimelineGeneratorAgent', () => {
       vi.spyOn(generator['classifier'], 'getDailySummary').mockResolvedValue(mockSummary);
 
       // Mock database save to fail
-      vi.spyOn(generator['supabase'], 'from').mockReturnValue({
+      vi.spyOn(mockSupabase, 'from').mockReturnValue({
         upsert: vi.fn().mockResolvedValue({ error: new Error('Database error') }),
       } as any);
 

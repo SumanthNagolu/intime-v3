@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useAppStore } from '../../lib/store';
-import { Search, Filter, MoreHorizontal, MapPin, Clock, CheckCircle, XCircle, Calendar, DollarSign, User, FileText, Edit3, Briefcase, TrendingUp, Star } from 'lucide-react';
+import { Search, Filter, MoreHorizontal, MapPin, Clock, CheckCircle, XCircle, Calendar, DollarSign, User, FileText, Edit3, Briefcase, TrendingUp, Star, Building2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { cn } from '../../lib/utils';
@@ -144,7 +144,7 @@ export const PipelineView: React.FC = () => {
                           {item.job?.title}
                       </div>
                       <div className="text-sm text-gold-700 font-semibold flex items-center gap-1.5">
-                          <Building size={14} strokeWidth={2} />
+                          <Building2 size={14} strokeWidth={2} />
                           {item.account?.name}
                       </div>
                   </div>

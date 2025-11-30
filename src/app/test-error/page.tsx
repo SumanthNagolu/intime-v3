@@ -9,7 +9,7 @@ import { useState } from 'react';
  */
 
 // Component that throws during render
-function ErrorThrower() {
+function ErrorThrower(): React.ReactElement {
   throw new Error('This is a test error to preview the error page design');
 }
 

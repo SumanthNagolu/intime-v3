@@ -71,7 +71,7 @@ export const aiMentorRouter = router({
    * Ask AI Mentor (Non-streaming)
    */
   askMentor: protectedProcedure.input(askMentorSchema).mutation(async ({ ctx, input }) => {
-    const userId = ctx.session.user.id;
+    const userId = ctx.userId as string;
 
     const response = await askMentor(userId, {
       question: input.question,
@@ -90,26 +90,28 @@ export const aiMentorRouter = router({
   askMentorStream: protectedProcedure
     .input(askMentorSchema)
     .subscription(({ ctx, input }) => {
-      const userId = ctx.session.user.id;
+      const userId = ctx.userId as string;
 
-      return observable<MentorStreamChunk>(async (emit) => {
-        try {
-          const stream = askMentorStream(userId, {
-            question: input.question,
-            topicId: input.topicId,
-            courseId: input.courseId,
-            sessionId: input.sessionId,
-            conversationHistory: input.conversationHistory,
-          });
+      return observable<MentorStreamChunk>((emit) => {
+        (async () => {
+          try {
+            const stream = askMentorStream(userId, {
+              question: input.question,
+              topicId: input.topicId,
+              courseId: input.courseId,
+              sessionId: input.sessionId,
+              conversationHistory: input.conversationHistory,
+            });
 
-          for await (const chunk of stream) {
-            emit.next(chunk);
+            for await (const chunk of stream) {
+              emit.next(chunk);
+            }
+
+            emit.complete();
+          } catch (error) {
+            emit.error(error instanceof Error ? error : new Error('Unknown error'));
           }
-
-          emit.complete();
-        } catch (error) {
-          emit.error(error instanceof Error ? error : new Error('Unknown error'));
-        }
+        })();
       });
     }),
 
@@ -117,7 +119,7 @@ export const aiMentorRouter = router({
    * Rate a chat response
    */
   rateChat: protectedProcedure.input(rateChatSchema).mutation(async ({ ctx, input }) => {
-    const userId = ctx.session.user.id;
+    const userId = ctx.userId as string;
 
     const SUPABASE_URL = 'https://gkwhxmvugnjwwwiufmdy.supabase.co';
     const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
@@ -150,7 +152,7 @@ export const aiMentorRouter = router({
    * Escalate chat to trainer
    */
   escalateChat: protectedProcedure.input(escalateChatSchema).mutation(async ({ ctx, input }) => {
-    const userId = ctx.session.user.id;
+    const userId = ctx.userId as string;
 
     const SUPABASE_URL = 'https://gkwhxmvugnjwwwiufmdy.supabase.co';
     const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
@@ -185,7 +187,7 @@ export const aiMentorRouter = router({
   getChatHistory: protectedProcedure
     .input(getChatHistorySchema)
     .query(async ({ ctx, input }) => {
-      const userId = ctx.session.user.id;
+      const userId = ctx.userId as string;
 
       const SUPABASE_URL = 'https://gkwhxmvugnjwwwiufmdy.supabase.co';
       const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
@@ -220,7 +222,7 @@ export const aiMentorRouter = router({
   getUserSessions: protectedProcedure
     .input(getUserSessionsSchema)
     .query(async ({ ctx, input }) => {
-      const userId = ctx.session.user.id;
+      const userId = ctx.userId as string;
 
       const SUPABASE_URL = 'https://gkwhxmvugnjwwwiufmdy.supabase.co';
       const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
@@ -253,7 +255,7 @@ export const aiMentorRouter = router({
    * Get rate limit status for current user
    */
   getRateLimitStatus: protectedProcedure.query(async ({ ctx }) => {
-    const userId = ctx.session.user.id;
+    const userId = ctx.userId as string;
 
     const status = await getRateLimitStatus(userId);
 

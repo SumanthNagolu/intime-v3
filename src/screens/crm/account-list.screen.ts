@@ -17,7 +17,7 @@ const accountTableColumns: TableColumnDefinition[] = [
     id: 'name',
     label: 'Account Name',
     path: 'name',
-    fieldType: 'text',
+    type: 'text',
     sortable: true,
     width: '200px',
   },
@@ -25,7 +25,7 @@ const accountTableColumns: TableColumnDefinition[] = [
     id: 'industry',
     label: 'Industry',
     path: 'industry',
-    fieldType: 'enum',
+    type: 'enum',
     sortable: true,
     config: {
       options: [
@@ -50,7 +50,7 @@ const accountTableColumns: TableColumnDefinition[] = [
     id: 'companyType',
     label: 'Type',
     path: 'companyType',
-    fieldType: 'enum',
+    type: 'enum',
     config: {
       options: [
         { value: 'direct_client', label: 'Direct Client' },
@@ -66,7 +66,7 @@ const accountTableColumns: TableColumnDefinition[] = [
     id: 'status',
     label: 'Status',
     path: 'status',
-    fieldType: 'enum',
+    type: 'enum',
     sortable: true,
     config: {
       options: [
@@ -87,7 +87,7 @@ const accountTableColumns: TableColumnDefinition[] = [
     id: 'tier',
     label: 'Tier',
     path: 'tier',
-    fieldType: 'enum',
+    type: 'enum',
     sortable: true,
     config: {
       options: [
@@ -108,13 +108,13 @@ const accountTableColumns: TableColumnDefinition[] = [
     id: 'accountManager',
     label: 'Account Manager',
     path: 'accountManager.fullName',
-    fieldType: 'text',
+    type: 'text',
   },
   {
     id: 'annualRevenueTarget',
     label: 'Revenue Target',
     path: 'annualRevenueTarget',
-    fieldType: 'currency',
+    type: 'currency',
     sortable: true,
     width: '140px',
   },
@@ -122,13 +122,13 @@ const accountTableColumns: TableColumnDefinition[] = [
     id: 'phone',
     label: 'Phone',
     path: 'phone',
-    fieldType: 'phone',
+    type: 'phone',
   },
   {
     id: 'createdAt',
     label: 'Created',
     path: 'createdAt',
-    fieldType: 'date',
+    type: 'date',
     sortable: true,
     config: { format: 'short' },
   },
@@ -142,7 +142,7 @@ const filterFields = [
   {
     id: 'status',
     label: 'Status',
-    fieldType: 'multiselect' as const,
+    type: 'multiselect' as const,
     config: {
       options: [
         { value: 'prospect', label: 'Prospect' },
@@ -155,7 +155,7 @@ const filterFields = [
   {
     id: 'tier',
     label: 'Tier',
-    fieldType: 'multiselect' as const,
+    type: 'multiselect' as const,
     config: {
       options: [
         { value: 'enterprise', label: 'Enterprise' },
@@ -168,7 +168,7 @@ const filterFields = [
   {
     id: 'industry',
     label: 'Industry',
-    fieldType: 'multiselect' as const,
+    type: 'multiselect' as const,
     config: {
       options: [
         { value: 'technology', label: 'Technology' },
@@ -183,7 +183,7 @@ const filterFields = [
   {
     id: 'companyType',
     label: 'Company Type',
-    fieldType: 'multiselect' as const,
+    type: 'multiselect' as const,
     config: {
       options: [
         { value: 'direct_client', label: 'Direct Client' },
@@ -198,7 +198,7 @@ const filterFields = [
   {
     id: 'accountManagerId',
     label: 'Account Manager',
-    fieldType: 'select' as const,
+    type: 'select' as const,
     config: {
       entityType: 'user',
       displayField: 'fullName',
@@ -207,7 +207,7 @@ const filterFields = [
   {
     id: 'dateRange',
     label: 'Created Date',
-    fieldType: 'date' as const,
+    type: 'date' as const,
     config: {
       range: true,
     },
@@ -230,9 +230,8 @@ export const accountListScreen: ScreenDefinition = {
   dataSource: {
     type: 'query',
     query: {
-      router: 'crm',
-      procedure: 'accounts.list',
-      input: {},
+      procedure: 'crm.accounts.list',
+      params: {},
     },
   },
 
@@ -248,25 +247,25 @@ export const accountListScreen: ScreenDefinition = {
           {
             id: 'totalAccounts',
             label: 'Total Accounts',
-            fieldType: 'number',
+            type: 'number',
             path: 'total',
           },
           {
             id: 'activeAccounts',
             label: 'Active',
-            fieldType: 'number',
+            type: 'number',
             path: 'metrics.byStatus.active',
           },
           {
             id: 'prospects',
             label: 'Prospects',
-            fieldType: 'number',
+            type: 'number',
             path: 'metrics.byStatus.prospect',
           },
           {
             id: 'totalRevenueTarget',
             label: 'Revenue Target',
-            fieldType: 'currency',
+            type: 'currency',
             path: 'metrics.totalRevenueTarget',
           },
         ],
@@ -274,31 +273,7 @@ export const accountListScreen: ScreenDefinition = {
       {
         id: 'account-table',
         type: 'table',
-        tableConfig: {
-          columns: accountTableColumns,
-          dataPath: 'items',
-          rowClickAction: {
-            type: 'navigate',
-            navigation: {
-              path: '/employee/crm/accounts/{id}',
-              params: { id: fieldValue('id') },
-            },
-          },
-          pagination: {
-            enabled: true,
-            pageSize: 25,
-            pageSizeOptions: [10, 25, 50, 100],
-          },
-          sorting: {
-            enabled: true,
-            defaultSort: { field: 'name', direction: 'asc' },
-          },
-          selection: {
-            enabled: true,
-            mode: 'multiple',
-          },
-          filters: filterFields,
-        },
+        columns_config: accountTableColumns,
       },
     ],
   },
@@ -307,55 +282,35 @@ export const accountListScreen: ScreenDefinition = {
   actions: [
     {
       id: 'create',
-      label: 'New Account',
       type: 'navigate',
+      label: 'New Account',
       variant: 'primary',
       icon: 'Plus',
-      navigation: {
-        path: '/employee/crm/accounts/new',
+      config: {
+        type: 'navigate',
+        route: '/employee/crm/accounts/new',
       },
     },
     {
       id: 'import',
-      label: 'Import',
       type: 'custom',
+      label: 'Import',
       variant: 'secondary',
       icon: 'Upload',
+      config: {
+        type: 'custom',
+        handler: 'handleImport',
+      },
     },
     {
       id: 'export',
-      label: 'Export',
       type: 'custom',
+      label: 'Export',
       variant: 'secondary',
       icon: 'Download',
-    },
-  ],
-
-  // Bulk actions (when rows selected)
-  bulkActions: [
-    {
-      id: 'bulk-assign',
-      label: 'Assign Manager',
-      type: 'custom',
-      icon: 'UserPlus',
-    },
-    {
-      id: 'bulk-status',
-      label: 'Change Status',
-      type: 'custom',
-      icon: 'RefreshCw',
-    },
-    {
-      id: 'bulk-delete',
-      label: 'Delete',
-      type: 'custom',
-      variant: 'destructive',
-      icon: 'Trash2',
-      confirm: {
-        title: 'Delete Accounts',
-        message: 'Are you sure you want to delete the selected accounts?',
-        confirmLabel: 'Delete',
-        cancelLabel: 'Cancel',
+      config: {
+        type: 'custom',
+        handler: 'handleExport',
       },
     },
   ],
@@ -363,7 +318,7 @@ export const accountListScreen: ScreenDefinition = {
   // Navigation
   navigation: {
     breadcrumbs: [
-      { label: 'CRM', path: '/employee/crm' },
+      { label: 'CRM', route: '/employee/crm' },
       { label: 'Accounts' },
     ],
   },

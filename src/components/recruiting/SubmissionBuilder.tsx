@@ -9,13 +9,15 @@ import { ChevronLeft, FileText, Mail, Send, Wand2, CheckCircle, Eye, Paperclip, 
 import { Submission } from '../../types';
 
 export const SubmissionBuilder: React.FC = () => {
-  const { candidateId, jobId } = useParams();
+  const params = useParams();
+  const candidateId = typeof params.candidateId === 'string' ? params.candidateId : '';
+  const jobId = typeof params.jobId === 'string' ? params.jobId : '';
   const router = useRouter();
   const { candidates, jobs, submissions, updateSubmission, addSubmission } = useAppStore();
-  
+
   const candidate = candidates.find(c => c.id === candidateId);
   // Ensure we can find jobs even if they are 'external' (mocked by ensuring they exist in store or handling gracefully)
-  const job = jobs.find(j => j.id === jobId); 
+  const job = jobs.find(j => j.id === jobId);
   const existingSubmission = submissions.find(s => s.candidateId === candidateId && s.jobId === jobId);
   
   // Lifecycle State
@@ -79,8 +81,8 @@ export const SubmissionBuilder: React.FC = () => {
           } else {
               const newSubmission: Submission = {
                   id: `sub${Date.now()}`,
-                  jobId: jobId!,
-                  candidateId: candidateId!,
+                  jobId: jobId,
+                  candidateId: candidateId,
                   status: 'submitted_to_client',
                   createdAt: new Date().toLocaleDateString(),
                   lastActivity: 'Submitted to Client',

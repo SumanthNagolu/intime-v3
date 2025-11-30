@@ -20,9 +20,6 @@ export {
   type DisplayJob,
   type DisplayCandidate,
   type DisplaySubmission,
-  type DisplayInterview,
-  type DisplayOffer,
-  type DisplayPlacement,
   // Enums
   type JobStatus,
   type JobType,

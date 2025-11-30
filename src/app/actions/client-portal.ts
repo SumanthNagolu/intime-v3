@@ -378,20 +378,20 @@ export async function listClientJobsAction(
           id: job.id,
           title: job.title,
           description: job.description,
-          jobType: job.jobType,
+          jobType: job.jobType ?? 'full_time',
           status: job.status,
           location: job.location,
           isRemote: job.isRemote,
-          rateMin: job.rateMin ? Number(job.rateMin) : null,
-          rateMax: job.rateMax ? Number(job.rateMax) : null,
+          rateMin: job.rateMin ? parseFloat(job.rateMin.toString()) : null,
+          rateMax: job.rateMax ? parseFloat(job.rateMax.toString()) : null,
           rateType: job.rateType,
           requiredSkills: job.requiredSkills,
-          positionsCount: job.positionsCount,
-          positionsFilled: job.positionsFilled || 0,
+          positionsCount: job.positionsCount ?? 1,
+          positionsFilled: job.positionsFilled ?? 0,
           submissionCount: Number(submissionCount[0]?.count || 0),
           priority: job.priority,
           createdAt: job.createdAt.toISOString(),
-          targetStartDate: job.targetStartDate?.toISOString() || null,
+          targetStartDate: job.targetStartDate?.toISOString() ?? null,
         };
       })
     );
@@ -450,7 +450,7 @@ export async function getClientJobAction(
         aiMatchScore: submissions.aiMatchScore,
         recruiterMatchScore: submissions.recruiterMatchScore,
         submittedRate: submissions.submittedRate,
-        submittedAt: submissions.submittedAt,
+        submittedAt: submissions.submittedToClientAt,
         candidateFirstName: userProfiles.firstName,
         candidateLastName: userProfiles.lastName,
         candidateTitle: userProfiles.title,
@@ -462,7 +462,7 @@ export async function getClientJobAction(
         // Only show submissions that have been submitted to client
         sql`${submissions.status} not in ('sourced', 'screening', 'submission_ready')`
       ))
-      .orderBy(desc(submissions.submittedAt));
+      .orderBy(desc(submissions.submittedToClientAt));
 
     // Get interview counts
     const submissionData: ClientSubmission[] = await Promise.all(
@@ -477,13 +477,13 @@ export async function getClientJobAction(
           jobId: sub.jobId,
           jobTitle: job.title,
           candidateFirstName: sub.candidateFirstName,
-          candidateLastInitial: sub.candidateLastName?.charAt(0) || null,
+          candidateLastInitial: sub.candidateLastName?.charAt(0) ?? null,
           candidateTitle: sub.candidateTitle,
           status: sub.status,
           aiMatchScore: sub.aiMatchScore,
           recruiterMatchScore: sub.recruiterMatchScore,
-          submittedRate: sub.submittedRate ? Number(sub.submittedRate) : null,
-          submittedAt: sub.submittedAt?.toISOString() || null,
+          submittedRate: sub.submittedRate ? parseFloat(sub.submittedRate.toString()) : null,
+          submittedAt: sub.submittedAt?.toISOString() ?? null,
           interviewCount: Number(interviewCount[0]?.count || 0),
           yearsExperience: null, // Privacy - don't expose full details
           skills: null, // Privacy - don't expose full details
@@ -507,20 +507,20 @@ export async function getClientJobAction(
         id: job.id,
         title: job.title,
         description: job.description,
-        jobType: job.jobType,
+        jobType: job.jobType ?? 'full_time',
         status: job.status,
         location: job.location,
         isRemote: job.isRemote,
-        rateMin: job.rateMin ? Number(job.rateMin) : null,
-        rateMax: job.rateMax ? Number(job.rateMax) : null,
+        rateMin: job.rateMin ? parseFloat(job.rateMin.toString()) : null,
+        rateMax: job.rateMax ? parseFloat(job.rateMax.toString()) : null,
         rateType: job.rateType,
         requiredSkills: job.requiredSkills,
-        positionsCount: job.positionsCount,
-        positionsFilled: job.positionsFilled || 0,
+        positionsCount: job.positionsCount ?? 1,
+        positionsFilled: job.positionsFilled ?? 0,
         submissionCount: submissionData.length,
         priority: job.priority,
         createdAt: job.createdAt.toISOString(),
-        targetStartDate: job.targetStartDate?.toISOString() || null,
+        targetStartDate: job.targetStartDate?.toISOString() ?? null,
         submissions: submissionData,
       },
     };
@@ -596,7 +596,7 @@ export async function listClientSubmissionsAction(
         aiMatchScore: submissions.aiMatchScore,
         recruiterMatchScore: submissions.recruiterMatchScore,
         submittedRate: submissions.submittedRate,
-        submittedAt: submissions.submittedAt,
+        submittedAt: submissions.submittedToClientAt,
         candidateFirstName: userProfiles.firstName,
         candidateLastName: userProfiles.lastName,
         candidateTitle: userProfiles.title,
@@ -606,7 +606,7 @@ export async function listClientSubmissionsAction(
       .leftJoin(userProfiles, eq(submissions.candidateId, userProfiles.id))
       .leftJoin(jobs, eq(submissions.jobId, jobs.id))
       .where(and(...conditions))
-      .orderBy(sortOrder === 'asc' ? asc(submissions.submittedAt) : desc(submissions.submittedAt))
+      .orderBy(sortOrder === 'asc' ? asc(submissions.submittedToClientAt) : desc(submissions.submittedToClientAt))
       .limit(pageSize)
       .offset(offset);
 
@@ -631,13 +631,13 @@ export async function listClientSubmissionsAction(
           jobId: sub.jobId,
           jobTitle: sub.jobTitle,
           candidateFirstName: sub.candidateFirstName,
-          candidateLastInitial: sub.candidateLastName?.charAt(0) || null,
+          candidateLastInitial: sub.candidateLastName?.charAt(0) ?? null,
           candidateTitle: sub.candidateTitle,
           status: sub.status,
           aiMatchScore: sub.aiMatchScore,
           recruiterMatchScore: sub.recruiterMatchScore,
-          submittedRate: sub.submittedRate ? Number(sub.submittedRate) : null,
-          submittedAt: sub.submittedAt?.toISOString() || null,
+          submittedRate: sub.submittedRate ? parseFloat(sub.submittedRate.toString()) : null,
+          submittedAt: sub.submittedAt?.toISOString() ?? null,
           interviewCount: Number(interviewCount[0]?.count || 0),
           yearsExperience: null,
           skills: null,
@@ -677,7 +677,7 @@ export async function getClientSubmissionAction(
         aiMatchScore: submissions.aiMatchScore,
         recruiterMatchScore: submissions.recruiterMatchScore,
         submittedRate: submissions.submittedRate,
-        submittedAt: submissions.submittedAt,
+        submittedAt: submissions.submittedToClientAt,
         candidateFirstName: userProfiles.firstName,
         candidateLastName: userProfiles.lastName,
         candidateTitle: userProfiles.title,
@@ -713,11 +713,11 @@ export async function getClientSubmissionAction(
       candidateFirstName: sub.candidateFirstName,
       jobTitle: sub.jobTitle,
       roundNumber: interview.roundNumber,
-      interviewType: interview.interviewType,
-      scheduledAt: interview.scheduledAt?.toISOString() || null,
-      duration: interview.duration,
+      interviewType: interview.interviewType ?? 'technical',
+      scheduledAt: interview.scheduledAt?.toISOString() ?? null,
+      duration: interview.durationMinutes ?? null,
       status: interview.status,
-      notes: interview.notes,
+      notes: interview.feedback ?? null,
     }));
 
     await logClientActivity(
@@ -737,13 +737,13 @@ export async function getClientSubmissionAction(
         jobId: sub.jobId,
         jobTitle: sub.jobTitle,
         candidateFirstName: sub.candidateFirstName,
-        candidateLastInitial: sub.candidateLastName?.charAt(0) || null,
+        candidateLastInitial: sub.candidateLastName?.charAt(0) ?? null,
         candidateTitle: sub.candidateTitle,
         status: sub.status,
         aiMatchScore: sub.aiMatchScore,
         recruiterMatchScore: sub.recruiterMatchScore,
-        submittedRate: sub.submittedRate ? Number(sub.submittedRate) : null,
-        submittedAt: sub.submittedAt?.toISOString() || null,
+        submittedRate: sub.submittedRate ? parseFloat(sub.submittedRate.toString()) : null,
+        submittedAt: sub.submittedAt?.toISOString() ?? null,
         interviewCount: interviewData.length,
         yearsExperience: null,
         skills: null,
@@ -807,8 +807,8 @@ export async function submitClientFeedbackAction(
     await db.update(submissions)
       .set({
         status: newStatus,
-        clientFeedback: validated.feedback,
-        clientReviewedAt: new Date(),
+        clientDecisionNotes: validated.feedback ?? null,
+        clientDecisionAt: new Date(),
         updatedAt: new Date(),
       })
       .where(eq(submissions.id, validated.submissionId));
@@ -892,12 +892,12 @@ export async function listClientPlacementsAction(): Promise<ActionResult<ClientP
       id: p.id,
       jobTitle: p.jobTitle,
       candidateFirstName: p.candidateFirstName,
-      candidateLastInitial: p.candidateLastName?.charAt(0) || null,
-      startDate: p.startDate,
-      endDate: p.endDate,
-      billRate: Number(p.billRate),
+      candidateLastInitial: p.candidateLastName?.charAt(0) ?? null,
+      startDate: p.startDate.toISOString(),
+      endDate: p.endDate?.toISOString() ?? null,
+      billRate: parseFloat(p.billRate.toString()),
       status: p.status,
-      onboardingStatus: p.onboardingStatus,
+      onboardingStatus: p.onboardingStatus ?? null,
     }));
 
     return { success: true, data: placementData };
@@ -1118,15 +1118,28 @@ export async function requestInterviewAction(
 
     const nextRound = (existingInterviews[0]?.roundNumber || 0) + 1;
 
+    // Get submission details for required fields
+    const submissionDetails = await db.query.submissions.findFirst({
+      where: eq(submissions.id, validated.submissionId),
+      columns: { jobId: true, candidateId: true, orgId: true },
+    });
+
+    if (!submissionDetails) {
+      return { success: false, error: 'Submission not found' };
+    }
+
     // Create interview request (status: scheduled with first preferred date)
     const [interview] = await db.insert(interviews).values({
+      orgId: submissionDetails.orgId,
       submissionId: validated.submissionId,
+      jobId: submissionDetails.jobId,
+      candidateId: submissionDetails.candidateId,
       roundNumber: nextRound,
       interviewType: validated.interviewType,
       scheduledAt: new Date(validated.preferredDates[0]),
-      duration: validated.duration,
+      durationMinutes: validated.duration,
       status: 'scheduled',
-      notes: validated.notes,
+      feedback: validated.notes ?? null,
     }).returning({ id: interviews.id });
 
     // Update submission status

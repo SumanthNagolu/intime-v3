@@ -94,7 +94,7 @@ async function getCurrentUserContext() {
     where: eq(userProfiles.id, user.id),
   });
 
-  return profile ? { userId: user.id, orgId: profile.orgId } : null;
+  return profile ? { userId: user.id, orgId: profile.orgId, email: profile.email } : null;
 }
 
 async function checkPermission(
@@ -107,9 +107,9 @@ async function checkPermission(
 
   const { data, error } = await supabase.rpc('check_user_permission', {
     p_user_id: userId,
-    p_permission: permission,
-    p_table_name: resourceType || null,
-    p_record_id: resourceId || null,
+    p_resource: permission.split(':')[0] || permission,
+    p_action: permission.split(':')[1] || 'read',
+    p_required_scope: 'all',
   });
 
   if (error) {
@@ -117,12 +117,13 @@ async function checkPermission(
     return { allowed: false };
   }
 
-  return { allowed: data?.allowed ?? false, scope: data?.scope };
+  return { allowed: data ?? false, scope: undefined };
 }
 
 async function logAuditEvent(
   userId: string,
   orgId: string,
+  userEmail: string,
   action: string,
   resourceType: string,
   resourceId: string | null,
@@ -131,9 +132,10 @@ async function logAuditEvent(
 ) {
   const supabase = await createClient();
 
-  await supabase.from('audit_logs').insert({
+  await (supabase.from as any)('audit_logs').insert({
     user_id: userId,
     org_id: orgId,
+    user_email: userEmail,
     action,
     table_name: resourceType,
     record_id: resourceId,
@@ -419,6 +421,7 @@ export async function createHotlistAction(
     await logAuditEvent(
       context.userId,
       context.orgId,
+      context.email,
       'bench.hotlist.created',
       'hotlists',
       hotlist.id,
@@ -499,6 +502,7 @@ export async function updateHotlistAction(
     await logAuditEvent(
       context.userId,
       context.orgId,
+      context.email,
       'bench.hotlist.updated',
       'hotlists',
       hotlistId,
@@ -559,6 +563,7 @@ export async function addCandidatesToHotlistAction(
     await logAuditEvent(
       context.userId,
       context.orgId,
+      context.email,
       'bench.hotlist.candidates_added',
       'hotlists',
       hotlistId,
@@ -620,6 +625,7 @@ export async function removeCandidateFromHotlistAction(
     await logAuditEvent(
       context.userId,
       context.orgId,
+      context.email,
       'bench.hotlist.candidate_removed',
       'hotlists',
       hotlistId,
@@ -699,6 +705,7 @@ export async function sendHotlistAction(
     await logAuditEvent(
       context.userId,
       context.orgId,
+      context.email,
       'bench.hotlist.sent',
       'hotlists',
       validated.hotlistId,
@@ -790,6 +797,7 @@ export async function recordHotlistResponseAction(
     await logAuditEvent(
       context.userId,
       context.orgId,
+      context.email,
       'bench.hotlist.response_recorded',
       'hotlists',
       validated.hotlistId,
@@ -834,6 +842,7 @@ export async function deleteHotlistAction(
     await logAuditEvent(
       context.userId,
       context.orgId,
+      context.email,
       'bench.hotlist.deleted',
       'hotlists',
       hotlistId,
@@ -891,6 +900,7 @@ export async function duplicateHotlistAction(
     await logAuditEvent(
       context.userId,
       context.orgId,
+      context.email,
       'bench.hotlist.duplicated',
       'hotlists',
       duplicate.id,

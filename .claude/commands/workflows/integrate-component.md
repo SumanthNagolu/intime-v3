@@ -161,45 +161,280 @@ function EmptyState() {
 }
 ```
 
-### Step 7: Write Tests
+### Step 7: Write Comprehensive E2E Tests
 
-Create test files:
-
-1. **Unit tests** for hooks and adapters
-2. **Integration tests** for component
-3. **E2E tests** for user flows
+Create test file: `tests/e2e/[module]/[component].spec.ts`
 
 ```typescript
-// tests/e2e/[component].spec.ts
-
 import { test, expect } from '@playwright/test';
 
-test.describe('[ComponentName]', () => {
+// Test helpers (create in tests/e2e/helpers.ts)
+async function loginAs(page: Page, role: 'recruiter' | 'admin' | 'manager') {
+  const credentials = {
+    recruiter: { email: 'jr_rec@intime.com', password: 'TestPass123!' },
+    admin: { email: 'admin@intime.com', password: 'TestPass123!' },
+    manager: { email: 'manager@intime.com', password: 'TestPass123!' },
+  };
+
+  await page.goto('/auth/employee');
+  await page.fill('[data-testid="email"]', credentials[role].email);
+  await page.fill('[data-testid="password"]', credentials[role].password);
+  await page.click('[data-testid="submit"]');
+  await page.waitForURL(/\/employee\//);
+}
+
+test.describe('[ComponentName] - Complete Flow', () => {
+
   test.beforeEach(async ({ page }) => {
-    // Login and navigate
+    await loginAs(page, 'recruiter');
+    await page.goto('/employee/[path]');
   });
 
-  test('displays data correctly', async ({ page }) => {
-    // Test data display
+  // ============================================
+  // CRUD Operations
+  // ============================================
+  test.describe('CRUD Operations', () => {
+    test('should create [entity] with all fields', async ({ page }) => {
+      await page.click('[data-testid="create-button"]');
+
+      // Fill required fields
+      await page.fill('[data-testid="name"]', 'Test Entity');
+      await page.selectOption('[data-testid="status"]', 'active');
+      // ... more fields
+
+      await page.click('[data-testid="submit"]');
+
+      // Verify success
+      await expect(page.locator('[data-testid="success-toast"]')).toBeVisible();
+      await expect(page).toHaveURL(/\/employee\/.*\/[\w-]+$/);
+    });
+
+    test('should display [entity] details correctly', async ({ page }) => {
+      await page.goto('/employee/[path]/[test-id]');
+
+      // Verify all sections
+      await expect(page.locator('[data-testid="header"]')).toBeVisible();
+      await expect(page.locator('[data-testid="sidebar"]')).toBeVisible();
+      await expect(page.locator('[data-testid="main-content"]')).toBeVisible();
+    });
+
+    test('should update [entity] inline', async ({ page }) => {
+      await page.goto('/employee/[path]/[test-id]');
+      await page.click('[data-testid="edit-button"]');
+
+      // Modify field
+      await page.fill('[data-testid="name"]', 'Updated Name');
+      await page.click('[data-testid="save-button"]');
+
+      // Verify change persisted
+      await expect(page.locator('[data-testid="name"]')).toContainText('Updated Name');
+    });
+
+    test('should delete [entity] with confirmation', async ({ page }) => {
+      await page.goto('/employee/[path]/[test-id]');
+      await page.click('[data-testid="delete-button"]');
+
+      // Confirm dialog
+      await expect(page.locator('[data-testid="confirm-dialog"]')).toBeVisible();
+      await page.click('[data-testid="confirm-delete"]');
+
+      // Verify redirect to list
+      await expect(page).toHaveURL(/\/employee\/[path]$/);
+    });
   });
 
-  test('handles loading state', async ({ page }) => {
-    // Test loading
+  // ============================================
+  // List Operations
+  // ============================================
+  test.describe('List Operations', () => {
+    test('should display paginated results', async ({ page }) => {
+      await expect(page.locator('[data-testid="entity-row"]')).toHaveCount.greaterThan(0);
+      await expect(page.locator('[data-testid="pagination"]')).toBeVisible();
+
+      // Navigate to page 2
+      await page.click('[data-testid="page-2"]');
+      await expect(page.locator('[data-testid="current-page"]')).toHaveText('2');
+    });
+
+    test('should filter by status', async ({ page }) => {
+      await page.click('[data-testid="filter-status"]');
+      await page.click('[data-testid="status-active"]');
+      await page.click('[data-testid="apply-filters"]');
+
+      // Verify all visible items have status 'active'
+      const statusCells = page.locator('[data-testid="status-cell"]');
+      const count = await statusCells.count();
+      for (let i = 0; i < count; i++) {
+        await expect(statusCells.nth(i)).toContainText('Active');
+      }
+    });
+
+    test('should sort by column', async ({ page }) => {
+      // Click column header to sort
+      await page.click('[data-testid="sort-createdAt"]');
+
+      // Verify sort indicator
+      await expect(page.locator('[data-testid="sort-indicator-desc"]')).toBeVisible();
+
+      // Click again for ascending
+      await page.click('[data-testid="sort-createdAt"]');
+      await expect(page.locator('[data-testid="sort-indicator-asc"]')).toBeVisible();
+    });
+
+    test('should search across fields', async ({ page }) => {
+      await page.fill('[data-testid="search-input"]', 'test search term');
+      await page.press('[data-testid="search-input"]', 'Enter');
+
+      // Verify results contain search term
+      await expect(page.locator('[data-testid="entity-row"]')).toContainText('test');
+    });
   });
 
-  test('handles error state', async ({ page }) => {
-    // Test errors
+  // ============================================
+  // Activity Tracking (Root Entities Only)
+  // ============================================
+  test.describe('Activity Tracking', () => {
+    test('should create workplan on entity creation', async ({ page }) => {
+      // Create new entity
+      await page.click('[data-testid="create-button"]');
+      await page.fill('[data-testid="name"]', 'Workplan Test');
+      await page.click('[data-testid="submit"]');
+
+      // Verify workplan created
+      await expect(page.locator('[data-testid="workplan-progress"]')).toBeVisible();
+      await expect(page.locator('[data-testid="workplan-progress"]')).not.toHaveText('0%');
+    });
+
+    test('should display activities in timeline', async ({ page }) => {
+      await page.goto('/employee/[path]/[test-id]');
+      await page.click('[data-testid="tab-activity"]');
+
+      await expect(page.locator('[data-testid="activity-timeline"]')).toBeVisible();
+      await expect(page.locator('[data-testid="activity-item"]')).toHaveCount.greaterThan(0);
+    });
+
+    test('should complete workplan activity', async ({ page }) => {
+      await page.goto('/employee/[path]/[test-id]');
+      await page.click('[data-testid="tab-activity"]');
+
+      // Find open activity
+      const openActivity = page.locator('[data-testid="activity-item"][data-status="open"]').first();
+      await openActivity.click();
+
+      // Complete it
+      await page.click('[data-testid="complete-activity"]');
+      await page.fill('[data-testid="outcome-notes"]', 'Completed successfully');
+      await page.click('[data-testid="confirm-complete"]');
+
+      // Verify status changed
+      await expect(openActivity.locator('[data-testid="activity-status"]')).toContainText('Completed');
+    });
+
+    test('should log manual activity', async ({ page }) => {
+      await page.goto('/employee/[path]/[test-id]');
+
+      await page.click('[data-testid="log-activity"]');
+      await page.fill('[data-testid="activity-subject"]', 'Manual test activity');
+      await page.selectOption('[data-testid="activity-type"]', 'note');
+      await page.fill('[data-testid="activity-notes"]', 'Test notes for activity');
+      await page.click('[data-testid="save-activity"]');
+
+      // Verify activity appears in timeline
+      await page.click('[data-testid="tab-activity"]');
+      await expect(page.locator('[data-testid="activity-timeline"]')).toContainText('Manual test activity');
+    });
   });
 
-  test('handles empty state', async ({ page }) => {
-    // Test empty
+  // ============================================
+  // Error Handling
+  // ============================================
+  test.describe('Error Handling', () => {
+    test('should display validation errors', async ({ page }) => {
+      await page.click('[data-testid="create-button"]');
+      await page.click('[data-testid="submit"]'); // Submit empty form
+
+      await expect(page.locator('[data-testid="error-name"]')).toBeVisible();
+      await expect(page.locator('[data-testid="error-name"]')).toContainText('required');
+    });
+
+    test('should handle not found gracefully', async ({ page }) => {
+      await page.goto('/employee/[path]/non-existent-id');
+
+      await expect(page.locator('[data-testid="not-found"]')).toBeVisible();
+    });
+
+    test('should handle empty state', async ({ page }) => {
+      // Apply filter that returns no results
+      await page.fill('[data-testid="search-input"]', 'zzzznonexistent');
+      await page.press('[data-testid="search-input"]', 'Enter');
+
+      await expect(page.locator('[data-testid="empty-state"]')).toBeVisible();
+    });
   });
 
-  test('performs CRUD operations', async ({ page }) => {
-    // Test create, update, delete
+  // ============================================
+  // Screenshots
+  // ============================================
+  test.describe('Visual Verification', () => {
+    test('capture all states', async ({ page }) => {
+      // List view
+      await page.screenshot({ path: 'test-results/[component]-list.png', fullPage: true });
+
+      // Detail view
+      await page.goto('/employee/[path]/[test-id]');
+      await page.screenshot({ path: 'test-results/[component]-detail.png', fullPage: true });
+
+      // Each tab
+      const tabs = ['overview', 'activity', 'documents'];
+      for (const tab of tabs) {
+        await page.click(`[data-testid="tab-${tab}"]`);
+        await page.screenshot({ path: `test-results/[component]-tab-${tab}.png`, fullPage: true });
+      }
+
+      // Edit mode
+      await page.click('[data-testid="edit-button"]');
+      await page.screenshot({ path: 'test-results/[component]-edit-mode.png', fullPage: true });
+
+      // Create form
+      await page.goto('/employee/[path]/new');
+      await page.screenshot({ path: 'test-results/[component]-create-form.png', fullPage: true });
+    });
   });
 });
 ```
+
+### Testing Checklist
+
+**CRUD Operations:**
+- [ ] Create with all fields
+- [ ] Create with minimal fields
+- [ ] Display details correctly
+- [ ] Update inline
+- [ ] Update via modal
+- [ ] Delete with confirmation
+
+**List Operations:**
+- [ ] Pagination works
+- [ ] Filtering works
+- [ ] Sorting works
+- [ ] Search works
+- [ ] Empty state displayed
+
+**Activity Tracking (Root Entities):**
+- [ ] Workplan created on entity creation
+- [ ] Activities display in timeline
+- [ ] Can complete workplan activity
+- [ ] Can log manual activity
+- [ ] Successor activities triggered
+
+**Error Handling:**
+- [ ] Validation errors displayed
+- [ ] Not found handled
+- [ ] Empty state handled
+
+**Visual Verification:**
+- [ ] Screenshots captured
+- [ ] All states documented
 
 ### Step 8: Add Feature Flag
 

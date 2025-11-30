@@ -39,19 +39,19 @@ export const analyticsRouter = router({
 
     try {
       // Get MRR
-      const { data: mrr } = await ctx.supabase.rpc('calculate_mrr');
+      const { data: mrr } = await (ctx.supabase.rpc as any)('calculate_mrr');
 
       // Get churn rate (last 3 months)
-      const { data: churnRate } = await ctx.supabase.rpc('calculate_churn_rate', {
+      const { data: churnRate } = await (ctx.supabase.rpc as any)('calculate_churn_rate', {
         p_period_months: 3,
       });
 
       // Get average LTV
-      const { data: avgLtv } = await ctx.supabase.rpc('calculate_avg_student_ltv');
+      const { data: avgLtv } = await (ctx.supabase.rpc as any)('calculate_avg_student_ltv');
 
       // Get current month analytics from materialized view
-      const { data: currentMonth } = await ctx.supabase
-        .from('revenue_analytics')
+      const { data: currentMonth } = await (ctx.supabase
+        .from as any)('revenue_analytics')
         .select('*')
         .order('month', { ascending: false })
         .limit(1)
@@ -105,8 +105,8 @@ export const analyticsRouter = router({
       }
 
       try {
-        const { data: trend, error } = await ctx.supabase
-          .from('revenue_analytics')
+        const { data: trend, error } = await (ctx.supabase
+          .from as any)('revenue_analytics')
           .select('*')
           .order('month', { ascending: false })
           .limit(input.months);
@@ -162,8 +162,8 @@ export const analyticsRouter = router({
       }
 
       try {
-        const { data: courses, error } = await ctx.supabase
-          .from('course_revenue_analytics')
+        const { data: courses, error } = await (ctx.supabase
+          .from as any)('course_revenue_analytics')
           .select('*')
           .order(input.sortBy, { ascending: false })
           .limit(input.limit);
@@ -217,8 +217,8 @@ export const analyticsRouter = router({
       }
 
       try {
-        let query = ctx.supabase
-          .from('student_ltv_analytics')
+        let query = (ctx.supabase
+          .from as any)('student_ltv_analytics')
           .select('*')
           .order('lifetime_revenue', { ascending: false })
           .limit(input.limit);
@@ -277,7 +277,7 @@ export const analyticsRouter = router({
 
       try {
         // Get success rate
-        const { data: successRate } = await ctx.supabase.rpc(
+        const { data: successRate } = await (ctx.supabase.rpc as any)(
           'calculate_payment_success_rate',
           {
             p_period_days: input.periodDays,
@@ -285,7 +285,7 @@ export const analyticsRouter = router({
         );
 
         // Get refund rate
-        const { data: refundRate } = await ctx.supabase.rpc('calculate_refund_rate', {
+        const { data: refundRate } = await (ctx.supabase.rpc as any)('calculate_refund_rate', {
           p_period_days: input.periodDays,
         });
 
@@ -336,7 +336,7 @@ export const analyticsRouter = router({
       }
 
       try {
-        const { data: funnel, error } = await ctx.supabase.rpc('get_enrollment_funnel', {
+        const { data: funnel, error } = await (ctx.supabase.rpc as any)('get_enrollment_funnel', {
           p_period_days: input.periodDays,
         });
 
@@ -389,8 +389,8 @@ export const analyticsRouter = router({
       }
 
       try {
-        const { data: discounts, error } = await ctx.supabase
-          .from('discount_effectiveness_analytics')
+        const { data: discounts, error } = await (ctx.supabase
+          .from as any)('discount_effectiveness_analytics')
           .select('*')
           .order(input.sortBy, { ascending: false, nullsFirst: false })
           .limit(input.limit);
@@ -435,7 +435,7 @@ export const analyticsRouter = router({
     }
 
     try {
-      const { error } = await ctx.supabase.rpc('refresh_revenue_analytics');
+      const { error } = await (ctx.supabase.rpc as any)('refresh_revenue_analytics');
 
       if (error) throw error;
 
@@ -491,8 +491,8 @@ export const analyticsRouter = router({
 
         switch (input.type) {
           case 'revenue':
-            const { data: revenue } = await ctx.supabase
-              .from('revenue_analytics')
+            const { data: revenue } = await (ctx.supabase
+              .from as any)('revenue_analytics')
               .select('*')
               .order('month', { ascending: false })
               .limit(input.months);
@@ -508,8 +508,8 @@ export const analyticsRouter = router({
             break;
 
           case 'courses':
-            const { data: courses } = await ctx.supabase
-              .from('course_revenue_analytics')
+            const { data: courses } = await (ctx.supabase
+              .from as any)('course_revenue_analytics')
               .select('*')
               .order('total_revenue', { ascending: false });
             data = courses || [];
@@ -522,8 +522,8 @@ export const analyticsRouter = router({
             break;
 
           case 'students':
-            const { data: students } = await ctx.supabase
-              .from('student_ltv_analytics')
+            const { data: students } = await (ctx.supabase
+              .from as any)('student_ltv_analytics')
               .select('*')
               .order('lifetime_revenue', { ascending: false });
             data = students || [];
@@ -536,8 +536,8 @@ export const analyticsRouter = router({
             break;
 
           case 'discounts':
-            const { data: discounts } = await ctx.supabase
-              .from('discount_effectiveness_analytics')
+            const { data: discounts } = await (ctx.supabase
+              .from as any)('discount_effectiveness_analytics')
               .select('*')
               .order('roi_ratio', { ascending: false, nullsFirst: false });
             data = discounts || [];

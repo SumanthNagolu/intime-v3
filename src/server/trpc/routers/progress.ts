@@ -10,7 +10,7 @@
  */
 
 import { z } from 'zod';
-import { router, protectedProcedure } from '@/lib/trpc/trpc';
+import { router, protectedProcedure } from '../trpc';
 import { createClient } from '@/lib/supabase/server';
 import {
   TopicCompletion,
@@ -624,7 +624,7 @@ export const progressRouter = router({
       // Publish graduation event
       const { error: eventError } = await supabase.rpc('publish_event', {
         p_event_type: 'course.graduated',
-        p_aggregate_id: null,
+        p_aggregate_id: course.id,
         p_payload: JSON.stringify({
           studentId: ctx.userId,
           enrollmentId: input.enrollment_id,

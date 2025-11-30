@@ -12,33 +12,1182 @@ export type Database = {
   __InternalSupabase: {
     PostgrestVersion: "13.0.5"
   }
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      graphql: {
-        Args: {
-          extensions?: Json
-          operationName?: string
-          query?: string
-          variables?: Json
-        }
-        Returns: Json
-      }
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
   public: {
     Tables: {
+      accounts: {
+        Row: {
+          account_manager_id: string | null
+          annual_revenue_target: number | null
+          company_type: string | null
+          contract_end_date: string | null
+          contract_start_date: string | null
+          created_at: string
+          created_by: string | null
+          deleted_at: string | null
+          description: string | null
+          headquarters_location: string | null
+          id: string
+          industry: string | null
+          markup_percentage: number | null
+          name: string
+          org_id: string
+          payment_terms_days: number | null
+          phone: string | null
+          preferred_quality: string | null
+          responsiveness: string | null
+          search_vector: unknown
+          status: string
+          tier: string | null
+          updated_at: string
+          updated_by: string | null
+          website: string | null
+        }
+        Insert: {
+          account_manager_id?: string | null
+          annual_revenue_target?: number | null
+          company_type?: string | null
+          contract_end_date?: string | null
+          contract_start_date?: string | null
+          created_at?: string
+          created_by?: string | null
+          deleted_at?: string | null
+          description?: string | null
+          headquarters_location?: string | null
+          id?: string
+          industry?: string | null
+          markup_percentage?: number | null
+          name: string
+          org_id: string
+          payment_terms_days?: number | null
+          phone?: string | null
+          preferred_quality?: string | null
+          responsiveness?: string | null
+          search_vector?: unknown
+          status?: string
+          tier?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          website?: string | null
+        }
+        Update: {
+          account_manager_id?: string | null
+          annual_revenue_target?: number | null
+          company_type?: string | null
+          contract_end_date?: string | null
+          contract_start_date?: string | null
+          created_at?: string
+          created_by?: string | null
+          deleted_at?: string | null
+          description?: string | null
+          headquarters_location?: string | null
+          id?: string
+          industry?: string | null
+          markup_percentage?: number | null
+          name?: string
+          org_id?: string
+          payment_terms_days?: number | null
+          phone?: string | null
+          preferred_quality?: string | null
+          responsiveness?: string | null
+          search_vector?: unknown
+          status?: string
+          tier?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          website?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "accounts_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "accounts_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "accounts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "accounts_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "accounts_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "accounts_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      activities: {
+        Row: {
+          activity_type: string
+          assigned_to: string
+          body: string | null
+          completed_at: string | null
+          created_at: string
+          created_by: string | null
+          direction: string | null
+          due_date: string
+          duration_minutes: number | null
+          entity_id: string
+          entity_type: string
+          escalation_date: string | null
+          id: string
+          org_id: string
+          outcome: string | null
+          parent_activity_id: string | null
+          performed_by: string | null
+          poc_id: string | null
+          priority: string
+          scheduled_at: string | null
+          skipped_at: string | null
+          status: string
+          subject: string | null
+          updated_at: string
+        }
+        Insert: {
+          activity_type: string
+          assigned_to: string
+          body?: string | null
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          direction?: string | null
+          due_date?: string
+          duration_minutes?: number | null
+          entity_id: string
+          entity_type: string
+          escalation_date?: string | null
+          id?: string
+          org_id: string
+          outcome?: string | null
+          parent_activity_id?: string | null
+          performed_by?: string | null
+          poc_id?: string | null
+          priority?: string
+          scheduled_at?: string | null
+          skipped_at?: string | null
+          status?: string
+          subject?: string | null
+          updated_at?: string
+        }
+        Update: {
+          activity_type?: string
+          assigned_to?: string
+          body?: string | null
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          direction?: string | null
+          due_date?: string
+          duration_minutes?: number | null
+          entity_id?: string
+          entity_type?: string
+          escalation_date?: string | null
+          id?: string
+          org_id?: string
+          outcome?: string | null
+          parent_activity_id?: string | null
+          performed_by?: string | null
+          poc_id?: string | null
+          priority?: string
+          scheduled_at?: string | null
+          skipped_at?: string | null
+          status?: string
+          subject?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activities_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "activities_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "activities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_parent_activity_id_fkey"
+            columns: ["parent_activity_id"]
+            isOneToOne: false
+            referencedRelation: "activities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "activities_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activities_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activities_poc_id_fkey"
+            columns: ["poc_id"]
+            isOneToOne: false
+            referencedRelation: "point_of_contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      activity_log: {
+        Row: {
+          activity_date: string
+          activity_type: string
+          body: string | null
+          created_at: string
+          direction: string | null
+          duration_minutes: number | null
+          entity_id: string
+          entity_type: string
+          id: string
+          next_action: string | null
+          next_action_date: string | null
+          org_id: string
+          outcome: string | null
+          performed_by: string | null
+          poc_id: string | null
+          subject: string | null
+        }
+        Insert: {
+          activity_date?: string
+          activity_type: string
+          body?: string | null
+          created_at?: string
+          direction?: string | null
+          duration_minutes?: number | null
+          entity_id: string
+          entity_type: string
+          id?: string
+          next_action?: string | null
+          next_action_date?: string | null
+          org_id: string
+          outcome?: string | null
+          performed_by?: string | null
+          poc_id?: string | null
+          subject?: string | null
+        }
+        Update: {
+          activity_date?: string
+          activity_type?: string
+          body?: string | null
+          created_at?: string
+          direction?: string | null
+          duration_minutes?: number | null
+          entity_id?: string
+          entity_type?: string
+          id?: string
+          next_action?: string | null
+          next_action_date?: string | null
+          org_id?: string
+          outcome?: string | null
+          performed_by?: string | null
+          poc_id?: string | null
+          subject?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_log_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activity_log_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activity_log_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activity_log_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activity_log_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activity_log_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activity_log_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activity_log_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activity_log_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activity_log_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "activity_log_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activity_log_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activity_log_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activity_log_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activity_log_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activity_log_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activity_log_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activity_log_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "activity_log_poc_id_fkey"
+            columns: ["poc_id"]
+            isOneToOne: false
+            referencedRelation: "point_of_contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      addresses: {
+        Row: {
+          address_line_1: string | null
+          address_line_2: string | null
+          address_line_3: string | null
+          address_type: string
+          city: string | null
+          country_code: string
+          county: string | null
+          created_at: string | null
+          created_by: string | null
+          effective_from: string | null
+          effective_to: string | null
+          entity_id: string
+          entity_type: string
+          id: string
+          is_primary: boolean | null
+          is_verified: boolean | null
+          latitude: number | null
+          longitude: number | null
+          notes: string | null
+          org_id: string
+          postal_code: string | null
+          state_province: string | null
+          updated_at: string | null
+          updated_by: string | null
+          verification_source: string | null
+          verified_at: string | null
+        }
+        Insert: {
+          address_line_1?: string | null
+          address_line_2?: string | null
+          address_line_3?: string | null
+          address_type: string
+          city?: string | null
+          country_code?: string
+          county?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          effective_from?: string | null
+          effective_to?: string | null
+          entity_id: string
+          entity_type: string
+          id?: string
+          is_primary?: boolean | null
+          is_verified?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          notes?: string | null
+          org_id: string
+          postal_code?: string | null
+          state_province?: string | null
+          updated_at?: string | null
+          updated_by?: string | null
+          verification_source?: string | null
+          verified_at?: string | null
+        }
+        Update: {
+          address_line_1?: string | null
+          address_line_2?: string | null
+          address_line_3?: string | null
+          address_type?: string
+          city?: string | null
+          country_code?: string
+          county?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          effective_from?: string | null
+          effective_to?: string | null
+          entity_id?: string
+          entity_type?: string
+          id?: string
+          is_primary?: boolean | null
+          is_verified?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          notes?: string | null
+          org_id?: string
+          postal_code?: string | null
+          state_province?: string | null
+          updated_at?: string | null
+          updated_by?: string | null
+          verification_source?: string | null
+          verified_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "addresses_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "addresses_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       ai_agent_interactions: {
         Row: {
           agent_name: string
@@ -2584,6 +3733,187 @@ export type Database = {
         }
         Relationships: []
       }
+      background_jobs: {
+        Row: {
+          attempts: number
+          completed_at: string | null
+          created_at: string
+          created_by: string
+          error_message: string | null
+          id: string
+          job_type: string
+          max_attempts: number
+          org_id: string
+          payload: Json
+          priority: number
+          result: Json | null
+          started_at: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          attempts?: number
+          completed_at?: string | null
+          created_at?: string
+          created_by: string
+          error_message?: string | null
+          id?: string
+          job_type: string
+          max_attempts?: number
+          org_id: string
+          payload: Json
+          priority?: number
+          result?: Json | null
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          attempts?: number
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string
+          error_message?: string | null
+          id?: string
+          job_type?: string
+          max_attempts?: number
+          org_id?: string
+          payload?: Json
+          priority?: number
+          result?: Json | null
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "background_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "background_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "background_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "background_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "background_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "background_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "background_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "background_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "background_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "background_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "background_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "background_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "background_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "background_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "background_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "background_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "background_jobs_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "background_jobs_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       badge_progress: {
         Row: {
           badge_id: string
@@ -2933,6 +4263,2365 @@ export type Database = {
         }
         Relationships: []
       }
+      bench_metadata: {
+        Row: {
+          alert_30_day_sent: boolean | null
+          alert_30_day_sent_at: string | null
+          alert_60_day_sent: boolean | null
+          alert_60_day_sent_at: string | null
+          bench_sales_rep_id: string | null
+          bench_start_date: string
+          contact_frequency_days: number | null
+          created_at: string
+          days_on_bench: number | null
+          has_active_immigration_case: boolean | null
+          hotlist_send_count: number | null
+          immigration_case_id: string | null
+          is_responsive: boolean | null
+          last_contacted_at: string | null
+          last_hotlist_sent_at: string | null
+          last_outreach_date: string | null
+          responsiveness_score: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          alert_30_day_sent?: boolean | null
+          alert_30_day_sent_at?: string | null
+          alert_60_day_sent?: boolean | null
+          alert_60_day_sent_at?: string | null
+          bench_sales_rep_id?: string | null
+          bench_start_date: string
+          contact_frequency_days?: number | null
+          created_at?: string
+          days_on_bench?: number | null
+          has_active_immigration_case?: boolean | null
+          hotlist_send_count?: number | null
+          immigration_case_id?: string | null
+          is_responsive?: boolean | null
+          last_contacted_at?: string | null
+          last_hotlist_sent_at?: string | null
+          last_outreach_date?: string | null
+          responsiveness_score?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          alert_30_day_sent?: boolean | null
+          alert_30_day_sent_at?: string | null
+          alert_60_day_sent?: boolean | null
+          alert_60_day_sent_at?: string | null
+          bench_sales_rep_id?: string | null
+          bench_start_date?: string
+          contact_frequency_days?: number | null
+          created_at?: string
+          days_on_bench?: number | null
+          has_active_immigration_case?: boolean | null
+          hotlist_send_count?: number | null
+          immigration_case_id?: string | null
+          is_responsive?: boolean | null
+          last_contacted_at?: string | null
+          last_hotlist_sent_at?: string | null
+          last_outreach_date?: string | null
+          responsiveness_score?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bench_metadata_bench_sales_rep_id_fkey"
+            columns: ["bench_sales_rep_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_bench_sales_rep_id_fkey"
+            columns: ["bench_sales_rep_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_bench_sales_rep_id_fkey"
+            columns: ["bench_sales_rep_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_bench_sales_rep_id_fkey"
+            columns: ["bench_sales_rep_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_bench_sales_rep_id_fkey"
+            columns: ["bench_sales_rep_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_bench_sales_rep_id_fkey"
+            columns: ["bench_sales_rep_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_bench_sales_rep_id_fkey"
+            columns: ["bench_sales_rep_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_bench_sales_rep_id_fkey"
+            columns: ["bench_sales_rep_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_bench_sales_rep_id_fkey"
+            columns: ["bench_sales_rep_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_bench_sales_rep_id_fkey"
+            columns: ["bench_sales_rep_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_bench_sales_rep_id_fkey"
+            columns: ["bench_sales_rep_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_bench_sales_rep_id_fkey"
+            columns: ["bench_sales_rep_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_bench_sales_rep_id_fkey"
+            columns: ["bench_sales_rep_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_bench_sales_rep_id_fkey"
+            columns: ["bench_sales_rep_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_bench_sales_rep_id_fkey"
+            columns: ["bench_sales_rep_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_bench_sales_rep_id_fkey"
+            columns: ["bench_sales_rep_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "fk_bench_immigration_case"
+            columns: ["immigration_case_id"]
+            isOneToOne: false
+            referencedRelation: "immigration_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bench_submissions: {
+        Row: {
+          bench_rep_id: string | null
+          candidate_id: string
+          created_at: string
+          external_job_id: string
+          id: string
+          interview_date: string | null
+          interview_feedback: string | null
+          org_id: string
+          placed_at: string | null
+          placement_bill_rate: number | null
+          placement_start_date: string | null
+          rejected_at: string | null
+          rejection_reason: string | null
+          status: string
+          submission_notes: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          updated_at: string
+          vendor_contact_email: string | null
+          vendor_contact_name: string | null
+          vendor_feedback: string | null
+          vendor_name: string | null
+          vendor_submission_id: string | null
+        }
+        Insert: {
+          bench_rep_id?: string | null
+          candidate_id: string
+          created_at?: string
+          external_job_id: string
+          id?: string
+          interview_date?: string | null
+          interview_feedback?: string | null
+          org_id: string
+          placed_at?: string | null
+          placement_bill_rate?: number | null
+          placement_start_date?: string | null
+          rejected_at?: string | null
+          rejection_reason?: string | null
+          status?: string
+          submission_notes?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          updated_at?: string
+          vendor_contact_email?: string | null
+          vendor_contact_name?: string | null
+          vendor_feedback?: string | null
+          vendor_name?: string | null
+          vendor_submission_id?: string | null
+        }
+        Update: {
+          bench_rep_id?: string | null
+          candidate_id?: string
+          created_at?: string
+          external_job_id?: string
+          id?: string
+          interview_date?: string | null
+          interview_feedback?: string | null
+          org_id?: string
+          placed_at?: string | null
+          placement_bill_rate?: number | null
+          placement_start_date?: string | null
+          rejected_at?: string | null
+          rejection_reason?: string | null
+          status?: string
+          submission_notes?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          updated_at?: string
+          vendor_contact_email?: string | null
+          vendor_contact_name?: string | null
+          vendor_feedback?: string | null
+          vendor_name?: string | null
+          vendor_submission_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bench_submissions_bench_rep_id_fkey"
+            columns: ["bench_rep_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_bench_rep_id_fkey"
+            columns: ["bench_rep_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_bench_rep_id_fkey"
+            columns: ["bench_rep_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_bench_rep_id_fkey"
+            columns: ["bench_rep_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_bench_rep_id_fkey"
+            columns: ["bench_rep_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_bench_rep_id_fkey"
+            columns: ["bench_rep_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_bench_rep_id_fkey"
+            columns: ["bench_rep_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_bench_rep_id_fkey"
+            columns: ["bench_rep_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_bench_rep_id_fkey"
+            columns: ["bench_rep_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_bench_rep_id_fkey"
+            columns: ["bench_rep_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_bench_rep_id_fkey"
+            columns: ["bench_rep_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_bench_rep_id_fkey"
+            columns: ["bench_rep_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_bench_rep_id_fkey"
+            columns: ["bench_rep_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_bench_rep_id_fkey"
+            columns: ["bench_rep_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_bench_rep_id_fkey"
+            columns: ["bench_rep_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_bench_rep_id_fkey"
+            columns: ["bench_rep_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_external_job_id_fkey"
+            columns: ["external_job_id"]
+            isOneToOne: false
+            referencedRelation: "external_jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bench_submissions_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      campaign_contacts: {
+        Row: {
+          ab_variant: string | null
+          campaign_id: string
+          clicked_at: string | null
+          company_name: string | null
+          contact_type: string
+          conversion_entity_id: string | null
+          conversion_type: string | null
+          converted_at: string | null
+          created_at: string
+          email: string | null
+          first_name: string | null
+          id: string
+          last_name: string | null
+          lead_id: string | null
+          linkedin_url: string | null
+          opened_at: string | null
+          responded_at: string | null
+          response_text: string | null
+          sent_at: string | null
+          status: string
+          template_used_id: string | null
+          title: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          ab_variant?: string | null
+          campaign_id: string
+          clicked_at?: string | null
+          company_name?: string | null
+          contact_type?: string
+          conversion_entity_id?: string | null
+          conversion_type?: string | null
+          converted_at?: string | null
+          created_at?: string
+          email?: string | null
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          lead_id?: string | null
+          linkedin_url?: string | null
+          opened_at?: string | null
+          responded_at?: string | null
+          response_text?: string | null
+          sent_at?: string | null
+          status?: string
+          template_used_id?: string | null
+          title?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          ab_variant?: string | null
+          campaign_id?: string
+          clicked_at?: string | null
+          company_name?: string | null
+          contact_type?: string
+          conversion_entity_id?: string | null
+          conversion_type?: string | null
+          converted_at?: string | null
+          created_at?: string
+          email?: string | null
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          lead_id?: string | null
+          linkedin_url?: string | null
+          opened_at?: string | null
+          responded_at?: string | null
+          response_text?: string | null
+          sent_at?: string | null
+          status?: string
+          template_used_id?: string | null
+          title?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_contacts_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_contacts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      campaigns: {
+        Row: {
+          ab_split_percentage: number | null
+          campaign_type: string
+          channel: string
+          contacts_reached: number | null
+          conversions: number | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          emails_sent: number | null
+          end_date: string | null
+          id: string
+          is_ab_test: boolean | null
+          linkedin_messages_sent: number | null
+          name: string
+          org_id: string
+          owner_id: string
+          response_rate: number | null
+          responses_received: number | null
+          start_date: string | null
+          status: string
+          target_audience: string | null
+          target_company_sizes: string[] | null
+          target_contacts_count: number | null
+          target_conversion_count: number | null
+          target_locations: string[] | null
+          target_response_rate: number | null
+          target_skills: string[] | null
+          updated_at: string
+          variant_a_template_id: string | null
+          variant_b_template_id: string | null
+        }
+        Insert: {
+          ab_split_percentage?: number | null
+          campaign_type?: string
+          channel?: string
+          contacts_reached?: number | null
+          conversions?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          emails_sent?: number | null
+          end_date?: string | null
+          id?: string
+          is_ab_test?: boolean | null
+          linkedin_messages_sent?: number | null
+          name: string
+          org_id: string
+          owner_id: string
+          response_rate?: number | null
+          responses_received?: number | null
+          start_date?: string | null
+          status?: string
+          target_audience?: string | null
+          target_company_sizes?: string[] | null
+          target_contacts_count?: number | null
+          target_conversion_count?: number | null
+          target_locations?: string[] | null
+          target_response_rate?: number | null
+          target_skills?: string[] | null
+          updated_at?: string
+          variant_a_template_id?: string | null
+          variant_b_template_id?: string | null
+        }
+        Update: {
+          ab_split_percentage?: number | null
+          campaign_type?: string
+          channel?: string
+          contacts_reached?: number | null
+          conversions?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          emails_sent?: number | null
+          end_date?: string | null
+          id?: string
+          is_ab_test?: boolean | null
+          linkedin_messages_sent?: number | null
+          name?: string
+          org_id?: string
+          owner_id?: string
+          response_rate?: number | null
+          responses_received?: number | null
+          start_date?: string | null
+          status?: string
+          target_audience?: string | null
+          target_company_sizes?: string[] | null
+          target_contacts_count?: number | null
+          target_conversion_count?: number | null
+          target_locations?: string[] | null
+          target_response_rate?: number | null
+          target_skills?: string[] | null
+          updated_at?: string
+          variant_a_template_id?: string | null
+          variant_b_template_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "campaigns_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "campaigns_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      candidate_background_checks: {
+        Row: {
+          adjudicated_at: string | null
+          adjudicated_by: string | null
+          adjudication_notes: string | null
+          adjudication_status: string | null
+          adverse_action_notes: string | null
+          adverse_action_required: boolean | null
+          authorization_form_file_id: string | null
+          billed_to: string | null
+          candidate_id: string
+          checks: Json | null
+          completed_at: string | null
+          consent_form_file_id: string | null
+          consent_ip_address: string | null
+          consent_signed_at: string | null
+          consent_user_agent: string | null
+          cost: number | null
+          cost_currency: string | null
+          created_at: string | null
+          created_by: string | null
+          estimated_completion: string | null
+          expires_at: string | null
+          final_adverse_sent_at: string | null
+          id: string
+          initiated_at: string | null
+          internal_notes: string | null
+          notes: string | null
+          org_id: string
+          overall_result: string | null
+          package_name: string | null
+          package_type: string | null
+          placement_id: string | null
+          pre_adverse_response_deadline: string | null
+          pre_adverse_sent_at: string | null
+          provider: string | null
+          provider_order_id: string | null
+          provider_reference_id: string | null
+          report_file_id: string | null
+          report_received_at: string | null
+          requested_at: string | null
+          requested_by: string | null
+          status: string
+          submission_id: string | null
+          updated_at: string | null
+          updated_by: string | null
+          valid_for_months: number | null
+        }
+        Insert: {
+          adjudicated_at?: string | null
+          adjudicated_by?: string | null
+          adjudication_notes?: string | null
+          adjudication_status?: string | null
+          adverse_action_notes?: string | null
+          adverse_action_required?: boolean | null
+          authorization_form_file_id?: string | null
+          billed_to?: string | null
+          candidate_id: string
+          checks?: Json | null
+          completed_at?: string | null
+          consent_form_file_id?: string | null
+          consent_ip_address?: string | null
+          consent_signed_at?: string | null
+          consent_user_agent?: string | null
+          cost?: number | null
+          cost_currency?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          estimated_completion?: string | null
+          expires_at?: string | null
+          final_adverse_sent_at?: string | null
+          id?: string
+          initiated_at?: string | null
+          internal_notes?: string | null
+          notes?: string | null
+          org_id: string
+          overall_result?: string | null
+          package_name?: string | null
+          package_type?: string | null
+          placement_id?: string | null
+          pre_adverse_response_deadline?: string | null
+          pre_adverse_sent_at?: string | null
+          provider?: string | null
+          provider_order_id?: string | null
+          provider_reference_id?: string | null
+          report_file_id?: string | null
+          report_received_at?: string | null
+          requested_at?: string | null
+          requested_by?: string | null
+          status?: string
+          submission_id?: string | null
+          updated_at?: string | null
+          updated_by?: string | null
+          valid_for_months?: number | null
+        }
+        Update: {
+          adjudicated_at?: string | null
+          adjudicated_by?: string | null
+          adjudication_notes?: string | null
+          adjudication_status?: string | null
+          adverse_action_notes?: string | null
+          adverse_action_required?: boolean | null
+          authorization_form_file_id?: string | null
+          billed_to?: string | null
+          candidate_id?: string
+          checks?: Json | null
+          completed_at?: string | null
+          consent_form_file_id?: string | null
+          consent_ip_address?: string | null
+          consent_signed_at?: string | null
+          consent_user_agent?: string | null
+          cost?: number | null
+          cost_currency?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          estimated_completion?: string | null
+          expires_at?: string | null
+          final_adverse_sent_at?: string | null
+          id?: string
+          initiated_at?: string | null
+          internal_notes?: string | null
+          notes?: string | null
+          org_id?: string
+          overall_result?: string | null
+          package_name?: string | null
+          package_type?: string | null
+          placement_id?: string | null
+          pre_adverse_response_deadline?: string | null
+          pre_adverse_sent_at?: string | null
+          provider?: string | null
+          provider_order_id?: string | null
+          provider_reference_id?: string | null
+          report_file_id?: string | null
+          report_received_at?: string | null
+          requested_at?: string | null
+          requested_by?: string | null
+          status?: string
+          submission_id?: string | null
+          updated_at?: string | null
+          updated_by?: string | null
+          valid_for_months?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "candidate_background_checks_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_placement_id_fkey"
+            columns: ["placement_id"]
+            isOneToOne: false
+            referencedRelation: "placements"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_background_checks_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      candidate_certifications: {
+        Row: {
+          acronym: string | null
+          candidate_id: string
+          certification_type: string
+          clearance_granted_date: string | null
+          clearance_level: string | null
+          clearance_status: string | null
+          cpe_credits_required: number | null
+          created_at: string | null
+          created_by: string | null
+          credential_id: string | null
+          credential_url: string | null
+          display_order: number | null
+          document_file_id: string | null
+          expiry_date: string | null
+          id: string
+          investigation_type: string | null
+          is_featured: boolean | null
+          is_lifetime: boolean | null
+          is_verified: boolean | null
+          issue_date: string | null
+          issuing_organization: string | null
+          license_country: string | null
+          license_jurisdiction: string | null
+          license_number: string | null
+          license_state: string | null
+          license_type: string | null
+          name: string
+          org_id: string
+          polygraph_date: string | null
+          polygraph_type: string | null
+          renewal_period_months: number | null
+          requires_renewal: boolean | null
+          sap_access: boolean | null
+          sci_access: boolean | null
+          updated_at: string | null
+          updated_by: string | null
+          verification_method: string | null
+          verification_notes: string | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          acronym?: string | null
+          candidate_id: string
+          certification_type: string
+          clearance_granted_date?: string | null
+          clearance_level?: string | null
+          clearance_status?: string | null
+          cpe_credits_required?: number | null
+          created_at?: string | null
+          created_by?: string | null
+          credential_id?: string | null
+          credential_url?: string | null
+          display_order?: number | null
+          document_file_id?: string | null
+          expiry_date?: string | null
+          id?: string
+          investigation_type?: string | null
+          is_featured?: boolean | null
+          is_lifetime?: boolean | null
+          is_verified?: boolean | null
+          issue_date?: string | null
+          issuing_organization?: string | null
+          license_country?: string | null
+          license_jurisdiction?: string | null
+          license_number?: string | null
+          license_state?: string | null
+          license_type?: string | null
+          name: string
+          org_id: string
+          polygraph_date?: string | null
+          polygraph_type?: string | null
+          renewal_period_months?: number | null
+          requires_renewal?: boolean | null
+          sap_access?: boolean | null
+          sci_access?: boolean | null
+          updated_at?: string | null
+          updated_by?: string | null
+          verification_method?: string | null
+          verification_notes?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          acronym?: string | null
+          candidate_id?: string
+          certification_type?: string
+          clearance_granted_date?: string | null
+          clearance_level?: string | null
+          clearance_status?: string | null
+          cpe_credits_required?: number | null
+          created_at?: string | null
+          created_by?: string | null
+          credential_id?: string | null
+          credential_url?: string | null
+          display_order?: number | null
+          document_file_id?: string | null
+          expiry_date?: string | null
+          id?: string
+          investigation_type?: string | null
+          is_featured?: boolean | null
+          is_lifetime?: boolean | null
+          is_verified?: boolean | null
+          issue_date?: string | null
+          issuing_organization?: string | null
+          license_country?: string | null
+          license_jurisdiction?: string | null
+          license_number?: string | null
+          license_state?: string | null
+          license_type?: string | null
+          name?: string
+          org_id?: string
+          polygraph_date?: string | null
+          polygraph_type?: string | null
+          renewal_period_months?: number | null
+          requires_renewal?: boolean | null
+          sap_access?: boolean | null
+          sci_access?: boolean | null
+          updated_at?: string | null
+          updated_by?: string | null
+          verification_method?: string | null
+          verification_notes?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "candidate_certifications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_certifications_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      candidate_compliance_documents: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          candidate_id: string
+          client_id: string | null
+          client_name: string | null
+          created_at: string | null
+          created_by: string | null
+          document_category: string | null
+          document_description: string | null
+          document_name: string
+          document_type: string
+          effective_date: string | null
+          expires_at: string | null
+          file_id: string | null
+          file_mime_type: string | null
+          file_name: string | null
+          file_size: number | null
+          file_url: string | null
+          id: string
+          internal_notes: string | null
+          is_current_version: boolean | null
+          is_signed: boolean | null
+          notes: string | null
+          org_id: string
+          placement_id: string | null
+          previous_version_id: string | null
+          rejected_at: string | null
+          rejected_by: string | null
+          rejection_reason: string | null
+          requested_at: string | null
+          required_by: string | null
+          requires_signature: boolean | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          signature_envelope_id: string | null
+          signature_ip: string | null
+          signature_method: string | null
+          signature_user_agent: string | null
+          signed_at: string | null
+          signer_email: string | null
+          signer_name: string | null
+          status: string
+          submission_id: string | null
+          submitted_at: string | null
+          updated_at: string | null
+          updated_by: string | null
+          version: number | null
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          candidate_id: string
+          client_id?: string | null
+          client_name?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          document_category?: string | null
+          document_description?: string | null
+          document_name: string
+          document_type: string
+          effective_date?: string | null
+          expires_at?: string | null
+          file_id?: string | null
+          file_mime_type?: string | null
+          file_name?: string | null
+          file_size?: number | null
+          file_url?: string | null
+          id?: string
+          internal_notes?: string | null
+          is_current_version?: boolean | null
+          is_signed?: boolean | null
+          notes?: string | null
+          org_id: string
+          placement_id?: string | null
+          previous_version_id?: string | null
+          rejected_at?: string | null
+          rejected_by?: string | null
+          rejection_reason?: string | null
+          requested_at?: string | null
+          required_by?: string | null
+          requires_signature?: boolean | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          signature_envelope_id?: string | null
+          signature_ip?: string | null
+          signature_method?: string | null
+          signature_user_agent?: string | null
+          signed_at?: string | null
+          signer_email?: string | null
+          signer_name?: string | null
+          status?: string
+          submission_id?: string | null
+          submitted_at?: string | null
+          updated_at?: string | null
+          updated_by?: string | null
+          version?: number | null
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          candidate_id?: string
+          client_id?: string | null
+          client_name?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          document_category?: string | null
+          document_description?: string | null
+          document_name?: string
+          document_type?: string
+          effective_date?: string | null
+          expires_at?: string | null
+          file_id?: string | null
+          file_mime_type?: string | null
+          file_name?: string | null
+          file_size?: number | null
+          file_url?: string | null
+          id?: string
+          internal_notes?: string | null
+          is_current_version?: boolean | null
+          is_signed?: boolean | null
+          notes?: string | null
+          org_id?: string
+          placement_id?: string | null
+          previous_version_id?: string | null
+          rejected_at?: string | null
+          rejected_by?: string | null
+          rejection_reason?: string | null
+          requested_at?: string | null
+          required_by?: string | null
+          requires_signature?: boolean | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          signature_envelope_id?: string | null
+          signature_ip?: string | null
+          signature_method?: string | null
+          signature_user_agent?: string | null
+          signed_at?: string | null
+          signer_email?: string | null
+          signer_name?: string | null
+          status?: string
+          submission_id?: string | null
+          submitted_at?: string | null
+          updated_at?: string | null
+          updated_by?: string | null
+          version?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "candidate_compliance_documents_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_placement_id_fkey"
+            columns: ["placement_id"]
+            isOneToOne: false
+            referencedRelation: "placements"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_compliance_documents_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      candidate_education: {
+        Row: {
+          candidate_id: string
+          class_rank: string | null
+          concentration: string | null
+          country_code: string | null
+          created_at: string | null
+          created_by: string | null
+          degree_name: string | null
+          degree_type: string | null
+          diploma_file_id: string | null
+          display_order: number | null
+          dissertation_title: string | null
+          end_date: string | null
+          expected_graduation: string | null
+          field_of_study: string | null
+          gpa: number | null
+          gpa_scale: number | null
+          honors: string | null
+          id: string
+          institution_city: string | null
+          institution_country: string | null
+          institution_name: string
+          institution_state: string | null
+          institution_type: string | null
+          is_current: boolean | null
+          is_highest_degree: boolean | null
+          is_verified: boolean | null
+          minor: string | null
+          org_id: string
+          start_date: string | null
+          thesis_title: string | null
+          transcript_file_id: string | null
+          updated_at: string | null
+          updated_by: string | null
+          verification_method: string | null
+          verification_notes: string | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          candidate_id: string
+          class_rank?: string | null
+          concentration?: string | null
+          country_code?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          degree_name?: string | null
+          degree_type?: string | null
+          diploma_file_id?: string | null
+          display_order?: number | null
+          dissertation_title?: string | null
+          end_date?: string | null
+          expected_graduation?: string | null
+          field_of_study?: string | null
+          gpa?: number | null
+          gpa_scale?: number | null
+          honors?: string | null
+          id?: string
+          institution_city?: string | null
+          institution_country?: string | null
+          institution_name: string
+          institution_state?: string | null
+          institution_type?: string | null
+          is_current?: boolean | null
+          is_highest_degree?: boolean | null
+          is_verified?: boolean | null
+          minor?: string | null
+          org_id: string
+          start_date?: string | null
+          thesis_title?: string | null
+          transcript_file_id?: string | null
+          updated_at?: string | null
+          updated_by?: string | null
+          verification_method?: string | null
+          verification_notes?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          candidate_id?: string
+          class_rank?: string | null
+          concentration?: string | null
+          country_code?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          degree_name?: string | null
+          degree_type?: string | null
+          diploma_file_id?: string | null
+          display_order?: number | null
+          dissertation_title?: string | null
+          end_date?: string | null
+          expected_graduation?: string | null
+          field_of_study?: string | null
+          gpa?: number | null
+          gpa_scale?: number | null
+          honors?: string | null
+          id?: string
+          institution_city?: string | null
+          institution_country?: string | null
+          institution_name?: string
+          institution_state?: string | null
+          institution_type?: string | null
+          is_current?: boolean | null
+          is_highest_degree?: boolean | null
+          is_verified?: boolean | null
+          minor?: string | null
+          org_id?: string
+          start_date?: string | null
+          thesis_title?: string | null
+          transcript_file_id?: string | null
+          updated_at?: string | null
+          updated_by?: string | null
+          verification_method?: string | null
+          verification_notes?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "candidate_education_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_education_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_education_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_education_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_education_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_education_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_education_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_education_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "candidate_education_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_education_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_education_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_education_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_education_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_education_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_education_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_education_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_education_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_education_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       candidate_embeddings: {
         Row: {
           availability: string | null
@@ -2980,6 +6669,1408 @@ export type Database = {
           },
           {
             foreignKeyName: "candidate_embeddings_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      candidate_references: {
+        Row: {
+          areas_for_improvement: string[] | null
+          best_time_to_contact: string | null
+          candidate_id: string
+          completed_at: string | null
+          consent_date: string | null
+          contact_attempts: number | null
+          contacted_at: string | null
+          contacted_by: string | null
+          created_at: string | null
+          created_by: string | null
+          display_order: number | null
+          email: string | null
+          feedback_summary: string | null
+          id: string
+          internal_notes: string | null
+          is_primary: boolean | null
+          last_contact_attempt: string | null
+          linkedin_url: string | null
+          org_id: string
+          overall_impression: string | null
+          phone: string | null
+          preferred_contact_method: string | null
+          questionnaire_responses: Json | null
+          rating: number | null
+          reference_company: string | null
+          reference_consent_given: boolean | null
+          reference_name: string
+          reference_title: string | null
+          relationship_description: string | null
+          relationship_type: string | null
+          status: string | null
+          strengths: string[] | null
+          updated_at: string | null
+          updated_by: string | null
+          verification_notes: string | null
+          worked_together_from: string | null
+          worked_together_to: string | null
+          would_rehire: boolean | null
+          would_work_with_again: boolean | null
+          years_known: number | null
+        }
+        Insert: {
+          areas_for_improvement?: string[] | null
+          best_time_to_contact?: string | null
+          candidate_id: string
+          completed_at?: string | null
+          consent_date?: string | null
+          contact_attempts?: number | null
+          contacted_at?: string | null
+          contacted_by?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          display_order?: number | null
+          email?: string | null
+          feedback_summary?: string | null
+          id?: string
+          internal_notes?: string | null
+          is_primary?: boolean | null
+          last_contact_attempt?: string | null
+          linkedin_url?: string | null
+          org_id: string
+          overall_impression?: string | null
+          phone?: string | null
+          preferred_contact_method?: string | null
+          questionnaire_responses?: Json | null
+          rating?: number | null
+          reference_company?: string | null
+          reference_consent_given?: boolean | null
+          reference_name: string
+          reference_title?: string | null
+          relationship_description?: string | null
+          relationship_type?: string | null
+          status?: string | null
+          strengths?: string[] | null
+          updated_at?: string | null
+          updated_by?: string | null
+          verification_notes?: string | null
+          worked_together_from?: string | null
+          worked_together_to?: string | null
+          would_rehire?: boolean | null
+          would_work_with_again?: boolean | null
+          years_known?: number | null
+        }
+        Update: {
+          areas_for_improvement?: string[] | null
+          best_time_to_contact?: string | null
+          candidate_id?: string
+          completed_at?: string | null
+          consent_date?: string | null
+          contact_attempts?: number | null
+          contacted_at?: string | null
+          contacted_by?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          display_order?: number | null
+          email?: string | null
+          feedback_summary?: string | null
+          id?: string
+          internal_notes?: string | null
+          is_primary?: boolean | null
+          last_contact_attempt?: string | null
+          linkedin_url?: string | null
+          org_id?: string
+          overall_impression?: string | null
+          phone?: string | null
+          preferred_contact_method?: string | null
+          questionnaire_responses?: Json | null
+          rating?: number | null
+          reference_company?: string | null
+          reference_consent_given?: boolean | null
+          reference_name?: string
+          reference_title?: string | null
+          relationship_description?: string | null
+          relationship_type?: string | null
+          status?: string | null
+          strengths?: string[] | null
+          updated_at?: string | null
+          updated_by?: string | null
+          verification_notes?: string | null
+          worked_together_from?: string | null
+          worked_together_to?: string | null
+          would_rehire?: boolean | null
+          would_work_with_again?: boolean | null
+          years_known?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "candidate_references_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_references_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_references_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_references_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_references_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_references_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_references_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_references_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "candidate_references_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_references_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_references_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_references_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_references_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_references_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_references_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_references_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_references_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_references_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      candidate_resumes: {
+        Row: {
+          ai_summary: string | null
+          archived_at: string | null
+          archived_by: string | null
+          bucket: string
+          candidate_id: string
+          created_at: string
+          file_name: string
+          file_path: string
+          file_size: number
+          id: string
+          is_archived: boolean | null
+          is_latest: boolean
+          mime_type: string
+          notes: string | null
+          org_id: string
+          parsed_content: string | null
+          parsed_experience: string | null
+          parsed_skills: string[] | null
+          previous_version_id: string | null
+          resume_type: string | null
+          submission_write_up: string | null
+          title: string | null
+          updated_at: string
+          uploaded_at: string
+          uploaded_by: string
+          version: number
+        }
+        Insert: {
+          ai_summary?: string | null
+          archived_at?: string | null
+          archived_by?: string | null
+          bucket?: string
+          candidate_id: string
+          created_at?: string
+          file_name: string
+          file_path: string
+          file_size: number
+          id?: string
+          is_archived?: boolean | null
+          is_latest?: boolean
+          mime_type: string
+          notes?: string | null
+          org_id: string
+          parsed_content?: string | null
+          parsed_experience?: string | null
+          parsed_skills?: string[] | null
+          previous_version_id?: string | null
+          resume_type?: string | null
+          submission_write_up?: string | null
+          title?: string | null
+          updated_at?: string
+          uploaded_at?: string
+          uploaded_by: string
+          version?: number
+        }
+        Update: {
+          ai_summary?: string | null
+          archived_at?: string | null
+          archived_by?: string | null
+          bucket?: string
+          candidate_id?: string
+          created_at?: string
+          file_name?: string
+          file_path?: string
+          file_size?: number
+          id?: string
+          is_archived?: boolean | null
+          is_latest?: boolean
+          mime_type?: string
+          notes?: string | null
+          org_id?: string
+          parsed_content?: string | null
+          parsed_experience?: string | null
+          parsed_skills?: string[] | null
+          previous_version_id?: string | null
+          resume_type?: string | null
+          submission_write_up?: string | null
+          title?: string | null
+          updated_at?: string
+          uploaded_at?: string
+          uploaded_by?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "candidate_resumes_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_archived_by_fkey"
+            columns: ["archived_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_previous_version_id_fkey"
+            columns: ["previous_version_id"]
+            isOneToOne: false
+            referencedRelation: "candidate_resumes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_resumes_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      candidate_skills: {
+        Row: {
+          candidate_id: string
+          certification_name: string | null
+          created_at: string
+          id: string
+          is_certified: boolean | null
+          last_used_date: string | null
+          proficiency_level: string | null
+          skill_id: string
+          updated_at: string
+          years_of_experience: number | null
+        }
+        Insert: {
+          candidate_id: string
+          certification_name?: string | null
+          created_at?: string
+          id?: string
+          is_certified?: boolean | null
+          last_used_date?: string | null
+          proficiency_level?: string | null
+          skill_id: string
+          updated_at?: string
+          years_of_experience?: number | null
+        }
+        Update: {
+          candidate_id?: string
+          certification_name?: string | null
+          created_at?: string
+          id?: string
+          is_certified?: boolean | null
+          last_used_date?: string | null
+          proficiency_level?: string | null
+          skill_id?: string
+          updated_at?: string
+          years_of_experience?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "candidate_skills_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_skill_id_fkey"
+            columns: ["skill_id"]
+            isOneToOne: false
+            referencedRelation: "skills"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      candidate_work_authorizations: {
+        Row: {
+          authorization_type: string
+          candidate_id: string
+          cap_exempt: boolean | null
+          country_code: string
+          created_at: string | null
+          created_by: string | null
+          current_sponsor: string | null
+          documents: Json | null
+          e_verify_case_number: string | null
+          e_verify_completion_date: string | null
+          e_verify_status: string | null
+          ead_card_number: string | null
+          ead_category: string | null
+          ead_expiry: string | null
+          expiry_date: string | null
+          has_valid_visa_stamp: boolean | null
+          i9_completed: boolean | null
+          i9_completed_at: string | null
+          i9_document_details: Json | null
+          i9_document_list: string | null
+          i9_expiry_date: string | null
+          i9_section_2_completed: boolean | null
+          id: string
+          is_primary: boolean | null
+          is_transferable: boolean | null
+          issue_date: string | null
+          lottery_selected: boolean | null
+          lottery_year: number | null
+          notes: string | null
+          org_id: string
+          passport_country: string | null
+          passport_expiry_date: string | null
+          passport_issue_date: string | null
+          passport_number_encrypted: string | null
+          receipt_number: string | null
+          requires_sponsorship: boolean | null
+          status: string
+          transfer_in_progress: boolean | null
+          updated_at: string | null
+          updated_by: string | null
+          visa_stamp_expiry: string | null
+          visa_type: string | null
+        }
+        Insert: {
+          authorization_type: string
+          candidate_id: string
+          cap_exempt?: boolean | null
+          country_code: string
+          created_at?: string | null
+          created_by?: string | null
+          current_sponsor?: string | null
+          documents?: Json | null
+          e_verify_case_number?: string | null
+          e_verify_completion_date?: string | null
+          e_verify_status?: string | null
+          ead_card_number?: string | null
+          ead_category?: string | null
+          ead_expiry?: string | null
+          expiry_date?: string | null
+          has_valid_visa_stamp?: boolean | null
+          i9_completed?: boolean | null
+          i9_completed_at?: string | null
+          i9_document_details?: Json | null
+          i9_document_list?: string | null
+          i9_expiry_date?: string | null
+          i9_section_2_completed?: boolean | null
+          id?: string
+          is_primary?: boolean | null
+          is_transferable?: boolean | null
+          issue_date?: string | null
+          lottery_selected?: boolean | null
+          lottery_year?: number | null
+          notes?: string | null
+          org_id: string
+          passport_country?: string | null
+          passport_expiry_date?: string | null
+          passport_issue_date?: string | null
+          passport_number_encrypted?: string | null
+          receipt_number?: string | null
+          requires_sponsorship?: boolean | null
+          status?: string
+          transfer_in_progress?: boolean | null
+          updated_at?: string | null
+          updated_by?: string | null
+          visa_stamp_expiry?: string | null
+          visa_type?: string | null
+        }
+        Update: {
+          authorization_type?: string
+          candidate_id?: string
+          cap_exempt?: boolean | null
+          country_code?: string
+          created_at?: string | null
+          created_by?: string | null
+          current_sponsor?: string | null
+          documents?: Json | null
+          e_verify_case_number?: string | null
+          e_verify_completion_date?: string | null
+          e_verify_status?: string | null
+          ead_card_number?: string | null
+          ead_category?: string | null
+          ead_expiry?: string | null
+          expiry_date?: string | null
+          has_valid_visa_stamp?: boolean | null
+          i9_completed?: boolean | null
+          i9_completed_at?: string | null
+          i9_document_details?: Json | null
+          i9_document_list?: string | null
+          i9_expiry_date?: string | null
+          i9_section_2_completed?: boolean | null
+          id?: string
+          is_primary?: boolean | null
+          is_transferable?: boolean | null
+          issue_date?: string | null
+          lottery_selected?: boolean | null
+          lottery_year?: number | null
+          notes?: string | null
+          org_id?: string
+          passport_country?: string | null
+          passport_expiry_date?: string | null
+          passport_issue_date?: string | null
+          passport_number_encrypted?: string | null
+          receipt_number?: string | null
+          requires_sponsorship?: boolean | null
+          status?: string
+          transfer_in_progress?: boolean | null
+          updated_at?: string | null
+          updated_by?: string | null
+          visa_stamp_expiry?: string | null
+          visa_type?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "candidate_work_authorizations_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_work_authorizations_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      candidate_work_history: {
+        Row: {
+          achievements: string[] | null
+          candidate_id: string
+          company_industry: string | null
+          company_name: string
+          company_size: string | null
+          country_code: string | null
+          created_at: string | null
+          created_by: string | null
+          department: string | null
+          description: string | null
+          display_order: number | null
+          employment_basis: string | null
+          employment_type: string | null
+          end_date: string | null
+          hr_contact_email: string | null
+          hr_contact_name: string | null
+          hr_contact_phone: string | null
+          id: string
+          is_current: boolean | null
+          is_rehire_eligible: boolean | null
+          is_remote: boolean | null
+          is_verified: boolean | null
+          job_title: string
+          location_city: string | null
+          location_country: string | null
+          location_state: string | null
+          org_id: string
+          projects: string[] | null
+          reason_for_leaving: string | null
+          rehire_notes: string | null
+          remote_type: string | null
+          responsibilities: string[] | null
+          salary_amount: number | null
+          salary_currency: string | null
+          salary_type: string | null
+          skills_used: string[] | null
+          start_date: string
+          supervisor_email: string | null
+          supervisor_name: string | null
+          supervisor_phone: string | null
+          supervisor_title: string | null
+          tools_used: string[] | null
+          updated_at: string | null
+          updated_by: string | null
+          verification_method: string | null
+          verification_notes: string | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          achievements?: string[] | null
+          candidate_id: string
+          company_industry?: string | null
+          company_name: string
+          company_size?: string | null
+          country_code?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          department?: string | null
+          description?: string | null
+          display_order?: number | null
+          employment_basis?: string | null
+          employment_type?: string | null
+          end_date?: string | null
+          hr_contact_email?: string | null
+          hr_contact_name?: string | null
+          hr_contact_phone?: string | null
+          id?: string
+          is_current?: boolean | null
+          is_rehire_eligible?: boolean | null
+          is_remote?: boolean | null
+          is_verified?: boolean | null
+          job_title: string
+          location_city?: string | null
+          location_country?: string | null
+          location_state?: string | null
+          org_id: string
+          projects?: string[] | null
+          reason_for_leaving?: string | null
+          rehire_notes?: string | null
+          remote_type?: string | null
+          responsibilities?: string[] | null
+          salary_amount?: number | null
+          salary_currency?: string | null
+          salary_type?: string | null
+          skills_used?: string[] | null
+          start_date: string
+          supervisor_email?: string | null
+          supervisor_name?: string | null
+          supervisor_phone?: string | null
+          supervisor_title?: string | null
+          tools_used?: string[] | null
+          updated_at?: string | null
+          updated_by?: string | null
+          verification_method?: string | null
+          verification_notes?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          achievements?: string[] | null
+          candidate_id?: string
+          company_industry?: string | null
+          company_name?: string
+          company_size?: string | null
+          country_code?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          department?: string | null
+          description?: string | null
+          display_order?: number | null
+          employment_basis?: string | null
+          employment_type?: string | null
+          end_date?: string | null
+          hr_contact_email?: string | null
+          hr_contact_name?: string | null
+          hr_contact_phone?: string | null
+          id?: string
+          is_current?: boolean | null
+          is_rehire_eligible?: boolean | null
+          is_remote?: boolean | null
+          is_verified?: boolean | null
+          job_title?: string
+          location_city?: string | null
+          location_country?: string | null
+          location_state?: string | null
+          org_id?: string
+          projects?: string[] | null
+          reason_for_leaving?: string | null
+          rehire_notes?: string | null
+          remote_type?: string | null
+          responsibilities?: string[] | null
+          salary_amount?: number | null
+          salary_currency?: string | null
+          salary_type?: string | null
+          skills_used?: string[] | null
+          start_date?: string
+          supervisor_email?: string | null
+          supervisor_name?: string | null
+          supervisor_phone?: string | null
+          supervisor_title?: string | null
+          tools_used?: string[] | null
+          updated_at?: string | null
+          updated_by?: string | null
+          verification_method?: string | null
+          verification_notes?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "candidate_work_history_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_work_history_org_id_fkey"
             columns: ["org_id"]
             isOneToOne: false
             referencedRelation: "v_organization_stats"
@@ -3299,6 +8390,315 @@ export type Database = {
           },
         ]
       }
+      comments: {
+        Row: {
+          author_id: string
+          content: string
+          created_at: string
+          deleted_at: string | null
+          deleted_by: string | null
+          edited_at: string | null
+          entity_id: string
+          entity_type: string
+          id: string
+          is_deleted: boolean | null
+          is_edited: boolean | null
+          mentioned_user_ids: string[] | null
+          org_id: string
+          original_content: string | null
+          parent_comment_id: string | null
+          reactions: Json | null
+          reply_count: number | null
+          updated_at: string
+        }
+        Insert: {
+          author_id: string
+          content: string
+          created_at?: string
+          deleted_at?: string | null
+          deleted_by?: string | null
+          edited_at?: string | null
+          entity_id: string
+          entity_type: string
+          id?: string
+          is_deleted?: boolean | null
+          is_edited?: boolean | null
+          mentioned_user_ids?: string[] | null
+          org_id: string
+          original_content?: string | null
+          parent_comment_id?: string | null
+          reactions?: Json | null
+          reply_count?: number | null
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string
+          content?: string
+          created_at?: string
+          deleted_at?: string | null
+          deleted_by?: string | null
+          edited_at?: string | null
+          entity_id?: string
+          entity_type?: string
+          id?: string
+          is_deleted?: boolean | null
+          is_edited?: boolean | null
+          mentioned_user_ids?: string[] | null
+          org_id?: string
+          original_content?: string | null
+          parent_comment_id?: string | null
+          reactions?: Json | null
+          reply_count?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "comments_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_deleted_by_fkey"
+            columns: ["deleted_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "comments_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_parent_comment_id_fkey"
+            columns: ["parent_comment_id"]
+            isOneToOne: false
+            referencedRelation: "comments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       content_assets: {
         Row: {
           cdn_url: string | null
@@ -3592,6 +8992,81 @@ export type Database = {
           },
         ]
       }
+      course_pricing: {
+        Row: {
+          course_id: string
+          created_at: string | null
+          early_bird_price: number | null
+          early_bird_valid_until: string | null
+          id: string
+          min_team_size: number | null
+          price_annual: number | null
+          price_monthly: number | null
+          price_one_time: number | null
+          scholarship_available: boolean | null
+          scholarship_criteria: string | null
+          stripe_price_id_annual: string | null
+          stripe_price_id_monthly: string | null
+          stripe_price_id_one_time: string | null
+          stripe_product_id: string | null
+          team_discount_percentage: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          course_id: string
+          created_at?: string | null
+          early_bird_price?: number | null
+          early_bird_valid_until?: string | null
+          id?: string
+          min_team_size?: number | null
+          price_annual?: number | null
+          price_monthly?: number | null
+          price_one_time?: number | null
+          scholarship_available?: boolean | null
+          scholarship_criteria?: string | null
+          stripe_price_id_annual?: string | null
+          stripe_price_id_monthly?: string | null
+          stripe_price_id_one_time?: string | null
+          stripe_product_id?: string | null
+          team_discount_percentage?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          course_id?: string
+          created_at?: string | null
+          early_bird_price?: number | null
+          early_bird_valid_until?: string | null
+          id?: string
+          min_team_size?: number | null
+          price_annual?: number | null
+          price_monthly?: number | null
+          price_one_time?: number | null
+          scholarship_available?: boolean | null
+          scholarship_criteria?: string | null
+          stripe_price_id_annual?: string | null
+          stripe_price_id_monthly?: string | null
+          stripe_price_id_one_time?: string | null
+          stripe_product_id?: string | null
+          team_discount_percentage?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_pricing_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: true
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "course_pricing_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: true
+            referencedRelation: "quiz_analytics"
+            referencedColumns: ["course_id"]
+          },
+        ]
+      }
       courses: {
         Row: {
           created_at: string | null
@@ -3774,6 +9249,1285 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_user_roles_detailed"
             referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      deals: {
+        Row: {
+          account_id: string | null
+          actual_close_date: string | null
+          close_reason: string | null
+          created_at: string
+          created_by: string | null
+          deleted_at: string | null
+          description: string | null
+          expected_close_date: string | null
+          id: string
+          lead_id: string | null
+          linked_job_ids: string[] | null
+          org_id: string
+          owner_id: string
+          probability: number | null
+          stage: string
+          title: string
+          updated_at: string
+          value: number
+        }
+        Insert: {
+          account_id?: string | null
+          actual_close_date?: string | null
+          close_reason?: string | null
+          created_at?: string
+          created_by?: string | null
+          deleted_at?: string | null
+          description?: string | null
+          expected_close_date?: string | null
+          id?: string
+          lead_id?: string | null
+          linked_job_ids?: string[] | null
+          org_id: string
+          owner_id: string
+          probability?: number | null
+          stage?: string
+          title: string
+          updated_at?: string
+          value: number
+        }
+        Update: {
+          account_id?: string | null
+          actual_close_date?: string | null
+          close_reason?: string | null
+          created_at?: string
+          created_by?: string | null
+          deleted_at?: string | null
+          description?: string | null
+          expected_close_date?: string | null
+          id?: string
+          lead_id?: string | null
+          linked_job_ids?: string[] | null
+          org_id?: string
+          owner_id?: string
+          probability?: number | null
+          stage?: string
+          title?: string
+          updated_at?: string
+          value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deals_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "deals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "deals_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "deals_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deals_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      discount_code_usage: {
+        Row: {
+          discount_amount: number
+          discount_code_id: string
+          enrollment_id: string | null
+          final_amount: number
+          id: string
+          original_amount: number
+          stripe_payment_intent_id: string | null
+          used_at: string | null
+          user_id: string
+        }
+        Insert: {
+          discount_amount: number
+          discount_code_id: string
+          enrollment_id?: string | null
+          final_amount: number
+          id?: string
+          original_amount: number
+          stripe_payment_intent_id?: string | null
+          used_at?: string | null
+          user_id: string
+        }
+        Update: {
+          discount_amount?: number
+          discount_code_id?: string
+          enrollment_id?: string | null
+          final_amount?: number
+          id?: string
+          original_amount?: number
+          stripe_payment_intent_id?: string | null
+          used_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "discount_code_usage_discount_code_id_fkey"
+            columns: ["discount_code_id"]
+            isOneToOne: false
+            referencedRelation: "discount_codes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_enrollment_id_fkey"
+            columns: ["enrollment_id"]
+            isOneToOne: false
+            referencedRelation: "student_enrollments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "discount_code_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      discount_codes: {
+        Row: {
+          applicable_course_ids: string[] | null
+          applicable_plan_types: string[] | null
+          code: string
+          created_at: string | null
+          created_by: string | null
+          deleted_at: string | null
+          description: string | null
+          discount_type: string
+          discount_value: number
+          id: string
+          is_active: boolean | null
+          max_uses: number | null
+          max_uses_per_user: number | null
+          minimum_purchase_amount: number | null
+          name: string
+          stripe_coupon_id: string | null
+          stripe_promotion_code_id: string | null
+          updated_at: string | null
+          uses_count: number | null
+          valid_from: string | null
+          valid_until: string | null
+        }
+        Insert: {
+          applicable_course_ids?: string[] | null
+          applicable_plan_types?: string[] | null
+          code: string
+          created_at?: string | null
+          created_by?: string | null
+          deleted_at?: string | null
+          description?: string | null
+          discount_type: string
+          discount_value: number
+          id?: string
+          is_active?: boolean | null
+          max_uses?: number | null
+          max_uses_per_user?: number | null
+          minimum_purchase_amount?: number | null
+          name: string
+          stripe_coupon_id?: string | null
+          stripe_promotion_code_id?: string | null
+          updated_at?: string | null
+          uses_count?: number | null
+          valid_from?: string | null
+          valid_until?: string | null
+        }
+        Update: {
+          applicable_course_ids?: string[] | null
+          applicable_plan_types?: string[] | null
+          code?: string
+          created_at?: string | null
+          created_by?: string | null
+          deleted_at?: string | null
+          description?: string | null
+          discount_type?: string
+          discount_value?: number
+          id?: string
+          is_active?: boolean | null
+          max_uses?: number | null
+          max_uses_per_user?: number | null
+          minimum_purchase_amount?: number | null
+          name?: string
+          stripe_coupon_id?: string | null
+          stripe_promotion_code_id?: string | null
+          updated_at?: string | null
+          uses_count?: number | null
+          valid_from?: string | null
+          valid_until?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "discount_codes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "discount_codes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "discount_codes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "discount_codes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "discount_codes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "discount_codes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "discount_codes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "discount_codes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "discount_codes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "discount_codes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "discount_codes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "discount_codes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "discount_codes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "discount_codes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "discount_codes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "discount_codes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      document_templates: {
+        Row: {
+          category: string
+          created_at: string
+          created_by: string
+          deleted_at: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          org_id: string
+          sample_data: Json | null
+          template_content: string
+          template_type: string
+          updated_at: string
+          variables: Json
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          created_by: string
+          deleted_at?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          org_id: string
+          sample_data?: Json | null
+          template_content: string
+          template_type: string
+          updated_at?: string
+          variables?: Json
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          created_by?: string
+          deleted_at?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          org_id?: string
+          sample_data?: Json | null
+          template_content?: string
+          template_type?: string
+          updated_at?: string
+          variables?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "document_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "document_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "document_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "document_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "document_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "document_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "document_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "document_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "document_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "document_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "document_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "document_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "document_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "document_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "document_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "document_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "document_templates_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "document_templates_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_logs: {
+        Row: {
+          bcc_email: string[] | null
+          cc_email: string[] | null
+          clicked_at: string | null
+          created_at: string
+          error_message: string | null
+          id: string
+          metadata: Json
+          opened_at: string | null
+          org_id: string
+          resend_id: string | null
+          sent_at: string | null
+          status: string
+          subject: string
+          template_id: string | null
+          to_email: string
+        }
+        Insert: {
+          bcc_email?: string[] | null
+          cc_email?: string[] | null
+          clicked_at?: string | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          metadata?: Json
+          opened_at?: string | null
+          org_id: string
+          resend_id?: string | null
+          sent_at?: string | null
+          status?: string
+          subject: string
+          template_id?: string | null
+          to_email: string
+        }
+        Update: {
+          bcc_email?: string[] | null
+          cc_email?: string[] | null
+          clicked_at?: string | null
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          metadata?: Json
+          opened_at?: string | null
+          org_id?: string
+          resend_id?: string | null
+          sent_at?: string | null
+          status?: string
+          subject?: string
+          template_id?: string | null
+          to_email?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_logs_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_logs_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_logs_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "email_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_templates: {
+        Row: {
+          body_html: string
+          body_text: string | null
+          category: string
+          created_at: string
+          created_by: string
+          deleted_at: string | null
+          id: string
+          is_active: boolean
+          name: string
+          org_id: string
+          subject: string
+          updated_at: string
+          variables: Json
+        }
+        Insert: {
+          body_html: string
+          body_text?: string | null
+          category: string
+          created_at?: string
+          created_by: string
+          deleted_at?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          org_id: string
+          subject: string
+          updated_at?: string
+          variables?: Json
+        }
+        Update: {
+          body_html?: string
+          body_text?: string | null
+          category?: string
+          created_at?: string
+          created_by?: string
+          deleted_at?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          org_id?: string
+          subject?: string
+          updated_at?: string
+          variables?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "email_templates_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_templates_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      employee_metadata: {
+        Row: {
+          benefits_eligible: boolean | null
+          benefits_start_date: string | null
+          bonus_target: number | null
+          commission_plan: string | null
+          created_at: string
+          emergency_contact_name: string | null
+          emergency_contact_phone: string | null
+          emergency_contact_relationship: string | null
+          employee_id_number: string | null
+          employment_type: string | null
+          equity_shares: number | null
+          kpi_targets: Json | null
+          monthly_placement_target: number | null
+          pod_id: string | null
+          pod_role: string | null
+          updated_at: string
+          user_id: string
+          weekly_hours: number | null
+          work_schedule: string | null
+        }
+        Insert: {
+          benefits_eligible?: boolean | null
+          benefits_start_date?: string | null
+          bonus_target?: number | null
+          commission_plan?: string | null
+          created_at?: string
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          emergency_contact_relationship?: string | null
+          employee_id_number?: string | null
+          employment_type?: string | null
+          equity_shares?: number | null
+          kpi_targets?: Json | null
+          monthly_placement_target?: number | null
+          pod_id?: string | null
+          pod_role?: string | null
+          updated_at?: string
+          user_id: string
+          weekly_hours?: number | null
+          work_schedule?: string | null
+        }
+        Update: {
+          benefits_eligible?: boolean | null
+          benefits_start_date?: string | null
+          bonus_target?: number | null
+          commission_plan?: string | null
+          created_at?: string
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          emergency_contact_relationship?: string | null
+          employee_id_number?: string | null
+          employment_type?: string | null
+          equity_shares?: number | null
+          kpi_targets?: Json | null
+          monthly_placement_target?: number | null
+          pod_id?: string | null
+          pod_role?: string | null
+          updated_at?: string
+          user_id?: string
+          weekly_hours?: number | null
+          work_schedule?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "employee_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "employee_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "employee_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "employee_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "employee_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "employee_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "employee_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "employee_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "employee_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "employee_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employee_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employee_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employee_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employee_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employee_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employee_metadata_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "fk_employee_pod"
+            columns: ["pod_id"]
+            isOneToOne: false
+            referencedRelation: "pods"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -4117,6 +10871,53 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_user_roles_detailed"
             referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      engagement_tracking: {
+        Row: {
+          campaign_contact_id: string
+          clicked_url: string | null
+          created_at: string
+          event_data: Json | null
+          event_timestamp: string
+          event_type: string
+          id: string
+          ip_address: unknown
+          tracking_id: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          campaign_contact_id: string
+          clicked_url?: string | null
+          created_at?: string
+          event_data?: Json | null
+          event_timestamp?: string
+          event_type: string
+          id?: string
+          ip_address?: unknown
+          tracking_id?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          campaign_contact_id?: string
+          clicked_url?: string | null
+          created_at?: string
+          event_data?: Json | null
+          event_timestamp?: string
+          event_type?: string
+          id?: string
+          ip_address?: unknown
+          tracking_id?: string | null
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "engagement_tracking_campaign_contact_id_fkey"
+            columns: ["campaign_contact_id"]
+            isOneToOne: false
+            referencedRelation: "campaign_contacts"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -4627,6 +11428,465 @@ export type Database = {
           },
         ]
       }
+      external_jobs: {
+        Row: {
+          company_name: string | null
+          content_hash: string | null
+          created_at: string
+          deleted_at: string | null
+          description: string | null
+          experience_years_min: number | null
+          expires_at: string | null
+          id: string
+          is_remote: boolean | null
+          last_verified_at: string | null
+          location: string | null
+          match_count: number | null
+          org_id: string
+          rate_max: number | null
+          rate_min: number | null
+          rate_type: string | null
+          required_skills: string[] | null
+          scraped_at: string
+          search_vector: unknown
+          source_job_id: string | null
+          source_name: string
+          source_url: string | null
+          status: string
+          submission_count: number | null
+          title: string
+          updated_at: string
+          visa_requirements: string[] | null
+        }
+        Insert: {
+          company_name?: string | null
+          content_hash?: string | null
+          created_at?: string
+          deleted_at?: string | null
+          description?: string | null
+          experience_years_min?: number | null
+          expires_at?: string | null
+          id?: string
+          is_remote?: boolean | null
+          last_verified_at?: string | null
+          location?: string | null
+          match_count?: number | null
+          org_id: string
+          rate_max?: number | null
+          rate_min?: number | null
+          rate_type?: string | null
+          required_skills?: string[] | null
+          scraped_at: string
+          search_vector?: unknown
+          source_job_id?: string | null
+          source_name: string
+          source_url?: string | null
+          status?: string
+          submission_count?: number | null
+          title: string
+          updated_at?: string
+          visa_requirements?: string[] | null
+        }
+        Update: {
+          company_name?: string | null
+          content_hash?: string | null
+          created_at?: string
+          deleted_at?: string | null
+          description?: string | null
+          experience_years_min?: number | null
+          expires_at?: string | null
+          id?: string
+          is_remote?: boolean | null
+          last_verified_at?: string | null
+          location?: string | null
+          match_count?: number | null
+          org_id?: string
+          rate_max?: number | null
+          rate_min?: number | null
+          rate_type?: string | null
+          required_skills?: string[] | null
+          scraped_at?: string
+          search_vector?: unknown
+          source_job_id?: string | null
+          source_name?: string
+          source_url?: string | null
+          status?: string
+          submission_count?: number | null
+          title?: string
+          updated_at?: string
+          visa_requirements?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "external_jobs_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "external_jobs_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      file_uploads: {
+        Row: {
+          bucket: string
+          deleted_at: string | null
+          entity_id: string | null
+          entity_type: string | null
+          file_name: string
+          file_path: string
+          file_size: number
+          id: string
+          metadata: Json
+          mime_type: string
+          org_id: string
+          uploaded_at: string
+          uploaded_by: string
+        }
+        Insert: {
+          bucket: string
+          deleted_at?: string | null
+          entity_id?: string | null
+          entity_type?: string | null
+          file_name: string
+          file_path: string
+          file_size: number
+          id?: string
+          metadata?: Json
+          mime_type: string
+          org_id: string
+          uploaded_at?: string
+          uploaded_by: string
+        }
+        Update: {
+          bucket?: string
+          deleted_at?: string | null
+          entity_id?: string | null
+          entity_type?: string | null
+          file_name?: string
+          file_path?: string
+          file_size?: number
+          id?: string
+          metadata?: Json
+          mime_type?: string
+          org_id?: string
+          uploaded_at?: string
+          uploaded_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "file_uploads_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "file_uploads_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "file_uploads_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "file_uploads_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "file_uploads_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "file_uploads_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "file_uploads_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "file_uploads_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "file_uploads_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "file_uploads_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "file_uploads_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "file_uploads_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "file_uploads_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "file_uploads_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "file_uploads_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "file_uploads_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "file_uploads_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "file_uploads_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      generated_documents: {
+        Row: {
+          entity_id: string
+          entity_type: string
+          file_name: string
+          file_path: string
+          file_size: number
+          generated_at: string
+          generated_by: string
+          id: string
+          metadata: Json
+          mime_type: string
+          org_id: string
+          template_id: string
+        }
+        Insert: {
+          entity_id: string
+          entity_type: string
+          file_name: string
+          file_path: string
+          file_size: number
+          generated_at?: string
+          generated_by: string
+          id?: string
+          metadata?: Json
+          mime_type: string
+          org_id: string
+          template_id: string
+        }
+        Update: {
+          entity_id?: string
+          entity_type?: string
+          file_name?: string
+          file_path?: string
+          file_size?: number
+          generated_at?: string
+          generated_by?: string
+          id?: string
+          metadata?: Json
+          mime_type?: string
+          org_id?: string
+          template_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "generated_documents_generated_by_fkey"
+            columns: ["generated_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "generated_documents_generated_by_fkey"
+            columns: ["generated_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "generated_documents_generated_by_fkey"
+            columns: ["generated_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "generated_documents_generated_by_fkey"
+            columns: ["generated_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "generated_documents_generated_by_fkey"
+            columns: ["generated_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "generated_documents_generated_by_fkey"
+            columns: ["generated_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "generated_documents_generated_by_fkey"
+            columns: ["generated_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "generated_documents_generated_by_fkey"
+            columns: ["generated_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "generated_documents_generated_by_fkey"
+            columns: ["generated_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "generated_documents_generated_by_fkey"
+            columns: ["generated_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "generated_documents_generated_by_fkey"
+            columns: ["generated_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "generated_documents_generated_by_fkey"
+            columns: ["generated_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "generated_documents_generated_by_fkey"
+            columns: ["generated_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "generated_documents_generated_by_fkey"
+            columns: ["generated_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "generated_documents_generated_by_fkey"
+            columns: ["generated_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "generated_documents_generated_by_fkey"
+            columns: ["generated_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "generated_documents_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "generated_documents_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "generated_documents_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "document_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       generated_resumes: {
         Row: {
           ats_keywords: string[] | null
@@ -5004,6 +12264,800 @@ export type Database = {
           },
         ]
       }
+      hotlists: {
+        Row: {
+          candidate_count: number
+          candidate_ids: string[]
+          created_at: string
+          created_by: string | null
+          description: string | null
+          document_file_id: string | null
+          expires_at: string | null
+          id: string
+          org_id: string
+          response_count: number | null
+          responses_text: string[] | null
+          sent_at: string | null
+          sent_by: string | null
+          sent_to_account_ids: string[] | null
+          sent_to_emails: string[] | null
+          status: string
+          target_accounts: string[] | null
+          target_roles: string[] | null
+          target_skills: string[] | null
+          title: string
+          updated_at: string
+          view_count: number | null
+        }
+        Insert: {
+          candidate_count: number
+          candidate_ids: string[]
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          document_file_id?: string | null
+          expires_at?: string | null
+          id?: string
+          org_id: string
+          response_count?: number | null
+          responses_text?: string[] | null
+          sent_at?: string | null
+          sent_by?: string | null
+          sent_to_account_ids?: string[] | null
+          sent_to_emails?: string[] | null
+          status?: string
+          target_accounts?: string[] | null
+          target_roles?: string[] | null
+          target_skills?: string[] | null
+          title: string
+          updated_at?: string
+          view_count?: number | null
+        }
+        Update: {
+          candidate_count?: number
+          candidate_ids?: string[]
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          document_file_id?: string | null
+          expires_at?: string | null
+          id?: string
+          org_id?: string
+          response_count?: number | null
+          responses_text?: string[] | null
+          sent_at?: string | null
+          sent_by?: string | null
+          sent_to_account_ids?: string[] | null
+          sent_to_emails?: string[] | null
+          status?: string
+          target_accounts?: string[] | null
+          target_roles?: string[] | null
+          target_skills?: string[] | null
+          title?: string
+          updated_at?: string
+          view_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hotlists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "hotlists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hotlists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hotlists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hotlists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hotlists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hotlists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hotlists_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hotlists_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hotlists_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "hotlists_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "hotlists_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hotlists_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hotlists_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hotlists_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hotlists_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hotlists_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hotlists_sent_by_fkey"
+            columns: ["sent_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      immigration_cases: {
+        Row: {
+          approval_notice_file_id: string | null
+          approved_date: string | null
+          attorney_email: string | null
+          attorney_fee: number | null
+          attorney_firm: string | null
+          attorney_name: string | null
+          attorney_phone: string | null
+          candidate_id: string
+          case_manager_id: string | null
+          case_type: string
+          created_at: string
+          created_by: string | null
+          current_visa_expiry: string | null
+          current_visa_type: string | null
+          days_elapsed: number | null
+          denial_reason: string | null
+          denied_date: string | null
+          expected_decision_date: string | null
+          filed_date: string | null
+          filing_fee: number | null
+          i797_file_id: string | null
+          id: string
+          internal_notes: string | null
+          new_visa_end_date: string | null
+          new_visa_start_date: string | null
+          new_visa_type: string | null
+          next_action: string | null
+          next_action_date: string | null
+          org_id: string
+          paid_by: string | null
+          petition_document_file_id: string | null
+          petition_number: string | null
+          premium_processing_fee: number | null
+          rfe_received_date: string | null
+          rfe_response_due_date: string | null
+          rfe_response_submitted_date: string | null
+          status: string
+          timeline_notes: Json | null
+          total_cost: number | null
+          updated_at: string
+        }
+        Insert: {
+          approval_notice_file_id?: string | null
+          approved_date?: string | null
+          attorney_email?: string | null
+          attorney_fee?: number | null
+          attorney_firm?: string | null
+          attorney_name?: string | null
+          attorney_phone?: string | null
+          candidate_id: string
+          case_manager_id?: string | null
+          case_type: string
+          created_at?: string
+          created_by?: string | null
+          current_visa_expiry?: string | null
+          current_visa_type?: string | null
+          days_elapsed?: number | null
+          denial_reason?: string | null
+          denied_date?: string | null
+          expected_decision_date?: string | null
+          filed_date?: string | null
+          filing_fee?: number | null
+          i797_file_id?: string | null
+          id?: string
+          internal_notes?: string | null
+          new_visa_end_date?: string | null
+          new_visa_start_date?: string | null
+          new_visa_type?: string | null
+          next_action?: string | null
+          next_action_date?: string | null
+          org_id: string
+          paid_by?: string | null
+          petition_document_file_id?: string | null
+          petition_number?: string | null
+          premium_processing_fee?: number | null
+          rfe_received_date?: string | null
+          rfe_response_due_date?: string | null
+          rfe_response_submitted_date?: string | null
+          status?: string
+          timeline_notes?: Json | null
+          total_cost?: number | null
+          updated_at?: string
+        }
+        Update: {
+          approval_notice_file_id?: string | null
+          approved_date?: string | null
+          attorney_email?: string | null
+          attorney_fee?: number | null
+          attorney_firm?: string | null
+          attorney_name?: string | null
+          attorney_phone?: string | null
+          candidate_id?: string
+          case_manager_id?: string | null
+          case_type?: string
+          created_at?: string
+          created_by?: string | null
+          current_visa_expiry?: string | null
+          current_visa_type?: string | null
+          days_elapsed?: number | null
+          denial_reason?: string | null
+          denied_date?: string | null
+          expected_decision_date?: string | null
+          filed_date?: string | null
+          filing_fee?: number | null
+          i797_file_id?: string | null
+          id?: string
+          internal_notes?: string | null
+          new_visa_end_date?: string | null
+          new_visa_start_date?: string | null
+          new_visa_type?: string | null
+          next_action?: string | null
+          next_action_date?: string | null
+          org_id?: string
+          paid_by?: string | null
+          petition_document_file_id?: string | null
+          petition_number?: string | null
+          premium_processing_fee?: number | null
+          rfe_received_date?: string | null
+          rfe_response_due_date?: string | null
+          rfe_response_submitted_date?: string | null
+          status?: string
+          timeline_notes?: Json | null
+          total_cost?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "immigration_cases_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_case_manager_id_fkey"
+            columns: ["case_manager_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_case_manager_id_fkey"
+            columns: ["case_manager_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_case_manager_id_fkey"
+            columns: ["case_manager_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_case_manager_id_fkey"
+            columns: ["case_manager_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_case_manager_id_fkey"
+            columns: ["case_manager_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_case_manager_id_fkey"
+            columns: ["case_manager_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_case_manager_id_fkey"
+            columns: ["case_manager_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_case_manager_id_fkey"
+            columns: ["case_manager_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_case_manager_id_fkey"
+            columns: ["case_manager_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_case_manager_id_fkey"
+            columns: ["case_manager_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_case_manager_id_fkey"
+            columns: ["case_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_case_manager_id_fkey"
+            columns: ["case_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_case_manager_id_fkey"
+            columns: ["case_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_case_manager_id_fkey"
+            columns: ["case_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_case_manager_id_fkey"
+            columns: ["case_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_case_manager_id_fkey"
+            columns: ["case_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "immigration_cases_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       interview_sessions: {
         Row: {
           average_score: number
@@ -5153,6 +13207,1043 @@ export type Database = {
           {
             foreignKeyName: "interview_sessions_student_id_fkey"
             columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      interviews: {
+        Row: {
+          cancellation_reason: string | null
+          candidate_id: string
+          created_at: string
+          duration_minutes: number | null
+          feedback: string | null
+          feedback_submitted_at: string | null
+          id: string
+          interview_type: string | null
+          interviewer_emails: string[] | null
+          interviewer_names: string[] | null
+          job_id: string
+          meeting_link: string | null
+          meeting_location: string | null
+          org_id: string
+          rating: number | null
+          recommendation: string | null
+          round_number: number
+          scheduled_at: string | null
+          scheduled_by: string | null
+          status: string
+          submission_id: string
+          submitted_by: string | null
+          timezone: string | null
+          updated_at: string
+        }
+        Insert: {
+          cancellation_reason?: string | null
+          candidate_id: string
+          created_at?: string
+          duration_minutes?: number | null
+          feedback?: string | null
+          feedback_submitted_at?: string | null
+          id?: string
+          interview_type?: string | null
+          interviewer_emails?: string[] | null
+          interviewer_names?: string[] | null
+          job_id: string
+          meeting_link?: string | null
+          meeting_location?: string | null
+          org_id: string
+          rating?: number | null
+          recommendation?: string | null
+          round_number?: number
+          scheduled_at?: string | null
+          scheduled_by?: string | null
+          status?: string
+          submission_id: string
+          submitted_by?: string | null
+          timezone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          cancellation_reason?: string | null
+          candidate_id?: string
+          created_at?: string
+          duration_minutes?: number | null
+          feedback?: string | null
+          feedback_submitted_at?: string | null
+          id?: string
+          interview_type?: string | null
+          interviewer_emails?: string[] | null
+          interviewer_names?: string[] | null
+          job_id?: string
+          meeting_link?: string | null
+          meeting_location?: string | null
+          org_id?: string
+          rating?: number | null
+          recommendation?: string | null
+          round_number?: number
+          scheduled_at?: string | null
+          scheduled_by?: string | null
+          status?: string
+          submission_id?: string
+          submitted_by?: string | null
+          timezone?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "interviews_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "submissions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "interviews_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "interviews_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "interviews_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      job_sources: {
+        Row: {
+          auth_type: string | null
+          created_at: string
+          created_by: string | null
+          credentials_encrypted: string | null
+          error_count: number | null
+          failed_scrapes: number | null
+          field_mapping: Json | null
+          id: string
+          is_active: boolean | null
+          is_healthy: boolean | null
+          last_error: string | null
+          last_scrape_at: string | null
+          last_success_at: string | null
+          name: string
+          next_scrape_at: string | null
+          org_id: string
+          requires_auth: boolean | null
+          scrape_frequency_hours: number | null
+          selector_config: Json | null
+          source_type: string
+          successful_scrapes: number | null
+          total_jobs_scraped: number | null
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          auth_type?: string | null
+          created_at?: string
+          created_by?: string | null
+          credentials_encrypted?: string | null
+          error_count?: number | null
+          failed_scrapes?: number | null
+          field_mapping?: Json | null
+          id?: string
+          is_active?: boolean | null
+          is_healthy?: boolean | null
+          last_error?: string | null
+          last_scrape_at?: string | null
+          last_success_at?: string | null
+          name: string
+          next_scrape_at?: string | null
+          org_id: string
+          requires_auth?: boolean | null
+          scrape_frequency_hours?: number | null
+          selector_config?: Json | null
+          source_type?: string
+          successful_scrapes?: number | null
+          total_jobs_scraped?: number | null
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          auth_type?: string | null
+          created_at?: string
+          created_by?: string | null
+          credentials_encrypted?: string | null
+          error_count?: number | null
+          failed_scrapes?: number | null
+          field_mapping?: Json | null
+          id?: string
+          is_active?: boolean | null
+          is_healthy?: boolean | null
+          last_error?: string | null
+          last_scrape_at?: string | null
+          last_success_at?: string | null
+          name?: string
+          next_scrape_at?: string | null
+          org_id?: string
+          requires_auth?: boolean | null
+          scrape_frequency_hours?: number | null
+          selector_config?: Json | null
+          source_type?: string
+          successful_scrapes?: number | null
+          total_jobs_scraped?: number | null
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "job_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "job_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "job_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "job_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "job_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "job_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "job_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "job_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "job_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "job_sources_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_sources_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jobs: {
+        Row: {
+          account_id: string | null
+          client_id: string | null
+          client_interview_process: string | null
+          client_submission_instructions: string | null
+          created_at: string
+          created_by: string | null
+          currency: string | null
+          deal_id: string | null
+          deleted_at: string | null
+          description: string | null
+          filled_date: string | null
+          hybrid_days: number | null
+          id: string
+          is_remote: boolean | null
+          job_type: string | null
+          location: string | null
+          max_experience_years: number | null
+          min_experience_years: number | null
+          nice_to_have_skills: string[] | null
+          org_id: string
+          owner_id: string
+          positions_count: number | null
+          positions_filled: number | null
+          posted_date: string | null
+          priority: string | null
+          rate_max: number | null
+          rate_min: number | null
+          rate_type: string | null
+          recruiter_ids: string[] | null
+          required_skills: string[] | null
+          search_vector: unknown
+          status: string
+          target_fill_date: string | null
+          target_start_date: string | null
+          title: string
+          updated_at: string
+          urgency: string | null
+          visa_requirements: string[] | null
+        }
+        Insert: {
+          account_id?: string | null
+          client_id?: string | null
+          client_interview_process?: string | null
+          client_submission_instructions?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string | null
+          deal_id?: string | null
+          deleted_at?: string | null
+          description?: string | null
+          filled_date?: string | null
+          hybrid_days?: number | null
+          id?: string
+          is_remote?: boolean | null
+          job_type?: string | null
+          location?: string | null
+          max_experience_years?: number | null
+          min_experience_years?: number | null
+          nice_to_have_skills?: string[] | null
+          org_id: string
+          owner_id: string
+          positions_count?: number | null
+          positions_filled?: number | null
+          posted_date?: string | null
+          priority?: string | null
+          rate_max?: number | null
+          rate_min?: number | null
+          rate_type?: string | null
+          recruiter_ids?: string[] | null
+          required_skills?: string[] | null
+          search_vector?: unknown
+          status?: string
+          target_fill_date?: string | null
+          target_start_date?: string | null
+          title: string
+          updated_at?: string
+          urgency?: string | null
+          visa_requirements?: string[] | null
+        }
+        Update: {
+          account_id?: string | null
+          client_id?: string | null
+          client_interview_process?: string | null
+          client_submission_instructions?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string | null
+          deal_id?: string | null
+          deleted_at?: string | null
+          description?: string | null
+          filled_date?: string | null
+          hybrid_days?: number | null
+          id?: string
+          is_remote?: boolean | null
+          job_type?: string | null
+          location?: string | null
+          max_experience_years?: number | null
+          min_experience_years?: number | null
+          nice_to_have_skills?: string[] | null
+          org_id?: string
+          owner_id?: string
+          positions_count?: number | null
+          positions_filled?: number | null
+          posted_date?: string | null
+          priority?: string | null
+          rate_max?: number | null
+          rate_min?: number | null
+          rate_type?: string | null
+          recruiter_ids?: string[] | null
+          required_skills?: string[] | null
+          search_vector?: unknown
+          status?: string
+          target_fill_date?: string | null
+          target_start_date?: string | null
+          title?: string
+          updated_at?: string
+          urgency?: string | null
+          visa_requirements?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jobs_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_deal_id_fkey"
+            columns: ["deal_id"]
+            isOneToOne: false
+            referencedRelation: "deals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "jobs_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "jobs_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_owner_id_fkey"
+            columns: ["owner_id"]
             isOneToOne: false
             referencedRelation: "v_user_roles_detailed"
             referencedColumns: ["user_id"]
@@ -5945,6 +15036,1140 @@ export type Database = {
           },
         ]
       }
+      lead_strategies: {
+        Row: {
+          competitors: Json | null
+          created_at: string
+          created_by: string | null
+          desired_outcomes: Json | null
+          differentiators: Json | null
+          id: string
+          lead_id: string
+          meeting_agenda: Json | null
+          objections: Json | null
+          org_id: string
+          pain_points: Json | null
+          questions_to_ask: Json | null
+          stakeholders: Json | null
+          strategy_notes: string | null
+          talking_points: Json | null
+          updated_at: string
+          updated_by: string | null
+          value_proposition: string | null
+          win_themes: Json | null
+        }
+        Insert: {
+          competitors?: Json | null
+          created_at?: string
+          created_by?: string | null
+          desired_outcomes?: Json | null
+          differentiators?: Json | null
+          id?: string
+          lead_id: string
+          meeting_agenda?: Json | null
+          objections?: Json | null
+          org_id: string
+          pain_points?: Json | null
+          questions_to_ask?: Json | null
+          stakeholders?: Json | null
+          strategy_notes?: string | null
+          talking_points?: Json | null
+          updated_at?: string
+          updated_by?: string | null
+          value_proposition?: string | null
+          win_themes?: Json | null
+        }
+        Update: {
+          competitors?: Json | null
+          created_at?: string
+          created_by?: string | null
+          desired_outcomes?: Json | null
+          differentiators?: Json | null
+          id?: string
+          lead_id?: string
+          meeting_agenda?: Json | null
+          objections?: Json | null
+          org_id?: string
+          pain_points?: Json | null
+          questions_to_ask?: Json | null
+          stakeholders?: Json | null
+          strategy_notes?: string | null
+          talking_points?: Json | null
+          updated_at?: string
+          updated_by?: string | null
+          value_proposition?: string | null
+          win_themes?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_strategies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: true
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_strategies_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      lead_tasks: {
+        Row: {
+          assigned_to: string | null
+          completed: boolean
+          completed_at: string | null
+          completed_by: string | null
+          created_at: string
+          created_by: string | null
+          deleted_at: string | null
+          description: string | null
+          due_date: string
+          id: string
+          lead_id: string
+          org_id: string
+          priority: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          completed?: boolean
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          deleted_at?: string | null
+          description?: string | null
+          due_date: string
+          id?: string
+          lead_id: string
+          org_id: string
+          priority?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          completed?: boolean
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          deleted_at?: string | null
+          description?: string | null
+          due_date?: string
+          id?: string
+          lead_id?: string
+          org_id?: string
+          priority?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_tasks_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      leads: {
+        Row: {
+          account_id: string | null
+          bant_authority: number | null
+          bant_authority_notes: string | null
+          bant_budget: number | null
+          bant_budget_notes: string | null
+          bant_need: number | null
+          bant_need_notes: string | null
+          bant_timeline: number | null
+          bant_timeline_notes: string | null
+          bant_total_score: number | null
+          company_description: string | null
+          company_name: string | null
+          company_size: string | null
+          company_type: string | null
+          converted_at: string | null
+          converted_to_account_id: string | null
+          converted_to_deal_id: string | null
+          created_at: string
+          created_by: string | null
+          decision_authority: string | null
+          deleted_at: string | null
+          email: string | null
+          engagement_score: number | null
+          estimated_value: number | null
+          first_name: string | null
+          headquarters: string | null
+          id: string
+          industry: string | null
+          last_contacted_at: string | null
+          last_name: string | null
+          last_response_at: string | null
+          lead_type: string
+          linkedin_url: string | null
+          lost_reason: string | null
+          notes: string | null
+          org_id: string
+          owner_id: string | null
+          phone: string | null
+          preferred_contact_method: string | null
+          search_vector: unknown
+          source: string | null
+          source_campaign_id: string | null
+          status: string
+          tier: string | null
+          title: string | null
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          account_id?: string | null
+          bant_authority?: number | null
+          bant_authority_notes?: string | null
+          bant_budget?: number | null
+          bant_budget_notes?: string | null
+          bant_need?: number | null
+          bant_need_notes?: string | null
+          bant_timeline?: number | null
+          bant_timeline_notes?: string | null
+          bant_total_score?: number | null
+          company_description?: string | null
+          company_name?: string | null
+          company_size?: string | null
+          company_type?: string | null
+          converted_at?: string | null
+          converted_to_account_id?: string | null
+          converted_to_deal_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          decision_authority?: string | null
+          deleted_at?: string | null
+          email?: string | null
+          engagement_score?: number | null
+          estimated_value?: number | null
+          first_name?: string | null
+          headquarters?: string | null
+          id?: string
+          industry?: string | null
+          last_contacted_at?: string | null
+          last_name?: string | null
+          last_response_at?: string | null
+          lead_type?: string
+          linkedin_url?: string | null
+          lost_reason?: string | null
+          notes?: string | null
+          org_id: string
+          owner_id?: string | null
+          phone?: string | null
+          preferred_contact_method?: string | null
+          search_vector?: unknown
+          source?: string | null
+          source_campaign_id?: string | null
+          status?: string
+          tier?: string | null
+          title?: string | null
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          account_id?: string | null
+          bant_authority?: number | null
+          bant_authority_notes?: string | null
+          bant_budget?: number | null
+          bant_budget_notes?: string | null
+          bant_need?: number | null
+          bant_need_notes?: string | null
+          bant_timeline?: number | null
+          bant_timeline_notes?: string | null
+          bant_total_score?: number | null
+          company_description?: string | null
+          company_name?: string | null
+          company_size?: string | null
+          company_type?: string | null
+          converted_at?: string | null
+          converted_to_account_id?: string | null
+          converted_to_deal_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          decision_authority?: string | null
+          deleted_at?: string | null
+          email?: string | null
+          engagement_score?: number | null
+          estimated_value?: number | null
+          first_name?: string | null
+          headquarters?: string | null
+          id?: string
+          industry?: string | null
+          last_contacted_at?: string | null
+          last_name?: string | null
+          last_response_at?: string | null
+          lead_type?: string
+          linkedin_url?: string | null
+          lost_reason?: string | null
+          notes?: string | null
+          org_id?: string
+          owner_id?: string | null
+          phone?: string | null
+          preferred_contact_method?: string | null
+          search_vector?: unknown
+          source?: string | null
+          source_campaign_id?: string | null
+          status?: string
+          tier?: string | null
+          title?: string | null
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_leads_converted_to_deal"
+            columns: ["converted_to_deal_id"]
+            isOneToOne: false
+            referencedRelation: "deals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_converted_to_account_id_fkey"
+            columns: ["converted_to_account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "leads_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "leads_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       module_topics: {
         Row: {
           content_type: string
@@ -6015,6 +16240,838 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          action_label: string | null
+          action_url: string | null
+          archived_at: string | null
+          channels: string[] | null
+          created_at: string
+          email_error: string | null
+          email_sent_at: string | null
+          entity_id: string | null
+          entity_type: string | null
+          id: string
+          is_archived: boolean | null
+          is_read: boolean | null
+          message: string
+          notification_type: string
+          org_id: string
+          priority: string | null
+          read_at: string | null
+          slack_error: string | null
+          slack_sent_at: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          action_label?: string | null
+          action_url?: string | null
+          archived_at?: string | null
+          channels?: string[] | null
+          created_at?: string
+          email_error?: string | null
+          email_sent_at?: string | null
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          is_archived?: boolean | null
+          is_read?: boolean | null
+          message: string
+          notification_type: string
+          org_id: string
+          priority?: string | null
+          read_at?: string | null
+          slack_error?: string | null
+          slack_sent_at?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          action_label?: string | null
+          action_url?: string | null
+          archived_at?: string | null
+          channels?: string[] | null
+          created_at?: string
+          email_error?: string | null
+          email_sent_at?: string | null
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          is_archived?: boolean | null
+          is_read?: boolean | null
+          message?: string
+          notification_type?: string
+          org_id?: string
+          priority?: string | null
+          read_at?: string | null
+          slack_error?: string | null
+          slack_sent_at?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notifications_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      object_owners: {
+        Row: {
+          assigned_at: string
+          assigned_by: string | null
+          assignment_type: string | null
+          created_at: string
+          entity_id: string
+          entity_type: string
+          id: string
+          is_primary: boolean | null
+          notes: string | null
+          org_id: string
+          permission: string
+          role: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          assigned_at?: string
+          assigned_by?: string | null
+          assignment_type?: string | null
+          created_at?: string
+          entity_id: string
+          entity_type: string
+          id?: string
+          is_primary?: boolean | null
+          notes?: string | null
+          org_id: string
+          permission?: string
+          role: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          assigned_at?: string
+          assigned_by?: string | null
+          assignment_type?: string | null
+          created_at?: string
+          entity_id?: string
+          entity_type?: string
+          id?: string
+          is_primary?: boolean | null
+          notes?: string | null
+          org_id?: string
+          permission?: string
+          role?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "object_owners_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "object_owners_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "object_owners_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "object_owners_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "object_owners_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "object_owners_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "object_owners_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "object_owners_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "object_owners_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "object_owners_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "object_owners_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "object_owners_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "object_owners_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "object_owners_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "object_owners_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "object_owners_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "object_owners_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "object_owners_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      offers: {
+        Row: {
+          accepted_at: string | null
+          benefits: string | null
+          bonus: number | null
+          candidate_counter_offer: number | null
+          candidate_id: string
+          created_at: string
+          created_by: string | null
+          decline_reason: string | null
+          declined_at: string | null
+          end_date: string | null
+          expires_at: string | null
+          id: string
+          job_id: string
+          negotiation_notes: string | null
+          offer_letter_file_id: string | null
+          offer_type: string | null
+          org_id: string
+          rate: number
+          rate_type: string | null
+          relocation_assistance: boolean | null
+          sent_at: string | null
+          sign_on_bonus: number | null
+          signed_offer_file_id: string | null
+          start_date: string | null
+          status: string
+          submission_id: string
+          updated_at: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          benefits?: string | null
+          bonus?: number | null
+          candidate_counter_offer?: number | null
+          candidate_id: string
+          created_at?: string
+          created_by?: string | null
+          decline_reason?: string | null
+          declined_at?: string | null
+          end_date?: string | null
+          expires_at?: string | null
+          id?: string
+          job_id: string
+          negotiation_notes?: string | null
+          offer_letter_file_id?: string | null
+          offer_type?: string | null
+          org_id: string
+          rate: number
+          rate_type?: string | null
+          relocation_assistance?: boolean | null
+          sent_at?: string | null
+          sign_on_bonus?: number | null
+          signed_offer_file_id?: string | null
+          start_date?: string | null
+          status?: string
+          submission_id: string
+          updated_at?: string
+        }
+        Update: {
+          accepted_at?: string | null
+          benefits?: string | null
+          bonus?: number | null
+          candidate_counter_offer?: number | null
+          candidate_id?: string
+          created_at?: string
+          created_by?: string | null
+          decline_reason?: string | null
+          declined_at?: string | null
+          end_date?: string | null
+          expires_at?: string | null
+          id?: string
+          job_id?: string
+          negotiation_notes?: string | null
+          offer_letter_file_id?: string | null
+          offer_type?: string | null
+          org_id?: string
+          rate?: number
+          rate_type?: string | null
+          relocation_assistance?: boolean | null
+          sent_at?: string | null
+          sign_on_bonus?: number | null
+          signed_offer_file_id?: string | null
+          start_date?: string | null
+          status?: string
+          submission_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "offers_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "offers_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "offers_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "offers_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "offers_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "offers_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "offers_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "offers_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "offers_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "offers_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "offers_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "offers_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organizations: {
         Row: {
           address_line1: string | null
@@ -6025,24 +17082,32 @@ export type Database = {
           created_at: string
           deleted_at: string | null
           email: string | null
+          favicon_url: string | null
           features: Json | null
           id: string
           legal_name: string | null
+          locale: string | null
+          logo_url: string | null
           max_candidates: number | null
           max_storage_gb: number | null
           max_users: number | null
+          metadata: Json | null
           name: string
           onboarding_completed: boolean | null
           onboarding_step: string | null
           phone: string | null
+          plan: string | null
           postal_code: string | null
           settings: Json | null
           slug: string
           state: string | null
           status: string
+          stripe_coupon_id: string | null
+          stripe_customer_id: string | null
           subscription_status: string
           subscription_tier: string
           tax_id: string | null
+          timezone: string | null
           updated_at: string
           website: string | null
         }
@@ -6055,24 +17120,32 @@ export type Database = {
           created_at?: string
           deleted_at?: string | null
           email?: string | null
+          favicon_url?: string | null
           features?: Json | null
           id?: string
           legal_name?: string | null
+          locale?: string | null
+          logo_url?: string | null
           max_candidates?: number | null
           max_storage_gb?: number | null
           max_users?: number | null
+          metadata?: Json | null
           name: string
           onboarding_completed?: boolean | null
           onboarding_step?: string | null
           phone?: string | null
+          plan?: string | null
           postal_code?: string | null
           settings?: Json | null
           slug: string
           state?: string | null
           status?: string
+          stripe_coupon_id?: string | null
+          stripe_customer_id?: string | null
           subscription_status?: string
           subscription_tier?: string
           tax_id?: string | null
+          timezone?: string | null
           updated_at?: string
           website?: string | null
         }
@@ -6085,28 +17158,515 @@ export type Database = {
           created_at?: string
           deleted_at?: string | null
           email?: string | null
+          favicon_url?: string | null
           features?: Json | null
           id?: string
           legal_name?: string | null
+          locale?: string | null
+          logo_url?: string | null
           max_candidates?: number | null
           max_storage_gb?: number | null
           max_users?: number | null
+          metadata?: Json | null
           name?: string
           onboarding_completed?: boolean | null
           onboarding_step?: string | null
           phone?: string | null
+          plan?: string | null
           postal_code?: string | null
           settings?: Json | null
           slug?: string
           state?: string | null
           status?: string
+          stripe_coupon_id?: string | null
+          stripe_customer_id?: string | null
           subscription_status?: string
           subscription_tier?: string
           tax_id?: string | null
+          timezone?: string | null
           updated_at?: string
           website?: string | null
         }
         Relationships: []
+      }
+      payroll_items: {
+        Row: {
+          base_salary: number | null
+          benefits_deductions: number | null
+          bonus: number | null
+          commission: number | null
+          created_at: string
+          employee_id: string
+          gross_pay: number
+          id: string
+          net_pay: number
+          other_deductions: number | null
+          other_earnings: number | null
+          overtime_hours: number | null
+          overtime_pay: number | null
+          payroll_run_id: string
+          taxes_withheld: number | null
+          updated_at: string
+        }
+        Insert: {
+          base_salary?: number | null
+          benefits_deductions?: number | null
+          bonus?: number | null
+          commission?: number | null
+          created_at?: string
+          employee_id: string
+          gross_pay: number
+          id?: string
+          net_pay: number
+          other_deductions?: number | null
+          other_earnings?: number | null
+          overtime_hours?: number | null
+          overtime_pay?: number | null
+          payroll_run_id: string
+          taxes_withheld?: number | null
+          updated_at?: string
+        }
+        Update: {
+          base_salary?: number | null
+          benefits_deductions?: number | null
+          bonus?: number | null
+          commission?: number | null
+          created_at?: string
+          employee_id?: string
+          gross_pay?: number
+          id?: string
+          net_pay?: number
+          other_deductions?: number | null
+          other_earnings?: number | null
+          overtime_hours?: number | null
+          overtime_pay?: number | null
+          payroll_run_id?: string
+          taxes_withheld?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payroll_items_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_items_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_items_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_items_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_items_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_items_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_items_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_items_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "payroll_items_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_items_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_items_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_items_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_items_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_items_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_items_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_items_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_items_payroll_run_id_fkey"
+            columns: ["payroll_run_id"]
+            isOneToOne: false
+            referencedRelation: "payroll_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payroll_runs: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          created_at: string
+          created_by: string | null
+          employee_count: number
+          gusto_payroll_id: string | null
+          id: string
+          org_id: string
+          pay_date: string
+          period_end_date: string
+          period_start_date: string
+          processed_at: string | null
+          processing_error: string | null
+          status: string
+          total_gross_pay: number | null
+          total_net_pay: number | null
+          total_taxes: number | null
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          employee_count?: number
+          gusto_payroll_id?: string | null
+          id?: string
+          org_id: string
+          pay_date: string
+          period_end_date: string
+          period_start_date: string
+          processed_at?: string | null
+          processing_error?: string | null
+          status?: string
+          total_gross_pay?: number | null
+          total_net_pay?: number | null
+          total_taxes?: number | null
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          employee_count?: number
+          gusto_payroll_id?: string | null
+          id?: string
+          org_id?: string
+          pay_date?: string
+          period_end_date?: string
+          period_start_date?: string
+          processed_at?: string | null
+          processing_error?: string | null
+          status?: string
+          total_gross_pay?: number | null
+          total_net_pay?: number | null
+          total_taxes?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payroll_runs_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payroll_runs_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       peer_reviews: {
         Row: {
@@ -6274,6 +17834,335 @@ export type Database = {
           },
         ]
       }
+      performance_reviews: {
+        Row: {
+          areas_for_improvement: string | null
+          communication: number | null
+          completed_at: string | null
+          created_at: string
+          employee_acknowledged_at: string | null
+          employee_comments: string | null
+          employee_id: string
+          employee_self_assessment: string | null
+          goals_achieved: Json | null
+          goals_next_period: Json | null
+          id: string
+          initiative: number | null
+          manager_comments: string | null
+          org_id: string
+          overall_rating: number | null
+          period_end_date: string
+          period_start_date: string
+          quality_of_work: number | null
+          reliability: number | null
+          review_cycle: string
+          review_type: string | null
+          reviewer_id: string
+          scheduled_date: string | null
+          status: string
+          strengths: string | null
+          teamwork: number | null
+          updated_at: string
+        }
+        Insert: {
+          areas_for_improvement?: string | null
+          communication?: number | null
+          completed_at?: string | null
+          created_at?: string
+          employee_acknowledged_at?: string | null
+          employee_comments?: string | null
+          employee_id: string
+          employee_self_assessment?: string | null
+          goals_achieved?: Json | null
+          goals_next_period?: Json | null
+          id?: string
+          initiative?: number | null
+          manager_comments?: string | null
+          org_id: string
+          overall_rating?: number | null
+          period_end_date: string
+          period_start_date: string
+          quality_of_work?: number | null
+          reliability?: number | null
+          review_cycle: string
+          review_type?: string | null
+          reviewer_id: string
+          scheduled_date?: string | null
+          status?: string
+          strengths?: string | null
+          teamwork?: number | null
+          updated_at?: string
+        }
+        Update: {
+          areas_for_improvement?: string | null
+          communication?: number | null
+          completed_at?: string | null
+          created_at?: string
+          employee_acknowledged_at?: string | null
+          employee_comments?: string | null
+          employee_id?: string
+          employee_self_assessment?: string | null
+          goals_achieved?: Json | null
+          goals_next_period?: Json | null
+          id?: string
+          initiative?: number | null
+          manager_comments?: string | null
+          org_id?: string
+          overall_rating?: number | null
+          period_end_date?: string
+          period_start_date?: string
+          quality_of_work?: number | null
+          reliability?: number | null
+          review_cycle?: string
+          review_type?: string | null
+          reviewer_id?: string
+          scheduled_date?: string | null
+          status?: string
+          strengths?: string | null
+          teamwork?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "performance_reviews_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "performance_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       permissions: {
         Row: {
           action: string
@@ -6307,6 +18196,1262 @@ export type Database = {
           is_dangerous?: boolean | null
           resource?: string
           scope?: string | null
+        }
+        Relationships: []
+      }
+      placements: {
+        Row: {
+          account_id: string
+          account_manager_id: string | null
+          actual_end_date: string | null
+          bill_rate: number
+          candidate_id: string
+          created_at: string
+          created_by: string | null
+          end_date: string | null
+          end_reason: string | null
+          extension_count: number | null
+          id: string
+          job_id: string
+          markup_percentage: number | null
+          offer_id: string | null
+          onboarding_completed_at: string | null
+          onboarding_status: string | null
+          org_id: string
+          pay_rate: number
+          performance_rating: number | null
+          placement_type: string | null
+          recruiter_id: string
+          start_date: string
+          status: string
+          submission_id: string
+          total_paid: number | null
+          total_revenue: number | null
+          updated_at: string
+        }
+        Insert: {
+          account_id: string
+          account_manager_id?: string | null
+          actual_end_date?: string | null
+          bill_rate: number
+          candidate_id: string
+          created_at?: string
+          created_by?: string | null
+          end_date?: string | null
+          end_reason?: string | null
+          extension_count?: number | null
+          id?: string
+          job_id: string
+          markup_percentage?: number | null
+          offer_id?: string | null
+          onboarding_completed_at?: string | null
+          onboarding_status?: string | null
+          org_id: string
+          pay_rate: number
+          performance_rating?: number | null
+          placement_type?: string | null
+          recruiter_id: string
+          start_date: string
+          status?: string
+          submission_id: string
+          total_paid?: number | null
+          total_revenue?: number | null
+          updated_at?: string
+        }
+        Update: {
+          account_id?: string
+          account_manager_id?: string | null
+          actual_end_date?: string | null
+          bill_rate?: number
+          candidate_id?: string
+          created_at?: string
+          created_by?: string | null
+          end_date?: string | null
+          end_reason?: string | null
+          extension_count?: number | null
+          id?: string
+          job_id?: string
+          markup_percentage?: number | null
+          offer_id?: string | null
+          onboarding_completed_at?: string | null
+          onboarding_status?: string | null
+          org_id?: string
+          pay_rate?: number
+          performance_rating?: number | null
+          placement_type?: string | null
+          recruiter_id?: string
+          start_date?: string
+          status?: string
+          submission_id?: string
+          total_paid?: number | null
+          total_revenue?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "placements_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "placements_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_account_manager_id_fkey"
+            columns: ["account_manager_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "placements_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "placements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_offer_id_fkey"
+            columns: ["offer_id"]
+            isOneToOne: false
+            referencedRelation: "offers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_recruiter_id_fkey"
+            columns: ["recruiter_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_recruiter_id_fkey"
+            columns: ["recruiter_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_recruiter_id_fkey"
+            columns: ["recruiter_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_recruiter_id_fkey"
+            columns: ["recruiter_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_recruiter_id_fkey"
+            columns: ["recruiter_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_recruiter_id_fkey"
+            columns: ["recruiter_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_recruiter_id_fkey"
+            columns: ["recruiter_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_recruiter_id_fkey"
+            columns: ["recruiter_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "placements_recruiter_id_fkey"
+            columns: ["recruiter_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_recruiter_id_fkey"
+            columns: ["recruiter_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_recruiter_id_fkey"
+            columns: ["recruiter_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_recruiter_id_fkey"
+            columns: ["recruiter_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_recruiter_id_fkey"
+            columns: ["recruiter_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_recruiter_id_fkey"
+            columns: ["recruiter_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_recruiter_id_fkey"
+            columns: ["recruiter_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "placements_recruiter_id_fkey"
+            columns: ["recruiter_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "placements_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pods: {
+        Row: {
+          average_placements_per_sprint: number | null
+          created_at: string
+          created_by: string | null
+          current_sprint_placements: number | null
+          current_sprint_start_date: string | null
+          dissolved_date: string | null
+          formed_date: string | null
+          id: string
+          is_active: boolean | null
+          junior_member_id: string | null
+          name: string
+          org_id: string
+          placements_per_sprint_target: number | null
+          pod_type: string
+          senior_member_id: string | null
+          sprint_duration_weeks: number | null
+          total_placements: number | null
+          updated_at: string
+        }
+        Insert: {
+          average_placements_per_sprint?: number | null
+          created_at?: string
+          created_by?: string | null
+          current_sprint_placements?: number | null
+          current_sprint_start_date?: string | null
+          dissolved_date?: string | null
+          formed_date?: string | null
+          id?: string
+          is_active?: boolean | null
+          junior_member_id?: string | null
+          name: string
+          org_id: string
+          placements_per_sprint_target?: number | null
+          pod_type: string
+          senior_member_id?: string | null
+          sprint_duration_weeks?: number | null
+          total_placements?: number | null
+          updated_at?: string
+        }
+        Update: {
+          average_placements_per_sprint?: number | null
+          created_at?: string
+          created_by?: string | null
+          current_sprint_placements?: number | null
+          current_sprint_start_date?: string | null
+          dissolved_date?: string | null
+          formed_date?: string | null
+          id?: string
+          is_active?: boolean | null
+          junior_member_id?: string | null
+          name?: string
+          org_id?: string
+          placements_per_sprint_target?: number | null
+          pod_type?: string
+          senior_member_id?: string | null
+          sprint_duration_weeks?: number | null
+          total_placements?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pods_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "pods_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_junior_member_id_fkey"
+            columns: ["junior_member_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_junior_member_id_fkey"
+            columns: ["junior_member_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_junior_member_id_fkey"
+            columns: ["junior_member_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_junior_member_id_fkey"
+            columns: ["junior_member_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_junior_member_id_fkey"
+            columns: ["junior_member_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_junior_member_id_fkey"
+            columns: ["junior_member_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_junior_member_id_fkey"
+            columns: ["junior_member_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_junior_member_id_fkey"
+            columns: ["junior_member_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "pods_junior_member_id_fkey"
+            columns: ["junior_member_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_junior_member_id_fkey"
+            columns: ["junior_member_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_junior_member_id_fkey"
+            columns: ["junior_member_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_junior_member_id_fkey"
+            columns: ["junior_member_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_junior_member_id_fkey"
+            columns: ["junior_member_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_junior_member_id_fkey"
+            columns: ["junior_member_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_junior_member_id_fkey"
+            columns: ["junior_member_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_junior_member_id_fkey"
+            columns: ["junior_member_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_senior_member_id_fkey"
+            columns: ["senior_member_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_senior_member_id_fkey"
+            columns: ["senior_member_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_senior_member_id_fkey"
+            columns: ["senior_member_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_senior_member_id_fkey"
+            columns: ["senior_member_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_senior_member_id_fkey"
+            columns: ["senior_member_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_senior_member_id_fkey"
+            columns: ["senior_member_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_senior_member_id_fkey"
+            columns: ["senior_member_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_senior_member_id_fkey"
+            columns: ["senior_member_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "pods_senior_member_id_fkey"
+            columns: ["senior_member_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pods_senior_member_id_fkey"
+            columns: ["senior_member_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_senior_member_id_fkey"
+            columns: ["senior_member_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_senior_member_id_fkey"
+            columns: ["senior_member_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_senior_member_id_fkey"
+            columns: ["senior_member_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_senior_member_id_fkey"
+            columns: ["senior_member_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_senior_member_id_fkey"
+            columns: ["senior_member_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pods_senior_member_id_fkey"
+            columns: ["senior_member_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      point_of_contacts: {
+        Row: {
+          account_id: string
+          created_at: string
+          created_by: string | null
+          decision_authority: string | null
+          deleted_at: string | null
+          email: string
+          first_name: string
+          full_name: string | null
+          id: string
+          is_active: boolean | null
+          is_primary: boolean | null
+          last_name: string
+          linkedin_url: string | null
+          notes: string | null
+          phone: string | null
+          preferred_contact_method: string | null
+          role: string | null
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          account_id: string
+          created_at?: string
+          created_by?: string | null
+          decision_authority?: string | null
+          deleted_at?: string | null
+          email: string
+          first_name: string
+          full_name?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_primary?: boolean | null
+          last_name: string
+          linkedin_url?: string | null
+          notes?: string | null
+          phone?: string | null
+          preferred_contact_method?: string | null
+          role?: string | null
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          account_id?: string
+          created_at?: string
+          created_by?: string | null
+          decision_authority?: string | null
+          deleted_at?: string | null
+          email?: string
+          first_name?: string
+          full_name?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_primary?: boolean | null
+          last_name?: string
+          linkedin_url?: string | null
+          notes?: string | null
+          phone?: string | null
+          preferred_contact_method?: string | null
+          role?: string | null
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "point_of_contacts_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "point_of_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "point_of_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "point_of_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "point_of_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "point_of_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "point_of_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "point_of_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "point_of_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "point_of_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "point_of_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "point_of_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "point_of_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "point_of_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "point_of_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "point_of_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "point_of_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      pricing_plans: {
+        Row: {
+          badge_text: string | null
+          created_at: string | null
+          deleted_at: string | null
+          description: string | null
+          display_order: number | null
+          features: Json | null
+          id: string
+          is_active: boolean | null
+          is_featured: boolean | null
+          max_courses: number | null
+          max_users: number | null
+          name: string
+          plan_type: string
+          price_annual: number | null
+          price_monthly: number | null
+          price_one_time: number | null
+          slug: string
+          stripe_price_id_annual: string | null
+          stripe_price_id_monthly: string | null
+          stripe_price_id_one_time: string | null
+          stripe_product_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          badge_text?: string | null
+          created_at?: string | null
+          deleted_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          features?: Json | null
+          id?: string
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          max_courses?: number | null
+          max_users?: number | null
+          name: string
+          plan_type: string
+          price_annual?: number | null
+          price_monthly?: number | null
+          price_one_time?: number | null
+          slug: string
+          stripe_price_id_annual?: string | null
+          stripe_price_id_monthly?: string | null
+          stripe_price_id_one_time?: string | null
+          stripe_product_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          badge_text?: string | null
+          created_at?: string | null
+          deleted_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          features?: Json | null
+          id?: string
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          max_courses?: number | null
+          max_users?: number | null
+          name?: string
+          plan_type?: string
+          price_annual?: number | null
+          price_monthly?: number | null
+          price_one_time?: number | null
+          slug?: string
+          stripe_price_id_annual?: string | null
+          stripe_price_id_monthly?: string | null
+          stripe_price_id_one_time?: string | null
+          stripe_product_id?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -6561,6 +19706,155 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_organization_stats"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      pto_balances: {
+        Row: {
+          accrual_rate_per_pay_period: number | null
+          annual_accrual_days: number | null
+          current_balance: number | null
+          employee_id: string
+          total_accrued: number | null
+          total_pending: number | null
+          total_used: number | null
+          updated_at: string
+          year: number
+        }
+        Insert: {
+          accrual_rate_per_pay_period?: number | null
+          annual_accrual_days?: number | null
+          current_balance?: number | null
+          employee_id: string
+          total_accrued?: number | null
+          total_pending?: number | null
+          total_used?: number | null
+          updated_at?: string
+          year: number
+        }
+        Update: {
+          accrual_rate_per_pay_period?: number | null
+          annual_accrual_days?: number | null
+          current_balance?: number | null
+          employee_id?: string
+          total_accrued?: number | null
+          total_pending?: number | null
+          total_used?: number | null
+          updated_at?: string
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pto_balances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pto_balances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pto_balances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pto_balances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pto_balances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pto_balances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pto_balances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pto_balances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "pto_balances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "pto_balances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pto_balances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pto_balances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pto_balances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pto_balances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pto_balances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pto_balances_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
           },
         ]
       }
@@ -7780,6 +21074,7 @@ export type Database = {
           deleted_at: string | null
           description: string | null
           display_name: string
+          display_order: number | null
           hierarchy_level: number | null
           id: string
           is_active: boolean | null
@@ -7787,6 +21082,7 @@ export type Database = {
           name: string
           parent_role_id: string | null
           updated_at: string
+          updated_by: string | null
         }
         Insert: {
           color_code?: string | null
@@ -7795,6 +21091,7 @@ export type Database = {
           deleted_at?: string | null
           description?: string | null
           display_name: string
+          display_order?: number | null
           hierarchy_level?: number | null
           id?: string
           is_active?: boolean | null
@@ -7802,6 +21099,7 @@ export type Database = {
           name: string
           parent_role_id?: string | null
           updated_at?: string
+          updated_by?: string | null
         }
         Update: {
           color_code?: string | null
@@ -7810,6 +21108,7 @@ export type Database = {
           deleted_at?: string | null
           description?: string | null
           display_name?: string
+          display_order?: number | null
           hierarchy_level?: number | null
           id?: string
           is_active?: boolean | null
@@ -7817,6 +21116,7 @@ export type Database = {
           name?: string
           parent_role_id?: string | null
           updated_at?: string
+          updated_by?: string | null
         }
         Relationships: [
           {
@@ -8022,8 +21322,53 @@ export type Database = {
           },
         ]
       }
+      skills: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          id: string
+          is_verified: boolean | null
+          name: string
+          parent_skill_id: string | null
+          updated_at: string
+          usage_count: number | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_verified?: boolean | null
+          name: string
+          parent_skill_id?: string | null
+          updated_at?: string
+          usage_count?: number | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_verified?: boolean | null
+          name?: string
+          parent_skill_id?: string | null
+          updated_at?: string
+          usage_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "skills_parent_skill_id_fkey"
+            columns: ["parent_skill_id"]
+            isOneToOne: false
+            referencedRelation: "skills"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       student_enrollments: {
         Row: {
+          at_risk_since: string | null
           completed_at: string | null
           completion_percentage: number | null
           course_id: string
@@ -8035,16 +21380,20 @@ export type Database = {
           enrollment_source: string | null
           expires_at: string | null
           id: string
+          is_at_risk: boolean | null
           notes: string | null
           payment_amount: number | null
           payment_id: string | null
           payment_type: string | null
+          risk_level: string | null
+          risk_reasons: string[] | null
           starts_at: string | null
           status: string
           updated_at: string | null
           user_id: string
         }
         Insert: {
+          at_risk_since?: string | null
           completed_at?: string | null
           completion_percentage?: number | null
           course_id: string
@@ -8056,16 +21405,20 @@ export type Database = {
           enrollment_source?: string | null
           expires_at?: string | null
           id?: string
+          is_at_risk?: boolean | null
           notes?: string | null
           payment_amount?: number | null
           payment_id?: string | null
           payment_type?: string | null
+          risk_level?: string | null
+          risk_reasons?: string[] | null
           starts_at?: string | null
           status?: string
           updated_at?: string | null
           user_id: string
         }
         Update: {
+          at_risk_since?: string | null
           completed_at?: string | null
           completion_percentage?: number | null
           course_id?: string
@@ -8077,10 +21430,13 @@ export type Database = {
           enrollment_source?: string | null
           expires_at?: string | null
           id?: string
+          is_at_risk?: boolean | null
           notes?: string | null
           payment_amount?: number | null
           payment_id?: string | null
           payment_type?: string | null
+          risk_level?: string | null
+          risk_reasons?: string[] | null
           starts_at?: string | null
           status?: string
           updated_at?: string | null
@@ -8285,6 +21641,315 @@ export type Database = {
           },
         ]
       }
+      student_interventions: {
+        Row: {
+          assigned_at: string | null
+          assigned_trainer_id: string | null
+          course_id: string
+          created_at: string | null
+          deleted_at: string | null
+          enrollment_id: string
+          id: string
+          intervention_type: string | null
+          notes: string | null
+          outcome: string | null
+          resolution_notes: string | null
+          resolved_at: string | null
+          risk_level: string
+          risk_reasons: string[]
+          status: string
+          student_id: string
+          trainer_notes: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          assigned_at?: string | null
+          assigned_trainer_id?: string | null
+          course_id: string
+          created_at?: string | null
+          deleted_at?: string | null
+          enrollment_id: string
+          id?: string
+          intervention_type?: string | null
+          notes?: string | null
+          outcome?: string | null
+          resolution_notes?: string | null
+          resolved_at?: string | null
+          risk_level: string
+          risk_reasons: string[]
+          status?: string
+          student_id: string
+          trainer_notes?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          assigned_at?: string | null
+          assigned_trainer_id?: string | null
+          course_id?: string
+          created_at?: string | null
+          deleted_at?: string | null
+          enrollment_id?: string
+          id?: string
+          intervention_type?: string | null
+          notes?: string | null
+          outcome?: string | null
+          resolution_notes?: string | null
+          resolved_at?: string | null
+          risk_level?: string
+          risk_reasons?: string[]
+          status?: string
+          student_id?: string
+          trainer_notes?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_interventions_assigned_trainer_id_fkey"
+            columns: ["assigned_trainer_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_assigned_trainer_id_fkey"
+            columns: ["assigned_trainer_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_assigned_trainer_id_fkey"
+            columns: ["assigned_trainer_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_assigned_trainer_id_fkey"
+            columns: ["assigned_trainer_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_assigned_trainer_id_fkey"
+            columns: ["assigned_trainer_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_assigned_trainer_id_fkey"
+            columns: ["assigned_trainer_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_assigned_trainer_id_fkey"
+            columns: ["assigned_trainer_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_assigned_trainer_id_fkey"
+            columns: ["assigned_trainer_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_assigned_trainer_id_fkey"
+            columns: ["assigned_trainer_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_assigned_trainer_id_fkey"
+            columns: ["assigned_trainer_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_interventions_assigned_trainer_id_fkey"
+            columns: ["assigned_trainer_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_interventions_assigned_trainer_id_fkey"
+            columns: ["assigned_trainer_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_interventions_assigned_trainer_id_fkey"
+            columns: ["assigned_trainer_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_interventions_assigned_trainer_id_fkey"
+            columns: ["assigned_trainer_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_interventions_assigned_trainer_id_fkey"
+            columns: ["assigned_trainer_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_interventions_assigned_trainer_id_fkey"
+            columns: ["assigned_trainer_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_interventions_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "quiz_analytics"
+            referencedColumns: ["course_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_enrollment_id_fkey"
+            columns: ["enrollment_id"]
+            isOneToOne: false
+            referencedRelation: "student_enrollments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "student_interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       student_progress: {
         Row: {
           completed_modules: string[]
@@ -8435,6 +22100,1714 @@ export type Database = {
             foreignKeyName: "student_progress_student_id_fkey"
             columns: ["student_id"]
             isOneToOne: true
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      submissions: {
+        Row: {
+          account_id: string | null
+          ai_match_score: number | null
+          candidate_id: string
+          client_decision: string | null
+          client_decision_at: string | null
+          client_decision_notes: string | null
+          client_profile_url: string | null
+          client_resume_file_id: string | null
+          created_at: string
+          created_by: string | null
+          deleted_at: string | null
+          id: string
+          interview_count: number | null
+          interview_feedback: string | null
+          job_id: string
+          last_interview_date: string | null
+          match_explanation: string | null
+          offer_accepted_at: string | null
+          offer_decline_reason: string | null
+          offer_declined_at: string | null
+          offer_extended_at: string | null
+          org_id: string
+          owner_id: string
+          recruiter_match_score: number | null
+          rejected_at: string | null
+          rejection_reason: string | null
+          rejection_source: string | null
+          status: string
+          submission_notes: string | null
+          submitted_rate: number | null
+          submitted_rate_type: string | null
+          submitted_to_client_at: string | null
+          submitted_to_client_by: string | null
+          updated_at: string
+          vendor_decision: string | null
+          vendor_decision_at: string | null
+          vendor_decision_by: string | null
+          vendor_notes: string | null
+          vendor_screening_completed_at: string | null
+          vendor_screening_notes: string | null
+          vendor_submitted_at: string | null
+          vendor_submitted_by: string | null
+        }
+        Insert: {
+          account_id?: string | null
+          ai_match_score?: number | null
+          candidate_id: string
+          client_decision?: string | null
+          client_decision_at?: string | null
+          client_decision_notes?: string | null
+          client_profile_url?: string | null
+          client_resume_file_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          deleted_at?: string | null
+          id?: string
+          interview_count?: number | null
+          interview_feedback?: string | null
+          job_id: string
+          last_interview_date?: string | null
+          match_explanation?: string | null
+          offer_accepted_at?: string | null
+          offer_decline_reason?: string | null
+          offer_declined_at?: string | null
+          offer_extended_at?: string | null
+          org_id: string
+          owner_id: string
+          recruiter_match_score?: number | null
+          rejected_at?: string | null
+          rejection_reason?: string | null
+          rejection_source?: string | null
+          status?: string
+          submission_notes?: string | null
+          submitted_rate?: number | null
+          submitted_rate_type?: string | null
+          submitted_to_client_at?: string | null
+          submitted_to_client_by?: string | null
+          updated_at?: string
+          vendor_decision?: string | null
+          vendor_decision_at?: string | null
+          vendor_decision_by?: string | null
+          vendor_notes?: string | null
+          vendor_screening_completed_at?: string | null
+          vendor_screening_notes?: string | null
+          vendor_submitted_at?: string | null
+          vendor_submitted_by?: string | null
+        }
+        Update: {
+          account_id?: string | null
+          ai_match_score?: number | null
+          candidate_id?: string
+          client_decision?: string | null
+          client_decision_at?: string | null
+          client_decision_notes?: string | null
+          client_profile_url?: string | null
+          client_resume_file_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          deleted_at?: string | null
+          id?: string
+          interview_count?: number | null
+          interview_feedback?: string | null
+          job_id?: string
+          last_interview_date?: string | null
+          match_explanation?: string | null
+          offer_accepted_at?: string | null
+          offer_decline_reason?: string | null
+          offer_declined_at?: string | null
+          offer_extended_at?: string | null
+          org_id?: string
+          owner_id?: string
+          recruiter_match_score?: number | null
+          rejected_at?: string | null
+          rejection_reason?: string | null
+          rejection_source?: string | null
+          status?: string
+          submission_notes?: string | null
+          submitted_rate?: number | null
+          submitted_rate_type?: string | null
+          submitted_to_client_at?: string | null
+          submitted_to_client_by?: string | null
+          updated_at?: string
+          vendor_decision?: string | null
+          vendor_decision_at?: string | null
+          vendor_decision_by?: string | null
+          vendor_notes?: string | null
+          vendor_screening_completed_at?: string | null
+          vendor_screening_notes?: string | null
+          vendor_submitted_at?: string | null
+          vendor_submitted_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "submissions_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "submissions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "submissions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_submitted_to_client_by_fkey"
+            columns: ["submitted_to_client_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_submitted_to_client_by_fkey"
+            columns: ["submitted_to_client_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_submitted_to_client_by_fkey"
+            columns: ["submitted_to_client_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_submitted_to_client_by_fkey"
+            columns: ["submitted_to_client_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_submitted_to_client_by_fkey"
+            columns: ["submitted_to_client_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_submitted_to_client_by_fkey"
+            columns: ["submitted_to_client_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_submitted_to_client_by_fkey"
+            columns: ["submitted_to_client_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_submitted_to_client_by_fkey"
+            columns: ["submitted_to_client_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "submissions_submitted_to_client_by_fkey"
+            columns: ["submitted_to_client_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_submitted_to_client_by_fkey"
+            columns: ["submitted_to_client_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_submitted_to_client_by_fkey"
+            columns: ["submitted_to_client_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_submitted_to_client_by_fkey"
+            columns: ["submitted_to_client_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_submitted_to_client_by_fkey"
+            columns: ["submitted_to_client_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_submitted_to_client_by_fkey"
+            columns: ["submitted_to_client_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_submitted_to_client_by_fkey"
+            columns: ["submitted_to_client_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_submitted_to_client_by_fkey"
+            columns: ["submitted_to_client_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_decision_by_fkey"
+            columns: ["vendor_decision_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_decision_by_fkey"
+            columns: ["vendor_decision_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_decision_by_fkey"
+            columns: ["vendor_decision_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_decision_by_fkey"
+            columns: ["vendor_decision_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_decision_by_fkey"
+            columns: ["vendor_decision_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_decision_by_fkey"
+            columns: ["vendor_decision_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_decision_by_fkey"
+            columns: ["vendor_decision_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_decision_by_fkey"
+            columns: ["vendor_decision_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_decision_by_fkey"
+            columns: ["vendor_decision_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_decision_by_fkey"
+            columns: ["vendor_decision_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_decision_by_fkey"
+            columns: ["vendor_decision_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_decision_by_fkey"
+            columns: ["vendor_decision_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_decision_by_fkey"
+            columns: ["vendor_decision_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_decision_by_fkey"
+            columns: ["vendor_decision_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_decision_by_fkey"
+            columns: ["vendor_decision_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_decision_by_fkey"
+            columns: ["vendor_decision_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_submitted_by_fkey"
+            columns: ["vendor_submitted_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_submitted_by_fkey"
+            columns: ["vendor_submitted_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_submitted_by_fkey"
+            columns: ["vendor_submitted_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_submitted_by_fkey"
+            columns: ["vendor_submitted_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_submitted_by_fkey"
+            columns: ["vendor_submitted_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_submitted_by_fkey"
+            columns: ["vendor_submitted_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_submitted_by_fkey"
+            columns: ["vendor_submitted_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_submitted_by_fkey"
+            columns: ["vendor_submitted_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_submitted_by_fkey"
+            columns: ["vendor_submitted_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_submitted_by_fkey"
+            columns: ["vendor_submitted_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_submitted_by_fkey"
+            columns: ["vendor_submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_submitted_by_fkey"
+            columns: ["vendor_submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_submitted_by_fkey"
+            columns: ["vendor_submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_submitted_by_fkey"
+            columns: ["vendor_submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_submitted_by_fkey"
+            columns: ["vendor_submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "submissions_vendor_submitted_by_fkey"
+            columns: ["vendor_submitted_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      talking_point_templates: {
+        Row: {
+          category: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean | null
+          is_default: boolean | null
+          name: string
+          org_id: string
+          talking_points: Json | null
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_default?: boolean | null
+          name: string
+          org_id: string
+          talking_points?: Json | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_default?: boolean | null
+          name?: string
+          org_id?: string
+          talking_points?: Json | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "talking_point_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "talking_point_templates_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tasks: {
+        Row: {
+          assigned_to: string | null
+          completed_at: string | null
+          completed_by: string | null
+          created_at: string
+          created_by: string
+          description: string | null
+          due_date: string | null
+          entity_id: string | null
+          entity_type: string | null
+          id: string
+          is_recurring: boolean | null
+          org_id: string
+          parent_task_id: string | null
+          priority: string | null
+          recurrence_pattern: string | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          created_by: string
+          description?: string | null
+          due_date?: string | null
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          is_recurring?: boolean | null
+          org_id: string
+          parent_task_id?: string | null
+          priority?: string | null
+          recurrence_pattern?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          due_date?: string | null
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          is_recurring?: boolean | null
+          org_id?: string
+          parent_task_id?: string | null
+          priority?: string | null
+          recurrence_pattern?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "tasks_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_parent_task_id_fkey"
+            columns: ["parent_task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      time_attendance: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          created_at: string
+          date: string
+          employee_id: string
+          holiday_hours: number | null
+          id: string
+          notes: string | null
+          overtime_hours: number | null
+          pto_hours: number | null
+          regular_hours: number | null
+          rejection_reason: string | null
+          sick_hours: number | null
+          status: string
+          total_hours: number | null
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          date: string
+          employee_id: string
+          holiday_hours?: number | null
+          id?: string
+          notes?: string | null
+          overtime_hours?: number | null
+          pto_hours?: number | null
+          regular_hours?: number | null
+          rejection_reason?: string | null
+          sick_hours?: number | null
+          status?: string
+          total_hours?: number | null
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          date?: string
+          employee_id?: string
+          holiday_hours?: number | null
+          id?: string
+          notes?: string | null
+          overtime_hours?: number | null
+          pto_hours?: number | null
+          regular_hours?: number | null
+          rejection_reason?: string | null
+          sick_hours?: number | null
+          status?: string
+          total_hours?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "time_attendance_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "time_attendance_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "time_attendance_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "time_attendance_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "time_attendance_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "time_attendance_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "time_attendance_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "time_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "time_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "time_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "time_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "time_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "time_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "time_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
             referencedRelation: "v_user_roles_detailed"
             referencedColumns: ["user_id"]
           },
@@ -9276,6 +24649,7 @@ export type Database = {
         Row: {
           auth_id: string | null
           avatar_url: string | null
+          benefits_required: string[] | null
           candidate_availability: string | null
           candidate_bench_start_date: string | null
           candidate_current_visa: string | null
@@ -9287,6 +24661,8 @@ export type Database = {
           candidate_status: string | null
           candidate_visa_expiry: string | null
           candidate_willing_to_relocate: boolean | null
+          career_objectives: string | null
+          categories: string[] | null
           client_company_name: string | null
           client_contract_end_date: string | null
           client_contract_start_date: string | null
@@ -9294,42 +24670,100 @@ export type Database = {
           client_payment_terms: number | null
           client_preferred_markup_percentage: number | null
           client_tier: string | null
+          compensation_notes: string | null
           created_at: string
           created_by: string | null
+          current_employment_status: string | null
+          date_of_birth: string | null
           deleted_at: string | null
+          desired_salary_annual: number | null
+          desired_salary_currency: string | null
+          do_not_contact: boolean | null
+          do_not_email: boolean | null
+          do_not_text: boolean | null
+          earliest_start_date: string | null
           email: string
+          email_secondary: string | null
+          emergency_contact_email: string | null
+          emergency_contact_name: string | null
+          emergency_contact_phone: string | null
+          emergency_contact_relationship: string | null
           employee_department: string | null
           employee_hire_date: string | null
           employee_manager_id: string | null
           employee_performance_rating: number | null
           employee_position: string | null
+          employee_role: string | null
           employee_salary: number | null
           employee_status: string | null
+          first_name: string | null
           full_name: string
+          gender: string | null
+          github_url: string | null
+          hotlist_added_at: string | null
+          hotlist_added_by: string | null
+          hotlist_notes: string | null
           id: string
           is_active: boolean | null
+          is_on_hotlist: boolean | null
+          languages: Json | null
+          last_activity_date: string | null
+          last_contacted_at: string | null
+          last_contacted_by: string | null
+          last_name: string | null
+          last_profile_update: string | null
+          lead_source: string | null
+          lead_source_detail: string | null
           leaderboard_visible: boolean | null
+          linkedin_url: string | null
           locale: string | null
+          marketing_status: string | null
+          middle_name: string | null
+          minimum_annual_salary: number | null
+          minimum_hourly_rate: number | null
+          nationality: string | null
+          notice_period_days: number | null
           org_id: string
+          personal_website: string | null
           phone: string | null
+          phone_home: string | null
+          phone_work: string | null
+          portfolio_url: string | null
+          preferred_call_time: string | null
+          preferred_contact_method: string | null
+          preferred_employment_type: string[] | null
+          preferred_locations: string[] | null
+          preferred_name: string | null
+          professional_headline: string | null
+          professional_summary: string | null
+          profile_completeness_score: number | null
           recruiter_monthly_placement_target: number | null
           recruiter_pod_id: string | null
+          recruiter_rating: number | null
+          recruiter_rating_notes: string | null
           recruiter_specialization: string[] | null
           recruiter_territory: string | null
+          relocation_assistance_required: boolean | null
+          relocation_notes: string | null
           search_vector: unknown
+          stripe_customer_id: string | null
           student_certificates: Json | null
           student_course_id: string | null
           student_course_progress: Json | null
           student_current_module: string | null
           student_enrollment_date: string | null
           student_graduation_date: string | null
+          tags: string[] | null
           timezone: string | null
+          title: string | null
+          total_placements: number | null
           updated_at: string
           updated_by: string | null
         }
         Insert: {
           auth_id?: string | null
           avatar_url?: string | null
+          benefits_required?: string[] | null
           candidate_availability?: string | null
           candidate_bench_start_date?: string | null
           candidate_current_visa?: string | null
@@ -9341,6 +24775,8 @@ export type Database = {
           candidate_status?: string | null
           candidate_visa_expiry?: string | null
           candidate_willing_to_relocate?: boolean | null
+          career_objectives?: string | null
+          categories?: string[] | null
           client_company_name?: string | null
           client_contract_end_date?: string | null
           client_contract_start_date?: string | null
@@ -9348,42 +24784,100 @@ export type Database = {
           client_payment_terms?: number | null
           client_preferred_markup_percentage?: number | null
           client_tier?: string | null
+          compensation_notes?: string | null
           created_at?: string
           created_by?: string | null
+          current_employment_status?: string | null
+          date_of_birth?: string | null
           deleted_at?: string | null
+          desired_salary_annual?: number | null
+          desired_salary_currency?: string | null
+          do_not_contact?: boolean | null
+          do_not_email?: boolean | null
+          do_not_text?: boolean | null
+          earliest_start_date?: string | null
           email: string
+          email_secondary?: string | null
+          emergency_contact_email?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          emergency_contact_relationship?: string | null
           employee_department?: string | null
           employee_hire_date?: string | null
           employee_manager_id?: string | null
           employee_performance_rating?: number | null
           employee_position?: string | null
+          employee_role?: string | null
           employee_salary?: number | null
           employee_status?: string | null
+          first_name?: string | null
           full_name: string
+          gender?: string | null
+          github_url?: string | null
+          hotlist_added_at?: string | null
+          hotlist_added_by?: string | null
+          hotlist_notes?: string | null
           id?: string
           is_active?: boolean | null
+          is_on_hotlist?: boolean | null
+          languages?: Json | null
+          last_activity_date?: string | null
+          last_contacted_at?: string | null
+          last_contacted_by?: string | null
+          last_name?: string | null
+          last_profile_update?: string | null
+          lead_source?: string | null
+          lead_source_detail?: string | null
           leaderboard_visible?: boolean | null
+          linkedin_url?: string | null
           locale?: string | null
+          marketing_status?: string | null
+          middle_name?: string | null
+          minimum_annual_salary?: number | null
+          minimum_hourly_rate?: number | null
+          nationality?: string | null
+          notice_period_days?: number | null
           org_id: string
+          personal_website?: string | null
           phone?: string | null
+          phone_home?: string | null
+          phone_work?: string | null
+          portfolio_url?: string | null
+          preferred_call_time?: string | null
+          preferred_contact_method?: string | null
+          preferred_employment_type?: string[] | null
+          preferred_locations?: string[] | null
+          preferred_name?: string | null
+          professional_headline?: string | null
+          professional_summary?: string | null
+          profile_completeness_score?: number | null
           recruiter_monthly_placement_target?: number | null
           recruiter_pod_id?: string | null
+          recruiter_rating?: number | null
+          recruiter_rating_notes?: string | null
           recruiter_specialization?: string[] | null
           recruiter_territory?: string | null
+          relocation_assistance_required?: boolean | null
+          relocation_notes?: string | null
           search_vector?: unknown
+          stripe_customer_id?: string | null
           student_certificates?: Json | null
           student_course_id?: string | null
           student_course_progress?: Json | null
           student_current_module?: string | null
           student_enrollment_date?: string | null
           student_graduation_date?: string | null
+          tags?: string[] | null
           timezone?: string | null
+          title?: string | null
+          total_placements?: number | null
           updated_at?: string
           updated_by?: string | null
         }
         Update: {
           auth_id?: string | null
           avatar_url?: string | null
+          benefits_required?: string[] | null
           candidate_availability?: string | null
           candidate_bench_start_date?: string | null
           candidate_current_visa?: string | null
@@ -9395,6 +24889,8 @@ export type Database = {
           candidate_status?: string | null
           candidate_visa_expiry?: string | null
           candidate_willing_to_relocate?: boolean | null
+          career_objectives?: string | null
+          categories?: string[] | null
           client_company_name?: string | null
           client_contract_end_date?: string | null
           client_contract_start_date?: string | null
@@ -9402,36 +24898,93 @@ export type Database = {
           client_payment_terms?: number | null
           client_preferred_markup_percentage?: number | null
           client_tier?: string | null
+          compensation_notes?: string | null
           created_at?: string
           created_by?: string | null
+          current_employment_status?: string | null
+          date_of_birth?: string | null
           deleted_at?: string | null
+          desired_salary_annual?: number | null
+          desired_salary_currency?: string | null
+          do_not_contact?: boolean | null
+          do_not_email?: boolean | null
+          do_not_text?: boolean | null
+          earliest_start_date?: string | null
           email?: string
+          email_secondary?: string | null
+          emergency_contact_email?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          emergency_contact_relationship?: string | null
           employee_department?: string | null
           employee_hire_date?: string | null
           employee_manager_id?: string | null
           employee_performance_rating?: number | null
           employee_position?: string | null
+          employee_role?: string | null
           employee_salary?: number | null
           employee_status?: string | null
+          first_name?: string | null
           full_name?: string
+          gender?: string | null
+          github_url?: string | null
+          hotlist_added_at?: string | null
+          hotlist_added_by?: string | null
+          hotlist_notes?: string | null
           id?: string
           is_active?: boolean | null
+          is_on_hotlist?: boolean | null
+          languages?: Json | null
+          last_activity_date?: string | null
+          last_contacted_at?: string | null
+          last_contacted_by?: string | null
+          last_name?: string | null
+          last_profile_update?: string | null
+          lead_source?: string | null
+          lead_source_detail?: string | null
           leaderboard_visible?: boolean | null
+          linkedin_url?: string | null
           locale?: string | null
+          marketing_status?: string | null
+          middle_name?: string | null
+          minimum_annual_salary?: number | null
+          minimum_hourly_rate?: number | null
+          nationality?: string | null
+          notice_period_days?: number | null
           org_id?: string
+          personal_website?: string | null
           phone?: string | null
+          phone_home?: string | null
+          phone_work?: string | null
+          portfolio_url?: string | null
+          preferred_call_time?: string | null
+          preferred_contact_method?: string | null
+          preferred_employment_type?: string[] | null
+          preferred_locations?: string[] | null
+          preferred_name?: string | null
+          professional_headline?: string | null
+          professional_summary?: string | null
+          profile_completeness_score?: number | null
           recruiter_monthly_placement_target?: number | null
           recruiter_pod_id?: string | null
+          recruiter_rating?: number | null
+          recruiter_rating_notes?: string | null
           recruiter_specialization?: string[] | null
           recruiter_territory?: string | null
+          relocation_assistance_required?: boolean | null
+          relocation_notes?: string | null
           search_vector?: unknown
+          stripe_customer_id?: string | null
           student_certificates?: Json | null
           student_course_id?: string | null
           student_course_progress?: Json | null
           student_current_module?: string | null
           student_enrollment_date?: string | null
           student_graduation_date?: string | null
+          tags?: string[] | null
           timezone?: string | null
+          title?: string | null
+          total_placements?: number | null
           updated_at?: string
           updated_by?: string | null
         }
@@ -9457,30 +25010,39 @@ export type Database = {
           assigned_at: string
           assigned_by: string | null
           created_at: string
+          created_by: string | null
           deleted_at: string | null
           expires_at: string | null
           is_primary: boolean | null
           role_id: string
+          updated_at: string | null
+          updated_by: string | null
           user_id: string
         }
         Insert: {
           assigned_at?: string
           assigned_by?: string | null
           created_at?: string
+          created_by?: string | null
           deleted_at?: string | null
           expires_at?: string | null
           is_primary?: boolean | null
           role_id: string
+          updated_at?: string | null
+          updated_by?: string | null
           user_id: string
         }
         Update: {
           assigned_at?: string
           assigned_by?: string | null
           created_at?: string
+          created_by?: string | null
           deleted_at?: string | null
           expires_at?: string | null
           is_primary?: boolean | null
           role_id?: string
+          updated_at?: string | null
+          updated_by?: string | null
           user_id?: string
         }
         Relationships: [
@@ -9724,6 +25286,146 @@ export type Database = {
           },
         ]
       }
+      user_session_context: {
+        Row: {
+          active_role: string
+          duration_seconds: number | null
+          id: string
+          session_ended_at: string | null
+          session_started_at: string
+          user_id: string
+        }
+        Insert: {
+          active_role: string
+          duration_seconds?: number | null
+          id?: string
+          session_ended_at?: string | null
+          session_started_at?: string
+          user_id: string
+        }
+        Update: {
+          active_role?: string
+          duration_seconds?: number | null
+          id?: string
+          session_ended_at?: string | null
+          session_started_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_session_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "user_session_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "user_session_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "user_session_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "user_session_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "user_session_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "user_session_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "user_session_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "user_session_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "user_session_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_session_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_session_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_session_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_session_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_session_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_session_context_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       video_progress: {
         Row: {
           completion_percentage: number | null
@@ -9941,6 +25643,685 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_user_roles_detailed"
             referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      workflow_history: {
+        Row: {
+          action: string
+          created_at: string
+          from_state_id: string | null
+          id: string
+          metadata: Json
+          notes: string | null
+          performed_by: string
+          to_state_id: string
+          workflow_instance_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          from_state_id?: string | null
+          id?: string
+          metadata?: Json
+          notes?: string | null
+          performed_by: string
+          to_state_id: string
+          workflow_instance_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          from_state_id?: string | null
+          id?: string
+          metadata?: Json
+          notes?: string | null
+          performed_by?: string
+          to_state_id?: string
+          workflow_instance_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflow_history_from_state_id_fkey"
+            columns: ["from_state_id"]
+            isOneToOne: false
+            referencedRelation: "workflow_states"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "workflow_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_history_to_state_id_fkey"
+            columns: ["to_state_id"]
+            isOneToOne: false
+            referencedRelation: "workflow_states"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_history_workflow_instance_id_fkey"
+            columns: ["workflow_instance_id"]
+            isOneToOne: false
+            referencedRelation: "v_workflow_instances_with_state"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_history_workflow_instance_id_fkey"
+            columns: ["workflow_instance_id"]
+            isOneToOne: false
+            referencedRelation: "workflow_instances"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workflow_instances: {
+        Row: {
+          cancelled_at: string | null
+          completed_at: string | null
+          created_at: string
+          created_by: string
+          current_state_id: string
+          entity_id: string
+          entity_type: string
+          id: string
+          metadata: Json
+          org_id: string
+          started_at: string
+          status: string
+          updated_at: string
+          version: number
+          workflow_id: string
+        }
+        Insert: {
+          cancelled_at?: string | null
+          completed_at?: string | null
+          created_at?: string
+          created_by: string
+          current_state_id: string
+          entity_id: string
+          entity_type: string
+          id?: string
+          metadata?: Json
+          org_id: string
+          started_at?: string
+          status?: string
+          updated_at?: string
+          version?: number
+          workflow_id: string
+        }
+        Update: {
+          cancelled_at?: string | null
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string
+          current_state_id?: string
+          entity_id?: string
+          entity_type?: string
+          id?: string
+          metadata?: Json
+          org_id?: string
+          started_at?: string
+          status?: string
+          updated_at?: string
+          version?: number
+          workflow_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflow_instances_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_current_state_id_fkey"
+            columns: ["current_state_id"]
+            isOneToOne: false
+            referencedRelation: "workflow_states"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_workflow_id_fkey"
+            columns: ["workflow_id"]
+            isOneToOne: false
+            referencedRelation: "v_workflow_metrics"
+            referencedColumns: ["workflow_id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_workflow_id_fkey"
+            columns: ["workflow_id"]
+            isOneToOne: false
+            referencedRelation: "workflows"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workflow_states: {
+        Row: {
+          actions: Json
+          created_at: string
+          description: string | null
+          display_name: string
+          id: string
+          is_initial: boolean
+          is_terminal: boolean
+          metadata: Json
+          name: string
+          state_order: number
+          workflow_id: string
+        }
+        Insert: {
+          actions?: Json
+          created_at?: string
+          description?: string | null
+          display_name: string
+          id?: string
+          is_initial?: boolean
+          is_terminal?: boolean
+          metadata?: Json
+          name: string
+          state_order: number
+          workflow_id: string
+        }
+        Update: {
+          actions?: Json
+          created_at?: string
+          description?: string | null
+          display_name?: string
+          id?: string
+          is_initial?: boolean
+          is_terminal?: boolean
+          metadata?: Json
+          name?: string
+          state_order?: number
+          workflow_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflow_states_workflow_id_fkey"
+            columns: ["workflow_id"]
+            isOneToOne: false
+            referencedRelation: "v_workflow_metrics"
+            referencedColumns: ["workflow_id"]
+          },
+          {
+            foreignKeyName: "workflow_states_workflow_id_fkey"
+            columns: ["workflow_id"]
+            isOneToOne: false
+            referencedRelation: "workflows"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workflow_transitions: {
+        Row: {
+          action: string
+          auto_transition: boolean
+          conditions: Json
+          created_at: string
+          display_name: string
+          from_state_id: string
+          id: string
+          metadata: Json
+          required_permission: string | null
+          to_state_id: string
+          workflow_id: string
+        }
+        Insert: {
+          action: string
+          auto_transition?: boolean
+          conditions?: Json
+          created_at?: string
+          display_name: string
+          from_state_id: string
+          id?: string
+          metadata?: Json
+          required_permission?: string | null
+          to_state_id: string
+          workflow_id: string
+        }
+        Update: {
+          action?: string
+          auto_transition?: boolean
+          conditions?: Json
+          created_at?: string
+          display_name?: string
+          from_state_id?: string
+          id?: string
+          metadata?: Json
+          required_permission?: string | null
+          to_state_id?: string
+          workflow_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflow_transitions_from_state_id_fkey"
+            columns: ["from_state_id"]
+            isOneToOne: false
+            referencedRelation: "workflow_states"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_transitions_to_state_id_fkey"
+            columns: ["to_state_id"]
+            isOneToOne: false
+            referencedRelation: "workflow_states"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_transitions_workflow_id_fkey"
+            columns: ["workflow_id"]
+            isOneToOne: false
+            referencedRelation: "v_workflow_metrics"
+            referencedColumns: ["workflow_id"]
+          },
+          {
+            foreignKeyName: "workflow_transitions_workflow_id_fkey"
+            columns: ["workflow_id"]
+            isOneToOne: false
+            referencedRelation: "workflows"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workflows: {
+        Row: {
+          created_at: string
+          created_by: string
+          deleted_at: string | null
+          description: string | null
+          entity_type: string
+          id: string
+          initial_state_id: string | null
+          is_active: boolean
+          name: string
+          org_id: string
+          updated_at: string
+          version: number
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          deleted_at?: string | null
+          description?: string | null
+          entity_type: string
+          id?: string
+          initial_state_id?: string | null
+          is_active?: boolean
+          name: string
+          org_id: string
+          updated_at?: string
+          version?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          deleted_at?: string | null
+          description?: string | null
+          entity_type?: string
+          id?: string
+          initial_state_id?: string | null
+          is_active?: boolean
+          name?: string
+          org_id?: string
+          updated_at?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "ai_mentor_student_stats"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "badge_leaderboard"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_all_time"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_cohort"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_by_course"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "leaderboard_global"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "trainer_escalation_stats"
+            referencedColumns: ["trainer_id"]
+          },
+          {
+            foreignKeyName: "workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_badge_progress"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_active_users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_bench_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflows_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_user_roles_detailed"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "workflows_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflows_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -12823,6 +29204,72 @@ export type Database = {
         }
         Relationships: []
       }
+      v_workflow_instances_with_state: {
+        Row: {
+          cancelled_at: string | null
+          completed_at: string | null
+          created_at: string | null
+          created_by_name: string | null
+          current_state: string | null
+          current_state_display: string | null
+          duration_hours: number | null
+          entity_id: string | null
+          entity_type: string | null
+          id: string | null
+          is_terminal: boolean | null
+          org_id: string | null
+          started_at: string | null
+          status: string | null
+          updated_at: string | null
+          workflow_name: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflow_instances_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflow_instances_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      v_workflow_metrics: {
+        Row: {
+          active_instances: number | null
+          avg_completion_hours: number | null
+          cancelled_instances: number | null
+          completed_instances: number | null
+          entity_type: string | null
+          last_started_at: string | null
+          org_id: string | null
+          total_instances: number | null
+          workflow_id: string | null
+          workflow_name: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflows_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workflows_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "v_organization_stats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       video_watch_stats: {
         Row: {
           completion_percentage: number | null
@@ -13065,6 +29512,11 @@ export type Database = {
         Args: { p_escalation_id: string; p_trainer_id: string }
         Returns: undefined
       }
+      auth_active_role: { Args: never; Returns: string }
+      auth_has_active_role: { Args: { role_name: string }; Returns: boolean }
+      auth_has_any_role: { Args: { role_names: string[] }; Returns: boolean }
+      auth_has_role: { Args: { role_name: string }; Returns: boolean }
+      auth_org_id: { Args: never; Returns: string }
       auth_user_id: { Args: never; Returns: string }
       auth_user_org_id: { Args: never; Returns: string }
       auto_assign_escalation: {
@@ -13088,6 +29540,14 @@ export type Database = {
         Args: { p_user_id: string }
         Returns: boolean
       }
+      calculate_discounted_price: {
+        Args: {
+          p_discount_type: string
+          p_discount_value: number
+          p_original_price: number
+        }
+        Returns: number
+      }
       calculate_matching_accuracy: {
         Args: { p_org_id: string; p_start_date?: string }
         Returns: {
@@ -13097,6 +29557,11 @@ export type Database = {
           relevant_matches: number
           total_matches: number
         }[]
+      }
+      can_switch_to_role: { Args: { p_role_name: string }; Returns: boolean }
+      cancel_workflow: {
+        Args: { p_instance_id: string; p_reason: string; p_user_id: string }
+        Returns: boolean
       }
       check_and_award_badge: {
         Args: {
@@ -13128,6 +29593,15 @@ export type Database = {
         Returns: boolean
       }
       check_rate_limits: { Args: { p_user_id: string }; Returns: Json }
+      check_user_permission: {
+        Args: {
+          p_action: string
+          p_required_scope?: string
+          p_resource: string
+          p_user_id: string
+        }
+        Returns: boolean
+      }
       cleanup_old_audit_partitions: {
         Args: never
         Returns: {
@@ -13135,8 +29609,13 @@ export type Database = {
           partition_name: string
         }[]
       }
+      cleanup_old_notifications: { Args: never; Returns: undefined }
       cleanup_old_screenshots: { Args: never; Returns: number }
       cleanup_old_twin_interactions: { Args: never; Returns: undefined }
+      clear_at_risk_status: {
+        Args: { p_enrollment_id: string }
+        Returns: undefined
+      }
       complete_topic: {
         Args: {
           p_enrollment_id: string
@@ -13146,8 +29625,21 @@ export type Database = {
         }
         Returns: string
       }
+      convert_lead_to_deal: {
+        Args: {
+          p_deal_stage?: string
+          p_deal_title: string
+          p_deal_value: number
+          p_lead_id: string
+        }
+        Returns: string
+      }
       create_audit_log_partition: {
         Args: { partition_date: string }
+        Returns: undefined
+      }
+      create_bench_aging_alert: {
+        Args: { p_candidate_id: string; p_days_on_bench: number }
         Returns: undefined
       }
       create_escalation: {
@@ -13187,6 +29679,14 @@ export type Database = {
         }
         Returns: string
       }
+      create_submission_notification: {
+        Args: {
+          p_new_status: string
+          p_recipient_id: string
+          p_submission_id: string
+        }
+        Returns: string
+      }
       deactivate_prompt_variant: {
         Args: { p_variant_id: string }
         Returns: undefined
@@ -13194,6 +29694,15 @@ export type Database = {
       delete_quiz_question: {
         Args: { p_question_id: string }
         Returns: boolean
+      }
+      dequeue_next_job: {
+        Args: never
+        Returns: {
+          job_id: string
+          job_type: string
+          org_id: string
+          payload: Json
+        }[]
       }
       disable_event_handler: {
         Args: { p_handler_name: string }
@@ -13254,6 +29763,27 @@ export type Database = {
         }[]
       }
       get_asset_storage_path: { Args: { p_asset_id: string }; Returns: string }
+      get_at_risk_students_summary: {
+        Args: never
+        Returns: {
+          high_risk: number
+          low_risk: number
+          medium_risk: number
+          pending_interventions: number
+          total_at_risk: number
+          with_interventions: number
+        }[]
+      }
+      get_available_actions: {
+        Args: { p_instance_id: string; p_user_id: string }
+        Returns: {
+          action: string
+          display_name: string
+          has_permission: boolean
+          required_permission: string
+          to_state_name: string
+        }[]
+      }
       get_badge_leaderboard_top: {
         Args: { p_limit?: number }
         Returns: {
@@ -13427,6 +29957,17 @@ export type Database = {
           processed_at: string
           retry_count: number
           status: string
+        }[]
+      }
+      get_job_queue_stats: {
+        Args: never
+        Returns: {
+          avg_processing_seconds: number
+          completed_count: number
+          failed_count: number
+          job_type: string
+          pending_count: number
+          processing_count: number
         }[]
       }
       get_lab_submission_history: {
@@ -13677,6 +30218,14 @@ export type Database = {
           total_tokens: number
         }[]
       }
+      get_user_available_roles: {
+        Args: never
+        Returns: {
+          role_description: string
+          role_display_name: string
+          role_name: string
+        }[]
+      }
       get_user_badges: {
         Args: { p_user_id: string }
         Returns: {
@@ -13851,9 +30400,25 @@ export type Database = {
         Args: { p_badge_id: string; p_user_id: string }
         Returns: undefined
       }
+      mark_enrollment_at_risk: {
+        Args: {
+          p_enrollment_id: string
+          p_risk_level: string
+          p_risk_reasons: string[]
+        }
+        Returns: undefined
+      }
       mark_event_completed: { Args: { p_event_id: string }; Returns: boolean }
       mark_event_failed: {
         Args: { p_error_message: string; p_event_id: string }
+        Returns: boolean
+      }
+      mark_job_completed: {
+        Args: { p_job_id: string; p_result?: Json }
+        Returns: boolean
+      }
+      mark_job_failed: {
+        Args: { p_error_message: string; p_job_id: string }
         Returns: boolean
       }
       publish_event:
@@ -13907,6 +30472,18 @@ export type Database = {
           p_storage_path: string
           p_topic_id?: string
           p_uploaded_by?: string
+        }
+        Returns: string
+      }
+      record_discount_usage: {
+        Args: {
+          p_discount_amount: number
+          p_discount_code_id: string
+          p_enrollment_id: string
+          p_final_amount: number
+          p_original_amount: number
+          p_stripe_payment_intent_id?: string
+          p_user_id: string
         }
         Returns: string
       }
@@ -14079,6 +30656,16 @@ export type Database = {
         Args: { p_enrollment_id: string; p_topic_id: string; p_user_id: string }
         Returns: string
       }
+      start_workflow: {
+        Args: {
+          p_entity_id: string
+          p_entity_type: string
+          p_org_id: string
+          p_user_id: string
+          p_workflow_id: string
+        }
+        Returns: string
+      }
       store_ai_chat: {
         Args: {
           p_conversation_context: Json
@@ -14160,6 +30747,16 @@ export type Database = {
         }[]
       }
       test_simple_function: { Args: never; Returns: string }
+      transition_workflow: {
+        Args: {
+          p_action: string
+          p_expected_version?: number
+          p_instance_id: string
+          p_notes?: string
+          p_user_id: string
+        }
+        Returns: boolean
+      }
       trigger_graduation: {
         Args: { p_enrollment_id: string }
         Returns: boolean
@@ -14239,9 +30836,43 @@ export type Database = {
         Args: { org_id: string; user_id: string }
         Returns: boolean
       }
+      validate_discount_code: {
+        Args: {
+          p_amount?: number
+          p_code: string
+          p_course_id?: string
+          p_plan_type?: string
+          p_user_id: string
+        }
+        Returns: {
+          discount_id: string
+          discount_type: string
+          discount_value: number
+          error_message: string
+          is_valid: boolean
+        }[]
+      }
     }
     Enums: {
-      [_ in never]: never
+      activity_direction: "inbound" | "outbound"
+      activity_outcome: "positive" | "neutral" | "negative"
+      activity_priority: "low" | "medium" | "high" | "urgent"
+      activity_status:
+        | "scheduled"
+        | "open"
+        | "in_progress"
+        | "completed"
+        | "skipped"
+        | "cancelled"
+      activity_type_enum:
+        | "email"
+        | "call"
+        | "meeting"
+        | "note"
+        | "linkedin_message"
+        | "task"
+        | "follow_up"
+        | "reminder"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -14367,10 +30998,29 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
-  graphql_public: {
-    Enums: {},
-  },
   public: {
-    Enums: {},
+    Enums: {
+      activity_direction: ["inbound", "outbound"],
+      activity_outcome: ["positive", "neutral", "negative"],
+      activity_priority: ["low", "medium", "high", "urgent"],
+      activity_status: [
+        "scheduled",
+        "open",
+        "in_progress",
+        "completed",
+        "skipped",
+        "cancelled",
+      ],
+      activity_type_enum: [
+        "email",
+        "call",
+        "meeting",
+        "note",
+        "linkedin_message",
+        "task",
+        "follow_up",
+        "reminder",
+      ],
+    },
   },
 } as const

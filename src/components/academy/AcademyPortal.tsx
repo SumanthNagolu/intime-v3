@@ -296,3 +296,8 @@ export function AcademyPortal({ error }: AcademyPortalProps) {
 
 export default AcademyPortal;
 
+
+
+
+
+

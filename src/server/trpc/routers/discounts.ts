@@ -36,9 +36,9 @@ export const discountsRouter = router({
         const { data, error } = await ctx.supabase.rpc('validate_discount_code', {
           p_code: input.code,
           p_user_id: ctx.session.user.id,
-          p_course_id: input.courseId || null,
-          p_plan_type: input.planType || null,
-          p_amount: input.amount || null,
+          p_course_id: input.courseId || undefined,
+          p_plan_type: input.planType || undefined,
+          p_amount: input.amount || undefined,
         });
 
         if (error) throw error;

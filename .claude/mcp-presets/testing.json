@@ -1,16 +1,25 @@
 {
   "mcpServers": {
-    "supabase": {
-      "type": "http",
-      "url": "https://mcp.supabase.com/mcp?project_ref=${SUPABASE_PROJECT_REF}"
+    "postgres": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres"],
+      "env": {
+        "POSTGRES_CONNECTION_STRING": "postgresql://postgres:TIfyrFR8Q3fFywZZ@db.gkwhxmvugnjwwwiufmdy.supabase.co:5432/postgres"
+      }
     },
     "playwright": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@playwright/mcp-server"],
+      "args": ["-y", "@playwright/mcp@latest"],
       "env": {
-        "BROWSER": "msedge"
+        "BROWSER": "chromium"
       }
+    },
+    "sequential-thinking": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
     }
   }
 }

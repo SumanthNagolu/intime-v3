@@ -292,7 +292,7 @@ export async function updateGeneralSettingsAction(
     userId: profile.id,
     userEmail: profile.email,
     orgId: profile.orgId,
-    oldValues: currentOrg,
+    oldValues: currentOrg || {},
     newValues: updateData,
     metadata: { source: 'admin_settings', settingsType: 'general' },
   });

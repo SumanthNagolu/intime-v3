@@ -61,8 +61,8 @@ export async function createCheckoutSession(
       p_code: params.discountCode,
       p_user_id: params.userId,
       p_course_id: params.courseId,
-      p_plan_type: null,
-      p_amount: null,
+      p_plan_type: undefined,
+      p_amount: undefined,
     });
 
     const validation = validationResult?.[0];

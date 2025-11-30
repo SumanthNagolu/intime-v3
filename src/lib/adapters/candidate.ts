@@ -224,7 +224,6 @@ export interface DisplayBenchCandidate extends DisplayCandidate {
   daysOnBench: number;
   lastContact: string;
   benchStartDate?: string;
-  benchStatus?: string;
 }
 
 export function dbCandidateToBenchDisplay(
@@ -232,8 +231,7 @@ export function dbCandidateToBenchDisplay(
   benchMetadata?: {
     daysOnBench: number;
     lastContactedAt: Date | null;
-    benchStartDate: Date;
-    benchStatus: string;
+    benchStartDate: string;
   }
 ): DisplayBenchCandidate {
   const base = dbCandidateToDisplay(candidate);
@@ -242,8 +240,7 @@ export function dbCandidateToBenchDisplay(
     ...base,
     daysOnBench: benchMetadata?.daysOnBench || 0,
     lastContact: benchMetadata?.lastContactedAt?.toISOString() || '',
-    benchStartDate: benchMetadata?.benchStartDate?.toISOString().split('T')[0],
-    benchStatus: benchMetadata?.benchStatus,
+    benchStartDate: benchMetadata?.benchStartDate,
   };
 }
 

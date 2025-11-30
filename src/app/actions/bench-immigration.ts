@@ -7,6 +7,7 @@
 
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { db } from '@/lib/db';
 import {
   immigrationCases,
@@ -112,34 +113,35 @@ async function getCurrentUserContext() {
     where: eq(userProfiles.id, user.id),
   });
 
-  return profile ? { userId: user.id, orgId: profile.orgId } : null;
+  return profile ? { userId: user.id, userEmail: profile.email ?? user.email ?? '', orgId: profile.orgId } : null;
 }
 
 async function checkPermission(
   userId: string,
-  permission: string,
-  resourceType?: string,
-  resourceId?: string
-): Promise<{ allowed: boolean; scope?: string }> {
+  resource: string,
+  action: string,
+  requiredScope: string = 'all'
+): Promise<boolean> {
   const supabase = await createClient();
 
   const { data, error } = await supabase.rpc('check_user_permission', {
     p_user_id: userId,
-    p_permission: permission,
-    p_table_name: resourceType || null,
-    p_record_id: resourceId || null,
+    p_resource: resource,
+    p_action: action,
+    p_required_scope: requiredScope,
   });
 
   if (error) {
     console.error('Permission check error:', error);
-    return { allowed: false };
+    return false;
   }
 
-  return { allowed: data?.allowed ?? false, scope: data?.scope };
+  return data === true;
 }
 
 async function logAuditEvent(
   userId: string,
+  userEmail: string,
   orgId: string,
   action: string,
   resourceType: string,
@@ -147,18 +149,17 @@ async function logAuditEvent(
   details: Record<string, unknown>,
   severity: 'info' | 'warning' | 'critical' = 'info'
 ) {
-  const supabase = await createClient();
+  const adminSupabase = createAdminClient();
 
-  await supabase.from('audit_logs').insert({
+  await (adminSupabase.from as any)('audit_logs').insert({
     user_id: userId,
+    user_email: userEmail,
     org_id: orgId,
     action,
     table_name: resourceType,
     record_id: resourceId,
     metadata: details,
     severity,
-    user_ip_address: null,
-    user_agent: null,
   });
 }
 
@@ -189,7 +190,7 @@ export async function listImmigrationCasesAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'immigration:read');
+    const allowed = await checkPermission(context.userId, 'immigration', 'read');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -339,7 +340,7 @@ export async function getImmigrationCaseAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'immigration:read');
+    const allowed = await checkPermission(context.userId, 'immigration', 'read');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -447,7 +448,7 @@ export async function createImmigrationCaseAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'immigration:write');
+    const allowed = await checkPermission(context.userId, 'immigration', 'write');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -505,6 +506,7 @@ export async function createImmigrationCaseAction(
 
     await logAuditEvent(
       context.userId,
+      context.userEmail,
       context.orgId,
       'immigration.case.created',
       'immigration_cases',
@@ -553,7 +555,7 @@ export async function updateImmigrationCaseAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'immigration:write');
+    const allowed = await checkPermission(context.userId, 'immigration', 'write');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -613,6 +615,7 @@ export async function updateImmigrationCaseAction(
 
     await logAuditEvent(
       context.userId,
+      context.userEmail,
       context.orgId,
       'immigration.case.updated',
       'immigration_cases',
@@ -638,7 +641,7 @@ export async function submitCaseAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'immigration:write');
+    const allowed = await checkPermission(context.userId, 'immigration', 'write');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -657,6 +660,7 @@ export async function submitCaseAction(
 
     await logAuditEvent(
       context.userId,
+      context.userEmail,
       context.orgId,
       'immigration.case.submitted',
       'immigration_cases',
@@ -686,7 +690,7 @@ export async function recordRfeAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'immigration:write');
+    const allowed = await checkPermission(context.userId, 'immigration', 'write');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -709,6 +713,7 @@ export async function recordRfeAction(
 
     await logAuditEvent(
       context.userId,
+      context.userEmail,
       context.orgId,
       'immigration.case.rfe_received',
       'immigration_cases',
@@ -734,7 +739,7 @@ export async function submitRfeResponseAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'immigration:write');
+    const allowed = await checkPermission(context.userId, 'immigration', 'write');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -754,6 +759,7 @@ export async function submitRfeResponseAction(
 
     await logAuditEvent(
       context.userId,
+      context.userEmail,
       context.orgId,
       'immigration.case.rfe_responded',
       'immigration_cases',
@@ -784,7 +790,7 @@ export async function approveCaseAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'immigration:write');
+    const allowed = await checkPermission(context.userId, 'immigration', 'write');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -825,6 +831,7 @@ export async function approveCaseAction(
 
     await logAuditEvent(
       context.userId,
+      context.userEmail,
       context.orgId,
       'immigration.case.approved',
       'immigration_cases',
@@ -854,7 +861,7 @@ export async function denyCaseAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'immigration:write');
+    const allowed = await checkPermission(context.userId, 'immigration', 'write');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -894,6 +901,7 @@ export async function denyCaseAction(
 
     await logAuditEvent(
       context.userId,
+      context.userEmail,
       context.orgId,
       'immigration.case.denied',
       'immigration_cases',
@@ -919,7 +927,7 @@ export async function withdrawCaseAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'immigration:write');
+    const allowed = await checkPermission(context.userId, 'immigration', 'write');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -958,6 +966,7 @@ export async function withdrawCaseAction(
 
     await logAuditEvent(
       context.userId,
+      context.userEmail,
       context.orgId,
       'immigration.case.withdrawn',
       'immigration_cases',
@@ -992,7 +1001,7 @@ export async function addTimelineNoteAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'immigration:write');
+    const allowed = await checkPermission(context.userId, 'immigration', 'write');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -1037,6 +1046,7 @@ export async function addTimelineNoteAction(
 
     await logAuditEvent(
       context.userId,
+      context.userEmail,
       context.orgId,
       'immigration.case.note_added',
       'immigration_cases',
@@ -1073,7 +1083,7 @@ export async function getImmigrationDashboardMetricsAction(): Promise<ActionResu
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'immigration:read');
+    const allowed = await checkPermission(context.userId, 'immigration', 'read');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -1146,7 +1156,7 @@ export async function getUpcomingDeadlinesAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'immigration:read');
+    const allowed = await checkPermission(context.userId, 'immigration', 'read');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }
@@ -1213,7 +1223,7 @@ export async function getExpiringVisasAction(
       return { success: false, error: 'Unauthorized' };
     }
 
-    const { allowed } = await checkPermission(context.userId, 'immigration:read');
+    const allowed = await checkPermission(context.userId, 'immigration', 'read');
     if (!allowed) {
       return { success: false, error: 'Permission denied' };
     }

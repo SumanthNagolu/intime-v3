@@ -53,22 +53,29 @@ export interface AccountQueryOptions {
  * ```
  */
 export function useAccounts(options: AccountsQueryOptions = {}) {
-  const { enabled = true, ownership, ...input } = options;
+  const { enabled = true, ownership, limit, offset, status, search, tier } = options;
+
+  // Convert limit/offset to page/pageSize for the API
+  const pageSize = limit ?? 50;
+  const page = offset ? Math.floor(offset / pageSize) + 1 : 1;
 
   const query = trpc.crm.accounts.list.useQuery(
     {
-      limit: input.limit ?? 50,
-      offset: input.offset ?? 0,
-      status: input.status,
-      search: input.search,
-      ownership: ownership ?? 'my_items',
+      page,
+      pageSize,
+      search,
+      filters: status || tier ? {
+        status: status ? [status] : undefined,
+        tier: tier ? [tier as 'enterprise' | 'mid_market' | 'smb' | 'strategic'] : undefined,
+      } : undefined,
+      // Note: ownership is handled by the ownershipProcedure middleware, not passed in input
     },
     {
       enabled,
       staleTime: 30 * 1000,
       select: (data): DisplayAccount[] => {
-        return data.map(account =>
-          accountAdapter.toDisplay(account as AlignedAccount)
+        return data.items.map(account =>
+          accountAdapter.toDisplay(account as unknown as AlignedAccount)
         );
       },
     }
@@ -85,14 +92,21 @@ export function useAccounts(options: AccountsQueryOptions = {}) {
  * Fetch accounts with raw database types
  */
 export function useAccountsRaw(options: AccountsQueryOptions = {}) {
-  const { enabled = true, ...input } = options;
+  const { enabled = true, limit, offset, status, search, tier } = options;
+
+  // Convert limit/offset to page/pageSize for the API
+  const pageSize = limit ?? 50;
+  const page = offset ? Math.floor(offset / pageSize) + 1 : 1;
 
   return trpc.crm.accounts.list.useQuery(
     {
-      limit: input.limit ?? 50,
-      offset: input.offset ?? 0,
-      status: input.status,
-      search: input.search,
+      page,
+      pageSize,
+      search,
+      filters: status || tier ? {
+        status: status ? [status] : undefined,
+        tier: tier ? [tier as 'enterprise' | 'mid_market' | 'smb' | 'strategic'] : undefined,
+      } : undefined,
     },
     { enabled }
   );
@@ -120,7 +134,7 @@ export function useAccount(id: string | undefined, options: AccountQueryOptions 
       enabled: enabled && !!id,
       staleTime: 30 * 1000,
       select: (data): DisplayAccount => {
-        return accountAdapter.toDisplay(data as AlignedAccount);
+        return accountAdapter.toDisplay(data as unknown as AlignedAccount);
       },
     }
   );
@@ -166,7 +180,7 @@ export function useAccountPocs(accountId: string | undefined, options: { enabled
       staleTime: 30 * 1000,
       select: (data): DisplayPointOfContact[] => {
         return data.map(poc =>
-          pocAdapter.toDisplay(poc as AlignedPointOfContact)
+          pocAdapter.toDisplay(poc as unknown as AlignedPointOfContact)
         );
       },
     }
@@ -224,21 +238,24 @@ export interface AccountSearchOptions {
  * ```
  */
 export function useAccountSearch(options: AccountSearchOptions) {
-  const { enabled = true, query: searchQuery, ...filters } = options;
+  const { enabled = true, query: searchQuery, status, tier } = options;
 
   const query = trpc.crm.accounts.list.useQuery(
     {
       search: searchQuery,
-      status: filters.status,
-      limit: 50,
-      offset: 0,
+      page: 1,
+      pageSize: 50,
+      filters: status || tier ? {
+        status: status ? [status] : undefined,
+        tier: tier ? [tier as 'enterprise' | 'mid_market' | 'smb' | 'strategic'] : undefined,
+      } : undefined,
     },
     {
       enabled: enabled && searchQuery.length >= 2,
       staleTime: 30 * 1000,
       select: (data): DisplayAccount[] => {
-        return data.map(account =>
-          accountAdapter.toDisplay(account as AlignedAccount)
+        return data.items.map(account =>
+          accountAdapter.toDisplay(account as unknown as AlignedAccount)
         );
       },
     }
@@ -283,10 +300,10 @@ export interface AccountStats {
  * Calculate account statistics - client-side aggregation
  */
 export function useAccountStats(options: { enabled?: boolean; ownership?: OwnershipFilter } = {}) {
-  const { enabled = true, ownership } = options;
+  const { enabled = true } = options;
 
   const query = trpc.crm.accounts.list.useQuery(
-    { limit: 500, offset: 0, ownership: ownership ?? 'my_items' },
+    { page: 1, pageSize: 500 },
     {
       enabled,
       staleTime: 60 * 1000,
@@ -295,7 +312,7 @@ export function useAccountStats(options: { enabled?: boolean; ownership?: Owners
         const byTier: Record<string, number> = {};
         let activeClients = 0;
 
-        data.forEach(account => {
+        data.items.forEach(account => {
           const status = account.status || 'unknown';
           const tier = account.tier || 'none';
 
@@ -308,7 +325,7 @@ export function useAccountStats(options: { enabled?: boolean; ownership?: Owners
         });
 
         return {
-          total: data.length,
+          total: data.items.length,
           byStatus,
           byTier,
           activeClients,
@@ -390,12 +407,12 @@ export function useAccountOptions(options: { enabled?: boolean } = {}) {
   const { enabled = true } = options;
 
   const query = trpc.crm.accounts.list.useQuery(
-    { limit: 200, offset: 0, status: 'active' },
+    { page: 1, pageSize: 200, filters: { status: ['active'] } },
     {
       enabled,
       staleTime: 60 * 1000,
       select: (data) => {
-        return data.map(account => ({
+        return data.items.map(account => ({
           value: account.id,
           label: account.name,
           status: account.status,
@@ -422,11 +439,14 @@ export function usePrefetchAccounts() {
 
   return {
     prefetchList: (options: Omit<AccountsQueryOptions, 'enabled'> = {}) => {
+      const pageSize = options.limit ?? 50;
+      const page = options.offset ? Math.floor(options.offset / pageSize) + 1 : 1;
+
       return utils.crm.accounts.list.prefetch({
-        limit: options.limit ?? 50,
-        offset: options.offset ?? 0,
-        status: options.status,
+        page,
+        pageSize,
         search: options.search,
+        filters: options.status ? { status: [options.status] } : undefined,
       });
     },
     prefetchAccount: (id: string) => {

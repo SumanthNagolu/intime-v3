@@ -61,7 +61,7 @@ export const Dashboard: React.FC = () => {
   });
 
   let currentModule = mergedModules.find(m => m.progress < 100) || mergedModules[mergedModules.length - 1];
-  let currentLesson = currentModule.lessons.find(l => l.status === 'unlocked' || l.status === 'current') || currentModule.lessons[currentModule.lessons.length - 1];
+  let currentLesson = currentModule.lessons.find(l => l.status === 'unlocked' || l.status === 'completed') || currentModule.lessons[currentModule.lessons.length - 1];
   if (!currentLesson) currentLesson = currentModule.lessons[0];
 
   const calculateEmployability = () => {

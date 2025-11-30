@@ -14,7 +14,7 @@ interface AppLayoutProps {
 
 export const AppLayout = ({ children, showMentor = false }: AppLayoutProps) => {
   return (
-    <div className="min-h-screen bg-cream flex flex-col relative overflow-x-hidden">
+    <div className="min-h-screen bg-cream flex flex-col relative overflow-x-hidden overflow-y-auto">
       {/* Premium Mesh Gradient Background */}
       <div className="fixed inset-0 bg-mesh-premium opacity-50 pointer-events-none"></div>
 

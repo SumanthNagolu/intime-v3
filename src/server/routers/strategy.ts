@@ -131,17 +131,17 @@ export const strategyRouter = router({
     }))
     .mutation(async ({ ctx, input }) => {
       const { userId, orgId } = ctx;
-      
+
       // Get user profile
       const [userProfile] = await db.select({ id: userProfiles.id })
         .from(userProfiles)
-        .where(eq(userProfiles.authId, userId))
+        .where(eq(userProfiles.authId, userId as string))
         .limit(1);
-      
+
       if (!userProfile) {
         throw new Error('User profile not found');
       }
-      
+
       // Check if strategy exists
       const [existing] = await db.select({ id: leadStrategies.id })
         .from(leadStrategies)
@@ -150,24 +150,24 @@ export const strategyRouter = router({
           eq(leadStrategies.orgId, orgId)
         ))
         .limit(1);
-      
+
       const updateData = {
         strategyNotes: input.strategyNotes,
-        talkingPoints: input.talkingPoints as TalkingPoint[],
+        talkingPoints: input.talkingPoints as TalkingPoint[] | undefined,
         valueProposition: input.valueProposition,
         differentiators: input.differentiators,
-        objections: input.objections as Objection[],
-        stakeholders: input.stakeholders as Stakeholder[],
-        competitors: input.competitors as Competitor[],
+        objections: input.objections as Objection[] | undefined,
+        stakeholders: input.stakeholders as Stakeholder[] | undefined,
+        competitors: input.competitors as Competitor[] | undefined,
         winThemes: input.winThemes,
         painPoints: input.painPoints,
-        meetingAgenda: input.meetingAgenda as AgendaItem[],
+        meetingAgenda: input.meetingAgenda as AgendaItem[] | undefined,
         questionsToAsk: input.questionsToAsk,
         desiredOutcomes: input.desiredOutcomes,
         updatedAt: new Date(),
         updatedBy: userProfile.id,
       };
-      
+
       if (existing) {
         // Update
         const [updated] = await db.update(leadStrategies)
@@ -200,12 +200,16 @@ export const strategyRouter = router({
     }))
     .mutation(async ({ ctx, input }) => {
       const { userId, orgId } = ctx;
-      
+
       const [userProfile] = await db.select({ id: userProfiles.id })
         .from(userProfiles)
-        .where(eq(userProfiles.authId, userId))
+        .where(eq(userProfiles.authId, userId as string))
         .limit(1);
-      
+
+      if (!userProfile) {
+        throw new Error('User profile not found');
+      }
+
       // Get or create strategy
       const [existing] = await db.select()
         .from(leadStrategies)
@@ -214,13 +218,13 @@ export const strategyRouter = router({
           eq(leadStrategies.orgId, orgId)
         ))
         .limit(1);
-      
+
       if (existing) {
         const [updated] = await db.update(leadStrategies)
           .set({
             talkingPoints: input.talkingPoints as TalkingPoint[],
             updatedAt: new Date(),
-            updatedBy: userProfile?.id,
+            updatedBy: userProfile.id,
           })
           .where(eq(leadStrategies.id, existing.id))
           .returning();
@@ -231,8 +235,8 @@ export const strategyRouter = router({
             orgId,
             leadId: input.leadId,
             talkingPoints: input.talkingPoints as TalkingPoint[],
-            createdBy: userProfile?.id,
-            updatedBy: userProfile?.id,
+            createdBy: userProfile.id,
+            updatedBy: userProfile.id,
           })
           .returning();
         return created;
@@ -246,12 +250,16 @@ export const strategyRouter = router({
     }))
     .mutation(async ({ ctx, input }) => {
       const { userId, orgId } = ctx;
-      
+
       const [userProfile] = await db.select({ id: userProfiles.id })
         .from(userProfiles)
-        .where(eq(userProfiles.authId, userId))
+        .where(eq(userProfiles.authId, userId as string))
         .limit(1);
-      
+
+      if (!userProfile) {
+        throw new Error('User profile not found');
+      }
+
       const [existing] = await db.select()
         .from(leadStrategies)
         .where(and(
@@ -259,13 +267,13 @@ export const strategyRouter = router({
           eq(leadStrategies.orgId, orgId)
         ))
         .limit(1);
-      
+
       if (existing) {
         const [updated] = await db.update(leadStrategies)
           .set({
             stakeholders: input.stakeholders as Stakeholder[],
             updatedAt: new Date(),
-            updatedBy: userProfile?.id,
+            updatedBy: userProfile.id,
           })
           .where(eq(leadStrategies.id, existing.id))
           .returning();
@@ -276,8 +284,8 @@ export const strategyRouter = router({
             orgId,
             leadId: input.leadId,
             stakeholders: input.stakeholders as Stakeholder[],
-            createdBy: userProfile?.id,
-            updatedBy: userProfile?.id,
+            createdBy: userProfile.id,
+            updatedBy: userProfile.id,
           })
           .returning();
         return created;
@@ -291,12 +299,16 @@ export const strategyRouter = router({
     }))
     .mutation(async ({ ctx, input }) => {
       const { userId, orgId } = ctx;
-      
+
       const [userProfile] = await db.select({ id: userProfiles.id })
         .from(userProfiles)
-        .where(eq(userProfiles.authId, userId))
+        .where(eq(userProfiles.authId, userId as string))
         .limit(1);
-      
+
+      if (!userProfile) {
+        throw new Error('User profile not found');
+      }
+
       const [existing] = await db.select()
         .from(leadStrategies)
         .where(and(
@@ -304,13 +316,13 @@ export const strategyRouter = router({
           eq(leadStrategies.orgId, orgId)
         ))
         .limit(1);
-      
+
       if (existing) {
         const [updated] = await db.update(leadStrategies)
           .set({
             objections: input.objections as Objection[],
             updatedAt: new Date(),
-            updatedBy: userProfile?.id,
+            updatedBy: userProfile.id,
           })
           .where(eq(leadStrategies.id, existing.id))
           .returning();
@@ -321,8 +333,8 @@ export const strategyRouter = router({
             orgId,
             leadId: input.leadId,
             objections: input.objections as Objection[],
-            createdBy: userProfile?.id,
-            updatedBy: userProfile?.id,
+            createdBy: userProfile.id,
+            updatedBy: userProfile.id,
           })
           .returning();
         return created;
@@ -336,12 +348,16 @@ export const strategyRouter = router({
     }))
     .mutation(async ({ ctx, input }) => {
       const { userId, orgId } = ctx;
-      
+
       const [userProfile] = await db.select({ id: userProfiles.id })
         .from(userProfiles)
-        .where(eq(userProfiles.authId, userId))
+        .where(eq(userProfiles.authId, userId as string))
         .limit(1);
-      
+
+      if (!userProfile) {
+        throw new Error('User profile not found');
+      }
+
       const [existing] = await db.select()
         .from(leadStrategies)
         .where(and(
@@ -349,13 +365,13 @@ export const strategyRouter = router({
           eq(leadStrategies.orgId, orgId)
         ))
         .limit(1);
-      
+
       if (existing) {
         const [updated] = await db.update(leadStrategies)
           .set({
             competitors: input.competitors as Competitor[],
             updatedAt: new Date(),
-            updatedBy: userProfile?.id,
+            updatedBy: userProfile.id,
           })
           .where(eq(leadStrategies.id, existing.id))
           .returning();
@@ -366,8 +382,8 @@ export const strategyRouter = router({
             orgId,
             leadId: input.leadId,
             competitors: input.competitors as Competitor[],
-            createdBy: userProfile?.id,
-            updatedBy: userProfile?.id,
+            createdBy: userProfile.id,
+            updatedBy: userProfile.id,
           })
           .returning();
         return created;
@@ -411,12 +427,16 @@ export const strategyRouter = router({
     }))
     .mutation(async ({ ctx, input }) => {
       const { userId, orgId } = ctx;
-      
+
       const [userProfile] = await db.select({ id: userProfiles.id })
         .from(userProfiles)
-        .where(eq(userProfiles.authId, userId))
+        .where(eq(userProfiles.authId, userId as string))
         .limit(1);
-      
+
+      if (!userProfile) {
+        throw new Error('User profile not found');
+      }
+
       const [template] = await db.insert(talkingPointTemplates)
         .values({
           orgId,
@@ -425,10 +445,10 @@ export const strategyRouter = router({
           category: input.category,
           talkingPoints: input.talkingPoints as TalkingPoint[],
           isDefault: input.isDefault,
-          createdBy: userProfile?.id,
+          createdBy: userProfile.id,
         })
         .returning();
-      
+
       return template;
     }),
 
@@ -439,7 +459,7 @@ export const strategyRouter = router({
     }))
     .mutation(async ({ ctx, input }) => {
       const { userId, orgId } = ctx;
-      
+
       // Get template
       const [template] = await db.select()
         .from(talkingPointTemplates)
@@ -448,16 +468,20 @@ export const strategyRouter = router({
           eq(talkingPointTemplates.orgId, orgId)
         ))
         .limit(1);
-      
+
       if (!template) {
         throw new Error('Template not found');
       }
-      
+
       const [userProfile] = await db.select({ id: userProfiles.id })
         .from(userProfiles)
-        .where(eq(userProfiles.authId, userId))
+        .where(eq(userProfiles.authId, userId as string))
         .limit(1);
-      
+
+      if (!userProfile) {
+        throw new Error('User profile not found');
+      }
+
       // Get or create strategy
       const [existing] = await db.select()
         .from(leadStrategies)
@@ -466,13 +490,13 @@ export const strategyRouter = router({
           eq(leadStrategies.orgId, orgId)
         ))
         .limit(1);
-      
+
       if (existing) {
         const [updated] = await db.update(leadStrategies)
           .set({
             talkingPoints: template.talkingPoints as TalkingPoint[],
             updatedAt: new Date(),
-            updatedBy: userProfile?.id,
+            updatedBy: userProfile.id,
           })
           .where(eq(leadStrategies.id, existing.id))
           .returning();
@@ -483,8 +507,8 @@ export const strategyRouter = router({
             orgId,
             leadId: input.leadId,
             talkingPoints: template.talkingPoints as TalkingPoint[],
-            createdBy: userProfile?.id,
-            updatedBy: userProfile?.id,
+            createdBy: userProfile.id,
+            updatedBy: userProfile.id,
           })
           .returning();
         return created;
@@ -493,5 +517,10 @@ export const strategyRouter = router({
 });
 
 export type StrategyRouter = typeof strategyRouter;
+
+
+
+
+
 
 

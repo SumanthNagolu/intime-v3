@@ -26,8 +26,8 @@ export function AcademyLayout({ children, showMentor = false }: AcademyLayoutPro
   const { score, state, theme } = useBiometric();
 
   return (
-    <div 
-      className="min-h-screen flex flex-col relative overflow-x-hidden"
+    <div
+      className="min-h-screen flex flex-col relative overflow-x-hidden overflow-y-auto"
       data-biometric-state={state}
     >
       {/* Living Biometric Background */}

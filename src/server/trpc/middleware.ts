@@ -91,7 +91,7 @@ export const hasPermission = (resource: string, action: string) =>
   isAuthenticated.unstable_pipe(
     middleware(async ({ ctx, next }) => {
       const { data: hasPermission } = await ctx.supabase.rpc('user_has_permission', {
-        p_user_id: ctx.userId as string,
+        p_user_id: ctx.userId!,
         p_resource: resource,
         p_action: action
       });
@@ -121,3 +121,53 @@ export const orgProtectedProcedure = publicProcedure.use(requireOrganization);
  * Procedure: Admin (requires admin role)
  */
 export const adminProcedure = publicProcedure.use(isAdmin);
+
+/**
+ * Middleware: Add ownership context for RCAI filtering
+ *
+ * Extends requireOrganization to add:
+ * - isManager: whether user has direct reports
+ * - managedUserIds: array of direct report profile IDs
+ * - profileId: user's profile ID (for ownership queries)
+ *
+ * Use this for procedures that support ownership filtering.
+ */
+export const withOwnershipContext = requireOrganization.unstable_pipe(
+  middleware(async ({ ctx, next }) => {
+    // Import dynamically to avoid circular dependencies
+    const { getDirectReports } = await import('@/lib/workspace/team-hierarchy');
+    const { createAdminClient } = await import('@/lib/supabase/server');
+
+    // Get user's profile ID (may be different from auth userId)
+    const adminClient = createAdminClient();
+    const { data: profile } = await adminClient
+      .from('user_profiles')
+      .select('id')
+      .or(`id.eq.${ctx.userId},auth_id.eq.${ctx.userId}`)
+      .limit(1)
+      .maybeSingle();
+
+    const profileId = profile?.id ?? ctx.userId!;
+
+    // Check if user is a manager (has direct reports)
+    const managedUserIds = await getDirectReports(profileId, ctx.orgId!);
+    const isManager = managedUserIds.length > 0;
+
+    return next({
+      ctx: {
+        ...ctx,
+        profileId,
+        isManager,
+        managedUserIds,
+      },
+    });
+  })
+);
+
+/**
+ * Procedure: Ownership Protected (includes ownership context)
+ *
+ * Use for procedures that support 'my_items', 'my_team', etc. filtering.
+ * Adds profileId, isManager, and managedUserIds to context.
+ */
+export const ownershipProcedure = publicProcedure.use(withOwnershipContext);

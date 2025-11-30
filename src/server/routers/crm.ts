@@ -58,7 +58,7 @@ export const crmRouter = router({
 
         // Build where conditions
         const conditions = [
-          eq(accounts.orgId, orgId),
+          eq(accounts.orgId, orgId!),
           isNull(accounts.deletedAt),
         ];
 
@@ -118,16 +118,43 @@ export const crmRouter = router({
         const orderBy = sortDirection === 'asc' ? asc(sortColumn) : desc(sortColumn);
 
         // Execute queries in parallel
+        // Note: Using select query instead of relational query to avoid lateral join issues
         const [items, countResult] = await Promise.all([
-          db.query.accounts.findMany({
-            where: and(...conditions),
-            with: {
-              accountManager: true,
-            },
-            orderBy,
-            limit: pageSize,
-            offset,
-          }),
+          db.select({
+            id: accounts.id,
+            orgId: accounts.orgId,
+            name: accounts.name,
+            industry: accounts.industry,
+            companyType: accounts.companyType,
+            status: accounts.status,
+            tier: accounts.tier,
+            accountManagerId: accounts.accountManagerId,
+            responsiveness: accounts.responsiveness,
+            preferredQuality: accounts.preferredQuality,
+            description: accounts.description,
+            contractStartDate: accounts.contractStartDate,
+            contractEndDate: accounts.contractEndDate,
+            paymentTermsDays: accounts.paymentTermsDays,
+            markupPercentage: accounts.markupPercentage,
+            annualRevenueTarget: accounts.annualRevenueTarget,
+            website: accounts.website,
+            headquartersLocation: accounts.headquartersLocation,
+            phone: accounts.phone,
+            createdAt: accounts.createdAt,
+            updatedAt: accounts.updatedAt,
+            createdBy: accounts.createdBy,
+            updatedBy: accounts.updatedBy,
+            deletedAt: accounts.deletedAt,
+            // Account manager info (flattened)
+            accountManagerName: userProfiles.fullName,
+            accountManagerEmail: userProfiles.email,
+          })
+            .from(accounts)
+            .leftJoin(userProfiles, eq(accounts.accountManagerId, userProfiles.id))
+            .where(and(...conditions))
+            .orderBy(orderBy)
+            .limit(pageSize)
+            .offset(offset),
           db.select({ count: sql<number>`count(*)::int` })
             .from(accounts)
             .where(and(...conditions)),
@@ -152,25 +179,83 @@ export const crmRouter = router({
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
 
-        const account = await db.query.accounts.findFirst({
-          where: and(
+        // Fetch account with account manager using explicit join
+        const accountResults = await db.select({
+          id: accounts.id,
+          orgId: accounts.orgId,
+          name: accounts.name,
+          industry: accounts.industry,
+          companyType: accounts.companyType,
+          status: accounts.status,
+          tier: accounts.tier,
+          accountManagerId: accounts.accountManagerId,
+          responsiveness: accounts.responsiveness,
+          preferredQuality: accounts.preferredQuality,
+          description: accounts.description,
+          contractStartDate: accounts.contractStartDate,
+          contractEndDate: accounts.contractEndDate,
+          paymentTermsDays: accounts.paymentTermsDays,
+          markupPercentage: accounts.markupPercentage,
+          annualRevenueTarget: accounts.annualRevenueTarget,
+          website: accounts.website,
+          headquartersLocation: accounts.headquartersLocation,
+          phone: accounts.phone,
+          createdAt: accounts.createdAt,
+          updatedAt: accounts.updatedAt,
+          createdBy: accounts.createdBy,
+          updatedBy: accounts.updatedBy,
+          deletedAt: accounts.deletedAt,
+        })
+          .from(accounts)
+          .where(and(
             eq(accounts.id, input.id),
             eq(accounts.orgId, orgId),
             isNull(accounts.deletedAt),
-          ),
-          with: {
-            accountManager: true,
-            pointOfContacts: true,
-            deals: true,
-            leads: true,
-          },
-        });
+          ))
+          .limit(1);
+
+        const account = accountResults[0];
 
         if (!account) {
           throw new Error('Account not found');
         }
 
-        return account;
+        // Fetch related data in parallel
+        const [accountManagerResult, pocsResult, dealsResult, leadsResult] = await Promise.all([
+          // Account manager
+          account.accountManagerId
+            ? db.select().from(userProfiles).where(eq(userProfiles.id, account.accountManagerId)).limit(1)
+            : Promise.resolve([]),
+          // Points of contact
+          db.select().from(pointOfContacts).where(
+            and(
+              eq(pointOfContacts.accountId, input.id),
+              isNull(pointOfContacts.deletedAt),
+            )
+          ),
+          // Deals
+          db.select().from(deals).where(
+            and(
+              eq(deals.accountId, input.id),
+              isNull(deals.deletedAt),
+            )
+          ),
+          // Leads
+          db.select().from(leads).where(
+            and(
+              eq(leads.accountId, input.id),
+              isNull(leads.deletedAt),
+            )
+          ),
+        ]);
+
+        return {
+          ...account,
+          accountManager: accountManagerResult[0] || null,
+          pointOfContacts: pocsResult,
+          deals: dealsResult,
+          leads: leadsResult,
+        };
       }),
 
     /**
@@ -228,27 +313,27 @@ export const crmRouter = router({
         const { userId, orgId } = ctx;
 
         // Get user profile ID for createdBy
-        const [userProfile] = await db.select({ id: userProfiles.id })
+        const userProfileResult = await db.select({ id: userProfiles.id })
           .from(userProfiles)
-          .where(eq(userProfiles.authId, userId))
+          .where(eq(userProfiles.authId, userId!))
           .limit(1);
 
-        const profileId = userProfile?.id;
+        const profileId = userProfileResult[0]?.id;
 
         const [newAccount] = await db.insert(accounts).values({
           ...input,
           // Convert numeric values to strings for database
-          markupPercentage: input.markupPercentage?.toString(),
-          annualRevenueTarget: input.annualRevenueTarget?.toString(),
-          orgId,
-          accountManagerId: input.accountManagerId || profileId,
-          createdBy: profileId,
+          markupPercentage: input.markupPercentage?.toString() ?? null,
+          annualRevenueTarget: input.annualRevenueTarget?.toString() ?? null,
+          orgId: orgId!,
+          accountManagerId: input.accountManagerId || profileId || null,
+          createdBy: profileId ?? null,
         }).returning();
 
         // Log activity
         if (profileId) {
           await db.insert(activityLog).values({
-            orgId,
+            orgId: orgId!,
             entityType: 'account',
             entityId: newAccount.id,
             activityType: 'note',
@@ -271,33 +356,54 @@ export const crmRouter = router({
         const { id, data } = input;
 
         // Get user profile ID for updatedBy
-        const [userProfile] = await db.select({ id: userProfiles.id })
+        const userProfileResult = await db.select({ id: userProfiles.id })
           .from(userProfiles)
-          .where(eq(userProfiles.authId, userId))
+          .where(eq(userProfiles.authId, userId!))
           .limit(1);
 
-        const profileId = userProfile?.id;
+        const profileId = userProfileResult[0]?.id;
 
         // Prepare update data, converting numeric values
-        const updateData: Record<string, unknown> = {
-          ...data,
+        const updateData: Partial<typeof accounts.$inferInsert> = {
           updatedAt: new Date(),
-          updatedBy: profileId,
+          updatedBy: profileId ?? null,
         };
 
+        // Manually copy fields to ensure proper type conversion
+        if (data.name !== undefined) updateData.name = data.name;
+        if (data.industry !== undefined) updateData.industry = data.industry ?? null;
+        if (data.companyType !== undefined) updateData.companyType = data.companyType ?? null;
+        if (data.status !== undefined) updateData.status = data.status;
+        if (data.tier !== undefined) updateData.tier = data.tier ?? null;
+        if (data.accountManagerId !== undefined) updateData.accountManagerId = data.accountManagerId ?? null;
+        if (data.responsiveness !== undefined) updateData.responsiveness = data.responsiveness ?? null;
+        if (data.preferredQuality !== undefined) updateData.preferredQuality = data.preferredQuality ?? null;
+        if (data.description !== undefined) updateData.description = data.description ?? null;
+        if (data.contractStartDate !== undefined) updateData.contractStartDate = data.contractStartDate ?? null;
+        if (data.contractEndDate !== undefined) updateData.contractEndDate = data.contractEndDate ?? null;
+        if (data.paymentTermsDays !== undefined) updateData.paymentTermsDays = data.paymentTermsDays ?? null;
+        if (data.website !== undefined) updateData.website = data.website ?? null;
+        if (data.headquartersLocation !== undefined) updateData.headquartersLocation = data.headquartersLocation ?? null;
+        if (data.phone !== undefined) updateData.phone = data.phone ?? null;
+
+        // Convert numeric values to strings for database
         if (data.markupPercentage !== undefined) {
-          updateData.markupPercentage = data.markupPercentage?.toString();
+          updateData.markupPercentage = data.markupPercentage !== undefined && data.markupPercentage !== null
+            ? data.markupPercentage.toString()
+            : null;
         }
 
         if (data.annualRevenueTarget !== undefined) {
-          updateData.annualRevenueTarget = data.annualRevenueTarget?.toString();
+          updateData.annualRevenueTarget = data.annualRevenueTarget !== undefined && data.annualRevenueTarget !== null
+            ? data.annualRevenueTarget.toString()
+            : null;
         }
 
         const [updatedAccount] = await db.update(accounts)
           .set(updateData)
           .where(and(
             eq(accounts.id, id),
-            eq(accounts.orgId, orgId),
+            eq(accounts.orgId, orgId!),
             isNull(accounts.deletedAt),
           ))
           .returning();
@@ -319,23 +425,23 @@ export const crmRouter = router({
         const { accountIds, accountManagerId } = input;
 
         // Get user profile ID for updatedBy
-        const [userProfile] = await db.select({ id: userProfiles.id })
+        const userProfileResult = await db.select({ id: userProfiles.id })
           .from(userProfiles)
-          .where(eq(userProfiles.authId, userId))
+          .where(eq(userProfiles.authId, userId!))
           .limit(1);
 
-        const profileId = userProfile?.id;
+        const profileId = userProfileResult[0]?.id;
 
         // Update all specified accounts
         const results = await db.update(accounts)
           .set({
             accountManagerId,
             updatedAt: new Date(),
-            updatedBy: profileId,
+            updatedBy: profileId ?? null,
           })
           .where(and(
             inArray(accounts.id, accountIds),
-            eq(accounts.orgId, orgId),
+            eq(accounts.orgId, orgId!),
             isNull(accounts.deletedAt),
           ))
           .returning({ id: accounts.id });
@@ -356,21 +462,21 @@ export const crmRouter = router({
         const { userId, orgId } = ctx;
 
         // Get user profile ID for updatedBy
-        const [userProfile] = await db.select({ id: userProfiles.id })
+        const userProfileResult = await db.select({ id: userProfiles.id })
           .from(userProfiles)
-          .where(eq(userProfiles.authId, userId))
+          .where(eq(userProfiles.authId, userId!))
           .limit(1);
 
-        const profileId = userProfile?.id;
+        const profileId = userProfileResult[0]?.id;
 
         const [deleted] = await db.update(accounts)
           .set({
             deletedAt: new Date(),
-            updatedBy: profileId,
+            updatedBy: profileId ?? null,
           })
           .where(and(
             eq(accounts.id, input.id),
-            eq(accounts.orgId, orgId),
+            eq(accounts.orgId, orgId!),
             isNull(accounts.deletedAt),
           ))
           .returning();
@@ -403,14 +509,14 @@ export const crmRouter = router({
         const { orgId, profileId, isManager, managedUserIds } = ctx;
         const { limit, offset, status, accountId, ownership } = input;
 
-        let conditions = [eq(leads.orgId, orgId), isNull(leads.deletedAt)];
+        let conditions = [eq(leads.orgId, orgId!), isNull(leads.deletedAt)];
         if (status) conditions.push(eq(leads.status, status));
         if (accountId) conditions.push(eq(leads.accountId, accountId));
 
         // Apply ownership filter if specified
-        if (ownership) {
+        if (ownership && profileId) {
           const ownershipCondition = await buildOwnershipCondition(
-            { userId: profileId, orgId, isManager, managedUserIds },
+            { userId: profileId, orgId: orgId!, isManager: isManager ?? false, managedUserIds: managedUserIds ?? [] },
             'lead',
             leads,
             ownership
@@ -438,7 +544,7 @@ export const crmRouter = router({
         const [lead] = await db.select().from(leads)
           .where(and(
             eq(leads.id, input.id),
-            eq(leads.orgId, orgId),
+            eq(leads.orgId, orgId!),
             isNull(leads.deletedAt)
           ))
           .limit(1);
@@ -458,7 +564,7 @@ export const crmRouter = router({
         const { orgId } = ctx;
 
         const allLeads = await db.select().from(leads)
-          .where(and(eq(leads.orgId, orgId), isNull(leads.deletedAt)));
+          .where(and(eq(leads.orgId, orgId!), isNull(leads.deletedAt)));
 
         return {
           total: allLeads.length,
@@ -481,18 +587,22 @@ export const crmRouter = router({
         const { userId, orgId } = ctx;
 
         // Get user profile ID for createdBy (FK references user_profiles.id, not auth.users.id)
-        const [userProfile] = await db.select({ id: userProfiles.id })
+        const userProfileResult = await db.select({ id: userProfiles.id })
           .from(userProfiles)
-          .where(eq(userProfiles.authId, userId))
+          .where(eq(userProfiles.authId, userId!))
           .limit(1);
 
-        const profileId = userProfile?.id;
+        const profileId = userProfileResult[0]?.id;
 
         const [newLead] = await db.insert(leads).values({
           ...input,
-          orgId,
-          ownerId: profileId || undefined,
-          createdBy: profileId,
+          // Convert numeric estimatedValue to string if present
+          estimatedValue: input.estimatedValue !== undefined && input.estimatedValue !== null
+            ? input.estimatedValue.toString()
+            : null,
+          orgId: orgId!,
+          ownerId: profileId ?? null,
+          createdBy: profileId ?? null,
           // Explicitly set BANT defaults to avoid schema sync issues
           bantBudget: 0,
           bantAuthority: 0,
@@ -512,14 +622,27 @@ export const crmRouter = router({
         const { userId, orgId } = ctx;
         const { id, ...data } = input;
 
+        const updateData: Partial<typeof leads.$inferInsert> = {
+          updatedAt: new Date(),
+        };
+
+        // Manually copy fields to ensure proper type conversion
+        Object.keys(data).forEach((key) => {
+          const value = (data as any)[key];
+          if (key === 'estimatedValue' && value !== undefined) {
+            // Convert number to string for database
+            updateData.estimatedValue = value !== null ? value.toString() : null;
+          } else if (key !== 'id') {
+            // Copy other fields directly
+            (updateData as any)[key] = value;
+          }
+        });
+
         const [updated] = await db.update(leads)
-          .set({
-            ...data,
-            updatedAt: new Date(),
-          })
+          .set(updateData)
           .where(and(
             eq(leads.id, id),
-            eq(leads.orgId, orgId)
+            eq(leads.orgId, orgId!)
           ))
           .returning();
 
@@ -543,12 +666,12 @@ export const crmRouter = router({
         const { userId, orgId } = ctx;
 
         // IMPORTANT: userId from context is auth.users.id, but FK columns reference user_profiles.id
-        const [userProfile] = await db.select({ id: userProfiles.id })
+        const userProfileResult = await db.select({ id: userProfiles.id })
           .from(userProfiles)
-          .where(eq(userProfiles.authId, userId))
+          .where(eq(userProfiles.authId, userId!))
           .limit(1);
 
-        const profileId = userProfile?.id;
+        const profileId = userProfileResult[0]?.id;
 
         const updateData: Record<string, any> = {
           status: input.status,
@@ -563,7 +686,7 @@ export const crmRouter = router({
           .set(updateData)
           .where(and(
             eq(leads.id, input.id),
-            eq(leads.orgId, orgId)
+            eq(leads.orgId, orgId!)
           ))
           .returning();
 
@@ -574,7 +697,7 @@ export const crmRouter = router({
         // Log the status change as an activity (only if we have a valid profile ID)
         if (profileId) {
           await db.insert(activityLog).values({
-            orgId,
+            orgId: orgId!,
             entityType: 'lead',
             entityId: input.id,
             activityType: 'note',
@@ -606,21 +729,21 @@ export const crmRouter = router({
 
         // IMPORTANT: userId from context is auth.users.id, but FK columns reference user_profiles.id
         // We need to lookup the profile ID
-        const [userProfile] = await db.select({ id: userProfiles.id })
+        const userProfileResult = await db.select({ id: userProfiles.id })
           .from(userProfiles)
-          .where(eq(userProfiles.authId, userId))
+          .where(eq(userProfiles.authId, userId!))
           .limit(1);
 
-        if (!userProfile) {
+        if (!userProfileResult[0]) {
           throw new Error('User profile not found');
         }
-        const profileId = userProfile.id;
+        const profileId = userProfileResult[0].id;
 
         // Get lead data
         const [lead] = await db.select().from(leads)
           .where(and(
             eq(leads.id, input.leadId),
-            eq(leads.orgId, orgId)
+            eq(leads.orgId, orgId!)
           ))
           .limit(1);
 
@@ -633,14 +756,14 @@ export const crmRouter = router({
         // Create account if requested
         if (input.createAccount && !accountId) {
           const [newAccount] = await db.insert(accounts).values({
-            orgId,
+            orgId: orgId!,
             name: input.accountName || lead.companyName || 'New Account',
-            industry: lead.industry,
-            companyType: lead.companyType,
+            industry: lead.industry ?? null,
+            companyType: lead.companyType ?? 'direct_client',
             status: 'active',
-            tier: lead.tier,
-            website: lead.website,
-            headquartersLocation: lead.headquarters,
+            tier: lead.tier ?? null,
+            website: lead.website ?? null,
+            headquartersLocation: lead.headquarters ?? null,
             createdBy: profileId,
           }).returning();
           accountId = newAccount.id;
@@ -648,12 +771,12 @@ export const crmRouter = router({
 
         // Create deal from lead
         const [newDeal] = await db.insert(deals).values({
-          orgId,
+          orgId: orgId!,
           title: input.dealTitle,
           value: input.dealValue.toString(),
           stage: input.stage,
-          expectedCloseDate: input.expectedCloseDate,
-          accountId,
+          expectedCloseDate: input.expectedCloseDate ?? null,
+          accountId: accountId ?? null,
           leadId: lead.id,
           ownerId: lead.ownerId || profileId,
           createdBy: profileId,
@@ -664,7 +787,7 @@ export const crmRouter = router({
           .set({
             status: 'converted',
             convertedToDealId: newDeal.id,
-            convertedToAccountId: accountId,
+            convertedToAccountId: accountId ?? null,
             convertedAt: new Date(),
             updatedAt: new Date(),
           })
@@ -672,7 +795,7 @@ export const crmRouter = router({
 
         // Log the conversion as an activity
         await db.insert(activityLog).values({
-          orgId,
+          orgId: orgId!,
           entityType: 'lead',
           entityId: input.leadId,
           activityType: 'note',
@@ -699,7 +822,7 @@ export const crmRouter = router({
           })
           .where(and(
             eq(leads.id, input.id),
-            eq(leads.orgId, orgId)
+            eq(leads.orgId, orgId!)
           ))
           .returning();
 
@@ -734,15 +857,15 @@ export const crmRouter = router({
             bantAuthority: input.bantAuthority,
             bantNeed: input.bantNeed,
             bantTimeline: input.bantTimeline,
-            bantBudgetNotes: input.bantBudgetNotes,
-            bantAuthorityNotes: input.bantAuthorityNotes,
-            bantNeedNotes: input.bantNeedNotes,
-            bantTimelineNotes: input.bantTimelineNotes,
+            bantBudgetNotes: input.bantBudgetNotes ?? null,
+            bantAuthorityNotes: input.bantAuthorityNotes ?? null,
+            bantNeedNotes: input.bantNeedNotes ?? null,
+            bantTimelineNotes: input.bantTimelineNotes ?? null,
             updatedAt: new Date(),
           })
           .where(and(
             eq(leads.id, input.id),
-            eq(leads.orgId, orgId)
+            eq(leads.orgId, orgId!)
           ))
           .returning();
 
@@ -780,14 +903,14 @@ export const crmRouter = router({
         const { orgId, profileId, isManager, managedUserIds } = ctx;
         const { limit, offset, stage, accountId, ownership } = input;
 
-        let conditions = [eq(deals.orgId, orgId)];
+        let conditions = [eq(deals.orgId, orgId!)];
         if (stage) conditions.push(eq(deals.stage, stage));
         if (accountId) conditions.push(eq(deals.accountId, accountId));
 
         // Apply ownership filter if specified
-        if (ownership) {
+        if (ownership && profileId) {
           const ownershipCondition = await buildOwnershipCondition(
-            { userId: profileId, orgId, isManager, managedUserIds },
+            { userId: profileId, orgId: orgId!, isManager: isManager ?? false, managedUserIds: managedUserIds ?? [] },
             'deal',
             deals,
             ownership
@@ -815,7 +938,7 @@ export const crmRouter = router({
         const [deal] = await db.select().from(deals)
           .where(and(
             eq(deals.id, input.id),
-            eq(deals.orgId, orgId)
+            eq(deals.orgId, orgId!)
           ))
           .limit(1);
 
@@ -835,12 +958,12 @@ export const crmRouter = router({
         const { userId, orgId } = ctx;
 
         // Get user profile ID for ownerId (FK references user_profiles.id, not auth.users.id)
-        const [userProfile] = await db.select({ id: userProfiles.id })
+        const userProfileResult = await db.select({ id: userProfiles.id })
           .from(userProfiles)
-          .where(eq(userProfiles.authId, userId))
+          .where(eq(userProfiles.authId, userId!))
           .limit(1);
 
-        const profileId = userProfile?.id;
+        const profileId = userProfileResult[0]?.id;
         if (!profileId) {
           throw new Error('User profile not found');
         }
@@ -849,7 +972,7 @@ export const crmRouter = router({
           ...input,
           // Convert numeric value to string for database
           value: String(input.value ?? 0),
-          orgId,
+          orgId: orgId!,
           ownerId: input.ownerId || profileId,
           createdBy: profileId,
         }).returning();
@@ -866,11 +989,18 @@ export const crmRouter = router({
         const { userId, orgId } = ctx;
         const { id, ...data } = input;
 
+        // Prepare update data with proper type handling
+        const updateData: Partial<typeof deals.$inferInsert> = {
+          ...data,
+          // Convert value if it's a number to string
+          value: data.value !== undefined ? String(data.value) : undefined,
+        };
+
         const [updated] = await db.update(deals)
-          .set(data)
+          .set(updateData)
           .where(and(
             eq(deals.id, id),
-            eq(deals.orgId, orgId)
+            eq(deals.orgId, orgId!)
           ))
           .returning();
 
@@ -895,7 +1025,7 @@ export const crmRouter = router({
         })
           .from(deals)
           .where(and(
-            eq(deals.orgId, orgId),
+            eq(deals.orgId, orgId!),
             sql`${deals.stage} NOT IN ('closed_won', 'closed_lost')`
           ))
           .groupBy(deals.stage);
@@ -911,7 +1041,7 @@ export const crmRouter = router({
         const { orgId } = ctx;
 
         const allDeals = await db.select().from(deals)
-          .where(and(eq(deals.orgId, orgId), isNull(deals.deletedAt)));
+          .where(and(eq(deals.orgId, orgId!), isNull(deals.deletedAt)));
 
         const activeStages = ['discovery', 'qualification', 'proposal', 'negotiation'];
         const activeDeals = allDeals.filter(d => activeStages.includes(d.stage));
@@ -957,7 +1087,7 @@ export const crmRouter = router({
           .from(accounts)
           .where(and(
             eq(accounts.id, accountId),
-            eq(accounts.orgId, orgId)
+            eq(accounts.orgId, orgId!)
           ))
           .limit(1);
 
@@ -988,7 +1118,7 @@ export const crmRouter = router({
           .from(accounts)
           .where(and(
             eq(accounts.id, input.accountId),
-            eq(accounts.orgId, orgId)
+            eq(accounts.orgId, orgId!)
           ))
           .limit(1);
 
@@ -997,18 +1127,18 @@ export const crmRouter = router({
         }
 
         // Get user profile ID from auth ID (userId is auth_id, not profile id)
-        const [userProfile] = await db.select({ id: userProfiles.id })
+        const userProfileResult = await db.select({ id: userProfiles.id })
           .from(userProfiles)
-          .where(eq(userProfiles.authId, userId))
+          .where(eq(userProfiles.authId, userId!))
           .limit(1);
 
-        if (!userProfile) {
+        if (!userProfileResult[0]) {
           throw new Error('User profile not found');
         }
 
         const [newPOC] = await db.insert(pointOfContacts).values({
           ...input,
-          createdBy: userProfile.id,
+          createdBy: userProfileResult[0].id,
         }).returning();
 
         return newPOC;
@@ -1041,7 +1171,7 @@ export const crmRouter = router({
           .from(accounts)
           .where(and(
             eq(accounts.id, poc.accountId),
-            eq(accounts.orgId, orgId)
+            eq(accounts.orgId, orgId!)
           ))
           .limit(1);
 
@@ -1087,7 +1217,7 @@ export const crmRouter = router({
           .from(accounts)
           .where(and(
             eq(accounts.id, poc.accountId),
-            eq(accounts.orgId, orgId)
+            eq(accounts.orgId, orgId!)
           ))
           .limit(1);
 
@@ -1130,7 +1260,7 @@ export const crmRouter = router({
           .where(and(
             eq(activityLog.entityType, entityType),
             eq(activityLog.entityId, entityId),
-            eq(activityLog.orgId, orgId)
+            eq(activityLog.orgId, orgId!)
           ))
           .limit(limit)
           .offset(offset)
@@ -1160,15 +1290,15 @@ export const crmRouter = router({
         const { userId, orgId } = ctx;
 
         // Get user profile ID for performedBy (FK references user_profiles.id, not auth.users.id)
-        const [userProfile] = await db.select({ id: userProfiles.id })
+        const userProfileResult = await db.select({ id: userProfiles.id })
           .from(userProfiles)
-          .where(eq(userProfiles.authId, userId))
+          .where(eq(userProfiles.authId, userId!))
           .limit(1);
 
         const [newActivity] = await db.insert(activityLog).values({
           ...input,
-          orgId,
-          performedBy: userProfile?.id,
+          orgId: orgId!,
+          performedBy: userProfileResult[0]?.id ?? null,
           activityDate: input.activityDate || new Date(),
         }).returning();
 

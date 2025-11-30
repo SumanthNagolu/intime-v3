@@ -133,7 +133,7 @@ export class TwinEventBus {
    * ```
    */
   async emit(input: CreateEventInput): Promise<string> {
-    const { data, error } = await this.supabase.rpc('emit_twin_event', {
+    const { data, error } = await (this.supabase.rpc as any)('emit_twin_event', {
       p_org_id: this.orgId,
       p_source_user_id: this.userId,
       p_source_role: input.sourceRole,
@@ -216,7 +216,7 @@ export class TwinEventBus {
     role: TwinRole,
     options?: EventQueryOptions
   ): Promise<TwinEvent[]> {
-    const { data, error } = await this.supabase.rpc('get_twin_events_for_role', {
+    const { data, error } = await (this.supabase.rpc as any)('get_twin_events_for_role', {
       p_org_id: this.orgId,
       p_role: role,
       p_limit: options?.limit || 50,
@@ -226,7 +226,7 @@ export class TwinEventBus {
       throw new Error(`Failed to get events: ${error.message}`);
     }
 
-    return (data || []).map(this.mapEventRow);
+    return (data || []).map((row: any) => this.mapEventRow(row));
   }
 
   /**
@@ -236,8 +236,7 @@ export class TwinEventBus {
    * @returns Array of events
    */
   async getUnprocessedEvents(options?: EventQueryOptions): Promise<TwinEvent[]> {
-    let query = this.supabase
-      .from('twin_events')
+    let query = (this.supabase.from as any)('twin_events')
       .select('*')
       .eq('org_id', this.orgId)
       .eq('processed', false)
@@ -265,7 +264,7 @@ export class TwinEventBus {
       throw new Error(`Failed to get unprocessed events: ${error.message}`);
     }
 
-    return (data || []).map(this.mapEventRow);
+    return (data || []).map((row: any) => this.mapEventRow(row));
   }
 
   /**
@@ -275,8 +274,7 @@ export class TwinEventBus {
    * @returns Array of broadcast events
    */
   async getBroadcasts(options?: EventQueryOptions): Promise<TwinEvent[]> {
-    let query = this.supabase
-      .from('twin_events')
+    let query = (this.supabase.from as any)('twin_events')
       .select('*')
       .eq('org_id', this.orgId)
       .is('target_role', null)
@@ -296,7 +294,7 @@ export class TwinEventBus {
       throw new Error(`Failed to get broadcasts: ${error.message}`);
     }
 
-    return (data || []).map(this.mapEventRow);
+    return (data || []).map((row: any) => this.mapEventRow(row));
   }
 
   /**
@@ -306,8 +304,7 @@ export class TwinEventBus {
    * @returns Event or null
    */
   async getEvent(eventId: string): Promise<TwinEvent | null> {
-    const { data, error } = await this.supabase
-      .from('twin_events')
+    const { data, error } = await (this.supabase.from as any)('twin_events')
       .select('*')
       .eq('id', eventId)
       .single();
@@ -316,7 +313,7 @@ export class TwinEventBus {
       return null;
     }
 
-    return this.mapEventRow(data);
+    return this.mapEventRow(data as any);
   }
 
   // ==========================================================================
@@ -330,7 +327,7 @@ export class TwinEventBus {
    * @returns Success status
    */
   async markProcessed(eventId: string): Promise<boolean> {
-    const { data, error } = await this.supabase.rpc('mark_twin_event_processed', {
+    const { data, error } = await (this.supabase.rpc as any)('mark_twin_event_processed', {
       p_event_id: eventId,
       p_processed_by: this.userId,
     });
@@ -431,8 +428,7 @@ export class TwinEventBus {
     byType: Record<string, number>;
     byPriority: Record<EventPriority, number>;
   }> {
-    const { data: events } = await this.supabase
-      .from('twin_events')
+    const { data: events } = await (this.supabase.from as any)('twin_events')
       .select('event_type, priority, processed')
       .eq('org_id', this.orgId);
 
@@ -454,7 +450,7 @@ export class TwinEventBus {
     };
     let unprocessed = 0;
 
-    for (const event of events) {
+    for (const event of events as any[]) {
       byType[event.event_type] = (byType[event.event_type] || 0) + 1;
       byPriority[event.priority as EventPriority]++;
       if (!event.processed) unprocessed++;

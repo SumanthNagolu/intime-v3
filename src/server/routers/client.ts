@@ -47,7 +47,7 @@ export const clientRouter = router({
 
       // Get job counts by status
       const jobStats = await db.select({
-        status: jobs.jobStatus,
+        status: jobs.status,
         count: sql<number>`count(*)::int`,
       })
         .from(jobs)
@@ -55,7 +55,7 @@ export const clientRouter = router({
           eq(jobs.clientId, clientId),
           eq(jobs.orgId, orgId)
         ))
-        .groupBy(jobs.jobStatus);
+        .groupBy(jobs.status);
 
       // Get total submissions for this client's jobs
       const clientJobIds = await db.select({ id: jobs.id })
@@ -67,14 +67,14 @@ export const clientRouter = router({
 
       const jobIds = clientJobIds.map(j => j.id);
 
-      let submissionStats = [];
+      let submissionStats: Array<{ status: string | null; count: number }> = [];
       let totalPlacements = 0;
       let upcomingInterviews = 0;
 
       if (jobIds.length > 0) {
         // Get submission counts by status
         submissionStats = await db.select({
-          status: submissions.submissionStatus,
+          status: submissions.status,
           count: sql<number>`count(*)::int`,
         })
           .from(submissions)
@@ -82,7 +82,7 @@ export const clientRouter = router({
             inArray(submissions.jobId, jobIds),
             eq(submissions.orgId, orgId)
           ))
-          .groupBy(submissions.submissionStatus);
+          .groupBy(submissions.status);
 
         // Get placement count
         const [placementCount] = await db.select({
@@ -108,8 +108,8 @@ export const clientRouter = router({
           .where(and(
             inArray(interviews.jobId, jobIds),
             eq(interviews.orgId, orgId),
-            sql`${interviews.scheduledDate} >= ${today}`,
-            sql`${interviews.scheduledDate} <= ${futureDate}`
+            sql`${interviews.scheduledAt} >= ${today}`,
+            sql`${interviews.scheduledAt} <= ${futureDate}`
           ));
 
         upcomingInterviews = upcomingCount?.count || 0;
@@ -148,7 +148,7 @@ export const clientRouter = router({
         ];
 
         if (status) {
-          conditions.push(eq(jobs.jobStatus, status));
+          conditions.push(eq(jobs.status, status));
         }
 
         const results = await db.select().from(jobs)
@@ -214,7 +214,7 @@ export const clientRouter = router({
 
         // Get submission counts by status
         const submissionStats = await db.select({
-          status: submissions.submissionStatus,
+          status: submissions.status,
           count: sql<number>`count(*)::int`,
         })
           .from(submissions)
@@ -222,7 +222,7 @@ export const clientRouter = router({
             eq(submissions.jobId, jobId),
             eq(submissions.orgId, orgId)
           ))
-          .groupBy(submissions.submissionStatus);
+          .groupBy(submissions.status);
 
         // Get interview count
         const [interviewCount] = await db.select({
@@ -304,14 +304,14 @@ export const clientRouter = router({
         }
 
         if (status) {
-          conditions.push(eq(submissions.submissionStatus, status));
+          conditions.push(eq(submissions.status, status));
         }
 
         const results = await db.select().from(submissions)
           .where(and(...conditions))
           .limit(limit)
           .offset(offset)
-          .orderBy(desc(submissions.submittedAt));
+          .orderBy(desc(submissions.submittedToClientAt));
 
         return results;
       }),
@@ -402,14 +402,14 @@ export const clientRouter = router({
 
         if (upcoming) {
           const now = new Date();
-          conditions.push(sql`${interviews.scheduledDate} >= ${now}`);
+          conditions.push(sql`${interviews.scheduledAt} >= ${now}`);
         }
 
         const results = await db.select().from(interviews)
           .where(and(...conditions))
           .limit(limit)
           .offset(offset)
-          .orderBy(desc(interviews.scheduledDate));
+          .orderBy(desc(interviews.scheduledAt));
 
         return results;
       }),

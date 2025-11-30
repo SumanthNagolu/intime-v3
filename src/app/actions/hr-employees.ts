@@ -10,6 +10,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { z } from 'zod';
 import type { ActionResult, PaginatedResult } from './types';
 import {
@@ -285,7 +286,7 @@ export async function getEmployeeAction(
   }
 
   // Fetch employee with relations
-  const { data: emp, error } = await supabase
+  const { data: emp, error } = await (supabase as any)
     .from('user_profiles')
     .select(
       `
@@ -452,11 +453,13 @@ export async function createEmployeeAction(
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'user_profiles',
     action: 'create',
     recordId: newEmployee.id,
     userId: profile.id,
+    userEmail: profile.email,
     newValues: { email, fullName, department, position },
     severity: 'info',
     orgId: profile.orgId,
@@ -469,16 +472,16 @@ export async function createEmployeeAction(
       email: newEmployee.email,
       fullName: newEmployee.full_name,
       avatarUrl: newEmployee.avatar_url,
-      department: newEmployee.department,
-      position: newEmployee.position,
-      hireDate: newEmployee.hire_date,
-      status: newEmployee.status,
-      salary: newEmployee.salary ? parseFloat(newEmployee.salary) : null,
-      managerId: newEmployee.manager_id,
-      performanceRating: newEmployee.performance_rating,
+      department: (newEmployee as any).department ?? null,
+      position: (newEmployee as any).position ?? null,
+      hireDate: (newEmployee as any).hire_date ?? null,
+      status: (newEmployee as any).status ?? 'active',
+      salary: (newEmployee as any).salary ? parseFloat((newEmployee as any).salary) : null,
+      managerId: (newEmployee as any).manager_id ?? null,
+      performanceRating: (newEmployee as any).performance_rating ?? null,
       orgId: newEmployee.org_id,
       createdAt: newEmployee.created_at,
-      employmentType,
+      employmentType: employmentType ?? null,
       employeeIdNumber: null,
       podId: null,
       podRole: null,
@@ -581,14 +584,16 @@ export async function updateEmployeeAction(
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'user_profiles',
     action: 'update',
     recordId: employeeId,
     userId: profile.id,
+    userEmail: profile.email,
     oldValues: existingEmployee,
     newValues: { ...profileUpdates, ...metadataUpdates },
-    changedFields: [...Object.keys(profileUpdates), ...Object.keys(metadataUpdates)],
+    metadata: { changedFields: [...Object.keys(profileUpdates), ...Object.keys(metadataUpdates)] },
     severity: 'info',
     orgId: profile.orgId,
   });
@@ -762,7 +767,7 @@ export async function terminateEmployeeAction(
   }
 
   // Update status to terminated
-  const { error: updateError } = await supabase
+  const { error: updateError } = await (supabase as any)
     .from('user_profiles')
     .update({ status: 'terminated' })
     .eq('id', employeeId);
@@ -772,12 +777,14 @@ export async function terminateEmployeeAction(
   }
 
   // Log audit event
-  await logAuditEvent(supabase, {
+  const adminSupabase = createAdminClient();
+  await logAuditEvent(adminSupabase, {
     tableName: 'user_profiles',
     action: 'terminate',
     recordId: employeeId,
     userId: profile.id,
-    oldValues: { status: employee.status },
+    userEmail: profile.email,
+    oldValues: { status: (employee as any).status },
     newValues: { status: 'terminated' },
     metadata: { reason },
     severity: 'warning',

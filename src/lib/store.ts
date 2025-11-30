@@ -1,7 +1,7 @@
 
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { Role, Candidate, Job, BenchConsultant, Employee, Cohort, Campaign, ImmigrationCase, Account, Submission, Lead, Deal, ApprovalRequest, PayrollRun } from '../types';
+import type { Role, Candidate, Job, BenchConsultant, Employee, Cohort, Campaign, ImmigrationCase, Account, Submission, Lead, Deal, ApprovalRequest, PayrollRun } from '../types';
 
 // --- ACADEMY TYPES ---
 export interface LessonProgress {
@@ -133,7 +133,7 @@ export const useAppStore = create<AppState>()(
       candidates: [
         { id: 'c1', name: 'Sarah Jenkins', role: 'PolicyCenter Dev', status: 'active', type: 'student', skills: ['PolicyCenter', 'Gosu', 'Java', 'Agile'], experience: '4 Yrs', location: 'Remote (US)', rate: '$95/hr', email: 'sarah.j@example.com', score: 92, source: 'Academy', notes: 'Strong communicator. Certified in PC 10.', ownerId: 'e3' },
         { id: 'c2', name: 'Mike Chen', role: 'BillingCenter Lead', status: 'active', type: 'external', skills: ['BillingCenter', 'SQL', 'Integration', 'REST API'], experience: '6 Yrs', location: 'Chicago, IL', rate: '$110/hr', email: 'mike.c@example.com', score: 88, source: 'LinkedIn', notes: 'Expert in billing workflows.', ownerId: 'e3' },
-        { id: 'c3', name: 'Priya Sharma', role: 'Senior Dev', status: 'placed', type: 'alumni', skills: ['PolicyCenter', 'Cloud', 'Gosu', 'React'], experience: '7 Yrs', location: 'Remote', rate: '$100/hr', email: 'priya@example.com', score: 98, source: 'Academy', notes: 'Top of class. Capstone project was excellent.', ownerId: 'e2' },
+        { id: 'c3', name: 'Priya Sharma', role: 'Senior Dev', status: 'placed', type: 'external', skills: ['PolicyCenter', 'Cloud', 'Gosu', 'React'], experience: '7 Yrs', location: 'Remote', rate: '$100/hr', email: 'priya@example.com', score: 98, source: 'Academy', notes: 'Top of class. Capstone project was excellent.', ownerId: 'e2' },
         { id: 'c4', name: 'Amit Kumar', role: 'Integration Architect', status: 'bench', type: 'internal_bench', skills: ['Integration', 'Gosu', 'MuleSoft'], experience: '8 Yrs', location: 'Hybrid (NJ)', rate: '$120/hr', email: 'amit.k@example.com', score: 90, source: 'Referral', notes: 'Available immediately.', ownerId: 'e4' },
         { id: 'c5', name: 'Vikram Patel', role: 'ClaimCenter Dev', status: 'bench', type: 'internal_bench', skills: ['ClaimCenter', 'Gosu'], experience: '5 Yrs', location: 'Remote', rate: '$90/hr', email: 'vikram@example.com', score: 85, source: 'Academy', notes: 'H-1B Transfer needed.', ownerId: 'e4' },
         { id: 'c6', name: 'Emily Davis', role: 'Guidewire QA', status: 'new', type: 'external', skills: ['Testing', 'Selenium', 'Gosu'], experience: '3 Yrs', location: 'Boston, MA', rate: '$75/hr', email: 'emily.d@example.com', score: 82, source: 'LinkedIn', notes: 'Looking for contract work.', ownerId: 'e3' },
