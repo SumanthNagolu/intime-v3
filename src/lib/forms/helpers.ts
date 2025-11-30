@@ -21,7 +21,7 @@ export function useForm<T extends z.ZodType>(
   options?: Omit<UseFormProps<z.infer<T>>, 'resolver'>
 ) {
   return useHookForm<z.infer<T>>({
-    // @ts-ignore - zodResolver type compatibility issue with react-hook-form
+    // @ts-expect-error zodResolver type compatibility issue with react-hook-form
     resolver: zodResolver(schema),
     ...options,
   });

@@ -45,29 +45,6 @@ import { useAccounts, useAccountStats } from '@/hooks/queries/accounts';
 import { useDeals, useDealStats } from '@/hooks/queries/deals';
 import { trpc } from '@/lib/trpc/client';
 
-// Types for tRPC data
-interface JobData {
-  id: string;
-  title: string | null;
-  location: string | null;
-  status: string | null;
-  jobType: string | null;
-  billRate?: string | number | null;
-  openPositions?: number | null;
-}
-
-interface CandidateData {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string | null;
-  phone: string | null;
-  title: string | null;
-  location: string | null;
-  status: string | null;
-  visaStatus?: string | null;
-}
-
 interface SubmissionData {
   id: string;
   candidateName: string | null;
@@ -76,6 +53,7 @@ interface SubmissionData {
   createdAt: string;
   billRate?: string | number | null;
   stage?: string | null;
+  submittedRate?: string | number | null;
 }
 
 // ============================================
@@ -956,15 +934,20 @@ function SubmissionsList({ searchTerm, filterStatus, ownership }: { searchTerm: 
     ownership,
   });
 
+  const submissionsData = submissions as SubmissionData[] | undefined;
+
   const filtered = useMemo(() => {
-    if (!submissions || !searchTerm) return submissions || [];
+    if (!submissionsData) return [];
+    if (!searchTerm) {
+      return submissionsData;
+    }
     const search = searchTerm.toLowerCase();
-    return submissions.filter(
-      (s) =>
-        (s as any).candidateName?.toLowerCase().includes(search) ||
-        (s as any).jobTitle?.toLowerCase().includes(search)
+    return submissionsData.filter(
+      (submission) =>
+        submission.candidateName?.toLowerCase().includes(search) ||
+        submission.jobTitle?.toLowerCase().includes(search)
     );
-  }, [submissions, searchTerm]);
+  }, [submissionsData, searchTerm]);
 
   if (isError) {
     return (
@@ -981,27 +964,27 @@ function SubmissionsList({ searchTerm, filterStatus, ownership }: { searchTerm: 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatsCard
           label="Total Submissions"
-          value={submissions?.length || 0}
+          value={submissionsData?.length || 0}
           icon={<FileText size={16} />}
           isLoading={isLoading}
         />
         <StatsCard
           label="Interviewing"
-          value={submissions?.filter((s) => s.status === 'interviewing').length || 0}
+          value={submissionsData?.filter((s) => s.status === 'interviewing').length || 0}
           icon={<TrendingUp size={16} />}
           color="text-purple-500"
           isLoading={isLoading}
         />
         <StatsCard
           label="Offered"
-          value={submissions?.filter((s) => s.status === 'offered').length || 0}
+          value={submissionsData?.filter((s) => s.status === 'offered').length || 0}
           icon={<Target size={16} />}
           color="text-amber-500"
           isLoading={isLoading}
         />
         <StatsCard
           label="Placed"
-          value={submissions?.filter((s) => s.status === 'placed').length || 0}
+          value={submissionsData?.filter((s) => s.status === 'placed').length || 0}
           icon={<Crown size={16} />}
           color="text-green-500"
           isLoading={isLoading}
@@ -1030,10 +1013,10 @@ function SubmissionsList({ searchTerm, filterStatus, ownership }: { searchTerm: 
                 </Badge>
               </div>
               <h3 className="font-serif font-bold text-lg text-charcoal mb-1 group-hover:text-rust transition-colors">
-                {(submission as any).candidateName || 'Unknown Candidate'}
+                {submission.candidateName || 'Unknown Candidate'}
               </h3>
               <p className="text-sm text-stone-500 mb-4 flex items-center gap-1">
-                <Briefcase size={12} /> {(submission as any).jobTitle || 'Unknown Job'}
+                <Briefcase size={12} /> {submission.jobTitle || 'Unknown Job'}
               </p>
               <div className="space-y-2 text-xs text-stone-500 mb-4">
                 <div className="flex items-center gap-2">
@@ -1047,7 +1030,7 @@ function SubmissionsList({ searchTerm, filterStatus, ownership }: { searchTerm: 
               </div>
               <div className="pt-4 border-t border-stone-100 flex justify-between items-center">
                 <div className="text-xs text-stone-400">
-                  {(submission as any).stage || submission.status || 'Initial'}
+                  {submission.stage || submission.status || 'Initial'}
                 </div>
                 <div className="flex items-center gap-1 text-xs font-bold text-stone-400 group-hover:text-charcoal transition-colors">
                   Details <ChevronRight size={12} />

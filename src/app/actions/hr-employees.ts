@@ -320,7 +320,7 @@ export async function getEmployeeAction(
   }
 
   // Fetch employee with relations
-  // @ts-ignore - Complex query causes "Type instantiation is excessively deep" error
+  // @ts-expect-error Complex query causes "Type instantiation is excessively deep" error
   const { data: emp, error } = await supabase
     .from('user_profiles')
     .select(

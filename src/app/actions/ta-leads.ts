@@ -675,7 +675,8 @@ export async function listLeadsAction(
     return { success: false, error: 'Failed to fetch leads' };
   }
 
-  const transformedLeads: Lead[] = (leads || []).map((lead: any) => ({
+  const leadRows = (leads ?? []) as unknown as LeadRow[];
+  const transformedLeads: Lead[] = leadRows.map((lead) => ({
     id: lead.id,
     leadType: lead.lead_type,
     companyName: lead.company_name,
@@ -1299,7 +1300,8 @@ export async function listDealsAction(
     return { success: false, error: 'Failed to fetch deals' };
   }
 
-  const transformedDeals: Deal[] = (deals || []).map((deal: any) => ({
+  const dealRows = (deals ?? []) as unknown as DealRow[];
+  const transformedDeals: Deal[] = dealRows.map((deal) => ({
     id: deal.id,
     title: deal.title,
     description: deal.description,
@@ -1849,7 +1851,8 @@ export async function listAccountsAction(
     return { success: false, error: 'Failed to fetch accounts' };
   }
 
-  const transformedAccounts: Account[] = (accounts || []).map((account: any) => ({
+  const accountRows = (accounts ?? []) as unknown as AccountRow[];
+  const transformedAccounts: Account[] = accountRows.map((account) => ({
     id: account.id,
     name: account.name,
     industry: account.industry,
@@ -2219,7 +2222,8 @@ export async function listAccountContactsAction(
     return { success: false, error: 'Failed to fetch contacts' };
   }
 
-  const transformedContacts: PointOfContact[] = (contacts || []).map((contact: any) => ({
+  const contactRows = (contacts ?? []) as unknown as ContactRow[];
+  const transformedContacts: PointOfContact[] = contactRows.map((contact) => ({
     id: contact.id,
     accountId: contact.account_id,
     accountName: contact.account?.name || null,
@@ -2566,7 +2570,8 @@ export async function listActivitiesAction(
     return { success: false, error: 'Failed to fetch activities' };
   }
 
-  const transformedActivities: Activity[] = (activities || []).map((activity: any) => ({
+  const activityRows = (activities ?? []) as unknown as ActivityRow[];
+  const transformedActivities: Activity[] = activityRows.map((activity) => ({
     id: activity.id,
     entityType: activity.entity_type,
     entityId: activity.entity_id,
@@ -2842,12 +2847,13 @@ export async function getTeamLeaderboardAction(): Promise<ActionResult<Array<{
     `)
     .is('deleted_at', null);
 
-  const salesTeam = (teamMembers || []).filter((m: any) => {
-    const roles = m.user_roles?.map((ur: any) => ur.roles?.name) || [];
-    return roles.some((r: string | undefined) => r && ['ta_manager', 'sales', 'recruiter'].includes(r));
+  const teamRows = (teamMembers ?? []) as unknown as TeamMemberRow[];
+  const salesTeam = teamRows.filter((member) => {
+    const roles = member.user_roles?.map((role) => role.roles?.name) || [];
+    return roles.some((roleName) => roleName !== undefined && ['ta_manager', 'sales', 'recruiter'].includes(roleName));
   });
 
-  const leaderboard = await Promise.all(salesTeam.map(async (member: any): Promise<{
+  const leaderboard = await Promise.all(salesTeam.map(async (member): Promise<{
     userId: string;
     userName: string;
     dealsWon: number;
@@ -2881,11 +2887,13 @@ export async function getTeamLeaderboardAction(): Promise<ActionResult<Array<{
       .eq('performed_by', member.id)
       .gte('activity_date', thirtyDaysAgo.toISOString());
 
+    const dealValues = (deals ?? []) as Array<{ value: string | number | null }>;
+
     return {
       userId: member.id,
       userName: member.full_name || '',
-      dealsWon: deals?.length || 0,
-      revenue: deals?.reduce((sum: number, d: any) => sum + parseFloat(String(d.value || 0)), 0) || 0,
+      dealsWon: dealValues.length,
+      revenue: dealValues.reduce((sum, deal) => sum + parseFloat(String(deal.value ?? 0)), 0),
       leadsConverted: leads?.length || 0,
       activitiesLogged: activities?.length || 0,
     };

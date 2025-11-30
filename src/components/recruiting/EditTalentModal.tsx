@@ -118,6 +118,9 @@ const VISA_TYPES = [
   'F1_OPT', 'F1_CPT', 'F1_STEM_OPT', 'GC_EAD', 'OTHER'
 ];
 
+type MutationHandler = (payload: unknown) => Promise<unknown>;
+type DeleteHandler = (payload: { id: string }) => Promise<unknown>;
+
 const DEGREE_TYPES = [
   { value: 'high_school', label: 'High School' },
   { value: 'associate', label: 'Associate' },
@@ -175,6 +178,53 @@ export const EditTalentModal: React.FC<EditTalentModalProps> = ({
   const createReference = trpc.ats.references.create.useMutation();
   const updateReference = trpc.ats.references.update.useMutation();
   const deleteReference = trpc.ats.references.delete.useMutation();
+
+  const wrapMutation = <TInput, TResult = unknown>(
+    mutation: (input: TInput) => Promise<TResult>
+  ): MutationHandler => {
+    return (payload) => mutation(payload as TInput);
+  };
+
+  const wrapDeleteMutation = <TInput extends { id: string }, TResult = unknown>(
+    mutation: (input: TInput) => Promise<TResult>
+  ): DeleteHandler => {
+    return (payload) => mutation(payload as TInput);
+  };
+
+  const addressHandlers = {
+    create: wrapMutation(createAddress.mutateAsync),
+    update: wrapMutation(updateAddress.mutateAsync),
+    delete: wrapDeleteMutation(deleteAddress.mutateAsync),
+  };
+
+  const educationHandlers = {
+    create: wrapMutation(createEducation.mutateAsync),
+    update: wrapMutation(updateEducation.mutateAsync),
+    delete: wrapDeleteMutation(deleteEducation.mutateAsync),
+  };
+
+  const workHistoryHandlers = {
+    create: wrapMutation(createWorkHistory.mutateAsync),
+    update: wrapMutation(updateWorkHistory.mutateAsync),
+    delete: wrapDeleteMutation(deleteWorkHistory.mutateAsync),
+  };
+
+  const workAuthHandlers = {
+    create: wrapMutation(createWorkAuth.mutateAsync),
+    update: wrapMutation(updateWorkAuth.mutateAsync),
+  };
+
+  const certificationHandlers = {
+    create: wrapMutation(createCertification.mutateAsync),
+    update: wrapMutation(updateCertification.mutateAsync),
+    delete: wrapDeleteMutation(deleteCertification.mutateAsync),
+  };
+
+  const referenceHandlers = {
+    create: wrapMutation(createReference.mutateAsync),
+    update: wrapMutation(updateReference.mutateAsync),
+    delete: wrapDeleteMutation(deleteReference.mutateAsync),
+  };
 
   // Initialize form data when profile loads
   useEffect(() => {
@@ -264,7 +314,41 @@ export const EditTalentModal: React.FC<EditTalentModalProps> = ({
     setIsSaving(true);
     setError(null);
     try {
-      await updateProfile.mutateAsync({
+      const normalizedLanguages = formData.languages?.map((entry) =>
+        typeof entry === 'string' ? { language: entry, proficiency: 'not_specified' } : entry
+      );
+      const allowedStatuses = ['active', 'placed', 'bench', 'inactive', 'blacklisted'] as const;
+      const normalizedCandidateStatus = allowedStatuses.includes(
+        formData.candidateStatus as (typeof allowedStatuses)[number]
+      )
+        ? (formData.candidateStatus as (typeof allowedStatuses)[number])
+        : undefined;
+      const availabilityOptions = ['immediate', '2_weeks', '1_month'] as const;
+      const normalizedAvailability = availabilityOptions.includes(
+        formData.candidateAvailability as (typeof availabilityOptions)[number]
+      )
+        ? (formData.candidateAvailability as (typeof availabilityOptions)[number])
+        : undefined;
+      const employmentStatuses = ['freelance', 'student', 'employed', 'unemployed'] as const;
+      const normalizedEmploymentStatus = employmentStatuses.includes(
+        formData.currentEmploymentStatus as (typeof employmentStatuses)[number]
+      )
+        ? (formData.currentEmploymentStatus as (typeof employmentStatuses)[number])
+        : undefined;
+      const marketingStatuses = ['do_not_contact', 'active', 'passive'] as const;
+      const normalizedMarketingStatus = marketingStatuses.includes(
+        formData.marketingStatus as (typeof marketingStatuses)[number]
+      )
+        ? (formData.marketingStatus as (typeof marketingStatuses)[number])
+        : undefined;
+      const normalizedContactMethod =
+        formData.preferredContactMethod === 'email' ||
+        formData.preferredContactMethod === 'phone' ||
+        formData.preferredContactMethod === 'text'
+          ? formData.preferredContactMethod
+          : undefined;
+
+      const payload: Parameters<typeof updateProfile.mutateAsync>[0] = {
         id: talentId,
         ...formData,
         dateOfBirth: formData.dateOfBirth ? new Date(formData.dateOfBirth) : undefined,
@@ -276,7 +360,15 @@ export const EditTalentModal: React.FC<EditTalentModalProps> = ({
         desiredSalaryAnnual: formData.desiredSalaryAnnual ? Number(formData.desiredSalaryAnnual) : undefined,
         minimumAnnualSalary: formData.minimumAnnualSalary ? Number(formData.minimumAnnualSalary) : undefined,
         recruiterRating: formData.recruiterRating ? Number(formData.recruiterRating) : undefined,
-      } as any);
+        languages: normalizedLanguages,
+        preferredContactMethod: normalizedContactMethod,
+        candidateStatus: normalizedCandidateStatus,
+        candidateAvailability: normalizedAvailability,
+        currentEmploymentStatus: normalizedEmploymentStatus,
+        marketingStatus: normalizedMarketingStatus,
+      };
+
+      await updateProfile.mutateAsync(payload);
       setHasChanges(false);
       refetch();
       onSuccess();
@@ -381,27 +473,27 @@ export const EditTalentModal: React.FC<EditTalentModalProps> = ({
                 <EducationTab
                   candidateId={talentId}
                   education={profile.education}
-                  onCreate={createEducation.mutateAsync}
-                  onUpdate={updateEducation.mutateAsync}
-                  onDelete={deleteEducation.mutateAsync}
+                  onCreate={educationHandlers.create}
+                  onUpdate={educationHandlers.update}
+                  onDelete={educationHandlers.delete}
                   onRefresh={refetch}
                 />
                 <hr className="border-gray-200" />
                 <ExperienceTab
                   candidateId={talentId}
                   workHistory={profile.workHistory}
-                  onCreate={createWorkHistory.mutateAsync}
-                  onUpdate={updateWorkHistory.mutateAsync}
-                  onDelete={deleteWorkHistory.mutateAsync}
+                  onCreate={workHistoryHandlers.create}
+                  onUpdate={workHistoryHandlers.update}
+                  onDelete={workHistoryHandlers.delete}
                   onRefresh={refetch}
                 />
                 <hr className="border-gray-200" />
                 <CertificationsTab
                   candidateId={talentId}
                   certifications={profile.certifications}
-                  onCreate={createCertification.mutateAsync}
-                  onUpdate={updateCertification.mutateAsync}
-                  onDelete={deleteCertification.mutateAsync}
+                  onCreate={certificationHandlers.create}
+                  onUpdate={certificationHandlers.update}
+                  onDelete={certificationHandlers.delete}
                   onRefresh={refetch}
                 />
               </div>
@@ -413,17 +505,17 @@ export const EditTalentModal: React.FC<EditTalentModalProps> = ({
                 <AddressesTab
                   candidateId={talentId}
                   addresses={profile.addresses}
-                  onCreate={createAddress.mutateAsync}
-                  onUpdate={updateAddress.mutateAsync}
-                  onDelete={deleteAddress.mutateAsync}
+                  onCreate={addressHandlers.create}
+                  onUpdate={addressHandlers.update}
+                  onDelete={addressHandlers.delete}
                   onRefresh={refetch}
                 />
                 <hr className="border-gray-200" />
                 <WorkAuthTab
                   candidateId={talentId}
                   workAuthorizations={profile.workAuthorizations}
-                  onCreate={createWorkAuth.mutateAsync}
-                  onUpdate={updateWorkAuth.mutateAsync}
+                  onCreate={workAuthHandlers.create}
+                  onUpdate={workAuthHandlers.update}
                   onRefresh={refetch}
                 />
               </div>
@@ -446,9 +538,9 @@ export const EditTalentModal: React.FC<EditTalentModalProps> = ({
                 <ReferencesTab
                   candidateId={talentId}
                   references={profile.references}
-                  onCreate={createReference.mutateAsync}
-                  onUpdate={updateReference.mutateAsync}
-                  onDelete={deleteReference.mutateAsync}
+                  onCreate={referenceHandlers.create}
+                  onUpdate={referenceHandlers.update}
+                  onDelete={referenceHandlers.delete}
                   onRefresh={refetch}
                 />
                 <hr className="border-gray-200" />
@@ -1118,9 +1210,9 @@ const SourceTab: React.FC<{ formData: TalentFormData; onChange: (field: string, 
 const AddressesTab: React.FC<{
   candidateId: string;
   addresses: Address[];
-  onCreate: (data: any) => Promise<any>;
-  onUpdate: (data: any) => Promise<any>;
-  onDelete: (data: { id: string }) => Promise<any>;
+  onCreate: MutationHandler;
+  onUpdate: MutationHandler;
+  onDelete: DeleteHandler;
   onRefresh: () => void;
 }> = ({ candidateId, addresses, onCreate, onUpdate, onDelete, onRefresh }) => {
   const [isAdding, setIsAdding] = useState(false);
@@ -1370,8 +1462,8 @@ const AddressesTab: React.FC<{
 const WorkAuthTab: React.FC<{
   candidateId: string;
   workAuthorizations: CandidateWorkAuthorization[];
-  onCreate: (data: any) => Promise<any>;
-  onUpdate: (data: any) => Promise<any>;
+  onCreate: MutationHandler;
+  onUpdate: MutationHandler;
   onRefresh: () => void;
 }> = ({ candidateId, workAuthorizations, onCreate, onUpdate: _onUpdate, onRefresh }) => {
   const [isAdding, setIsAdding] = useState(false);
@@ -1582,9 +1674,9 @@ const WorkAuthTab: React.FC<{
 const EducationTab: React.FC<{
   candidateId: string;
   education: CandidateEducation[];
-  onCreate: (data: any) => Promise<any>;
-  onUpdate: (data: any) => Promise<any>;
-  onDelete: (data: { id: string }) => Promise<any>;
+  onCreate: MutationHandler;
+  onUpdate: MutationHandler;
+  onDelete: DeleteHandler;
   onRefresh: () => void;
 }> = ({ candidateId, education, onCreate, onUpdate: _onUpdate, onDelete, onRefresh }) => {
   const [isAdding, setIsAdding] = useState(false);
@@ -1797,9 +1889,9 @@ const EducationTab: React.FC<{
 const ExperienceTab: React.FC<{
   candidateId: string;
   workHistory: CandidateWorkHistory[];
-  onCreate: (data: any) => Promise<any>;
-  onUpdate: (data: any) => Promise<any>;
-  onDelete: (data: { id: string }) => Promise<any>;
+  onCreate: MutationHandler;
+  onUpdate: MutationHandler;
+  onDelete: DeleteHandler;
   onRefresh: () => void;
 }> = ({ candidateId, workHistory, onCreate, onUpdate: _onUpdate, onDelete, onRefresh }) => {
   const [isAdding, setIsAdding] = useState(false);
@@ -2016,9 +2108,9 @@ const ExperienceTab: React.FC<{
 const CertificationsTab: React.FC<{
   candidateId: string;
   certifications: CandidateCertification[];
-  onCreate: (data: any) => Promise<any>;
-  onUpdate: (data: any) => Promise<any>;
-  onDelete: (data: { id: string }) => Promise<any>;
+  onCreate: MutationHandler;
+  onUpdate: MutationHandler;
+  onDelete: DeleteHandler;
   onRefresh: () => void;
 }> = ({ candidateId, certifications, onCreate, onUpdate: _onUpdate, onDelete, onRefresh }) => {
   const [isAdding, setIsAdding] = useState(false);
@@ -2225,9 +2317,9 @@ const CertificationsTab: React.FC<{
 const ReferencesTab: React.FC<{
   candidateId: string;
   references: CandidateReference[];
-  onCreate: (data: any) => Promise<any>;
-  onUpdate: (data: any) => Promise<any>;
-  onDelete: (data: { id: string }) => Promise<any>;
+  onCreate: MutationHandler;
+  onUpdate: MutationHandler;
+  onDelete: DeleteHandler;
   onRefresh: () => void;
 }> = ({ candidateId, references, onCreate, onUpdate: _onUpdate, onDelete, onRefresh }) => {
   const [isAdding, setIsAdding] = useState(false);
