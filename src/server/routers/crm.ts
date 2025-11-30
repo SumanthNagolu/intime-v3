@@ -5,7 +5,10 @@
 
 import { z } from 'zod';
 import { router, orgProtectedProcedure } from '../trpc/trpc';
+import { ownershipProcedure } from '../trpc/middleware';
 import { db } from '@/lib/db';
+import { ownershipFilterSchema } from '@/lib/validations/ownership';
+import { buildOwnershipCondition } from '@/lib/db/queries/ownership-filter';
 import {
   accounts,
   leads,
@@ -20,8 +23,6 @@ import {
 // Note: leadTasks has been migrated to the unified activities system
 import { userProfiles } from '@/lib/db/schema/user-profiles';
 import {
-  createAccountSchema,
-  updateAccountSchema,
   createLeadSchema,
   updateLeadSchema,
   createDealSchema,
@@ -30,7 +31,13 @@ import {
   createPointOfContactSchema,
   updatePointOfContactSchema
 } from '@/lib/validations/crm';
-import { eq, and, desc, sql, isNull } from 'drizzle-orm';
+import {
+  createAccountInput,
+  updateAccountInput,
+  listAccountsInput,
+  bulkAssignAccountsInput,
+} from '@/lib/validations/account';
+import { eq, and, desc, asc, sql, isNull, ilike, or, inArray, gte, lte } from 'drizzle-orm';
 import { createActivityLogSchema } from '@/lib/validations/crm';
 
 export const crmRouter = router({
@@ -39,80 +46,217 @@ export const crmRouter = router({
   // =====================================================
 
   /**
-   * Get all accounts for current user's organization
+   * Get all accounts for current user's organization with pagination, search, and filters
    */
   accounts: router({
-    list: orgProtectedProcedure
-      .input(z.object({
-        limit: z.number().min(1).max(100).default(50),
-        offset: z.number().min(0).default(0),
-        status: z.enum(['prospect', 'active', 'inactive', 'churned']).optional(),
-        search: z.string().optional(),
-      }))
+    list: ownershipProcedure
+      .input(listAccountsInput)
       .query(async ({ ctx, input }) => {
-        const { userId, orgId } = ctx;
-        const { limit, offset, status, search } = input;
+        const { orgId, profileId, isManager, managedUserIds } = ctx;
+        const { page, pageSize, sortBy, sortDirection, search, filters } = input;
+        const offset = (page - 1) * pageSize;
 
-        let query = db.select().from(accounts)
-          .where(eq(accounts.orgId, orgId))
-          .limit(limit)
-          .offset(offset)
-          .orderBy(desc(accounts.createdAt));
+        // Build where conditions
+        const conditions = [
+          eq(accounts.orgId, orgId),
+          isNull(accounts.deletedAt),
+        ];
+
+        // Search across searchable fields
+        if (search) {
+          conditions.push(
+            or(
+              ilike(accounts.name, `%${search}%`),
+              ilike(accounts.website, `%${search}%`),
+              ilike(accounts.headquartersLocation, `%${search}%`),
+            )!
+          );
+        }
 
         // Apply filters
-        if (status) {
-          query = query.where(and(
-            eq(accounts.orgId, orgId),
-            eq(accounts.status, status)
-          ));
+        if (filters?.status?.length) {
+          conditions.push(inArray(accounts.status, filters.status));
         }
 
-        if (search) {
-          query = query.where(and(
-            eq(accounts.orgId, orgId),
-            sql`${accounts.name} ILIKE ${`%${search}%`}`
-          ));
+        if (filters?.tier?.length) {
+          conditions.push(inArray(accounts.tier, filters.tier));
         }
 
-        const results = await query;
-        return results;
+        if (filters?.industry?.length) {
+          conditions.push(inArray(accounts.industry, filters.industry));
+        }
+
+        if (filters?.companyType?.length) {
+          conditions.push(inArray(accounts.companyType, filters.companyType));
+        }
+
+        if (filters?.accountManagerId) {
+          conditions.push(eq(accounts.accountManagerId, filters.accountManagerId));
+        }
+
+        if (filters?.hasContract === true) {
+          conditions.push(sql`${accounts.contractStartDate} IS NOT NULL`);
+        } else if (filters?.hasContract === false) {
+          conditions.push(sql`${accounts.contractStartDate} IS NULL`);
+        }
+
+        if (filters?.dateRange?.from) {
+          conditions.push(gte(accounts.createdAt, filters.dateRange.from));
+        }
+
+        if (filters?.dateRange?.to) {
+          conditions.push(lte(accounts.createdAt, filters.dateRange.to));
+        }
+
+        // Build sort order
+        const sortColumn = sortBy === 'name' ? accounts.name
+          : sortBy === 'status' ? accounts.status
+          : sortBy === 'tier' ? accounts.tier
+          : sortBy === 'annualRevenueTarget' ? accounts.annualRevenueTarget
+          : accounts.createdAt;
+
+        const orderBy = sortDirection === 'asc' ? asc(sortColumn) : desc(sortColumn);
+
+        // Execute queries in parallel
+        const [items, countResult] = await Promise.all([
+          db.query.accounts.findMany({
+            where: and(...conditions),
+            with: {
+              accountManager: true,
+            },
+            orderBy,
+            limit: pageSize,
+            offset,
+          }),
+          db.select({ count: sql<number>`count(*)::int` })
+            .from(accounts)
+            .where(and(...conditions)),
+        ]);
+
+        const total = countResult[0]?.count ?? 0;
+
+        return {
+          items,
+          total,
+          page,
+          pageSize,
+          totalPages: Math.ceil(total / pageSize),
+        };
       }),
 
     /**
-     * Get single account by ID
+     * Get single account by ID with relations
      */
     getById: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
-        const account = await db.select().from(accounts)
-          .where(and(
-            eq(accounts.id, input.id),
-            eq(accounts.orgId, orgId)
-          ))
-          .limit(1);
 
-        if (!account.length) {
+        const account = await db.query.accounts.findFirst({
+          where: and(
+            eq(accounts.id, input.id),
+            eq(accounts.orgId, orgId),
+            isNull(accounts.deletedAt),
+          ),
+          with: {
+            accountManager: true,
+            pointOfContacts: true,
+            deals: true,
+            leads: true,
+          },
+        });
+
+        if (!account) {
           throw new Error('Account not found');
         }
 
-        return account[0];
+        return account;
+      }),
+
+    /**
+     * Get account metrics/statistics
+     */
+    getMetrics: orgProtectedProcedure
+      .query(async ({ ctx }) => {
+        const { orgId } = ctx;
+
+        const allAccounts = await db.select().from(accounts)
+          .where(and(
+            eq(accounts.orgId, orgId),
+            isNull(accounts.deletedAt),
+          ));
+
+        const now = new Date();
+        const thirtyDaysFromNow = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+        return {
+          byStatus: {
+            prospect: allAccounts.filter(a => a.status === 'prospect').length,
+            active: allAccounts.filter(a => a.status === 'active').length,
+            inactive: allAccounts.filter(a => a.status === 'inactive').length,
+            churned: allAccounts.filter(a => a.status === 'churned').length,
+          },
+          byTier: {
+            enterprise: allAccounts.filter(a => a.tier === 'enterprise').length,
+            mid_market: allAccounts.filter(a => a.tier === 'mid_market').length,
+            smb: allAccounts.filter(a => a.tier === 'smb').length,
+            strategic: allAccounts.filter(a => a.tier === 'strategic').length,
+            unassigned: allAccounts.filter(a => !a.tier).length,
+          },
+          totalRevenueTarget: allAccounts.reduce(
+            (sum, a) => sum + (parseFloat(a.annualRevenueTarget || '0')), 0
+          ),
+          activeRevenueTarget: allAccounts
+            .filter(a => a.status === 'active')
+            .reduce((sum, a) => sum + (parseFloat(a.annualRevenueTarget || '0')), 0),
+          total: allAccounts.length,
+          withActiveContract: allAccounts.filter(a =>
+            a.contractStartDate && a.contractEndDate && a.contractEndDate > now
+          ).length,
+          contractsExpiringSoon: allAccounts.filter(a =>
+            a.contractEndDate && a.contractEndDate > now && a.contractEndDate <= thirtyDaysFromNow
+          ).length,
+        };
       }),
 
     /**
      * Create new account
      */
     create: orgProtectedProcedure
-      .input(createAccountSchema)
+      .input(createAccountInput)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
 
+        // Get user profile ID for createdBy
+        const [userProfile] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId))
+          .limit(1);
+
+        const profileId = userProfile?.id;
+
         const [newAccount] = await db.insert(accounts).values({
           ...input,
+          // Convert numeric values to strings for database
+          markupPercentage: input.markupPercentage?.toString(),
+          annualRevenueTarget: input.annualRevenueTarget?.toString(),
           orgId,
-          ownerId: input.ownerId || userId,
-          createdBy: userId,
+          accountManagerId: input.accountManagerId || profileId,
+          createdBy: profileId,
         }).returning();
+
+        // Log activity
+        if (profileId) {
+          await db.insert(activityLog).values({
+            orgId,
+            entityType: 'account',
+            entityId: newAccount.id,
+            activityType: 'note',
+            subject: 'Account created',
+            performedBy: profileId,
+            activityDate: new Date(),
+          });
+        }
 
         return newAccount;
       }),
@@ -121,16 +265,40 @@ export const crmRouter = router({
      * Update account
      */
     update: orgProtectedProcedure
-      .input(updateAccountSchema)
+      .input(updateAccountInput)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
-        const { id, ...data } = input;
+        const { id, data } = input;
+
+        // Get user profile ID for updatedBy
+        const [userProfile] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId))
+          .limit(1);
+
+        const profileId = userProfile?.id;
+
+        // Prepare update data, converting numeric values
+        const updateData: Record<string, unknown> = {
+          ...data,
+          updatedAt: new Date(),
+          updatedBy: profileId,
+        };
+
+        if (data.markupPercentage !== undefined) {
+          updateData.markupPercentage = data.markupPercentage?.toString();
+        }
+
+        if (data.annualRevenueTarget !== undefined) {
+          updateData.annualRevenueTarget = data.annualRevenueTarget?.toString();
+        }
 
         const [updatedAccount] = await db.update(accounts)
-          .set(data)
+          .set(updateData)
           .where(and(
             eq(accounts.id, id),
-            eq(accounts.orgId, orgId)
+            eq(accounts.orgId, orgId),
+            isNull(accounts.deletedAt),
           ))
           .returning();
 
@@ -142,6 +310,44 @@ export const crmRouter = router({
       }),
 
     /**
+     * Bulk assign accounts to an account manager
+     */
+    bulkAssign: orgProtectedProcedure
+      .input(bulkAssignAccountsInput)
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+        const { accountIds, accountManagerId } = input;
+
+        // Get user profile ID for updatedBy
+        const [userProfile] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId))
+          .limit(1);
+
+        const profileId = userProfile?.id;
+
+        // Update all specified accounts
+        const results = await db.update(accounts)
+          .set({
+            accountManagerId,
+            updatedAt: new Date(),
+            updatedBy: profileId,
+          })
+          .where(and(
+            inArray(accounts.id, accountIds),
+            eq(accounts.orgId, orgId),
+            isNull(accounts.deletedAt),
+          ))
+          .returning({ id: accounts.id });
+
+        return {
+          success: true,
+          updatedCount: results.length,
+          updatedIds: results.map(r => r.id),
+        };
+      }),
+
+    /**
      * Delete account (soft delete)
      */
     delete: orgProtectedProcedure
@@ -149,14 +355,23 @@ export const crmRouter = router({
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
 
+        // Get user profile ID for updatedBy
+        const [userProfile] = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId))
+          .limit(1);
+
+        const profileId = userProfile?.id;
+
         const [deleted] = await db.update(accounts)
           .set({
             deletedAt: new Date(),
-            deletedBy: userId
+            updatedBy: profileId,
           })
           .where(and(
             eq(accounts.id, input.id),
-            eq(accounts.orgId, orgId)
+            eq(accounts.orgId, orgId),
+            isNull(accounts.deletedAt),
           ))
           .returning();
 
@@ -174,22 +389,34 @@ export const crmRouter = router({
 
   leads: router({
     /**
-     * Get all leads
+     * Get all leads with optional ownership filtering
      */
-    list: orgProtectedProcedure
+    list: ownershipProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
         status: z.enum(['new', 'warm', 'hot', 'cold', 'converted', 'lost']).optional(),
         accountId: z.string().uuid().optional(),
+        ownership: ownershipFilterSchema.optional(),
       }))
       .query(async ({ ctx, input }) => {
-        const { orgId } = ctx;
-        const { limit, offset, status, accountId } = input;
+        const { orgId, profileId, isManager, managedUserIds } = ctx;
+        const { limit, offset, status, accountId, ownership } = input;
 
         let conditions = [eq(leads.orgId, orgId), isNull(leads.deletedAt)];
         if (status) conditions.push(eq(leads.status, status));
         if (accountId) conditions.push(eq(leads.accountId, accountId));
+
+        // Apply ownership filter if specified
+        if (ownership) {
+          const ownershipCondition = await buildOwnershipCondition(
+            { userId: profileId, orgId, isManager, managedUserIds },
+            'lead',
+            leads,
+            ownership
+          );
+          conditions.push(ownershipCondition);
+        }
 
         const results = await db.select().from(leads)
           .where(and(...conditions))
@@ -539,22 +766,34 @@ export const crmRouter = router({
 
   deals: router({
     /**
-     * Get all deals
+     * Get all deals with optional ownership filtering
      */
-    list: orgProtectedProcedure
+    list: ownershipProcedure
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
         stage: z.enum(['discovery', 'qualification', 'proposal', 'negotiation', 'closed_won', 'closed_lost']).optional(),
         accountId: z.string().uuid().optional(),
+        ownership: ownershipFilterSchema.optional(),
       }))
       .query(async ({ ctx, input }) => {
-        const { orgId } = ctx;
-        const { limit, offset, stage, accountId } = input;
+        const { orgId, profileId, isManager, managedUserIds } = ctx;
+        const { limit, offset, stage, accountId, ownership } = input;
 
         let conditions = [eq(deals.orgId, orgId)];
         if (stage) conditions.push(eq(deals.stage, stage));
         if (accountId) conditions.push(eq(deals.accountId, accountId));
+
+        // Apply ownership filter if specified
+        if (ownership) {
+          const ownershipCondition = await buildOwnershipCondition(
+            { userId: profileId, orgId, isManager, managedUserIds },
+            'deal',
+            deals,
+            ownership
+          );
+          conditions.push(ownershipCondition);
+        }
 
         const results = await db.select().from(deals)
           .where(and(...conditions))
