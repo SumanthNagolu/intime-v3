@@ -65,6 +65,7 @@ Load with: `Use the [skill-name] skill`
 |-------|--------|------------|
 | `database` | Infrastructure | Drizzle ORM, migrations, schema design |
 | `trpc` | Infrastructure | Router development, procedures, validation |
+| `metadata` | Infrastructure | Screen definitions, layouts, actions |
 | `recruiting` | Business | ATS workflows, jobs, submissions, interviews |
 | `academy` | Business | Training, courses, XP, certificates |
 | `crm` | Business | Leads, deals, accounts, activities |
@@ -161,6 +162,33 @@ curl -X POST 'https://gkwhxmvugnjwwwiufmdy.supabase.co/functions/v1/execute-sql'
    ```
 
 3. **Keep in sync:** Update `supabase/migrations/` and `src/lib/db/schema/`
+
+---
+
+## TypeScript Quick Reference
+
+### Critical Patterns (Prevent Compilation Errors)
+
+| Issue | Wrong | Correct |
+|-------|-------|---------|
+| Drizzle numeric | `job.rateMin` (string) | `parseFloat(job.rateMin)` |
+| Drizzle date | `job.createdAt.toISOString()` | `job.createdAt` (already string) |
+| Drizzle relations | `job.account.name` | `job.accountId` (use ID) |
+| Supabase table | `supabase.from('audit_logs')` | `(supabase.from as any)('audit_logs')` |
+| tRPC error | `options.onError(error)` | `options.onError(error as unknown as Error)` |
+| Metadata field | `fieldType: 'text'` | `type: 'text'` |
+| DataSource | `{ procedure: 'x' }` | `{ query: { procedure: 'x' } }` |
+| Null default | `value \|\| ''` | `value ?? ''` |
+
+### Pre-Commit Check
+
+```bash
+pnpm tsc --noEmit  # Must pass before committing
+```
+
+### Detailed Patterns
+
+See `.claude/rules/typescript-patterns.md` for comprehensive guide.
 
 ---
 

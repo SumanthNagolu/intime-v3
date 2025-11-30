@@ -487,3 +487,107 @@ ctx.orgId     // Current organization ID
 ctx.user      // Full user object (if loaded)
 ctx.session   // Supabase session
 ```
+
+## TypeScript Error Handling (CRITICAL)
+
+### TRPCClientError Type Casting
+
+When using tRPC hooks with `onError` callbacks, the error type is `TRPCClientError`, not `Error`. This causes type mismatches when passing to generic error handlers.
+
+```typescript
+// ❌ BAD - Type mismatch in hook callbacks
+export function useCreateAccount(options?: MutationOptions) {
+  return trpc.crm.accounts.create.useMutation({
+    onError: (error) => {
+      options?.onError?.(error); // Error: TRPCClientError not assignable to Error
+    },
+  });
+}
+
+// ✅ GOOD - Double assertion pattern
+export function useCreateAccount(options?: MutationOptions) {
+  return trpc.crm.accounts.create.useMutation({
+    onError: (error) => {
+      options?.onError?.(error as unknown as Error);
+    },
+    onSuccess: (data) => {
+      options?.onSuccess?.(data as unknown);
+    },
+  });
+}
+```
+
+### Context Properties May Be Null
+
+After middleware checks, context properties are guaranteed non-null, but TypeScript doesn't know this:
+
+```typescript
+// ❌ BAD - ctx.userId might be null/undefined
+const userId = ctx.userId;
+await db.select().where(eq(table.userId, userId)); // Error!
+
+// ✅ GOOD - Type assertion after orgProtectedProcedure middleware
+const userId = ctx.userId as string;
+const orgId = ctx.orgId as string;
+
+// ✅ BETTER - Explicit check for clarity
+if (!ctx.userId || !ctx.orgId) {
+  throw new TRPCError({ code: 'UNAUTHORIZED' });
+}
+const userId = ctx.userId;
+const orgId = ctx.orgId;
+```
+
+### Mutation Options Pattern
+
+Define reusable mutation options types:
+
+```typescript
+// src/hooks/types.ts
+export interface MutationOptions {
+  onSuccess?: (data?: unknown) => void;
+  onError?: (error: Error) => void;
+}
+
+// Usage in mutation hooks
+export function useUpdateLead(options?: MutationOptions) {
+  const utils = trpc.useUtils();
+
+  return trpc.crm.leads.update.useMutation({
+    onSuccess: (data) => {
+      utils.crm.leads.list.invalidate();
+      options?.onSuccess?.(data as unknown);
+    },
+    onError: (error) => {
+      options?.onError?.(error as unknown as Error);
+    },
+  });
+}
+```
+
+### Query Return Type Handling
+
+```typescript
+// ❌ BAD - Data might be undefined during loading
+const { data } = trpc.items.list.useQuery({ page: 1, pageSize: 50 });
+data.items.map(item => ...); // Error: data might be undefined!
+
+// ✅ GOOD - Provide defaults
+const { data } = trpc.items.list.useQuery({ page: 1, pageSize: 50 });
+const items = data?.items ?? [];
+
+// ✅ ALSO GOOD - Destructure with default
+const { data = { items: [], total: 0 } } = trpc.items.list.useQuery({
+  page: 1,
+  pageSize: 50
+});
+```
+
+### Error Casting Quick Reference
+
+| Scenario | Pattern |
+|----------|---------|
+| `onError` callback | `error as unknown as Error` |
+| `onSuccess` callback | `data as unknown` |
+| `ctx.userId` after auth | `ctx.userId as string` |
+| Query data | `data?.field ?? defaultValue` |
