@@ -164,11 +164,11 @@ async function logAuditEvent(
     user_id: userId,
     org_id: orgId,
     action,
-    resource_type: resourceType,
-    resource_id: resourceId,
-    details,
+    table_name: resourceType,
+    record_id: resourceId,
+    metadata: details,
     severity,
-    ip_address: null,
+    user_ip_address: null,
     user_agent: null,
   });
 }

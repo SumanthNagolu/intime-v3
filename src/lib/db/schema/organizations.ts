@@ -82,6 +82,20 @@ export const organizations = pgTable('organizations', {
   onboardingCompleted: boolean('onboarding_completed').default(false),
   onboardingStep: text('onboarding_step'),
 
+  // Localization (top-level for convenience)
+  timezone: text('timezone').default('America/New_York'),
+  locale: text('locale').default('en-US'),
+
+  // Branding (top-level for convenience)
+  logoUrl: text('logo_url'),
+  faviconUrl: text('favicon_url'),
+
+  // Billing extras
+  plan: text('plan').default('free'),
+  metadata: jsonb('metadata').$type<Record<string, unknown>>().default({}),
+  stripeCouponId: text('stripe_coupon_id'),
+  stripeCustomerId: text('stripe_customer_id'),
+
   // Metadata
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),

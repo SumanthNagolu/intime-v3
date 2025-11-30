@@ -192,11 +192,11 @@ async function logClientActivity(
     user_id: userId,
     org_id: orgId,
     action: `client.${action}`,
-    resource_type: resourceType,
-    resource_id: resourceId,
+    table_name: resourceType,
+    record_id: resourceId,
     details: { ...details, accountId },
     severity: 'info',
-    ip_address: null,
+    user_ip_address: null,
     user_agent: null,
   });
 }

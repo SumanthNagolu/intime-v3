@@ -3,7 +3,7 @@
  * Tables: skills, candidate_skills, jobs, submissions, interviews, offers, placements
  */
 
-import { pgTable, uuid, text, timestamp, numeric, integer, boolean, unique } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, timestamp, numeric, integer, boolean, unique, jsonb, date } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { userProfiles } from './user-profiles';
 import { organizations } from './organizations';
@@ -89,6 +89,7 @@ export const jobs = pgTable('jobs', {
 
   // Association
   accountId: uuid('account_id').references(() => accounts.id),
+  clientId: uuid('client_id').references(() => accounts.id), // Alias for accountId
   dealId: uuid('deal_id').references(() => deals.id),
 
   // Job details
@@ -110,6 +111,7 @@ export const jobs = pgTable('jobs', {
   // Status
   status: text('status').notNull().default('draft'),
   urgency: text('urgency').default('medium'),
+  priority: text('priority').default('medium'),
   positionsCount: integer('positions_count').default(1),
   positionsFilled: integer('positions_filled').default(0),
 
@@ -127,6 +129,7 @@ export const jobs = pgTable('jobs', {
   // Dates
   postedDate: timestamp('posted_date', { mode: 'date' }),
   targetFillDate: timestamp('target_fill_date', { mode: 'date' }),
+  targetStartDate: timestamp('target_start_date', { withTimezone: true }),
   filledDate: timestamp('filled_date', { mode: 'date' }),
 
   // Client interaction
@@ -195,11 +198,24 @@ export const submissions = pgTable('submissions', {
   submittedRateType: text('submitted_rate_type').default('hourly'),
   submissionNotes: text('submission_notes'),
 
-  // Client interaction
+  // Vendor submission tracking (internal approval before client submission)
+  vendorSubmittedAt: timestamp('vendor_submitted_at', { withTimezone: true }),
+  vendorSubmittedBy: uuid('vendor_submitted_by').references(() => userProfiles.id),
+  vendorDecision: text('vendor_decision'), // 'pending' | 'accepted' | 'rejected'
+  vendorDecisionAt: timestamp('vendor_decision_at', { withTimezone: true }),
+  vendorDecisionBy: uuid('vendor_decision_by').references(() => userProfiles.id),
+  vendorNotes: text('vendor_notes'),
+  vendorScreeningNotes: text('vendor_screening_notes'),
+  vendorScreeningCompletedAt: timestamp('vendor_screening_completed_at', { withTimezone: true }),
+
+  // Client submission tracking
   submittedToClientAt: timestamp('submitted_to_client_at', { withTimezone: true }),
   submittedToClientBy: uuid('submitted_to_client_by').references(() => userProfiles.id),
   clientResumeFileId: uuid('client_resume_file_id'),
   clientProfileUrl: text('client_profile_url'),
+  clientDecision: text('client_decision'), // 'pending' | 'accepted' | 'rejected'
+  clientDecisionAt: timestamp('client_decision_at', { withTimezone: true }),
+  clientDecisionNotes: text('client_decision_notes'),
 
   // Interview tracking
   interviewCount: integer('interview_count').default(0),
@@ -493,15 +509,25 @@ export const JobStatus = {
 } as const;
 
 export const SubmissionStatus = {
+  // Initial stages
   SOURCED: 'sourced',
   SCREENING: 'screening',
-  SUBMISSION_READY: 'submission_ready',
+  // Vendor stages (staffing company internal approval)
+  VENDOR_PENDING: 'vendor_pending',
+  VENDOR_SCREENING: 'vendor_screening',
+  VENDOR_ACCEPTED: 'vendor_accepted',
+  VENDOR_REJECTED: 'vendor_rejected',
+  // Client stages
   SUBMITTED_TO_CLIENT: 'submitted_to_client',
   CLIENT_REVIEW: 'client_review',
+  CLIENT_ACCEPTED: 'client_accepted',
+  CLIENT_REJECTED: 'client_rejected',
   CLIENT_INTERVIEW: 'client_interview',
+  // Final stages
   OFFER_STAGE: 'offer_stage',
   PLACED: 'placed',
   REJECTED: 'rejected',
+  WITHDRAWN: 'withdrawn',
 } as const;
 
 export const InterviewStatus = {
@@ -555,3 +581,909 @@ export const ATSActivityStatus = {
 
 export type ATSActivityTypeType = typeof ATSActivityType[keyof typeof ATSActivityType];
 export type ATSActivityStatusType = typeof ATSActivityStatus[keyof typeof ATSActivityStatus];
+
+// =====================================================
+// CANDIDATE_RESUMES - Resume Versioning System
+// =====================================================
+
+export const candidateResumes = pgTable('candidate_resumes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+  candidateId: uuid('candidate_id').notNull().references(() => userProfiles.id, { onDelete: 'cascade' }),
+
+  // Version tracking
+  version: integer('version').notNull().default(1),
+  isLatest: boolean('is_latest').notNull().default(true),
+  previousVersionId: uuid('previous_version_id'),
+
+  // File storage
+  bucket: text('bucket').notNull().default('resumes'),
+  filePath: text('file_path').notNull(),
+  fileName: text('file_name').notNull(),
+  fileSize: integer('file_size').notNull(),
+  mimeType: text('mime_type').notNull(),
+
+  // Resume metadata
+  resumeType: text('resume_type').default('master'), // 'master', 'formatted', 'client_specific'
+  title: text('title'), // e.g., "Master Resume", "Client-Formatted - ABC Corp"
+  notes: text('notes'),
+
+  // Parsed content (for AI features)
+  parsedContent: text('parsed_content'), // Raw text extracted from resume
+  parsedSkills: text('parsed_skills').array(),
+  parsedExperience: text('parsed_experience'), // JSON summary
+  aiSummary: text('ai_summary'), // AI-generated professional summary
+
+  // Submission tracking
+  submissionWriteUp: text('submission_write_up'), // Pre-formatted submission text
+
+  // Upload info
+  uploadedBy: uuid('uploaded_by').notNull().references(() => userProfiles.id),
+  uploadedAt: timestamp('uploaded_at', { withTimezone: true }).defaultNow().notNull(),
+
+  // Soft delete (never truly delete, just archive)
+  isArchived: boolean('is_archived').default(false),
+  archivedAt: timestamp('archived_at', { withTimezone: true }),
+  archivedBy: uuid('archived_by').references(() => userProfiles.id),
+
+  // Metadata
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const candidateResumesRelations = relations(candidateResumes, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [candidateResumes.orgId],
+    references: [organizations.id],
+  }),
+  candidate: one(userProfiles, {
+    fields: [candidateResumes.candidateId],
+    references: [userProfiles.id],
+  }),
+  uploader: one(userProfiles, {
+    fields: [candidateResumes.uploadedBy],
+    references: [userProfiles.id],
+  }),
+  previousVersion: one(candidateResumes, {
+    fields: [candidateResumes.previousVersionId],
+    references: [candidateResumes.id],
+  }),
+}));
+
+export type CandidateResume = typeof candidateResumes.$inferSelect;
+export type NewCandidateResume = typeof candidateResumes.$inferInsert;
+
+export const ResumeType = {
+  MASTER: 'master',
+  FORMATTED: 'formatted',
+  CLIENT_SPECIFIC: 'client_specific',
+} as const;
+
+export type ResumeTypeType = typeof ResumeType[keyof typeof ResumeType];
+
+// =====================================================
+// ADDRESSES - Polymorphic, Multi-Country Support
+// =====================================================
+
+export const addresses = pgTable('addresses', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+
+  // Polymorphic reference
+  entityType: text('entity_type').notNull(), // 'candidate', 'account', 'contact', 'vendor'
+  entityId: uuid('entity_id').notNull(),
+  addressType: text('address_type').notNull(), // 'current', 'permanent', 'mailing', 'work', 'billing', 'shipping'
+
+  // International address fields
+  addressLine1: text('address_line_1'),
+  addressLine2: text('address_line_2'),
+  addressLine3: text('address_line_3'),
+  city: text('city'),
+  stateProvince: text('state_province'),
+  postalCode: text('postal_code'),
+  countryCode: text('country_code').notNull().default('US'), // ISO 3166-1 alpha-2
+  county: text('county'),
+
+  // Geo-location
+  latitude: numeric('latitude', { precision: 10, scale: 7 }),
+  longitude: numeric('longitude', { precision: 10, scale: 7 }),
+
+  // Validation
+  isVerified: boolean('is_verified').default(false),
+  verifiedAt: timestamp('verified_at', { withTimezone: true }),
+  verificationSource: text('verification_source'),
+
+  // Metadata
+  isPrimary: boolean('is_primary').default(false),
+  effectiveFrom: date('effective_from'),
+  effectiveTo: date('effective_to'),
+  notes: text('notes'),
+
+  // Audit
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  createdBy: uuid('created_by'),
+  updatedBy: uuid('updated_by'),
+}, (table) => ({
+  uniqueAddressPerEntityType: unique().on(table.entityType, table.entityId, table.addressType),
+}));
+
+export const addressesRelations = relations(addresses, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [addresses.orgId],
+    references: [organizations.id],
+  }),
+}));
+
+export type Address = typeof addresses.$inferSelect;
+export type NewAddress = typeof addresses.$inferInsert;
+
+export const AddressType = {
+  CURRENT: 'current',
+  PERMANENT: 'permanent',
+  MAILING: 'mailing',
+  WORK: 'work',
+  BILLING: 'billing',
+  SHIPPING: 'shipping',
+} as const;
+
+export const EntityType = {
+  CANDIDATE: 'candidate',
+  ACCOUNT: 'account',
+  CONTACT: 'contact',
+  VENDOR: 'vendor',
+} as const;
+
+// =====================================================
+// CANDIDATE WORK AUTHORIZATIONS
+// =====================================================
+
+export const candidateWorkAuthorizations = pgTable('candidate_work_authorizations', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+  candidateId: uuid('candidate_id').notNull().references(() => userProfiles.id, { onDelete: 'cascade' }),
+
+  // Work Authorization Type
+  authorizationType: text('authorization_type').notNull(), // 'citizen', 'permanent_resident', 'work_visa', 'student_visa', 'ead', 'asylum', 'refugee', 'other'
+  visaType: text('visa_type'), // H1B, L1, O1, TN, E2, F1_OPT, etc.
+  countryCode: text('country_code').notNull(),
+
+  // Status & Validity
+  status: text('status').notNull().default('active'), // 'active', 'expired', 'pending', 'revoked', 'denied'
+  issueDate: date('issue_date'),
+  expiryDate: date('expiry_date'),
+  receiptNumber: text('receipt_number'),
+
+  // Sponsorship
+  requiresSponsorship: boolean('requires_sponsorship').default(false),
+  currentSponsor: text('current_sponsor'),
+  isTransferable: boolean('is_transferable').default(true),
+  transferInProgress: boolean('transfer_in_progress').default(false),
+
+  // Cap/Lottery Status (for H1B)
+  capExempt: boolean('cap_exempt').default(false),
+  lotterySelected: boolean('lottery_selected'),
+  lotteryYear: integer('lottery_year'),
+
+  // EAD Specific
+  eadCategory: text('ead_category'),
+  eadCardNumber: text('ead_card_number'),
+  eadExpiry: date('ead_expiry'),
+
+  // I-9 Compliance
+  i9Completed: boolean('i9_completed').default(false),
+  i9CompletedAt: timestamp('i9_completed_at', { withTimezone: true }),
+  i9ExpiryDate: date('i9_expiry_date'),
+  i9Section2Completed: boolean('i9_section_2_completed').default(false),
+  i9DocumentList: text('i9_document_list'), // 'A', 'B+C', 'B', 'C'
+  i9DocumentDetails: jsonb('i9_document_details'),
+  eVerifyStatus: text('e_verify_status'), // 'not_started', 'pending', 'verified', 'tnc', 'fnc', 'failed', 'closed'
+  eVerifyCaseNumber: text('e_verify_case_number'),
+  eVerifyCompletionDate: date('e_verify_completion_date'),
+
+  // Passport Information
+  passportCountry: text('passport_country'),
+  passportNumberEncrypted: text('passport_number_encrypted'),
+  passportIssueDate: date('passport_issue_date'),
+  passportExpiryDate: date('passport_expiry_date'),
+  hasValidVisaStamp: boolean('has_valid_visa_stamp').default(false),
+  visaStampExpiry: date('visa_stamp_expiry'),
+
+  // Documents
+  documents: jsonb('documents').default([]),
+
+  // Metadata
+  notes: text('notes'),
+  isPrimary: boolean('is_primary').default(false),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  createdBy: uuid('created_by'),
+  updatedBy: uuid('updated_by'),
+});
+
+export const candidateWorkAuthorizationsRelations = relations(candidateWorkAuthorizations, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [candidateWorkAuthorizations.orgId],
+    references: [organizations.id],
+  }),
+  candidate: one(userProfiles, {
+    fields: [candidateWorkAuthorizations.candidateId],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type CandidateWorkAuthorization = typeof candidateWorkAuthorizations.$inferSelect;
+export type NewCandidateWorkAuthorization = typeof candidateWorkAuthorizations.$inferInsert;
+
+export const AuthorizationType = {
+  CITIZEN: 'citizen',
+  PERMANENT_RESIDENT: 'permanent_resident',
+  WORK_VISA: 'work_visa',
+  STUDENT_VISA: 'student_visa',
+  EAD: 'ead',
+  ASYLUM: 'asylum',
+  REFUGEE: 'refugee',
+  OTHER: 'other',
+} as const;
+
+export const VisaType = {
+  H1B: 'H1B',
+  H1B1: 'H1B1',
+  L1A: 'L1A',
+  L1B: 'L1B',
+  O1: 'O1',
+  TN: 'TN',
+  E2: 'E2',
+  E3: 'E3',
+  F1_OPT: 'F1_OPT',
+  F1_CPT: 'F1_CPT',
+  J1: 'J1',
+  H4_EAD: 'H4_EAD',
+  L2_EAD: 'L2_EAD',
+  OTHER: 'Other',
+} as const;
+
+// =====================================================
+// CANDIDATE EDUCATION
+// =====================================================
+
+export const candidateEducation = pgTable('candidate_education', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+  candidateId: uuid('candidate_id').notNull().references(() => userProfiles.id, { onDelete: 'cascade' }),
+
+  // Education Details
+  degreeType: text('degree_type'),
+  degreeName: text('degree_name'),
+  fieldOfStudy: text('field_of_study'),
+  minor: text('minor'),
+  concentration: text('concentration'),
+
+  // Institution
+  institutionName: text('institution_name').notNull(),
+  institutionType: text('institution_type'),
+  institutionCity: text('institution_city'),
+  institutionState: text('institution_state'),
+  institutionCountry: text('institution_country'),
+  countryCode: text('country_code'),
+
+  // Dates
+  startDate: date('start_date'),
+  endDate: date('end_date'),
+  expectedGraduation: date('expected_graduation'),
+  isCurrent: boolean('is_current').default(false),
+
+  // Academic Performance
+  gpa: numeric('gpa', { precision: 4, scale: 2 }),
+  gpaScale: numeric('gpa_scale', { precision: 3, scale: 1 }).default('4.0'),
+  classRank: text('class_rank'),
+  honors: text('honors'),
+  thesisTitle: text('thesis_title'),
+  dissertationTitle: text('dissertation_title'),
+
+  // Verification
+  isVerified: boolean('is_verified').default(false),
+  verifiedAt: timestamp('verified_at', { withTimezone: true }),
+  verifiedBy: uuid('verified_by'),
+  verificationMethod: text('verification_method'),
+  verificationNotes: text('verification_notes'),
+  transcriptFileId: uuid('transcript_file_id'),
+  diplomaFileId: uuid('diploma_file_id'),
+
+  // Display
+  displayOrder: integer('display_order').default(0),
+  isHighestDegree: boolean('is_highest_degree').default(false),
+
+  // Audit
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  createdBy: uuid('created_by'),
+  updatedBy: uuid('updated_by'),
+});
+
+export const candidateEducationRelations = relations(candidateEducation, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [candidateEducation.orgId],
+    references: [organizations.id],
+  }),
+  candidate: one(userProfiles, {
+    fields: [candidateEducation.candidateId],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type CandidateEducationRecord = typeof candidateEducation.$inferSelect;
+export type NewCandidateEducation = typeof candidateEducation.$inferInsert;
+
+export const DegreeType = {
+  HIGH_SCHOOL: 'high_school',
+  GED: 'ged',
+  VOCATIONAL: 'vocational',
+  ASSOCIATE: 'associate',
+  BACHELOR: 'bachelor',
+  MASTER: 'master',
+  MBA: 'mba',
+  DOCTORATE: 'doctorate',
+  PHD: 'phd',
+  POSTDOC: 'postdoc',
+  CERTIFICATE: 'certificate',
+  DIPLOMA: 'diploma',
+  PROFESSIONAL_DEGREE: 'professional_degree',
+  OTHER: 'other',
+} as const;
+
+// =====================================================
+// CANDIDATE WORK HISTORY
+// =====================================================
+
+export const candidateWorkHistory = pgTable('candidate_work_history', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+  candidateId: uuid('candidate_id').notNull().references(() => userProfiles.id, { onDelete: 'cascade' }),
+
+  // Company & Role
+  companyName: text('company_name').notNull(),
+  companyIndustry: text('company_industry'),
+  companySize: text('company_size'),
+  jobTitle: text('job_title').notNull(),
+  department: text('department'),
+
+  // Employment Details
+  employmentType: text('employment_type'),
+  employmentBasis: text('employment_basis'), // 'w2', '1099', 'corp_to_corp', 'direct'
+
+  // Location
+  locationCity: text('location_city'),
+  locationState: text('location_state'),
+  locationCountry: text('location_country'),
+  countryCode: text('country_code'),
+  isRemote: boolean('is_remote').default(false),
+  remoteType: text('remote_type'),
+
+  // Dates
+  startDate: date('start_date').notNull(),
+  endDate: date('end_date'),
+  isCurrent: boolean('is_current').default(false),
+
+  // Job Details
+  description: text('description'),
+  responsibilities: text('responsibilities').array(),
+  achievements: text('achievements').array(),
+  skillsUsed: text('skills_used').array(),
+  toolsUsed: text('tools_used').array(),
+  projects: text('projects').array(),
+
+  // Salary
+  salaryAmount: numeric('salary_amount', { precision: 12, scale: 2 }),
+  salaryCurrency: text('salary_currency').default('USD'),
+  salaryType: text('salary_type'),
+
+  // Verification
+  supervisorName: text('supervisor_name'),
+  supervisorTitle: text('supervisor_title'),
+  supervisorEmail: text('supervisor_email'),
+  supervisorPhone: text('supervisor_phone'),
+  hrContactName: text('hr_contact_name'),
+  hrContactEmail: text('hr_contact_email'),
+  hrContactPhone: text('hr_contact_phone'),
+  isVerified: boolean('is_verified').default(false),
+  verifiedAt: timestamp('verified_at', { withTimezone: true }),
+  verifiedBy: uuid('verified_by'),
+  verificationMethod: text('verification_method'),
+  verificationNotes: text('verification_notes'),
+
+  // Exit Details
+  reasonForLeaving: text('reason_for_leaving'),
+  isRehireEligible: boolean('is_rehire_eligible'),
+  rehireNotes: text('rehire_notes'),
+
+  // Display
+  displayOrder: integer('display_order').default(0),
+
+  // Audit
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  createdBy: uuid('created_by'),
+  updatedBy: uuid('updated_by'),
+});
+
+export const candidateWorkHistoryRelations = relations(candidateWorkHistory, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [candidateWorkHistory.orgId],
+    references: [organizations.id],
+  }),
+  candidate: one(userProfiles, {
+    fields: [candidateWorkHistory.candidateId],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type CandidateWorkHistoryRecord = typeof candidateWorkHistory.$inferSelect;
+export type NewCandidateWorkHistory = typeof candidateWorkHistory.$inferInsert;
+
+export const EmploymentType = {
+  FULL_TIME: 'full_time',
+  PART_TIME: 'part_time',
+  CONTRACT: 'contract',
+  TEMP: 'temp',
+  FREELANCE: 'freelance',
+  INTERNSHIP: 'internship',
+  APPRENTICESHIP: 'apprenticeship',
+  VOLUNTEER: 'volunteer',
+  SELF_EMPLOYED: 'self_employed',
+} as const;
+
+// =====================================================
+// CANDIDATE CERTIFICATIONS
+// =====================================================
+
+export const candidateCertifications = pgTable('candidate_certifications', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+  candidateId: uuid('candidate_id').notNull().references(() => userProfiles.id, { onDelete: 'cascade' }),
+
+  // Certification Type
+  certificationType: text('certification_type').notNull(),
+
+  // Certification Details
+  name: text('name').notNull(),
+  acronym: text('acronym'),
+  issuingOrganization: text('issuing_organization'),
+  credentialId: text('credential_id'),
+  credentialUrl: text('credential_url'),
+
+  // Validity
+  issueDate: date('issue_date'),
+  expiryDate: date('expiry_date'),
+  isLifetime: boolean('is_lifetime').default(false),
+  requiresRenewal: boolean('requires_renewal').default(false),
+  renewalPeriodMonths: integer('renewal_period_months'),
+  cpeCreditsRequired: integer('cpe_credits_required'),
+
+  // For Licenses
+  licenseType: text('license_type'),
+  licenseNumber: text('license_number'),
+  licenseState: text('license_state'),
+  licenseCountry: text('license_country'),
+  licenseJurisdiction: text('license_jurisdiction'),
+
+  // For Security Clearances
+  clearanceLevel: text('clearance_level'),
+  clearanceStatus: text('clearance_status'),
+  clearanceGrantedDate: date('clearance_granted_date'),
+  investigationType: text('investigation_type'),
+  polygraphType: text('polygraph_type'),
+  polygraphDate: date('polygraph_date'),
+  sapAccess: boolean('sap_access').default(false),
+  sciAccess: boolean('sci_access').default(false),
+
+  // Verification
+  isVerified: boolean('is_verified').default(false),
+  verifiedAt: timestamp('verified_at', { withTimezone: true }),
+  verifiedBy: uuid('verified_by'),
+  verificationMethod: text('verification_method'),
+  verificationNotes: text('verification_notes'),
+  documentFileId: uuid('document_file_id'),
+
+  // Display
+  displayOrder: integer('display_order').default(0),
+  isFeatured: boolean('is_featured').default(false),
+
+  // Audit
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  createdBy: uuid('created_by'),
+  updatedBy: uuid('updated_by'),
+});
+
+export const candidateCertificationsRelations = relations(candidateCertifications, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [candidateCertifications.orgId],
+    references: [organizations.id],
+  }),
+  candidate: one(userProfiles, {
+    fields: [candidateCertifications.candidateId],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type CandidateCertification = typeof candidateCertifications.$inferSelect;
+export type NewCandidateCertification = typeof candidateCertifications.$inferInsert;
+
+export const CertificationType = {
+  PROFESSIONAL: 'professional',
+  TECHNICAL: 'technical',
+  VENDOR: 'vendor',
+  INDUSTRY: 'industry',
+  LICENSE: 'license',
+  CLEARANCE: 'clearance',
+  TRAINING: 'training',
+  OTHER: 'other',
+} as const;
+
+export const ClearanceLevel = {
+  PUBLIC_TRUST: 'public_trust',
+  CONFIDENTIAL: 'confidential',
+  SECRET: 'secret',
+  TOP_SECRET: 'top_secret',
+  TOP_SECRET_SCI: 'top_secret_sci',
+  Q_CLEARANCE: 'q_clearance',
+  L_CLEARANCE: 'l_clearance',
+} as const;
+
+// =====================================================
+// CANDIDATE REFERENCES
+// =====================================================
+
+export const candidateReferences = pgTable('candidate_references', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+  candidateId: uuid('candidate_id').notNull().references(() => userProfiles.id, { onDelete: 'cascade' }),
+
+  // Reference Person Info
+  referenceName: text('reference_name').notNull(),
+  referenceTitle: text('reference_title'),
+  referenceCompany: text('reference_company'),
+  relationshipType: text('relationship_type'),
+  relationshipDescription: text('relationship_description'),
+  yearsKnown: integer('years_known'),
+  workedTogetherFrom: date('worked_together_from'),
+  workedTogetherTo: date('worked_together_to'),
+
+  // Contact Information
+  email: text('email'),
+  phone: text('phone'),
+  linkedinUrl: text('linkedin_url'),
+  preferredContactMethod: text('preferred_contact_method'),
+  bestTimeToContact: text('best_time_to_contact'),
+
+  // Verification Status
+  status: text('status').default('pending'),
+  contactAttempts: integer('contact_attempts').default(0),
+  lastContactAttempt: timestamp('last_contact_attempt', { withTimezone: true }),
+  contactedAt: timestamp('contacted_at', { withTimezone: true }),
+  contactedBy: uuid('contacted_by'),
+  completedAt: timestamp('completed_at', { withTimezone: true }),
+
+  // Reference Feedback
+  rating: integer('rating'),
+  overallImpression: text('overall_impression'),
+  wouldRehire: boolean('would_rehire'),
+  wouldWorkWithAgain: boolean('would_work_with_again'),
+
+  // Structured Feedback
+  feedbackSummary: text('feedback_summary'),
+  strengths: text('strengths').array(),
+  areasForImprovement: text('areas_for_improvement').array(),
+  questionnaireResponses: jsonb('questionnaire_responses'),
+
+  // Notes
+  verificationNotes: text('verification_notes'),
+  internalNotes: text('internal_notes'),
+
+  // Consent
+  referenceConsentGiven: boolean('reference_consent_given').default(false),
+  consentDate: timestamp('consent_date', { withTimezone: true }),
+
+  // Display
+  displayOrder: integer('display_order').default(0),
+  isPrimary: boolean('is_primary').default(false),
+
+  // Audit
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  createdBy: uuid('created_by'),
+  updatedBy: uuid('updated_by'),
+});
+
+export const candidateReferencesRelations = relations(candidateReferences, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [candidateReferences.orgId],
+    references: [organizations.id],
+  }),
+  candidate: one(userProfiles, {
+    fields: [candidateReferences.candidateId],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type CandidateReference = typeof candidateReferences.$inferSelect;
+export type NewCandidateReference = typeof candidateReferences.$inferInsert;
+
+export const ReferenceRelationshipType = {
+  DIRECT_SUPERVISOR: 'direct_supervisor',
+  INDIRECT_SUPERVISOR: 'indirect_supervisor',
+  COLLEAGUE: 'colleague',
+  DIRECT_REPORT: 'direct_report',
+  CLIENT: 'client',
+  VENDOR: 'vendor',
+  PROFESSOR: 'professor',
+  MENTOR: 'mentor',
+  PERSONAL: 'personal',
+  OTHER: 'other',
+} as const;
+
+// =====================================================
+// CANDIDATE BACKGROUND CHECKS
+// =====================================================
+
+export const candidateBackgroundChecks = pgTable('candidate_background_checks', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+  candidateId: uuid('candidate_id').notNull().references(() => userProfiles.id, { onDelete: 'cascade' }),
+  submissionId: uuid('submission_id').references(() => submissions.id, { onDelete: 'set null' }),
+  placementId: uuid('placement_id').references(() => placements.id, { onDelete: 'set null' }),
+
+  // Provider Information
+  provider: text('provider'),
+  providerReferenceId: text('provider_reference_id'),
+  providerOrderId: text('provider_order_id'),
+  packageName: text('package_name'),
+  packageType: text('package_type'),
+
+  // Overall Status
+  status: text('status').notNull().default('not_started'),
+  overallResult: text('overall_result'),
+
+  // Dates
+  requestedAt: timestamp('requested_at', { withTimezone: true }),
+  requestedBy: uuid('requested_by'),
+  initiatedAt: timestamp('initiated_at', { withTimezone: true }),
+  estimatedCompletion: date('estimated_completion'),
+  completedAt: timestamp('completed_at', { withTimezone: true }),
+  expiresAt: timestamp('expires_at', { withTimezone: true }),
+  validForMonths: integer('valid_for_months').default(12),
+
+  // Component Checks
+  checks: jsonb('checks').default({}),
+
+  // Adjudication
+  adjudicationStatus: text('adjudication_status'),
+  adjudicationNotes: text('adjudication_notes'),
+  adjudicatedBy: uuid('adjudicated_by'),
+  adjudicatedAt: timestamp('adjudicated_at', { withTimezone: true }),
+
+  // Adverse Action
+  adverseActionRequired: boolean('adverse_action_required').default(false),
+  preAdverseSentAt: timestamp('pre_adverse_sent_at', { withTimezone: true }),
+  preAdverseResponseDeadline: date('pre_adverse_response_deadline'),
+  finalAdverseSentAt: timestamp('final_adverse_sent_at', { withTimezone: true }),
+  adverseActionNotes: text('adverse_action_notes'),
+
+  // Consent & Documents
+  consentFormFileId: uuid('consent_form_file_id'),
+  consentSignedAt: timestamp('consent_signed_at', { withTimezone: true }),
+  consentIpAddress: text('consent_ip_address'),
+  consentUserAgent: text('consent_user_agent'),
+  authorizationFormFileId: uuid('authorization_form_file_id'),
+  reportFileId: uuid('report_file_id'),
+  reportReceivedAt: timestamp('report_received_at', { withTimezone: true }),
+
+  // Cost Tracking
+  cost: numeric('cost', { precision: 10, scale: 2 }),
+  costCurrency: text('cost_currency').default('USD'),
+  billedTo: text('billed_to'),
+
+  // Notes
+  notes: text('notes'),
+  internalNotes: text('internal_notes'),
+
+  // Audit
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  createdBy: uuid('created_by'),
+  updatedBy: uuid('updated_by'),
+});
+
+export const candidateBackgroundChecksRelations = relations(candidateBackgroundChecks, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [candidateBackgroundChecks.orgId],
+    references: [organizations.id],
+  }),
+  candidate: one(userProfiles, {
+    fields: [candidateBackgroundChecks.candidateId],
+    references: [userProfiles.id],
+  }),
+  submission: one(submissions, {
+    fields: [candidateBackgroundChecks.submissionId],
+    references: [submissions.id],
+  }),
+  placement: one(placements, {
+    fields: [candidateBackgroundChecks.placementId],
+    references: [placements.id],
+  }),
+}));
+
+export type CandidateBackgroundCheck = typeof candidateBackgroundChecks.$inferSelect;
+export type NewCandidateBackgroundCheck = typeof candidateBackgroundChecks.$inferInsert;
+
+export const BGCProvider = {
+  STERLING: 'sterling',
+  HIRERIGHT: 'hireright',
+  CHECKR: 'checkr',
+  ACCURATE: 'accurate',
+  GOODHIRE: 'goodhire',
+  FIRST_ADVANTAGE: 'first_advantage',
+  FADV: 'fadv',
+  ORANGE_TREE: 'orange_tree',
+  INFO_CUBIC: 'info_cubic',
+  INTERNAL: 'internal',
+  CLIENT_CONDUCTED: 'client_conducted',
+  OTHER: 'other',
+} as const;
+
+export const BGCStatus = {
+  NOT_STARTED: 'not_started',
+  CONSENT_PENDING: 'consent_pending',
+  CONSENT_RECEIVED: 'consent_received',
+  INITIATED: 'initiated',
+  IN_PROGRESS: 'in_progress',
+  COMPLETED: 'completed',
+  FAILED: 'failed',
+  CANCELLED: 'cancelled',
+  EXPIRED: 'expired',
+} as const;
+
+export const BGCResult = {
+  CLEAR: 'clear',
+  CONSIDER: 'consider',
+  ADVERSE: 'adverse',
+  PENDING: 'pending',
+  INCOMPLETE: 'incomplete',
+} as const;
+
+// =====================================================
+// CANDIDATE COMPLIANCE DOCUMENTS
+// =====================================================
+
+export const candidateComplianceDocuments = pgTable('candidate_compliance_documents', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+  candidateId: uuid('candidate_id').notNull().references(() => userProfiles.id, { onDelete: 'cascade' }),
+  placementId: uuid('placement_id').references(() => placements.id, { onDelete: 'set null' }),
+  submissionId: uuid('submission_id').references(() => submissions.id, { onDelete: 'set null' }),
+
+  // Document Classification
+  documentType: text('document_type').notNull(),
+  documentName: text('document_name').notNull(),
+  documentDescription: text('document_description'),
+  documentCategory: text('document_category'),
+
+  // Status Tracking
+  status: text('status').notNull().default('required'),
+
+  // Dates
+  requiredBy: date('required_by'),
+  requestedAt: timestamp('requested_at', { withTimezone: true }),
+  submittedAt: timestamp('submitted_at', { withTimezone: true }),
+  reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
+  reviewedBy: uuid('reviewed_by'),
+  approvedAt: timestamp('approved_at', { withTimezone: true }),
+  approvedBy: uuid('approved_by'),
+  rejectedAt: timestamp('rejected_at', { withTimezone: true }),
+  rejectedBy: uuid('rejected_by'),
+  rejectionReason: text('rejection_reason'),
+  effectiveDate: date('effective_date'),
+  expiresAt: date('expires_at'),
+
+  // File Storage
+  fileId: uuid('file_id'),
+  fileUrl: text('file_url'),
+  fileName: text('file_name'),
+  fileSize: integer('file_size'),
+  fileMimeType: text('file_mime_type'),
+
+  // E-Signature
+  requiresSignature: boolean('requires_signature').default(true),
+  isSigned: boolean('is_signed').default(false),
+  signedAt: timestamp('signed_at', { withTimezone: true }),
+  signerName: text('signer_name'),
+  signerEmail: text('signer_email'),
+  signatureIp: text('signature_ip'),
+  signatureUserAgent: text('signature_user_agent'),
+  signatureMethod: text('signature_method'),
+  signatureEnvelopeId: text('signature_envelope_id'),
+
+  // Version Control
+  version: integer('version').default(1),
+  previousVersionId: uuid('previous_version_id'),
+  isCurrentVersion: boolean('is_current_version').default(true),
+
+  // Client-Specific
+  clientId: uuid('client_id'),
+  clientName: text('client_name'),
+
+  // Notes
+  notes: text('notes'),
+  internalNotes: text('internal_notes'),
+
+  // Audit
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  createdBy: uuid('created_by'),
+  updatedBy: uuid('updated_by'),
+});
+
+export const candidateComplianceDocumentsRelations = relations(candidateComplianceDocuments, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [candidateComplianceDocuments.orgId],
+    references: [organizations.id],
+  }),
+  candidate: one(userProfiles, {
+    fields: [candidateComplianceDocuments.candidateId],
+    references: [userProfiles.id],
+  }),
+  submission: one(submissions, {
+    fields: [candidateComplianceDocuments.submissionId],
+    references: [submissions.id],
+  }),
+  placement: one(placements, {
+    fields: [candidateComplianceDocuments.placementId],
+    references: [placements.id],
+  }),
+  previousVersion: one(candidateComplianceDocuments, {
+    fields: [candidateComplianceDocuments.previousVersionId],
+    references: [candidateComplianceDocuments.id],
+  }),
+}));
+
+export type CandidateComplianceDocument = typeof candidateComplianceDocuments.$inferSelect;
+export type NewCandidateComplianceDocument = typeof candidateComplianceDocuments.$inferInsert;
+
+export const ComplianceDocumentType = {
+  I9: 'i9',
+  W4: 'w4',
+  W9: 'w9',
+  STATE_TAX: 'state_tax',
+  DIRECT_DEPOSIT: 'direct_deposit',
+  OFFER_LETTER: 'offer_letter',
+  EMPLOYMENT_AGREEMENT: 'employment_agreement',
+  CONTRACTOR_AGREEMENT: 'contractor_agreement',
+  NDA: 'nda',
+  NON_COMPETE: 'non_compete',
+  NON_SOLICITATION: 'non_solicitation',
+  IP_ASSIGNMENT: 'ip_assignment',
+  EMPLOYEE_HANDBOOK_ACK: 'employee_handbook_ack',
+  POLICY_ACKNOWLEDGMENT: 'policy_acknowledgment',
+  CODE_OF_CONDUCT: 'code_of_conduct',
+  BENEFITS_ENROLLMENT: 'benefits_enrollment',
+  EMERGENCY_CONTACT_FORM: 'emergency_contact_form',
+  BACKGROUND_CHECK_CONSENT: 'background_check_consent',
+  DRUG_TEST_CONSENT: 'drug_test_consent',
+  EQUIPMENT_AGREEMENT: 'equipment_agreement',
+  EXPENSE_POLICY: 'expense_policy',
+  CLIENT_SPECIFIC: 'client_specific',
+  OTHER: 'other',
+} as const;
+
+export const ComplianceDocumentStatus = {
+  NOT_REQUIRED: 'not_required',
+  REQUIRED: 'required',
+  PENDING: 'pending',
+  SUBMITTED: 'submitted',
+  UNDER_REVIEW: 'under_review',
+  APPROVED: 'approved',
+  REJECTED: 'rejected',
+  EXPIRED: 'expired',
+  SUPERSEDED: 'superseded',
+} as const;
