@@ -87,71 +87,112 @@ CREATE TABLE IF NOT EXISTS activities (
     updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
 );
 
--- Create indexes for activities
+-- Create indexes for activities (defensive - only if columns exist)
 CREATE INDEX IF NOT EXISTS idx_activities_org_id ON activities(org_id);
-CREATE INDEX IF NOT EXISTS idx_activities_user_id ON activities(user_id);
+
+DO $$ BEGIN
+    IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'activities' AND column_name = 'user_id') THEN
+        CREATE INDEX IF NOT EXISTS idx_activities_user_id ON activities(user_id);
+    END IF;
+EXCEPTION WHEN OTHERS THEN NULL;
+END $$;
+
 CREATE INDEX IF NOT EXISTS idx_activities_status ON activities(status);
-CREATE INDEX IF NOT EXISTS idx_activities_start_date ON activities(start_date);
-CREATE INDEX IF NOT EXISTS idx_activities_target_date ON activities(target_date);
+
+DO $$ BEGIN
+    IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'activities' AND column_name = 'start_date') THEN
+        CREATE INDEX IF NOT EXISTS idx_activities_start_date ON activities(start_date);
+    END IF;
+EXCEPTION WHEN OTHERS THEN NULL;
+END $$;
+
+DO $$ BEGIN
+    IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'activities' AND column_name = 'target_date') THEN
+        CREATE INDEX IF NOT EXISTS idx_activities_target_date ON activities(target_date);
+    END IF;
+EXCEPTION WHEN OTHERS THEN NULL;
+END $$;
+
 CREATE INDEX IF NOT EXISTS idx_activities_entity ON activities(entity_type, entity_id);
 
 -- Enable RLS on activities
 ALTER TABLE activities ENABLE ROW LEVEL SECURITY;
 
--- RLS policies for activities
-CREATE POLICY "Users can view their own activities" ON activities
-    FOR SELECT
-    USING (
-        user_id IN (
-            SELECT id FROM user_profiles WHERE auth_id = auth.uid()
-        )
-    );
+-- RLS policies for activities (defensive - only if user_id column exists)
+DO $$ BEGIN
+    IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'activities' AND column_name = 'user_id') THEN
+        DROP POLICY IF EXISTS "Users can view their own activities" ON activities;
+        CREATE POLICY "Users can view their own activities" ON activities
+            FOR SELECT
+            USING (
+                user_id IN (
+                    SELECT id FROM user_profiles WHERE auth_id = auth.uid()
+                )
+            );
 
-CREATE POLICY "Users can manage their own activities" ON activities
-    FOR ALL
-    USING (
-        user_id IN (
-            SELECT id FROM user_profiles WHERE auth_id = auth.uid()
-        )
-    );
-
--- Trigger to update updated_at on activities
-CREATE OR REPLACE FUNCTION update_activities_updated_at()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.updated_at = NOW();
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER activities_updated_at_trigger
-    BEFORE UPDATE ON activities
-    FOR EACH ROW
-    EXECUTE FUNCTION update_activities_updated_at();
-
--- Trigger to calculate escalated_days
-CREATE OR REPLACE FUNCTION calculate_escalated_days()
-RETURNS TRIGGER AS $$
-BEGIN
-    -- Calculate days past target_date if not completed
-    IF NEW.target_date IS NOT NULL AND NEW.completed_at IS NULL THEN
-        IF NOW() > NEW.target_date THEN
-            NEW.escalated_days := EXTRACT(DAY FROM (NOW() - NEW.target_date))::INTEGER;
-            IF NEW.escalated_days > 0 AND NOT NEW.is_escalated THEN
-                NEW.is_escalated := TRUE;
-                NEW.escalated_at := NOW();
-            END IF;
-        ELSE
-            NEW.escalated_days := 0;
-            NEW.is_escalated := FALSE;
-            NEW.escalated_at := NULL;
-        END IF;
+        DROP POLICY IF EXISTS "Users can manage their own activities" ON activities;
+        CREATE POLICY "Users can manage their own activities" ON activities
+            FOR ALL
+            USING (
+                user_id IN (
+                    SELECT id FROM user_profiles WHERE auth_id = auth.uid()
+                )
+            );
     END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+EXCEPTION WHEN OTHERS THEN
+    RAISE NOTICE 'Could not create activities user policies: %', SQLERRM;
+END $$;
 
-CREATE TRIGGER activities_escalation_trigger
-    BEFORE INSERT OR UPDATE ON activities
-    FOR EACH ROW
-    EXECUTE FUNCTION calculate_escalated_days();
+-- Trigger to update updated_at on activities (defensive)
+DO $$ BEGIN
+    CREATE OR REPLACE FUNCTION update_activities_updated_at()
+    RETURNS TRIGGER AS $fn$
+    BEGIN
+        NEW.updated_at = NOW();
+        RETURN NEW;
+    END;
+    $fn$ LANGUAGE plpgsql;
+
+    DROP TRIGGER IF EXISTS activities_updated_at_trigger ON activities;
+    CREATE TRIGGER activities_updated_at_trigger
+        BEFORE UPDATE ON activities
+        FOR EACH ROW
+        EXECUTE FUNCTION update_activities_updated_at();
+EXCEPTION WHEN OTHERS THEN
+    RAISE NOTICE 'Could not create activities_updated_at_trigger: %', SQLERRM;
+END $$;
+
+-- Trigger to calculate escalated_days (only if columns exist)
+DO $$ BEGIN
+    IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'activities' AND column_name = 'target_date')
+    AND EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'activities' AND column_name = 'escalated_days') THEN
+        CREATE OR REPLACE FUNCTION calculate_escalated_days()
+        RETURNS TRIGGER AS $fn$
+        BEGIN
+            -- Calculate days past target_date if not completed
+            IF NEW.target_date IS NOT NULL AND NEW.completed_at IS NULL THEN
+                IF NOW() > NEW.target_date THEN
+                    NEW.escalated_days := EXTRACT(DAY FROM (NOW() - NEW.target_date))::INTEGER;
+                    IF NEW.escalated_days > 0 AND NOT NEW.is_escalated THEN
+                        NEW.is_escalated := TRUE;
+                        NEW.escalated_at := NOW();
+                    END IF;
+                ELSE
+                    NEW.escalated_days := 0;
+                    NEW.is_escalated := FALSE;
+                    NEW.escalated_at := NULL;
+                END IF;
+            END IF;
+            RETURN NEW;
+        END;
+        $fn$ LANGUAGE plpgsql;
+
+        DROP TRIGGER IF EXISTS activities_escalation_trigger ON activities;
+        CREATE TRIGGER activities_escalation_trigger
+            BEFORE INSERT OR UPDATE ON activities
+            FOR EACH ROW
+            EXECUTE FUNCTION calculate_escalated_days();
+    END IF;
+EXCEPTION WHEN OTHERS THEN
+    RAISE NOTICE 'Could not create activities_escalation_trigger: %', SQLERRM;
+END $$;

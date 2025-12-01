@@ -35,7 +35,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import { useRCAI, type RCAIOwner } from '../hooks/useRCAI';
-import type { RCAIEntityTypeType, RCAIRoleType, RCAIPermissionType } from '@/lib/db/schema/workspace';
+import type { RCAIEntityTypeType, RCAIRoleType, RCAIPermissionType } from '@/lib/db/schema/raci';
 
 // Entity types supported by the tRPC router
 // Note: 'candidate' and 'talent' map to other entity types

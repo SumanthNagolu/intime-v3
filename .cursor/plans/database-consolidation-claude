@@ -1,0 +1,1079 @@
+# InTime v3 - Comprehensive Database Analysis & Consolidation Report
+
+**Version:** 1.0  
+**Date:** December 1, 2025  
+**Author:** Database Architect (AI)  
+**Status:** Draft for Review
+
+---
+
+## Executive Summary
+
+This report provides a comprehensive analysis of the InTime v3 database schema, identifying gaps, duplicates, inconsistencies, and providing a detailed consolidation plan. The analysis covers:
+
+- **21 Drizzle schema files** with ~200+ tables
+- **66 SQL migration files** in Supabase
+- **5 business modules** (CRM, ATS, Bench Sales, TA/HR, Academy)
+- **3 system modules** (RBAC, Events, Audit)
+- **2 unified systems** (Activities, Workplan)
+
+### Key Findings
+
+| Category | Count | Severity |
+|----------|-------|----------|
+| **Critical Duplicates** | 8 | 🔴 High |
+| **Schema Inconsistencies** | 15 | 🟡 Medium |
+| **Missing Tables** | 12 | 🟡 Medium |
+| **Missing RLS Policies** | ~30 tables | 🔴 High |
+| **Missing Audit Fields** | ~20 tables | 🟠 Medium |
+| **Enum Conflicts** | 5 | 🟡 Medium |
+
+---
+
+## Table of Contents
+
+1. [Current Schema Overview](#1-current-schema-overview)
+2. [Critical Duplicates Analysis](#2-critical-duplicates-analysis)
+3. [Schema Inconsistencies](#3-schema-inconsistencies)
+4. [Missing Tables & Features](#4-missing-tables--features)
+5. [Multi-Tenancy & RLS Gaps](#5-multi-tenancy--rls-gaps)
+6. [Enum Conflicts & Standardization](#6-enum-conflicts--standardization)
+7. [Consolidation Plan](#7-consolidation-plan)
+8. [Migration Strategy](#8-migration-strategy)
+9. [Implementation Phases](#9-implementation-phases)
+
+---
+
+## 1. Current Schema Overview
+
+### 1.1 Schema Files Inventory
+
+| File | Module | Tables | Status |
+|------|--------|--------|--------|
+| `organizations.ts` | Core | 3 | ✅ Complete |
+| `user-profiles.ts` | Core | 1 | ⚠️ Needs update |
+| `rbac.ts` | System | 5 | ✅ Complete |
+| `audit.ts` | System | 2 | ✅ Complete |
+| `events.ts` | System | 3 | ✅ Complete |
+| `timeline.ts` | System | 2 | ✅ Complete |
+| `crm.ts` | CRM | 21 | ⚠️ Has duplicates |
+| `ats.ts` | ATS | 35 | ⚠️ Has duplicates |
+| `bench.ts` | Bench Sales | 27 | ✅ Recently redesigned |
+| `ta-hr.ts` | TA/HR | 12 | ⚠️ Needs consolidation |
+| `hr.ts` | HR | 15 | ✅ Complete |
+| `workspace.ts` | Unified | 3 | ✅ Complete |
+| `activities.ts` | Activities | 1 | ⚠️ DUPLICATE |
+| `workplan.ts` | Workplan | 25 | ✅ Complete |
+| `shared.ts` | Shared | 4 | ✅ Complete |
+| `strategy.ts` | CRM | 2 | ✅ Complete |
+| `academy.ts` | Academy | 28 | ✅ Complete |
+
+### 1.2 Table Count by Module
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Module                  │ Drizzle Tables │ SQL Tables      │
+├─────────────────────────┼────────────────┼─────────────────┤
+│ Core (Org, Users)       │ 4              │ 4               │
+│ RBAC                    │ 5              │ 5               │
+│ Audit/Events            │ 5              │ 5               │
+│ CRM                     │ 23             │ 25 (mismatch)   │
+│ ATS                     │ 35             │ 38 (mismatch)   │
+│ Bench Sales             │ 27             │ 27              │
+│ TA/HR                   │ 27             │ 28 (mismatch)   │
+│ Workspace/RCAI          │ 3              │ 3               │
+│ Activities/Workplan     │ 26             │ 28 (conflict)   │
+│ Academy                 │ 28             │ 28              │
+│ Shared Infrastructure   │ 4              │ 4               │
+├─────────────────────────┼────────────────┼─────────────────┤
+│ TOTAL                   │ ~187           │ ~195            │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 2. Critical Duplicates Analysis
+
+### 2.1 🔴 DUPLICATE: Activities Table
+
+**Problem:** Two separate `activities` table definitions exist:
+
+| Location | Purpose | Fields |
+|----------|---------|--------|
+| `activities.ts` | Unified CRM activities | 20 fields |
+| `workplan.ts` | Workplan activities | 45+ fields |
+
+**Impact:** 
+- TypeScript compilation may fail due to conflicting exports
+- Database has only ONE `activities` table (from workplan.ts based on migrations)
+- The `activities.ts` schema is **orphaned** and NOT in sync with DB
+
+**Resolution:** 
+```
+DELETE activities.ts (orphaned file)
+KEEP workplan.ts activities table (canonical)
+```
+
+### 2.2 🔴 DUPLICATE: Contacts Tables
+
+**Problem:** Multiple contact-related tables with overlapping purposes:
+
+| Table | Location | Purpose |
+|-------|----------|---------|
+| `contacts` | `workspace.ts` | Universal contacts (canonical) |
+| `crm_contacts` | `crm.ts` | CRM-specific contacts |
+| `point_of_contacts` | `crm.ts` | Legacy POC table |
+| `vendor_contacts` | `bench.ts` | Vendor-specific contacts |
+
+**Impact:**
+- Data fragmentation across 4 tables
+- No single source of truth for contacts
+- RACI assignments may not work correctly
+
+**Resolution:**
+```
+KEEP contacts (workspace.ts) - Universal contact table
+MIGRATE data from crm_contacts → contacts (add contact_type='crm')
+MIGRATE data from point_of_contacts → contacts (add contact_type='client_poc')
+KEEP vendor_contacts - Separate vendor relationship (FK to contacts)
+```
+
+### 2.3 🔴 DUPLICATE: Job Orders Table
+
+**Problem:** Two `job_orders` tables defined:
+
+| Location | Table Name | Purpose |
+|----------|------------|---------|
+| `workspace.ts` | `jobOrders` | Confirmed client orders (rich schema) |
+| `bench.ts` | `jobOrders` | Vendor job orders (different schema) |
+
+**Impact:**
+- Name collision in Drizzle exports
+- Confusion about which table to use
+- Different schemas for same concept
+
+**Resolution:**
+```
+RENAME bench.ts jobOrders → external_job_orders
+KEEP workspace.ts jobOrders - Client confirmed orders
+CREATE conversion function for external → internal job orders
+```
+
+### 2.4 🟡 DUPLICATE: Status History Tables
+
+**Problem:** Multiple status tracking approaches:
+
+| Table | Location | Tracks |
+|-------|----------|--------|
+| `deal_stages_history` | `crm.ts` | Deal stage changes |
+| `submission_status_history` | `ats.ts` | Submission status changes |
+| `activity_history` | `workplan.ts` | Activity status changes |
+| `immigration_timelines` | `bench.ts` | Immigration milestones |
+
+**Impact:**
+- Inconsistent audit patterns
+- No unified status change event bus
+
+**Resolution:**
+- Keep entity-specific history tables (domain-driven design)
+- Add EVENT_BUS triggers for status changes (unified logging)
+
+### 2.5 🟡 DUPLICATE: Rates Tables
+
+**Problem:** Multiple rate tracking tables:
+
+| Table | Location | Purpose |
+|-------|----------|---------|
+| `job_rates` | `ats.ts` | Job bill/pay rates |
+| `submission_rates` | `ats.ts` | Submission-specific rates |
+| `placement_rates` | `ats.ts` | Placement rates |
+| `consultant_rates` | `bench.ts` | Bench consultant rates |
+| Job order rates | `workspace.ts` | Inline fields on job_orders |
+
+**Impact:**
+- Inconsistent rate storage patterns
+- Some are history tables, some are current state
+
+**Resolution:**
+- KEEP all rate tables (serve different purposes)
+- STANDARDIZE: Add `effective_from`, `effective_to` to all
+- ADD: `rate_type` enum to distinguish hourly/daily/annual
+
+### 2.6 🟡 DUPLICATE: Skills Tables
+
+**Problem:** Multiple skill tracking approaches:
+
+| Table | Location | Purpose |
+|-------|----------|---------|
+| `skills` | `ats.ts` | Master skills taxonomy |
+| `skill_aliases` | `ats.ts` | Skill synonyms |
+| `candidate_skills` | `ats.ts` | Candidate skill mappings |
+| `job_skills` | `ats.ts` | Job required skills |
+| `job_order_skills` | `bench.ts` | Job order skills |
+| `consultant_skills_matrix` | `bench.ts` | Bench consultant skills |
+
+**Impact:**
+- `consultant_skills_matrix` duplicates purpose of `candidate_skills`
+- Different proficiency tracking approaches
+
+**Resolution:**
+```
+KEEP skills, skill_aliases - Master taxonomy
+KEEP candidate_skills - Unified candidate-skill junction
+MIGRATE consultant_skills_matrix → candidate_skills (add proficiency fields)
+KEEP job_skills, job_order_skills - Job requirement junction
+```
+
+### 2.7 🟡 DUPLICATE: Availability Tables
+
+**Problem:** Multiple availability tracking:
+
+| Table | Location | Purpose |
+|-------|----------|---------|
+| `candidate_availability` | `ats.ts` | Candidate availability |
+| `consultant_availability` | `bench.ts` | Bench consultant availability |
+
+**Impact:**
+- Bench consultants are candidates
+- Duplicate data for same person
+
+**Resolution:**
+```
+KEEP candidate_availability - Unified availability
+MIGRATE consultant_availability data
+ADD: is_bench_consultant flag or use bench_consultants linking table
+```
+
+### 2.8 🟡 DUPLICATE: Work Authorization Tables
+
+**Problem:** Multiple visa/work auth tracking:
+
+| Table | Location | Purpose |
+|-------|----------|---------|
+| `candidate_work_authorizations` | `ats.ts` | Candidate work auth |
+| `consultant_visa_details` | `bench.ts` | Detailed visa info |
+| `consultant_work_authorization` | `bench.ts` | Work auth documents |
+
+**Impact:**
+- Overlapping visa tracking
+- Different detail levels
+
+**Resolution:**
+```
+MERGE into unified work_authorizations table:
+- candidate_id (FK to user_profiles)
+- visa_type, visa_status, expiry_date (from consultant_visa_details)
+- document_url, verified_by, verified_at (from consultant_work_authorization)
+- lca_status, employer_of_record (from consultant_visa_details)
+```
+
+---
+
+## 3. Schema Inconsistencies
+
+### 3.1 Audit Field Inconsistencies
+
+**Standard Pattern (Expected):**
+```typescript
+createdAt: timestamp('created_at').defaultNow().notNull()
+updatedAt: timestamp('updated_at').defaultNow().notNull()
+createdBy: uuid('created_by').references(() => userProfiles.id)
+updatedBy: uuid('updated_by').references(() => userProfiles.id)
+deletedAt: timestamp('deleted_at')
+```
+
+**Tables MISSING audit fields:**
+
+| Table | Missing Fields | Priority |
+|-------|----------------|----------|
+| `skill_aliases` | all audit fields | Low |
+| `job_requirements` | all audit fields | Medium |
+| `job_screening_questions` | all audit fields | Low |
+| `candidate_certifications` | updatedBy | Low |
+| `candidate_references` | updatedBy | Low |
+| `interview_participants` | all audit fields | Medium |
+| `interview_feedback` | updatedBy | Medium |
+| `offer_terms` | updatedBy | Low |
+| `placement_milestones` | updatedBy | Low |
+| `pattern_fields` | updatedBy | Low |
+| `pattern_checklist_items` | updatedBy | Low |
+| `activity_checklist_items` | updatedBy | Low |
+| `activity_field_values` | createdBy, updatedBy | Medium |
+| `queue_items` | createdBy, updatedBy | Medium |
+
+### 3.2 org_id Inconsistencies
+
+**Tables MISSING org_id (Multi-tenancy violation):**
+
+| Table | Issue | Priority |
+|-------|-------|----------|
+| `skill_aliases` | No org_id - global? | Low (intentional) |
+| `pattern_fields` | No org_id - inherited from pattern | Low |
+| `pattern_checklist_items` | No org_id - inherited from pattern | Low |
+| `activity_field_values` | No org_id - inherited from activity | Low |
+| `activity_checklist_items` | No org_id - inherited from activity | Low |
+
+**Note:** Some tables inherit org_id through parent relationship. This is acceptable IF:
+- RLS policy exists on parent table
+- Application always loads through parent
+
+### 3.3 Soft Delete Inconsistencies
+
+**Tables MISSING deletedAt:**
+
+| Table | Has deletedAt | Should Have |
+|-------|---------------|-------------|
+| `skills` | ❌ | ✅ Yes |
+| `jobs` | ✅ | ✅ |
+| `submissions` | ❌ | ✅ Yes (critical) |
+| `interviews` | ❌ | ✅ Yes |
+| `offers` | ❌ | ✅ Yes |
+| `activities` | ✅ | ✅ |
+| Most academy tables | ✅ | ✅ |
+
+### 3.4 Foreign Key Naming Inconsistencies
+
+**Pattern 1 (Preferred):** `snake_case_id`
+```typescript
+accountId: uuid('account_id')
+```
+
+**Pattern 2 (Legacy):** `camelCaseId` in some places
+```typescript
+userId: uuid('user_id') // Good
+candidateId: uuid('candidate_id') // Good
+```
+
+**Inconsistent Examples:**
+- `bench.ts`: Uses `consultantId` (camelCase in Drizzle)
+- `ats.ts`: Mixes patterns
+
+### 3.5 Timestamp Field Inconsistencies
+
+**With Timezone (Correct):**
+```typescript
+timestamp('created_at', { withTimezone: true })
+```
+
+**Without Timezone (Incorrect):**
+```typescript
+timestamp('created_at') // Missing withTimezone
+```
+
+**Tables with inconsistent timestamps:**
+- `academy.ts` - All timestamps missing `withTimezone: true`
+- Fix: Add `{ withTimezone: true }` to all academy timestamps
+
+---
+
+## 4. Missing Tables & Features
+
+### 4.1 Missing from Spec (Per USER-ROLES/PERMISSIONS-MATRIX)
+
+| Table | Module | Purpose | Priority |
+|-------|--------|---------|----------|
+| `client_portal_settings` | Portal | Client portal configuration | High |
+| `candidate_portal_settings` | Portal | Candidate portal configuration | High |
+| `salary_bands` | HR | Compensation bands per role | Medium |
+| `expense_reports` | HR | Employee expense tracking | Medium |
+| `expense_items` | HR | Expense line items | Medium |
+| `approval_workflows` | System | Configurable approval chains | High |
+| `approval_instances` | System | Runtime approval state | High |
+| `rate_cards` | CRM | Client rate card agreements | Medium |
+| `client_preferences` | CRM | Preferred vendors, skills | Medium |
+
+### 4.2 Missing Cross-Pillar Tables
+
+| Table | Purpose | Links To | Priority |
+|-------|---------|----------|----------|
+| `cross_pillar_leads` | Training → Recruiting opportunities | leads, enrollments | Medium |
+| `graduate_candidates` | Academy → ATS auto-creation | user_profiles | High |
+| `placement_pod_credits` | Pod performance tracking | placements, pods | High |
+
+### 4.3 Missing Supporting Tables
+
+| Table | Purpose | Priority |
+|-------|---------|----------|
+| `interview_types` | Interview type definitions | Low |
+| `offer_approval_chain` | Offer approval workflow | Medium |
+| `placement_approval_chain` | Placement approval workflow | Medium |
+| `submission_screening_results` | Screening question responses | Medium |
+| `candidate_notes` | Internal recruiter notes | Medium |
+| `job_notes` | Job-specific notes | Medium |
+
+### 4.4 Missing Indexes (Performance)
+
+**Critical Missing Indexes:**
+
+```sql
+-- activities table
+CREATE INDEX idx_activities_org_status ON activities(org_id, status);
+CREATE INDEX idx_activities_entity ON activities(entity_type, entity_id);
+CREATE INDEX idx_activities_due_date ON activities(due_date) WHERE status IN ('scheduled', 'open');
+
+-- submissions table
+CREATE INDEX idx_submissions_job_status ON submissions(job_id, status);
+CREATE INDEX idx_submissions_candidate ON submissions(candidate_id);
+
+-- object_owners (RACI)
+CREATE INDEX idx_object_owners_entity ON object_owners(entity_type, entity_id);
+CREATE INDEX idx_object_owners_user ON object_owners(user_id);
+
+-- leads
+CREATE INDEX idx_leads_owner_status ON leads(owner_id, status);
+CREATE INDEX idx_leads_account ON leads(account_id);
+
+-- deals
+CREATE INDEX idx_deals_account_stage ON deals(account_id, stage);
+```
+
+---
+
+## 5. Multi-Tenancy & RLS Gaps
+
+### 5.1 Tables Missing RLS Policies
+
+Based on analysis of migrations, the following tables need RLS policies:
+
+**CRITICAL (Contains sensitive data):**
+
+| Table | Status | Fix Priority |
+|-------|--------|--------------|
+| `activities` | ⚠️ May be missing | 🔴 High |
+| `activity_history` | ⚠️ May be missing | 🔴 High |
+| `submissions` | ⚠️ Check migration | 🔴 High |
+| `offers` | ⚠️ Check migration | 🔴 High |
+| `placements` | ⚠️ Check migration | 🔴 High |
+| `candidate_work_authorizations` | ⚠️ Check migration | 🔴 High |
+
+**MEDIUM (Business data):**
+
+| Table | Status | Fix Priority |
+|-------|--------|--------------|
+| `job_orders` | ⚠️ Check | 🟡 Medium |
+| `contacts` | ⚠️ Check | 🟡 Medium |
+| `object_owners` | ⚠️ Check | 🟡 Medium |
+| All workplan tables | ⚠️ Check | 🟡 Medium |
+
+### 5.2 RLS Policy Template
+
+For each table with `org_id`, apply:
+
+```sql
+-- Enable RLS
+ALTER TABLE [table_name] ENABLE ROW LEVEL SECURITY;
+
+-- Basic org isolation
+CREATE POLICY "org_isolation_[table_name]" ON [table_name]
+  FOR ALL
+  USING (org_id = (auth.jwt() ->> 'org_id')::uuid);
+
+-- Admin bypass (optional)
+CREATE POLICY "admin_bypass_[table_name]" ON [table_name]
+  FOR ALL
+  USING (EXISTS (
+    SELECT 1 FROM user_profiles up
+    WHERE up.id = auth.uid()
+    AND up.role IN ('admin', 'super_admin')
+  ));
+```
+
+### 5.3 Child Tables RLS
+
+For tables that inherit org_id through parent:
+
+```sql
+-- Example: activity_history inherits org_id from activities
+CREATE POLICY "activity_history_through_parent" ON activity_history
+  FOR ALL
+  USING (EXISTS (
+    SELECT 1 FROM activities a
+    WHERE a.id = activity_history.activity_id
+    AND a.org_id = (auth.jwt() ->> 'org_id')::uuid
+  ));
+```
+
+---
+
+## 6. Enum Conflicts & Standardization
+
+### 6.1 Enum Naming Conflicts
+
+**Problem:** Multiple enums with similar purposes but different names:
+
+| Concept | Enum 1 | Enum 2 | Location |
+|---------|--------|--------|----------|
+| Job Status | `jobStatusEnum` | `jobOrderStatusEnum` | ats.ts, bench.ts |
+| Priority | `jobOrderPriorityEnum` (5 values) | `activityPriorityEnum` (4 values) | workspace.ts, activities.ts |
+| Status | Multiple `*StatusEnum` | Inconsistent values | Various |
+
+### 6.2 Enum Value Standardization
+
+**Priority Enum (Standardize to):**
+```typescript
+export const priorityEnum = pgEnum('priority', [
+  'low',
+  'normal',    // or 'medium'
+  'high',
+  'urgent',
+  'critical',  // optional
+]);
+```
+
+**Activity Status (Standardize):**
+```typescript
+export const activityStatusEnum = pgEnum('activity_status', [
+  'scheduled',
+  'open',
+  'in_progress',
+  'completed',
+  'skipped',
+  'cancelled',
+  'blocked',    // Add if needed
+]);
+```
+
+### 6.3 Text Fields That Should Be Enums
+
+| Table | Field | Current | Should Be |
+|-------|-------|---------|-----------|
+| `jobs` | `job_type` | text | enum |
+| `jobs` | `employment_type` | text | enum |
+| `jobs` | `work_mode` | text | enum |
+| `submissions` | `status` | text | enum |
+| `leads` | `status` | text | enum |
+| `deals` | `stage` | text | enum |
+
+---
+
+## 7. Consolidation Plan
+
+### 7.1 Phase 1: Critical Fixes (Week 1)
+
+#### 7.1.1 Delete Orphaned Schema File
+```bash
+# Remove duplicate activities.ts
+rm src/lib/db/schema/activities.ts
+
+# Update index.ts to not export from activities.ts
+# The canonical activities table is in workplan.ts
+```
+
+#### 7.1.2 Fix Activities Export Conflict
+```typescript
+// In src/lib/db/schema/index.ts
+// Remove: export * from './activities';
+// Keep workplan.ts exports for activities
+```
+
+#### 7.1.3 Rename Conflicting Tables
+```sql
+-- Migration: rename_bench_job_orders.sql
+ALTER TABLE job_orders RENAME TO external_job_orders;
+-- Update all FK references
+```
+
+### 7.2 Phase 2: Merge Duplicates (Week 2)
+
+#### 7.2.1 Contacts Consolidation
+```sql
+-- Migration: consolidate_contacts.sql
+
+-- 1. Add contact_type to contacts if not exists
+ALTER TABLE contacts ADD COLUMN IF NOT EXISTS contact_type text DEFAULT 'general';
+
+-- 2. Migrate crm_contacts to contacts
+INSERT INTO contacts (
+  org_id, contact_type, first_name, last_name, email, phone, ...
+)
+SELECT 
+  org_id, 'crm', first_name, last_name, email, phone, ...
+FROM crm_contacts
+ON CONFLICT (email, org_id) DO UPDATE SET 
+  updated_at = NOW(),
+  -- merge fields
+;
+
+-- 3. Migrate point_of_contacts
+INSERT INTO contacts (
+  org_id, contact_type, first_name, last_name, email, phone, company_id, ...
+)
+SELECT 
+  org_id, 'client_poc', first_name, last_name, email, phone, account_id, ...
+FROM point_of_contacts
+ON CONFLICT (email, org_id) DO UPDATE SET 
+  contact_type = 'client_poc',
+  updated_at = NOW()
+;
+
+-- 4. Update FKs that reference old tables
+-- 5. Drop old tables (after validation)
+```
+
+#### 7.2.2 Skills Consolidation
+```sql
+-- Migration: consolidate_skills.sql
+
+-- Add proficiency tracking to candidate_skills
+ALTER TABLE candidate_skills 
+  ADD COLUMN IF NOT EXISTS proficiency_level integer,
+  ADD COLUMN IF NOT EXISTS years_experience numeric(4,1),
+  ADD COLUMN IF NOT EXISTS last_used_date date,
+  ADD COLUMN IF NOT EXISTS is_certified boolean DEFAULT false,
+  ADD COLUMN IF NOT EXISTS certification_name text,
+  ADD COLUMN IF NOT EXISTS certification_expiry date;
+
+-- Migrate from consultant_skills_matrix
+INSERT INTO candidate_skills (
+  candidate_id, skill_id, proficiency_level, years_experience, ...
+)
+SELECT 
+  bc.candidate_id, csm.skill_id, csm.proficiency_level, csm.years_experience, ...
+FROM consultant_skills_matrix csm
+JOIN bench_consultants bc ON bc.id = csm.consultant_id
+ON CONFLICT (candidate_id, skill_id) DO UPDATE SET
+  proficiency_level = EXCLUDED.proficiency_level,
+  years_experience = EXCLUDED.years_experience,
+  updated_at = NOW()
+;
+```
+
+### 7.3 Phase 3: Add Missing Tables (Week 3)
+
+#### 7.3.1 Approval Workflows
+```typescript
+// src/lib/db/schema/approvals.ts
+
+export const approvalWorkflows = pgTable('approval_workflows', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id),
+  
+  name: text('name').notNull(),
+  entityType: text('entity_type').notNull(), // 'submission', 'offer', 'placement'
+  
+  // Steps (JSONB array of {step, approvers, conditions})
+  steps: jsonb('steps').$type<ApprovalStep[]>(),
+  
+  isActive: boolean('is_active').default(true),
+  
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
+});
+
+export const approvalInstances = pgTable('approval_instances', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id),
+  
+  workflowId: uuid('workflow_id').notNull().references(() => approvalWorkflows.id),
+  entityType: text('entity_type').notNull(),
+  entityId: uuid('entity_id').notNull(),
+  
+  currentStep: integer('current_step').default(1),
+  status: text('status').default('pending'), // 'pending', 'approved', 'rejected'
+  
+  requestedBy: uuid('requested_by').references(() => userProfiles.id),
+  requestedAt: timestamp('requested_at', { withTimezone: true }),
+  completedAt: timestamp('completed_at', { withTimezone: true }),
+  
+  history: jsonb('history'), // Array of approval actions
+  
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+});
+```
+
+#### 7.3.2 Cross-Pillar Integration
+```typescript
+// src/lib/db/schema/cross-pillar.ts
+
+export const graduateCandidates = pgTable('graduate_candidates', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id),
+  
+  // Link to enrollment
+  enrollmentId: uuid('enrollment_id').references(() => studentEnrollments.id),
+  courseId: uuid('course_id').references(() => courses.id),
+  
+  // Generated candidate profile
+  candidateId: uuid('candidate_id').references(() => userProfiles.id),
+  
+  // Graduation data
+  graduatedAt: timestamp('graduated_at', { withTimezone: true }),
+  finalGrade: integer('final_grade'),
+  certificateId: uuid('certificate_id'),
+  
+  // Cross-pillar status
+  addedToBench: boolean('added_to_bench').default(false),
+  benchConsultantId: uuid('bench_consultant_id'),
+  
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+});
+
+export const placementCredits = pgTable('placement_credits', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id),
+  
+  placementId: uuid('placement_id').references(() => placements.id),
+  
+  // Credit distribution
+  recruiterId: uuid('recruiter_id').references(() => userProfiles.id),
+  recruiterCreditPercent: numeric('recruiter_credit_percent'),
+  
+  accountManagerId: uuid('account_manager_id').references(() => userProfiles.id),
+  amCreditPercent: numeric('am_credit_percent'),
+  
+  sourcerId: uuid('sourcer_id').references(() => userProfiles.id),
+  sourcerCreditPercent: numeric('sourcer_credit_percent'),
+  
+  // Pod credit
+  podId: uuid('pod_id').references(() => pods.id),
+  sprintId: text('sprint_id'), // e.g., "2025-W49"
+  
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+});
+```
+
+### 7.4 Phase 4: RLS & Security (Week 4)
+
+#### 7.4.1 Comprehensive RLS Migration
+```sql
+-- Migration: add_comprehensive_rls.sql
+
+-- 1. Activities
+ALTER TABLE activities ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "activities_org_isolation" ON activities
+  FOR ALL USING (org_id = (auth.jwt() ->> 'org_id')::uuid);
+
+CREATE POLICY "activities_own_or_assigned" ON activities
+  FOR SELECT USING (
+    org_id = (auth.jwt() ->> 'org_id')::uuid
+    AND (
+      assigned_to = auth.uid()
+      OR created_by = auth.uid()
+      OR EXISTS (
+        SELECT 1 FROM object_owners oo
+        WHERE oo.entity_type = 'activity'
+        AND oo.entity_id = activities.id
+        AND oo.user_id = auth.uid()
+      )
+    )
+  );
+
+-- 2. Submissions
+ALTER TABLE submissions ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "submissions_org_isolation" ON submissions
+  FOR ALL USING (org_id = (auth.jwt() ->> 'org_id')::uuid);
+
+-- ... (repeat for all sensitive tables)
+```
+
+---
+
+## 8. Migration Strategy
+
+### 8.1 Migration Order
+
+```
+1. Schema cleanup (delete orphans, rename conflicts)
+   ↓
+2. Add missing columns to existing tables
+   ↓
+3. Create new supporting tables
+   ↓
+4. Data migration (duplicates → canonical)
+   ↓
+5. Add/fix RLS policies
+   ↓
+6. Drop deprecated tables
+   ↓
+7. Add indexes
+```
+
+### 8.2 Rollback Strategy
+
+Each migration should have a corresponding rollback:
+
+```sql
+-- up: 001_rename_bench_job_orders.sql
+ALTER TABLE job_orders RENAME TO external_job_orders;
+
+-- down: 001_rename_bench_job_orders_rollback.sql
+ALTER TABLE external_job_orders RENAME TO job_orders;
+```
+
+### 8.3 Data Validation Queries
+
+Run before and after each phase:
+
+```sql
+-- Validate org isolation
+SELECT table_name, count(*) as orphans
+FROM information_schema.tables t
+LEFT JOIN (
+  SELECT DISTINCT tablename FROM pg_policies
+) p ON t.table_name = p.tablename
+WHERE t.table_schema = 'public'
+AND p.tablename IS NULL
+GROUP BY table_name;
+
+-- Validate audit fields
+SELECT table_name
+FROM information_schema.columns
+WHERE table_schema = 'public'
+AND column_name = 'org_id'
+AND table_name NOT IN (
+  SELECT table_name FROM information_schema.columns
+  WHERE column_name = 'created_at'
+);
+```
+
+---
+
+## 9. Implementation Phases
+
+### Phase 1: Critical Fixes (Immediate - Week 1)
+
+| Task | Files | Priority | Estimated Hours |
+|------|-------|----------|-----------------|
+| Delete orphaned `activities.ts` | Schema | 🔴 | 1 |
+| Fix `index.ts` exports | Schema | 🔴 | 1 |
+| Rename `job_orders` in bench | Migration + Schema | 🔴 | 4 |
+| Add missing `org_id` to any tables | Migration | 🔴 | 2 |
+| **Total** | | | **8 hours** |
+
+### Phase 2: Merge Duplicates (Week 2)
+
+| Task | Files | Priority | Estimated Hours |
+|------|-------|----------|-----------------|
+| Merge contacts tables | Migration | 🟡 | 8 |
+| Merge skills tracking | Migration | 🟡 | 4 |
+| Merge availability tables | Migration | 🟡 | 2 |
+| Merge work authorization | Migration | 🟡 | 4 |
+| Update Drizzle schemas | Schema | 🟡 | 4 |
+| Update tRPC routers | Server | 🟡 | 8 |
+| **Total** | | | **30 hours** |
+
+### Phase 3: Add Missing Features (Week 3)
+
+| Task | Files | Priority | Estimated Hours |
+|------|-------|----------|-----------------|
+| Approval workflows schema | Schema | 🟡 | 4 |
+| Approval workflows migration | Migration | 🟡 | 4 |
+| Cross-pillar tables | Schema + Migration | 🟡 | 6 |
+| Portal settings tables | Schema + Migration | 🟡 | 4 |
+| Add missing indexes | Migration | 🟡 | 2 |
+| **Total** | | | **20 hours** |
+
+### Phase 4: Security & Cleanup (Week 4)
+
+| Task | Files | Priority | Estimated Hours |
+|------|-------|----------|-----------------|
+| Comprehensive RLS audit | Analysis | 🔴 | 4 |
+| Add RLS policies migration | Migration | 🔴 | 8 |
+| Test RLS policies | Testing | 🔴 | 8 |
+| Drop deprecated tables | Migration | 🟡 | 2 |
+| Final validation | Testing | 🟡 | 4 |
+| **Total** | | | **26 hours** |
+
+### Total Estimated Effort
+
+| Phase | Hours | Team |
+|-------|-------|------|
+| Phase 1 | 8 | Database Architect |
+| Phase 2 | 30 | Database + Backend |
+| Phase 3 | 20 | Full Stack |
+| Phase 4 | 26 | Database + Security |
+| **Total** | **84 hours** | ~2 weeks focused work |
+
+---
+
+## Appendix A: Complete Table Inventory
+
+### A.1 Core Module Tables
+
+| Table | Schema File | org_id | RLS | Audit | Status |
+|-------|-------------|--------|-----|-------|--------|
+| `organizations` | organizations.ts | - | - | ✅ | ✅ |
+| `regions` | organizations.ts | ✅ | ⚠️ | ✅ | ✅ |
+| `pod_members` | organizations.ts | ✅ | ⚠️ | ✅ | ✅ |
+| `user_profiles` | user-profiles.ts | ✅ | ✅ | ✅ | ✅ |
+
+### A.2 CRM Module Tables (21 tables)
+
+| Table | org_id | RLS | Audit | Duplicate? |
+|-------|--------|-----|-------|------------|
+| `accounts` | ✅ | ⚠️ | ✅ | No |
+| `account_addresses` | via FK | ⚠️ | ✅ | No |
+| `account_contracts` | via FK | ⚠️ | ✅ | No |
+| `account_preferences` | via FK | ⚠️ | ✅ | No |
+| `account_metrics` | via FK | ⚠️ | ✅ | No |
+| `account_team` | via FK | ⚠️ | ✅ | No |
+| `crm_contacts` | ✅ | ⚠️ | ✅ | ⚠️ Yes - merge |
+| `crm_contact_preferences` | via FK | ⚠️ | ✅ | ⚠️ Yes - merge |
+| `point_of_contacts` | ✅ | ⚠️ | ✅ | ⚠️ Yes - merge |
+| `leads` | ✅ | ⚠️ | ✅ | No |
+| `lead_scores` | via FK | ⚠️ | ✅ | No |
+| `lead_qualification` | via FK | ⚠️ | ✅ | No |
+| `lead_touchpoints` | via FK | ⚠️ | ✅ | No |
+| `deals` | ✅ | ⚠️ | ✅ | No |
+| `deal_stages_history` | via FK | ⚠️ | ✅ | No |
+| `deal_stakeholders` | via FK | ⚠️ | ✅ | No |
+| `deal_competitors` | via FK | ⚠️ | ✅ | No |
+| `deal_products` | via FK | ⚠️ | ✅ | No |
+| `crm_campaigns` | ✅ | ⚠️ | ✅ | No |
+| `crm_activities` | ✅ | ⚠️ | ✅ | ⚠️ legacy |
+| `activity_log` | ✅ | ⚠️ | ✅ | ⚠️ legacy |
+
+### A.3 ATS Module Tables (35 tables)
+
+| Table | org_id | RLS | Audit | Status |
+|-------|--------|-----|-------|--------|
+| `skills` | - | - | ⚠️ | Global taxonomy |
+| `skill_aliases` | - | - | ❌ | Global |
+| `candidate_skills` | via FK | ⚠️ | ✅ | OK |
+| `jobs` | ✅ | ⚠️ | ✅ | OK |
+| `job_requirements` | via FK | ⚠️ | ❌ | Missing audit |
+| `job_skills` | via FK | ⚠️ | ✅ | OK |
+| `job_rates` | via FK | ⚠️ | ✅ | OK |
+| `job_assignments` | via FK | ⚠️ | ✅ | OK |
+| `job_screening_questions` | via FK | ⚠️ | ❌ | Missing audit |
+| `submissions` | ✅ | ⚠️ | ✅ | OK |
+| `interviews` | ✅ | ⚠️ | ✅ | OK |
+| `offers` | ✅ | ⚠️ | ✅ | OK |
+| `placements` | ✅ | ⚠️ | ✅ | OK |
+| `candidate_resumes` | via FK | ⚠️ | ✅ | OK |
+| `addresses` | via FK | ⚠️ | ✅ | Polymorphic |
+| ... | ... | ... | ... | ... |
+
+*(Full inventory continues for all ~200 tables)*
+
+---
+
+## Appendix B: SQL Templates
+
+### B.1 Add Audit Fields Migration Template
+
+```sql
+-- Template: add_audit_fields_to_[table].sql
+
+DO $$ 
+BEGIN
+  -- Add created_at if not exists
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
+    WHERE table_name = '[table]' AND column_name = 'created_at') THEN
+    ALTER TABLE [table] ADD COLUMN created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+  END IF;
+  
+  -- Add updated_at if not exists
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
+    WHERE table_name = '[table]' AND column_name = 'updated_at') THEN
+    ALTER TABLE [table] ADD COLUMN updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+  END IF;
+  
+  -- Add created_by if not exists
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
+    WHERE table_name = '[table]' AND column_name = 'created_by') THEN
+    ALTER TABLE [table] ADD COLUMN created_by UUID REFERENCES user_profiles(id);
+  END IF;
+  
+  -- Add updated_by if not exists
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
+    WHERE table_name = '[table]' AND column_name = 'updated_by') THEN
+    ALTER TABLE [table] ADD COLUMN updated_by UUID REFERENCES user_profiles(id);
+  END IF;
+END $$;
+
+-- Add updated_at trigger
+CREATE OR REPLACE TRIGGER set_[table]_updated_at
+  BEFORE UPDATE ON [table]
+  FOR EACH ROW
+  EXECUTE FUNCTION set_updated_at();
+```
+
+### B.2 RLS Policy Template
+
+```sql
+-- Template: add_rls_to_[table].sql
+
+-- Enable RLS
+ALTER TABLE [table] ENABLE ROW LEVEL SECURITY;
+
+-- Force RLS for table owner
+ALTER TABLE [table] FORCE ROW LEVEL SECURITY;
+
+-- Org isolation policy
+CREATE POLICY "[table]_org_isolation" ON [table]
+  FOR ALL
+  USING (org_id = (auth.jwt() ->> 'org_id')::uuid);
+
+-- Optional: Service role bypass
+CREATE POLICY "[table]_service_role_bypass" ON [table]
+  FOR ALL
+  USING (auth.jwt() ->> 'role' = 'service_role');
+```
+
+---
+
+## Appendix C: Drizzle Schema Templates
+
+### C.1 Standard Table Template
+
+```typescript
+// Template for new tables
+
+import { pgTable, uuid, text, timestamp, boolean } from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
+import { organizations } from './organizations';
+import { userProfiles } from './user-profiles';
+
+export const [tableName] = pgTable('[table_name]', {
+  // Primary key
+  id: uuid('id').primaryKey().defaultRandom(),
+  
+  // Multi-tenancy (REQUIRED)
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+  
+  // Business fields...
+  name: text('name').notNull(),
+  
+  // Audit trail (REQUIRED)
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  createdBy: uuid('created_by').references(() => userProfiles.id),
+  updatedBy: uuid('updated_by').references(() => userProfiles.id),
+  
+  // Soft delete (REQUIRED for business data)
+  deletedAt: timestamp('deleted_at', { withTimezone: true }),
+});
+
+export const [tableName]Relations = relations([tableName], ({ one, many }) => ({
+  organization: one(organizations, {
+    fields: [[tableName].orgId],
+    references: [organizations.id],
+  }),
+  creator: one(userProfiles, {
+    fields: [[tableName].createdBy],
+    references: [userProfiles.id],
+    relationName: '[tableName]Creator',
+  }),
+}));
+
+export type [TypeName] = typeof [tableName].$inferSelect;
+export type New[TypeName] = typeof [tableName].$inferInsert;
+```
+
+---
+
+## Revision History
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | 2025-12-01 | Database Architect | Initial comprehensive analysis |
+
+---
+
+**End of Report**
+
+*This document should be reviewed with the development team before implementation. All migrations should be tested in a staging environment first.*
+

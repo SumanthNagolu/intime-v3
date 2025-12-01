@@ -12,7 +12,7 @@ import { trpc } from '@/lib/trpc/client';
 import type {
   RCAIRoleType,
   RCAIPermissionType,
-} from '@/lib/db/schema/workspace';
+} from '@/lib/db/schema/raci';
 
 // Entity types supported by the tRPC router
 type SupportedEntityType =

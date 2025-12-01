@@ -3,30 +3,82 @@
  *
  * Reusable work authorization fields for candidates and placements.
  * Critical for staffing compliance and immigration requirements.
+ * Supports both US and Canada work authorizations.
+ * 
+ * @see docs/specs/20-USER-ROLES/00-MASTER-FRAMEWORK.md
  */
 
 import type { InputSetConfig, FieldDefinition } from '../types';
 
+// ==========================================
+// US WORK AUTHORIZATION OPTIONS
+// ==========================================
+
 /**
- * Visa/Work Authorization Status options
+ * US Visa/Work Authorization Status options
  */
-export const WORK_AUTH_STATUS_OPTIONS = [
+export const US_WORK_AUTH_OPTIONS = [
   { value: 'USC', label: 'US Citizen' },
   { value: 'GC', label: 'Green Card (Permanent Resident)' },
+  { value: 'GC_EAD', label: 'Green Card EAD (I-485 pending)' },
   { value: 'H1B', label: 'H-1B Visa' },
+  { value: 'H1B_TRANSFER', label: 'H-1B Transfer' },
   { value: 'H4EAD', label: 'H-4 EAD' },
-  { value: 'L1', label: 'L-1 Visa' },
+  { value: 'L1A', label: 'L-1A (Manager/Executive)' },
+  { value: 'L1B', label: 'L-1B (Specialized Knowledge)' },
   { value: 'L2EAD', label: 'L-2 EAD' },
   { value: 'OPT', label: 'OPT (F-1)' },
   { value: 'OPTSTE', label: 'OPT STEM Extension' },
   { value: 'CPT', label: 'CPT' },
   { value: 'TN', label: 'TN Visa' },
   { value: 'E2', label: 'E-2 Visa' },
-  { value: 'E3', label: 'E-3 Visa' },
-  { value: 'O1', label: 'O-1 Visa' },
+  { value: 'E3', label: 'E-3 Visa (Australian)' },
+  { value: 'O1', label: 'O-1 Visa (Extraordinary Ability)' },
   { value: 'EAD', label: 'EAD (Other)' },
   { value: 'OTHER', label: 'Other' },
   { value: 'NEED_SPONSORSHIP', label: 'Needs Sponsorship' },
+];
+
+// Legacy export for backwards compatibility
+export const WORK_AUTH_STATUS_OPTIONS = US_WORK_AUTH_OPTIONS;
+
+// ==========================================
+// CANADA WORK AUTHORIZATION OPTIONS
+// ==========================================
+
+/**
+ * Canada Work Authorization options
+ */
+export const CANADA_WORK_AUTH_OPTIONS = [
+  { value: 'CA_CITIZEN', label: 'Canadian Citizen' },
+  { value: 'CA_PR', label: 'Permanent Resident' },
+  { value: 'CA_WORK_PERMIT', label: 'Closed Work Permit' },
+  { value: 'CA_OWP', label: 'Open Work Permit' },
+  { value: 'CA_PGWP', label: 'Post-Graduation Work Permit' },
+  { value: 'CA_LMIA', label: 'LMIA-based Work Permit' },
+  { value: 'CA_IEC', label: 'International Experience Canada' },
+  { value: 'CA_BRIDGING_OWP', label: 'Bridging Open Work Permit' },
+  { value: 'CA_COOP', label: 'Co-op Work Permit' },
+  { value: 'CA_SPOUSAL_OWP', label: 'Spousal Open Work Permit' },
+  { value: 'CA_OTHER', label: 'Other (Canada)' },
+];
+
+/**
+ * Combined work authorization options for all countries
+ */
+export const ALL_WORK_AUTH_OPTIONS = [
+  { value: '_US_', label: '── United States ──', disabled: true },
+  ...US_WORK_AUTH_OPTIONS,
+  { value: '_CA_', label: '── Canada ──', disabled: true },
+  ...CANADA_WORK_AUTH_OPTIONS,
+];
+
+/**
+ * Country options for work authorization
+ */
+export const WORK_COUNTRY_OPTIONS = [
+  { value: 'US', label: 'United States' },
+  { value: 'CA', label: 'Canada' },
 ];
 
 /**
@@ -255,6 +307,153 @@ export const workEligibilityInputSet: InputSetConfig = {
   ],
   layout: {
     columns: 1,
+  },
+};
+
+// ==========================================
+// MULTI-COUNTRY WORK AUTHORIZATION
+// ==========================================
+
+/**
+ * Multi-country work authorization fields
+ */
+export const multiCountryWorkAuthFields: FieldDefinition[] = [
+  {
+    id: 'workAuthCountry',
+    label: 'Country',
+    type: 'enum',
+    required: true,
+    config: {
+      options: WORK_COUNTRY_OPTIONS,
+    },
+  },
+  {
+    id: 'usWorkAuth',
+    label: 'US Work Authorization',
+    type: 'enum',
+    visible: {
+      type: 'condition',
+      condition: { field: 'workAuthCountry', operator: 'eq', value: 'US' },
+    },
+    config: {
+      options: US_WORK_AUTH_OPTIONS,
+    },
+  },
+  {
+    id: 'canadaWorkAuth',
+    label: 'Canada Work Authorization',
+    type: 'enum',
+    visible: {
+      type: 'condition',
+      condition: { field: 'workAuthCountry', operator: 'eq', value: 'CA' },
+    },
+    config: {
+      options: CANADA_WORK_AUTH_OPTIONS,
+    },
+  },
+  {
+    id: 'workAuthExpiry',
+    label: 'Authorization Expiry Date',
+    type: 'date',
+    description: 'Leave blank for permanent status (Citizen, PR)',
+  },
+  {
+    id: 'sponsorshipRequired',
+    label: 'Sponsorship Required',
+    type: 'boolean',
+    description: 'Does this candidate need work visa sponsorship?',
+  },
+  {
+    id: 'currentSponsor',
+    label: 'Current Sponsoring Employer',
+    type: 'text',
+    description: 'For H1B transfers and employer-specific permits',
+    visible: {
+      type: 'condition',
+      condition: { field: 'sponsorshipRequired', operator: 'eq', value: false },
+    },
+  },
+];
+
+/**
+ * Multi-country Work Authorization InputSet
+ */
+export const multiCountryWorkAuthInputSet: InputSetConfig = {
+  id: 'multi-country-workauth',
+  label: 'Work Authorization',
+  description: 'Work authorization for US and Canada',
+  fields: multiCountryWorkAuthFields,
+  layout: {
+    columns: 2,
+    fieldLayout: [
+      { fieldId: 'workAuthCountry', colSpan: 2 },
+      { fieldId: 'usWorkAuth', colSpan: 1 },
+      { fieldId: 'canadaWorkAuth', colSpan: 1 },
+      { fieldId: 'workAuthExpiry', colSpan: 1 },
+      { fieldId: 'sponsorshipRequired', colSpan: 1 },
+      { fieldId: 'currentSponsor', colSpan: 2 },
+    ],
+  },
+};
+
+/**
+ * Canada-specific work authorization InputSet
+ */
+export const canadaWorkAuthInputSet: InputSetConfig = {
+  id: 'canada-workauth',
+  label: 'Canada Work Authorization',
+  description: 'Work authorization status for Canada',
+  fields: [
+    {
+      id: 'canadaWorkAuthType',
+      label: 'Work Authorization',
+      type: 'enum',
+      required: true,
+      config: {
+        options: CANADA_WORK_AUTH_OPTIONS,
+      },
+    },
+    {
+      id: 'workPermitExpiry',
+      label: 'Work Permit Expiry',
+      type: 'date',
+      visible: {
+        type: 'condition',
+        condition: {
+          field: 'canadaWorkAuthType',
+          operator: 'in',
+          value: ['CA_WORK_PERMIT', 'CA_OWP', 'CA_PGWP', 'CA_LMIA', 'CA_IEC', 'CA_BRIDGING_OWP', 'CA_COOP', 'CA_SPOUSAL_OWP'],
+        },
+      },
+    },
+    {
+      id: 'lmiaRequired',
+      label: 'LMIA Required for New Employment',
+      type: 'boolean',
+      visible: {
+        type: 'condition',
+        condition: {
+          field: 'canadaWorkAuthType',
+          operator: 'in',
+          value: ['CA_WORK_PERMIT', 'CA_LMIA'],
+        },
+      },
+    },
+    {
+      id: 'prApplicationPending',
+      label: 'PR Application Pending',
+      type: 'boolean',
+      description: 'Is permanent residency application in progress?',
+    },
+  ],
+  layout: {
+    columns: 2,
+    fieldLayout: [
+      { fieldId: 'canadaWorkAuthType', colSpan: 2 },
+      { fieldId: 'workPermitExpiry', colSpan: 1 },
+      { fieldId: 'lmiaRequired', colSpan: 1 },
+      { fieldId: 'prApplicationPending', colSpan: 2 },
+    ],
   },
 };
 

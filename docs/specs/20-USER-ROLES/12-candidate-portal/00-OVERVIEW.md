@@ -786,7 +786,7 @@ interface RateLocalization {
 
 - [01-portal-onboarding.md](./01-portal-onboarding.md) - Registration and onboarding flows
 - [02-manage-profile.md](./02-manage-profile.md) - Profile management capabilities
-- [03-search-apply-jobs.md](./03-search-apply-jobs.md) - Job discovery and application
-- [04-track-applications.md](./04-track-applications.md) - Application tracking
-- [05-manage-assignment.md](./05-manage-assignment.md) - Assignment management (consultants)
-- [06-submit-timesheets.md](./06-submit-timesheets.md) - Timesheet submission workflows
+- [03-view-submissions.md](./03-view-submissions.md) - Application tracking
+- [04-prepare-interview.md](./04-prepare-interview.md) - Interview preparation
+- [05-manage-placement.md](./05-manage-placement.md) - Placement management (consultants)
+- [06-search-apply-jobs.md](./06-search-apply-jobs.md) - Job search and application

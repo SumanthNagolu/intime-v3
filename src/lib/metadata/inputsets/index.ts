@@ -94,9 +94,16 @@ export {
   workAuthInputSet,
   visaDetailsInputSet,
   workEligibilityInputSet,
+  multiCountryWorkAuthInputSet,
+  canadaWorkAuthInputSet,
   workAuthFields,
   visaDetailsFields,
+  multiCountryWorkAuthFields,
   WORK_AUTH_STATUS_OPTIONS,
+  US_WORK_AUTH_OPTIONS,
+  CANADA_WORK_AUTH_OPTIONS,
+  ALL_WORK_AUTH_OPTIONS,
+  WORK_COUNTRY_OPTIONS,
 } from './workauth.inputset';
 
 // ==========================================
@@ -116,6 +123,86 @@ export {
 } from './interview.inputset';
 
 // ==========================================
+// RATE CARD INPUT SETS
+// ==========================================
+
+export {
+  rateCardInputSet,
+  rateRangeInputSet,
+  desiredRateInputSet,
+  overtimeRateInputSet,
+  rateCardFields,
+  rateRangeFields,
+  desiredRateFields,
+  overtimeRateFields,
+  RATE_TYPE_OPTIONS,
+  RATE_CURRENCY_OPTIONS,
+} from './ratecard.inputset';
+
+// ==========================================
+// AVAILABILITY INPUT SETS
+// ==========================================
+
+export {
+  availabilityInputSet,
+  simpleAvailabilityInputSet,
+  placementAvailabilityInputSet,
+  availabilityFields,
+  simpleAvailabilityFields,
+  placementAvailabilityFields,
+  AVAILABILITY_STATUS_OPTIONS,
+  NOTICE_PERIOD_OPTIONS,
+  WORK_MODE_OPTIONS,
+  EMPLOYMENT_TYPE_OPTIONS as AVAILABILITY_EMPLOYMENT_TYPE_OPTIONS,
+  TRAVEL_PERCENT_OPTIONS,
+} from './availability.inputset';
+
+// ==========================================
+// TIMELINE INPUT SETS
+// ==========================================
+
+export {
+  timelineFilterInputSet,
+  quickLogActivityInputSet,
+  scheduleActivityInputSet,
+  activityBadgeInputSet,
+  timelineFilterFields,
+  quickLogActivityFields,
+  scheduleActivityFields,
+  activityBadgeFields,
+  TIMELINE_ENTRY_TYPE_OPTIONS,
+  ACTIVITY_TYPE_OPTIONS,
+  ACTIVITY_STATUS_OPTIONS,
+  ACTIVITY_OUTCOME_OPTIONS,
+  ACTIVITY_PRIORITY_OPTIONS,
+  DIRECTION_OPTIONS,
+  DATE_RANGE_OPTIONS,
+  REMINDER_OPTIONS,
+} from './timeline.inputset';
+
+// ==========================================
+// RACI INPUT SETS
+// ==========================================
+
+export {
+  raciAssignmentInputSet,
+  raciDisplayInputSet,
+  quickOwnerChangeInputSet,
+  bulkRaciInputSet,
+  raciMatrixInputSet,
+  raciAssignmentFields,
+  raciDisplayFields,
+  quickOwnerChangeFields,
+  bulkRaciFields,
+  raciMatrixFields,
+  RACI_ROLE_OPTIONS,
+  RACI_PERMISSION_OPTIONS,
+  ASSIGNMENT_TYPE_OPTIONS,
+  OWNER_CHANGE_REASON_OPTIONS,
+  RACI_ENTITY_TYPE_OPTIONS,
+} from './raci.inputset';
+
+// ==========================================
 // INPUT SET REGISTRY
 // ==========================================
 
@@ -123,8 +210,12 @@ import { addressInputSet, usAddressInputSet, workLocationInputSet } from './addr
 import { contactInputSet, quickContactInputSet, pocInputSet, professionalLinksInputSet } from './contact.inputset';
 import { compensationInputSet, jobRateInputSet, candidateRateInputSet, placementRateInputSet } from './compensation.inputset';
 import { jobRequirementsInputSet, candidateSkillsInputSet, educationInputSet, certificationInputSet } from './skills.inputset';
-import { workAuthInputSet, visaDetailsInputSet, workEligibilityInputSet } from './workauth.inputset';
+import { workAuthInputSet, visaDetailsInputSet, workEligibilityInputSet, multiCountryWorkAuthInputSet, canadaWorkAuthInputSet } from './workauth.inputset';
 import { interviewScheduleInputSet, interviewFeedbackInputSet, quickInterviewRatingInputSet, interviewRescheduleInputSet } from './interview.inputset';
+import { rateCardInputSet, rateRangeInputSet, desiredRateInputSet, overtimeRateInputSet } from './ratecard.inputset';
+import { availabilityInputSet, simpleAvailabilityInputSet, placementAvailabilityInputSet } from './availability.inputset';
+import { timelineFilterInputSet, quickLogActivityInputSet, scheduleActivityInputSet, activityBadgeInputSet } from './timeline.inputset';
+import { raciAssignmentInputSet, raciDisplayInputSet, quickOwnerChangeInputSet, bulkRaciInputSet, raciMatrixInputSet } from './raci.inputset';
 import type { InputSetConfig } from '../types';
 
 /**
@@ -158,12 +249,38 @@ export const INPUT_SET_REGISTRY: Record<string, InputSetConfig> = {
   workauth: workAuthInputSet,
   'visa-details': visaDetailsInputSet,
   'work-eligibility': workEligibilityInputSet,
+  'multi-country-workauth': multiCountryWorkAuthInputSet,
+  'canada-workauth': canadaWorkAuthInputSet,
 
   // Interview
   'interview-schedule': interviewScheduleInputSet,
   'interview-feedback': interviewFeedbackInputSet,
   'quick-interview-rating': quickInterviewRatingInputSet,
   'interview-reschedule': interviewRescheduleInputSet,
+
+  // Rate Card
+  'rate-card': rateCardInputSet,
+  'rate-range': rateRangeInputSet,
+  'desired-rate': desiredRateInputSet,
+  'overtime-rate': overtimeRateInputSet,
+
+  // Availability
+  availability: availabilityInputSet,
+  'simple-availability': simpleAvailabilityInputSet,
+  'placement-availability': placementAvailabilityInputSet,
+
+  // Timeline
+  'timeline-filter': timelineFilterInputSet,
+  'quick-log-activity': quickLogActivityInputSet,
+  'schedule-activity': scheduleActivityInputSet,
+  'activity-badge': activityBadgeInputSet,
+
+  // RACI
+  'raci-assignment': raciAssignmentInputSet,
+  'raci-display': raciDisplayInputSet,
+  'quick-owner-change': quickOwnerChangeInputSet,
+  'bulk-raci': bulkRaciInputSet,
+  'raci-matrix': raciMatrixInputSet,
 };
 
 /**

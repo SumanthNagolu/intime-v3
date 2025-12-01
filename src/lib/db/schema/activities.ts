@@ -9,7 +9,7 @@
  * This replaces both `activity_log` and `lead_tasks` tables.
  */
 
-import { pgTable, uuid, text, timestamp, integer, pgEnum } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, timestamp, integer, pgEnum, boolean, jsonb } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { organizations } from './organizations';
 import { userProfiles } from './user-profiles';
@@ -142,11 +142,68 @@ export const activities = pgTable('activities', {
   // Note: Can't use .references() for self-ref in same table definition
   
   // ─────────────────────────────────────────────────────
+  // Auto-Activity Link
+  // ─────────────────────────────────────────────────────
+  activityPatternId: uuid('activity_pattern_id'), // Link to pattern if auto-created (FK added later)
+  isAutoCreated: boolean('is_auto_created').default(false),
+
+  // ─────────────────────────────────────────────────────
   // Audit Trail
   // ─────────────────────────────────────────────────────
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
   createdBy: uuid('created_by').references(() => userProfiles.id),
+});
+
+// =====================================================
+// ACTIVITY PATTERNS TABLE (For Auto-Activities)
+// =====================================================
+
+export const activityPatterns = pgTable('activity_patterns', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
+  
+  // Pattern Identity
+  patternCode: text('pattern_code').notNull().unique(), // e.g. 'CAND_SUBMITTED_FOLLOWUP'
+  name: text('name').notNull(),
+  description: text('description'),
+
+  // Trigger Configuration
+  triggerEvent: text('trigger_event').notNull(), // e.g. 'candidate.submitted'
+  triggerConditions: jsonb('trigger_conditions').$type<Array<{
+    field: string;
+    operator: 'eq' | 'ne' | 'gt' | 'lt' | 'in' | 'contains';
+    value: any;
+  }>>().default([]),
+
+  // Activity Template
+  activityType: text('activity_type').notNull(), // matches activityTypeEnum
+  subjectTemplate: text('subject_template').notNull(),
+  descriptionTemplate: text('description_template'),
+  priority: text('priority').notNull().default('medium'),
+
+  // Assignment Rule
+  assignTo: jsonb('assign_to').notNull(), // { type: 'owner' | 'role' | 'user', value?: string }
+
+  // Timing
+  dueOffsetHours: integer('due_offset_hours'),
+  dueOffsetBusinessDays: integer('due_offset_business_days'),
+  specificTime: text('specific_time'), // HH:MM
+
+  // Configuration
+  isActive: boolean('is_active').default(true),
+  isSystem: boolean('is_system').default(false),
+  canBeSkipped: boolean('can_be_skipped').default(false),
+  requiresOutcome: boolean('requires_outcome').default(true),
+
+  // SLA
+  slaWarningHours: integer('sla_warning_hours'),
+  slaBreachHours: integer('sla_breach_hours'),
+
+  // Metadata
+  tags: text('tags').array(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });
 
 // =====================================================
@@ -187,6 +244,19 @@ export const activitiesRelations = relations(activities, ({ one, many }) => ({
   followUps: many(activities, {
     relationName: 'activityFollowUps',
   }),
+  // Pattern link
+  pattern: one(activityPatterns, {
+    fields: [activities.activityPatternId],
+    references: [activityPatterns.id],
+  }),
+}));
+
+export const activityPatternsRelations = relations(activityPatterns, ({ one, many }) => ({
+  organization: one(organizations, {
+    fields: [activityPatterns.orgId],
+    references: [organizations.id],
+  }),
+  activities: many(activities),
 }));
 
 // =====================================================
@@ -195,6 +265,9 @@ export const activitiesRelations = relations(activities, ({ one, many }) => ({
 
 export type Activity = typeof activities.$inferSelect;
 export type NewActivity = typeof activities.$inferInsert;
+
+export type ActivityPattern = typeof activityPatterns.$inferSelect;
+export type NewActivityPattern = typeof activityPatterns.$inferInsert;
 
 // Status type for type safety
 export type ActivityStatus = 'scheduled' | 'open' | 'in_progress' | 'completed' | 'skipped' | 'cancelled';

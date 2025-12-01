@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/select';
 import { ActivityPanel } from '../base/ActivityPanel';
 import type { EntityType } from '@/lib/workspace/entity-registry';
-import type { RCAIEntityTypeType } from '@/lib/db/schema/workspace';
+import type { RCAIEntityTypeType } from '@/lib/db/schema/raci';
 
 // =====================================================
 // TYPES

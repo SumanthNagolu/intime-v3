@@ -1198,4 +1198,344 @@ From candidates list:
 
 ---
 
+## Backend Processing
+
+### tRPC Router Reference
+
+**File:** `src/server/routers/candidates.ts`
+**Procedure:** `candidates.create`
+**Type:** Mutation (Protected)
+
+### Input Schema (Zod)
+
+```typescript
+import { z } from 'zod';
+
+export const createCandidateInput = z.object({
+  // Personal Information
+  firstName: z.string().min(1).max(50),
+  lastName: z.string().min(1).max(50),
+  email: z.string().email().max(100),
+  phone: z.string().max(20).optional(),
+  linkedinUrl: z.string().url().optional(),
+
+  // Professional Profile
+  professionalHeadline: z.string().max(200).optional(),
+  professionalSummary: z.string().max(2000).optional(),
+  candidateSkills: z.array(z.string()).min(1).max(50),
+  candidateExperienceYears: z.number().int().min(0).max(50),
+
+  // Work Authorization
+  candidateCurrentVisa: z.enum([
+    'us_citizen', 'green_card', 'h1b', 'l1', 'tn', 'opt', 'cpt', 'ead', 'other'
+  ]),
+  visaExpiryDate: z.date().optional(),
+
+  // Availability
+  candidateAvailability: z.enum(['immediate', '2_weeks', '30_days', 'not_available']),
+  candidateLocation: z.string().min(2).max(200),
+  candidateWillingToRelocate: z.boolean().default(false),
+
+  // Rate Expectations
+  minimumHourlyRate: z.number().min(0).multipleOf(0.01).optional(),
+  candidateHourlyRate: z.number().min(0).multipleOf(0.01).optional(),
+
+  // Resume
+  resumeFileId: z.string().uuid().optional(),
+  resumeType: z.enum(['master', 'formatted', 'client_specific']).default('master'),
+
+  // Source
+  leadSource: z.enum([
+    'linkedin', 'indeed', 'dice', 'monster', 'referral', 'direct', 'agency', 'job_board', 'other'
+  ]),
+  sourceDetails: z.string().max(500).optional(),
+
+  // Advanced Fields
+  homePhone: z.string().max(20).optional(),
+  secondaryEmail: z.string().email().optional(),
+  employmentStatus: z.enum(['employed', 'unemployed', 'student', 'freelance', 'other']).optional(),
+  noticePeriod: z.number().int().min(0).max(365).optional(),
+  preferredContactMethod: z.enum(['email', 'phone', 'text', 'linkedin']).optional(),
+
+  // Hotlist
+  isOnHotlist: z.boolean().default(false),
+  hotlistNotes: z.string().max(500).optional(),
+
+  // Tags & Jobs
+  tags: z.array(z.string()).max(20).optional(),
+  associatedJobIds: z.array(z.string().uuid()).optional(),
+});
+
+export type CreateCandidateInput = z.infer<typeof createCandidateInput>;
+```
+
+### Output Schema
+
+```typescript
+export const createCandidateOutput = z.object({
+  candidateId: z.string().uuid(),
+  profileComplete: z.boolean(),
+  resumeUploaded: z.boolean(),
+  submissions: z.array(z.object({
+    submissionId: z.string().uuid(),
+    jobId: z.string().uuid(),
+    status: z.literal('sourced'),
+  })).optional(),
+});
+
+export type CreateCandidateOutput = z.infer<typeof createCandidateOutput>;
+```
+
+### Processing Steps
+
+1. **Validate Input** (~50ms)
+
+   ```typescript
+   // Check permissions
+   const hasPermission = ctx.user.permissions.includes('candidate.create');
+   if (!hasPermission) throw new TRPCError({ code: 'FORBIDDEN' });
+
+   // Validate rate range
+   if (input.candidateHourlyRate && input.minimumHourlyRate &&
+       input.candidateHourlyRate < input.minimumHourlyRate) {
+     throw new TRPCError({
+       code: 'BAD_REQUEST',
+       message: 'Target rate cannot be less than minimum rate'
+     });
+   }
+   ```
+
+2. **Check Duplicate** (~100ms)
+
+   ```sql
+   SELECT id, first_name, last_name, email, phone
+   FROM user_profiles
+   WHERE org_id = $1
+     AND (
+       LOWER(email) = LOWER($2)
+       OR (phone IS NOT NULL AND phone = $3)
+       OR (linkedin_url IS NOT NULL AND linkedin_url = $4)
+     )
+     AND role = 'candidate'
+   LIMIT 1;
+   ```
+
+3. **Create Candidate Record** (~100ms)
+
+   ```sql
+   INSERT INTO user_profiles (
+     id, org_id, role,
+     first_name, last_name, email, phone, linkedin_url,
+     professional_headline, professional_summary,
+     experience_years, current_visa, visa_expiry_date,
+     current_status, location, willing_to_relocate,
+     min_hourly_rate, hourly_rate,
+     employment_status, notice_period_days, preferred_contact_method,
+     lead_source, source_details,
+     candidate_status, is_on_hotlist, hotlist_added_at, hotlist_added_by, hotlist_notes,
+     created_at, updated_at, created_by
+   ) VALUES (
+     gen_random_uuid(), $1, 'candidate',
+     $2, $3, $4, $5, $6,
+     $7, $8,
+     $9, $10, $11,
+     $12, $13, $14,
+     $15, $16,
+     $17, $18, $19,
+     $20, $21,
+     'active', $22, CASE WHEN $22 THEN NOW() ELSE NULL END, CASE WHEN $22 THEN $23 ELSE NULL END, $24,
+     NOW(), NOW(), $23
+   ) RETURNING id;
+   ```
+
+4. **Create Skills Associations** (~50ms)
+
+   ```sql
+   INSERT INTO candidate_skills (id, candidate_id, skill_name, created_at)
+   SELECT gen_random_uuid(), $1, unnest($2::text[]), NOW();
+   ```
+
+5. **Link Resume** (~50ms)
+
+   ```sql
+   INSERT INTO candidate_resumes (
+     id, candidate_id, version, file_name, storage_path,
+     resume_type, uploaded_at, uploaded_by, created_at
+   ) VALUES (
+     gen_random_uuid(), $1, 1, $2, $3,
+     $4, NOW(), $5, NOW()
+   );
+   ```
+
+6. **Create Submissions for Jobs** (~50ms per job)
+
+   ```sql
+   INSERT INTO submissions (
+     id, org_id, job_id, candidate_id,
+     status, source, created_at, created_by
+   )
+   SELECT
+     gen_random_uuid(), $1, unnest($2::uuid[]), $3,
+     'sourced', 'manual', NOW(), $4;
+   ```
+
+7. **Add Tags** (~50ms)
+
+   ```sql
+   INSERT INTO candidate_tags (id, org_id, candidate_id, tag, created_at)
+   SELECT gen_random_uuid(), $1, $2, unnest($3::text[]), NOW()
+   ON CONFLICT (org_id, candidate_id, tag) DO NOTHING;
+   ```
+
+8. **Log Activity** (~50ms)
+
+   ```sql
+   INSERT INTO activities (
+     id, org_id, entity_type, entity_id,
+     activity_type, description, created_by, created_at, metadata
+   ) VALUES (
+     gen_random_uuid(), $1, 'candidate', $2,
+     'created', 'Candidate profile created', $3, NOW(), $4::jsonb
+   );
+   ```
+
+---
+
+## Database Schema References
+
+### Table: user_profiles (Candidate Fields)
+
+**File:** `src/lib/db/schema/core.ts`
+
+| Column | Type | Constraint | Notes |
+|--------|------|-----------|-------|
+| `id` | UUID | PK | |
+| `org_id` | UUID | FK → organizations.id, NOT NULL | |
+| `role` | ENUM | NOT NULL | 'candidate', 'employee', 'client', etc. |
+| `first_name` | VARCHAR(50) | NOT NULL | |
+| `last_name` | VARCHAR(50) | NOT NULL | |
+| `email` | VARCHAR(100) | NOT NULL, UNIQUE per org | Indexed |
+| `phone` | VARCHAR(20) | | |
+| `linkedin_url` | VARCHAR(500) | | |
+| `professional_headline` | VARCHAR(200) | | |
+| `professional_summary` | TEXT | | Max 2000 chars |
+| `experience_years` | INT | | 0-50 |
+| `current_visa` | ENUM | | See visa enum |
+| `visa_expiry_date` | DATE | | |
+| `current_status` | ENUM | | 'immediate', '2_weeks', '30_days', 'not_available' |
+| `location` | VARCHAR(200) | | |
+| `willing_to_relocate` | BOOLEAN | DEFAULT false | |
+| `min_hourly_rate` | DECIMAL(8,2) | | |
+| `hourly_rate` | DECIMAL(8,2) | | |
+| `employment_status` | ENUM | | 'employed', 'unemployed', 'student', 'freelance' |
+| `notice_period_days` | INT | | |
+| `preferred_contact_method` | ENUM | | 'email', 'phone', 'text', 'linkedin' |
+| `lead_source` | ENUM | | See source enum |
+| `source_details` | VARCHAR(500) | | |
+| `candidate_status` | ENUM | DEFAULT 'active' | 'active', 'bench', 'placed', 'inactive' |
+| `is_on_hotlist` | BOOLEAN | DEFAULT false | |
+| `hotlist_added_at` | TIMESTAMP | | |
+| `hotlist_added_by` | UUID | FK → user_profiles.id | |
+| `hotlist_notes` | VARCHAR(500) | | |
+| `created_at` | TIMESTAMP | NOT NULL | |
+| `updated_at` | TIMESTAMP | NOT NULL | |
+| `created_by` | UUID | FK → user_profiles.id | |
+
+### Table: candidate_skills
+
+| Column | Type | Constraint | Notes |
+|--------|------|-----------|-------|
+| `id` | UUID | PK | |
+| `candidate_id` | UUID | FK → user_profiles.id, NOT NULL | |
+| `skill_name` | VARCHAR(100) | NOT NULL | |
+| `years_experience` | INT | | Optional |
+| `proficiency` | ENUM | | 'beginner', 'intermediate', 'expert' |
+| `created_at` | TIMESTAMP | NOT NULL | |
+
+**Unique Constraint:** `(candidate_id, skill_name)`
+
+### Table: candidate_resumes
+
+| Column | Type | Constraint | Notes |
+|--------|------|-----------|-------|
+| `id` | UUID | PK | |
+| `candidate_id` | UUID | FK → user_profiles.id, NOT NULL | |
+| `version` | INT | NOT NULL | Auto-increment per candidate |
+| `file_name` | VARCHAR(255) | NOT NULL | |
+| `storage_path` | VARCHAR(500) | NOT NULL | Supabase storage path |
+| `resume_type` | ENUM | NOT NULL | 'master', 'formatted', 'client_specific' |
+| `file_size` | INT | | Bytes |
+| `is_archived` | BOOLEAN | DEFAULT false | |
+| `uploaded_at` | TIMESTAMP | NOT NULL | |
+| `uploaded_by` | UUID | FK → user_profiles.id | |
+| `created_at` | TIMESTAMP | NOT NULL | |
+
+### Table: candidate_tags
+
+| Column | Type | Constraint | Notes |
+|--------|------|-----------|-------|
+| `id` | UUID | PK | |
+| `org_id` | UUID | FK → organizations.id, NOT NULL | |
+| `candidate_id` | UUID | FK → user_profiles.id, NOT NULL | |
+| `tag` | VARCHAR(50) | NOT NULL | |
+| `created_at` | TIMESTAMP | NOT NULL | |
+
+**Unique Constraint:** `(org_id, candidate_id, tag)`
+
+### Indexes
+
+```sql
+-- Email uniqueness check
+CREATE UNIQUE INDEX idx_user_profiles_org_email
+  ON user_profiles(org_id, LOWER(email))
+  WHERE role = 'candidate';
+
+-- LinkedIn deduplication
+CREATE INDEX idx_user_profiles_linkedin
+  ON user_profiles(linkedin_url)
+  WHERE linkedin_url IS NOT NULL AND role = 'candidate';
+
+-- Phone deduplication
+CREATE INDEX idx_user_profiles_phone
+  ON user_profiles(phone)
+  WHERE phone IS NOT NULL AND role = 'candidate';
+
+-- Skills lookup
+CREATE INDEX idx_candidate_skills_candidate
+  ON candidate_skills(candidate_id);
+
+-- Full-text search on candidates
+CREATE INDEX idx_user_profiles_search
+  ON user_profiles USING gin(
+    to_tsvector('english',
+      coalesce(first_name, '') || ' ' ||
+      coalesce(last_name, '') || ' ' ||
+      coalesce(professional_headline, '') || ' ' ||
+      coalesce(location, '')
+    )
+  )
+  WHERE role = 'candidate';
+
+-- Hotlist quick access
+CREATE INDEX idx_user_profiles_hotlist
+  ON user_profiles(org_id, is_on_hotlist)
+  WHERE role = 'candidate' AND is_on_hotlist = true;
+```
+
+---
+
+## Resume Storage Configuration
+
+| Property | Value |
+|----------|-------|
+| Bucket | `resumes` (Supabase Storage) |
+| Access Level | Private (signed URLs required) |
+| Path Structure | `resumes/{candidateId}/v{version}-{fileHash}.{ext}` |
+| Max File Size | 10 MB |
+| Accepted Types | .pdf, .doc, .docx |
+| Retention | Indefinite |
+| Signed URL Expiry | 1 hour |
+
+---
+
 *Last Updated: 2024-11-30*

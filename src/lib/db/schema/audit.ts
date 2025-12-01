@@ -7,7 +7,7 @@
  * @module schema/audit
  */
 
-import { pgTable, uuid, text, timestamp, jsonb, inet, integer } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, timestamp, jsonb, inet, integer, boolean } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { userProfiles } from './user-profiles';
 import { organizations } from './organizations';
@@ -25,13 +25,21 @@ export const auditLogs = pgTable('audit_logs', {
   // Multi-tenancy
   orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
 
+  // Entity identification (polymorphic)
+  entityType: text('entity_type').notNull(), // 'job', 'candidate', 'submission', etc.
+  entityId: uuid('entity_id'),
+
+  // Legacy fields (for backward compatibility)
+  tableName: text('table_name'), // Deprecated: use entityType
+  recordId: uuid('record_id'),   // Deprecated: use entityId
+
   // Action metadata
-  tableName: text('table_name').notNull(),
   action: text('action').notNull(), // 'INSERT', 'UPDATE', 'DELETE', 'LOGIN', etc.
-  recordId: uuid('record_id'),
 
   // Actor information
-  userId: uuid('user_id'),
+  actorType: text('actor_type').default('user'), // 'user', 'system', 'api', 'webhook'
+  actorId: uuid('actor_id'), // User ID or system identifier
+  userId: uuid('user_id'),   // Legacy: use actorId
   userEmail: text('user_email'),
   userIpAddress: inet('user_ip_address'),
   userAgent: text('user_agent'),
@@ -47,11 +55,19 @@ export const auditLogs = pgTable('audit_logs', {
   requestPath: text('request_path'),
   requestMethod: text('request_method'),
 
+  // Correlation (for linking related events)
+  correlationId: text('correlation_id'),
+  parentAuditId: uuid('parent_audit_id'),
+
   // Metadata
   metadata: jsonb('metadata').$type<Record<string, unknown>>().default({}),
 
   // Severity
   severity: text('severity').default('info'), // 'debug', 'info', 'warning', 'error', 'critical'
+
+  // Compliance fields
+  isComplianceRelevant: boolean('is_compliance_relevant').default(false),
+  retentionCategory: text('retention_category'), // 'standard', 'extended', 'permanent'
 });
 
 // ============================================================================

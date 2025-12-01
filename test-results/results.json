@@ -1,0 +1,156 @@
+{
+  "config": {
+    "configFile": "/Users/sumanthrajkumarnagolu/Projects/intime-v3/playwright.config.ts",
+    "rootDir": "/Users/sumanthrajkumarnagolu/Projects/intime-v3/tests/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "test-results/junit.xml"
+        }
+      ],
+      [
+        "list",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/sumanthrajkumarnagolu/Projects/intime-v3/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/sumanthrajkumarnagolu/Projects/intime-v3/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/sumanthrajkumarnagolu/Projects/intime-v3/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/sumanthrajkumarnagolu/Projects/intime-v3/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/sumanthrajkumarnagolu/Projects/intime-v3/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/sumanthrajkumarnagolu/Projects/intime-v3/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/sumanthrajkumarnagolu/Projects/intime-v3/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "/Users/sumanthrajkumarnagolu/Projects/intime-v3/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/sumanthrajkumarnagolu/Projects/intime-v3/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "/Users/sumanthrajkumarnagolu/Projects/intime-v3/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/sumanthrajkumarnagolu/Projects/intime-v3/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium-accessibility",
+        "name": "chromium-accessibility",
+        "testDir": "/Users/sumanthrajkumarnagolu/Projects/intime-v3/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 6,
+    "webServer": null
+  },
+  "suites": [],
+  "errors": [
+    {
+      "message": "Error: supabaseUrl is required.",
+      "stack": "Error: supabaseUrl is required.\n    at validateSupabaseUrl (/Users/sumanthrajkumarnagolu/Projects/intime-v3/node_modules/.pnpm/@supabase+supabase-js@2.83.0/node_modules/@supabase/supabase-js/src/lib/helpers.ts:86:11)\n    at SupabaseClient (/Users/sumanthrajkumarnagolu/Projects/intime-v3/node_modules/.pnpm/@supabase+supabase-js@2.83.0/node_modules/@supabase/supabase-js/src/SupabaseClient.ts:117:40)\n    at createClient (/Users/sumanthrajkumarnagolu/Projects/intime-v3/node_modules/.pnpm/@supabase+supabase-js@2.83.0/node_modules/@supabase/supabase-js/src/index.ts:54:10)\n    at /Users/sumanthrajkumarnagolu/Projects/intime-v3/tests/e2e/sprint-1-comprehensive.test.ts:32:18",
+      "location": {
+        "file": "/Users/sumanthrajkumarnagolu/Projects/intime-v3/tests/e2e/sprint-1-comprehensive.test.ts",
+        "column": 18,
+        "line": 32
+      },
+      "snippet": "\u001b[90m   at \u001b[39msprint-1-comprehensive.test.ts:32\n\n\u001b[0m \u001b[90m 30 |\u001b[39m\n \u001b[90m 31 |\u001b[39m \u001b[90m// Create Supabase clients\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 32 |\u001b[39m \u001b[36mconst\u001b[39m supabase \u001b[33m=\u001b[39m createClient(\u001b[33mSUPABASE_URL\u001b[39m\u001b[33m,\u001b[39m \u001b[33mSUPABASE_ANON_KEY\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 33 |\u001b[39m \u001b[36mconst\u001b[39m supabaseAdmin \u001b[33m=\u001b[39m createClient(\u001b[33mSUPABASE_URL\u001b[39m\u001b[33m,\u001b[39m \u001b[33mSUPABASE_SERVICE_KEY\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 34 |\u001b[39m\n \u001b[90m 35 |\u001b[39m \u001b[90m// Test user data\u001b[39m\u001b[0m"
+    }
+  ],
+  "stats": {
+    "startTime": "2025-12-01T19:06:33.736Z",
+    "duration": 319.452,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

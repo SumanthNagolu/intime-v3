@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS lead_tasks (
 -- Enable RLS
 ALTER TABLE lead_tasks ENABLE ROW LEVEL SECURITY;
 
--- RLS Policy for org isolation
+-- RLS Policy for org isolation (drop first if exists)
+DROP POLICY IF EXISTS "lead_tasks_org_isolation" ON lead_tasks;
 CREATE POLICY "lead_tasks_org_isolation" ON lead_tasks
   FOR ALL
   USING (org_id = (SELECT org_id FROM user_profiles WHERE auth_id = auth.uid()));
@@ -106,6 +107,7 @@ CREATE TRIGGER trigger_task_completion
   BEFORE UPDATE ON lead_tasks
   FOR EACH ROW
   EXECUTE FUNCTION handle_task_completion();
+
 
 
 

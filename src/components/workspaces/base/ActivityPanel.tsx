@@ -44,7 +44,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { trpc } from '@/lib/trpc/client';
-import type { RCAIEntityTypeType } from '@/lib/db/schema/workspace';
+import type { RCAIEntityTypeType } from '@/lib/db/schema/raci';
 
 // =====================================================
 // TYPES

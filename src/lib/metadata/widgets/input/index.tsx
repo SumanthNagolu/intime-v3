@@ -921,6 +921,13 @@ export function RichtextInput({
 }
 
 // ==========================================
+// COMPOSITE INPUTS
+// ==========================================
+
+export * from './composite-inputs';
+import { compositeInputWidgets } from './composite-inputs';
+
+// ==========================================
 // EXPORT MAP
 // ==========================================
 
@@ -950,4 +957,6 @@ export const inputWidgets = {
   'entity-select': EntitySelect,
   'entity-multiselect': EntityMultiselect,
   'json-input': JsonInput,
+  // Composite inputs
+  ...compositeInputWidgets,
 } as const;

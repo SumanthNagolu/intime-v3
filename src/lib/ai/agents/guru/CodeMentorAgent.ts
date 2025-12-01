@@ -322,7 +322,6 @@ export class CodeMentorAgent extends BaseAgent<CodeMentorInput, CodeMentorOutput
   }): Promise<void> {
     try {
       const supabase = getSupabaseClient();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await (supabase.from as any)('guru_interactions').insert({
         org_id: this.config.orgId || 'default',
         student_id: data.studentId,

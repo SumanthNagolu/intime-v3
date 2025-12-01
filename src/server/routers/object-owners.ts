@@ -8,8 +8,8 @@ import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
 import {
   objectOwners,
-  RCAI_DEFAULT_PERMISSIONS,
-} from '@/lib/db/schema/workspace';
+  DEFAULT_RACI_PERMISSIONS,
+} from '@/lib/db/schema/raci';
 import { userProfiles } from '@/lib/db/schema/user-profiles';
 import { eq, and, desc, sql, SQL } from 'drizzle-orm';
 
@@ -163,7 +163,7 @@ export const objectOwnersRouter = router({
 
       // Determine permission based on role if not provided
       const permission = input.permission ||
-        RCAI_DEFAULT_PERMISSIONS[input.role as keyof typeof RCAI_DEFAULT_PERMISSIONS];
+        DEFAULT_RACI_PERMISSIONS[input.role as keyof typeof DEFAULT_RACI_PERMISSIONS];
 
       const [owner] = await db.insert(objectOwners)
         .values({
@@ -208,7 +208,7 @@ export const objectOwnersRouter = router({
         userId: assignment.userId,
         role: assignment.role,
         permission: assignment.permission ||
-          RCAI_DEFAULT_PERMISSIONS[assignment.role as keyof typeof RCAI_DEFAULT_PERMISSIONS],
+          DEFAULT_RACI_PERMISSIONS[assignment.role as keyof typeof DEFAULT_RACI_PERMISSIONS],
         assignmentType: 'manual' as const,
         assignedBy: userId,
         notes: assignment.notes,
@@ -243,7 +243,7 @@ export const objectOwnersRouter = router({
       // If role is being changed, update permission accordingly
       const updateData: Record<string, unknown> = { ...data };
       if (data.role && !data.permission) {
-        updateData.permission = RCAI_DEFAULT_PERMISSIONS[data.role as keyof typeof RCAI_DEFAULT_PERMISSIONS];
+        updateData.permission = DEFAULT_RACI_PERMISSIONS[data.role as keyof typeof DEFAULT_RACI_PERMISSIONS];
       }
 
       const [updated] = await db.update(objectOwners)
@@ -348,7 +348,7 @@ export const objectOwnersRouter = router({
         await db.update(objectOwners)
           .set({
             role: input.keepPreviousAs,
-            permission: RCAI_DEFAULT_PERMISSIONS[input.keepPreviousAs],
+            permission: DEFAULT_RACI_PERMISSIONS[input.keepPreviousAs],
             isPrimary: false,
             updatedAt: new Date(),
           })

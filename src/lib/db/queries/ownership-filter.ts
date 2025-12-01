@@ -7,7 +7,7 @@
 
 import { eq, and, or, inArray, sql, type SQL } from 'drizzle-orm';
 import { db } from '@/lib/db';
-import { objectOwners } from '@/lib/db/schema/workspace';
+import { objectOwners } from '@/lib/db/schema/raci';
 import type { OwnershipFilter } from '@/lib/validations/ownership';
 
 /**

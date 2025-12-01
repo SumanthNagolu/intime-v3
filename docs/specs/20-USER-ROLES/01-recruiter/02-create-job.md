@@ -787,6 +787,234 @@ At Step 4, if user clicks "+ New" button:
 
 ---
 
+## Backend Processing
+
+### tRPC Router Reference
+
+**File:** `src/server/routers/jobs.ts`
+**Procedure:** `jobs.create`
+**Type:** Mutation (Protected)
+
+### Input Schema (Zod)
+
+```typescript
+import { z } from 'zod';
+
+export const createJobInput = z.object({
+  title: z.string().min(3).max(200),
+  accountId: z.string().uuid(),
+  jobType: z.enum(['contract', 'permanent', 'contract_to_hire', 'temp', 'sow']),
+  location: z.string().max(200).optional(),
+  isRemote: z.boolean().default(false),
+  hybridDays: z.number().int().min(1).max(5).optional(),
+  requiredSkills: z.array(z.string()).min(1).max(20),
+  niceToHaveSkills: z.array(z.string()).max(20).optional(),
+  minExperienceYears: z.number().int().min(0).max(50).optional(),
+  maxExperienceYears: z.number().int().min(0).max(50).optional(),
+  visaRequirements: z.array(z.enum([
+    'us_citizen', 'green_card', 'h1b', 'l1', 'opt', 'tn', 'any'
+  ])).optional(),
+  description: z.string().max(5000).optional(),
+  rateMin: z.number().positive().multipleOf(0.01),
+  rateMax: z.number().positive().multipleOf(0.01).optional(),
+  rateType: z.enum(['hourly', 'daily', 'weekly', 'monthly', 'annual']),
+  positionsCount: z.number().int().min(1).max(100).default(1),
+  priority: z.enum(['low', 'normal', 'high', 'urgent', 'critical']).default('normal'),
+  urgency: z.enum(['low', 'medium', 'high', 'urgent']).default('medium'),
+  targetFillDate: z.date().optional(),
+  targetStartDate: z.date().optional(),
+  internalNotes: z.string().max(2000).optional(),
+  dealId: z.string().uuid().optional(),
+});
+
+export type CreateJobInput = z.infer<typeof createJobInput>;
+```
+
+### Output Schema
+
+```typescript
+export const createJobOutput = z.object({
+  jobId: z.string().uuid(),
+  title: z.string(),
+  status: z.literal('draft'),
+  createdAt: z.string().datetime(),
+});
+
+export type CreateJobOutput = z.infer<typeof createJobOutput>;
+```
+
+### Processing Steps
+
+1. **Validate Input** (~50ms)
+
+   ```typescript
+   // Check permissions
+   const hasPermission = ctx.user.permissions.includes('job.create');
+   if (!hasPermission) throw new TRPCError({ code: 'FORBIDDEN' });
+
+   // Validate rate range
+   if (input.rateMax && input.rateMax < input.rateMin) {
+     throw new TRPCError({
+       code: 'BAD_REQUEST',
+       message: 'Max rate must be greater than min rate'
+     });
+   }
+
+   // Validate experience range
+   if (input.maxExperienceYears && input.minExperienceYears &&
+       input.maxExperienceYears < input.minExperienceYears) {
+     throw new TRPCError({
+       code: 'BAD_REQUEST',
+       message: 'Max experience must be greater than min'
+     });
+   }
+   ```
+
+2. **Check Duplicate** (~50ms)
+
+   ```sql
+   SELECT id FROM jobs
+   WHERE org_id = $1
+     AND account_id = $2
+     AND LOWER(title) = LOWER($3)
+     AND status != 'cancelled';
+   ```
+
+3. **Create Job Record** (~100ms)
+
+   ```sql
+   INSERT INTO jobs (
+     id, org_id, account_id, title, job_type,
+     location, is_remote, hybrid_days,
+     required_skills, nice_to_have_skills,
+     min_experience_years, max_experience_years,
+     visa_requirements, description,
+     rate_min, rate_max, rate_type,
+     positions_count, priority, urgency,
+     target_fill_date, target_start_date,
+     internal_notes, deal_id,
+     status, owner_id, created_by, created_at, updated_at
+   ) VALUES (
+     gen_random_uuid(), $1, $2, $3, $4,
+     $5, $6, $7,
+     $8::text[], $9::text[],
+     $10, $11,
+     $12::text[], $13,
+     $14, $15, $16,
+     $17, $18, $19,
+     $20, $21,
+     $22, $23,
+     'draft', $24, $24, NOW(), NOW()
+   ) RETURNING id;
+   ```
+
+4. **Create RCAI Assignment** (~50ms)
+
+   ```sql
+   INSERT INTO entity_assignments (
+     id, org_id, entity_type, entity_id,
+     user_id, role, created_at
+   ) VALUES (
+     gen_random_uuid(), $1, 'job', $2,
+     $3, 'responsible', NOW()
+   );
+   ```
+
+5. **Log Activity** (~50ms)
+
+   ```sql
+   INSERT INTO activities (
+     id, org_id, entity_type, entity_id,
+     activity_type, description, created_by, created_at
+   ) VALUES (
+     gen_random_uuid(), $1, 'job', $2,
+     'created', 'Job created', $3, NOW()
+   );
+   ```
+
+---
+
+## Database Schema Reference
+
+### Table: jobs
+
+**File:** `src/lib/db/schema/ats.ts`
+
+| Column | Type | Constraint | Notes |
+|--------|------|-----------|-------|
+| `id` | UUID | PK | Auto-generated |
+| `org_id` | UUID | FK → organizations.id, NOT NULL | Multi-tenant |
+| `account_id` | UUID | FK → accounts.id, NOT NULL | Client company |
+| `deal_id` | UUID | FK → deals.id | Optional CRM deal linkage |
+| `title` | VARCHAR(200) | NOT NULL | Job title |
+| `description` | TEXT | | Full job description (max 5000) |
+| `job_type` | ENUM | NOT NULL | 'contract', 'permanent', 'contract_to_hire', 'temp', 'sow' |
+| `location` | VARCHAR(200) | | Work location |
+| `is_remote` | BOOLEAN | DEFAULT false | Remote position flag |
+| `hybrid_days` | INT | | Days per week in office (1-5) |
+| `required_skills` | TEXT[] | NOT NULL | Array of required skills |
+| `nice_to_have_skills` | TEXT[] | | Array of preferred skills |
+| `min_experience_years` | INT | | Minimum years experience |
+| `max_experience_years` | INT | | Maximum years experience |
+| `visa_requirements` | TEXT[] | | Acceptable visa statuses |
+| `rate_min` | DECIMAL(10,2) | NOT NULL | Minimum bill rate |
+| `rate_max` | DECIMAL(10,2) | | Maximum bill rate |
+| `rate_type` | ENUM | NOT NULL | 'hourly', 'daily', 'weekly', 'monthly', 'annual' |
+| `positions_count` | INT | DEFAULT 1 | Number of positions to fill |
+| `priority` | ENUM | DEFAULT 'normal' | 'low', 'normal', 'high', 'urgent', 'critical' |
+| `urgency` | ENUM | DEFAULT 'medium' | 'low', 'medium', 'high', 'urgent' |
+| `target_fill_date` | DATE | | Target date to fill position |
+| `target_start_date` | DATE | | Target candidate start date |
+| `internal_notes` | TEXT | | Internal notes (max 2000, not visible to clients) |
+| `status` | ENUM | DEFAULT 'draft' | See status enum below |
+| `owner_id` | UUID | FK → user_profiles.id | Primary owner (Responsible) |
+| `created_by` | UUID | FK → user_profiles.id | Who created the job |
+| `created_at` | TIMESTAMP | NOT NULL | |
+| `updated_at` | TIMESTAMP | NOT NULL | |
+
+**Status Enum Values:**
+- `draft` - Initial creation, not yet published
+- `open` - Actively seeking candidates
+- `on_hold` - Temporarily paused
+- `filled` - All positions filled
+- `cancelled` - No longer needed
+
+**Indexes:**
+
+```sql
+CREATE INDEX idx_jobs_org_status ON jobs(org_id, status);
+CREATE INDEX idx_jobs_account ON jobs(account_id);
+CREATE INDEX idx_jobs_owner ON jobs(owner_id);
+CREATE INDEX idx_jobs_deal ON jobs(deal_id) WHERE deal_id IS NOT NULL;
+CREATE INDEX idx_jobs_skills ON jobs USING gin(required_skills);
+```
+
+### Field Clarifications
+
+**urgency vs priority:**
+- `priority` - Used for UI display (color-coded badges, sorting)
+- `urgency` - Used for SLA calculations and automated escalations
+
+**Rate Type Usage:**
+- `hourly` - Most common for contract positions ($/hr)
+- `daily` - Day rate contracts
+- `weekly` - Rare, some government contracts
+- `monthly` - Retainer-based positions
+- `annual` - Permanent/salaried positions
+
+**Internal Notes:**
+- Only visible to internal team members
+- Not included in client-facing exports
+- Used for competitive intelligence, rate negotiation notes, etc.
+
+**Deal Linkage:**
+- Optional connection to CRM deals table
+- Used for tracking revenue attribution
+- Enables deal-to-placement revenue tracking
+
+---
+
 *Last Updated: 2024-11-30*
+
 
 
