@@ -641,6 +641,445 @@ OR
 
 ---
 
+## Backend Processing
+
+### tRPC Router Reference
+
+**File:** `src/server/routers/submissions.ts`
+**Procedure:** `submissions.submitToClient`
+**Type:** Mutation (Protected)
+
+### Input Schema (Zod)
+
+```typescript
+import { z } from 'zod';
+
+export const submitToClientInput = z.object({
+  jobId: z.string().uuid(),
+  candidateId: z.string().uuid(),
+  resumeVersionId: z.string().uuid(),
+  payRate: z.number().positive().multipleOf(0.01),
+  billRate: z.number().positive().multipleOf(0.01),
+  submissionNotes: z.string().min(50).max(1000),
+  internalNotes: z.string().max(500).optional(),
+  additionalDocumentIds: z.array(z.string().uuid()).max(5).optional(),
+  submissionMethod: z.enum(['email', 'vms', 'manual']),
+  overrideBillRate: z.boolean().optional().default(false),
+});
+
+export type SubmitToClientInput = z.infer<typeof submitToClientInput>;
+```
+
+### Output Schema
+
+```typescript
+export const submitToClientOutput = z.object({
+  submissionId: z.string().uuid(),
+  status: z.literal('submitted_to_client'),
+  submittedAt: z.string().datetime(),
+  method: z.enum(['email', 'vms', 'manual']),
+  emailSent: z.boolean().optional(),
+  vmsSubmissionId: z.string().optional(),
+});
+
+export type SubmitToClientOutput = z.infer<typeof submitToClientOutput>;
+```
+
+### Processing Steps
+
+1. **Validate Input** (~50ms)
+   ```typescript
+   // Check permissions
+   const canSubmit = await checkJobAccess(ctx.userId, input.jobId);
+   if (!canSubmit) throw new TRPCError({ code: 'FORBIDDEN' });
+
+   // Check duplicate submission
+   const existing = await db.query.submissions.findFirst({
+     where: and(
+       eq(submissions.jobId, input.jobId),
+       eq(submissions.candidateId, input.candidateId),
+       ne(submissions.status, 'withdrawn')
+     )
+   });
+   if (existing) throw new TRPCError({
+     code: 'CONFLICT',
+     message: 'Candidate already submitted to this job'
+   });
+   ```
+
+2. **Create Submission Record** (~100ms)
+   ```sql
+   INSERT INTO submissions (
+     id, org_id, job_id, candidate_id,
+     resume_version_id, pay_rate, bill_rate,
+     submission_notes, internal_notes,
+     submission_method, status,
+     submitted_to_client_at, submitted_to_client_by,
+     created_at, updated_at
+   ) VALUES (
+     gen_random_uuid(), $1, $2, $3,
+     $4, $5, $6,
+     $7, $8,
+     $9, 'submitted_to_client',
+     NOW(), $10,
+     NOW(), NOW()
+   ) RETURNING id;
+   ```
+
+3. **Link Additional Documents** (~50ms)
+   ```sql
+   INSERT INTO submission_documents (submission_id, document_id, created_at)
+   SELECT $1, unnest($2::uuid[]), NOW();
+   ```
+
+4. **Send Email (if method = 'email')** (~500ms)
+   - Generate email using template
+   - Send via email service (SendGrid/SES)
+   - Record in `email_logs` table
+
+5. **Create Follow-up Task (if method = 'manual')** (~50ms)
+   ```sql
+   INSERT INTO tasks (
+     id, org_id, title, description,
+     entity_type, entity_id,
+     assigned_to, due_at, priority, status, created_at
+   ) VALUES (
+     gen_random_uuid(), $1,
+     'Confirm external submission: ' || $2 || ' to ' || $3,
+     'Please confirm you have submitted externally',
+     'submission', $4,
+     $5, NOW() + INTERVAL '4 hours', 'high', 'pending', NOW()
+   );
+   ```
+
+6. **Log Activity** (~50ms)
+   ```sql
+   INSERT INTO activities (
+     id, org_id, entity_type, entity_id,
+     activity_type, description,
+     created_by, created_at, metadata
+   ) VALUES (
+     gen_random_uuid(), $1, 'submission', $2,
+     'submitted_to_client', 'Candidate submitted to client',
+     $3, NOW(), $4::jsonb
+   );
+   ```
+
+7. **Notify Manager** (~100ms)
+   - If manager notifications enabled, queue notification
+   - Push notification + email
+
+8. **Update Pipeline Count** (~50ms)
+   ```sql
+   UPDATE jobs
+   SET submitted_count = submitted_count + 1,
+       updated_at = NOW()
+   WHERE id = $1;
+   ```
+
+---
+
+## Database Schema References
+
+### Table: submissions
+
+**File:** `src/lib/db/schema/ats.ts`
+
+| Column | Type | Constraint | Notes |
+|--------|------|-----------|-------|
+| `id` | UUID | PK | Auto-generated |
+| `org_id` | UUID | FK → organizations.id, NOT NULL | Multi-tenant |
+| `job_id` | UUID | FK → jobs.id, NOT NULL | Target job |
+| `candidate_id` | UUID | FK → user_profiles.id, NOT NULL | Submitted candidate |
+| `resume_version_id` | UUID | FK → candidate_resumes.id | Selected resume |
+| `pay_rate` | DECIMAL(10,2) | NOT NULL | Pay rate to candidate |
+| `bill_rate` | DECIMAL(10,2) | NOT NULL | Bill rate to client |
+| `margin_percent` | DECIMAL(5,2) | | Calculated margin |
+| `submission_notes` | TEXT | NOT NULL | Candidate highlights (max 1000) |
+| `internal_notes` | TEXT | | Internal only (max 500) |
+| `submission_method` | ENUM | NOT NULL | 'email', 'vms', 'manual' |
+| `vms_submission_id` | VARCHAR(100) | | VMS reference ID |
+| `status` | ENUM | NOT NULL | See status enum below |
+| `submitted_to_client_at` | TIMESTAMP | | When submitted |
+| `submitted_to_client_by` | UUID | FK → user_profiles.id | Who submitted |
+| `client_responded_at` | TIMESTAMP | | When client responded |
+| `client_response` | ENUM | | 'accepted', 'rejected', 'hold' |
+| `rejection_reason` | TEXT | | If rejected |
+| `created_at` | TIMESTAMP | NOT NULL | |
+| `updated_at` | TIMESTAMP | NOT NULL | |
+| `created_by` | UUID | FK → user_profiles.id | |
+
+**Status Enum Values:**
+- `sourced` - Initial add to pipeline
+- `screening` - Internal review
+- `submitted_to_client` - Sent to client
+- `client_review` - Client reviewing
+- `client_accepted` - Client interested
+- `client_rejected` - Client passed
+- `interview_scheduled` - Interview set
+- `interview_completed` - Interview done
+- `offer_pending` - Offer in progress
+- `offer_extended` - Offer sent
+- `offer_accepted` - Candidate accepted
+- `offer_declined` - Candidate declined
+- `placed` - Successfully placed
+- `withdrawn` - Removed from consideration
+
+**Indexes:**
+```sql
+CREATE INDEX idx_submissions_org_job ON submissions(org_id, job_id);
+CREATE INDEX idx_submissions_org_candidate ON submissions(org_id, candidate_id);
+CREATE INDEX idx_submissions_status ON submissions(status);
+CREATE UNIQUE INDEX idx_submissions_job_candidate ON submissions(job_id, candidate_id)
+  WHERE status != 'withdrawn';
+```
+
+### Table: submission_documents
+
+| Column | Type | Constraint | Notes |
+|--------|------|-----------|-------|
+| `id` | UUID | PK | |
+| `submission_id` | UUID | FK → submissions.id, NOT NULL | |
+| `document_id` | UUID | FK → documents.id, NOT NULL | |
+| `created_at` | TIMESTAMP | NOT NULL | |
+
+### Table: candidate_resumes
+
+| Column | Type | Constraint | Notes |
+|--------|------|-----------|-------|
+| `id` | UUID | PK | |
+| `candidate_id` | UUID | FK → user_profiles.id, NOT NULL | |
+| `version` | INT | NOT NULL | Auto-increment per candidate |
+| `file_name` | VARCHAR(255) | NOT NULL | |
+| `storage_path` | VARCHAR(500) | NOT NULL | Supabase storage path |
+| `resume_type` | ENUM | NOT NULL | 'master', 'formatted', 'client_specific' |
+| `file_size` | INT | | Bytes |
+| `is_archived` | BOOLEAN | DEFAULT false | |
+| `uploaded_at` | TIMESTAMP | NOT NULL | |
+| `uploaded_by` | UUID | FK → user_profiles.id | |
+| `created_at` | TIMESTAMP | NOT NULL | |
+
+---
+
+## Email Template: Submission to Client
+
+### Template ID: `submission_to_client`
+
+### Subject Line
+```
+Candidate Submission: {candidateName} for {jobTitle}
+```
+
+### Template Variables
+| Variable | Source | Example |
+|----------|--------|---------|
+| `candidateName` | candidate.firstName + lastName | "John Smith" |
+| `jobTitle` | job.title | "Senior Developer" |
+| `companyName` | account.name | "Google" |
+| `clientContactName` | contact.firstName | "Jane" |
+| `billRate` | submission.billRate | "$105" |
+| `availability` | candidate.availability | "Immediately" |
+| `submissionNotes` | submission.submissionNotes | Bullet points |
+| `resumeDownloadUrl` | signed URL | "https://..." |
+| `recruiterName` | user.firstName + lastName | "Sarah Johnson" |
+| `recruiterEmail` | user.email | "sarah@company.com" |
+| `recruiterPhone` | user.phone | "(555) 123-4567" |
+
+### Email Body Template
+
+```html
+Dear {clientContactName},
+
+We have identified a strong candidate for your {jobTitle} position at {companyName}.
+
+**Candidate Profile:**
+- Name: {candidateName}
+- Bill Rate: {billRate}/hr
+- Availability: {availability}
+
+**Key Qualifications:**
+{submissionNotes}
+
+**Resume:** [Download Resume]({resumeDownloadUrl})
+
+Please let us know if you would like to proceed with this candidate for an interview.
+
+Best regards,
+
+{recruiterName}
+{recruiterEmail}
+{recruiterPhone}
+```
+
+---
+
+## Resume Formatter Specification
+
+### Feature: Create Formatted Resume Version
+
+**Trigger:** User clicks "Create New Formatted Version" in Step 6
+
+### Screen Mockup
+```
++----------------------------------------------------------+
+|                    Resume Formatter                   [×] |
++----------------------------------------------------------+
+| Original Resume                 │ Formatted Preview       |
+| ┌─────────────────────────────┐ │ ┌─────────────────────┐ |
+| │ John Smith                  │ │ │ [Company Logo]      │ |
+| │ john@email.com              │ │ │                     │ |
+| │ (555) 123-4567              │ │ │ CANDIDATE PROFILE   │ |
+| │ 123 Main St, City           │ │ │                     │ |
+| │                             │ │ │ Professional with   │ |
+| │ EXPERIENCE                  │ │ │ 7 years experience  │ |
+| │ Meta - Senior Engineer      │ │ │                     │ |
+| │ 2019 - Present              │ │ │ SKILLS              │ |
+| └─────────────────────────────┘ │ │ • React             │ |
+|                                 │ │ • Node.js           │ |
++----------------------------------------------------------+
+| Formatting Options                                        |
+| ☑ Remove personal phone number                           |
+| ☑ Remove personal address                                |
+| ☐ Remove LinkedIn/social profiles                        |
+| ☑ Add company header/branding                            |
+| ☐ Convert to ATS-friendly format                         |
+|                                                           |
+| Version Name: [Google - Formatted              ]         |
++----------------------------------------------------------+
+|                    [Cancel]  [Save Formatted Version →]  |
++----------------------------------------------------------+
+```
+
+### Formatting Options
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| Remove personal phone | ✓ | Hides candidate's phone |
+| Remove personal address | ✓ | Hides home address |
+| Remove social profiles | ☐ | Hides LinkedIn, GitHub, etc. |
+| Add company branding | ✓ | Adds staffing company header |
+| ATS-friendly format | ☐ | Converts to plain text structure |
+
+### Field Specification: Version Name
+| Property | Value |
+|----------|-------|
+| Field Name | `versionName` |
+| Type | Text Input |
+| Required | Yes |
+| Max Length | 100 characters |
+| Suggestion | "{Client Name} - Formatted" |
+
+---
+
+## VMS Integration Specification
+
+### Supported VMS Systems
+
+| VMS | Integration Type | Status |
+|-----|------------------|--------|
+| Fieldglass | API + Portal | Active |
+| Beeline | Portal Only | Active |
+| Coupa | API | Planned |
+| Vendor Neutral | Portal | Active |
+
+### Configuration (Account Level)
+
+```typescript
+interface VMSConfig {
+  vmsType: 'fieldglass' | 'beeline' | 'coupa' | 'vendor_neutral' | 'other';
+  portalUrl: string;
+  apiKey?: string; // For API integrations
+  clientId?: string;
+  mappings: {
+    jobIdField: string;
+    candidateFields: Record<string, string>;
+  };
+}
+```
+
+### VMS Submission Flow
+
+1. User selects "VMS Portal Upload" in Step 11
+2. System retrieves VMS config from account settings
+3. **If API Integration:**
+   - Auto-submit via API
+   - Store VMS submission ID
+   - Show success/failure
+4. **If Portal Only:**
+   - Open VMS portal in new tab
+   - Pre-fill form data where possible
+   - User completes submission manually
+   - Returns to InTime, clicks "Confirm Submitted"
+
+---
+
+## AI Highlight Generation Specification
+
+### Feature: Auto-Generate Candidate Highlights
+
+**Trigger:** User clicks "Use AI to generate highlights" checkbox in Step 8
+
+### Implementation
+
+**Service:** OpenAI GPT-4 or Claude 3.5 Sonnet
+
+**Prompt Template:**
+```
+You are an expert recruiter writing compelling candidate highlights for a client submission.
+
+Generate 3-5 bullet points highlighting why this candidate is perfect for this role.
+
+**Job Requirements:**
+- Title: {jobTitle}
+- Required Skills: {requiredSkills}
+- Experience: {experienceYears} years
+- Key Requirements: {jobDescription}
+
+**Candidate Profile:**
+- Name: {candidateName}
+- Experience: {candidateExperience} years
+- Skills: {candidateSkills}
+- Recent Role: {currentTitle} at {currentCompany}
+- Resume Summary: {resumeSummary}
+
+**Instructions:**
+- Write in third person
+- Focus on matching skills and experience
+- Highlight achievements with metrics if available
+- Keep each bullet under 100 characters
+- Be specific, not generic
+
+**Output Format:**
+Return as bullet points, one per line, starting with •
+```
+
+### Response Handling
+
+```typescript
+interface AIHighlightResponse {
+  highlights: string[];
+  confidence: number; // 0-1
+  tokensUsed: number;
+}
+```
+
+### UI Behavior
+
+1. Show loading spinner: "Generating highlights..."
+2. On success: Populate textarea with generated bullets
+3. On failure: Show toast "AI generation failed. Please write manually."
+4. User can edit before submitting
+5. Track: `ai_highlights_used: boolean` on submission
+
+### Cost & Limits
+
+- ~500-1000 tokens per generation
+- Rate limit: 10 AI generations per user per hour
+- Fallback: Manual entry always available
+
+---
+
 *Last Updated: 2024-11-30*
+
 
 

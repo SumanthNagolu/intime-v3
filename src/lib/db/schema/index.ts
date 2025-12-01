@@ -21,13 +21,14 @@ export * from './crm';
 export * from './ats';
 export * from './bench';
 export * from './ta-hr';
+export * from './hr';
 export * from './shared';
 
 // Unified Activity System (primary activities table)
-export * from './activities';
+// export * from './activities'; // Deprecated: merged into workplan.ts
 
 // Workplan & Activity Pattern System (Guidewire-inspired)
-// Note: workplan.ts has its own activities - we selectively export to avoid conflicts
+// Note: workplan.ts now contains the unified 'activities' table
 export {
   activityPatterns,
   activityPatternsRelations,
@@ -39,15 +40,27 @@ export {
   workplanTemplateActivitiesRelations,
   workplanInstances,
   workplanInstancesRelations,
+  activities, // The unified activities table
+  activitiesRelations,
   activityHistory,
   activityHistoryRelations,
 } from './workplan';
+
+// RCAI Assignments (legacy)
+export * from './assignments';
+
+// RACI Ownership System (new Guidewire-inspired)
+export * from './raci';
+
+// SLA System
+export * from './sla';
 
 // Sales Strategy System
 export * from './strategy';
 
 // Unified Workspace System (RCAI, Contacts, Job Orders)
-export * from './workspace';
+// MOVED TO: tmp/old-conflicting-code/schema/workspace.ts (had conflicting exports)
+// export * from './workspace';
 
 // Re-export commonly used types
 export type {
@@ -55,7 +68,15 @@ export type {
   NewOrganization,
   SubscriptionTier,
   OrganizationStatus,
+  OrganizationTier,
+  Region,
+  NewRegion,
+  PodMember,
+  NewPodMember,
+  PodMemberRoleValue,
 } from './organizations';
+
+// Pod types are exported from ta-hr.ts via the export * from './ta-hr'
 
 export type {
   UserProfile,
@@ -69,6 +90,13 @@ export type {
   NewPermission,
   UserRole,
   NewUserRole,
+  SystemRole,
+  NewSystemRole,
+  SystemRoleType,
+  PermissionActionType,
+  PermissionScopeType,
+  RoleCategoryType,
+  PermissionEntityType,
 } from './rbac';
 
 export type {
@@ -99,3 +127,29 @@ export type {
   ActivityHistory,
   NewActivityHistory,
 } from './workplan';
+
+// RACI Types
+export type {
+  ObjectOwner,
+  NewObjectOwner,
+  RACIChangeLog,
+  NewRACIChangeLog,
+  RACIRole,
+  RACIPermission,
+  AssignmentType,
+  RACIEntityType,
+} from './raci';
+
+// SLA Types
+export type {
+  SLADefinition,
+  NewSLADefinition,
+  SLATracking,
+  NewSLATracking,
+  SLAViolation,
+  NewSLAViolation,
+  SLAStatus,
+  SLAMetric,
+  SLARecipient,
+  ViolationType,
+} from './sla';

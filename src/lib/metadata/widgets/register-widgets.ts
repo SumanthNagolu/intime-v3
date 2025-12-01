@@ -28,6 +28,15 @@ import {
   ImageDisplay,
   ProgressDisplay,
   AvatarDisplay,
+  // Composite display widgets
+  PriorityBadge,
+  UserCard,
+  MetricCard,
+  KPICard,
+  ActivityCard,
+  TimelineItem,
+  RACIPanel,
+  ActivityBadgeCount,
 } from './display';
 
 // Input Widgets
@@ -53,6 +62,11 @@ import {
   JsonInput,
   EntitySelect,
   EntityMultiselect,
+  // Composite input widgets
+  RateInput,
+  DateRangePicker,
+  DurationInput,
+  VisaStatusSelect,
 } from './input';
 
 /**
@@ -137,6 +151,42 @@ export function registerAllWidgets() {
 
   registerWidget('avatar-display', {
     Display: AvatarDisplay,
+  });
+
+  // ==========================================
+  // COMPOSITE DISPLAY WIDGETS
+  // ==========================================
+
+  registerWidget('priority-badge', {
+    Display: PriorityBadge,
+  });
+
+  registerWidget('user-card', {
+    Display: UserCard,
+  });
+
+  registerWidget('metric-card', {
+    Display: MetricCard,
+  });
+
+  registerWidget('kpi-card', {
+    Display: KPICard,
+  });
+
+  registerWidget('activity-card', {
+    Display: ActivityCard,
+  });
+
+  registerWidget('timeline-item', {
+    Display: TimelineItem,
+  });
+
+  registerWidget('raci-panel', {
+    Display: RACIPanel,
+  });
+
+  registerWidget('activity-badge-count', {
+    Display: ActivityBadgeCount,
   });
 
   // ==========================================
@@ -263,6 +313,30 @@ export function registerAllWidgets() {
   registerWidget('files-input', {
     Display: TextDisplay as unknown as typeof FileInput,
     Input: FileInput,
+  });
+
+  // ==========================================
+  // COMPOSITE INPUT WIDGETS
+  // ==========================================
+
+  registerWidget('rate-input', {
+    Display: TextDisplay as unknown as typeof RateInput,
+    Input: RateInput,
+  });
+
+  registerWidget('date-range-picker', {
+    Display: TextDisplay as unknown as typeof DateRangePicker,
+    Input: DateRangePicker,
+  });
+
+  registerWidget('duration-input', {
+    Display: TextDisplay as unknown as typeof DurationInput,
+    Input: DurationInput,
+  });
+
+  registerWidget('visa-status-select', {
+    Display: BadgeDisplay as unknown as typeof VisaStatusSelect,
+    Input: VisaStatusSelect,
   });
 }
 

@@ -13,7 +13,7 @@
 3. [Entity Permissions Matrix](#3-entity-permissions-matrix)
 4. [Feature Permissions Matrix](#4-feature-permissions-matrix)
 5. [Data Scope by Role](#5-data-scope-by-role)
-6. [RCAI Assignment Rules](#6-rcai-assignment-rules)
+6. [RACI Assignment Rules](#6-raci-assignment-rules)
 7. [Portal-Specific Permissions](#7-portal-specific-permissions)
 8. [Permission Inheritance](#8-permission-inheritance)
 9. [Implementation Reference](#9-implementation-reference)
@@ -96,12 +96,12 @@ CEO
 
 | Role | Create | Read | Update | Delete | Scope | Approve | Reassign | Notes |
 |------|--------|------|--------|--------|-------|---------|----------|-------|
-| **Technical Recruiter** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | No | No | Can create jobs for accounts |
-| **Recruiting Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Yes | Can approve and reassign team jobs |
-| **Bench Sales Recruiter** | No | RCAI only | RCAI(R,A) | No | RCAI | No | No | Read-only for context |
-| **Bench Manager** | No | RCAI only | RCAI(R,A) | No | RCAI | No | No | Read-only for context |
-| **TA Specialist** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | No | No | Creates jobs from won deals |
-| **TA Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Yes | Oversees job creation process |
+| **Technical Recruiter** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | No | No | Can create jobs for accounts |
+| **Recruiting Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Yes | Can approve and reassign team jobs |
+| **Bench Sales Recruiter** | No | RACI only | RACI(R,A) | No | RACI | No | No | Read-only for context |
+| **Bench Manager** | No | RACI only | RACI(R,A) | No | RACI | No | No | Read-only for context |
+| **TA Specialist** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | No | No | Creates jobs from won deals |
+| **TA Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Yes | Oversees job creation process |
 | **HR** | Yes | Org | Org | No | Org | No | No | Creates internal positions |
 | **Admin** | No | Org | Org | Org | Org | No | Yes | System admin override |
 | **COO** | Yes | Org | Org | No | Org | Yes | Yes | Operational oversight |
@@ -114,12 +114,12 @@ CEO
 
 | Role | Create | Read | Update | Delete | Scope | Source | Submit | Notes |
 |------|--------|------|--------|--------|-------|--------|--------|-------|
-| **Technical Recruiter** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | Yes | Yes | Full sourcing and submission |
-| **Recruiting Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Yes | Team oversight |
-| **Bench Sales Recruiter** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | Yes | Yes | Markets bench consultants |
-| **Bench Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Yes | Bench oversight |
-| **TA Specialist** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | Yes | No | Sources for job pipeline |
-| **TA Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Yes | Pipeline management |
+| **Technical Recruiter** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | Yes | Yes | Full sourcing and submission |
+| **Recruiting Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Yes | Team oversight |
+| **Bench Sales Recruiter** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | Yes | Yes | Markets bench consultants |
+| **Bench Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Yes | Bench oversight |
+| **TA Specialist** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | Yes | No | Sources for job pipeline |
+| **TA Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Yes | Pipeline management |
 | **HR** | Yes | Org | Org | No | Org | No | No | Employee records |
 | **Admin** | No | Org | Org | Org | Org | No | No | System admin |
 | **COO** | No | Org | Org | No | Org | No | No | Operational metrics |
@@ -132,12 +132,12 @@ CEO
 
 | Role | Create | Read | Update | Delete | Scope | Approve | Withdraw | Notes |
 |------|--------|------|--------|--------|-------|---------|----------|-------|
-| **Technical Recruiter** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | No | Yes | Creates and manages submissions |
-| **Recruiting Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Yes | Approves before client submission |
-| **Bench Sales Recruiter** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | No | Yes | Job order submissions |
-| **Bench Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Yes | Approves rates and submissions |
-| **TA Specialist** | No | RCAI only | RCAI(R,A) | No | RCAI | No | No | Visibility into pipeline |
-| **TA Manager** | No | Team + RCAI | Team + RCAI(R,A) | No | Team | No | No | Team visibility |
+| **Technical Recruiter** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | No | Yes | Creates and manages submissions |
+| **Recruiting Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Yes | Approves before client submission |
+| **Bench Sales Recruiter** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | No | Yes | Job order submissions |
+| **Bench Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Yes | Approves rates and submissions |
+| **TA Specialist** | No | RACI only | RACI(R,A) | No | RACI | No | No | Visibility into pipeline |
+| **TA Manager** | No | Team + RACI | Team + RACI(R,A) | No | Team | No | No | Team visibility |
 | **HR** | No | Org | No | No | Org | No | No | HR compliance review |
 | **Admin** | No | Org | Org | Org | Org | No | No | System admin |
 | **COO** | No | Org | Org | No | Org | Yes | Yes | Operational decisions |
@@ -150,12 +150,12 @@ CEO
 
 | Role | Create | Read | Update | Delete | Scope | Convert | Close | Notes |
 |------|--------|------|--------|--------|-------|---------|-------|-------|
-| **Technical Recruiter** | No | RCAI only | RCAI(R,A) | No | RCAI | No | No | Works assigned orders |
-| **Recruiting Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | No | Team | Yes | Yes | Creates from requisitions |
-| **Bench Sales Recruiter** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | Yes | Yes | Imports external job orders |
-| **Bench Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Yes | Oversees order fulfillment |
-| **TA Specialist** | No | RCAI only | RCAI(R,A) | No | RCAI | No | No | Pipeline visibility |
-| **TA Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | No | Team | Yes | Yes | Deal to order conversion |
+| **Technical Recruiter** | No | RACI only | RACI(R,A) | No | RACI | No | No | Works assigned orders |
+| **Recruiting Manager** | Yes | Team + RACI | Team + RACI(R,A) | No | Team | Yes | Yes | Creates from requisitions |
+| **Bench Sales Recruiter** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | Yes | Yes | Imports external job orders |
+| **Bench Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Yes | Oversees order fulfillment |
+| **TA Specialist** | No | RACI only | RACI(R,A) | No | RACI | No | No | Pipeline visibility |
+| **TA Manager** | Yes | Team + RACI | Team + RACI(R,A) | No | Team | Yes | Yes | Deal to order conversion |
 | **HR** | No | Org | No | No | Org | No | No | Visibility only |
 | **Admin** | No | Org | Org | Org | Org | No | No | System admin |
 | **COO** | No | Org | Org | No | Org | Yes | Yes | Operational oversight |
@@ -168,12 +168,12 @@ CEO
 
 | Role | Create | Read | Update | Delete | Scope | Qualify | Convert | Notes |
 |------|--------|------|--------|--------|-------|---------|---------|-------|
-| **Technical Recruiter** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | No | No | Can create leads from sourcing |
-| **Recruiting Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Yes | Team lead management |
-| **Bench Sales Recruiter** | No | RCAI only | RCAI(R,A) | No | RCAI | No | No | Informed of opportunities |
-| **Bench Manager** | No | Team + RCAI | Team + RCAI(R,A) | No | Team | No | No | Team visibility |
-| **TA Specialist** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | Yes | Yes | Primary lead creator |
-| **TA Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Yes | Manages team pipeline |
+| **Technical Recruiter** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | No | No | Can create leads from sourcing |
+| **Recruiting Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Yes | Team lead management |
+| **Bench Sales Recruiter** | No | RACI only | RACI(R,A) | No | RACI | No | No | Informed of opportunities |
+| **Bench Manager** | No | Team + RACI | Team + RACI(R,A) | No | Team | No | No | Team visibility |
+| **TA Specialist** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | Yes | Yes | Primary lead creator |
+| **TA Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Yes | Manages team pipeline |
 | **HR** | No | No | No | No | N/A | No | No | No access |
 | **Admin** | No | Org | Org | Org | Org | No | No | System admin |
 | **COO** | No | Org | Org | No | Org | No | No | Strategic oversight |
@@ -186,12 +186,12 @@ CEO
 
 | Role | Create | Read | Update | Delete | Scope | Close | Notes |
 |------|--------|------|--------|--------|-------|-------|-------|
-| **Technical Recruiter** | No | RCAI only | RCAI(R,A) | No | RCAI | No | Visibility for planning |
-| **Recruiting Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | No | Team | Yes | Can close won deals |
-| **Bench Sales Recruiter** | No | RCAI only | RCAI(R,A) | No | RCAI | No | Informed of deals |
-| **Bench Manager** | No | Team + RCAI | Team + RCAI(R,A) | No | Team | No | Team visibility |
-| **TA Specialist** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | No | Creates from qualified leads |
-| **TA Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Closes won deals |
+| **Technical Recruiter** | No | RACI only | RACI(R,A) | No | RACI | No | Visibility for planning |
+| **Recruiting Manager** | Yes | Team + RACI | Team + RACI(R,A) | No | Team | Yes | Can close won deals |
+| **Bench Sales Recruiter** | No | RACI only | RACI(R,A) | No | RACI | No | Informed of deals |
+| **Bench Manager** | No | Team + RACI | Team + RACI(R,A) | No | Team | No | Team visibility |
+| **TA Specialist** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | No | Creates from qualified leads |
+| **TA Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Closes won deals |
 | **HR** | No | No | No | No | N/A | No | No access |
 | **Admin** | No | Org | Org | Org | Org | No | System admin |
 | **COO** | No | Org | Org | No | Org | Yes | Operational decisions |
@@ -204,12 +204,12 @@ CEO
 
 | Role | Create | Read | Update | Delete | Scope | Merge | Notes |
 |------|--------|------|--------|--------|-------|-------|-------|
-| **Technical Recruiter** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | No | Can create client accounts |
-| **Recruiting Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Manages client relationships |
-| **Bench Sales Recruiter** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | No | Client accounts for job orders |
-| **Bench Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Oversees client portfolio |
-| **TA Specialist** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | No | Creates accounts from leads |
-| **TA Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Account strategy |
+| **Technical Recruiter** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | No | Can create client accounts |
+| **Recruiting Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Manages client relationships |
+| **Bench Sales Recruiter** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | No | Client accounts for job orders |
+| **Bench Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Oversees client portfolio |
+| **TA Specialist** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | No | Creates accounts from leads |
+| **TA Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Account strategy |
 | **HR** | No | Org | No | No | Org | No | Visibility only |
 | **Admin** | No | Org | Org | Org | Org | Yes | System admin |
 | **COO** | No | Org | Org | No | Org | Yes | Strategic accounts |
@@ -222,12 +222,12 @@ CEO
 
 | Role | Create | Read | Update | Delete | Scope | Merge | Notes |
 |------|--------|------|--------|--------|-------|-------|-------|
-| **Technical Recruiter** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | No | Client POCs and candidates |
-| **Recruiting Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Team contact management |
-| **Bench Sales Recruiter** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | No | Client contacts |
-| **Bench Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Team oversight |
-| **TA Specialist** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | No | Prospect contacts |
-| **TA Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Contact strategy |
+| **Technical Recruiter** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | No | Client POCs and candidates |
+| **Recruiting Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Team contact management |
+| **Bench Sales Recruiter** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | No | Client contacts |
+| **Bench Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Team oversight |
+| **TA Specialist** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | No | Prospect contacts |
+| **TA Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Contact strategy |
 | **HR** | Yes | Org | Org | No | Org | Yes | Employee contacts |
 | **Admin** | No | Org | Org | Org | Org | Yes | System admin |
 | **COO** | No | Org | Org | No | Org | No | Visibility only |
@@ -240,12 +240,12 @@ CEO
 
 | Role | Create | Read | Update | Delete | Scope | Launch | Notes |
 |------|--------|------|--------|--------|-------|--------|-------|
-| **Technical Recruiter** | No | RCAI only | RCAI(R,A) | No | RCAI | No | Informed of campaigns |
-| **Recruiting Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | No | Team | Yes | Recruiting campaigns |
-| **Bench Sales Recruiter** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | Yes | Marketing campaigns |
-| **Bench Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Campaign oversight |
-| **TA Specialist** | Yes | Own + RCAI | Own + RCAI(R,A) | No | Own | Yes | Lead generation campaigns |
-| **TA Manager** | Yes | Team + RCAI | Team + RCAI(R,A) | Team | Team | Yes | Campaign strategy |
+| **Technical Recruiter** | No | RACI only | RACI(R,A) | No | RACI | No | Informed of campaigns |
+| **Recruiting Manager** | Yes | Team + RACI | Team + RACI(R,A) | No | Team | Yes | Recruiting campaigns |
+| **Bench Sales Recruiter** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | Yes | Marketing campaigns |
+| **Bench Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Campaign oversight |
+| **TA Specialist** | Yes | Own + RACI | Own + RACI(R,A) | No | Own | Yes | Lead generation campaigns |
+| **TA Manager** | Yes | Team + RACI | Team + RACI(R,A) | Team | Team | Yes | Campaign strategy |
 | **HR** | No | No | No | No | N/A | No | No access |
 | **Admin** | No | Org | Org | Org | Org | No | System admin |
 | **COO** | No | Org | Org | No | Org | No | Campaign performance |
@@ -258,12 +258,12 @@ CEO
 
 | Role | Create | Read | Update | Delete | Scope | Notes |
 |------|--------|------|--------|--------|-------|-------|
-| **Technical Recruiter** | Yes | Own + RCAI | Own | No | Own | Personal activity log |
-| **Recruiting Manager** | Yes | Team + RCAI | Team | Team | Team | Team activity visibility |
-| **Bench Sales Recruiter** | Yes | Own + RCAI | Own | No | Own | Personal activity log |
-| **Bench Manager** | Yes | Team + RCAI | Team | Team | Team | Team activity visibility |
-| **TA Specialist** | Yes | Own + RCAI | Own | No | Own | Personal activity log |
-| **TA Manager** | Yes | Team + RCAI | Team | Team | Team | Team activity visibility |
+| **Technical Recruiter** | Yes | Own + RACI | Own | No | Own | Personal activity log |
+| **Recruiting Manager** | Yes | Team + RACI | Team | Team | Team | Team activity visibility |
+| **Bench Sales Recruiter** | Yes | Own + RACI | Own | No | Own | Personal activity log |
+| **Bench Manager** | Yes | Team + RACI | Team | Team | Team | Team activity visibility |
+| **TA Specialist** | Yes | Own + RACI | Own | No | Own | Personal activity log |
+| **TA Manager** | Yes | Team + RACI | Team | Team | Team | Team activity visibility |
 | **HR** | Yes | Org | Org | No | Org | HR activities |
 | **Admin** | No | Org | Org | Org | Org | System admin |
 | **COO** | No | Org | No | No | Org | Activity metrics |
@@ -356,7 +356,7 @@ CEO
 
 | Scope | Definition | Roles |
 |-------|------------|-------|
-| **Own** | Only records where user is owner or has RCAI assignment | Technical Recruiter, Bench Sales Recruiter, TA Specialist, Client, Candidate |
+| **Own** | Only records where user is owner or has RACI assignment | Technical Recruiter, Bench Sales Recruiter, TA Specialist, Client, Candidate |
 | **Team** | Own + records owned by direct reports | Recruiting Manager, Bench Manager, TA Manager |
 | **Pod** | Team + other team in same pod (if applicable) | Recruiting Manager, Bench Manager (via pod assignment) |
 | **Department** | All records in department | (Future: Regional Directors) |
@@ -364,7 +364,7 @@ CEO
 
 ### 5.2 Scope Application by Entity
 
-| Entity | Own Scope | Team Scope | Org Scope | RCAI Override |
+| Entity | Own Scope | Team Scope | Org Scope | RACI Override |
 |--------|-----------|------------|-----------|---------------|
 | Jobs | Created by user | Created by team | All jobs | Yes - R/A can edit |
 | Candidates | Owned by user | Owned by team | All candidates | Yes - R/A can edit |
@@ -372,7 +372,7 @@ CEO
 | Job Orders | Accountable = user | Accountable = team | All job orders | Yes - R can edit |
 | Leads | Owner = user | Owner = team | All leads | Yes - R/A can edit |
 | Deals | Owner = user | Owner = team | All deals | Yes - R/A can edit |
-| Accounts | Owner or RCAI | Owner or RCAI (team) | All accounts | Yes - R/A can edit |
+| Accounts | Owner or RACI | Owner or RACI (team) | All accounts | Yes - R/A can edit |
 | Contacts | Owner = user | Owner = team | All contacts | Yes - R/A can edit |
 | Campaigns | Created by user | Created by team | All campaigns | Yes - R can edit |
 | Activities | Created by user | Created by team | All activities | No - personal only |
@@ -385,7 +385,7 @@ CEO
 
 **Cross-Pod Visibility:**
 - **Same pod type:** Manager can view other pod's data for collaboration
-- **Different pod type:** RCAI assignments only
+- **Different pod type:** RACI assignments only
 - **COO/CEO:** All pods visible
 
 **Example:**
@@ -404,18 +404,18 @@ Pod Beta (Recruiting)
 
 ---
 
-## 6. RCAI Assignment Rules
+## 6. RACI Assignment Rules
 
-### 6.1 RCAI Model Overview
+### 6.1 RACI Model Overview
 
-**RCAI = Responsible, Consulted, Accountable, Informed**
+**RACI = Responsible, Accountable, Consulted, Informed**
 
 | Role | Permission | Description | Can Edit | Can View |
 |------|-----------|-------------|----------|----------|
 | **R**esponsible | Edit | Does the work | Yes | Yes |
-| **A**ccountable | Edit | Approves/owns outcome (exactly 1) | Yes | Yes |
-| **C**onsulted | View | Provides input | No | Yes |
-| **I**nformed | View | Kept updated | No | Yes |
+| **A**ccountable | Approve | Approves/owns outcome (exactly 1) | Yes | Yes |
+| **C**onsulted | View | Provides input (before decision) | No | Yes |
+| **I**nformed | View | Kept updated (after decision) | No | Yes |
 
 ### 6.2 Auto-Assignment Rules by Entity
 
@@ -463,7 +463,7 @@ Pod Beta (Recruiting)
 
 ### 6.3 Manual Assignment Rules
 
-#### Who Can Assign RCAI Roles?
+#### Who Can Assign RACI Roles?
 
 | Assigner Role | Can Assign To | On Entities | Restrictions |
 |---------------|--------------|-------------|--------------|
@@ -478,9 +478,9 @@ Pod Beta (Recruiting)
 | **COO** | Anyone | Any entity | Operational override |
 | **CEO** | Anyone | Any entity | Full override |
 
-#### RCAI Reassignment Escalation
+#### RACI Reassignment Escalation
 
-| Current RCAI | Can Change To | Approver Required |
+| Current RACI | Can Change To | Approver Required |
 |--------------|---------------|-------------------|
 | Informed → Consulted | User request | Accountable approval |
 | Informed → Responsible | Manager assignment | Accountable approval |
@@ -488,7 +488,7 @@ Pod Beta (Recruiting)
 | Responsible → Accountable | Manager or Executive | Current Accountable approval or COO override |
 | Accountable transfer | Ownership transfer | Current Accountable or Manager approval |
 
-### 6.4 RCAI Permissions Override
+### 6.4 RACI Permissions Override
 
 **Override Scenarios:**
 1. **Responsible (R)** can edit entity even if not the owner
@@ -497,9 +497,9 @@ Pod Beta (Recruiting)
 4. **Informed (I)** can view entity even if not in their scope
 
 **Permission Inheritance:**
-- If entity has RCAI, base ownership rules are **extended** (not replaced)
+- If entity has RACI, base ownership rules are **extended** (not replaced)
 - Owner always has implicit **R** or **A** role
-- RCAI grants **additional** access beyond scope limits
+- RACI grants **additional** access beyond scope limits
 
 ---
 
@@ -533,7 +533,7 @@ Pod Beta (Recruiting)
   - Financial data (rates, margins)
   - Candidate contact info (until approved)
   - Internal notes on candidates
-  - RCAI assignments (internal only)
+  - RACI assignments (internal only)
   - Other candidates not submitted to them
 
 - **Cannot:**
@@ -541,7 +541,7 @@ Pod Beta (Recruiting)
   - See recruiter assignments
   - Access API
   - View system configurations
-  - Assign RCAI roles
+  - Assign RACI roles
   - View audit logs
 
 #### Data Visibility
@@ -577,7 +577,7 @@ Pod Beta (Recruiting)
   - Job financials (rates)
   - Recruiter notes
   - Submission status beyond public stages
-  - RCAI data
+  - RACI data
 
 - **Cannot:**
   - Create jobs
@@ -611,9 +611,9 @@ CEO (Full Access)
   ↓
 COO, CFO, Admin (Org-wide + specific domain)
   ↓
-Managers (Team + RCAI)
+Managers (Team + RACI)
   ↓
-ICs (Own + RCAI)
+ICs (Own + RACI)
   ↓
 External Portals (Own only)
 ```
@@ -650,8 +650,8 @@ function getAggregatedPermissions(systemRoles: string[]): ExtendedPermissions {
 | `/src/lib/workspace/specific-role-config.ts` | All 11 role definitions with permissions |
 | `/src/lib/workspace/role-hierarchy.ts` | Role mapping and permission aggregation |
 | `/src/lib/db/schema/rbac.ts` | RBAC database schema |
-| `/src/lib/db/schema/workspace.ts` | RCAI object_owners table |
-| `/src/server/routers/object-owners.ts` | RCAI assignment API |
+| `/src/lib/db/schema/workspace.ts` | RACI object_owners table |
+| `/src/server/routers/object-owners.ts` | RACI assignment API |
 | `/src/lib/db/queries/ownership-filter.ts` | Data scope filtering logic |
 
 ### 9.2 Permission Check Functions
@@ -661,7 +661,7 @@ function getAggregatedPermissions(systemRoles: string[]): ExtendedPermissions {
 import { hasAggregatedPermission } from '@/lib/workspace/role-hierarchy';
 const canApprove = hasAggregatedPermission(userRoles, 'canApproveSubmissions');
 
-// Check RCAI access
+// Check RACI access
 import { hasEditAccess } from '@/lib/db/queries/ownership-filter';
 const canEdit = await hasEditAccess(userId, orgId, 'job', jobId);
 
@@ -683,7 +683,7 @@ const condition = await buildOwnershipCondition(ctx, 'job', jobs, 'my_team');
 1. **Router Layer (tRPC):** `orgProtectedProcedure` enforces org membership
 2. **Permission Layer:** Role-based permissions checked via `getAggregatedPermissions()`
 3. **Data Scope Layer:** Ownership filters applied via `buildOwnershipCondition()`
-4. **RCAI Layer:** RCAI assignments override base scope
+4. **RACI Layer:** RACI assignments override base scope
 5. **UI Layer:** Hide/disable actions based on permissions
 
 ---
@@ -704,16 +704,16 @@ const condition = await buildOwnershipCondition(ctx, 'job', jobs, 'my_team');
 |-------|------------|-------------|
 | **Own** | User is owner or creator | `ownerId = userId` |
 | **Team** | Own + direct reports' items | `ownerId IN (userId, ...reportIds)` |
-| **RCAI** | User has any RCAI assignment | `EXISTS (object_owners WHERE userId AND entityId)` |
+| **RACI** | User has any RACI assignment | `EXISTS (object_owners WHERE userId AND entityId)` |
 | **Org** | All org items (executive/admin) | `orgId = userOrgId` |
 
 ### 11.2 Entity CRUD Defaults by Hierarchy
 
 | Hierarchy Level | Create | Read | Update | Delete |
 |-----------------|--------|------|--------|--------|
-| **IC** | Own entities | Own + RCAI | Own + RCAI(R,A) | No |
-| **Manager** | Own + team entities | Team + RCAI | Team + RCAI(R,A) | Team (limited) |
-| **Director** | Dept entities | Dept + RCAI | Dept + RCAI(R,A) | Dept (limited) |
+| **IC** | Own entities | Own + RACI | Own + RACI(R,A) | No |
+| **Manager** | Own + team entities | Team + RACI | Team + RACI(R,A) | Team (limited) |
+| **Director** | Dept entities | Dept + RACI | Dept + RACI(R,A) | Dept (limited) |
 | **C-Suite** | Org entities | Org | Org | Org (limited) |
 | **Admin** | System entities | Org | Org | Org (admin only) |
 | **External** | Own data only | Own data only | Own data only | No |

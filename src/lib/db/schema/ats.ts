@@ -3,7 +3,7 @@
  * Tables: skills, candidate_skills, jobs, submissions, interviews, offers, placements
  */
 
-import { pgTable, uuid, text, timestamp, numeric, integer, boolean, unique, jsonb, date } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, timestamp, numeric, integer, boolean, unique, jsonb, date, index } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { userProfiles } from './user-profiles';
 import { organizations } from './organizations';
@@ -36,10 +36,52 @@ export const skillsRelations = relations(skills, ({ one, many }) => ({
     references: [skills.id],
   }),
   candidateSkills: many(candidateSkills),
+  skillAliases: many(skillAliases),
+  jobSkills: many(jobSkills),
 }));
 
 export type Skill = typeof skills.$inferSelect;
 export type NewSkill = typeof skills.$inferInsert;
+
+// =====================================================
+// SKILL ALIASES
+// =====================================================
+
+export const skillAliases = pgTable(
+  'skill_aliases',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    skillId: uuid('skill_id')
+      .notNull()
+      .references(() => skills.id, { onDelete: 'cascade' }),
+
+    alias: text('alias').notNull(), // Alternative name for the skill
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    skillIdIdx: index('idx_skill_aliases_skill_id').on(table.skillId),
+  })
+);
+
+export const skillAliasesRelations = relations(skillAliases, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [skillAliases.orgId],
+    references: [organizations.id],
+  }),
+  skill: one(skills, {
+    fields: [skillAliases.skillId],
+    references: [skills.id],
+  }),
+}));
+
+export type SkillAlias = typeof skillAliases.$inferSelect;
+export type NewSkillAlias = typeof skillAliases.$inferInsert;
 
 // =====================================================
 // CANDIDATE_SKILLS
@@ -167,10 +209,245 @@ export const jobsRelations = relations(jobs, ({ one, many }) => ({
   interviews: many(interviews),
   offers: many(offers),
   placements: many(placements),
+  jobRequirements: many(jobRequirements),
+  jobSkills: many(jobSkills),
+  jobRates: many(jobRates),
+  jobAssignments: many(jobAssignments),
+  jobScreeningQuestions: many(jobScreeningQuestions),
 }));
 
 export type Job = typeof jobs.$inferSelect;
 export type NewJob = typeof jobs.$inferInsert;
+
+// =====================================================
+// JOB REQUIREMENTS
+// =====================================================
+
+export const jobRequirements = pgTable(
+  'job_requirements',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    jobId: uuid('job_id')
+      .notNull()
+      .references(() => jobs.id, { onDelete: 'cascade' }),
+
+    requirement: text('requirement').notNull(),
+    type: text('type').notNull().default('must_have'), // must_have, nice_to_have
+    sequence: integer('sequence').default(0),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    jobIdIdx: index('idx_job_requirements_job_id').on(table.jobId),
+  })
+);
+
+export const jobRequirementsRelations = relations(jobRequirements, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [jobRequirements.orgId],
+    references: [organizations.id],
+  }),
+  job: one(jobs, {
+    fields: [jobRequirements.jobId],
+    references: [jobs.id],
+  }),
+}));
+
+export type JobRequirement = typeof jobRequirements.$inferSelect;
+export type NewJobRequirement = typeof jobRequirements.$inferInsert;
+
+// =====================================================
+// JOB SKILLS
+// =====================================================
+
+export const jobSkills = pgTable(
+  'job_skills',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    jobId: uuid('job_id')
+      .notNull()
+      .references(() => jobs.id, { onDelete: 'cascade' }),
+    skillId: uuid('skill_id')
+      .notNull()
+      .references(() => skills.id, { onDelete: 'cascade' }),
+
+    importance: text('importance').notNull().default('required'), // required, preferred
+    minYears: numeric('min_years', { precision: 4, scale: 1 }),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    jobIdIdx: index('idx_job_skills_job_id').on(table.jobId),
+    skillIdIdx: index('idx_job_skills_skill_id').on(table.skillId),
+    uniqueJobSkill: unique().on(table.jobId, table.skillId),
+  })
+);
+
+export const jobSkillsRelations = relations(jobSkills, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [jobSkills.orgId],
+    references: [organizations.id],
+  }),
+  job: one(jobs, {
+    fields: [jobSkills.jobId],
+    references: [jobs.id],
+  }),
+  skill: one(skills, {
+    fields: [jobSkills.skillId],
+    references: [skills.id],
+  }),
+}));
+
+export type JobSkill = typeof jobSkills.$inferSelect;
+export type NewJobSkill = typeof jobSkills.$inferInsert;
+
+// =====================================================
+// JOB RATES
+// =====================================================
+
+export const jobRates = pgTable(
+  'job_rates',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    jobId: uuid('job_id')
+      .notNull()
+      .references(() => jobs.id, { onDelete: 'cascade' }),
+
+    billRateMin: numeric('bill_rate_min', { precision: 10, scale: 2 }),
+    billRateMax: numeric('bill_rate_max', { precision: 10, scale: 2 }),
+    payRateMin: numeric('pay_rate_min', { precision: 10, scale: 2 }),
+    payRateMax: numeric('pay_rate_max', { precision: 10, scale: 2 }),
+    currency: text('currency').default('USD'),
+    rateType: text('rate_type').default('hourly'), // hourly, daily, annual
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    jobIdIdx: index('idx_job_rates_job_id').on(table.jobId),
+  })
+);
+
+export const jobRatesRelations = relations(jobRates, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [jobRates.orgId],
+    references: [organizations.id],
+  }),
+  job: one(jobs, {
+    fields: [jobRates.jobId],
+    references: [jobs.id],
+  }),
+}));
+
+export type JobRate = typeof jobRates.$inferSelect;
+export type NewJobRate = typeof jobRates.$inferInsert;
+
+// =====================================================
+// JOB ASSIGNMENTS
+// =====================================================
+
+export const jobAssignments = pgTable(
+  'job_assignments',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    jobId: uuid('job_id')
+      .notNull()
+      .references(() => jobs.id, { onDelete: 'cascade' }),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => userProfiles.id, { onDelete: 'cascade' }),
+
+    role: text('role').notNull().default('secondary'), // primary, secondary, sourcer
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    jobIdIdx: index('idx_job_assignments_job_id').on(table.jobId),
+    userIdIdx: index('idx_job_assignments_user_id').on(table.userId),
+    uniqueJobUser: unique().on(table.jobId, table.userId),
+  })
+);
+
+export const jobAssignmentsRelations = relations(jobAssignments, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [jobAssignments.orgId],
+    references: [organizations.id],
+  }),
+  job: one(jobs, {
+    fields: [jobAssignments.jobId],
+    references: [jobs.id],
+  }),
+  user: one(userProfiles, {
+    fields: [jobAssignments.userId],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type JobAssignment = typeof jobAssignments.$inferSelect;
+export type NewJobAssignment = typeof jobAssignments.$inferInsert;
+
+// =====================================================
+// JOB SCREENING QUESTIONS
+// =====================================================
+
+export const jobScreeningQuestions = pgTable(
+  'job_screening_questions',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    jobId: uuid('job_id')
+      .notNull()
+      .references(() => jobs.id, { onDelete: 'cascade' }),
+
+    question: text('question').notNull(),
+    type: text('type').notNull().default('text'), // text, select, boolean
+    options: jsonb('options'), // For select type questions
+    isRequired: boolean('is_required').default(false),
+    sequence: integer('sequence').default(0),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    jobIdIdx: index('idx_job_screening_questions_job_id').on(table.jobId),
+  })
+);
+
+export const jobScreeningQuestionsRelations = relations(jobScreeningQuestions, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [jobScreeningQuestions.orgId],
+    references: [organizations.id],
+  }),
+  job: one(jobs, {
+    fields: [jobScreeningQuestions.jobId],
+    references: [jobs.id],
+  }),
+}));
+
+export type JobScreeningQuestion = typeof jobScreeningQuestions.$inferSelect;
+export type NewJobScreeningQuestion = typeof jobScreeningQuestions.$inferInsert;
 
 // =====================================================
 // SUBMISSIONS
@@ -268,6 +545,10 @@ export const submissionsRelations = relations(submissions, ({ one, many }) => ({
   }),
   interviews: many(interviews),
   offers: many(offers),
+  submissionRates: many(submissionRates),
+  submissionScreeningAnswers: many(submissionScreeningAnswers),
+  submissionNotes: many(submissionNotes),
+  submissionStatusHistory: many(submissionStatusHistory),
 }));
 
 export type Submission = typeof submissions.$inferSelect;
@@ -316,7 +597,7 @@ export const interviews = pgTable('interviews', {
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });
 
-export const interviewsRelations = relations(interviews, ({ one }) => ({
+export const interviewsRelations = relations(interviews, ({ one, many }) => ({
   organization: one(organizations, {
     fields: [interviews.orgId],
     references: [organizations.id],
@@ -333,6 +614,9 @@ export const interviewsRelations = relations(interviews, ({ one }) => ({
     fields: [interviews.candidateId],
     references: [userProfiles.id],
   }),
+  interviewParticipants: many(interviewParticipants),
+  interviewFeedback: many(interviewFeedback),
+  interviewReminders: many(interviewReminders),
 }));
 
 export type Interview = typeof interviews.$inferSelect;
@@ -404,6 +688,9 @@ export const offersRelations = relations(offers, ({ one, many }) => ({
     references: [userProfiles.id],
   }),
   placements: many(placements),
+  offerTerms: many(offerTerms),
+  offerNegotiations: many(offerNegotiations),
+  offerApprovals: many(offerApprovals),
 }));
 
 export type Offer = typeof offers.$inferSelect;
@@ -461,7 +748,7 @@ export const placements = pgTable('placements', {
   createdBy: uuid('created_by').references(() => userProfiles.id),
 });
 
-export const placementsRelations = relations(placements, ({ one }) => ({
+export const placementsRelations = relations(placements, ({ one, many }) => ({
   organization: one(organizations, {
     fields: [placements.orgId],
     references: [organizations.id],
@@ -490,6 +777,10 @@ export const placementsRelations = relations(placements, ({ one }) => ({
     fields: [placements.recruiterId],
     references: [userProfiles.id],
   }),
+  placementRates: many(placementRates),
+  placementExtensions: many(placementExtensions),
+  placementTimesheets: many(placementTimesheets),
+  placementMilestones: many(placementMilestones),
 }));
 
 export type Placement = typeof placements.$inferSelect;
@@ -1487,3 +1778,810 @@ export const ComplianceDocumentStatus = {
   EXPIRED: 'expired',
   SUPERSEDED: 'superseded',
 } as const;
+
+// =====================================================
+// CANDIDATE PROFILES
+// =====================================================
+
+export const candidateProfiles = pgTable('candidate_profiles', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id')
+    .notNull()
+    .references(() => organizations.id, { onDelete: 'cascade' }),
+  candidateId: uuid('candidate_id')
+    .notNull()
+    .references(() => userProfiles.id, { onDelete: 'cascade' })
+    .unique(),
+
+  summary: text('summary'),
+  totalExperienceYears: numeric('total_experience_years', { precision: 4, scale: 1 }),
+  highestEducation: text('highest_education'),
+  linkedinUrl: text('linkedin_url'),
+  githubUrl: text('github_url'),
+  portfolioUrl: text('portfolio_url'),
+
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  deletedAt: timestamp('deleted_at', { withTimezone: true }),
+});
+
+export const candidateProfilesRelations = relations(candidateProfiles, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [candidateProfiles.orgId],
+    references: [organizations.id],
+  }),
+  candidate: one(userProfiles, {
+    fields: [candidateProfiles.candidateId],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type CandidateProfile = typeof candidateProfiles.$inferSelect;
+export type NewCandidateProfile = typeof candidateProfiles.$inferInsert;
+
+// =====================================================
+// CANDIDATE DOCUMENTS
+// =====================================================
+
+export const candidateDocuments = pgTable(
+  'candidate_documents',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    candidateId: uuid('candidate_id')
+      .notNull()
+      .references(() => userProfiles.id, { onDelete: 'cascade' }),
+
+    type: text('type').notNull(), // resume, cover_letter, portfolio, certification
+    fileUrl: text('file_url').notNull(),
+    fileName: text('file_name').notNull(),
+    version: integer('version').default(1),
+    isPrimary: boolean('is_primary').default(false),
+    uploadedAt: timestamp('uploaded_at', { withTimezone: true }).defaultNow().notNull(),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    candidateIdIdx: index('idx_candidate_documents_candidate_id').on(table.candidateId),
+  })
+);
+
+export const candidateDocumentsRelations = relations(candidateDocuments, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [candidateDocuments.orgId],
+    references: [organizations.id],
+  }),
+  candidate: one(userProfiles, {
+    fields: [candidateDocuments.candidateId],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type CandidateDocument = typeof candidateDocuments.$inferSelect;
+export type NewCandidateDocument = typeof candidateDocuments.$inferInsert;
+
+// =====================================================
+// CANDIDATE AVAILABILITY
+// =====================================================
+
+export const candidateAvailability = pgTable('candidate_availability', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id')
+    .notNull()
+    .references(() => organizations.id, { onDelete: 'cascade' }),
+  candidateId: uuid('candidate_id')
+    .notNull()
+    .references(() => userProfiles.id, { onDelete: 'cascade' })
+    .unique(),
+
+  availableFrom: date('available_from'),
+  noticePeriodDays: integer('notice_period_days'),
+  preferredRateMin: numeric('preferred_rate_min', { precision: 10, scale: 2 }),
+  preferredRateMax: numeric('preferred_rate_max', { precision: 10, scale: 2 }),
+  currency: text('currency').default('USD'),
+
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  deletedAt: timestamp('deleted_at', { withTimezone: true }),
+});
+
+export const candidateAvailabilityRelations = relations(candidateAvailability, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [candidateAvailability.orgId],
+    references: [organizations.id],
+  }),
+  candidate: one(userProfiles, {
+    fields: [candidateAvailability.candidateId],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type CandidateAvailabilityRecord = typeof candidateAvailability.$inferSelect;
+export type NewCandidateAvailability = typeof candidateAvailability.$inferInsert;
+
+// =====================================================
+// CANDIDATE PREFERENCES
+// =====================================================
+
+export const candidatePreferences = pgTable('candidate_preferences', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id')
+    .notNull()
+    .references(() => organizations.id, { onDelete: 'cascade' }),
+  candidateId: uuid('candidate_id')
+    .notNull()
+    .references(() => userProfiles.id, { onDelete: 'cascade' })
+    .unique(),
+
+  preferredJobTypes: text('preferred_job_types').array(),
+  preferredWorkModes: text('preferred_work_modes').array(),
+  preferredIndustries: text('preferred_industries').array(),
+  minRate: numeric('min_rate', { precision: 10, scale: 2 }),
+  maxCommuteMiles: integer('max_commute_miles'),
+
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  deletedAt: timestamp('deleted_at', { withTimezone: true }),
+});
+
+export const candidatePreferencesRelations = relations(candidatePreferences, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [candidatePreferences.orgId],
+    references: [organizations.id],
+  }),
+  candidate: one(userProfiles, {
+    fields: [candidatePreferences.candidateId],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type CandidatePreferencesRecord = typeof candidatePreferences.$inferSelect;
+export type NewCandidatePreferences = typeof candidatePreferences.$inferInsert;
+
+// =====================================================
+// SUBMISSION RATES
+// =====================================================
+
+export const submissionRates = pgTable('submission_rates', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id')
+    .notNull()
+    .references(() => organizations.id, { onDelete: 'cascade' }),
+  submissionId: uuid('submission_id')
+    .notNull()
+    .references(() => submissions.id, { onDelete: 'cascade' })
+    .unique(),
+
+  billRate: numeric('bill_rate', { precision: 10, scale: 2 }),
+  payRate: numeric('pay_rate', { precision: 10, scale: 2 }),
+  marginPercent: numeric('margin_percent', { precision: 5, scale: 2 }),
+  marginAmount: numeric('margin_amount', { precision: 10, scale: 2 }),
+  currency: text('currency').default('USD'),
+
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  deletedAt: timestamp('deleted_at', { withTimezone: true }),
+});
+
+export const submissionRatesRelations = relations(submissionRates, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [submissionRates.orgId],
+    references: [organizations.id],
+  }),
+  submission: one(submissions, {
+    fields: [submissionRates.submissionId],
+    references: [submissions.id],
+  }),
+}));
+
+export type SubmissionRate = typeof submissionRates.$inferSelect;
+export type NewSubmissionRate = typeof submissionRates.$inferInsert;
+
+// =====================================================
+// SUBMISSION SCREENING ANSWERS
+// =====================================================
+
+export const submissionScreeningAnswers = pgTable(
+  'submission_screening_answers',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    submissionId: uuid('submission_id')
+      .notNull()
+      .references(() => submissions.id, { onDelete: 'cascade' }),
+    questionId: uuid('question_id')
+      .notNull()
+      .references(() => jobScreeningQuestions.id, { onDelete: 'cascade' }),
+
+    answer: text('answer'),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    submissionIdIdx: index('idx_submission_screening_answers_submission_id').on(table.submissionId),
+    uniqueSubmissionQuestion: unique().on(table.submissionId, table.questionId),
+  })
+);
+
+export const submissionScreeningAnswersRelations = relations(submissionScreeningAnswers, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [submissionScreeningAnswers.orgId],
+    references: [organizations.id],
+  }),
+  submission: one(submissions, {
+    fields: [submissionScreeningAnswers.submissionId],
+    references: [submissions.id],
+  }),
+  question: one(jobScreeningQuestions, {
+    fields: [submissionScreeningAnswers.questionId],
+    references: [jobScreeningQuestions.id],
+  }),
+}));
+
+export type SubmissionScreeningAnswer = typeof submissionScreeningAnswers.$inferSelect;
+export type NewSubmissionScreeningAnswer = typeof submissionScreeningAnswers.$inferInsert;
+
+// =====================================================
+// SUBMISSION NOTES
+// =====================================================
+
+export const submissionNotes = pgTable(
+  'submission_notes',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    submissionId: uuid('submission_id')
+      .notNull()
+      .references(() => submissions.id, { onDelete: 'cascade' }),
+
+    note: text('note').notNull(),
+    isClientVisible: boolean('is_client_visible').default(false),
+    createdBy: uuid('created_by')
+      .notNull()
+      .references(() => userProfiles.id),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    submissionIdIdx: index('idx_submission_notes_submission_id').on(table.submissionId),
+  })
+);
+
+export const submissionNotesRelations = relations(submissionNotes, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [submissionNotes.orgId],
+    references: [organizations.id],
+  }),
+  submission: one(submissions, {
+    fields: [submissionNotes.submissionId],
+    references: [submissions.id],
+  }),
+  creator: one(userProfiles, {
+    fields: [submissionNotes.createdBy],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type SubmissionNote = typeof submissionNotes.$inferSelect;
+export type NewSubmissionNote = typeof submissionNotes.$inferInsert;
+
+// =====================================================
+// SUBMISSION STATUS HISTORY
+// =====================================================
+
+export const submissionStatusHistory = pgTable(
+  'submission_status_history',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    submissionId: uuid('submission_id')
+      .notNull()
+      .references(() => submissions.id, { onDelete: 'cascade' }),
+
+    fromStatus: text('from_status'),
+    toStatus: text('to_status').notNull(),
+    reason: text('reason'),
+    changedBy: uuid('changed_by')
+      .notNull()
+      .references(() => userProfiles.id),
+    changedAt: timestamp('changed_at', { withTimezone: true }).defaultNow().notNull(),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    submissionIdIdx: index('idx_submission_status_history_submission_id').on(table.submissionId),
+  })
+);
+
+export const submissionStatusHistoryRelations = relations(submissionStatusHistory, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [submissionStatusHistory.orgId],
+    references: [organizations.id],
+  }),
+  submission: one(submissions, {
+    fields: [submissionStatusHistory.submissionId],
+    references: [submissions.id],
+  }),
+  changer: one(userProfiles, {
+    fields: [submissionStatusHistory.changedBy],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type SubmissionStatusHistory = typeof submissionStatusHistory.$inferSelect;
+export type NewSubmissionStatusHistory = typeof submissionStatusHistory.$inferInsert;
+
+// =====================================================
+// INTERVIEW PARTICIPANTS
+// =====================================================
+
+export const interviewParticipants = pgTable(
+  'interview_participants',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    interviewId: uuid('interview_id')
+      .notNull()
+      .references(() => interviews.id, { onDelete: 'cascade' }),
+
+    participantType: text('participant_type').notNull(), // interviewer, candidate, recruiter
+    userId: uuid('user_id').references(() => userProfiles.id),
+    externalName: text('external_name'),
+    externalEmail: text('external_email'),
+    isRequired: boolean('is_required').default(true),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    interviewIdIdx: index('idx_interview_participants_interview_id').on(table.interviewId),
+  })
+);
+
+export const interviewParticipantsRelations = relations(interviewParticipants, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [interviewParticipants.orgId],
+    references: [organizations.id],
+  }),
+  interview: one(interviews, {
+    fields: [interviewParticipants.interviewId],
+    references: [interviews.id],
+  }),
+  user: one(userProfiles, {
+    fields: [interviewParticipants.userId],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type InterviewParticipant = typeof interviewParticipants.$inferSelect;
+export type NewInterviewParticipant = typeof interviewParticipants.$inferInsert;
+
+// =====================================================
+// INTERVIEW FEEDBACK
+// =====================================================
+
+export const interviewFeedback = pgTable(
+  'interview_feedback',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    interviewId: uuid('interview_id')
+      .notNull()
+      .references(() => interviews.id, { onDelete: 'cascade' }),
+
+    submittedBy: uuid('submitted_by')
+      .notNull()
+      .references(() => userProfiles.id),
+    rating: integer('rating'), // 1-5
+    recommendation: text('recommendation'), // strong_yes, yes, maybe, no, strong_no
+    strengths: text('strengths'),
+    weaknesses: text('weaknesses'),
+    notes: text('notes'),
+    submittedAt: timestamp('submitted_at', { withTimezone: true }).defaultNow().notNull(),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    interviewIdIdx: index('idx_interview_feedback_interview_id').on(table.interviewId),
+  })
+);
+
+export const interviewFeedbackRelations = relations(interviewFeedback, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [interviewFeedback.orgId],
+    references: [organizations.id],
+  }),
+  interview: one(interviews, {
+    fields: [interviewFeedback.interviewId],
+    references: [interviews.id],
+  }),
+  submitter: one(userProfiles, {
+    fields: [interviewFeedback.submittedBy],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type InterviewFeedbackRecord = typeof interviewFeedback.$inferSelect;
+export type NewInterviewFeedback = typeof interviewFeedback.$inferInsert;
+
+// =====================================================
+// INTERVIEW REMINDERS
+// =====================================================
+
+export const interviewReminders = pgTable(
+  'interview_reminders',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    interviewId: uuid('interview_id')
+      .notNull()
+      .references(() => interviews.id, { onDelete: 'cascade' }),
+
+    reminderType: text('reminder_type').notNull(), // 24h, 1h, 15m
+    sentAt: timestamp('sent_at', { withTimezone: true }),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    interviewIdIdx: index('idx_interview_reminders_interview_id').on(table.interviewId),
+  })
+);
+
+export const interviewRemindersRelations = relations(interviewReminders, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [interviewReminders.orgId],
+    references: [organizations.id],
+  }),
+  interview: one(interviews, {
+    fields: [interviewReminders.interviewId],
+    references: [interviews.id],
+  }),
+}));
+
+export type InterviewReminder = typeof interviewReminders.$inferSelect;
+export type NewInterviewReminder = typeof interviewReminders.$inferInsert;
+
+// =====================================================
+// OFFER TERMS
+// =====================================================
+
+export const offerTerms = pgTable(
+  'offer_terms',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    offerId: uuid('offer_id')
+      .notNull()
+      .references(() => offers.id, { onDelete: 'cascade' }),
+
+    termType: text('term_type').notNull(), // signing_bonus, relocation, pto, benefits, other
+    value: text('value'),
+    description: text('description'),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    offerIdIdx: index('idx_offer_terms_offer_id').on(table.offerId),
+  })
+);
+
+export const offerTermsRelations = relations(offerTerms, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [offerTerms.orgId],
+    references: [organizations.id],
+  }),
+  offer: one(offers, {
+    fields: [offerTerms.offerId],
+    references: [offers.id],
+  }),
+}));
+
+export type OfferTerm = typeof offerTerms.$inferSelect;
+export type NewOfferTerm = typeof offerTerms.$inferInsert;
+
+// =====================================================
+// OFFER NEGOTIATIONS
+// =====================================================
+
+export const offerNegotiations = pgTable(
+  'offer_negotiations',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    offerId: uuid('offer_id')
+      .notNull()
+      .references(() => offers.id, { onDelete: 'cascade' }),
+
+    requestedBy: text('requested_by').notNull(), // candidate, client
+    requestedChanges: text('requested_changes'),
+    status: text('status').notNull().default('pending'), // pending, accepted, rejected
+    notes: text('notes'),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    offerIdIdx: index('idx_offer_negotiations_offer_id').on(table.offerId),
+  })
+);
+
+export const offerNegotiationsRelations = relations(offerNegotiations, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [offerNegotiations.orgId],
+    references: [organizations.id],
+  }),
+  offer: one(offers, {
+    fields: [offerNegotiations.offerId],
+    references: [offers.id],
+  }),
+}));
+
+export type OfferNegotiation = typeof offerNegotiations.$inferSelect;
+export type NewOfferNegotiation = typeof offerNegotiations.$inferInsert;
+
+// =====================================================
+// OFFER APPROVALS
+// =====================================================
+
+export const offerApprovals = pgTable(
+  'offer_approvals',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    offerId: uuid('offer_id')
+      .notNull()
+      .references(() => offers.id, { onDelete: 'cascade' }),
+
+    approverId: uuid('approver_id')
+      .notNull()
+      .references(() => userProfiles.id),
+    status: text('status').notNull().default('pending'), // pending, approved, rejected
+    notes: text('notes'),
+    decidedAt: timestamp('decided_at', { withTimezone: true }),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    offerIdIdx: index('idx_offer_approvals_offer_id').on(table.offerId),
+    approverIdIdx: index('idx_offer_approvals_approver_id').on(table.approverId),
+  })
+);
+
+export const offerApprovalsRelations = relations(offerApprovals, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [offerApprovals.orgId],
+    references: [organizations.id],
+  }),
+  offer: one(offers, {
+    fields: [offerApprovals.offerId],
+    references: [offers.id],
+  }),
+  approver: one(userProfiles, {
+    fields: [offerApprovals.approverId],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type OfferApproval = typeof offerApprovals.$inferSelect;
+export type NewOfferApproval = typeof offerApprovals.$inferInsert;
+
+// =====================================================
+// PLACEMENT RATES
+// =====================================================
+
+export const placementRates = pgTable(
+  'placement_rates',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    placementId: uuid('placement_id')
+      .notNull()
+      .references(() => placements.id, { onDelete: 'cascade' }),
+
+    billRate: numeric('bill_rate', { precision: 10, scale: 2 }).notNull(),
+    payRate: numeric('pay_rate', { precision: 10, scale: 2 }).notNull(),
+    marginPercent: numeric('margin_percent', { precision: 5, scale: 2 }),
+    effectiveFrom: date('effective_from').notNull(),
+    effectiveTo: date('effective_to'),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    placementIdIdx: index('idx_placement_rates_placement_id').on(table.placementId),
+  })
+);
+
+export const placementRatesRelations = relations(placementRates, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [placementRates.orgId],
+    references: [organizations.id],
+  }),
+  placement: one(placements, {
+    fields: [placementRates.placementId],
+    references: [placements.id],
+  }),
+}));
+
+export type PlacementRate = typeof placementRates.$inferSelect;
+export type NewPlacementRate = typeof placementRates.$inferInsert;
+
+// =====================================================
+// PLACEMENT EXTENSIONS
+// =====================================================
+
+export const placementExtensions = pgTable(
+  'placement_extensions',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    placementId: uuid('placement_id')
+      .notNull()
+      .references(() => placements.id, { onDelete: 'cascade' }),
+
+    previousEndDate: date('previous_end_date').notNull(),
+    newEndDate: date('new_end_date').notNull(),
+    reason: text('reason'),
+    approvedBy: uuid('approved_by').references(() => userProfiles.id),
+    approvedAt: timestamp('approved_at', { withTimezone: true }),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    placementIdIdx: index('idx_placement_extensions_placement_id').on(table.placementId),
+  })
+);
+
+export const placementExtensionsRelations = relations(placementExtensions, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [placementExtensions.orgId],
+    references: [organizations.id],
+  }),
+  placement: one(placements, {
+    fields: [placementExtensions.placementId],
+    references: [placements.id],
+  }),
+  approver: one(userProfiles, {
+    fields: [placementExtensions.approvedBy],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type PlacementExtension = typeof placementExtensions.$inferSelect;
+export type NewPlacementExtension = typeof placementExtensions.$inferInsert;
+
+// =====================================================
+// PLACEMENT TIMESHEETS
+// =====================================================
+
+export const placementTimesheets = pgTable(
+  'placement_timesheets',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    placementId: uuid('placement_id')
+      .notNull()
+      .references(() => placements.id, { onDelete: 'cascade' }),
+
+    weekEnding: date('week_ending').notNull(),
+    regularHours: numeric('regular_hours', { precision: 5, scale: 2 }).default('0'),
+    overtimeHours: numeric('overtime_hours', { precision: 5, scale: 2 }).default('0'),
+    status: text('status').notNull().default('draft'), // draft, submitted, approved, rejected
+    submittedAt: timestamp('submitted_at', { withTimezone: true }),
+    approvedBy: uuid('approved_by').references(() => userProfiles.id),
+    approvedAt: timestamp('approved_at', { withTimezone: true }),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    placementIdIdx: index('idx_placement_timesheets_placement_id').on(table.placementId),
+    weekEndingIdx: index('idx_placement_timesheets_week_ending').on(table.weekEnding),
+  })
+);
+
+export const placementTimesheetsRelations = relations(placementTimesheets, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [placementTimesheets.orgId],
+    references: [organizations.id],
+  }),
+  placement: one(placements, {
+    fields: [placementTimesheets.placementId],
+    references: [placements.id],
+  }),
+  approver: one(userProfiles, {
+    fields: [placementTimesheets.approvedBy],
+    references: [userProfiles.id],
+  }),
+}));
+
+export type PlacementTimesheet = typeof placementTimesheets.$inferSelect;
+export type NewPlacementTimesheet = typeof placementTimesheets.$inferInsert;
+
+// =====================================================
+// PLACEMENT MILESTONES
+// =====================================================
+
+export const placementMilestones = pgTable(
+  'placement_milestones',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    orgId: uuid('org_id')
+      .notNull()
+      .references(() => organizations.id, { onDelete: 'cascade' }),
+    placementId: uuid('placement_id')
+      .notNull()
+      .references(() => placements.id, { onDelete: 'cascade' }),
+
+    milestoneType: text('milestone_type').notNull(), // day1, week1, day30, day60, day90, end
+    dueDate: date('due_date'),
+    completedAt: timestamp('completed_at', { withTimezone: true }),
+    notes: text('notes'),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    deletedAt: timestamp('deleted_at', { withTimezone: true }),
+  },
+  (table) => ({
+    placementIdIdx: index('idx_placement_milestones_placement_id').on(table.placementId),
+    dueDateIdx: index('idx_placement_milestones_due_date').on(table.dueDate),
+  })
+);
+
+export const placementMilestonesRelations = relations(placementMilestones, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [placementMilestones.orgId],
+    references: [organizations.id],
+  }),
+  placement: one(placements, {
+    fields: [placementMilestones.placementId],
+    references: [placements.id],
+  }),
+}));
+
+export type PlacementMilestone = typeof placementMilestones.$inferSelect;
+export type NewPlacementMilestone = typeof placementMilestones.$inferInsert;

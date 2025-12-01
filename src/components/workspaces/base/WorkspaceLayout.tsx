@@ -22,7 +22,7 @@ import {
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { RCAIBar } from './RCAIBar';
-import type { RCAIEntityTypeType } from '@/lib/db/schema/workspace';
+import type { RCAIEntityTypeType } from '@/lib/db/schema/raci';
 
 // =====================================================
 // TYPES

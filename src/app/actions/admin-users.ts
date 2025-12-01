@@ -341,41 +341,29 @@ export async function listUsersAction(
     }>;
   }
 
-  type UserRoleRow = UserQueryResult['user_roles'][number];
-  type ActiveUserRole = UserRoleRow & {
-    roles: NonNullable<UserRoleRow['roles']>;
-  };
-
-  const typedUsers = (users ?? []) as unknown as UserQueryResult[];
-
-  const transformedUsers: UserWithRoles[] = typedUsers.map((user) => {
-    const userRoles = Array.isArray(user.user_roles) ? user.user_roles : [];
-    const activeRoles = userRoles.filter(
-      (role): role is ActiveUserRole => Boolean(role && !role.deleted_at && role.roles)
-    );
-
-    return {
-      id: user.id,
-      authId: user.auth_id,
-      email: user.email,
-      fullName: user.full_name,
-      avatarUrl: user.avatar_url,
-      phone: user.phone,
-      isActive: user.is_active ?? false,
-      createdAt: user.created_at,
-      updatedAt: user.updated_at,
-      deletedAt: user.deleted_at,
-      orgId: user.org_id,
-      roles: activeRoles.map((role) => ({
-        id: role.roles.id,
-        name: role.roles.name,
-        displayName: role.roles.display_name,
-        isPrimary: role.is_primary,
-        assignedAt: role.assigned_at,
-        expiresAt: role.expires_at,
+  const transformedUsers: UserWithRoles[] = (users || []).map((user) => ({
+    id: user.id,
+    authId: user.auth_id,
+    email: user.email,
+    fullName: user.full_name,
+    avatarUrl: user.avatar_url,
+    phone: user.phone,
+    isActive: user.is_active ?? false,
+    createdAt: user.created_at,
+    updatedAt: user.updated_at,
+    deletedAt: user.deleted_at,
+    orgId: user.org_id,
+    roles: (Array.isArray(user.user_roles) ? user.user_roles : [])
+      .filter((ur: any) => !ur.deleted_at && ur.roles)
+      .map((ur: any) => ({
+        id: ur.roles!.id,
+        name: ur.roles!.name,
+        displayName: ur.roles!.display_name,
+        isPrimary: ur.is_primary,
+        assignedAt: ur.assigned_at,
+        expiresAt: ur.expires_at,
       })),
-    };
-  });
+  }));
 
   const total = count || 0;
   const totalPages = Math.ceil(total / pageSize);

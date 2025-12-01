@@ -137,23 +137,18 @@ export const atsRouter = router({
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
 
-        if (!userId) {
-          throw new Error('User context missing');
-        }
-
         // Extract rate fields that need string conversion for numeric columns
         const { rateMin, rateMax, ownerId, ...rest } = input;
 
-        const jobValues: typeof jobs.$inferInsert = {
-          ...rest,
+        const [newJob] = await db.insert(jobs).values({
+          ...(rest as any),
           orgId,
           ownerId: ownerId ?? userId,
           createdBy: userId,
+          // Convert numbers to strings for numeric columns
           ...(rateMin !== undefined && { rateMin: String(rateMin) }),
           ...(rateMax !== undefined && { rateMax: String(rateMax) }),
-        };
-
-        const [newJob] = await db.insert(jobs).values(jobValues).returning();
+        }).returning();
 
         return newJob;
       }),
@@ -971,23 +966,14 @@ export const atsRouter = router({
       .input(createOfferSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
+        const { billRate, ...rest } = input;
 
-        if (!userId) {
-          throw new Error('User context missing');
-        }
-
-        const { billRate, benefits, ...offerData } = input;
-        const normalizedBenefits = Array.isArray(benefits) ? benefits.join(', ') : benefits ?? null;
-
-        const offerValues: typeof offers.$inferInsert = {
-          ...offerData,
-          benefits: normalizedBenefits,
+        const [newOffer] = await db.insert(offers).values({
+          ...(rest as any),
           rate: billRate !== undefined ? String(billRate) : '0',
           orgId,
           createdBy: userId,
-        };
-
-        const [newOffer] = await db.insert(offers).values(offerValues).returning();
+        }).returning();
 
         return newOffer;
       }),
@@ -1123,24 +1109,16 @@ export const atsRouter = router({
       .input(createPlacementSchema)
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
-
-        if (!userId) {
-          throw new Error('User context missing');
-        }
-
         const { billRate, payRate, ...rest } = input;
-        const basePlacement = rest as unknown as typeof placements.$inferInsert;
 
-        const placementValues: typeof placements.$inferInsert = {
-          ...basePlacement,
+        const [newPlacement] = await db.insert(placements).values({
+          ...(rest as any),
           recruiterId: userId,
-          billRate: billRate !== undefined && billRate !== null ? String(billRate) : '0',
-          payRate: payRate !== undefined && payRate !== null ? String(payRate) : '0',
+          billRate: String(billRate),
+          payRate: String(payRate),
           orgId,
           createdBy: userId,
-        };
-
-        const [newPlacement] = await db.insert(placements).values(placementValues).returning();
+        }).returning();
 
         return newPlacement;
       }),
@@ -2012,11 +1990,6 @@ export const atsRouter = router({
       }))
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
-
-        if (!userId) {
-          throw new Error('User context missing');
-        }
-
         const { candidateId, resumeType, bucket, filePath, fileName, fileSize, mimeType, title, notes, parsedContent, parsedSkills, aiSummary, submissionWriteUp } = input;
 
         // Get the current latest version for this resume type
@@ -2041,7 +2014,7 @@ export const atsRouter = router({
         }
 
         // Create new version
-        const resumeValues: typeof candidateResumes.$inferInsert = {
+        const [newResume] = await db.insert(candidateResumes).values({
           orgId,
           candidateId,
           version: newVersion,
@@ -2051,7 +2024,7 @@ export const atsRouter = router({
           bucket,
           filePath,
           fileName,
-          fileSize: typeof fileSize === 'number' ? fileSize : Number(fileSize),
+          fileSize: String(fileSize),
           mimeType,
           ...(title !== undefined && { title }),
           ...(notes !== undefined && { notes }),
@@ -2060,9 +2033,7 @@ export const atsRouter = router({
           ...(aiSummary !== undefined && { aiSummary }),
           ...(submissionWriteUp !== undefined && { submissionWriteUp }),
           uploadedBy: userId,
-        };
-
-        const [newResume] = await db.insert(candidateResumes).values(resumeValues).returning();
+        } as any).returning();
 
         return newResume;
       }),

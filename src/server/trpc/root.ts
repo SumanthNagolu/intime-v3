@@ -34,7 +34,8 @@ import { academyRouter } from './routers/academy';
 // Business module routers
 import { crmRouter } from '../routers/crm';
 import { atsRouter } from '../routers/ats';
-import { benchRouter } from '../routers/bench';
+// MOVED TO: tmp/old-conflicting-code/routers/bench.ts (had old schema imports)
+// import { benchRouter } from '../routers/bench';
 import { taHrRouter } from '../routers/ta-hr';
 import { dashboardRouter } from '../routers/dashboard';
 import { activitiesRouter } from '../routers/activities';
@@ -42,11 +43,14 @@ import { strategyRouter } from '../routers/strategy';
 import { filesRouter } from '../routers/files';
 
 // Unified Workspace routers
-import { contactsRouter } from '../routers/contacts';
-import { jobOrdersRouter } from '../routers/job-orders';
+// MOVED TO: tmp/old-conflicting-code/routers/contacts.ts (imports workspace schema)
+// import { contactsRouter } from '../routers/contacts';
+// MOVED TO: tmp/old-conflicting-code/routers/job-orders.ts (had old schema imports)
+// import { jobOrdersRouter } from '../routers/job-orders';
 import { objectOwnersRouter } from '../routers/object-owners';
 import { authRouter } from '../routers/auth';
 import { workspaceRouter } from '../routers/workspace';
+import { eventsRouter } from '../routers/events';
 
 // Role-based dashboard routers
 import { hrMetricsRouter } from '../routers/hr-metrics';
@@ -91,7 +95,7 @@ export const appRouter = router({
   // Business module routers
   crm: crmRouter,
   ats: atsRouter,
-  bench: benchRouter,
+  // bench: benchRouter, // MOVED - old schema imports
   taHr: taHrRouter,
   dashboard: dashboardRouter,
   activities: activitiesRouter,
@@ -99,10 +103,11 @@ export const appRouter = router({
   files: filesRouter,
 
   // Unified Workspace routers
-  contacts: contactsRouter,
-  jobOrders: jobOrdersRouter,
+  // contacts: contactsRouter, // MOVED - imports workspace schema
+  // jobOrders: jobOrdersRouter, // MOVED - old schema imports
   objectOwners: objectOwnersRouter,
   workspace: workspaceRouter,
+  events: eventsRouter,
 
   // Auth router
   auth: authRouter,

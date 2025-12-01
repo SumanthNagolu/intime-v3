@@ -1022,6 +1022,238 @@ Option 1:
 
 ---
 
+## Backend Processing
+
+### tRPC Router Reference
+
+**File:** `src/server/routers/interviews.ts`
+
+### Procedures
+
+| Procedure | Type | Description |
+|-----------|------|-------------|
+| `interviews.schedule` | Mutation | Create new interview |
+| `interviews.confirm` | Mutation | Confirm proposed time |
+| `interviews.reschedule` | Mutation | Change date/time |
+| `interviews.cancel` | Mutation | Cancel interview |
+| `interviews.addFeedback` | Mutation | Submit post-interview feedback |
+| `interviews.getBySubmission` | Query | List interviews for submission |
+
+### Input Schema: Schedule Interview
+
+```typescript
+import { z } from 'zod';
+
+export const scheduleInterviewInput = z.object({
+  submissionId: z.string().uuid(),
+  interviewType: z.enum([
+    'phone_screen',
+    'video_call',
+    'in_person',
+    'panel',
+    'technical',
+    'behavioral',
+    'final_round'
+  ]),
+  roundNumber: z.number().int().min(1).max(10),
+  durationMinutes: z.number().int().min(15).max(480),
+  timezone: z.string(), // IANA timezone
+  proposedTimes: z.array(z.object({
+    date: z.string(), // ISO date
+    time: z.string(), // HH:MM format
+  })).min(1).max(5),
+  interviewers: z.array(z.object({
+    name: z.string().max(100),
+    email: z.string().email(),
+    title: z.string().max(100).optional(),
+  })).min(1).max(5),
+  meetingLink: z.string().url().optional(),
+  meetingLocation: z.string().max(200).optional(),
+  description: z.string().max(500).optional(),
+  internalNotes: z.string().max(1000).optional(),
+});
+
+export type ScheduleInterviewInput = z.infer<typeof scheduleInterviewInput>;
+```
+
+### Output Schema
+
+```typescript
+export const scheduleInterviewOutput = z.object({
+  interviewId: z.string().uuid(),
+  status: z.enum(['proposed', 'scheduled']),
+  proposedTimes: z.array(z.object({
+    id: z.string().uuid(),
+    date: z.string(),
+    time: z.string(),
+    timezone: z.string(),
+    confirmed: z.boolean(),
+  })),
+  emailsSent: z.object({
+    candidate: z.boolean(),
+    interviewers: z.number(),
+  }),
+  calendarInvitesSent: z.boolean(),
+});
+
+export type ScheduleInterviewOutput = z.infer<typeof scheduleInterviewOutput>;
+```
+
+### Processing Steps
+
+1. **Validate Input** (~50ms)
+
+   ```typescript
+   // Check permissions
+   const hasAccess = await checkSubmissionAccess(ctx.userId, input.submissionId);
+   if (!hasAccess) throw new TRPCError({ code: 'FORBIDDEN' });
+
+   // Validate round sequence
+   const lastInterview = await db.query.interviews.findFirst({
+     where: and(
+       eq(interviews.submissionId, input.submissionId),
+       eq(interviews.status, 'completed')
+     ),
+     orderBy: desc(interviews.roundNumber)
+   });
+
+   if (lastInterview && input.roundNumber > lastInterview.roundNumber + 1) {
+     throw new TRPCError({
+       code: 'BAD_REQUEST',
+       message: `Complete Round ${lastInterview.roundNumber + 1} first`
+     });
+   }
+
+   // Validate meeting link requirement
+   if (['video_call', 'panel'].includes(input.interviewType) && !input.meetingLink) {
+     throw new TRPCError({
+       code: 'BAD_REQUEST',
+       message: 'Meeting link required for video interviews'
+     });
+   }
+   ```
+
+2. **Create Interview Record** (~100ms)
+
+   ```sql
+   INSERT INTO interviews (
+     id, org_id, submission_id, job_id, candidate_id,
+     round_number, interview_type, duration_minutes, timezone,
+     meeting_link, meeting_location, description, internal_notes,
+     interviewer_names, interviewer_emails,
+     status, scheduled_by, created_at, updated_at
+   ) VALUES (
+     gen_random_uuid(), $1, $2, $3, $4,
+     $5, $6, $7, $8,
+     $9, $10, $11, $12,
+     $13::text[], $14::text[],
+     'proposed', $15, NOW(), NOW()
+   ) RETURNING id;
+   ```
+
+3. **Create Proposed Times** (~50ms)
+
+   ```sql
+   INSERT INTO interview_proposed_times (
+     id, interview_id, proposed_date, proposed_time, timezone,
+     status, created_at
+   )
+   SELECT
+     gen_random_uuid(), $1,
+     (unnest::jsonb)->>'date',
+     (unnest::jsonb)->>'time',
+     $2, 'pending', NOW()
+   FROM unnest($3::jsonb[]);
+   ```
+
+4. **Update Submission Status** (~50ms)
+
+   ```sql
+   UPDATE submissions
+   SET status = 'interviewing',
+       interview_count = interview_count + 1,
+       updated_at = NOW()
+   WHERE id = $1;
+   ```
+
+5. **Generate Calendar Invites** (~200ms)
+   - Create ICS files for each proposed time
+   - Include meeting link and description
+   - Attach to email
+
+6. **Send Notifications** (~500ms)
+
+   **To Candidate:**
+   - Email with all proposed times
+   - Instructions to confirm preferred time
+   - Meeting details and prep info
+
+   **To Interviewers:**
+   - Email with interview details
+   - Candidate profile summary
+   - Calendar invites for all proposed times
+
+7. **Log Activity** (~50ms)
+
+   ```sql
+   INSERT INTO activities (
+     id, org_id, entity_type, entity_id,
+     activity_type, description, created_by, created_at, metadata
+   ) VALUES (
+     gen_random_uuid(), $1, 'interview', $2,
+     'scheduled', 'Interview scheduled', $3, NOW(), $4::jsonb
+   );
+   ```
+
+### Error Handling
+
+| Error Code | Message | Recovery |
+|------------|---------|----------|
+| `FORBIDDEN` | Not authorized to schedule for this submission | Contact submission owner |
+| `BAD_REQUEST` | Round sequence violation | Complete previous round first |
+| `BAD_REQUEST` | Meeting link required | Add meeting link |
+| `BAD_REQUEST` | Invalid email format | Fix interviewer email |
+| `BAD_REQUEST` | Cannot schedule in the past | Select future date/time |
+| `CONFLICT` | Interview already exists for this round | View existing interview |
+| `INTERNAL_ERROR` | Failed to send emails | Retry or continue without emails |
+
+---
+
+## Proposed Times Data Model
+
+### Table: `interview_proposed_times`
+
+| Column | Type | Constraint | Notes |
+|--------|------|-----------|-------|
+| `id` | UUID | PK | |
+| `interview_id` | UUID | FK → interviews.id, NOT NULL | |
+| `proposed_date` | DATE | NOT NULL | |
+| `proposed_time` | TIME | NOT NULL | |
+| `timezone` | VARCHAR(50) | NOT NULL | IANA timezone |
+| `status` | ENUM | NOT NULL | 'pending', 'confirmed', 'declined' |
+| `confirmed_by` | UUID | FK → user_profiles.id | Who confirmed |
+| `confirmed_at` | TIMESTAMP | | When confirmed |
+| `created_at` | TIMESTAMP | NOT NULL | |
+
+### Confirmation Flow
+
+```typescript
+// When candidate confirms a time
+const confirmTimeInput = z.object({
+  interviewId: z.string().uuid(),
+  proposedTimeId: z.string().uuid(),
+});
+
+// Processing:
+// 1. Mark selected time as 'confirmed'
+// 2. Mark other times as 'declined'
+// 3. Update interview.scheduledAt with confirmed datetime
+// 4. Change interview.status from 'proposed' to 'scheduled'
+// 5. Send final calendar invites to all parties
+```
+
+---
+
 ## Database Schema Reference
 
 ### `interviews` Table

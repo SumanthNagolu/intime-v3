@@ -63,7 +63,7 @@ This documentation captures every aspect of the InTime OS unified workspace - ev
 
 ---
 
-#### 01-recruiter/ - Technical Recruiter (11 docs)
+#### 01-recruiter/ - Technical Recruiter
 
 | Document | Description |
 |----------|-------------|
@@ -82,7 +82,7 @@ This documentation captures every aspect of the InTime OS unified workspace - ev
 
 ---
 
-#### 02-bench-sales/ - Bench Sales Recruiter (10 docs)
+#### 02-bench-sales/ - Bench Sales Recruiter
 
 | Document | Description |
 |----------|-------------|
@@ -100,7 +100,7 @@ This documentation captures every aspect of the InTime OS unified workspace - ev
 
 ---
 
-#### 03-ta/ - Talent Acquisition (5 docs)
+#### 03-ta/ - Talent Acquisition
 
 | Document | Description |
 |----------|-------------|
@@ -112,97 +112,97 @@ This documentation captures every aspect of the InTime OS unified workspace - ev
 
 ---
 
-#### 04-sales/ - Sales / Business Development (6 docs)
+#### 04-manager/ - Pod Manager
 
 | Document | Description |
 |----------|-------------|
-| [00-OVERVIEW.md](./20-USER-ROLES/04-sales/00-OVERVIEW.md) | Role summary |
-| [01-daily-workflow.md](./20-USER-ROLES/04-sales/01-daily-workflow.md) | Typical day |
-| [02-manage-leads.md](./20-USER-ROLES/04-sales/02-manage-leads.md) | Manage leads |
-| [03-manage-deals.md](./20-USER-ROLES/04-sales/03-manage-deals.md) | Manage deals |
-| [04-prospect-outreach.md](./20-USER-ROLES/04-sales/04-prospect-outreach.md) | Prospect outreach |
-| [05-close-deal.md](./20-USER-ROLES/04-sales/05-close-deal.md) | Close deal |
+| [00-OVERVIEW.md](./20-USER-ROLES/04-manager/00-OVERVIEW.md) | Role summary |
+| [01-daily-workflow.md](./20-USER-ROLES/04-manager/01-daily-workflow.md) | Typical day |
+| [02-pod-dashboard.md](./20-USER-ROLES/04-manager/02-pod-dashboard.md) | Pod dashboard |
+| [03-handle-escalation.md](./20-USER-ROLES/04-manager/03-handle-escalation.md) | Handle escalation |
+| [04-approve-submission.md](./20-USER-ROLES/04-manager/04-approve-submission.md) | Approve submission |
 
 ---
 
-#### 05-manager/ - Pod Manager (5 docs)
+#### 05-hr/ - HR Manager
 
 | Document | Description |
 |----------|-------------|
-| [00-OVERVIEW.md](./20-USER-ROLES/05-manager/00-OVERVIEW.md) | Role summary |
-| [01-daily-workflow.md](./20-USER-ROLES/05-manager/01-daily-workflow.md) | Typical day |
-| [02-pod-dashboard.md](./20-USER-ROLES/05-manager/02-pod-dashboard.md) | Pod dashboard |
-| [03-handle-escalation.md](./20-USER-ROLES/05-manager/03-handle-escalation.md) | Handle escalation |
-| [04-approve-submission.md](./20-USER-ROLES/05-manager/04-approve-submission.md) | Approve submission |
+| [00-OVERVIEW.md](./20-USER-ROLES/05-hr/00-OVERVIEW.md) | Role summary |
+| [01-daily-workflow.md](./20-USER-ROLES/05-hr/01-daily-workflow.md) | Typical day |
+| [02-employee-onboarding.md](./20-USER-ROLES/05-hr/02-employee-onboarding.md) | Onboarding |
+| [03-payroll-management.md](./20-USER-ROLES/05-hr/03-payroll-management.md) | Payroll |
+| [04-performance-reviews.md](./20-USER-ROLES/05-hr/04-performance-reviews.md) | Reviews |
+| [05-time-and-attendance.md](./20-USER-ROLES/05-hr/05-time-and-attendance.md) | Time/PTO |
+| [06-international-employment.md](./20-USER-ROLES/05-hr/06-international-employment.md) | International employment |
+| [07-contractor-classification.md](./20-USER-ROLES/05-hr/07-contractor-classification.md) | Contractor classification |
 
 ---
 
-#### 06-hr-manager/ - HR Manager (6 docs)
+#### 06-regional/ - Regional Director
 
 | Document | Description |
 |----------|-------------|
-| [00-OVERVIEW.md](./20-USER-ROLES/06-hr-manager/00-OVERVIEW.md) | Role summary |
-| [01-daily-workflow.md](./20-USER-ROLES/06-hr-manager/01-daily-workflow.md) | Typical day |
-| [02-employee-onboarding.md](./20-USER-ROLES/06-hr-manager/02-employee-onboarding.md) | Onboarding |
-| [03-payroll-management.md](./20-USER-ROLES/06-hr-manager/03-payroll-management.md) | Payroll |
-| [04-performance-reviews.md](./20-USER-ROLES/06-hr-manager/04-performance-reviews.md) | Reviews |
-| [05-time-and-attendance.md](./20-USER-ROLES/06-hr-manager/05-time-and-attendance.md) | Time/PTO |
+| [00-OVERVIEW.md](./20-USER-ROLES/06-regional/00-OVERVIEW.md) | Role summary |
+| [01-daily-workflow.md](./20-USER-ROLES/06-regional/01-daily-workflow.md) | Typical day |
+| [02-regional-dashboard.md](./20-USER-ROLES/06-regional/02-regional-dashboard.md) | Regional dashboard |
+| [03-manage-pods.md](./20-USER-ROLES/06-regional/03-manage-pods.md) | Manage pods |
+| [04-territory-planning.md](./20-USER-ROLES/06-regional/04-territory-planning.md) | Territory planning |
+| [05-regional-reporting.md](./20-USER-ROLES/06-regional/05-regional-reporting.md) | Regional reporting |
 
 ---
 
-#### 07-finance/ - Finance / CFO (6 docs)
+#### 07-cfo/ - Finance / CFO
 
 | Document | Description |
 |----------|-------------|
-| [00-OVERVIEW.md](./20-USER-ROLES/07-finance/00-OVERVIEW.md) | Role summary |
-| [01-daily-workflow.md](./20-USER-ROLES/07-finance/01-daily-workflow.md) | Typical day |
-| [02-process-invoices.md](./20-USER-ROLES/07-finance/02-process-invoices.md) | Process invoices |
-| [03-manage-payroll.md](./20-USER-ROLES/07-finance/03-manage-payroll.md) | Manage payroll |
-| [04-track-ar.md](./20-USER-ROLES/07-finance/04-track-ar.md) | Track AR |
-| [05-financial-reporting.md](./20-USER-ROLES/07-finance/05-financial-reporting.md) | Financial reports |
+| [00-OVERVIEW.md](./20-USER-ROLES/07-cfo/00-OVERVIEW.md) | Role summary |
+| [01-daily-workflow.md](./20-USER-ROLES/07-cfo/01-daily-workflow.md) | Typical day |
+| [02-process-invoices.md](./20-USER-ROLES/07-cfo/02-process-invoices.md) | Process invoices |
+| [03-manage-payroll.md](./20-USER-ROLES/07-cfo/03-manage-payroll.md) | Manage payroll |
+| [04-track-ar.md](./20-USER-ROLES/07-cfo/04-track-ar.md) | Track AR |
+| [05-financial-reporting.md](./20-USER-ROLES/07-cfo/05-financial-reporting.md) | Financial reports |
 
 ---
 
-#### 08-account-manager/ - Account Manager (6 docs)
+#### 08-coo/ - Chief Operating Officer
 
 | Document | Description |
 |----------|-------------|
-| [00-OVERVIEW.md](./20-USER-ROLES/08-account-manager/00-OVERVIEW.md) | Role summary |
-| [01-daily-workflow.md](./20-USER-ROLES/08-account-manager/01-daily-workflow.md) | Typical day |
-| [02-manage-account.md](./20-USER-ROLES/08-account-manager/02-manage-account.md) | Manage account |
-| [03-client-meeting.md](./20-USER-ROLES/08-account-manager/03-client-meeting.md) | Client meeting |
-| [04-expand-account.md](./20-USER-ROLES/08-account-manager/04-expand-account.md) | Expand account |
-| [05-handle-issue.md](./20-USER-ROLES/08-account-manager/05-handle-issue.md) | Handle issue |
+| [00-OVERVIEW.md](./20-USER-ROLES/08-coo/00-OVERVIEW.md) | Role summary |
+| [01-daily-workflow.md](./20-USER-ROLES/08-coo/01-daily-workflow.md) | Typical day |
+| [10-operational-dashboard.md](./20-USER-ROLES/08-coo/10-operational-dashboard.md) | Operational dashboard |
+| [11-sla-management.md](./20-USER-ROLES/08-coo/11-sla-management.md) | SLA management |
+| [12-process-optimization.md](./20-USER-ROLES/08-coo/12-process-optimization.md) | Process optimization |
+| [13-escalation-management.md](./20-USER-ROLES/08-coo/13-escalation-management.md) | Escalation management |
 
 ---
 
-#### 09-executive/ - Executive (CEO/COO/CFO) (6 docs)
+#### 09-ceo/ - Chief Executive Officer
 
 | Document | Description |
 |----------|-------------|
-| [00-OVERVIEW.md](./20-USER-ROLES/09-executive/00-OVERVIEW.md) | Role summary |
-| [01-daily-workflow.md](./20-USER-ROLES/09-executive/01-daily-workflow.md) | Typical day |
-| [02-executive-dashboard.md](./20-USER-ROLES/09-executive/02-executive-dashboard.md) | Executive dashboard |
-| [03-workforce-planning.md](./20-USER-ROLES/09-executive/03-workforce-planning.md) | Workforce planning |
-| [04-strategic-client.md](./20-USER-ROLES/09-executive/04-strategic-client.md) | Strategic clients |
-| [05-organization-config.md](./20-USER-ROLES/09-executive/05-organization-config.md) | Org config |
+| [00-OVERVIEW.md](./20-USER-ROLES/09-ceo/00-OVERVIEW.md) | Role summary |
+| [01-strategic-kpi-dashboard.md](./20-USER-ROLES/09-ceo/01-strategic-kpi-dashboard.md) | Strategic KPI dashboard |
+| [02-board-reporting.md](./20-USER-ROLES/09-ceo/02-board-reporting.md) | Board reporting |
+| [03-strategic-client.md](./20-USER-ROLES/09-ceo/03-strategic-client.md) | Strategic client management |
+| [04-workforce-planning.md](./20-USER-ROLES/09-ceo/04-workforce-planning.md) | Workforce planning |
 
 ---
 
-#### 10-regional-director/ - Regional Director (6 docs)
+#### 10-admin/ - System Administrator
 
 | Document | Description |
 |----------|-------------|
-| [00-OVERVIEW.md](./20-USER-ROLES/10-regional-director/00-OVERVIEW.md) | Role summary |
-| [01-daily-workflow.md](./20-USER-ROLES/10-regional-director/01-daily-workflow.md) | Typical day |
-| [02-regional-dashboard.md](./20-USER-ROLES/10-regional-director/02-regional-dashboard.md) | Regional dashboard |
-| [03-manage-pods.md](./20-USER-ROLES/10-regional-director/03-manage-pods.md) | Manage pods |
-| [04-territory-planning.md](./20-USER-ROLES/10-regional-director/04-territory-planning.md) | Territory planning |
-| [05-regional-reporting.md](./20-USER-ROLES/10-regional-director/05-regional-reporting.md) | Regional reporting |
+| [00-OVERVIEW.md](./20-USER-ROLES/10-admin/00-OVERVIEW.md) | Role summary |
+| [01-manage-users.md](./20-USER-ROLES/10-admin/01-manage-users.md) | Manage users |
+| [02-configure-pods.md](./20-USER-ROLES/10-admin/02-configure-pods.md) | Configure pods |
+| [03-system-settings.md](./20-USER-ROLES/10-admin/03-system-settings.md) | System settings |
+| [04-data-management.md](./20-USER-ROLES/10-admin/04-data-management.md) | Data management |
 
 ---
 
-#### 11-client-portal/ - Client Portal (6 docs)
+#### 11-client-portal/ - Client Portal
 
 | Document | Description |
 |----------|-------------|
@@ -215,7 +215,7 @@ This documentation captures every aspect of the InTime OS unified workspace - ev
 
 ---
 
-#### 12-candidate-portal/ - Candidate Portal (5 docs)
+#### 12-candidate-portal/ - Candidate Portal
 
 | Document | Description |
 |----------|-------------|
@@ -225,18 +225,6 @@ This documentation captures every aspect of the InTime OS unified workspace - ev
 | [03-view-submissions.md](./20-USER-ROLES/12-candidate-portal/03-view-submissions.md) | View submissions |
 | [04-prepare-interview.md](./20-USER-ROLES/12-candidate-portal/04-prepare-interview.md) | Prepare interview |
 | [05-manage-placement.md](./20-USER-ROLES/12-candidate-portal/05-manage-placement.md) | Manage placement |
-
----
-
-#### 03-admin/ - System Administrator (5 docs)
-
-| Document | Description |
-|----------|-------------|
-| [00-OVERVIEW.md](./20-USER-ROLES/03-admin/00-OVERVIEW.md) | Role summary |
-| [01-manage-users.md](./20-USER-ROLES/03-admin/01-manage-users.md) | Manage users |
-| [02-configure-pods.md](./20-USER-ROLES/03-admin/02-configure-pods.md) | Configure pods |
-| [03-system-settings.md](./20-USER-ROLES/03-admin/03-system-settings.md) | System settings |
-| [04-data-management.md](./20-USER-ROLES/03-admin/04-data-management.md) | Data management |
 
 ---
 
@@ -339,4 +327,4 @@ Documentation is complete when:
 
 ---
 
-*Last Updated: 2024-11-30*
+*Last Updated: 2025-12-01*

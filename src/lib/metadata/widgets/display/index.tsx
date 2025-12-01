@@ -581,6 +581,13 @@ export function IconDisplay({
 }
 
 // ==========================================
+// COMPOSITE WIDGETS
+// ==========================================
+
+export * from './composite-widgets';
+import { compositeDisplayWidgets } from './composite-widgets';
+
+// ==========================================
 // EXPORT MAP
 // ==========================================
 
@@ -607,4 +614,6 @@ export const displayWidgets = {
   'avatar-display': AvatarDisplay,
   'image-display': ImageDisplay,
   'icon-display': IconDisplay,
+  // Composite widgets
+  ...compositeDisplayWidgets,
 } as const;

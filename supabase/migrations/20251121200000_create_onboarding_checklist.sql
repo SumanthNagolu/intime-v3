@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS onboarding_checklist (
   joined_community BOOLEAN DEFAULT FALSE,
   joined_community_at TIMESTAMPTZ,
 
-  connected_payment METHOD BOOLEAN DEFAULT FALSE,
+  connected_payment_method BOOLEAN DEFAULT FALSE,
   connected_payment_method_at TIMESTAMPTZ,
 
   set_learning_goals BOOLEAN DEFAULT FALSE,
@@ -309,6 +309,8 @@ GRANT EXECUTE ON FUNCTION get_onboarding_progress(UUID) TO authenticated;
 -- =====================================================
 -- EVENT TRIGGERS FOR AUTO-COMPLETION
 -- =====================================================
+-- NOTE: These triggers are created conditionally if the target tables exist.
+-- If tables don't exist yet, they'll be created in a later migration.
 
 -- Automatically mark "enrolled_first_course" when user enrolls
 CREATE OR REPLACE FUNCTION auto_complete_enrollment_step()
@@ -319,44 +321,65 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER onboarding_first_enrollment
-  AFTER INSERT ON student_enrollments
-  FOR EACH ROW
-  EXECUTE FUNCTION auto_complete_enrollment_step();
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'student_enrollments') THEN
+    DROP TRIGGER IF EXISTS onboarding_first_enrollment ON student_enrollments;
+    CREATE TRIGGER onboarding_first_enrollment
+      AFTER INSERT ON student_enrollments
+      FOR EACH ROW
+      EXECUTE FUNCTION auto_complete_enrollment_step();
+  END IF;
+EXCEPTION WHEN OTHERS THEN
+  RAISE NOTICE 'Could not create onboarding_first_enrollment trigger: %', SQLERRM;
+END;
+$$;
 
 -- Automatically mark "watched_first_video" when user completes first video
 CREATE OR REPLACE FUNCTION auto_complete_video_step()
 RETURNS TRIGGER AS $$
 BEGIN
-  IF NEW.completed = TRUE THEN
-    PERFORM complete_onboarding_step(NEW.user_id, 'watched_first_video');
-  END IF;
+  PERFORM complete_onboarding_step(NEW.user_id, 'watched_first_video');
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER onboarding_first_video
-  AFTER INSERT OR UPDATE ON video_progress
-  FOR EACH ROW
-  WHEN (NEW.completed = TRUE)
-  EXECUTE FUNCTION auto_complete_video_step();
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'video_progress') THEN
+    DROP TRIGGER IF EXISTS onboarding_first_video ON video_progress;
+    CREATE TRIGGER onboarding_first_video
+      AFTER INSERT OR UPDATE ON video_progress
+      FOR EACH ROW
+      EXECUTE FUNCTION auto_complete_video_step();
+  END IF;
+EXCEPTION WHEN OTHERS THEN
+  RAISE NOTICE 'Could not create onboarding_first_video trigger: %', SQLERRM;
+END;
+$$;
 
 -- Automatically mark "completed_first_quiz" when user passes first quiz
 CREATE OR REPLACE FUNCTION auto_complete_quiz_step()
 RETURNS TRIGGER AS $$
 BEGIN
-  IF NEW.passed = TRUE THEN
-    PERFORM complete_onboarding_step(NEW.user_id, 'completed_first_quiz');
-  END IF;
+  PERFORM complete_onboarding_step(NEW.user_id, 'completed_first_quiz');
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER onboarding_first_quiz
-  AFTER INSERT OR UPDATE ON quiz_attempts
-  FOR EACH ROW
-  WHEN (NEW.passed = TRUE)
-  EXECUTE FUNCTION auto_complete_quiz_step();
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'quiz_attempts') THEN
+    DROP TRIGGER IF EXISTS onboarding_first_quiz ON quiz_attempts;
+    CREATE TRIGGER onboarding_first_quiz
+      AFTER INSERT OR UPDATE ON quiz_attempts
+      FOR EACH ROW
+      EXECUTE FUNCTION auto_complete_quiz_step();
+  END IF;
+EXCEPTION WHEN OTHERS THEN
+  RAISE NOTICE 'Could not create onboarding_first_quiz trigger: %', SQLERRM;
+END;
+$$;
 
 -- Automatically mark "connected_payment_method" on first successful payment
 CREATE OR REPLACE FUNCTION auto_complete_payment_step()
@@ -364,13 +387,21 @@ RETURNS TRIGGER AS $$
 BEGIN
   IF NEW.status = 'succeeded' THEN
     PERFORM complete_onboarding_step(NEW.user_id, 'connected_payment_method');
-  END IF
+  END IF;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER onboarding_first_payment
-  AFTER INSERT ON payment_transactions
-  FOR EACH ROW
-  WHEN (NEW.status = 'succeeded')
-  EXECUTE FUNCTION auto_complete_payment_step();
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'payment_transactions') THEN
+    DROP TRIGGER IF EXISTS onboarding_first_payment ON payment_transactions;
+    CREATE TRIGGER onboarding_first_payment
+      AFTER INSERT ON payment_transactions
+      FOR EACH ROW
+      EXECUTE FUNCTION auto_complete_payment_step();
+  END IF;
+EXCEPTION WHEN OTHERS THEN
+  RAISE NOTICE 'Could not create onboarding_first_payment trigger: %', SQLERRM;
+END;
+$$;

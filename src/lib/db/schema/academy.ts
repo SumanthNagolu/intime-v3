@@ -287,3 +287,170 @@ export const pricingPlans = pgTable('pricing_plans', {
     updated_at: timestamp('updated_at').defaultNow().notNull(),
     deleted_at: timestamp('deleted_at'),
 });
+
+// =====================================================
+// LEARNING PATHS
+// =====================================================
+
+// Learning Paths
+export const learningPaths = pgTable('learning_paths', {
+    id: uuid('id').defaultRandom().primaryKey(),
+    slug: text('slug').notNull().unique(),
+    title: text('title').notNull(),
+    description: text('description').notNull(),
+    category: text('category'),
+    difficulty: skillLevelEnum('difficulty').notNull().default('beginner'),
+    duration_estimate_hours: integer('duration_estimate_hours'),
+    status: text('status').notNull().default('draft'),
+    thumbnail_url: text('thumbnail_url'),
+    created_by: uuid('created_by').references(() => userProfiles.id),
+    created_at: timestamp('created_at').defaultNow().notNull(),
+    updated_at: timestamp('updated_at').defaultNow().notNull(),
+    deleted_at: timestamp('deleted_at'),
+});
+
+// Learning Path Courses (junction table)
+export const learningPathCourses = pgTable('learning_path_courses', {
+    id: uuid('id').defaultRandom().primaryKey(),
+    path_id: uuid('path_id').references(() => learningPaths.id, { onDelete: 'cascade' }).notNull(),
+    course_id: uuid('course_id').references(() => courses.id, { onDelete: 'cascade' }).notNull(),
+    sequence: integer('sequence').notNull(),
+    is_required: boolean('is_required').notNull().default(true),
+    created_at: timestamp('created_at').defaultNow().notNull(),
+});
+
+// Path Enrollments
+export const pathEnrollments = pgTable('path_enrollments', {
+    id: uuid('id').defaultRandom().primaryKey(),
+    user_id: uuid('user_id').references(() => userProfiles.id).notNull(),
+    path_id: uuid('path_id').references(() => learningPaths.id).notNull(),
+    status: enrollmentStatusEnum('status').notNull().default('pending'),
+    enrolled_at: timestamp('enrolled_at').defaultNow().notNull(),
+    completed_at: timestamp('completed_at'),
+    progress_percent: integer('progress_percent').default(0),
+    created_at: timestamp('created_at').defaultNow().notNull(),
+    updated_at: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// =====================================================
+// CERTIFICATES
+// =====================================================
+
+// Certificate Templates
+export const certificateTemplates = pgTable('certificate_templates', {
+    id: uuid('id').defaultRandom().primaryKey(),
+    name: text('name').notNull(),
+    design_template: text('design_template').notNull(),
+    fields: jsonb('fields'),
+    is_active: boolean('is_active').default(true),
+    created_at: timestamp('created_at').defaultNow().notNull(),
+    updated_at: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// Certificates
+export const certificates = pgTable('certificates', {
+    id: uuid('id').defaultRandom().primaryKey(),
+    enrollment_id: uuid('enrollment_id').references(() => studentEnrollments.id).notNull(),
+    template_id: uuid('template_id').references(() => certificateTemplates.id),
+    certificate_number: text('certificate_number').notNull().unique(),
+    issued_at: timestamp('issued_at').defaultNow().notNull(),
+    expiry_date: timestamp('expiry_date'),
+    pdf_url: text('pdf_url'),
+    verification_code: text('verification_code').notNull().unique(),
+    created_at: timestamp('created_at').defaultNow().notNull(),
+});
+
+// =====================================================
+// GAMIFICATION - LEVELS & ACHIEVEMENTS
+// =====================================================
+
+// Level Definitions
+export const levelDefinitions = pgTable('level_definitions', {
+    level: integer('level').primaryKey(),
+    xp_required: integer('xp_required').notNull(),
+    title: text('title').notNull(),
+    badge_url: text('badge_url'),
+    perks: jsonb('perks'),
+    created_at: timestamp('created_at').defaultNow().notNull(),
+    updated_at: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// User Levels
+export const userLevels = pgTable('user_levels', {
+    user_id: uuid('user_id').references(() => userProfiles.id).primaryKey(),
+    current_level: integer('current_level').notNull().default(1),
+    current_xp: integer('current_xp').notNull().default(0),
+    xp_to_next_level: integer('xp_to_next_level').notNull().default(100),
+    level_up_at: timestamp('level_up_at'),
+    updated_at: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// Achievements (broader than badges)
+export const achievements = pgTable('achievements', {
+    id: uuid('id').defaultRandom().primaryKey(),
+    slug: text('slug').notNull().unique(),
+    name: text('name').notNull(),
+    description: text('description').notNull(),
+    category: text('category').notNull(),
+    badge_url: text('badge_url'),
+    xp_reward: integer('xp_reward').notNull().default(0),
+    criteria: jsonb('criteria').notNull(),
+    is_secret: boolean('is_secret').default(false),
+    created_at: timestamp('created_at').defaultNow().notNull(),
+    updated_at: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// User Achievements
+export const userAchievements = pgTable('user_achievements', {
+    id: uuid('id').defaultRandom().primaryKey(),
+    user_id: uuid('user_id').references(() => userProfiles.id).notNull(),
+    achievement_id: uuid('achievement_id').references(() => achievements.id).notNull(),
+    unlocked_at: timestamp('unlocked_at').defaultNow().notNull(),
+    progress: jsonb('progress'),
+    created_at: timestamp('created_at').defaultNow().notNull(),
+});
+
+// =====================================================
+// STREAKS
+// =====================================================
+
+// Learning Streaks
+export const learningStreaks = pgTable('learning_streaks', {
+    id: uuid('id').defaultRandom().primaryKey(),
+    user_id: uuid('user_id').references(() => userProfiles.id).notNull(),
+    streak_type: text('streak_type').notNull(),
+    current_count: integer('current_count').notNull().default(0),
+    longest_count: integer('longest_count').notNull().default(0),
+    last_activity_date: timestamp('last_activity_date'),
+    streak_started_at: timestamp('streak_started_at'),
+    created_at: timestamp('created_at').defaultNow().notNull(),
+    updated_at: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// =====================================================
+// LEADERBOARDS
+// =====================================================
+
+// Leaderboards
+export const leaderboards = pgTable('leaderboards', {
+    id: uuid('id').defaultRandom().primaryKey(),
+    type: text('type').notNull(),
+    scope: text('scope').notNull(),
+    period_start: timestamp('period_start').notNull(),
+    period_end: timestamp('period_end').notNull(),
+    created_at: timestamp('created_at').defaultNow().notNull(),
+    updated_at: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// Leaderboard Entries
+export const leaderboardEntries = pgTable('leaderboard_entries', {
+    id: uuid('id').defaultRandom().primaryKey(),
+    leaderboard_id: uuid('leaderboard_id').references(() => leaderboards.id, { onDelete: 'cascade' }).notNull(),
+    user_id: uuid('user_id').references(() => userProfiles.id).notNull(),
+    rank: integer('rank').notNull(),
+    xp_earned: integer('xp_earned').notNull().default(0),
+    courses_completed: integer('courses_completed').notNull().default(0),
+    lessons_completed: integer('lessons_completed').notNull().default(0),
+    created_at: timestamp('created_at').defaultNow().notNull(),
+    updated_at: timestamp('updated_at').defaultNow().notNull(),
+});
