@@ -1,9 +1,9 @@
 /**
  * CFO Financial Dashboard Screen Definition
- * 
+ *
  * Comprehensive financial dashboard for the Chief Financial Officer.
- * 
- * @see docs/specs/20-USER-ROLES/07-cfo/06-cfo-overview.md
+ *
+ * @see docs/specs/20-USER-ROLES/07-cfo/00-OVERVIEW.md
  */
 
 import type { ScreenDefinition } from '@/lib/metadata/types';
@@ -11,95 +11,223 @@ import type { ScreenDefinition } from '@/lib/metadata/types';
 export const cfoDashboardScreen: ScreenDefinition = {
   id: 'cfo-dashboard',
   type: 'dashboard',
-  entityType: 'financial',
   title: 'CFO Financial Dashboard',
-  description: 'Multi-currency financial operations and analysis',
-  
+  subtitle: 'Multi-currency financial operations and analysis',
+  icon: 'DollarSign',
+
   dataSource: {
     type: 'query',
-    query: 'finance.getCFODashboard',
+    query: {
+      procedure: 'finance.getCFODashboard',
+    },
   },
-  
+
   layout: {
     type: 'tabs',
+    defaultTab: 'overview',
     tabs: [
       // ─────────────────────────────────────────────────────
       // TAB 1: FINANCIAL OVERVIEW
+      // Per CFO Role Spec: KPIs + Charts + Alerts
       // ─────────────────────────────────────────────────────
       {
         id: 'overview',
         label: 'Overview',
-        icon: 'layout-dashboard',
+        icon: 'LayoutDashboard',
         sections: [
+          // KPI Cards Row 1: Revenue & Margin
           {
-            id: 'financial-kpis',
+            id: 'financial-kpis-row1',
             type: 'metrics-grid',
             columns: 4,
-            metrics: [
+            fields: [
               {
-                id: 'total-revenue',
-                label: 'Total Revenue (USD)',
-                value: { type: 'field', path: 'overview.totalRevenue' },
-                format: 'currency',
-                target: { type: 'field', path: 'overview.revenueTarget' },
-                trend: { type: 'field', path: 'overview.revenueTrend' },
-                size: 'large',
+                id: 'revenue-mtd',
+                label: 'Revenue MTD',
+                type: 'currency',
+                path: 'overview.revenueMTD',
+                config: {
+                  target: { type: 'field', path: 'overview.revenueMTDTarget' },
+                  trend: { type: 'field', path: 'overview.revenueMTDTrend' },
+                  icon: 'TrendingUp',
+                },
+              },
+              {
+                id: 'revenue-ytd',
+                label: 'Revenue YTD',
+                type: 'currency',
+                path: 'overview.revenueYTD',
+                config: {
+                  target: { type: 'field', path: 'overview.revenueYTDTarget' },
+                  trend: { type: 'field', path: 'overview.revenueYTDTrend' },
+                  icon: 'TrendingUp',
+                },
               },
               {
                 id: 'gross-margin',
-                label: 'Gross Margin',
-                value: { type: 'field', path: 'overview.grossMargin' },
-                format: 'percentage',
-                target: 25,
-                color: 'success',
+                label: 'Gross Margin %',
+                type: 'percentage',
+                path: 'overview.grossMargin',
+                config: {
+                  target: 25,
+                  thresholds: { warning: 20, critical: 15 },
+                  icon: 'Percent',
+                },
               },
               {
-                id: 'operating-margin',
-                label: 'Operating Margin',
-                value: { type: 'field', path: 'overview.operatingMargin' },
-                format: 'percentage',
-                target: 15,
+                id: 'ebitda',
+                label: 'EBITDA',
+                type: 'currency',
+                path: 'overview.ebitda',
+                config: {
+                  trend: { type: 'field', path: 'overview.ebitdaTrend' },
+                  icon: 'CircleDollarSign',
+                },
+              },
+            ],
+          },
+          // KPI Cards Row 2: Cash & AR
+          {
+            id: 'financial-kpis-row2',
+            type: 'metrics-grid',
+            columns: 4,
+            fields: [
+              {
+                id: 'cash-position',
+                label: 'Cash Position',
+                type: 'currency',
+                path: 'overview.cashPosition',
+                config: {
+                  icon: 'Wallet',
+                  trend: { type: 'field', path: 'overview.cashTrend' },
+                },
+              },
+              {
+                id: 'ar-outstanding',
+                label: 'AR Outstanding',
+                type: 'currency',
+                path: 'overview.arOutstanding',
+                config: {
+                  icon: 'FileText',
+                  thresholds: { warning: 500000, critical: 1000000 },
+                },
               },
               {
                 id: 'dso',
                 label: 'DSO (Days)',
-                value: { type: 'field', path: 'overview.dso' },
-                format: 'number',
-                target: 45,
-                inverse: true, // Lower is better
+                type: 'number',
+                path: 'overview.dso',
+                config: {
+                  target: 45,
+                  inverse: true, // Lower is better
+                  icon: 'Clock',
+                  thresholds: { warning: 50, critical: 60 },
+                },
+              },
+              {
+                id: 'collection-rate',
+                label: 'Collection Rate',
+                type: 'percentage',
+                path: 'overview.collectionRate',
+                config: {
+                  target: 95,
+                  icon: 'BadgeCheck',
+                  thresholds: { warning: 90, critical: 85 },
+                },
               },
             ],
           },
+          // Charts: Revenue Trend (12-month)
           {
-            id: 'revenue-by-entity',
+            id: 'revenue-trend',
             type: 'custom',
-            component: 'RevenueByEntityChart',
-            title: 'Revenue by Entity (US / Canada)',
-            span: 'half',
+            component: 'RevenueTrendChart',
+            title: 'Revenue Trend (12-Month Rolling)',
+            config: { height: 300 },
+          },
+          // Charts Row: Service Line + Client Tier
+          {
+            id: 'revenue-by-service',
+            type: 'custom',
+            component: 'RevenueByServiceLineChart',
+            title: 'Revenue by Service Line',
+            config: {
+              servicelines: ['Contract', 'FTE', 'C2H', 'Bench'],
+              chartType: 'donut',
+            },
           },
           {
-            id: 'cash-position',
+            id: 'margin-by-tier',
             type: 'custom',
-            component: 'CashPositionWidget',
-            title: 'Cash Position',
-            span: 'half',
+            component: 'MarginByClientTierChart',
+            title: 'Margin by Client Tier',
+            config: {
+              tiers: ['Enterprise', 'Mid-Market', 'SMB'],
+              chartType: 'bar',
+            },
           },
+          // AR Aging Distribution
           {
-            id: 'ar-aging-summary',
+            id: 'ar-aging-chart',
             type: 'custom',
-            component: 'ARAgingSummary',
-            title: 'AR Aging Summary',
-            span: 'half',
+            component: 'ARAgingDistributionChart',
+            title: 'AR Aging Distribution',
+            config: {
+              buckets: ['Current', '1-30', '31-60', '61-90', '90+'],
+              chartType: 'stacked-bar',
+            },
           },
+          // Alerts Panel
           {
-            id: 'fx-rates',
-            type: 'info-card',
-            title: 'FX Rates (USD/CAD)',
-            span: 'half',
-            fields: [
-              { id: 'spot', label: 'Spot Rate', path: 'fx.spotRate' },
-              { id: 'avg', label: 'MTD Average', path: 'fx.mtdAverage' },
-              { id: 'gain-loss', label: 'FX Gain/Loss (MTD)', path: 'fx.gainLoss', format: 'currency' },
+            id: 'financial-alerts',
+            type: 'table',
+            title: 'Financial Alerts',
+            icon: 'AlertTriangle',
+            dataSource: {
+              type: 'field',
+              path: 'alerts',
+            },
+            columns_config: [
+              {
+                id: 'severity',
+                header: '',
+                path: 'severity',
+                type: 'enum',
+                config: {
+                  options: [
+                    { value: 'critical', label: '🔴' },
+                    { value: 'warning', label: '🟡' },
+                    { value: 'info', label: '🔵' },
+                  ],
+                },
+                width: '40px',
+              },
+              {
+                id: 'type',
+                header: 'Type',
+                path: 'alertType',
+                type: 'enum',
+                config: {
+                  options: [
+                    { value: 'overdue_invoice', label: 'Large Invoice Overdue' },
+                    { value: 'margin_exception', label: 'Margin Exception' },
+                    { value: 'commission_unusual', label: 'Unusual Commission' },
+                    { value: 'cash_flow', label: 'Cash Flow Alert' },
+                  ],
+                },
+              },
+              { id: 'description', header: 'Description', path: 'description', type: 'text' },
+              { id: 'amount', header: 'Amount', path: 'amount', type: 'currency' },
+              { id: 'date', header: 'Date', path: 'createdAt', type: 'date' },
+            ],
+            actions: [
+              {
+                id: 'view-alert',
+                type: 'navigate',
+                label: 'View',
+                icon: 'Eye',
+                config: { type: 'navigate', route: '/employee/cfo/alerts/${id}' },
+              },
             ],
           },
         ],
@@ -111,8 +239,8 @@ export const cfoDashboardScreen: ScreenDefinition = {
       {
         id: 'commissions',
         label: 'Commissions',
-        icon: 'wallet',
-        badge: { type: 'field', path: 'commissions.pendingCount' },
+        icon: 'Wallet',
+        badge: { type: 'count', path: 'commissions.pendingCount' },
         sections: [
           {
             id: 'commission-summary',
@@ -123,14 +251,14 @@ export const cfoDashboardScreen: ScreenDefinition = {
                 id: 'pending-approval',
                 label: 'Pending Approval',
                 value: { type: 'field', path: 'commissions.pendingAmount' },
-                format: 'currency',
+                format: { type: 'currency' },
                 icon: 'clock',
               },
               {
                 id: 'approved-mtd',
                 label: 'Approved MTD',
                 value: { type: 'field', path: 'commissions.approvedMTD' },
-                format: 'currency',
+                format: { type: 'currency' },
                 icon: 'check-circle',
               },
               {
@@ -144,7 +272,7 @@ export const cfoDashboardScreen: ScreenDefinition = {
                 id: 'accuracy',
                 label: 'Accuracy Rate',
                 value: { type: 'field', path: 'commissions.accuracyRate' },
-                format: 'percentage',
+                format: { type: 'percentage' },
                 target: 99.5,
               },
             ],
@@ -157,36 +285,36 @@ export const cfoDashboardScreen: ScreenDefinition = {
               type: 'field',
               path: 'commissions.pending',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'recruiter',
                 header: 'Recruiter',
-                field: 'recruiterName',
+                path: 'recruiterName',
                 type: 'user',
               },
               {
                 id: 'placement',
                 header: 'Placement',
-                field: 'placementTitle',
+                accessor: 'placementTitle',
                 type: 'link',
-                linkPattern: '/employee/placements/{{placementId}}',
+                config: { linkPattern: '/employee/placements/{{placementId}}' },
               },
               {
                 id: 'client',
                 header: 'Client',
-                field: 'clientName',
+                accessor: 'clientName',
                 type: 'text',
               },
               {
                 id: 'amount',
                 header: 'Amount',
-                field: 'amount',
+                accessor: 'amount',
                 type: 'currency',
               },
               {
                 id: 'type',
                 header: 'Type',
-                field: 'commissionType',
+                accessor: 'commissionType',
                 type: 'badge',
                 options: [
                   { value: 'placement', label: 'Placement', color: 'success' },
@@ -198,21 +326,25 @@ export const cfoDashboardScreen: ScreenDefinition = {
                 id: 'actions',
                 header: '',
                 type: 'actions',
-                actions: [
-                  {
-                    id: 'approve',
-                    label: 'Approve',
-                    icon: 'check',
-                    variant: 'success',
-                    action: { type: 'mutation', mutation: 'commissions.approve' },
-                  },
-                  {
-                    id: 'review',
-                    label: 'Review',
-                    icon: 'eye',
-                    action: { type: 'navigate', path: '/finance/commissions/{{id}}' },
-                  },
-                ],
+                config: {
+                  actions: [
+                    {
+                      id: 'approve',
+                      type: 'mutation',
+                      label: 'Approve',
+                      icon: 'check',
+                      variant: 'success',
+                      config: { type: 'mutation', procedure: 'commissions.approve' },
+                    },
+                    {
+                      id: 'review',
+                      type: 'navigate',
+                      label: 'Review',
+                      icon: 'eye',
+                      config: { type: 'navigate', route: '/finance/commissions/{{id}}' },
+                    },
+                  ],
+                },
               },
             ],
           },
@@ -225,7 +357,7 @@ export const cfoDashboardScreen: ScreenDefinition = {
       {
         id: 'invoicing',
         label: 'Invoicing & AR',
-        icon: 'file-text',
+        icon: 'FileText',
         sections: [
           {
             id: 'ar-kpis',
@@ -236,27 +368,27 @@ export const cfoDashboardScreen: ScreenDefinition = {
                 id: 'ar-total',
                 label: 'Total AR',
                 value: { type: 'field', path: 'ar.total' },
-                format: 'currency',
+                format: { type: 'currency' },
               },
               {
                 id: 'ar-current',
                 label: 'Current (<30 days)',
                 value: { type: 'field', path: 'ar.current' },
-                format: 'currency',
+                format: { type: 'currency' },
                 color: 'success',
               },
               {
                 id: 'ar-overdue',
                 label: 'Overdue (>30 days)',
                 value: { type: 'field', path: 'ar.overdue' },
-                format: 'currency',
+                format: { type: 'currency' },
                 color: 'warning',
               },
               {
                 id: 'ar-critical',
                 label: 'Critical (>90 days)',
                 value: { type: 'field', path: 'ar.critical' },
-                format: 'currency',
+                format: { type: 'currency' },
                 color: 'destructive',
                 alertThreshold: 1,
               },
@@ -267,14 +399,14 @@ export const cfoDashboardScreen: ScreenDefinition = {
             type: 'custom',
             component: 'ARAgingChart',
             title: 'AR Aging Distribution',
-            span: 'half',
+            span: 2,
           },
           {
             id: 'collections-trend',
             type: 'custom',
             component: 'CollectionsTrendChart',
             title: 'Collections Trend (12 Months)',
-            span: 'half',
+            span: 2,
           },
           {
             id: 'overdue-invoices',
@@ -284,30 +416,30 @@ export const cfoDashboardScreen: ScreenDefinition = {
               type: 'field',
               path: 'ar.overdueInvoices',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'invoice',
                 header: 'Invoice #',
-                field: 'invoiceNumber',
+                path: 'invoiceNumber',
                 type: 'link',
-                linkPattern: '/finance/invoices/{{id}}',
+                config: { linkPattern: '/finance/invoices/{{id}}' },
               },
               {
                 id: 'client',
                 header: 'Client',
-                field: 'clientName',
+                accessor: 'clientName',
                 type: 'text',
               },
               {
                 id: 'amount',
                 header: 'Amount',
-                field: 'amount',
+                accessor: 'amount',
                 type: 'currency',
               },
               {
                 id: 'currency',
                 header: 'Currency',
-                field: 'currency',
+                accessor: 'currency',
                 type: 'badge',
                 options: [
                   { value: 'USD', label: 'USD', color: 'info' },
@@ -317,13 +449,13 @@ export const cfoDashboardScreen: ScreenDefinition = {
               {
                 id: 'dueDate',
                 header: 'Due Date',
-                field: 'dueDate',
+                accessor: 'dueDate',
                 type: 'date',
               },
               {
                 id: 'daysOverdue',
                 header: 'Days Overdue',
-                field: 'daysOverdue',
+                accessor: 'daysOverdue',
                 type: 'number',
                 highlight: {
                   condition: { operator: 'gt', field: 'daysOverdue', value: 60 },
@@ -333,7 +465,7 @@ export const cfoDashboardScreen: ScreenDefinition = {
               {
                 id: 'status',
                 header: 'Status',
-                field: 'collectionStatus',
+                accessor: 'collectionStatus',
                 type: 'badge',
                 options: [
                   { value: 'pending', label: 'Pending', color: 'warning' },
@@ -353,7 +485,7 @@ export const cfoDashboardScreen: ScreenDefinition = {
       {
         id: 'multi-currency',
         label: 'Multi-Currency',
-        icon: 'globe',
+        icon: 'Globe',
         sections: [
           {
             id: 'fx-overview',
@@ -371,54 +503,54 @@ export const cfoDashboardScreen: ScreenDefinition = {
             type: 'custom',
             component: 'FXRatesHistoryChart',
             title: 'USD/CAD Exchange Rate (90 Days)',
-            span: 'full',
+            span: 4,
           },
           {
             id: 'fx-gain-loss',
             type: 'custom',
             component: 'FXGainLossChart',
             title: 'FX Gain/Loss by Month',
-            span: 'half',
+            span: 2,
           },
           {
             id: 'intercompany',
             type: 'table',
             title: 'Intercompany Transactions',
             description: 'US ↔ Canada transactions requiring reconciliation',
-            span: 'half',
+            span: 2,
             dataSource: {
               type: 'field',
               path: 'currency.intercompany',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'description',
                 header: 'Description',
-                field: 'description',
+                path: 'description',
                 type: 'text',
               },
               {
                 id: 'from',
                 header: 'From',
-                field: 'fromEntity',
+                accessor: 'fromEntity',
                 type: 'text',
               },
               {
                 id: 'to',
                 header: 'To',
-                field: 'toEntity',
+                accessor: 'toEntity',
                 type: 'text',
               },
               {
                 id: 'amount',
                 header: 'Amount',
-                field: 'amount',
+                accessor: 'amount',
                 type: 'currency',
               },
               {
                 id: 'status',
                 header: 'Status',
-                field: 'status',
+                accessor: 'status',
                 type: 'badge',
                 options: [
                   { value: 'pending', label: 'Pending', color: 'warning' },
@@ -436,7 +568,7 @@ export const cfoDashboardScreen: ScreenDefinition = {
       {
         id: 'margins',
         label: 'Margin Analysis',
-        icon: 'trending-up',
+        icon: 'TrendingUp',
         sections: [
           {
             id: 'margin-kpis',
@@ -447,14 +579,14 @@ export const cfoDashboardScreen: ScreenDefinition = {
                 id: 'avg-margin',
                 label: 'Avg Gross Margin',
                 value: { type: 'field', path: 'margins.avgGrossMargin' },
-                format: 'percentage',
+                format: { type: 'percentage' },
                 target: 25,
               },
               {
                 id: 'margin-per-hour',
                 label: 'Avg Margin/Hour',
                 value: { type: 'field', path: 'margins.avgMarginPerHour' },
-                format: 'currency',
+                format: { type: 'currency' },
                 target: 20,
               },
               {
@@ -471,21 +603,21 @@ export const cfoDashboardScreen: ScreenDefinition = {
             type: 'custom',
             component: 'MarginByPillarChart',
             title: 'Margin by Pillar',
-            span: 'half',
+            span: 2,
           },
           {
             id: 'margin-by-client',
             type: 'custom',
             component: 'MarginByClientChart',
             title: 'Top 10 Clients by Margin',
-            span: 'half',
+            span: 2,
           },
           {
             id: 'margin-distribution',
             type: 'custom',
             component: 'MarginDistributionChart',
             title: 'Margin Distribution',
-            span: 'full',
+            span: 4,
           },
           {
             id: 'low-margin-placements',
@@ -495,36 +627,36 @@ export const cfoDashboardScreen: ScreenDefinition = {
               type: 'field',
               path: 'margins.lowMarginPlacements',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'placement',
                 header: 'Placement',
-                field: 'title',
+                path: 'title',
                 type: 'link',
-                linkPattern: '/employee/placements/{{id}}',
+                config: { linkPattern: '/employee/placements/{{id}}' },
               },
               {
                 id: 'client',
                 header: 'Client',
-                field: 'clientName',
+                accessor: 'clientName',
                 type: 'text',
               },
               {
                 id: 'bill-rate',
                 header: 'Bill Rate',
-                field: 'billRate',
+                accessor: 'billRate',
                 type: 'currency',
               },
               {
                 id: 'pay-rate',
                 header: 'Pay Rate',
-                field: 'payRate',
+                accessor: 'payRate',
                 type: 'currency',
               },
               {
                 id: 'margin',
                 header: 'Margin',
-                field: 'margin',
+                accessor: 'margin',
                 type: 'percentage',
                 highlight: {
                   condition: { operator: 'lt', field: 'margin', value: 10 },
@@ -534,7 +666,7 @@ export const cfoDashboardScreen: ScreenDefinition = {
               {
                 id: 'monthly-revenue',
                 header: 'Monthly Revenue',
-                field: 'monthlyRevenue',
+                accessor: 'monthlyRevenue',
                 type: 'currency',
               },
             ],
@@ -548,14 +680,14 @@ export const cfoDashboardScreen: ScreenDefinition = {
       {
         id: 'close',
         label: 'Month-End Close',
-        icon: 'calendar-check',
+        icon: 'CalendarCheck',
         sections: [
           {
             id: 'close-status',
             type: 'custom',
             component: 'MonthEndCloseChecklist',
             title: 'Close Checklist',
-            span: 'full',
+            span: 4,
           },
           {
             id: 'close-metrics',
@@ -566,26 +698,26 @@ export const cfoDashboardScreen: ScreenDefinition = {
                 id: 'close-day',
                 label: 'Close Day',
                 value: { type: 'field', path: 'close.dayNumber' },
-                format: 'number',
+                format: { type: 'number' },
                 suffix: ' of 5',
               },
               {
                 id: 'tasks-complete',
                 label: 'Tasks Complete',
                 value: { type: 'field', path: 'close.tasksComplete' },
-                format: 'percentage',
+                format: { type: 'percentage' },
               },
               {
                 id: 'revenue-recognized',
                 label: 'Revenue Recognized',
                 value: { type: 'field', path: 'close.revenueRecognized' },
-                format: 'currency',
+                format: { type: 'currency' },
               },
               {
                 id: 'pending-accruals',
                 label: 'Pending Accruals',
                 value: { type: 'field', path: 'close.pendingAccruals' },
-                format: 'number',
+                format: { type: 'number' },
               },
             ],
           },
@@ -597,29 +729,29 @@ export const cfoDashboardScreen: ScreenDefinition = {
               type: 'field',
               path: 'close.pendingJournalEntries',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'entry',
                 header: 'Entry',
-                field: 'description',
+                path: 'description',
                 type: 'text',
               },
               {
                 id: 'amount',
                 header: 'Amount',
-                field: 'amount',
+                accessor: 'amount',
                 type: 'currency',
               },
               {
                 id: 'preparedBy',
                 header: 'Prepared By',
-                field: 'preparedByName',
+                accessor: 'preparedByName',
                 type: 'user',
               },
               {
                 id: 'status',
                 header: 'Status',
-                field: 'status',
+                accessor: 'status',
                 type: 'badge',
                 options: [
                   { value: 'draft', label: 'Draft', color: 'muted' },
@@ -636,7 +768,8 @@ export const cfoDashboardScreen: ScreenDefinition = {
                     id: 'approve',
                     label: 'Approve',
                     icon: 'check',
-                    action: { type: 'mutation', mutation: 'finance.approveJournalEntry' },
+                    type: 'mutation',
+                    config: { type: 'mutation', procedure: 'finance.approveJournalEntry' },
                   },
                 ],
               },
@@ -650,25 +783,52 @@ export const cfoDashboardScreen: ScreenDefinition = {
   actions: [
     {
       id: 'export-financials',
+      type: 'modal',
       label: 'Export Financials',
-      icon: 'download',
-      action: { type: 'modal', modalId: 'export-financials' },
-      position: 'header',
+      icon: 'Download',
+      variant: 'outline',
+      config: { type: 'modal', modal: 'ExportFinancialsModal' },
+    },
+    {
+      id: 'revenue-analytics',
+      type: 'navigate',
+      label: 'Revenue Analytics',
+      icon: 'BarChart3',
+      variant: 'outline',
+      config: { type: 'navigate', route: '/employee/cfo/revenue' },
+    },
+    {
+      id: 'ar-dashboard',
+      type: 'navigate',
+      label: 'AR Dashboard',
+      icon: 'FileText',
+      variant: 'outline',
+      config: { type: 'navigate', route: '/employee/cfo/ar' },
     },
     {
       id: 'refresh',
+      type: 'custom',
       label: 'Refresh',
-      icon: 'refresh-cw',
-      action: { type: 'refresh' },
-      position: 'header',
+      icon: 'RefreshCw',
+      variant: 'ghost',
+      config: { type: 'custom', handler: 'handleRefresh' },
     },
   ],
-  
-  keyboardShortcuts: [
-    { key: 'g f', action: 'navigate:/finance/dashboard', description: 'Go to CFO Dashboard' },
+
+  navigation: {
+    breadcrumbs: [
+      { label: 'Home', route: '/employee/workspace' },
+      { label: 'CFO Dashboard' },
+    ],
+  },
+
+  keyboard_shortcuts: [
+    { key: 'g f', action: 'navigate:/employee/cfo/dashboard', description: 'Go to CFO Dashboard' },
     { key: 'g c', action: 'tab:commissions', description: 'Go to Commissions' },
     { key: 'g i', action: 'tab:invoicing', description: 'Go to Invoicing' },
     { key: 'g m', action: 'tab:margins', description: 'Go to Margin Analysis' },
+    { key: 'g r', action: 'navigate:/employee/cfo/revenue', description: 'Go to Revenue Analytics' },
+    { key: 'g a', action: 'navigate:/employee/cfo/ar', description: 'Go to AR Dashboard' },
     { key: 'a', action: 'approve-selected', description: 'Approve selected item' },
     { key: 'r', action: 'refresh', description: 'Refresh data' },
   ],

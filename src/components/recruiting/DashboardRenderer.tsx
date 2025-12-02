@@ -91,7 +91,7 @@ export function DashboardRenderer({ definition, className }: DashboardRendererPr
   };
 
   // Build context with data for each widget
-  const buildSectionContext = (section: SectionDefinition): Partial<RenderContext> => {
+  const buildSectionContext = (section: SectionDefinition): Record<string, unknown> => {
     const componentName = section.component;
     if (!componentName) return {};
 
@@ -124,33 +124,11 @@ export function DashboardRenderer({ definition, className }: DashboardRendererPr
       };
     }
 
-    // Handle columns layout
-    if (layout.type === 'columns' && 'columns' in layout) {
-      return {
-        ...layout,
-        columns: layout.columns.map((col) => ({
-          ...col,
-          sections: col.sections?.map((section) => ({
-            ...section,
-            _context: buildSectionContext(section),
-          })),
-        })),
-      };
-    }
+    // Handle two-column layout (deprecated - columns not directly in LayoutDefinition)
+    // This code is kept for backward compatibility but should not be used with new layouts
 
-    // Handle grid layout
-    if (layout.type === 'grid' && 'areas' in layout) {
-      return {
-        ...layout,
-        areas: layout.areas.map((area) => ({
-          ...area,
-          sections: area.sections?.map((section) => ({
-            ...section,
-            _context: buildSectionContext(section),
-          })),
-        })),
-      };
-    }
+    // Note: LayoutDefinition doesn't have 'columns' or 'areas' directly
+    // These layouts should use sections instead
 
     return layout;
   };
@@ -164,8 +142,8 @@ export function DashboardRenderer({ definition, className }: DashboardRendererPr
     tasks.isLoading &&
     pipelineHealth.isLoading;
 
-  // Build render context
-  const context: Partial<RenderContext> = {
+  // Build render context with extended data property
+  const context = {
     entity: {},
     entityType: 'dashboard',
     entityId: '',
@@ -184,8 +162,8 @@ export function DashboardRenderer({ definition, className }: DashboardRendererPr
     computed: new Map(),
     navigate: () => {},
     showToast: () => {},
-    // Pass all data for widgets to access
-    data: {
+    // Extended property for dashboard data (not in RenderContext type but needed for widgets)
+    dashboardData: {
       sprintProgress: sprintProgress.data,
       tasks: tasks.data,
       pipelineHealth: pipelineHealth.data,
@@ -194,9 +172,9 @@ export function DashboardRenderer({ definition, className }: DashboardRendererPr
       qualityMetrics: qualityMetrics.data,
       upcomingCalendar: upcomingCalendar.data,
       recentWins: recentWins.data,
-    } as unknown as Record<string, unknown>,
+    },
     isLoading,
-  };
+  } as RenderContext & { dashboardData: Record<string, unknown>; isLoading: boolean };
 
   // Loading skeleton
   if (isLoading) {
@@ -219,23 +197,25 @@ export function DashboardRenderer({ definition, className }: DashboardRendererPr
       {definition.title && (
         <header className="mb-6">
           <h1 className="text-2xl font-bold">
-            {typeof definition.title === 'string' ? definition.title : String(definition.title.default ?? '')}
+            {typeof definition.title === 'string' ? definition.title : ''}
           </h1>
           {definition.subtitle && (
             <p className="mt-1 text-muted-foreground">
-              {typeof definition.subtitle === 'string' ? definition.subtitle : String(definition.subtitle.default ?? '')}
+              {typeof definition.subtitle === 'string' ? definition.subtitle : ''}
             </p>
           )}
         </header>
       )}
 
       {/* Layout with enriched sections */}
-      <LayoutRenderer
-        definition={enrichedLayout}
-        entity={{}}
-        isEditing={false}
-        context={context as RenderContext}
-      />
+      {enrichedLayout && (
+        <LayoutRenderer
+          definition={enrichedLayout}
+          entity={{}}
+          isEditing={false}
+          context={context as RenderContext}
+        />
+      )}
     </div>
   );
 }

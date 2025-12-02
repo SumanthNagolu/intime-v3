@@ -38,7 +38,7 @@ import { useRCAI, type RCAIOwner } from '../hooks/useRCAI';
 import type { RCAIEntityTypeType, RCAIRoleType, RCAIPermissionType } from '@/lib/db/schema/raci';
 
 // Entity types supported by the tRPC router
-// Note: 'candidate' and 'talent' map to other entity types
+// Must match entityTypeValues in src/server/routers/object-owners.ts
 export type SupportedEntityType =
   | 'campaign'
   | 'lead'
@@ -48,16 +48,9 @@ export type SupportedEntityType =
   | 'job_order'
   | 'submission'
   | 'contact'
-  | 'external_job';
-
-// Map RCAIEntityType to SupportedEntityType
-function mapEntityType(entityType: RCAIEntityTypeType): SupportedEntityType {
-  // Map candidate/talent to contact (they're stored as contacts)
-  if (entityType === 'candidate' || entityType === 'talent') {
-    return 'contact';
-  }
-  return entityType as SupportedEntityType;
-}
+  | 'external_job'
+  | 'candidate'
+  | 'talent';
 
 // =====================================================
 // CONSTANTS
@@ -95,7 +88,7 @@ const ROLE_CONFIG = {
 // =====================================================
 
 interface RCAIBarProps {
-  entityType: RCAIEntityTypeType;
+  entityType: RCAIEntityTypeType | 'talent';
   entityId: string;
   canEdit?: boolean;
   compact?: boolean;
@@ -105,7 +98,7 @@ interface RCAIBarProps {
 interface AssignDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  entityType: RCAIEntityTypeType;
+  entityType: RCAIEntityTypeType | 'talent';
   entityId: string;
   currentOwners: RCAIOwner[];
   onAssign: (
@@ -310,15 +303,12 @@ export function RCAIBar({
 }: RCAIBarProps) {
   const [showAssignDialog, setShowAssignDialog] = useState(false);
 
-  // Map the entity type to a supported type for the tRPC router
-  const mappedEntityType = mapEntityType(entityType);
-
   const {
     owners,
     isLoading,
     assignOwner,
     removeOwner,
-  } = useRCAI(mappedEntityType, entityId);
+  } = useRCAI(entityType as SupportedEntityType, entityId);
 
   // Group owners by role
   const ownersByRole = {

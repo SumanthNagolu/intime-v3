@@ -173,14 +173,14 @@ export function useAccountRaw(id: string | undefined, options: AccountQueryOptio
 export function useAccountPocs(accountId: string | undefined, options: { enabled?: boolean } = {}) {
   const { enabled = true } = options;
 
-  const query = trpc.crm.pocs.list.useQuery(
+  const query = trpc.crm.contacts.list.useQuery(
     { accountId: accountId! },
     {
       enabled: enabled && !!accountId,
       staleTime: 30 * 1000,
       select: (data): DisplayPointOfContact[] => {
-        return data.map(poc =>
-          pocAdapter.toDisplay(poc as unknown as AlignedPointOfContact)
+        return data.map((poc: unknown) =>
+          pocAdapter.toDisplay(poc as AlignedPointOfContact)
         );
       },
     }
@@ -372,7 +372,7 @@ export interface AccountMetrics {
 export function useAccountMetrics(options: { enabled?: boolean } = {}) {
   const { enabled = true } = options;
 
-  const query = trpc.crm.accounts.getMetrics.useQuery(undefined, {
+  const query = trpc.crm.accounts.getStats.useQuery(undefined, {
     enabled,
     staleTime: 60 * 1000,
   });
@@ -469,6 +469,6 @@ export function useInvalidateAccounts() {
     invalidateAll: () => utils.crm.accounts.list.invalidate(),
     invalidateAccount: (id: string) => utils.crm.accounts.getById.invalidate({ id }),
     invalidatePocs: (accountId: string) =>
-      utils.crm.pocs.list.invalidate({ accountId }),
+      utils.crm.contacts.list.invalidate({ accountId }),
   };
 }

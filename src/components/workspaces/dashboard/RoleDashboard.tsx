@@ -262,8 +262,8 @@ export function RoleDashboard({
             data={metrics[widget.id]}
             isLoading={isLoading}
             onClick={() => {
-              if (widget.entityType) {
-                router.push(entityRegistry[widget.entityType].routes.list);
+              if (widget.entityType && entityRegistry[widget.entityType]) {
+                router.push(entityRegistry[widget.entityType]!.routes.list);
               }
             }}
           />
@@ -277,8 +277,8 @@ export function RoleDashboard({
             items={lists[widget.id]}
             isLoading={isLoading}
             onViewAll={() => {
-              if (widget.entityType) {
-                router.push(entityRegistry[widget.entityType].routes.list);
+              if (widget.entityType && entityRegistry[widget.entityType]) {
+                router.push(entityRegistry[widget.entityType]!.routes.list);
               }
             }}
             className="col-span-1 md:col-span-2"
@@ -305,8 +305,8 @@ export function RoleDashboard({
             stages={pipelines[widget.id]}
             isLoading={isLoading}
             onStageClick={(stage) => {
-              if (widget.entityType) {
-                router.push(`${entityRegistry[widget.entityType].routes.list}?status=${stage.id}`);
+              if (widget.entityType && entityRegistry[widget.entityType]) {
+                router.push(`${entityRegistry[widget.entityType]!.routes.list}?status=${stage.id}`);
               }
             }}
             className="col-span-1 md:col-span-2 lg:col-span-4"

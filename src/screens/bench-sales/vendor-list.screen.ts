@@ -16,13 +16,13 @@ const VENDOR_STATUS_OPTIONS = [
   { value: 'inactive', label: 'Inactive' },
   { value: 'pending', label: 'Pending' },
   { value: 'blocked', label: 'Blocked' },
-] as const;
+];
 
 const VENDOR_TIER_OPTIONS = [
   { value: 'preferred', label: 'Preferred' },
   { value: 'standard', label: 'Standard' },
   { value: 'new', label: 'New' },
-] as const;
+];
 
 const VENDOR_TYPE_OPTIONS = [
   { value: 'direct_client', label: 'Direct Client' },
@@ -30,7 +30,7 @@ const VENDOR_TYPE_OPTIONS = [
   { value: 'tier_1', label: 'Tier 1' },
   { value: 'tier_2', label: 'Tier 2' },
   { value: 'implementation_partner', label: 'Implementation Partner' },
-] as const;
+];
 
 // ==========================================
 // COLUMN DEFINITIONS
@@ -145,7 +145,7 @@ export const vendorListScreen: ScreenDefinition = {
   // Data source
   dataSource: {
     type: 'list',
-    entity: 'vendor',
+    entityType: 'vendor',
     procedure: 'bench.vendors.list',
     defaultSort: { field: 'name', direction: 'asc' },
     defaultPageSize: 25,
@@ -159,7 +159,7 @@ export const vendorListScreen: ScreenDefinition = {
       {
         id: 'metrics',
         type: 'metrics-grid',
-        columns: 5,
+        columns: 4,
         fields: [
           {
             id: 'totalVendors',
@@ -193,7 +193,7 @@ export const vendorListScreen: ScreenDefinition = {
           },
         ],
         dataSource: {
-          type: 'query',
+          type: 'custom',
           query: {
             procedure: 'bench.vendors.getStats',
           },
@@ -208,28 +208,28 @@ export const vendorListScreen: ScreenDefinition = {
           {
             id: 'search',
             label: 'Search',
-            type: 'search',
+            type: 'text',
             path: 'search',
             config: { placeholder: 'Search vendors...' },
           },
           {
             id: 'status',
             label: 'Status',
-            type: 'multi-select',
+            type: 'multiselect',
             path: 'filters.status',
             options: VENDOR_STATUS_OPTIONS,
           },
           {
             id: 'tier',
             label: 'Tier',
-            type: 'multi-select',
+            type: 'multiselect',
             path: 'filters.tier',
             options: VENDOR_TIER_OPTIONS,
           },
           {
             id: 'type',
             label: 'Type',
-            type: 'multi-select',
+            type: 'multiselect',
             path: 'filters.type',
             options: VENDOR_TYPE_OPTIONS,
           },
@@ -246,6 +246,81 @@ export const vendorListScreen: ScreenDefinition = {
           type: 'navigate',
           route: '/employee/bench/vendors/{{id}}',
         },
+        rowActions: [
+          {
+            id: 'view',
+            label: 'View Details',
+            icon: 'Eye',
+            type: 'navigate',
+            config: {
+              type: 'navigate',
+              route: '/employee/bench/vendors/{{id}}',
+            },
+          },
+          {
+            id: 'edit',
+            label: 'Edit',
+            icon: 'Pencil',
+            type: 'navigate',
+            config: {
+              type: 'navigate',
+              route: '/employee/bench/vendors/{{id}}/edit',
+            },
+          },
+          {
+            id: 'view-job-orders',
+            label: 'View Job Orders',
+            icon: 'Briefcase',
+            type: 'navigate',
+            config: {
+              type: 'navigate',
+              route: '/employee/bench/job-orders?vendorId={{id}}',
+            },
+          },
+          {
+            id: 'add-contact',
+            label: 'Add Contact',
+            icon: 'UserPlus',
+            type: 'modal',
+            config: {
+              type: 'modal',
+              modal: 'AddVendorContactModal',
+              props: { vendorId: '{{id}}' },
+            },
+          },
+          {
+            id: 'deactivate',
+            label: 'Deactivate',
+            icon: 'Pause',
+            type: 'mutation',
+            variant: 'secondary',
+            config: {
+              type: 'mutation',
+              procedure: 'bench.vendors.deactivate',
+              input: { id: '{{id}}' },
+            },
+            visible: {
+              type: 'condition',
+              condition: { field: 'status', operator: 'eq', value: 'active' },
+            },
+          },
+          {
+            id: 'activate',
+            label: 'Activate',
+            icon: 'Play',
+            type: 'mutation',
+            variant: 'secondary',
+            config: {
+              type: 'mutation',
+              procedure: 'bench.vendors.activate',
+              input: { id: '{{id}}' },
+            },
+            visible: {
+              type: 'condition',
+              condition: { field: 'status', operator: 'eq', value: 'inactive' },
+            },
+          },
+        ],
       },
     ],
   },
@@ -283,83 +358,6 @@ export const vendorListScreen: ScreenDefinition = {
       config: {
         type: 'custom',
         handler: 'handleExport',
-      },
-    },
-  ],
-
-  // Row actions
-  rowActions: [
-    {
-      id: 'view',
-      label: 'View Details',
-      icon: 'Eye',
-      type: 'navigate',
-      config: {
-        type: 'navigate',
-        route: '/employee/bench/vendors/{{id}}',
-      },
-    },
-    {
-      id: 'edit',
-      label: 'Edit',
-      icon: 'Pencil',
-      type: 'navigate',
-      config: {
-        type: 'navigate',
-        route: '/employee/bench/vendors/{{id}}/edit',
-      },
-    },
-    {
-      id: 'view-job-orders',
-      label: 'View Job Orders',
-      icon: 'Briefcase',
-      type: 'navigate',
-      config: {
-        type: 'navigate',
-        route: '/employee/bench/job-orders?vendorId={{id}}',
-      },
-    },
-    {
-      id: 'add-contact',
-      label: 'Add Contact',
-      icon: 'UserPlus',
-      type: 'modal',
-      config: {
-        type: 'modal',
-        modal: 'AddVendorContactModal',
-        props: { vendorId: '{{id}}' },
-      },
-    },
-    {
-      id: 'deactivate',
-      label: 'Deactivate',
-      icon: 'Pause',
-      type: 'mutation',
-      variant: 'secondary',
-      config: {
-        type: 'mutation',
-        procedure: 'bench.vendors.deactivate',
-        input: { id: '{{id}}' },
-      },
-      visible: {
-        type: 'condition',
-        condition: { field: 'status', operator: 'eq', value: 'active' },
-      },
-    },
-    {
-      id: 'activate',
-      label: 'Activate',
-      icon: 'Play',
-      type: 'mutation',
-      variant: 'secondary',
-      config: {
-        type: 'mutation',
-        procedure: 'bench.vendors.activate',
-        input: { id: '{{id}}' },
-      },
-      visible: {
-        type: 'condition',
-        condition: { field: 'status', operator: 'eq', value: 'inactive' },
       },
     },
   ],

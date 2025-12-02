@@ -99,7 +99,7 @@ export function getRegisteredWidgetTypes(): string[] {
 // FIELD TYPE TO WIDGET TYPE MAPPING
 // ==========================================
 
-const fieldTypeToWidgetMap: Record<FieldType, { display: WidgetType; input: WidgetType }> = {
+const fieldTypeToWidgetMap: Partial<Record<FieldType, { display: WidgetType; input: WidgetType }>> = {
   // Text types
   text: { display: 'text-display', input: 'text-input' },
   textarea: { display: 'text-display', input: 'textarea-input' },
@@ -150,6 +150,9 @@ export function getWidgetTypeForField(
   isEditing: boolean
 ): WidgetType {
   const mapping = fieldTypeToWidgetMap[fieldType];
+  if (!mapping) {
+    return isEditing ? 'text-input' : 'text-display';
+  }
   return isEditing ? mapping.input : mapping.display;
 }
 

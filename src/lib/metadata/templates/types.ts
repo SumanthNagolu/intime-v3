@@ -8,7 +8,7 @@
 import type { EntityType } from '@/lib/workspace/entity-registry';
 import type { FieldDefinition, OptionDefinition, FieldType, InputSetConfig } from '../types/widget.types';
 import type { DynamicValue, VisibilityRule, PermissionRule } from '../types/data.types';
-import type { ActionDefinition, SectionDefinition, TableColumnDefinition, LucideIconName } from '../types/screen.types';
+import type { ActionDefinition, SectionDefinition, TableColumnDefinition, LucideIconName, BadgeDefinition, NavigationDefinition } from '../types/screen.types';
 
 // ==========================================
 // BASE TEMPLATE CONFIG
@@ -81,6 +81,22 @@ export interface ListTemplateConfig extends BaseTemplateConfig {
 
   /** Default page size */
   defaultPageSize?: number;
+
+  /** Navigation configuration */
+  navigation?: NavigationDefinition;
+
+  /** Search configuration */
+  search?: {
+    enabled?: boolean;
+    placeholder?: string;
+    fields?: string[];
+  };
+
+  /** View modes (table, kanban, etc.) */
+  viewModes?: Array<{ id: string; label: string; icon?: string }> | string[];
+
+  /** Default view mode */
+  defaultViewMode?: string;
 }
 
 export interface ListColumnConfig {
@@ -129,10 +145,14 @@ export interface MetricConfig {
   label: string;
 
   /** Field type (number, currency, percentage) */
-  type: 'number' | 'currency' | 'percentage';
+  type?: 'number' | 'currency' | 'percentage' | string;
+  fieldType?: string;  // Alias for type
 
   /** Data path */
-  path: string;
+  path?: string;
+
+  /** Value (alternative to path) */
+  value?: unknown | DynamicValue;
 
   /** Icon */
   icon?: LucideIconName;
@@ -155,7 +175,10 @@ export interface FilterConfig {
   label: string;
 
   /** Field type */
-  type: FieldType | 'date-range' | 'number-range';
+  type: FieldType | 'date-range' | 'number-range' | string;
+
+  /** Field path */
+  path?: string;
 
   /** Options (for enum/select) */
   options?: OptionDefinition[];
@@ -195,7 +218,8 @@ export interface RowActionConfig {
   icon?: LucideIconName;
 
   /** Action type */
-  type: 'navigate' | 'mutation' | 'modal' | 'custom';
+  type?: 'navigate' | 'mutation' | 'modal' | 'custom';
+  actionType?: string;  // Alias for type
 
   /** Route (for navigate) */
   route?: string;
@@ -220,6 +244,7 @@ export interface RowActionConfig {
 
   /** Visibility rule */
   visible?: VisibilityRule;
+  showWhen?: VisibilityRule;
 }
 
 export interface HeaderActionConfig {
@@ -227,7 +252,8 @@ export interface HeaderActionConfig {
   id: string;
 
   /** Action type preset (create, import, export) or custom */
-  type: 'create' | 'import' | 'export' | 'custom';
+  type?: 'create' | 'import' | 'export' | 'custom' | 'navigate' | 'modal';
+  actionType?: string;  // Alias for type
 
   /** Override label */
   label?: string;
@@ -235,8 +261,11 @@ export interface HeaderActionConfig {
   /** Override icon */
   icon?: LucideIconName;
 
-  /** Override route (for create) */
+  /** Override route (for create/navigate) */
   route?: string;
+
+  /** Modal (for modal type) */
+  modal?: string;
 
   /** Variant */
   variant?: 'default' | 'primary' | 'secondary' | 'outline';
@@ -269,8 +298,9 @@ export interface EmptyStateConfig {
   /** Title */
   title: string;
 
-  /** Description */
-  description: string;
+  /** Description or message */
+  description?: string;
+  message?: string;
 
   /** Icon */
   icon?: LucideIconName;
@@ -278,7 +308,8 @@ export interface EmptyStateConfig {
   /** Action button */
   action?: {
     label: string;
-    route: string;
+    route?: string;
+    handler?: string;
   };
 }
 
@@ -286,12 +317,27 @@ export interface EmptyStateConfig {
 // DETAIL SCREEN TEMPLATE
 // ==========================================
 
-export interface DetailTemplateConfig extends BaseTemplateConfig {
-  /** Title field path */
-  titleField: string;
+export interface DetailTemplateConfig {
+  /** Entity ID (short name) */
+  entityId: string;
 
-  /** Subtitle field path (optional) */
-  subtitleField?: string;
+  /** Human-readable entity name */
+  entityName: string;
+
+  /** Base route path */
+  basePath: string;
+
+  /** Data source config */
+  dataSource?: {
+    getProcedure?: string;
+    idParam?: string;
+  };
+
+  /** Title template */
+  titleTemplate?: string;
+
+  /** Subtitle template */
+  subtitleTemplate?: string;
 
   /** Icon field path (optional) */
   iconField?: string;
@@ -311,6 +357,14 @@ export interface DetailTemplateConfig extends BaseTemplateConfig {
   /** Header actions */
   headerActions?: DetailActionConfig[];
 
+  /** Navigation breadcrumbs */
+  navigation?: {
+    breadcrumbs?: Array<{
+      label: string;
+      route?: string;
+    }>;
+  };
+
   /** Enable edit mode */
   editable?: boolean;
 
@@ -322,14 +376,30 @@ export interface SidebarConfig {
   /** Sidebar position */
   position?: 'left' | 'right';
 
-  /** Sidebar width */
-  width?: 'sm' | 'md' | 'lg';
+  /** Sidebar width (number or preset) */
+  width?: number | 'sm' | 'md' | 'lg';
 
   /** Sidebar title */
   title?: string;
 
-  /** Sidebar fields */
-  fields: SidebarFieldConfig[];
+  /** Sidebar sections */
+  sections?: Array<{
+    id: string;
+    type: string;
+    title?: string;
+    fields?: SidebarFieldConfig[];
+    config?: Record<string, unknown>;
+    actions?: Array<{
+      id: string;
+      label: string;
+      icon?: string;
+      type?: string;
+      actionType?: string;  // Alias for type
+      handler?: string;
+      mutation?: string;
+      showWhen?: VisibilityRule;
+    }>;
+  }>;
 }
 
 export interface SidebarFieldConfig {
@@ -345,11 +415,20 @@ export interface SidebarFieldConfig {
   /** Data path */
   path: string;
 
+  /** Icon */
+  icon?: string;
+
   /** Options (for enum types) */
   options?: OptionDefinition[];
 
   /** Badge colors (for status fields) */
   badgeColors?: Record<string, string>;
+
+  /** Link template (for links) */
+  linkTemplate?: string;
+
+  /** External link flag */
+  external?: boolean;
 
   /** Additional config */
   config?: Record<string, unknown>;
@@ -367,6 +446,9 @@ export interface DetailTabConfig {
 
   /** Badge path (for count display) */
   badgePath?: string;
+
+  /** Badge configuration (alternative to badgePath) */
+  badge?: string | number | DynamicValue | BadgeDefinition;
 
   /** Use InputSet references */
   inputSets?: string[];
@@ -398,16 +480,16 @@ export interface DetailSectionConfig {
   title?: string;
 
   /** Section type */
-  type?: 'field-grid' | 'info-card' | 'form' | 'custom';
-
-  /** Number of columns */
-  columns?: 1 | 2 | 3 | 4;
+  type?: 'field-grid' | 'info-card' | 'form' | 'custom' | string;
 
   /** Fields */
   fields?: FieldDefinition[];
 
-  /** InputSet reference */
-  inputSet?: string;
+  /** InputSet reference (can be string or object) */
+  inputSet?: string | InputSetConfig;
+
+  /** Read-only mode */
+  readonly?: boolean;
 
   /** Is collapsible */
   collapsible?: boolean;
@@ -420,6 +502,44 @@ export interface DetailSectionConfig {
 
   /** Custom component */
   component?: string;
+
+  /** Data path for section */
+  dataPath?: string;
+
+  /** Data source for section */
+  dataSource?: {
+    procedure?: string;
+    params?: Record<string, string | DynamicValue>;
+  };
+
+  /**
+   * DUAL PURPOSE: columns property
+   * - For field-grid sections: Number of columns (1 | 2 | 3 | 4)
+   * - For table/related-table sections: Array of column configurations
+   */
+  columns?: 1 | 2 | 3 | 4 | ListColumnConfig[];
+
+  /** Empty state */
+  emptyState?: EmptyStateConfig;
+
+  /** Section actions */
+  actions?: Array<{
+    id: string;
+    label: string;
+    icon?: string;
+    type?: string;
+    actionType?: string;  // Alias for type
+    handler?: string;
+  }>;
+
+  /** Config object */
+  config?: Record<string, unknown>;
+
+  /** Badge configuration */
+  badge?: {
+    path?: string;
+    variant?: string;
+  };
 }
 
 export interface RelatedTableConfig {
@@ -491,7 +611,8 @@ export interface DetailActionConfig {
   id: string;
 
   /** Action type */
-  type: 'edit' | 'delete' | 'navigate' | 'mutation' | 'modal' | 'custom';
+  type?: 'edit' | 'delete' | 'navigate' | 'mutation' | 'modal' | 'custom';
+  actionType?: string;  // Alias for type
 
   /** Override label */
   label?: string;
@@ -502,11 +623,13 @@ export interface DetailActionConfig {
   /** Variant */
   variant?: 'default' | 'primary' | 'secondary' | 'outline' | 'destructive';
 
-  /** Route (for navigate) */
+  /** Route (for navigate) - supports templates */
   route?: string;
+  routeTemplate?: string;
 
   /** Procedure (for mutation) */
   procedure?: string;
+  mutation?: string;
 
   /** Modal (for modal) */
   modal?: string;
@@ -521,8 +644,15 @@ export interface DetailActionConfig {
     destructive?: boolean;
   };
 
-  /** Visibility */
+  /** Visibility rule */
   visible?: VisibilityRule;
+  showWhen?: VisibilityRule;
+
+  /** Success handling */
+  onSuccess?: {
+    toast?: { message: string };
+    redirect?: string;
+  };
 }
 
 // ==========================================
@@ -543,7 +673,7 @@ export interface FormTemplateConfig extends BaseTemplateConfig {
   sections: FormSectionConfig[];
 
   /** Submit configuration */
-  submit: FormSubmitConfig;
+  submit?: FormSubmitConfig;
 
   /** Cancel route */
   cancelRoute?: string;
@@ -553,6 +683,25 @@ export interface FormTemplateConfig extends BaseTemplateConfig {
 
   /** Show field progress */
   showProgress?: boolean;
+
+  /** Form-level actions */
+  actions?: ActionDefinition[];
+
+  /** Validation configuration */
+  validation?: {
+    required?: string[];
+    custom?: string;
+    rules?: Array<Record<string, unknown>>;
+  };
+
+  /** Success handlers */
+  onSuccess?: {
+    create?: { redirect?: string; toast?: { message: string } };
+    update?: { redirect?: string; toast?: { message: string } };
+  };
+
+  /** Navigation configuration */
+  navigation?: NavigationDefinition;
 }
 
 export interface FormSectionConfig {
@@ -571,8 +720,8 @@ export interface FormSectionConfig {
   /** Number of columns */
   columns?: 1 | 2 | 3 | 4;
 
-  /** InputSet reference */
-  inputSet?: string;
+  /** InputSet reference (can be string or InputSetConfig object) */
+  inputSet?: string | InputSetConfig;
 
   /** Inline fields */
   fields?: FieldDefinition[];
@@ -688,14 +837,16 @@ export function staticValue(value: unknown): DynamicValue {
 /**
  * Helper to capitalize first letter
  */
-export function capitalizeFirst(str: string): string {
+export function capitalizeFirst(str: string | undefined | null): string {
+  if (!str) return '';
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 /**
  * Helper to pluralize a word
  */
-export function pluralize(str: string): string {
+export function pluralize(str: string | undefined | null): string {
+  if (!str) return '';
   if (str.endsWith('y')) {
     return str.slice(0, -1) + 'ies';
   }

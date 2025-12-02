@@ -120,7 +120,7 @@ export function WidgetRenderer({
     widget = getWidgetForField(fieldType, isEditing);
   } else {
     // It's a widget definition - get widget directly
-    widget = getWidget(definition.type);
+    widget = getWidget(definition.type || 'text-display');
   }
 
   if (!widget) {

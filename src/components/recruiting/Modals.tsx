@@ -1114,19 +1114,19 @@ export const CreatePOCModal: React.FC<{
         phone: '',
         linkedinUrl: '',
         preferredContactMethod: 'email' as 'email' | 'phone' | 'linkedin',
-        decisionAuthority: '' as '' | 'none' | 'influencer' | 'decision_maker' | 'final_approver',
+        decisionAuthority: '' as '' | 'final_decision_maker' | 'key_influencer' | 'gatekeeper' | 'recommender' | 'end_user',
         isPrimary: false,
         notes: '',
     });
 
-    // tRPC mutation for creating POCs
-    const createPocMutation = trpc.crm.pocs.create.useMutation({
+    // tRPC mutation for creating contacts (POCs)
+    const createPocMutation = trpc.crm.contacts.create.useMutation({
         onSuccess: () => {
             onSuccess?.();
             onClose();
         },
-        onError: (err) => {
-            setError(err.message || 'Failed to create contact');
+        onError: (err: unknown) => {
+            setError((err as Error).message || 'Failed to create contact');
             setIsSubmitting(false);
         }
     });
@@ -1142,13 +1142,11 @@ export const CreatePOCModal: React.FC<{
                 firstName: form.firstName,
                 lastName: form.lastName,
                 title: form.title || undefined,
-                role: form.role || undefined,
                 email: form.email,
                 phone: form.phone || undefined,
                 linkedinUrl: form.linkedinUrl || undefined,
                 preferredContactMethod: form.preferredContactMethod,
                 decisionAuthority: form.decisionAuthority || undefined,
-                isPrimary: form.isPrimary,
                 notes: form.notes || undefined,
             });
         } catch (err) {
@@ -1169,10 +1167,11 @@ export const CreatePOCModal: React.FC<{
     ];
 
     const DECISION_AUTHORITY = [
-        { value: 'none', label: 'None' },
-        { value: 'influencer', label: 'Influencer' },
-        { value: 'decision_maker', label: 'Decision Maker' },
-        { value: 'final_approver', label: 'Final Approver' },
+        { value: 'gatekeeper', label: 'Gatekeeper' },
+        { value: 'end_user', label: 'End User' },
+        { value: 'key_influencer', label: 'Key Influencer' },
+        { value: 'recommender', label: 'Recommender' },
+        { value: 'final_decision_maker', label: 'Final Decision Maker' },
     ];
 
     return (
@@ -1528,8 +1527,8 @@ export const CreateDealFromAccountModal: React.FC<{
         dealType: 'new_business' as 'new_business' | 'expansion' | 'renewal',
     });
 
-    // Fetch POCs for this account
-    const { data: pocs = [] } = trpc.crm.pocs.list.useQuery(
+    // Fetch contacts (POCs) for this account
+    const { data: pocs = [] } = trpc.crm.contacts.list.useQuery(
         { accountId },
         { enabled: !!accountId }
     );
@@ -1693,7 +1692,7 @@ export const CreateDealFromAccountModal: React.FC<{
                                     <option value="">Select contact...</option>
                                     {pocs.map(poc => (
                                         <option key={poc.id} value={poc.id}>
-                                            {poc.firstName} {poc.lastName} - {poc.title || poc.role || 'No Title'}
+                                            {poc.firstName} {poc.lastName} - {poc.title || 'No Title'}
                                         </option>
                                     ))}
                                 </select>

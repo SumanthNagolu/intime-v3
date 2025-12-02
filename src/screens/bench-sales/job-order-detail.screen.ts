@@ -17,20 +17,20 @@ const JOB_ORDER_STATUS_OPTIONS = [
   { value: 'filled', label: 'Filled' },
   { value: 'on_hold', label: 'On Hold' },
   { value: 'closed', label: 'Closed' },
-] as const;
+];
 
 const JOB_ORDER_PRIORITY_OPTIONS = [
   { value: 'urgent', label: 'Urgent' },
   { value: 'high', label: 'High' },
   { value: 'normal', label: 'Normal' },
   { value: 'low', label: 'Low' },
-] as const;
+];
 
 const WORK_MODE_OPTIONS = [
   { value: 'remote', label: 'Remote' },
   { value: 'hybrid', label: 'Hybrid' },
   { value: 'onsite', label: 'Onsite' },
-] as const;
+];
 
 const SUBMISSION_STATUS_OPTIONS = [
   { value: 'submitted', label: 'Submitted' },
@@ -41,7 +41,7 @@ const SUBMISSION_STATUS_OPTIONS = [
   { value: 'placed', label: 'Placed' },
   { value: 'rejected', label: 'Rejected' },
   { value: 'withdrawn', label: 'Withdrawn' },
-] as const;
+];
 
 // ==========================================
 // SIDEBAR FIELDS
@@ -417,7 +417,7 @@ const activityLogColumns: import('@/lib/metadata').TableColumnDefinition[] = [
 export const jobOrderDetailScreen: ScreenDefinition = {
   id: 'job-order-detail',
   type: 'detail',
-  entityType: 'jobOrder',
+  entityType: 'job_order',
 
   title: fieldValue('title', 'Job Order Details'),
   subtitle: fieldValue('clientName'),
@@ -425,7 +425,7 @@ export const jobOrderDetailScreen: ScreenDefinition = {
 
   // Data source
   dataSource: {
-    type: 'query',
+    type: 'custom',
     query: {
       procedure: 'bench.jobOrders.getById',
       params: { id: fieldValue('id') },
@@ -520,7 +520,7 @@ export const jobOrderDetailScreen: ScreenDefinition = {
             title: 'Submitted Consultants',
             columns_config: submissionTableColumns,
             dataSource: {
-              type: 'query',
+              type: 'custom',
               query: {
                 procedure: 'bench.jobOrders.getSubmissions',
                 params: { jobOrderId: fieldValue('id') },
@@ -606,6 +606,7 @@ export const jobOrderDetailScreen: ScreenDefinition = {
               message: 'Submit consultants to this job order to start tracking.',
               action: {
                 label: 'Submit Consultant',
+                type: 'custom',
                 handler: 'handleSubmitConsultant',
               },
             },
@@ -626,7 +627,7 @@ export const jobOrderDetailScreen: ScreenDefinition = {
             title: 'Activity Log',
             columns_config: activityLogColumns,
             dataSource: {
-              type: 'query',
+              type: 'custom',
               query: {
                 procedure: 'bench.jobOrders.getActivityLog',
                 params: { jobOrderId: fieldValue('id') },

@@ -482,7 +482,7 @@ export function AccountDetailRenderer() {
                 <label className="text-xs text-stone-400">Account Manager</label>
                 <p className="mt-1 text-stone-900 flex items-center gap-2">
                   <User size={14} className="text-stone-400" />
-                  {account.accountManagerName || '-'}
+                  {account.accountManager?.fullName || '-'}
                 </p>
               </div>
               <div>

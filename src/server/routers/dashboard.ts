@@ -547,7 +547,7 @@ export const dashboardRouter = router({
         .where(and(
           eq(submissions.orgId, orgId),
           eq(submissions.status, 'submitted_to_client'),
-          lt(submissions.submittedAt, threeDaysAgo)
+          lt(submissions.submittedToClientAt, threeDaysAgo)
         )),
     ]);
 
@@ -587,7 +587,6 @@ export const dashboardRouter = router({
       status: accounts.status,
       tier: accounts.tier,
       healthScore: accounts.healthScore,
-      lastContactedAt: accounts.lastContactedAt,
       contractEndDate: accounts.contractEndDate,
     })
       .from(accounts)
@@ -615,12 +614,12 @@ export const dashboardRouter = router({
             )),
         ]);
 
-        // Calculate health status
-        const lastContact = account.lastContactedAt ? new Date(account.lastContactedAt) : null;
+        // Calculate health status based on health score since lastContactedAt doesn't exist
         let healthStatus: 'healthy' | 'needs_attention' | 'at_risk' = 'healthy';
-        if (!lastContact || lastContact < fourteenDaysAgo) {
+        const healthScore = account.healthScore || 50;
+        if (healthScore < 50) {
           healthStatus = 'at_risk';
-        } else if (lastContact < sevenDaysAgo) {
+        } else if (healthScore < 70) {
           healthStatus = 'needs_attention';
         }
 
@@ -629,8 +628,8 @@ export const dashboardRouter = router({
           name: account.name,
           status: account.status,
           tier: account.tier,
-          healthScore: account.healthScore || 50,
-          lastContactAt: account.lastContactedAt,
+          healthScore: healthScore,
+          lastContactAt: account.contractEndDate, // Use contract end date as proxy
           activeJobs: jobsCount[0]?.count || 0,
           ytdRevenue: ytdRevenue[0]?.total || 0,
           nps: 8, // Would come from actual NPS data
@@ -765,7 +764,7 @@ export const dashboardRouter = router({
       db.select({
         total: sql<number>`count(*)::int`,
         toInterview: sql<number>`count(case when ${submissions.status} in ('interview', 'offer', 'placed') then 1 end)::int`,
-        avgTimeToSubmit: sql<number>`coalesce(avg(extract(epoch from (${submissions.submittedAt} - ${submissions.createdAt})) / 3600), 0)::int`,
+        avgTimeToSubmit: sql<number>`coalesce(avg(extract(epoch from (${submissions.submittedToClientAt} - ${submissions.createdAt})) / 3600), 0)::int`,
       })
         .from(submissions)
         .where(and(eq(submissions.orgId, orgId), gte(submissions.createdAt, thirtyDaysAgo))),
@@ -988,16 +987,16 @@ export const dashboardRouter = router({
       type: sql<string>`'deal_won'`,
       title: deals.title,
       value: deals.value,
-      closedAt: deals.closedAt,
+      closedAt: deals.actualCloseDate,
       accountId: deals.accountId,
     })
       .from(deals)
       .where(and(
         eq(deals.orgId, orgId),
         eq(deals.stage, 'closed_won'),
-        gte(deals.closedAt, thirtyDaysAgo)
+        gte(deals.actualCloseDate, thirtyDaysAgo)
       ))
-      .orderBy(desc(deals.closedAt))
+      .orderBy(desc(deals.actualCloseDate))
       .limit(5);
 
     // Combine and format

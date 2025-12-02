@@ -37,7 +37,7 @@ export interface ActivityTabProps {
 type ActivityFilter = 'all' | 'call' | 'email' | 'meeting' | 'note' | 'task' | 'follow_up';
 
 // Map EntityType to RCAIEntityTypeType
-const entityTypeToRCAI: Record<EntityType, RCAIEntityTypeType> = {
+const entityTypeToRCAI: Partial<Record<EntityType, RCAIEntityTypeType>> = {
   lead: 'lead',
   account: 'account',
   deal: 'deal',
@@ -46,6 +46,14 @@ const entityTypeToRCAI: Record<EntityType, RCAIEntityTypeType> = {
   submission: 'submission',
   contact: 'contact',
   job_order: 'job_order',
+  employee: 'candidate', // fallback
+  pod: 'job', // fallback
+  onboarding: 'submission', // fallback
+  performance: 'submission', // fallback
+  timeoff: 'submission', // fallback
+  payroll: 'submission', // fallback
+  benefit_plan: 'deal', // fallback
+  compliance: 'deal', // fallback
 };
 
 // =====================================================
@@ -112,13 +120,19 @@ export function ActivityTab({
 
       {/* Activity Panel - expanded for full tab view */}
       <div className="bg-white rounded-lg border border-border">
-        <ActivityPanel
-          entityType={rcaiEntityType}
-          entityId={entityId}
-          canEdit={canCompose}
-          collapsed={false}
-          className="min-h-[400px]"
-        />
+        {rcaiEntityType ? (
+          <ActivityPanel
+            entityType={rcaiEntityType}
+            entityId={entityId}
+            canEdit={canCompose}
+            collapsed={false}
+            className="min-h-[400px]"
+          />
+        ) : (
+          <div className="p-8 text-center text-muted-foreground">
+            Activity tracking not available for this entity type
+          </div>
+        )}
       </div>
     </div>
   );

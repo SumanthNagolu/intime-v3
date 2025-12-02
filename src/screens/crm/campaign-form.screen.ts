@@ -20,17 +20,17 @@ import {
 // CAMPAIGN FORM CONFIG
 // ==========================================
 
-const campaignFormConfig: FormTemplateConfig = {
-  entityId: 'campaign',
-  entityName: 'Campaign',
+const campaignFormConfig: Omit<FormTemplateConfig, 'mode' | 'submit'> = {
+  entityType: 'campaign',
+  domain: 'crm',
+  displayName: 'Campaign',
   basePath: '/employee/crm/campaigns',
 
   // Data source for edit mode
-  dataSource: {
-    getProcedure: 'crm.campaigns.getById',
-    createProcedure: 'crm.campaigns.create',
-    updateProcedure: 'crm.campaigns.update',
-    idParam: 'id',
+  procedures: {
+    getById: 'crm.campaigns.getById',
+    create: 'crm.campaigns.create',
+    update: 'crm.campaigns.update',
   },
 
   // Form sections using InputSets
@@ -83,66 +83,6 @@ const campaignFormConfig: FormTemplateConfig = {
       defaultExpanded: false,
     },
   ],
-
-  // Validation rules
-  validation: {
-    rules: [
-      {
-        type: 'required',
-        field: 'name',
-        message: 'Campaign name is required',
-      },
-      {
-        type: 'required',
-        field: 'campaignType',
-        message: 'Campaign type is required',
-      },
-      {
-        type: 'min',
-        field: 'budget',
-        value: 0,
-        message: 'Budget cannot be negative',
-      },
-      {
-        type: 'min',
-        field: 'goalLeads',
-        value: 0,
-        message: 'Lead goal cannot be negative',
-      },
-      {
-        type: 'min',
-        field: 'goalResponses',
-        value: 0,
-        message: 'Response goal cannot be negative',
-      },
-      {
-        type: 'min',
-        field: 'goalMeetings',
-        value: 0,
-        message: 'Meeting goal cannot be negative',
-      },
-    ],
-  },
-
-  // Form actions
-  actions: {
-    submit: {
-      label: 'Save Campaign',
-      variant: 'primary',
-      icon: 'Check',
-    },
-    cancel: {
-      label: 'Cancel',
-      variant: 'secondary',
-      route: '/employee/crm/campaigns',
-    },
-    saveAndNew: {
-      label: 'Save & Add Another',
-      variant: 'secondary',
-      showOnCreate: true,
-      showOnEdit: false,
-    },
-  },
 
   // Success handlers
   onSuccess: {

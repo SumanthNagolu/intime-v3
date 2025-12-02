@@ -19,9 +19,6 @@ export * from './base';
 // Hooks
 export * from './hooks';
 
-// List Components
-export * from './lists';
-
 // CRM Workspaces
 export { LeadsWorkspace } from './LeadsWorkspace';
 export { DealsWorkspace } from './DealsWorkspace';
@@ -38,9 +35,6 @@ export { JobOrdersWorkspace } from './JobOrdersWorkspace';
 
 // TA Workspaces
 export { CampaignsWorkspace } from './CampaignsWorkspace';
-
-// Role-Specific Consoles
-export * from './consoles';
 
 // =====================================================
 // NEW MODULAR TABS (v2)

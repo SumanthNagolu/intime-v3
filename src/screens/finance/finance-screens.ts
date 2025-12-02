@@ -18,28 +18,28 @@ export const financeDashboardScreen: ScreenDefinition = {
             id: 'total-revenue',
             type: 'metric-card',
             label: 'Total Revenue (YTD)',
-            dataSource: { type: 'aggregate', entityType: 'invoice', method: 'sum', field: 'amount', filter: { status: 'paid', date: 'current_year' } },
+            dataSource: { type: 'query' as const, query: 'finance.getTotalRevenue' },
             config: { format: { type: 'currency' } }
           },
           {
             id: 'outstanding-invoices',
             type: 'metric-card',
             label: 'Outstanding',
-            dataSource: { type: 'aggregate', entityType: 'invoice', method: 'sum', field: 'balance', filter: { status: 'sent' } },
+            dataSource: { type: 'query' as const, query: 'finance.getOutstandingBalance' },
             config: { format: { type: 'currency' }, bgColor: 'red-50', iconColor: 'red-500' }
           },
           {
             id: 'gross-margin',
             type: 'metric-card',
             label: 'Gross Margin',
-            dataSource: { type: 'aggregate', entityType: 'placement', method: 'average', field: 'margin' },
+            dataSource: { type: 'query' as const, query: 'finance.getGrossMargin' },
             config: { format: { type: 'percentage' } }
           },
           {
             id: 'avg-dso',
             type: 'metric-card',
             label: 'DSO',
-            dataSource: { type: 'aggregate', entityType: 'invoice', method: 'average_days_to_pay' },
+            dataSource: { type: 'query' as const, query: 'finance.getAverageDSO' },
             config: { suffix: 'days' }
           }
         ]
@@ -57,13 +57,12 @@ export const financeDashboardScreen: ScreenDefinition = {
 export const invoiceListScreen: ScreenDefinition = {
   id: 'invoice-list',
   type: 'list',
-  entityType: 'invoice', // Assuming invoice entity
   title: 'Invoices',
   icon: 'FileText',
 
   dataSource: {
-    type: 'list',
-    entityType: 'invoice',
+    type: 'query',
+    query: { procedure: 'finance.listInvoices' },
     pagination: true,
     sort: { field: 'issueDate', direction: 'desc' }
   },

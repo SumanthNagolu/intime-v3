@@ -165,7 +165,7 @@ export function ActivityQueueWidget({ definition, data, context }: SectionWidget
             </div>
             <div>
               <CardTitle className="text-lg font-heading font-bold text-charcoal-900">
-                {definition.title || "Today's Priorities"}
+                {(typeof definition.title === 'string' ? definition.title : "Today's Priorities") || "Today's Priorities"}
               </CardTitle>
               <p className="text-sm text-charcoal-500 mt-0.5">
                 {totalTasks} tasks remaining

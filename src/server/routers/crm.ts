@@ -271,9 +271,9 @@ export const crmRouter = router({
       }),
 
     /**
-     * Get account metrics/statistics
+     * Get account statistics (aggregate metrics across all accounts)
      */
-    getMetrics: orgProtectedProcedure
+    getStats: orgProtectedProcedure
       .query(async ({ ctx }) => {
         const { orgId } = ctx;
 
@@ -2890,7 +2890,6 @@ export const crmRouter = router({
             ...data,
             budget: data.budget !== undefined ? data.budget.toString() : undefined,
             updatedAt: new Date(),
-            updatedBy: userProfileResult[0]?.id,
           })
           .where(and(
             eq(crmCampaigns.id, id),
@@ -2939,7 +2938,6 @@ export const crmRouter = router({
             status: 'active',
             startDate: campaign.startDate ?? new Date(),
             updatedAt: new Date(),
-            updatedBy: userProfileResult[0]?.id,
           })
           .where(eq(crmCampaigns.id, input.id))
           .returning();
@@ -2964,7 +2962,6 @@ export const crmRouter = router({
           .set({
             status: 'paused',
             updatedAt: new Date(),
-            updatedBy: userProfileResult[0]?.id,
           })
           .where(and(
             eq(crmCampaigns.id, input.id),
@@ -2997,7 +2994,6 @@ export const crmRouter = router({
             status: 'completed',
             endDate: new Date(),
             updatedAt: new Date(),
-            updatedBy: userProfileResult[0]?.id,
           })
           .where(and(
             eq(crmCampaigns.id, input.id),
@@ -3212,7 +3208,6 @@ export const crmRouter = router({
         const [deleted] = await db.update(crmCampaigns)
           .set({
             deletedAt: new Date(),
-            updatedBy: userProfileResult[0]?.id,
           })
           .where(and(
             eq(crmCampaigns.id, input.id),

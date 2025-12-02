@@ -16,20 +16,20 @@ const JOB_ORDER_STATUS_OPTIONS = [
   { value: 'filled', label: 'Filled' },
   { value: 'on_hold', label: 'On Hold' },
   { value: 'closed', label: 'Closed' },
-] as const;
+];
 
 const JOB_ORDER_PRIORITY_OPTIONS = [
   { value: 'urgent', label: 'Urgent' },
   { value: 'high', label: 'High' },
   { value: 'normal', label: 'Normal' },
   { value: 'low', label: 'Low' },
-] as const;
+];
 
 const WORK_MODE_OPTIONS = [
   { value: 'remote', label: 'Remote' },
   { value: 'hybrid', label: 'Hybrid' },
   { value: 'onsite', label: 'Onsite' },
-] as const;
+];
 
 // ==========================================
 // COLUMN DEFINITIONS
@@ -147,7 +147,7 @@ const jobOrderTableColumns: import('@/lib/metadata').TableColumnDefinition[] = [
 export const jobOrderListScreen: ScreenDefinition = {
   id: 'job-order-list',
   type: 'list',
-  entityType: 'jobOrder',
+  entityType: 'job_order',
 
   title: 'Job Orders',
   subtitle: 'Browse and submit consultants to vendor job orders',
@@ -156,7 +156,7 @@ export const jobOrderListScreen: ScreenDefinition = {
   // Data source
   dataSource: {
     type: 'list',
-    entity: 'jobOrder',
+    entityType: 'job_order',
     procedure: 'bench.jobOrders.list',
     defaultSort: { field: 'postedAt', direction: 'desc' },
     defaultPageSize: 25,
@@ -170,7 +170,7 @@ export const jobOrderListScreen: ScreenDefinition = {
       {
         id: 'metrics',
         type: 'metrics-grid',
-        columns: 5,
+        columns: 4,
         fields: [
           {
             id: 'totalOrders',
@@ -204,7 +204,7 @@ export const jobOrderListScreen: ScreenDefinition = {
           },
         ],
         dataSource: {
-          type: 'query',
+          type: 'custom',
           query: {
             procedure: 'bench.jobOrders.getStats',
           },
@@ -219,28 +219,28 @@ export const jobOrderListScreen: ScreenDefinition = {
           {
             id: 'search',
             label: 'Search',
-            type: 'search',
+            type: 'text',
             path: 'search',
             config: { placeholder: 'Search job titles...' },
           },
           {
             id: 'status',
             label: 'Status',
-            type: 'multi-select',
+            type: 'multiselect',
             path: 'filters.status',
             options: JOB_ORDER_STATUS_OPTIONS,
           },
           {
             id: 'priority',
             label: 'Priority',
-            type: 'multi-select',
+            type: 'multiselect',
             path: 'filters.priority',
             options: JOB_ORDER_PRIORITY_OPTIONS,
           },
           {
             id: 'workMode',
             label: 'Work Mode',
-            type: 'multi-select',
+            type: 'multiselect',
             path: 'filters.workMode',
             options: WORK_MODE_OPTIONS,
           },
@@ -267,6 +267,65 @@ export const jobOrderListScreen: ScreenDefinition = {
           type: 'navigate',
           route: '/employee/bench/job-orders/{{id}}',
         },
+        rowActions: [
+          {
+            id: 'view',
+            label: 'View Details',
+            icon: 'Eye',
+            type: 'navigate',
+            config: {
+              type: 'navigate',
+              route: '/employee/bench/job-orders/{{id}}',
+            },
+          },
+          {
+            id: 'submit-consultant',
+            label: 'Submit Consultant',
+            icon: 'UserPlus',
+            type: 'modal',
+            config: {
+              type: 'modal',
+              modal: 'SubmitConsultantModal',
+              props: { jobOrderId: '{{id}}' },
+            },
+          },
+          {
+            id: 'find-matches',
+            label: 'Find Matches',
+            icon: 'Search',
+            type: 'modal',
+            config: {
+              type: 'modal',
+              modal: 'FindMatchingCandidatesModal',
+              props: { jobOrderId: '{{id}}' },
+            },
+          },
+          {
+            id: 'edit',
+            label: 'Edit',
+            icon: 'Pencil',
+            type: 'navigate',
+            config: {
+              type: 'navigate',
+              route: '/employee/bench/job-orders/{{id}}/edit',
+            },
+          },
+          {
+            id: 'close',
+            label: 'Close',
+            icon: 'X',
+            type: 'mutation',
+            config: {
+              type: 'mutation',
+              procedure: 'bench.jobOrders.close',
+              input: { id: '{{id}}' },
+            },
+            visible: {
+              type: 'condition',
+              condition: { field: 'status', operator: 'eq', value: 'open' },
+            },
+          },
+        ],
       },
     ],
   },
@@ -304,67 +363,6 @@ export const jobOrderListScreen: ScreenDefinition = {
       config: {
         type: 'custom',
         handler: 'handleExport',
-      },
-    },
-  ],
-
-  // Row actions
-  rowActions: [
-    {
-      id: 'view',
-      label: 'View Details',
-      icon: 'Eye',
-      type: 'navigate',
-      config: {
-        type: 'navigate',
-        route: '/employee/bench/job-orders/{{id}}',
-      },
-    },
-    {
-      id: 'submit-consultant',
-      label: 'Submit Consultant',
-      icon: 'UserPlus',
-      type: 'modal',
-      config: {
-        type: 'modal',
-        modal: 'SubmitConsultantModal',
-        props: { jobOrderId: '{{id}}' },
-      },
-    },
-    {
-      id: 'find-matches',
-      label: 'Find Matches',
-      icon: 'Search',
-      type: 'modal',
-      config: {
-        type: 'modal',
-        modal: 'FindMatchingCandidatesModal',
-        props: { jobOrderId: '{{id}}' },
-      },
-    },
-    {
-      id: 'edit',
-      label: 'Edit',
-      icon: 'Pencil',
-      type: 'navigate',
-      config: {
-        type: 'navigate',
-        route: '/employee/bench/job-orders/{{id}}/edit',
-      },
-    },
-    {
-      id: 'close',
-      label: 'Close',
-      icon: 'X',
-      type: 'mutation',
-      config: {
-        type: 'mutation',
-        procedure: 'bench.jobOrders.close',
-        input: { id: '{{id}}' },
-      },
-      visible: {
-        type: 'condition',
-        condition: { field: 'status', operator: 'eq', value: 'open' },
       },
     },
   ],

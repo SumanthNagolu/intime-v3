@@ -34,13 +34,17 @@ function resolveDynamicValue(
   if (typeof value === 'number') return value.toString();
 
   // For DynamicValue, resolve from context
-  if (context && value.path) {
+  const dynValue = value as DynamicValue;
+  const valuePath = 'path' in dynValue ? dynValue.path : undefined;
+  const valueDefault = 'default' in dynValue ? dynValue.default : undefined;
+
+  if (context && valuePath) {
     // Simple resolution - in production this would be more sophisticated
-    const resolved = context.query?.[value.path] || value.default;
-    return resolved?.toString() || '';
+    const resolved = context.query?.[valuePath] ?? valueDefault;
+    return resolved?.toString() ?? '';
   }
 
-  return value.default?.toString() || '';
+  return valueDefault?.toString() ?? '';
 }
 
 // ==========================================

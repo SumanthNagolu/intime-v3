@@ -277,9 +277,8 @@ const dealDetailConfig: DetailTemplateConfig = {
               id: 'remove',
               label: 'Remove',
               icon: 'Trash',
-              variant: 'destructive',
               actionType: 'mutation',
-              mutation: 'crm.deals.removeStakeholder',
+              handler: 'removeStakeholder',
             },
           ],
           emptyState: {
@@ -297,10 +296,7 @@ const dealDetailConfig: DetailTemplateConfig = {
       id: 'competitors',
       label: 'Competitors',
       icon: 'Swords',
-      badge: {
-        path: 'competitors.length',
-        variant: 'secondary',
-      },
+      badgePath: 'competitors.length',
       sections: [
         {
           id: 'competitorList',
@@ -351,10 +347,7 @@ const dealDetailConfig: DetailTemplateConfig = {
       id: 'products',
       label: 'Products',
       icon: 'Package',
-      badge: {
-        path: 'products.length',
-        variant: 'secondary',
-      },
+      badgePath: 'products.length',
       sections: [
         {
           id: 'productList',
@@ -420,7 +413,7 @@ const dealDetailConfig: DetailTemplateConfig = {
       id: 'outcome',
       label: 'Outcome',
       icon: 'Target',
-      showWhen: {
+      visible: {
         field: 'stage',
         operator: 'in',
         value: ['closed_won', 'closed_lost'],

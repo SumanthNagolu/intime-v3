@@ -19,25 +19,26 @@
 // ============================================
 // RECRUITING SCREENS
 // ============================================
-export * from './recruiting';
 export { recruitingScreens } from './recruiting';
 
 // ============================================
 // BENCH SALES SCREENS
 // ============================================
-export * from './bench-sales';
 export { benchSalesScreens } from './bench-sales';
 
 // ============================================
-// CRM/TA SCREENS
+// CRM SCREENS
 // ============================================
-export * from './crm';
 export { crmScreens } from './crm';
+
+// ============================================
+// TA (TALENT ACQUISITION) SCREENS
+// ============================================
+export { taScreens } from './ta';
 
 // ============================================
 // OPERATIONS/MANAGER SCREENS
 // ============================================
-export * from './operations';
 export { operationsScreens } from './operations';
 
 // ============================================
@@ -46,6 +47,7 @@ export { operationsScreens } from './operations';
 import { recruitingScreens, type RecruitingScreenId } from './recruiting';
 import { benchSalesScreens, type BenchSalesScreenId } from './bench-sales';
 import { crmScreens, type CrmScreenId } from './crm';
+import { taScreens, type TaScreenId } from './ta';
 import { operationsScreens, type OperationsScreenId } from './operations';
 import type { ScreenDefinition } from '@/lib/metadata/types';
 
@@ -53,10 +55,11 @@ export const screenRegistry = {
   ...recruitingScreens,
   ...benchSalesScreens,
   ...crmScreens,
+  ...taScreens,
   ...operationsScreens,
 } as const;
 
-export type ScreenId = RecruitingScreenId | BenchSalesScreenId | CrmScreenId | OperationsScreenId;
+export type ScreenId = RecruitingScreenId | BenchSalesScreenId | CrmScreenId | TaScreenId | OperationsScreenId;
 
 /**
  * Load a screen definition by ID
@@ -73,7 +76,7 @@ export async function loadScreen(screenId: ScreenId): Promise<ScreenDefinition> 
 /**
  * Get all screen IDs for a domain
  */
-export function getScreenIdsByDomain(domain: 'recruiting' | 'bench-sales' | 'crm'): ScreenId[] {
+export function getScreenIdsByDomain(domain: 'recruiting' | 'bench-sales' | 'crm' | 'ta' | 'operations'): ScreenId[] {
   switch (domain) {
     case 'recruiting':
       return Object.keys(recruitingScreens) as RecruitingScreenId[];
@@ -81,6 +84,10 @@ export function getScreenIdsByDomain(domain: 'recruiting' | 'bench-sales' | 'crm
       return Object.keys(benchSalesScreens) as BenchSalesScreenId[];
     case 'crm':
       return Object.keys(crmScreens) as CrmScreenId[];
+    case 'ta':
+      return Object.keys(taScreens) as TaScreenId[];
+    case 'operations':
+      return Object.keys(operationsScreens) as OperationsScreenId[];
     default:
       return [];
   }

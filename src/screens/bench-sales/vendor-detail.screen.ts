@@ -17,13 +17,13 @@ const VENDOR_STATUS_OPTIONS = [
   { value: 'inactive', label: 'Inactive' },
   { value: 'pending', label: 'Pending' },
   { value: 'blocked', label: 'Blocked' },
-] as const;
+];
 
 const VENDOR_TIER_OPTIONS = [
   { value: 'preferred', label: 'Preferred' },
   { value: 'standard', label: 'Standard' },
   { value: 'new', label: 'New' },
-] as const;
+];
 
 const VENDOR_TYPE_OPTIONS = [
   { value: 'direct_client', label: 'Direct Client' },
@@ -31,14 +31,14 @@ const VENDOR_TYPE_OPTIONS = [
   { value: 'tier_1', label: 'Tier 1' },
   { value: 'tier_2', label: 'Tier 2' },
   { value: 'implementation_partner', label: 'Implementation Partner' },
-] as const;
+];
 
 const JOB_ORDER_STATUS_OPTIONS = [
   { value: 'open', label: 'Open' },
   { value: 'filled', label: 'Filled' },
   { value: 'on_hold', label: 'On Hold' },
   { value: 'closed', label: 'Closed' },
-] as const;
+];
 
 // ==========================================
 // SIDEBAR FIELDS
@@ -485,7 +485,7 @@ export const vendorDetailScreen: ScreenDefinition = {
 
   // Data source
   dataSource: {
-    type: 'query',
+    type: 'custom',
     query: {
       procedure: 'bench.vendors.getById',
       params: { id: fieldValue('id') },
@@ -560,7 +560,7 @@ export const vendorDetailScreen: ScreenDefinition = {
             title: 'Vendor Contacts',
             columns_config: contactsTableColumns,
             dataSource: {
-              type: 'query',
+              type: 'custom',
               query: {
                 procedure: 'bench.vendors.getContacts',
                 params: { vendorId: fieldValue('id') },
@@ -631,6 +631,7 @@ export const vendorDetailScreen: ScreenDefinition = {
               message: 'Add contacts to track vendor relationships.',
               action: {
                 label: 'Add Contact',
+                type: 'custom',
                 handler: 'handleAddContact',
               },
             },
@@ -651,7 +652,7 @@ export const vendorDetailScreen: ScreenDefinition = {
             title: 'Job Orders',
             columns_config: jobOrdersTableColumns,
             dataSource: {
-              type: 'query',
+              type: 'custom',
               query: {
                 procedure: 'bench.vendors.getJobOrders',
                 params: { vendorId: fieldValue('id') },
@@ -698,6 +699,7 @@ export const vendorDetailScreen: ScreenDefinition = {
               message: 'No job orders from this vendor yet.',
               action: {
                 label: 'Add Job Order',
+                type: 'custom',
                 handler: 'handleAddJobOrder',
               },
             },
@@ -719,13 +721,13 @@ export const vendorDetailScreen: ScreenDefinition = {
             title: 'Consultant Placements',
             columns_config: placementsTableColumns,
             dataSource: {
-              type: 'query',
+              type: 'custom',
               query: {
                 procedure: 'bench.vendors.getPlacements',
                 params: { vendorId: fieldValue('id') },
               },
             },
-            rowActions: [
+            actions: [
               {
                 id: 'view',
                 label: 'View Placement',
@@ -758,7 +760,7 @@ export const vendorDetailScreen: ScreenDefinition = {
             title: 'Activity Log',
             columns_config: activityLogColumns,
             dataSource: {
-              type: 'query',
+              type: 'custom',
               query: {
                 procedure: 'bench.vendors.getActivityLog',
                 params: { vendorId: fieldValue('id') },

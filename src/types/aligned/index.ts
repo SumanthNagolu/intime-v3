@@ -65,7 +65,7 @@ export {
   type LeadStatus,
   type LeadSource,
   type DealStage,
-  type ActivityType,
+  type CrmActivityType,
   // List responses
   type AccountListResponse,
   type LeadListResponse,

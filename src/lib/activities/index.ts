@@ -24,3 +24,64 @@ export * from './activity-queries';
 export { interpolateTemplate } from './template-utils';
 export { calculateDueDate } from './due-date-utils';
 
+// SLA utilities
+export {
+  calculateSLAStatus,
+  getTimeRemaining,
+  isOverdue,
+  getAtRiskThreshold,
+  calculateDefaultDueDate,
+  getSLALabel,
+  getSLAColors,
+  willBreachSoon,
+  sortBySLAPriority,
+  DEFAULT_SLA_THRESHOLDS,
+  DEFAULT_SLA_DURATIONS,
+  type SLAStatus,
+  type Priority,
+  type TimeRemaining,
+  type SLAConfig,
+} from './sla';
+
+// Pattern utilities
+export {
+  ACTIVITY_PATTERNS,
+  getPattern,
+  getPatternsByCategory,
+  getPatternsForEntity,
+  getPatternDueDate,
+  getPatternFields,
+  getPatternChecklist,
+  getPatternOutcomes,
+  searchPatterns,
+  getQuickLogPatterns,
+  getCategoryLabel,
+  getCategoryColor,
+  type PatternCategory,
+  type FieldType,
+  type PatternField,
+  type ChecklistItem,
+  type PatternOutcome,
+  type ActivityPattern,
+} from './patterns';
+
+// Transition utilities
+export {
+  canTransition,
+  getAvailableTransitions,
+  validateTransition,
+  getTransitionConfig,
+  getTransitionLabel,
+  isTerminalStatus,
+  isOpenStatus,
+  isActionableStatus,
+  STATUS_CONFIG,
+  getStatusConfig,
+  getStatusLabel,
+  getTransitionActions,
+  type ActivityStatus,
+  type TransitionValidation,
+  type StatusConfig,
+  type TransitionAction,
+} from './transitions';
+

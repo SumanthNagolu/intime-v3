@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { hrDashboardScreen, employeeListScreen, employeeDetailScreen } from '@/screens/hr/hr-screens';
+import { hrDashboardScreen, employeeListScreen, employeeDetailScreen } from '@/screens/hr';
+import type { SectionDefinition, WidgetDefinition, ActionDefinition, TabDefinition } from '@/lib/metadata/types';
 
 describe('HR Dashboard Screen', () => {
   it('should be a dashboard type', () => {
@@ -8,9 +9,10 @@ describe('HR Dashboard Screen', () => {
   });
 
   it('should have key HR metrics', () => {
-    const metricsSection = hrDashboardScreen.layout.sections?.find(s => s.type === 'metrics-grid');
-    const widgetIds = metricsSection?.widgets?.map(w => w.id) || [];
-    
+    expect(hrDashboardScreen.layout).toBeDefined();
+    const metricsSection = hrDashboardScreen.layout?.sections?.find((s: SectionDefinition) => s.type === 'metrics-grid');
+    const widgetIds = metricsSection?.widgets?.map((w: WidgetDefinition) => w.id) || [];
+
     expect(widgetIds).toContain('total-employees');
     expect(widgetIds).toContain('onboarding-pending');
     expect(widgetIds).toContain('compliance-alerts');
@@ -25,7 +27,7 @@ describe('Employee List Screen', () => {
 
   it('should have add employee action', () => {
     const actions = employeeListScreen.actions || [];
-    expect(actions.find(a => a.id === 'add-employee')).toBeDefined();
+    expect(actions.find((a: ActionDefinition) => a.id === 'add-employee')).toBeDefined();
   });
 });
 
@@ -36,9 +38,10 @@ describe('Employee Detail Screen', () => {
   });
 
   it('should have compensation and benefits sections', () => {
-    const compTab = employeeDetailScreen.layout.tabs?.find(t => t.id === 'compensation');
+    expect(employeeDetailScreen.layout).toBeDefined();
+    const compTab = employeeDetailScreen.layout?.tabs?.find((t: TabDefinition) => t.id === 'compensation');
     expect(compTab).toBeDefined();
-    expect(compTab?.sections.find(s => s.id === 'salary-info')).toBeDefined();
+    expect(compTab?.sections.find((s: SectionDefinition) => s.id === 'salary-info')).toBeDefined();
   });
 });
 

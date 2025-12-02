@@ -556,6 +556,7 @@ const touchpointsSections: SectionDefinition[] = [
       title: 'No touchpoints yet',
       message: 'Log your first interaction with this lead.',
       action: {
+        type: 'custom',
         label: 'Log Touchpoint',
         handler: 'handleLogTouchpoint',
       },

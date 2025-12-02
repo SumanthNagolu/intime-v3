@@ -1,10 +1,10 @@
 /**
  * COO Operations Dashboard Screen Definition
- * 
+ *
  * Real-time operational visibility dashboard for the Chief Operating Officer.
  * The COO is ALWAYS INFORMED on all object changes.
- * 
- * @see docs/specs/20-USER-ROLES/08-coo/00-OVERVIEW.md
+ *
+ * @see docs/specs/20-USER-ROLES/04-manager/00-OVERVIEW.md (COO oversees all pod managers)
  */
 
 import type { ScreenDefinition } from '@/lib/metadata/types';
@@ -12,25 +12,29 @@ import type { ScreenDefinition } from '@/lib/metadata/types';
 export const cooDashboardScreen: ScreenDefinition = {
   id: 'coo-dashboard',
   type: 'dashboard',
-  entityType: 'operations',
   title: 'COO Operations Dashboard',
-  description: 'Real-time operational visibility and control center',
-  
+  subtitle: 'Real-time operational visibility and control center',
+  icon: 'Activity',
+
   dataSource: {
     type: 'query',
-    query: 'operations.getCOODashboard',
+    query: {
+      procedure: 'operations.getCOODashboard',
+    },
   },
-  
+
   layout: {
     type: 'tabs',
+    defaultTab: 'overview',
     tabs: [
       // ─────────────────────────────────────────────────────
       // TAB 1: OVERVIEW
+      // Per COO oversight role: KPIs + Pod Performance
       // ─────────────────────────────────────────────────────
       {
         id: 'overview',
         label: 'Overview',
-        icon: 'layout-dashboard',
+        icon: 'LayoutDashboard',
         sections: [
           {
             id: 'operational-kpis',
@@ -41,7 +45,7 @@ export const cooDashboardScreen: ScreenDefinition = {
                 id: 'efficiency',
                 label: 'Operational Efficiency',
                 value: { type: 'field', path: 'overview.efficiency' },
-                format: 'percentage',
+                format: { type: 'percentage' },
                 target: 85,
                 size: 'large',
               },
@@ -49,14 +53,14 @@ export const cooDashboardScreen: ScreenDefinition = {
                 id: 'utilization',
                 label: 'Team Utilization',
                 value: { type: 'field', path: 'overview.utilization' },
-                format: 'percentage',
+                format: { type: 'percentage' },
                 target: 85,
               },
               {
                 id: 'ttf',
                 label: 'Avg TTF (Days)',
                 value: { type: 'field', path: 'overview.avgTTF' },
-                format: 'number',
+                format: { type: 'number' },
                 target: 30,
                 inverse: true,
               },
@@ -64,14 +68,14 @@ export const cooDashboardScreen: ScreenDefinition = {
                 id: 'placements-today',
                 label: 'Placements Today',
                 value: { type: 'field', path: 'overview.placementsToday' },
-                format: 'number',
+                format: { type: 'number' },
                 target: 8,
               },
               {
                 id: 'sla-compliance',
                 label: 'SLA Compliance',
                 value: { type: 'field', path: 'overview.slaCompliance' },
-                format: 'percentage',
+                format: { type: 'percentage' },
                 target: 95,
               },
             ],
@@ -81,21 +85,21 @@ export const cooDashboardScreen: ScreenDefinition = {
             type: 'custom',
             component: 'PillarHealthGrid',
             title: 'Pillar Health Status',
-            span: 'full',
+            span: 4,
           },
           {
             id: 'regional-performance',
             type: 'custom',
             component: 'RegionalPerformanceMap',
             title: 'Regional Performance',
-            span: 'half',
+            span: 2,
           },
           {
             id: 'pod-status',
             type: 'custom',
             component: 'PodStatusGrid',
             title: 'Pod Status Overview',
-            span: 'half',
+            span: 2,
           },
         ],
       },
@@ -106,8 +110,8 @@ export const cooDashboardScreen: ScreenDefinition = {
       {
         id: 'informed-feed',
         label: 'Informed Feed',
-        icon: 'bell',
-        badge: { type: 'field', path: 'notifications.unreadCount' },
+        icon: 'Bell',
+        badge: { type: 'count', path: 'notifications.unreadCount' },
         sections: [
           {
             id: 'notification-filters',
@@ -149,32 +153,32 @@ export const cooDashboardScreen: ScreenDefinition = {
               type: 'field',
               path: 'notifications.critical',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'timestamp',
                 header: 'Time',
-                field: 'timestamp',
+                path: 'timestamp',
                 type: 'relative-time',
                 width: '80px',
               },
               {
                 id: 'event',
                 header: 'Event',
-                field: 'description',
+                accessor: 'description',
                 type: 'text',
                 primary: true,
               },
               {
                 id: 'entity',
                 header: 'Entity',
-                field: 'entityTitle',
+                accessor: 'entityTitle',
                 type: 'link',
-                linkPattern: '{{entityUrl}}',
+                config: { linkPattern: '{{entityUrl}}' },
               },
               {
                 id: 'actor',
                 header: 'Actor',
-                field: 'actorName',
+                accessor: 'actorName',
                 type: 'user',
               },
               {
@@ -186,19 +190,22 @@ export const cooDashboardScreen: ScreenDefinition = {
                     id: 'view',
                     label: 'View',
                     icon: 'eye',
-                    action: { type: 'navigate', path: '{{entityUrl}}' },
+                    type: 'navigate',
+                    config: { type: 'navigate', route: '{{entityUrl}}' },
                   },
                   {
                     id: 'escalate',
                     label: 'Escalate',
                     icon: 'arrow-up',
-                    action: { type: 'modal', modalId: 'escalate' },
+                    type: 'modal',
+                    config: { type: 'modal', modal: 'escalate' },
                   },
                   {
                     id: 'assign',
                     label: 'Assign',
                     icon: 'user-plus',
-                    action: { type: 'modal', modalId: 'assign' },
+                    type: 'modal',
+                    config: { type: 'modal', modal: 'assign' },
                   },
                 ],
               },
@@ -213,30 +220,30 @@ export const cooDashboardScreen: ScreenDefinition = {
               type: 'field',
               path: 'notifications.high',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'timestamp',
                 header: 'Time',
-                field: 'timestamp',
+                path: 'timestamp',
                 type: 'relative-time',
               },
               {
                 id: 'event',
                 header: 'Event',
-                field: 'description',
+                accessor: 'description',
                 type: 'text',
               },
               {
                 id: 'entity',
                 header: 'Entity',
-                field: 'entityTitle',
+                accessor: 'entityTitle',
                 type: 'link',
-                linkPattern: '{{entityUrl}}',
+                config: { linkPattern: '{{entityUrl}}' },
               },
               {
                 id: 'actor',
                 header: 'Actor',
-                field: 'actorName',
+                accessor: 'actorName',
                 type: 'user',
               },
             ],
@@ -250,23 +257,23 @@ export const cooDashboardScreen: ScreenDefinition = {
               type: 'field',
               path: 'notifications.normal',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'timestamp',
                 header: 'Time',
-                field: 'timestamp',
+                path: 'timestamp',
                 type: 'relative-time',
               },
               {
                 id: 'event',
                 header: 'Event',
-                field: 'description',
+                accessor: 'description',
                 type: 'text',
               },
               {
                 id: 'entity',
                 header: 'Entity',
-                field: 'entityTitle',
+                accessor: 'entityTitle',
                 type: 'text',
               },
             ],
@@ -280,8 +287,8 @@ export const cooDashboardScreen: ScreenDefinition = {
       {
         id: 'sla',
         label: 'SLA Management',
-        icon: 'timer',
-        badge: { type: 'field', path: 'sla.breachCount' },
+        icon: 'Timer',
+        badge: { type: 'count', path: 'sla.breachCount' },
         sections: [
           {
             id: 'sla-summary',
@@ -292,27 +299,27 @@ export const cooDashboardScreen: ScreenDefinition = {
                 id: 'overall-compliance',
                 label: 'Overall Compliance',
                 value: { type: 'field', path: 'sla.overallCompliance' },
-                format: 'percentage',
+                format: { type: 'percentage' },
                 target: 95,
               },
               {
                 id: 'active-slas',
                 label: 'Active SLAs',
                 value: { type: 'field', path: 'sla.activeCount' },
-                format: 'number',
+                format: { type: 'number' },
               },
               {
                 id: 'at-risk',
                 label: 'At Risk',
                 value: { type: 'field', path: 'sla.atRiskCount' },
-                format: 'number',
+                format: { type: 'number' },
                 alertThreshold: 5,
               },
               {
                 id: 'breached',
                 label: 'Breached',
                 value: { type: 'field', path: 'sla.breachCount' },
-                format: 'number',
+                format: { type: 'number' },
                 color: 'destructive',
                 alertThreshold: 1,
               },
@@ -326,44 +333,44 @@ export const cooDashboardScreen: ScreenDefinition = {
               type: 'field',
               path: 'sla.breaches',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'entity',
                 header: 'Entity',
-                field: 'entityTitle',
+                path: 'entityTitle',
                 type: 'link',
-                linkPattern: '{{entityUrl}}',
+                config: { linkPattern: '{{entityUrl}}' },
               },
               {
                 id: 'sla-type',
                 header: 'SLA Type',
-                field: 'slaType',
+                accessor: 'slaType',
                 type: 'text',
               },
               {
                 id: 'target',
                 header: 'Target',
-                field: 'targetHours',
+                accessor: 'targetHours',
                 type: 'text',
                 suffix: ' hours',
               },
               {
                 id: 'actual',
                 header: 'Actual',
-                field: 'actualHours',
+                accessor: 'actualHours',
                 type: 'text',
                 suffix: ' hours',
               },
               {
                 id: 'breach-duration',
                 header: 'Breach Duration',
-                field: 'breachDuration',
+                accessor: 'breachDuration',
                 type: 'duration',
               },
               {
                 id: 'owner',
                 header: 'Owner',
-                field: 'ownerName',
+                accessor: 'ownerName',
                 type: 'user',
               },
               {
@@ -375,13 +382,15 @@ export const cooDashboardScreen: ScreenDefinition = {
                     id: 'escalate',
                     label: 'Escalate',
                     icon: 'arrow-up',
-                    action: { type: 'modal', modalId: 'escalate' },
+                    type: 'modal',
+                    config: { type: 'modal', modal: 'escalate' },
                   },
                   {
                     id: 'reassign',
                     label: 'Reassign',
                     icon: 'user-plus',
-                    action: { type: 'modal', modalId: 'reassign' },
+                    type: 'modal',
+                    config: { type: 'modal', modal: 'reassign' },
                   },
                 ],
               },
@@ -396,30 +405,30 @@ export const cooDashboardScreen: ScreenDefinition = {
               type: 'field',
               path: 'sla.atRisk',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'entity',
                 header: 'Entity',
-                field: 'entityTitle',
+                path: 'entityTitle',
                 type: 'link',
-                linkPattern: '{{entityUrl}}',
+                config: { linkPattern: '{{entityUrl}}' },
               },
               {
                 id: 'sla-type',
                 header: 'SLA Type',
-                field: 'slaType',
+                accessor: 'slaType',
                 type: 'text',
               },
               {
                 id: 'time-remaining',
                 header: 'Time Remaining',
-                field: 'timeRemaining',
+                accessor: 'timeRemaining',
                 type: 'duration',
               },
               {
                 id: 'owner',
                 header: 'Owner',
-                field: 'ownerName',
+                accessor: 'ownerName',
                 type: 'user',
               },
             ],
@@ -433,7 +442,7 @@ export const cooDashboardScreen: ScreenDefinition = {
       {
         id: 'team',
         label: 'Team Performance',
-        icon: 'users',
+        icon: 'Users',
         sections: [
           {
             id: 'team-kpis',
@@ -444,26 +453,26 @@ export const cooDashboardScreen: ScreenDefinition = {
                 id: 'total-headcount',
                 label: 'Total Headcount',
                 value: { type: 'field', path: 'team.totalHeadcount' },
-                format: 'number',
+                format: { type: 'number' },
               },
               {
                 id: 'active-recruiters',
                 label: 'Active Recruiters',
                 value: { type: 'field', path: 'team.activeRecruiters' },
-                format: 'number',
+                format: { type: 'number' },
               },
               {
                 id: 'avg-productivity',
                 label: 'Avg Productivity',
                 value: { type: 'field', path: 'team.avgProductivity' },
-                format: 'percentage',
+                format: { type: 'percentage' },
                 target: 100,
               },
               {
                 id: 'pods-green',
                 label: 'Pods at 100%',
                 value: { type: 'field', path: 'team.podsAtTarget' },
-                format: 'number',
+                format: { type: 'number' },
                 suffix: { type: 'field', path: 'team.totalPods', prefix: ' / ' },
               },
             ],
@@ -477,44 +486,44 @@ export const cooDashboardScreen: ScreenDefinition = {
               path: 'team.pods',
             },
             sortable: true,
-            columns: [
+            columns_config: [
               {
                 id: 'rank',
                 header: '#',
-                field: 'rank',
+                path: 'rank',
                 type: 'number',
                 width: '50px',
               },
               {
                 id: 'pod',
                 header: 'Pod',
-                field: 'name',
+                accessor: 'name',
                 type: 'link',
-                linkPattern: '/employee/manager/pod/{{id}}',
+                config: { linkPattern: '/employee/manager/pod/{{id}}' },
               },
               {
                 id: 'manager',
                 header: 'Manager',
-                field: 'managerName',
+                accessor: 'managerName',
                 type: 'user',
               },
               {
                 id: 'placements',
                 header: 'Placements (Sprint)',
-                field: 'sprintPlacements',
+                accessor: 'sprintPlacements',
                 type: 'text',
                 format: '{{actual}}/{{target}}',
               },
               {
                 id: 'progress',
                 header: 'Progress',
-                field: 'progressPercentage',
+                accessor: 'progressPercentage',
                 type: 'progress-bar',
               },
               {
                 id: 'status',
                 header: 'Status',
-                field: 'status',
+                accessor: 'status',
                 type: 'badge',
                 options: [
                   { value: 'exceeding', label: '⭐ Exceeding', color: 'success' },
@@ -532,7 +541,8 @@ export const cooDashboardScreen: ScreenDefinition = {
                     id: 'view-details',
                     label: 'View Details',
                     icon: 'eye',
-                    action: { type: 'navigate', path: '/employee/manager/pod/{{id}}/metrics' },
+                    type: 'navigate',
+                    config: { type: 'navigate', route: '/employee/manager/pod/{{id}}/metrics' },
                   },
                 ],
               },
@@ -543,14 +553,14 @@ export const cooDashboardScreen: ScreenDefinition = {
             type: 'custom',
             component: 'TopPerformersWidget',
             title: 'Top Performers This Month',
-            span: 'half',
+            span: 2,
           },
           {
             id: 'needs-coaching',
             type: 'custom',
             component: 'NeedsCoachingWidget',
             title: 'ICs Needing Support',
-            span: 'half',
+            span: 2,
           },
         ],
       },
@@ -561,15 +571,15 @@ export const cooDashboardScreen: ScreenDefinition = {
       {
         id: 'bottlenecks',
         label: 'Bottlenecks',
-        icon: 'alert-octagon',
-        badge: { type: 'field', path: 'bottlenecks.criticalCount' },
+        icon: 'AlertOctagon',
+        badge: { type: 'count', path: 'bottlenecks.criticalCount' },
         sections: [
           {
             id: 'bottleneck-analysis',
             type: 'custom',
             component: 'BottleneckAnalysisChart',
             title: 'Process Bottleneck Analysis',
-            span: 'full',
+            span: 4,
           },
           {
             id: 'stale-jobs',
@@ -579,36 +589,36 @@ export const cooDashboardScreen: ScreenDefinition = {
               type: 'field',
               path: 'bottlenecks.staleJobs',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'job',
                 header: 'Job',
-                field: 'title',
+                path: 'title',
                 type: 'link',
-                linkPattern: '/employee/jobs/{{id}}',
+                config: { linkPattern: '/employee/jobs/{{id}}' },
               },
               {
                 id: 'client',
                 header: 'Client',
-                field: 'clientName',
+                accessor: 'clientName',
                 type: 'text',
               },
               {
                 id: 'days-stale',
                 header: 'Days Stale',
-                field: 'daysStale',
+                accessor: 'daysStale',
                 type: 'number',
               },
               {
                 id: 'owner',
                 header: 'Owner',
-                field: 'ownerName',
+                accessor: 'ownerName',
                 type: 'user',
               },
               {
                 id: 'pod',
                 header: 'Pod',
-                field: 'podName',
+                accessor: 'podName',
                 type: 'text',
               },
               {
@@ -620,19 +630,22 @@ export const cooDashboardScreen: ScreenDefinition = {
                     id: 'escalate',
                     label: 'Escalate',
                     icon: 'arrow-up',
-                    action: { type: 'modal', modalId: 'escalate' },
+                    type: 'modal',
+                    config: { type: 'modal', modal: 'escalate' },
                   },
                   {
                     id: 'reassign',
                     label: 'Reassign',
                     icon: 'user-plus',
-                    action: { type: 'modal', modalId: 'reassign' },
+                    type: 'modal',
+                    config: { type: 'modal', modal: 'reassign' },
                   },
                   {
                     id: 'close',
                     label: 'Close Job',
                     icon: 'x',
-                    action: { type: 'mutation', mutation: 'jobs.close' },
+                    type: 'mutation',
+                    config: { type: 'mutation', procedure: 'jobs.close' },
                   },
                 ],
               },
@@ -646,30 +659,30 @@ export const cooDashboardScreen: ScreenDefinition = {
               type: 'field',
               path: 'bottlenecks.slowSubmissions',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'submission',
                 header: 'Submission',
-                field: 'candidateName',
+                path: 'candidateName',
                 type: 'link',
-                linkPattern: '/employee/submissions/{{id}}',
+                config: { linkPattern: '/employee/submissions/{{id}}' },
               },
               {
                 id: 'job',
                 header: 'Job',
-                field: 'jobTitle',
+                accessor: 'jobTitle',
                 type: 'text',
               },
               {
                 id: 'days-pending',
                 header: 'Days Pending',
-                field: 'daysPending',
+                accessor: 'daysPending',
                 type: 'number',
               },
               {
                 id: 'recruiter',
                 header: 'Recruiter',
-                field: 'recruiterName',
+                accessor: 'recruiterName',
                 type: 'user',
               },
             ],
@@ -681,32 +694,68 @@ export const cooDashboardScreen: ScreenDefinition = {
   
   actions: [
     {
-      id: 'refresh',
-      label: 'Refresh',
-      icon: 'refresh-cw',
-      action: { type: 'refresh' },
-      position: 'header',
+      id: 'all-pods',
+      type: 'navigate',
+      label: 'All Pods',
+      icon: 'Users',
+      variant: 'outline',
+      config: { type: 'navigate', route: '/employee/coo/pods' },
     },
     {
-      id: 'notification-settings',
-      label: 'Notification Settings',
-      icon: 'settings',
-      action: { type: 'modal', modalId: 'notification-settings' },
-      position: 'header',
+      id: 'sla-dashboard',
+      type: 'navigate',
+      label: 'SLA Dashboard',
+      icon: 'Timer',
+      variant: 'outline',
+      config: { type: 'navigate', route: '/employee/coo/sla' },
+    },
+    {
+      id: 'escalations',
+      type: 'navigate',
+      label: 'Escalations',
+      icon: 'AlertTriangle',
+      variant: 'outline',
+      config: { type: 'navigate', route: '/employee/coo/escalations' },
     },
     {
       id: 'export',
+      type: 'modal',
       label: 'Export Report',
-      icon: 'download',
-      action: { type: 'export', format: 'pdf' },
-      position: 'header',
+      icon: 'Download',
+      variant: 'outline',
+      config: { type: 'modal', modal: 'ExportOperationsReportModal' },
+    },
+    {
+      id: 'notification-settings',
+      type: 'modal',
+      label: 'Settings',
+      icon: 'Settings',
+      variant: 'ghost',
+      config: { type: 'modal', modal: 'COONotificationSettingsModal' },
+    },
+    {
+      id: 'refresh',
+      type: 'custom',
+      label: 'Refresh',
+      icon: 'RefreshCw',
+      variant: 'ghost',
+      config: { type: 'custom', handler: 'handleRefresh' },
     },
   ],
-  
-  keyboardShortcuts: [
-    { key: 'g o', action: 'navigate:/executive/coo', description: 'Go to COO Dashboard' },
+
+  navigation: {
+    breadcrumbs: [
+      { label: 'Home', route: '/employee/workspace' },
+      { label: 'COO Dashboard' },
+    ],
+  },
+
+  keyboard_shortcuts: [
+    { key: 'g o', action: 'navigate:/employee/coo/dashboard', description: 'Go to COO Dashboard' },
+    { key: 'g p', action: 'navigate:/employee/coo/pods', description: 'Go to All Pods' },
+    { key: 'g s', action: 'navigate:/employee/coo/sla', description: 'Go to SLA Dashboard' },
+    { key: 'g e', action: 'navigate:/employee/coo/escalations', description: 'Go to Escalations' },
     { key: 'g n', action: 'tab:informed-feed', description: 'Go to Notifications' },
-    { key: 'g s', action: 'tab:sla', description: 'Go to SLA Management' },
     { key: 'e', action: 'escalate-selected', description: 'Escalate selected item' },
     { key: 'a', action: 'assign-selected', description: 'Assign selected item' },
     { key: 'r', action: 'refresh', description: 'Refresh data' },

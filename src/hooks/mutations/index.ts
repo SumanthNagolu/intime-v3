@@ -28,22 +28,6 @@ export {
   type BulkUpdateJobsInput,
 } from './jobs';
 
-// Candidates (uses bench.consultants router)
-export {
-  useCreateCandidate,
-  useUpdateCandidate,
-  useUpdateResponsiveness,
-  useUpdateContactFrequency,
-  useCreateHotlist,
-  useBulkUpdateCandidates,
-  type CreateConsultantInput,
-  type CreateCandidateOptions,
-  type UpdateCandidateInput,
-  type UpdateCandidateOptions,
-  type CreateHotlistInput,
-  type BulkUpdateCandidatesInput,
-} from './candidates';
-
 // Submissions
 export {
   useCreateSubmission,

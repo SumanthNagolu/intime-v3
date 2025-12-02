@@ -19,18 +19,16 @@ import {
 // DEAL FORM CONFIG
 // ==========================================
 
-const dealFormConfig: FormTemplateConfig = {
-  entityId: 'deal',
-  entityName: 'Deal',
+const dealFormConfig: Omit<FormTemplateConfig, 'mode' | 'submit'> = {
+  entityType: 'deal',
+  domain: 'crm',
   basePath: '/employee/crm/deals',
-
-  // Data source for edit mode
-  dataSource: {
-    getProcedure: 'crm.deals.getById',
-    createProcedure: 'crm.deals.create',
-    updateProcedure: 'crm.deals.update',
-    idParam: 'id',
+  procedures: {
+    getById: 'crm.deals.getById',
+    create: 'crm.deals.create',
+    update: 'crm.deals.update',
   },
+
 
   // Form sections using InputSets
   sections: [
@@ -106,25 +104,6 @@ const dealFormConfig: FormTemplateConfig = {
     ],
   },
 
-  // Form actions
-  actions: {
-    submit: {
-      label: 'Save Deal',
-      variant: 'primary',
-      icon: 'Check',
-    },
-    cancel: {
-      label: 'Cancel',
-      variant: 'secondary',
-      route: '/employee/crm/deals',
-    },
-    saveAndNew: {
-      label: 'Save & Add Another',
-      variant: 'secondary',
-      showOnCreate: true,
-      showOnEdit: false,
-    },
-  },
 
   // Success handlers
   onSuccess: {

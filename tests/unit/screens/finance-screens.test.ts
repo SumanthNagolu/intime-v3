@@ -8,7 +8,8 @@ describe('Finance Dashboard Screen', () => {
   });
 
   it('should show revenue metrics', () => {
-    const metricsSection = financeDashboardScreen.layout.sections?.find(s => s.type === 'metrics-grid');
+    expect(financeDashboardScreen.layout).toBeDefined();
+    const metricsSection = financeDashboardScreen.layout?.sections?.find(s => s.type === 'metrics-grid');
     const widgetIds = metricsSection?.widgets?.map(w => w.id) || [];
     expect(widgetIds).toContain('total-revenue');
     expect(widgetIds).toContain('outstanding-invoices');

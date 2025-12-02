@@ -1018,3 +1018,5 @@ CREATE INDEX idx_jobs_skills ON jobs USING gin(required_skills);
 
 
 
+
+

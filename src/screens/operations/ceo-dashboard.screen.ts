@@ -1,9 +1,9 @@
 /**
  * CEO Strategic Dashboard Screen Definition
- * 
+ *
  * High-level strategic dashboard for the Chief Executive Officer.
- * 
- * @see docs/specs/20-USER-ROLES/09-ceo/00-OVERVIEW.md
+ *
+ * @see docs/specs/20-USER-ROLES/04-manager/00-OVERVIEW.md (Executive hierarchy)
  */
 
 import type { ScreenDefinition } from '@/lib/metadata/types';
@@ -11,73 +11,102 @@ import type { ScreenDefinition } from '@/lib/metadata/types';
 export const ceoDashboardScreen: ScreenDefinition = {
   id: 'ceo-dashboard',
   type: 'dashboard',
-  entityType: 'strategic',
   title: 'CEO Strategic Dashboard',
-  description: 'Strategic overview and company performance',
-  
+  subtitle: 'Strategic overview and company performance',
+  icon: 'Crown',
+
   dataSource: {
     type: 'query',
-    query: 'executive.getCEODashboard',
+    query: {
+      procedure: 'executive.getCEODashboard',
+    },
   },
-  
+
   layout: {
     type: 'single-column',
     sections: [
       // ─────────────────────────────────────────────────────
-      // STRATEGIC KPIs
+      // STRATEGIC KPIs ROW 1
       // ─────────────────────────────────────────────────────
       {
-        id: 'strategic-kpis',
+        id: 'strategic-kpis-row1',
         type: 'metrics-grid',
         title: 'Strategic KPIs (YTD)',
         columns: 6,
-        metrics: [
+        fields: [
           {
-            id: 'revenue-growth',
-            label: 'Revenue Growth',
-            value: { type: 'field', path: 'kpis.revenueGrowth' },
-            format: 'percentage',
-            target: 25,
-            trend: { type: 'field', path: 'kpis.revenueGrowthTrend' },
-            size: 'large',
-            icon: 'trending-up',
+            id: 'total-revenue',
+            label: 'Total Revenue (MTD/YTD)',
+            type: 'currency',
+            path: 'kpis.totalRevenueYTD',
+            config: {
+              trend: { type: 'field', path: 'kpis.revenueTrend' },
+              target: { type: 'field', path: 'kpis.revenueTarget' },
+              icon: 'DollarSign',
+            },
           },
           {
-            id: 'market-share',
-            label: 'Market Position',
-            value: { type: 'field', path: 'kpis.marketPosition' },
-            format: 'text',
-            suffix: { type: 'field', path: 'kpis.marketShare', prefix: ' (', suffix: '%)' },
+            id: 'revenue-growth',
+            label: 'Revenue Growth %',
+            type: 'percentage',
+            path: 'kpis.revenueGrowth',
+            config: {
+              target: 25,
+              trend: { type: 'field', path: 'kpis.revenueGrowthTrend' },
+              icon: 'TrendingUp',
+            },
+          },
+          {
+            id: 'total-placements',
+            label: 'Total Placements',
+            type: 'number',
+            path: 'kpis.totalPlacements',
+            config: {
+              icon: 'Users',
+              trend: { type: 'field', path: 'kpis.placementsTrend' },
+            },
+          },
+          {
+            id: 'client-count',
+            label: 'Active Clients',
+            type: 'number',
+            path: 'kpis.activeClients',
+            config: { icon: 'Building2' },
+          },
+          {
+            id: 'employee-count',
+            label: 'Employees',
+            type: 'number',
+            path: 'kpis.employeeCount',
+            config: { icon: 'UserCheck' },
           },
           {
             id: 'gross-margin',
-            label: 'Gross Margin',
-            value: { type: 'field', path: 'kpis.grossMargin' },
-            format: 'percentage',
-            target: 25,
-          },
-          {
-            id: 'client-nps',
-            label: 'Client NPS',
-            value: { type: 'field', path: 'kpis.clientNPS' },
-            format: 'number',
-            target: 70,
-          },
-          {
-            id: 'employee-nps',
-            label: 'Employee NPS',
-            value: { type: 'field', path: 'kpis.employeeNPS' },
-            format: 'number',
-            target: 70,
-          },
-          {
-            id: 'placement-volume',
-            label: 'Placement Volume',
-            value: { type: 'field', path: 'kpis.placementVolume' },
-            format: 'number',
-            target: { type: 'field', path: 'kpis.placementTarget' },
+            label: 'Gross Margin %',
+            type: 'percentage',
+            path: 'kpis.grossMargin',
+            config: { target: 25, icon: 'Percent' },
           },
         ],
+      },
+
+      // ─────────────────────────────────────────────────────
+      // COMPANY HEALTH SCORE
+      // ─────────────────────────────────────────────────────
+      {
+        id: 'company-health-score',
+        type: 'custom',
+        component: 'CompanyHealthScoreWidget',
+        title: 'Company Health Score',
+        config: {
+          dimensions: [
+            { id: 'financial', label: 'Financial Health', weight: 0.3, icon: 'DollarSign' },
+            { id: 'operational', label: 'Operational Health', weight: 0.3, icon: 'Activity' },
+            { id: 'client', label: 'Client Health', weight: 0.2, icon: 'Building2' },
+            { id: 'team', label: 'Team Health', weight: 0.2, icon: 'Users' },
+          ],
+          showBreakdown: true,
+        },
       },
       
       // ─────────────────────────────────────────────────────
@@ -88,7 +117,7 @@ export const ceoDashboardScreen: ScreenDefinition = {
         type: 'custom',
         component: 'OKRProgressWidget',
         title: { type: 'computed', template: 'OKR Progress ({{quarter}})' },
-        span: 'full',
+        span: 4,
       },
       
       // ─────────────────────────────────────────────────────
@@ -102,11 +131,11 @@ export const ceoDashboardScreen: ScreenDefinition = {
           type: 'field',
           path: 'alerts',
         },
-        columns: [
+        columns_config: [
           {
             id: 'severity',
             header: '',
-            field: 'severity',
+            path: 'severity',
             type: 'badge',
             options: [
               { value: 'critical', label: '🔴', color: 'destructive' },
@@ -118,20 +147,20 @@ export const ceoDashboardScreen: ScreenDefinition = {
           {
             id: 'alert',
             header: 'Alert',
-            field: 'description',
+            accessor: 'description',
             type: 'text',
             primary: true,
           },
           {
             id: 'action',
             header: 'Action',
-            field: 'recommendedAction',
+            accessor: 'recommendedAction',
             type: 'text',
           },
           {
             id: 'due',
             header: 'Due',
-            field: 'dueDate',
+            accessor: 'dueDate',
             type: 'date',
           },
           {
@@ -143,13 +172,15 @@ export const ceoDashboardScreen: ScreenDefinition = {
                 id: 'view',
                 label: 'View Details',
                 icon: 'eye',
-                action: { type: 'navigate', path: '{{detailUrl}}' },
+                type: 'navigate',
+                config: { type: 'navigate', route: '{{detailUrl}}' },
               },
               {
                 id: 'add-note',
                 label: 'Add Note',
                 icon: 'message-square',
-                action: { type: 'modal', modalId: 'add-note' },
+                type: 'modal',
+                config: { type: 'modal', modal: 'add-note' },
               },
             ],
           },
@@ -164,14 +195,14 @@ export const ceoDashboardScreen: ScreenDefinition = {
         type: 'custom',
         component: 'RevenueGrowthChart',
         title: 'Revenue & Growth (12 Months)',
-        span: 'half',
+        span: 2,
       },
       {
         id: 'pillar-revenue',
         type: 'custom',
         component: 'RevenuePillarBreakdown',
         title: 'Revenue by Pillar',
-        span: 'half',
+        span: 2,
       },
       
       // ─────────────────────────────────────────────────────
@@ -186,38 +217,38 @@ export const ceoDashboardScreen: ScreenDefinition = {
           type: 'field',
           path: 'strategicAccounts',
         },
-        columns: [
+        columns_config: [
           {
             id: 'account',
             header: 'Account',
-            field: 'name',
+            path: 'name',
             type: 'link',
-            linkPattern: '/executive/accounts/{{id}}',
+            config: { linkPattern: '/executive/accounts/{{id}}' },
             primary: true,
           },
           {
             id: 'revenue',
             header: 'YTD Revenue',
-            field: 'ytdRevenue',
+            accessor: 'ytdRevenue',
             type: 'currency',
           },
           {
             id: 'placements',
             header: 'Placements',
-            field: 'placementCount',
+            accessor: 'placementCount',
             type: 'number',
           },
           {
             id: 'health',
             header: 'Health Score',
-            field: 'healthScore',
+            accessor: 'healthScore',
             type: 'progress-bar',
             max: 100,
           },
           {
             id: 'status',
             header: 'Status',
-            field: 'status',
+            accessor: 'status',
             type: 'badge',
             options: [
               { value: 'healthy', label: 'Healthy', color: 'success' },
@@ -228,7 +259,7 @@ export const ceoDashboardScreen: ScreenDefinition = {
           {
             id: 'next-action',
             header: 'Next Action',
-            field: 'nextAction',
+            accessor: 'nextAction',
             type: 'text',
           },
         ],
@@ -255,19 +286,22 @@ export const ceoDashboardScreen: ScreenDefinition = {
             id: 'prep-deck',
             label: 'Prep Board Deck',
             icon: 'presentation',
-            action: { type: 'navigate', path: '/executive/board/deck' },
+            type: 'navigate',
+            config: { type: 'navigate', route: '/executive/board/deck' },
           },
           {
             id: 'view-financials',
             label: 'Review Financials',
             icon: 'dollar-sign',
-            action: { type: 'navigate', path: '/finance/dashboard' },
+            type: 'navigate',
+            config: { type: 'navigate', route: '/finance/dashboard' },
           },
           {
             id: 'view-agenda',
             label: 'View Agenda',
             icon: 'list',
-            action: { type: 'navigate', path: '/executive/board/agenda' },
+            type: 'navigate',
+            config: { type: 'navigate', route: '/executive/board/agenda' },
           },
         ],
       },
@@ -295,23 +329,23 @@ export const ceoDashboardScreen: ScreenDefinition = {
           type: 'field',
           path: 'execTeamStatus',
         },
-        columns: [
+        columns_config: [
           {
             id: 'executive',
             header: 'Executive',
-            field: 'name',
+            path: 'name',
             type: 'user',
           },
           {
             id: 'role',
             header: 'Role',
-            field: 'role',
+            accessor: 'role',
             type: 'text',
           },
           {
             id: 'status',
             header: 'Status',
-            field: 'status',
+            accessor: 'status',
             type: 'badge',
             options: [
               { value: 'green', label: 'Green', color: 'success' },
@@ -322,13 +356,13 @@ export const ceoDashboardScreen: ScreenDefinition = {
           {
             id: 'top-priority',
             header: 'Top Priority This Week',
-            field: 'topPriority',
+            accessor: 'topPriority',
             type: 'text',
           },
           {
             id: 'blockers',
             header: 'Blockers',
-            field: 'blockers',
+            accessor: 'blockers',
             type: 'text',
           },
         ],
@@ -338,34 +372,62 @@ export const ceoDashboardScreen: ScreenDefinition = {
   
   actions: [
     {
+      id: 'business-intelligence',
+      type: 'navigate',
+      label: 'Business Intelligence',
+      icon: 'Lightbulb',
+      variant: 'outline',
+      config: { type: 'navigate', route: '/employee/ceo/intelligence' },
+    },
+    {
+      id: 'strategic-initiatives',
+      type: 'navigate',
+      label: 'Strategic Initiatives',
+      icon: 'Target',
+      variant: 'outline',
+      config: { type: 'navigate', route: '/employee/ceo/initiatives' },
+    },
+    {
+      id: 'portfolio-overview',
+      type: 'navigate',
+      label: 'Portfolio',
+      icon: 'PieChart',
+      variant: 'outline',
+      config: { type: 'navigate', route: '/employee/ceo/portfolio' },
+    },
+    {
+      id: 'executive-reports',
+      type: 'navigate',
+      label: 'Reports',
+      icon: 'FileBarChart',
+      variant: 'outline',
+      config: { type: 'navigate', route: '/employee/ceo/reports' },
+    },
+    {
       id: 'refresh',
+      type: 'custom',
       label: 'Refresh',
-      icon: 'refresh-cw',
-      action: { type: 'refresh' },
-      position: 'header',
-    },
-    {
-      id: 'board-reporting',
-      label: 'Board Reporting',
-      icon: 'presentation',
-      action: { type: 'navigate', path: '/executive/board' },
-      position: 'header',
-    },
-    {
-      id: 'okr-management',
-      label: 'OKR Management',
-      icon: 'target',
-      action: { type: 'navigate', path: '/executive/okrs' },
-      position: 'header',
+      icon: 'RefreshCw',
+      variant: 'ghost',
+      config: { type: 'custom', handler: 'handleRefresh' },
     },
   ],
-  
-  keyboardShortcuts: [
-    { key: 'g s', action: 'navigate:/executive/ceo', description: 'Go to CEO Dashboard' },
-    { key: 'g b', action: 'navigate:/executive/board', description: 'Go to Board Reporting' },
-    { key: 'g o', action: 'navigate:/executive/okrs', description: 'Go to OKRs' },
-    { key: 'g a', action: 'navigate:/executive/accounts', description: 'Go to Strategic Accounts' },
-    { key: 'g f', action: 'navigate:/finance/dashboard', description: 'Go to Financial Summary' },
+
+  navigation: {
+    breadcrumbs: [
+      { label: 'Home', route: '/employee/workspace' },
+      { label: 'CEO Dashboard' },
+    ],
+  },
+
+  keyboard_shortcuts: [
+    { key: 'g s', action: 'navigate:/employee/ceo/dashboard', description: 'Go to CEO Dashboard' },
+    { key: 'g i', action: 'navigate:/employee/ceo/intelligence', description: 'Go to Business Intelligence' },
+    { key: 'g t', action: 'navigate:/employee/ceo/initiatives', description: 'Go to Strategic Initiatives' },
+    { key: 'g p', action: 'navigate:/employee/ceo/portfolio', description: 'Go to Portfolio' },
+    { key: 'g r', action: 'navigate:/employee/ceo/reports', description: 'Go to Reports' },
+    { key: 'g f', action: 'navigate:/employee/cfo/dashboard', description: 'Go to CFO Dashboard' },
+    { key: 'g o', action: 'navigate:/employee/coo/dashboard', description: 'Go to COO Dashboard' },
     { key: 'r', action: 'refresh', description: 'Refresh data' },
   ],
 };

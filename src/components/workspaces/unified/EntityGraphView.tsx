@@ -81,7 +81,9 @@ export interface EntityGraphViewProps {
 // CONSTANTS
 // =====================================================
 
-const ENTITY_COLORS: Record<EntityType, { bg: string; border: string; text: string }> = {
+const DEFAULT_COLORS = { bg: 'bg-slate-50', border: 'border-slate-300', text: 'text-slate-700' };
+
+const ENTITY_COLORS: Partial<Record<EntityType, { bg: string; border: string; text: string }>> = {
   lead: { bg: 'bg-emerald-50', border: 'border-emerald-300', text: 'text-emerald-700' },
   account: { bg: 'bg-blue-50', border: 'border-blue-300', text: 'text-blue-700' },
   deal: { bg: 'bg-amber-50', border: 'border-amber-300', text: 'text-amber-700' },
@@ -92,7 +94,7 @@ const ENTITY_COLORS: Record<EntityType, { bg: string; border: string; text: stri
   job_order: { bg: 'bg-indigo-50', border: 'border-indigo-300', text: 'text-indigo-700' },
 };
 
-const ENTITY_ICONS: Record<EntityType, LucideIcon> = {
+const ENTITY_ICONS: Partial<Record<EntityType, LucideIcon>> = {
   lead: Target,
   account: Building2,
   deal: DollarSign,
@@ -115,8 +117,8 @@ interface EntityNodeData {
 
 function EntityNode({ data }: { data: EntityNodeData }) {
   const { entity, isCenter, onClick } = data;
-  const colors = ENTITY_COLORS[entity.type];
-  const Icon = ENTITY_ICONS[entity.type];
+  const colors = ENTITY_COLORS[entity.type] ?? DEFAULT_COLORS;
+  const Icon = ENTITY_ICONS[entity.type] ?? Briefcase;
 
   return (
     <div
@@ -303,6 +305,7 @@ export function EntityGraphView({
       {Object.entries(ENTITY_COLORS).map(([type, colors]) => {
         const Icon = ENTITY_ICONS[type as EntityType];
         const config = entityRegistry[type as EntityType];
+        if (!Icon || !config) return null;
         return (
           <div key={type} className="flex items-center gap-1 text-xs">
             <div className={cn('w-4 h-4 rounded flex items-center justify-center', colors.bg)}>

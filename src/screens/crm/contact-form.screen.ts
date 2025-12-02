@@ -21,17 +21,17 @@ import {
 // CONTACT FORM CONFIG
 // ==========================================
 
-const contactFormConfig: FormTemplateConfig = {
-  entityId: 'contact',
-  entityName: 'Contact',
+const contactFormConfig: Omit<FormTemplateConfig, 'mode' | 'submit'> = {
+  entityType: 'contact',
+  domain: 'crm',
+  displayName: 'Contact',
   basePath: '/employee/crm/contacts',
 
   // Data source for edit mode
-  dataSource: {
-    getProcedure: 'crm.contacts.getById',
-    createProcedure: 'crm.contacts.create',
-    updateProcedure: 'crm.contacts.update',
-    idParam: 'id',
+  procedures: {
+    getById: 'crm.contacts.getById',
+    create: 'crm.contacts.create',
+    update: 'crm.contacts.update',
   },
 
   // Form sections using InputSets
@@ -93,43 +93,7 @@ const contactFormConfig: FormTemplateConfig = {
     },
   ],
 
-  // Validation rules (augments InputSet field validation)
-  validation: {
-    rules: [
-      {
-        type: 'required-if',
-        field: 'email',
-        condition: { field: 'preferredContactMethod', value: 'email' },
-        message: 'Email is required when email is the preferred contact method',
-      },
-      {
-        type: 'required-if',
-        field: 'phone',
-        condition: { field: 'preferredContactMethod', value: 'phone' },
-        message: 'Phone is required when phone is the preferred contact method',
-      },
-    ],
-  },
 
-  // Form actions
-  actions: {
-    submit: {
-      label: 'Save Contact',
-      variant: 'primary',
-      icon: 'Check',
-    },
-    cancel: {
-      label: 'Cancel',
-      variant: 'secondary',
-      route: '/employee/crm/contacts',
-    },
-    saveAndNew: {
-      label: 'Save & Add Another',
-      variant: 'secondary',
-      showOnCreate: true,
-      showOnEdit: false,
-    },
-  },
 
   // Success handlers
   onSuccess: {

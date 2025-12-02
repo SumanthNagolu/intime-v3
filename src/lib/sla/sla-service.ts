@@ -5,7 +5,8 @@
  */
 
 import { db } from '@/lib/db';
-import { slaDefinitions, slaInstances } from '@/lib/db/schema';
+import { slaDefinitions } from '@/lib/db/schema/workplan';
+import { slaInstances } from '@/lib/db/schema/workplan';
 import { eq, and, isNull, inArray } from 'drizzle-orm';
 import type {
   SlaDefinition,
@@ -36,14 +37,22 @@ export class SlaService {
    * Get SLA definition by code
    */
   async getDefinitionByCode(code: string, orgId?: string): Promise<SlaDefinition | null> {
+    const conditions = [
+      eq(slaDefinitions.slaCode, code),
+      eq(slaDefinitions.isActive, true)
+    ];
+
+    if (orgId !== undefined) {
+      conditions.push(
+        orgId ? eq(slaDefinitions.orgId, orgId) : isNull(slaDefinitions.orgId)
+      );
+    }
+
     const [def] = await db.select()
       .from(slaDefinitions)
-      .where(and(
-        eq(slaDefinitions.slaCode, code),
-        eq(slaDefinitions.isActive, true)
-      ))
+      .where(and(...conditions))
       .limit(1);
-    
+
     return def ? this.mapToDefinition(def) : null;
   }
 
@@ -315,14 +324,14 @@ export class SlaService {
   private mapToDefinition(record: typeof slaDefinitions.$inferSelect): SlaDefinition {
     return {
       id: record.id,
-      orgId: record.orgId,
+      orgId: record.orgId ?? null,
       slaName: record.slaName,
       slaCode: record.slaCode,
       description: record.description ?? undefined,
       entityType: record.entityType,
-      activityType: record.activityType as SlaDefinition['activityType'],
+      activityType: record.activityType as SlaDefinition['activityType'] | undefined,
       activityCategory: record.activityCategory ?? undefined,
-      priority: record.priority as SlaDefinition['priority'],
+      priority: (record.priority as SlaDefinition['priority']) ?? 'medium',
       targetHours: record.targetHours,
       warningHours: record.warningHours ?? undefined,
       criticalHours: record.criticalHours ?? undefined,

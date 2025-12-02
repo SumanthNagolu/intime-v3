@@ -69,40 +69,53 @@ function useDynamicValue(
   if (value === undefined) return undefined;
   if (typeof value === 'string') return value;
 
-  switch (value.type) {
+  // Handle DynamicValue - check for explicit type or shorthand properties
+  const dynValue = value as DynamicValue;
+  const valueType = 'type' in dynValue ? dynValue.type : undefined;
+  const valuePath = 'path' in dynValue ? dynValue.path : undefined;
+  const valueDefault = 'default' in dynValue ? dynValue.default : undefined;
+
+  switch (valueType) {
     case 'static':
-      return String(value.default ?? '');
+      return String(valueDefault ?? '');
 
     case 'field':
-      if (entity && value.path) {
-        const resolved = resolveValue(entity, value.path);
-        return resolved !== undefined ? String(resolved) : String(value.default ?? '');
+      if (entity && valuePath) {
+        const resolved = resolveValue(entity, valuePath);
+        return resolved !== undefined ? String(resolved) : String(valueDefault ?? '');
       }
-      return String(value.default ?? '');
+      return String(valueDefault ?? '');
 
     case 'param':
-      if (value.path && context.params) {
-        const resolved = context.params[value.path];
-        return resolved !== undefined ? String(resolved) : String(value.default ?? '');
+      if (valuePath && context.params) {
+        const resolved = context.params[valuePath];
+        return resolved !== undefined ? String(resolved) : String(valueDefault ?? '');
       }
-      return String(value.default ?? '');
+      return String(valueDefault ?? '');
 
     case 'computed':
-      if (value.path && context.computed) {
-        const resolved = context.computed.get(value.path);
-        return resolved !== undefined ? String(resolved) : String(value.default ?? '');
+      if (valuePath && context.computed) {
+        const resolved = context.computed.get(valuePath);
+        return resolved !== undefined ? String(resolved) : String(valueDefault ?? '');
       }
-      return String(value.default ?? '');
+      return String(valueDefault ?? '');
 
     case 'context':
-      if (value.path) {
-        const resolved = resolveValue(context as unknown as Record<string, unknown>, value.path);
-        return resolved !== undefined ? String(resolved) : String(value.default ?? '');
+      if (valuePath) {
+        const resolved = resolveValue(context as unknown as Record<string, unknown>, valuePath);
+        return resolved !== undefined ? String(resolved) : String(valueDefault ?? '');
       }
-      return String(value.default ?? '');
+      return String(valueDefault ?? '');
 
     default:
-      return String(value.default ?? '');
+      // Handle shorthand { field: string } format
+      if ('field' in dynValue && dynValue.field) {
+        if (entity) {
+          const resolved = resolveValue(entity, dynValue.field);
+          return resolved !== undefined ? String(resolved) : String(valueDefault ?? '');
+        }
+      }
+      return String(valueDefault ?? '');
   }
 }
 
@@ -230,16 +243,19 @@ function ActionBar({
   const router = useRouter();
 
   const handleAction = async (action: ActionDefinition) => {
-    if (action.type === 'navigate' && action.config?.type === 'navigate') {
-      router.push(
-        typeof action.config.route === 'string'
-          ? action.config.route
-          : String(action.config.route.default ?? '')
-      );
-      return;
+    if (action.type === 'navigate' && action.config) {
+      // Type guard for navigate config
+      const config = action.config as { type?: string; route?: string | DynamicValue };
+      if (config.type === 'navigate' && config.route) {
+        const route = typeof config.route === 'string'
+          ? config.route
+          : ('default' in config.route ? String(config.route.default ?? '') : '');
+        router.push(route);
+        return;
+      }
     }
 
-    if (onAction) {
+    if (onAction && action.id) {
       await onAction(action.id, action);
     }
   };
@@ -320,9 +336,13 @@ function ScreenHeader({
         <nav className="mb-2">
           <ol className="flex items-center gap-2 text-sm text-muted-foreground">
             {breadcrumbs.map((crumb, index) => {
-              const label = typeof crumb.label === 'string' ? crumb.label : String(crumb.label.default ?? '');
+              const label = typeof crumb.label === 'string'
+                ? crumb.label
+                : ('default' in crumb.label ? String(crumb.label.default ?? '') : '');
               const path = crumb.path
-                ? (typeof crumb.path === 'string' ? crumb.path : String(crumb.path.default ?? ''))
+                ? (typeof crumb.path === 'string'
+                    ? crumb.path
+                    : ('default' in crumb.path ? String(crumb.path.default ?? '') : ''))
                 : undefined;
 
               return (
@@ -560,9 +580,9 @@ export function ScreenRenderer({
           currentStep={currentStep}
           onStepChange={setCurrentStep}
         />
-      ) : (
+      ) : (definition as ScreenDefinition).layout ? (
         <LayoutRenderer
-          definition={(definition as ScreenDefinition).layout}
+          definition={(definition as ScreenDefinition).layout!}
           entity={entity}
           formState={formState}
           onFieldChange={handleFieldChange}
@@ -572,7 +592,7 @@ export function ScreenRenderer({
           currentStep={currentStep}
           onStepChange={setCurrentStep}
         />
-      )}
+      ) : null}
     </div>
   );
 }
