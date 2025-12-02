@@ -193,6 +193,74 @@ placement_started
 - Candidates can have academy enrollments
 - Certificate completion shows on candidate profile
 
+## Activity-Centric Integration
+
+### Golden Rule
+```
+"NO WORK IS CONSIDERED DONE UNLESS AN ACTIVITY IS CREATED"
+```
+
+### Events Emitted
+
+| Event | Trigger | Auto-Activities |
+|-------|---------|-----------------|
+| `candidate.created` | New candidate added | CAND_NEW_INTRO_CALL |
+| `candidate.submitted` | Submitted to job | CAND_SUBMITTED_FOLLOWUP |
+| `candidate.stale` | 7 days no activity | CAND_STALE_FOLLOWUP |
+| `job.created` | New job requisition | JOB_NEW_KICKOFF |
+| `job.published` | Job goes live | JOB_SOURCING_START |
+| `job.stale` | 14 days no activity | JOB_STALE_REVIEW |
+| `submission.sent_to_client` | Sent to client | SUB_CLIENT_FOLLOWUP |
+| `submission.rejected` | Client rejects | SUB_REJECTED_FEEDBACK |
+| `interview.scheduled` | Interview booked | CAND_INTERVIEW_PREP |
+| `interview.completed` | Interview done | CAND_INTERVIEW_DEBRIEF |
+| `placement.started` | Consultant starts | PLACE_DAY1_CHECK |
+
+### Activity Patterns (Recruiting)
+
+| Pattern Code | Trigger | Activity | Due |
+|--------------|---------|----------|-----|
+| `CAND_NEW_INTRO_CALL` | candidate.created | Call: Introduction call | +4 hours |
+| `CAND_SUBMITTED_FOLLOWUP` | candidate.submitted | Call: Follow up on submission | +24 hours |
+| `CAND_INTERVIEW_PREP` | interview.scheduled | Task: Prepare for interview | -24 hours |
+| `CAND_INTERVIEW_DEBRIEF` | interview.completed | Call: Post-interview debrief | +2 hours |
+| `CAND_OFFER_FOLLOWUP` | offer.sent | Call: Follow up on offer | +48 hours |
+| `CAND_PLACEMENT_CHECKIN` | placement.started | Call: Day 1 check-in | +1 day |
+| `CAND_STALE_FOLLOWUP` | candidate.stale | Call: Re-engage candidate | +0 hours |
+| `JOB_NEW_KICKOFF` | job.created | Meeting: Kickoff with manager | +24 hours |
+| `JOB_SOURCING_START` | job.published | Task: Begin sourcing | +0 hours |
+| `JOB_NO_SUBMITS` | job.no_submissions (5d) | Task: Review requirements | +0 hours |
+| `SUB_CLIENT_FOLLOWUP` | submission.sent_to_client | Call: Client follow-up | +48 hours |
+| `SUB_REJECTED_FEEDBACK` | submission.rejected | Task: Get feedback | +4 hours |
+
+### Transition Guards
+
+```typescript
+// Candidate cannot be submitted without a call
+{
+  entity: 'candidate',
+  from: 'new',
+  to: 'submitted',
+  requires: [{ type: 'call', count: 1, status: 'completed' }],
+  error: 'Complete at least 1 call before submitting'
+}
+
+// Submission cannot be sent without review
+{
+  entity: 'submission',
+  from: 'draft',
+  to: 'sent_to_client',
+  requires: [{ type: 'review', count: 1, status: 'completed' }],
+  error: 'Complete resume review before sending'
+}
+```
+
+### UI Requirements
+- Activity queue on RecruiterDashboard
+- Timeline tab on CandidateDetail
+- Quick log buttons on all entity cards
+- SLA indicators for overdue activities
+
 ## Common Queries
 
 ### Open Jobs with Submission Counts

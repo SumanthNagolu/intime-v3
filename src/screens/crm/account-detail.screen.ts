@@ -434,6 +434,463 @@ const leadsTableColumns: import('@/lib/metadata').TableColumnDefinition[] = [
 ];
 
 // ==========================================
+// ADDRESSES TABLE
+// ==========================================
+
+const addressesTableColumns: import('@/lib/metadata').TableColumnDefinition[] = [
+  {
+    id: 'addressType',
+    label: 'Type',
+    path: 'addressType',
+    type: 'enum',
+    width: '100px',
+    config: {
+      options: [
+        { value: 'hq', label: 'Headquarters' },
+        { value: 'billing', label: 'Billing' },
+        { value: 'office', label: 'Office' },
+        { value: 'shipping', label: 'Shipping' },
+      ],
+      badgeColors: {
+        hq: 'purple',
+        billing: 'blue',
+        office: 'gray',
+        shipping: 'green',
+      },
+    },
+  },
+  {
+    id: 'street',
+    label: 'Street',
+    path: 'street',
+    type: 'text',
+    width: '200px',
+  },
+  {
+    id: 'city',
+    label: 'City',
+    path: 'city',
+    type: 'text',
+  },
+  {
+    id: 'state',
+    label: 'State',
+    path: 'state',
+    type: 'text',
+  },
+  {
+    id: 'postalCode',
+    label: 'Postal Code',
+    path: 'postalCode',
+    type: 'text',
+  },
+  {
+    id: 'country',
+    label: 'Country',
+    path: 'country',
+    type: 'text',
+  },
+  {
+    id: 'isPrimary',
+    label: 'Primary',
+    path: 'isPrimary',
+    type: 'boolean',
+    width: '80px',
+  },
+];
+
+// ==========================================
+// CONTRACTS TABLE
+// ==========================================
+
+const contractsTableColumns: import('@/lib/metadata').TableColumnDefinition[] = [
+  {
+    id: 'name',
+    label: 'Contract Name',
+    path: 'name',
+    type: 'text',
+    width: '200px',
+  },
+  {
+    id: 'contractType',
+    label: 'Type',
+    path: 'contractType',
+    type: 'enum',
+    config: {
+      options: [
+        { value: 'msa', label: 'MSA' },
+        { value: 'sow', label: 'SOW' },
+        { value: 'nda', label: 'NDA' },
+        { value: 'amendment', label: 'Amendment' },
+        { value: 'addendum', label: 'Addendum' },
+      ],
+      badgeColors: {
+        msa: 'purple',
+        sow: 'blue',
+        nda: 'gray',
+        amendment: 'amber',
+        addendum: 'cyan',
+      },
+    },
+  },
+  {
+    id: 'status',
+    label: 'Status',
+    path: 'status',
+    type: 'enum',
+    config: {
+      options: [
+        { value: 'draft', label: 'Draft' },
+        { value: 'pending_review', label: 'Pending Review' },
+        { value: 'active', label: 'Active' },
+        { value: 'expired', label: 'Expired' },
+        { value: 'terminated', label: 'Terminated' },
+      ],
+      badgeColors: {
+        draft: 'gray',
+        pending_review: 'yellow',
+        active: 'green',
+        expired: 'orange',
+        terminated: 'red',
+      },
+    },
+  },
+  {
+    id: 'startDate',
+    label: 'Start Date',
+    path: 'startDate',
+    type: 'date',
+    sortable: true,
+  },
+  {
+    id: 'endDate',
+    label: 'End Date',
+    path: 'endDate',
+    type: 'date',
+    sortable: true,
+  },
+  {
+    id: 'value',
+    label: 'Value',
+    path: 'value',
+    type: 'currency',
+  },
+];
+
+// ==========================================
+// TEAM TABLE
+// ==========================================
+
+const teamTableColumns: import('@/lib/metadata').TableColumnDefinition[] = [
+  {
+    id: 'userName',
+    label: 'Team Member',
+    path: 'userName',
+    type: 'text',
+    width: '200px',
+  },
+  {
+    id: 'userEmail',
+    label: 'Email',
+    path: 'userEmail',
+    type: 'email',
+  },
+  {
+    id: 'role',
+    label: 'Role',
+    path: 'role',
+    type: 'enum',
+    config: {
+      options: [
+        { value: 'owner', label: 'Owner' },
+        { value: 'secondary', label: 'Secondary' },
+        { value: 'support', label: 'Support' },
+        { value: 'recruiter', label: 'Recruiter' },
+        { value: 'account_manager', label: 'Account Manager' },
+      ],
+      badgeColors: {
+        owner: 'purple',
+        secondary: 'blue',
+        support: 'gray',
+        recruiter: 'green',
+        account_manager: 'amber',
+      },
+    },
+  },
+  {
+    id: 'isPrimary',
+    label: 'Primary',
+    path: 'isPrimary',
+    type: 'boolean',
+    width: '80px',
+  },
+  {
+    id: 'assignedAt',
+    label: 'Assigned',
+    path: 'assignedAt',
+    type: 'date',
+    config: { format: 'relative' },
+  },
+];
+
+// ==========================================
+// PREFERENCES FIELDS
+// ==========================================
+
+const preferencesSkillsFields: import('@/lib/metadata').FieldDefinition[] = [
+  {
+    id: 'preferredSkills',
+    label: 'Preferred Skills',
+    type: 'tags',
+    path: 'preferredSkills',
+    editable: true,
+    span: 2,
+  },
+  {
+    id: 'excludedSkills',
+    label: 'Excluded Skills',
+    type: 'tags',
+    path: 'excludedSkills',
+    editable: true,
+    span: 2,
+  },
+];
+
+const preferencesVisaFields: import('@/lib/metadata').FieldDefinition[] = [
+  {
+    id: 'preferredVisaTypes',
+    label: 'Preferred Visa Types',
+    type: 'multi-select',
+    path: 'preferredVisaTypes',
+    editable: true,
+    options: [
+      { value: 'USC', label: 'US Citizen' },
+      { value: 'GC', label: 'Green Card' },
+      { value: 'H1B', label: 'H-1B' },
+      { value: 'L1', label: 'L-1' },
+      { value: 'OPT', label: 'OPT' },
+      { value: 'CPT', label: 'CPT' },
+      { value: 'TN', label: 'TN Visa' },
+      { value: 'EAD', label: 'EAD' },
+    ],
+  },
+  {
+    id: 'excludedVisaTypes',
+    label: 'Excluded Visa Types',
+    type: 'multi-select',
+    path: 'excludedVisaTypes',
+    editable: true,
+    options: [
+      { value: 'USC', label: 'US Citizen' },
+      { value: 'GC', label: 'Green Card' },
+      { value: 'H1B', label: 'H-1B' },
+      { value: 'L1', label: 'L-1' },
+      { value: 'OPT', label: 'OPT' },
+      { value: 'CPT', label: 'CPT' },
+      { value: 'TN', label: 'TN Visa' },
+      { value: 'EAD', label: 'EAD' },
+    ],
+  },
+];
+
+const preferencesRateFields: import('@/lib/metadata').FieldDefinition[] = [
+  {
+    id: 'rateRangeMin',
+    label: 'Min Rate',
+    type: 'currency',
+    path: 'rateRangeMin',
+    editable: true,
+  },
+  {
+    id: 'rateRangeMax',
+    label: 'Max Rate',
+    type: 'currency',
+    path: 'rateRangeMax',
+    editable: true,
+  },
+  {
+    id: 'preferredRateType',
+    label: 'Rate Type',
+    type: 'select',
+    path: 'preferredRateType',
+    editable: true,
+    options: [
+      { value: 'hourly', label: 'Hourly' },
+      { value: 'daily', label: 'Daily' },
+      { value: 'monthly', label: 'Monthly' },
+      { value: 'annual', label: 'Annual' },
+    ],
+  },
+];
+
+const preferencesWorkFields: import('@/lib/metadata').FieldDefinition[] = [
+  {
+    id: 'workModePreference',
+    label: 'Work Mode',
+    type: 'select',
+    path: 'workModePreference',
+    editable: true,
+    options: [
+      { value: 'remote', label: 'Remote' },
+      { value: 'onsite', label: 'Onsite' },
+      { value: 'hybrid', label: 'Hybrid' },
+    ],
+  },
+  {
+    id: 'backgroundCheckRequired',
+    label: 'Background Check',
+    type: 'boolean',
+    path: 'backgroundCheckRequired',
+    editable: true,
+  },
+  {
+    id: 'drugScreenRequired',
+    label: 'Drug Screen',
+    type: 'boolean',
+    path: 'drugScreenRequired',
+    editable: true,
+  },
+  {
+    id: 'securityClearanceRequired',
+    label: 'Security Clearance',
+    type: 'select',
+    path: 'securityClearanceRequired',
+    editable: true,
+    options: [
+      { value: 'none', label: 'None Required' },
+      { value: 'public_trust', label: 'Public Trust' },
+      { value: 'secret', label: 'Secret' },
+      { value: 'top_secret', label: 'Top Secret' },
+      { value: 'sci', label: 'TS/SCI' },
+    ],
+  },
+];
+
+const preferencesInterviewFields: import('@/lib/metadata').FieldDefinition[] = [
+  {
+    id: 'typicalInterviewRounds',
+    label: 'Interview Rounds',
+    type: 'number',
+    path: 'typicalInterviewRounds',
+    editable: true,
+  },
+  {
+    id: 'interviewTurnaroundDays',
+    label: 'Turnaround (Days)',
+    type: 'number',
+    path: 'interviewTurnaroundDays',
+    editable: true,
+  },
+  {
+    id: 'interviewProcessNotes',
+    label: 'Interview Process Notes',
+    type: 'textarea',
+    path: 'interviewProcessNotes',
+    editable: true,
+    span: 2,
+    config: { rows: 4 },
+  },
+];
+
+// ==========================================
+// METRICS FIELDS
+// ==========================================
+
+const metricsPlacementFields: import('@/lib/metadata').FieldDefinition[] = [
+  {
+    id: 'totalPlacements',
+    label: 'Total Placements',
+    type: 'number',
+    path: 'totalPlacements',
+  },
+  {
+    id: 'activePlacements',
+    label: 'Active Placements',
+    type: 'number',
+    path: 'activePlacements',
+  },
+  {
+    id: 'endedPlacements',
+    label: 'Ended Placements',
+    type: 'number',
+    path: 'endedPlacements',
+  },
+];
+
+const metricsRevenueFields: import('@/lib/metadata').FieldDefinition[] = [
+  {
+    id: 'totalRevenue',
+    label: 'Total Revenue',
+    type: 'currency',
+    path: 'totalRevenue',
+    config: { format: 'compact' },
+  },
+  {
+    id: 'totalMargin',
+    label: 'Total Margin',
+    type: 'currency',
+    path: 'totalMargin',
+    config: { format: 'compact' },
+  },
+];
+
+const metricsPerformanceFields: import('@/lib/metadata').FieldDefinition[] = [
+  {
+    id: 'avgTtfDays',
+    label: 'Avg Time to Fill',
+    type: 'number',
+    path: 'avgTtfDays',
+    config: { suffix: ' days' },
+  },
+  {
+    id: 'submissionToInterviewRate',
+    label: 'Submit to Interview',
+    type: 'percentage',
+    path: 'submissionToInterviewRate',
+  },
+  {
+    id: 'interviewToOfferRate',
+    label: 'Interview to Offer',
+    type: 'percentage',
+    path: 'interviewToOfferRate',
+  },
+  {
+    id: 'offerAcceptanceRate',
+    label: 'Offer Acceptance',
+    type: 'percentage',
+    path: 'offerAcceptanceRate',
+  },
+];
+
+const metricsActivityFields: import('@/lib/metadata').FieldDefinition[] = [
+  {
+    id: 'totalSubmissions',
+    label: 'Total Submissions',
+    type: 'number',
+    path: 'totalSubmissions',
+  },
+  {
+    id: 'totalInterviews',
+    label: 'Total Interviews',
+    type: 'number',
+    path: 'totalInterviews',
+  },
+  {
+    id: 'totalOffers',
+    label: 'Total Offers',
+    type: 'number',
+    path: 'totalOffers',
+  },
+  {
+    id: 'healthScore',
+    label: 'Health Score',
+    type: 'number',
+    path: 'healthScore',
+    config: { suffix: '/100' },
+  },
+];
+
+// ==========================================
 // SCREEN DEFINITION
 // ==========================================
 
@@ -631,6 +1088,246 @@ export const accountDetailScreen: ScreenDefinition = {
                 },
               },
             ],
+          },
+        ],
+      },
+
+      // Addresses Tab
+      {
+        id: 'addresses',
+        label: 'Addresses',
+        icon: 'MapPin',
+        lazy: true,
+        sections: [
+          {
+            id: 'addresses-table',
+            type: 'table',
+            title: 'Account Addresses',
+            columns_config: addressesTableColumns,
+            dataSource: {
+              type: 'query',
+              query: {
+                procedure: 'crm.accounts.getAddresses',
+                params: { accountId: fieldValue('id') },
+              },
+            },
+            actions: [
+              {
+                id: 'add-address',
+                label: 'Add Address',
+                type: 'modal',
+                variant: 'primary',
+                icon: 'Plus',
+                config: {
+                  type: 'modal',
+                  modal: 'AddAddressModal',
+                  props: { accountId: fieldValue('id') },
+                },
+              },
+            ],
+            emptyState: {
+              title: 'No addresses',
+              message: 'Add an address for this account.',
+            },
+          },
+        ],
+      },
+
+      // Contracts Tab
+      {
+        id: 'contracts',
+        label: 'Contracts',
+        icon: 'FileSignature',
+        lazy: true,
+        sections: [
+          {
+            id: 'contracts-table',
+            type: 'table',
+            title: 'Account Contracts',
+            columns_config: contractsTableColumns,
+            dataSource: {
+              type: 'query',
+              query: {
+                procedure: 'crm.accounts.getContracts',
+                params: { accountId: fieldValue('id') },
+              },
+            },
+            actions: [
+              {
+                id: 'add-contract',
+                label: 'Add Contract',
+                type: 'modal',
+                variant: 'primary',
+                icon: 'Plus',
+                config: {
+                  type: 'modal',
+                  modal: 'AddContractModal',
+                  props: { accountId: fieldValue('id') },
+                },
+              },
+            ],
+            emptyState: {
+              title: 'No contracts',
+              message: 'Add a contract for this account.',
+            },
+          },
+        ],
+      },
+
+      // Team Tab
+      {
+        id: 'team',
+        label: 'Team',
+        icon: 'UsersRound',
+        lazy: true,
+        sections: [
+          {
+            id: 'team-table',
+            type: 'table',
+            title: 'Account Team',
+            columns_config: teamTableColumns,
+            dataSource: {
+              type: 'query',
+              query: {
+                procedure: 'crm.accounts.getTeam',
+                params: { accountId: fieldValue('id') },
+              },
+            },
+            actions: [
+              {
+                id: 'add-team-member',
+                label: 'Add Team Member',
+                type: 'modal',
+                variant: 'primary',
+                icon: 'UserPlus',
+                config: {
+                  type: 'modal',
+                  modal: 'AddTeamMemberModal',
+                  props: { accountId: fieldValue('id') },
+                },
+              },
+            ],
+            emptyState: {
+              title: 'No team members',
+              message: 'Add team members to this account.',
+            },
+          },
+        ],
+      },
+
+      // Preferences Tab
+      {
+        id: 'preferences',
+        label: 'Preferences',
+        icon: 'Settings',
+        lazy: true,
+        sections: [
+          {
+            id: 'preferences-skills',
+            type: 'field-grid',
+            title: 'Skill Preferences',
+            icon: 'Code',
+            columns: 2,
+            fields: preferencesSkillsFields,
+            editable: true,
+            collapsible: true,
+            defaultExpanded: true,
+            dataSource: {
+              type: 'query',
+              query: {
+                procedure: 'crm.accounts.getPreferences',
+                params: { accountId: fieldValue('id') },
+              },
+            },
+          },
+          {
+            id: 'preferences-visa',
+            type: 'field-grid',
+            title: 'Visa Preferences',
+            icon: 'FileCheck',
+            columns: 2,
+            fields: preferencesVisaFields,
+            editable: true,
+            collapsible: true,
+            defaultExpanded: true,
+          },
+          {
+            id: 'preferences-rate',
+            type: 'field-grid',
+            title: 'Rate Preferences',
+            icon: 'DollarSign',
+            columns: 3,
+            fields: preferencesRateFields,
+            editable: true,
+            collapsible: true,
+            defaultExpanded: true,
+          },
+          {
+            id: 'preferences-work',
+            type: 'field-grid',
+            title: 'Work Preferences',
+            icon: 'Briefcase',
+            columns: 2,
+            fields: preferencesWorkFields,
+            editable: true,
+            collapsible: true,
+            defaultExpanded: true,
+          },
+          {
+            id: 'preferences-interview',
+            type: 'field-grid',
+            title: 'Interview Process',
+            icon: 'Calendar',
+            columns: 2,
+            fields: preferencesInterviewFields,
+            editable: true,
+            collapsible: true,
+            defaultExpanded: true,
+          },
+        ],
+      },
+
+      // Metrics Tab
+      {
+        id: 'metrics',
+        label: 'Metrics',
+        icon: 'BarChart3',
+        lazy: true,
+        sections: [
+          {
+            id: 'metrics-placements',
+            type: 'metrics-grid',
+            title: 'Placement Metrics',
+            columns: 3,
+            fields: metricsPlacementFields,
+            dataSource: {
+              type: 'query',
+              query: {
+                procedure: 'crm.accounts.getMetrics',
+                params: { accountId: fieldValue('id') },
+              },
+            },
+          },
+          {
+            id: 'metrics-revenue',
+            type: 'metrics-grid',
+            title: 'Revenue & Margin',
+            columns: 2,
+            fields: metricsRevenueFields,
+          },
+          {
+            id: 'metrics-performance',
+            type: 'metrics-grid',
+            title: 'Performance Rates',
+            columns: 4,
+            fields: metricsPerformanceFields,
+          },
+          {
+            id: 'metrics-activity',
+            type: 'metrics-grid',
+            title: 'Activity Metrics',
+            columns: 4,
+            fields: metricsActivityFields,
           },
         ],
       },

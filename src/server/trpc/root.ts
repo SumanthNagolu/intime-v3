@@ -37,6 +37,7 @@ import { atsRouter } from '../routers/ats';
 // MOVED TO: tmp/old-conflicting-code/routers/bench.ts (had old schema imports)
 // import { benchRouter } from '../routers/bench';
 import { taHrRouter } from '../routers/ta-hr';
+import { hrRouter } from '../routers/hr';
 import { dashboardRouter } from '../routers/dashboard';
 import { activitiesRouter } from '../routers/activities';
 import { strategyRouter } from '../routers/strategy';
@@ -97,6 +98,7 @@ export const appRouter = router({
   ats: atsRouter,
   // bench: benchRouter, // MOVED - old schema imports
   taHr: taHrRouter,
+  hr: hrRouter,
   dashboard: dashboardRouter,
   activities: activitiesRouter,
   strategy: strategyRouter,

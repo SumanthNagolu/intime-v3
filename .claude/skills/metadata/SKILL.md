@@ -417,3 +417,282 @@ Before committing screen definitions:
 - [ ] Condition operators use abbreviated form (`eq`, `neq`, etc.)
 - [ ] Dynamic values use `fieldValue()` helper
 - [ ] Column configs use `path` or `accessor` (both work)
+
+## Activity-Centric UI Components
+
+### Core Philosophy
+```
+"NO WORK IS CONSIDERED DONE UNLESS AN ACTIVITY IS CREATED"
+```
+
+Every screen must integrate with the activity system where applicable.
+
+### Activity Section Types
+
+```typescript
+type SectionType =
+  // ... existing types ...
+  | 'activity-queue'      // User's pending activities
+  | 'activity-timeline'   // Entity activity/event history
+  | 'activity-stream'     // Recent activities (compact)
+  | 'quick-log'           // Quick activity log buttons
+  | 'activity-badge';     // Activity count summary
+```
+
+### Activity Queue Section
+
+Shows user's pending activities on dashboards:
+
+```typescript
+{
+  id: 'my-activities',
+  type: 'activity-queue',
+  title: 'My Activities',
+  config: {
+    showOverdue: true,      // Red indicator
+    showDueToday: true,     // Yellow indicator
+    showUpcoming: false,    // Green indicator (collapsed)
+    maxItems: 10,
+  },
+  dataSource: {
+    type: 'query',
+    query: {
+      procedure: 'activities.getMyQueue',
+      params: {},
+    },
+  },
+}
+```
+
+### Activity Timeline Section
+
+Shows entity history on detail pages:
+
+```typescript
+{
+  id: 'timeline',
+  type: 'activity-timeline',
+  title: 'Activity Timeline',
+  config: {
+    includeEvents: true,    // Show system events
+    groupBy: 'day',         // day | week | month
+    filters: {
+      types: ['call', 'email', 'meeting'],
+      showCompleted: true,
+    },
+  },
+  dataSource: {
+    type: 'query',
+    query: {
+      procedure: 'activities.getTimeline',
+      params: {
+        entityType: 'candidate',
+        entityId: fieldValue('id'),
+      },
+    },
+  },
+}
+```
+
+### Quick Log Section
+
+Quick activity buttons for entity cards:
+
+```typescript
+{
+  id: 'quick-log',
+  type: 'quick-log',
+  config: {
+    entityType: 'candidate',
+    entityId: fieldValue('id'),
+    types: ['call', 'email', 'note', 'task', 'meeting'],
+  },
+}
+
+// Renders: [📞 Call] [📧 Email] [📝 Note] [✅ Task] [📅 Meeting]
+```
+
+### Activity Badge Section
+
+Activity count summary in headers:
+
+```typescript
+{
+  id: 'activity-badge',
+  type: 'activity-badge',
+  config: {
+    entityType: 'candidate',
+    entityId: fieldValue('id'),
+    showOverdue: true,
+    showDueToday: true,
+    showTotal: true,
+  },
+}
+
+// Renders: 🔴 2 overdue | 🟡 3 due today | 📊 15 total
+```
+
+### Dashboard Screen Pattern
+
+Every role dashboard MUST include activity queue:
+
+```typescript
+const recruiterDashboard: ScreenDefinition = {
+  id: 'recruiter-dashboard',
+  type: 'dashboard',
+  layout: {
+    type: 'single-column',
+    sections: [
+      // Activity queue FIRST - top priority
+      {
+        id: 'activity-queue',
+        type: 'activity-queue',
+        title: 'My Activities',
+        priority: 1,
+        config: { showOverdue: true, showDueToday: true, maxItems: 10 },
+      },
+      // Progress bar
+      {
+        id: 'progress',
+        type: 'metrics-grid',
+        columns: 1,
+        fields: [
+          {
+            id: 'todayProgress',
+            type: 'progress',
+            label: "Today's Progress",
+            path: 'completedToday',
+            config: { max: fieldValue('totalToday') },
+          },
+        ],
+      },
+      // Other sections...
+    ],
+  },
+};
+```
+
+### Entity Detail Screen Pattern
+
+Every entity detail page MUST include:
+
+```typescript
+const candidateDetail: ScreenDefinition = {
+  id: 'candidate-detail',
+  type: 'detail',
+  layout: {
+    type: 'tabs',
+    tabs: [
+      {
+        id: 'overview',
+        label: 'Overview',
+        sections: [
+          // Quick log in header
+          { id: 'quick-log', type: 'quick-log' },
+          // Entity info
+          { id: 'info', type: 'info-card', fields: [...] },
+          // Open activities for this entity
+          {
+            id: 'open-activities',
+            type: 'activity-stream',
+            title: 'Open Activities',
+            config: { maxItems: 5, status: 'open' },
+          },
+        ],
+      },
+      {
+        id: 'timeline',
+        label: 'Timeline',
+        icon: 'History',
+        badge: { field: 'activityCount' },  // Dynamic badge
+        sections: [
+          { id: 'timeline', type: 'activity-timeline' },
+        ],
+      },
+    ],
+  },
+  // Activity badge in header
+  header: {
+    badge: { type: 'activity-badge' },
+  },
+};
+```
+
+### Activity Action Definitions
+
+Standard actions for activity management:
+
+```typescript
+const activityActions: ActionDefinition[] = [
+  {
+    id: 'log-call',
+    type: 'modal',
+    label: 'Log Call',
+    icon: 'Phone',
+    config: {
+      type: 'modal',
+      modal: 'ActivityModal',
+      props: { defaultType: 'call' },
+    },
+  },
+  {
+    id: 'log-email',
+    type: 'modal',
+    label: 'Log Email',
+    icon: 'Mail',
+    config: {
+      type: 'modal',
+      modal: 'ActivityModal',
+      props: { defaultType: 'email' },
+    },
+  },
+  {
+    id: 'complete-activity',
+    type: 'modal',
+    label: 'Complete',
+    icon: 'Check',
+    variant: 'primary',
+    config: {
+      type: 'modal',
+      modal: 'CompleteActivityModal',
+    },
+    visible: { field: 'status', operator: 'in', value: ['open', 'in_progress'] },
+  },
+];
+```
+
+### SLA Indicator Fields
+
+Display SLA status on activity cards:
+
+```typescript
+{
+  id: 'slaStatus',
+  label: 'SLA',
+  type: 'enum',
+  path: 'slaStatus',
+  config: {
+    options: [
+      { value: 'on_track', label: 'On Track' },
+      { value: 'warning', label: 'Warning' },
+      { value: 'breached', label: 'Breached' },
+    ],
+    badgeColors: {
+      on_track: 'green',
+      warning: 'yellow',
+      breached: 'red',
+    },
+  },
+}
+```
+
+### Activity Screen Checklist
+
+Before shipping any screen definition:
+
+- [ ] Dashboard has `activity-queue` section (priority: 1)
+- [ ] Detail pages have `quick-log` section
+- [ ] Detail pages have `timeline` tab with badge
+- [ ] Entity cards show `activity-badge`
+- [ ] Actions include activity logging options
+- [ ] SLA indicators displayed where applicable

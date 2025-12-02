@@ -11,9 +11,24 @@ import { ownershipFilterSchema } from '@/lib/validations/ownership';
 import { buildOwnershipCondition } from '@/lib/db/queries/ownership-filter';
 import {
   accounts,
+  accountAddresses,
+  accountContracts,
+  accountPreferences,
+  accountMetrics,
+  accountTeam,
   leads,
+  leadTouchpoints,
+  leadQualification,
   deals,
-  pointOfContacts,
+  dealStagesHistory,
+  dealStakeholders,
+  dealCompetitors,
+  dealProducts,
+  crmContacts,
+  crmCampaigns,
+  crmCampaignTargets,
+  crmCampaignContent,
+  crmCampaignMetrics,
   activityLog,
 } from '@/lib/db/schema/crm';
 // Note: leadTasks has been migrated to the unified activities system
@@ -23,8 +38,6 @@ import {
   updateLeadSchema,
   createDealSchema,
   updateDealSchema,
-  createPointOfContactSchema,
-  updatePointOfContactSchema
 } from '@/lib/validations/crm';
 import {
   createAccountInput,
@@ -171,6 +184,7 @@ export const crmRouter = router({
     getById: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
+        try {
         const { orgId } = ctx;
 
         // Fetch account with account manager using explicit join
@@ -215,16 +229,16 @@ export const crmRouter = router({
         }
 
         // Fetch related data in parallel
-        const [accountManagerResult, pocsResult, dealsResult, leadsResult] = await Promise.all([
+        const [accountManagerResult, contactsResult, dealsResult, leadsResult] = await Promise.all([
           // Account manager
           account.accountManagerId
             ? db.select().from(userProfiles).where(eq(userProfiles.id, account.accountManagerId)).limit(1)
             : Promise.resolve([]),
-          // Points of contact
-          db.select().from(pointOfContacts).where(
+          // Contacts linked to this account
+          db.select().from(crmContacts).where(
             and(
-              eq(pointOfContacts.accountId, input.id),
-              isNull(pointOfContacts.deletedAt),
+              eq(crmContacts.companyId, input.id),
+              isNull(crmContacts.deletedAt),
             )
           ),
           // Deals
@@ -246,10 +260,14 @@ export const crmRouter = router({
         return {
           ...account,
           accountManager: accountManagerResult[0] || null,
-          pointOfContacts: pocsResult,
+          contacts: contactsResult,
           deals: dealsResult,
           leads: leadsResult,
         };
+        } catch (error) {
+          console.error('getById error:', error);
+          throw error;
+        }
       }),
 
     /**
@@ -480,6 +498,180 @@ export const crmRouter = router({
         }
 
         return { success: true };
+      }),
+
+    /**
+     * Get account addresses
+     */
+    getAddresses: orgProtectedProcedure
+      .input(z.object({ accountId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        // Verify account exists and belongs to org
+        const [account] = await db.select({ id: accounts.id })
+          .from(accounts)
+          .where(and(
+            eq(accounts.id, input.accountId),
+            eq(accounts.orgId, orgId!),
+            isNull(accounts.deletedAt),
+          ))
+          .limit(1);
+
+        if (!account) {
+          throw new Error('Account not found');
+        }
+
+        const addresses = await db.select()
+          .from(accountAddresses)
+          .where(eq(accountAddresses.accountId, input.accountId))
+          .orderBy(desc(accountAddresses.isPrimary), asc(accountAddresses.addressType));
+
+        return addresses;
+      }),
+
+    /**
+     * Get account contracts
+     */
+    getContracts: orgProtectedProcedure
+      .input(z.object({ accountId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        // Verify account exists and belongs to org
+        const [account] = await db.select({ id: accounts.id })
+          .from(accounts)
+          .where(and(
+            eq(accounts.id, input.accountId),
+            eq(accounts.orgId, orgId!),
+            isNull(accounts.deletedAt),
+          ))
+          .limit(1);
+
+        if (!account) {
+          throw new Error('Account not found');
+        }
+
+        const contracts = await db.select()
+          .from(accountContracts)
+          .where(eq(accountContracts.accountId, input.accountId))
+          .orderBy(desc(accountContracts.startDate));
+
+        return contracts;
+      }),
+
+    /**
+     * Get account team members
+     */
+    getTeam: orgProtectedProcedure
+      .input(z.object({ accountId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        // Verify account exists and belongs to org
+        const [account] = await db.select({ id: accounts.id })
+          .from(accounts)
+          .where(and(
+            eq(accounts.id, input.accountId),
+            eq(accounts.orgId, orgId!),
+            isNull(accounts.deletedAt),
+          ))
+          .limit(1);
+
+        if (!account) {
+          throw new Error('Account not found');
+        }
+
+        const team = await db.select({
+          id: accountTeam.id,
+          accountId: accountTeam.accountId,
+          userId: accountTeam.userId,
+          role: accountTeam.role,
+          isPrimary: accountTeam.isPrimary,
+          isActive: accountTeam.isActive,
+          assignedAt: accountTeam.assignedAt,
+          notes: accountTeam.notes,
+          userName: userProfiles.fullName,
+          userEmail: userProfiles.email,
+        })
+          .from(accountTeam)
+          .leftJoin(userProfiles, eq(accountTeam.userId, userProfiles.id))
+          .where(and(
+            eq(accountTeam.accountId, input.accountId),
+            eq(accountTeam.isActive, true),
+          ))
+          .orderBy(desc(accountTeam.isPrimary), asc(accountTeam.role));
+
+        return team;
+      }),
+
+    /**
+     * Get account preferences
+     */
+    getPreferences: orgProtectedProcedure
+      .input(z.object({ accountId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        // Verify account exists and belongs to org
+        const [account] = await db.select({ id: accounts.id })
+          .from(accounts)
+          .where(and(
+            eq(accounts.id, input.accountId),
+            eq(accounts.orgId, orgId!),
+            isNull(accounts.deletedAt),
+          ))
+          .limit(1);
+
+        if (!account) {
+          throw new Error('Account not found');
+        }
+
+        const [preferences] = await db.select()
+          .from(accountPreferences)
+          .where(eq(accountPreferences.accountId, input.accountId))
+          .limit(1);
+
+        return preferences ?? null;
+      }),
+
+    /**
+     * Get account metrics (most recent)
+     */
+    getMetrics: orgProtectedProcedure
+      .input(z.object({
+        accountId: z.string().uuid(),
+        period: z.string().optional(), // YYYY-MM format
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        // Verify account exists and belongs to org
+        const [account] = await db.select({ id: accounts.id })
+          .from(accounts)
+          .where(and(
+            eq(accounts.id, input.accountId),
+            eq(accounts.orgId, orgId!),
+            isNull(accounts.deletedAt),
+          ))
+          .limit(1);
+
+        if (!account) {
+          throw new Error('Account not found');
+        }
+
+        const conditions = [eq(accountMetrics.accountId, input.accountId)];
+        if (input.period) {
+          conditions.push(eq(accountMetrics.period, input.period));
+        }
+
+        const metrics = await db.select()
+          .from(accountMetrics)
+          .where(and(...conditions))
+          .orderBy(desc(accountMetrics.period))
+          .limit(12); // Last 12 periods
+
+        return metrics;
       }),
   }),
 
@@ -869,6 +1061,240 @@ export const crmRouter = router({
 
         return updated;
       }),
+
+    /**
+     * Get lead touchpoints
+     */
+    getTouchpoints: orgProtectedProcedure
+      .input(z.object({
+        leadId: z.string().uuid(),
+        limit: z.number().min(1).max(100).default(50),
+        offset: z.number().min(0).default(0),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        // Verify lead exists and belongs to org
+        const [lead] = await db.select({ id: leads.id })
+          .from(leads)
+          .where(and(
+            eq(leads.id, input.leadId),
+            eq(leads.orgId, orgId!),
+            isNull(leads.deletedAt),
+          ))
+          .limit(1);
+
+        if (!lead) {
+          throw new Error('Lead not found');
+        }
+
+        const touchpoints = await db.select({
+          id: leadTouchpoints.id,
+          leadId: leadTouchpoints.leadId,
+          touchpointType: leadTouchpoints.touchpointType,
+          direction: leadTouchpoints.direction,
+          subject: leadTouchpoints.subject,
+          notes: leadTouchpoints.notes,
+          outcome: leadTouchpoints.outcome,
+          nextSteps: leadTouchpoints.nextSteps,
+          nextFollowUpDate: leadTouchpoints.nextFollowUpDate,
+          durationMinutes: leadTouchpoints.durationMinutes,
+          touchpointDate: leadTouchpoints.touchpointDate,
+          createdAt: leadTouchpoints.createdAt,
+          createdByName: userProfiles.fullName,
+        })
+          .from(leadTouchpoints)
+          .leftJoin(userProfiles, eq(leadTouchpoints.createdBy, userProfiles.id))
+          .where(eq(leadTouchpoints.leadId, input.leadId))
+          .orderBy(desc(leadTouchpoints.touchpointDate))
+          .limit(input.limit)
+          .offset(input.offset);
+
+        return touchpoints;
+      }),
+
+    /**
+     * Create a lead touchpoint
+     */
+    createTouchpoint: orgProtectedProcedure
+      .input(z.object({
+        leadId: z.string().uuid(),
+        touchpointType: z.enum(['call', 'email', 'meeting', 'linkedin', 'text', 'event']),
+        direction: z.enum(['inbound', 'outbound']).default('outbound'),
+        subject: z.string().optional(),
+        notes: z.string().optional(),
+        outcome: z.enum(['positive', 'neutral', 'negative', 'no_response']).optional(),
+        nextSteps: z.string().optional(),
+        nextFollowUpDate: z.date().optional(),
+        durationMinutes: z.number().min(0).optional(),
+        touchpointDate: z.date().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+
+        // Verify lead exists and belongs to org
+        const [lead] = await db.select({ id: leads.id })
+          .from(leads)
+          .where(and(
+            eq(leads.id, input.leadId),
+            eq(leads.orgId, orgId!),
+            isNull(leads.deletedAt),
+          ))
+          .limit(1);
+
+        if (!lead) {
+          throw new Error('Lead not found');
+        }
+
+        // Get user profile ID
+        const userProfileResult = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId!))
+          .limit(1);
+
+        const profileId = userProfileResult[0]?.id;
+
+        const [touchpoint] = await db.insert(leadTouchpoints).values({
+          leadId: input.leadId,
+          touchpointType: input.touchpointType,
+          direction: input.direction,
+          subject: input.subject ?? null,
+          notes: input.notes ?? null,
+          outcome: input.outcome ?? null,
+          nextSteps: input.nextSteps ?? null,
+          nextFollowUpDate: input.nextFollowUpDate ?? null,
+          durationMinutes: input.durationMinutes ?? null,
+          touchpointDate: input.touchpointDate ?? new Date(),
+          createdBy: profileId ?? null,
+        }).returning();
+
+        // Update lead's lastContactedAt
+        await db.update(leads)
+          .set({ lastContactedAt: touchpoint.touchpointDate, updatedAt: new Date() })
+          .where(eq(leads.id, input.leadId));
+
+        return touchpoint;
+      }),
+
+    /**
+     * Get lead qualification details
+     */
+    getQualification: orgProtectedProcedure
+      .input(z.object({ leadId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        // Verify lead exists and belongs to org
+        const [lead] = await db.select({ id: leads.id })
+          .from(leads)
+          .where(and(
+            eq(leads.id, input.leadId),
+            eq(leads.orgId, orgId!),
+            isNull(leads.deletedAt),
+          ))
+          .limit(1);
+
+        if (!lead) {
+          throw new Error('Lead not found');
+        }
+
+        const [qualification] = await db.select()
+          .from(leadQualification)
+          .where(eq(leadQualification.leadId, input.leadId))
+          .limit(1);
+
+        return qualification ?? null;
+      }),
+
+    /**
+     * Update lead qualification
+     */
+    updateQualification: orgProtectedProcedure
+      .input(z.object({
+        leadId: z.string().uuid(),
+        // Budget
+        hasBudget: z.boolean().optional(),
+        budgetAmount: z.number().optional(),
+        budgetTimeframe: z.enum(['this_quarter', 'next_quarter', 'this_year', 'next_year']).optional(),
+        budgetNotes: z.string().optional(),
+        // Authority
+        decisionMaker: z.enum(['yes', 'no', 'partial', 'unknown']).optional(),
+        decisionProcess: z.string().optional(),
+        otherStakeholders: z.string().optional(),
+        authorityNotes: z.string().optional(),
+        // Need
+        needIdentified: z.boolean().optional(),
+        needUrgency: z.enum(['critical', 'high', 'medium', 'low']).optional(),
+        painPoints: z.array(z.string()).optional(),
+        currentSolution: z.string().optional(),
+        needNotes: z.string().optional(),
+        // Timeline
+        timeline: z.enum(['immediate', '30_days', '90_days', '6_months', '12_months', 'unknown']).optional(),
+        decisionDate: z.date().optional(),
+        projectStartDate: z.date().optional(),
+        timelineNotes: z.string().optional(),
+        // Status
+        qualificationStatus: z.enum(['pending', 'qualified', 'disqualified']).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+        const { leadId, ...qualificationData } = input;
+
+        // Verify lead exists and belongs to org
+        const [lead] = await db.select({ id: leads.id })
+          .from(leads)
+          .where(and(
+            eq(leads.id, leadId),
+            eq(leads.orgId, orgId!),
+            isNull(leads.deletedAt),
+          ))
+          .limit(1);
+
+        if (!lead) {
+          throw new Error('Lead not found');
+        }
+
+        // Get user profile ID
+        const userProfileResult = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId!))
+          .limit(1);
+
+        const profileId = userProfileResult[0]?.id;
+
+        // Check if qualification exists
+        const [existing] = await db.select({ id: leadQualification.id })
+          .from(leadQualification)
+          .where(eq(leadQualification.leadId, leadId))
+          .limit(1);
+
+        if (existing) {
+          // Update existing
+          const [updated] = await db.update(leadQualification)
+            .set({
+              ...qualificationData,
+              budgetAmount: qualificationData.budgetAmount?.toString() ?? undefined,
+              updatedAt: new Date(),
+              qualifiedAt: qualificationData.qualificationStatus === 'qualified' ? new Date() : undefined,
+              qualifiedBy: qualificationData.qualificationStatus === 'qualified' ? profileId : undefined,
+            })
+            .where(eq(leadQualification.id, existing.id))
+            .returning();
+
+          return updated;
+        } else {
+          // Create new
+          const [created] = await db.insert(leadQualification).values({
+            leadId,
+            ...qualificationData,
+            budgetAmount: qualificationData.budgetAmount?.toString() ?? null,
+            qualifiedAt: qualificationData.qualificationStatus === 'qualified' ? new Date() : null,
+            qualifiedBy: qualificationData.qualificationStatus === 'qualified' ? profileId : null,
+          }).returning();
+
+          return created;
+        }
+      }),
   }),
 
   // =====================================================
@@ -1055,16 +1481,516 @@ export const crmRouter = router({
           wonValue: wonDeals.reduce((sum, d) => sum + (parseFloat(d.value || '0')), 0),
         };
       }),
+
+    /**
+     * Get all deals with full pagination, search, and filters
+     */
+    listAll: orgProtectedProcedure
+      .input(z.object({
+        page: z.number().min(1).default(1),
+        pageSize: z.number().min(1).max(100).default(25),
+        sortBy: z.string().optional(),
+        sortDirection: z.enum(['asc', 'desc']).default('desc'),
+        search: z.string().optional(),
+        filters: z.object({
+          stage: z.array(z.enum(['discovery', 'qualification', 'proposal', 'negotiation', 'closed_won', 'closed_lost'])).optional(),
+          dealType: z.array(z.enum(['new_business', 'expansion', 'renewal', 'upsell'])).optional(),
+          accountId: z.string().uuid().optional(),
+          ownerId: z.string().uuid().optional(),
+          minValue: z.number().optional(),
+          maxValue: z.number().optional(),
+          expectedCloseFrom: z.date().optional(),
+          expectedCloseTo: z.date().optional(),
+        }).optional(),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+        const { page, pageSize, sortBy, sortDirection, search, filters } = input;
+        const offset = (page - 1) * pageSize;
+
+        const conditions: SQL[] = [
+          eq(deals.orgId, orgId!),
+          isNull(deals.deletedAt),
+        ];
+
+        // Search
+        if (search) {
+          conditions.push(
+            or(
+              ilike(deals.title, `%${search}%`),
+              ilike(deals.description, `%${search}%`),
+            )!
+          );
+        }
+
+        // Apply filters
+        if (filters?.stage?.length) {
+          conditions.push(inArray(deals.stage, filters.stage));
+        }
+
+        if (filters?.dealType?.length) {
+          conditions.push(inArray(deals.dealType, filters.dealType));
+        }
+
+        if (filters?.accountId) {
+          conditions.push(eq(deals.accountId, filters.accountId));
+        }
+
+        if (filters?.ownerId) {
+          conditions.push(eq(deals.ownerId, filters.ownerId));
+        }
+
+        if (filters?.minValue !== undefined) {
+          conditions.push(sql`${deals.value}::numeric >= ${filters.minValue}`);
+        }
+
+        if (filters?.maxValue !== undefined) {
+          conditions.push(sql`${deals.value}::numeric <= ${filters.maxValue}`);
+        }
+
+        if (filters?.expectedCloseFrom) {
+          conditions.push(gte(deals.expectedCloseDate, filters.expectedCloseFrom));
+        }
+
+        if (filters?.expectedCloseTo) {
+          conditions.push(lte(deals.expectedCloseDate, filters.expectedCloseTo));
+        }
+
+        // Build sort order
+        const sortColumn = sortBy === 'title' ? deals.title
+          : sortBy === 'value' ? deals.value
+          : sortBy === 'stage' ? deals.stage
+          : sortBy === 'expectedCloseDate' ? deals.expectedCloseDate
+          : deals.createdAt;
+
+        const orderBy = sortDirection === 'asc' ? asc(sortColumn) : desc(sortColumn);
+
+        const [items, countResult] = await Promise.all([
+          db.select({
+            id: deals.id,
+            title: deals.title,
+            description: deals.description,
+            dealType: deals.dealType,
+            value: deals.value,
+            currency: deals.currency,
+            stage: deals.stage,
+            probability: deals.probability,
+            expectedCloseDate: deals.expectedCloseDate,
+            actualCloseDate: deals.actualCloseDate,
+            accountId: deals.accountId,
+            leadId: deals.leadId,
+            ownerId: deals.ownerId,
+            closeReason: deals.closeReason,
+            lossReason: deals.lossReason,
+            competitorWon: deals.competitorWon,
+            notes: deals.notes,
+            createdAt: deals.createdAt,
+            updatedAt: deals.updatedAt,
+            accountName: accounts.name,
+            ownerName: userProfiles.fullName,
+          })
+            .from(deals)
+            .leftJoin(accounts, eq(deals.accountId, accounts.id))
+            .leftJoin(userProfiles, eq(deals.ownerId, userProfiles.id))
+            .where(and(...conditions))
+            .orderBy(orderBy)
+            .limit(pageSize)
+            .offset(offset),
+          db.select({ count: sql<number>`count(*)::int` })
+            .from(deals)
+            .where(and(...conditions)),
+        ]);
+
+        const total = countResult[0]?.count ?? 0;
+
+        return {
+          items,
+          total,
+          page,
+          pageSize,
+          totalPages: Math.ceil(total / pageSize),
+        };
+      }),
+
+    /**
+     * Update deal stage with history logging
+     */
+    updateStage: orgProtectedProcedure
+      .input(z.object({
+        id: z.string().uuid(),
+        stage: z.enum(['discovery', 'qualification', 'proposal', 'negotiation', 'closed_won', 'closed_lost']),
+        reason: z.string().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+
+        const userProfileResult = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId!))
+          .limit(1);
+
+        const profileId = userProfileResult[0]?.id;
+
+        // Get current deal
+        const [currentDeal] = await db.select().from(deals)
+          .where(and(
+            eq(deals.id, input.id),
+            eq(deals.orgId, orgId!),
+          ))
+          .limit(1);
+
+        if (!currentDeal) {
+          throw new Error('Deal not found');
+        }
+
+        const previousStage = currentDeal.stage;
+
+        // Update deal stage
+        const [updatedDeal] = await db.update(deals)
+          .set({
+            stage: input.stage,
+            probability: input.stage === 'closed_won' ? 100 : input.stage === 'closed_lost' ? 0 : currentDeal.probability,
+            actualCloseDate: ['closed_won', 'closed_lost'].includes(input.stage) ? new Date() : null,
+            updatedAt: new Date(),
+          })
+          .where(eq(deals.id, input.id))
+          .returning();
+
+        // Log stage change in history
+        await db.insert(dealStagesHistory).values({
+          dealId: input.id,
+          stage: input.stage,
+          previousStage,
+          notes: input.notes,
+          reason: input.reason,
+          changedBy: profileId,
+        });
+
+        return updatedDeal;
+      }),
+
+    /**
+     * Get deal stage history
+     */
+    getStageHistory: orgProtectedProcedure
+      .input(z.object({ dealId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        // Verify deal belongs to org
+        const [deal] = await db.select({ id: deals.id })
+          .from(deals)
+          .where(and(eq(deals.id, input.dealId), eq(deals.orgId, orgId!)))
+          .limit(1);
+
+        if (!deal) {
+          throw new Error('Deal not found');
+        }
+
+        const history = await db.select({
+          id: dealStagesHistory.id,
+          stage: dealStagesHistory.stage,
+          previousStage: dealStagesHistory.previousStage,
+          enteredAt: dealStagesHistory.enteredAt,
+          exitedAt: dealStagesHistory.exitedAt,
+          durationDays: dealStagesHistory.durationDays,
+          notes: dealStagesHistory.notes,
+          reason: dealStagesHistory.reason,
+          changedByName: userProfiles.fullName,
+        })
+          .from(dealStagesHistory)
+          .leftJoin(userProfiles, eq(dealStagesHistory.changedBy, userProfiles.id))
+          .where(eq(dealStagesHistory.dealId, input.dealId))
+          .orderBy(desc(dealStagesHistory.enteredAt));
+
+        return history;
+      }),
+
+    /**
+     * Get deal stakeholders
+     */
+    getStakeholders: orgProtectedProcedure
+      .input(z.object({ dealId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        // Verify deal belongs to org
+        const [deal] = await db.select({ id: deals.id })
+          .from(deals)
+          .where(and(eq(deals.id, input.dealId), eq(deals.orgId, orgId!)))
+          .limit(1);
+
+        if (!deal) {
+          throw new Error('Deal not found');
+        }
+
+        const stakeholders = await db.select({
+          id: dealStakeholders.id,
+          dealId: dealStakeholders.dealId,
+          contactId: dealStakeholders.contactId,
+          name: dealStakeholders.name,
+          title: dealStakeholders.title,
+          email: dealStakeholders.email,
+          role: dealStakeholders.role,
+          influenceLevel: dealStakeholders.influenceLevel,
+          sentiment: dealStakeholders.sentiment,
+          engagementNotes: dealStakeholders.engagementNotes,
+          isActive: dealStakeholders.isActive,
+          isPrimary: dealStakeholders.isPrimary,
+          createdAt: dealStakeholders.createdAt,
+          // Contact info if linked
+          contactFirstName: crmContacts.firstName,
+          contactLastName: crmContacts.lastName,
+          contactEmail: crmContacts.email,
+          contactTitle: crmContacts.title,
+        })
+          .from(dealStakeholders)
+          .leftJoin(crmContacts, eq(dealStakeholders.contactId, crmContacts.id))
+          .where(eq(dealStakeholders.dealId, input.dealId))
+          .orderBy(desc(dealStakeholders.isPrimary), asc(dealStakeholders.createdAt));
+
+        return stakeholders;
+      }),
+
+    /**
+     * Add stakeholder to deal
+     */
+    addStakeholder: orgProtectedProcedure
+      .input(z.object({
+        dealId: z.string().uuid(),
+        contactId: z.string().uuid().optional(),
+        name: z.string().optional(),
+        title: z.string().optional(),
+        email: z.string().email().optional(),
+        role: z.enum(['decision_maker', 'influencer', 'champion', 'blocker', 'gatekeeper', 'end_user']),
+        influenceLevel: z.enum(['high', 'medium', 'low']).optional(),
+        sentiment: z.enum(['positive', 'neutral', 'negative', 'unknown']).optional(),
+        isPrimary: z.boolean().default(false),
+        engagementNotes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+        const { dealId, ...stakeholderData } = input;
+
+        // Verify deal belongs to org
+        const [deal] = await db.select({ id: deals.id })
+          .from(deals)
+          .where(and(eq(deals.id, dealId), eq(deals.orgId, orgId!)))
+          .limit(1);
+
+        if (!deal) {
+          throw new Error('Deal not found');
+        }
+
+        const [newStakeholder] = await db.insert(dealStakeholders).values({
+          dealId,
+          ...stakeholderData,
+        }).returning();
+
+        return newStakeholder;
+      }),
+
+    /**
+     * Remove stakeholder from deal
+     */
+    removeStakeholder: orgProtectedProcedure
+      .input(z.object({
+        dealId: z.string().uuid(),
+        stakeholderId: z.string().uuid(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        // Verify deal belongs to org
+        const [deal] = await db.select({ id: deals.id })
+          .from(deals)
+          .where(and(eq(deals.id, input.dealId), eq(deals.orgId, orgId!)))
+          .limit(1);
+
+        if (!deal) {
+          throw new Error('Deal not found');
+        }
+
+        await db.delete(dealStakeholders)
+          .where(and(
+            eq(dealStakeholders.id, input.stakeholderId),
+            eq(dealStakeholders.dealId, input.dealId),
+          ));
+
+        return { success: true };
+      }),
+
+    /**
+     * Get deal competitors
+     */
+    getCompetitors: orgProtectedProcedure
+      .input(z.object({ dealId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        // Verify deal belongs to org
+        const [deal] = await db.select({ id: deals.id })
+          .from(deals)
+          .where(and(eq(deals.id, input.dealId), eq(deals.orgId, orgId!)))
+          .limit(1);
+
+        if (!deal) {
+          throw new Error('Deal not found');
+        }
+
+        const competitors = await db.select()
+          .from(dealCompetitors)
+          .where(eq(dealCompetitors.dealId, input.dealId))
+          .orderBy(desc(dealCompetitors.threatLevel), asc(dealCompetitors.competitorName));
+
+        return competitors;
+      }),
+
+    /**
+     * Add competitor to deal
+     */
+    addCompetitor: orgProtectedProcedure
+      .input(z.object({
+        dealId: z.string().uuid(),
+        competitorName: z.string(),
+        competitorWebsite: z.string().optional(),
+        strengths: z.string().optional(),
+        weaknesses: z.string().optional(),
+        ourDifferentiators: z.string().optional(),
+        pricing: z.string().optional(),
+        threatLevel: z.enum(['high', 'medium', 'low']).optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+        const { dealId, ...competitorData } = input;
+
+        // Verify deal belongs to org
+        const [deal] = await db.select({ id: deals.id })
+          .from(deals)
+          .where(and(eq(deals.id, dealId), eq(deals.orgId, orgId!)))
+          .limit(1);
+
+        if (!deal) {
+          throw new Error('Deal not found');
+        }
+
+        const [newCompetitor] = await db.insert(dealCompetitors).values({
+          dealId,
+          ...competitorData,
+        }).returning();
+
+        return newCompetitor;
+      }),
+
+    /**
+     * Get deal products/services
+     */
+    getProducts: orgProtectedProcedure
+      .input(z.object({ dealId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        // Verify deal belongs to org
+        const [deal] = await db.select({ id: deals.id })
+          .from(deals)
+          .where(and(eq(deals.id, input.dealId), eq(deals.orgId, orgId!)))
+          .limit(1);
+
+        if (!deal) {
+          throw new Error('Deal not found');
+        }
+
+        const products = await db.select()
+          .from(dealProducts)
+          .where(eq(dealProducts.dealId, input.dealId))
+          .orderBy(asc(dealProducts.createdAt));
+
+        return products;
+      }),
+
+    /**
+     * Add product to deal
+     */
+    addProduct: orgProtectedProcedure
+      .input(z.object({
+        dealId: z.string().uuid(),
+        productType: z.enum(['staffing', 'training', 'consulting', 'recruitment', 'subscription']),
+        productName: z.string().optional(),
+        description: z.string().optional(),
+        quantity: z.number().int().min(1).default(1),
+        unitPrice: z.number().optional(),
+        discount: z.number().min(0).max(100).optional(),
+        durationMonths: z.number().int().min(1).optional(),
+        startDate: z.date().optional(),
+        endDate: z.date().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+        const { dealId, ...productData } = input;
+
+        // Verify deal belongs to org
+        const [deal] = await db.select({ id: deals.id })
+          .from(deals)
+          .where(and(eq(deals.id, dealId), eq(deals.orgId, orgId!)))
+          .limit(1);
+
+        if (!deal) {
+          throw new Error('Deal not found');
+        }
+
+        // Calculate total value
+        const unitPrice = productData.unitPrice ?? 0;
+        const quantity = productData.quantity ?? 1;
+        const discountPercent = productData.discount ?? 0;
+        const totalValue = (unitPrice * quantity) * (1 - discountPercent / 100);
+
+        const [newProduct] = await db.insert(dealProducts).values({
+          dealId,
+          ...productData,
+          unitPrice: productData.unitPrice?.toString(),
+          discount: productData.discount?.toString(),
+          totalValue: totalValue.toString(),
+        }).returning();
+
+        return newProduct;
+      }),
+
+    /**
+     * Soft delete a deal
+     */
+    delete: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        const [deleted] = await db.update(deals)
+          .set({
+            deletedAt: new Date(),
+          })
+          .where(and(
+            eq(deals.id, input.id),
+            eq(deals.orgId, orgId!)
+          ))
+          .returning();
+
+        if (!deleted) {
+          throw new Error('Deal not found or unauthorized');
+        }
+
+        return { success: true };
+      }),
   }),
 
   // =====================================================
-  // POINTS OF CONTACT (POCs)
+  // CONTACTS (Account POCs via crm_contacts)
   // =====================================================
 
-  pocs: router({
+  contacts: router({
     /**
-     * Get all POCs for an account
-     * Security: Verifies account belongs to user's org through the account relationship
+     * Get all contacts for an account (account-scoped)
      */
     list: orgProtectedProcedure
       .input(z.object({
@@ -1076,7 +2002,7 @@ export const crmRouter = router({
         const { orgId } = ctx;
         const { accountId, limit, offset } = input;
 
-        // First verify the account belongs to the user's org
+        // Verify the account belongs to the user's org
         const [account] = await db.select({ id: accounts.id })
           .from(accounts)
           .where(and(
@@ -1089,29 +2015,382 @@ export const crmRouter = router({
           throw new Error('Account not found or unauthorized');
         }
 
-        const results = await db.select().from(pointOfContacts)
-          .where(eq(pointOfContacts.accountId, accountId))
+        const results = await db.select().from(crmContacts)
+          .where(and(
+            eq(crmContacts.companyId, accountId),
+            isNull(crmContacts.deletedAt),
+          ))
           .limit(limit)
           .offset(offset)
-          .orderBy(desc(pointOfContacts.isPrimary));
+          .orderBy(desc(crmContacts.createdAt));
 
         return results;
       }),
 
     /**
-     * Create new POC
-     * Security: Verifies account belongs to user's org before creating
+     * Get all contacts (global, not account-scoped) with pagination, search, and filters
+     */
+    listAll: orgProtectedProcedure
+      .input(z.object({
+        page: z.number().min(1).default(1),
+        pageSize: z.number().min(1).max(100).default(25),
+        sortBy: z.string().optional(),
+        sortDirection: z.enum(['asc', 'desc']).default('desc'),
+        search: z.string().optional(),
+        filters: z.object({
+          contactType: z.array(z.enum(['client_poc', 'candidate', 'vendor', 'partner', 'internal', 'general'])).optional(),
+          status: z.array(z.enum(['active', 'inactive', 'do_not_contact', 'bounced', 'unsubscribed'])).optional(),
+          companyId: z.string().uuid().optional(),
+          ownerId: z.string().uuid().optional(),
+          decisionAuthority: z.array(z.enum(['final_decision_maker', 'key_influencer', 'gatekeeper', 'recommender', 'end_user'])).optional(),
+          hasEmail: z.boolean().optional(),
+          dateRange: z.object({
+            from: z.date().optional(),
+            to: z.date().optional(),
+          }).optional(),
+        }).optional(),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+        const { page, pageSize, sortBy, sortDirection, search, filters } = input;
+        const offset = (page - 1) * pageSize;
+
+        // Build where conditions
+        const conditions: SQL[] = [
+          eq(crmContacts.orgId, orgId!),
+          isNull(crmContacts.deletedAt),
+        ];
+
+        // Search across searchable fields
+        if (search) {
+          conditions.push(
+            or(
+              ilike(crmContacts.firstName, `%${search}%`),
+              ilike(crmContacts.lastName, `%${search}%`),
+              ilike(crmContacts.email, `%${search}%`),
+              ilike(crmContacts.companyName, `%${search}%`),
+              ilike(crmContacts.title, `%${search}%`),
+            )!
+          );
+        }
+
+        // Apply filters
+        if (filters?.contactType?.length) {
+          conditions.push(inArray(crmContacts.contactType, filters.contactType));
+        }
+
+        if (filters?.status?.length) {
+          conditions.push(inArray(crmContacts.status, filters.status));
+        }
+
+        if (filters?.companyId) {
+          conditions.push(eq(crmContacts.companyId, filters.companyId));
+        }
+
+        if (filters?.ownerId) {
+          conditions.push(eq(crmContacts.ownerId, filters.ownerId));
+        }
+
+        if (filters?.decisionAuthority?.length) {
+          conditions.push(inArray(crmContacts.decisionAuthority, filters.decisionAuthority));
+        }
+
+        if (filters?.hasEmail === true) {
+          conditions.push(sql`${crmContacts.email} IS NOT NULL AND ${crmContacts.email} != ''`);
+        } else if (filters?.hasEmail === false) {
+          conditions.push(sql`${crmContacts.email} IS NULL OR ${crmContacts.email} = ''`);
+        }
+
+        if (filters?.dateRange?.from) {
+          conditions.push(gte(crmContacts.createdAt, filters.dateRange.from));
+        }
+
+        if (filters?.dateRange?.to) {
+          conditions.push(lte(crmContacts.createdAt, filters.dateRange.to));
+        }
+
+        // Build sort order
+        const sortColumn = sortBy === 'firstName' ? crmContacts.firstName
+          : sortBy === 'lastName' ? crmContacts.lastName
+          : sortBy === 'email' ? crmContacts.email
+          : sortBy === 'companyName' ? crmContacts.companyName
+          : sortBy === 'status' ? crmContacts.status
+          : sortBy === 'contactType' ? crmContacts.contactType
+          : sortBy === 'lastContactedAt' ? crmContacts.lastContactedAt
+          : sortBy === 'engagementScore' ? crmContacts.engagementScore
+          : crmContacts.createdAt;
+
+        const orderBy = sortDirection === 'asc' ? asc(sortColumn) : desc(sortColumn);
+
+        // Execute queries in parallel
+        const [items, countResult] = await Promise.all([
+          db.select({
+            id: crmContacts.id,
+            orgId: crmContacts.orgId,
+            contactType: crmContacts.contactType,
+            firstName: crmContacts.firstName,
+            lastName: crmContacts.lastName,
+            email: crmContacts.email,
+            phone: crmContacts.phone,
+            mobile: crmContacts.mobile,
+            linkedinUrl: crmContacts.linkedinUrl,
+            avatarUrl: crmContacts.avatarUrl,
+            title: crmContacts.title,
+            companyName: crmContacts.companyName,
+            companyId: crmContacts.companyId,
+            department: crmContacts.department,
+            workLocation: crmContacts.workLocation,
+            timezone: crmContacts.timezone,
+            preferredContactMethod: crmContacts.preferredContactMethod,
+            status: crmContacts.status,
+            decisionAuthority: crmContacts.decisionAuthority,
+            buyingRole: crmContacts.buyingRole,
+            influenceLevel: crmContacts.influenceLevel,
+            lastContactedAt: crmContacts.lastContactedAt,
+            lastResponseAt: crmContacts.lastResponseAt,
+            totalInteractions: crmContacts.totalInteractions,
+            engagementScore: crmContacts.engagementScore,
+            ownerId: crmContacts.ownerId,
+            createdAt: crmContacts.createdAt,
+            updatedAt: crmContacts.updatedAt,
+            // Company info (flattened from join)
+            accountName: accounts.name,
+            accountStatus: accounts.status,
+            // Owner info (flattened from join)
+            ownerName: userProfiles.fullName,
+            ownerEmail: userProfiles.email,
+          })
+            .from(crmContacts)
+            .leftJoin(accounts, eq(crmContacts.companyId, accounts.id))
+            .leftJoin(userProfiles, eq(crmContacts.ownerId, userProfiles.id))
+            .where(and(...conditions))
+            .orderBy(orderBy)
+            .limit(pageSize)
+            .offset(offset),
+          db.select({ count: sql<number>`count(*)::int` })
+            .from(crmContacts)
+            .where(and(...conditions)),
+        ]);
+
+        const total = countResult[0]?.count ?? 0;
+
+        return {
+          items,
+          total,
+          page,
+          pageSize,
+          totalPages: Math.ceil(total / pageSize),
+        };
+      }),
+
+    /**
+     * Get single contact by ID with relations
+     */
+    getById: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        // Fetch contact with company and owner info
+        const contactResults = await db.select({
+          id: crmContacts.id,
+          orgId: crmContacts.orgId,
+          contactType: crmContacts.contactType,
+          firstName: crmContacts.firstName,
+          lastName: crmContacts.lastName,
+          email: crmContacts.email,
+          phone: crmContacts.phone,
+          mobile: crmContacts.mobile,
+          linkedinUrl: crmContacts.linkedinUrl,
+          avatarUrl: crmContacts.avatarUrl,
+          title: crmContacts.title,
+          companyName: crmContacts.companyName,
+          companyId: crmContacts.companyId,
+          department: crmContacts.department,
+          workLocation: crmContacts.workLocation,
+          timezone: crmContacts.timezone,
+          preferredContactMethod: crmContacts.preferredContactMethod,
+          bestTimeToContact: crmContacts.bestTimeToContact,
+          doNotCallBefore: crmContacts.doNotCallBefore,
+          doNotCallAfter: crmContacts.doNotCallAfter,
+          status: crmContacts.status,
+          source: crmContacts.source,
+          sourceDetail: crmContacts.sourceDetail,
+          userProfileId: crmContacts.userProfileId,
+          lastContactedAt: crmContacts.lastContactedAt,
+          lastResponseAt: crmContacts.lastResponseAt,
+          totalInteractions: crmContacts.totalInteractions,
+          engagementScore: crmContacts.engagementScore,
+          twitterUrl: crmContacts.twitterUrl,
+          githubUrl: crmContacts.githubUrl,
+          decisionAuthority: crmContacts.decisionAuthority,
+          buyingRole: crmContacts.buyingRole,
+          influenceLevel: crmContacts.influenceLevel,
+          tags: crmContacts.tags,
+          notes: crmContacts.notes,
+          internalNotes: crmContacts.internalNotes,
+          ownerId: crmContacts.ownerId,
+          createdAt: crmContacts.createdAt,
+          updatedAt: crmContacts.updatedAt,
+          createdBy: crmContacts.createdBy,
+          updatedBy: crmContacts.updatedBy,
+        })
+          .from(crmContacts)
+          .where(and(
+            eq(crmContacts.id, input.id),
+            eq(crmContacts.orgId, orgId!),
+            isNull(crmContacts.deletedAt),
+          ))
+          .limit(1);
+
+        const contact = contactResults[0];
+
+        if (!contact) {
+          throw new Error('Contact not found');
+        }
+
+        // Fetch related data in parallel
+        const [companyResult, ownerResult, dealsResult, activitiesResult] = await Promise.all([
+          // Company
+          contact.companyId
+            ? db.select({
+                id: accounts.id,
+                name: accounts.name,
+                industry: accounts.industry,
+                status: accounts.status,
+                tier: accounts.tier,
+              })
+              .from(accounts)
+              .where(eq(accounts.id, contact.companyId))
+              .limit(1)
+            : Promise.resolve([]),
+          // Owner
+          contact.ownerId
+            ? db.select({
+                id: userProfiles.id,
+                fullName: userProfiles.fullName,
+                email: userProfiles.email,
+                avatarUrl: userProfiles.avatarUrl,
+              })
+              .from(userProfiles)
+              .where(eq(userProfiles.id, contact.ownerId))
+              .limit(1)
+            : Promise.resolve([]),
+          // Related deals (where this contact is a stakeholder)
+          db.select({
+            id: deals.id,
+            title: deals.title,
+            value: deals.value,
+            stage: deals.stage,
+            expectedCloseDate: deals.expectedCloseDate,
+          })
+            .from(deals)
+            .where(and(
+              eq(deals.orgId, orgId!),
+              isNull(deals.deletedAt),
+            ))
+            .limit(5),
+          // Recent activity log
+          db.select()
+            .from(activityLog)
+            .where(and(
+              eq(activityLog.entityType, 'poc'),
+              eq(activityLog.entityId, input.id),
+              eq(activityLog.orgId, orgId!),
+            ))
+            .orderBy(desc(activityLog.activityDate))
+            .limit(10),
+        ]);
+
+        return {
+          ...contact,
+          company: companyResult[0] ?? null,
+          owner: ownerResult[0] ?? null,
+          deals: dealsResult,
+          activities: activitiesResult,
+        };
+      }),
+
+    /**
+     * Get contact statistics for metrics
+     */
+    getStats: orgProtectedProcedure
+      .query(async ({ ctx }) => {
+        const { orgId } = ctx;
+
+        const allContacts = await db.select().from(crmContacts)
+          .where(and(
+            eq(crmContacts.orgId, orgId!),
+            isNull(crmContacts.deletedAt),
+          ));
+
+        const now = new Date();
+        const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+        return {
+          total: allContacts.length,
+          byType: {
+            client_poc: allContacts.filter(c => c.contactType === 'client_poc').length,
+            candidate: allContacts.filter(c => c.contactType === 'candidate').length,
+            vendor: allContacts.filter(c => c.contactType === 'vendor').length,
+            partner: allContacts.filter(c => c.contactType === 'partner').length,
+            internal: allContacts.filter(c => c.contactType === 'internal').length,
+            general: allContacts.filter(c => c.contactType === 'general').length,
+          },
+          byStatus: {
+            active: allContacts.filter(c => c.status === 'active').length,
+            inactive: allContacts.filter(c => c.status === 'inactive').length,
+            do_not_contact: allContacts.filter(c => c.status === 'do_not_contact').length,
+            bounced: allContacts.filter(c => c.status === 'bounced').length,
+            unsubscribed: allContacts.filter(c => c.status === 'unsubscribed').length,
+          },
+          recentlyContacted: allContacts.filter(c =>
+            c.lastContactedAt && c.lastContactedAt >= thirtyDaysAgo
+          ).length,
+          needsFollowUp: allContacts.filter(c =>
+            !c.lastContactedAt || c.lastContactedAt < sevenDaysAgo
+          ).length,
+          withEmail: allContacts.filter(c => c.email).length,
+          withPhone: allContacts.filter(c => c.phone || c.mobile).length,
+          avgEngagementScore: Math.round(
+            allContacts.reduce((sum, c) => sum + (c.engagementScore ?? 0), 0) / (allContacts.length || 1)
+          ),
+          decisionMakers: allContacts.filter(c =>
+            c.decisionAuthority === 'final_decision_maker' || c.decisionAuthority === 'key_influencer'
+          ).length,
+          newThisMonth: allContacts.filter(c =>
+            c.createdAt >= thirtyDaysAgo
+          ).length,
+        };
+      }),
+
+    /**
+     * Create new contact for an account
      */
     create: orgProtectedProcedure
-      .input(createPointOfContactSchema)
+      .input(z.object({
+        accountId: z.string().uuid(),
+        firstName: z.string().optional(),
+        lastName: z.string().optional(),
+        email: z.string().email().optional(),
+        phone: z.string().optional(),
+        title: z.string().optional(),
+        linkedinUrl: z.string().optional(),
+        contactType: z.enum(['client_poc', 'candidate', 'vendor', 'partner', 'internal', 'general']).default('client_poc'),
+        preferredContactMethod: z.enum(['email', 'phone', 'mobile', 'linkedin', 'text']).default('email'),
+        decisionAuthority: z.enum(['final_decision_maker', 'key_influencer', 'gatekeeper', 'recommender', 'end_user']).optional(),
+        notes: z.string().optional(),
+      }))
       .mutation(async ({ ctx, input }) => {
         const { userId, orgId } = ctx;
+        const { accountId, ...contactData } = input;
 
         // Verify the account belongs to the user's org
         const [account] = await db.select({ id: accounts.id })
           .from(accounts)
           .where(and(
-            eq(accounts.id, input.accountId),
+            eq(accounts.id, accountId),
             eq(accounts.orgId, orgId!)
           ))
           .limit(1);
@@ -1120,7 +2399,7 @@ export const crmRouter = router({
           throw new Error('Account not found or unauthorized');
         }
 
-        // Get user profile ID from auth ID (userId is auth_id, not profile id)
+        // Get user profile ID
         const userProfileResult = await db.select({ id: userProfiles.id })
           .from(userProfiles)
           .where(eq(userProfiles.authId, userId!))
@@ -1130,102 +2409,103 @@ export const crmRouter = router({
           throw new Error('User profile not found');
         }
 
-        const [newPOC] = await db.insert(pointOfContacts).values({
-          ...input,
+        const [newContact] = await db.insert(crmContacts).values({
+          ...contactData,
+          orgId: orgId!,
+          companyId: accountId,
           createdBy: userProfileResult[0].id,
         }).returning();
 
-        return newPOC;
+        return newContact;
       }),
 
     /**
-     * Update POC
-     * Security: Verifies POC's account belongs to user's org before updating
+     * Update contact
      */
     update: orgProtectedProcedure
-      .input(updatePointOfContactSchema)
+      .input(z.object({
+        id: z.string().uuid(),
+        firstName: z.string().optional(),
+        lastName: z.string().optional(),
+        email: z.string().email().optional(),
+        phone: z.string().optional(),
+        title: z.string().optional(),
+        linkedinUrl: z.string().optional(),
+        contactType: z.enum(['client_poc', 'candidate', 'vendor', 'partner', 'internal', 'general']).optional(),
+        preferredContactMethod: z.enum(['email', 'phone', 'mobile', 'linkedin', 'text']).optional(),
+        decisionAuthority: z.enum(['final_decision_maker', 'key_influencer', 'gatekeeper', 'recommender', 'end_user']).optional(),
+        notes: z.string().optional(),
+        status: z.enum(['active', 'inactive', 'do_not_contact', 'bounced', 'unsubscribed']).optional(),
+      }))
       .mutation(async ({ ctx, input }) => {
-        const { orgId } = ctx;
+        const { userId, orgId } = ctx;
         const { id, ...data } = input;
 
-        // Get the POC and verify its account belongs to user's org
-        const [poc] = await db.select({
-          id: pointOfContacts.id,
-          accountId: pointOfContacts.accountId
-        })
-          .from(pointOfContacts)
-          .where(eq(pointOfContacts.id, id))
-          .limit(1);
-
-        if (!poc) {
-          throw new Error('POC not found');
-        }
-
-        const [account] = await db.select({ id: accounts.id })
-          .from(accounts)
+        // Verify contact belongs to user's org
+        const [contact] = await db.select()
+          .from(crmContacts)
           .where(and(
-            eq(accounts.id, poc.accountId),
-            eq(accounts.orgId, orgId!)
+            eq(crmContacts.id, id),
+            eq(crmContacts.orgId, orgId!),
           ))
           .limit(1);
 
-        if (!account) {
-          throw new Error('Unauthorized');
+        if (!contact) {
+          throw new Error('Contact not found');
         }
 
-        const [updated] = await db.update(pointOfContacts)
-          .set(data)
-          .where(eq(pointOfContacts.id, id))
+        // Get user profile ID
+        const userProfileResult = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId!))
+          .limit(1);
+
+        const [updated] = await db.update(crmContacts)
+          .set({
+            ...data,
+            updatedAt: new Date(),
+            updatedBy: userProfileResult[0]?.id ?? null,
+          })
+          .where(eq(crmContacts.id, id))
           .returning();
-
-        if (!updated) {
-          throw new Error('POC not found or unauthorized');
-        }
 
         return updated;
       }),
 
     /**
-     * Delete POC
-     * Security: Verifies POC's account belongs to user's org before deleting
+     * Delete contact (soft delete)
      */
     delete: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .mutation(async ({ ctx, input }) => {
-        const { orgId } = ctx;
+        const { userId, orgId } = ctx;
 
-        // Get the POC and verify its account belongs to user's org
-        const [poc] = await db.select({
-          id: pointOfContacts.id,
-          accountId: pointOfContacts.accountId
-        })
-          .from(pointOfContacts)
-          .where(eq(pointOfContacts.id, input.id))
-          .limit(1);
-
-        if (!poc) {
-          throw new Error('POC not found');
-        }
-
-        const [account] = await db.select({ id: accounts.id })
-          .from(accounts)
+        // Verify contact belongs to user's org
+        const [contact] = await db.select({ id: crmContacts.id })
+          .from(crmContacts)
           .where(and(
-            eq(accounts.id, poc.accountId),
-            eq(accounts.orgId, orgId!)
+            eq(crmContacts.id, input.id),
+            eq(crmContacts.orgId, orgId!),
           ))
           .limit(1);
 
-        if (!account) {
-          throw new Error('Unauthorized');
+        if (!contact) {
+          throw new Error('Contact not found');
         }
 
-        const [deleted] = await db.delete(pointOfContacts)
-          .where(eq(pointOfContacts.id, input.id))
+        // Get user profile ID
+        const userProfileResult = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId!))
+          .limit(1);
+
+        const [deleted] = await db.update(crmContacts)
+          .set({
+            deletedAt: new Date(),
+            updatedBy: userProfileResult[0]?.id ?? null,
+          })
+          .where(eq(crmContacts.id, input.id))
           .returning();
-
-        if (!deleted) {
-          throw new Error('POC not found');
-        }
 
         return { success: true };
       }),
@@ -1304,6 +2584,647 @@ export const crmRouter = router({
         }
 
         return newActivity;
+      }),
+  }),
+
+  // =====================================================
+  // CAMPAIGNS
+  // =====================================================
+
+  campaigns: router({
+    /**
+     * Get all campaigns with pagination, search, and filters
+     */
+    list: orgProtectedProcedure
+      .input(z.object({
+        page: z.number().min(1).default(1),
+        pageSize: z.number().min(1).max(100).default(25),
+        sortBy: z.string().optional(),
+        sortDirection: z.enum(['asc', 'desc']).default('desc'),
+        search: z.string().optional(),
+        filters: z.object({
+          status: z.array(z.enum(['draft', 'scheduled', 'active', 'paused', 'completed', 'cancelled'])).optional(),
+          campaignType: z.array(z.enum(['email', 'linkedin', 'event', 'webinar', 'content', 'outbound_call'])).optional(),
+          ownerId: z.string().uuid().optional(),
+          dateRange: z.object({
+            from: z.date().optional(),
+            to: z.date().optional(),
+          }).optional(),
+        }).optional(),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+        const { page, pageSize, sortBy, sortDirection, search, filters } = input;
+        const offset = (page - 1) * pageSize;
+
+        const conditions: SQL[] = [
+          eq(crmCampaigns.orgId, orgId!),
+          isNull(crmCampaigns.deletedAt),
+        ];
+
+        // Search
+        if (search) {
+          conditions.push(
+            or(
+              ilike(crmCampaigns.name, `%${search}%`),
+              ilike(crmCampaigns.description, `%${search}%`),
+            )!
+          );
+        }
+
+        // Apply filters
+        if (filters?.status?.length) {
+          conditions.push(inArray(crmCampaigns.status, filters.status));
+        }
+
+        if (filters?.campaignType?.length) {
+          conditions.push(inArray(crmCampaigns.campaignType, filters.campaignType));
+        }
+
+        if (filters?.ownerId) {
+          conditions.push(eq(crmCampaigns.ownerId, filters.ownerId));
+        }
+
+        if (filters?.dateRange?.from) {
+          conditions.push(gte(crmCampaigns.startDate, filters.dateRange.from));
+        }
+
+        if (filters?.dateRange?.to) {
+          conditions.push(lte(crmCampaigns.startDate, filters.dateRange.to));
+        }
+
+        // Build sort order
+        const sortColumn = sortBy === 'name' ? crmCampaigns.name
+          : sortBy === 'status' ? crmCampaigns.status
+          : sortBy === 'startDate' ? crmCampaigns.startDate
+          : sortBy === 'endDate' ? crmCampaigns.endDate
+          : crmCampaigns.createdAt;
+
+        const orderBy = sortDirection === 'asc' ? asc(sortColumn) : desc(sortColumn);
+
+        const [items, countResult] = await Promise.all([
+          db.select({
+            id: crmCampaigns.id,
+            orgId: crmCampaigns.orgId,
+            name: crmCampaigns.name,
+            description: crmCampaigns.description,
+            campaignType: crmCampaigns.campaignType,
+            status: crmCampaigns.status,
+            startDate: crmCampaigns.startDate,
+            endDate: crmCampaigns.endDate,
+            scheduledAt: crmCampaigns.scheduledAt,
+            budget: crmCampaigns.budget,
+            currency: crmCampaigns.currency,
+            goalLeads: crmCampaigns.goalLeads,
+            goalResponses: crmCampaigns.goalResponses,
+            goalMeetings: crmCampaigns.goalMeetings,
+            ownerId: crmCampaigns.ownerId,
+            createdAt: crmCampaigns.createdAt,
+            updatedAt: crmCampaigns.updatedAt,
+            ownerName: userProfiles.fullName,
+          })
+            .from(crmCampaigns)
+            .leftJoin(userProfiles, eq(crmCampaigns.ownerId, userProfiles.id))
+            .where(and(...conditions))
+            .orderBy(orderBy)
+            .limit(pageSize)
+            .offset(offset),
+          db.select({ count: sql<number>`count(*)::int` })
+            .from(crmCampaigns)
+            .where(and(...conditions)),
+        ]);
+
+        const total = countResult[0]?.count ?? 0;
+
+        return {
+          items,
+          total,
+          page,
+          pageSize,
+          totalPages: Math.ceil(total / pageSize),
+        };
+      }),
+
+    /**
+     * Get campaign by ID with related data
+     */
+    getById: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        const [campaign] = await db.select()
+          .from(crmCampaigns)
+          .where(and(
+            eq(crmCampaigns.id, input.id),
+            eq(crmCampaigns.orgId, orgId!),
+            isNull(crmCampaigns.deletedAt),
+          ))
+          .limit(1);
+
+        if (!campaign) {
+          throw new Error('Campaign not found');
+        }
+
+        // Get related data
+        const [owner, targets, content, metrics] = await Promise.all([
+          campaign.ownerId
+            ? db.select({ id: userProfiles.id, fullName: userProfiles.fullName, email: userProfiles.email })
+                .from(userProfiles)
+                .where(eq(userProfiles.id, campaign.ownerId))
+                .limit(1)
+            : Promise.resolve([]),
+          db.select().from(crmCampaignTargets)
+            .where(eq(crmCampaignTargets.campaignId, input.id))
+            .limit(100),
+          db.select().from(crmCampaignContent)
+            .where(eq(crmCampaignContent.campaignId, input.id)),
+          db.select().from(crmCampaignMetrics)
+            .where(eq(crmCampaignMetrics.campaignId, input.id))
+            .limit(1),
+        ]);
+
+        return {
+          ...campaign,
+          owner: owner[0] ?? null,
+          targets,
+          content,
+          metrics: metrics[0] ?? null,
+        };
+      }),
+
+    /**
+     * Get campaign statistics
+     */
+    getStats: orgProtectedProcedure
+      .query(async ({ ctx }) => {
+        const { orgId } = ctx;
+
+        const allCampaigns = await db.select().from(crmCampaigns)
+          .where(and(
+            eq(crmCampaigns.orgId, orgId!),
+            isNull(crmCampaigns.deletedAt),
+          ));
+
+        const now = new Date();
+        const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+        return {
+          total: allCampaigns.length,
+          byStatus: {
+            draft: allCampaigns.filter(c => c.status === 'draft').length,
+            scheduled: allCampaigns.filter(c => c.status === 'scheduled').length,
+            active: allCampaigns.filter(c => c.status === 'active').length,
+            paused: allCampaigns.filter(c => c.status === 'paused').length,
+            completed: allCampaigns.filter(c => c.status === 'completed').length,
+            cancelled: allCampaigns.filter(c => c.status === 'cancelled').length,
+          },
+          byType: {
+            email: allCampaigns.filter(c => c.campaignType === 'email').length,
+            linkedin: allCampaigns.filter(c => c.campaignType === 'linkedin').length,
+            event: allCampaigns.filter(c => c.campaignType === 'event').length,
+            webinar: allCampaigns.filter(c => c.campaignType === 'webinar').length,
+            content: allCampaigns.filter(c => c.campaignType === 'content').length,
+            outbound_call: allCampaigns.filter(c => c.campaignType === 'outbound_call').length,
+          },
+          active: allCampaigns.filter(c => c.status === 'active').length,
+          recentlyLaunched: allCampaigns.filter(c =>
+            c.startDate && c.startDate >= thirtyDaysAgo
+          ).length,
+          totalBudget: allCampaigns.reduce((sum, c) => sum + (parseFloat(c.budget ?? '0')), 0),
+          activeBudget: allCampaigns
+            .filter(c => c.status === 'active')
+            .reduce((sum, c) => sum + (parseFloat(c.budget ?? '0')), 0),
+        };
+      }),
+
+    /**
+     * Create new campaign
+     */
+    create: orgProtectedProcedure
+      .input(z.object({
+        name: z.string().min(1),
+        description: z.string().optional(),
+        campaignType: z.enum(['email', 'linkedin', 'event', 'webinar', 'content', 'outbound_call']),
+        status: z.enum(['draft', 'scheduled', 'active', 'paused', 'completed', 'cancelled']).default('draft'),
+        startDate: z.date().optional(),
+        endDate: z.date().optional(),
+        scheduledAt: z.date().optional(),
+        targetAudience: z.string().optional(),
+        targetIndustries: z.array(z.string()).optional(),
+        targetCompanySizes: z.array(z.string()).optional(),
+        targetTitles: z.array(z.string()).optional(),
+        goalLeads: z.number().int().min(0).optional(),
+        goalResponses: z.number().int().min(0).optional(),
+        goalMeetings: z.number().int().min(0).optional(),
+        budget: z.number().optional(),
+        currency: z.string().default('USD'),
+        ownerId: z.string().uuid().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+
+        const userProfileResult = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId!))
+          .limit(1);
+
+        const profileId = userProfileResult[0]?.id;
+
+        const [newCampaign] = await db.insert(crmCampaigns).values({
+          ...input,
+          budget: input.budget?.toString(),
+          targetIndustries: input.targetIndustries ?? [],
+          targetCompanySizes: input.targetCompanySizes ?? [],
+          targetTitles: input.targetTitles ?? [],
+          orgId: orgId!,
+          ownerId: input.ownerId ?? profileId,
+          createdBy: profileId,
+        }).returning();
+
+        // Create initial metrics record
+        await db.insert(crmCampaignMetrics).values({
+          campaignId: newCampaign.id,
+        });
+
+        return newCampaign;
+      }),
+
+    /**
+     * Update campaign
+     */
+    update: orgProtectedProcedure
+      .input(z.object({
+        id: z.string().uuid(),
+        name: z.string().min(1).optional(),
+        description: z.string().optional(),
+        campaignType: z.enum(['email', 'linkedin', 'event', 'webinar', 'content', 'outbound_call']).optional(),
+        status: z.enum(['draft', 'scheduled', 'active', 'paused', 'completed', 'cancelled']).optional(),
+        startDate: z.date().optional(),
+        endDate: z.date().optional(),
+        scheduledAt: z.date().optional(),
+        targetAudience: z.string().optional(),
+        targetIndustries: z.array(z.string()).optional(),
+        targetCompanySizes: z.array(z.string()).optional(),
+        targetTitles: z.array(z.string()).optional(),
+        goalLeads: z.number().int().min(0).optional(),
+        goalResponses: z.number().int().min(0).optional(),
+        goalMeetings: z.number().int().min(0).optional(),
+        budget: z.number().optional(),
+        currency: z.string().optional(),
+        ownerId: z.string().uuid().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+        const { id, ...data } = input;
+
+        const userProfileResult = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId!))
+          .limit(1);
+
+        const [updated] = await db.update(crmCampaigns)
+          .set({
+            ...data,
+            budget: data.budget !== undefined ? data.budget.toString() : undefined,
+            updatedAt: new Date(),
+            updatedBy: userProfileResult[0]?.id,
+          })
+          .where(and(
+            eq(crmCampaigns.id, id),
+            eq(crmCampaigns.orgId, orgId!),
+          ))
+          .returning();
+
+        if (!updated) {
+          throw new Error('Campaign not found');
+        }
+
+        return updated;
+      }),
+
+    /**
+     * Launch campaign (change status from draft/scheduled to active)
+     */
+    launch: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+
+        const userProfileResult = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId!))
+          .limit(1);
+
+        const [campaign] = await db.select()
+          .from(crmCampaigns)
+          .where(and(
+            eq(crmCampaigns.id, input.id),
+            eq(crmCampaigns.orgId, orgId!),
+          ))
+          .limit(1);
+
+        if (!campaign) {
+          throw new Error('Campaign not found');
+        }
+
+        if (!['draft', 'scheduled', 'paused'].includes(campaign.status)) {
+          throw new Error(`Cannot launch campaign with status: ${campaign.status}`);
+        }
+
+        const [updated] = await db.update(crmCampaigns)
+          .set({
+            status: 'active',
+            startDate: campaign.startDate ?? new Date(),
+            updatedAt: new Date(),
+            updatedBy: userProfileResult[0]?.id,
+          })
+          .where(eq(crmCampaigns.id, input.id))
+          .returning();
+
+        return updated;
+      }),
+
+    /**
+     * Pause campaign
+     */
+    pause: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+
+        const userProfileResult = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId!))
+          .limit(1);
+
+        const [updated] = await db.update(crmCampaigns)
+          .set({
+            status: 'paused',
+            updatedAt: new Date(),
+            updatedBy: userProfileResult[0]?.id,
+          })
+          .where(and(
+            eq(crmCampaigns.id, input.id),
+            eq(crmCampaigns.orgId, orgId!),
+          ))
+          .returning();
+
+        if (!updated) {
+          throw new Error('Campaign not found');
+        }
+
+        return updated;
+      }),
+
+    /**
+     * Complete campaign
+     */
+    complete: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+
+        const userProfileResult = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId!))
+          .limit(1);
+
+        const [updated] = await db.update(crmCampaigns)
+          .set({
+            status: 'completed',
+            endDate: new Date(),
+            updatedAt: new Date(),
+            updatedBy: userProfileResult[0]?.id,
+          })
+          .where(and(
+            eq(crmCampaigns.id, input.id),
+            eq(crmCampaigns.orgId, orgId!),
+          ))
+          .returning();
+
+        if (!updated) {
+          throw new Error('Campaign not found');
+        }
+
+        return updated;
+      }),
+
+    /**
+     * Get campaign targets
+     */
+    getTargets: orgProtectedProcedure
+      .input(z.object({
+        campaignId: z.string().uuid(),
+        page: z.number().min(1).default(1),
+        pageSize: z.number().min(1).max(100).default(50),
+        status: z.enum(['pending', 'sent', 'opened', 'clicked', 'responded', 'converted', 'bounced', 'unsubscribed']).optional(),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+        const { campaignId, page, pageSize, status } = input;
+        const offset = (page - 1) * pageSize;
+
+        // Verify campaign belongs to org
+        const [campaign] = await db.select({ id: crmCampaigns.id })
+          .from(crmCampaigns)
+          .where(and(eq(crmCampaigns.id, campaignId), eq(crmCampaigns.orgId, orgId!)))
+          .limit(1);
+
+        if (!campaign) {
+          throw new Error('Campaign not found');
+        }
+
+        const conditions = [eq(crmCampaignTargets.campaignId, campaignId)];
+        if (status) {
+          conditions.push(eq(crmCampaignTargets.status, status));
+        }
+
+        const [items, countResult] = await Promise.all([
+          db.select()
+            .from(crmCampaignTargets)
+            .where(and(...conditions))
+            .limit(pageSize)
+            .offset(offset)
+            .orderBy(desc(crmCampaignTargets.createdAt)),
+          db.select({ count: sql<number>`count(*)::int` })
+            .from(crmCampaignTargets)
+            .where(and(...conditions)),
+        ]);
+
+        const total = countResult[0]?.count ?? 0;
+
+        return {
+          items,
+          total,
+          page,
+          pageSize,
+          totalPages: Math.ceil(total / pageSize),
+        };
+      }),
+
+    /**
+     * Add targets to campaign
+     */
+    addTargets: orgProtectedProcedure
+      .input(z.object({
+        campaignId: z.string().uuid(),
+        targets: z.array(z.object({
+          targetType: z.enum(['lead', 'contact', 'account']),
+          targetId: z.string().uuid(),
+        })),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        // Verify campaign belongs to org
+        const [campaign] = await db.select({ id: crmCampaigns.id })
+          .from(crmCampaigns)
+          .where(and(eq(crmCampaigns.id, input.campaignId), eq(crmCampaigns.orgId, orgId!)))
+          .limit(1);
+
+        if (!campaign) {
+          throw new Error('Campaign not found');
+        }
+
+        const newTargets = await db.insert(crmCampaignTargets).values(
+          input.targets.map(t => ({
+            campaignId: input.campaignId,
+            targetType: t.targetType,
+            targetId: t.targetId,
+            status: 'pending' as const,
+          }))
+        ).returning();
+
+        return newTargets;
+      }),
+
+    /**
+     * Get campaign content
+     */
+    getContent: orgProtectedProcedure
+      .input(z.object({ campaignId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        // Verify campaign belongs to org
+        const [campaign] = await db.select({ id: crmCampaigns.id })
+          .from(crmCampaigns)
+          .where(and(eq(crmCampaigns.id, input.campaignId), eq(crmCampaigns.orgId, orgId!)))
+          .limit(1);
+
+        if (!campaign) {
+          throw new Error('Campaign not found');
+        }
+
+        const content = await db.select()
+          .from(crmCampaignContent)
+          .where(eq(crmCampaignContent.campaignId, input.campaignId))
+          .orderBy(asc(crmCampaignContent.variant));
+
+        return content;
+      }),
+
+    /**
+     * Add content to campaign
+     */
+    addContent: orgProtectedProcedure
+      .input(z.object({
+        campaignId: z.string().uuid(),
+        contentType: z.enum(['email', 'linkedin_message', 'landing_page', 'call_script', 'text_message']),
+        name: z.string().optional(),
+        subject: z.string().optional(),
+        body: z.string().optional(),
+        htmlBody: z.string().optional(),
+        assetUrl: z.string().optional(),
+        variant: z.string().default('A'),
+        isActive: z.boolean().default(true),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+        const { campaignId, ...contentData } = input;
+
+        // Verify campaign belongs to org
+        const [campaign] = await db.select({ id: crmCampaigns.id })
+          .from(crmCampaigns)
+          .where(and(eq(crmCampaigns.id, campaignId), eq(crmCampaigns.orgId, orgId!)))
+          .limit(1);
+
+        if (!campaign) {
+          throw new Error('Campaign not found');
+        }
+
+        const userProfileResult = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId!))
+          .limit(1);
+
+        const [newContent] = await db.insert(crmCampaignContent).values({
+          campaignId,
+          ...contentData,
+          createdBy: userProfileResult[0]?.id,
+        }).returning();
+
+        return newContent;
+      }),
+
+    /**
+     * Get campaign metrics
+     */
+    getMetrics: orgProtectedProcedure
+      .input(z.object({ campaignId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx;
+
+        // Verify campaign belongs to org
+        const [campaign] = await db.select({ id: crmCampaigns.id })
+          .from(crmCampaigns)
+          .where(and(eq(crmCampaigns.id, input.campaignId), eq(crmCampaigns.orgId, orgId!)))
+          .limit(1);
+
+        if (!campaign) {
+          throw new Error('Campaign not found');
+        }
+
+        const [metrics] = await db.select()
+          .from(crmCampaignMetrics)
+          .where(eq(crmCampaignMetrics.campaignId, input.campaignId))
+          .limit(1);
+
+        return metrics ?? null;
+      }),
+
+    /**
+     * Soft delete campaign
+     */
+    delete: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+
+        const userProfileResult = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId!))
+          .limit(1);
+
+        const [deleted] = await db.update(crmCampaigns)
+          .set({
+            deletedAt: new Date(),
+            updatedBy: userProfileResult[0]?.id,
+          })
+          .where(and(
+            eq(crmCampaigns.id, input.id),
+            eq(crmCampaigns.orgId, orgId!),
+          ))
+          .returning();
+
+        if (!deleted) {
+          throw new Error('Campaign not found');
+        }
+
+        return { success: true };
       }),
   }),
 });

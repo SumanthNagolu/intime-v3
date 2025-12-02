@@ -339,3 +339,228 @@ const openActivities = await db.query.activities.findMany({
   orderBy: asc(activities.dueDate),
 });
 ```
+
+## Activity-Centric Tables
+
+### Core Philosophy
+```
+"NO WORK IS CONSIDERED DONE UNLESS AN ACTIVITY IS CREATED"
+```
+
+### Activities Table Schema
+
+```typescript
+// src/lib/db/schema/activities.ts
+export const activities = pgTable('activities', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id),
+  activityNumber: varchar('activity_number', { length: 20 }).notNull().unique(),
+
+  // Type & Pattern
+  activityType: varchar('activity_type', { length: 50 }).notNull(),
+  activityPatternId: uuid('activity_pattern_id').references(() => activityPatterns.id),
+  isAutoCreated: boolean('is_auto_created').default(false),
+
+  // Subject & Description
+  subject: varchar('subject', { length: 500 }).notNull(),
+  description: text('description'),
+
+  // Related Entity (Polymorphic)
+  relatedEntityType: varchar('related_entity_type', { length: 50 }).notNull(),
+  relatedEntityId: uuid('related_entity_id').notNull(),
+  secondaryEntityType: varchar('secondary_entity_type', { length: 50 }),
+  secondaryEntityId: uuid('secondary_entity_id'),
+
+  // Assignment
+  assignedTo: uuid('assigned_to').notNull().references(() => userProfiles.id),
+  createdBy: uuid('created_by').notNull().references(() => userProfiles.id),
+
+  // Status & Priority
+  status: varchar('status', { length: 20 }).notNull().default('open'),
+  priority: varchar('priority', { length: 20 }).notNull().default('medium'),
+
+  // Timing
+  dueDate: timestamp('due_date', { withTimezone: true }),
+  completedAt: timestamp('completed_at', { withTimezone: true }),
+  durationMinutes: integer('duration_minutes'),
+
+  // Outcome
+  outcome: varchar('outcome', { length: 50 }),
+  outcomeNotes: text('outcome_notes'),
+
+  // Follow-up
+  followUpRequired: boolean('follow_up_required').default(false),
+  followUpDate: date('follow_up_date'),
+  followUpActivityId: uuid('follow_up_activity_id').references((): any => activities.id),
+
+  // SLA
+  slaWarningHours: integer('sla_warning_hours'),
+  slaBreachHours: integer('sla_breach_hours'),
+
+  // Timestamps
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+// Indexes for common queries
+// idx_activities_assigned_to - User's activity queue
+// idx_activities_related_entity - Entity timeline
+// idx_activities_status_due - Overdue/due today queries
+// idx_activities_pattern - Pattern analytics
+```
+
+### Events Table Schema (Immutable)
+
+```typescript
+// src/lib/db/schema/events.ts
+export const events = pgTable('events', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').notNull().references(() => organizations.id),
+  eventId: varchar('event_id', { length: 30 }).notNull().unique(),
+
+  // Event Classification
+  eventType: varchar('event_type', { length: 100 }).notNull(),
+  eventCategory: varchar('event_category', { length: 50 }).notNull(),
+  eventSeverity: varchar('event_severity', { length: 20 }).notNull().default('info'),
+
+  // Actor
+  actorType: varchar('actor_type', { length: 20 }).notNull(),
+  actorId: uuid('actor_id'),
+  actorName: varchar('actor_name', { length: 200 }),
+
+  // Entity
+  entityType: varchar('entity_type', { length: 50 }).notNull(),
+  entityId: uuid('entity_id').notNull(),
+  entityName: varchar('entity_name', { length: 200 }),
+
+  // Data (immutable)
+  eventData: jsonb('event_data').notNull().default('{}'),
+  changes: jsonb('changes'),
+  relatedEntities: jsonb('related_entities'),
+
+  // Correlation
+  correlationId: uuid('correlation_id'),
+  parentEventId: uuid('parent_event_id').references((): any => events.id),
+  triggeredActivityIds: uuid('triggered_activity_ids').array(),
+
+  // Timestamps (immutable - no updatedAt)
+  occurredAt: timestamp('occurred_at', { withTimezone: true }).notNull().defaultNow(),
+  recordedAt: timestamp('recorded_at', { withTimezone: true }).notNull().defaultNow(),
+});
+```
+
+### Activity Patterns Table Schema
+
+```typescript
+// src/lib/db/schema/activity-patterns.ts
+export const activityPatterns = pgTable('activity_patterns', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  orgId: uuid('org_id').references(() => organizations.id), // NULL = system pattern
+  patternCode: varchar('pattern_code', { length: 100 }).notNull().unique(),
+
+  // Display
+  name: varchar('name', { length: 200 }).notNull(),
+  description: text('description'),
+
+  // Trigger
+  triggerEvent: varchar('trigger_event', { length: 100 }).notNull(),
+  triggerConditions: jsonb('trigger_conditions').default('[]'),
+
+  // Activity Template
+  activityType: varchar('activity_type', { length: 50 }).notNull(),
+  subjectTemplate: varchar('subject_template', { length: 500 }).notNull(),
+  descriptionTemplate: text('description_template'),
+  priority: varchar('priority', { length: 20 }).notNull().default('medium'),
+
+  // Assignment (JSONB for flexibility)
+  assignTo: jsonb('assign_to').notNull(),
+
+  // Timing
+  dueOffsetHours: integer('due_offset_hours'),
+  dueOffsetBusinessDays: integer('due_offset_business_days'),
+  specificTime: time('specific_time'),
+
+  // Configuration
+  isActive: boolean('is_active').default(true),
+  isSystem: boolean('is_system').default(false),
+  canBeSkipped: boolean('can_be_skipped').default(false),
+  requiresOutcome: boolean('requires_outcome').default(true),
+
+  // SLA
+  slaWarningHours: integer('sla_warning_hours'),
+  slaBreachHours: integer('sla_breach_hours'),
+
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+```
+
+### Common Activity Queries
+
+```typescript
+// Get user's activity queue (overdue, today, upcoming)
+const queue = await db.select()
+  .from(activities)
+  .where(and(
+    eq(activities.orgId, orgId),
+    eq(activities.assignedTo, userId),
+    inArray(activities.status, ['open', 'in_progress']),
+  ))
+  .orderBy(asc(activities.dueDate));
+
+// Get entity timeline (activities + events)
+const [entityActivities, entityEvents] = await Promise.all([
+  db.select().from(activities)
+    .where(and(
+      eq(activities.relatedEntityType, entityType),
+      eq(activities.relatedEntityId, entityId),
+    ))
+    .orderBy(desc(activities.createdAt)),
+
+  db.select().from(events)
+    .where(and(
+      eq(events.entityType, entityType),
+      eq(events.entityId, entityId),
+    ))
+    .orderBy(desc(events.occurredAt)),
+]);
+
+// Check transition guard
+const activityCount = await db.select({ count: sql<number>`count(*)` })
+  .from(activities)
+  .where(and(
+    eq(activities.relatedEntityType, 'candidate'),
+    eq(activities.relatedEntityId, candidateId),
+    eq(activities.activityType, 'call'),
+    eq(activities.status, 'completed'),
+  ));
+
+// Find overdue activities
+const overdue = await db.select()
+  .from(activities)
+  .where(and(
+    eq(activities.status, 'open'),
+    lt(activities.dueDate, new Date()),
+  ));
+```
+
+### Entity lastActivityAt Updates
+
+All entity tables with activity tracking should include:
+
+```typescript
+// Add to entity tables that track activities
+lastActivityAt: timestamp('last_activity_at', { withTimezone: true }),
+daysSinceActivity: integer('days_since_activity').generatedAlwaysAs(
+  sql`EXTRACT(DAY FROM NOW() - last_activity_at)::INTEGER`
+),
+```
+
+Update `lastActivityAt` when activities are created/completed:
+
+```typescript
+// After creating/completing activity on entity
+await tx.update(entityTable)
+  .set({ lastActivityAt: new Date() })
+  .where(eq(entityTable.id, entityId));
+```

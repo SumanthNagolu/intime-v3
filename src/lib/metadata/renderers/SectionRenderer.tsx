@@ -18,6 +18,7 @@ import type {
 } from '../types';
 import { FieldWrapper, WidgetRenderer } from './WidgetRenderer';
 import { cn } from '@/lib/utils';
+import { getSectionWidget, hasSectionWidget } from '../registry/section-widget-registry';
 
 // ==========================================
 // TYPES
@@ -306,6 +307,20 @@ function TableSection({
   const dataPath = 'items'; // Default path for table data
   const data = (resolveValue(entity, dataPath) as Record<string, unknown>[]) || [];
 
+  // Handle row click for navigation
+  const handleRowClick = (row: Record<string, unknown>) => {
+    const entityId = row.id as string;
+    if (entityId && context?.navigate) {
+      // Determine the entity type from context or definition
+      const entityType = context.entityType || 'account';
+      const basePath = entityType === 'account' ? '/employee/recruiting/accounts' :
+                       entityType === 'lead' ? '/employee/recruiting/leads' :
+                       entityType === 'deal' ? '/employee/recruiting/deals' :
+                       `/employee/recruiting/${entityType}s`;
+      context.navigate(`${basePath}/${entityId}`);
+    }
+  };
+
   return (
     <div className="space-y-3">
       {definition.title && (
@@ -341,7 +356,11 @@ function TableSection({
               </tr>
             ) : (
               data.map((row, rowIndex) => (
-                <tr key={rowIndex} className="hover:bg-muted/30">
+                <tr
+                  key={(row.id as string) || rowIndex}
+                  className="hover:bg-muted/30 cursor-pointer transition-colors"
+                  onClick={() => handleRowClick(row)}
+                >
                   {columns.map((col: TableColumnDefinition) => {
                     const cellValue = resolveValue(row, col.accessor || col.path || col.id);
                     const fieldDef: FieldDefinition = {
@@ -561,19 +580,65 @@ function CollapsibleSection({
 }
 
 /**
- * Custom Section - renders custom content via render function
+ * Maps widget component names to their data keys in the context
+ */
+const WIDGET_DATA_KEYS: Record<string, string> = {
+  SprintProgressWidget: 'sprintProgress',
+  ActivityQueueWidget: 'tasks',
+  TaskQueueWidget: 'tasks',
+  AlertList: 'pipelineHealth',
+  PipelineAlerts: 'pipelineHealth',
+  CalendarWidget: 'upcomingCalendar',
+  UpcomingCalendar: 'upcomingCalendar',
+  WinsList: 'recentWins',
+  RecentWins: 'recentWins',
+  AccountHealth: 'accountHealth',
+  ActivitySummary: 'activitySummary',
+  QualityMetrics: 'qualityMetrics',
+};
+
+/**
+ * Custom Section - renders custom widgets from section widget registry
  */
 function CustomSection({
   definition,
-  entity: _entity,
-  context: _context,
+  entity,
+  context,
 }: SectionRendererProps) {
-  // For custom sections, we'd need a registry of custom section components
-  // For now, just render a placeholder
+  const componentName = definition.component;
+
+  // Look up the widget in the registry
+  if (componentName && hasSectionWidget(componentName)) {
+    const Widget = getSectionWidget(componentName)!;
+
+    // Get the data key for this widget
+    const dataKey = WIDGET_DATA_KEYS[componentName];
+
+    // Extract widget-specific data from context.data (set by DashboardRenderer)
+    const contextData = context?.data as Record<string, unknown> | undefined;
+    const widgetData = dataKey && contextData ? contextData[dataKey] as Record<string, unknown> : undefined;
+
+    return (
+      <Widget
+        definition={definition}
+        data={widgetData}
+        entity={entity}
+        context={{
+          isLoading: context?.isLoading && !widgetData,
+          error: context?.error ? new Error(String(context.error)) : null,
+        }}
+      />
+    );
+  }
+
+  // Fallback placeholder for unregistered widgets
   return (
     <div className="p-4 border rounded-lg bg-muted/30">
       <div className="text-muted-foreground text-sm">
-        Custom section: {definition.component || definition.id}
+        Widget not found: {componentName || definition.id}
+      </div>
+      <div className="text-xs text-muted-foreground mt-1">
+        Register this widget using registerSectionWidget(&apos;{componentName}&apos;, Component)
       </div>
     </div>
   );

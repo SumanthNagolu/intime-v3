@@ -327,13 +327,6 @@ export const RecruitingLayout: React.FC<RecruitingLayoutProps> = ({ children }) 
             <div className="text-rust font-bold text-xs uppercase tracking-[0.2em] mb-2">Internal Recruiting</div>
             <h1 className="text-4xl font-serif font-bold text-charcoal">Recruiter Workspace</h1>
           </div>
-          <button
-            onClick={handleActionClick}
-            className="px-6 py-3 bg-charcoal text-white font-bold text-sm uppercase tracking-wider rounded-lg hover:bg-rust transition-colors flex items-center gap-2"
-          >
-            <Plus size={18} />
-            {getActionButtonLabel()}
-          </button>
         </div>
 
         {/* Persistent Sub Navigation */}

@@ -474,9 +474,312 @@ export const appRouter = router({
   courses: coursesRouter,
   enrollment: enrollmentRouter,
   progress: progressRouter,
+  activities: activitiesRouter,  // Activity-Centric
+  events: eventsRouter,          // Event log queries
 });
 
 export type AppRouter = typeof appRouter;
+```
+
+## Activity-Centric Router Pattern
+
+### Core Philosophy
+```
+"NO WORK IS CONSIDERED DONE UNLESS AN ACTIVITY IS CREATED"
+```
+
+Every mutation on root entities must:
+1. Execute business logic
+2. Emit event (immutable record)
+3. Create/update activity (human work tracking)
+4. Check transition guards before status changes
+
+### Activities Router
+
+```typescript
+// src/server/routers/activities.ts
+export const activitiesRouter = router({
+  // Get user's activity queue
+  getMyQueue: orgProtectedProcedure
+    .input(z.object({
+      statuses: z.array(z.enum(['open', 'in_progress'])).optional(),
+      page: z.number().default(1),
+      pageSize: z.number().default(50),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { userId, orgId } = ctx;
+      const now = new Date();
+      const todayEnd = endOfDay(now);
+
+      const results = await db.select()
+        .from(activities)
+        .where(and(
+          eq(activities.orgId, orgId),
+          eq(activities.assignedTo, userId),
+          inArray(activities.status, input.statuses ?? ['open', 'in_progress']),
+        ))
+        .orderBy(asc(activities.dueDate))
+        .limit(input.pageSize)
+        .offset((input.page - 1) * input.pageSize);
+
+      // Categorize by due date
+      return {
+        overdue: results.filter(a => a.dueDate && a.dueDate < now),
+        dueToday: results.filter(a => a.dueDate && a.dueDate >= now && a.dueDate <= todayEnd),
+        upcoming: results.filter(a => !a.dueDate || a.dueDate > todayEnd),
+        total: results.length,
+      };
+    }),
+
+  // Get entity timeline (activities + events)
+  getTimeline: orgProtectedProcedure
+    .input(z.object({
+      entityType: z.string(),
+      entityId: z.string().uuid(),
+      includeEvents: z.boolean().default(true),
+      page: z.number().default(1),
+      pageSize: z.number().default(50),
+    }))
+    .query(async ({ ctx, input }) => {
+      const [activityResults, eventResults] = await Promise.all([
+        db.select().from(activities)
+          .where(and(
+            eq(activities.relatedEntityType, input.entityType),
+            eq(activities.relatedEntityId, input.entityId),
+          ))
+          .orderBy(desc(activities.createdAt)),
+
+        input.includeEvents
+          ? db.select().from(events)
+              .where(and(
+                eq(events.entityType, input.entityType),
+                eq(events.entityId, input.entityId),
+              ))
+              .orderBy(desc(events.occurredAt))
+          : Promise.resolve([]),
+      ]);
+
+      // Merge and sort by date
+      const timeline = [
+        ...activityResults.map(a => ({ type: 'activity' as const, data: a, date: a.createdAt })),
+        ...eventResults.map(e => ({ type: 'event' as const, data: e, date: e.occurredAt })),
+      ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+      return { items: timeline };
+    }),
+
+  // Create activity
+  create: orgProtectedProcedure
+    .input(createActivitySchema)
+    .mutation(async ({ ctx, input }) => {
+      const { userId, orgId } = ctx;
+
+      return db.transaction(async (tx) => {
+        const activityNumber = await generateActivityNumber(tx, orgId);
+
+        const [activity] = await tx.insert(activities)
+          .values({
+            ...input,
+            orgId,
+            activityNumber,
+            createdBy: userId,
+            assignedTo: input.assignedTo ?? userId,
+          })
+          .returning();
+
+        // Update entity's lastActivityAt
+        await updateEntityLastActivity(tx, input.relatedEntityType, input.relatedEntityId);
+
+        return activity;
+      });
+    }),
+
+  // Complete activity
+  complete: orgProtectedProcedure
+    .input(z.object({
+      id: z.string().uuid(),
+      outcome: z.enum(['successful', 'unsuccessful', 'no_answer', 'left_voicemail', 'rescheduled', 'no_show', 'partial', 'pending_response']),
+      durationMinutes: z.number().optional(),
+      outcomeNotes: z.string().optional(),
+      followUp: z.object({
+        type: z.string(),
+        subject: z.string(),
+        dueDate: z.date(),
+      }).optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId, orgId } = ctx;
+
+      return db.transaction(async (tx) => {
+        // Update activity
+        const [activity] = await tx.update(activities)
+          .set({
+            status: 'completed',
+            outcome: input.outcome,
+            outcomeNotes: input.outcomeNotes,
+            durationMinutes: input.durationMinutes,
+            completedAt: new Date(),
+            updatedAt: new Date(),
+          })
+          .where(and(
+            eq(activities.id, input.id),
+            eq(activities.orgId, orgId),
+          ))
+          .returning();
+
+        // Create follow-up if requested
+        if (input.followUp) {
+          const followUpNumber = await generateActivityNumber(tx, orgId);
+          const [followUpActivity] = await tx.insert(activities)
+            .values({
+              orgId,
+              activityNumber: followUpNumber,
+              activityType: input.followUp.type,
+              subject: input.followUp.subject,
+              relatedEntityType: activity.relatedEntityType,
+              relatedEntityId: activity.relatedEntityId,
+              assignedTo: activity.assignedTo,
+              createdBy: userId,
+              status: 'open',
+              dueDate: input.followUp.dueDate,
+            })
+            .returning();
+
+          // Link follow-up
+          await tx.update(activities)
+            .set({ followUpActivityId: followUpActivity.id })
+            .where(eq(activities.id, input.id));
+        }
+
+        // Update entity's lastActivityAt
+        await updateEntityLastActivity(tx, activity.relatedEntityType, activity.relatedEntityId);
+
+        // Emit completion event
+        await emitEvent(tx, {
+          type: 'activity.completed',
+          entityType: 'activity',
+          entityId: activity.id,
+          actorId: userId,
+          eventData: { outcome: input.outcome, activityType: activity.activityType },
+        });
+
+        return activity;
+      });
+    }),
+
+  // Check transition guard
+  checkTransition: orgProtectedProcedure
+    .input(z.object({
+      entityType: z.string(),
+      entityId: z.string().uuid(),
+      fromStatus: z.string(),
+      toStatus: z.string(),
+    }))
+    .query(async ({ ctx, input }) => {
+      const rule = transitionRules.find(
+        r => r.entity_type === input.entityType &&
+             r.from_status === input.fromStatus &&
+             r.to_status === input.toStatus
+      );
+
+      if (!rule) return { allowed: true };
+
+      for (const req of rule.required_activities) {
+        const [{ count }] = await db.select({ count: sql<number>`count(*)` })
+          .from(activities)
+          .where(and(
+            eq(activities.relatedEntityType, input.entityType),
+            eq(activities.relatedEntityId, input.entityId),
+            eq(activities.activityType, req.type),
+            eq(activities.status, req.status),
+          ));
+
+        if (Number(count) < req.count) {
+          return { allowed: false, errorMessage: rule.error_message };
+        }
+      }
+
+      return { allowed: true };
+    }),
+});
+```
+
+### Mutation with Activity Pattern
+
+```typescript
+// Every root entity mutation should follow this pattern
+update: orgProtectedProcedure
+  .input(updateSchema)
+  .mutation(async ({ ctx, input }) => {
+    const { userId, orgId } = ctx;
+
+    return db.transaction(async (tx) => {
+      // 1. Get old values
+      const [old] = await tx.select()
+        .from(tableName)
+        .where(eq(tableName.id, input.id))
+        .limit(1);
+
+      if (!old) throw new TRPCError({ code: 'NOT_FOUND' });
+
+      // 2. Check transition guard if status is changing
+      if (input.data.status && old.status !== input.data.status) {
+        const guard = await checkTransitionAllowed(
+          tx, entityType, input.id, old.status, input.data.status
+        );
+        if (!guard.allowed) {
+          throw new TRPCError({ code: 'PRECONDITION_FAILED', message: guard.errorMessage });
+        }
+      }
+
+      // 3. Update entity
+      const [entity] = await tx.update(tableName)
+        .set({ ...input.data, updatedAt: new Date() })
+        .where(and(
+          eq(tableName.id, input.id),
+          eq(tableName.orgId, orgId)
+        ))
+        .returning();
+
+      // 4. Emit event (ALWAYS)
+      await emitEvent(tx, {
+        type: `${entityType}.updated`,
+        entityType,
+        entityId: entity.id,
+        actorId: userId,
+        eventData: entity,
+        changes: diffObjects(old, entity),
+      });
+
+      // 5. Handle status change
+      if (old.status !== entity.status) {
+        await emitEvent(tx, {
+          type: `${entityType}.status_changed`,
+          entityType,
+          entityId: entity.id,
+          actorId: userId,
+          eventData: {
+            oldStatus: old.status,
+            newStatus: entity.status,
+          },
+        });
+
+        await createActivity(tx, {
+          orgId,
+          activityType: 'status_change',
+          subject: `Status: ${old.status} → ${entity.status}`,
+          relatedEntityType: entityType,
+          relatedEntityId: entity.id,
+          assignedTo: userId,
+          createdBy: userId,
+          status: 'completed',
+          completedAt: new Date(),
+        });
+      }
+
+      return entity;
+    });
+  }),
 ```
 
 ## Common Context Values
