@@ -5,35 +5,50 @@
  * Fields are widget configurations bound to entity properties.
  */
 
-import type { DynamicValue, VisibilityRule, ValidationRule } from './data.types';
+import type { DynamicValue, VisibilityRule, ValidationRule, DataSourceDefinition } from './data.types';
 
 // ==========================================
 // FIELD TYPES
 // ==========================================
 
 export type FieldType =
+  // Display types (for info-card sections)
+  | 'field'          // Generic field display
+  | 'divider'        // Visual separator
+  | 'custom'         // Custom component
+
   // Text types
   | 'text'           // Single line text
   | 'textarea'       // Multi-line text
   | 'richtext'       // Rich text editor (markdown/HTML)
+  | 'rich-text'      // Alias for richtext
 
   // Numeric types
   | 'number'         // Integer or decimal
   | 'currency'       // Money with currency symbol
   | 'percentage'     // Percentage (0-100)
+  | 'rating'         // Star rating (1-5)
+  | 'fraction'       // Fraction display (e.g., 4/10)
+  | 'progress'       // Progress bar/indicator
 
   // Date/Time types
   | 'date'           // Date only
   | 'datetime'       // Date and time
   | 'time'           // Time only
   | 'duration'       // Time duration
+  | 'date-range'     // Date range picker
+  | 'relative-time'  // Relative time display (e.g., "2 hours ago")
+  | 'tenure'         // Tenure display (days, months, years)
 
   // Boolean/Choice types
   | 'boolean'        // Checkbox/toggle
+  | 'checkbox'       // Single checkbox input
   | 'enum'           // Single select from fixed options
   | 'select'         // Single select from dynamic options (entity reference)
   | 'multiselect'    // Multiple select
+  | 'multi-select'   // Alias for multiselect
   | 'radio'          // Radio group
+  | 'radio-group'    // Alias for radio
   | 'checkbox-group' // Checkbox group
 
   // Special types
@@ -41,7 +56,16 @@ export type FieldType =
   | 'email'          // Email with validation
   | 'phone'          // Phone with formatting
   | 'url'            // URL with validation
+  | 'link'           // Clickable link display
   | 'uuid'           // UUID (typically read-only)
+  | 'badge'          // Badge display
+  | 'status-indicator' // Status indicator (dot/icon)
+  | 'avatar'         // Avatar display
+  | 'user'           // User reference display
+  | 'user-with-avatar' // User name with avatar
+  | 'user-select'    // User selection dropdown
+  | 'actions'        // Action buttons (for tables)
+  | 'activity-type-badge' // Activity type specific badge
 
   // File types
   | 'file'           // Single file upload
@@ -51,7 +75,17 @@ export type FieldType =
   // Composite types
   | 'address'        // Address input set
   | 'json'           // JSON editor
-  | 'computed';      // Computed/derived field (read-only)
+  | 'computed'       // Computed/derived field (read-only)
+
+  // Extended types for bench-sales screens
+  | 'list'           // List input/display
+  | 'number-range'   // Number range input (min/max)
+  | 'user-avatar'    // User avatar display
+  | 'search'         // Search input field
+
+  // TA-specific field types
+  | 'async-select'   // Async select with tRPC procedure
+  | 'timezone-select'; // Timezone selection dropdown
 
 // ==========================================
 // WIDGET TYPES
@@ -120,21 +154,34 @@ export type WidgetType =
   // Layout widgets
   | 'spacer'
   | 'divider'
-  | 'group';
+  | 'group'
+
+  // TA-specific widget types
+  | 'metric'       // KPI metric display
+  | 'stat-card'    // Stat card widget
+  | 'field'        // Generic field display
+  | 'rich-text'    // Rich text display
+  | 'tags'         // Tags display widget
+  | 'checklist'    // Checklist widget
+  | 'stat-row'     // Stat row for summaries
+  | 'link';        // Link widget
 
 // ==========================================
 // FIELD DEFINITION
 // ==========================================
 
 export interface FieldDefinition {
-  /** Unique field ID */
-  id: string;
+  /** Unique field ID (optional for shorthand inline fields) */
+  id?: string;
 
   /** Data field path (supports dot notation: 'address.city') - defaults to id if not provided */
   dataField?: string;
 
   /** Alias for dataField - for compatibility */
   path?: string;
+
+  /** Alias for id or path - for compatibility */
+  name?: string;
 
   /** Display label */
   label?: string;
@@ -143,10 +190,19 @@ export interface FieldDefinition {
   description?: string;
 
   /** Field type determines widget and validation */
-  type?: FieldType;
+  type?: FieldType | string;
 
   /** Alias for type - for compatibility with inputsets */
   fieldType?: FieldType | string;
+
+  /** Custom widget component name */
+  widget?: string;
+
+  /** Custom component for complex field types */
+  component?: string;
+
+  /** Custom component props */
+  componentProps?: Record<string, unknown>;
 
   /** Visibility setting */
   visibility?: 'visible' | 'hidden' | 'conditional';
@@ -224,7 +280,7 @@ export interface FieldDefinition {
 
   // Formatting
   /** Format string or function name */
-  format?: string;
+  format?: FormatDefinition | string;
 
   /** Parse function name (display to data) */
   parse?: string;
@@ -243,21 +299,24 @@ export interface WidgetDefinition {
   id: string;
 
   /** Widget type */
-  type: WidgetType;
+  type?: WidgetType;
 
   // Data binding
   /** Data field path */
   dataField?: string;
 
+  /** Alternative path (shorthand for dataField) */
+  path?: string;
+
   /** Alternative data source */
-  dataSource?: DynamicValue;
+  dataSource?: DataSourceDefinition | DynamicValue;
 
   // Display
   /** Label */
   label?: string | DynamicValue;
 
   /** Format configuration */
-  format?: FormatDefinition;
+  format?: FormatDefinition | string;
 
   // Behavior
   /** Visibility rule */
@@ -269,6 +328,52 @@ export interface WidgetDefinition {
   // Widget config
   /** Widget-specific configuration */
   config?: WidgetConfig;
+
+  // Metric widget specific
+  /** Icon for metric widgets */
+  icon?: string;
+
+  /** Variant for styling */
+  variant?: string;
+
+  /** Color for metric widgets */
+  color?: string;
+
+  /** Value for metric widgets (DynamicValue) */
+  value?: DynamicValue;
+
+  /** Target value for comparison */
+  target?: number | DynamicValue;
+
+  /** Suffix for display (can be DynamicValue) */
+  suffix?: string | DynamicValue;
+
+  /** Prefix for suffix (when suffix is DynamicValue) */
+  prefix?: string;
+
+  /** Trend data */
+  trend?: DynamicValue;
+
+  /** Whether lower values are better */
+  lowerIsBetter?: boolean;
+
+  /** Alert threshold for metric widgets */
+  alertThreshold?: number;
+
+  /** Show target indicator */
+  showTarget?: boolean;
+
+  /** Size for widgets */
+  size?: 'sm' | 'md' | 'lg' | 'large';
+
+  /** Inverse color scheme */
+  inverse?: boolean;
+
+  /** Action configuration */
+  action?: {
+    type: string;
+    handler?: string;
+  };
 }
 
 // ==========================================
@@ -299,11 +404,29 @@ export interface OptionDefinition {
 }
 
 export interface OptionsSourceDefinition {
+  /** Source type */
+  type?: 'entity' | 'static' | 'procedure' | 'query';
+
   /** Entity type to fetch options from */
-  entityType: string;
+  entityType?: string;
+
+  /** Static source name (for predefined option sets) */
+  source?: string;
+
+  /** tRPC procedure to fetch options (for procedure type) */
+  procedure?: string;
+
+  /** Query string or object (for query type) */
+  query?: string | { procedure: string; params?: Record<string, unknown> };
+
+  /** Query params */
+  params?: Record<string, unknown>;
 
   /** Field to use as label */
-  labelField: string;
+  labelField?: string;
+
+  /** Label template for custom formatting */
+  labelTemplate?: string;
 
   /** Field to use as value (defaults to 'id') */
   valueField?: string;
@@ -313,6 +436,9 @@ export interface OptionsSourceDefinition {
 
   /** Filter criteria */
   filter?: Record<string, unknown>;
+
+  /** Filter by role (for user selections) */
+  filterRole?: string | string[];
 
   /** Sort order */
   sort?: { field: string; direction: 'asc' | 'desc' };
@@ -556,6 +682,7 @@ export interface InputSetConfig {
   /** Layout configuration */
   layout?: {
     columns?: number;
+    gap?: number | string;
     fieldLayout?: Array<{
       fieldId: string;
       colSpan?: number;

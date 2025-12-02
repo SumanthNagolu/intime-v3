@@ -9,11 +9,13 @@ describe('Candidate Detail Screen Definition', () => {
   });
 
   it('should have a sidebar-main layout', () => {
-    expect(candidateDetailScreen.layout.type).toBe('sidebar-main');
+    expect(candidateDetailScreen.layout).toBeDefined();
+    expect(candidateDetailScreen.layout?.type).toBe('sidebar-main');
   });
 
   it('should have key tabs', () => {
-    const tabs = candidateDetailScreen.layout.tabs || [];
+    expect(candidateDetailScreen.layout).toBeDefined();
+    const tabs = candidateDetailScreen.layout?.tabs || [];
     const tabIds = tabs.map(t => t.id);
     expect(tabIds).toContain('overview');
     expect(tabIds).toContain('activity');
@@ -21,11 +23,12 @@ describe('Candidate Detail Screen Definition', () => {
   });
 
   it('should have basic info in sidebar', () => {
-    const sidebar = candidateDetailScreen.layout.sidebar;
+    expect(candidateDetailScreen.layout).toBeDefined();
+    const sidebar = candidateDetailScreen.layout?.sidebar;
     expect(sidebar).toBeDefined();
     expect(sidebar?.type).toBe('info-card');
     const fields = sidebar?.fields?.map(f => f.path) || [];
-    
+
     expect(fields).toContain('email');
     expect(fields).toContain('phone');
     expect(fields).toContain('location');
@@ -33,9 +36,10 @@ describe('Candidate Detail Screen Definition', () => {
   });
 
   it('should use CandidateProfileInputSet', () => {
-    const overviewTab = candidateDetailScreen.layout.tabs?.find(t => t.id === 'overview');
+    expect(candidateDetailScreen.layout).toBeDefined();
+    const overviewTab = candidateDetailScreen.layout?.tabs?.find(t => t.id === 'overview');
     const profileSection = overviewTab?.sections.find(s => s.id === 'profile');
-    
+
     expect(profileSection).toBeDefined();
     expect(profileSection?.type).toBe('input-set');
     expect(profileSection?.inputSet).toBe('CandidateProfileInputSet');

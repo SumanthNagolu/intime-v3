@@ -148,7 +148,7 @@ export function WinsList({ definition, data, context }: SectionWidgetProps) {
             </div>
             <div>
               <CardTitle className="text-lg font-heading font-bold text-charcoal-900">
-                {definition.title || 'Recent Wins'}
+                {(typeof definition.title === 'string' ? definition.title : 'Recent Wins') || 'Recent Wins'}
               </CardTitle>
               <p className="text-sm text-charcoal-500 mt-0.5">
                 Last 30 days

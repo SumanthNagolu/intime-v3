@@ -178,14 +178,14 @@ export async function executePaginatedQuery<T extends PgTable, TResult>(
       ? db.select(selectFields)
       : db.select()
     )
-      .from(table)
+      .from(table as any)
       .where(and(...conditions))
       .orderBy(orderBy)
       .limit(pageSize)
       .offset(offset) as Promise<TResult[]>,
     db
       .select({ count: sql<number>`count(*)::int` })
-      .from(table)
+      .from(table as any)
       .where(and(...conditions)),
   ]);
 
@@ -234,18 +234,18 @@ export async function softDelete<T extends PgTable>(
   }
 
   const result = await db
-    .update(table)
-    .set(updateValues as Parameters<typeof db.update>[1])
+    .update(table as any)
+    .set(updateValues as any)
     .where(
       and(
-        eq(idCol as Parameters<typeof eq>[0], id),
-        eq(orgCol as Parameters<typeof eq>[0], orgId),
-        isNull(deletedCol as Parameters<typeof isNull>[0])
+        eq(idCol as any, id),
+        eq(orgCol as any, orgId),
+        isNull(deletedCol as any)
       )
     )
     .returning();
 
-  if (!result.length) {
+  if (!result || !result.length) {
     throw new Error('Record not found or unauthorized');
   }
 
@@ -327,18 +327,18 @@ export async function getListMetrics<T extends PgTable>(
   // Get total count
   const totalResult = await db
     .select({ count: sql<number>`count(*)::int` })
-    .from(table)
+    .from(table as any)
     .where(and(...conditions));
 
   // Get counts by status
   const statusCounts = await db
     .select({
-      status: statusCol as Parameters<typeof db.select>[0][keyof Parameters<typeof db.select>[0]],
+      status: statusCol as any,
       count: sql<number>`count(*)::int`,
     })
-    .from(table)
+    .from(table as any)
     .where(and(...conditions))
-    .groupBy(statusCol as Parameters<typeof db.select>[0][keyof Parameters<typeof db.select>[0]]);
+    .groupBy(statusCol as any);
 
   const byStatus: Record<string, number> = {};
   for (const row of statusCounts) {

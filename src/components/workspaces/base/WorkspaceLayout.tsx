@@ -59,7 +59,7 @@ export interface WorkspaceLayoutProps {
   secondaryActions?: WorkspaceAction[];
 
   // Entity for RCAI
-  entityType: RCAIEntityTypeType;
+  entityType: RCAIEntityTypeType | 'talent';
   entityId: string;
 
   // Permissions

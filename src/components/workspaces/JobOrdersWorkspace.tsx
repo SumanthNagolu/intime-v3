@@ -88,6 +88,94 @@ interface JobOrdersWorkspaceProps {
   jobOrderId: string;
 }
 
+// Job Order type definition based on bench schema
+interface JobOrder {
+  id: string;
+  orgId: string;
+  vendorId: string | null;
+  clientName: string | null;
+  title: string;
+  description: string | null;
+  location: string | null;
+  workMode: string | null;
+  rateType: string | null;
+  billRate: string | null;
+  billRateMax: string | null;
+  payRateMin: string | null;
+  payRateMax: string | null;
+  durationMonths: number | null;
+  positions: number | null;
+  positionsCount: number;
+  positionsFilled: number;
+  status: string;
+  priority: string;
+  receivedAt: Date;
+  receivedDate: Date | null;
+  responseDueAt: Date | null;
+  source: string | null;
+  originalSourceUrl: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  createdBy: string | null;
+  deletedAt: Date | null;
+  // Extended fields for workspace
+  orderNumber: string | null;
+  jobType: string | null;
+  employmentType: string | null;
+  city: string | null;
+  state: string | null;
+  zipCode: string | null;
+  isRemote: boolean | null;
+  remoteType: string | null;
+  hybridDays: number | null;
+  startDate: Date | null;
+  endDate: Date | null;
+  targetFillDate: Date | null;
+  extensionPossible: boolean | null;
+  hiringManagerName: string | null;
+  hiringManagerEmail: string | null;
+  department: string | null;
+  vmsName: string | null;
+  mspName: string | null;
+  vmsJobId: string | null;
+  vendorTier: string | null;
+  requiredSkills: string[] | null;
+  niceToHaveSkills: string[] | null;
+  certificationsRequired: string[] | null;
+  visaRequirements: string[] | null;
+  minExperienceYears: number | null;
+  maxExperienceYears: number | null;
+  educationRequirement: string | null;
+  citizenshipRequired: boolean | null;
+  securityClearanceRequired: string | null;
+  backgroundCheckRequired: boolean | null;
+  drugScreenRequired: boolean | null;
+  interviewProcess: string | null;
+  interviewRounds: number | null;
+  technicalAssessmentRequired: boolean | null;
+  currentSubmissions: number | null;
+  maxSubmissions: number | null;
+  submissionInstructions: string | null;
+  submissionFormat: string | null;
+  markupPercentage: string | null;
+  currency: string | null;
+  overtimeExpected: boolean | null;
+  overtimeBillRate: string | null;
+  overtimePayRate: string | null;
+  placementFeePercentage: string | null;
+  placementFeeFlat: string | null;
+  guaranteePeriodDays: number | null;
+  account: {
+    id: string;
+    name: string;
+    industry: string | null;
+  } | null;
+  sourceJob: {
+    id: string;
+    title: string;
+  } | null;
+}
+
 // =====================================================
 // CONSTANTS
 // =====================================================
@@ -162,7 +250,7 @@ function FillProgress({ positionsCount, positionsFilled }: { positionsCount: num
   );
 }
 
-function OverviewTab({ jobOrder, canEdit: _canEdit }: { jobOrder: NonNullable<ReturnType<typeof useJobOrder>['data']>; canEdit: boolean }) {
+function OverviewTab({ jobOrder, canEdit: _canEdit }: { jobOrder: JobOrder; canEdit: boolean }) {
   const daysOpen = differenceInDays(new Date(), new Date(jobOrder.receivedDate || jobOrder.createdAt));
   const daysToTarget = jobOrder.targetFillDate
     ? differenceInDays(new Date(jobOrder.targetFillDate), new Date())
@@ -521,7 +609,7 @@ function OverviewTab({ jobOrder, canEdit: _canEdit }: { jobOrder: NonNullable<Re
   );
 }
 
-function RequirementsTab({ jobOrder, canEdit: _canEdit }: { jobOrder: NonNullable<ReturnType<typeof useJobOrder>['data']>; canEdit: boolean }) {
+function RequirementsTab({ jobOrder, canEdit: _canEdit }: { jobOrder: JobOrder; canEdit: boolean }) {
   const requiredSkills = jobOrder.requiredSkills || [];
   const niceToHaveSkills = jobOrder.niceToHaveSkills || [];
   const certifications = jobOrder.certificationsRequired || [];
@@ -543,7 +631,7 @@ function RequirementsTab({ jobOrder, canEdit: _canEdit }: { jobOrder: NonNullabl
               <p className="text-sm text-muted-foreground">No required skills specified</p>
             ) : (
               <div className="flex flex-wrap gap-2">
-                {requiredSkills.map((skill, i) => (
+                {requiredSkills.map((skill: string, i: number) => (
                   <Badge key={i} variant="default">{skill}</Badge>
                 ))}
               </div>
@@ -563,7 +651,7 @@ function RequirementsTab({ jobOrder, canEdit: _canEdit }: { jobOrder: NonNullabl
               <p className="text-sm text-muted-foreground">No preferred skills specified</p>
             ) : (
               <div className="flex flex-wrap gap-2">
-                {niceToHaveSkills.map((skill, i) => (
+                {niceToHaveSkills.map((skill: string, i: number) => (
                   <Badge key={i} variant="secondary">{skill}</Badge>
                 ))}
               </div>
@@ -602,7 +690,7 @@ function RequirementsTab({ jobOrder, canEdit: _canEdit }: { jobOrder: NonNullabl
                 <p className="font-medium">None required</p>
               ) : (
                 <div className="flex flex-wrap gap-1 mt-1">
-                  {certifications.map((cert, i) => (
+                  {certifications.map((cert: string, i: number) => (
                     <Badge key={i} variant="outline" className="text-xs">{cert}</Badge>
                   ))}
                 </div>
@@ -628,7 +716,7 @@ function RequirementsTab({ jobOrder, canEdit: _canEdit }: { jobOrder: NonNullabl
                 <p className="font-medium">Any</p>
               ) : (
                 <div className="flex flex-wrap gap-1 mt-1">
-                  {visaRequirements.map((visa, i) => (
+                  {visaRequirements.map((visa: string, i: number) => (
                     <Badge key={i} variant="outline" className="text-xs">{visa}</Badge>
                   ))}
                 </div>
@@ -696,7 +784,7 @@ function RequirementsTab({ jobOrder, canEdit: _canEdit }: { jobOrder: NonNullabl
   );
 }
 
-function SubmissionsTab({ jobOrder, canEdit }: { jobOrder: NonNullable<ReturnType<typeof useJobOrder>['data']>; canEdit: boolean }) {
+function SubmissionsTab({ jobOrder, canEdit }: { jobOrder: JobOrder; canEdit: boolean }) {
   const currentSubmissions = jobOrder.currentSubmissions || 0;
   const maxSubmissions = jobOrder.maxSubmissions;
 
@@ -800,7 +888,7 @@ function SubmissionsTab({ jobOrder, canEdit }: { jobOrder: NonNullable<ReturnTyp
   );
 }
 
-function FinancialsTab({ jobOrder }: { jobOrder: NonNullable<ReturnType<typeof useJobOrder>['data']> }) {
+function FinancialsTab({ jobOrder }: { jobOrder: JobOrder }) {
   const positionsFilled = jobOrder.positionsFilled || 0;
   const billRate = Number(jobOrder.billRate || 0);
   const avgPayRate = (Number(jobOrder.payRateMin || 0) + Number(jobOrder.payRateMax || 0)) / 2;
@@ -909,8 +997,18 @@ function FinancialsTab({ jobOrder }: { jobOrder: NonNullable<ReturnType<typeof u
 }
 
 // Hook to fetch job order data
-function useJobOrder(jobOrderId: string) {
-  return trpc.jobOrders.getById.useQuery({ id: jobOrderId });
+// TODO: Implement jobOrders router
+function useJobOrder(_jobOrderId: string): {
+  data: JobOrder | undefined;
+  isLoading: boolean;
+  error: Error | null;
+} {
+  // Stub - jobOrders router not yet implemented
+  return {
+    data: undefined,
+    isLoading: false,
+    error: new Error('JobOrders router not implemented'),
+  };
 }
 
 // =====================================================

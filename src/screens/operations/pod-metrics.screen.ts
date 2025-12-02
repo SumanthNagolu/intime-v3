@@ -17,9 +17,11 @@ export const podMetricsScreen: ScreenDefinition = {
   
   dataSource: {
     type: 'query',
-    query: 'manager.getPodMetrics',
-    params: {
-      podId: { type: 'context', path: 'user.podId' },
+    query: {
+      procedure: 'manager.getPodMetrics',
+      params: {
+        podId: { type: 'context', path: 'user.podId' },
+      },
     },
   },
   
@@ -38,7 +40,7 @@ export const podMetricsScreen: ScreenDefinition = {
             id: 'sprint-overview',
             type: 'custom',
             component: 'SprintProgressWidget',
-            span: 'full',
+            span: 4,
           },
           {
             id: 'ic-contributions',
@@ -48,42 +50,43 @@ export const podMetricsScreen: ScreenDefinition = {
               type: 'field',
               path: 'sprintMetrics.icContributions',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'ic',
                 header: 'IC',
-                field: 'name',
+                path: 'name',
                 type: 'user',
-                primary: true,
               },
               {
                 id: 'goal',
                 header: 'Sprint Goal',
-                field: 'goal',
+                path: 'goal',
                 type: 'number',
               },
               {
                 id: 'actual',
                 header: 'Actual',
-                field: 'actual',
+                path: 'actual',
                 type: 'number',
               },
               {
                 id: 'status',
                 header: 'Status',
-                field: 'status',
+                path: 'status',
                 type: 'badge',
-                options: [
-                  { value: 'on_track', label: 'On Track', color: 'success' },
-                  { value: 'at_risk', label: 'At Risk', color: 'warning' },
-                  { value: 'off_track', label: 'Off Track', color: 'destructive' },
-                  { value: 'complete', label: 'Complete ✓', color: 'success' },
-                ],
+                config: {
+                  options: [
+                    { value: 'on_track', label: 'On Track', color: 'success' },
+                    { value: 'at_risk', label: 'At Risk', color: 'warning' },
+                    { value: 'off_track', label: 'Off Track', color: 'destructive' },
+                    { value: 'complete', label: 'Complete ✓', color: 'success' },
+                  ],
+                },
               },
               {
                 id: 'completion-day',
                 header: 'Completed On',
-                field: 'completionDay',
+                path: 'completionDay',
                 type: 'text',
               },
             ],
@@ -94,7 +97,7 @@ export const podMetricsScreen: ScreenDefinition = {
             component: 'SprintTrendChart',
             title: 'Sprint-over-Sprint Trend',
             description: 'Performance comparison across recent sprints',
-            span: 'full',
+            span: 4,
           },
         ],
       },
@@ -111,34 +114,46 @@ export const podMetricsScreen: ScreenDefinition = {
             id: 'pipeline-kpis',
             type: 'metrics-grid',
             columns: 4,
-            metrics: [
+            fields: [
               {
                 id: 'coverage-ratio',
                 label: 'Coverage Ratio',
-                value: { type: 'field', path: 'pipelineMetrics.coverageRatio' },
-                format: 'decimal',
-                suffix: 'x',
-                target: 3.0,
-                trend: { type: 'field', path: 'pipelineMetrics.coverageTrend' },
+                path: 'pipelineMetrics.coverageRatio',
+                type: 'number',
+                config: {
+                  format: { type: 'decimal' },
+                  suffix: 'x',
+                  target: 3.0,
+                  trend: { type: 'field', path: 'pipelineMetrics.coverageTrend' },
+                },
               },
               {
                 id: 'active-jobs',
                 label: 'Active Jobs',
-                value: { type: 'field', path: 'pipelineMetrics.activeJobs' },
-                icon: 'briefcase',
+                path: 'pipelineMetrics.activeJobs',
+                type: 'number',
+                config: {
+                  icon: 'briefcase',
+                },
               },
               {
                 id: 'active-submissions',
                 label: 'Active Submissions',
-                value: { type: 'field', path: 'pipelineMetrics.activeSubmissions' },
-                icon: 'send',
+                path: 'pipelineMetrics.activeSubmissions',
+                type: 'number',
+                config: {
+                  icon: 'send',
+                },
               },
               {
                 id: 'stale-jobs',
                 label: 'Stale Jobs',
-                value: { type: 'field', path: 'pipelineMetrics.staleJobs' },
-                icon: 'alert-circle',
-                alertThreshold: 3,
+                path: 'pipelineMetrics.staleJobs',
+                type: 'number',
+                config: {
+                  icon: 'alert-circle',
+                  alertThreshold: 3,
+                },
               },
             ],
           },
@@ -147,14 +162,14 @@ export const podMetricsScreen: ScreenDefinition = {
             type: 'custom',
             component: 'JobCoverageChart',
             title: 'Job Coverage Breakdown',
-            span: 'half',
+            span: 2,
           },
           {
             id: 'submission-funnel',
             type: 'custom',
             component: 'SubmissionFunnelChart',
             title: 'Submission Pipeline',
-            span: 'half',
+            span: 2,
           },
           {
             id: 'stale-jobs-table',
@@ -166,30 +181,30 @@ export const podMetricsScreen: ScreenDefinition = {
               path: 'pipelineMetrics.staleJobsList',
             },
             emptyMessage: 'No stale jobs - great job!',
-            columns: [
+            columns_config: [
               {
                 id: 'job',
                 header: 'Job',
-                field: 'title',
+                path: 'title',
                 type: 'link',
-                linkPattern: '/employee/jobs/{{id}}',
+                config: { linkPattern: '/employee/jobs/{{id}}' },
               },
               {
                 id: 'client',
                 header: 'Client',
-                field: 'clientName',
+                accessor: 'clientName',
                 type: 'text',
               },
               {
                 id: 'last-activity',
                 header: 'Last Activity',
-                field: 'lastActivityAt',
+                accessor: 'lastActivityAt',
                 type: 'relative-time',
               },
               {
                 id: 'assigned-to',
                 header: 'Assigned IC',
-                field: 'assignedToName',
+                accessor: 'assignedToName',
                 type: 'user',
               },
               {
@@ -201,13 +216,15 @@ export const podMetricsScreen: ScreenDefinition = {
                     id: 'follow-up',
                     label: 'Create Follow-up',
                     icon: 'phone',
-                    action: { type: 'modal', modalId: 'create-follow-up' },
+                    type: 'modal',
+                    config: { type: 'modal', modal: 'create-follow-up' },
                   },
                   {
                     id: 'reassign',
                     label: 'Reassign',
                     icon: 'user-plus',
-                    action: { type: 'modal', modalId: 'reassign-job' },
+                    type: 'modal',
+                    config: { type: 'modal', modal: 'reassign-job' },
                   },
                 ],
               },
@@ -233,7 +250,7 @@ export const podMetricsScreen: ScreenDefinition = {
                 id: 'overall-conversion',
                 label: 'Overall Pipeline Efficiency',
                 value: { type: 'field', path: 'conversionMetrics.overall' },
-                format: 'percentage',
+                format: { type: 'percentage' },
                 target: 5,
                 size: 'large',
                 trend: { type: 'field', path: 'conversionMetrics.overallTrend' },
@@ -245,7 +262,7 @@ export const podMetricsScreen: ScreenDefinition = {
             type: 'custom',
             component: 'ConversionFunnelVisualization',
             title: 'Funnel Visualization',
-            span: 'full',
+            span: 4,
           },
           {
             id: 'stage-breakdown',
@@ -255,30 +272,30 @@ export const podMetricsScreen: ScreenDefinition = {
               type: 'field',
               path: 'conversionMetrics.stages',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'stage',
                 header: 'Conversion Stage',
-                field: 'name',
+                path: 'name',
                 type: 'text',
                 primary: true,
               },
               {
                 id: 'target',
                 header: 'Target',
-                field: 'target',
+                accessor: 'target',
                 type: 'percentage',
               },
               {
                 id: 'actual',
                 header: 'Actual',
-                field: 'actual',
+                accessor: 'actual',
                 type: 'percentage',
               },
               {
                 id: 'status',
                 header: 'Status',
-                field: 'status',
+                accessor: 'status',
                 type: 'badge',
                 options: [
                   { value: 'above', label: 'Above Target', color: 'success' },
@@ -290,7 +307,7 @@ export const podMetricsScreen: ScreenDefinition = {
               {
                 id: 'trend',
                 header: 'Trend (30d)',
-                field: 'trend',
+                accessor: 'trend',
                 type: 'trend',
               },
             ],
@@ -331,39 +348,39 @@ export const podMetricsScreen: ScreenDefinition = {
               path: 'icMetrics.ics',
             },
             sortable: true,
-            columns: [
+            columns_config: [
               {
                 id: 'ic',
                 header: 'IC',
-                field: 'name',
+                path: 'name',
                 type: 'user',
                 primary: true,
               },
               {
                 id: 'placements',
                 header: 'Placements/Sprint',
-                field: 'placementsPerSprint',
+                accessor: 'placementsPerSprint',
                 type: 'number',
                 sortable: true,
               },
               {
                 id: 'submissions',
                 header: 'Submissions/Week',
-                field: 'submissionsPerWeek',
+                accessor: 'submissionsPerWeek',
                 type: 'number',
                 sortable: true,
               },
               {
                 id: 'conversion',
                 header: 'Conv. Rate',
-                field: 'conversionRate',
+                accessor: 'conversionRate',
                 type: 'percentage',
                 sortable: true,
               },
               {
                 id: 'vs-avg',
                 header: 'vs Pod Avg',
-                field: 'vsPodAvg',
+                accessor: 'vsPodAvg',
                 type: 'percentage',
                 highlight: {
                   positive: 'success',
@@ -374,7 +391,7 @@ export const podMetricsScreen: ScreenDefinition = {
               {
                 id: 'status',
                 header: 'Status',
-                field: 'status',
+                accessor: 'status',
                 type: 'badge',
                 options: [
                   { value: 'top_performer', label: '⭐ Top Performer', color: 'success' },
@@ -392,45 +409,28 @@ export const podMetricsScreen: ScreenDefinition = {
                     id: 'view-details',
                     label: 'View Details',
                     icon: 'eye',
-                    action: { type: 'panel', panelId: 'ic-detail' },
+                    type: 'modal',
+                    config: { type: 'modal', modal: 'ic-detail' },
                   },
                   {
                     id: 'schedule-1on1',
                     label: 'Schedule 1:1',
                     icon: 'calendar',
-                    action: { type: 'modal', modalId: 'schedule-1on1' },
+                    type: 'modal',
+                    config: { type: 'modal', modal: 'schedule-1on1' },
                   },
                 ],
               },
             ],
           },
-          {
-            id: 'ic-detail-panel',
-            type: 'panel',
-            panelId: 'ic-detail',
-            title: 'IC Performance Detail',
-            sections: [
-              {
-                id: 'ic-summary',
-                type: 'info-card',
-                fields: [
-                  { id: 'placements', label: 'Sprint Placements', path: 'selected.placementsPerSprint' },
-                  { id: 'submissions', label: 'Weekly Submissions', path: 'selected.submissionsPerWeek' },
-                  { id: 'conversion', label: 'Conversion Rate', path: 'selected.conversionRate', format: 'percentage' },
-                ],
-              },
-              {
-                id: 'strengths-concerns',
-                type: 'custom',
-                component: 'StrengthsConcernsPanel',
-              },
-              {
-                id: 'recommended-actions',
-                type: 'custom',
-                component: 'RecommendedActionsPanel',
-              },
-            ],
-          },
+          // TODO: Add panel/modal support to SectionDefinition type
+          // {
+          //   id: 'ic-detail-panel',
+          //   type: 'panel',
+          //   panelId: 'ic-detail',
+          //   title: 'IC Performance Detail',
+          //   sections: [...]
+          // },
         ],
       },
       
@@ -451,7 +451,7 @@ export const podMetricsScreen: ScreenDefinition = {
                 id: 'total-revenue',
                 label: 'Total Pod Revenue',
                 value: { type: 'field', path: 'revenueMetrics.totalRevenue' },
-                format: 'currency',
+                format: { type: 'currency' },
                 target: { type: 'field', path: 'revenueMetrics.targetRevenue' },
                 size: 'large',
               },
@@ -465,14 +465,14 @@ export const podMetricsScreen: ScreenDefinition = {
                 id: 'avg-margin',
                 label: 'Avg Margin/hr',
                 value: { type: 'field', path: 'revenueMetrics.avgMargin' },
-                format: 'currency',
+                format: { type: 'currency' },
                 target: 20,
               },
               {
                 id: 'margin-pct',
                 label: 'Avg Margin %',
                 value: { type: 'field', path: 'revenueMetrics.avgMarginPct' },
-                format: 'percentage',
+                format: { type: 'percentage' },
                 target: 20,
               },
             ],
@@ -485,42 +485,42 @@ export const podMetricsScreen: ScreenDefinition = {
               type: 'field',
               path: 'revenueMetrics.placements',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'placement',
                 header: 'Placement',
-                field: 'candidateName',
+                path: 'candidateName',
                 type: 'link',
-                linkPattern: '/employee/placements/{{id}}',
+                config: { linkPattern: '/employee/placements/{{id}}' },
               },
               {
                 id: 'client',
                 header: 'Client',
-                field: 'clientName',
+                accessor: 'clientName',
                 type: 'text',
               },
               {
                 id: 'bill-rate',
                 header: 'Bill Rate',
-                field: 'billRate',
+                accessor: 'billRate',
                 type: 'currency',
               },
               {
                 id: 'pay-rate',
                 header: 'Pay Rate',
-                field: 'payRate',
+                accessor: 'payRate',
                 type: 'currency',
               },
               {
                 id: 'margin',
                 header: 'Margin',
-                field: 'margin',
+                accessor: 'margin',
                 type: 'currency',
               },
               {
                 id: 'monthly-revenue',
                 header: 'Monthly Revenue',
-                field: 'monthlyRevenue',
+                accessor: 'monthlyRevenue',
                 type: 'currency',
               },
             ],
@@ -530,14 +530,14 @@ export const podMetricsScreen: ScreenDefinition = {
             type: 'custom',
             component: 'RevenueTrendChart',
             title: 'Revenue Trend (6 Months)',
-            span: 'half',
+            span: 2,
           },
           {
             id: 'revenue-by-ic',
             type: 'custom',
             component: 'RevenueByICChart',
             title: 'Revenue per IC',
-            span: 'half',
+            span: 2,
           },
           {
             id: 'margin-quality',
@@ -560,7 +560,7 @@ export const podMetricsScreen: ScreenDefinition = {
             id: 'nps-overview',
             type: 'custom',
             component: 'NPSScoreWidget',
-            span: 'full',
+            span: 4,
           },
           {
             id: 'feedback-breakdown',
@@ -570,24 +570,24 @@ export const podMetricsScreen: ScreenDefinition = {
               type: 'field',
               path: 'satisfactionMetrics.categories',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'category',
                 header: 'Category',
-                field: 'name',
+                path: 'name',
                 type: 'text',
                 primary: true,
               },
               {
                 id: 'avg-rating',
                 header: 'Avg Rating',
-                field: 'avgRating',
+                accessor: 'avgRating',
                 type: 'rating',
               },
               {
                 id: 'status',
                 header: 'Status',
-                field: 'status',
+                accessor: 'status',
                 type: 'badge',
                 options: [
                   { value: 'excellent', label: '✅ Excellent', color: 'success' },
@@ -606,30 +606,30 @@ export const podMetricsScreen: ScreenDefinition = {
               type: 'field',
               path: 'satisfactionMetrics.recentFeedback',
             },
-            columns: [
+            columns_config: [
               {
                 id: 'client',
                 header: 'Client',
-                field: 'clientName',
+                path: 'clientName',
                 type: 'text',
               },
               {
                 id: 'rating',
                 header: 'Rating',
-                field: 'rating',
+                accessor: 'rating',
                 type: 'rating',
               },
               {
                 id: 'comment',
                 header: 'Comment',
-                field: 'comment',
+                accessor: 'comment',
                 type: 'text',
                 truncate: 80,
               },
               {
                 id: 'date',
                 header: 'Date',
-                field: 'createdAt',
+                accessor: 'createdAt',
                 type: 'date',
               },
             ],
@@ -655,112 +655,23 @@ export const podMetricsScreen: ScreenDefinition = {
       id: 'export-report',
       label: 'Export Report',
       icon: 'download',
-      action: { type: 'modal', modalId: 'export-report' },
+      type: 'modal',
+                    config: { type: 'modal', modal: 'export-report' },
       position: 'header',
     },
     {
       id: 'refresh',
       label: 'Refresh',
       icon: 'refresh-cw',
-      action: { type: 'refresh' },
+      type: 'custom',
+      handler: 'refresh',
       position: 'header',
     },
   ],
-  
-  modals: [
-    {
-      id: 'export-report',
-      title: 'Export Pod Performance Report',
-      size: 'medium',
-      sections: [
-        {
-          id: 'export-form',
-          type: 'form',
-          fields: [
-            {
-              id: 'report-type',
-              name: 'reportType',
-              label: 'Report Type',
-              type: 'radio-group',
-              required: true,
-              options: [
-                { value: 'daily', label: 'Daily Summary' },
-                { value: 'sprint', label: 'Sprint Progress Report' },
-                { value: 'ic', label: 'Individual IC Report' },
-                { value: 'pipeline', label: 'Pipeline Health Report' },
-              ],
-            },
-            {
-              id: 'time-period',
-              name: 'timePeriod',
-              label: 'Time Period',
-              type: 'radio-group',
-              required: true,
-              options: [
-                { value: 'current_sprint', label: 'Current Sprint' },
-                { value: 'last_sprint', label: 'Last Sprint' },
-                { value: 'last_30_days', label: 'Last 30 Days' },
-                { value: 'custom', label: 'Custom Range' },
-              ],
-            },
-            {
-              id: 'date-range',
-              name: 'dateRange',
-              label: 'Custom Date Range',
-              type: 'date-range',
-              visible: {
-                type: 'condition',
-                condition: { operator: 'eq', field: 'timePeriod', value: 'custom' },
-              },
-            },
-            {
-              id: 'include-sections',
-              name: 'includeSections',
-              label: 'Include Sections',
-              type: 'checkbox-group',
-              options: [
-                { value: 'sprint', label: 'Sprint Progress' },
-                { value: 'ic_metrics', label: 'Individual IC Metrics' },
-                { value: 'pipeline', label: 'Pipeline Breakdown' },
-                { value: 'activity', label: 'Activity Summary' },
-                { value: 'detailed_activity', label: 'Detailed Activity Log' },
-              ],
-            },
-            {
-              id: 'format',
-              name: 'format',
-              label: 'Format',
-              type: 'radio-group',
-              options: [
-                { value: 'pdf', label: 'PDF' },
-                { value: 'excel', label: 'Excel' },
-                { value: 'csv', label: 'CSV' },
-              ],
-            },
-          ],
-          actions: [
-            {
-              id: 'cancel',
-              label: 'Cancel',
-              variant: 'outline',
-              action: { type: 'close-modal' },
-            },
-            {
-              id: 'generate',
-              label: 'Generate Report',
-              variant: 'default',
-              action: {
-                type: 'mutation',
-                mutation: 'manager.exportReport',
-                onSuccess: { type: 'download' },
-              },
-            },
-          ],
-        },
-      ],
-    },
-  ],
-  
+
+  // TODO: Add modals support to ScreenDefinition type
+  // modals: [...],
+
   keyboardShortcuts: [
     { key: 'r', action: 'refresh', description: 'Refresh metrics' },
     { key: 'x', action: 'modal:export-report', description: 'Export report' },

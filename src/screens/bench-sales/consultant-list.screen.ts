@@ -15,13 +15,13 @@ import type { ScreenDefinition } from '@/lib/metadata/types';
 export const consultantListScreen: ScreenDefinition = {
   id: 'consultant-list',
   type: 'list',
-  entityType: 'bench_consultant',
+  entityType: 'talent',
   title: 'Bench Consultants',
   icon: 'Users',
 
   dataSource: {
     type: 'list',
-    entityType: 'bench_consultant',
+    entityType: 'talent',
     pagination: true,
     pageSize: 25,
     sort: { field: 'days_on_bench', direction: 'desc' },
@@ -97,7 +97,7 @@ export const consultantListScreen: ScreenDefinition = {
           },
           {
             id: 'rate-range',
-            type: 'number-range',
+            type: 'number',
             path: 'filters.rateRange',
             label: 'Rate Range',
             config: { prefix: '$', suffix: '/hr' },
@@ -210,11 +210,11 @@ export const consultantListScreen: ScreenDefinition = {
         selectable: true,
         rowClick: { type: 'navigate', route: '/employee/workspace/bench/consultants/{{id}}' },
         rowActions: [
-          { id: 'view', label: 'View', icon: 'Eye', type: 'navigate', config: { route: '/employee/workspace/bench/consultants/{{id}}' } },
-          { id: 'marketing', label: 'Add to Hotlist', icon: 'Megaphone', type: 'modal', config: { modal: 'add-to-hotlist' } },
-          { id: 'submit', label: 'Submit', icon: 'Send', type: 'modal', config: { modal: 'bench-submission-create' } },
-          { id: 'contact', label: 'Contact', icon: 'Phone', type: 'function', config: { handler: 'initiateCall' } },
-          { id: 'log', label: 'Log Activity', icon: 'Plus', type: 'modal', config: { modal: 'log-activity' } },
+          { id: 'view', label: 'View', icon: 'Eye', type: 'navigate', config: { type: 'navigate', route: '/employee/workspace/bench/consultants/{{id}}' } },
+          { id: 'marketing', label: 'Add to Hotlist', icon: 'Megaphone', type: 'modal', config: { type: 'modal', modal: 'add-to-hotlist' } },
+          { id: 'submit', label: 'Submit', icon: 'Send', type: 'modal', config: { type: 'modal', modal: 'bench-submission-create' } },
+          { id: 'contact', label: 'Contact', icon: 'Phone', type: 'custom', config: { type: 'custom', handler: 'initiateCall' } },
+          { id: 'log', label: 'Log Activity', icon: 'Plus', type: 'modal', config: { type: 'modal', modal: 'log-activity' } },
         ],
         emptyState: {
           title: 'No consultants found',
@@ -273,10 +273,10 @@ export const consultantListScreen: ScreenDefinition = {
     {
       id: 'export',
       label: 'Export',
-      type: 'function',
+      type: 'custom',
       icon: 'Download',
       variant: 'ghost',
-      config: { type: 'function', handler: 'exportConsultants' },
+      config: { type: 'custom', handler: 'exportConsultants' },
     },
   ],
 

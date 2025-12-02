@@ -183,7 +183,7 @@ export function AlertList({ definition, data, context }: SectionWidgetProps) {
             </div>
             <div>
               <CardTitle className="text-lg font-heading font-bold text-charcoal-900">
-                {definition.title || 'Needs Attention'}
+                {(typeof definition.title === 'string' ? definition.title : 'Needs Attention') || 'Needs Attention'}
               </CardTitle>
               <p className="text-sm text-charcoal-500 mt-0.5">
                 {totalAlerts > 0 ? `${totalAlerts} items require action` : 'All clear!'}

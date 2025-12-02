@@ -18,27 +18,43 @@ export const benchDashboardScreen: ScreenDefinition = {
             id: 'total-bench',
             type: 'metric-card',
             label: 'Total on Bench',
-            dataSource: { type: 'aggregate', entityType: 'bench_consultant', method: 'count', filter: { status: 'on_bench' } },
+            dataSource: {
+              type: 'query',
+              query: {
+                procedure: 'bench.countConsultants',
+                params: { status: 'on_bench' }
+              }
+            },
             config: { icon: 'Users', trend: { field: 'delta', positiveColor: 'green' } }
           },
           {
             id: 'utilization',
             type: 'metric-card',
             label: 'Bench Utilization',
-            dataSource: { type: 'aggregate', entityType: 'bench_consultant', method: 'utilization' },
+            dataSource: {
+              type: 'query',
+              query: 'bench.getUtilization'
+            },
             config: { format: { type: 'percentage' } }
           },
           {
             id: 'placements-sprint',
             type: 'metric-card',
             label: 'Sprint Placements',
-            dataSource: { type: 'aggregate', entityType: 'placement', method: 'count', filter: { period: 'current_sprint' } }
+            dataSource: {
+              type: 'list',
+              entityType: 'placement',
+              filter: { period: 'current_sprint' }
+            }
           },
           {
             id: 'avg-days',
             type: 'metric-card',
             label: 'Avg Days on Bench',
-            dataSource: { type: 'aggregate', entityType: 'bench_consultant', method: 'average', field: 'daysOnBench' }
+            dataSource: {
+              type: 'query',
+              query: 'bench.getAverageDaysOnBench'
+            }
           }
         ]
       },
@@ -55,13 +71,13 @@ export const benchDashboardScreen: ScreenDefinition = {
 export const benchListScreen: ScreenDefinition = {
   id: 'bench-list',
   type: 'list',
-  entityType: 'bench_consultant',
+  entityType: 'consultant',
   title: 'My Consultants',
   icon: 'Users',
 
   dataSource: {
     type: 'list',
-    entityType: 'bench_consultant',
+    entityType: 'consultant',
     pagination: true,
     filter: { assignedTo: { type: 'context', path: 'user.id' } }
   },

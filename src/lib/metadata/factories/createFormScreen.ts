@@ -38,7 +38,7 @@ export function createFormScreen(config: FormTemplateConfig): ScreenDefinition {
   const formSections = generateFormSections(sections, entityType);
 
   // Generate submit action
-  const submitAction = generateSubmitAction(submit, entityType, entityDisplayName, entityBasePath, procedures, mode);
+  const submitAction = generateSubmitAction(submit || {}, entityType, entityDisplayName, entityBasePath, procedures, mode);
 
   // Generate cancel action
   const cancelAction = generateCancelAction(cancelRoute ?? entityBasePath, entityPluralName);
@@ -114,7 +114,7 @@ function generateFormSections(sections: FormSectionConfig[], entityType: string)
     };
 
     // Add fields from InputSet
-    if (section.inputSet) {
+    if (typeof section.inputSet === 'string') {
       const inputSet = getInputSet(section.inputSet);
       if (inputSet) {
         sectionDef.fields = inputSet.fields.map((field) => ({
@@ -146,7 +146,7 @@ function generateFormSections(sections: FormSectionConfig[], entityType: string)
  * Generate submit action
  */
 function generateSubmitAction(
-  submit: FormSubmitConfig,
+  submit: FormSubmitConfig | Record<string, never>,
   entityType: string,
   displayName: string,
   basePath: string,

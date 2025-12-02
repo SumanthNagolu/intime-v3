@@ -260,7 +260,7 @@ export function useUpdateAccountTier(options: UpdateAccountOptions = {}) {
 export function useCreatePoc(options: { onSuccess?: (data: unknown) => void; onError?: (error: Error) => void } = {}) {
   const invalidate = useInvalidateAccounts();
 
-  const mutation = trpc.crm.pocs.create.useMutation({
+  const mutation = trpc.crm.contacts.create.useMutation({
     onSuccess: (data, variables) => {
       invalidate.invalidatePocs(variables.accountId);
       options.onSuccess?.(data);
@@ -283,8 +283,8 @@ export function useCreatePoc(options: { onSuccess?: (data: unknown) => void; onE
         email: input.email,
         phone: input.phone,
         title: input.role,
-        isPrimary: input.isPrimary,
-      } as Parameters<typeof mutation.mutateAsync>[0]);
+        contactType: 'client_poc',
+      });
     },
     isCreating: mutation.isPending,
     error: mutation.error,
@@ -302,15 +302,15 @@ export interface UpdatePOCInput extends Partial<CreatePOCInput> {
 export function useUpdatePoc(options: { onSuccess?: (data: unknown) => void; onError?: (error: Error) => void } = {}) {
   const invalidate = useInvalidateAccounts();
 
-  const mutation = trpc.crm.pocs.update.useMutation({
-    onSuccess: (data, _variables) => {
+  const mutation = trpc.crm.contacts.update.useMutation({
+    onSuccess: (data: unknown, _variables: unknown) => {
       // POC update needs accountId for cache invalidation
       // This might need adjustment based on actual return type
       invalidate.invalidateAll();
       options.onSuccess?.(data);
     },
-    onError: (error) => {
-      options.onError?.(error as unknown as Error);
+    onError: (error: unknown) => {
+      options.onError?.(error as Error);
     },
   });
 
@@ -329,13 +329,13 @@ export function useUpdatePoc(options: { onSuccess?: (data: unknown) => void; onE
 export function useDeletePoc(options: { onSuccess?: () => void; onError?: (error: Error) => void } = {}) {
   const invalidate = useInvalidateAccounts();
 
-  const mutation = trpc.crm.pocs.delete.useMutation({
+  const mutation = trpc.crm.contacts.delete.useMutation({
     onSuccess: () => {
       invalidate.invalidateAll();
       options.onSuccess?.();
     },
-    onError: (error) => {
-      options.onError?.(error as unknown as Error);
+    onError: (error: unknown) => {
+      options.onError?.(error as Error);
     },
   });
 

@@ -9,7 +9,8 @@ describe('Job List Screen', () => {
   });
 
   it('should have appropriate columns', () => {
-    const tableSection = jobListScreen.layout.sections?.find(s => s.type === 'table');
+    expect(jobListScreen.layout).toBeDefined();
+    const tableSection = jobListScreen.layout?.sections?.find(s => s.type === 'table');
     const columns = tableSection?.columns_config?.map(c => c.id) || [];
     expect(columns).toContain('title');
     expect(columns).toContain('account');

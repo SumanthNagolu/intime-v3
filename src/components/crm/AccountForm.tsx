@@ -258,18 +258,43 @@ export function AccountForm({ mode = 'create', accountId }: AccountFormProps) {
       return;
     }
 
+    // Helper to capitalize for display values (database uses lowercase, display uses Title Case)
+    const capitalizeFirst = (str: string): string => {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    };
+
+    // Map form values (lowercase) to display values (capitalized) for CreateAccountInput
+    const statusMap: Record<string, 'Prospect' | 'Active' | 'Hold' | 'Churned'> = {
+      'prospect': 'Prospect',
+      'active': 'Active',
+      'inactive': 'Hold',
+      'churned': 'Churned',
+    };
+
+    const responsivenessMap: Record<string, 'High' | 'Medium' | 'Low'> = {
+      'high': 'High',
+      'medium': 'Medium',
+      'low': 'Low',
+    };
+
+    const qualityMap: Record<string, 'Quality' | 'Speed' | 'Quantity'> = {
+      'premium': 'Quality',
+      'standard': 'Speed',
+      'budget': 'Quantity',
+    };
+
     const accountInput = {
       name: formData.name,
       industry: formData.industry || undefined,
       companyType: (formData.companyType || undefined) as 'direct_client' | 'implementation_partner' | 'msp_vms' | 'system_integrator' | 'staffing_agency' | 'vendor' | undefined,
-      status: (formData.status || 'prospect') as 'prospect' | 'active' | 'inactive' | 'churned',
-      tier: (formData.tier || undefined) as 'enterprise' | 'mid_market' | 'smb' | 'strategic' | undefined,
+      status: statusMap[formData.status] || 'Prospect',
+      tier: formData.tier || undefined,
       website: formData.website || undefined,
       phone: formData.phone || undefined,
       headquartersLocation: formData.headquartersLocation || undefined,
       description: formData.description || undefined,
-      responsiveness: (formData.responsiveness || undefined) as 'high' | 'medium' | 'low' | undefined,
-      preferredQuality: (formData.preferredQuality || undefined) as 'premium' | 'standard' | 'budget' | undefined,
+      responsiveness: formData.responsiveness ? responsivenessMap[formData.responsiveness] : undefined,
+      preference: formData.preferredQuality ? qualityMap[formData.preferredQuality] : undefined,
       contractStartDate: formData.contractStartDate ? new Date(formData.contractStartDate) : undefined,
       contractEndDate: formData.contractEndDate ? new Date(formData.contractEndDate) : undefined,
       paymentTermsDays: formData.paymentTermsDays ? parseInt(formData.paymentTermsDays) : undefined,

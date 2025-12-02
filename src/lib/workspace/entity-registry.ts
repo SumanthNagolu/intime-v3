@@ -27,18 +27,46 @@ export type EntityType =
   | 'deal'
   | 'job'
   | 'talent'
+  | 'candidate' // Alias for talent in recruiting context
   | 'submission'
   | 'contact'
   | 'job_order'
+  // Recruiting entity types
+  | 'interview'
+  | 'placement'
+  | 'activity'
   // HR entity types
   | 'employee'
   | 'onboarding'
   | 'timeoff'
+  | 'timesheet'
   | 'payroll'
   | 'benefit_plan'
   | 'performance'
   | 'compliance'
-  | 'pod';
+  | 'pod'
+  // Manager/Operations entity types
+  | 'escalation'
+  | 'approval'
+  | 'one_on_one'
+  | 'sprint'
+  | 'coaching_note'
+  | 'raci_item'
+  // Consultant entity types
+  | 'consultant'
+  | 'hotlist'
+  // Bench Sales entity types
+  | 'vendor'
+  | 'immigration_case'
+  | 'marketing_profile'
+  | 'vendor_consultant'
+  // TA (Talent Acquisition) entity types
+  | 'campaign'
+  | 'internalJob'
+  | 'internalCandidate'
+  | 'trainingApplication'
+  | 'trainingEnrollment'
+  | 'trainingPlacement';
 
 export interface EntityStatus {
   label: string;
@@ -142,7 +170,7 @@ const SUBMISSION_STATUSES: Record<string, EntityStatus> = {
 // ENTITY CONFIGURATIONS
 // =====================================================
 
-export const entityRegistry: Record<EntityType, EntityConfig> = {
+export const entityRegistry: Partial<Record<EntityType, EntityConfig>> = {
   lead: {
     type: 'lead',
     name: 'Lead',

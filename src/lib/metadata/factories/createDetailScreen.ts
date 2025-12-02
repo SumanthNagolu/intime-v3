@@ -30,32 +30,53 @@ import { toBadgeColorsMap } from '../options/crm-options';
 /**
  * Create a detail screen from template config
  */
-export function createDetailScreen(config: DetailTemplateConfig): ScreenDefinition {
+export function createDetailScreen(config: DetailTemplateConfig & {
+  entityType?: string;
+  domain?: string;
+  displayName?: string;
+  pluralName?: string;
+  procedures?: {
+    list?: string;
+    getById?: string;
+    create?: string;
+    update?: string;
+    delete?: string;
+  };
+  titleField?: string;
+  subtitleField?: string;
+}): ScreenDefinition {
   const {
     entityType,
+    entityId,
+    entityName,
     domain,
     displayName,
     pluralName,
     procedures,
     basePath,
     titleField,
+    titleTemplate,
     subtitleField,
+    subtitleTemplate,
     sidebar,
     tabs,
     headerActions,
     editable = true,
+    dataSource,
   } = config;
 
-  const entityDisplayName = displayName ?? capitalizeFirst(entityType);
+  const actualEntityType = entityType ?? entityId;
+  const actualDomain = domain ?? 'employee';
+  const entityDisplayName = displayName ?? entityName ?? capitalizeFirst(actualEntityType);
   const entityPluralName = pluralName ?? pluralize(entityDisplayName);
-  const entityBasePath = basePath ?? getBasePath(domain, entityType);
-  const getByIdProcedure = procedures.getById ?? getProcedureName(domain, entityType, 'getById');
+  const entityBasePath = basePath;
+  const getByIdProcedure = dataSource?.getProcedure ?? procedures?.getById ?? getProcedureName(actualDomain, actualEntityType, 'getById');
 
   // Build sidebar section
-  const sidebarSection = sidebar ? generateSidebarSection(sidebar, entityType) : undefined;
+  const sidebarSection = sidebar ? generateSidebarSection(sidebar, actualEntityType) : undefined;
 
   // Build tabs
-  const tabDefs = generateTabs(tabs, entityType, domain);
+  const tabDefs = generateTabs(tabs, actualEntityType, actualDomain);
 
   // Generate actions
   const actions = generateDetailActions(
@@ -63,22 +84,24 @@ export function createDetailScreen(config: DetailTemplateConfig): ScreenDefiniti
       { id: 'edit', type: 'edit' },
       { id: 'delete', type: 'delete' },
     ],
-    entityType,
+    actualEntityType,
     entityDisplayName,
     entityBasePath,
-    procedures.delete ?? getProcedureName(domain, entityType, 'delete'),
+    procedures?.delete ?? getProcedureName(actualDomain, actualEntityType, 'delete'),
     editable
   );
 
   return {
-    id: `${entityType}-detail`,
+    id: `${actualEntityType}-detail`,
     type: 'detail',
-    entityType: entityType as import('@/lib/workspace/entity-registry').EntityType,
+    entityType: actualEntityType as import('@/lib/workspace/entity-registry').EntityType,
 
-    title: fieldValue(titleField),
+    title: fieldValue(titleField ?? titleTemplate ?? 'name'),
     subtitle: subtitleField
       ? fieldValue(subtitleField)
-      : `${entityDisplayName} Details`,
+      : subtitleTemplate
+        ? fieldValue(subtitleTemplate)
+        : `${entityDisplayName} Details`,
 
     dataSource: {
       type: 'query',
@@ -90,7 +113,7 @@ export function createDetailScreen(config: DetailTemplateConfig): ScreenDefiniti
 
     layout: {
       type: sidebar ? 'sidebar-main' : 'tabs',
-      sidebarWidth: sidebar?.width ?? 'md',
+      sidebarWidth: (typeof sidebar?.width === 'string' ? sidebar.width : 'md') as 'sm' | 'md' | 'lg',
       sidebarPosition: sidebar?.position ?? 'right',
       sidebar: sidebarSection,
       tabs: tabDefs,
@@ -104,9 +127,9 @@ export function createDetailScreen(config: DetailTemplateConfig): ScreenDefiniti
         route: entityBasePath,
       },
       breadcrumbs: [
-        { label: capitalizeFirst(domain), route: `/employee/${domain}` },
+        { label: capitalizeFirst(actualDomain), route: `/employee/${actualDomain}` },
         { label: entityPluralName, route: entityBasePath },
-        { label: fieldValue(titleField) },
+        { label: fieldValue(titleField ?? titleTemplate ?? 'name') },
       ],
     },
   };
@@ -119,7 +142,9 @@ function generateSidebarSection(
   config: SidebarConfig,
   entityType: string
 ): SectionDefinition {
-  const fields: FieldDefinition[] = config.fields.map((f) => {
+  // Extract fields from sections if they exist, otherwise use empty array
+  const sidebarFields = config.sections?.[0]?.fields ?? [];
+  const fields: FieldDefinition[] = sidebarFields.map((f) => {
     const field: FieldDefinition = {
       id: f.id,
       label: f.label,
@@ -236,16 +261,16 @@ function generateDetailSection(
 ): SectionDefinition {
   const section: SectionDefinition = {
     id: config.id ?? `${tabId}-section`,
-    type: config.type ?? 'field-grid',
+    type: (config.type ?? 'field-grid') as SectionDefinition['type'],
     title: config.title,
-    columns: config.columns ?? 2,
+    columns: (typeof config.columns === 'number' ? config.columns : 2) as number,
     collapsible: config.collapsible ?? false,
     defaultExpanded: config.defaultExpanded ?? true,
     editable: config.editable ?? true,
   };
 
   // Add fields from InputSet
-  if (config.inputSet) {
+  if (typeof config.inputSet === 'string') {
     const inputSet = getInputSet(config.inputSet);
     if (inputSet) {
       section.fields = inputSet.fields;

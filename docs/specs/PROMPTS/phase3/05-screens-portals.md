@@ -4,329 +4,421 @@ Copy everything below the line and paste into Claude Code CLI:
 
 ---
 
-Use the metadata skill.
+Use the metadata skill and frontend skill.
 
-Create Client Portal and Candidate Portal screens for InTime v3.
+Create/Update Client Portal, Candidate Portal, and Academy Portal screens for InTime v3.
 
-## Read First:
-- docs/specs/20-USER-ROLES/11-client-portal/00-OVERVIEW.md
-- docs/specs/20-USER-ROLES/11-client-portal/02-review-submissions.md
-- docs/specs/20-USER-ROLES/11-client-portal/03-schedule-interviews.md
-- docs/specs/20-USER-ROLES/11-client-portal/04-manage-placements.md
-- docs/specs/20-USER-ROLES/12-candidate-portal/00-OVERVIEW.md
-- docs/specs/20-USER-ROLES/12-candidate-portal/04-track-applications.md
-- docs/specs/20-USER-ROLES/12-candidate-portal/06-search-apply-jobs.md
+## Read First (Required):
+- docs/specs/20-USER-ROLES/11-client-portal/00-OVERVIEW.md (Client portal spec)
+- docs/specs/20-USER-ROLES/12-candidate-portal/00-OVERVIEW.md (Candidate portal spec)
+- docs/specs/20-USER-ROLES/13-academy/00-OVERVIEW.md (Academy portal spec if exists)
+- docs/specs/01-GLOSSARY.md (Business terms)
+- CLAUDE.md (Tech stack)
 
-## Create Client Portal Screens (src/app/(portal)/client/):
+## Read Existing Code:
+- src/app/auth/client/page.tsx (Client auth)
+- src/app/auth/talent/page.tsx (Candidate/talent auth)
+- src/app/auth/academy/page.tsx (Academy auth)
+- src/components/academy/ (Academy components)
+- src/lib/metadata/types.ts (ScreenDefinition type)
 
-### 1. Client Dashboard (/client)
-File: page.tsx
+## Context:
+- Portals are EXTERNAL facing (clients, candidates, learners)
+- Separate auth flows from employee system
+- Clean, professional, mobile-first design
+- Minimal JS, fast loading
+- Accessibility compliant
+
+---
+
+## Client Portal Screens (src/app/client/):
+
+### 1. Client Dashboard
+File: page.tsx OR use ScreenRenderer with client-dashboard.screen.ts
+Route: `/client`
 
 Layout:
 - Welcome banner (company name, primary contact)
 - Quick stats row:
-  - Active Jobs
-  - Pending Submissions
+  - Active Jobs count
+  - Pending Submissions (awaiting review)
   - Upcoming Interviews
   - Active Placements
 - Two-column:
-  - Left: Pending Actions (submissions to review, interviews to schedule)
+  - Left: Pending Actions card (submissions to review, interviews to schedule)
   - Right: Recent Activity feed
-- Bottom: Active Placements overview
+- Bottom: Active Placements summary
 
-### 2. Jobs List (/client/jobs)
-File: jobs/page.tsx
+### 2. Jobs List (Client View)
+Route: `/client/jobs`
 
-Layout:
-- Page header: "Your Jobs"
-- Jobs cards/table: title, status, submissions count, interviews, positions
-- Filters: Status, Date range
+Client's job orders:
+- Table/Cards: title, status, positionsCount, submissionsCount, interviewsCount, createdAt
+- Status filter: Open, Filled, On Hold, Cancelled
 - Click → Job detail
 
-### 3. Job Detail (/client/jobs/[id])
-File: jobs/[id]/page.tsx
+### 3. Job Detail (Client View)
+Route: `/client/jobs/[id]`
 
-Layout:
-- Job header: Title, Status, Posted date
-- Job description, requirements
-- Tabs:
-  - Submissions: Candidates submitted for review
-  - Interviews: Scheduled/completed interviews
-  - Placements: Filled positions
-- Actions: Request More Candidates
+Tabs:
+- Details: Job description, requirements, rates (if visible)
+- Submissions: Candidates submitted for this job (review queue)
+- Interviews: Scheduled and completed interviews
+- Placements: Hired candidates
 
-### 4. Submissions Review (/client/submissions)
-File: submissions/page.tsx
+Actions: Request More Candidates, Edit Requirements, Put On Hold
 
-Layout:
-- Pending submissions queue
-- Submission cards with:
-  - Candidate summary (anonymized or full based on settings)
-  - Skills match indicators
-  - Rate
-  - Quick actions: View Profile, Shortlist, Reject, Request Interview
-- Filters: Job, Status
+### 4. Submissions Review Queue
+Route: `/client/submissions`
 
-### 5. Submission Detail (/client/submissions/[id])
-File: submissions/[id]/page.tsx
+All pending submissions across jobs:
+- Cards with candidate summary (may be anonymized)
+- Skills match percentage
+- Rate (if disclosed)
+- Quick actions: View Profile, Shortlist, Reject, Request Interview
 
-Layout:
-- Candidate profile view (as shared by recruiter)
-- Resume viewer
-- Skills matrix
+Filters: Job, Status (pending/shortlisted/rejected)
+
+### 5. Submission Detail (Client View)
+Route: `/client/submissions/[id]`
+
+Candidate review screen:
+- Profile as shared (may hide some details)
+- Resume viewer (embedded)
+- Skills matrix with job requirements match
 - Work history
 - Rate information
-- Actions: Shortlist, Reject, Request Interview
-- Feedback form
+- Screening question answers
 
-### 6. Interviews (/client/interviews)
-File: interviews/page.tsx
+Actions: Shortlist, Reject (with reason), Request Interview
+Feedback form: Required feedback on decision
 
-Layout:
-- View toggle: Calendar | List
+### 6. Interviews (Client View)
+Route: `/client/interviews`
+
+Views: Calendar | List
 - Upcoming interviews
 - Past interviews (with feedback status)
-- Actions: View Details, Provide Feedback
-- Schedule new interview (for shortlisted candidates)
+- Interview cards: candidate, date, time, type, interviewers
 
-### 7. Interview Detail (/client/interviews/[id])
-File: interviews/[id]/page.tsx
+Actions: View Details, Provide Feedback, Reschedule
 
-Layout:
-- Interview info: Date, Time, Type, Duration
+### 7. Interview Detail (Client View)
+Route: `/client/interviews/[id]`
+
+- Date, Time, Type, Duration
 - Candidate summary
-- Meeting link/location
-- Interviewers list
-- Actions: Reschedule, Cancel
-- Feedback form (post-interview)
+- Meeting link or location
+- Interviewers from client side
+- Preparation materials (if provided)
+- Post-interview: Feedback form (rating, comments, decision)
 
-### 8. Placements (/client/placements)
-File: placements/page.tsx
+Actions: Reschedule, Cancel, Submit Feedback
 
-Layout:
-- Active placements grid
-- Placement cards: consultant, role, start date, rate, status
-- Historical placements
-- Filters: Status, Date range
+### 8. Placements (Client View)
+Route: `/client/placements`
 
-### 9. Placement Detail (/client/placements/[id])
-File: placements/[id]/page.tsx
+Active and historical placements:
+- Cards: consultant name, role, start date, end date, status
+- Filters: Status (active/completed), Date range
 
-Layout:
-- Placement header: Consultant name, Role, Status
-- Contract info: Start date, End date, Rate
-- Performance notes
-- Extension request option
+### 9. Placement Detail (Client View)
+Route: `/client/placements/[id]`
+
+- Consultant profile
+- Contract info: Start, End, Rate
+- Performance check-ins (if shared)
+- Extension request form
 - Issue reporting
 
-### 10. Reports (/client/reports)
-File: reports/page.tsx
+### 10. Client Reports
+Route: `/client/reports`
 
-Layout:
-- Available reports:
-  - Hiring activity
-  - Time to fill
-  - Placement history
-  - Spending summary
-- Export options
+Available reports:
+- Hiring Activity (jobs, submissions, interviews)
+- Time to Fill Analysis
+- Placement History
+- Spending Summary
+- Diversity Report (if enabled)
 
-### 11. Settings (/client/settings)
-File: settings/page.tsx
+Export: PDF, Excel
 
-Layout:
-- Account preferences
-- Notification settings
-- Team members (invite/manage)
-- Integration settings
+### 11. Client Settings
+Route: `/client/settings`
+
+Sections:
+- Account Preferences (notification frequency, communication)
+- Team Members (invite colleagues, manage access)
+- Billing Preferences
+- Integration Settings (calendar sync)
 
 ---
 
-## Create Candidate Portal Screens (src/app/(portal)/candidate/):
+## Candidate Portal Screens (src/app/talent/ or src/app/candidate/):
 
-### 12. Candidate Dashboard (/candidate)
-File: page.tsx
+### 12. Candidate Dashboard
+Route: `/talent`
 
 Layout:
 - Welcome banner (candidate name)
-- Profile completeness indicator
+- Profile completeness indicator (progress bar)
 - Quick stats: Active Applications, Interviews Scheduled, Offers Pending
 - Two-column:
   - Left: Application status updates
   - Right: Recommended jobs
-- Bottom: Upcoming interviews
+- Bottom: Upcoming interviews card
 
-### 13. My Profile (/candidate/profile)
-File: profile/page.tsx
+### 13. My Profile
+Route: `/talent/profile`
 
-Layout:
-- Profile completeness bar
-- Sections (accordion or tabs):
-  - Personal Info
-  - Contact Information
-  - Work Experience
-  - Education
-  - Skills
-  - Preferences (job type, location, rate)
-  - Documents (resume, certifications)
-- Edit capabilities per section
+Profile editor with sections:
+- Personal Info (name, location, contact)
+- Work Experience (add/edit/remove)
+- Education
+- Skills (tag input with proficiency)
+- Work Preferences (job type, location, rate, remote preference)
+- Documents (resume upload, certifications)
 
-### 14. Job Search (/candidate/jobs)
-File: jobs/page.tsx
+Profile completeness indicator per section
+Save progress automatically
 
-Layout:
-- Search bar with filters
+### 14. Job Search
+Route: `/talent/jobs`
+
+Search and browse jobs:
+- Search bar with autocomplete
 - Filter sidebar:
-  - Job type (contract, FTE, C2H)
-  - Work mode (remote, hybrid, onsite)
-  - Location
-  - Salary/Rate range
+  - Job type (Contract, FTE, Contract-to-Hire)
+  - Work mode (Remote, Hybrid, Onsite)
+  - Location (with radius)
+  - Rate/Salary range
   - Skills
-- Job cards grid:
+  - Company
+- Job cards:
   - Title, Company, Location, Type
-  - Brief description
-  - Match score (if applicable)
+  - Rate range (if shown)
+  - Match score (based on profile)
+  - Posted date
   - Save / Apply buttons
-- Pagination or infinite scroll
 
-### 15. Job Detail (/candidate/jobs/[id])
-File: jobs/[id]/page.tsx
+Pagination or infinite scroll
 
-Layout:
+### 15. Job Detail (Candidate View)
+Route: `/talent/jobs/[id]`
+
 - Job header: Title, Company, Location, Type
 - Full description
-- Requirements list
-- Skills required (with match indicators if logged in)
-- Company info summary
-- Apply button (prominent)
+- Requirements with match indicators (green check / yellow partial / red missing)
+- Skills required (matched against profile)
+- Company info
+- Apply button (prominent CTA)
 - Save for later
+- Share job
 - Similar jobs
 
-### 16. Application Flow (/candidate/jobs/[id]/apply)
-File: jobs/[id]/apply/page.tsx
+### 16. Application Flow
+Route: `/talent/jobs/[id]/apply`
 
-Layout:
-- Multi-step form:
-  1. Review Profile (confirm info is current)
-  2. Screening Questions (from job)
-  3. Cover Letter (optional)
-  4. Availability & Rate
-  5. Review & Submit
-- Progress indicator
-- Save draft option
+Multi-step application:
+1. Review Profile: Confirm info is current
+2. Screening Questions: Answer job-specific questions
+3. Cover Letter: Optional personalized message
+4. Availability & Rate: When can you start? Rate expectations
+5. Review & Submit: Final review before submission
 
-### 17. My Applications (/candidate/applications)
-File: applications/page.tsx
+Progress indicator
+Save draft option
 
-Layout:
-- Applications list by status:
-  - Active (Submitted, Under Review, Interviewing)
-  - Completed (Offered, Placed, Rejected, Withdrawn)
-- Application cards:
-  - Job title, Company
-  - Status badge
-  - Applied date
-  - Last activity
-- Click → Application detail
-- Withdraw action (for active)
+### 17. My Applications
+Route: `/talent/applications`
 
-### 18. Application Detail (/candidate/applications/[id])
-File: applications/[id]/page.tsx
+Applications by status:
+- Active: Submitted, Under Review, Interviewing
+- Completed: Offered, Placed, Rejected, Withdrawn
 
-Layout:
-- Application status timeline
+Application cards:
+- Job title, Company
+- Status badge
+- Applied date
+- Last activity
+
+Click → Application detail
+Withdraw action (for active applications)
+
+### 18. Application Detail
+Route: `/talent/applications/[id]`
+
+- Status timeline (visual)
 - Job summary
 - Submitted information
 - Upcoming interview (if scheduled)
-- Messages/Notes from recruiter
+- Messages from recruiter
 - Actions: Withdraw, Update Availability
 
-### 19. Interviews (/candidate/interviews)
-File: interviews/page.tsx
+### 19. Interviews (Candidate View)
+Route: `/talent/interviews`
 
-Layout:
-- Upcoming interviews list
-- Interview cards:
-  - Company, Position
-  - Date, Time, Type
-  - Location/Meeting link
-  - Interviewer names
-- Calendar view option
-- Past interviews with feedback (if shared)
-
-### 20. Interview Detail (/candidate/interviews/[id])
-File: interviews/[id]/page.tsx
-
-Layout:
-- Interview info: Date, Time, Type, Duration
-- Company and position
-- Interviewers (with LinkedIn if provided)
+Upcoming and past interviews:
+- Calendar or list view
+- Interview cards: Company, Position, Date, Time, Type
 - Meeting link or location
-- Preparation tips
-- Company research links
+- Interviewers (if provided)
 - Add to calendar button
 
-### 21. Offers (/candidate/offers)
-File: offers/page.tsx
+### 20. Interview Detail (Candidate View)
+Route: `/talent/interviews/[id]`
 
-Layout:
-- Pending offers
-- Offer cards:
-  - Position, Company
-  - Compensation summary
-  - Start date
-  - Expiry date
-  - Accept/Decline buttons
-- Offer history
+- Full interview info
+- Company research links
+- Interviewers (with LinkedIn if provided)
+- Preparation tips
+- Meeting link with one-click join
+- Add to Google/Outlook calendar
 
-### 22. Offer Detail (/candidate/offers/[id])
-File: offers/[id]/page.tsx
+### 21. Offers
+Route: `/talent/offers`
 
-Layout:
-- Offer letter view
+Pending and past offers:
+- Offer cards: Position, Company, Compensation, Start date, Expiry
+- Accept / Decline buttons
+- Expiry countdown for pending offers
+
+### 22. Offer Detail
+Route: `/talent/offers/[id]`
+
+- Offer letter view (PDF or rendered)
 - Compensation breakdown
 - Benefits summary
 - Terms and conditions
-- Accept/Decline actions
+- Accept / Decline with confirmation
 - Negotiate button (if enabled)
-- Expiry countdown
 
-### 23. Saved Jobs (/candidate/saved)
-File: saved/page.tsx
+### 23. Saved Jobs
+Route: `/talent/saved`
 
-Layout:
-- Saved jobs list
-- Quick apply option
+Saved job list:
+- Quick apply from saved
 - Remove from saved
 - Sort by date saved
 
-### 24. Settings (/candidate/settings)
-File: settings/page.tsx
+### 24. Candidate Settings
+Route: `/talent/settings`
 
-Layout:
 - Notification preferences
 - Privacy settings (profile visibility)
+- Job alert subscriptions
 - Password change
-- Account deletion
+- Account deletion request
 
-## Screen Metadata:
-Create metadata in:
-- src/lib/metadata/screens/client-portal/
-- src/lib/metadata/screens/candidate-portal/
+---
+
+## Academy Portal Screens (src/app/academy/ or src/app/training/):
+
+### 25. Academy Dashboard
+Route: `/training`
+
+Per academy skill:
+- XP Progress bar
+- Current streak display (with flame animation)
+- Active courses
+- Recently completed
+- Achievements/Badges
+- Leaderboard (optional)
+
+### 26. Courses Catalog
+Route: `/training/courses`
+
+Browse courses:
+- Categories: Technical, Soft Skills, Compliance, Role-specific
+- Course cards: Title, Duration, XP reward, Difficulty
+- Progress indicator if started
+- Filters: Category, Duration, Skill level
+
+### 27. Course Detail
+Route: `/training/courses/[id]`
+
+- Course overview
+- Lessons list with checkmarks
+- Estimated time
+- XP reward
+- Prerequisites
+- Start / Continue button
+
+### 28. Lesson View
+Route: `/training/courses/[courseId]/lessons/[lessonId]`
+
+- Video or content area
+- Progress tracker
+- Quiz/Assessment (if applicable)
+- Next lesson navigation
+- Mark complete
+
+### 29. My Learning
+Route: `/training/my-learning`
+
+- In-progress courses
+- Completed courses
+- Certificates earned
+- XP history
+
+### 30. Certificates
+Route: `/training/certificates`
+
+- Earned certificates grid
+- Download/Print options
+- Share to LinkedIn
+
+### 31. Achievements
+Route: `/training/achievements`
+
+- Badges/Achievements earned
+- Progress toward next badges
+- Streak history
+
+## Screen Definition Pattern:
+```typescript
+// For portal screens using metadata
+import type { ScreenDefinition } from '@/lib/metadata/types';
+
+export const portalScreenName: ScreenDefinition = {
+  id: 'portal-screen-id',
+  type: 'list' | 'detail' | 'dashboard',
+  title: 'Screen Title',
+
+  // Portal-specific: public or authenticated
+  auth: {
+    required: true,
+    portalType: 'client' | 'candidate' | 'academy',
+  },
+
+  dataSource: {
+    type: 'query',
+    query: { procedure: 'portal.procedure' },
+  },
+
+  layout: { /* sections */ },
+};
+```
 
 ## Requirements:
 - Clean, professional design for external users
 - Mobile-first (candidates often use phones)
-- Fast loading (minimal JS)
-- Accessibility compliant
+- Fast loading (code-split, minimal JS)
+- Accessibility compliant (WCAG 2.1 AA)
 - Clear call-to-actions
 - Progress indicators
-- Email notification integration points
+- Email notification integration
+- SEO friendly for job listings
 
 ## Authentication:
-- Separate auth flow for portals
+- Separate auth flow from employee system
 - Magic link option for candidates
-- SSO for client users (if configured)
+- SSO for enterprise clients (if configured)
+- Remember me option
+- Session timeout handling
 
 ## After Screens:
-- Add routes to portal navigation
-- Export screen metadata
+1. Create screen definitions in src/screens/portals/
+2. Create routes in src/app/client/, src/app/talent/, src/app/training/
+3. Update portal navigation configs
+4. Test mobile responsiveness

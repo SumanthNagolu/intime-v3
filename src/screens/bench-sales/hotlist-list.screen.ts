@@ -14,13 +14,13 @@ import type { ScreenDefinition } from '@/lib/metadata';
 const HOTLIST_STATUS_OPTIONS = [
   { value: 'active', label: 'Active' },
   { value: 'archived', label: 'Archived' },
-] as const;
+];
 
 const HOTLIST_PURPOSE_OPTIONS = [
   { value: 'general', label: 'General' },
   { value: 'client_specific', label: 'Client Specific' },
   { value: 'skill_specific', label: 'Skill Specific' },
-] as const;
+];
 
 // ==========================================
 // COLUMN DEFINITIONS
@@ -117,7 +117,7 @@ export const hotlistListScreen: ScreenDefinition = {
   // Data source
   dataSource: {
     type: 'list',
-    entity: 'hotlist',
+    entityType: 'hotlist',
     procedure: 'bench.hotlists.list',
     defaultSort: { field: 'createdAt', direction: 'desc' },
     defaultPageSize: 25,
@@ -159,7 +159,7 @@ export const hotlistListScreen: ScreenDefinition = {
           },
         ],
         dataSource: {
-          type: 'query',
+          type: 'custom',
           query: {
             procedure: 'bench.hotlists.getStats',
           },
@@ -174,21 +174,21 @@ export const hotlistListScreen: ScreenDefinition = {
           {
             id: 'search',
             label: 'Search',
-            type: 'search',
+            type: 'text',
             path: 'search',
             config: { placeholder: 'Search hotlists...' },
           },
           {
             id: 'status',
             label: 'Status',
-            type: 'multi-select',
+            type: 'multiselect',
             path: 'filters.status',
             options: HOTLIST_STATUS_OPTIONS,
           },
           {
             id: 'purpose',
             label: 'Purpose',
-            type: 'multi-select',
+            type: 'multiselect',
             path: 'filters.purpose',
             options: HOTLIST_PURPOSE_OPTIONS,
           },
@@ -205,6 +205,84 @@ export const hotlistListScreen: ScreenDefinition = {
           type: 'navigate',
           route: '/employee/bench/hotlists/{{id}}',
         },
+        rowActions: [
+          {
+            id: 'view',
+            label: 'View',
+            icon: 'Eye',
+            type: 'navigate',
+            config: {
+              type: 'navigate',
+              route: '/employee/bench/hotlists/{{id}}',
+            },
+          },
+          {
+            id: 'edit',
+            label: 'Edit',
+            icon: 'Pencil',
+            type: 'navigate',
+            config: {
+              type: 'navigate',
+              route: '/employee/bench/hotlists/{{id}}/edit',
+            },
+          },
+          {
+            id: 'send',
+            label: 'Send',
+            icon: 'Send',
+            type: 'modal',
+            config: {
+              type: 'modal',
+              modal: 'SendHotlistModal',
+              props: { hotlistId: '{{id}}' },
+            },
+          },
+          {
+            id: 'duplicate',
+            label: 'Duplicate',
+            icon: 'Copy',
+            type: 'mutation',
+            config: {
+              type: 'mutation',
+              procedure: 'bench.hotlists.duplicate',
+              input: { id: '{{id}}' },
+            },
+          },
+          {
+            id: 'archive',
+            label: 'Archive',
+            icon: 'Archive',
+            type: 'mutation',
+            variant: 'secondary',
+            config: {
+              type: 'mutation',
+              procedure: 'bench.hotlists.archive',
+              input: { id: '{{id}}' },
+            },
+            visible: {
+              type: 'condition',
+              condition: { field: 'status', operator: 'eq', value: 'active' },
+            },
+          },
+          {
+            id: 'delete',
+            label: 'Delete',
+            icon: 'Trash',
+            type: 'mutation',
+            variant: 'destructive',
+            config: {
+              type: 'mutation',
+              procedure: 'bench.hotlists.delete',
+              input: { id: '{{id}}' },
+            },
+            confirm: {
+              title: 'Delete Hotlist',
+              message: 'Are you sure you want to delete this hotlist? This action cannot be undone.',
+              confirmLabel: 'Delete',
+              destructive: true,
+            },
+          },
+        ],
       },
     ],
   },
@@ -231,86 +309,6 @@ export const hotlistListScreen: ScreenDefinition = {
       config: {
         type: 'custom',
         handler: 'handleExport',
-      },
-    },
-  ],
-
-  // Row actions
-  rowActions: [
-    {
-      id: 'view',
-      label: 'View',
-      icon: 'Eye',
-      type: 'navigate',
-      config: {
-        type: 'navigate',
-        route: '/employee/bench/hotlists/{{id}}',
-      },
-    },
-    {
-      id: 'edit',
-      label: 'Edit',
-      icon: 'Pencil',
-      type: 'navigate',
-      config: {
-        type: 'navigate',
-        route: '/employee/bench/hotlists/{{id}}/edit',
-      },
-    },
-    {
-      id: 'send',
-      label: 'Send',
-      icon: 'Send',
-      type: 'modal',
-      config: {
-        type: 'modal',
-        modal: 'SendHotlistModal',
-        props: { hotlistId: '{{id}}' },
-      },
-    },
-    {
-      id: 'duplicate',
-      label: 'Duplicate',
-      icon: 'Copy',
-      type: 'mutation',
-      config: {
-        type: 'mutation',
-        procedure: 'bench.hotlists.duplicate',
-        input: { id: '{{id}}' },
-      },
-    },
-    {
-      id: 'archive',
-      label: 'Archive',
-      icon: 'Archive',
-      type: 'mutation',
-      variant: 'secondary',
-      config: {
-        type: 'mutation',
-        procedure: 'bench.hotlists.archive',
-        input: { id: '{{id}}' },
-      },
-      visible: {
-        type: 'condition',
-        condition: { field: 'status', operator: 'eq', value: 'active' },
-      },
-    },
-    {
-      id: 'delete',
-      label: 'Delete',
-      icon: 'Trash',
-      type: 'mutation',
-      variant: 'destructive',
-      config: {
-        type: 'mutation',
-        procedure: 'bench.hotlists.delete',
-        input: { id: '{{id}}' },
-      },
-      confirm: {
-        title: 'Delete Hotlist',
-        message: 'Are you sure you want to delete this hotlist? This action cannot be undone.',
-        confirmLabel: 'Delete',
-        destructive: true,
       },
     },
   ],

@@ -299,12 +299,12 @@ export function conditionVisible(
 /**
  * Always visible
  */
-export const ALWAYS_VISIBLE: VisibilityRule = { type: 'always' };
+export const ALWAYS_VISIBLE: VisibilityRule = { type: 'condition', condition: { operator: 'eq' as const, field: '_always', value: true } };
 
 /**
  * Never visible
  */
-export const NEVER_VISIBLE: VisibilityRule = { type: 'never' };
+export const NEVER_VISIBLE: VisibilityRule = { type: 'condition', condition: { operator: 'eq' as const, field: '_never', value: false } };
 
 // ==========================================
 // RENDERER EXPORTS

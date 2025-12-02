@@ -31,6 +31,26 @@ export interface TestUser {
   createdAt: Date;
 }
 
+export interface TestCandidate {
+  id: string;
+  orgId: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phone?: string;
+  status: string;
+  createdAt: Date;
+}
+
+export interface TestJob {
+  id: string;
+  orgId: string;
+  title: string;
+  accountId: string;
+  status: string;
+  createdAt: Date;
+}
+
 // ==========================================
 // MOCK DATABASE STATE
 // ==========================================
@@ -138,6 +158,81 @@ export function getUsersByOrg(orgId: string): TestUser[] {
  */
 export function getUserById(id: string): TestUser | undefined {
   return testData.users.get(id);
+}
+
+/**
+ * Create test organization (alias for seedOrganization)
+ */
+export function createTestOrg(partial?: Partial<TestOrganization>): TestOrganization {
+  return seedOrganization(partial);
+}
+
+/**
+ * Create test user (alias for seedUser)
+ */
+export function createTestUser(partial?: Partial<TestUser>): TestUser {
+  return seedUser(partial);
+}
+
+/**
+ * Create test candidate
+ */
+export function createTestCandidate(partial: Partial<TestCandidate> = {}): TestCandidate {
+  const id = partial.id || `cand_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+
+  // Ensure org exists
+  let orgId = partial.orgId;
+  if (!orgId) {
+    const org = seedOrganization();
+    orgId = org.id;
+  }
+
+  const candidate: TestCandidate = {
+    id,
+    orgId,
+    email: partial.email || `candidate-${id}@example.com`,
+    firstName: partial.firstName || 'Test',
+    lastName: partial.lastName || 'Candidate',
+    phone: partial.phone,
+    status: partial.status || 'active',
+    createdAt: partial.createdAt || new Date(),
+  };
+
+  testData.candidates.set(id, candidate);
+  return candidate;
+}
+
+/**
+ * Create test job
+ */
+export function createTestJob(partial: Partial<TestJob> = {}): TestJob {
+  const id = partial.id || `job_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+
+  // Ensure org exists
+  let orgId = partial.orgId;
+  if (!orgId) {
+    const org = seedOrganization();
+    orgId = org.id;
+  }
+
+  const job: TestJob = {
+    id,
+    orgId,
+    title: partial.title || 'Test Job',
+    accountId: partial.accountId || 'account_test',
+    status: partial.status || 'open',
+    createdAt: partial.createdAt || new Date(),
+  };
+
+  testData.jobs.set(id, job);
+  return job;
+}
+
+/**
+ * Clean up all test data
+ */
+export function cleanupTestData(): void {
+  resetTestDatabase();
 }
 
 // ==========================================

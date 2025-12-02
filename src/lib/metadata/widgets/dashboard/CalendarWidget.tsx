@@ -167,7 +167,7 @@ export function CalendarWidget({ definition, data, context }: SectionWidgetProps
             </div>
             <div>
               <CardTitle className="text-lg font-heading font-bold text-charcoal-900">
-                {definition.title || 'Upcoming'}
+                {(typeof definition.title === 'string' ? definition.title : 'Upcoming') || 'Upcoming'}
               </CardTitle>
               <p className="text-sm text-charcoal-500 mt-0.5">
                 {totalEvents} events next 3 days

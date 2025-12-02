@@ -16,14 +16,14 @@ import type { ScreenDefinition } from '@/lib/metadata/types';
 export const consultantDetailScreen: ScreenDefinition = {
   id: 'bench-consultant-detail',
   type: 'detail',
-  entityType: 'bench_consultant',
+  entityType: 'talent',
   title: { type: 'field', path: 'fullName' },
   subtitle: { type: 'field', path: 'title' },
   icon: 'User',
 
   dataSource: {
     type: 'entity',
-    entityType: 'bench_consultant',
+    entityType: 'talent',
     entityId: { type: 'param', path: 'id' },
     include: [
       'skills',
@@ -187,11 +187,11 @@ export const consultantDetailScreen: ScreenDefinition = {
         {
           id: 'call',
           label: 'Call',
-          type: 'function',
+          type: 'custom',
           icon: 'Phone',
           variant: 'ghost',
           size: 'sm',
-          config: { type: 'function', handler: 'initiateCall' },
+          config: { type: 'custom', handler: 'initiateCall' },
         },
         {
           id: 'email',
@@ -501,10 +501,10 @@ export const consultantDetailScreen: ScreenDefinition = {
           {
             id: 'generate-one-pager',
             label: 'Generate One-Pager',
-            type: 'function',
+            type: 'custom',
             icon: 'FileText',
             variant: 'ghost',
-            config: { type: 'function', handler: 'generateOnePager' },
+            config: { type: 'custom', handler: 'generateOnePager' },
           },
         ],
       },
@@ -608,7 +608,7 @@ export const consultantDetailScreen: ScreenDefinition = {
               { id: 'isPrimary', header: '', path: 'isPrimary', type: 'primary-badge' },
             ],
             actions: [
-              { id: 'download', label: 'Download', icon: 'Download', type: 'function', config: { handler: 'downloadDocument' } },
+              { id: 'download', label: 'Download', icon: 'Download', type: 'custom', config: { handler: 'downloadDocument' } },
               { id: 'preview', label: 'Preview', icon: 'Eye', type: 'modal', config: { modal: 'document-preview' } },
             ],
           },

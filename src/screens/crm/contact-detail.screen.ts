@@ -187,6 +187,7 @@ const contactDetailConfig: DetailTemplateConfig = {
           {
             id: 'linkedin',
             label: 'LinkedIn',
+            type: 'link',
             path: 'linkedinUrl',
             icon: 'Linkedin',
             external: true,
@@ -194,6 +195,7 @@ const contactDetailConfig: DetailTemplateConfig = {
           {
             id: 'twitter',
             label: 'Twitter/X',
+            type: 'link',
             path: 'twitterUrl',
             icon: 'Twitter',
             external: true,
@@ -201,6 +203,7 @@ const contactDetailConfig: DetailTemplateConfig = {
           {
             id: 'github',
             label: 'GitHub',
+            type: 'link',
             path: 'githubUrl',
             icon: 'Github',
             external: true,
@@ -329,7 +332,7 @@ const contactDetailConfig: DetailTemplateConfig = {
               label: 'View Deal',
               icon: 'Eye',
               actionType: 'navigate',
-              routeTemplate: '/employee/crm/deals/{{id}}',
+              handler: 'navigateToDeal',
             },
           ],
           emptyState: {

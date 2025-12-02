@@ -34,6 +34,8 @@ export const recruiterDashboardScreen: ScreenDefinition = {
       { key: 'qualityMetrics', procedure: 'dashboard.getQualityMetrics' },
       { key: 'upcomingCalendar', procedure: 'dashboard.getUpcomingCalendar' },
       { key: 'recentWins', procedure: 'dashboard.getRecentWins' },
+      { key: 'raciWatchlist', procedure: 'dashboard.getRACIWatchlist' },
+      { key: 'crossPillarOpportunities', procedure: 'dashboard.getCrossPillarOpportunities' },
     ],
   },
 
@@ -107,6 +109,128 @@ export const recruiterDashboardScreen: ScreenDefinition = {
             },
           ],
         },
+      },
+
+      // ===========================================
+      // RACI WATCHLIST WIDGET
+      // ===========================================
+      {
+        id: 'raci-watchlist',
+        type: 'custom',
+        title: 'RACI Watchlist',
+        description: 'Items where you are Consulted or Informed',
+        component: 'RACIWatchlistWidget',
+        componentProps: {
+          roles: ['C', 'I'], // Items where user is Consulted or Informed
+          maxItems: 8,
+          showEntityType: true,
+          groupByEntity: true,
+        },
+        config: {
+          entities: ['job', 'submission', 'account', 'deal'],
+          sortBy: 'lastActivityAt',
+          showDueActivities: true,
+        },
+        actions: [
+          {
+            id: 'view-all-watchlist',
+            label: 'View All',
+            type: 'navigate',
+            variant: 'ghost',
+            icon: 'ArrowRight',
+            config: { type: 'navigate', route: '/employee/workspace/watchlist' },
+          },
+        ],
+      },
+
+      // ===========================================
+      // CLIENT RELATIONSHIP HEALTH ALERTS
+      // ===========================================
+      {
+        id: 'client-health-alerts',
+        type: 'custom',
+        title: 'Client Relationship Alerts',
+        component: 'ClientHealthAlerts',
+        componentProps: {
+          showOnlyAtRisk: true,
+          maxItems: 5,
+        },
+        config: {
+          alerts: [
+            {
+              condition: { field: 'accountHealth.atRiskCount', operator: 'gt', value: 0 },
+              template: '{{count}} accounts need attention',
+              severity: 'warning',
+            },
+            {
+              condition: { field: 'accountHealth.noContactIn30Days', operator: 'gt', value: 0 },
+              template: '{{count}} accounts not contacted in 30+ days',
+              severity: 'info',
+            },
+            {
+              condition: { field: 'accountHealth.decliningNPS', operator: 'gt', value: 0 },
+              template: '{{count}} accounts with declining NPS',
+              severity: 'critical',
+            },
+          ],
+        },
+        visible: {
+          type: 'condition',
+          condition: {
+            operator: 'or',
+            conditions: [
+              { field: 'accountHealth.atRiskCount', operator: 'gt', value: 0 },
+              { field: 'accountHealth.noContactIn30Days', operator: 'gt', value: 0 },
+            ],
+          },
+        },
+        actions: [
+          {
+            id: 'view-account-health',
+            label: 'View All Accounts',
+            type: 'navigate',
+            variant: 'ghost',
+            icon: 'ArrowRight',
+            config: { type: 'navigate', route: '/employee/workspace/accounts?filter=at_risk' },
+          },
+        ],
+      },
+
+      // ===========================================
+      // CROSS-PILLAR OPPORTUNITIES
+      // ===========================================
+      {
+        id: 'cross-pillar-opportunities',
+        type: 'custom',
+        title: 'Cross-Pillar Opportunities',
+        description: 'Potential opportunities from recent interactions',
+        component: 'CrossPillarOpportunities',
+        componentProps: {
+          maxItems: 5,
+          showSourceActivity: true,
+          pillars: ['academy', 'bench_sales', 'ta'],
+        },
+        config: {
+          opportunities: [
+            { pillar: 'academy', label: 'Training Need', icon: 'GraduationCap', color: 'purple' },
+            { pillar: 'bench_sales', label: 'Bench Opportunity', icon: 'Users', color: 'blue' },
+            { pillar: 'ta', label: 'New Business', icon: 'Target', color: 'green' },
+          ],
+        },
+        visible: {
+          type: 'condition',
+          condition: { field: 'crossPillarOpportunities.length', operator: 'gt', value: 0 },
+        },
+        actions: [
+          {
+            id: 'view-all-opportunities',
+            label: 'View All',
+            type: 'navigate',
+            variant: 'ghost',
+            icon: 'ArrowRight',
+            config: { type: 'navigate', route: '/employee/workspace/opportunities' },
+          },
+        ],
       },
 
       // ===========================================

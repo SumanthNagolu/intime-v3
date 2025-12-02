@@ -54,7 +54,7 @@ export const podDashboardScreen: ScreenDefinition = {
           goals: [
             { label: 'Placements', current: { type: 'field', path: 'sprint.placements' }, target: { type: 'field', path: 'sprint.placementsTarget' } },
             { label: 'Submissions', current: { type: 'field', path: 'sprint.submissions' }, target: { type: 'field', path: 'sprint.submissionsTarget' } },
-            { label: 'Revenue', current: { type: 'field', path: 'sprint.revenue' }, target: { type: 'field', path: 'sprint.revenueTarget' }, format: 'currency' },
+            { label: 'Revenue', current: { type: 'field', path: 'sprint.revenue' }, target: { type: 'field', path: 'sprint.revenueTarget' }, format: { type: 'currency' } },
           ],
         },
       },

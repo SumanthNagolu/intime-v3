@@ -110,7 +110,7 @@ export function SprintProgressWidget({ definition, data, context }: SectionWidge
             </div>
             <div>
               <CardTitle className="text-lg font-heading font-bold text-charcoal-900">
-                {definition.title || 'Sprint Progress'}
+                {(typeof definition.title === 'string' ? definition.title : 'Sprint Progress') || 'Sprint Progress'}
               </CardTitle>
               <p className="text-sm text-charcoal-500 mt-0.5">
                 {sprintData?.sprintName || 'Current Sprint'} • {sprintData?.daysRemaining || 0} days remaining

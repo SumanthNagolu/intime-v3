@@ -26,7 +26,7 @@ export const CandidateDetail: React.FC = () => {
   };
 
   const mockLogs: LogEntry[] = [
-      { id: '1', type: 'note', content: 'Screened by Sarah - Strong cultural fit.', date: '2 days ago', author: 'Sarah Lao' }
+      { id: '1', type: 'note', subject: 'Screened by Sarah - Strong cultural fit.', date: '2 days ago', from: 'Sarah Lao' }
   ];
 
   return (

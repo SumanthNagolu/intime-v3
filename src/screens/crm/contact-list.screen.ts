@@ -18,15 +18,16 @@ import {
 // ==========================================
 
 const contactListConfig: ListTemplateConfig = {
-  entityId: 'contact',
-  entityName: 'Contact',
-  entityNamePlural: 'Contacts',
+  entityType: 'contact',
+  domain: 'crm',
+  displayName: 'Contact',
+  pluralName: 'Contacts',
   basePath: '/employee/crm/contacts',
 
   // Data source
-  dataSource: {
-    listProcedure: 'crm.contacts.listAll',
-    statsProcedure: 'crm.contacts.getStats',
+  procedures: {
+    list: 'crm.contacts.listAll',
+    getStats: 'crm.contacts.getStats',
   },
 
   // Metrics displayed above the table
@@ -199,11 +200,6 @@ const contactListConfig: ListTemplateConfig = {
     },
   ],
 
-  // Search configuration
-  search: {
-    placeholder: 'Search contacts by name, email, company...',
-    fields: ['firstName', 'lastName', 'email', 'companyName', 'title'],
-  },
 
   // Sort defaults
   defaultSort: {
@@ -273,7 +269,7 @@ const contactListConfig: ListTemplateConfig = {
       icon: 'Trash',
       variant: 'destructive',
       actionType: 'mutation',
-      mutation: 'crm.contacts.delete',
+      procedure: 'crm.contacts.delete',
       confirm: {
         title: 'Delete Contact',
         message: 'Are you sure you want to delete this contact? This action cannot be undone.',

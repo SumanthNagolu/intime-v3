@@ -76,7 +76,7 @@ interface Activity {
 }
 
 interface ActivityPanelProps {
-  entityType: RCAIEntityTypeType;
+  entityType: RCAIEntityTypeType | 'talent';
   entityId: string;
   canEdit?: boolean;
   className?: string;

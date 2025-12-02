@@ -248,7 +248,7 @@ export const campaignGoalsInputSet: InputSetConfig = {
   label: 'Goals & Budget',
   description: 'Campaign objectives and budget allocation',
   fields: campaignGoalsFields,
-  columns: 5,
+  columns: 4,
 };
 
 // ==========================================
@@ -590,7 +590,7 @@ export const campaignRatesInputSet: InputSetConfig = {
   label: 'Performance Rates',
   description: 'Calculated campaign performance rates',
   fields: campaignRatesFields,
-  columns: 5,
+  columns: 4,
 };
 
 // ==========================================

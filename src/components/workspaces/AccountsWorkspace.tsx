@@ -431,7 +431,7 @@ function OverviewTab({ account, canEdit }: { account: NonNullable<ReturnType<typ
 }
 
 function ContactsTab({ account, canEdit }: { account: NonNullable<ReturnType<typeof useAccount>['data']>; canEdit: boolean }) {
-  const contacts = account.pointOfContacts || [];
+  const contacts = account.contacts || [];
 
   return (
     <div className="space-y-6">
@@ -462,7 +462,7 @@ function ContactsTab({ account, canEdit }: { account: NonNullable<ReturnType<typ
             </div>
           ) : (
             <div className="space-y-4">
-              {contacts.map((contact) => (
+              {contacts.map((contact: { id: string; firstName: string | null; lastName: string | null; title: string | null; email: string | null; phone: string | null; isPrimary?: boolean | null; linkedinUrl?: string | null; decisionAuthority?: string | null }) => (
                 <div
                   key={contact.id}
                   className="flex items-start justify-between p-4 border rounded-lg hover:bg-stone-50 transition-colors"
@@ -840,7 +840,7 @@ export function AccountsWorkspace({ accountId }: AccountsWorkspaceProps) {
   const tabs = useMemo((): WorkspaceTab[] => {
     if (!account) return [];
 
-    const contactCount = account.pointOfContacts?.length || 0;
+    const contactCount = account.contacts?.length || 0;
     const dealCount = account.deals?.length || 0;
 
     const baseTabs: WorkspaceTab[] = [
@@ -920,7 +920,7 @@ export function AccountsWorkspace({ accountId }: AccountsWorkspaceProps) {
       },
       {
         label: 'Contacts',
-        value: account.pointOfContacts?.length || 0,
+        value: account.contacts?.length || 0,
         icon: <Users className="w-3 h-3" />,
       },
       {

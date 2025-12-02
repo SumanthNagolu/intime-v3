@@ -270,7 +270,7 @@ export function ActivityCard({
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium truncate">{value.subject}</span>
             {value.priority && (
-              <PriorityBadge value={value.priority} className="text-xs" />
+              <PriorityBadge value={value.priority} className="text-xs" definition={{} as any} isEditing={false} />
             )}
           </div>
           {value.entityType && value.entityName && (
@@ -413,7 +413,7 @@ export function RACIPanel({
         </Badge>
         <div className="flex flex-wrap gap-1">
           {userArray.map((user) => (
-            <UserAvatarWithTooltip key={user.id} value={user} />
+            <UserAvatarWithTooltip key={user.id} value={user} definition={{} as any} isEditing={false} />
           ))}
         </div>
       </div>

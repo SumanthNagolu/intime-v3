@@ -7,7 +7,7 @@
  */
 
 import { db } from '@/lib/db';
-import { activityPatterns } from '@/lib/db/schema';
+import { activityPatterns } from '@/lib/db/schema/activities';
 import { eq, and, isNull } from 'drizzle-orm';
 import type { Event } from '@/lib/events/event.types';
 

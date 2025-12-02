@@ -17,15 +17,16 @@ import {
 // ==========================================
 
 const dealListConfig: ListTemplateConfig = {
-  entityId: 'deal',
-  entityName: 'Deal',
-  entityNamePlural: 'Deals',
+  entityType: 'deal',
+  domain: 'crm',
+  displayName: 'Deal',
+  pluralName: 'Deals',
   basePath: '/employee/crm/deals',
 
   // Data source
-  dataSource: {
-    listProcedure: 'crm.deals.listAll',
-    statsProcedure: 'crm.deals.getStats',
+  procedures: {
+    list: 'crm.deals.listAll',
+    getStats: 'crm.deals.getStats',
   },
 
   // Metrics displayed above the table
@@ -35,7 +36,6 @@ const dealListConfig: ListTemplateConfig = {
       label: 'Pipeline Value',
       path: 'pipelineValue',
       fieldType: 'currency',
-      config: { prefix: '$', format: 'compact' },
     },
     {
       id: 'active',
@@ -66,7 +66,6 @@ const dealListConfig: ListTemplateConfig = {
       label: 'Won Value',
       path: 'wonValue',
       fieldType: 'currency',
-      config: { prefix: '$', format: 'compact' },
     },
   ],
 
@@ -177,13 +176,11 @@ const dealListConfig: ListTemplateConfig = {
       id: 'minValue',
       label: 'Min Value',
       type: 'number',
-      config: { prefix: '$' },
     },
     {
       id: 'maxValue',
       label: 'Max Value',
       type: 'number',
-      config: { prefix: '$' },
     },
     {
       id: 'expectedCloseFrom',
@@ -210,7 +207,10 @@ const dealListConfig: ListTemplateConfig = {
   },
 
   // View modes
-  viewModes: ['table', 'pipeline'],
+  viewModes: [
+    { id: 'table', label: 'Table' },
+    { id: 'pipeline', label: 'Pipeline' },
+  ],
   defaultViewMode: 'pipeline',
 
   // Header actions
@@ -260,7 +260,7 @@ const dealListConfig: ListTemplateConfig = {
       icon: 'Trash',
       variant: 'destructive',
       actionType: 'mutation',
-      mutation: 'crm.deals.delete',
+      procedure: 'crm.deals.delete',
       confirm: {
         title: 'Delete Deal',
         message: 'Are you sure you want to delete this deal? This action cannot be undone.',

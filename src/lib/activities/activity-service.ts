@@ -32,10 +32,10 @@ export class ActivityService {
    */
   async create(input: CreateActivityInput): Promise<Activity> {
     const now = new Date();
-    
-    const [activity] = await db.insert(activities).values({
+
+    const result: any = await db.insert(activities).values({
       orgId: input.orgId,
-      
+
       // Type
       activityType: input.activityType,
       patternCode: input.patternCode,
@@ -88,7 +88,12 @@ export class ActivityService {
       createdAt: now,
       updatedAt: now,
     }).returning();
-    
+
+    const activity = result[0];
+    if (!activity) {
+      throw new Error('Failed to create activity');
+    }
+
     // Emit event
     await eventEmitter.emit({
       type: 'activity.created',
@@ -431,33 +436,30 @@ export class ActivityService {
       conditions.push(eq(activities.autoCreated, filters.isAutoCreated));
     }
     
-    // Build query
+    // Build query with ordering
+    const orderCol = filters.orderBy === 'priority'
+      ? activities.priority
+      : filters.orderBy === 'createdAt'
+        ? activities.createdAt
+        : activities.dueDate;
+
+    const orderFn = filters.orderDir === 'desc' ? desc : asc;
+
+    // Build complete query in one chain
     let query = db.select()
       .from(activities)
-      .where(and(...conditions));
-    
-    // Ordering
-    const orderCol = filters.orderBy === 'priority' 
-      ? activities.priority 
-      : filters.orderBy === 'createdAt' 
-        ? activities.createdAt 
-        : activities.dueDate;
-    
-    if (filters.orderDir === 'desc') {
-      query = query.orderBy(desc(orderCol));
-    } else {
-      query = query.orderBy(asc(orderCol));
-    }
-    
-    // Pagination
+      .where(and(...conditions))
+      .orderBy(orderFn(orderCol));
+
+    // Add pagination if specified
     if (filters.limit) {
-      query = query.limit(filters.limit);
+      query = query.limit(filters.limit) as typeof query;
     }
-    
+
     if (filters.offset) {
-      query = query.offset(filters.offset);
+      query = query.offset(filters.offset) as typeof query;
     }
-    
+
     const results = await query;
     return results.map(r => this.mapToActivity(r));
   }
@@ -549,16 +551,16 @@ export class ActivityService {
     if (!options?.includeCompleted) {
       conditions.push(inArray(activities.status, ['open', 'in_progress']));
     }
-    
+
     let query = db.select()
       .from(activities)
       .where(and(...conditions))
       .orderBy(desc(activities.createdAt));
-    
+
     if (options?.limit) {
-      query = query.limit(options.limit);
+      query = query.limit(options.limit) as typeof query;
     }
-    
+
     const results = await query;
     return results.map(r => this.mapToActivity(r));
   }

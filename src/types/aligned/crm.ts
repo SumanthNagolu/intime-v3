@@ -309,7 +309,7 @@ export interface DisplayDeal {
 // ============================================
 
 export type ActivityEntityType = 'account' | 'lead' | 'deal' | 'poc' | 'submission' | 'candidate';
-export type ActivityType = 'email' | 'call' | 'meeting' | 'note' | 'linkedin_message' | 'task' | 'status_change';
+export type CrmActivityType = 'email' | 'call' | 'meeting' | 'note' | 'linkedin_message' | 'task' | 'status_change';
 export type ActivityDirection = 'inbound' | 'outbound';
 export type ActivityOutcome = 'positive' | 'neutral' | 'negative';
 
@@ -322,7 +322,7 @@ export interface AlignedActivityLog {
   entityId: string;
 
   // Activity details
-  activityType: ActivityType;
+  activityType: CrmActivityType;
   subject: string | null;
   description: string | null;
   direction: ActivityDirection | null;

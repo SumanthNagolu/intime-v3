@@ -15,6 +15,7 @@ import type {
   RenderContext,
   FormState,
   DynamicValue,
+  WidgetDefinition,
 } from '../types';
 import { FieldWrapper, WidgetRenderer } from './WidgetRenderer';
 import { cn } from '@/lib/utils';
@@ -74,7 +75,10 @@ function resolveValue(obj: Record<string, unknown> | undefined, path: string): u
 /**
  * Get grid columns class based on column count
  */
-function getGridCols(columns: number): string {
+function getGridCols(columns: number | TableColumnDefinition[] | undefined): string {
+  if (typeof columns !== 'number') {
+    return 'grid-cols-1';
+  }
   const colsMap: Record<number, string> = {
     1: 'grid-cols-1',
     2: 'grid-cols-1 md:grid-cols-2',
@@ -90,9 +94,10 @@ function getGridCols(columns: number): string {
 function resolveDynamicValue(value: string | DynamicValue | undefined): string {
   if (!value) return '';
   if (typeof value === 'string') return value;
-  // For DynamicValue, just return the path as placeholder
-  // In a real implementation, this would resolve from context
-  return value.path || '';
+  // For DynamicValue, check for path property
+  if ('path' in value && value.path) return value.path;
+  if ('default' in value && value.default !== undefined) return String(value.default);
+  return '';
 }
 
 // ==========================================
@@ -122,16 +127,18 @@ function InfoCardSection({
 
       <div className={cn('grid gap-4', getGridCols(columns))}>
         {fields.map((field) => {
-          const value = formState?.values[field.id] ?? resolveValue(entity, field.path || field.id);
-          const error = formState?.errors[field.id];
+          const fieldId = field.id ?? field.path ?? field.dataField ?? '';
+          const fieldPath = field.path ?? field.dataField ?? field.id ?? '';
+          const value = formState?.values[fieldId] ?? resolveValue(entity, fieldPath);
+          const error = formState?.errors[fieldId];
 
           return (
             <FieldWrapper
-              key={field.id}
+              key={fieldId}
               definition={field}
               value={value}
-              onChange={(val) => onFieldChange?.(field.id, val)}
-              onBlur={() => onFieldBlur?.(field.id)}
+              onChange={(val) => onFieldChange?.(fieldId, val)}
+              onBlur={() => onFieldBlur?.(fieldId)}
               isEditing={isEditing}
               disabled={formState?.isSubmitting}
               error={error}
@@ -166,22 +173,24 @@ function FormSection({
         <h3 className="text-lg font-semibold">{resolveDynamicValue(definition.title)}</h3>
       )}
 
-      {definition.description && (
+      {definition.description && typeof definition.description === 'string' && (
         <p className="text-sm text-muted-foreground">{definition.description}</p>
       )}
 
       <div className={cn('grid gap-4', getGridCols(columns))}>
         {fields.map((field) => {
-          const value = formState?.values[field.id] ?? resolveValue(entity, field.path || field.id);
-          const error = formState?.errors[field.id];
+          const fieldId = field.id ?? field.path ?? field.dataField ?? '';
+          const fieldPath = field.path ?? field.dataField ?? field.id ?? '';
+          const value = formState?.values[fieldId] ?? resolveValue(entity, fieldPath);
+          const error = formState?.errors[fieldId];
 
           return (
             <FieldWrapper
-              key={field.id}
+              key={fieldId}
               definition={field}
               value={value}
-              onChange={(val) => onFieldChange?.(field.id, val)}
-              onBlur={() => onFieldBlur?.(field.id)}
+              onChange={(val) => onFieldChange?.(fieldId, val)}
+              onBlur={() => onFieldBlur?.(fieldId)}
               isEditing={isEditing ?? true}
               disabled={formState?.isSubmitting}
               error={error}
@@ -216,10 +225,12 @@ function FieldGridSection({
 
       <div className={cn('grid gap-x-6 gap-y-3', getGridCols(columns))}>
         {fields.map((field) => {
-          const value = resolveValue(entity, field.path || field.id);
+          const fieldId = field.id ?? field.path ?? field.dataField ?? '';
+          const fieldPath = field.path ?? field.dataField ?? field.id ?? '';
+          const value = resolveValue(entity, fieldPath);
 
           return (
-            <div key={field.id} className="space-y-1">
+            <div key={fieldId} className="space-y-1">
               <dt className="text-xs text-muted-foreground">{field.label}</dt>
               <dd className="text-sm font-medium">
                 <WidgetRenderer
@@ -246,26 +257,33 @@ function MetricsGridSection({
   entity,
   context,
 }: SectionRendererProps) {
+  const widgets = definition.widgets || definition.metrics || [];
   const fields = definition.fields || [];
-  const columns = definition.columns || 4;
+  const items = widgets.length > 0 ? widgets : fields;
+  const columns = typeof definition.columns === 'number' ? definition.columns : 4;
 
   return (
     <div className={cn('grid gap-4', getGridCols(columns))}>
-      {fields.map((field) => {
-        const value = resolveValue(entity, field.path || field.id);
-        const config = field.config as { trend?: 'up' | 'down'; change?: number } | undefined;
+      {items.map((item) => {
+        const fieldId = item.id ?? (item as FieldDefinition).path ?? (item as FieldDefinition).dataField ?? '';
+        const fieldPath = (item as FieldDefinition).path ?? (item as FieldDefinition).dataField ?? item.id ?? '';
+        const value = resolveValue(entity, fieldPath);
+        const config = (item.config || (item as FieldDefinition).config) as { trend?: 'up' | 'down'; change?: number; format?: string; icon?: string } | undefined;
 
         return (
           <div
-            key={field.id}
+            key={fieldId}
             className="bg-card rounded-lg border border-border p-4"
           >
             <div className="text-xs text-muted-foreground uppercase tracking-wide">
-              {field.label}
+              {(() => {
+                const label = (item as FieldDefinition).label || (item as WidgetDefinition).label;
+                return typeof label === 'string' ? label : item.id;
+              })()}
             </div>
             <div className="mt-1 text-2xl font-bold">
               <WidgetRenderer
-                definition={field}
+                definition={item as FieldDefinition}
                 value={value}
                 isEditing={false}
                 entity={entity}
@@ -422,9 +440,11 @@ function ListSection({
               className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg"
             >
               {fields.map((field) => {
-                const value = resolveValue(item, field.path || field.id);
+                const fieldId = field.id ?? field.path ?? field.dataField ?? '';
+                const fieldPath = field.path ?? field.dataField ?? field.id ?? '';
+                const value = resolveValue(item, fieldPath);
                 return (
-                  <div key={field.id} className="flex-1">
+                  <div key={fieldId} className="flex-1">
                     <WidgetRenderer
                       definition={field}
                       value={value}
@@ -457,9 +477,9 @@ function TimelineSection({
   const fields = definition.fields || [];
 
   // Assume fields are: timestamp, title, description
-  const timestampField = fields.find((f) => f.id === 'timestamp' || f.fieldType === 'datetime');
-  const titleField = fields.find((f) => f.id === 'title');
-  const descriptionField = fields.find((f) => f.id === 'description');
+  const timestampField = fields.find((f) => (f.id ?? f.path ?? f.dataField) === 'timestamp' || f.fieldType === 'datetime');
+  const titleField = fields.find((f) => (f.id ?? f.path ?? f.dataField) === 'title');
+  const descriptionField = fields.find((f) => (f.id ?? f.path ?? f.dataField) === 'description');
 
   return (
     <div className="space-y-3">
@@ -483,7 +503,7 @@ function TimelineSection({
                     <div className="text-xs text-muted-foreground">
                       <WidgetRenderer
                         definition={timestampField}
-                        value={resolveValue(event, timestampField.path || 'timestamp')}
+                        value={resolveValue(event, timestampField.path ?? timestampField.dataField ?? timestampField.id ?? 'timestamp')}
                         isEditing={false}
                         entity={event}
                         context={context}
@@ -495,7 +515,7 @@ function TimelineSection({
                     <div className="font-medium">
                       <WidgetRenderer
                         definition={titleField}
-                        value={resolveValue(event, titleField.path || 'title')}
+                        value={resolveValue(event, titleField.path ?? titleField.dataField ?? titleField.id ?? 'title')}
                         isEditing={false}
                         entity={event}
                         context={context}
@@ -507,7 +527,7 @@ function TimelineSection({
                     <div className="text-sm text-muted-foreground">
                       <WidgetRenderer
                         definition={descriptionField}
-                        value={resolveValue(event, descriptionField.path || 'description')}
+                        value={resolveValue(event, descriptionField.path ?? descriptionField.dataField ?? descriptionField.id ?? 'description')}
                         isEditing={false}
                         entity={event}
                         context={context}
@@ -554,16 +574,18 @@ function CollapsibleSection({
         <div className="p-4 pt-0 border-t">
           <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
             {fields.map((field) => {
-              const value = formState?.values[field.id] ?? resolveValue(entity, field.path || field.id);
-              const error = formState?.errors[field.id];
+              const fieldId = field.id ?? field.path ?? field.dataField ?? '';
+              const fieldPath = field.path ?? field.dataField ?? field.id ?? '';
+              const value = formState?.values[fieldId] ?? resolveValue(entity, fieldPath);
+              const error = formState?.errors[fieldId];
 
               return (
                 <FieldWrapper
-                  key={field.id}
+                  key={fieldId}
                   definition={field}
                   value={value}
-                  onChange={(val) => onFieldChange?.(field.id, val)}
-                  onBlur={() => onFieldBlur?.(field.id)}
+                  onChange={(val) => onFieldChange?.(fieldId, val)}
+                  onBlur={() => onFieldBlur?.(fieldId)}
                   isEditing={isEditing}
                   disabled={formState?.isSubmitting}
                   error={error}
@@ -614,8 +636,9 @@ function CustomSection({
     // Get the data key for this widget
     const dataKey = WIDGET_DATA_KEYS[componentName];
 
-    // Extract widget-specific data from context.data (set by DashboardRenderer)
-    const contextData = context?.data as Record<string, unknown> | undefined;
+    // Extract widget-specific data from extended context (set by DashboardRenderer)
+    const extendedContext = context as (RenderContext & { data?: Record<string, unknown>; isLoading?: boolean; error?: unknown }) | undefined;
+    const contextData = extendedContext?.data;
     const widgetData = dataKey && contextData ? contextData[dataKey] as Record<string, unknown> : undefined;
 
     return (
@@ -624,8 +647,8 @@ function CustomSection({
         data={widgetData}
         entity={entity}
         context={{
-          isLoading: context?.isLoading && !widgetData,
-          error: context?.error ? new Error(String(context.error)) : null,
+          isLoading: (extendedContext?.isLoading ?? false) && !widgetData,
+          error: extendedContext?.error ? new Error(String(extendedContext.error)) : null,
         }}
       />
     );

@@ -67,7 +67,7 @@ export interface RoleConfig {
   visibleEntities: EntityType[];
 
   // Default tabs per entity type
-  defaultTabs: Record<EntityType, TabConfig[]>;
+  defaultTabs: Partial<Record<EntityType, TabConfig[]>>;
 
   // Quick actions available
   quickActions: QuickAction[];
@@ -200,7 +200,7 @@ export const roleConfigs: Record<WorkspaceRole, RoleConfig> = {
       deal: DEAL_TABS,
       contact: [],
       job_order: [],
-    },
+    } as Partial<Record<EntityType, TabConfig[]>>,
 
     quickActions: [
       { id: 'source-talent', label: 'Source Talent', icon: UserPlus, action: 'source-talent', entityTypes: ['job'] },
@@ -251,7 +251,7 @@ export const roleConfigs: Record<WorkspaceRole, RoleConfig> = {
       deal: DEAL_TABS,
       contact: [],
       job_order: JOB_TABS,
-    },
+    } as Partial<Record<EntityType, TabConfig[]>>,
 
     quickActions: [
       { id: 'submit-to-order', label: 'Submit to Job Order', icon: Send, action: 'submit-to-order', entityTypes: ['talent'] },
@@ -297,7 +297,7 @@ export const roleConfigs: Record<WorkspaceRole, RoleConfig> = {
       deal: DEAL_TABS,
       contact: [],
       job_order: [],
-    },
+    } as Partial<Record<EntityType, TabConfig[]>>,
 
     quickActions: [
       { id: 'create-lead', label: 'New Lead', icon: Target, action: 'create-lead', shortcut: 'cmd+shift+l' },
@@ -346,7 +346,7 @@ export const roleConfigs: Record<WorkspaceRole, RoleConfig> = {
       deal: DEAL_TABS,
       contact: [],
       job_order: [],
-    },
+    } as Partial<Record<EntityType, TabConfig[]>>,
 
     quickActions: [
       { id: 'approve-submission', label: 'Approve', icon: Send, action: 'approve-submission', entityTypes: ['submission'] },
@@ -395,7 +395,7 @@ export const roleConfigs: Record<WorkspaceRole, RoleConfig> = {
       ],
       contact: [],
       job_order: [],
-    },
+    } as Partial<Record<EntityType, TabConfig[]>>,
 
     quickActions: [
       { id: 'view-analytics', label: 'Analytics', icon: FileText, action: 'view-analytics' },

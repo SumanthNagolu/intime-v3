@@ -99,12 +99,11 @@ export function AccountsListRenderer({ definition, className }: AccountsListRend
     },
     {
       refetchInterval: 30000,
-      keepPreviousData: true,
     }
   );
 
-  // Fetch account metrics
-  const metricsQuery = trpc.crm.accounts.getMetrics.useQuery(undefined, {
+  // Fetch account statistics
+  const metricsQuery = trpc.crm.accounts.getStats.useQuery(undefined, {
     refetchInterval: 60000,
   });
 

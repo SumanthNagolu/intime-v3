@@ -15,13 +15,13 @@ import { fieldValue } from '@/lib/metadata';
 const HOTLIST_STATUS_OPTIONS = [
   { value: 'active', label: 'Active' },
   { value: 'archived', label: 'Archived' },
-] as const;
+];
 
 const HOTLIST_PURPOSE_OPTIONS = [
   { value: 'general', label: 'General' },
   { value: 'client_specific', label: 'Client Specific' },
   { value: 'skill_specific', label: 'Skill Specific' },
-] as const;
+];
 
 // ==========================================
 // SIDEBAR FIELDS
@@ -280,7 +280,7 @@ export const hotlistDetailScreen: ScreenDefinition = {
 
   // Data source
   dataSource: {
-    type: 'query',
+    type: 'custom',
     query: {
       procedure: 'bench.hotlists.getById',
       params: { id: fieldValue('id') },
@@ -328,13 +328,55 @@ export const hotlistDetailScreen: ScreenDefinition = {
         icon: 'Users',
         badge: fieldValue('consultantCount'),
         sections: [
+          // Per spec Section 8.3: Min 5, Max 25 consultants per hotlist
           {
-            id: 'consultants-table',
-            type: 'table',
+            id: 'consultant-count-warning',
+            type: 'custom',
+            component: 'HotlistConsultantCountAlert',
+            componentProps: {
+              countPath: 'consultantCount',
+              minCount: 5,
+              maxCount: 25,
+              warnings: {
+                belowMin: 'Hotlist should have at least 5 consultants for effective marketing',
+                atMax: 'Hotlist has reached maximum capacity (25 consultants)',
+                nearMax: 'Hotlist is approaching maximum capacity',
+              },
+            },
+            visible: {
+              type: 'condition',
+              condition: {
+                operator: 'or',
+                conditions: [
+                  { field: 'consultantCount', operator: 'lt', value: 5 },
+                  { field: 'consultantCount', operator: 'gte', value: 23 },
+                ],
+              },
+            },
+          },
+
+          // Drag-drop sortable consultant list
+          {
+            id: 'consultants-sortable',
+            type: 'custom',
             title: 'Hotlist Consultants',
-            columns_config: consultantTableColumns,
+            description: 'Drag to reorder consultants in the hotlist',
+            component: 'DragDropConsultantList',
+            componentProps: {
+              hotlistId: fieldValue('id'),
+              columns: consultantTableColumns,
+              enableDragDrop: true,
+              minItems: 5,
+              maxItems: 25,
+              onReorder: 'handleConsultantReorder',
+              showPositionNumbers: true,
+              emptyState: {
+                title: 'No consultants yet',
+                description: 'Add at least 5 consultants to start marketing',
+              },
+            },
             dataSource: {
-              type: 'query',
+              type: 'custom',
               query: {
                 procedure: 'bench.hotlists.getConsultants',
                 params: { hotlistId: fieldValue('id') },
@@ -352,16 +394,41 @@ export const hotlistDetailScreen: ScreenDefinition = {
                   modal: 'AddConsultantToHotlistModal',
                   props: { hotlistId: fieldValue('id') },
                 },
+                // Disable when at max capacity
+                disabled: {
+                  type: 'condition',
+                  condition: { field: 'consultantCount', operator: 'gte', value: 25 },
+                },
               },
               {
-                id: 'reorder',
-                label: 'Reorder',
-                type: 'custom',
+                id: 'bulk-add',
+                label: 'Bulk Add',
+                type: 'modal',
+                variant: 'secondary',
+                icon: 'Users',
+                config: {
+                  type: 'modal',
+                  modal: 'BulkAddConsultantsModal',
+                  props: {
+                    hotlistId: fieldValue('id'),
+                    maxAddable: { type: 'computed', compute: '25 - consultantCount' },
+                  },
+                },
+                disabled: {
+                  type: 'condition',
+                  condition: { field: 'consultantCount', operator: 'gte', value: 25 },
+                },
+              },
+              {
+                id: 'auto-sort',
+                label: 'Auto-Sort',
+                type: 'modal',
                 variant: 'secondary',
                 icon: 'ArrowUpDown',
                 config: {
-                  type: 'custom',
-                  handler: 'handleReorder',
+                  type: 'modal',
+                  modal: 'AutoSortHotlistModal',
+                  props: { hotlistId: fieldValue('id') },
                 },
               },
             ],
@@ -422,6 +489,7 @@ export const hotlistDetailScreen: ScreenDefinition = {
               message: 'Add consultants to this hotlist to start marketing.',
               action: {
                 label: 'Add Consultant',
+                type: 'custom',
                 handler: 'handleAddConsultant',
               },
             },
@@ -443,7 +511,7 @@ export const hotlistDetailScreen: ScreenDefinition = {
             title: 'Send History',
             columns_config: sendHistoryColumns,
             dataSource: {
-              type: 'query',
+              type: 'custom',
               query: {
                 procedure: 'bench.hotlists.getSendHistory',
                 params: { hotlistId: fieldValue('id') },

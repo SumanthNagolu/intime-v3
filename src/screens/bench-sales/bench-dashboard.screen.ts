@@ -36,12 +36,52 @@ export const benchDashboardScreen: ScreenDefinition = {
       { key: 'immigration', procedure: 'bench.getImmigrationAlerts' },
       { key: 'marketing', procedure: 'bench.getMarketingActivity' },
       { key: 'revenue', procedure: 'bench.getRevenueCommission' },
+      { key: 'jobOrders', procedure: 'bench.jobOrders.getRecent' },
     ],
   },
 
   layout: {
     type: 'single-column',
     sections: [
+      // ===========================================
+      // ACTIVITY QUEUE (Priority 1 - per Activity-Centric UI pattern)
+      // ===========================================
+      {
+        id: 'activity-queue',
+        type: 'custom',
+        title: 'My Activities',
+        component: 'ActivityQueue',
+        componentProps: {
+          showOverdue: true,
+          showDueToday: true,
+          showUpcoming: false,
+          maxItems: 10,
+          quickActions: ['complete', 'reschedule', 'delegate'],
+        },
+        dataSource: {
+          type: 'list',
+          entityType: 'activity',
+          filter: { assignedToMe: true },
+        },
+        actions: [
+          {
+            id: 'view-all-activities',
+            label: 'View All Activities',
+            type: 'navigate',
+            variant: 'ghost',
+            config: { type: 'navigate', route: '/employee/workspace/bench/activities' },
+          },
+          {
+            id: 'log-activity',
+            label: 'Log Activity',
+            type: 'modal',
+            icon: 'Plus',
+            variant: 'default',
+            config: { type: 'modal', modal: 'log-activity' },
+          },
+        ],
+      },
+
       // ===========================================
       // TODAY'S PRIORITIES
       // ===========================================
@@ -125,26 +165,19 @@ export const benchDashboardScreen: ScreenDefinition = {
           {
             id: 'this-week',
             label: 'This Week',
-            type: 'custom',
-            path: 'benchHealth.weeklyStats',
-            widget: 'WeeklyStatsSummary',
+            type: 'number',
+            path: 'benchHealth.weeklyStats.submissions',
             config: {
-              metrics: [
-                { label: 'Placed', path: 'placed', icon: 'CheckCircle', variant: 'success' },
-                { label: 'Subs', path: 'submissions', icon: 'Send' },
-                { label: 'Interviews', path: 'interviews', icon: 'Calendar' },
-              ],
+              icon: 'Send',
             },
           },
           {
             id: 'sprint-progress',
             label: 'Sprint Progress',
-            type: 'custom',
-            path: 'benchHealth.sprint',
-            widget: 'SprintProgress',
+            type: 'percentage',
+            path: 'benchHealth.sprint.percentComplete',
             config: {
-              showDaysRemaining: true,
-              showRiskIndicator: true,
+              showProgress: true,
             },
           },
         ],
@@ -168,30 +201,53 @@ export const benchDashboardScreen: ScreenDefinition = {
             },
           },
           {
-            id: 'pipeline',
-            label: 'Pipeline',
-            type: 'custom',
-            path: 'benchHealth.pipeline',
-            widget: 'PipelineMiniBadges',
+            id: 'utilization',
+            label: 'Bench Utilization',
+            type: 'percentage',
+            path: 'benchHealth.utilizationRate',
             config: {
-              badges: [
-                { label: 'subs', path: 'activeSubmissions' },
-                { label: 'interviews', path: 'interviews' },
-                { label: 'offers', path: 'offers' },
-              ],
+              target: 25,
+              targetLabel: 'target <25%',
+              icon: 'PieChart',
+              bgColor: 'bg-violet-50',
             },
           },
           {
             id: 'marketing',
             label: 'Marketing',
-            type: 'custom',
-            path: 'benchHealth.marketing',
-            widget: 'MarketingMiniStats',
+            type: 'number',
+            path: 'benchHealth.marketing.hotlistsThisWeek',
             config: {
-              metrics: [
-                { label: 'hotlists', path: 'hotlistsThisWeek' },
-                { label: 'vendors reached', path: 'vendorsReached' },
-              ],
+              icon: 'Megaphone',
+            },
+          },
+          {
+            id: 'interviews',
+            label: 'Interviews This Week',
+            type: 'number',
+            path: 'benchHealth.interviewsThisWeek',
+            config: {
+              icon: 'Calendar',
+              bgColor: 'bg-cyan-50',
+            },
+          },
+        ],
+      },
+
+      // Third row of health metrics
+      {
+        id: 'bench-health-row3',
+        type: 'metrics-grid',
+        columns: 4,
+        fields: [
+          {
+            id: 'pipeline',
+            label: 'Pipeline',
+            type: 'number',
+            path: 'benchHealth.pipeline.activeSubmissions',
+            config: {
+              icon: 'Send',
+              bgColor: 'bg-indigo-50',
             },
           },
           {
@@ -206,6 +262,116 @@ export const benchDashboardScreen: ScreenDefinition = {
               bgColor: 'bg-emerald-50',
             },
           },
+          {
+            id: 'commission-mtd',
+            label: 'Commission MTD',
+            type: 'currency',
+            path: 'benchHealth.commissionMTD',
+            config: {
+              icon: 'Wallet',
+              bgColor: 'bg-teal-50',
+            },
+          },
+          {
+            id: 'placements-mtd',
+            label: 'Placements MTD',
+            type: 'number',
+            path: 'benchHealth.placementsMTD',
+            config: {
+              target: 2,
+              targetLabel: 'target: 2',
+              icon: 'Target',
+              bgColor: 'bg-rose-50',
+            },
+          },
+        ],
+      },
+
+      // ===========================================
+      // BENCH STATUS DISTRIBUTION
+      // ===========================================
+      {
+        id: 'bench-status-distribution',
+        type: 'custom',
+        title: 'Bench Status Distribution',
+        component: 'BenchStatusDistribution',
+        componentProps: {
+          dataPath: 'benchHealth.statusDistribution',
+          categories: [
+            { id: 'green', label: 'Green (0-15 days)', color: 'green', description: 'Newly on bench' },
+            { id: 'yellow', label: 'Yellow (16-30 days)', color: 'yellow', description: 'Active marketing' },
+            { id: 'orange', label: 'Orange (31-60 days)', color: 'orange', description: 'Needs attention' },
+            { id: 'red', label: 'Red (61-90 days)', color: 'red', description: 'Critical - escalate' },
+            { id: 'black', label: 'Black (91+ days)', color: 'gray', description: 'Long-term bench' },
+          ],
+          showChart: true,
+          chartType: 'donut',
+          showTable: true,
+          onCategoryClick: 'filterByStatus',
+        },
+        actions: [
+          {
+            id: 'view-all',
+            label: 'View All Consultants',
+            type: 'navigate',
+            variant: 'ghost',
+            config: { type: 'navigate', route: '/employee/workspace/bench/consultants' },
+          },
+        ],
+      },
+
+      // ===========================================
+      // JOB ORDER FEED
+      // ===========================================
+      {
+        id: 'job-order-feed',
+        type: 'custom',
+        title: 'New Job Orders',
+        component: 'JobOrderFeed',
+        componentProps: {
+          dataPath: 'jobOrders',
+          maxItems: 5,
+          cardTemplate: {
+            title: { type: 'field', path: 'title' },
+            subtitle: { type: 'field', path: 'vendor.name' },
+            badges: [
+              { type: 'field', path: 'priority', variant: 'priority' },
+              { type: 'field', path: 'workMode', variant: 'default' },
+            ],
+            details: [
+              { icon: 'MapPin', label: 'Location', value: { type: 'field', path: 'location' } },
+              { icon: 'DollarSign', label: 'Rate', value: { type: 'field', path: 'rateRangeFormatted' } },
+              { icon: 'Clock', label: 'Posted', value: { type: 'field', path: 'postedAtRelative' } },
+            ],
+            matchIndicator: { type: 'field', path: 'bestMatchScore' },
+          },
+          quickActions: ['view', 'submit', 'bookmark'],
+          sortBy: 'receivedAt',
+          sortOrder: 'desc',
+        },
+        dataSource: {
+          type: 'custom',
+          query: {
+            procedure: 'bench.jobOrders.getRecent',
+            params: { limit: 5 },
+          },
+        },
+        actions: [
+          {
+            id: 'view-all-jobs',
+            label: 'View All Job Orders',
+            type: 'navigate',
+            variant: 'ghost',
+            config: { type: 'navigate', route: '/employee/workspace/bench/jobs' },
+          },
+          {
+            id: 'create-job',
+            label: 'Add Job Order',
+            type: 'modal',
+            icon: 'Plus',
+            variant: 'default',
+            config: { type: 'modal', modal: 'job-order-create' },
+          },
         ],
       },
 
@@ -216,7 +382,7 @@ export const benchDashboardScreen: ScreenDefinition = {
         id: 'performance-metrics',
         type: 'table',
         title: 'Performance Metrics (vs Goals)',
-        dataSource: { type: 'field', path: 'metrics' },
+        dataSource: { type: 'related', relation: 'metrics' },
         columns_config: [
           { id: 'metric', header: 'Metric', path: 'name' },
           { id: 'this-week', header: 'This Week', path: 'thisWeek', type: 'number' },
@@ -245,10 +411,10 @@ export const benchDashboardScreen: ScreenDefinition = {
           {
             id: 'export',
             label: 'Export',
-            type: 'function',
+            type: 'custom',
             icon: 'Download',
             variant: 'ghost',
-            config: { type: 'function', handler: 'exportMetrics' },
+            config: { type: 'custom', handler: 'exportMetrics' },
           },
           {
             id: 'set-goals',
@@ -381,13 +547,6 @@ export const benchDashboardScreen: ScreenDefinition = {
           },
           quickActions: ['view', 'log-checkin', 'update'],
         },
-        footer: {
-          type: 'summary-row',
-          items: [
-            { label: 'Total Monthly Value', value: { type: 'field', path: 'placements.totalMonthlyValue' }, format: 'currency' },
-            { label: 'Avg Health', value: { type: 'field', path: 'placements.avgHealth' }, suffix: '%' },
-          ],
-        },
       },
 
       // ===========================================
@@ -422,10 +581,10 @@ export const benchDashboardScreen: ScreenDefinition = {
           {
             id: 'download-report',
             label: 'Download Report',
-            type: 'function',
+            type: 'custom',
             icon: 'Download',
             variant: 'ghost',
-            config: { type: 'function', handler: 'downloadImmigrationReport' },
+            config: { type: 'custom', handler: 'downloadImmigrationReport' },
           },
           {
             id: 'contact-attorney',
@@ -550,10 +709,10 @@ export const benchDashboardScreen: ScreenDefinition = {
           {
             id: 'export-report',
             label: 'Export Report',
-            type: 'function',
+            type: 'custom',
             icon: 'Download',
             variant: 'ghost',
-            config: { type: 'function', handler: 'exportRevenueReport' },
+            config: { type: 'custom', handler: 'exportRevenueReport' },
           },
           {
             id: 'contact-finance',
@@ -572,10 +731,10 @@ export const benchDashboardScreen: ScreenDefinition = {
     {
       id: 'refresh',
       label: 'Refresh',
-      type: 'function',
+      type: 'custom',
       icon: 'RefreshCw',
       variant: 'ghost',
-      config: { type: 'function', handler: 'refreshDashboard' },
+      config: { type: 'custom', handler: 'refreshDashboard' },
     },
     {
       id: 'add-consultant',
@@ -617,18 +776,6 @@ export const benchDashboardScreen: ScreenDefinition = {
       { label: 'Bench Sales', active: true },
     ],
   },
-
-  keyboard_shortcuts: [
-    { key: 'g d', action: 'navigate', route: '/employee/workspace/bench', description: 'Go to dashboard' },
-    { key: 'r', action: 'refresh', description: 'Refresh dashboard' },
-    { key: '1-9', action: 'jumpToWidget', description: 'Jump to widget by number' },
-    { key: 't', action: 'viewTasks', description: 'View tasks' },
-    { key: 'c', action: 'viewConsultants', description: 'View consultants' },
-    { key: 's', action: 'viewSubmissions', description: 'View submissions' },
-    { key: 'p', action: 'viewPlacements', description: 'View placements' },
-    { key: 'i', action: 'viewImmigration', description: 'View immigration' },
-    { key: 'm', action: 'viewMarketing', description: 'View marketing' },
-  ],
 };
 
 export default benchDashboardScreen;

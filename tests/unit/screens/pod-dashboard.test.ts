@@ -8,13 +8,15 @@ describe('Pod Dashboard Screen', () => {
   });
 
   it('should show sprint progress', () => {
-    const sprintSection = podDashboardScreen.layout.sections?.find(s => s.id === 'sprint-progress');
+    expect(podDashboardScreen.layout).toBeDefined();
+    const sprintSection = podDashboardScreen.layout?.sections?.find(s => s.id === 'sprint-progress');
     expect(sprintSection).toBeDefined();
     expect(sprintSection?.type).toBe('metrics-grid');
   });
 
   it('should show individual performance table', () => {
-    const icTable = podDashboardScreen.layout.sections?.find(s => s.id === 'individual-performance');
+    expect(podDashboardScreen.layout).toBeDefined();
+    const icTable = podDashboardScreen.layout?.sections?.find(s => s.id === 'individual-performance');
     expect(icTable).toBeDefined();
     expect(icTable?.type).toBe('table');
     const columns = icTable?.columns_config?.map(c => c.id) || [];
@@ -24,7 +26,8 @@ describe('Pod Dashboard Screen', () => {
   });
 
   it('should show escalations queue', () => {
-    const escalations = podDashboardScreen.layout.sections?.find(s => s.id === 'escalations');
+    expect(podDashboardScreen.layout).toBeDefined();
+    const escalations = podDashboardScreen.layout?.sections?.find(s => s.id === 'escalations');
     expect(escalations).toBeDefined();
     expect(escalations?.title).toContain('Escalations');
   });

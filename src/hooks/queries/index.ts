@@ -29,22 +29,6 @@ export {
   type JobQueryOptions,
 } from './jobs';
 
-// Candidates (uses bench.consultants router)
-export {
-  useCandidates,
-  useCandidatesRaw,
-  useCandidate,
-  useCandidateRaw,
-  useBenchCandidates,
-  useHotlistCandidates,
-  useBenchAgingReport,
-  usePrefetchCandidates,
-  useInvalidateCandidates,
-  type CandidatesQueryOptions,
-  type CandidateQueryOptions,
-  type BenchCandidatesOptions,
-} from './candidates';
-
 // Submissions
 export {
   useSubmissions,

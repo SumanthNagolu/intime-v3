@@ -1,6 +1,6 @@
 /**
  * Communication Log Component (Stub)
- * 
+ *
  * TODO: Implement full communication log with metadata-driven approach
  * For now, this is a placeholder to prevent build errors.
  */
@@ -10,9 +10,22 @@
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { MessageSquare } from 'lucide-react';
 
-interface CommunicationLogProps {
+export interface LogEntry {
+  id: string;
+  type: 'email' | 'call' | 'meeting' | 'note' | 'sms';
+  subject?: string;
+  content?: string;
+  body?: string;
+  date: string;
+  from?: string;
+  to?: string;
+  author?: string;
+}
+
+export interface CommunicationLogProps {
   entityId?: string;
   entityType?: string;
+  logs?: LogEntry[];
 }
 
 export function CommunicationLog({ entityId, entityType }: CommunicationLogProps) {
@@ -35,4 +48,6 @@ export function CommunicationLog({ entityId, entityType }: CommunicationLogProps
     </Card>
   );
 }
+
+
 

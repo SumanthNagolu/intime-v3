@@ -15,6 +15,7 @@ import type {
 } from '@/lib/db/schema/raci';
 
 // Entity types supported by the tRPC router
+// Must match entityTypeValues in src/server/routers/object-owners.ts
 type SupportedEntityType =
   | 'campaign'
   | 'lead'
@@ -24,7 +25,9 @@ type SupportedEntityType =
   | 'job_order'
   | 'submission'
   | 'contact'
-  | 'external_job';
+  | 'external_job'
+  | 'candidate'
+  | 'talent';
 
 export interface RCAIOwner {
   id: string;

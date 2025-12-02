@@ -17,15 +17,16 @@ import {
 // ==========================================
 
 const campaignListConfig: ListTemplateConfig = {
-  entityId: 'campaign',
-  entityName: 'Campaign',
-  entityNamePlural: 'Campaigns',
+  entityType: 'campaign',
+  domain: 'crm',
+  displayName: 'Campaign',
+  pluralName: 'Campaigns',
   basePath: '/employee/crm/campaigns',
 
   // Data source
-  dataSource: {
-    listProcedure: 'crm.campaigns.list',
-    statsProcedure: 'crm.campaigns.getStats',
+  procedures: {
+    list: 'crm.campaigns.list',
+    getStats: 'crm.campaigns.getStats',
   },
 
   // Metrics displayed above the table
@@ -59,14 +60,12 @@ const campaignListConfig: ListTemplateConfig = {
       label: 'Total Budget',
       path: 'totalBudget',
       fieldType: 'currency',
-      config: { prefix: '$', format: 'compact' },
     },
     {
       id: 'activeBudget',
       label: 'Active Budget',
       path: 'activeBudget',
       fieldType: 'currency',
-      config: { prefix: '$', format: 'compact' },
     },
   ],
 
@@ -182,11 +181,6 @@ const campaignListConfig: ListTemplateConfig = {
     },
   ],
 
-  // Search configuration
-  search: {
-    placeholder: 'Search campaigns by name...',
-    fields: ['name', 'description'],
-  },
 
   // Sort defaults
   defaultSort: {
@@ -233,7 +227,7 @@ const campaignListConfig: ListTemplateConfig = {
       label: 'Launch',
       icon: 'Play',
       actionType: 'mutation',
-      mutation: 'crm.campaigns.launch',
+      procedure: 'crm.campaigns.launch',
       showWhen: { field: 'status', operator: 'in', value: ['draft', 'scheduled', 'paused'] },
     },
     {
@@ -241,7 +235,7 @@ const campaignListConfig: ListTemplateConfig = {
       label: 'Pause',
       icon: 'Pause',
       actionType: 'mutation',
-      mutation: 'crm.campaigns.pause',
+      procedure: 'crm.campaigns.pause',
       showWhen: { field: 'status', operator: 'eq', value: 'active' },
     },
     {
@@ -249,7 +243,7 @@ const campaignListConfig: ListTemplateConfig = {
       label: 'Complete',
       icon: 'CheckCircle',
       actionType: 'mutation',
-      mutation: 'crm.campaigns.complete',
+      procedure: 'crm.campaigns.complete',
       showWhen: { field: 'status', operator: 'in', value: ['active', 'paused'] },
     },
     {
@@ -258,7 +252,7 @@ const campaignListConfig: ListTemplateConfig = {
       icon: 'Trash',
       variant: 'destructive',
       actionType: 'mutation',
-      mutation: 'crm.campaigns.delete',
+      procedure: 'crm.campaigns.delete',
       confirm: {
         title: 'Delete Campaign',
         message: 'Are you sure you want to delete this campaign? This action cannot be undone.',

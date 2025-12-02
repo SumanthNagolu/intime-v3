@@ -402,7 +402,7 @@ function LinkedEntitiesTab({ contact: _contact, canEdit: _canEdit }: { contact: 
 
 // Hook to fetch contact data
 function useContact(contactId: string) {
-  return trpc.contacts.getById.useQuery({ id: contactId });
+  return trpc.crm.contacts.getById.useQuery({ id: contactId });
 }
 
 // =====================================================

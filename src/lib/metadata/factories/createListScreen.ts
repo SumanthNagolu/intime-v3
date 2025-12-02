@@ -183,7 +183,7 @@ function generateHeaderActions(
   displayName: string,
   basePath: string
 ): ActionDefinition[] {
-  return actions.map((action) => {
+  return actions.map((action): ActionDefinition => {
     switch (action.type) {
       case 'create':
         return {
@@ -241,7 +241,7 @@ function generateHeaderActions(
         return {
           id: action.id,
           type: 'custom' as const,
-          label: action.label ?? action.type,
+          label: action.label ?? (action.type || 'Action'),
           variant: action.variant ?? 'secondary',
           config: {
             type: 'custom' as const,

@@ -684,7 +684,7 @@ export const dealStageHistoryInputSet: InputSetConfig = {
   label: 'Stage History',
   description: 'History of stage transitions',
   fields: dealStageHistoryFields,
-  columns: 5,
+  columns: 4,
 };
 
 // ==========================================

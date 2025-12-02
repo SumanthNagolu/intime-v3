@@ -235,24 +235,19 @@ export class EventEmitter {
       await db.insert(events).values({
         id: event.id,
         orgId: event.orgId,
-        
+
         eventType: event.eventType,
         eventCategory: event.eventCategory,
         severity: event.eventSeverity,
-        
+
         actorType: event.actorType,
-        actorId: event.actorId,
-        
+        actorId: event.actorId ?? null,
+
         entityType: event.entityType,
         entityId: event.entityId,
-        
-        payload: event.eventData,
-        changes: event.changes,
-        
-        source: event.source,
-        correlationId: event.correlationId,
-        parentEventId: event.parentEventId,
-        
+
+        eventData: event.eventData as Record<string, unknown>,
+
         occurredAt: event.occurredAt,
         createdAt: event.recordedAt,
       });

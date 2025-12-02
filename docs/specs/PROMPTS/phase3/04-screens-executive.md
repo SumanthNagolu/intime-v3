@@ -4,265 +4,412 @@ Copy everything below the line and paste into Claude Code CLI:
 
 ---
 
-Use the metadata skill.
+Use the metadata skill and backend skill.
 
-Create Executive role screens (CFO, COO, CEO) for InTime v3.
+Create/Update Executive role screens (CFO, COO, CEO) for InTime v3 using the metadata-driven screen definition approach.
 
-## Read First:
-- docs/specs/20-USER-ROLES/09-executive/00-OVERVIEW.md
-- docs/specs/20-USER-ROLES/09-executive/02-cfo-financial-dashboard.md
-- docs/specs/20-USER-ROLES/09-executive/03-coo-operations-dashboard.md
-- docs/specs/20-USER-ROLES/09-executive/04-ceo-strategic-dashboard.md
-- docs/specs/20-USER-ROLES/09-executive/05-business-intelligence.md
+## Read First (Required):
+- docs/specs/20-USER-ROLES/07-cfo/00-OVERVIEW.md (CFO role with financial metrics)
+- docs/specs/20-USER-ROLES/04-manager/00-OVERVIEW.md (COO oversees all pod managers)
+- docs/specs/01-GLOSSARY.md (Business terms)
+- CLAUDE.md (Tech stack)
 
-## Create Executive Screens (src/app/(app)/executive/):
+## Read Existing Code:
+- src/screens/operations/index.ts (Operations screen registry)
+- src/screens/operations/cfo-dashboard.screen.ts
+- src/screens/operations/coo-dashboard.screen.ts
+- src/screens/operations/ceo-dashboard.screen.ts
+- src/screens/finance/index.ts (Finance screens if exist)
+- src/lib/metadata/types.ts (ScreenDefinition type)
 
-### 1. Executive Home (/executive)
-File: page.tsx
+## Context:
+- Routes: `/employee/cfo/*`, `/employee/coo/*`, `/employee/ceo/*`
+- Executives have org-wide visibility
+- Dashboards focus on high-level metrics and strategic decisions
+- Drill-down capabilities to pod/team/individual level
+- Export for board presentations
 
-Layout:
-- Role-based redirect or unified executive dashboard
-- Top KPIs: Revenue, Placements, Pipeline Value, Headcount
-- Quick links to role-specific dashboards
-- Critical alerts panel
-- Recent activity feed
+## Executive Hierarchy:
+- CEO: Strategic oversight, all company data
+- COO: Operations oversight, all pods and processes
+- CFO: Financial oversight, revenue, margins, AR/AP
+- Regional Director: Multi-country P&L, regional operations (see 06-regional/00-OVERVIEW.md)
 
----
-
-## CFO Screens (src/app/(app)/executive/cfo/):
-
-### 2. CFO Dashboard (/executive/cfo)
-File: cfo/page.tsx
-
-Layout:
-- Financial KPIs row:
-  - Revenue (MTD, YTD, vs Target)
-  - Gross Margin
-  - Operating Expenses
-  - EBITDA
-  - Cash Position
-- Revenue breakdown chart (by service line, region, client)
-- Margin analysis (by job type, visa type)
-- AR/AP summary
-- Collections status
-- Budget vs Actual comparison
-
-### 3. Revenue Analytics (/executive/cfo/revenue)
-File: cfo/revenue/page.tsx
-
-Layout:
-- Revenue trends (monthly, quarterly, yearly)
-- Revenue by:
-  - Client tier (Strategic, Growth, Standard)
-  - Service type (Contract, FTE, C2H)
-  - Region
-  - Pod
-- Top accounts by revenue
-- Revenue forecasting
-- Export capabilities
-
-### 4. Margin Analysis (/executive/cfo/margins)
-File: cfo/margins/page.tsx
-
-Layout:
-- Overall margin trends
-- Margin by job type
-- Margin by visa type
-- Margin by client
-- Low margin alerts
-- Margin improvement opportunities
-
-### 5. Financial Reports (/executive/cfo/reports)
-File: cfo/reports/page.tsx
-
-Layout:
-- P&L statements
-- Balance sheet
-- Cash flow
-- AR aging
-- Custom report builder
-- Scheduled reports
-- Export (Excel, PDF)
+## Note on Regional Director:
+Regional Directors use the same dashboard patterns as CFO/COO/CEO but scoped to their region.
+Their screens filter all data by region assignment. Key additions:
+- Multi-country view (country tabs/filters)
+- Cross-border compliance dashboard
+- Regional P&L vs country breakdown
+- Country manager performance comparison
 
 ---
 
-## COO Screens (src/app/(app)/executive/coo/):
+## CFO Screens (src/screens/operations/ or src/screens/finance/):
 
-### 6. COO Dashboard (/executive/coo)
-File: coo/page.tsx
+### 1. CFO Dashboard (UPDATE existing)
+File: cfo-dashboard.screen.ts
+Route: `/employee/cfo/dashboard`
+Status: EXISTS - Verify per 07-cfo/00-OVERVIEW.md
 
-Layout:
-- Operations KPIs row:
-  - Active Placements
-  - Open Jobs
-  - Time to Fill
-  - Submission to Interview Rate
-  - Fill Rate
-- Pod performance comparison
-- SLA compliance (activities, response times)
-- Process efficiency metrics
-- Bottleneck identification
-- Resource utilization
+Per CFO Role Spec:
 
-### 7. Operations Analytics (/executive/coo/operations)
-File: coo/operations/page.tsx
+KPI Cards (Row 1):
+- Revenue MTD vs Target
+- Revenue YTD vs Target
+- Gross Margin %
+- EBITDA
 
-Layout:
-- Process metrics dashboard
-- Funnel analysis (leads → placements)
-- Conversion rates by stage
-- Time in stage analysis
-- Team productivity metrics
-- Trend analysis
+KPI Cards (Row 2):
+- Cash Position
+- AR Outstanding
+- DSO (Days Sales Outstanding)
+- Collection Rate
 
-### 8. Team Performance (/executive/coo/teams)
-File: coo/teams/page.tsx
+Charts:
+- Revenue Trend (12-month rolling)
+- Revenue by Service Line (Contract, FTE, C2H, Bench)
+- Margin by Client Tier (Enterprise, Mid-Market, SMB)
+- AR Aging Distribution (Current, 30, 60, 90+)
 
-Layout:
-- All teams/pods overview
-- Performance rankings
-- Workload distribution
-- Capacity planning
-- Underperforming teams alerts
-- Drill-down to pod details
+Alerts Panel:
+- Large invoices overdue
+- Margin exceptions (negative or below threshold)
+- Unusual commission claims
 
-### 9. SLA Dashboard (/executive/coo/sla)
-File: coo/sla/page.tsx
+### 2. Revenue Analytics (CREATE if missing)
+File: revenue-analytics.screen.ts
+Route: `/employee/cfo/revenue`
 
-Layout:
-- SLA compliance overview (% met)
-- SLA by type (response, resolution)
-- Breach analysis
-- At-risk items
-- Trending violations
-- Improvement recommendations
+Tabs:
+- Overview: Revenue trends, comparisons
+- By Service: Contract vs FTE vs C2H vs Bench breakdown
+- By Client: Top clients, concentration risk
+- By Region: Geographic distribution
+- By Pod: Pod-level contribution
 
-### 10. Process Metrics (/executive/coo/metrics)
-File: coo/metrics/page.tsx
+Charts: Bar, line, pie with drill-down
+Filters: Date range, Service type, Region, Client tier
+Export: PDF, Excel
 
-Layout:
-- Key process metrics
-- Cycle times
-- Quality metrics
-- Automation rates
-- Error rates
-- Continuous improvement tracking
+### 3. Margin Analysis (CREATE if missing)
+File: margin-analysis.screen.ts
+Route: `/employee/cfo/margins`
+
+Sections:
+- Overall Margin Trends (line chart)
+- Margin by Placement Type (Contract/FTE/Bench)
+- Margin by Visa Type (US Citizen, Green Card, H1B, etc.)
+- Margin by Client
+- Low Margin Alerts (placements below threshold)
+- Margin Improvement Opportunities
+
+Rate Stack Display:
+```
+Bill Rate → Markup → Pay Rate → Margin
+$100/hr  →  25%   → $75/hr  → $25/hr
+```
+
+### 4. Accounts Receivable (CREATE if missing)
+File: ar-dashboard.screen.ts
+Route: `/employee/cfo/ar`
+
+Sections:
+- AR Aging Summary (Current, 1-30, 31-60, 61-90, 90+)
+- AR by Client (top debtors)
+- Collection Queue (actions needed)
+- Payment History
+- DSO Trend
+
+Actions: Send Reminder, Escalate, Write Off
+Integration: Invoicing system
+
+### 5. Placements Financial View (CREATE if missing)
+File: placements-financial.screen.ts
+Route: `/employee/cfo/placements`
+
+Financial perspective on placements:
+- Active Placements with Revenue
+- Projected Revenue (based on end dates)
+- Extension Impact
+- Margin Summary
+- Commission Obligations
+
+Columns: consultant, client, billRate, payRate, margin, weeklyRevenue, mtdRevenue
+
+### 6. Financial Reports (CREATE if missing)
+File: financial-reports.screen.ts
+Route: `/employee/cfo/reports`
+
+Report Types:
+- P&L Statement (monthly, quarterly, annual)
+- Cash Flow Statement
+- AR Aging Report
+- Commission Report
+- Margin Analysis Report
+- Revenue Forecast
+
+Actions: Generate, Schedule, Export (PDF/Excel)
 
 ---
 
-## CEO Screens (src/app/(app)/executive/ceo/):
+## COO Screens (src/screens/operations/):
 
-### 11. CEO Dashboard (/executive/ceo)
-File: ceo/page.tsx
+### 7. COO Dashboard (UPDATE existing)
+File: coo-dashboard.screen.ts
+Route: `/employee/coo/dashboard`
+Status: EXISTS - Enhance
 
-Layout:
-- Strategic KPIs row:
-  - Total Revenue
-  - Revenue Growth %
-  - Market Share
-  - Client NPS
-  - Employee Satisfaction
-- Company health score (composite)
-- Strategic initiative progress
-- Competitive landscape
-- Key alerts and decisions needed
+Per COO oversight role:
 
-### 12. Business Intelligence (/executive/ceo/intelligence)
-File: ceo/intelligence/page.tsx
+KPI Cards:
+- Total Active Placements
+- Open Jobs (all pods)
+- Avg Time to Fill
+- Submission to Interview Rate
+- Fill Rate %
+- Active Escalations
 
-Layout:
-- Market trends
-- Competitive analysis
-- Industry benchmarks
-- Growth opportunities
-- Risk assessment
-- AI-powered insights
+Widgets:
+- Pod Performance Comparison (bar chart ranking)
+- SLA Compliance by Pod
+- Process Bottlenecks (where deals are stuck)
+- Resource Utilization
 
-### 13. Strategic Initiatives (/executive/ceo/initiatives)
-File: ceo/initiatives/page.tsx
+Alerts:
+- Pods below target
+- High escalation pods
+- SLA breaches
 
-Layout:
-- Initiative cards (goal, progress, owner, deadline)
-- Milestone tracking
-- Resource allocation
+### 8. All Pods Overview (CREATE if missing)
+File: all-pods-overview.screen.ts
+Route: `/employee/coo/pods`
+
+Grid of all pods:
+- Pod card: name, type, manager, IC count, sprint progress, health score
+- Performance ranking
+- Click → Pod detail
+
+Filters: Type (recruiting/bench_sales/ta), Performance tier
+
+### 9. Pod Detail (COO View) (CREATE if missing)
+File: coo-pod-detail.screen.ts
+Route: `/employee/coo/pods/[podId]`
+
+COO can see any pod in detail:
+- Pod metrics
+- Team members
+- Sprint progress
+- Pipeline
+- Escalations
+- Historical performance
+
+Actions: Adjust Targets (with justification), Reassign Manager
+
+### 10. Operations Analytics (CREATE if missing)
+File: operations-analytics.screen.ts
+Route: `/employee/coo/analytics`
+
+Org-wide operations metrics:
+- Pipeline Funnel (leads → placements)
+- Conversion Rates by Stage
+- Time in Stage Analysis
+- Process Efficiency Metrics
+- Trend Analysis (improving/declining)
+
+Drill-down: By pod, by IC, by account
+
+### 11. SLA Dashboard (CREATE if missing)
+File: sla-dashboard.screen.ts
+Route: `/employee/coo/sla`
+
+SLA Compliance:
+- Overall % Met
+- By Activity Type
+- By Pod
+- Breach Analysis (root causes)
+- At-Risk Items
+- Trending Violations
+
+Actions: Review Breaches, Adjust SLAs
+
+### 12. Process Metrics (CREATE if missing)
+File: process-metrics.screen.ts
+Route: `/employee/coo/metrics`
+
+Detailed process metrics:
+- Cycle Times (job open → placed)
+- Stage Durations
+- Quality Metrics (submission quality, interview pass rate)
+- Error Rates
+- Automation Rates
+- Continuous Improvement Tracking
+
+### 13. Escalations Overview (CREATE if missing)
+File: coo-escalations.screen.ts
+Route: `/employee/coo/escalations`
+
+Org-wide escalation view:
+- All open escalations (across pods)
+- Escalation by type
+- Escalation by pod
+- Resolution time trends
+- Manager performance on escalations
+
+Actions: Assign to Manager, Take Over, Close
+
+---
+
+## CEO Screens (src/screens/operations/):
+
+### 14. CEO Dashboard (UPDATE existing)
+File: ceo-dashboard.screen.ts
+Route: `/employee/ceo/dashboard`
+Status: EXISTS - Enhance
+
+Strategic overview:
+
+KPI Cards:
+- Total Revenue (MTD/YTD)
+- Revenue Growth %
+- Total Placements (active)
+- Client Count (active)
+- Employee Count
+- Gross Margin %
+
+Company Health Score (composite):
+- Financial Health: Revenue vs target, margin
+- Operational Health: Fill rate, SLA compliance
+- Client Health: NPS, retention
+- Team Health: IC productivity, retention
+
+Strategic Sections:
+- Top Clients (revenue, health)
+- Key Initiatives Progress
+- Critical Alerts
+- Recent Wins
+
+### 15. Business Intelligence (CREATE if missing)
+File: business-intelligence.screen.ts
+Route: `/employee/ceo/intelligence`
+
+Strategic insights:
+- Market Trends
+- Competitive Landscape
+- Industry Benchmarks
+- Growth Opportunities
+- Risk Assessment
+- AI-Powered Insights
+
+### 16. Strategic Initiatives (CREATE if missing)
+File: strategic-initiatives.screen.ts
+Route: `/employee/ceo/initiatives`
+
+Initiative Tracker:
+- Cards: Goal, Progress %, Owner, Deadline
+- Milestone Timeline
+- Resource Allocation
 - Dependencies
-- Status updates
-- Risk flags
+- Risk Flags
 
-### 14. Portfolio Overview (/executive/ceo/portfolio)
-File: ceo/portfolio/page.tsx
+Actions: Add Initiative, Update Status, Close
 
-Layout:
-- Business unit performance
-- Client portfolio health
-- Revenue diversification
-- Concentration risks
-- Growth vs. mature accounts
+### 17. Portfolio Overview (CREATE if missing)
+File: portfolio-overview.screen.ts
+Route: `/employee/ceo/portfolio`
 
-### 15. Executive Reports (/executive/ceo/reports)
-File: ceo/reports/page.tsx
+Business portfolio:
+- Revenue by Business Unit
+- Client Portfolio Health
+- Concentration Risks (>10% revenue from single client)
+- Growth vs Mature Accounts
+- Diversification Analysis
 
-Layout:
-- Board-ready reports
-- Investor updates
-- Annual review
-- Strategic planning docs
-- Custom report builder
+### 18. Executive Reports (CREATE if missing)
+File: executive-reports.screen.ts
+Route: `/employee/ceo/reports`
+
+Board-Ready Reports:
+- Board Deck Generator
+- Investor Updates
+- Annual Review
+- Strategic Planning Docs
+- Custom Report Builder
+
+Export: PowerPoint, PDF
 
 ---
 
 ## Shared Executive Components:
 
-### 16. Analytics Builder (/executive/analytics)
-File: analytics/page.tsx
+### 19. Forecasting (CREATE if missing)
+File: forecasting.screen.ts
+Route: `/employee/executive/forecasting`
 
-Layout:
-- Drag-drop dashboard builder
-- Widget library
-- Custom metrics
-- Save/share dashboards
-- Schedule refresh
+Forecasting Tools:
+- Revenue Forecast (ML-based if available)
+- Pipeline Projections
+- Headcount Planning
+- Scenario Modeling
+- What-If Analysis
 
-### 17. Benchmarking (/executive/benchmarks)
-File: benchmarks/page.tsx
+### 20. Benchmarking (CREATE if missing)
+File: benchmarking.screen.ts
+Route: `/employee/executive/benchmarks`
 
-Layout:
-- Industry benchmarks comparison
-- Internal benchmarks (pod vs pod)
-- Trend analysis
-- Target setting
+Benchmarks:
+- Industry Comparisons
+- Internal Benchmarks (pod vs pod)
+- Historical Trends
+- Target Setting Tools
 
-### 18. Forecasting (/executive/forecasting)
-File: forecasting/page.tsx
+## Screen Definition Pattern:
+```typescript
+import type { ScreenDefinition } from '@/lib/metadata/types';
 
-Layout:
-- Revenue forecasting
-- Pipeline projections
-- Headcount planning
-- Scenario modeling
-- What-if analysis
+export const executiveScreenName: ScreenDefinition = {
+  id: 'executive-screen-id',
+  type: 'dashboard',
+  title: 'Screen Title',
+  icon: 'IconName',
 
-## Screen Metadata:
-Create metadata in:
-- src/lib/metadata/screens/executive/cfo/
-- src/lib/metadata/screens/executive/coo/
-- src/lib/metadata/screens/executive/ceo/
+  permission: {
+    roles: ['cfo', 'coo', 'ceo', 'admin'],
+  },
+
+  dataSource: {
+    type: 'aggregate',
+    queries: [
+      { key: 'metrics', procedure: 'executive.getMetrics' },
+      { key: 'trends', procedure: 'executive.getTrends' },
+    ],
+  },
+
+  layout: {
+    type: 'dashboard',
+    sections: [/* KPI rows, charts, tables */],
+  },
+};
+```
 
 ## Requirements:
-- High-impact visualizations (charts, graphs)
-- Drill-down capabilities (click to explore)
-- Real-time data refresh
+- High-impact data visualizations (Recharts or similar)
+- Drill-down capabilities (click chart segment → detail view)
+- Real-time data refresh option
 - Export to PDF/Excel for board presentations
-- Mobile-responsive for on-the-go access
-- Secure (role-based data access)
-- AI insights integration points
+- Mobile responsive for on-the-go access
+- Secure (role-based data scoping)
+- Loading skeletons for data-heavy screens
 
-## Chart Libraries:
-- Use Recharts or similar for visualizations
-- Consistent color scheme
-- Interactive tooltips
-- Comparison overlays
+## Visualization Guidelines:
+- Consistent color palette across all executive screens
+- Interactive tooltips with details
+- Comparison overlays (vs last period, vs target)
+- Trend indicators (up/down arrows with %)
+- Threshold highlighting (red for alerts)
 
 ## After Screens:
-- Add routes to navigation config
-- Export screen metadata
+1. Export from src/screens/operations/index.ts or src/screens/finance/index.ts
+2. Add to operationsScreens registry
+3. Create routes in src/app/employee/cfo/, /coo/, /ceo/
+4. Update navigation config for executive roles

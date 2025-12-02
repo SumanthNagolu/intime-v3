@@ -246,10 +246,7 @@ const campaignDetailConfig: DetailTemplateConfig = {
       id: 'targets',
       label: 'Targets',
       icon: 'Users',
-      badge: {
-        path: 'targets.length',
-        variant: 'secondary',
-      },
+      badgePath: 'targets.length',
       sections: [
         {
           id: 'targetList',
@@ -314,10 +311,7 @@ const campaignDetailConfig: DetailTemplateConfig = {
       id: 'content',
       label: 'Content',
       icon: 'FileText',
-      badge: {
-        path: 'content.length',
-        variant: 'secondary',
-      },
+      badgePath: 'content.length',
       sections: [
         {
           id: 'contentList',

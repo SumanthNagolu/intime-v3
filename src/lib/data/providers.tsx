@@ -28,11 +28,9 @@ import {
   useAccount,
   useSubmissions,
   useSubmissionPipeline,
-  useCandidates,
   type JobsQueryOptions,
   type AccountsQueryOptions,
   type SubmissionsQueryOptions,
-  type CandidatesQueryOptions,
 } from '@/hooks/queries';
 
 import type { DisplayAccount } from '@/lib/adapters';
@@ -478,14 +476,10 @@ interface CandidatesDataResult {
   refetch: () => void;
 }
 
-export function useCandidatesData(options: Omit<CandidatesQueryOptions, 'enabled'> = {}): CandidatesDataResult {
+export function useCandidatesData(options: { status?: string } = {}): CandidatesDataResult {
   const isLive = useFeatureFlag(FeatureFlags.USE_LIVE_BENCH_DATA);
 
-  const liveQuery = useCandidates({
-    ...options,
-    enabled: isLive,
-  });
-
+  // TODO: Implement live candidates query when available
   const mockCandidates = useMemo(() => {
     let filtered = [...MOCK_CANDIDATES];
     if (options.status) {
@@ -494,16 +488,7 @@ export function useCandidatesData(options: Omit<CandidatesQueryOptions, 'enabled
     return filtered;
   }, [options.status]);
 
-  if (isLive) {
-    return {
-      candidates: liveQuery.candidates as unknown as DisplayCandidate[],
-      isLoading: liveQuery.isLoading,
-      error: liveQuery.error as Error | null,
-      isLive: true,
-      refetch: () => liveQuery.refetch(),
-    };
-  }
-
+  // For now, always return mock data
   return {
     candidates: mockCandidates,
     isLoading: false,

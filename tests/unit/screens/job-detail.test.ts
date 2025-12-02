@@ -22,13 +22,15 @@ describe('Job Detail Screen Definition', () => {
   });
 
   it('should have a sidebar-main layout', () => {
-    expect(jobDetailScreen.layout.type).toBe('sidebar-main');
+    expect(jobDetailScreen.layout).toBeDefined();
+    expect(jobDetailScreen.layout?.type).toBe('sidebar-main');
   });
 
   it('should have key sections in the main area', () => {
-    const mainTabs = jobDetailScreen.layout.tabs || [];
+    expect(jobDetailScreen.layout).toBeDefined();
+    const mainTabs = jobDetailScreen.layout?.tabs || [];
     expect(mainTabs).toBeDefined();
-    
+
     // Check for Details tab
     const detailsTab = mainTabs.find(t => t.id === 'details');
     expect(detailsTab).toBeDefined();
@@ -41,9 +43,10 @@ describe('Job Detail Screen Definition', () => {
   });
 
   it('should use the JobDetailsInputSet in the summary section', () => {
-    const detailsTab = jobDetailScreen.layout.tabs?.find(t => t.id === 'details');
+    expect(jobDetailScreen.layout).toBeDefined();
+    const detailsTab = jobDetailScreen.layout?.tabs?.find(t => t.id === 'details');
     const summarySection = detailsTab?.sections.find(s => s.id === 'summary');
-    
+
     expect(summarySection).toBeDefined();
     expect(summarySection?.type).toBe('input-set');
     // We expect it to reference a reusable input set
