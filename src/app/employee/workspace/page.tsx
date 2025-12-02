@@ -8,7 +8,7 @@
 import { redirect } from 'next/navigation';
 
 interface PageProps {
-  searchParams: { role?: string; specificRole?: string };
+  searchParams: Promise<{ role?: string; specificRole?: string }>;
 }
 
 // Map roles to their metadata-driven dashboard paths
@@ -38,9 +38,10 @@ const ROLE_DASHBOARD_PATHS: Record<string, string> = {
   admin: '/employee/admin/dashboard',
 };
 
-export default function WorkspaceRouter({ searchParams }: PageProps) {
-  // Get role from query params
-  const role = searchParams.specificRole || searchParams.role || 'recruiting';
+export default async function WorkspaceRouter({ searchParams }: PageProps) {
+  // Get role from query params (Next.js 15 requires awaiting searchParams)
+  const params = await searchParams;
+  const role = params.specificRole || params.role || 'recruiting';
   
   // Find the dashboard path for this role
   const dashboardPath = ROLE_DASHBOARD_PATHS[role.toLowerCase()] || '/employee/recruiting/dashboard';
@@ -48,4 +49,5 @@ export default function WorkspaceRouter({ searchParams }: PageProps) {
   // Redirect to the appropriate dashboard
   redirect(dashboardPath);
 }
+
 
