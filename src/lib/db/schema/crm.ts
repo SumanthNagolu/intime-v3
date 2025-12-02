@@ -353,7 +353,7 @@ export type NewAccountTeamMember = typeof accountTeam.$inferInsert;
 // Note: This is different from workspace.contacts - CRM contacts are for sales/marketing
 // =====================================================
 
-export const crmContacts = pgTable('crm_contacts', {
+export const crmContacts = pgTable('contacts', {
   id: uuid('id').primaryKey().defaultRandom(),
   orgId: uuid('org_id').notNull().references(() => organizations.id, { onDelete: 'cascade' }),
 

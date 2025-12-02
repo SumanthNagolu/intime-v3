@@ -340,7 +340,19 @@ export function registerAllWidgets() {
   });
 }
 
+// Import and register dashboard section widgets
+import { registerDashboardWidgets } from './dashboard';
+
+/**
+ * Register all widgets including dashboard section widgets
+ */
+export function registerAllWidgetsAndDashboard() {
+  registerAllWidgets();
+  registerDashboardWidgets();
+}
+
 // Auto-register on import
 registerAllWidgets();
+registerDashboardWidgets();
 
 export default registerAllWidgets;

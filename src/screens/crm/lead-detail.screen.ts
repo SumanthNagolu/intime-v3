@@ -452,6 +452,117 @@ const qualificationSections: SectionDefinition[] = [
   },
 ];
 
+const touchpointsSections: SectionDefinition[] = [
+  {
+    id: 'touchpoints-table',
+    type: 'related-table',
+    title: 'Touchpoint History',
+    dataSource: {
+      type: 'query',
+      query: {
+        procedure: 'crm.leads.getTouchpoints',
+        params: { leadId: paramValue('id') },
+      },
+    },
+    columns: [
+      {
+        id: 'touchpointDate',
+        label: 'Date',
+        path: 'touchpointDate',
+        type: 'datetime',
+        config: { format: 'medium' },
+      },
+      {
+        id: 'touchpointType',
+        label: 'Type',
+        path: 'touchpointType',
+        type: 'enum',
+        config: {
+          options: [
+            { value: 'call', label: 'Phone Call' },
+            { value: 'email', label: 'Email' },
+            { value: 'meeting', label: 'Meeting' },
+            { value: 'linkedin', label: 'LinkedIn' },
+            { value: 'text', label: 'Text Message' },
+            { value: 'event', label: 'Event' },
+          ],
+          badgeColors: {
+            call: 'green',
+            email: 'blue',
+            meeting: 'purple',
+            linkedin: 'cyan',
+            text: 'gray',
+            event: 'amber',
+          },
+        },
+      },
+      {
+        id: 'direction',
+        label: 'Direction',
+        path: 'direction',
+        type: 'enum',
+        config: {
+          options: [
+            { value: 'inbound', label: 'Inbound' },
+            { value: 'outbound', label: 'Outbound' },
+          ],
+          badgeColors: {
+            inbound: 'green',
+            outbound: 'blue',
+          },
+        },
+      },
+      {
+        id: 'subject',
+        label: 'Subject',
+        path: 'subject',
+        type: 'text',
+      },
+      {
+        id: 'outcome',
+        label: 'Outcome',
+        path: 'outcome',
+        type: 'enum',
+        config: {
+          options: [
+            { value: 'positive', label: 'Positive' },
+            { value: 'neutral', label: 'Neutral' },
+            { value: 'negative', label: 'Negative' },
+            { value: 'no_response', label: 'No Response' },
+          ],
+          badgeColors: {
+            positive: 'green',
+            neutral: 'gray',
+            negative: 'red',
+            no_response: 'yellow',
+          },
+        },
+      },
+      {
+        id: 'nextFollowUpDate',
+        label: 'Follow-Up',
+        path: 'nextFollowUpDate',
+        type: 'date',
+        config: { format: 'relative' },
+      },
+      {
+        id: 'createdByName',
+        label: 'By',
+        path: 'createdByName',
+        type: 'text',
+      },
+    ],
+    emptyState: {
+      title: 'No touchpoints yet',
+      message: 'Log your first interaction with this lead.',
+      action: {
+        label: 'Log Touchpoint',
+        handler: 'handleLogTouchpoint',
+      },
+    },
+  },
+];
+
 const activitySections: SectionDefinition[] = [
   {
     id: 'activity-metrics',
@@ -551,6 +662,11 @@ export const leadDetailScreen: ScreenDefinition = {
         id: 'qualification',
         label: 'Qualification',
         sections: qualificationSections,
+      },
+      {
+        id: 'touchpoints',
+        label: 'Touchpoints',
+        sections: touchpointsSections,
       },
       {
         id: 'activity',

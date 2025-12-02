@@ -53,9 +53,21 @@ export interface WidgetRendererProps {
 
 /**
  * Check if definition is a FieldDefinition
+ * Checks for both 'fieldType' (preferred) and 'type' (if type is a FieldType, not WidgetType)
  */
 function isFieldDefinition(def: FieldDefinition | WidgetDefinition): def is FieldDefinition {
-  return 'fieldType' in def;
+  // Check for fieldType first (preferred)
+  if ('fieldType' in def && def.fieldType) return true;
+
+  // Check if 'type' is a FieldType (not a WidgetType)
+  // FieldTypes don't end with '-display' or '-input'
+  if ('type' in def && def.type) {
+    const typeStr = def.type as string;
+    const isWidgetType = typeStr.endsWith('-display') || typeStr.endsWith('-input') || typeStr.includes('-');
+    return !isWidgetType;
+  }
+
+  return false;
 }
 
 /**

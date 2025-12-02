@@ -151,3 +151,79 @@ deal_created
 - Lead/Deal creation → triggers workplan
 - Status changes → trigger successor activities
 - AI Twin for deal insights and follow-ups
+
+## Activity-Centric Integration
+
+### Golden Rule
+```
+"NO WORK IS CONSIDERED DONE UNLESS AN ACTIVITY IS CREATED"
+```
+
+### Events Emitted
+
+| Event | Trigger | Auto-Activities |
+|-------|---------|-----------------|
+| `lead.created` | New lead added | LEAD_NEW_QUALIFY |
+| `lead.qualified` | Lead marked qualified | LEAD_QUALIFIED_PROPOSAL |
+| `lead.stale` | 7 days no activity | LEAD_STALE_FOLLOWUP |
+| `deal.created` | New deal created | DEAL_CREATED_DISCOVERY |
+| `deal.stage_changed` | Stage progression | Stage-specific patterns |
+| `deal.proposal_sent` | Proposal sent | DEAL_PROPOSAL_FOLLOWUP |
+| `deal.stale` | 7 days stuck in stage | DEAL_STALE_REVIEW |
+| `deal.won` | Deal closed won | DEAL_WON_ONBOARD |
+| `account.created` | New account added | ACCT_NEW_WELCOME |
+| `account.health_score_dropped` | Health < 50 | ACCT_AT_RISK |
+| `account.no_activity` | 30 days no activity | ACCT_REENGAGEMENT |
+
+### Activity Patterns (CRM)
+
+| Pattern Code | Trigger | Activity | Due |
+|--------------|---------|----------|-----|
+| `LEAD_NEW_QUALIFY` | lead.created | Call: Qualification call | +24 hours |
+| `LEAD_WARM_FOLLOWUP` | lead.marked_warm | Task: Send capability deck | +4 hours |
+| `LEAD_STALE_FOLLOWUP` | lead.stale | Call: Re-engage lead | +0 hours |
+| `DEAL_CREATED_DISCOVERY` | deal.created | Meeting: Discovery call | +24 hours |
+| `DEAL_PROPOSAL_PREP` | deal.qualified | Task: Prepare proposal | +48 hours |
+| `DEAL_PROPOSAL_FOLLOWUP` | deal.proposal_sent | Call: Follow up on proposal | +72 hours |
+| `DEAL_STALE_REVIEW` | deal.stale | Review: Assess deal progress | +24 hours |
+| `ACCT_NEW_WELCOME` | account.created | Email: Welcome email | +4 hours |
+| `ACCT_FIRST_JOB` | job.created (first) | Meeting: Relationship building | +48 hours |
+| `ACCT_QUARTERLY_REVIEW` | account.quarter_ended | Meeting: QBR | +5 days |
+| `ACCT_AT_RISK` | account.health_dropped | Escalation: Review at-risk | +4 hours |
+
+### Transition Guards
+
+```typescript
+// Lead cannot be qualified without a call
+{
+  entity: 'lead',
+  from: 'new',
+  to: 'qualified',
+  requires: [{ type: 'call', count: 1, status: 'completed' }],
+  error: 'Complete qualification call before marking as qualified'
+}
+
+// Deal cannot close without proposal activity
+{
+  entity: 'deal',
+  from: 'negotiation',
+  to: 'closed_won',
+  requires: [{ type: 'document', count: 1, status: 'completed' }],
+  error: 'Must have proposal activity before closing'
+}
+```
+
+### SLA Rules
+
+| Entity | Metric | Warning | Breach |
+|--------|--------|---------|--------|
+| Lead | First contact | 4 hours | 24 hours |
+| Deal | Proposal follow-up | 48 hours | 72 hours |
+| Account | Quarterly check-in | 80 days | 95 days |
+
+### UI Requirements
+- Activity queue on CRM dashboard
+- Timeline tab on Account/Lead/Deal detail pages
+- Quick log buttons: Call, Email, Meeting, Note
+- Deal health indicators based on activity recency
+- Account at-risk alerts

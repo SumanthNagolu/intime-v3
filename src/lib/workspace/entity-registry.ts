@@ -29,7 +29,16 @@ export type EntityType =
   | 'talent'
   | 'submission'
   | 'contact'
-  | 'job_order';
+  | 'job_order'
+  // HR entity types
+  | 'employee'
+  | 'onboarding'
+  | 'timeoff'
+  | 'payroll'
+  | 'benefit_plan'
+  | 'performance'
+  | 'compliance'
+  | 'pod';
 
 export interface EntityStatus {
   label: string;
