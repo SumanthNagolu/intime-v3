@@ -21,7 +21,7 @@ import {
   Handshake,
   Layers
 } from 'lucide-react';
-import { MarketingNavbar, Footer } from '@/components/templates';
+import { MarketingNavbar, Footer } from '@/components/marketing/templates';
 
 // Intersection observer hook for scroll animations
 const useInView = (threshold = 0.2) => {

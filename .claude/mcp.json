@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-postgres", "${DATABASE_URL}"],
+      "description": "Query Supabase/PostgreSQL - essential for DB debugging"
+    },
+    "linear": {
+      "command": "npx",
+      "args": ["-y", "mcp-linear"],
+      "env": {
+        "LINEAR_API_KEY": "${LINEAR_API_KEY}"
+      },
+      "description": "Linear ticket management - if you use Linear"
+    }
+  }
+}

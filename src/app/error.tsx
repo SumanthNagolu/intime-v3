@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Home, RefreshCw, AlertTriangle, ChevronDown, Mail, ArrowLeft } from 'lucide-react';
 import * as Sentry from '@sentry/nextjs';
-import { MarketingNavbar, Footer } from '@/components/templates';
+import { MarketingNavbar, Footer } from '@/components/marketing/templates';
 
 export default function Error({
   error,

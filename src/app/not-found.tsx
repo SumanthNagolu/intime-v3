@@ -9,7 +9,7 @@
 
 import Link from 'next/link';
 import { Home, ArrowLeft, Search, HelpCircle } from 'lucide-react';
-import { MarketingNavbar, Footer } from '@/components/templates';
+import { MarketingNavbar, Footer } from '@/components/marketing/templates';
 
 export default function NotFound() {
   return (

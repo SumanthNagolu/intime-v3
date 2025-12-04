@@ -28,7 +28,7 @@ import {
   Clock,
   Briefcase
 } from 'lucide-react';
-import { MarketingNavbar, Footer } from '@/components/templates';
+import { MarketingNavbar, Footer } from '@/components/marketing/templates';
 
 const INDUSTRIES = [
   { icon: Monitor, title: 'Information Technology', href: '/industries/information-technology', description: 'Software development, cloud architecture, cybersecurity, and enterprise systems integration', accent: 'slate' },

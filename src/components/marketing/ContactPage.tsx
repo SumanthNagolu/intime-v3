@@ -19,7 +19,7 @@ import {
   Headphones,
   Sparkles
 } from 'lucide-react';
-import { MarketingNavbar, Footer } from '@/components/templates';
+import { MarketingNavbar, Footer } from '@/components/marketing/templates';
 
 const CONTACT_OPTIONS = [
   {

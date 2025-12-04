@@ -16,7 +16,7 @@ import {
   Quote,
   TrendingUp
 } from 'lucide-react';
-import { MarketingNavbar, Footer } from '@/components/templates';
+import { MarketingNavbar, Footer } from '@/components/marketing/templates';
 
 const LEADERSHIP_TEAM = [
   {

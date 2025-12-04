@@ -19,7 +19,7 @@ import {
   Sparkles,
   Briefcase
 } from 'lucide-react';
-import { MarketingNavbar, Footer } from '@/components/templates';
+import { MarketingNavbar, Footer } from '@/components/marketing/templates';
 
 const AVAILABLE_CONSULTANTS = [
   {

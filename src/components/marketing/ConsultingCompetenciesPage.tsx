@@ -14,7 +14,7 @@ import {
   GitBranch,
   Award
 } from 'lucide-react';
-import { MarketingNavbar, Footer } from '@/components/templates';
+import { MarketingNavbar, Footer } from '@/components/marketing/templates';
 
 const TECHNOLOGY_COMPETENCIES = [
   {

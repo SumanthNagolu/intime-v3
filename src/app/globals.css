@@ -169,6 +169,24 @@
   .focus-ring-premium {
     @apply focus:outline-none focus:ring-4 focus:ring-gold-500/20 focus:border-gold-500 transition-all;
   }
+
+  /* Enhanced focus utilities */
+  .focus-ring-gold {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500/30 focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
+  }
+
+  .focus-ring-forest {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest-500/30 focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
+  }
+
+  /* Responsive containers */
+  .container-narrow {
+    @apply max-w-3xl mx-auto px-6 lg:px-8;
+  }
+
+  .container-wide {
+    @apply max-w-7xl mx-auto px-6 lg:px-12;
+  }
 }
 
 

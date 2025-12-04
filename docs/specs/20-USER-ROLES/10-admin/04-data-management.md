@@ -992,4 +992,191 @@ WHERE status = 'completed'
 
 ---
 
-*Last Updated: 2024-11-30*
+## Keyboard Shortcuts
+
+| Key | Action | Context |
+|-----|--------|---------|
+| `Ctrl/Cmd + U` | Open import wizard | Data Management page |
+| `Ctrl/Cmd + E` | Open export wizard | Data Management page |
+| `Ctrl/Cmd + D` | Find duplicates | Data Management page |
+| `Ctrl/Cmd + R` | Open reassignment wizard | Data Management page |
+| `Esc` | Close wizard / Cancel | Modal open |
+| `Enter` | Continue to next step | Wizard step |
+| `←` | Previous step | Multi-step wizard |
+| `→` | Next step | Multi-step wizard |
+| `Ctrl/Cmd + A` | Select all records | List view |
+| `Space` | Toggle record selection | List view |
+| `Ctrl/Cmd + S` | Save / Confirm action | Modal open |
+
+---
+
+## Test Cases
+
+| Test ID | Scenario | Preconditions | Steps | Expected Result |
+|---------|----------|---------------|-------|-----------------|
+| ADMIN-DAT-001 | Import valid CSV | Admin logged in, valid CSV prepared | 1. Click Import 2. Select Candidates 3. Upload valid CSV 4. Import | All records imported, success message shown |
+| ADMIN-DAT-002 | Import with validation errors | Admin logged in | 1. Upload CSV with invalid emails 2. View validation | Errors shown, invalid rows flagged |
+| ADMIN-DAT-003 | Import skip duplicates | Admin logged in, some emails exist | 1. Upload CSV 2. Select "Skip duplicates" 3. Import | Existing records skipped, new records created |
+| ADMIN-DAT-004 | Import update duplicates | Admin logged in, some emails exist | 1. Upload CSV 2. Select "Update existing" 3. Import | Existing records updated with new data |
+| ADMIN-DAT-005 | Download import template | Admin logged in | 1. Click Import 2. Download template | CSV template downloaded with correct headers |
+| ADMIN-DAT-006 | Export all candidates | Admin logged in | 1. Click Export 2. Select Candidates 3. Select All time 4. Export | CSV downloaded with all candidate data |
+| ADMIN-DAT-007 | Export with filters | Admin logged in | 1. Export Candidates 2. Filter by date range 3. Filter by status 4. Export | Only filtered records exported |
+| ADMIN-DAT-008 | Export anonymized data | Admin logged in | 1. Export 2. Check "Anonymize personal data" 3. Export | Exported CSV has masked personal data |
+| ADMIN-DAT-009 | Find duplicate candidates | Admin logged in, duplicates exist | 1. Click Find Duplicates 2. Select Candidates 3. Scan | Duplicate groups identified and shown |
+| ADMIN-DAT-010 | Merge duplicate candidates | Duplicates found | 1. Select primary record 2. Preview merge 3. Confirm | Records merged, secondary deleted |
+| ADMIN-DAT-011 | Skip false positive duplicate | Duplicates found | 1. Review group 2. Select "Keep both" | Records preserved, marked as not duplicates |
+| ADMIN-DAT-012 | Bulk reassign jobs | Admin logged in, user has jobs | 1. Click Reassign 2. Select owner 3. Select all jobs 4. Choose new owner 5. Confirm | All jobs transferred to new owner |
+| ADMIN-DAT-013 | Reassign with notifications | Admin logged in | 1. Reassign records 2. Enable notifications 3. Confirm | Reassignment completed, notifications sent |
+| ADMIN-DAT-014 | Archive old jobs | Admin logged in, old jobs exist | 1. Click Archive 2. Configure criteria 3. Preview 4. Archive | Old jobs moved to archive |
+| ADMIN-DAT-015 | Archive with backup | Admin logged in | 1. Archive data 2. Enable backup 3. Confirm | Backup created, then records archived |
+| ADMIN-DAT-016 | View archived records | Records archived | 1. Go to entity list 2. Enable "View Archived" filter | Archived records visible with indicator |
+| ADMIN-DAT-017 | Restore archived record | Records archived | 1. Find archived record 2. Click Restore | Record restored to active status |
+| ADMIN-DAT-018 | Import oversized file | Admin logged in | 1. Attempt to upload 30MB CSV | Error: "File size exceeds 25 MB limit" |
+| ADMIN-DAT-019 | Export large dataset | Admin logged in, 10k+ records | 1. Export all candidates | Progress shown, file downloaded successfully |
+| ADMIN-DAT-020 | Reassign to user without permission | Admin logged in | 1. Try to reassign to user without proper role | Error: "New owner does not have required permissions" |
+
+---
+
+## Database Schema Reference
+
+### Core Tables
+
+```sql
+-- Import logs table
+CREATE TABLE import_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+  entity_type VARCHAR(50) NOT NULL, -- 'candidates', 'jobs', 'accounts', etc.
+  file_name VARCHAR(255) NOT NULL,
+  file_size_bytes INTEGER,
+  total_rows INTEGER NOT NULL,
+  created_count INTEGER DEFAULT 0,
+  updated_count INTEGER DEFAULT 0,
+  skipped_count INTEGER DEFAULT 0,
+  error_count INTEGER DEFAULT 0,
+  error_details JSONB, -- array of {row, field, error}
+  status VARCHAR(20) DEFAULT 'pending', -- 'pending', 'processing', 'completed', 'failed'
+  started_at TIMESTAMPTZ,
+  completed_at TIMESTAMPTZ,
+  imported_by UUID REFERENCES users(id),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Export logs table
+CREATE TABLE export_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+  entity_type VARCHAR(50) NOT NULL,
+  filters JSONB, -- applied filters
+  record_count INTEGER NOT NULL,
+  file_name VARCHAR(255),
+  file_size_bytes INTEGER,
+  format VARCHAR(20) DEFAULT 'csv', -- 'csv', 'xlsx', 'json'
+  anonymized BOOLEAN DEFAULT FALSE,
+  exported_by UUID REFERENCES users(id),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Duplicate merge logs table
+CREATE TABLE merge_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+  entity_type VARCHAR(50) NOT NULL,
+  primary_record_id UUID NOT NULL,
+  secondary_record_id UUID NOT NULL,
+  merge_strategy JSONB, -- fields merged and how
+  merged_by UUID REFERENCES users(id),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Reassignment logs table
+CREATE TABLE reassignment_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+  entity_type VARCHAR(50) NOT NULL,
+  record_ids UUID[] NOT NULL, -- array of reassigned record IDs
+  from_user_id UUID NOT NULL REFERENCES users(id),
+  to_user_id UUID NOT NULL REFERENCES users(id),
+  reason TEXT,
+  notifications_sent BOOLEAN DEFAULT FALSE,
+  reassigned_by UUID REFERENCES users(id),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Archive metadata (added to entities)
+-- Each entity table has these columns:
+-- archived BOOLEAN DEFAULT FALSE
+-- archived_at TIMESTAMPTZ
+-- archived_by UUID REFERENCES users(id)
+
+-- Archive configuration table
+CREATE TABLE archive_policies (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+  entity_type VARCHAR(50) NOT NULL,
+  retention_period_months INTEGER NOT NULL,
+  criteria JSONB, -- status, last_activity, etc.
+  auto_archive BOOLEAN DEFAULT FALSE,
+  last_run_at TIMESTAMPTZ,
+  records_archived INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(organization_id, entity_type)
+);
+```
+
+### Indexes
+
+```sql
+-- Import/Export logs indexes
+CREATE INDEX idx_import_logs_org_id ON import_logs(organization_id);
+CREATE INDEX idx_import_logs_entity_type ON import_logs(entity_type);
+CREATE INDEX idx_import_logs_status ON import_logs(status);
+CREATE INDEX idx_import_logs_created_at ON import_logs(created_at);
+
+CREATE INDEX idx_export_logs_org_id ON export_logs(organization_id);
+CREATE INDEX idx_export_logs_entity_type ON export_logs(entity_type);
+CREATE INDEX idx_export_logs_created_at ON export_logs(created_at);
+
+-- Merge logs indexes
+CREATE INDEX idx_merge_logs_org_id ON merge_logs(organization_id);
+CREATE INDEX idx_merge_logs_entity_type ON merge_logs(entity_type);
+CREATE INDEX idx_merge_logs_primary_record ON merge_logs(primary_record_id);
+
+-- Reassignment logs indexes
+CREATE INDEX idx_reassignment_logs_org_id ON reassignment_logs(organization_id);
+CREATE INDEX idx_reassignment_logs_from_user ON reassignment_logs(from_user_id);
+CREATE INDEX idx_reassignment_logs_to_user ON reassignment_logs(to_user_id);
+
+-- Archive policy indexes
+CREATE INDEX idx_archive_policies_org_id ON archive_policies(organization_id);
+CREATE INDEX idx_archive_policies_entity_type ON archive_policies(entity_type);
+
+-- Archived records indexes (for each entity table)
+-- Example for user_profiles:
+CREATE INDEX idx_user_profiles_archived ON user_profiles(archived) WHERE archived = TRUE;
+CREATE INDEX idx_jobs_archived ON jobs(archived) WHERE archived = TRUE;
+CREATE INDEX idx_placements_archived ON placements(archived) WHERE archived = TRUE;
+```
+
+---
+
+## Related Use Cases
+
+- [UC-ADMIN-001: Admin Dashboard Overview](./00-OVERVIEW.md)
+- [UC-ADMIN-003: System Settings](./03-system-settings.md)
+- [UC-ADMIN-005: User Management](./05-user-management.md)
+- [UC-ADMIN-008: Audit Logs](./08-audit-logs.md)
+
+---
+
+## Change Log
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0 | 2024-11-30 | Initial documentation |
+| 1.1 | 2025-12-04 | Added test cases, keyboard shortcuts, database schema |
+
+---
+
+*Last Updated: 2025-12-04*

@@ -1,8 +1,3 @@
-/**
- * Industry slugs list - used for server-side validation
- * This is a simple list without React components to avoid serialization issues
- */
-
 export const INDUSTRY_SLUGS = [
   'information-technology',
   'healthcare',
@@ -18,7 +13,7 @@ export const INDUSTRY_SLUGS = [
   'telecom-technology',
   'automobile',
   'retail',
-  'government-public-sector'
+  'government-public-sector',
 ] as const;
 
 export type IndustrySlug = typeof INDUSTRY_SLUGS[number];

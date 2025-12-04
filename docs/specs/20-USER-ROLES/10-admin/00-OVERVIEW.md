@@ -21,6 +21,139 @@ The **Admin** is the system administrator role in InTime OS. Admins have full ac
 
 ---
 
+## Admin Dashboard Screen
+
+### Screen Layout (ASCII)
+
+```
++----------------------------------------------------------+
+| InTime OS                    [🔔 3] [👤 Admin ▼]         |
++----------------------------------------------------------+
+| ADMIN                                                     |
+| ┌──────────────┐                                         |
+| │ 📊 Dashboard │ ← Active                                |
+| │ 👥 Users     │                                         |
+| │ 🔐 Roles     │                                         |
+| │ 🏢 Pods      │                                         |
+| │ 🔑 Permissions│                                        |
+| ├──────────────┤                                         |
+| │ SYSTEM       │                                         |
+| │ ⚙️ Settings  │                                         |
+| │ 🔗 Integrations│                                       |
+| │ 📋 Workflows │                                         |
+| │ 🎯 SLA Config│                                         |
+| │ 📧 Email     │                                         |
+| │ 🚩 Features  │                                         |
+| ├──────────────┤                                         |
+| │ DATA         │                                         |
+| │ 📦 Data Hub  │                                         |
+| │ 📜 Audit Logs│                                         |
+| │ 🖥️ System Logs│                                        |
+| └──────────────┘                                         |
+|                                                          |
+| MAIN CONTENT AREA                                        |
+| ┌─────────────────────────────────────────────────────┐ |
+| │ System Health                        [Refresh] [⚙️] │ |
+| │ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐       │ |
+| │ │  247   │ │  245   │ │   2    │ │   0    │       │ |
+| │ │ Total  │ │ Active │ │Inactive│ │ Locked │       │ |
+| │ │ Users  │ │ Users  │ │ Users  │ │Accounts│       │ |
+| │ └────────┘ └────────┘ └────────┘ └────────┘       │ |
+| ├─────────────────────────────────────────────────────┤ |
+| │ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐       │ |
+| │ │  12    │ │   8    │ │  15    │ │  98.5% │       │ |
+| │ │ Active │ │Pending │ │Failed  │ │ System │       │ |
+| │ │Sessions│ │Invites │ │Logins  │ │ Uptime │       │ |
+| │ └────────┘ └────────┘ └────────┘ └────────┘       │ |
+| ├─────────────────────────────────────────────────────┤ |
+| │ Quick Actions                                        │ |
+| │ [+ Add User] [📧 Invite Users] [🔄 Sync HRIS]       │ |
+| │ [⬇️ Export Data] [🔧 System Settings]               │ |
+| ├─────────────────────────────────────────────────────┤ |
+| │ System Alerts (2)                       [View All →]│ |
+| │ 🟡 SMTP Email: Connection timeout (15 min ago)      │ |
+| │ 🟡 Unusual data export: john@... (500 records)      │ |
+| ├─────────────────────────────────────────────────────┤ |
+| │ Recent Activity                         [View All →]│ |
+| │ 2:42 PM  admin@...  Login     Session    ✓          │ |
+| │ 2:40 PM  sarah@...  Login     Session    ✗ (5th)    │ |
+| │ 2:38 PM  mike@...   Update    Job #1234  ✓          │ |
+| └─────────────────────────────────────────────────────┘ |
++----------------------------------------------------------+
+```
+
+### Navigation Structure (Mantine v7 AppShell)
+
+The Admin layout uses `<AppShell>` with a collapsible sidebar:
+
+```typescript
+// Layout Configuration
+<AppShell
+  layout="default"
+  navbar={{
+    width: 260,
+    breakpoint: 'sm',
+    collapsed: { mobile: !opened, desktop: false }
+  }}
+  padding="md"
+>
+```
+
+#### Sidebar Navigation Groups
+
+| Group | Items | Route Prefix |
+|-------|-------|--------------|
+| **USER MANAGEMENT** | Dashboard, Users, Roles, Pods, Permissions | `/employee/admin/` |
+| **SYSTEM** | Settings, Integrations, Workflows, SLA, Email, Features | `/employee/admin/settings/` |
+| **DATA** | Data Hub, Audit Logs, System Logs | `/employee/admin/data/` |
+
+### Metrics Grid Specification
+
+| Metric | Data Source | Refresh Rate | Click Action | Color When |
+|--------|-------------|--------------|--------------|------------|
+| Total Users | `admin.users.count()` | 5 min | → Users List | Always blue |
+| Active Users | `admin.users.count(status='active')` | 5 min | → Filter: Active | Green if >90% |
+| Inactive Users | `admin.users.count(status='inactive')` | 5 min | → Filter: Inactive | Yellow if >5% |
+| Locked Accounts | `admin.users.count(status='locked')` | 1 min | → Filter: Locked | Red if >0 |
+| Active Sessions | `admin.sessions.countActive()` | 30 sec | → Session Monitor | Always blue |
+| Pending Invitations | `admin.invitations.pending()` | 5 min | → Pending Invites | Yellow if >10 |
+| Failed Logins (24h) | `admin.audit.failedLogins(24h)` | 1 min | → Audit Logs | Red if >20 |
+| System Uptime | `admin.health.uptime()` | 1 min | → System Logs | Green if >99% |
+
+### Quick Actions Panel
+
+| Action | Button Label | Route | Permission Required |
+|--------|--------------|-------|---------------------|
+| Add User | `+ Add User` | Modal → `/employee/admin/users/invite` | `users.create` |
+| Invite Users | `📧 Invite Users` | Modal → Bulk invite form | `users.invite` |
+| Sync HRIS | `🔄 Sync HRIS` | Trigger integration sync | `integrations.sync` |
+| Export Data | `⬇️ Export Data` | Modal → Export wizard | `data.export` |
+| System Settings | `🔧 System Settings` | `/employee/admin/settings/org` | `settings.update` |
+
+### System Alerts Specification
+
+Alerts display in severity order (Critical → Warning → Info):
+
+| Severity | Icon | Color | Examples |
+|----------|------|-------|----------|
+| Critical | 🔴 | `red-6` | Integration down, Security breach |
+| Warning | 🟡 | `gold-6` | Email timeout, Unusual activity |
+| Info | 🔵 | `ocean-6` | Scheduled maintenance, New features |
+
+### Recent Activity Feed
+
+Shows last 10 activities across all users:
+
+| Column | Width | Content |
+|--------|-------|---------|
+| Time | 60px | Relative time (e.g., "2:42 PM") |
+| User | 120px | User email (truncated) |
+| Action | 80px | Login, Create, Update, Delete |
+| Entity | 100px | Session, User, Job, etc. |
+| Status | 40px | ✓ Success, ✗ Failed |
+
+---
+
 ## Key Responsibilities
 
 1. **User Management** - Create, edit, deactivate users; assign roles and permissions
@@ -181,12 +314,35 @@ Admins have the unique ability to **override RCAI assignments** on any entity:
 
 The following use cases are documented in detail in separate files:
 
-| Use Case | File | Priority |
-|----------|------|----------|
-| Manage Users | [01-manage-users.md](./01-manage-users.md) | High |
-| Configure Pods | [02-configure-pods.md](./02-configure-pods.md) | High |
-| System Settings | [03-system-settings.md](./03-system-settings.md) | High |
-| Data Management | [04-data-management.md](./04-data-management.md) | Medium |
+### User & Pod Management
+
+| Use Case | File | Priority | Status |
+|----------|------|----------|--------|
+| Manage Users (Legacy) | [01-manage-users.md](./01-manage-users.md) | Low | Deprecated - See 05 |
+| Configure Pods | [02-configure-pods.md](./02-configure-pods.md) | High | Active |
+| User Management | [05-user-management.md](./05-user-management.md) | High | Active |
+| Permission Management | [06-permission-management.md](./06-permission-management.md) | High | Active |
+
+### System Configuration
+
+| Use Case | File | Priority | Status |
+|----------|------|----------|--------|
+| System Settings | [03-system-settings.md](./03-system-settings.md) | High | Active |
+| Workflow Configuration | [09-workflow-configuration.md](./09-workflow-configuration.md) | High | Active |
+| Email Templates | [10-email-templates.md](./10-email-templates.md) | High | Active |
+| SLA Configuration | [12-sla-configuration.md](./12-sla-configuration.md) | Medium | Active |
+| Activity Patterns | [13-activity-patterns.md](./13-activity-patterns.md) | Medium | Active |
+| Feature Flags | [14-feature-flags.md](./14-feature-flags.md) | Medium | Active |
+| Organization Settings | [15-organization-settings.md](./15-organization-settings.md) | High | Active |
+
+### Data & Integrations
+
+| Use Case | File | Priority | Status |
+|----------|------|----------|--------|
+| Data Management | [04-data-management.md](./04-data-management.md) | High | Active |
+| Integration Management | [07-integration-management.md](./07-integration-management.md) | Medium | Active |
+| Audit Logs | [08-audit-logs.md](./08-audit-logs.md) | Medium | Active |
+| Emergency Procedures | [11-emergency-procedures.md](./11-emergency-procedures.md) | Critical | Active |
 
 ---
 
@@ -402,4 +558,179 @@ Before granting Admin access, a user should:
 
 ---
 
-*Last Updated: 2024-11-30*
+---
+
+## Test Cases
+
+| Test ID | Scenario | Preconditions | Steps | Expected Result |
+|---------|----------|---------------|-------|-----------------|
+| ADMIN-DASH-001 | View dashboard metrics | Admin logged in | Navigate to /employee/admin/dashboard | All 8 metrics load within 2s |
+| ADMIN-DASH-002 | Metrics refresh automatically | On dashboard | Wait 5 minutes | User count metrics refresh |
+| ADMIN-DASH-003 | Quick Action - Add User | On dashboard | Click "+ Add User" | User creation modal opens |
+| ADMIN-DASH-004 | Alert severity ordering | Alerts exist | View alert panel | Critical alerts shown first |
+| ADMIN-DASH-005 | Click metric to filter | On dashboard | Click "Locked Accounts" | Navigate to users with locked filter |
+| ADMIN-DASH-006 | Recent activity updates | On dashboard | Another admin makes change | Activity appears within 30s |
+| ADMIN-DASH-007 | Navigation sidebar | On any admin page | Check sidebar | All groups visible and clickable |
+| ADMIN-DASH-008 | Keyboard navigation | On dashboard | Press `g u` | Navigate to Users list |
+| ADMIN-DASH-009 | Permission restriction | Non-admin logged in | Try /employee/admin/dashboard | Redirect to unauthorized page |
+| ADMIN-DASH-010 | Mobile responsive | On mobile device | View dashboard | Sidebar collapses, metrics stack |
+
+---
+
+## Database Schema Reference
+
+```sql
+-- Admin Dashboard Metrics Query Examples
+-- Total Users
+SELECT COUNT(*) FROM users WHERE org_id = current_org_id;
+
+-- Active Users
+SELECT COUNT(*) FROM users WHERE org_id = current_org_id AND status = 'active';
+
+-- Active Sessions
+SELECT COUNT(*) FROM sessions
+WHERE org_id = current_org_id
+  AND expires_at > NOW()
+  AND revoked_at IS NULL;
+
+-- Failed Logins (24h)
+SELECT COUNT(*) FROM audit_logs
+WHERE org_id = current_org_id
+  AND action = 'login_failed'
+  AND created_at > NOW() - INTERVAL '24 hours';
+
+-- System Uptime (from health_checks table)
+SELECT
+  (COUNT(*) FILTER (WHERE status = 'healthy') * 100.0 / COUNT(*)) as uptime_percent
+FROM health_checks
+WHERE created_at > NOW() - INTERVAL '30 days';
+```
+
+---
+
+## UI Component Reference (Mantine v7)
+
+| Context | Component | Props |
+|---------|-----------|-------|
+| Metrics Card | `<Paper p="md" withBorder>` | shadow="xs", radius="md" |
+| Metric Value | `<Text size="xl" fw={700}>` | c="brand.6" for positive |
+| Alert Item | `<Alert>` | color="yellow", icon={IconAlertTriangle} |
+| Quick Action | `<Button variant="light">` | leftSection={Icon} |
+| Activity Row | `<Table.Tr>` | Hover state for clickable |
+| Sidebar Nav | `<NavLink>` | Within AppShell.Navbar |
+
+---
+
+## Field Specifications
+
+### Dashboard Filter Fields
+
+**Field Specification: Date Range Filter**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `dateRange` |
+| Type | DateRangePicker |
+| Required | No |
+| Default | Last 7 days |
+| Options | Today, Yesterday, Last 7 days, Last 30 days, This month, Custom |
+| Validation | End date must be >= Start date |
+| Error Messages | |
+| - Invalid Range | "End date must be after start date" |
+| - Future Date | "Cannot select future dates" |
+
+**Field Specification: User Type Filter**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `userType` |
+| Type | MultiSelect |
+| Required | No |
+| Default | All |
+| Options | Active, Inactive, Locked, Pending Invitation |
+| Validation | At least one option if filtering |
+| Error Messages | |
+| - None Selected | "Select at least one user type to filter" |
+
+**Field Specification: Role Filter**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `roleFilter` |
+| Type | MultiSelect (searchable) |
+| Required | No |
+| Default | All Roles |
+| Options | Dynamic from `roles` table |
+| Validation | Valid role IDs |
+| Error Messages | |
+| - Invalid Role | "One or more selected roles no longer exist" |
+
+**Field Specification: Pod Filter**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `podFilter` |
+| Type | MultiSelect (searchable) |
+| Required | No |
+| Default | All Pods |
+| Options | Dynamic from `pods` table |
+| Validation | Valid pod IDs |
+| Error Messages | |
+| - Invalid Pod | "One or more selected pods no longer exist" |
+
+**Field Specification: Search Input**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `searchQuery` |
+| Type | TextInput with search icon |
+| Required | No |
+| Placeholder | "Search users, pods, settings..." |
+| Max Length | 100 characters |
+| Debounce | 300ms |
+| Validation | Alphanumeric, spaces, @, ., - |
+| Error Messages | |
+| - Too Long | "Search query cannot exceed 100 characters" |
+| - Invalid Characters | "Search contains invalid characters" |
+
+**Field Specification: Alert Severity Filter**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `alertSeverity` |
+| Type | SegmentedControl |
+| Required | No |
+| Default | All |
+| Options | All, Critical, Warning, Info |
+| Validation | None |
+
+---
+
+## Error Scenarios
+
+| Error | Cause | Message | Recovery |
+|-------|-------|---------|----------|
+| Dashboard load failed | API timeout | "Unable to load dashboard. Please refresh the page." | Click refresh or wait and retry |
+| Metrics unavailable | Database connection issue | "Some metrics are temporarily unavailable" | Partial dashboard shown, auto-retry in 30s |
+| User count mismatch | Data sync delay | "User counts may be slightly delayed" | Info banner, resolves automatically |
+| Session expired | Token expired | "Your session has expired. Please log in again." | Redirect to login |
+| Permission denied | Non-admin access | "You don't have permission to view this dashboard" | Redirect to appropriate dashboard |
+| Filter error | Invalid filter combination | "Unable to apply filters. Please try again." | Reset filters to defaults |
+| Export failed | Too much data | "Export failed. Try narrowing your date range." | Reduce data scope |
+| Real-time updates paused | WebSocket disconnected | "Live updates paused. Reconnecting..." | Auto-reconnect with backoff |
+| Quick action failed | Backend error | "Action failed: [specific error]. Please try again." | Retry or contact support |
+| Alert dismiss failed | Concurrent modification | "Unable to dismiss alert. It may have been updated." | Refresh and retry |
+
+---
+
+## Change Log
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0 | 2024-11-30 | Initial documentation |
+| 2.0 | 2025-12-03 | Added dashboard wireframe, metrics grid, navigation spec, quick actions, alerts, test cases |
+| 2.1 | 2025-12-04 | Added field specifications for dashboard filters, error scenarios table |
+
+---
+
+*Last Updated: 2025-12-04*

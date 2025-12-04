@@ -1208,4 +1208,267 @@ One of the following:
 
 ---
 
-*Last Updated: 2024-11-30*
+## Keyboard Shortcuts
+
+| Key | Action | Context |
+|-----|--------|---------|
+| `Ctrl/Cmd + S` | Save current settings | Any settings page |
+| `Ctrl/Cmd + Z` | Undo last change | Form editing |
+| `Esc` | Close modal / Cancel changes | Modal open |
+| `Tab` | Navigate to next field | Form editing |
+| `Shift + Tab` | Navigate to previous field | Form editing |
+| `Ctrl/Cmd + K` | Open command bar | Global |
+| `?` | Show keyboard shortcuts | Global |
+| `Ctrl/Cmd + /` | Toggle sidebar | Settings page |
+
+---
+
+## Test Cases
+
+| Test ID | Scenario | Preconditions | Steps | Expected Result |
+|---------|----------|---------------|-------|-----------------|
+| ADMIN-SET-001 | Update organization name | Admin logged in | 1. Navigate to Settings > Organization Profile 2. Change organization name 3. Click Save | Name updated, toast shown, audit log created |
+| ADMIN-SET-002 | Upload valid logo | Admin logged in | 1. Go to Branding 2. Upload 200x200 PNG 3. Save | Logo uploaded, preview updated |
+| ADMIN-SET-003 | Upload oversized logo | Admin logged in | 1. Attempt to upload 5MB image | Error: "Logo file must be under 2 MB" |
+| ADMIN-SET-004 | Enable SSO (OAuth) | Admin logged in | 1. Enable SSO 2. Select OAuth 3. Enter valid credentials 4. Test connection | Connection succeeds, SSO enabled |
+| ADMIN-SET-005 | Enable SSO with invalid credentials | Admin logged in | 1. Enable SSO 2. Enter invalid credentials 3. Test connection | Error: "SSO connection test failed" |
+| ADMIN-SET-006 | Enable 2FA for all users | Admin logged in | 1. Go to Security 2. Enable "Require 2FA for all users" 3. Save | Setting saved, users prompted on next login |
+| ADMIN-SET-007 | Set password policy | Admin logged in | 1. Set min length to 14 2. Enable all requirements 3. Save | Policy saved, new passwords must comply |
+| ADMIN-SET-008 | Configure session timeout | Admin logged in | 1. Set timeout to 60 minutes 2. Save | Users logged out after 60 min inactivity |
+| ADMIN-SET-009 | Test email configuration | Admin logged in | 1. Configure SMTP 2. Click "Send Test Email" | Test email received at configured address |
+| ADMIN-SET-010 | Customize email template | Admin logged in | 1. Edit invitation template 2. Add custom text 3. Save | Template saved, used for new invitations |
+| ADMIN-SET-011 | Configure LinkedIn integration | Admin logged in | 1. Enter LinkedIn API credentials 2. Test connection | Connection succeeds, status shows "Connected" |
+| ADMIN-SET-012 | Enable feature flag | Admin logged in | 1. Go to Features 2. Enable "AI-powered matching" 3. Save | Feature enabled, UI refreshes to show feature |
+| ADMIN-SET-013 | Set data retention policy | Admin logged in | 1. Set candidate retention to 3 years 2. Enable auto-archive 3. Save | Policy saved, archival job scheduled |
+| ADMIN-SET-014 | Generate new API key | Admin logged in | 1. Go to API settings 2. Click "Generate New API Key" | New key generated, shown once, stored securely |
+| ADMIN-SET-015 | Create webhook | Admin logged in | 1. Click "Add Webhook" 2. Enter URL and events 3. Test 4. Create | Webhook created, test payload sent |
+| ADMIN-SET-016 | Revoke API key | Admin logged in | 1. Click "Revoke" on existing key 2. Confirm | Key revoked, API calls with that key fail |
+| ADMIN-SET-017 | Set IP allowlist | Admin logged in | 1. Enable IP restriction 2. Add valid IP ranges 3. Save | Only listed IPs can access system |
+| ADMIN-SET-018 | Configure GDPR settings | Admin logged in | 1. Enable GDPR features 2. Set DPO contact 3. Save | GDPR compliance features activated |
+| ADMIN-SET-019 | Run manual backup | Admin logged in | 1. Go to Data & Privacy 2. Click "Run Backup Now" | Backup initiated, status shows completion |
+| ADMIN-SET-020 | Change time zone | Admin logged in | 1. Change default time zone 2. Save | All timestamps display in new time zone |
+
+---
+
+## Database Schema Reference
+
+### Core Tables
+
+```sql
+-- Organization settings table
+CREATE TABLE organizations (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name VARCHAR(100) NOT NULL,
+  legal_name VARCHAR(200),
+  website VARCHAR(500),
+  industry VARCHAR(100),
+  company_size VARCHAR(50),
+  logo_url TEXT,
+  primary_color VARCHAR(7) DEFAULT '#3B82F6',
+  secondary_color VARCHAR(7) DEFAULT '#10B981',
+  primary_email VARCHAR(255),
+  support_email VARCHAR(255),
+  primary_phone VARCHAR(50),
+  address_line1 VARCHAR(200),
+  address_line2 VARCHAR(200),
+  city VARCHAR(100),
+  state VARCHAR(100),
+  postal_code VARCHAR(20),
+  country VARCHAR(100) DEFAULT 'United States',
+  default_timezone VARCHAR(50) DEFAULT 'America/New_York',
+  date_format VARCHAR(20) DEFAULT 'MM/DD/YYYY',
+  time_format VARCHAR(20) DEFAULT '12-hour',
+  currency VARCHAR(10) DEFAULT 'USD',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Security settings table
+CREATE TABLE organization_security_settings (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+  sso_enabled BOOLEAN DEFAULT FALSE,
+  sso_provider VARCHAR(50), -- 'saml', 'oauth'
+  sso_client_id TEXT,
+  sso_client_secret TEXT, -- encrypted
+  sso_auth_url TEXT,
+  sso_token_url TEXT,
+  require_2fa BOOLEAN DEFAULT TRUE,
+  require_2fa_admins_only BOOLEAN DEFAULT FALSE,
+  allow_sms_2fa BOOLEAN DEFAULT TRUE,
+  allow_totp_2fa BOOLEAN DEFAULT TRUE,
+  two_fa_grace_period_days INTEGER DEFAULT 7,
+  min_password_length INTEGER DEFAULT 12,
+  require_uppercase BOOLEAN DEFAULT TRUE,
+  require_lowercase BOOLEAN DEFAULT TRUE,
+  require_number BOOLEAN DEFAULT TRUE,
+  require_special_char BOOLEAN DEFAULT TRUE,
+  password_expiration_days INTEGER,
+  password_history_count INTEGER DEFAULT 5,
+  session_timeout_minutes INTEGER DEFAULT 30,
+  max_session_hours INTEGER DEFAULT 24,
+  max_concurrent_sessions INTEGER DEFAULT 3,
+  logout_on_browser_close BOOLEAN DEFAULT TRUE,
+  ip_allowlist_enabled BOOLEAN DEFAULT FALSE,
+  ip_allowlist TEXT[], -- array of IP addresses/ranges
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(organization_id)
+);
+
+-- Email settings table
+CREATE TABLE organization_email_settings (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+  email_provider VARCHAR(50) DEFAULT 'intime', -- 'intime', 'smtp'
+  from_email VARCHAR(255),
+  from_name VARCHAR(100),
+  reply_to_email VARCHAR(255),
+  smtp_host VARCHAR(255),
+  smtp_port INTEGER,
+  smtp_username VARCHAR(255),
+  smtp_password TEXT, -- encrypted
+  smtp_use_tls BOOLEAN DEFAULT TRUE,
+  notification_frequency VARCHAR(20) DEFAULT 'batched', -- 'immediate', 'batched', 'daily'
+  slack_enabled BOOLEAN DEFAULT FALSE,
+  slack_webhook_url TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(organization_id)
+);
+
+-- Feature flags table
+CREATE TABLE organization_features (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+  feature_key VARCHAR(100) NOT NULL,
+  enabled BOOLEAN DEFAULT FALSE,
+  enabled_for_roles TEXT[], -- array of role names
+  enabled_for_users UUID[], -- array of user IDs
+  rollout_percentage INTEGER DEFAULT 100,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(organization_id, feature_key)
+);
+
+-- Data retention settings table
+CREATE TABLE organization_data_settings (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+  candidate_retention_years INTEGER DEFAULT 2,
+  job_retention_years INTEGER DEFAULT 5,
+  activity_log_retention_years INTEGER DEFAULT 1,
+  audit_log_retention_years INTEGER DEFAULT 7,
+  auto_archive BOOLEAN DEFAULT TRUE,
+  anonymize_after_retention BOOLEAN DEFAULT TRUE,
+  gdpr_enabled BOOLEAN DEFAULT FALSE,
+  allow_data_export_request BOOLEAN DEFAULT TRUE,
+  allow_data_deletion_request BOOLEAN DEFAULT TRUE,
+  privacy_policy_url TEXT,
+  terms_of_service_url TEXT,
+  dpo_name VARCHAR(200),
+  dpo_email VARCHAR(255),
+  backup_enabled BOOLEAN DEFAULT TRUE,
+  backup_schedule VARCHAR(20) DEFAULT 'daily', -- 'daily', 'weekly', 'custom'
+  backup_retention_days INTEGER DEFAULT 30,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(organization_id)
+);
+
+-- API keys table
+CREATE TABLE api_keys (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+  name VARCHAR(100),
+  key_hash VARCHAR(64) NOT NULL, -- SHA256 hash of key
+  key_prefix VARCHAR(10) NOT NULL, -- first 8 chars for identification
+  key_type VARCHAR(20) DEFAULT 'live', -- 'live', 'test'
+  rate_limit_per_minute INTEGER DEFAULT 100,
+  burst_limit INTEGER DEFAULT 200,
+  is_active BOOLEAN DEFAULT TRUE,
+  last_used_at TIMESTAMPTZ,
+  created_by UUID REFERENCES users(id),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  revoked_at TIMESTAMPTZ
+);
+
+-- Webhooks table
+CREATE TABLE webhooks (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+  name VARCHAR(100) NOT NULL,
+  target_url TEXT NOT NULL,
+  events TEXT[] NOT NULL, -- array of event types
+  secret_hash VARCHAR(64), -- for signature verification
+  max_retries INTEGER DEFAULT 3,
+  retry_interval_minutes INTEGER DEFAULT 5,
+  is_active BOOLEAN DEFAULT TRUE,
+  last_triggered_at TIMESTAMPTZ,
+  last_status VARCHAR(20), -- 'success', 'failed'
+  last_error TEXT,
+  created_by UUID REFERENCES users(id),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Webhook delivery log
+CREATE TABLE webhook_deliveries (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  webhook_id UUID NOT NULL REFERENCES webhooks(id) ON DELETE CASCADE,
+  event_type VARCHAR(100) NOT NULL,
+  payload JSONB NOT NULL,
+  response_status INTEGER,
+  response_body TEXT,
+  attempt_count INTEGER DEFAULT 1,
+  delivered_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+### Indexes
+
+```sql
+-- Organization settings indexes
+CREATE INDEX idx_org_security_org_id ON organization_security_settings(organization_id);
+CREATE INDEX idx_org_email_org_id ON organization_email_settings(organization_id);
+CREATE INDEX idx_org_features_org_id ON organization_features(organization_id);
+CREATE INDEX idx_org_features_key ON organization_features(feature_key);
+CREATE INDEX idx_org_data_org_id ON organization_data_settings(organization_id);
+
+-- API keys indexes
+CREATE INDEX idx_api_keys_org_id ON api_keys(organization_id);
+CREATE INDEX idx_api_keys_prefix ON api_keys(key_prefix);
+CREATE INDEX idx_api_keys_active ON api_keys(is_active) WHERE is_active = TRUE;
+
+-- Webhooks indexes
+CREATE INDEX idx_webhooks_org_id ON webhooks(organization_id);
+CREATE INDEX idx_webhooks_active ON webhooks(is_active) WHERE is_active = TRUE;
+CREATE INDEX idx_webhook_deliveries_webhook_id ON webhook_deliveries(webhook_id);
+CREATE INDEX idx_webhook_deliveries_created_at ON webhook_deliveries(created_at);
+```
+
+---
+
+## Related Use Cases
+
+- [UC-ADMIN-001: Admin Dashboard Overview](./00-OVERVIEW.md)
+- [UC-ADMIN-005: User Management](./05-user-management.md)
+- [UC-ADMIN-006: Permission Management](./06-permission-management.md)
+- [UC-ADMIN-007: Integration Management](./07-integration-management.md)
+- [UC-ADMIN-008: Audit Logs](./08-audit-logs.md)
+- [UC-ADMIN-014: Feature Flags](./14-feature-flags.md)
+- [UC-ADMIN-015: Organization Settings](./15-organization-settings.md)
+
+---
+
+## Change Log
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0 | 2024-11-30 | Initial documentation |
+| 1.1 | 2025-12-04 | Added test cases, keyboard shortcuts, database schema |
+
+---
+
+*Last Updated: 2025-12-04*
