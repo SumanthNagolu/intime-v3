@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'InTime Solutions - Enterprise Staffing & Consulting',
@@ -13,8 +14,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-ivory antialiased font-body">
-        {children}
+      <body className="min-h-screen bg-cream antialiased font-body">
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
+        <main id="main-content">
+          {children}
+        </main>
+        <Toaster />
       </body>
     </html>
   );

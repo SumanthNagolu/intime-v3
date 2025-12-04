@@ -631,4 +631,57 @@
     0% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
     100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
   }
+
+  /* ============================================
+     ACCESSIBILITY UTILITIES
+     ============================================ */
+
+  /* Reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Skip link for keyboard navigation */
+  .skip-link {
+    @apply absolute -top-10 left-4 z-[100] bg-forest-600 text-white px-4 py-2 rounded-md;
+    @apply focus:top-4 transition-all duration-200;
+  }
+
+  /* Focus visible enhancement */
+  .focus-visible-enhanced:focus {
+    outline: none;
+  }
+
+  .focus-visible-enhanced:focus-visible {
+    @apply ring-2 ring-gold-500/40 ring-offset-2 ring-offset-cream;
+  }
+
+  .dark .focus-visible-enhanced:focus-visible {
+    @apply ring-offset-charcoal-900;
+  }
+
+  /* Screen reader only content */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Focus within for form groups */
+  .focus-within-ring:focus-within {
+    @apply ring-2 ring-forest-500/20 ring-offset-2 rounded-lg;
+  }
 }
