@@ -14,10 +14,6 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 
-  // Temporarily ignore ESLint errors during build (to be fixed in follow-up)
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   // Temporarily ignore TypeScript errors during build (to be fixed in follow-up)
   typescript: {
     ignoreBuildErrors: true,
@@ -35,6 +31,10 @@ const nextConfig = {
     optimizePackageImports: ['react-icons', 'date-fns'],
   },
 
+  // Next.js 16 uses Turbopack by default - acknowledge the migration
+  turbopack: {},
+
+  // Keep webpack config for fallback (Next.js 16 allows both)
   webpack: (config, { dev, isServer }) => {
     // Suppress warnings from OpenTelemetry and require-in-the-middle
     config.ignoreWarnings = [
