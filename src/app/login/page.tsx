@@ -35,7 +35,7 @@ const PORTALS: Array<{
     icon: Users,
     color: 'text-forest-600',
     bgColor: 'bg-forest-50 hover:bg-forest-100 border-forest-200',
-    redirectPath: '/employee/workspace',
+    redirectPath: '/employee/admin/dashboard',
   },
   {
     id: 'client',

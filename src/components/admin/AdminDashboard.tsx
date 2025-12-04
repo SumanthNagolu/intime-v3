@@ -1,0 +1,223 @@
+'use client'
+
+import { trpc } from '@/lib/trpc/client'
+import {
+  DashboardShell,
+  DashboardGrid,
+  DashboardSection,
+} from '@/components/dashboard/DashboardShell'
+import { StatsCard } from '@/components/dashboard/StatsCard'
+import { ActivityFeedWidget } from '@/components/dashboard/ActivityFeedWidget'
+import { QuickActionsWidget } from '@/components/dashboard/QuickActionsWidget'
+import { SystemHealthSkeleton } from './SystemHealthSkeleton'
+import { AlertsSection } from './AlertsSection'
+import {
+  Users,
+  Plug,
+  Clock,
+  HardDrive,
+  CheckCircle,
+  UserPlus,
+  FolderPlus,
+  FileText,
+  Settings,
+  AlertTriangle,
+  LogIn,
+} from 'lucide-react'
+import Link from 'next/link'
+
+export function AdminDashboard() {
+  const healthQuery = trpc.admin.getSystemHealth.useQuery(undefined, {
+    refetchInterval: 60000, // Refresh every 60 seconds
+    retry: false, // Don't retry on auth errors
+  })
+
+  const alertsQuery = trpc.admin.getCriticalAlerts.useQuery(undefined, {
+    retry: false,
+  })
+
+  const activityQuery = trpc.admin.getRecentActivity.useQuery(undefined, {
+    retry: false,
+  })
+
+  // Check for auth errors
+  const isAuthError = healthQuery.error?.message?.includes('logged in') ||
+    healthQuery.error?.message?.includes('UNAUTHORIZED') ||
+    healthQuery.error?.message?.includes('organization') ||
+    healthQuery.error?.message?.includes('FORBIDDEN')
+
+  // Show login prompt if not authenticated
+  if (isAuthError) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center p-8">
+        <div className="max-w-md w-full text-center">
+          <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-amber-100 flex items-center justify-center">
+            <AlertTriangle className="w-8 h-8 text-amber-600" />
+          </div>
+          <h2 className="text-2xl font-heading font-bold text-charcoal-900 mb-3">
+            Authentication Required
+          </h2>
+          <p className="text-charcoal-600 mb-6">
+            You need to be signed in to access the Admin Dashboard. Please sign in to continue.
+          </p>
+          <Link
+            href="/login"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-forest-600 text-white rounded-xl font-semibold hover:bg-forest-700 transition-colors"
+          >
+            <LogIn className="w-5 h-5" />
+            Sign In
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  const breadcrumbs = [
+    { label: 'Admin', href: '/employee/admin' },
+    { label: 'Dashboard' },
+  ]
+
+  const quickActions = [
+    {
+      id: 'add-user',
+      label: 'Add User',
+      description: 'Create a new user account',
+      href: '/employee/admin/users/new',
+      icon: UserPlus,
+      variant: 'primary' as const,
+    },
+    {
+      id: 'create-pod',
+      label: 'Create Pod',
+      description: 'Create a new team pod',
+      href: '/employee/admin/pods/new',
+      icon: FolderPlus,
+    },
+    {
+      id: 'audit-logs',
+      label: 'View Audit Logs',
+      description: 'Review system audit trail',
+      href: '/employee/admin/audit',
+      icon: FileText,
+    },
+    {
+      id: 'settings',
+      label: 'System Settings',
+      description: 'Configure system settings',
+      href: '/employee/admin/settings',
+      icon: Settings,
+    },
+  ]
+
+  return (
+    <DashboardShell
+      title="Admin Dashboard"
+      description="Monitor system health and manage platform settings"
+      breadcrumbs={breadcrumbs}
+    >
+      {/* System Health Metrics */}
+      <DashboardSection title="System Health">
+        {healthQuery.isLoading ? (
+          <SystemHealthSkeleton />
+        ) : healthQuery.error ? (
+          <div className="card-premium p-6 text-center text-red-600">
+            Failed to load system health data. Please try again.
+          </div>
+        ) : (
+          <DashboardGrid columns={4}>
+            <StatsCard
+              title="Active Users"
+              value={healthQuery.data?.activeUsers ?? 0}
+              icon={Users}
+            />
+            <StatsCard
+              title="Integrations"
+              value={`${healthQuery.data?.activeIntegrations ?? 0}/${healthQuery.data?.totalIntegrations ?? 0}`}
+              changeLabel="active"
+              icon={Plug}
+              variant={
+                (healthQuery.data?.activeIntegrations ?? 0) < (healthQuery.data?.totalIntegrations ?? 0)
+                  ? 'warning'
+                  : 'success'
+              }
+            />
+            <StatsCard
+              title="Pending Approvals"
+              value={healthQuery.data?.pendingApprovals ?? 0}
+              icon={CheckCircle}
+              variant={
+                (healthQuery.data?.pendingApprovals ?? 0) > 10
+                  ? 'warning'
+                  : 'default'
+              }
+            />
+            <StatsCard
+              title="Uptime"
+              value={`${healthQuery.data?.uptime ?? 0}%`}
+              icon={Clock}
+              variant="success"
+            />
+            <StatsCard
+              title="Storage Used"
+              value={`${healthQuery.data?.storageUsed ?? 0}%`}
+              changeLabel="of total"
+              icon={HardDrive}
+              variant={
+                (healthQuery.data?.storageUsed ?? 0) > 80
+                  ? 'warning'
+                  : 'default'
+              }
+            />
+          </DashboardGrid>
+        )}
+      </DashboardSection>
+
+      {/* Critical Alerts */}
+      <AlertsSection
+        alerts={alertsQuery.data ?? []}
+        isLoading={alertsQuery.isLoading}
+      />
+
+      {/* Quick Actions */}
+      <DashboardSection title="Quick Actions">
+        <QuickActionsWidget actions={quickActions} columns={4} title="" />
+      </DashboardSection>
+
+      {/* Recent Activity */}
+      <DashboardSection
+        title="Recent Activity"
+        action={
+          <a
+            href="/employee/admin/audit"
+            className="text-sm text-forest-600 hover:text-forest-700"
+          >
+            View All
+          </a>
+        }
+      >
+        {activityQuery.isLoading ? (
+          <div className="bg-white rounded-xl border border-charcoal-100 p-8">
+            <div className="space-y-4">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="h-12 bg-charcoal-100 animate-pulse rounded" />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <ActivityFeedWidget
+            title=""
+            activities={activityQuery.data?.map(a => ({
+              id: a.id,
+              title: `${a.action} ${a.entity}`,
+              description: a.actor ?? 'System',
+              timestamp: new Date(a.timestamp),
+              icon: FileText,
+            })) ?? []}
+            maxItems={10}
+            showViewAll={false}
+          />
+        )}
+      </DashboardSection>
+    </DashboardShell>
+  )
+}
