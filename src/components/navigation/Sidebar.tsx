@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ChevronDown, ChevronRight, LucideIcon } from "lucide-react"
+import { ChevronDown, LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export interface SidebarItem {
@@ -28,26 +28,31 @@ export function Sidebar({ sections, className }: SidebarProps) {
   const pathname = usePathname()
 
   return (
-    <aside className={cn("w-64 flex-shrink-0", className)}>
-      <nav className="sticky top-24 space-y-6">
-        {sections.map((section, sectionIndex) => (
-          <div key={sectionIndex}>
-            {section.title && (
-              <h3 className="px-3 text-xs font-semibold text-charcoal-500 uppercase tracking-wider mb-2">
-                {section.title}
-              </h3>
-            )}
-            <ul className="space-y-1">
-              {section.items.map((item, itemIndex) => (
-                <SidebarNavItem
-                  key={itemIndex}
-                  item={item}
-                  pathname={pathname}
-                />
-              ))}
-            </ul>
-          </div>
-        ))}
+    <aside className={cn("w-[300px] flex-shrink-0 bg-cream", className)}>
+      <nav className="sticky top-24 px-8 py-10">
+        <div className="space-y-10">
+          {sections.map((section, sectionIndex) => (
+            <div key={sectionIndex}>
+              {section.title && (
+                <div className="mb-5">
+                  <h3 className="text-[10px] font-semibold uppercase tracking-[0.15em] text-charcoal-400">
+                    {section.title}
+                  </h3>
+                  <div className="w-5 h-[2px] bg-rust-500 mt-2" />
+                </div>
+              )}
+              <ul className="space-y-1">
+                {section.items.map((item, itemIndex) => (
+                  <SidebarNavItem
+                    key={itemIndex}
+                    item={item}
+                    pathname={pathname}
+                  />
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </nav>
     </aside>
   )
@@ -71,11 +76,24 @@ function SidebarNavItem({ item, pathname, depth = 0 }: {
   }, [pathname, hasChildren, item.items])
 
   const content = (
-    <span className="flex items-center gap-2 flex-1">
-      {Icon && <Icon className="h-4 w-4" />}
-      <span>{item.label}</span>
+    <span className="flex items-center gap-4 flex-1">
+      {Icon && (
+        <Icon 
+          className={cn(
+            "h-4 w-4 flex-shrink-0 transition-colors duration-200",
+            isActive ? "text-forest-600" : "text-charcoal-400"
+          )} 
+          strokeWidth={1.5}
+        />
+      )}
+      <span className={cn(
+        "transition-colors duration-200",
+        depth > 0 && "font-heading text-[14px]"
+      )}>
+        {item.label}
+      </span>
       {item.badge && (
-        <span className="ml-auto text-xs bg-gold-100 text-gold-700 px-2 py-0.5 rounded-full">
+        <span className="ml-auto text-[10px] font-medium bg-rust-50 text-rust-600 px-2 py-0.5 rounded-full">
           {item.badge}
         </span>
       )}
@@ -83,11 +101,12 @@ function SidebarNavItem({ item, pathname, depth = 0 }: {
   )
 
   const baseClasses = cn(
-    "flex items-center gap-2 px-3 py-2 rounded-md text-sm transition-all duration-200",
-    "hover:bg-charcoal-50",
-    isActive && "bg-forest-50 text-forest-700 font-medium border-l-2 border-forest-600",
-    !isActive && "text-charcoal-700",
-    depth > 0 && "ml-4"
+    "flex items-center gap-4 py-3 text-[15px] font-medium transition-colors duration-200",
+    "hover:text-forest-700",
+    isActive 
+      ? "text-forest-600 font-semibold" 
+      : "text-charcoal-600",
+    depth > 0 && "pl-8 text-[14px] font-normal text-charcoal-500 hover:text-charcoal-800"
   )
 
   if (hasChildren) {
@@ -95,17 +114,24 @@ function SidebarNavItem({ item, pathname, depth = 0 }: {
       <li>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={cn(baseClasses, "w-full justify-between")}
+          className={cn(baseClasses, "w-full justify-between group")}
         >
           {content}
-          {isOpen ? (
-            <ChevronDown className="h-4 w-4 text-charcoal-400" />
-          ) : (
-            <ChevronRight className="h-4 w-4 text-charcoal-400" />
-          )}
+          <ChevronDown 
+            className={cn(
+              "h-3.5 w-3.5 text-charcoal-400 transition-transform duration-200",
+              isOpen && "rotate-180"
+            )} 
+            strokeWidth={1.5}
+          />
         </button>
-        {isOpen && (
-          <ul className="mt-1 space-y-1">
+        <div 
+          className={cn(
+            "overflow-hidden transition-all duration-300 ease-out",
+            isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          )}
+        >
+          <ul className="mt-2 space-y-0.5 border-l border-charcoal-100 ml-2">
             {item.items!.map((child, childIndex) => (
               <SidebarNavItem
                 key={childIndex}
@@ -115,7 +141,7 @@ function SidebarNavItem({ item, pathname, depth = 0 }: {
               />
             ))}
           </ul>
-        )}
+        </div>
       </li>
     )
   }

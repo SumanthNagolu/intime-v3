@@ -1,3 +1,5 @@
+"use client"
+
 import { SidebarLayout } from '@/components/layouts/SidebarLayout'
 import { adminNavSections } from '@/lib/navigation/adminNavConfig'
 import type { ReactNode } from 'react'

@@ -9,6 +9,7 @@ import {
   Flag,
   AlertTriangle,
   Database,
+  Network,
 } from 'lucide-react'
 import type { SidebarSection } from '@/components/navigation/Sidebar'
 
@@ -30,6 +31,11 @@ export const adminNavSections: SidebarSection[] = [
         label: 'Users',
         href: '/employee/admin/users',
         icon: Users,
+      },
+      {
+        label: 'Pods',
+        href: '/employee/admin/pods',
+        icon: Network,
       },
       {
         label: 'Roles',
