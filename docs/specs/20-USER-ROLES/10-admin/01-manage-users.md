@@ -1,5 +1,11 @@
 # Use Case: Manage Users
 
+> **DEPRECATION NOTICE**: This spec has been superseded by [UC-ADMIN-005: User Management](./05-user-management.md), which provides comprehensive enterprise-level documentation including SSO/SAML provisioning, API token management, field specifications, test cases, and database schema. Please refer to the newer spec for all user management functionality.
+>
+> This document is retained for historical reference only.
+
+---
+
 ## Overview
 
 | Property | Value |

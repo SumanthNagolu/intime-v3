@@ -17,7 +17,7 @@ import {
   Code2,
   Rocket
 } from 'lucide-react';
-import { MarketingNavbar, Footer } from '@/components/templates';
+import { MarketingNavbar, Footer } from '@/components/marketing/templates';
 
 // Animated counter hook
 const useCounter = (end: number, duration: number = 2000) => {

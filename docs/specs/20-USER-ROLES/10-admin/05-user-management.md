@@ -1,13 +1,22 @@
 # UC-ADMIN-005: User Management
 
-**Version:** 1.0
-**Last Updated:** 2025-11-30
+**Version:** 2.0
+**Last Updated:** 2025-12-04
 **Role:** Admin
 **Status:** Approved
 
 ---
 
-## 1. Overview
+## Overview
+
+| Property | Value |
+|----------|-------|
+| Use Case ID | UC-ADMIN-005 |
+| Actor | Admin |
+| Goal | Manage complete user lifecycle including creation, role assignment, profile updates, deactivation, and bulk operations |
+| Frequency | Daily (user lookups), Weekly (new user creation), As needed (terminations) |
+| Estimated Time | 2-5 min (create user), 30 sec (lookup), 2 min (deactivate) |
+| Priority | HIGH |
 
 This use case covers complete user lifecycle management in InTime OS, including user creation, role assignment, profile updates, deactivation, and bulk operations. Admin has god-mode access to create, modify, and delete users across the entire organization.
 
@@ -609,11 +618,537 @@ This use case covers complete user lifecycle management in InTime OS, including 
 
 ---
 
-## 13. Change Log
+## 13. Field Specifications
+
+### Create User Form Fields
+
+**Field Specification: First Name**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `firstName` |
+| Type | TextInput |
+| Required | Yes |
+| Max Length | 50 characters |
+| Validation | Letters, spaces, hyphens, apostrophes only |
+| Error Messages | |
+| - Empty | "First name is required" |
+| - Invalid | "First name can only contain letters, spaces, hyphens, and apostrophes" |
+| - Too Long | "First name cannot exceed 50 characters" |
+
+**Field Specification: Last Name**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `lastName` |
+| Type | TextInput |
+| Required | Yes |
+| Max Length | 50 characters |
+| Validation | Letters, spaces, hyphens, apostrophes only |
+| Error Messages | |
+| - Empty | "Last name is required" |
+| - Invalid | "Last name can only contain letters, spaces, hyphens, and apostrophes" |
+| - Too Long | "Last name cannot exceed 50 characters" |
+
+**Field Specification: Email**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `email` |
+| Type | TextInput (email) |
+| Required | Yes |
+| Max Length | 254 characters |
+| Validation | Valid email format, unique in system |
+| Error Messages | |
+| - Empty | "Email is required" |
+| - Invalid Format | "Please enter a valid email address" |
+| - Duplicate | "A user with this email already exists" |
+| - Domain Restricted | "Only @company.com email addresses are allowed" |
+
+**Field Specification: Employee ID**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `employeeId` |
+| Type | TextInput |
+| Required | No (auto-generated if empty) |
+| Max Length | 20 characters |
+| Format | EMP-YYYY-NNNN |
+| Validation | Alphanumeric, unique in system |
+| Error Messages | |
+| - Duplicate | "This employee ID is already in use" |
+| - Invalid Format | "Employee ID must be alphanumeric" |
+
+**Field Specification: Primary Role**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `roleId` |
+| Type | Select (searchable) |
+| Required | Yes |
+| Options | From `roles` table where `is_active = true` |
+| Error Messages | |
+| - Empty | "Please select a role for this user" |
+| - Invalid | "Selected role is not available" |
+
+**Field Specification: Pod Assignment**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `podId` |
+| Type | Select (searchable) |
+| Required | Conditional (required for IC roles) |
+| Options | From `pods` table where `is_active = true` |
+| Error Messages | |
+| - Empty | "Pod assignment is required for this role" |
+| - Invalid | "Selected pod is not available" |
+
+**Field Specification: Start Date**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `startDate` |
+| Type | DatePicker |
+| Required | Yes |
+| Default | Today |
+| Validation | Cannot be more than 90 days in past or future |
+| Error Messages | |
+| - Empty | "Start date is required" |
+| - Too Far Past | "Start date cannot be more than 90 days in the past" |
+| - Too Far Future | "Start date cannot be more than 90 days in the future" |
+
+---
+
+## 14. SSO/SAML User Provisioning
+
+### Overview
+
+InTime OS supports Single Sign-On (SSO) integration with enterprise identity providers using SAML 2.0 or OIDC protocols.
+
+### SSO User Flow
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│ SSO/SAML User Provisioning Flow                                │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  1. User clicks "Sign in with SSO"                             │
+│     ↓                                                          │
+│  2. Redirect to Identity Provider (IdP)                        │
+│     ↓                                                          │
+│  3. User authenticates with IdP                                │
+│     ↓                                                          │
+│  4. IdP sends SAML assertion to InTime                         │
+│     ↓                                                          │
+│  5. InTime validates SAML assertion                            │
+│     ↓                                                          │
+│  ┌────────────────────────────────────────────────────────┐   │
+│  │ User Exists?                                           │   │
+│  │                                                         │   │
+│  │ YES → Update user attributes from SAML                 │   │
+│  │       → Log user in                                    │   │
+│  │       → Redirect to dashboard                          │   │
+│  │                                                         │   │
+│  │ NO (JIT Provisioning Enabled) →                        │   │
+│  │       → Create new user from SAML attributes           │   │
+│  │       → Assign default role (configurable)             │   │
+│  │       → Log user in                                    │   │
+│  │       → Show onboarding wizard                         │   │
+│  │                                                         │   │
+│  │ NO (JIT Disabled) →                                    │   │
+│  │       → Show error: "Account not found"                │   │
+│  │       → Log failed attempt                             │   │
+│  └────────────────────────────────────────────────────────┘   │
+│                                                                 │
+└────────────────────────────────────────────────────────────────┘
+```
+
+### SAML Attribute Mapping
+
+| SAML Attribute | InTime Field | Required | Notes |
+|----------------|--------------|----------|-------|
+| `email` | `email` | Yes | Primary identifier |
+| `firstName` or `givenName` | `first_name` | Yes | |
+| `lastName` or `surname` | `last_name` | Yes | |
+| `employeeId` | `employee_id` | No | From HRIS |
+| `department` | `department` | No | |
+| `manager` | `manager_id` | No | Email lookup |
+| `groups` | `role_id` | No | Mapped via group rules |
+| `title` | `job_title` | No | |
+
+### SSO Configuration Screen
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│ SSO/SAML Configuration                              [Test SSO]  │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│ IDENTITY PROVIDER                                               │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ Provider Type:                                             │ │
+│ │ ○ SAML 2.0                                                │ │
+│ │ ○ OIDC (OpenID Connect)                                   │ │
+│ │ ● Azure AD (pre-configured)                               │ │
+│ │ ○ Okta (pre-configured)                                   │ │
+│ │ ○ Google Workspace (pre-configured)                       │ │
+│ │                                                             │ │
+│ │ IdP Metadata URL:                                          │ │
+│ │ [https://login.microsoftonline.com/...]                   │ │
+│ │                                                             │ │
+│ │ [Upload IdP Metadata XML]                                  │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ SERVICE PROVIDER (InTime)                                       │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ Entity ID: https://app.intime.com/saml/metadata            │ │
+│ │ ACS URL: https://app.intime.com/saml/acs                   │ │
+│ │ SLO URL: https://app.intime.com/saml/slo                   │ │
+│ │                                                             │ │
+│ │ [Download SP Metadata] [Copy URLs]                         │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ JIT PROVISIONING                                                │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ ☑ Enable Just-in-Time user provisioning                    │ │
+│ │                                                             │ │
+│ │ Default Role for new SSO users:                            │ │
+│ │ [Technical Recruiter                                   ▼] │ │
+│ │                                                             │ │
+│ │ Default Pod for new SSO users:                             │ │
+│ │ [Unassigned                                            ▼] │ │
+│ │                                                             │ │
+│ │ ☑ Require admin approval for JIT-created users             │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ [Cancel]                                      [Save SSO Config]  │
+└────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 15. API Token Management
+
+### Overview
+
+Admins can create and manage API tokens for users who need programmatic access to InTime APIs.
+
+### API Token Screen
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│ API Tokens - Sarah Patel                        [+ New Token]   │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│ ACTIVE TOKENS (2)                                               │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ Token Name        | Scopes          | Created    | Expires │ │
+│ ├───────────────────┼─────────────────┼────────────┼─────────┤ │
+│ │ Automation Script | jobs:read,      | Nov 1, 2024| Never   │ │
+│ │                   | candidates:read |            |         │ │
+│ │                   | [Revoke]                               │ │
+│ ├───────────────────┼─────────────────┼────────────┼─────────┤ │
+│ │ Reporting Tool    | reports:read    | Dec 1, 2024| Dec 2025│ │
+│ │                   | [Revoke]                               │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ REVOKED TOKENS (1)                                              │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ Old Integration   | full            | Jan 2024   | Revoked │ │
+│ │                   | Revoked: Oct 15, 2024 by Admin         │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+└────────────────────────────────────────────────────────────────┘
+```
+
+### Create API Token Flow
+
+**Step 1:** Click "+ New Token"
+
+**System Response:**
+```
+┌────────────────────────────────────────────────────────────────┐
+│ Create API Token                                          [×]   │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│ TOKEN DETAILS                                                   │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ Token Name: *                                              │ │
+│ │ [________________________]                                 │ │
+│ │ (Descriptive name to identify this token)                  │ │
+│ │                                                             │ │
+│ │ Expiration:                                                 │ │
+│ │ ○ 30 days                                                  │ │
+│ │ ○ 90 days                                                  │ │
+│ │ ● 1 year                                                   │ │
+│ │ ○ Never (not recommended)                                  │ │
+│ │ ○ Custom: [____________] [📅]                             │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ SCOPES (Permissions)                                            │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ ☐ full - Full access (all permissions)                     │ │
+│ │                                                             │ │
+│ │ Jobs                                                        │ │
+│ │ ☑ jobs:read - Read job data                               │ │
+│ │ ☐ jobs:write - Create/update jobs                         │ │
+│ │                                                             │ │
+│ │ Candidates                                                  │ │
+│ │ ☑ candidates:read - Read candidate data                   │ │
+│ │ ☐ candidates:write - Create/update candidates             │ │
+│ │                                                             │ │
+│ │ Submissions                                                 │ │
+│ │ ☐ submissions:read - Read submissions                     │ │
+│ │ ☐ submissions:write - Create/update submissions           │ │
+│ │                                                             │ │
+│ │ Reports                                                     │ │
+│ │ ☐ reports:read - Generate reports                         │ │
+│ │                                                             │ │
+│ │ Users (Admin only)                                          │ │
+│ │ ☐ users:read - Read user data                             │ │
+│ │ ☐ users:write - Create/update users                       │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ [Cancel]                                      [Generate Token]  │
+└────────────────────────────────────────────────────────────────┘
+```
+
+**Step 2:** Click "Generate Token"
+
+**System Response:**
+```
+┌────────────────────────────────────────────────────────────────┐
+│ ✓ API Token Created                                       [×]   │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│ ⚠️ IMPORTANT: Copy this token now. It will not be shown again! │
+│                                                                 │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ itm_live_aBcDeFgHiJkLmNoPqRsTuVwXyZ1234567890abcdef       │ │
+│ │                                                [Copy 📋]   │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ Token Details:                                                  │
+│ • Name: Automation Script                                       │
+│ • Scopes: jobs:read, candidates:read                           │
+│ • Expires: December 4, 2025                                    │
+│ • Created: December 4, 2024                                    │
+│                                                                 │
+│ Usage Example:                                                  │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ curl -H "Authorization: Bearer itm_live_aBc..."            │ │
+│ │      https://api.intime.com/v1/jobs                        │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ [Done]                                                          │
+└────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 16. User Profile Photos
+
+### Photo Upload Flow
+
+**Step 1:** Navigate to user profile → Click "Edit" → Click profile photo area
+
+**System Response:**
+```
+┌────────────────────────────────────────────────────────────────┐
+│ Update Profile Photo                                      [×]   │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│        ┌─────────────────────────────────────────┐             │
+│        │                                         │             │
+│        │            Current Photo                │             │
+│        │              (or initials)              │             │
+│        │                                         │             │
+│        └─────────────────────────────────────────┘             │
+│                                                                 │
+│ UPLOAD NEW PHOTO                                                │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ Drag and drop image here, or [Browse]                      │ │
+│ │                                                             │ │
+│ │ Requirements:                                               │ │
+│ │ • JPG, PNG, or WebP format                                 │ │
+│ │ • Max file size: 5 MB                                      │ │
+│ │ • Min dimensions: 200 x 200 pixels                         │ │
+│ │ • Square images work best                                  │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ [Remove Photo]              [Cancel]              [Save Photo]  │
+│                                                                 │
+└────────────────────────────────────────────────────────────────┘
+```
+
+### Photo Processing
+
+| Step | Action |
+|------|--------|
+| 1 | Upload photo to temporary storage |
+| 2 | Validate file type and size |
+| 3 | Generate thumbnail (50x50, 100x100, 200x200) |
+| 4 | Move to permanent storage (S3/CDN) |
+| 5 | Update user_profile.photo_url |
+| 6 | Invalidate CDN cache |
+
+---
+
+## 17. Keyboard Shortcuts
+
+| Key | Action | Context |
+|-----|--------|---------|
+| `Cmd+K` / `Ctrl+K` | Open command palette | Any admin page |
+| `g u` | Go to Users list | Any admin page |
+| `n u` | New user | Users list |
+| `/` | Focus search | Users list |
+| `j` / `k` | Navigate up/down | Users list |
+| `Enter` | Open selected user | Users list |
+| `e` | Edit user | User profile |
+| `Escape` | Close modal | Any modal |
+
+---
+
+## 18. Test Cases
+
+| Test ID | Scenario | Preconditions | Steps | Expected Result |
+|---------|----------|---------------|-------|-----------------|
+| ADMIN-USR-001 | Create user with valid data | Admin logged in | 1. Click "+ Create User" 2. Fill all required fields 3. Click "Create" | User created, welcome email sent |
+| ADMIN-USR-002 | Create user with duplicate email | User with email exists | 1. Click "+ Create User" 2. Enter existing email 3. Submit | Error: "A user with this email already exists" |
+| ADMIN-USR-003 | Deactivate user | User is active | 1. Open user profile 2. Click "Deactivate" 3. Select reason 4. Confirm | User status = Inactive, sessions terminated |
+| ADMIN-USR-004 | Reactivate user | User is inactive | 1. Open inactive user 2. Click "Reactivate" 3. Confirm | User status = Active, can log in |
+| ADMIN-USR-005 | Reset password (send link) | User exists | 1. Open user profile 2. Click "Reset Password" 3. Choose "Send link" | Password reset email sent |
+| ADMIN-USR-006 | Unlock account | User is locked | 1. Open locked user 2. Click "Unlock" 3. Choose option 4. Confirm | Account unlocked |
+| ADMIN-USR-007 | Bulk import users | CSV file ready | 1. Click "Import Users" 2. Upload CSV 3. Review mapping 4. Import | Users created, errors reported |
+| ADMIN-USR-008 | Change user role | User exists | 1. Open user 2. Click "Edit" 3. Change role 4. Save | Role updated, permissions changed |
+| ADMIN-USR-009 | Assign user to pod | User has no pod | 1. Open user 2. Edit pod assignment 3. Save | User added to pod |
+| ADMIN-USR-010 | Transfer ownership on deactivation | User owns records | 1. Deactivate user 2. Select new owner 3. Confirm | All RACI assignments transferred |
+| ADMIN-USR-011 | Create API token | User profile open | 1. Click "API Tokens" 2. Click "+ New" 3. Configure scopes 4. Generate | Token created, shown once |
+| ADMIN-USR-012 | Revoke API token | Token exists | 1. Click "API Tokens" 2. Click "Revoke" 3. Confirm | Token invalidated immediately |
+| ADMIN-USR-013 | SSO login (existing user) | SSO configured | 1. Click "SSO Login" 2. Authenticate with IdP | User logged in, attributes synced |
+| ADMIN-USR-014 | SSO login (JIT provisioning) | SSO + JIT enabled | 1. New user clicks "SSO Login" 2. Authenticate | New user created, logged in |
+| ADMIN-USR-015 | Upload profile photo | User profile open | 1. Click photo area 2. Upload image 3. Save | Photo displayed, thumbnails generated |
+
+---
+
+## 19. Error Scenarios
+
+| Error | Cause | Message | Recovery |
+|-------|-------|---------|----------|
+| Duplicate email | Email already in system | "A user with this email already exists" | Use different email or merge accounts |
+| Invalid role | Role deleted/disabled | "Selected role is not available" | Select different role |
+| Pod not found | Pod deleted | "Selected pod no longer exists" | Select different pod |
+| HRIS sync failed | Integration error | "Failed to sync with HRIS. User created locally." | Manual HRIS entry or retry |
+| Email send failed | SMTP error | "Welcome email failed to send. Click to retry." | Retry or copy invite link |
+| SSO assertion invalid | Certificate mismatch | "SSO authentication failed. Contact admin." | Re-upload IdP certificate |
+| Token generation failed | Rate limit | "Too many tokens created. Try again later." | Wait 1 hour |
+| Photo upload failed | File too large | "Photo must be under 5 MB" | Resize image |
+| Password too weak | Doesn't meet policy | "Password must contain uppercase, lowercase, number, and special character" | Use stronger password |
+
+---
+
+## 20. Database Schema Reference
+
+```sql
+-- Core user table
+CREATE TABLE user_profiles (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  auth_user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+  email VARCHAR(254) NOT NULL UNIQUE,
+  first_name VARCHAR(50) NOT NULL,
+  last_name VARCHAR(50) NOT NULL,
+  employee_id VARCHAR(20) UNIQUE,
+  phone VARCHAR(20),
+  photo_url TEXT,
+
+  -- Enterprise fields
+  cost_center VARCHAR(20),
+  hire_date DATE,
+  termination_date DATE,
+  commission_plan_id UUID REFERENCES commission_plans(id),
+  license_type VARCHAR(20) DEFAULT 'full', -- full, limited, read_only
+  sso_identifier VARCHAR(255), -- External SSO ID
+  external_system_id VARCHAR(100), -- HRIS ID
+
+  -- Organization
+  organization_id UUID NOT NULL REFERENCES organizations(id),
+  pod_id UUID REFERENCES pods(id),
+  manager_id UUID REFERENCES user_profiles(id),
+  department VARCHAR(100),
+  job_title VARCHAR(100),
+  location VARCHAR(100),
+  timezone VARCHAR(50) DEFAULT 'America/New_York',
+
+  -- Status
+  status VARCHAR(20) DEFAULT 'active', -- active, inactive, locked, pending
+  data_scope VARCHAR(20) DEFAULT 'own', -- own, team, region, organization
+
+  -- Security
+  mfa_enabled BOOLEAN DEFAULT false,
+  last_login_at TIMESTAMPTZ,
+  failed_login_count INTEGER DEFAULT 0,
+  locked_at TIMESTAMPTZ,
+  password_changed_at TIMESTAMPTZ,
+
+  -- Metadata
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  created_by UUID REFERENCES user_profiles(id),
+  updated_by UUID REFERENCES user_profiles(id)
+);
+
+-- API tokens
+CREATE TABLE api_tokens (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES user_profiles(id) ON DELETE CASCADE,
+  name VARCHAR(100) NOT NULL,
+  token_hash VARCHAR(64) NOT NULL, -- SHA-256 hash
+  token_prefix VARCHAR(10) NOT NULL, -- First 10 chars for identification
+  scopes TEXT[] NOT NULL,
+  expires_at TIMESTAMPTZ,
+  revoked_at TIMESTAMPTZ,
+  revoked_by UUID REFERENCES user_profiles(id),
+  last_used_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- User role assignments
+CREATE TABLE user_roles (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES user_profiles(id) ON DELETE CASCADE,
+  role_id UUID NOT NULL REFERENCES roles(id),
+  is_primary BOOLEAN DEFAULT false,
+  assigned_at TIMESTAMPTZ DEFAULT NOW(),
+  assigned_by UUID REFERENCES user_profiles(id),
+  UNIQUE(user_id, role_id)
+);
+
+-- Indexes for performance
+CREATE INDEX idx_user_profiles_email ON user_profiles(email);
+CREATE INDEX idx_user_profiles_org ON user_profiles(organization_id);
+CREATE INDEX idx_user_profiles_pod ON user_profiles(pod_id);
+CREATE INDEX idx_user_profiles_status ON user_profiles(status);
+CREATE INDEX idx_user_profiles_sso ON user_profiles(sso_identifier);
+CREATE INDEX idx_api_tokens_user ON api_tokens(user_id);
+CREATE INDEX idx_api_tokens_prefix ON api_tokens(token_prefix);
+```
+
+---
+
+## 21. Related Use Cases
+
+- [UC-ADMIN-002: Configure Pods](./02-configure-pods.md)
+- [UC-ADMIN-006: Permission Management](./06-permission-management.md)
+- [UC-ADMIN-007: Integration Management](./07-integration-management.md)
+- [UC-ADMIN-008: Audit Logs](./08-audit-logs.md)
+
+---
+
+## 22. Change Log
 
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | 2025-11-30 | Initial user management documentation |
+| 2.0 | 2025-12-04 | Added field specifications, SSO/SAML flow, API tokens, test cases, keyboard shortcuts, database schema |
 
 ---
 

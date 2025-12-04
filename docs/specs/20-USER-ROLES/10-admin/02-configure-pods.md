@@ -1150,21 +1150,186 @@ INSERT INTO activities (
 
 ## Test Cases
 
-| Test ID | Scenario | Expected Result |
-|---------|----------|-----------------|
-| TC-001 | Create pod with manager and 2 ICs | Pod created successfully |
-| TC-002 | Create pod with duplicate name | Error: "Pod name already exists" |
-| TC-003 | Create pod without manager | Error: "Manager required" |
-| TC-004 | Assign manager already in pod | Error: "Manager already assigned" |
-| TC-005 | Exceed max pod size | Error shown, cannot save |
-| TC-006 | Edit pod to increase max size | Pod updated successfully |
-| TC-007 | Change pod manager | Manager changed, notifications sent |
-| TC-008 | Add member to full pod | Error or warning shown |
-| TC-009 | Remove member from pod | Member removed, optionally reassigned |
-| TC-010 | Update sprint targets | Targets updated for next sprint |
-| TC-011 | Dissolve pod with reassignment | Pod dissolved, members moved |
-| TC-012 | Create pod with no members | Pod created with manager only |
+| Test ID | Scenario | Preconditions | Steps | Expected Result |
+|---------|----------|---------------|-------|-----------------|
+| ADMIN-POD-001 | Create pod with manager and 2 ICs | Admin logged in | 1. Click Create Pod 2. Enter details 3. Add manager 4. Add 2 ICs 5. Save | Pod created successfully, all members assigned |
+| ADMIN-POD-002 | Create pod with duplicate name | Admin logged in, pod "Alpha" exists | 1. Create new pod 2. Enter name "Alpha" 3. Save | Error: "A pod with this name already exists" |
+| ADMIN-POD-003 | Create pod without manager | Admin logged in | 1. Create pod 2. Fill details 3. Leave manager empty 4. Save | Error: "Please assign a manager to the pod" |
+| ADMIN-POD-004 | Assign manager already in pod | Admin logged in, user is manager of Pod A | 1. Create new pod 2. Select same manager 3. Save | Error: "This manager is already assigned to Pod A" |
+| ADMIN-POD-005 | Exceed max pod size | Admin logged in, max size = 5 | 1. Edit pod 2. Add 6th member | Error: "You have selected 6 members, but max size is 5" |
+| ADMIN-POD-006 | Edit pod to increase max size | Admin logged in | 1. Open pod 2. Edit settings 3. Increase max to 10 4. Save | Pod updated successfully, capacity increased |
+| ADMIN-POD-007 | Change pod manager | Admin logged in | 1. Open pod 2. Change manager 3. Save | Manager changed, notifications sent to old and new |
+| ADMIN-POD-008 | Add member to full pod | Pod at max capacity | 1. Open pod 2. Try to add member | Error or warning shown, must increase capacity first |
+| ADMIN-POD-009 | Remove member from pod | Pod has members | 1. Open pod 2. Remove member 3. Confirm | Member removed, optionally reassigned to another pod |
+| ADMIN-POD-010 | Update sprint targets | Admin logged in | 1. Open pod 2. Edit targets 3. Save | Targets updated for next sprint |
+| ADMIN-POD-011 | Dissolve pod with reassignment | Pod has members | 1. Open pod 2. Click Dissolve 3. Reassign members 4. Confirm | Pod dissolved, members moved to new pods |
+| ADMIN-POD-012 | Create pod with no members | Admin logged in | 1. Create pod 2. Add manager only 3. Save | Pod created with manager only |
+| ADMIN-POD-013 | View pod performance metrics | Pod has activity | 1. Open pod detail | Performance metrics displayed correctly |
+| ADMIN-POD-014 | Configure pod territory | Admin logged in | 1. Open pod 2. Set territory 3. Save | Territory assigned, reflected in filters |
+| ADMIN-POD-015 | Set custom sprint duration | Admin logged in | 1. Open pod settings 2. Set sprint to 3 weeks 3. Save | Sprint duration updated, calendar reflects change |
 
 ---
 
-*Last Updated: 2024-11-30*
+## Database Schema Reference
+
+### Core Tables
+
+```sql
+-- Pods table
+CREATE TABLE pods (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+  name VARCHAR(100) NOT NULL,
+  description TEXT,
+  pod_type VARCHAR(50) NOT NULL, -- 'recruiting', 'bench_sales', 'ta', 'hr', 'mixed', 'client_services'
+  manager_id UUID REFERENCES users(id),
+  parent_pod_id UUID REFERENCES pods(id), -- for hierarchical pods
+  territory VARCHAR(100), -- geographic or account territory
+  color VARCHAR(7), -- hex color for UI
+  icon VARCHAR(50), -- icon name
+  max_size INTEGER DEFAULT 10,
+  is_active BOOLEAN DEFAULT TRUE,
+  created_by UUID REFERENCES users(id),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(organization_id, name)
+);
+
+-- Pod members table
+CREATE TABLE pod_members (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  pod_id UUID NOT NULL REFERENCES pods(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  position_type VARCHAR(50) NOT NULL, -- 'manager', 'ic', 'support'
+  role_in_pod VARCHAR(100), -- e.g., 'Senior Recruiter', 'Account Manager'
+  joined_at TIMESTAMPTZ DEFAULT NOW(),
+  left_at TIMESTAMPTZ,
+  is_active BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(pod_id, user_id, is_active) -- user can only be active in one position per pod
+);
+
+-- Pod targets table
+CREATE TABLE pod_targets (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  pod_id UUID NOT NULL REFERENCES pods(id) ON DELETE CASCADE,
+  sprint_number INTEGER,
+  sprint_start_date DATE,
+  sprint_end_date DATE,
+  sprint_duration_weeks INTEGER DEFAULT 2,
+
+  -- Target metrics
+  submissions_target INTEGER DEFAULT 0,
+  interviews_target INTEGER DEFAULT 0,
+  placements_target INTEGER DEFAULT 0,
+  revenue_target DECIMAL(12,2),
+  activities_target INTEGER DEFAULT 0,
+
+  -- Weighting for scoring
+  submissions_weight DECIMAL(3,2) DEFAULT 0.30,
+  interviews_weight DECIMAL(3,2) DEFAULT 0.25,
+  placements_weight DECIMAL(3,2) DEFAULT 0.30,
+  activities_weight DECIMAL(3,2) DEFAULT 0.15,
+
+  -- Actual results (updated during/after sprint)
+  submissions_actual INTEGER DEFAULT 0,
+  interviews_actual INTEGER DEFAULT 0,
+  placements_actual INTEGER DEFAULT 0,
+  revenue_actual DECIMAL(12,2) DEFAULT 0,
+  activities_actual INTEGER DEFAULT 0,
+
+  -- Calculated score
+  achievement_score DECIMAL(5,2), -- percentage
+
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(pod_id, sprint_number)
+);
+
+-- Individual contributor targets (per member)
+CREATE TABLE pod_member_targets (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  pod_member_id UUID NOT NULL REFERENCES pod_members(id) ON DELETE CASCADE,
+  pod_target_id UUID NOT NULL REFERENCES pod_targets(id) ON DELETE CASCADE,
+
+  -- Individual targets
+  submissions_target INTEGER DEFAULT 0,
+  interviews_target INTEGER DEFAULT 0,
+  placements_target INTEGER DEFAULT 0,
+  activities_target INTEGER DEFAULT 0,
+
+  -- Individual actuals
+  submissions_actual INTEGER DEFAULT 0,
+  interviews_actual INTEGER DEFAULT 0,
+  placements_actual INTEGER DEFAULT 0,
+  activities_actual INTEGER DEFAULT 0,
+
+  -- Individual score
+  achievement_score DECIMAL(5,2),
+
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(pod_member_id, pod_target_id)
+);
+
+-- Pod settings/configuration
+CREATE TABLE pod_settings (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  pod_id UUID NOT NULL REFERENCES pods(id) ON DELETE CASCADE,
+  setting_key VARCHAR(100) NOT NULL,
+  setting_value JSONB,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(pod_id, setting_key)
+);
+```
+
+### Indexes
+
+```sql
+-- Pods indexes
+CREATE INDEX idx_pods_org_id ON pods(organization_id);
+CREATE INDEX idx_pods_manager_id ON pods(manager_id);
+CREATE INDEX idx_pods_type ON pods(pod_type);
+CREATE INDEX idx_pods_active ON pods(is_active) WHERE is_active = TRUE;
+CREATE INDEX idx_pods_parent ON pods(parent_pod_id);
+
+-- Pod members indexes
+CREATE INDEX idx_pod_members_pod_id ON pod_members(pod_id);
+CREATE INDEX idx_pod_members_user_id ON pod_members(user_id);
+CREATE INDEX idx_pod_members_active ON pod_members(is_active) WHERE is_active = TRUE;
+CREATE INDEX idx_pod_members_position ON pod_members(position_type);
+
+-- Pod targets indexes
+CREATE INDEX idx_pod_targets_pod_id ON pod_targets(pod_id);
+CREATE INDEX idx_pod_targets_sprint ON pod_targets(sprint_number);
+CREATE INDEX idx_pod_targets_dates ON pod_targets(sprint_start_date, sprint_end_date);
+
+-- Pod member targets indexes
+CREATE INDEX idx_pod_member_targets_member ON pod_member_targets(pod_member_id);
+CREATE INDEX idx_pod_member_targets_target ON pod_member_targets(pod_target_id);
+
+-- Pod settings indexes
+CREATE INDEX idx_pod_settings_pod_id ON pod_settings(pod_id);
+```
+
+---
+
+## Related Use Cases
+
+- [UC-ADMIN-001: Admin Dashboard Overview](./00-OVERVIEW.md)
+- [UC-ADMIN-005: User Management](./05-user-management.md)
+- [UC-ADMIN-006: Permission Management](./06-permission-management.md)
+
+---
+
+## Change Log
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0 | 2024-11-30 | Initial documentation |
+| 1.1 | 2025-12-04 | Reformatted test IDs to ADMIN-POD-XXX, added complete database schema |
+
+---
+
+*Last Updated: 2025-12-04*

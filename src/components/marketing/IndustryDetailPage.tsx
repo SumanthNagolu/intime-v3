@@ -27,7 +27,7 @@ import {
   Target,
   Zap
 } from 'lucide-react';
-import { MarketingNavbar, Footer } from '@/components/templates';
+import { MarketingNavbar, Footer } from '@/components/marketing/templates';
 
 export const INDUSTRIES_DATA: Record<string, {
   title: string;

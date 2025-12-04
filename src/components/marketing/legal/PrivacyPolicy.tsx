@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Shield, ArrowLeft } from 'lucide-react';
-import { MarketingNavbar, Footer } from '@/components/templates';
+import { MarketingNavbar, Footer } from '@/components/marketing/templates';
 
 export const PrivacyPolicy: React.FC = () => {
   return (

@@ -1,13 +1,22 @@
 # UC-ADMIN-007: Integration Management
 
-**Version:** 1.0
-**Last Updated:** 2025-11-30
+**Version:** 2.0
+**Last Updated:** 2025-12-04
 **Role:** Admin
 **Status:** Approved
 
 ---
 
-## 1. Overview
+## Overview
+
+| Property | Value |
+|----------|-------|
+| Use Case ID | UC-ADMIN-007 |
+| Actor | Admin |
+| Goal | Manage external integrations including configuration, monitoring, troubleshooting, and health checks |
+| Frequency | Daily (monitoring), As needed (configuration) |
+| Estimated Time | 5-30 min depending on integration type |
+| Priority | HIGH |
 
 This use case covers managing all external integrations in InTime OS, including configuration, monitoring, troubleshooting, and health checks for third-party services like email, payroll, background checks, job boards, and API integrations.
 
@@ -378,11 +387,664 @@ This use case covers managing all external integrations in InTime OS, including 
 
 ---
 
-## 11. Change Log
+## 11. OAuth Flow Documentation
+
+### OAuth 2.0 Integration Setup
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│ OAuth Integration Setup                                   [×]   │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│ SUPPORTED OAuth PROVIDERS                                       │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ ● Google (Calendar, Drive, Gmail)                          │ │
+│ │ ○ Microsoft (Outlook, Teams, SharePoint)                   │ │
+│ │ ○ Zoom (Video Meetings)                                    │ │
+│ │ ○ Salesforce (CRM Sync)                                    │ │
+│ │ ○ LinkedIn (Job Posting, Recruiter)                        │ │
+│ │ ○ Custom OAuth 2.0 Provider                                │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ GOOGLE OAUTH CONFIGURATION                                      │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ Client ID:                                                  │ │
+│ │ [123456789-abc123.apps.googleusercontent.com]              │ │
+│ │                                                             │ │
+│ │ Client Secret:                                              │ │
+│ │ [************************************] [Show] [Regenerate]  │ │
+│ │                                                             │ │
+│ │ Redirect URI:                                               │ │
+│ │ https://app.intime.com/oauth/callback/google                │ │
+│ │                                                             │ │
+│ │ Scopes Requested:                                           │ │
+│ │ ☑ https://www.googleapis.com/auth/calendar                 │ │
+│ │ ☑ https://www.googleapis.com/auth/calendar.events          │ │
+│ │ ☐ https://www.googleapis.com/auth/gmail.send               │ │
+│ │ ☐ https://www.googleapis.com/auth/drive.readonly           │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ OAUTH FLOW                                                      │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ 1. User clicks "Connect Google Calendar"                   │ │
+│ │    ↓                                                       │ │
+│ │ 2. Redirect to Google OAuth consent screen                 │ │
+│ │    ↓                                                       │ │
+│ │ 3. User grants permissions                                 │ │
+│ │    ↓                                                       │ │
+│ │ 4. Google redirects back with authorization code           │ │
+│ │    ↓                                                       │ │
+│ │ 5. InTime exchanges code for access + refresh tokens       │ │
+│ │    ↓                                                       │ │
+│ │ 6. Tokens stored securely (encrypted)                      │ │
+│ │    ↓                                                       │ │
+│ │ 7. Integration active - calendar sync enabled              │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ [Test OAuth Flow] [Save Configuration]                          │
+└────────────────────────────────────────────────────────────────┘
+```
+
+### Token Management
+
+| Token Type | Lifespan | Refresh Strategy |
+|------------|----------|------------------|
+| Access Token | 1 hour | Auto-refresh using refresh token |
+| Refresh Token | 6 months | Re-authenticate if expired |
+| ID Token | 1 hour | Used for SSO only |
+
+---
+
+## 12. Webhook Debugging Tools
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│ Webhook Debugger                                                │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│ TEST WEBHOOK                                                    │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ Webhook: [Job Created - Zapier                         ▼] │ │
+│ │                                                             │ │
+│ │ Test Event:                                                │ │
+│ │ ○ job.created (new job posted)                            │ │
+│ │ ● job.updated (job details changed)                       │ │
+│ │ ○ job.closed (job filled/cancelled)                       │ │
+│ │                                                             │ │
+│ │ Sample Payload:                                            │ │
+│ │ ┌──────────────────────────────────────────────────────┐  │ │
+│ │ │ {                                                     │  │ │
+│ │ │   "event": "job.updated",                            │  │ │
+│ │ │   "timestamp": "2024-12-04T10:30:00Z",               │  │ │
+│ │ │   "data": {                                          │  │ │
+│ │ │     "job_id": "JOB-2024-1234",                       │  │ │
+│ │ │     "title": "Senior Java Developer",                │  │ │
+│ │ │     "status": "active",                              │  │ │
+│ │ │     "bill_rate": 85.00                               │  │ │
+│ │ │   }                                                  │  │ │
+│ │ │ }                                                     │  │ │
+│ │ └──────────────────────────────────────────────────────┘  │ │
+│ │                                                             │ │
+│ │ [Send Test Webhook]                                        │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ DELIVERY RESULT                                                 │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ Status: ✓ 200 OK (Delivered in 245ms)                     │ │
+│ │                                                             │ │
+│ │ Request:                                                   │ │
+│ │ POST https://zapier.com/hooks/intime/job-created          │ │
+│ │ Headers:                                                   │ │
+│ │   Content-Type: application/json                          │ │
+│ │   X-InTime-Signature: sha256=abc123...                    │ │
+│ │   X-InTime-Event: job.updated                             │ │
+│ │                                                             │ │
+│ │ Response:                                                  │ │
+│ │   {"status": "received", "id": "zap_123"}                 │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ DELIVERY HISTORY (Last 24h)                                     │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ Time       │ Event        │ Status │ Response │ Duration  │ │
+│ ├────────────┼──────────────┼────────┼──────────┼───────────┤ │
+│ │ 10:30 AM   │ job.updated  │ ✓ 200  │ OK       │ 245ms     │ │
+│ │ 10:15 AM   │ job.created  │ ✓ 200  │ OK       │ 312ms     │ │
+│ │ 09:45 AM   │ job.created  │ ✗ 500  │ Error    │ 1.2s      │ │
+│ │            │              │        │ (retry 1)│           │ │
+│ │ 09:45 AM   │ job.created  │ ✓ 200  │ OK       │ 298ms     │ │
+│ │            │              │        │ (retry 2)│           │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ [View Full History] [Export Logs] [Replay Failed]              │
+└────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 13. Error Retry Configuration
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│ Retry Configuration                                             │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│ GLOBAL RETRY SETTINGS                                           │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ Max Retries: [3]                                           │ │
+│ │                                                             │ │
+│ │ Retry Strategy:                                            │ │
+│ │ ● Exponential Backoff (recommended)                        │ │
+│ │   Delays: 1s → 2s → 4s → 8s → ...                         │ │
+│ │ ○ Linear (1s, 2s, 3s, 4s)                                 │ │
+│ │ ○ Fixed Interval                                           │ │
+│ │   Delay: [5] seconds                                       │ │
+│ │                                                             │ │
+│ │ Jitter: ☑ Add random jitter (±20%)                        │ │
+│ │   Helps prevent thundering herd                            │ │
+│ │                                                             │ │
+│ │ Max Delay: [60] seconds                                    │ │
+│ │ Timeout per attempt: [30] seconds                          │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ RETRY ON THESE ERRORS                                           │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ ☑ 5xx Server Errors (500, 502, 503, 504)                  │ │
+│ │ ☑ Connection Timeout (ETIMEDOUT)                           │ │
+│ │ ☑ Connection Refused (ECONNREFUSED)                        │ │
+│ │ ☑ DNS Resolution Failure (ENOTFOUND)                       │ │
+│ │ ☐ 429 Too Many Requests (may need rate limiting)          │ │
+│ │ ☐ 4xx Client Errors (usually not retriable)               │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ DEAD LETTER QUEUE                                               │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ ☑ Enable Dead Letter Queue                                 │ │
+│ │   Events that fail all retries go to DLQ for manual review │ │
+│ │                                                             │ │
+│ │ Alert when DLQ has items:                                  │ │
+│ │ ☑ Email admin@intime.com                                   │ │
+│ │ ☑ Slack #alerts channel                                    │ │
+│ │                                                             │ │
+│ │ Current DLQ items: 3                                       │ │
+│ │ [View DLQ] [Retry All] [Clear]                            │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                                                 │
+│ [Save Configuration]                                            │
+└────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 14. Keyboard Shortcuts
+
+| Key | Action | Context |
+|-----|--------|---------|
+| `Cmd+K` / `Ctrl+K` | Open command palette | Any admin page |
+| `g i` | Go to Integrations | Any admin page |
+| `/` | Focus search | Integration list |
+| `j` / `k` | Navigate up/down | Integration list |
+| `Enter` | Open selected integration | Integration list |
+| `t` | Test integration | Integration detail |
+| `r` | Reconnect/refresh | Integration detail |
+| `l` | View logs | Integration detail |
+| `Escape` | Close modal | Any modal |
+
+---
+
+## 15. Test Cases
+
+| Test ID | Scenario | Preconditions | Steps | Expected Result |
+|---------|----------|---------------|-------|-----------------|
+| ADMIN-INT-001 | View integration dashboard | Admin logged in | 1. Navigate to Integrations | Dashboard shows all integrations with status |
+| ADMIN-INT-002 | Add new integration | Integration type available | 1. Click "+ Add" 2. Select type 3. Configure 4. Save | Integration added, health check runs |
+| ADMIN-INT-003 | Test SMTP connection | Email integration configured | 1. Open email integration 2. Click "Test Connection" | Test email sent, success message |
+| ADMIN-INT-004 | Configure webhook | Webhook URL available | 1. Click "+ New Webhook" 2. Enter URL 3. Select events 4. Save | Webhook created, test payload sent |
+| ADMIN-INT-005 | Debug failed webhook | Webhook delivery failed | 1. Open webhook 2. View history 3. Click failed delivery | Shows request/response details |
+| ADMIN-INT-006 | Replay failed webhook | Failed webhook in history | 1. Select failed delivery 2. Click "Replay" | Webhook re-sent with same payload |
+| ADMIN-INT-007 | Test OAuth flow | OAuth provider configured | 1. Click "Connect" 2. Authorize 3. Return to app | OAuth tokens stored, integration active |
+| ADMIN-INT-008 | Refresh OAuth token | Token expired | System auto-refreshes token | New access token obtained, no user action |
+| ADMIN-INT-009 | View integration logs | Integration exists | 1. Open integration 2. Click "View Logs" | Logs displayed with filtering |
+| ADMIN-INT-010 | Handle rate limit | API returns 429 | System detects rate limit | Backs off, retries after delay |
+| ADMIN-INT-011 | Failover to backup | Primary provider fails | System detects failure | Automatically switches to backup |
+| ADMIN-INT-012 | Configure retry policy | Integration exists | 1. Open retry settings 2. Change parameters 3. Save | Retry behavior updated |
+| ADMIN-INT-013 | Review Dead Letter Queue | Items in DLQ | 1. Open DLQ 2. Review items 3. Retry or delete | Items processed from DLQ |
+| ADMIN-INT-014 | Rotate API key | Integration uses API key | 1. Open integration 2. Click "Regenerate" 3. Confirm | New key generated, old key invalidated |
+| ADMIN-INT-015 | Disable integration | Integration active | 1. Open integration 2. Click "Disable" 3. Confirm | Integration stopped, status = disabled |
+
+---
+
+## 16. Error Scenarios
+
+| Error | Cause | Message | Recovery |
+|-------|-------|---------|----------|
+| Connection timeout | Network issue | "Connection to [provider] timed out" | Check network, retry |
+| Authentication failed | Invalid credentials | "Authentication failed. Please check credentials." | Update API key/password |
+| Rate limited | Too many requests | "Rate limit exceeded. Retry in [X] seconds." | Wait, reduce request rate |
+| Provider outage | Third-party down | "[Provider] is currently unavailable" | Monitor status page, use fallback |
+| Invalid webhook URL | URL unreachable | "Webhook endpoint returned error: [code]" | Fix endpoint, verify URL |
+| OAuth token expired | Refresh token invalid | "Please reconnect your [provider] account" | Re-authenticate via OAuth |
+| Certificate error | SSL/TLS issue | "SSL certificate verification failed" | Update certificates |
+| Payload too large | Data exceeds limit | "Request payload too large (max 10 MB)" | Reduce payload size |
+
+---
+
+## 17. Field Specifications
+
+### SMTP Email Configuration Form
+
+**Field Specification: SMTP Provider**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `provider` |
+| Type | Select |
+| Required | Yes |
+| Options | SendGrid, AWS SES, Mailgun, Postmark, Custom SMTP |
+| Default | SendGrid |
+| Validation | Must select valid provider |
+| Error Messages | |
+| - Empty | "Please select an email provider" |
+
+**Field Specification: SMTP Host**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `smtpHost` |
+| Type | TextInput |
+| Required | Yes |
+| Placeholder | "smtp.sendgrid.net" |
+| Max Length | 255 characters |
+| Validation | Valid hostname or IP address |
+| Error Messages | |
+| - Empty | "SMTP host is required" |
+| - Invalid | "Please enter a valid hostname or IP address" |
+
+**Field Specification: SMTP Port**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `smtpPort` |
+| Type | Radio |
+| Required | Yes |
+| Options | 587 (TLS - Recommended), 465 (SSL), 25 (Unencrypted) |
+| Default | 587 |
+| Validation | Must be valid port number |
+| Error Messages | |
+| - Empty | "Please select a port" |
+
+**Field Specification: SMTP Username**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `smtpUsername` |
+| Type | TextInput |
+| Required | Yes |
+| Placeholder | "apikey" |
+| Max Length | 255 characters |
+| Validation | Non-empty |
+| Error Messages | |
+| - Empty | "Username/API key is required" |
+
+**Field Specification: SMTP Password**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `smtpPassword` |
+| Type | PasswordInput |
+| Required | Yes |
+| Max Length | 500 characters |
+| Validation | Non-empty |
+| Actions | Show/Hide toggle, Regenerate button |
+| Error Messages | |
+| - Empty | "Password/API secret is required" |
+
+**Field Specification: From Email**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `fromEmail` |
+| Type | TextInput |
+| Required | Yes |
+| Placeholder | "noreply@company.com" |
+| Max Length | 254 characters |
+| Validation | Valid email format |
+| Error Messages | |
+| - Empty | "From email address is required" |
+| - Invalid | "Please enter a valid email address" |
+
+**Field Specification: From Name**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `fromName` |
+| Type | TextInput |
+| Required | Yes |
+| Placeholder | "InTime Staffing" |
+| Max Length | 100 characters |
+| Validation | Non-empty, alphanumeric with spaces |
+| Error Messages | |
+| - Empty | "From name is required" |
+| - Invalid | "From name contains invalid characters" |
+
+**Field Specification: Rate Limit (Per Hour)**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `rateLimitHour` |
+| Type | NumberInput |
+| Required | Yes |
+| Min | 100 |
+| Max | 10000 |
+| Default | 1000 |
+| Validation | Number within range |
+| Error Messages | |
+| - Empty | "Hourly rate limit is required" |
+| - Below Min | "Minimum hourly limit is 100" |
+| - Above Max | "Maximum hourly limit is 10,000" |
+
+### OAuth Configuration Form
+
+**Field Specification: OAuth Provider**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `oauthProvider` |
+| Type | Select |
+| Required | Yes |
+| Options | Google, Microsoft, Zoom, Salesforce, LinkedIn, Custom OAuth 2.0 |
+| Validation | Must select provider |
+| Error Messages | |
+| - Empty | "Please select an OAuth provider" |
+
+**Field Specification: Client ID**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `clientId` |
+| Type | TextInput |
+| Required | Yes |
+| Placeholder | "your-client-id.apps.googleusercontent.com" |
+| Max Length | 500 characters |
+| Validation | Non-empty, alphanumeric with dashes and dots |
+| Error Messages | |
+| - Empty | "Client ID is required" |
+| - Invalid | "Client ID format is invalid" |
+
+**Field Specification: Client Secret**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `clientSecret` |
+| Type | PasswordInput |
+| Required | Yes |
+| Max Length | 500 characters |
+| Actions | Show/Hide toggle, Regenerate button |
+| Validation | Non-empty |
+| Error Messages | |
+| - Empty | "Client secret is required" |
+
+**Field Specification: Redirect URI**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `redirectUri` |
+| Type | TextInput (readonly) |
+| Required | Yes |
+| Default | Auto-generated based on environment |
+| Format | `https://app.intime.com/oauth/callback/{provider}` |
+| Actions | Copy button |
+
+**Field Specification: OAuth Scopes**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `scopes` |
+| Type | CheckboxGroup |
+| Required | At least one |
+| Options | Provider-specific (e.g., calendar, email, drive) |
+| Validation | At least one scope selected |
+| Error Messages | |
+| - Empty | "Please select at least one permission scope" |
+
+### Webhook Configuration Form
+
+**Field Specification: Webhook Name**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `webhookName` |
+| Type | TextInput |
+| Required | Yes |
+| Placeholder | "Job Created - Zapier" |
+| Max Length | 100 characters |
+| Validation | Non-empty, unique per organization |
+| Error Messages | |
+| - Empty | "Webhook name is required" |
+| - Duplicate | "A webhook with this name already exists" |
+
+**Field Specification: Webhook URL**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `webhookUrl` |
+| Type | TextInput |
+| Required | Yes |
+| Placeholder | "https://hooks.zapier.com/..." |
+| Max Length | 2048 characters |
+| Validation | Valid HTTPS URL |
+| Error Messages | |
+| - Empty | "Webhook URL is required" |
+| - Invalid | "Please enter a valid HTTPS URL" |
+| - HTTP Only | "Webhook URLs must use HTTPS for security" |
+
+**Field Specification: Webhook Events**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `events` |
+| Type | CheckboxGroup |
+| Required | At least one |
+| Options | job.created, job.updated, job.closed, candidate.created, candidate.updated, submission.created, submission.placed, interview.scheduled, interview.completed, user.created, user.deactivated |
+| Validation | At least one event selected |
+| Error Messages | |
+| - Empty | "Please select at least one event to subscribe to" |
+
+**Field Specification: Webhook Secret**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `webhookSecret` |
+| Type | TextInput (readonly) |
+| Required | No |
+| Default | Auto-generated 32-character string |
+| Actions | Regenerate button, Copy button |
+| Description | "Used to verify webhook signatures (X-InTime-Signature header)" |
+
+### Retry Configuration Form
+
+**Field Specification: Max Retries**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `maxRetries` |
+| Type | NumberInput |
+| Required | Yes |
+| Min | 1 |
+| Max | 10 |
+| Default | 3 |
+| Validation | Integer within range |
+| Error Messages | |
+| - Empty | "Max retries is required" |
+| - Below Min | "Minimum retry count is 1" |
+| - Above Max | "Maximum retry count is 10" |
+
+**Field Specification: Retry Strategy**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `retryStrategy` |
+| Type | Radio |
+| Required | Yes |
+| Options | Exponential Backoff (recommended), Linear, Fixed Interval |
+| Default | Exponential Backoff |
+| Validation | Must select strategy |
+| Error Messages | |
+| - Empty | "Please select a retry strategy" |
+
+**Field Specification: Fixed Delay**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `fixedDelay` |
+| Type | NumberInput |
+| Required | Conditional (if strategy = Fixed Interval) |
+| Min | 1 |
+| Max | 300 |
+| Default | 5 |
+| Unit | seconds |
+| Validation | Integer within range |
+| Error Messages | |
+| - Empty | "Delay is required for fixed interval strategy" |
+| - Below Min | "Minimum delay is 1 second" |
+| - Above Max | "Maximum delay is 300 seconds (5 minutes)" |
+
+**Field Specification: Enable Jitter**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `enableJitter` |
+| Type | Checkbox |
+| Required | No |
+| Default | true |
+| Label | "Add random jitter (±20%) - helps prevent thundering herd" |
+
+**Field Specification: Max Delay**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `maxDelay` |
+| Type | NumberInput |
+| Required | Yes |
+| Min | 10 |
+| Max | 300 |
+| Default | 60 |
+| Unit | seconds |
+| Validation | Integer within range |
+| Error Messages | |
+| - Empty | "Maximum delay is required" |
+| - Below Min | "Minimum max delay is 10 seconds" |
+| - Above Max | "Maximum delay cannot exceed 300 seconds" |
+
+**Field Specification: Enable Dead Letter Queue**
+
+| Property | Value |
+|----------|-------|
+| Field Name | `enableDlq` |
+| Type | Checkbox |
+| Required | No |
+| Default | true |
+| Label | "Enable Dead Letter Queue for failed events" |
+
+---
+
+## 18. Database Schema Reference
+
+```sql
+-- Integrations table
+CREATE TABLE integrations (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id UUID NOT NULL REFERENCES organizations(id),
+  type VARCHAR(50) NOT NULL, -- email, calendar, hris, etc.
+  provider VARCHAR(50) NOT NULL, -- sendgrid, google, bamboohr, etc.
+  name VARCHAR(100) NOT NULL,
+  config JSONB NOT NULL, -- Encrypted configuration
+  status VARCHAR(20) DEFAULT 'inactive', -- active, inactive, error
+  last_health_check TIMESTAMPTZ,
+  last_sync TIMESTAMPTZ,
+  error_message TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- OAuth tokens
+CREATE TABLE oauth_tokens (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  integration_id UUID NOT NULL REFERENCES integrations(id) ON DELETE CASCADE,
+  user_id UUID REFERENCES user_profiles(id),
+  access_token TEXT NOT NULL, -- Encrypted
+  refresh_token TEXT, -- Encrypted
+  token_type VARCHAR(20) DEFAULT 'Bearer',
+  expires_at TIMESTAMPTZ,
+  scope TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Webhooks
+CREATE TABLE webhooks (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  organization_id UUID NOT NULL REFERENCES organizations(id),
+  name VARCHAR(100) NOT NULL,
+  url TEXT NOT NULL,
+  secret VARCHAR(64), -- For signature verification
+  events TEXT[] NOT NULL, -- Array of event types
+  status VARCHAR(20) DEFAULT 'active',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Webhook deliveries
+CREATE TABLE webhook_deliveries (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  webhook_id UUID NOT NULL REFERENCES webhooks(id) ON DELETE CASCADE,
+  event_type VARCHAR(50) NOT NULL,
+  payload JSONB NOT NULL,
+  request_headers JSONB,
+  response_status INTEGER,
+  response_body TEXT,
+  response_headers JSONB,
+  duration_ms INTEGER,
+  attempt_number INTEGER DEFAULT 1,
+  delivered_at TIMESTAMPTZ DEFAULT NOW(),
+  next_retry_at TIMESTAMPTZ,
+  status VARCHAR(20) DEFAULT 'pending' -- pending, success, failed, dlq
+);
+
+-- Dead Letter Queue
+CREATE TABLE webhook_dlq (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  webhook_id UUID NOT NULL REFERENCES webhooks(id),
+  delivery_id UUID NOT NULL REFERENCES webhook_deliveries(id),
+  reason TEXT NOT NULL,
+  added_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Indexes
+CREATE INDEX idx_integrations_org ON integrations(organization_id);
+CREATE INDEX idx_integrations_status ON integrations(status);
+CREATE INDEX idx_oauth_tokens_integration ON oauth_tokens(integration_id);
+CREATE INDEX idx_webhooks_org ON webhooks(organization_id);
+CREATE INDEX idx_webhook_deliveries_webhook ON webhook_deliveries(webhook_id);
+CREATE INDEX idx_webhook_deliveries_status ON webhook_deliveries(status);
+```
+
+---
+
+## 19. Related Use Cases
+
+- [UC-ADMIN-008: Audit Logs](./08-audit-logs.md)
+- [UC-ADMIN-005: User Management](./05-user-management.md) (SSO integration)
+- [UC-ADMIN-010: Email Templates](./10-email-templates.md) (email integration)
+
+---
+
+## 20. Change Log
 
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | 2025-11-30 | Initial integration management documentation |
+| 2.0 | 2025-12-04 | Added overview table, OAuth documentation, webhook debugging, error retry config, keyboard shortcuts, test cases, error scenarios, database schema |
+| 2.1 | 2025-12-04 | Added field specifications for SMTP, OAuth, webhook, and retry configuration forms |
 
 ---
 

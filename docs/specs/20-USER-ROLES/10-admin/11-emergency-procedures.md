@@ -1,7 +1,7 @@
 # UC-ADMIN-011: Emergency Procedures & Incident Response
 
-**Version:** 1.0
-**Last Updated:** 2025-11-30
+**Version:** 1.1
+**Last Updated:** 2025-12-04
 **Role:** Admin
 **Status:** Approved
 
@@ -9,9 +9,42 @@
 
 ## 1. Overview
 
+| Property | Value |
+|----------|-------|
+| Use Case ID | UC-ADMIN-011 |
+| Actor | Admin (System Administrator) |
+| Goal | Execute emergency procedures to respond to incidents, restore services, and protect organizational data |
+| Frequency | Rare (1-2 times per year, but critical when needed) |
+| Estimated Time | Variable (15 minutes to 24+ hours depending on severity) |
+| Priority | CRITICAL |
+
 This use case covers emergency procedures and incident response protocols for InTime OS, including system outages, security breaches, data loss, and critical failures. Admin executes emergency procedures to restore services and protect data.
 
 **Critical Focus:** Fast, decisive action during emergencies minimizes damage and downtime. Clear procedures ensure consistent, effective response.
+
+---
+
+## 1.1 Preconditions
+
+1. User is logged in as Admin with `admin.emergency` permission
+2. Emergency contact list is up-to-date and accessible
+3. Monitoring/alerting systems are operational
+4. Backup systems have been verified within the last 24 hours
+5. Break-glass credentials are stored and accessible to authorized personnel
+6. Communication channels (Slack, email, SMS) are configured
+
+---
+
+## 1.2 Trigger
+
+One or more of the following:
+- Monitoring system alerts for P0/P1 incident
+- User reports widespread service unavailability
+- Security alert from intrusion detection system
+- Data anomaly or corruption detected
+- Third-party vendor outage notification
+- Manual detection of suspicious activity
+- Automated health check failures exceeding threshold
 
 ---
 
@@ -610,11 +643,166 @@ QUARTERLY TABLETOP EXERCISE:
 
 ---
 
-## 13. Change Log
+## 13. Error Scenarios
+
+| Error | Cause | Message | Recovery |
+|-------|-------|---------|----------|
+| Cannot access monitoring dashboard | Network/service down | "Monitoring service unavailable" | Use backup monitoring or direct system checks |
+| Break-glass credentials invalid | Password expired or changed | "Authentication failed" | Contact secondary authorized personnel, use backup access method |
+| Backup restore fails | Corrupted backup or insufficient space | "Restore operation failed" | Try previous backup version, verify storage space |
+| Database connection timeout during recovery | Connection pool exhausted | "Connection timeout" | Kill idle connections, increase pool size temporarily |
+| Status page update fails | Third-party service down | "Failed to update status" | Use backup communication (email, Slack, SMS) |
+| Cannot reach on-call personnel | Phone/Slack unavailable | "Contact unreachable" | Escalate to next person in chain |
+| Rollback fails | Version mismatch or dependencies | "Rollback aborted" | Manual deployment of previous version |
+| Insufficient permissions for recovery | Token expired or revoked | "Access denied" | Use break-glass account |
+| Audit log inaccessible during incident | Log service down | "Audit service unavailable" | Manual logging to document, sync later |
+| Communication channel overloaded | Mass notifications sent | "Rate limit exceeded" | Stagger notifications, use alternative channels |
+| Vendor support unavailable | Outside business hours | "No response from vendor" | Use emergency contact or escalate internally |
+| Evidence preservation fails | Insufficient storage | "Cannot save snapshot" | Clear space or use secondary storage |
+
+---
+
+## 14. Keyboard Shortcuts
+
+| Key | Action | Context |
+|-----|--------|---------|
+| `Cmd+Shift+E` | Open Emergency Dashboard | Global (Admin) |
+| `Cmd+Shift+I` | Create Incident Ticket | Emergency Dashboard |
+| `Cmd+Shift+N` | Send Mass Notification | Emergency Dashboard |
+| `Cmd+Shift+L` | View Incident Log | Emergency Dashboard |
+| `Cmd+Shift+S` | Update Status Page | Emergency Dashboard |
+| `Cmd+Shift+B` | Access Backup Console | Emergency Dashboard |
+| `Cmd+Shift+R` | Initiate Rollback | Emergency Dashboard |
+| `Cmd+Shift+A` | View Audit Logs | Emergency Dashboard |
+| `Cmd+K` | Open Command Palette | Global |
+| `Esc` | Cancel Current Action | Any Modal |
+| `Cmd+Enter` | Confirm Emergency Action | Confirmation Dialog |
+
+---
+
+## 15. Test Cases
+
+| Test ID | Scenario | Preconditions | Steps | Expected Result |
+|---------|----------|---------------|-------|-----------------|
+| ADMIN-EMR-001 | P0 incident creation | Admin logged in, system operational | 1. Navigate to Emergency Dashboard 2. Click "Create Incident" 3. Select P0 severity 4. Fill incident details 5. Submit | Incident created, stakeholders notified immediately |
+| ADMIN-EMR-002 | Status page update during outage | Active P0 incident exists | 1. Open incident 2. Click "Update Status" 3. Enter status message 4. Publish | Status page updated, users see current status |
+| ADMIN-EMR-003 | Emergency rollback execution | Recent deployment available | 1. Open Emergency Dashboard 2. Click "Rollback" 3. Select version 4. Confirm rollback 5. Monitor | System rolled back, services restored |
+| ADMIN-EMR-004 | Break-glass account access | Primary admin unavailable | 1. Access vault 2. Retrieve break-glass credentials 3. Log in with emergency account | Access granted, alert sent to CEO/CTO |
+| ADMIN-EMR-005 | Database backup restore | Database corruption detected | 1. Access backup console 2. Select recovery point 3. Initiate restore 4. Verify integrity | Database restored, data integrity verified |
+| ADMIN-EMR-006 | Mass notification delivery | Active incident, users affected | 1. Create notification template 2. Select all users 3. Send notification | All affected users receive notification within 5 minutes |
+| ADMIN-EMR-007 | Security breach containment | Compromised account detected | 1. Identify account 2. Disable account 3. Revoke sessions 4. Preserve evidence | Account disabled, sessions terminated, evidence saved |
+| ADMIN-EMR-008 | Incident escalation | P0 incident, CTO unresponsive | 1. Document escalation 2. Contact CEO 3. Update incident log | CEO notified, escalation documented |
+| ADMIN-EMR-009 | Post-incident report generation | Incident resolved | 1. Open closed incident 2. Click "Generate Report" 3. Review timeline 4. Add lessons learned | Comprehensive report generated with timeline |
+| ADMIN-EMR-010 | Emergency drill execution | Drill scheduled, team available | 1. Announce drill 2. Simulate P0 scenario 3. Execute procedures 4. Debrief | Drill completed, gaps identified, runbooks updated |
+| ADMIN-EMR-011 | Connection pool recovery | Pool exhausted, timeouts occurring | 1. Access database console 2. Kill idle connections 3. Verify recovery | Connections available, timeouts resolved |
+| ADMIN-EMR-012 | Third-party outage handling | AWS/Supabase down | 1. Confirm vendor outage 2. Update status page 3. Monitor vendor status 4. Communicate ETA | Users informed, monitoring in place |
+| ADMIN-EMR-013 | Data loss recovery | Accidental deletion reported | 1. Identify scope 2. Check soft delete 3. Restore from backup if needed 4. Verify | Data recovered, integrity confirmed |
+| ADMIN-EMR-014 | Incident log audit trail | Incident closed, audit required | 1. Access audit logs 2. Filter by incident 3. Export timeline | Complete audit trail with all actions documented |
+| ADMIN-EMR-015 | Multi-incident management | Two simultaneous P1 incidents | 1. Create both incidents 2. Assign separate teams 3. Track independently 4. Coordinate communications | Both incidents tracked, resolved without confusion |
+
+---
+
+## 16. Database Schema Reference
+
+```sql
+-- Incident tracking
+CREATE TABLE incidents (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  incident_number TEXT UNIQUE NOT NULL, -- INC-2024-0001
+  title TEXT NOT NULL,
+  description TEXT,
+  severity TEXT NOT NULL CHECK (severity IN ('P0', 'P1', 'P2', 'P3')),
+  status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open', 'investigating', 'identified', 'monitoring', 'resolved')),
+  impact TEXT,
+  root_cause TEXT,
+  resolution TEXT,
+  started_at TIMESTAMPTZ NOT NULL,
+  detected_at TIMESTAMPTZ,
+  resolved_at TIMESTAMPTZ,
+  created_by UUID REFERENCES users(id),
+  incident_commander UUID REFERENCES users(id),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Incident timeline events
+CREATE TABLE incident_timeline (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  incident_id UUID NOT NULL REFERENCES incidents(id) ON DELETE CASCADE,
+  event_type TEXT NOT NULL CHECK (event_type IN ('detection', 'notification', 'escalation', 'action', 'update', 'resolution')),
+  description TEXT NOT NULL,
+  performed_by UUID REFERENCES users(id),
+  metadata JSONB DEFAULT '{}',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Incident notifications sent
+CREATE TABLE incident_notifications (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  incident_id UUID NOT NULL REFERENCES incidents(id) ON DELETE CASCADE,
+  notification_type TEXT NOT NULL CHECK (notification_type IN ('email', 'sms', 'slack', 'status_page')),
+  recipient TEXT NOT NULL,
+  subject TEXT,
+  body TEXT NOT NULL,
+  sent_at TIMESTAMPTZ DEFAULT NOW(),
+  delivered_at TIMESTAMPTZ,
+  status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'sent', 'delivered', 'failed'))
+);
+
+-- Break-glass access log
+CREATE TABLE break_glass_access (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id),
+  accessed_by TEXT NOT NULL, -- Could be email if user record doesn't exist
+  reason TEXT NOT NULL,
+  incident_id UUID REFERENCES incidents(id),
+  actions_taken TEXT[],
+  authorized_by TEXT NOT NULL, -- Two-person authorization
+  accessed_at TIMESTAMPTZ DEFAULT NOW(),
+  ended_at TIMESTAMPTZ
+);
+
+-- Emergency drills
+CREATE TABLE emergency_drills (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  drill_type TEXT NOT NULL CHECK (drill_type IN ('tabletop', 'simulated_outage', 'security_breach', 'backup_restore')),
+  scenario TEXT NOT NULL,
+  participants UUID[] NOT NULL,
+  scheduled_at TIMESTAMPTZ NOT NULL,
+  started_at TIMESTAMPTZ,
+  completed_at TIMESTAMPTZ,
+  findings TEXT,
+  action_items JSONB DEFAULT '[]',
+  created_by UUID REFERENCES users(id),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Indexes for performance
+CREATE INDEX idx_incidents_status ON incidents(status);
+CREATE INDEX idx_incidents_severity ON incidents(severity);
+CREATE INDEX idx_incidents_started ON incidents(started_at);
+CREATE INDEX idx_incident_timeline_incident ON incident_timeline(incident_id);
+CREATE INDEX idx_break_glass_accessed ON break_glass_access(accessed_at);
+```
+
+---
+
+## 17. Related Use Cases
+
+- [UC-ADMIN-008: Audit Logs](./08-audit-logs.md) - Review incident-related audit trails
+- [UC-ADMIN-007: Integration Management](./07-integration-management.md) - Manage third-party integrations during outages
+- [UC-ADMIN-005: User Management](./05-user-management.md) - Disable compromised accounts
+- [UC-ADMIN-03: System Settings](./03-system-settings.md) - Configure security settings
+- [UC-ADMIN-012: SLA Configuration](./12-sla-configuration.md) - Monitor SLA breaches during incidents
+
+---
+
+## 18. Change Log
 
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | 2025-11-30 | Initial emergency procedures and incident response documentation |
+| 1.1 | 2025-12-04 | Added Overview table, Preconditions, Trigger, Error Scenarios, Keyboard Shortcuts, Test Cases, Database Schema, Related Use Cases |
 
 ---
 

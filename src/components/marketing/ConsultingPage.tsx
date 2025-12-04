@@ -24,7 +24,7 @@ import {
   DollarSign,
   Award
 } from 'lucide-react';
-import { MarketingNavbar, Footer } from '@/components/templates';
+import { MarketingNavbar, Footer } from '@/components/marketing/templates';
 
 const ENTERPRISE_SERVICES = [
   {
