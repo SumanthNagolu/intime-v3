@@ -1,9 +1,54 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Award, Users, GraduationCap } from 'lucide-react';
+import {
+  LayoutDashboard,
+  BookOpen,
+  Users,
+  GraduationCap,
+  Award,
+  PenTool,
+  ChevronRight,
+  ChevronDown,
+} from 'lucide-react';
+
+// Navigation section and item types
+interface NavItem {
+  id: string;
+  label: string;
+  href: string;
+  icon: React.ElementType;
+}
+
+interface NavSection {
+  id: string;
+  label: string;
+  items: NavItem[];
+}
+
+// Navigation configuration
+const academySections: NavSection[] = [
+  {
+    id: 'main',
+    label: 'Main',
+    items: [
+      { id: 'dashboard', label: 'Console', href: '/employee/academy/dashboard', icon: LayoutDashboard },
+      { id: 'learning', label: 'My Learning', href: '/employee/academy/learning', icon: BookOpen },
+    ],
+  },
+  {
+    id: 'management',
+    label: 'Management',
+    items: [
+      { id: 'cohorts', label: 'Cohorts', href: '/employee/academy/cohorts', icon: GraduationCap },
+      { id: 'students', label: 'Students', href: '/employee/academy/students', icon: Users },
+      { id: 'certificates', label: 'Certificates', href: '/employee/academy/certificates', icon: Award },
+      { id: 'courses', label: 'Course Builder', href: '/employee/academy/courses', icon: PenTool },
+    ],
+  },
+];
 
 interface AcademyLayoutProps {
   children: React.ReactNode;
@@ -12,50 +57,82 @@ interface AcademyLayoutProps {
 export const AcademyLayout: React.FC<AcademyLayoutProps> = ({ children }) => {
   const pathname = usePathname();
 
-  const isActive = (path: string) => pathname.includes(path);
+  // Sidebar section expansion state
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(
+    new Set(['main', 'management'])
+  );
+
+  const toggleSection = (sectionId: string) => {
+    setExpandedSections((prev) => {
+      const next = new Set(prev);
+      if (next.has(sectionId)) {
+        next.delete(sectionId);
+      } else {
+        next.add(sectionId);
+      }
+      return next;
+    });
+  };
+
+  const isActiveExact = (href: string) => pathname === href || pathname.startsWith(href + '/');
 
   return (
-    <div className="pt-4">
-      {/* Context Navigation Header */}
-      <div className="mb-10 border-b border-stone-200 pb-0">
-        <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-6">
-          <div>
-            <div className="text-rust font-bold text-xs uppercase tracking-[0.2em] mb-2">Academy Admin</div>
-            <h1 className="text-4xl font-serif font-bold text-charcoal">Academy Administration</h1>
-          </div>
+    <div className="flex min-h-[calc(100vh-64px)]">
+      {/* Sidebar Navigation */}
+      <aside className="w-64 border-r border-stone-200 bg-white flex-shrink-0">
+        <div className="p-6 border-b border-stone-200">
+          <div className="text-rust font-bold text-xs uppercase tracking-[0.2em] mb-1">Academy</div>
+          <h2 className="text-xl font-serif font-bold text-charcoal">Learning & Training</h2>
         </div>
 
-        {/* Persistent Sub Navigation */}
-        <div className="flex gap-8 overflow-x-auto">
-          <Link
-            href="/employee/academy/admin/cohorts"
-            className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
-              isActive('cohorts') ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
-            }`}
-          >
-            <GraduationCap size={14} /> Cohorts
-          </Link>
-          <Link
-            href="/employee/academy/admin/students"
-            className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
-              isActive('students') ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
-            }`}
-          >
-            <Users size={14} /> Students
-          </Link>
-          <Link
-            href="/employee/academy/admin/certificates"
-            className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
-              isActive('certificates') ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
-            }`}
-          >
-            <Award size={14} /> Certificates
-          </Link>
-        </div>
-      </div>
+        <nav className="p-4 space-y-2">
+          {academySections.map((section) => (
+            <div key={section.id}>
+              {/* Section Header */}
+              <button
+                onClick={() => toggleSection(section.id)}
+                className="w-full flex items-center justify-between px-3 py-2 text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-charcoal transition-colors"
+              >
+                <span>{section.label}</span>
+                {expandedSections.has(section.id) ? (
+                  <ChevronDown size={14} />
+                ) : (
+                  <ChevronRight size={14} />
+                )}
+              </button>
 
-      {/* Page Content */}
-      {children}
+              {/* Section Items */}
+              {expandedSections.has(section.id) && (
+                <div className="ml-2 space-y-1">
+                  {section.items.map((item) => {
+                    const Icon = item.icon;
+                    const active = isActiveExact(item.href);
+                    return (
+                      <Link
+                        key={item.id}
+                        href={item.href}
+                        className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
+                          active
+                            ? 'bg-rust/10 text-rust font-medium border-l-2 border-rust'
+                            : 'text-stone-600 hover:bg-stone-50 hover:text-charcoal'
+                        }`}
+                      >
+                        <Icon size={16} />
+                        <span>{item.label}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          ))}
+        </nav>
+      </aside>
+
+      {/* Main Content Area */}
+      <main className="flex-1 p-6 overflow-auto">
+        {children}
+      </main>
     </div>
   );
 };

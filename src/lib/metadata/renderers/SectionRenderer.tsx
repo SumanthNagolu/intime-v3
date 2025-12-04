@@ -602,21 +602,41 @@ function CollapsibleSection({
 }
 
 /**
- * Maps widget component names to their data keys in the context
+ * Maps widget component names to their data keys in the context.dashboardData
+ * Keys must match the property names in DashboardRenderer's dashboardData object.
  */
 const WIDGET_DATA_KEYS: Record<string, string> = {
+  // Recruiting/CRM widgets
   SprintProgressWidget: 'sprintProgress',
   ActivityQueueWidget: 'tasks',
   TaskQueueWidget: 'tasks',
   AlertList: 'pipelineHealth',
   PipelineAlerts: 'pipelineHealth',
+  ClientHealthAlerts: 'accountHealth',
   CalendarWidget: 'upcomingCalendar',
   UpcomingCalendar: 'upcomingCalendar',
   WinsList: 'recentWins',
   RecentWins: 'recentWins',
+  RACIWatchlistWidget: 'raciWatchlist',
+  CrossPillarOpportunities: 'crossPillarOpportunities',
   AccountHealth: 'accountHealth',
   ActivitySummary: 'activitySummary',
   QualityMetrics: 'qualityMetrics',
+  KanbanBoard: 'submissionPipeline',
+
+  // Bench Sales widgets
+  ActivityQueue: 'todaysPriorities',
+  PrioritizedTaskList: 'todaysPriorities',
+  BenchStatusDistribution: 'benchHealth',
+  BenchStatusSummary: 'benchHealth',
+  JobOrderFeed: 'jobOrders',
+  ConsultantCardGrid: 'myConsultants',
+  MiniKanbanBoard: 'submissionPipeline',
+  PlacementCardList: 'activePlacements',
+  ImmigrationAlertsDashboard: 'immigrationAlerts',
+  MarketingActivityWidget: 'marketingActivity',
+  RevenueCommissionWidget: 'revenueCommission',
+  MarketingProfileGrid: 'marketingProfiles',
 };
 
 /**
@@ -637,8 +657,16 @@ function CustomSection({
     const dataKey = WIDGET_DATA_KEYS[componentName];
 
     // Extract widget-specific data from extended context (set by DashboardRenderer)
-    const extendedContext = context as (RenderContext & { data?: Record<string, unknown>; isLoading?: boolean; error?: unknown }) | undefined;
-    const contextData = extendedContext?.data;
+    // DashboardRenderer stores data in context.dashboardData
+    const extendedContext = context as (RenderContext & {
+      data?: Record<string, unknown>;
+      dashboardData?: Record<string, unknown>;
+      isLoading?: boolean;
+      error?: unknown
+    }) | undefined;
+
+    // Try dashboardData first (from DashboardRenderer), then fall back to data
+    const contextData = extendedContext?.dashboardData ?? extendedContext?.data;
     const widgetData = dataKey && contextData ? contextData[dataKey] as Record<string, unknown> : undefined;
 
     return (
@@ -654,14 +682,14 @@ function CustomSection({
     );
   }
 
-  // Fallback placeholder for unregistered widgets
+  // Fallback for unregistered widgets - shows error for debugging
   return (
-    <div className="p-4 border rounded-lg bg-muted/30">
-      <div className="text-muted-foreground text-sm">
-        Widget not found: {componentName || definition.id}
+    <div className="p-4 border border-dashed border-warning-300 rounded-lg bg-warning-50">
+      <div className="text-warning-700 text-sm font-medium">
+        Widget not registered: {componentName || definition.id}
       </div>
-      <div className="text-xs text-muted-foreground mt-1">
-        Register this widget using registerSectionWidget(&apos;{componentName}&apos;, Component)
+      <div className="text-xs text-warning-600 mt-1">
+        Register using: registerSectionWidget(&apos;{componentName}&apos;, Component)
       </div>
     </div>
   );

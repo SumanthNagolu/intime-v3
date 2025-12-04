@@ -45,7 +45,7 @@ const vendorBenchColumns: import('@/lib/metadata/types').TableColumnDefinition[]
     width: '180px',
     config: {
       link: true,
-      linkPath: '/employee/workspace/bench/vendor-consultants/{{id}}',
+      linkPath: '/employee/bench/vendor-consultants/{{id}}',
     },
   },
   {
@@ -248,7 +248,7 @@ export const vendorBenchListScreen: ScreenDefinition = {
             label: 'View Profile',
             icon: 'Eye',
             type: 'navigate',
-            config: { type: 'navigate', route: '/employee/workspace/bench/vendor-consultants/{{id}}' },
+            config: { type: 'navigate', route: '/employee/bench/vendor-consultants/{{id}}' },
           },
           {
             id: 'import',
@@ -320,7 +320,7 @@ export const vendorBenchListScreen: ScreenDefinition = {
   navigation: {
     breadcrumbs: [
       { label: 'Workspace', route: '/employee/workspace' },
-      { label: 'Bench Sales', route: '/employee/workspace/bench' },
+      { label: 'Bench Sales', route: '/employee/bench' },
       { label: 'Vendor Bench', active: true },
     ],
   },

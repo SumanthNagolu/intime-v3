@@ -7,7 +7,7 @@
  * RACI-based filtering, and better styling.
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { trpc } from '@/lib/trpc/client';
@@ -25,6 +25,9 @@ import {
   Filter,
   Loader2,
   AlertCircle,
+  X,
+  FileSpreadsheet,
+  CheckCircle2,
 } from 'lucide-react';
 
 // Import and register widgets
@@ -82,12 +85,61 @@ function formatEnum(value: string | null | undefined): string {
 }
 
 /**
+ * Helper function to convert data to CSV format
+ */
+function convertToCSV(data: Record<string, unknown>[], headers: string[]): string {
+  const headerRow = headers.join(',');
+  const rows = data.map(row =>
+    headers.map(header => {
+      const value = row[header];
+      if (value === null || value === undefined) return '';
+      const stringValue = String(value);
+      // Escape values containing commas, quotes, or newlines
+      if (stringValue.includes(',') || stringValue.includes('"') || stringValue.includes('\n')) {
+        return `"${stringValue.replace(/"/g, '""')}"`;
+      }
+      return stringValue;
+    }).join(',')
+  );
+  return [headerRow, ...rows].join('\n');
+}
+
+/**
+ * Helper function to parse CSV
+ */
+function parseCSV(csvText: string): { headers: string[], rows: Record<string, string>[] } {
+  const lines = csvText.split('\n').filter(line => line.trim());
+  if (lines.length === 0) return { headers: [], rows: [] };
+
+  const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+  const rows = lines.slice(1).map(line => {
+    const values = line.split(',').map(v => v.trim().replace(/^"|"$/g, ''));
+    const row: Record<string, string> = {};
+    headers.forEach((header, idx) => {
+      row[header] = values[idx] || '';
+    });
+    return row;
+  });
+
+  return { headers, rows };
+}
+
+/**
  * Accounts List Renderer Component
  */
 export function AccountsListRenderer({ definition, className }: AccountsListRendererProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [importStatus, setImportStatus] = useState<{
+    loading: boolean;
+    success?: boolean;
+    message?: string;
+    created?: number;
+    skipped?: number;
+  }>({ loading: false });
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Fetch accounts list with RACI-based filtering (ownershipProcedure handles this)
   const accountsQuery = trpc.crm.accounts.list.useQuery(
@@ -106,6 +158,132 @@ export function AccountsListRenderer({ definition, className }: AccountsListRend
   const metricsQuery = trpc.crm.accounts.getStats.useQuery(undefined, {
     refetchInterval: 60000,
   });
+
+  // Export mutation (using query that we fetch on demand)
+  const exportQuery = trpc.crm.accounts.exportAll.useQuery(undefined, {
+    enabled: false, // Manual trigger only
+  });
+
+  // Import mutation
+  const importMutation = trpc.crm.accounts.bulkCreate.useMutation({
+    onSuccess: (data) => {
+      setImportStatus({
+        loading: false,
+        success: true,
+        message: `Successfully imported ${data.created} accounts`,
+        created: data.created,
+        skipped: data.skipped,
+      });
+      // Refetch the accounts list
+      accountsQuery.refetch();
+      metricsQuery.refetch();
+    },
+    onError: (error) => {
+      setImportStatus({
+        loading: false,
+        success: false,
+        message: error.message || 'Failed to import accounts',
+      });
+    },
+  });
+
+  // Export handler
+  const handleExport = useCallback(async () => {
+    try {
+      const result = await exportQuery.refetch();
+      if (result.data) {
+        const csv = convertToCSV(
+          result.data.accounts as Record<string, unknown>[],
+          result.data.headers
+        );
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `accounts-export-${new Date().toISOString().split('T')[0]}.csv`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+      }
+    } catch (error) {
+      console.error('Export failed:', error);
+    }
+  }, [exportQuery]);
+
+  // Import handler
+  const handleImport = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setImportStatus({ loading: true });
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const csvText = e.target?.result as string;
+        const { rows } = parseCSV(csvText);
+
+        // Valid enum values for validation
+        const validIndustries = ['technology', 'healthcare', 'finance', 'banking', 'insurance', 'manufacturing', 'retail', 'consulting', 'government', 'education', 'energy', 'telecommunications', 'pharmaceutical', 'other'] as const;
+        const validCompanyTypes = ['direct_client', 'implementation_partner', 'msp_vms', 'system_integrator', 'staffing_agency', 'vendor'] as const;
+        const validStatuses = ['prospect', 'active', 'inactive', 'churned'] as const;
+        const validTiers = ['enterprise', 'mid_market', 'smb', 'strategic'] as const;
+
+        // Helper function to validate enum values
+        const validateEnum = <T extends string>(value: string | undefined, validValues: readonly T[]): T | undefined => {
+          if (!value) return undefined;
+          const normalized = value.toLowerCase().trim();
+          return validValues.includes(normalized as T) ? normalized as T : undefined;
+        };
+
+        // Map CSV rows to account objects
+        const accountsToImport = rows.map(row => ({
+          name: row.name || row.Name || '',
+          industry: validateEnum(row.industry || row.Industry, validIndustries),
+          companyType: validateEnum(row.companyType || row.company_type || row['Company Type'], validCompanyTypes),
+          status: validateEnum(row.status || row.Status, validStatuses) || 'prospect',
+          tier: validateEnum(row.tier || row.Tier, validTiers),
+          website: row.website || row.Website || undefined,
+          phone: row.phone || row.Phone || undefined,
+          headquartersLocation: row.headquartersLocation || row.headquarters_location || row.Location || undefined,
+          description: row.description || row.Description || undefined,
+        })).filter(a => a.name); // Filter out rows without names
+
+        if (accountsToImport.length === 0) {
+          setImportStatus({
+            loading: false,
+            success: false,
+            message: 'No valid accounts found in CSV. Make sure the file has a "name" column.',
+          });
+          return;
+        }
+
+        importMutation.mutate({
+          accounts: accountsToImport,
+          skipDuplicates: true,
+        });
+      } catch (error) {
+        setImportStatus({
+          loading: false,
+          success: false,
+          message: 'Failed to parse CSV file. Please check the format.',
+        });
+      }
+    };
+
+    reader.onerror = () => {
+      setImportStatus({
+        loading: false,
+        success: false,
+        message: 'Failed to read file.',
+      });
+    };
+
+    reader.readAsText(file);
+
+    // Reset the input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  }, [importMutation]);
 
   // Process data
   const accounts = accountsQuery.data?.items ?? [];
@@ -168,18 +346,35 @@ export function AccountsListRenderer({ definition, className }: AccountsListRend
 
           {/* Actions */}
           <div className="flex items-center gap-2">
+            <input
+              type="file"
+              ref={fileInputRef}
+              accept=".csv"
+              onChange={handleImport}
+              className="hidden"
+            />
             <button
-              onClick={() => console.log('Import')}
-              className="px-4 py-2 rounded-lg text-sm font-medium bg-stone-100 hover:bg-stone-200 transition-colors flex items-center gap-2"
+              onClick={() => setShowImportModal(true)}
+              disabled={importMutation.isPending}
+              className="px-4 py-2 rounded-lg text-sm font-medium bg-stone-100 hover:bg-stone-200 transition-colors flex items-center gap-2 disabled:opacity-50"
             >
-              <Upload size={16} />
+              {importMutation.isPending ? (
+                <Loader2 size={16} className="animate-spin" />
+              ) : (
+                <Upload size={16} />
+              )}
               Import
             </button>
             <button
-              onClick={() => console.log('Export')}
-              className="px-4 py-2 rounded-lg text-sm font-medium bg-stone-100 hover:bg-stone-200 transition-colors flex items-center gap-2"
+              onClick={handleExport}
+              disabled={exportQuery.isFetching}
+              className="px-4 py-2 rounded-lg text-sm font-medium bg-stone-100 hover:bg-stone-200 transition-colors flex items-center gap-2 disabled:opacity-50"
             >
-              <Download size={16} />
+              {exportQuery.isFetching ? (
+                <Loader2 size={16} className="animate-spin" />
+              ) : (
+                <Download size={16} />
+              )}
               Export
             </button>
             <Link
@@ -192,6 +387,102 @@ export function AccountsListRenderer({ definition, className }: AccountsListRend
           </div>
         </div>
       </header>
+
+      {/* Import Modal */}
+      {showImportModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-xl max-w-lg w-full mx-4">
+            <div className="p-6 border-b border-stone-200">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold text-stone-900">Import Accounts</h2>
+                <button
+                  onClick={() => {
+                    setShowImportModal(false);
+                    setImportStatus({ loading: false });
+                  }}
+                  className="text-stone-400 hover:text-stone-600"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6">
+              {importStatus.success !== undefined ? (
+                <div className={cn(
+                  'p-4 rounded-lg mb-4',
+                  importStatus.success ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
+                )}>
+                  <div className="flex items-start gap-3">
+                    {importStatus.success ? (
+                      <CheckCircle2 className="text-green-500 shrink-0" size={20} />
+                    ) : (
+                      <AlertCircle className="text-red-500 shrink-0" size={20} />
+                    )}
+                    <div>
+                      <p className="font-medium">{importStatus.message}</p>
+                      {importStatus.skipped !== undefined && importStatus.skipped > 0 && (
+                        <p className="text-sm mt-1">
+                          {importStatus.skipped} duplicate accounts were skipped.
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="border-2 border-dashed border-stone-300 rounded-lg p-8 text-center">
+                    <FileSpreadsheet className="mx-auto text-stone-400 mb-4" size={48} />
+                    <p className="text-stone-600 mb-2">Upload a CSV file to import accounts</p>
+                    <p className="text-sm text-stone-500 mb-4">
+                      Required column: <span className="font-mono bg-stone-100 px-1">name</span>
+                    </p>
+                    <p className="text-xs text-stone-400 mb-4">
+                      Optional: industry, companyType, status, tier, website, phone, headquartersLocation, description
+                    </p>
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={importStatus.loading}
+                      className="px-4 py-2 bg-rust text-white rounded-lg hover:bg-rust/90 transition-colors disabled:opacity-50"
+                    >
+                      {importStatus.loading ? (
+                        <span className="flex items-center gap-2">
+                          <Loader2 size={16} className="animate-spin" />
+                          Processing...
+                        </span>
+                      ) : (
+                        'Select CSV File'
+                      )}
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="p-4 bg-stone-50 border-t border-stone-200 rounded-b-xl">
+              <div className="flex justify-end gap-2">
+                <button
+                  onClick={() => {
+                    setShowImportModal(false);
+                    setImportStatus({ loading: false });
+                  }}
+                  className="px-4 py-2 text-sm font-medium text-stone-600 hover:text-stone-900"
+                >
+                  {importStatus.success ? 'Done' : 'Cancel'}
+                </button>
+                {importStatus.success && (
+                  <button
+                    onClick={() => setImportStatus({ loading: false })}
+                    className="px-4 py-2 text-sm font-medium bg-rust text-white rounded-lg hover:bg-rust/90"
+                  >
+                    Import More
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Metrics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

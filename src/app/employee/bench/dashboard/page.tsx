@@ -1,16 +1,18 @@
 /**
  * Bench Sales Dashboard Page
- * 
- * Uses metadata-driven ScreenRenderer for the bench sales dashboard UI.
+ *
+ * Uses metadata-driven BenchDashboardRenderer for the bench sales dashboard UI.
+ * Fetches all required tRPC data and passes it to widget components.
  * @see src/screens/bench-sales/bench-dashboard.screen.ts
  */
 
 import { Suspense } from 'react';
-import { ScreenRenderer } from '@/lib/metadata/renderers';
 import { benchDashboardScreen } from '@/screens/bench-sales';
 import { AppLayout } from '@/components/AppLayout';
+import { BenchLayout } from '@/components/layouts/BenchLayout';
+import { BenchDashboardRenderer } from '@/components/bench/BenchDashboardRenderer';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 function DashboardSkeleton() {
   return (
@@ -18,10 +20,13 @@ function DashboardSkeleton() {
       <div className="h-8 bg-stone-200 rounded w-1/4" />
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="h-24 bg-stone-200 rounded" />
+          <div key={i} className="h-24 bg-stone-200 rounded-xl" />
         ))}
       </div>
-      <div className="h-64 bg-stone-200 rounded" />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 h-64 bg-stone-200 rounded-xl" />
+        <div className="h-64 bg-stone-200 rounded-xl" />
+      </div>
     </div>
   );
 }
@@ -29,9 +34,11 @@ function DashboardSkeleton() {
 export default function BenchDashboardPage() {
   return (
     <AppLayout>
-      <Suspense fallback={<DashboardSkeleton />}>
-        <ScreenRenderer definition={benchDashboardScreen} />
-      </Suspense>
+      <BenchLayout>
+        <Suspense fallback={<DashboardSkeleton />}>
+          <BenchDashboardRenderer definition={benchDashboardScreen} />
+        </Suspense>
+      </BenchLayout>
     </AppLayout>
   );
 }

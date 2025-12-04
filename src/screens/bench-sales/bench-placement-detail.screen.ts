@@ -268,7 +268,7 @@ export const benchPlacementDetailScreen: ScreenDefinition = {
                 type: 'navigate',
                 icon: 'ExternalLink',
                 variant: 'ghost',
-                config: { type: 'navigate', route: '/employee/workspace/bench/consultants/{{consultantId}}' },
+                config: { type: 'navigate', route: '/employee/bench/consultants/{{consultantId}}' },
               },
             ],
           },
@@ -338,7 +338,7 @@ export const benchPlacementDetailScreen: ScreenDefinition = {
                 type: 'navigate',
                 icon: 'ExternalLink',
                 variant: 'ghost',
-                config: { type: 'navigate', route: '/employee/workspace/bench/vendors/{{vendorId}}' },
+                config: { type: 'navigate', route: '/employee/bench/vendors/{{vendorId}}' },
               },
             ],
           },
@@ -594,7 +594,7 @@ export const benchPlacementDetailScreen: ScreenDefinition = {
       type: 'navigate',
       icon: 'Edit',
       variant: 'default',
-      config: { type: 'navigate', route: { type: 'template', path: '/employee/workspace/bench/placements/{{id}}/edit' } },
+      config: { type: 'navigate', route: { type: 'template', path: '/employee/bench/placements/{{id}}/edit' } },
     },
     {
       id: 'log-activity',
@@ -621,12 +621,12 @@ export const benchPlacementDetailScreen: ScreenDefinition = {
   navigation: {
     back: {
       label: 'Back to Placements',
-      route: '/employee/workspace/bench/placements',
+      route: '/employee/bench/placements',
     },
     breadcrumbs: [
       { label: 'Workspace', route: '/employee/workspace' },
-      { label: 'Bench Sales', route: '/employee/workspace/bench' },
-      { label: 'Placements', route: '/employee/workspace/bench/placements' },
+      { label: 'Bench Sales', route: '/employee/bench' },
+      { label: 'Placements', route: '/employee/bench/placements' },
       { label: { type: 'field', path: 'consultant.fullName' }, active: true },
     ],
   },

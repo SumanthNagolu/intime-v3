@@ -1,21 +1,28 @@
 /**
- * Bench Consultants List Page
- * 
- * Uses metadata-driven ScreenRenderer for the consultants list UI.
+ * Bench Talent (Consultants) List Page
+ *
+ * Uses metadata-driven ListRenderer for the consultants list UI.
+ * Fetches real consultant data from the bench tRPC router.
  * @see src/screens/bench-sales/consultant-list.screen.ts
  */
 
 import { Suspense } from 'react';
-import { ScreenRenderer } from '@/lib/metadata/renderers';
+import { ListRenderer } from '@/lib/metadata/renderers';
 import { consultantListScreen } from '@/screens/bench-sales';
 import { AppLayout } from '@/components/AppLayout';
+import { BenchLayout } from '@/components/layouts/BenchLayout';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 function ListSkeleton() {
   return (
     <div className="animate-pulse space-y-4">
       <div className="h-8 bg-stone-200 rounded w-1/4" />
+      <div className="flex gap-2 mb-4">
+        {[1, 2, 3, 4, 5].map((i) => (
+          <div key={i} className="h-8 w-24 bg-stone-200 rounded-full" />
+        ))}
+      </div>
       <div className="h-12 bg-stone-200 rounded" />
       {[1, 2, 3, 4, 5].map((i) => (
         <div key={i} className="h-16 bg-stone-200 rounded" />
@@ -24,12 +31,14 @@ function ListSkeleton() {
   );
 }
 
-export default function ConsultantsListPage() {
+export default function TalentListPage() {
   return (
     <AppLayout>
-      <Suspense fallback={<ListSkeleton />}>
-        <ScreenRenderer definition={consultantListScreen} />
-      </Suspense>
+      <BenchLayout>
+        <Suspense fallback={<ListSkeleton />}>
+          <ListRenderer definition={consultantListScreen} />
+        </Suspense>
+      </BenchLayout>
     </AppLayout>
   );
 }

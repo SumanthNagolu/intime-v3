@@ -1,31 +1,53 @@
 /**
  * Event Bus
- * 
+ *
  * In-memory event bus for publishing and subscribing to events.
+ * Supports middleware pattern for processing pipeline.
  * In production, this would be backed by Redis or a message queue.
- * 
+ *
  * @see docs/specs/20-USER-ROLES/01-ACTIVITIES-EVENTS-FRAMEWORK.md
  */
 
 import type { Event, EventHandler, EventSubscription } from './event.types';
-import { activityEngine } from '@/lib/activities/activity-engine';
+import { coreHandlers } from './handlers';
+
+/**
+ * Middleware function type
+ * Receives the event and a next function to call the next middleware
+ */
+export type EventMiddleware = (
+  event: Event,
+  next: () => Promise<void>
+) => Promise<void>;
 
 /**
  * Event Bus
- * 
+ *
  * Manages event subscriptions and dispatches events to handlers.
- * Built-in handlers:
- * - Activity Pattern Matcher (auto-creates activities)
+ * Supports:
+ * - Middleware pipeline for processing
+ * - Global and type-specific subscriptions
+ * - Wildcard patterns (e.g., "submission.*")
+ * - Priority-based execution
  */
 export class EventBus {
   private subscriptions: Map<string, EventSubscription[]> = new Map();
   private globalSubscriptions: EventSubscription[] = [];
+  private middlewares: EventMiddleware[] = [];
   private isProcessing = false;
   private eventQueue: Event[] = [];
 
   constructor() {
     // Register built-in handlers
     this.registerBuiltInHandlers();
+  }
+
+  /**
+   * Add middleware to the processing pipeline
+   * Middlewares run in order before handlers
+   */
+  use(middleware: EventMiddleware): void {
+    this.middlewares.push(middleware);
   }
 
   /**
@@ -107,9 +129,37 @@ export class EventBus {
   }
 
   /**
-   * Dispatch an event to handlers
+   * Dispatch an event through middleware and to handlers
    */
   private async dispatch(event: Event): Promise<void> {
+    // Run through middleware chain first
+    await this.runMiddleware(event);
+
+    // Then dispatch to handlers
+    await this.dispatchToHandlers(event);
+  }
+
+  /**
+   * Run event through middleware chain
+   */
+  private async runMiddleware(event: Event): Promise<void> {
+    if (this.middlewares.length === 0) return;
+
+    let index = 0;
+    const next = async (): Promise<void> => {
+      if (index < this.middlewares.length) {
+        const middleware = this.middlewares[index++];
+        await middleware(event, next);
+      }
+    };
+
+    await next();
+  }
+
+  /**
+   * Dispatch an event to subscription handlers
+   */
+  private async dispatchToHandlers(event: Event): Promise<void> {
     const handlers: EventSubscription[] = [];
 
     // Add global handlers
@@ -147,42 +197,40 @@ export class EventBus {
 
   /**
    * Register built-in handlers
+   *
+   * Core handlers run as middleware (before subscriptions):
+   * 1. Audit - Record everything first
+   * 2. Activity Creation - Create activities from events
+   * 3. Notification - Send notifications
+   * 4. Webhook - Trigger webhooks
    */
   private registerBuiltInHandlers(): void {
-    // Activity Pattern Matcher - triggers auto-activities
-    this.subscribe(
-      '*',
-      async (event) => {
+    // Register core handlers as middleware
+    for (const handler of coreHandlers) {
+      this.use(async (event, next) => {
         try {
-          const createdActivities = await activityEngine.processEvent(event);
-          
-          if (createdActivities.length > 0) {
-            console.log(
-              `Auto-created ${createdActivities.length} activities for event ${event.eventType}`
-            );
-          }
+          await handler(event);
         } catch (error) {
-          console.error('Activity engine failed to process event:', error);
+          console.error(`Core handler failed for ${event.eventType}:`, error);
         }
-      },
-      { priority: 100 }  // High priority - run first
-    );
+        await next();
+      });
+    }
 
-    // Audit logger
-    this.subscribe(
-      '*',
-      async (event) => {
-        // In production, this would write to an audit log
-        if (process.env.NODE_ENV === 'development') {
+    // Dev logging (only in development)
+    if (process.env.NODE_ENV === 'development') {
+      this.subscribe(
+        '*',
+        async (event) => {
           console.log(`[EVENT] ${event.eventType}`, {
             entityType: event.entityType,
             entityId: event.entityId,
             actorId: event.actorId,
           });
-        }
-      },
-      { priority: -100 }  // Low priority - run last
-    );
+        },
+        { priority: -100 }  // Low priority - run last
+      );
+    }
   }
 
   /**

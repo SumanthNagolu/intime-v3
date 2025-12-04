@@ -1,13 +1,13 @@
 /**
- * Leads List Page
- * 
- * Uses metadata-driven ScreenRenderer for the leads list UI.
- * @see src/screens/crm/lead-list.screen.ts
+ * TA Leads List Page
+ *
+ * Uses metadata-driven ScreenRenderer for the TA leads list UI.
+ * @see src/screens/ta/ta-leads.screen.ts
  */
 
 import { Suspense } from 'react';
 import { ScreenRenderer } from '@/lib/metadata/renderers';
-import { leadListScreen } from '@/screens/crm';
+import { taLeadsScreen } from '@/screens/ta';
 import { AppLayout } from '@/components/AppLayout';
 
 export const dynamic = "force-dynamic";
@@ -24,11 +24,11 @@ function ListSkeleton() {
   );
 }
 
-export default function LeadsListPage() {
+export default function TALeadsPage() {
   return (
     <AppLayout>
       <Suspense fallback={<ListSkeleton />}>
-        <ScreenRenderer definition={leadListScreen} />
+        <ScreenRenderer definition={taLeadsScreen} />
       </Suspense>
     </AppLayout>
   );

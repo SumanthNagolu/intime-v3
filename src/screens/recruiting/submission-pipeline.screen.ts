@@ -30,51 +30,13 @@ export const submissionPipelineScreen: ScreenDefinition = {
   layout: {
     type: 'single-column',
     sections: [
-      // Filters Bar
+      // Filters Bar - Custom widget with real data fetching
       {
         id: 'filters',
-        type: 'form',
+        type: 'custom',
         title: '',
-        inline: true,
-        fields: [
-          {
-            id: 'job-filter',
-            type: 'select',
-            path: 'filters.jobId',
-            label: 'Job',
-            placeholder: 'All Jobs',
-            optionsSource: { type: 'entity', entityType: 'job', filter: { status: 'open' } },
-          },
-          {
-            id: 'account-filter',
-            type: 'select',
-            path: 'filters.accountId',
-            label: 'Client',
-            placeholder: 'All Clients',
-            optionsSource: { type: 'entity', entityType: 'account' },
-          },
-          {
-            id: 'date-range',
-            type: 'date-range',
-            path: 'filters.dateRange',
-            label: 'Date Range',
-            config: {
-              presets: ['today', 'this_week', 'this_month', 'last_30_days'],
-            },
-          },
-          {
-            id: 'priority-filter',
-            type: 'multiselect',
-            path: 'filters.priority',
-            label: 'Priority',
-            options: [
-              { value: 'urgent', label: 'Urgent' },
-              { value: 'high', label: 'High' },
-              { value: 'medium', label: 'Medium' },
-              { value: 'low', label: 'Low' },
-            ],
-          },
-        ],
+        component: 'PipelineFilters',
+        componentProps: {},
       },
 
       // Kanban Board

@@ -56,7 +56,7 @@ import {
   updateComplianceDocumentSchema,
   updateCandidateProfileSchema,
 } from '@/lib/validations/ats';
-import { eq, and, desc, sql, isNull, or, SQL } from 'drizzle-orm';
+import { eq, and, desc, sql, isNull, or, SQL, inArray, notInArray } from 'drizzle-orm';
 import { userProfiles } from '@/lib/db/schema/user-profiles';
 import { accounts } from '@/lib/db/schema/crm';
 
@@ -73,9 +73,9 @@ export const atsRouter = router({
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        status: z.enum(['draft', 'open', 'on_hold', 'filled', 'closed']).optional(),
-        clientId: z.string().uuid().optional(),
-        ownership: ownershipFilterSchema.optional(),
+        status: z.enum(['draft', 'open', 'on_hold', 'filled', 'closed']).nullish(),
+        clientId: z.string().uuid().nullish(),
+        ownership: ownershipFilterSchema.nullish(),
       }))
       .query(async ({ ctx, input }) => {
         const orgId = ctx.orgId as string;
@@ -241,10 +241,10 @@ export const atsRouter = router({
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        status: z.string().optional(),
-        jobId: z.string().uuid().optional(),
-        candidateId: z.string().uuid().optional(),
-        ownership: ownershipFilterSchema.optional(),
+        status: z.string().nullish(),
+        jobId: z.string().uuid().nullish(),
+        candidateId: z.string().uuid().nullish(),
+        ownership: ownershipFilterSchema.nullish(),
       }))
       .query(async ({ ctx, input }) => {
         const orgId = ctx.orgId as string;
@@ -275,6 +275,213 @@ export const atsRouter = router({
           .orderBy(desc(submissions.createdAt));
 
         return results;
+      }),
+
+    /**
+     * Get submissions with full candidate/job details for list view
+     */
+    listWithDetails: ownershipProcedure
+      .input(z.object({
+        limit: z.number().min(1).max(100).default(50),
+        offset: z.number().min(0).default(0),
+        status: z.string().optional(),
+        jobId: z.string().uuid().optional(),
+        accountId: z.string().uuid().optional(),
+        ownership: ownershipFilterSchema.optional(),
+      }))
+      .query(async ({ ctx, input }) => {
+        const orgId = ctx.orgId as string;
+        const { isManager, managedUserIds } = ctx;
+        const profileId = ctx.profileId as string;
+        const { limit, offset, status, jobId, accountId, ownership } = input;
+
+        const conditions: SQL<unknown>[] = [eq(submissions.orgId, orgId) as SQL<unknown>];
+        if (status) conditions.push(eq(submissions.status, status) as SQL<unknown>);
+        if (jobId) conditions.push(eq(submissions.jobId, jobId) as SQL<unknown>);
+        if (accountId) conditions.push(eq(jobs.accountId, accountId) as SQL<unknown>);
+
+        // Apply ownership filter if specified
+        if (ownership) {
+          const ownershipCondition = await buildOwnershipCondition(
+            { userId: profileId, orgId, isManager: isManager ?? false, managedUserIds },
+            'submission',
+            { id: submissions.id as unknown as SQL<unknown>, ownerId: submissions.ownerId as unknown as SQL<unknown> },
+            ownership
+          );
+          conditions.push(ownershipCondition);
+        }
+
+        // Query with joins for full details
+        const results = await db
+          .select({
+            id: submissions.id,
+            status: submissions.status,
+            aiMatchScore: submissions.aiMatchScore,
+            recruiterMatchScore: submissions.recruiterMatchScore,
+            submittedRate: submissions.submittedRate,
+            submittedRateType: submissions.submittedRateType,
+            submittedToClientAt: submissions.submittedToClientAt,
+            createdAt: submissions.createdAt,
+            updatedAt: submissions.updatedAt,
+            candidateId: submissions.candidateId,
+            jobId: submissions.jobId,
+            // Candidate info
+            candidateFirstName: userProfiles.firstName,
+            candidateLastName: userProfiles.lastName,
+            candidateEmail: userProfiles.email,
+            candidateAvatar: userProfiles.avatarUrl,
+            candidateLocation: userProfiles.candidateLocation,
+            candidateVisa: userProfiles.candidateCurrentVisa,
+            // Job info
+            jobTitle: jobs.title,
+            jobStatus: jobs.status,
+            jobPriority: jobs.priority,
+            jobLocation: jobs.location,
+            // Account info
+            accountId: jobs.accountId,
+            accountName: accounts.name,
+          })
+          .from(submissions)
+          .leftJoin(userProfiles, eq(submissions.candidateId, userProfiles.id))
+          .leftJoin(jobs, eq(submissions.jobId, jobs.id))
+          .leftJoin(accounts, eq(jobs.accountId, accounts.id))
+          .where(and(...conditions))
+          .limit(limit)
+          .offset(offset)
+          .orderBy(desc(submissions.createdAt));
+
+        // Transform to nested format for ListRenderer compatibility
+        return results.map(r => ({
+          id: r.id,
+          status: r.status,
+          priority: r.jobPriority,
+          aiMatchScore: r.aiMatchScore,
+          recruiterMatchScore: r.recruiterMatchScore,
+          submittedRate: r.submittedRate,
+          submittedRateType: r.submittedRateType,
+          submittedAt: r.submittedToClientAt || r.createdAt,
+          createdAt: r.createdAt,
+          updatedAt: r.updatedAt,
+          candidateId: r.candidateId,
+          jobId: r.jobId,
+          // Nested candidate object
+          candidate: {
+            id: r.candidateId,
+            fullName: r.candidateFirstName && r.candidateLastName
+              ? `${r.candidateFirstName} ${r.candidateLastName}`
+              : 'Unknown Candidate',
+            email: r.candidateEmail,
+            avatarUrl: r.candidateAvatar,
+            location: r.candidateLocation,
+            visaStatus: r.candidateVisa,
+          },
+          // Nested job object
+          job: {
+            id: r.jobId,
+            title: r.jobTitle || 'Unknown Job',
+            status: r.jobStatus,
+            priority: r.jobPriority,
+            location: r.jobLocation,
+            // Nested account in job
+            account: {
+              id: r.accountId,
+              name: r.accountName || 'Unknown Client',
+            },
+          },
+          // Computed fields
+          daysInCurrentStage: r.updatedAt
+            ? Math.floor((Date.now() - new Date(r.updatedAt).getTime()) / (1000 * 60 * 60 * 24))
+            : 0,
+          slaStatus: 'on_track' as const, // Could compute based on business rules
+          overdueActivitiesCount: 0, // Would need separate query
+        }));
+      }),
+
+    /**
+     * Get submissions enriched with candidate and job info for pipeline view
+     */
+    listForPipeline: ownershipProcedure
+      .input(z.object({
+        limit: z.number().min(1).max(200).default(100),
+        status: z.array(z.string()).optional(),
+        jobId: z.string().uuid().optional(),
+        accountId: z.string().uuid().optional(),
+        ownership: ownershipFilterSchema.optional(),
+      }))
+      .query(async ({ ctx, input }) => {
+        const orgId = ctx.orgId as string;
+        const { isManager, managedUserIds } = ctx;
+        const profileId = ctx.profileId as string;
+        const { limit, status, jobId, accountId, ownership } = input;
+
+        const conditions: SQL<unknown>[] = [eq(submissions.orgId, orgId) as SQL<unknown>];
+
+        // Filter by statuses (exclude withdrawn/archived by default)
+        if (status && status.length > 0) {
+          conditions.push(inArray(submissions.status, status) as SQL<unknown>);
+        } else {
+          conditions.push(notInArray(submissions.status, ['withdrawn', 'archived']) as SQL<unknown>);
+        }
+
+        if (jobId) conditions.push(eq(submissions.jobId, jobId) as SQL<unknown>);
+
+        // Apply ownership filter
+        if (ownership) {
+          const ownershipCondition = await buildOwnershipCondition(
+            { userId: profileId, orgId, isManager: isManager ?? false, managedUserIds },
+            'submission',
+            { id: submissions.id as unknown as SQL<unknown>, ownerId: submissions.ownerId as unknown as SQL<unknown> },
+            ownership
+          );
+          conditions.push(ownershipCondition);
+        }
+
+        // Query with joins for candidate and job info
+        const results = await db
+          .select({
+            id: submissions.id,
+            status: submissions.status,
+            priority: jobs.priority,
+            updatedAt: submissions.updatedAt,
+            candidateId: submissions.candidateId,
+            jobId: submissions.jobId,
+            candidateFirstName: userProfiles.firstName,
+            candidateLastName: userProfiles.lastName,
+            candidateAvatar: userProfiles.avatarUrl,
+            jobTitle: jobs.title,
+            accountId: jobs.accountId,
+            accountName: accounts.name,
+          })
+          .from(submissions)
+          .leftJoin(userProfiles, eq(submissions.candidateId, userProfiles.id))
+          .leftJoin(jobs, eq(submissions.jobId, jobs.id))
+          .leftJoin(accounts, eq(jobs.accountId, accounts.id))
+          .where(and(...conditions))
+          .limit(limit)
+          .orderBy(desc(submissions.updatedAt));
+
+        // Filter by account if specified
+        let filteredResults = results;
+        if (accountId) {
+          filteredResults = results.filter(r => r.accountId === accountId);
+        }
+
+        // Transform to expected format
+        return filteredResults.map(r => ({
+          id: r.id,
+          status: r.status,
+          priority: r.priority,
+          updatedAt: r.updatedAt,
+          candidateName: r.candidateFirstName && r.candidateLastName
+            ? `${r.candidateFirstName} ${r.candidateLastName}`
+            : 'Unknown Candidate',
+          candidateAvatar: r.candidateAvatar,
+          jobTitle: r.jobTitle || 'Unknown Job',
+          accountName: r.accountName,
+          // SLA status could be computed based on submission age and status
+          slaStatus: 'met' as const,
+          overdueActivitiesCount: 0,
+        }));
       }),
 
     /**
@@ -836,8 +1043,8 @@ export const atsRouter = router({
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        status: z.enum(['scheduled', 'completed', 'cancelled', 'no_show']).optional(),
-        submissionId: z.string().uuid().optional(),
+        status: z.enum(['scheduled', 'completed', 'cancelled', 'no_show']).nullish(),
+        submissionId: z.string().uuid().nullish(),
       }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -939,8 +1146,8 @@ export const atsRouter = router({
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        status: z.enum(['draft', 'pending_approval', 'sent', 'accepted', 'declined', 'withdrawn']).optional(),
-        submissionId: z.string().uuid().optional(),
+        status: z.enum(['draft', 'pending_approval', 'sent', 'accepted', 'declined', 'withdrawn']).nullish(),
+        submissionId: z.string().uuid().nullish(),
       }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -1082,8 +1289,8 @@ export const atsRouter = router({
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        status: z.enum(['active', 'extended', 'completed', 'terminated']).optional(),
-        candidateId: z.string().uuid().optional(),
+        status: z.enum(['active', 'extended', 'completed', 'terminated']).nullish(),
+        candidateId: z.string().uuid().nullish(),
       }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;
@@ -1254,8 +1461,8 @@ export const atsRouter = router({
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        status: z.string().optional(),
-        ownership: ownershipFilterSchema.optional(),
+        status: z.string().nullish(),
+        ownership: ownershipFilterSchema.nullish(),
       }))
       .query(async ({ ctx, input }) => {
         const orgId = ctx.orgId as string;

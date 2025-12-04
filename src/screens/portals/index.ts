@@ -22,6 +22,8 @@ export {
   clientPlacementDetailScreen,
   clientReportsScreen,
   clientSettingsScreen,
+  clientJobPostScreen,
+  clientCandidateDetailScreen,
 } from './client';
 
 // ===========================================
@@ -63,8 +65,10 @@ export const clientPortalScreens = {
   dashboard: 'client-dashboard',
   jobsList: 'client-jobs-list',
   jobDetail: 'client-job-detail',
+  jobPost: 'client-job-post',
   submissions: 'client-submissions',
   submissionDetail: 'client-submission-detail',
+  candidateDetail: 'client-candidate-detail',
   interviews: 'client-interviews',
   interviewDetail: 'client-interview-detail',
   placements: 'client-placements',

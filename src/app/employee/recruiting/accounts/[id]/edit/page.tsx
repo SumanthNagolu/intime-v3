@@ -1,13 +1,15 @@
 /**
  * Account Edit Page (Recruiting Module)
  *
- * Form for editing an existing client account.
+ * Uses metadata-driven ScreenRenderer for the account edit form.
+ * @see src/screens/crm/account-form.screen.ts
  */
 
 import { Suspense } from 'react';
+import { ScreenRenderer } from '@/lib/metadata/renderers/ScreenRenderer';
+import { accountEditScreen } from '@/screens/crm/account-form.screen';
 import { AppLayout } from '@/components/AppLayout';
 import { RecruitingLayout } from '@/components/layouts/RecruitingLayout';
-import { AccountForm } from '@/components/crm/AccountForm';
 
 export const dynamic = "force-dynamic";
 
@@ -24,12 +26,21 @@ function FormSkeleton() {
   );
 }
 
-export default function EditAccountPage() {
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function EditAccountPage({ params }: PageProps) {
+  const { id } = await params;
+
   return (
     <AppLayout>
       <RecruitingLayout>
         <Suspense fallback={<FormSkeleton />}>
-          <AccountForm mode="edit" />
+          <ScreenRenderer
+            definition={accountEditScreen}
+            context={{ params: { id } }}
+          />
         </Suspense>
       </RecruitingLayout>
     </AppLayout>

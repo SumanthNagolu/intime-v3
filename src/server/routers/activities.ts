@@ -1,20 +1,27 @@
 /**
  * Unified Activities Router
- * 
+ *
  * Handles all activity CRUD operations across entities.
  * Replaces both activity_log and lead_tasks functionality.
+ *
+ * Enhanced with:
+ * - Queue management (personal and team queues)
+ * - Pattern management
+ * - SLA status and statistics
+ * - Activity claiming/unclaiming
  */
 
 import { z } from 'zod';
 import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
-import {
-  activities,
-  type Activity,
-} from '@/lib/db/schema/activities';
+import { activities, type Activity } from '@/lib/db/schema/activities';
 import { userProfiles } from '@/lib/db/schema/user-profiles';
 import { leads } from '@/lib/db/schema/crm';
-import { eq, and, desc, asc, or, lte, inArray } from 'drizzle-orm';
+import { eq, and, desc, asc, or, lte, inArray, sql, isNull } from 'drizzle-orm';
+import { queueManager } from '@/lib/activities/QueueManager';
+import { patternService } from '@/lib/activities/PatternService';
+import { calculateSLAStatus, type Priority, type SLAStatus } from '@/lib/activities/sla';
+import { ACTIVITY_PATTERNS } from '@/lib/activities/patterns';
 
 // =====================================================
 // VALIDATION SCHEMAS
@@ -79,11 +86,321 @@ const updateActivitySchema = z.object({
 });
 
 // =====================================================
+// HELPER FUNCTIONS
+// =====================================================
+
+/**
+ * Get human-readable name for entity type
+ */
+function getEntityTypeName(entityType: string): string {
+  const nameMap: Record<string, string> = {
+    lead: 'Lead',
+    deal: 'Deal',
+    account: 'Account',
+    candidate: 'Candidate',
+    submission: 'Submission',
+    job: 'Job',
+    poc: 'Point of Contact',
+    bench_consultant: 'Consultant',
+    vendor: 'Vendor',
+    job_order: 'Job Order',
+    placement: 'Placement',
+    hotlist: 'Hotlist',
+    immigration_case: 'Immigration Case',
+  };
+  return nameMap[entityType] || entityType;
+}
+
+/**
+ * Get link path for entity
+ */
+function getEntityLink(entityType: string, entityId: string): string {
+  const routeMap: Record<string, string> = {
+    lead: '/employee/recruiting/leads',
+    deal: '/employee/recruiting/deals',
+    account: '/employee/recruiting/accounts',
+    candidate: '/employee/recruiting/talent',
+    submission: '/employee/recruiting/submissions',
+    job: '/employee/recruiting/jobs',
+    bench_consultant: '/employee/bench/talent',
+    vendor: '/employee/bench/vendors',
+    job_order: '/employee/bench/job-orders',
+    placement: '/employee/bench/placements',
+  };
+  const basePath = routeMap[entityType] || '/employee/workspace';
+  return `${basePath}/${entityId}`;
+}
+
+// =====================================================
 // ACTIVITIES ROUTER
 // =====================================================
 
 export const activitiesRouter = router({
-  
+
+  // ─────────────────────────────────────────────────────
+  // BENCH ACTIVITIES STATS (for bench activities page)
+  // ─────────────────────────────────────────────────────
+
+  /**
+   * Get activity stats for bench sales activities page
+   * Returns overdue, dueToday, inProgress, completedToday counts
+   */
+  benchStats: orgProtectedProcedure.query(async ({ ctx }) => {
+    const { userId, orgId } = ctx;
+
+    // Get user profile
+    const [userProfile] = await db
+      .select({ id: userProfiles.id })
+      .from(userProfiles)
+      .where(eq(userProfiles.authId, userId as string))
+      .limit(1);
+
+    if (!userProfile) {
+      return { overdue: 0, dueToday: 0, inProgress: 0, completedToday: 0 };
+    }
+
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
+
+    // Count overdue activities (due before today, not completed/cancelled)
+    const [overdueResult] = await db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(activities)
+      .where(
+        and(
+          eq(activities.orgId, orgId),
+          eq(activities.assignedTo, userProfile.id),
+          lte(activities.dueDate, today),
+          or(
+            eq(activities.status, 'open'),
+            eq(activities.status, 'in_progress'),
+            eq(activities.status, 'scheduled')
+          )
+        )
+      );
+
+    // Count due today activities
+    const [dueTodayResult] = await db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(activities)
+      .where(
+        and(
+          eq(activities.orgId, orgId),
+          eq(activities.assignedTo, userProfile.id),
+          sql`${activities.dueDate} >= ${today} AND ${activities.dueDate} < ${tomorrow}`,
+          or(
+            eq(activities.status, 'open'),
+            eq(activities.status, 'in_progress'),
+            eq(activities.status, 'scheduled')
+          )
+        )
+      );
+
+    // Count in progress activities
+    const [inProgressResult] = await db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(activities)
+      .where(
+        and(
+          eq(activities.orgId, orgId),
+          eq(activities.assignedTo, userProfile.id),
+          eq(activities.status, 'in_progress')
+        )
+      );
+
+    // Count completed today
+    const [completedTodayResult] = await db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(activities)
+      .where(
+        and(
+          eq(activities.orgId, orgId),
+          eq(activities.assignedTo, userProfile.id),
+          eq(activities.status, 'completed'),
+          sql`${activities.completedAt} >= ${today} AND ${activities.completedAt} < ${tomorrow}`
+        )
+      );
+
+    return {
+      overdue: overdueResult?.count ?? 0,
+      dueToday: dueTodayResult?.count ?? 0,
+      inProgress: inProgressResult?.count ?? 0,
+      completedToday: completedTodayResult?.count ?? 0,
+    };
+  }),
+
+  /**
+   * Get activities list for bench sales activities page
+   * Returns paginated activities with filter support
+   */
+  benchActivities: orgProtectedProcedure
+    .input(
+      z.object({
+        status: z.array(activityStatusSchema).optional(),
+        type: z.array(activityTypeSchema).optional(),
+        priority: z.array(activityPrioritySchema).optional(),
+        entityType: z.array(entityTypeSchema).optional(),
+        dueFrom: z.date().optional(),
+        dueTo: z.date().optional(),
+        showCompleted: z.boolean().default(false),
+        search: z.string().optional(),
+        limit: z.number().min(1).max(100).default(25),
+        offset: z.number().min(0).default(0),
+        sortField: z.enum(['dueDate', 'createdAt', 'priority', 'status']).default('dueDate'),
+        sortDirection: z.enum(['asc', 'desc']).default('asc'),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { userId, orgId } = ctx;
+
+      // Get user profile
+      const [userProfile] = await db
+        .select({ id: userProfiles.id, fullName: userProfiles.fullName })
+        .from(userProfiles)
+        .where(eq(userProfiles.authId, userId as string))
+        .limit(1);
+
+      if (!userProfile) {
+        return { items: [], total: 0 };
+      }
+
+      // Build conditions
+      const conditions = [
+        eq(activities.orgId, orgId),
+        eq(activities.assignedTo, userProfile.id),
+      ];
+
+      // Status filter
+      if (input.status && input.status.length > 0) {
+        conditions.push(inArray(activities.status, input.status));
+      } else if (!input.showCompleted) {
+        conditions.push(
+          or(
+            eq(activities.status, 'open'),
+            eq(activities.status, 'in_progress'),
+            eq(activities.status, 'scheduled')
+          )!
+        );
+      }
+
+      // Type filter
+      if (input.type && input.type.length > 0) {
+        conditions.push(inArray(activities.activityType, input.type));
+      }
+
+      // Priority filter
+      if (input.priority && input.priority.length > 0) {
+        conditions.push(inArray(activities.priority, input.priority));
+      }
+
+      // Entity type filter
+      if (input.entityType && input.entityType.length > 0) {
+        conditions.push(inArray(activities.entityType, input.entityType as string[]));
+      }
+
+      // Date range filter
+      if (input.dueFrom) {
+        conditions.push(sql`${activities.dueDate} >= ${input.dueFrom}`);
+      }
+      if (input.dueTo) {
+        conditions.push(sql`${activities.dueDate} <= ${input.dueTo}`);
+      }
+
+      // Search filter
+      if (input.search) {
+        conditions.push(
+          or(
+            sql`${activities.subject} ILIKE ${'%' + input.search + '%'}`,
+            sql`${activities.body} ILIKE ${'%' + input.search + '%'}`
+          )!
+        );
+      }
+
+      // Get total count
+      const [countResult] = await db
+        .select({ count: sql<number>`count(*)::int` })
+        .from(activities)
+        .where(and(...conditions));
+
+      // Get items with sorting
+      const sortColumn = input.sortField === 'dueDate' ? activities.dueDate :
+                        input.sortField === 'createdAt' ? activities.createdAt :
+                        input.sortField === 'priority' ? activities.priority :
+                        activities.status;
+      const sortFn = input.sortDirection === 'asc' ? asc : desc;
+
+      const items = await db
+        .select({
+          id: activities.id,
+          subject: activities.subject,
+          body: activities.body,
+          activityType: activities.activityType,
+          status: activities.status,
+          priority: activities.priority,
+          dueDate: activities.dueDate,
+          scheduledAt: activities.scheduledAt,
+          entityType: activities.entityType,
+          entityId: activities.entityId,
+          outcome: activities.outcome,
+          completedAt: activities.completedAt,
+          createdAt: activities.createdAt,
+        })
+        .from(activities)
+        .where(and(...conditions))
+        .orderBy(sortFn(sortColumn))
+        .limit(input.limit)
+        .offset(input.offset);
+
+      // Enrich with SLA status and assignee info
+      const enrichedItems = items.map((item) => {
+        const slaStatus = calculateSLAStatus(
+          item.dueDate,
+          item.priority as Priority
+        );
+
+        return {
+          ...item,
+          slaStatus,
+          assignedTo: {
+            id: userProfile.id,
+            fullName: userProfile.fullName,
+          },
+          entityName: getEntityTypeName(item.entityType),
+          entityLink: getEntityLink(item.entityType, item.entityId),
+        };
+      });
+
+      return {
+        items: enrichedItems,
+        total: countResult?.count ?? 0,
+      };
+    }),
+
+  /**
+   * Start an activity (transition to in_progress)
+   */
+  start: orgProtectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+
+      const [updated] = await db
+        .update(activities)
+        .set({
+          status: 'in_progress',
+          updatedAt: new Date(),
+        })
+        .where(and(eq(activities.id, input.id), eq(activities.orgId, orgId)))
+        .returning();
+
+      if (!updated) {
+        throw new Error('Activity not found or unauthorized');
+      }
+
+      return updated;
+    }),
+
   // ─────────────────────────────────────────────────────
   // LIST ACTIVITIES
   // ─────────────────────────────────────────────────────
@@ -609,25 +926,519 @@ export const activitiesRouter = router({
     }))
     .mutation(async ({ ctx, input }) => {
       const { orgId } = ctx;
-      
-      const [rescheduled] = await db.update(activities)
+
+      const [rescheduled] = await db
+        .update(activities)
         .set({
           dueDate: input.newDueDate,
           scheduledAt: input.newScheduledAt || input.newDueDate,
           status: 'scheduled',
           updatedAt: new Date(),
         })
-        .where(and(
-          eq(activities.id, input.id),
-          eq(activities.orgId, orgId)
-        ))
+        .where(and(eq(activities.id, input.id), eq(activities.orgId, orgId)))
         .returning();
-      
+
       if (!rescheduled) {
         throw new Error('Activity not found or unauthorized');
       }
-      
+
       return rescheduled;
+    }),
+
+  // ─────────────────────────────────────────────────────
+  // QUEUE MANAGEMENT
+  // ─────────────────────────────────────────────────────
+
+  /**
+   * Get personal work queue for the current user
+   */
+  myQueue: orgProtectedProcedure
+    .input(
+      z.object({
+        status: z
+          .array(z.enum(['pending', 'open', 'in_progress']))
+          .optional(),
+        limit: z.number().min(1).max(100).default(50),
+        activityTypes: z.array(activityTypeSchema).optional(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { userId, orgId } = ctx;
+
+      // Get user profile ID
+      const [userProfile] = await db
+        .select({ id: userProfiles.id })
+        .from(userProfiles)
+        .where(eq(userProfiles.authId, userId as string))
+        .limit(1);
+
+      if (!userProfile) {
+        throw new Error('User profile not found');
+      }
+
+      return queueManager.getPersonalQueue(userProfile.id, orgId, {
+        status: input.status as ('pending' | 'open' | 'in_progress')[] | undefined,
+        limit: input.limit,
+        activityTypes: input.activityTypes,
+      });
+    }),
+
+  /**
+   * Get team queue (for managers)
+   */
+  teamQueue: orgProtectedProcedure
+    .input(
+      z.object({
+        teamId: z.string().uuid(),
+        status: z
+          .array(z.enum(['pending', 'open', 'in_progress']))
+          .optional(),
+        limit: z.number().min(1).max(100).default(100),
+        includeUnassigned: z.boolean().default(false),
+        activityTypes: z.array(activityTypeSchema).optional(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+
+      return queueManager.getTeamQueue(input.teamId, orgId, {
+        status: input.status as ('pending' | 'open' | 'in_progress')[] | undefined,
+        limit: input.limit,
+        includeUnassigned: input.includeUnassigned,
+        activityTypes: input.activityTypes,
+      });
+    }),
+
+  /**
+   * Get next recommended activity for the current user
+   */
+  nextRecommended: orgProtectedProcedure.query(async ({ ctx }) => {
+    const { userId, orgId } = ctx;
+
+    // Get user profile ID
+    const [userProfile] = await db
+      .select({ id: userProfiles.id })
+      .from(userProfiles)
+      .where(eq(userProfiles.authId, userId as string))
+      .limit(1);
+
+    if (!userProfile) {
+      throw new Error('User profile not found');
+    }
+
+    return queueManager.getNextRecommended(userProfile.id, orgId);
+  }),
+
+  /**
+   * Claim an activity from the queue
+   */
+  claim: orgProtectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId, orgId } = ctx;
+
+      // Get user profile ID
+      const [userProfile] = await db
+        .select({ id: userProfiles.id })
+        .from(userProfiles)
+        .where(eq(userProfiles.authId, userId as string))
+        .limit(1);
+
+      if (!userProfile) {
+        throw new Error('User profile not found');
+      }
+
+      return queueManager.claim(input.id, userProfile.id, orgId);
+    }),
+
+  /**
+   * Unclaim an activity (return to queue)
+   */
+  unclaim: orgProtectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId, orgId } = ctx;
+
+      // Get user profile ID
+      const [userProfile] = await db
+        .select({ id: userProfiles.id })
+        .from(userProfiles)
+        .where(eq(userProfiles.authId, userId as string))
+        .limit(1);
+
+      if (!userProfile) {
+        throw new Error('User profile not found');
+      }
+
+      return queueManager.unclaim(input.id, userProfile.id, orgId);
+    }),
+
+  /**
+   * Get queue statistics for the current user
+   */
+  queueStats: orgProtectedProcedure.query(async ({ ctx }) => {
+    const { userId, orgId } = ctx;
+
+    // Get user profile ID
+    const [userProfile] = await db
+      .select({ id: userProfiles.id })
+      .from(userProfiles)
+      .where(eq(userProfiles.authId, userId as string))
+      .limit(1);
+
+    if (!userProfile) {
+      throw new Error('User profile not found');
+    }
+
+    return queueManager.getQueueStats(userProfile.id, orgId);
+  }),
+
+  /**
+   * Get team queue statistics
+   */
+  teamQueueStats: orgProtectedProcedure
+    .input(z.object({ teamId: z.string().uuid() }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+
+      return queueManager.getTeamQueueStats(input.teamId, orgId);
+    }),
+
+  // ─────────────────────────────────────────────────────
+  // PATTERN MANAGEMENT
+  // ─────────────────────────────────────────────────────
+
+  /**
+   * Get all activity patterns
+   */
+  patterns: orgProtectedProcedure.query(async ({ ctx }) => {
+    const { orgId } = ctx;
+
+    return patternService.getAllPatterns(orgId);
+  }),
+
+  /**
+   * Get patterns by category
+   */
+  patternsByCategory: orgProtectedProcedure
+    .input(z.object({ category: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+
+      return patternService.getByCategory(input.category, orgId);
+    }),
+
+  /**
+   * Get patterns for an entity type
+   */
+  patternsForEntity: orgProtectedProcedure
+    .input(z.object({ entityType: entityTypeSchema }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+
+      return patternService.getByEntityType(input.entityType, orgId);
+    }),
+
+  /**
+   * Get a specific pattern by code
+   */
+  pattern: orgProtectedProcedure
+    .input(z.object({ code: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+
+      return patternService.getPattern(input.code, orgId);
+    }),
+
+  /**
+   * Get fields for a pattern
+   */
+  patternFields: orgProtectedProcedure
+    .input(z.object({ code: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+
+      return patternService.getFields(input.code, orgId);
+    }),
+
+  /**
+   * Create activity from pattern
+   */
+  createFromPattern: orgProtectedProcedure
+    .input(
+      z.object({
+        patternCode: z.string(),
+        entityType: entityTypeSchema,
+        entityId: z.string().uuid(),
+        subject: z.string().optional(),
+        description: z.string().optional(),
+        dueDate: z.date().optional(),
+        priority: activityPrioritySchema.optional(),
+        fieldValues: z.record(z.unknown()).optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { userId, orgId } = ctx;
+
+      // Get user profile
+      const [userProfile] = await db
+        .select({ id: userProfiles.id })
+        .from(userProfiles)
+        .where(eq(userProfiles.authId, userId as string))
+        .limit(1);
+
+      if (!userProfile) {
+        throw new Error('User profile not found');
+      }
+
+      // Instantiate the pattern
+      const instantiated = await patternService.instantiate(
+        input.patternCode,
+        input.entityType,
+        input.entityId,
+        {
+          subject: input.subject,
+          description: input.description,
+          dueAt: input.dueDate,
+          priority: input.priority as Priority | undefined,
+          assignedTo: userProfile.id,
+          fieldValues: input.fieldValues,
+        },
+        orgId
+      );
+
+      // Create the activity
+      const [newActivity] = await db
+        .insert(activities)
+        .values({
+          orgId,
+          entityType: input.entityType as string,
+          entityId: input.entityId,
+          activityType: 'task',
+          status: 'open',
+          priority: instantiated.priority,
+          subject: `[${instantiated.patternCode}] ${instantiated.subject}`,
+          body: instantiated.description,
+          dueDate: instantiated.dueAt,
+          assignedTo: userProfile.id,
+          createdBy: userProfile.id,
+        })
+        .returning();
+
+      return newActivity;
+    }),
+
+  // ─────────────────────────────────────────────────────
+  // SLA STATUS
+  // ─────────────────────────────────────────────────────
+
+  /**
+   * Get activities with SLA status
+   */
+  withSLAStatus: orgProtectedProcedure
+    .input(
+      z.object({
+        entityType: entityTypeSchema.optional(),
+        entityId: z.string().uuid().optional(),
+        slaStatus: z.enum(['on_track', 'at_risk', 'breached']).optional(),
+        limit: z.number().min(1).max(100).default(50),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+
+      const conditions = [
+        eq(activities.orgId, orgId),
+        inArray(activities.status, ['open', 'in_progress', 'scheduled']),
+      ];
+
+      if (input.entityType) {
+        conditions.push(eq(activities.entityType, input.entityType as string));
+      }
+
+      if (input.entityId) {
+        conditions.push(eq(activities.entityId, input.entityId));
+      }
+
+      const results = await db
+        .select()
+        .from(activities)
+        .where(and(...conditions))
+        .orderBy(asc(activities.dueDate))
+        .limit(input.limit);
+
+      // Calculate SLA status for each activity
+      const withSLA = results.map((activity) => ({
+        ...activity,
+        slaStatus: calculateSLAStatus(
+          activity.dueDate,
+          activity.priority as Priority
+        ),
+      }));
+
+      // Filter by SLA status if specified
+      if (input.slaStatus) {
+        return withSLA.filter((a) => a.slaStatus === input.slaStatus);
+      }
+
+      return withSLA;
+    }),
+
+  /**
+   * Get SLA summary (counts by status)
+   */
+  slaSummary: orgProtectedProcedure
+    .input(
+      z.object({
+        entityType: entityTypeSchema.optional(),
+        entityId: z.string().uuid().optional(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+
+      const conditions = [
+        eq(activities.orgId, orgId),
+        inArray(activities.status, ['open', 'in_progress', 'scheduled']),
+      ];
+
+      if (input.entityType) {
+        conditions.push(eq(activities.entityType, input.entityType as string));
+      }
+
+      if (input.entityId) {
+        conditions.push(eq(activities.entityId, input.entityId));
+      }
+
+      const results = await db
+        .select()
+        .from(activities)
+        .where(and(...conditions));
+
+      const summary = {
+        total: results.length,
+        on_track: 0,
+        at_risk: 0,
+        breached: 0,
+      };
+
+      for (const activity of results) {
+        const status = calculateSLAStatus(
+          activity.dueDate,
+          activity.priority as Priority
+        );
+        summary[status]++;
+      }
+
+      return summary;
+    }),
+
+  // ─────────────────────────────────────────────────────
+  // REASSIGN
+  // ─────────────────────────────────────────────────────
+
+  /**
+   * Reassign activity to another user
+   */
+  reassign: orgProtectedProcedure
+    .input(
+      z.object({
+        id: z.string().uuid(),
+        assignedTo: z.string().uuid(),
+        notifyAssignee: z.boolean().default(true),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+
+      const [reassigned] = await db
+        .update(activities)
+        .set({
+          assignedTo: input.assignedTo,
+          updatedAt: new Date(),
+        })
+        .where(and(eq(activities.id, input.id), eq(activities.orgId, orgId)))
+        .returning();
+
+      if (!reassigned) {
+        throw new Error('Activity not found or unauthorized');
+      }
+
+      // TODO: Send notification to new assignee if notifyAssignee is true
+
+      return reassigned;
+    }),
+
+  // ─────────────────────────────────────────────────────
+  // BULK OPERATIONS
+  // ─────────────────────────────────────────────────────
+
+  /**
+   * Bulk complete activities
+   */
+  bulkComplete: orgProtectedProcedure
+    .input(
+      z.object({
+        ids: z.array(z.string().uuid()).min(1).max(50),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { userId, orgId } = ctx;
+
+      // Get user profile
+      const [userProfile] = await db
+        .select({ id: userProfiles.id })
+        .from(userProfiles)
+        .where(eq(userProfiles.authId, userId as string))
+        .limit(1);
+
+      if (!userProfile) {
+        throw new Error('User profile not found');
+      }
+
+      const now = new Date();
+
+      const completed = await db
+        .update(activities)
+        .set({
+          status: 'completed',
+          completedAt: now,
+          performedBy: userProfile.id,
+          updatedAt: now,
+        })
+        .where(
+          and(eq(activities.orgId, orgId), inArray(activities.id, input.ids))
+        )
+        .returning();
+
+      return { count: completed.length, activities: completed };
+    }),
+
+  /**
+   * Bulk reassign activities
+   */
+  bulkReassign: orgProtectedProcedure
+    .input(
+      z.object({
+        ids: z.array(z.string().uuid()).min(1).max(50),
+        assignedTo: z.string().uuid(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx;
+
+      const reassigned = await db
+        .update(activities)
+        .set({
+          assignedTo: input.assignedTo,
+          updatedAt: new Date(),
+        })
+        .where(
+          and(eq(activities.orgId, orgId), inArray(activities.id, input.ids))
+        )
+        .returning();
+
+      return { count: reassigned.length, activities: reassigned };
     }),
 });
 

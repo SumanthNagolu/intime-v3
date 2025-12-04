@@ -299,7 +299,7 @@ export const commissionDashboardScreen: ScreenDefinition = {
         },
         rowClick: {
           type: 'navigate',
-          route: '/employee/workspace/bench/placements/{{placementId}}',
+          route: '/employee/bench/placements/{{placementId}}',
         },
         emptyState: {
           title: 'No active placements',
@@ -324,7 +324,7 @@ export const commissionDashboardScreen: ScreenDefinition = {
         },
         rowClick: {
           type: 'navigate',
-          route: '/employee/workspace/bench/vendors/{{vendorId}}',
+          route: '/employee/bench/vendors/{{vendorId}}',
         },
       },
 
@@ -400,7 +400,7 @@ export const commissionDashboardScreen: ScreenDefinition = {
   navigation: {
     breadcrumbs: [
       { label: 'Workspace', route: '/employee/workspace' },
-      { label: 'Bench Sales', route: '/employee/workspace/bench' },
+      { label: 'Bench Sales', route: '/employee/bench' },
       { label: 'Commission', active: true },
     ],
   },

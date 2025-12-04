@@ -76,7 +76,7 @@ const casesTableColumns: import('@/lib/metadata/types').TableColumnDefinition[] 
     width: '180px',
     config: {
       link: true,
-      linkPath: '/employee/workspace/bench/consultants/{{consultantId}}',
+      linkPath: '/employee/bench/consultants/{{consultantId}}',
     },
   },
   {
@@ -361,7 +361,7 @@ export const immigrationDashboardScreen: ScreenDefinition = {
                 label: 'View Consultant',
                 icon: 'Eye',
                 type: 'navigate',
-                config: { type: 'navigate', route: '/employee/workspace/bench/consultants/{{consultantId}}' },
+                config: { type: 'navigate', route: '/employee/bench/consultants/{{consultantId}}' },
               },
               {
                 id: 'create-case',
@@ -442,7 +442,7 @@ export const immigrationDashboardScreen: ScreenDefinition = {
             },
             rowClick: {
               type: 'navigate',
-              route: '/employee/workspace/bench/immigration/{{id}}',
+              route: '/employee/bench/immigration/{{id}}',
             },
             actions: [
               {
@@ -450,7 +450,7 @@ export const immigrationDashboardScreen: ScreenDefinition = {
                 label: 'View Case',
                 icon: 'Eye',
                 type: 'navigate',
-                config: { type: 'navigate', route: '/employee/workspace/bench/immigration/{{id}}' },
+                config: { type: 'navigate', route: '/employee/bench/immigration/{{id}}' },
               },
               {
                 id: 'update-status',
@@ -505,7 +505,7 @@ export const immigrationDashboardScreen: ScreenDefinition = {
                 label: 'View Cases',
                 icon: 'FileText',
                 type: 'navigate',
-                config: { type: 'navigate', route: '/employee/workspace/bench/immigration?attorney={{id}}' },
+                config: { type: 'navigate', route: '/employee/bench/immigration?attorney={{id}}' },
               },
               {
                 id: 'edit',
@@ -550,7 +550,7 @@ export const immigrationDashboardScreen: ScreenDefinition = {
   navigation: {
     breadcrumbs: [
       { label: 'Workspace', route: '/employee/workspace' },
-      { label: 'Bench Sales', route: '/employee/workspace/bench' },
+      { label: 'Bench Sales', route: '/employee/bench' },
       { label: 'Immigration', active: true },
     ],
   },

@@ -3,13 +3,82 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, Building2, Target, DollarSign, Briefcase, List, Plus, X, Loader2, Calendar, Users, Send, Search, MapPin, User, ChevronRight } from 'lucide-react';
+import {
+  LayoutDashboard,
+  Building2,
+  Target,
+  DollarSign,
+  Briefcase,
+  List,
+  Plus,
+  X,
+  Loader2,
+  Calendar,
+  Users,
+  Send,
+  Search,
+  MapPin,
+  User,
+  ChevronRight,
+  ChevronDown,
+  CheckSquare,
+  UserPlus,
+  Handshake,
+} from 'lucide-react';
 import { CreateLeadModal, CreateAccountModal } from '../recruiting/Modals';
 import { useAppStore } from '../../lib/store';
 import { Lead, Account } from '../../types';
 import { useAccounts } from '@/hooks/queries/accounts';
 import { useCreateDeal } from '@/hooks/mutations/deals';
 import { trpc } from '@/lib/trpc/client';
+
+// Navigation section and item types
+interface NavItem {
+  id: string;
+  label: string;
+  href: string;
+  icon: React.ElementType;
+}
+
+interface NavSection {
+  id: string;
+  label: string;
+  items: NavItem[];
+}
+
+// Navigation configuration
+const recruitingSections: NavSection[] = [
+  {
+    id: 'main',
+    label: 'Main',
+    items: [
+      { id: 'dashboard', label: 'Console', href: '/employee/recruiting/dashboard', icon: LayoutDashboard },
+      { id: 'activities', label: 'Activities', href: '/employee/recruiting/activities', icon: CheckSquare },
+    ],
+  },
+  {
+    id: 'recruiting',
+    label: 'Recruiting',
+    items: [
+      { id: 'jobs', label: 'Jobs', href: '/employee/recruiting/jobs', icon: Briefcase },
+      { id: 'talent', label: 'Talent', href: '/employee/recruiting/talent', icon: Users },
+      { id: 'submissions', label: 'Submissions', href: '/employee/recruiting/submissions', icon: Send },
+      { id: 'interviews', label: 'Interviews', href: '/employee/recruiting/interviews', icon: Calendar },
+      { id: 'placements', label: 'Placements', href: '/employee/recruiting/placements', icon: Handshake },
+      { id: 'pipeline', label: 'Pipeline', href: '/employee/recruiting/pipeline', icon: List },
+    ],
+  },
+  {
+    id: 'crm',
+    label: 'CRM',
+    items: [
+      { id: 'accounts', label: 'Accounts', href: '/employee/recruiting/accounts', icon: Building2 },
+      { id: 'contacts', label: 'Contacts', href: '/employee/recruiting/contacts', icon: UserPlus },
+      { id: 'leads', label: 'Leads', href: '/employee/recruiting/leads', icon: Target },
+      { id: 'deals', label: 'Deals', href: '/employee/recruiting/deals', icon: DollarSign },
+    ],
+  },
+];
 
 // Visa badge colors
 const VISA_COLORS: Record<string, string> = {
@@ -79,7 +148,25 @@ export const RecruitingLayout: React.FC<RecruitingLayoutProps> = ({ children }) 
   });
   const [skillInput, setSkillInput] = useState('');
 
+  // Sidebar section expansion state
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(
+    new Set(['main', 'recruiting', 'crm'])
+  );
+
+  const toggleSection = (sectionId: string) => {
+    setExpandedSections((prev) => {
+      const next = new Set(prev);
+      if (next.has(sectionId)) {
+        next.delete(sectionId);
+      } else {
+        next.add(sectionId);
+      }
+      return next;
+    });
+  };
+
   const isActive = (path: string) => pathname.includes(path);
+  const isActiveExact = (href: string) => pathname === href || pathname.startsWith(href + '/');
   const isLeadsPage = pathname.includes('/leads');
   const isDealsPage = pathname.includes('/deals');
   const isAccountsPage = pathname.includes('/accounts');
@@ -319,87 +406,62 @@ export const RecruitingLayout: React.FC<RecruitingLayoutProps> = ({ children }) 
   };
 
   return (
-    <div className="pt-4">
-      {/* Context Navigation Header */}
-      <div className="mb-10 border-b border-stone-200 pb-0">
-        <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-6">
-          <div>
-            <div className="text-rust font-bold text-xs uppercase tracking-[0.2em] mb-2">Internal Recruiting</div>
-            <h1 className="text-4xl font-serif font-bold text-charcoal">Recruiter Workspace</h1>
-          </div>
+    <div className="flex min-h-[calc(100vh-64px)]">
+      {/* Sidebar Navigation */}
+      <aside className="w-64 border-r border-stone-200 bg-white flex-shrink-0">
+        <div className="p-6 border-b border-stone-200">
+          <div className="text-rust font-bold text-xs uppercase tracking-[0.2em] mb-1">Internal Recruiting</div>
+          <h2 className="text-xl font-serif font-bold text-charcoal">Recruiter Workspace</h2>
         </div>
 
-        {/* Persistent Sub Navigation */}
-        <div className="flex gap-8 overflow-x-auto">
-          <Link
-            href="/employee/recruiting/dashboard"
-            className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
-              isActive('dashboard') ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
-            }`}
-          >
-            <LayoutDashboard size={14} /> Console
-          </Link>
-          <Link
-            href="/employee/recruiting/accounts"
-            className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
-              isActive('accounts') ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
-            }`}
-          >
-            <Building2 size={14} /> Accounts
-          </Link>
-          <Link
-            href="/employee/recruiting/leads"
-            className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
-              isActive('leads') ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
-            }`}
-          >
-            <Target size={14} /> Leads
-          </Link>
-          <Link
-            href="/employee/recruiting/deals"
-            className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
-              isActive('deals') ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
-            }`}
-          >
-            <DollarSign size={14} /> Deals
-          </Link>
-          <Link
-            href="/employee/recruiting/jobs"
-            className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
-              isActive('jobs') ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
-            }`}
-          >
-            <Briefcase size={14} /> Jobs
-          </Link>
-          <Link
-            href="/employee/recruiting/talent"
-            className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
-              isActive('talent') && !isActive('submissions') ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
-            }`}
-          >
-            <Users size={14} /> Talent
-          </Link>
-          <Link
-            href="/employee/recruiting/submissions"
-            className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
-              isActive('submissions') ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
-            }`}
-          >
-            <Send size={14} /> Submissions
-          </Link>
-          <Link
-            href="/employee/recruiting/pipeline"
-            className={`pb-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
-              isActive('pipeline') ? 'border-rust text-rust' : 'border-transparent text-stone-400 hover:text-charcoal'
-            }`}
-          >
-            <List size={14} /> Pipeline
-          </Link>
-        </div>
-      </div>
+        <nav className="p-4 space-y-2">
+          {recruitingSections.map((section) => (
+            <div key={section.id}>
+              {/* Section Header */}
+              <button
+                onClick={() => toggleSection(section.id)}
+                className="w-full flex items-center justify-between px-3 py-2 text-xs font-bold uppercase tracking-widest text-stone-500 hover:text-charcoal transition-colors"
+              >
+                <span>{section.label}</span>
+                {expandedSections.has(section.id) ? (
+                  <ChevronDown size={14} />
+                ) : (
+                  <ChevronRight size={14} />
+                )}
+              </button>
 
-      {/* Page Content */}
-      {children}
+              {/* Section Items */}
+              {expandedSections.has(section.id) && (
+                <div className="ml-2 space-y-1">
+                  {section.items.map((item) => {
+                    const Icon = item.icon;
+                    const active = isActiveExact(item.href);
+                    return (
+                      <Link
+                        key={item.id}
+                        href={item.href}
+                        className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
+                          active
+                            ? 'bg-rust/10 text-rust font-medium border-l-2 border-rust'
+                            : 'text-stone-600 hover:bg-stone-50 hover:text-charcoal'
+                        }`}
+                      >
+                        <Icon size={16} />
+                        <span>{item.label}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          ))}
+        </nav>
+      </aside>
+
+      {/* Main Content Area */}
+      <main className="flex-1 p-6 overflow-auto">
+        {children}
+      </main>
 
       {/* Create Lead Modal */}
       {showLeadModal && (

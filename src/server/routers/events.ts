@@ -1,18 +1,25 @@
 /**
  * Events Router
- * 
- * Read-only router for querying events (immutable audit log).
+ *
+ * Router for events, subscriptions, and notifications.
  * Events are system records - they cannot be created, updated, or deleted via API.
  * Events are created automatically by the EventEmitter when actions occur.
- * 
+ *
+ * Includes:
+ * - Event querying and search
+ * - User subscription management
+ * - Notification preferences
+ * - In-app notification management
+ *
  * @see docs/specs/20-USER-ROLES/01-ACTIVITIES-EVENTS-FRAMEWORK.md
  */
 
 import { z } from 'zod';
 import { router, orgProtectedProcedure } from '../trpc/trpc';
 import { db } from '@/lib/db';
-import { events } from '@/lib/db/schema';
+import { events, notifications } from '@/lib/db/schema';
 import { eq, and, desc, gte, lte, inArray, sql } from 'drizzle-orm';
+import { subscriptionService } from '@/lib/events/SubscriptionService';
 
 // =====================================================
 // VALIDATION SCHEMAS
@@ -328,23 +335,219 @@ export const eventsRouter = router({
     }))
     .query(async ({ ctx, input }) => {
       const { orgId } = ctx;
-      
+
       const conditions = [
         eq(events.orgId, orgId),
         eq(events.eventCategory, 'security'),
       ];
-      
+
       if (input.startDate) {
         conditions.push(gte(events.occurredAt, input.startDate));
       }
-      
+
       const result = await db.select()
         .from(events)
         .where(and(...conditions))
         .orderBy(desc(events.occurredAt))
         .limit(input.limit);
-      
+
       return result;
+    }),
+
+  // ─────────────────────────────────────────────────────
+  // SUBSCRIPTIONS
+  // ─────────────────────────────────────────────────────
+
+  /**
+   * Get current user's subscriptions
+   */
+  getMySubscriptions: orgProtectedProcedure.query(async ({ ctx }) => {
+    if (!ctx.userId) throw new Error('User ID required');
+    return subscriptionService.getUserSubscriptions(ctx.userId);
+  }),
+
+  /**
+   * Subscribe to an event pattern
+   */
+  subscribe: orgProtectedProcedure
+    .input(
+      z.object({
+        eventPattern: z.string().min(1).max(100),
+        channel: z.enum(['email', 'push', 'in_app', 'sms', 'webhook']),
+        metadata: z.record(z.unknown()).optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.userId) throw new Error('User ID required');
+      return subscriptionService.subscribe(ctx.userId, {
+        eventPattern: input.eventPattern,
+        channel: input.channel,
+        metadata: input.metadata,
+      });
+    }),
+
+  /**
+   * Unsubscribe from an event pattern
+   */
+  unsubscribe: orgProtectedProcedure
+    .input(z.object({ subscriptionId: z.string().uuid() }))
+    .mutation(async ({ input }) => {
+      await subscriptionService.unsubscribe(input.subscriptionId);
+      return { success: true };
+    }),
+
+  // ─────────────────────────────────────────────────────
+  // NOTIFICATION PREFERENCES
+  // ─────────────────────────────────────────────────────
+
+  /**
+   * Get notification preferences
+   */
+  getNotificationPreferences: orgProtectedProcedure.query(async ({ ctx }) => {
+    if (!ctx.userId) throw new Error('User ID required');
+    return subscriptionService.getNotificationPreferences(ctx.userId);
+  }),
+
+  /**
+   * Update notification preferences
+   */
+  updateNotificationPreferences: orgProtectedProcedure
+    .input(
+      z.object({
+        emailEnabled: z.boolean().optional(),
+        pushEnabled: z.boolean().optional(),
+        smsEnabled: z.boolean().optional(),
+        quietHoursStart: z.string().optional(),
+        quietHoursEnd: z.string().optional(),
+        timezone: z.string().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.userId) throw new Error('User ID required');
+      return subscriptionService.updateNotificationPreferences(ctx.userId, input);
+    }),
+
+  // ─────────────────────────────────────────────────────
+  // IN-APP NOTIFICATIONS
+  // ─────────────────────────────────────────────────────
+
+  /**
+   * Get user's in-app notifications
+   */
+  getNotifications: orgProtectedProcedure
+    .input(
+      z.object({
+        unreadOnly: z.boolean().optional(),
+        limit: z.number().min(1).max(100).optional(),
+      }).optional()
+    )
+    .query(async ({ ctx, input }) => {
+      const { orgId, userId } = ctx;
+      if (!userId) throw new Error('User ID required');
+
+      const conditions = [
+        eq(notifications.orgId, orgId),
+        eq(notifications.userId, userId),
+      ];
+
+      if (input?.unreadOnly) {
+        conditions.push(eq(notifications.isRead, false));
+      }
+
+      const result = await db.select()
+        .from(notifications)
+        .where(and(...conditions))
+        .orderBy(desc(notifications.createdAt))
+        .limit(input?.limit ?? 50);
+
+      return result;
+    }),
+
+  /**
+   * Get unread notification count
+   */
+  getUnreadCount: orgProtectedProcedure.query(async ({ ctx }) => {
+    const { orgId, userId } = ctx;
+    if (!userId) throw new Error('User ID required');
+
+    const result = await db.select({
+      count: sql<number>`count(*)::int`,
+    })
+      .from(notifications)
+      .where(and(
+        eq(notifications.orgId, orgId),
+        eq(notifications.userId, userId),
+        eq(notifications.isRead, false)
+      ));
+
+    return result[0]?.count ?? 0;
+  }),
+
+  /**
+   * Mark a notification as read
+   */
+  markNotificationRead: orgProtectedProcedure
+    .input(z.object({ notificationId: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, userId } = ctx;
+      if (!userId) throw new Error('User ID required');
+
+      await db
+        .update(notifications)
+        .set({ isRead: true, readAt: new Date() })
+        .where(
+          and(
+            eq(notifications.id, input.notificationId),
+            eq(notifications.orgId, orgId),
+            eq(notifications.userId, userId)
+          )
+        );
+
+      return { success: true };
+    }),
+
+  /**
+   * Mark all notifications as read
+   */
+  markAllNotificationsRead: orgProtectedProcedure.mutation(async ({ ctx }) => {
+    const { orgId, userId } = ctx;
+    if (!userId) throw new Error('User ID required');
+
+    await db
+      .update(notifications)
+      .set({ isRead: true, readAt: new Date() })
+      .where(
+        and(
+          eq(notifications.orgId, orgId),
+          eq(notifications.userId, userId),
+          eq(notifications.isRead, false)
+        )
+      );
+
+    return { success: true };
+  }),
+
+  /**
+   * Archive a notification
+   */
+  archiveNotification: orgProtectedProcedure
+    .input(z.object({ notificationId: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, userId } = ctx;
+      if (!userId) throw new Error('User ID required');
+
+      await db
+        .update(notifications)
+        .set({ isArchived: true, archivedAt: new Date() })
+        .where(
+          and(
+            eq(notifications.id, input.notificationId),
+            eq(notifications.orgId, orgId),
+            eq(notifications.userId, userId)
+          )
+        );
+
+      return { success: true };
     }),
 });
 

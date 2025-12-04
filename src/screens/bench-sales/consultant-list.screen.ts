@@ -140,7 +140,7 @@ export const consultantListScreen: ScreenDefinition = {
             width: '18%',
             config: { 
               link: true, 
-              linkPath: '/employee/workspace/bench/consultants/{{id}}',
+              linkPath: '/employee/bench/consultants/{{id}}',
               avatar: true,
               avatarPath: 'avatarUrl',
             },
@@ -208,9 +208,9 @@ export const consultantListScreen: ScreenDefinition = {
           },
         ],
         selectable: true,
-        rowClick: { type: 'navigate', route: '/employee/workspace/bench/consultants/{{id}}' },
+        rowClick: { type: 'navigate', route: '/employee/bench/consultants/{{id}}' },
         rowActions: [
-          { id: 'view', label: 'View', icon: 'Eye', type: 'navigate', config: { type: 'navigate', route: '/employee/workspace/bench/consultants/{{id}}' } },
+          { id: 'view', label: 'View', icon: 'Eye', type: 'navigate', config: { type: 'navigate', route: '/employee/bench/consultants/{{id}}' } },
           { id: 'marketing', label: 'Add to Hotlist', icon: 'Megaphone', type: 'modal', config: { type: 'modal', modal: 'add-to-hotlist' } },
           { id: 'submit', label: 'Submit', icon: 'Send', type: 'modal', config: { type: 'modal', modal: 'bench-submission-create' } },
           { id: 'contact', label: 'Contact', icon: 'Phone', type: 'custom', config: { type: 'custom', handler: 'initiateCall' } },
@@ -283,7 +283,7 @@ export const consultantListScreen: ScreenDefinition = {
   navigation: {
     breadcrumbs: [
       { label: 'Workspace', route: '/employee/workspace' },
-      { label: 'Bench Sales', route: '/employee/workspace/bench' },
+      { label: 'Bench Sales', route: '/employee/bench' },
       { label: 'Consultants', active: true },
     ],
   },

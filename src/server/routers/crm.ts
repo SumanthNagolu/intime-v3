@@ -44,6 +44,7 @@ import {
   updateAccountInput,
   listAccountsInput,
   bulkAssignAccountsInput,
+  bulkCreateAccountsInput,
 } from '@/lib/validations/account';
 import { eq, and, desc, asc, sql, isNull, ilike, or, inArray, gte, lte, type SQL } from 'drizzle-orm';
 
@@ -501,6 +502,149 @@ export const crmRouter = router({
       }),
 
     /**
+     * Export all accounts for CSV download
+     * Returns all accounts in a flat format suitable for CSV export
+     */
+    exportAll: orgProtectedProcedure
+      .query(async ({ ctx }) => {
+        const { orgId } = ctx;
+
+        const allAccounts = await db.select({
+          id: accounts.id,
+          name: accounts.name,
+          industry: accounts.industry,
+          companyType: accounts.companyType,
+          status: accounts.status,
+          tier: accounts.tier,
+          website: accounts.website,
+          phone: accounts.phone,
+          headquartersLocation: accounts.headquartersLocation,
+          description: accounts.description,
+          paymentTermsDays: accounts.paymentTermsDays,
+          markupPercentage: accounts.markupPercentage,
+          annualRevenueTarget: accounts.annualRevenueTarget,
+          contractStartDate: accounts.contractStartDate,
+          contractEndDate: accounts.contractEndDate,
+          createdAt: accounts.createdAt,
+        })
+          .from(accounts)
+          .where(and(
+            eq(accounts.orgId, orgId!),
+            isNull(accounts.deletedAt),
+          ))
+          .orderBy(asc(accounts.name));
+
+        // Return data formatted for CSV export
+        return {
+          accounts: allAccounts,
+          exportedAt: new Date().toISOString(),
+          total: allAccounts.length,
+          headers: [
+            'id',
+            'name',
+            'industry',
+            'companyType',
+            'status',
+            'tier',
+            'website',
+            'phone',
+            'headquartersLocation',
+            'description',
+            'paymentTermsDays',
+            'markupPercentage',
+            'annualRevenueTarget',
+            'contractStartDate',
+            'contractEndDate',
+            'createdAt',
+          ],
+        };
+      }),
+
+    /**
+     * Bulk create accounts from CSV import
+     */
+    bulkCreate: orgProtectedProcedure
+      .input(bulkCreateAccountsInput)
+      .mutation(async ({ ctx, input }) => {
+        const { userId, orgId } = ctx;
+        const { accounts: accountsToCreate, skipDuplicates } = input;
+
+        // Get user profile ID
+        const userProfileResult = await db.select({ id: userProfiles.id })
+          .from(userProfiles)
+          .where(eq(userProfiles.authId, userId!))
+          .limit(1);
+
+        const profileId = userProfileResult[0]?.id;
+
+        // Check for existing accounts with same names if skipDuplicates is true
+        let accountsToInsert = accountsToCreate;
+        const skipped: string[] = [];
+
+        if (skipDuplicates) {
+          const existingAccounts = await db.select({ name: accounts.name })
+            .from(accounts)
+            .where(and(
+              eq(accounts.orgId, orgId!),
+              isNull(accounts.deletedAt),
+            ));
+
+          const existingNames = new Set(existingAccounts.map(a => a.name.toLowerCase()));
+
+          accountsToInsert = accountsToCreate.filter(account => {
+            if (existingNames.has(account.name.toLowerCase())) {
+              skipped.push(account.name);
+              return false;
+            }
+            return true;
+          });
+        }
+
+        if (accountsToInsert.length === 0) {
+          return {
+            success: true,
+            created: 0,
+            skipped: skipped.length,
+            skippedNames: skipped,
+            createdIds: [],
+          };
+        }
+
+        // Insert accounts
+        const newAccounts = await db.insert(accounts).values(
+          accountsToInsert.map(account => ({
+            ...account,
+            website: account.website || null,
+            markupPercentage: account.markupPercentage?.toString() ?? null,
+            annualRevenueTarget: account.annualRevenueTarget?.toString() ?? null,
+            orgId: orgId!,
+            createdBy: profileId ?? null,
+          }))
+        ).returning({ id: accounts.id, name: accounts.name });
+
+        // Log activity for bulk import
+        if (profileId && newAccounts.length > 0) {
+          await db.insert(activityLog).values({
+            orgId: orgId!,
+            entityType: 'account',
+            entityId: newAccounts[0].id,
+            activityType: 'note',
+            subject: `Bulk imported ${newAccounts.length} accounts`,
+            performedBy: profileId,
+            activityDate: new Date(),
+          });
+        }
+
+        return {
+          success: true,
+          created: newAccounts.length,
+          skipped: skipped.length,
+          skippedNames: skipped,
+          createdIds: newAccounts.map(a => a.id),
+        };
+      }),
+
+    /**
      * Get account addresses
      */
     getAddresses: orgProtectedProcedure
@@ -687,9 +831,9 @@ export const crmRouter = router({
       .input(z.object({
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        status: z.enum(['new', 'warm', 'hot', 'cold', 'converted', 'lost']).optional(),
-        accountId: z.string().uuid().optional(),
-        ownership: ownershipFilterSchema.optional(),
+        status: z.enum(['new', 'warm', 'hot', 'cold', 'converted', 'lost']).nullish(),
+        accountId: z.string().uuid().nullish(),
+        ownership: ownershipFilterSchema.nullish(),
       }))
       .query(async ({ ctx, input }) => {
         const { orgId, profileId, isManager, managedUserIds } = ctx;
@@ -716,7 +860,11 @@ export const crmRouter = router({
           .offset(offset)
           .orderBy(desc(leads.createdAt));
 
-        return results;
+        // Ensure status has a valid value (handle legacy null values)
+        return results.map(lead => ({
+          ...lead,
+          status: lead.status ?? 'new',
+        }));
       }),
 
     /**
@@ -739,7 +887,11 @@ export const crmRouter = router({
           throw new Error('Lead not found');
         }
 
-        return lead;
+        // Ensure status has a valid value (handle legacy null values)
+        return {
+          ...lead,
+          status: lead.status ?? 'new',
+        };
       }),
 
     /**
@@ -1479,6 +1631,105 @@ export const crmRouter = router({
           active: activeDeals.length,
           pipelineValue: activeDeals.reduce((sum, d) => sum + (parseFloat(d.value || '0')), 0),
           wonValue: wonDeals.reduce((sum, d) => sum + (parseFloat(d.value || '0')), 0),
+        };
+      }),
+
+    /**
+     * Get deal pipeline statistics for pipeline view
+     * Returns summary stats and deals grouped by stage for kanban
+     */
+    pipelineStats: orgProtectedProcedure
+      .query(async ({ ctx }) => {
+        const { orgId } = ctx;
+
+        // Get active deals (not closed won/lost)
+        const activeStages = ['discovery', 'qualification', 'proposal', 'negotiation'];
+        const allDeals = await db.select({
+          id: deals.id,
+          title: deals.title,
+          name: deals.name,
+          description: deals.description,
+          value: deals.value,
+          currency: deals.currency,
+          stage: deals.stage,
+          probability: deals.probability,
+          dealType: deals.dealType,
+          expectedCloseDate: deals.expectedCloseDate,
+          ownerId: deals.ownerId,
+          accountId: deals.accountId,
+          createdAt: deals.createdAt,
+          updatedAt: deals.updatedAt,
+        })
+          .from(deals)
+          .where(and(
+            eq(deals.orgId, orgId!),
+            isNull(deals.deletedAt),
+            inArray(deals.stage, activeStages)
+          ))
+          .orderBy(desc(deals.updatedAt));
+
+        // Calculate summary stats
+        const totalDeals = allDeals.length;
+        const totalValue = allDeals.reduce((sum, d) => sum + parseFloat(d.value || '0'), 0);
+
+        // Weighted value: sum of (value * probability)
+        const weightedValue = allDeals.reduce((sum, d) => {
+          const value = parseFloat(d.value || '0');
+          const prob = (d.probability ?? 50) / 100;
+          return sum + (value * prob);
+        }, 0);
+
+        const avgDealSize = totalDeals > 0 ? totalValue / totalDeals : 0;
+
+        // Deals closing this month
+        const now = new Date();
+        const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+        const closingThisMonth = allDeals
+          .filter(d => {
+            if (!d.expectedCloseDate) return false;
+            const closeDate = new Date(d.expectedCloseDate);
+            return closeDate <= endOfMonth && closeDate >= now;
+          })
+          .reduce((sum, d) => sum + parseFloat(d.value || '0'), 0);
+
+        // Group deals by stage
+        const dealsByStage: Record<string, typeof allDeals> = {
+          discovery: [],
+          qualification: [],
+          proposal: [],
+          negotiation: [],
+        };
+
+        for (const deal of allDeals) {
+          if (dealsByStage[deal.stage]) {
+            dealsByStage[deal.stage].push(deal);
+          }
+        }
+
+        // Calculate column totals
+        const columnStats = Object.entries(dealsByStage).reduce((acc, [stage, stageDeals]) => {
+          const stageTotal = stageDeals.reduce((sum, d) => sum + parseFloat(d.value || '0'), 0);
+          const probability = stage === 'discovery' ? 10 :
+                            stage === 'qualification' ? 25 :
+                            stage === 'proposal' ? 50 : 75;
+          acc[stage] = {
+            count: stageDeals.length,
+            totalValue: stageTotal,
+            weightedValue: stageTotal * (probability / 100),
+          };
+          return acc;
+        }, {} as Record<string, { count: number; totalValue: number; weightedValue: number }>);
+
+        return {
+          summary: {
+            totalDeals,
+            totalValue,
+            weightedValue,
+            avgDealSize,
+            closingThisMonth,
+          },
+          deals: dealsByStage,
+          columnStats,
         };
       }),
 

@@ -136,7 +136,7 @@ export const clientRouter = router({
         clientId: z.string().uuid(),
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        status: z.enum(['draft', 'open', 'on_hold', 'filled', 'closed']).optional(),
+        status: z.enum(['draft', 'open', 'on_hold', 'filled', 'closed']).nullish(),
       }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx;

@@ -1,22 +1,111 @@
 /**
  * Activity Engine
- * 
+ *
  * Core engine that processes events and creates auto-activities based on patterns.
  * Implements the rule engine from the spec.
- * 
+ *
+ * Enhanced with:
+ * - Static auto-creation rules
+ * - Database-driven auto rules
+ * - Condition evaluation with operators
+ * - Field mapping from events to activities
+ *
  * @see docs/specs/20-USER-ROLES/01-ACTIVITIES-EVENTS-FRAMEWORK.md#rule-engine-architecture
  */
 
 import { db } from '@/lib/db';
 import { objectOwners, userProfiles } from '@/lib/db/schema';
-import { eq, and } from 'drizzle-orm';
+import { activityAutoRules } from '@/lib/db/schema/workplan';
+import { pods } from '@/lib/db/schema/ta-hr';
+import { eq, and, or } from 'drizzle-orm';
 import { activityService } from './activity-service';
 import { patternMatcher, type ActivityPattern, type AssignmentRule } from './pattern-matcher';
-import { interpolateTemplate, createTemplateContext } from './template-utils';
+import { patternService } from './PatternService';
+import { interpolateTemplate, createTemplateContext, getNestedValue } from './template-utils';
 import { calculateDueDate } from './due-date-utils';
 import type { Event } from '@/lib/events/event.types';
 import type { Activity, CreateActivityInput, ActivityType, ActivityPriority } from './activity.types';
 import type { EntityType } from '@/types/core/entity.types';
+
+// ============================================================================
+// AUTO RULE TYPES
+// ============================================================================
+
+export interface AutoRule {
+  id: string;
+  eventType: string;
+  patternCode: string;
+  conditions?: Record<string, unknown>;
+  fieldMapping?: Record<string, string>;
+  assigneeResolution?: 'actor' | 'owner' | 'manager' | 'specific';
+  assigneeId?: string;
+  subjectTemplate?: string;
+  active: boolean;
+}
+
+// ============================================================================
+// STATIC AUTO RULES
+// ============================================================================
+
+/**
+ * Static auto-creation rules (can be extended via database)
+ */
+const STATIC_AUTO_RULES: AutoRule[] = [
+  {
+    id: 'submission-created',
+    eventType: 'submission.created',
+    patternCode: 'submit_candidate',
+    conditions: {},
+    assigneeResolution: 'owner',
+    subjectTemplate: 'Review submission for {{candidate.name}}',
+    active: true,
+  },
+  {
+    id: 'interview-scheduled',
+    eventType: 'interview.scheduled',
+    patternCode: 'conduct_interview',
+    conditions: {},
+    assigneeResolution: 'owner',
+    subjectTemplate: 'Follow up on interview with {{candidate.name}}',
+    active: true,
+  },
+  {
+    id: 'offer-sent',
+    eventType: 'offer.sent',
+    patternCode: 'make_offer',
+    conditions: {},
+    assigneeResolution: 'owner',
+    subjectTemplate: 'Follow up on offer to {{candidate.name}}',
+    active: true,
+  },
+  {
+    id: 'lead-created',
+    eventType: 'lead.created',
+    patternCode: 'lead_outreach',
+    conditions: {},
+    assigneeResolution: 'actor',
+    subjectTemplate: 'Initial outreach to {{lead.name}}',
+    active: true,
+  },
+  {
+    id: 'placement-ending',
+    eventType: 'placement.ending_soon',
+    patternCode: 'follow_up',
+    conditions: {},
+    assigneeResolution: 'owner',
+    subjectTemplate: 'Discuss extension for {{consultant.name}}',
+    active: true,
+  },
+  {
+    id: 'visa-expiring',
+    eventType: 'consultant.visa_expiring',
+    patternCode: 'immigration_check',
+    conditions: {},
+    assigneeResolution: 'owner',
+    subjectTemplate: 'Check visa status for {{consultant.name}}',
+    active: true,
+  },
+];
 
 /**
  * Activity Engine
@@ -324,16 +413,270 @@ export class ActivityEngine {
     orgId: string,
     userId: string
   ): Promise<string | null> {
-    const [user] = await db.select()
+    // First try to get manager from user profile
+    const [user] = await db
+      .select()
       .from(userProfiles)
-      .where(and(
-        eq(userProfiles.orgId, orgId),
-        eq(userProfiles.id, userId)
-      ))
+      .where(and(eq(userProfiles.orgId, orgId), eq(userProfiles.id, userId)))
       .limit(1);
-    
-    // Assuming user_profiles has a managerId field
-    return (user as { managerId?: string } | undefined)?.managerId ?? null;
+
+    // Check for managerId field
+    const managerId = (user as { managerId?: string } | undefined)?.managerId;
+    if (managerId) {
+      return managerId;
+    }
+
+    // Fall back to pod senior member
+    const [pod] = await db
+      .select({ seniorMemberId: pods.seniorMemberId })
+      .from(pods)
+      .where(
+        and(
+          eq(pods.orgId, orgId),
+          or(eq(pods.seniorMemberId, userId), eq(pods.juniorMemberId, userId))
+        )
+      )
+      .limit(1);
+
+    if (pod?.seniorMemberId && pod.seniorMemberId !== userId) {
+      return pod.seniorMemberId;
+    }
+
+    return null;
+  }
+
+  // ==========================================================================
+  // AUTO RULES PROCESSING
+  // ==========================================================================
+
+  /**
+   * Process an event using auto-creation rules
+   * This is an alternative to pattern-based processing for simple rules
+   */
+  async processEventWithRules(event: Event): Promise<Activity[]> {
+    const rules = await this.getRulesForEvent(event.eventType, event.orgId);
+    const createdActivities: Activity[] = [];
+
+    for (const rule of rules) {
+      // Skip inactive rules
+      if (!rule.active) continue;
+
+      // Evaluate conditions
+      if (!this.evaluateConditions(rule, event)) continue;
+
+      try {
+        // Map event data to activity fields
+        const fieldValues = this.mapFields(rule, event);
+
+        // Resolve assignee
+        const assignedTo = await this.resolveAutoRuleAssignee(rule, event);
+
+        if (!assignedTo) {
+          console.warn(
+            `Could not resolve assignee for auto rule ${rule.id}, skipping`
+          );
+          continue;
+        }
+
+        // Create activity from pattern
+        const activityData = await patternService.instantiate(
+          rule.patternCode,
+          event.entityType,
+          event.entityId,
+          {
+            assignedTo,
+            fieldValues,
+            subject: this.interpolateRuleSubject(rule, event),
+          },
+          event.orgId
+        );
+
+        const created = await activityService.create({
+          orgId: event.orgId,
+          activityType: 'task' as ActivityType,
+          patternCode: activityData.patternCode,
+          subject: activityData.subject,
+          description: activityData.description,
+          entityType: event.entityType as EntityType,
+          entityId: event.entityId,
+          assignedTo,
+          createdBy: 'system',
+          priority: activityData.priority as ActivityPriority,
+          dueDate: activityData.dueAt,
+          isAutoCreated: true,
+          customFields: fieldValues,
+        });
+
+        createdActivities.push(created);
+      } catch (error) {
+        console.error(`Failed to create activity from rule ${rule.id}:`, error);
+      }
+    }
+
+    return createdActivities;
+  }
+
+  /**
+   * Get auto-creation rules for an event type
+   */
+  async getRulesForEvent(eventType: string, _orgId?: string): Promise<AutoRule[]> {
+    // Check database rules using direct query
+    const dbRulesRaw = await db
+      .select()
+      .from(activityAutoRules)
+      .where(
+        and(
+          eq(activityAutoRules.eventType, eventType),
+          eq(activityAutoRules.isActive, true)
+        )
+      );
+
+    const dbRules: AutoRule[] = dbRulesRaw.map((r) => ({
+      id: r.id,
+      eventType: r.eventType,
+      patternCode: r.ruleCode,
+      conditions: r.condition as Record<string, unknown> | undefined,
+      assigneeResolution: r.assignToField as AutoRule['assigneeResolution'],
+      assigneeId: r.assignToUserId ?? undefined,
+      active: r.isActive ?? true,
+    }));
+
+    // Also check static rules
+    const staticRules = STATIC_AUTO_RULES.filter(
+      (r) => r.eventType === eventType
+    );
+
+    return [...dbRules, ...staticRules];
+  }
+
+  /**
+   * Evaluate rule conditions against event data
+   */
+  evaluateConditions(rule: AutoRule, event: Event): boolean {
+    if (!rule.conditions || Object.keys(rule.conditions).length === 0) {
+      return true;
+    }
+
+    for (const [field, expected] of Object.entries(rule.conditions)) {
+      const actual = getNestedValue(event.eventData, field);
+
+      if (typeof expected === 'object' && expected !== null) {
+        const expectedObj = expected as Record<string, unknown>;
+        // Handle operators
+        if ('$eq' in expectedObj && actual !== expectedObj.$eq) return false;
+        if ('$ne' in expectedObj && actual === expectedObj.$ne) return false;
+        if ('$in' in expectedObj && !Array.isArray(expectedObj.$in)) return false;
+        if ('$in' in expectedObj && Array.isArray(expectedObj.$in) && !expectedObj.$in.includes(actual)) return false;
+        if ('$nin' in expectedObj && Array.isArray(expectedObj.$nin) && expectedObj.$nin.includes(actual)) return false;
+        if ('$gt' in expectedObj && !(Number(actual) > Number(expectedObj.$gt))) return false;
+        if ('$gte' in expectedObj && !(Number(actual) >= Number(expectedObj.$gte))) return false;
+        if ('$lt' in expectedObj && !(Number(actual) < Number(expectedObj.$lt))) return false;
+        if ('$lte' in expectedObj && !(Number(actual) <= Number(expectedObj.$lte))) return false;
+        if ('$exists' in expectedObj && (actual !== undefined) !== expectedObj.$exists) return false;
+      } else {
+        // Simple equality
+        if (actual !== expected) return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Map event data to activity fields
+   */
+  mapFields(rule: AutoRule, event: Event): Record<string, unknown> {
+    if (!rule.fieldMapping) return {};
+
+    const mapped: Record<string, unknown> = {};
+
+    for (const [activityField, eventPath] of Object.entries(rule.fieldMapping)) {
+      mapped[activityField] = getNestedValue(event.eventData, eventPath);
+    }
+
+    return mapped;
+  }
+
+  /**
+   * Resolve the assignee for an auto rule
+   */
+  async resolveAutoRuleAssignee(
+    rule: AutoRule,
+    event: Event
+  ): Promise<string | undefined> {
+    switch (rule.assigneeResolution) {
+      case 'actor':
+        return event.actorId ?? undefined;
+
+      case 'owner':
+        return (
+          (await this.getEntityOwner(
+            event.orgId,
+            event.entityType as EntityType,
+            event.entityId
+          )) ?? undefined
+        );
+
+      case 'manager':
+        const ownerId = await this.getEntityOwner(
+          event.orgId,
+          event.entityType as EntityType,
+          event.entityId
+        );
+        if (ownerId) {
+          return (await this.getUserManager(event.orgId, ownerId)) ?? undefined;
+        }
+        return undefined;
+
+      case 'specific':
+        return rule.assigneeId;
+
+      default:
+        return event.actorId ?? undefined;
+    }
+  }
+
+  /**
+   * Interpolate subject template with event data
+   */
+  interpolateRuleSubject(rule: AutoRule, event: Event): string | undefined {
+    if (!rule.subjectTemplate) return undefined;
+
+    const context = createTemplateContext(event.eventData, {
+      event: {
+        type: event.eventType,
+        entityType: event.entityType,
+        entityId: event.entityId,
+      },
+    });
+
+    return interpolateTemplate(rule.subjectTemplate, context);
+  }
+
+  /**
+   * Get all static auto rules
+   */
+  getStaticRules(): AutoRule[] {
+    return [...STATIC_AUTO_RULES];
+  }
+
+  /**
+   * Add a static rule (for testing or runtime configuration)
+   */
+  addStaticRule(rule: AutoRule): void {
+    STATIC_AUTO_RULES.push(rule);
+  }
+
+  /**
+   * Remove a static rule by ID
+   */
+  removeStaticRule(ruleId: string): boolean {
+    const index = STATIC_AUTO_RULES.findIndex((r) => r.id === ruleId);
+    if (index !== -1) {
+      STATIC_AUTO_RULES.splice(index, 1);
+      return true;
+    }
+    return false;
   }
 }
 

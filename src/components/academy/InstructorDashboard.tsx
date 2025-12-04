@@ -6,7 +6,13 @@ import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAppStore } from '../../lib/store';
 import { Users, AlertCircle, Calendar, CheckCircle, ChevronRight, MessageSquare, Video, BookOpen, LayoutDashboard, Award, Layers, Plus, MoreHorizontal, Search, Clock, Activity, CheckSquare, ArrowUp, ArrowDown } from 'lucide-react';
-import { CourseBuilder } from '../admin/CourseBuilder';
+// CourseBuilder was removed - using placeholder
+const CourseBuilder: React.FC = () => (
+  <div className="p-8 text-center text-stone-500">
+    <p className="text-lg font-medium">Course Builder Coming Soon</p>
+    <p className="text-sm mt-2">This feature is being migrated to the new metadata-driven system.</p>
+  </div>
+);
 import { CertificateGenerator } from './CertificateGenerator';
 import { MessageModal, GradingModal } from './AcademyModals';
 import { ScheduleSessionModal } from './ScheduleSessionModal';

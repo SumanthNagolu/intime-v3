@@ -1,0 +1,7 @@
+{
+  "name": "res3000",
+  "description": "Kill process on port 3000 and restart dev server",
+  "command": "lsof -ti:3000 | xargs kill -9 2>/dev/null || true && NODE_TLS_REJECT_UNAUTHORIZED=0 pnpm dev",
+  "type": "shell"
+}
+
