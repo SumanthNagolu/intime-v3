@@ -551,7 +551,7 @@ export const vendorOnboardScreen: ScreenDefinition = {
   onComplete: {
     action: 'create',
     entityType: 'vendor',
-    successRedirect: '/employee/workspace/bench/vendors/{{id}}',
+    successRedirect: '/employee/bench/vendors/{{id}}',
     successMessage: 'Vendor onboarded successfully!',
   },
 
@@ -570,7 +570,7 @@ export const vendorOnboardScreen: ScreenDefinition = {
       type: 'navigate',
       icon: 'X',
       variant: 'ghost',
-      config: { type: 'navigate', route: '/employee/workspace/bench/vendors' },
+      config: { type: 'navigate', route: '/employee/bench/vendors' },
       confirm: {
         title: 'Cancel Onboarding',
         message: 'Are you sure? Any unsaved changes will be lost.',
@@ -582,8 +582,8 @@ export const vendorOnboardScreen: ScreenDefinition = {
 
   breadcrumbs: [
     { label: 'Workspace', route: '/employee/workspace' },
-    { label: 'Bench Sales', route: '/employee/workspace/bench' },
-    { label: 'Vendors', route: '/employee/workspace/bench/vendors' },
+    { label: 'Bench Sales', route: '/employee/bench' },
+    { label: 'Vendors', route: '/employee/bench/vendors' },
     { label: 'Onboard', active: true },
   ],
 };

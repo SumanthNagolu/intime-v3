@@ -938,6 +938,201 @@ export const dashboardRouter = router({
   }),
 
   /**
+   * Get RACI Watchlist - items where user is Consulted or Informed
+   * Returns entities the user should be aware of
+   */
+  getRACIWatchlist: orgProtectedProcedure.query(async ({ ctx }) => {
+    const { orgId, userId } = ctx;
+
+    // Get user profile
+    const profile = await db.select({ id: userProfiles.id })
+      .from(userProfiles)
+      .where(or(eq(userProfiles.id, userId!), eq(userProfiles.authId, userId!)))
+      .limit(1);
+    const profileId = profile[0]?.id;
+
+    if (!profileId) {
+      return { items: [], totalCount: 0 };
+    }
+
+    // Get recent jobs assigned to user's pod/team (as Consulted/Informed)
+    const recentJobs = await db.select({
+      id: jobs.id,
+      title: jobs.title,
+      status: jobs.status,
+      updatedAt: jobs.updatedAt,
+      accountId: jobs.accountId,
+    })
+      .from(jobs)
+      .where(and(
+        eq(jobs.orgId, orgId),
+        eq(jobs.status, 'open')
+      ))
+      .orderBy(desc(jobs.updatedAt))
+      .limit(8);
+
+    // Get recent submissions with activity
+    const recentSubmissions = await db.select({
+      id: submissions.id,
+      candidateId: submissions.candidateId,
+      jobId: submissions.jobId,
+      status: submissions.status,
+      updatedAt: submissions.updatedAt,
+    })
+      .from(submissions)
+      .where(and(
+        eq(submissions.orgId, orgId),
+        ne(submissions.status, 'placed'),
+        ne(submissions.status, 'rejected')
+      ))
+      .orderBy(desc(submissions.updatedAt))
+      .limit(8);
+
+    // Get recent deals
+    const recentDeals = await db.select({
+      id: deals.id,
+      title: deals.title,
+      stage: deals.stage,
+      updatedAt: deals.updatedAt,
+      accountId: deals.accountId,
+    })
+      .from(deals)
+      .where(and(
+        eq(deals.orgId, orgId),
+        ne(deals.stage, 'closed_won'),
+        ne(deals.stage, 'closed_lost')
+      ))
+      .orderBy(desc(deals.updatedAt))
+      .limit(8);
+
+    // Combine and format as watchlist items
+    const items = [
+      ...recentJobs.map((j) => ({
+        id: `job-${j.id}`,
+        entityType: 'job' as const,
+        entityId: j.id,
+        title: j.title,
+        subtitle: `Status: ${j.status}`,
+        raciRole: 'I' as const, // Informed
+        lastActivityAt: j.updatedAt,
+        hasNewActivity: new Date(j.updatedAt!).getTime() > Date.now() - 24 * 60 * 60 * 1000,
+      })),
+      ...recentSubmissions.slice(0, 4).map((s) => ({
+        id: `submission-${s.id}`,
+        entityType: 'submission' as const,
+        entityId: s.id,
+        title: `Submission #${s.id.slice(0, 8)}`,
+        subtitle: `Status: ${s.status}`,
+        raciRole: 'C' as const, // Consulted
+        lastActivityAt: s.updatedAt,
+        hasNewActivity: new Date(s.updatedAt!).getTime() > Date.now() - 24 * 60 * 60 * 1000,
+      })),
+      ...recentDeals.slice(0, 4).map((d) => ({
+        id: `deal-${d.id}`,
+        entityType: 'deal' as const,
+        entityId: d.id,
+        title: d.title,
+        subtitle: `Stage: ${d.stage}`,
+        raciRole: 'I' as const, // Informed
+        lastActivityAt: d.updatedAt,
+        hasNewActivity: new Date(d.updatedAt!).getTime() > Date.now() - 24 * 60 * 60 * 1000,
+      })),
+    ].sort((a, b) => {
+      const dateA = a.lastActivityAt ? new Date(a.lastActivityAt).getTime() : 0;
+      const dateB = b.lastActivityAt ? new Date(b.lastActivityAt).getTime() : 0;
+      return dateB - dateA;
+    }).slice(0, 8);
+
+    return {
+      items,
+      totalCount: items.length,
+    };
+  }),
+
+  /**
+   * Get Cross-Pillar Opportunities
+   * AI-detected opportunities from recent interactions
+   */
+  getCrossPillarOpportunities: orgProtectedProcedure.query(async ({ ctx }) => {
+    const { orgId } = ctx;
+
+    // In a real implementation, this would use AI to analyze interactions
+    // For now, we detect simple patterns:
+    // 1. Accounts with training mentions → Academy opportunity
+    // 2. Candidates on bench → Bench Sales opportunity
+    // 3. New leads from existing accounts → TA opportunity
+
+    const now = new Date();
+    const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+    // Get placed candidates who might need training (Academy opportunity)
+    const placedCandidates = await db.select({
+      id: placements.id,
+      candidateId: placements.candidateId,
+      startDate: placements.startDate,
+      accountId: placements.accountId,
+    })
+      .from(placements)
+      .where(and(
+        eq(placements.orgId, orgId),
+        eq(placements.status, 'active'),
+        gte(placements.startDate, sevenDaysAgo)
+      ))
+      .limit(3);
+
+    // Get accounts with recent activity (TA opportunity)
+    const activeAccounts = await db.select({
+      id: accounts.id,
+      name: accounts.name,
+      tier: accounts.tier,
+    })
+      .from(accounts)
+      .where(and(
+        eq(accounts.orgId, orgId),
+        eq(accounts.status, 'active'),
+        eq(accounts.tier, 'tier_1')
+      ))
+      .limit(3);
+
+    // Build opportunities
+    const opportunities = [
+      ...placedCandidates.map((p) => ({
+        id: `academy-${p.id}`,
+        pillar: 'academy' as const,
+        title: 'New placement may need onboarding training',
+        description: 'Recent placement started - consider offering upskilling courses',
+        sourceActivity: {
+          type: 'Placement',
+          entityType: 'placement',
+          entityName: `Placement #${p.id.slice(0, 8)}`,
+          date: p.startDate,
+        },
+        confidence: 'medium' as const,
+        actionUrl: '/employee/academy/courses',
+      })),
+      ...activeAccounts.slice(0, 2).map((a) => ({
+        id: `ta-${a.id}`,
+        pillar: 'ta' as const,
+        title: `Expand relationship with ${a.name}`,
+        description: 'Tier 1 account with potential for additional services',
+        sourceActivity: {
+          type: 'Account Review',
+          entityType: 'account',
+          entityName: a.name,
+          date: now,
+        },
+        confidence: 'high' as const,
+        actionUrl: `/employee/recruiting/accounts/${a.id}`,
+      })),
+    ];
+
+    return {
+      opportunities,
+      length: opportunities.length,
+    };
+  }),
+
+  /**
    * Get Recent Wins (placements, offers accepted, milestones)
    * Returns wins from last 30 days
    */

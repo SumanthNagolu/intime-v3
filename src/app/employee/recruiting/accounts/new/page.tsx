@@ -1,13 +1,15 @@
 /**
  * New Account Page (Recruiting Module)
  *
- * Form for creating a new client account.
+ * Uses metadata-driven ScreenRenderer for the account creation form.
+ * @see src/screens/crm/account-form.screen.ts
  */
 
 import { Suspense } from 'react';
+import { ScreenRenderer } from '@/lib/metadata/renderers/ScreenRenderer';
+import { accountCreateScreen } from '@/screens/crm/account-form.screen';
 import { AppLayout } from '@/components/AppLayout';
 import { RecruitingLayout } from '@/components/layouts/RecruitingLayout';
-import { AccountForm } from '@/components/crm/AccountForm';
 
 export const dynamic = "force-dynamic";
 
@@ -29,7 +31,7 @@ export default function NewAccountPage() {
     <AppLayout>
       <RecruitingLayout>
         <Suspense fallback={<FormSkeleton />}>
-          <AccountForm />
+          <ScreenRenderer definition={accountCreateScreen} />
         </Suspense>
       </RecruitingLayout>
     </AppLayout>

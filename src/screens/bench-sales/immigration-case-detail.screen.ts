@@ -268,7 +268,7 @@ export const immigrationCaseDetailScreen: ScreenDefinition = {
                 type: 'navigate',
                 icon: 'ExternalLink',
                 variant: 'ghost',
-                config: { type: 'navigate', route: '/employee/workspace/bench/consultants/{{consultantId}}' },
+                config: { type: 'navigate', route: '/employee/bench/consultants/{{consultantId}}' },
               },
             ],
           },
@@ -637,12 +637,12 @@ export const immigrationCaseDetailScreen: ScreenDefinition = {
   navigation: {
     back: {
       label: 'Back to Immigration',
-      route: '/employee/workspace/bench/immigration',
+      route: '/employee/bench/immigration',
     },
     breadcrumbs: [
       { label: 'Workspace', route: '/employee/workspace' },
-      { label: 'Bench Sales', route: '/employee/workspace/bench' },
-      { label: 'Immigration', route: '/employee/workspace/bench/immigration' },
+      { label: 'Bench Sales', route: '/employee/bench' },
+      { label: 'Immigration', route: '/employee/bench/immigration' },
       { label: { type: 'field', path: 'consultant.fullName' }, active: true },
     ],
   },

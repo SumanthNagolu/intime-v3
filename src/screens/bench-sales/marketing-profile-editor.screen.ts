@@ -324,12 +324,12 @@ export const marketingProfileEditorScreen: ScreenDefinition = {
   navigation: {
     back: {
       label: 'Back to Marketing Profiles',
-      route: '/employee/workspace/bench/marketing',
+      route: '/employee/bench/marketing',
     },
     breadcrumbs: [
       { label: 'Workspace', route: '/employee/workspace' },
-      { label: 'Bench Sales', route: '/employee/workspace/bench' },
-      { label: 'Marketing Profiles', route: '/employee/workspace/bench/marketing' },
+      { label: 'Bench Sales', route: '/employee/bench' },
+      { label: 'Marketing Profiles', route: '/employee/bench/marketing' },
       { label: { type: 'field', path: 'consultant.fullName' }, active: true },
     ],
   },

@@ -1,12 +1,12 @@
-import { ClientPortal } from '@/components/client/ClientPortal';
-import { AppLayout } from '@/components/AppLayout';
+/**
+ * Client Portal Page
+ *
+ * Redirects to the client dashboard for a unified entry point.
+ * @see /client/dashboard
+ */
 
-export const dynamic = "force-dynamic";
+import { redirect } from 'next/navigation';
 
-export default function Page() {
-  return (
-    <AppLayout showMentor={false}>
-      <ClientPortal />
-    </AppLayout>
-  );
+export default function ClientPortalPage() {
+  redirect('/client/dashboard');
 }

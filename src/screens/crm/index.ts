@@ -12,6 +12,7 @@ export { taDashboardScreen } from './ta-dashboard.screen';
 // Account screens
 export { accountDetailScreen } from './account-detail.screen';
 export { accountListScreen } from './account-list.screen';
+export { accountCreateScreen, accountEditScreen, accountFormConfig } from './account-form.screen';
 
 // Lead screens
 export { leadDetailScreen } from './lead-detail.screen';
@@ -40,6 +41,8 @@ export const crmScreens = {
   'lead-detail': () => import('./lead-detail.screen').then(m => m.leadDetailScreen),
   'account-list': () => import('./account-list.screen').then(m => m.accountListScreen),
   'account-detail': () => import('./account-detail.screen').then(m => m.accountDetailScreen),
+  'account-create': () => import('./account-form.screen').then(m => m.accountCreateScreen),
+  'account-edit': () => import('./account-form.screen').then(m => m.accountEditScreen),
   'deal-pipeline': () => import('./deal-pipeline.screen').then(m => m.dealPipelineScreen),
   'deal-list': () => import('./deal-list.screen').then(m => m.dealListScreen),
   'deal-detail': () => import('./deal-detail.screen').then(m => m.dealDetailScreen),

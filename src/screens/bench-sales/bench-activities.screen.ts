@@ -434,7 +434,7 @@ export const benchActivitiesScreen: ScreenDefinition = {
   navigation: {
     breadcrumbs: [
       { label: 'Workspace', route: '/employee/workspace' },
-      { label: 'Bench Sales', route: '/employee/workspace/bench' },
+      { label: 'Bench Sales', route: '/employee/bench' },
       { label: 'Activities', active: true },
     ],
   },

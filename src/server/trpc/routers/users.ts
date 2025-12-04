@@ -29,6 +29,23 @@ export const usersRouter = router({
   }),
 
   /**
+   * Check if current user has admin access
+   *
+   * Uses a security definer function that properly maps auth.uid() to profile ID
+   * and bypasses RLS to check the user_roles table.
+   */
+  isAdmin: protectedProcedure.query(async ({ ctx }) => {
+    const { data, error } = await (ctx.supabase.rpc as Function)('check_current_user_is_admin');
+
+    if (error) {
+      console.error('Failed to check admin status:', error);
+      return { isAdmin: false };
+    }
+
+    return { isAdmin: !!data };
+  }),
+
+  /**
    * Update current user's profile
    */
   updateProfile: protectedProcedure

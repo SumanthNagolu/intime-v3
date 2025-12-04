@@ -51,7 +51,7 @@ const placementsTableColumns: import('@/lib/metadata/types').TableColumnDefiniti
     width: '180px',
     config: {
       link: true,
-      linkPath: '/employee/workspace/bench/consultants/{{consultantId}}',
+      linkPath: '/employee/bench/consultants/{{consultantId}}',
       avatar: true,
       avatarPath: 'consultant.avatarUrl',
     },
@@ -311,7 +311,7 @@ export const benchPlacementsListScreen: ScreenDefinition = {
             label: 'View Details',
             icon: 'Eye',
             type: 'navigate',
-            config: { type: 'navigate', route: '/employee/workspace/bench/placements/{{id}}' },
+            config: { type: 'navigate', route: '/employee/bench/placements/{{id}}' },
           },
           {
             id: 'check-in',
@@ -374,7 +374,7 @@ export const benchPlacementsListScreen: ScreenDefinition = {
   navigation: {
     breadcrumbs: [
       { label: 'Workspace', route: '/employee/workspace' },
-      { label: 'Bench Sales', route: '/employee/workspace/bench' },
+      { label: 'Bench Sales', route: '/employee/bench' },
       { label: 'Placements', active: true },
     ],
   },

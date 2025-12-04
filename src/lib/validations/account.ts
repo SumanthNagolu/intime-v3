@@ -234,6 +234,30 @@ export const bulkAssignAccountsInput = z.object({
 });
 
 // ==========================================
+// BULK CREATE INPUT (for CSV import)
+// ==========================================
+
+export const bulkCreateAccountsInput = z.object({
+  accounts: z.array(
+    z.object({
+      name: z.string().min(1, 'Account name is required').max(255),
+      industry: accountIndustrySchema.optional(),
+      companyType: accountCompanyTypeSchema.optional().default('direct_client'),
+      status: accountStatusSchema.optional().default('prospect'),
+      tier: accountTierSchema.optional(),
+      website: z.string().url().optional().or(z.literal('')).or(z.literal(null)),
+      headquartersLocation: z.string().max(255).optional(),
+      phone: z.string().max(30).optional(),
+      description: z.string().optional(),
+      paymentTermsDays: z.number().int().min(0).max(180).optional().default(30),
+      markupPercentage: z.number().min(0).max(100).optional(),
+      annualRevenueTarget: z.number().min(0).optional(),
+    })
+  ).min(1, 'At least one account is required').max(500, 'Maximum 500 accounts per import'),
+  skipDuplicates: z.boolean().optional().default(true),
+});
+
+// ==========================================
 // TYPE EXPORTS
 // ==========================================
 
@@ -244,6 +268,7 @@ export type ListAccountsInput = z.infer<typeof listAccountsInput>;
 export type ListAccountsOutput = z.infer<typeof listAccountsOutput>;
 export type AccountMetricsOutput = z.infer<typeof accountMetricsOutput>;
 export type BulkAssignAccountsInput = z.infer<typeof bulkAssignAccountsInput>;
+export type BulkCreateAccountsInput = z.infer<typeof bulkCreateAccountsInput>;
 
 // Enum types
 export type AccountIndustry = z.infer<typeof accountIndustrySchema>;

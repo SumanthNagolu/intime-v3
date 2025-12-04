@@ -15,3 +15,5 @@ export { clientPlacementsScreen } from './client-placements.screen';
 export { clientPlacementDetailScreen } from './client-placement-detail.screen';
 export { clientReportsScreen } from './client-reports.screen';
 export { clientSettingsScreen } from './client-settings.screen';
+export { clientJobPostScreen } from './client-job-post.screen';
+export { clientCandidateDetailScreen } from './client-candidate-detail.screen';

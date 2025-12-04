@@ -141,6 +141,10 @@ export type WidgetType =
   | 'entity-select'
   | 'entity-multiselect'
   | 'json-input'
+  | 'date-range-picker'
+  | 'rate-input'
+  | 'duration-input'
+  | 'visa-status-select'
 
   // Composite widgets
   | 'metric-card'

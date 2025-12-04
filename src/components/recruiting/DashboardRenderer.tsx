@@ -32,6 +32,7 @@ const WIDGET_DATA_MAP: Record<string, string> = {
   TaskQueueWidget: 'getTasks',
   AlertList: 'getPipelineHealth',
   PipelineAlerts: 'getPipelineHealth',
+  ClientHealthAlerts: 'getAccountHealth',
   CalendarWidget: 'getUpcomingCalendar',
   UpcomingCalendar: 'getUpcomingCalendar',
   WinsList: 'getRecentWins',
@@ -39,6 +40,8 @@ const WIDGET_DATA_MAP: Record<string, string> = {
   AccountHealth: 'getAccountHealth',
   ActivitySummary: 'getActivitySummary',
   QualityMetrics: 'getQualityMetrics',
+  RACIWatchlistWidget: 'getRACIWatchlist',
+  CrossPillarOpportunities: 'getCrossPillarOpportunities',
 };
 
 /**
@@ -78,6 +81,14 @@ export function DashboardRenderer({ definition, className }: DashboardRendererPr
     refetchInterval: 60000,
   });
 
+  const raciWatchlist = trpc.dashboard.getRACIWatchlist.useQuery(undefined, {
+    refetchInterval: 60000,
+  });
+
+  const crossPillarOpportunities = trpc.dashboard.getCrossPillarOpportunities.useQuery(undefined, {
+    refetchInterval: 60000,
+  });
+
   // Create data map for widgets
   const dataMap: Record<string, { data: unknown; isLoading: boolean; error: unknown }> = {
     getSprintProgress: sprintProgress,
@@ -88,6 +99,8 @@ export function DashboardRenderer({ definition, className }: DashboardRendererPr
     getQualityMetrics: qualityMetrics,
     getUpcomingCalendar: upcomingCalendar,
     getRecentWins: recentWins,
+    getRACIWatchlist: raciWatchlist,
+    getCrossPillarOpportunities: crossPillarOpportunities,
   };
 
   // Build context with data for each widget
@@ -172,6 +185,8 @@ export function DashboardRenderer({ definition, className }: DashboardRendererPr
       qualityMetrics: qualityMetrics.data,
       upcomingCalendar: upcomingCalendar.data,
       recentWins: recentWins.data,
+      raciWatchlist: raciWatchlist.data,
+      crossPillarOpportunities: crossPillarOpportunities.data,
     },
     isLoading,
   } as RenderContext & { dashboardData: Record<string, unknown>; isLoading: boolean };
@@ -211,7 +226,19 @@ export function DashboardRenderer({ definition, className }: DashboardRendererPr
       {enrichedLayout && (
         <LayoutRenderer
           definition={enrichedLayout}
-          entity={{}}
+          entity={{
+            // Pass dashboard data as entity so paths like "activitySummary.calls" resolve correctly
+            sprintProgress: sprintProgress.data,
+            tasks: tasks.data,
+            pipelineHealth: pipelineHealth.data,
+            accountHealth: accountHealth.data,
+            activitySummary: activitySummary.data,
+            qualityMetrics: qualityMetrics.data,
+            upcomingCalendar: upcomingCalendar.data,
+            recentWins: recentWins.data,
+            raciWatchlist: raciWatchlist.data,
+            crossPillarOpportunities: crossPillarOpportunities.data,
+          }}
           isEditing={false}
           context={context as RenderContext}
         />

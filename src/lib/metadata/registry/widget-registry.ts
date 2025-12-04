@@ -140,6 +140,9 @@ const fieldTypeToWidgetMap: Partial<Record<FieldType, { display: WidgetType; inp
   address: { display: 'address-display', input: 'text-input' },
   json: { display: 'json-display', input: 'json-input' },
   computed: { display: 'text-display', input: 'text-input' },
+
+  // Date range types
+  'date-range': { display: 'text-display', input: 'date-range-picker' },
 };
 
 /**

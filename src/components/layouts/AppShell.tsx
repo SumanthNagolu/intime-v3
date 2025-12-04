@@ -1,10 +1,17 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
-import { layoutTokens, type NavSection, type UserRole, getNavSectionsForRole } from '@/lib/navigation';
+import {
+  layoutTokens,
+  type NavSection,
+  type UserRole,
+  getNavSectionsForRole,
+  getNavigation,
+  getPortalNavigation,
+} from '@/lib/navigation';
 import { Header } from './header';
 import { Sidebar } from './sidebar';
 import { CommandBar } from './command';
@@ -12,7 +19,7 @@ import { CommandBar } from './command';
 interface AppShellProps {
   children: React.ReactNode;
   /** User role for navigation */
-  role?: UserRole;
+  role?: UserRole | string;
   /** Base role for managers (recruiter or bench_sales) */
   baseRole?: 'recruiter' | 'bench_sales';
   /** Custom navigation sections (overrides role-based) */
@@ -36,6 +43,12 @@ interface AppShellProps {
  * Main application shell component
  * Based on 01-LAYOUT-SHELL.md specification
  * Combines header, sidebar, and main content area
+ *
+ * Automatically detects portal type from pathname:
+ * - /client/* -> Client Portal navigation
+ * - /talent/* -> Talent Portal navigation
+ * - /training/* or /academy/* -> Academy navigation
+ * - /employee/* -> Role-based employee navigation
  */
 export function AppShell({
   children,
@@ -52,8 +65,32 @@ export function AppShell({
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
   const [commandBarOpen, setCommandBarOpen] = useState(false);
 
-  // Get navigation sections based on role or use custom sections
-  const sections = navSections || getNavSectionsForRole(role, baseRole);
+  // Determine which navigation to use based on pathname and role
+  const sections = useMemo(() => {
+    // Use custom sections if provided
+    if (navSections) {
+      return navSections;
+    }
+
+    // Detect portal from pathname
+    if (pathname?.startsWith('/client')) {
+      return getPortalNavigation('client');
+    }
+    if (pathname?.startsWith('/talent')) {
+      return getPortalNavigation('talent');
+    }
+    if (pathname?.startsWith('/training') || pathname?.startsWith('/academy')) {
+      return getPortalNavigation('academy');
+    }
+
+    // Use new getNavigation function for employee pages
+    if (pathname?.startsWith('/employee')) {
+      return getNavigation(role as string);
+    }
+
+    // Fallback to legacy role-based navigation
+    return getNavSectionsForRole(role as UserRole, baseRole);
+  }, [pathname, role, baseRole, navSections]);
 
   // Toggle sidebar collapse
   const handleToggleCollapse = useCallback(() => {

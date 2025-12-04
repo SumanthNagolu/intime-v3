@@ -1,14 +1,16 @@
-export const dynamic = "force-dynamic";
-import { OrgChart } from '@/components/hr/OrgChart';
-import { AppLayout } from '@/components/AppLayout';
-import { HRLayout } from '@/components/layouts/HRLayout';
+/**
+ * Organization Page (Legacy Route)
+ *
+ * Redirects to the canonical org-chart route which uses ScreenRenderer.
+ * @see src/app/employee/hr/org-chart/page.tsx
+ * @see src/screens/hr/org-chart.screen.ts
+ */
 
-export default function Page() {
-  return (
-    <AppLayout>
-      <HRLayout>
-        <OrgChart />
-      </HRLayout>
-    </AppLayout>
-  );
+export const dynamic = "force-dynamic";
+
+import { redirect } from 'next/navigation';
+
+export default function OrgPage() {
+  // Redirect to the canonical org-chart route
+  redirect('/employee/hr/org-chart');
 }

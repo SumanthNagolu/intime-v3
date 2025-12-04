@@ -647,7 +647,7 @@ export const consultantOnboardScreen: ScreenDefinition = {
   onComplete: {
     action: 'create',
     entityType: 'talent',
-    successRedirect: '/employee/workspace/bench/consultants/{{id}}',
+    successRedirect: '/employee/bench/consultants/{{id}}',
     successMessage: 'Consultant onboarded successfully!',
   },
 
@@ -666,7 +666,7 @@ export const consultantOnboardScreen: ScreenDefinition = {
       type: 'navigate',
       icon: 'X',
       variant: 'ghost',
-      config: { type: 'navigate', route: '/employee/workspace/bench/consultants' },
+      config: { type: 'navigate', route: '/employee/bench/consultants' },
       confirm: {
         title: 'Cancel Onboarding',
         message: 'Are you sure? Any unsaved changes will be lost.',
@@ -678,8 +678,8 @@ export const consultantOnboardScreen: ScreenDefinition = {
 
   breadcrumbs: [
     { label: 'Workspace', route: '/employee/workspace' },
-    { label: 'Bench Sales', route: '/employee/workspace/bench' },
-    { label: 'Consultants', route: '/employee/workspace/bench/consultants' },
+    { label: 'Bench Sales', route: '/employee/bench' },
+    { label: 'Consultants', route: '/employee/bench/consultants' },
     { label: 'Onboard', active: true },
   ],
 };

@@ -1,7 +1,8 @@
 /**
- * Bench Consultant Detail Page
- * 
+ * Bench Talent (Consultant) Detail Page
+ *
  * Uses metadata-driven ScreenRenderer for the consultant detail UI.
+ * Note: This is an alias for /employee/bench/consultants/[id] - kept for backwards compatibility.
  * @see src/screens/bench-sales/consultant-detail.screen.ts
  */
 
@@ -9,30 +10,38 @@ import { Suspense } from 'react';
 import { ScreenRenderer } from '@/lib/metadata/renderers';
 import { consultantDetailScreen } from '@/screens/bench-sales';
 import { AppLayout } from '@/components/AppLayout';
+import { BenchLayout } from '@/components/layouts/BenchLayout';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 function DetailSkeleton() {
   return (
     <div className="animate-pulse space-y-6">
-      <div className="h-8 bg-stone-200 rounded w-1/3" />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-2 space-y-4">
-          <div className="h-32 bg-stone-200 rounded" />
-          <div className="h-64 bg-stone-200 rounded" />
+      <div className="flex items-center gap-4">
+        <div className="w-16 h-16 bg-stone-200 rounded-full" />
+        <div className="space-y-2">
+          <div className="h-6 w-48 bg-stone-200 rounded" />
+          <div className="h-4 w-32 bg-stone-200 rounded" />
         </div>
-        <div className="h-96 bg-stone-200 rounded" />
       </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="h-24 bg-stone-200 rounded-xl" />
+        ))}
+      </div>
+      <div className="h-64 bg-stone-200 rounded-xl" />
     </div>
   );
 }
 
-export default function ConsultantDetailPage() {
+export default function TalentDetailPage() {
   return (
     <AppLayout>
-      <Suspense fallback={<DetailSkeleton />}>
-        <ScreenRenderer definition={consultantDetailScreen} />
-      </Suspense>
+      <BenchLayout>
+        <Suspense fallback={<DetailSkeleton />}>
+          <ScreenRenderer definition={consultantDetailScreen} />
+        </Suspense>
+      </BenchLayout>
     </AppLayout>
   );
 }

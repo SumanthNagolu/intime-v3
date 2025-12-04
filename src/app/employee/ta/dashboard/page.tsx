@@ -1,13 +1,13 @@
 /**
  * TA Specialist Dashboard Page
- * 
+ *
  * Uses metadata-driven ScreenRenderer for the TA dashboard UI.
- * @see src/screens/crm/ta-dashboard.screen.ts
+ * @see src/screens/ta/ta-dashboard.screen.ts
  */
 
 import { Suspense } from 'react';
 import { ScreenRenderer } from '@/lib/metadata/renderers';
-import { taDashboardScreen } from '@/screens/crm';
+import { taDashboardScreen } from '@/screens/ta';
 import { AppLayout } from '@/components/AppLayout';
 
 export const dynamic = "force-dynamic";

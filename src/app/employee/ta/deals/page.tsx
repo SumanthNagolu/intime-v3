@@ -1,13 +1,13 @@
 /**
- * Deal Pipeline Page
- * 
- * Uses metadata-driven ScreenRenderer for the deal pipeline (Kanban) UI.
- * @see src/screens/crm/deal-pipeline.screen.ts
+ * TA Deals Page
+ *
+ * Uses metadata-driven ScreenRenderer for the TA deals pipeline UI.
+ * @see src/screens/ta/ta-deals.screen.ts
  */
 
 import { Suspense } from 'react';
 import { ScreenRenderer } from '@/lib/metadata/renderers';
-import { dealPipelineScreen } from '@/screens/crm';
+import { taDealsScreen } from '@/screens/ta';
 import { AppLayout } from '@/components/AppLayout';
 
 export const dynamic = "force-dynamic";
@@ -25,11 +25,11 @@ function PipelineSkeleton() {
   );
 }
 
-export default function DealPipelinePage() {
+export default function TADealsPage() {
   return (
     <AppLayout>
       <Suspense fallback={<PipelineSkeleton />}>
-        <ScreenRenderer definition={dealPipelineScreen} />
+        <ScreenRenderer definition={taDealsScreen} />
       </Suspense>
     </AppLayout>
   );

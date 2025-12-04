@@ -19,3 +19,7 @@ export type { SectionRendererProps } from './SectionRenderer';
 // Widget Renderer - handles field/widget rendering
 export { WidgetRenderer, FieldWrapper } from './WidgetRenderer';
 export type { WidgetRendererProps, FieldWrapperProps } from './WidgetRenderer';
+
+// List Renderer - specialized for list screens with data fetching
+export { ListRenderer } from './ListRenderer';
+export type { default as ListRendererProps } from './ListRenderer';

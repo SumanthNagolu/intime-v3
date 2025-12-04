@@ -322,20 +322,20 @@ export const jobOrderSubmitScreen: ScreenDefinition = {
       type: 'navigate',
       icon: 'X',
       variant: 'ghost',
-      config: { type: 'navigate', route: '/employee/workspace/bench/jobs/{{id}}' },
+      config: { type: 'navigate', route: '/employee/bench/jobs/{{id}}' },
     },
   ],
 
   navigation: {
     back: {
       label: 'Back to Job Order',
-      route: '/employee/workspace/bench/jobs/{{id}}',
+      route: '/employee/bench/jobs/{{id}}',
     },
     breadcrumbs: [
       { label: 'Workspace', route: '/employee/workspace' },
-      { label: 'Bench Sales', route: '/employee/workspace/bench' },
-      { label: 'Job Orders', route: '/employee/workspace/bench/jobs' },
-      { label: { type: 'field', path: 'title' }, route: '/employee/workspace/bench/jobs/{{id}}' },
+      { label: 'Bench Sales', route: '/employee/bench' },
+      { label: 'Job Orders', route: '/employee/bench/jobs' },
+      { label: { type: 'field', path: 'title' }, route: '/employee/bench/jobs/{{id}}' },
       { label: 'Submit', active: true },
     ],
   },

@@ -11,6 +11,18 @@ export { WorkspaceLayout } from './WorkspaceLayout';
 export { AuthLayout } from './AuthLayout';
 export { PortalLayout } from './PortalLayout';
 
+// Module-specific layouts
+export { AdminLayout } from './AdminLayout';
+export { RecruitingLayout } from './RecruitingLayout';
+export { BenchLayout } from './BenchLayout';
+export { HRLayout } from './HRLayout';
+export { TALayout } from './TALayout';
+export { AcademyLayout } from './AcademyLayout';
+export { CEOLayout } from './CEOLayout';
+export { EmployeeLayout } from './EmployeeLayout';
+export { ImmigrationLayout } from './ImmigrationLayout';
+export { SharedLayout } from './SharedLayout';
+
 // Header components
 export { Header, UserMenu, NotificationsDropdown } from './header';
 
@@ -55,3 +67,6 @@ export {
   HideAt,
   MobileNav,
 } from './responsive';
+
+// Quick Actions
+export { QuickActions, getQuickActionsForPath, hasQuickActions } from './QuickActions';

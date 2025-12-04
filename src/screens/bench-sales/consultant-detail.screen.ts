@@ -661,7 +661,7 @@ export const consultantDetailScreen: ScreenDefinition = {
       variant: 'default',
       config: { 
         type: 'navigate', 
-        route: '/employee/workspace/bench/consultants/{{id}}/edit',
+        route: '/employee/bench/consultants/{{id}}/edit',
       },
     },
     {
@@ -713,8 +713,8 @@ export const consultantDetailScreen: ScreenDefinition = {
   navigation: {
     breadcrumbs: [
       { label: 'Workspace', route: '/employee/workspace' },
-      { label: 'Bench Sales', route: '/employee/workspace/bench' },
-      { label: 'Consultants', route: '/employee/workspace/bench/consultants' },
+      { label: 'Bench Sales', route: '/employee/bench' },
+      { label: 'Consultants', route: '/employee/bench/consultants' },
       { label: { type: 'field', path: 'fullName' }, active: true },
     ],
   },

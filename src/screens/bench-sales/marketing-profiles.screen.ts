@@ -173,14 +173,14 @@ export const marketingProfilesScreen: ScreenDefinition = {
             label: 'View',
             icon: 'Eye',
             type: 'navigate',
-            config: { type: 'navigate', route: '/employee/workspace/bench/marketing/{{id}}' },
+            config: { type: 'navigate', route: '/employee/bench/marketing/{{id}}' },
           },
           {
             id: 'edit',
             label: 'Edit',
             icon: 'Edit',
             type: 'navigate',
-            config: { type: 'navigate', route: '/employee/workspace/bench/marketing/{{id}}/edit' },
+            config: { type: 'navigate', route: '/employee/bench/marketing/{{id}}/edit' },
           },
           {
             id: 'preview',
@@ -215,7 +215,7 @@ export const marketingProfilesScreen: ScreenDefinition = {
       type: 'navigate',
       icon: 'Plus',
       variant: 'primary',
-      config: { type: 'navigate', route: '/employee/workspace/bench/marketing/new' },
+      config: { type: 'navigate', route: '/employee/bench/marketing/new' },
     },
     {
       id: 'bulk-generate',
@@ -255,7 +255,7 @@ export const marketingProfilesScreen: ScreenDefinition = {
   navigation: {
     breadcrumbs: [
       { label: 'Workspace', route: '/employee/workspace' },
-      { label: 'Bench Sales', route: '/employee/workspace/bench' },
+      { label: 'Bench Sales', route: '/employee/bench' },
       { label: 'Marketing Profiles', active: true },
     ],
   },

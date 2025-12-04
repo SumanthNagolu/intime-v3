@@ -1,12 +1,12 @@
-import { TalentPortal } from '@/components/talent/TalentPortal';
-import { AppLayout } from '@/components/AppLayout';
+/**
+ * Talent Portal Page
+ *
+ * Redirects to the talent dashboard for a unified entry point.
+ * @see /talent/dashboard
+ */
 
-export const dynamic = "force-dynamic";
+import { redirect } from 'next/navigation';
 
-export default function Page() {
-  return (
-    <AppLayout showMentor={false}>
-      <TalentPortal />
-    </AppLayout>
-  );
+export default function TalentPortalPage() {
+  redirect('/talent/dashboard');
 }

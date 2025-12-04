@@ -1,12 +1,12 @@
-import { ClientPipeline } from '@/components/client/ClientPipeline';
-import { AppLayout } from '@/components/AppLayout';
+/**
+ * Client Pipeline Page
+ *
+ * Redirects to the client submissions page which handles the pipeline view.
+ * @see /client/submissions
+ */
 
-export const dynamic = "force-dynamic";
+import { redirect } from 'next/navigation';
 
-export default function Page() {
-  return (
-    <AppLayout showMentor={false}>
-      <ClientPipeline />
-    </AppLayout>
-  );
+export default function ClientPipelinePage() {
+  redirect('/client/submissions');
 }

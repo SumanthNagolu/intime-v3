@@ -9,6 +9,7 @@ import { router } from './init';
 import { usersRouter } from './routers/users';
 import { adminEventsRouter } from './routers/admin/events';
 import { adminHandlersRouter } from './routers/admin/handlers';
+import { adminUsersRouter } from './routers/admin/users';
 import { enrollmentRouter } from './routers/enrollment';
 import { progressRouter } from './routers/progress';
 import { contentRouter } from './routers/content';
@@ -34,8 +35,7 @@ import { academyRouter } from './routers/academy';
 // Business module routers
 import { crmRouter } from '../routers/crm';
 import { atsRouter } from '../routers/ats';
-// MOVED TO: tmp/old-conflicting-code/routers/bench.ts (had old schema imports)
-// import { benchRouter } from '../routers/bench';
+import { benchRouter } from '../routers/bench';
 import { taHrRouter } from '../routers/ta-hr';
 import { hrRouter } from '../routers/hr';
 import { dashboardRouter } from '../routers/dashboard';
@@ -68,6 +68,7 @@ export const appRouter = router({
   admin: router({
     events: adminEventsRouter,
     handlers: adminHandlersRouter,
+    users: adminUsersRouter,
   }),
   // Academy UI router (transforms database to Academy UI format)
   academy: academyRouter,
@@ -96,7 +97,7 @@ export const appRouter = router({
   // Business module routers
   crm: crmRouter,
   ats: atsRouter,
-  // bench: benchRouter, // MOVED - old schema imports
+  bench: benchRouter,
   taHr: taHrRouter,
   hr: hrRouter,
   dashboard: dashboardRouter,

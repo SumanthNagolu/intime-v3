@@ -51,6 +51,16 @@ export interface WidgetRendererProps {
 // HELPER FUNCTIONS
 // ==========================================
 
+// Known field types that contain hyphens (to distinguish from widget types)
+const HYPHENATED_FIELD_TYPES = new Set([
+  'date-range',
+  'rich-text',
+  'multi-select',
+  'checkbox-group',
+  'radio-group',
+  'relative-time',
+]);
+
 /**
  * Check if definition is a FieldDefinition
  * Checks for both 'fieldType' (preferred) and 'type' (if type is a FieldType, not WidgetType)
@@ -60,10 +70,18 @@ function isFieldDefinition(def: FieldDefinition | WidgetDefinition): def is Fiel
   if ('fieldType' in def && def.fieldType) return true;
 
   // Check if 'type' is a FieldType (not a WidgetType)
-  // FieldTypes don't end with '-display' or '-input'
   if ('type' in def && def.type) {
     const typeStr = def.type as string;
-    const isWidgetType = typeStr.endsWith('-display') || typeStr.endsWith('-input') || typeStr.includes('-');
+
+    // Check if it's a known hyphenated field type
+    if (HYPHENATED_FIELD_TYPES.has(typeStr)) return true;
+
+    // Widget types end with '-display' or '-input' or '-picker' or '-select' (composite widgets)
+    const isWidgetType = typeStr.endsWith('-display') ||
+                         typeStr.endsWith('-input') ||
+                         typeStr.endsWith('-picker') ||
+                         typeStr.endsWith('-card') ||
+                         typeStr.endsWith('-item');
     return !isWidgetType;
   }
 

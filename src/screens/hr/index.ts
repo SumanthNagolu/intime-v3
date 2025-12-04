@@ -57,6 +57,12 @@ export { orgChartScreen } from './org-chart.screen';
 // HR Activities
 export { hrActivitiesScreen } from './hr-activities.screen';
 
+// Analytics & Learning
+export { analyticsScreen } from './analytics.screen';
+export { learningScreen } from './learning.screen';
+export { documentsScreen } from './documents.screen';
+export { recruitmentScreen } from './recruitment.screen';
+
 // Screen Registry Entry
 export const hrScreens = {
   // Dashboard
@@ -108,6 +114,12 @@ export const hrScreens = {
 
   // HR Activities
   'hr-activities': () => import('./hr-activities.screen').then(m => m.hrActivitiesScreen),
+
+  // Analytics & Learning
+  'hr-analytics': () => import('./analytics.screen').then(m => m.analyticsScreen),
+  'hr-learning': () => import('./learning.screen').then(m => m.learningScreen),
+  'hr-documents': () => import('./documents.screen').then(m => m.documentsScreen),
+  'hr-recruitment': () => import('./recruitment.screen').then(m => m.recruitmentScreen),
 } as const;
 
 export type HRScreenId = keyof typeof hrScreens;

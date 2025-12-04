@@ -1,11 +1,18 @@
 /**
  * Activities Module
- * 
+ *
  * Core philosophy: "NO WORK IS CONSIDERED DONE UNLESS AN ACTIVITY IS CREATED"
- * 
+ *
  * This module implements the Guidewire-inspired activity-centric architecture
  * where every action generates either an Activity (human work) or Event (system record).
- * 
+ *
+ * Components:
+ * - ActivityService: Core CRUD operations
+ * - ActivityEngine: Event processing and auto-activity creation
+ * - PatternService: Activity patterns and templates
+ * - QueueManager: Personal and team work queues
+ * - PatternMatcher: Event-to-pattern matching
+ *
  * @see docs/specs/20-USER-ROLES/01-ACTIVITIES-EVENTS-FRAMEWORK.md
  */
 
@@ -14,14 +21,31 @@ export * from './activity.types';
 
 // Services
 export { ActivityService, activityService } from './activity-service';
-export { ActivityEngine, activityEngine } from './activity-engine';
+export { ActivityEngine, activityEngine, type AutoRule } from './activity-engine';
 export { PatternMatcher, patternMatcher } from './pattern-matcher';
+export {
+  PatternService,
+  patternService,
+  type UnifiedPattern,
+  type PatternField as PatternFieldDef,
+  type ValidationError,
+  type ValidationResult,
+  type InstantiatedActivity,
+} from './PatternService';
+export {
+  QueueManager,
+  queueManager,
+  type QueueActivity,
+  type QueueOptions,
+  type TeamQueueOptions,
+  type QueueStats,
+} from './QueueManager';
 
 // Queries
 export * from './activity-queries';
 
 // Utils
-export { interpolateTemplate } from './template-utils';
+export { interpolateTemplate, createTemplateContext, getNestedValue } from './template-utils';
 export { calculateDueDate } from './due-date-utils';
 
 // SLA utilities
