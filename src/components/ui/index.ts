@@ -45,3 +45,20 @@ export {
 } from './toast'
 export { Toaster } from './toaster'
 export { useToast, toast, toastHelpers } from './use-toast'
+
+// Dialog
+export {
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+} from './dialog'
+
+// Scroll Area
+export { ScrollArea, ScrollBar } from './scroll-area'
