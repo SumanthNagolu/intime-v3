@@ -62,3 +62,53 @@ export {
 
 // Scroll Area
 export { ScrollArea, ScrollBar } from './scroll-area'
+
+// Card
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './card'
+
+// Badge
+export { Badge, badgeVariants } from './badge'
+export type { BadgeProps } from './badge'
+
+// Table
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
+} from './table'
+
+// Dropdown Menu
+export {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuGroup,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuRadioGroup,
+} from './dropdown-menu'
+
+// Tabs
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs'
+
+// Radio Group
+export { RadioGroup, RadioGroupItem } from './radio-group'
+
+// Checkbox
+export { Checkbox } from './checkbox'
+
+// Progress
+export { Progress } from './progress'

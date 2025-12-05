@@ -33,9 +33,42 @@ export const usersRouter = router({
     }))
     .query(async ({ ctx, input }) => {
       const { orgId } = ctx
-      const { search, roleId, status, page, pageSize } = input
+      const { search, roleId, podId, status, page, pageSize } = input
       // Use admin client to bypass RLS (we've already verified org access via middleware)
       const adminClient = getAdminClient()
+
+      // If filtering by pod, first get user IDs that belong to that pod
+      let userIdsInPod: string[] | null = null
+      if (podId) {
+        const { data: podMembers, error: podError } = await adminClient
+          .from('pod_members')
+          .select('user_id')
+          .eq('pod_id', podId)
+          .eq('is_active', true)
+          .eq('org_id', orgId)
+
+        if (podError) {
+          console.error('Failed to fetch pod members:', podError)
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Failed to fetch pod members',
+          })
+        }
+
+        userIdsInPod = podMembers?.map((pm) => pm.user_id) ?? []
+        // If no users in pod, return empty result
+        if (userIdsInPod.length === 0) {
+          return {
+            items: [],
+            pagination: {
+              total: 0,
+              page,
+              pageSize,
+              totalPages: 0,
+            },
+          }
+        }
+      }
 
       let query = adminClient
         .from('user_profiles')
@@ -52,7 +85,14 @@ export const usersRouter = router({
           start_date,
           last_login_at,
           created_at,
-          role:system_roles(id, name, display_name, code, category, color_code)
+          role:system_roles(id, name, display_name, code, category, color_code),
+          pod_memberships:pod_members(
+            id,
+            pod_id,
+            role,
+            is_active,
+            pod:pods(id, name, pod_type)
+          )
         `, { count: 'exact' })
         .eq('org_id', orgId)
         .is('deleted_at', null)
@@ -63,6 +103,9 @@ export const usersRouter = router({
       }
       if (roleId) {
         query = query.eq('role_id', roleId)
+      }
+      if (podId && userIdsInPod) {
+        query = query.in('id', userIdsInPod)
       }
       if (status) {
         query = query.eq('status', status)
@@ -91,6 +134,10 @@ export const usersRouter = router({
       const transformedItems = filteredData.map((user: any) => ({
         ...user,
         role: Array.isArray(user.role) ? user.role[0] : user.role,
+        pod_memberships: user.pod_memberships?.map((pm: { pod?: unknown[] | unknown; [key: string]: unknown }) => ({
+          ...pm,
+          pod: Array.isArray(pm.pod) ? pm.pod[0] : pm.pod,
+        })),
       }))
 
       return {
