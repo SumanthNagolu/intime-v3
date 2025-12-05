@@ -10,6 +10,7 @@ import {
   AlertTriangle,
   Database,
   Network,
+  Key,
 } from 'lucide-react'
 import type { SidebarSection } from '@/components/navigation/Sidebar'
 
@@ -71,6 +72,11 @@ export const adminNavSections: SidebarSection[] = [
         label: 'Email Templates',
         href: '/employee/admin/email-templates',
         icon: FileText,
+      },
+      {
+        label: 'API Tokens',
+        href: '/employee/admin/api-tokens',
+        icon: Key,
       },
     ],
   },

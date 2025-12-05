@@ -18,11 +18,11 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex h-11 w-full items-center justify-between rounded-md border border-charcoal-200 bg-transparent px-4 py-2 text-base",
+      "flex h-11 w-full items-center justify-between rounded-sm border border-charcoal-200 bg-white px-4 py-2 text-sm",
       "placeholder:text-charcoal-400",
-      "focus:outline-none focus:border-forest-500 focus:ring-2 focus:ring-forest-500/20",
+      "focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20",
       "disabled:cursor-not-allowed disabled:opacity-50",
-      "transition-all duration-200",
+      "transition-all duration-300",
       "[&>span]:line-clamp-1",
       className
     )}
@@ -30,7 +30,7 @@ const SelectTrigger = React.forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 text-charcoal-400" />
+      <ChevronDown className="h-4 w-4 opacity-50" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ))
@@ -78,7 +78,7 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-lg border border-charcoal-100 bg-white shadow-elevation-lg",
+        "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-sm border border-charcoal-200 bg-white text-charcoal-900 shadow-elevation-lg",
         "data-[state=open]:animate-in data-[state=closed]:animate-out",
         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
         "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
@@ -124,9 +124,9 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex w-full cursor-pointer select-none items-center rounded-md py-2.5 pl-10 pr-4 text-sm",
-      "outline-none transition-colors",
-      "focus:bg-forest-50 focus:text-forest-900",
+      "relative flex w-full cursor-pointer select-none items-center rounded-sm py-2.5 pl-10 pr-4 text-sm",
+      "outline-none transition-colors duration-300",
+      "focus:bg-gold-50 focus:text-charcoal-900",
       "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className
     )}
@@ -134,7 +134,7 @@ const SelectItem = React.forwardRef<
   >
     <span className="absolute left-3 flex h-4 w-4 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <Check className="h-4 w-4 text-forest-600" />
+        <Check className="h-4 w-4 text-gold-500" />
       </SelectPrimitive.ItemIndicator>
     </span>
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>

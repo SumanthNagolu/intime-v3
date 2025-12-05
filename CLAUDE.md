@@ -168,40 +168,55 @@ src/server/routers/
 
 ## Design System
 
+**Hublot-inspired luxury aesthetic** with black/white/rose gold palette.
+
 ### Color Palette
 
 | Usage | Light Mode | Class |
 |-------|------------|-------|
 | Background | #FDFBF7 | `bg-cream` |
 | Cards | #FFFFFF | `bg-white` |
-| Primary Text | #1A1A1A | `text-charcoal-900` |
-| Primary Action | #0D4C3B | `bg-forest-500` |
-| Accent | Gold gradient | `bg-gold-500` |
+| Primary Text | #171717 | `text-charcoal-900` |
+| Primary Action | #000000 | `bg-hublot-900` |
+| Accent (Rose Gold) | #B76E79 | `bg-gold-500` |
 
 ### Typography
 
-- **Headlines**: Cormorant Garamond (`font-heading`)
-- **UI Elements**: Plus Jakarta Sans (`font-body`)
+- **Headlines**: Raleway (`font-heading`) - Geometric sans-serif with wide letter-spacing
+- **UI Elements**: Raleway (`font-subheading`)
+- **Body**: Inter (`font-body`)
 - **Code**: JetBrains Mono (`font-mono`)
 
 ### Component Patterns
 
 ```tsx
-// Premium button
-<Button variant="premium" size="default">
+// Primary button (black)
+<Button variant="default">
   Submit
 </Button>
 
+// Premium button (rose gold gradient)
+<Button variant="premium">
+  Premium Action
+</Button>
+
 // Card with elevation
-<Card className="bg-white rounded-xl shadow-elevation-sm hover:shadow-elevation-md transition-all">
+<Card className="bg-white rounded-lg shadow-elevation-sm hover:shadow-elevation-md transition-all duration-300">
   ...
 </Card>
 
 // Glass morphism
-<div className="glass rounded-xl p-6">
+<div className="glass rounded-lg p-6">
   ...
 </div>
 ```
+
+### Key Styling Rules
+- Border radius: Sharp (4px-8px), not rounded-xl
+- Transitions: 300ms (deliberate, luxury feel)
+- Buttons: Uppercase with tracking-wider
+- Focus states: Rose gold ring
+- Navigation: Gold accents on active/hover
 
 **See**: `.claude/rules/ui-design-system.md` for complete design system rules
 
@@ -276,6 +291,10 @@ src/server/routers/
 ### DO
 
 - Use cream background (`bg-cream`) for pages
+- Use `hublot-900` (black) for primary actions
+- Use `gold-500` (rose gold) for premium/accent actions
+- Use sharp corners (`rounded-sm`, `rounded-lg`) not `rounded-xl`
+- Use 300ms transitions for luxury feel
 - Apply premium styling from design system
 - Create activities for business actions
 - Filter data by `org_id`
@@ -286,6 +305,9 @@ src/server/routers/
 ### DON'T
 
 - Use `bg-gray-50` (use `bg-cream` instead)
+- Use `forest-*` colors (deprecated, use `hublot-*` instead)
+- Use `rounded-xl` or larger for cards/buttons
+- Use transitions faster than 250ms
 - Skip activity creation for important actions
 - Bypass org_id filtering
 - Create manual API routes (use tRPC)

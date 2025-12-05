@@ -3,13 +3,13 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const inputVariants = cva(
-  "flex w-full rounded-md border bg-transparent text-charcoal-900 transition-all duration-200 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-charcoal-400 disabled:cursor-not-allowed disabled:opacity-50",
+  "flex w-full rounded-sm border bg-white text-charcoal-900 transition-all duration-300 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-charcoal-400 disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "border-charcoal-200 focus:border-forest-500 focus:ring-2 focus:ring-forest-500/20",
-        premium: "border-charcoal-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 shadow-elevation-xs",
-        ghost: "border-transparent bg-charcoal-50 focus:bg-white focus:border-charcoal-200",
+        default: "border-charcoal-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20",
+        premium: "border-charcoal-200 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/30 shadow-elevation-xs",
+        ghost: "border-transparent bg-charcoal-50 focus:bg-white focus:border-gold-500",
         error: "border-error-500 focus:border-error-500 focus:ring-2 focus:ring-error-500/20 text-error-700",
         success: "border-success-500 focus:border-success-500 focus:ring-2 focus:ring-success-500/20",
       },

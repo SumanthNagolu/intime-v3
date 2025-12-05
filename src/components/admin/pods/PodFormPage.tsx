@@ -109,7 +109,7 @@ export function PodFormPage({ mode, podId }: PodFormPageProps) {
       setName(pod.name)
       setDescription(pod.description ?? '')
       setPodType(pod.pod_type)
-      setRegionId(pod.region_id ?? '')
+      setRegionId(pod.region_id ?? 'none')
       setManagerId(pod.manager_id ?? '')
       setSprintDurationWeeks(pod.sprint_duration_weeks ?? 2)
       setPlacementsTarget(pod.placements_per_sprint_target ?? 2)
@@ -141,7 +141,7 @@ export function PodFormPage({ mode, podId }: PodFormPageProps) {
         name: name.trim(),
         description: description.trim() || undefined,
         podType: podType as 'recruiting' | 'bench_sales' | 'ta' | 'hr' | 'mixed',
-        regionId: regionId || undefined,
+        regionId: regionId && regionId !== 'none' ? regionId : undefined,
         managerId,
         memberIds: selectedMembers.map(m => m.id),
         sprintDurationWeeks,
@@ -153,7 +153,7 @@ export function PodFormPage({ mode, podId }: PodFormPageProps) {
         name: name.trim(),
         description: description.trim() || undefined,
         podType: podType as 'recruiting' | 'bench_sales' | 'ta' | 'hr' | 'mixed',
-        regionId: regionId || null,
+        regionId: regionId && regionId !== 'none' ? regionId : null,
         managerId,
         sprintDurationWeeks,
         placementsPerSprintTarget: placementsTarget,
@@ -253,7 +253,7 @@ export function PodFormPage({ mode, podId }: PodFormPageProps) {
                 <SelectValue placeholder="Select region (optional)" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">No Region</SelectItem>
+                <SelectItem value="none">No Region</SelectItem>
                 {regionsQuery.data?.map((region: { id: string; name: string; code: string }) => (
                   <SelectItem key={region.id} value={region.id}>
                     {region.name}

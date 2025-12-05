@@ -1,5 +1,4 @@
 import type { Config } from 'tailwindcss';
-import tailwindcssAnimate from 'tailwindcss-animate';
 
 const config: Config = {
 	darkMode: ['class'],
@@ -7,82 +6,64 @@ const config: Config = {
 		'./src/pages/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/components/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/app/**/*.{js,ts,jsx,tsx,mdx}',
-		'./src/lib/**/*.{js,ts,jsx,tsx,mdx}',
-		'./src/screens/**/*.{js,ts,jsx,tsx,mdx}',
 	],
 	theme: {
 		extend: {
 			colors: {
-				// Rust - Warm Accent Color (for CTAs and highlights)
-				rust: {
-					'50': '#FDF6F3',
-					'100': '#FBEAE3',
-					'200': '#F6D5C8',
-					'300': '#F0B8A1',
-					'400': '#E68E6C',
-					'500': '#C75B39',  // Main rust
-					'600': '#B5482D',  // Slightly darker
-					'700': '#9A3D26',
-					'800': '#7F331F',
-					'900': '#682A1A',
-					'950': '#3A1409',
-					DEFAULT: '#C75B39'  // Default rust color
+				// Hublot Black - Primary Brand Color
+				hublot: {
+					'50': '#F5F5F5',
+					'100': '#E5E5E5',
+					'200': '#CCCCCC',
+					'300': '#999999',
+					'400': '#666666',
+					'500': '#333333',
+					'600': '#1A1A1A',
+					'700': '#0D0D0D',
+					'800': '#080808',
+					'900': '#000000',
+					'950': '#000000'
 				},
-				// Premium Forest Green - Primary Brand Color
-				forest: {
-					'50': '#E8F5ED',
-					'100': '#D1EBD9',
-					'200': '#A3D7B3',
-					'300': '#75C38D',
-					'400': '#47AF67',
-					'500': '#0D4C3B',  // Main brand color
-					'600': '#0B3F31',
-					'700': '#093228',
-					'800': '#07251E',
-					'900': '#0A3A2A',  // Deep forest (richer)
-					'950': '#041E16'
-				},
-				// Refined Gold - Accent Color (replacing amber)
+				// Rose Gold - Hublot Accent Color
 				gold: {
-					'50': '#FDFBF7',
-					'100': '#FAF6ED',
-					'200': '#F5EDD9',
-					'300': '#EBD9B3',
-					'400': '#DFC18A',
-					'500': '#C9A961',  // Main gold
-					'600': '#D4AF37',  // Bright gold (highlights)
-					'700': '#B8964E',
-					'800': '#997D41',
-					'900': '#7A6434',
-					'950': '#5C4B27'
+					'50': '#FDF8F6',
+					'100': '#FAEFEC',
+					'200': '#F5DDD6',
+					'300': '#EBBEAF',
+					'400': '#D4A574',  // Rose gold light
+					'500': '#B76E79',  // King Gold (primary accent)
+					'600': '#A25D68',
+					'700': '#8A4D57',
+					'800': '#724046',
+					'900': '#5F3639',
+					'950': '#331C1E'
 				},
 				// Keep amber for backwards compatibility (maps to gold)
 				amber: {
-					'50': '#FDFBF7',
-					'100': '#FAF6ED',
-					'200': '#F5EDD9',
-					'300': '#EBD9B3',
-					'400': '#DFC18A',
-					'500': '#C9A961',
-					'600': '#D4AF37',
-					'700': '#B8964E',
-					'800': '#997D41',
-					'900': '#7A6434'
+					'50': '#FDF8F6',
+					'100': '#FAEFEC',
+					'200': '#F5DDD6',
+					'300': '#EBBEAF',
+					'400': '#D4A574',
+					'500': '#B76E79',
+					'600': '#A25D68',
+					'700': '#8A4D57',
+					'800': '#724046',
+					'900': '#5F3639'
 				},
-				// Premium Neutrals
+				// Premium Neutrals (refined)
 				charcoal: {
-					'50': '#F8F9FA',
-					'100': '#E9ECEF',
-					'200': '#DEE2E6',
-					'300': '#CED4DA',
-					'400': '#ADB5BD',
-					'500': '#6C757D',
-					'600': '#495057',
-					'700': '#343A40',
-					'800': '#212529',
-					'900': '#1A1A1A',  // True charcoal
-					'950': '#0D0D0D',
-					DEFAULT: '#1A1A1A'  // Default to true charcoal (900)
+					'50': '#FAFAFA',
+					'100': '#F5F5F5',
+					'200': '#E5E5E5',
+					'300': '#D4D4D4',
+					'400': '#A3A3A3',
+					'500': '#737373',
+					'600': '#525252',
+					'700': '#404040',
+					'800': '#262626',
+					'900': '#171717',
+					'950': '#0A0A0A'
 				},
 				slate: {
 					'50': '#F8F9FA',
@@ -96,9 +77,9 @@ const config: Config = {
 					'800': '#15202C',
 					'900': '#0D1620'
 				},
-				// Cream/Cloud backgrounds
+				// Premium backgrounds (keep cream as requested)
 				cream: '#FDFBF7',
-				cloud: '#F8F9FA',
+				cloud: '#F8F8F8',
 				ivory: '#FFFCF5',
 				// Semantic colors (refined)
 				success: {
@@ -175,18 +156,18 @@ const config: Config = {
 				'xs': '2px',
 			},
 			animation: {
-				// Refined animation system
-				'fade-in': 'fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-				'fade-in-fast': 'fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-				'slide-up': 'slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-				'slide-down': 'slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-				'slide-left': 'slideLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-				'slide-right': 'slideRight 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+				// Hublot-style animation system (slower, more deliberate)
+				'fade-in': 'fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+				'fade-in-fast': 'fadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+				'slide-up': 'slideUp 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+				'slide-down': 'slideDown 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+				'slide-left': 'slideLeft 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+				'slide-right': 'slideRight 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
 				'scale-in': 'scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
 				'scale-out': 'scaleOut 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-				'shimmer': 'shimmer 2s linear infinite',
+				'shimmer': 'shimmer 2.5s linear infinite',
 				'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-				'bounce-subtle': 'bounceSubtle 2s ease-in-out infinite',
+				'lift': 'lift 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
 				'glow': 'glow 2s ease-in-out infinite',
 			},
 			keyframes: {
@@ -222,35 +203,30 @@ const config: Config = {
 					'0%': { backgroundPosition: '-1000px 0' },
 					'100%': { backgroundPosition: '1000px 0' },
 				},
-				bounceSubtle: {
-					'0%, 100%': { transform: 'translateY(0)' },
-					'50%': { transform: 'translateY(-4px)' },
+				lift: {
+					'0%': { transform: 'translateY(0)' },
+					'100%': { transform: 'translateY(-2px)' },
 				},
 				glow: {
-					'0%, 100%': { opacity: '1', boxShadow: '0 0 20px rgba(201, 169, 97, 0.5)' },
-					'50%': { opacity: '0.8', boxShadow: '0 0 30px rgba(201, 169, 97, 0.8)' },
+					'0%, 100%': { opacity: '1', boxShadow: '0 0 20px rgba(183, 110, 121, 0.5)' },
+					'50%': { opacity: '0.8', boxShadow: '0 0 30px rgba(183, 110, 121, 0.8)' },
 				},
 			},
 			fontFamily: {
-				// Premium Heading - Elegant serif with character
 				heading: [
-					'"Cormorant Garamond"',
-					'"Playfair Display"',
-					'Georgia',
-					'Cambria',
-					'serif'
+					'Raleway',
+					'Helvetica Neue',
+					'Helvetica',
+					'Arial',
+					'sans-serif'
 				],
-				// Modern Subheading - Clean geometric sans
 				subheading: [
-					'"Plus Jakarta Sans"',
-					'"Space Grotesk"',
+					'Raleway',
 					'Inter',
 					'system-ui',
 					'sans-serif'
 				],
-				// Body - Highly readable modern sans
 				body: [
-					'"Plus Jakarta Sans"',
 					'Inter',
 					'-apple-system',
 					'BlinkMacSystemFont',
@@ -258,40 +234,41 @@ const config: Config = {
 					'Roboto',
 					'sans-serif'
 				],
-				// Code - Developer-friendly monospace
 				mono: [
 					'"JetBrains Mono"',
-					'"IBM Plex Mono"',
 					'"Fira Code"',
 					'"Courier New"',
 					'monospace'
 				]
 			},
 			fontSize: {
-				// Formalized type scale
-				'display': ['4.5rem', { lineHeight: '5rem', fontWeight: '900' }],  // 72px
-				'h1': ['3rem', { lineHeight: '3.5rem', fontWeight: '900' }],       // 48px
-				'h2': ['2.25rem', { lineHeight: '2.75rem', fontWeight: '700' }],   // 36px
-				'h3': ['1.75rem', { lineHeight: '2.25rem', fontWeight: '700' }],   // 28px
-				'h4': ['1.25rem', { lineHeight: '1.75rem', fontWeight: '600' }],   // 20px
-				'body-lg': ['1.125rem', { lineHeight: '1.75rem', fontWeight: '400' }], // 18px
-				'body': ['1rem', { lineHeight: '1.5rem', fontWeight: '400' }],     // 16px
-				'body-sm': ['0.875rem', { lineHeight: '1.25rem', fontWeight: '400' }], // 14px
-				'caption': ['0.75rem', { lineHeight: '1rem', fontWeight: '500', letterSpacing: '0.05em' }], // 12px
+				// Hublot-style type scale with wider letter spacing
+				'display': ['4.5rem', { lineHeight: '5rem', fontWeight: '700', letterSpacing: '0.02em' }],
+				'h1': ['3rem', { lineHeight: '3.5rem', fontWeight: '700', letterSpacing: '0.02em' }],
+				'h2': ['2.25rem', { lineHeight: '2.75rem', fontWeight: '700', letterSpacing: '0.02em' }],
+				'h3': ['1.75rem', { lineHeight: '2.25rem', fontWeight: '600', letterSpacing: '0.02em' }],
+				'h4': ['1.25rem', { lineHeight: '1.75rem', fontWeight: '600', letterSpacing: '0.01em' }],
+				'body-lg': ['1.125rem', { lineHeight: '1.75rem', fontWeight: '400' }],
+				'body': ['1rem', { lineHeight: '1.625rem', fontWeight: '400' }],
+				'body-sm': ['0.875rem', { lineHeight: '1.25rem', fontWeight: '400' }],
+				'caption': ['0.75rem', { lineHeight: '1rem', fontWeight: '500', letterSpacing: '0.05em' }],
+				'nav': ['0.875rem', { lineHeight: '1.25rem', fontWeight: '500', letterSpacing: '0.03em' }],
 			},
 			boxShadow: {
-				// Premium elevation system
-				'elevation-xs': '0 1px 2px rgba(10, 58, 42, 0.05)',
-				'elevation-sm': '0 2px 8px rgba(10, 58, 42, 0.08)',
-				'elevation-md': '0 4px 16px rgba(10, 58, 42, 0.10)',
-				'elevation-lg': '0 8px 24px rgba(10, 58, 42, 0.12)',
-				'elevation-xl': '0 16px 32px rgba(10, 58, 42, 0.16)',
-				'elevation-2xl': '0 24px 48px rgba(10, 58, 42, 0.20)',
+				// Hublot-style neutral elevation system
+				'elevation-xs': '0 1px 2px rgba(0, 0, 0, 0.05)',
+				'elevation-sm': '0 2px 8px rgba(0, 0, 0, 0.08)',
+				'elevation-md': '0 4px 16px rgba(0, 0, 0, 0.10)',
+				'elevation-lg': '0 8px 24px rgba(0, 0, 0, 0.12)',
+				'elevation-xl': '0 16px 32px rgba(0, 0, 0, 0.16)',
+				'elevation-2xl': '0 24px 48px rgba(0, 0, 0, 0.20)',
 				// Specialty shadows
-				'glass': '0 8px 32px 0 rgba(10, 58, 42, 0.12)',
-				'inner-glow': 'inset 0 2px 4px rgba(201, 169, 97, 0.1)',
-				'premium': '0 20px 40px -12px rgba(10, 58, 42, 0.25)',
-				'premium-lg': '0 32px 64px -12px rgba(10, 58, 42, 0.3)',
+				'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.12)',
+				'inner-glow': 'inset 0 2px 4px rgba(183, 110, 121, 0.1)',
+				'premium': '0 20px 40px -12px rgba(0, 0, 0, 0.25)',
+				'premium-lg': '0 32px 64px -12px rgba(0, 0, 0, 0.3)',
+				'gold-glow': '0 4px 12px rgba(183, 110, 121, 0.3)',
+				'gold-glow-lg': '0 6px 16px rgba(183, 110, 121, 0.4)',
 			},
 			spacing: {
 				// Formalized 8px grid spacing scale
@@ -309,27 +286,18 @@ const config: Config = {
 				'22': '5.5rem'
 			},
 			borderRadius: {
-				// Formalized radius scale for premium feel
+				// Hublot-style sharp/subtle radius scale
 				'none': '0',
-				'sm': '0.5rem',     // 8px - inputs, small cards
-				'md': '1rem',       // 16px - cards, buttons
-				'lg': '1.5rem',     // 24px - large cards, modals
-				'xl': '2rem',       // 32px - hero sections, feature cards
-				'2xl': '2.5rem',    // 40px - extra large features
-				'3xl': '3rem',      // 48px - signature large radius
-				'full': '9999px',   // pills, avatars
-				// shadcn compatibility
-				DEFAULT: '1rem'
-			},
-			borderWidth: {
-				'0': '0',
-				'1': '1px',
-				'2': '2px',
-				'3': '3px',
-				'4': '4px',
-				'6': '6px',
-				'8': '8px',
-				DEFAULT: '1px'
+				'xs': '2px',
+				'sm': '4px',        // Primary radius for inputs, small cards
+				'md': '6px',        // Buttons
+				'lg': '8px',        // Cards, modals
+				'xl': '12px',       // Large cards
+				'2xl': '16px',      // Feature sections
+				'3xl': '24px',      // Hero elements
+				'full': '9999px',   // Pills, avatars
+				// shadcn compatibility - default to sharp
+				DEFAULT: '4px'
 			},
 			maxWidth: {
 				// Container widths
@@ -342,7 +310,7 @@ const config: Config = {
 			}
 		}
 	},
-	plugins: [tailwindcssAnimate],
+	plugins: [require("tailwindcss-animate")],
 };
 
 export default config;

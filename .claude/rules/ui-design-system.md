@@ -2,13 +2,16 @@
 
 ## Design Philosophy
 
-InTime uses a **Premium Minimalist Design System** inspired by:
-- **Hublot**: Luxury watch aesthetic (monochrome foundation, generous whitespace, photography-dominant)
-- **HumanLayer**: Modern documentation (clean navigation, content-first, excellent UX)
+InTime uses a **Hublot-inspired Luxury Design System** featuring:
+- **Pure black/white foundation** with rose gold accents
+- **Geometric sans-serif typography** (Raleway for headings, Inter for body)
+- **Sharp/subtle corners** (4px-8px radius)
+- **Deliberate animations** (300ms+ transitions)
+- **Generous whitespace** for premium feel
 
-### Core Principle: "Content as Art"
+### Core Principle: "Art of Fusion"
 
-Every screen should feel like a curated gallery - content breathes, forms feel effortless, navigation disappears when not needed. **Reject boxed everything** in favor of page-like flows with visual hierarchy through spacing, not borders.
+Every screen combines technical precision with refined luxury. Content breathes, forms feel effortless, navigation is intuitive. Use restraint with color - let black, white, and rose gold create visual impact.
 
 ---
 
@@ -17,15 +20,16 @@ Every screen should feel like a curated gallery - content breathes, forms feel e
 ### Primary Palette
 - **Page background**: `bg-cream` (#FDFBF7)
 - **Card background**: `bg-white`
-- **Primary text**: `text-charcoal-900` (#1A1A1A)
+- **Primary text**: `text-charcoal-900` (#171717)
 - **Secondary text**: `text-charcoal-600`
 - **Muted text**: `text-charcoal-500`
 
-### Brand Colors (Use Sparingly)
-- **Primary actions**: `forest-500` (#0D4C3B)
+### Brand Colors
+- **Primary actions**: `hublot-900` (pure black #000000)
+- **Premium actions**: `gold-500` (#B76E79 rose gold)
 - **Active/selected states**: `gold-500` or gold gradient
-- **Focus rings**: `ring-gold-500/20`
-- **Warm accents**: `rust-500` (#C75B39)
+- **Focus rings**: `ring-gold-500`
+- **Hover accents**: `gold-400` (#D4A574)
 
 ### Status Colors
 - **Success**: `success-500` (#0A8754)
@@ -38,26 +42,27 @@ Every screen should feel like a curated gallery - content breathes, forms feel e
 ## Typography
 
 ### Font Families
-- **Headlines**: `font-heading` (Cormorant Garamond) - Elegant serif
-- **UI Elements**: `font-subheading` (Plus Jakarta Sans) - Modern sans
-- **Body Text**: `font-body` (Plus Jakarta Sans) - Readable sans
+- **Headlines**: `font-heading` (Raleway) - Geometric sans-serif
+- **UI Elements**: `font-subheading` (Raleway)
+- **Body Text**: `font-body` (Inter) - Clean sans-serif
 - **Code**: `font-mono` (JetBrains Mono)
 
 ### Type Scale
-- `text-display`: 72px (hero headlines)
-- `text-h1`: 48px (page titles)
-- `text-h2`: 36px (section headers)
-- `text-h3`: 28px (subsections)
+- `text-display`: 72px (hero headlines, tracking-wide)
+- `text-h1`: 48px (page titles, tracking-wide)
+- `text-h2`: 36px (section headers, tracking-wide)
+- `text-h3`: 28px (subsections, tracking-wide)
 - `text-h4`: 20px (card titles)
 - `text-body-lg`: 18px (lead paragraphs)
 - `text-body`: 16px (default)
 - `text-body-sm`: 14px (compact)
-- `text-caption`: 12px (labels, uppercase)
+- `text-nav`: 14px (navigation, uppercase, tracking-widest)
+- `text-caption`: 12px (labels, uppercase, tracking-widest)
 
 ### Rules
-- Headlines always use `font-heading` (serif)
-- UI elements use `font-subheading` (sans)
-- Captions use uppercase with `tracking-wider`
+- Headlines use `font-heading` (Raleway) with wider letter-spacing
+- Navigation uses uppercase with `tracking-widest`
+- Body text uses Inter for readability
 - Maximum line length: 65 characters
 
 ---
@@ -81,7 +86,7 @@ Every screen should feel like a curated gallery - content breathes, forms feel e
 - Inline gaps: `gap-2` or `gap-4`
 
 ### Philosophy
-- **Generous whitespace** = premium feel
+- **Generous whitespace** = luxury feel
 - **Internal spacing < External spacing** (group related items)
 - **Prefer spacing over borders** for visual separation
 
@@ -92,10 +97,13 @@ Every screen should feel like a curated gallery - content breathes, forms feel e
 ### Buttons
 
 #### Variants
-- `variant="default"`: Forest-500 bg, white text
-- `variant="premium"`: Gold gradient + shimmer
-- `variant="secondary"`: Outlined, forest border
+- `variant="default"`: Black bg, white text, lift on hover
+- `variant="premium"`: Rose gold gradient + gold glow shadow
+- `variant="gold"`: Solid gold with glow
+- `variant="outline"`: 2px black border, fills on hover
+- `variant="secondary"`: Light gray bg
 - `variant="ghost"`: No background, text only
+- `variant="glass"`: White/90 with blur
 - `variant="destructive"`: Error-500 bg
 
 #### Sizes
@@ -105,49 +113,62 @@ Every screen should feel like a curated gallery - content breathes, forms feel e
 
 #### States
 - Hover: `hover:-translate-y-0.5 hover:shadow-elevation-md`
-- Focus: `focus:ring-4 focus:ring-gold-500/20`
+- Focus: `focus:ring-2 focus:ring-gold-500`
 - Disabled: `opacity-50`
+
+#### Styling
+- All buttons use uppercase text with `tracking-wider`
+- Border radius: `rounded-sm` (4px)
+- Transition: 300ms
 
 ### Cards
 
 Standard card:
 ```tsx
-<Card className="bg-white rounded-xl border-charcoal-100 shadow-elevation-sm hover:shadow-elevation-md hover:-translate-y-0.5 transition-all duration-300">
+<Card className="bg-white rounded-lg border-charcoal-100 shadow-elevation-sm hover:shadow-elevation-md hover:-translate-y-1 transition-all duration-300">
 ```
 
 Glass card:
 ```tsx
-<div className="glass rounded-xl p-6">
+<div className="glass rounded-lg p-6">
 ```
 
 ### Form Inputs
 
 ```tsx
-<Input className="h-11 rounded-md border-charcoal-200 focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500" />
+<Input className="h-11 rounded-sm border-charcoal-200 focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 transition-all duration-300" />
 ```
 
+- Focus state: Rose gold border and ring
+- Border radius: `rounded-sm` (4px)
+
 ### Shadows
+- `shadow-elevation-xs`: Subtle elevation
 - `shadow-elevation-sm`: Default cards
 - `shadow-elevation-md`: Hovered cards
-- `shadow-elevation-lg`: Modals
+- `shadow-elevation-lg`: Dropdowns
+- `shadow-elevation-xl`: Modals
 - `shadow-premium`: Hero elements
 - `shadow-glass`: Glass components
+- `shadow-gold-glow`: Gold button glow
+- `shadow-gold-glow-lg`: Enhanced gold glow
 
 ---
 
 ## Navigation Patterns
 
-### Top Navigation
-- Glass effect: `glass-strong rounded-2xl shadow-premium`
-- Horizontal tabs for primary sections
-- Active state: Gold gradient background
-- Dropdowns expand on hover
-
 ### Sidebar
-- Width: 280px
-- No visible border
-- Active item: `border-l-2 border-gold-600`
-- Collapsible sections
+- Width: 256px
+- Background: `bg-white` with subtle border
+- Section titles: Uppercase, `text-nav` style
+- Active item: `bg-gold-50 text-gold-600 border-l-[3px] border-gold-500`
+- Hover: `hover:bg-charcoal-50 hover:text-gold-500`
+- Transition: 300ms
+
+### Breadcrumbs
+- Separator: ChevronRight
+- Link hover: `hover:text-gold-500`
+- Active: `font-semibold text-charcoal-900`
 
 ### Command Palette (Cmd+K)
 - Centered glass modal
@@ -182,52 +203,31 @@ Glass card:
 
 ## Animations
 
-### Timing
-- 150ms: Micro-interactions
+### Timing (Hublot-style - slower, deliberate)
+- 250ms: Micro-interactions
 - 300ms: Standard transitions
-- 400ms: Slide animations
-- 500ms: Fade animations
+- 350ms: Slide animations
+- 400ms: Fade animations
 
 ### Easing
 - Standard: `cubic-bezier(0.4, 0, 0.2, 1)`
 
 ### Patterns
-- Cards: Lift on hover (`hover:-translate-y-0.5`)
-- Buttons: Scale on press (`active:scale-95`)
-- Modals: Fade + scale in
+- Cards: Lift on hover (`hover:-translate-y-1`)
+- Buttons: Lift on hover (`hover:-translate-y-0.5`)
+- Modals: Fade + scale in (300ms)
+- Navigation: Color transitions (300ms)
 
 ---
 
-## Role-Specific UI
+## Dark Mode
 
-### Recruiter
-- Sidebar-main layout
-- Pipeline kanban/list toggle
-- Activity timeline
-- Forest/gold accents
-
-### Bench Sales
-- Status-based tabs
-- Prominent utilization metrics
-- Color-coded bench days (green/yellow/orange/red)
-- Immigration alerts
-
-### Admin
-- Settings-style sidebar
-- Neutral colors
-- Data-focused
-
-### Client Portal
-- Minimal navigation
-- Quick action cards
-- Interview calendar
-- Client brand colors if white-labeled
-
-### Talent Portal
-- Profile-centric
-- Job search focus
-- Progress indicators
-- Encouraging greens/golds
+Hublot-style pure black aesthetic:
+- Background: Pure black (#000000)
+- Cards: Very dark gray (#121212)
+- Text: Off-white (#FAFAFA)
+- Accents: Rose gold lighter variant
+- Borders: Dark gray (#262626)
 
 ---
 
@@ -256,7 +256,7 @@ Glass card:
 - Large text: 3:1 minimum
 
 ### Focus States
-- Visible focus ring on all interactive elements
+- Visible gold focus ring on all interactive elements
 - Tab order follows logical flow
 - Focus trapped in modals
 
@@ -266,16 +266,18 @@ Glass card:
 
 ### DO
 - Use generous whitespace
-- Prefer spacing over borders
-- Use serif fonts for headlines
-- Add subtle hover animations
-- Use gold accents for premium feel
-- Keep forms clean and scannable
+- Use pure black for primary actions
+- Use rose gold for premium/accent actions
+- Add subtle hover lift animations (300ms)
+- Use Raleway for headings with wide letter-spacing
+- Use uppercase for navigation text
+- Keep corners sharp (4px-8px radius)
 
 ### DON'T
-- Box everything with borders
-- Use too many colors
-- Crowd content together
+- Use forest green (deprecated)
+- Use rounded-xl or larger for cards/buttons
+- Use transitions faster than 250ms
+- Use serif fonts for headings
+- Box everything with heavy borders
+- Use too many accent colors
 - Skip hover/focus states
-- Use generic sans-serif for headlines
-- Add unnecessary decorative elements
