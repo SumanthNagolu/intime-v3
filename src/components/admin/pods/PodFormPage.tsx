@@ -191,6 +191,43 @@ export function PodFormPage({ mode, podId }: PodFormPageProps) {
     )
   }
 
+  // Show loading state while fetching initial data
+  if (regionsQuery.isLoading || usersQuery.isLoading) {
+    return (
+      <DashboardShell
+        title={mode === 'create' ? 'Create New Pod' : 'Edit Pod'}
+        description={mode === 'create' ? 'Set up a new organizational pod' : 'Update pod details'}
+        breadcrumbs={breadcrumbs}
+      >
+        <div className="flex items-center justify-center h-64">
+          <Loader2 className="w-8 h-8 animate-spin text-forest-600" />
+        </div>
+      </DashboardShell>
+    )
+  }
+
+  // Show error state if queries fail
+  if (regionsQuery.error || usersQuery.error) {
+    return (
+      <DashboardShell
+        title={mode === 'create' ? 'Create New Pod' : 'Edit Pod'}
+        description={mode === 'create' ? 'Set up a new organizational pod' : 'Update pod details'}
+        breadcrumbs={breadcrumbs}
+      >
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <p className="text-red-800">
+            Failed to load required data. Please refresh the page.
+          </p>
+          {(regionsQuery.error || usersQuery.error) && (
+            <p className="text-red-600 text-sm mt-2">
+              {regionsQuery.error?.message || usersQuery.error?.message}
+            </p>
+          )}
+        </div>
+      </DashboardShell>
+    )
+  }
+
   const availableUsers = usersQuery.data?.filter(
     (u: UserProfile) => !selectedMembers.find(m => m.id === u.id) && u.id !== managerId
   ) ?? []
