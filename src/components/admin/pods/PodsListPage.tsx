@@ -74,8 +74,8 @@ export function PodsListPage() {
 
   const podsQuery = trpc.pods.list.useQuery({
     search: search || undefined,
-    podType: podType as 'recruiting' | 'bench_sales' | 'ta' | 'hr' | 'mixed' | undefined,
-    status: status as 'active' | 'inactive' | undefined,
+    podType: podType && podType !== 'all' ? podType as 'recruiting' | 'bench_sales' | 'ta' | 'hr' | 'mixed' : undefined,
+    status: status && status !== 'all' ? status as 'active' | 'inactive' : undefined,
     page,
     pageSize: 20,
   })
@@ -116,7 +116,7 @@ export function PodsListPage() {
               <SelectValue placeholder="All Types" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Types</SelectItem>
+              <SelectItem value="all">All Types</SelectItem>
               <SelectItem value="recruiting">Recruiting</SelectItem>
               <SelectItem value="bench_sales">Bench Sales</SelectItem>
               <SelectItem value="ta">TA</SelectItem>
@@ -131,7 +131,7 @@ export function PodsListPage() {
             <SelectContent>
               <SelectItem value="active">Active</SelectItem>
               <SelectItem value="inactive">Inactive</SelectItem>
-              <SelectItem value="">All</SelectItem>
+              <SelectItem value="all">All</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -155,9 +155,9 @@ export function PodsListPage() {
               </div>
               <h3 className="text-lg font-semibold text-charcoal-900 mb-2">No pods found</h3>
               <p className="text-charcoal-500 mb-4">
-                {search || podType ? 'Try adjusting your filters' : 'Get started by creating your first pod'}
+                {search || (podType && podType !== 'all') ? 'Try adjusting your filters' : 'Get started by creating your first pod'}
               </p>
-              {!search && !podType && (
+              {!search && (!podType || podType === 'all') && (
                 <Link href="/employee/admin/pods/new">
                   <Button className="bg-forest-600 hover:bg-forest-700 text-white">
                     <Plus className="w-4 h-4 mr-2" />

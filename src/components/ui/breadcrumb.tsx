@@ -1,5 +1,3 @@
-"use client"
-
 import * as React from "react"
 import { ChevronRight, Home } from "lucide-react"
 import Link from "next/link"
@@ -21,7 +19,7 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
     <nav aria-label="Breadcrumb" className={cn("flex items-center space-x-1 text-sm", className)}>
       <Link
         href="/"
-        className="text-charcoal-500 hover:text-forest-600 transition-colors"
+        className="text-charcoal-500 hover:text-gold-500 transition-colors duration-300"
         aria-label="Home"
       >
         <Home className="h-4 w-4" />
@@ -33,14 +31,15 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
           {item.href && !item.active ? (
             <Link
               href={item.href}
-              className="text-charcoal-500 hover:text-forest-600 transition-colors"
+              className="text-charcoal-500 hover:text-gold-500 transition-colors duration-300 tracking-wide"
             >
               {item.label}
             </Link>
           ) : (
             <span
               className={cn(
-                item.active ? "text-charcoal-900 font-medium" : "text-charcoal-500"
+                "tracking-wide",
+                item.active ? "text-charcoal-900 font-semibold" : "text-charcoal-500"
               )}
               aria-current={item.active ? "page" : undefined}
             >

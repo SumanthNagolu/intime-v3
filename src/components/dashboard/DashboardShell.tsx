@@ -1,5 +1,3 @@
-"use client"
-
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Breadcrumb, BreadcrumbItem } from "@/components/ui/breadcrumb"
@@ -7,7 +5,7 @@ import { Breadcrumb, BreadcrumbItem } from "@/components/ui/breadcrumb"
 interface DashboardShellProps {
   children: React.ReactNode
   title: string
-  description?: string
+  description?: React.ReactNode
   breadcrumbs?: BreadcrumbItem[]
   actions?: React.ReactNode
   className?: string
@@ -33,7 +31,7 @@ export function DashboardShell({
           <div>
             <h1 className="text-h1 text-charcoal-900">{title}</h1>
             {description && (
-              <p className="text-body-lg text-charcoal-600 mt-2">{description}</p>
+              <div className="text-body-lg text-charcoal-600 mt-2">{description}</div>
             )}
           </div>
 
