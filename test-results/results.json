@@ -1,0 +1,3011 @@
+{
+  "config": {
+    "configFile": "/home/user/intime-v3/playwright.config.ts",
+    "rootDir": "/home/user/intime-v3/tests/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 8
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "test-results/junit.xml"
+        }
+      ],
+      [
+        "list",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/user/intime-v3/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 8
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/user/intime-v3/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/home/user/intime-v3/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 8
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "/home/user/intime-v3/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 8,
+    "webServer": {
+      "command": "pnpm dev",
+      "url": "http://localhost:3000",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "admin-dashboard.spec.ts",
+      "file": "admin-dashboard.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Admin Dashboard",
+          "file": "admin-dashboard.spec.ts",
+          "line": 20,
+          "column": 6,
+          "specs": [
+            {
+              "title": "ADMIN-DASH-001: Navigate to dashboard",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 15086,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:40:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                          "column": 16,
+                          "line": 40
+                        },
+                        "snippet": "  38 |     \n  39 |     // Wait for navigation after login\n> 40 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n     |                ^\n  41 |     \n  42 |     // Navigate to admin dashboard\n  43 |     await page.goto(DASHBOARD_URL);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                            "column": 16,
+                            "line": 40
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  38 |     \n  39 |     // Wait for navigation after login\n> 40 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n     |                ^\n  41 |     \n  42 |     // Navigate to admin dashboard\n  43 |     await page.goto(DASHBOARD_URL);\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:40:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:18:26.755Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-df6c7-H-001-Navigate-to-dashboard-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-df6c7-H-001-Navigate-to-dashboard-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-df6c7-H-001-Navigate-to-dashboard-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                        "column": 16,
+                        "line": 40
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d4e698b37550954495f8-2a998001fda98b63cad1",
+              "file": "admin-dashboard.spec.ts",
+              "line": 33,
+              "column": 3
+            },
+            {
+              "title": "ADMIN-DASH-002: View system health",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 14963,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:62:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                          "column": 16,
+                          "line": 62
+                        },
+                        "snippet": "  60 |     \n  61 |     // Wait for navigation after login\n> 62 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n     |                ^\n  63 |     \n  64 |     // Navigate to admin dashboard\n  65 |     await page.goto(DASHBOARD_URL);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                            "column": 16,
+                            "line": 62
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  60 |     \n  61 |     // Wait for navigation after login\n> 62 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n     |                ^\n  63 |     \n  64 |     // Navigate to admin dashboard\n  65 |     await page.goto(DASHBOARD_URL);\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:62:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:18:26.775Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-8775f-DASH-002-View-system-health-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-8775f-DASH-002-View-system-health-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-8775f-DASH-002-View-system-health-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                        "column": 16,
+                        "line": 62
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d4e698b37550954495f8-5b4a3f23f496960df08d",
+              "file": "admin-dashboard.spec.ts",
+              "line": 55,
+              "column": 3
+            },
+            {
+              "title": "ADMIN-DASH-003: View critical alerts",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 15309,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:95:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                          "column": 16,
+                          "line": 95
+                        },
+                        "snippet": "  93 |     \n  94 |     // Wait for navigation after login\n> 95 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n     |                ^\n  96 |     \n  97 |     // Navigate to admin dashboard\n  98 |     await page.goto(DASHBOARD_URL);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                            "column": 16,
+                            "line": 95
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  93 |     \n  94 |     // Wait for navigation after login\n> 95 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n     |                ^\n  96 |     \n  97 |     // Navigate to admin dashboard\n  98 |     await page.goto(DASHBOARD_URL);\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:95:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:18:26.746Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-5686a-SH-003-View-critical-alerts-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-5686a-SH-003-View-critical-alerts-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-5686a-SH-003-View-critical-alerts-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                        "column": 16,
+                        "line": 95
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d4e698b37550954495f8-ba53f032f48f03f21099",
+              "file": "admin-dashboard.spec.ts",
+              "line": 88,
+              "column": 3
+            },
+            {
+              "title": "ADMIN-DASH-004: Click quick action",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 15319,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:122:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                          "column": 16,
+                          "line": 122
+                        },
+                        "snippet": "  120 |     \n  121 |     // Wait for navigation after login\n> 122 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  123 |     \n  124 |     // Navigate to admin dashboard\n  125 |     await page.goto(DASHBOARD_URL);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                            "column": 16,
+                            "line": 122
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  120 |     \n  121 |     // Wait for navigation after login\n> 122 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  123 |     \n  124 |     // Navigate to admin dashboard\n  125 |     await page.goto(DASHBOARD_URL);\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:122:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:18:26.749Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-3c42a-DASH-004-Click-quick-action-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-3c42a-DASH-004-Click-quick-action-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-3c42a-DASH-004-Click-quick-action-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                        "column": 16,
+                        "line": 122
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d4e698b37550954495f8-d911558dfb361dc7d192",
+              "file": "admin-dashboard.spec.ts",
+              "line": 115,
+              "column": 3
+            },
+            {
+              "title": "ADMIN-DASH-005: View recent activity",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 15154,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:165:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                          "column": 16,
+                          "line": 165
+                        },
+                        "snippet": "  163 |     \n  164 |     // Wait for navigation after login\n> 165 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  166 |     \n  167 |     // Navigate to admin dashboard\n  168 |     await page.goto(DASHBOARD_URL);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                            "column": 16,
+                            "line": 165
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  163 |     \n  164 |     // Wait for navigation after login\n> 165 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  166 |     \n  167 |     // Navigate to admin dashboard\n  168 |     await page.goto(DASHBOARD_URL);\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:165:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:18:26.747Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-15d2f-SH-005-View-recent-activity-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-15d2f-SH-005-View-recent-activity-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-15d2f-SH-005-View-recent-activity-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                        "column": 16,
+                        "line": 165
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d4e698b37550954495f8-d464c50d72a13f89ec99",
+              "file": "admin-dashboard.spec.ts",
+              "line": 158,
+              "column": 3
+            },
+            {
+              "title": "ADMIN-DASH-006: Auto-refresh",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "failed",
+                      "duration": 15042,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:196:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                          "column": 16,
+                          "line": 196
+                        },
+                        "snippet": "  194 |     \n  195 |     // Wait for navigation after login\n> 196 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  197 |     \n  198 |     // Navigate to admin dashboard\n  199 |     await page.goto(DASHBOARD_URL);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                            "column": 16,
+                            "line": 196
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  194 |     \n  195 |     // Wait for navigation after login\n> 196 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  197 |     \n  198 |     // Navigate to admin dashboard\n  199 |     await page.goto(DASHBOARD_URL);\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:196:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:18:26.783Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dashboard-ADMIN-DASH-006-Auto-refresh-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dashboard-ADMIN-DASH-006-Auto-refresh-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dashboard-ADMIN-DASH-006-Auto-refresh-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                        "column": 16,
+                        "line": 196
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d4e698b37550954495f8-48ac8fb5ddfb648faaf5",
+              "file": "admin-dashboard.spec.ts",
+              "line": 189,
+              "column": 3
+            },
+            {
+              "title": "ADMIN-DASH-007: Keyboard navigation - Command palette",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 6,
+                      "status": "failed",
+                      "duration": 15179,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:230:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                          "column": 16,
+                          "line": 230
+                        },
+                        "snippet": "  228 |     \n  229 |     // Wait for navigation after login\n> 230 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  231 |     \n  232 |     // Navigate to admin dashboard\n  233 |     await page.goto(DASHBOARD_URL);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                            "column": 16,
+                            "line": 230
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  228 |     \n  229 |     // Wait for navigation after login\n> 230 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  231 |     \n  232 |     // Navigate to admin dashboard\n  233 |     await page.goto(DASHBOARD_URL);\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:230:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:18:26.803Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-c59c4-avigation---Command-palette-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-c59c4-avigation---Command-palette-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-c59c4-avigation---Command-palette-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                        "column": 16,
+                        "line": 230
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d4e698b37550954495f8-8afc032c14864ff54660",
+              "file": "admin-dashboard.spec.ts",
+              "line": 223,
+              "column": 3
+            },
+            {
+              "title": "ADMIN-DASH-008: Non-admin access - should be forbidden",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
+                      "status": "failed",
+                      "duration": 15185,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:274:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                          "column": 16,
+                          "line": 274
+                        },
+                        "snippet": "  272 |     \n  273 |     // Wait for navigation after login\n> 274 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  275 |     \n  276 |     // Try to navigate to admin dashboard\n  277 |     await page.goto(DASHBOARD_URL);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                            "column": 16,
+                            "line": 274
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  272 |     \n  273 |     // Wait for navigation after login\n> 274 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  275 |     \n  276 |     // Try to navigate to admin dashboard\n  277 |     await page.goto(DASHBOARD_URL);\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:274:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:18:26.748Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-f53c4-ccess---should-be-forbidden-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-f53c4-ccess---should-be-forbidden-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-f53c4-ccess---should-be-forbidden-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                        "column": 16,
+                        "line": 274
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d4e698b37550954495f8-6efeb6d7df86f6aa6450",
+              "file": "admin-dashboard.spec.ts",
+              "line": 267,
+              "column": 3
+            },
+            {
+              "title": "ADMIN-DASH-009: Dashboard breadcrumb navigation",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 13487,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:309:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                          "column": 16,
+                          "line": 309
+                        },
+                        "snippet": "  307 |     \n  308 |     // Wait for navigation after login\n> 309 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  310 |     \n  311 |     // Navigate to admin dashboard\n  312 |     await page.goto(DASHBOARD_URL);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                            "column": 16,
+                            "line": 309
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  307 |     \n  308 |     // Wait for navigation after login\n> 309 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  310 |     \n  311 |     // Navigate to admin dashboard\n  312 |     await page.goto(DASHBOARD_URL);\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:309:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:18:45.197Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-38f39-board-breadcrumb-navigation-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-38f39-board-breadcrumb-navigation-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-38f39-board-breadcrumb-navigation-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                        "column": 16,
+                        "line": 309
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d4e698b37550954495f8-5166e4e025136ed4b349",
+              "file": "admin-dashboard.spec.ts",
+              "line": 302,
+              "column": 3
+            },
+            {
+              "title": "ADMIN-DASH-010: Sidebar navigation",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 5,
+                      "status": "failed",
+                      "duration": 13402,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:338:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                          "column": 16,
+                          "line": 338
+                        },
+                        "snippet": "  336 |     \n  337 |     // Wait for navigation after login\n> 338 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  339 |     \n  340 |     // Navigate to admin dashboard\n  341 |     await page.goto(DASHBOARD_URL);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                            "column": 16,
+                            "line": 338
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  336 |     \n  337 |     // Wait for navigation after login\n> 338 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  339 |     \n  340 |     // Navigate to admin dashboard\n  341 |     await page.goto(DASHBOARD_URL);\n    at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:338:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:18:45.247Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-99085-DASH-010-Sidebar-navigation-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-99085-DASH-010-Sidebar-navigation-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/admin-dashboard-Admin-Dash-99085-DASH-010-Sidebar-navigation-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts",
+                        "column": 16,
+                        "line": 338
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d4e698b37550954495f8-76e786167460678c2495",
+              "file": "admin-dashboard.spec.ts",
+              "line": 331,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "data-management.spec.ts",
+      "file": "data-management.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Data Management Dashboard",
+          "file": "data-management.spec.ts",
+          "line": 17,
+          "column": 6,
+          "specs": [
+            {
+              "title": "DATA-001: Navigate to data management page",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 13618,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:35:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 35
+                        },
+                        "snippet": "  33 |\n  34 |     // Wait for navigation after login\n> 35 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n     |                ^\n  36 |   });\n  37 |\n  38 |   test('DATA-001: Navigate to data management page', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 35
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  33 |\n  34 |     // Wait for navigation after login\n> 35 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n     |                ^\n  36 |   });\n  37 |\n  38 |   test('DATA-001: Navigate to data management page', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:35:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:18:45.280Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Data-Manag-e46c5-ate-to-data-management-page-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Data-Manag-e46c5-ate-to-data-management-page-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Data-Manag-e46c5-ate-to-data-management-page-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 35
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-f1393dce94005c0ec80f",
+              "file": "data-management.spec.ts",
+              "line": 38,
+              "column": 3
+            },
+            {
+              "title": "DATA-002: View overview tab with stats",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 13603,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:35:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 35
+                        },
+                        "snippet": "  33 |\n  34 |     // Wait for navigation after login\n> 35 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n     |                ^\n  36 |   });\n  37 |\n  38 |   test('DATA-001: Navigate to data management page', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 35
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  33 |\n  34 |     // Wait for navigation after login\n> 35 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n     |                ^\n  36 |   });\n  37 |\n  38 |   test('DATA-001: Navigate to data management page', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:35:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:18:45.347Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Data-Manag-41868-iew-overview-tab-with-stats-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Data-Manag-41868-iew-overview-tab-with-stats-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Data-Manag-41868-iew-overview-tab-with-stats-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 35
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-6240df5912ce34d17994",
+              "file": "data-management.spec.ts",
+              "line": 49,
+              "column": 3
+            },
+            {
+              "title": "DATA-003: Quick actions are visible",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 7,
+                      "status": "failed",
+                      "duration": 13619,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:35:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 35
+                        },
+                        "snippet": "  33 |\n  34 |     // Wait for navigation after login\n> 35 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n     |                ^\n  36 |   });\n  37 |\n  38 |   test('DATA-001: Navigate to data management page', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 35
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  33 |\n  34 |     // Wait for navigation after login\n> 35 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n     |                ^\n  36 |   });\n  37 |\n  38 |   test('DATA-001: Navigate to data management page', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:35:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:18:45.346Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Data-Manag-a6ccc-3-Quick-actions-are-visible-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Data-Manag-a6ccc-3-Quick-actions-are-visible-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Data-Manag-a6ccc-3-Quick-actions-are-visible-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 35
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-a67e54262c010e4504ea",
+              "file": "data-management.spec.ts",
+              "line": 71,
+              "column": 3
+            },
+            {
+              "title": "DATA-004: Tab navigation works",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 6,
+                      "status": "failed",
+                      "duration": 13471,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:35:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 35
+                        },
+                        "snippet": "  33 |\n  34 |     // Wait for navigation after login\n> 35 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n     |                ^\n  36 |   });\n  37 |\n  38 |   test('DATA-001: Navigate to data management page', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 35
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  33 |\n  34 |     // Wait for navigation after login\n> 35 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n     |                ^\n  36 |   });\n  37 |\n  38 |   test('DATA-001: Navigate to data management page', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:35:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:18:45.490Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Data-Manag-79d79-TA-004-Tab-navigation-works-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Data-Manag-79d79-TA-004-Tab-navigation-works-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Data-Manag-79d79-TA-004-Tab-navigation-works-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 35
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-841a584ec9695a50af18",
+              "file": "data-management.spec.ts",
+              "line": 93,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Import Wizard",
+          "file": "data-management.spec.ts",
+          "line": 122,
+          "column": 6,
+          "specs": [
+            {
+              "title": "IMPORT-001: Open import wizard from header",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 13440,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:131:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 131
+                        },
+                        "snippet": "  129 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  130 |     await page.click('button[type=\"submit\"]');\n> 131 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  132 |   });\n  133 |\n  134 |   test('IMPORT-001: Open import wizard from header', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 131
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  129 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  130 |     await page.click('button[type=\"submit\"]');\n> 131 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  132 |   });\n  133 |\n  134 |   test('IMPORT-001: Open import wizard from header', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:131:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:18:45.484Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Import-Wiz-b9645-n-import-wizard-from-header-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Import-Wiz-b9645-n-import-wizard-from-header-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Import-Wiz-b9645-n-import-wizard-from-header-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 131
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-ce1130819b95e9d6045e",
+              "file": "data-management.spec.ts",
+              "line": 134,
+              "column": 3
+            },
+            {
+              "title": "IMPORT-002: Open import wizard from quick actions",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 13401,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:131:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 131
+                        },
+                        "snippet": "  129 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  130 |     await page.click('button[type=\"submit\"]');\n> 131 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  132 |   });\n  133 |\n  134 |   test('IMPORT-001: Open import wizard from header', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 131
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  129 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  130 |     await page.click('button[type=\"submit\"]');\n> 131 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  132 |   });\n  133 |\n  134 |   test('IMPORT-001: Open import wizard from header', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:131:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:18:45.530Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Import-Wiz-beefb-t-wizard-from-quick-actions-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Import-Wiz-beefb-t-wizard-from-quick-actions-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Import-Wiz-beefb-t-wizard-from-quick-actions-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 131
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-650cb8d78677bc2b14c7",
+              "file": "data-management.spec.ts",
+              "line": 146,
+              "column": 3
+            },
+            {
+              "title": "IMPORT-003: Import wizard shows entity selection",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 5,
+                      "status": "failed",
+                      "duration": 12574,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:131:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 131
+                        },
+                        "snippet": "  129 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  130 |     await page.click('button[type=\"submit\"]');\n> 131 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  132 |   });\n  133 |\n  134 |   test('IMPORT-001: Open import wizard from header', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 131
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  129 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  130 |     await page.click('button[type=\"submit\"]');\n> 131 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  132 |   });\n  133 |\n  134 |   test('IMPORT-001: Open import wizard from header', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:131:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:02.004Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Import-Wiz-1f9c2-zard-shows-entity-selection-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Import-Wiz-1f9c2-zard-shows-entity-selection-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Import-Wiz-1f9c2-zard-shows-entity-selection-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 131
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-3d4ca8283214c2d2661b",
+              "file": "data-management.spec.ts",
+              "line": 162,
+              "column": 3
+            },
+            {
+              "title": "IMPORT-004: Close import wizard",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 12834,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:131:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 131
+                        },
+                        "snippet": "  129 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  130 |     await page.click('button[type=\"submit\"]');\n> 131 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  132 |   });\n  133 |\n  134 |   test('IMPORT-001: Open import wizard from header', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 131
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  129 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  130 |     await page.click('button[type=\"submit\"]');\n> 131 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  132 |   });\n  133 |\n  134 |   test('IMPORT-001: Open import wizard from header', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:131:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:02.017Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Import-Wizard-IMPORT-004-Close-import-wizard-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Import-Wizard-IMPORT-004-Close-import-wizard-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Import-Wizard-IMPORT-004-Close-import-wizard-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 131
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-769e974effb102869ae9",
+              "file": "data-management.spec.ts",
+              "line": 182,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Export Builder",
+          "file": "data-management.spec.ts",
+          "line": 204,
+          "column": 6,
+          "specs": [
+            {
+              "title": "EXPORT-001: Open export builder from header",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 13281,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:213:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 213
+                        },
+                        "snippet": "  211 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  212 |     await page.click('button[type=\"submit\"]');\n> 213 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  214 |   });\n  215 |\n  216 |   test('EXPORT-001: Open export builder from header', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 213
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  211 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  212 |     await page.click('button[type=\"submit\"]');\n> 213 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  214 |   });\n  215 |\n  216 |   test('EXPORT-001: Open export builder from header', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:213:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:02.232Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Export-Bui-6464e--export-builder-from-header-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Export-Bui-6464e--export-builder-from-header-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Export-Bui-6464e--export-builder-from-header-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 213
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-7c9b1ca2ef1351768e0d",
+              "file": "data-management.spec.ts",
+              "line": 216,
+              "column": 3
+            },
+            {
+              "title": "EXPORT-002: Export builder shows entity selection",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 13243,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:213:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 213
+                        },
+                        "snippet": "  211 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  212 |     await page.click('button[type=\"submit\"]');\n> 213 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  214 |   });\n  215 |\n  216 |   test('EXPORT-001: Open export builder from header', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 213
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  211 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  212 |     await page.click('button[type=\"submit\"]');\n> 213 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  214 |   });\n  215 |\n  216 |   test('EXPORT-001: Open export builder from header', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:213:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:02.301Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Export-Bui-cb46a-lder-shows-entity-selection-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Export-Bui-cb46a-lder-shows-entity-selection-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Export-Bui-cb46a-lder-shows-entity-selection-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 213
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-8e1a8af8c998d03ffdd0",
+              "file": "data-management.spec.ts",
+              "line": 228,
+              "column": 3
+            },
+            {
+              "title": "EXPORT-003: Export builder shows format options",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 7,
+                      "status": "failed",
+                      "duration": 13250,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:213:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 213
+                        },
+                        "snippet": "  211 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  212 |     await page.click('button[type=\"submit\"]');\n> 213 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  214 |   });\n  215 |\n  216 |   test('EXPORT-001: Open export builder from header', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 213
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  211 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  212 |     await page.click('button[type=\"submit\"]');\n> 213 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  214 |   });\n  215 |\n  216 |   test('EXPORT-001: Open export builder from header', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:213:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:02.323Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Export-Bui-f1127-uilder-shows-format-options-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Export-Bui-f1127-uilder-shows-format-options-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Export-Bui-f1127-uilder-shows-format-options-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 213
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-763674d5f80583ab4f21",
+              "file": "data-management.spec.ts",
+              "line": 248,
+              "column": 3
+            },
+            {
+              "title": "EXPORT-004: Close export builder",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 13244,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:213:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 213
+                        },
+                        "snippet": "  211 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  212 |     await page.click('button[type=\"submit\"]');\n> 213 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  214 |   });\n  215 |\n  216 |   test('EXPORT-001: Open export builder from header', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 213
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  211 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  212 |     await page.click('button[type=\"submit\"]');\n> 213 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  214 |   });\n  215 |\n  216 |   test('EXPORT-001: Open export builder from header', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:213:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:02.320Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Export-Bui-289f3-RT-004-Close-export-builder-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Export-Bui-289f3-RT-004-Close-export-builder-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Export-Bui-289f3-RT-004-Close-export-builder-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 213
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-f82a24d22593d478d278",
+              "file": "data-management.spec.ts",
+              "line": 269,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Duplicates Manager",
+          "file": "data-management.spec.ts",
+          "line": 291,
+          "column": 6,
+          "specs": [
+            {
+              "title": "DUP-001: Navigate to duplicates tab",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 22,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 13092,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:300:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 300
+                        },
+                        "snippet": "  298 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  299 |     await page.click('button[type=\"submit\"]');\n> 300 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  301 |   });\n  302 |\n  303 |   test('DUP-001: Navigate to duplicates tab', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 300
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  298 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  299 |     await page.click('button[type=\"submit\"]');\n> 300 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  301 |   });\n  302 |\n  303 |   test('DUP-001: Navigate to duplicates tab', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:300:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:02.376Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Duplicates-38a06--Navigate-to-duplicates-tab-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Duplicates-38a06--Navigate-to-duplicates-tab-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Duplicates-38a06--Navigate-to-duplicates-tab-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 300
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-9bd4902210bd8f5482ac",
+              "file": "data-management.spec.ts",
+              "line": 303,
+              "column": 3
+            },
+            {
+              "title": "DUP-002: Entity type selection in duplicates",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 23,
+                      "parallelIndex": 6,
+                      "status": "failed",
+                      "duration": 13033,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:300:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 300
+                        },
+                        "snippet": "  298 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  299 |     await page.click('button[type=\"submit\"]');\n> 300 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  301 |   });\n  302 |\n  303 |   test('DUP-001: Navigate to duplicates tab', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 300
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  298 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  299 |     await page.click('button[type=\"submit\"]');\n> 300 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  301 |   });\n  302 |\n  303 |   test('DUP-001: Navigate to duplicates tab', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:300:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:02.408Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Duplicates-0a015-ype-selection-in-duplicates-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Duplicates-0a015-ype-selection-in-duplicates-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Duplicates-0a015-ype-selection-in-duplicates-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 300
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-4a35b1f26058d38baf6d",
+              "file": "data-management.spec.ts",
+              "line": 324,
+              "column": 3
+            },
+            {
+              "title": "DUP-003: Detect duplicates button exists",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 24,
+                      "parallelIndex": 5,
+                      "status": "failed",
+                      "duration": 11840,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:300:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 300
+                        },
+                        "snippet": "  298 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  299 |     await page.click('button[type=\"submit\"]');\n> 300 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  301 |   });\n  302 |\n  303 |   test('DUP-001: Navigate to duplicates tab', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 300
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  298 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  299 |     await page.click('button[type=\"submit\"]');\n> 300 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  301 |   });\n  302 |\n  303 |   test('DUP-001: Navigate to duplicates tab', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:300:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:17.997Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Duplicates-f4428-ct-duplicates-button-exists-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Duplicates-f4428-ct-duplicates-button-exists-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Duplicates-f4428-ct-duplicates-button-exists-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 300
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-b16425a1a7fb50eb0ca4",
+              "file": "data-management.spec.ts",
+              "line": 341,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "GDPR Requests",
+          "file": "data-management.spec.ts",
+          "line": 359,
+          "column": 6,
+          "specs": [
+            {
+              "title": "GDPR-001: Navigate to GDPR tab",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 25,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 11982,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:368:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 368
+                        },
+                        "snippet": "  366 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  367 |     await page.click('button[type=\"submit\"]');\n> 368 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  369 |   });\n  370 |\n  371 |   test('GDPR-001: Navigate to GDPR tab', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 368
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  366 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  367 |     await page.click('button[type=\"submit\"]');\n> 368 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  369 |   });\n  370 |\n  371 |   test('GDPR-001: Navigate to GDPR tab', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:368:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:18.358Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-GDPR-Requests-GDPR-001-Navigate-to-GDPR-tab-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-GDPR-Requests-GDPR-001-Navigate-to-GDPR-tab-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-GDPR-Requests-GDPR-001-Navigate-to-GDPR-tab-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 368
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-4b67c3e02cf22f681838",
+              "file": "data-management.spec.ts",
+              "line": 371,
+              "column": 3
+            },
+            {
+              "title": "GDPR-002: New request button exists",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 26,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 12515,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:368:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 368
+                        },
+                        "snippet": "  366 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  367 |     await page.click('button[type=\"submit\"]');\n> 368 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  369 |   });\n  370 |\n  371 |   test('GDPR-001: Navigate to GDPR tab', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 368
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  366 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  367 |     await page.click('button[type=\"submit\"]');\n> 368 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  369 |   });\n  370 |\n  371 |   test('GDPR-001: Navigate to GDPR tab', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:368:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:19.074Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-GDPR-Reque-0a86a-2-New-request-button-exists-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-GDPR-Reque-0a86a-2-New-request-button-exists-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-GDPR-Reque-0a86a-2-New-request-button-exists-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 368
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-4a8500040fe5d7662b6e",
+              "file": "data-management.spec.ts",
+              "line": 392,
+              "column": 3
+            },
+            {
+              "title": "GDPR-003: Open new request dialog",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 27,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 12680,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:368:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 368
+                        },
+                        "snippet": "  366 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  367 |     await page.click('button[type=\"submit\"]');\n> 368 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  369 |   });\n  370 |\n  371 |   test('GDPR-001: Navigate to GDPR tab', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 368
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  366 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  367 |     await page.click('button[type=\"submit\"]');\n> 368 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  369 |   });\n  370 |\n  371 |   test('GDPR-001: Navigate to GDPR tab', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:368:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:19.257Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-GDPR-Reque-cc967-003-Open-new-request-dialog-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-GDPR-Reque-cc967-003-Open-new-request-dialog-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-GDPR-Reque-cc967-003-Open-new-request-dialog-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 368
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-3728e1f6ca71556d2a4b",
+              "file": "data-management.spec.ts",
+              "line": 409,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Archive Manager",
+          "file": "data-management.spec.ts",
+          "line": 430,
+          "column": 6,
+          "specs": [
+            {
+              "title": "ARCHIVE-001: Navigate to archive tab",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 28,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 12642,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:439:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 439
+                        },
+                        "snippet": "  437 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  438 |     await page.click('button[type=\"submit\"]');\n> 439 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  440 |   });\n  441 |\n  442 |   test('ARCHIVE-001: Navigate to archive tab', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 439
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  437 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  438 |     await page.click('button[type=\"submit\"]');\n> 439 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  440 |   });\n  441 |\n  442 |   test('ARCHIVE-001: Navigate to archive tab', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:439:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:19.236Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Archive-Ma-2ccf5-001-Navigate-to-archive-tab-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Archive-Ma-2ccf5-001-Navigate-to-archive-tab-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Archive-Ma-2ccf5-001-Navigate-to-archive-tab-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 439
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-bbfa386a5ce681a9c9c0",
+              "file": "data-management.spec.ts",
+              "line": 442,
+              "column": 3
+            },
+            {
+              "title": "ARCHIVE-002: Entity type filter in archive",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 29,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 12679,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:439:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 439
+                        },
+                        "snippet": "  437 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  438 |     await page.click('button[type=\"submit\"]');\n> 439 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  440 |   });\n  441 |\n  442 |   test('ARCHIVE-001: Navigate to archive tab', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 439
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  437 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  438 |     await page.click('button[type=\"submit\"]');\n> 439 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  440 |   });\n  441 |\n  442 |   test('ARCHIVE-001: Navigate to archive tab', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:439:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:19.273Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Archive-Ma-0c8ff-tity-type-filter-in-archive-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Archive-Ma-0c8ff-tity-type-filter-in-archive-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Archive-Ma-0c8ff-tity-type-filter-in-archive-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 439
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-f09c26c3098e63f86d5a",
+              "file": "data-management.spec.ts",
+              "line": 462,
+              "column": 3
+            },
+            {
+              "title": "ARCHIVE-003: Search input in archive",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 30,
+                      "parallelIndex": 7,
+                      "status": "failed",
+                      "duration": 12733,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:439:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 439
+                        },
+                        "snippet": "  437 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  438 |     await page.click('button[type=\"submit\"]');\n> 439 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  440 |   });\n  441 |\n  442 |   test('ARCHIVE-001: Navigate to archive tab', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 439
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  437 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  438 |     await page.click('button[type=\"submit\"]');\n> 439 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  440 |   });\n  441 |\n  442 |   test('ARCHIVE-001: Navigate to archive tab', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:439:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:19.266Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Archive-Ma-f861d-003-Search-input-in-archive-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Archive-Ma-f861d-003-Search-input-in-archive-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Archive-Ma-f861d-003-Search-input-in-archive-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 439
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-2ad17390e51619825c84",
+              "file": "data-management.spec.ts",
+              "line": 479,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Bulk Operations",
+          "file": "data-management.spec.ts",
+          "line": 497,
+          "column": 6,
+          "specs": [
+            {
+              "title": "BULK-001: Open bulk operations from quick actions",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 31,
+                      "parallelIndex": 6,
+                      "status": "failed",
+                      "duration": 12613,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:506:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 506
+                        },
+                        "snippet": "  504 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  505 |     await page.click('button[type=\"submit\"]');\n> 506 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  507 |   });\n  508 |\n  509 |   test('BULK-001: Open bulk operations from quick actions', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 506
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  504 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  505 |     await page.click('button[type=\"submit\"]');\n> 506 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  507 |   });\n  508 |\n  509 |   test('BULK-001: Open bulk operations from quick actions', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:506:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:19.337Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Bulk-Opera-5535a-erations-from-quick-actions-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Bulk-Opera-5535a-erations-from-quick-actions-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Bulk-Opera-5535a-erations-from-quick-actions-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 506
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-4e6eb79cecbd001eb315",
+              "file": "data-management.spec.ts",
+              "line": 509,
+              "column": 3
+            },
+            {
+              "title": "BULK-002: Bulk operations dialog shows entity selection",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 32,
+                      "parallelIndex": 5,
+                      "status": "failed",
+                      "duration": 11724,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:506:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 506
+                        },
+                        "snippet": "  504 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  505 |     await page.click('button[type=\"submit\"]');\n> 506 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  507 |   });\n  508 |\n  509 |   test('BULK-001: Open bulk operations from quick actions', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 506
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  504 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  505 |     await page.click('button[type=\"submit\"]');\n> 506 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  507 |   });\n  508 |\n  509 |   test('BULK-001: Open bulk operations from quick actions', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:506:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:32.951Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Bulk-Opera-dc52c-alog-shows-entity-selection-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Bulk-Opera-dc52c-alog-shows-entity-selection-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Bulk-Opera-dc52c-alog-shows-entity-selection-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 506
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-e93bfc04d15803350ebb",
+              "file": "data-management.spec.ts",
+              "line": 525,
+              "column": 3
+            },
+            {
+              "title": "BULK-003: Close bulk operations dialog",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 33,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 11649,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:506:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 506
+                        },
+                        "snippet": "  504 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  505 |     await page.click('button[type=\"submit\"]');\n> 506 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  507 |   });\n  508 |\n  509 |   test('BULK-001: Open bulk operations from quick actions', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 506
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  504 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  505 |     await page.click('button[type=\"submit\"]');\n> 506 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  507 |   });\n  508 |\n  509 |   test('BULK-001: Open bulk operations from quick actions', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:506:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:33.730Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Bulk-Opera-bf03d-lose-bulk-operations-dialog-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Bulk-Opera-bf03d-lose-bulk-operations-dialog-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Bulk-Opera-bf03d-lose-bulk-operations-dialog-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 506
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-4e1deb9761a767876f6f",
+              "file": "data-management.spec.ts",
+              "line": 547,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Recent Operations",
+          "file": "data-management.spec.ts",
+          "line": 571,
+          "column": 6,
+          "specs": [
+            {
+              "title": "RECENT-001: View recent imports section",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 34,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 11870,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:580:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 580
+                        },
+                        "snippet": "  578 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  579 |     await page.click('button[type=\"submit\"]');\n> 580 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  581 |   });\n  582 |\n  583 |   test('RECENT-001: View recent imports section', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 580
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  578 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  579 |     await page.click('button[type=\"submit\"]');\n> 580 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  581 |   });\n  582 |\n  583 |   test('RECENT-001: View recent imports section', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:580:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:34.967Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Recent-Ope-cbbbb-View-recent-imports-section-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Recent-Ope-cbbbb-View-recent-imports-section-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Recent-Ope-cbbbb-View-recent-imports-section-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 580
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-6820802218e38dcd2d17",
+              "file": "data-management.spec.ts",
+              "line": 583,
+              "column": 3
+            },
+            {
+              "title": "RECENT-002: View recent exports section",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 35,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 11902,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:580:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 580
+                        },
+                        "snippet": "  578 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  579 |     await page.click('button[type=\"submit\"]');\n> 580 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  581 |   });\n  582 |\n  583 |   test('RECENT-001: View recent imports section', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 580
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  578 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  579 |     await page.click('button[type=\"submit\"]');\n> 580 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  581 |   });\n  582 |\n  583 |   test('RECENT-001: View recent imports section', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:580:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:35.253Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Recent-Ope-e40a2-View-recent-exports-section-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Recent-Ope-e40a2-View-recent-exports-section-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Recent-Ope-e40a2-View-recent-exports-section-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 580
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-6fcead9721ea9b0d7127",
+              "file": "data-management.spec.ts",
+              "line": 598,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "Responsive Design",
+          "file": "data-management.spec.ts",
+          "line": 614,
+          "column": 6,
+          "specs": [
+            {
+              "title": "RESPONSIVE-001: Data management loads on mobile",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 36,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 11871,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:623:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 623
+                        },
+                        "snippet": "  621 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  622 |     await page.click('button[type=\"submit\"]');\n> 623 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  624 |   });\n  625 |\n  626 |   test('RESPONSIVE-001: Data management loads on mobile', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 623
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  621 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  622 |     await page.click('button[type=\"submit\"]');\n> 623 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  624 |   });\n  625 |\n  626 |   test('RESPONSIVE-001: Data management loads on mobile', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:623:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:35.340Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Responsive-c063f--management-loads-on-mobile-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Responsive-c063f--management-loads-on-mobile-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Responsive-c063f--management-loads-on-mobile-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 623
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-051e82f4e8f73f47dcc8",
+              "file": "data-management.spec.ts",
+              "line": 626,
+              "column": 3
+            },
+            {
+              "title": "RESPONSIVE-002: Tabs are accessible on tablet",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 37,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 11872,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:623:16",
+                        "location": {
+                          "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                          "column": 16,
+                          "line": 623
+                        },
+                        "snippet": "  621 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  622 |     await page.click('button[type=\"submit\"]');\n> 623 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  624 |   });\n  625 |\n  626 |   test('RESPONSIVE-001: Data management loads on mobile', async ({ page }) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                            "column": 16,
+                            "line": 623
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 10000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n  621 |     await page.fill('input[type=\"password\"]', ADMIN_PASSWORD);\n  622 |     await page.click('button[type=\"submit\"]');\n> 623 |     await page.waitForURL(/\\/(employee|dashboard)/, { timeout: 10000 });\n      |                ^\n  624 |   });\n  625 |\n  626 |   test('RESPONSIVE-001: Data management loads on mobile', async ({ page }) => {\n    at /home/user/intime-v3/tests/e2e/data-management.spec.ts:623:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-06T01:19:35.335Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/user/intime-v3/test-results/data-management-Responsive-c1257-bs-are-accessible-on-tablet-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/user/intime-v3/test-results/data-management-Responsive-c1257-bs-are-accessible-on-tablet-chromium/video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/user/intime-v3/test-results/data-management-Responsive-c1257-bs-are-accessible-on-tablet-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/user/intime-v3/tests/e2e/data-management.spec.ts",
+                        "column": 16,
+                        "line": 623
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0d7e3aa7233172a5bf9e-968f863783124799355e",
+              "file": "data-management.spec.ts",
+              "line": 639,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-12-06T01:18:11.218Z",
+    "duration": 96578.293,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 38,
+    "flaky": 0
+  }
+}

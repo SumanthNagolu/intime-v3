@@ -1,0 +1,1488 @@
+<testsuites id="" name="" tests="38" failures="38" skipped="0" errors="0" time="96.578293">
+<testsuite name="admin-dashboard.spec.ts" timestamp="2025-12-06T01:18:23.938Z" hostname="chromium" tests="10" failures="10" skipped="0" time="148.126" errors="0">
+<testcase name="Admin Dashboard › ADMIN-DASH-001: Navigate to dashboard" classname="admin-dashboard.spec.ts" time="15.086">
+<failure message="admin-dashboard.spec.ts:33:3 ADMIN-DASH-001: Navigate to dashboard" type="FAILURE">
+<![CDATA[  [chromium] › admin-dashboard.spec.ts:33:3 › Admin Dashboard › ADMIN-DASH-001: Navigate to dashboard 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      38 |     
+      39 |     // Wait for navigation after login
+    > 40 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+         |                ^
+      41 |     
+      42 |     // Navigate to admin dashboard
+      43 |     await page.goto(DASHBOARD_URL);
+        at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:40:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-df6c7-H-001-Navigate-to-dashboard-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-df6c7-H-001-Navigate-to-dashboard-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-dashboard-Admin-Dash-df6c7-H-001-Navigate-to-dashboard-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-dashboard-Admin-Dash-df6c7-H-001-Navigate-to-dashboard-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-df6c7-H-001-Navigate-to-dashboard-chromium/video.webm]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-df6c7-H-001-Navigate-to-dashboard-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Dashboard › ADMIN-DASH-002: View system health" classname="admin-dashboard.spec.ts" time="14.963">
+<failure message="admin-dashboard.spec.ts:55:3 ADMIN-DASH-002: View system health" type="FAILURE">
+<![CDATA[  [chromium] › admin-dashboard.spec.ts:55:3 › Admin Dashboard › ADMIN-DASH-002: View system health ─
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      60 |     
+      61 |     // Wait for navigation after login
+    > 62 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+         |                ^
+      63 |     
+      64 |     // Navigate to admin dashboard
+      65 |     await page.goto(DASHBOARD_URL);
+        at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:62:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-8775f-DASH-002-View-system-health-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-8775f-DASH-002-View-system-health-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-dashboard-Admin-Dash-8775f-DASH-002-View-system-health-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-dashboard-Admin-Dash-8775f-DASH-002-View-system-health-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-8775f-DASH-002-View-system-health-chromium/video.webm]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-8775f-DASH-002-View-system-health-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Dashboard › ADMIN-DASH-003: View critical alerts" classname="admin-dashboard.spec.ts" time="15.309">
+<failure message="admin-dashboard.spec.ts:88:3 ADMIN-DASH-003: View critical alerts" type="FAILURE">
+<![CDATA[  [chromium] › admin-dashboard.spec.ts:88:3 › Admin Dashboard › ADMIN-DASH-003: View critical alerts 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      93 |     
+      94 |     // Wait for navigation after login
+    > 95 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+         |                ^
+      96 |     
+      97 |     // Navigate to admin dashboard
+      98 |     await page.goto(DASHBOARD_URL);
+        at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:95:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-5686a-SH-003-View-critical-alerts-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-5686a-SH-003-View-critical-alerts-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-dashboard-Admin-Dash-5686a-SH-003-View-critical-alerts-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-dashboard-Admin-Dash-5686a-SH-003-View-critical-alerts-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-5686a-SH-003-View-critical-alerts-chromium/video.webm]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-5686a-SH-003-View-critical-alerts-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Dashboard › ADMIN-DASH-004: Click quick action" classname="admin-dashboard.spec.ts" time="15.319">
+<failure message="admin-dashboard.spec.ts:115:3 ADMIN-DASH-004: Click quick action" type="FAILURE">
+<![CDATA[  [chromium] › admin-dashboard.spec.ts:115:3 › Admin Dashboard › ADMIN-DASH-004: Click quick action 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      120 |     
+      121 |     // Wait for navigation after login
+    > 122 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      123 |     
+      124 |     // Navigate to admin dashboard
+      125 |     await page.goto(DASHBOARD_URL);
+        at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:122:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-3c42a-DASH-004-Click-quick-action-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-3c42a-DASH-004-Click-quick-action-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-dashboard-Admin-Dash-3c42a-DASH-004-Click-quick-action-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-dashboard-Admin-Dash-3c42a-DASH-004-Click-quick-action-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-3c42a-DASH-004-Click-quick-action-chromium/video.webm]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-3c42a-DASH-004-Click-quick-action-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Dashboard › ADMIN-DASH-005: View recent activity" classname="admin-dashboard.spec.ts" time="15.154">
+<failure message="admin-dashboard.spec.ts:158:3 ADMIN-DASH-005: View recent activity" type="FAILURE">
+<![CDATA[  [chromium] › admin-dashboard.spec.ts:158:3 › Admin Dashboard › ADMIN-DASH-005: View recent activity 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      163 |     
+      164 |     // Wait for navigation after login
+    > 165 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      166 |     
+      167 |     // Navigate to admin dashboard
+      168 |     await page.goto(DASHBOARD_URL);
+        at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:165:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-15d2f-SH-005-View-recent-activity-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-15d2f-SH-005-View-recent-activity-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-dashboard-Admin-Dash-15d2f-SH-005-View-recent-activity-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-dashboard-Admin-Dash-15d2f-SH-005-View-recent-activity-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-15d2f-SH-005-View-recent-activity-chromium/video.webm]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-15d2f-SH-005-View-recent-activity-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Dashboard › ADMIN-DASH-006: Auto-refresh" classname="admin-dashboard.spec.ts" time="15.042">
+<failure message="admin-dashboard.spec.ts:189:3 ADMIN-DASH-006: Auto-refresh" type="FAILURE">
+<![CDATA[  [chromium] › admin-dashboard.spec.ts:189:3 › Admin Dashboard › ADMIN-DASH-006: Auto-refresh ──────
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      194 |     
+      195 |     // Wait for navigation after login
+    > 196 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      197 |     
+      198 |     // Navigate to admin dashboard
+      199 |     await page.goto(DASHBOARD_URL);
+        at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:196:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dashboard-ADMIN-DASH-006-Auto-refresh-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dashboard-ADMIN-DASH-006-Auto-refresh-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-dashboard-Admin-Dashboard-ADMIN-DASH-006-Auto-refresh-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-dashboard-Admin-Dashboard-ADMIN-DASH-006-Auto-refresh-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dashboard-ADMIN-DASH-006-Auto-refresh-chromium/video.webm]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dashboard-ADMIN-DASH-006-Auto-refresh-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Dashboard › ADMIN-DASH-007: Keyboard navigation - Command palette" classname="admin-dashboard.spec.ts" time="15.179">
+<failure message="admin-dashboard.spec.ts:223:3 ADMIN-DASH-007: Keyboard navigation - Command palette" type="FAILURE">
+<![CDATA[  [chromium] › admin-dashboard.spec.ts:223:3 › Admin Dashboard › ADMIN-DASH-007: Keyboard navigation - Command palette 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      228 |     
+      229 |     // Wait for navigation after login
+    > 230 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      231 |     
+      232 |     // Navigate to admin dashboard
+      233 |     await page.goto(DASHBOARD_URL);
+        at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:230:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-c59c4-avigation---Command-palette-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-c59c4-avigation---Command-palette-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-dashboard-Admin-Dash-c59c4-avigation---Command-palette-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-dashboard-Admin-Dash-c59c4-avigation---Command-palette-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-c59c4-avigation---Command-palette-chromium/video.webm]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-c59c4-avigation---Command-palette-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Dashboard › ADMIN-DASH-008: Non-admin access - should be forbidden" classname="admin-dashboard.spec.ts" time="15.185">
+<failure message="admin-dashboard.spec.ts:267:3 ADMIN-DASH-008: Non-admin access - should be forbidden" type="FAILURE">
+<![CDATA[  [chromium] › admin-dashboard.spec.ts:267:3 › Admin Dashboard › ADMIN-DASH-008: Non-admin access - should be forbidden 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      272 |     
+      273 |     // Wait for navigation after login
+    > 274 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      275 |     
+      276 |     // Try to navigate to admin dashboard
+      277 |     await page.goto(DASHBOARD_URL);
+        at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:274:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-f53c4-ccess---should-be-forbidden-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-f53c4-ccess---should-be-forbidden-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-dashboard-Admin-Dash-f53c4-ccess---should-be-forbidden-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-dashboard-Admin-Dash-f53c4-ccess---should-be-forbidden-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-f53c4-ccess---should-be-forbidden-chromium/video.webm]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-f53c4-ccess---should-be-forbidden-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Dashboard › ADMIN-DASH-009: Dashboard breadcrumb navigation" classname="admin-dashboard.spec.ts" time="13.487">
+<failure message="admin-dashboard.spec.ts:302:3 ADMIN-DASH-009: Dashboard breadcrumb navigation" type="FAILURE">
+<![CDATA[  [chromium] › admin-dashboard.spec.ts:302:3 › Admin Dashboard › ADMIN-DASH-009: Dashboard breadcrumb navigation 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      307 |     
+      308 |     // Wait for navigation after login
+    > 309 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      310 |     
+      311 |     // Navigate to admin dashboard
+      312 |     await page.goto(DASHBOARD_URL);
+        at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:309:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-38f39-board-breadcrumb-navigation-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-38f39-board-breadcrumb-navigation-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-dashboard-Admin-Dash-38f39-board-breadcrumb-navigation-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-dashboard-Admin-Dash-38f39-board-breadcrumb-navigation-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-38f39-board-breadcrumb-navigation-chromium/video.webm]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-38f39-board-breadcrumb-navigation-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Dashboard › ADMIN-DASH-010: Sidebar navigation" classname="admin-dashboard.spec.ts" time="13.402">
+<failure message="admin-dashboard.spec.ts:331:3 ADMIN-DASH-010: Sidebar navigation" type="FAILURE">
+<![CDATA[  [chromium] › admin-dashboard.spec.ts:331:3 › Admin Dashboard › ADMIN-DASH-010: Sidebar navigation 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      336 |     
+      337 |     // Wait for navigation after login
+    > 338 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      339 |     
+      340 |     // Navigate to admin dashboard
+      341 |     await page.goto(DASHBOARD_URL);
+        at /home/user/intime-v3/tests/e2e/admin-dashboard.spec.ts:338:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-99085-DASH-010-Sidebar-navigation-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-dashboard-Admin-Dash-99085-DASH-010-Sidebar-navigation-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-dashboard-Admin-Dash-99085-DASH-010-Sidebar-navigation-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-dashboard-Admin-Dash-99085-DASH-010-Sidebar-navigation-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-99085-DASH-010-Sidebar-navigation-chromium/video.webm]]
+
+[[ATTACHMENT|admin-dashboard-Admin-Dash-99085-DASH-010-Sidebar-navigation-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="data-management.spec.ts" timestamp="2025-12-06T01:18:23.938Z" hostname="chromium" tests="28" failures="28" skipped="0" time="356.275" errors="0">
+<testcase name="Data Management Dashboard › DATA-001: Navigate to data management page" classname="data-management.spec.ts" time="13.618">
+<failure message="data-management.spec.ts:38:3 DATA-001: Navigate to data management page" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:38:3 › Data Management Dashboard › DATA-001: Navigate to data management page 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      33 |
+      34 |     // Wait for navigation after login
+    > 35 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+         |                ^
+      36 |   });
+      37 |
+      38 |   test('DATA-001: Navigate to data management page', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:35:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Data-Manag-e46c5-ate-to-data-management-page-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Data-Manag-e46c5-ate-to-data-management-page-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Data-Manag-e46c5-ate-to-data-management-page-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Data-Manag-e46c5-ate-to-data-management-page-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Data-Manag-e46c5-ate-to-data-management-page-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Data-Manag-e46c5-ate-to-data-management-page-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Data Management Dashboard › DATA-002: View overview tab with stats" classname="data-management.spec.ts" time="13.603">
+<failure message="data-management.spec.ts:49:3 DATA-002: View overview tab with stats" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:49:3 › Data Management Dashboard › DATA-002: View overview tab with stats 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      33 |
+      34 |     // Wait for navigation after login
+    > 35 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+         |                ^
+      36 |   });
+      37 |
+      38 |   test('DATA-001: Navigate to data management page', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:35:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Data-Manag-41868-iew-overview-tab-with-stats-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Data-Manag-41868-iew-overview-tab-with-stats-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Data-Manag-41868-iew-overview-tab-with-stats-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Data-Manag-41868-iew-overview-tab-with-stats-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Data-Manag-41868-iew-overview-tab-with-stats-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Data-Manag-41868-iew-overview-tab-with-stats-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Data Management Dashboard › DATA-003: Quick actions are visible" classname="data-management.spec.ts" time="13.619">
+<failure message="data-management.spec.ts:71:3 DATA-003: Quick actions are visible" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:71:3 › Data Management Dashboard › DATA-003: Quick actions are visible 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      33 |
+      34 |     // Wait for navigation after login
+    > 35 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+         |                ^
+      36 |   });
+      37 |
+      38 |   test('DATA-001: Navigate to data management page', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:35:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Data-Manag-a6ccc-3-Quick-actions-are-visible-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Data-Manag-a6ccc-3-Quick-actions-are-visible-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Data-Manag-a6ccc-3-Quick-actions-are-visible-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Data-Manag-a6ccc-3-Quick-actions-are-visible-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Data-Manag-a6ccc-3-Quick-actions-are-visible-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Data-Manag-a6ccc-3-Quick-actions-are-visible-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Data Management Dashboard › DATA-004: Tab navigation works" classname="data-management.spec.ts" time="13.471">
+<failure message="data-management.spec.ts:93:3 DATA-004: Tab navigation works" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:93:3 › Data Management Dashboard › DATA-004: Tab navigation works 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      33 |
+      34 |     // Wait for navigation after login
+    > 35 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+         |                ^
+      36 |   });
+      37 |
+      38 |   test('DATA-001: Navigate to data management page', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:35:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Data-Manag-79d79-TA-004-Tab-navigation-works-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Data-Manag-79d79-TA-004-Tab-navigation-works-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Data-Manag-79d79-TA-004-Tab-navigation-works-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Data-Manag-79d79-TA-004-Tab-navigation-works-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Data-Manag-79d79-TA-004-Tab-navigation-works-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Data-Manag-79d79-TA-004-Tab-navigation-works-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Import Wizard › IMPORT-001: Open import wizard from header" classname="data-management.spec.ts" time="13.44">
+<failure message="data-management.spec.ts:134:3 IMPORT-001: Open import wizard from header" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:134:3 › Import Wizard › IMPORT-001: Open import wizard from header 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      129 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      130 |     await page.click('button[type="submit"]');
+    > 131 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      132 |   });
+      133 |
+      134 |   test('IMPORT-001: Open import wizard from header', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:131:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Import-Wiz-b9645-n-import-wizard-from-header-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Import-Wiz-b9645-n-import-wizard-from-header-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Import-Wiz-b9645-n-import-wizard-from-header-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Import-Wiz-b9645-n-import-wizard-from-header-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Import-Wiz-b9645-n-import-wizard-from-header-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Import-Wiz-b9645-n-import-wizard-from-header-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Import Wizard › IMPORT-002: Open import wizard from quick actions" classname="data-management.spec.ts" time="13.401">
+<failure message="data-management.spec.ts:146:3 IMPORT-002: Open import wizard from quick actions" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:146:3 › Import Wizard › IMPORT-002: Open import wizard from quick actions 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      129 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      130 |     await page.click('button[type="submit"]');
+    > 131 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      132 |   });
+      133 |
+      134 |   test('IMPORT-001: Open import wizard from header', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:131:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Import-Wiz-beefb-t-wizard-from-quick-actions-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Import-Wiz-beefb-t-wizard-from-quick-actions-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Import-Wiz-beefb-t-wizard-from-quick-actions-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Import-Wiz-beefb-t-wizard-from-quick-actions-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Import-Wiz-beefb-t-wizard-from-quick-actions-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Import-Wiz-beefb-t-wizard-from-quick-actions-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Import Wizard › IMPORT-003: Import wizard shows entity selection" classname="data-management.spec.ts" time="12.574">
+<failure message="data-management.spec.ts:162:3 IMPORT-003: Import wizard shows entity selection" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:162:3 › Import Wizard › IMPORT-003: Import wizard shows entity selection 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      129 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      130 |     await page.click('button[type="submit"]');
+    > 131 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      132 |   });
+      133 |
+      134 |   test('IMPORT-001: Open import wizard from header', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:131:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Import-Wiz-1f9c2-zard-shows-entity-selection-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Import-Wiz-1f9c2-zard-shows-entity-selection-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Import-Wiz-1f9c2-zard-shows-entity-selection-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Import-Wiz-1f9c2-zard-shows-entity-selection-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Import-Wiz-1f9c2-zard-shows-entity-selection-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Import-Wiz-1f9c2-zard-shows-entity-selection-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Import Wizard › IMPORT-004: Close import wizard" classname="data-management.spec.ts" time="12.834">
+<failure message="data-management.spec.ts:182:3 IMPORT-004: Close import wizard" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:182:3 › Import Wizard › IMPORT-004: Close import wizard ─────
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      129 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      130 |     await page.click('button[type="submit"]');
+    > 131 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      132 |   });
+      133 |
+      134 |   test('IMPORT-001: Open import wizard from header', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:131:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Import-Wizard-IMPORT-004-Close-import-wizard-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Import-Wizard-IMPORT-004-Close-import-wizard-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Import-Wizard-IMPORT-004-Close-import-wizard-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Import-Wizard-IMPORT-004-Close-import-wizard-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Import-Wizard-IMPORT-004-Close-import-wizard-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Import-Wizard-IMPORT-004-Close-import-wizard-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Export Builder › EXPORT-001: Open export builder from header" classname="data-management.spec.ts" time="13.281">
+<failure message="data-management.spec.ts:216:3 EXPORT-001: Open export builder from header" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:216:3 › Export Builder › EXPORT-001: Open export builder from header 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      211 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      212 |     await page.click('button[type="submit"]');
+    > 213 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      214 |   });
+      215 |
+      216 |   test('EXPORT-001: Open export builder from header', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:213:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Export-Bui-6464e--export-builder-from-header-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Export-Bui-6464e--export-builder-from-header-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Export-Bui-6464e--export-builder-from-header-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Export-Bui-6464e--export-builder-from-header-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Export-Bui-6464e--export-builder-from-header-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Export-Bui-6464e--export-builder-from-header-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Export Builder › EXPORT-002: Export builder shows entity selection" classname="data-management.spec.ts" time="13.243">
+<failure message="data-management.spec.ts:228:3 EXPORT-002: Export builder shows entity selection" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:228:3 › Export Builder › EXPORT-002: Export builder shows entity selection 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      211 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      212 |     await page.click('button[type="submit"]');
+    > 213 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      214 |   });
+      215 |
+      216 |   test('EXPORT-001: Open export builder from header', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:213:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Export-Bui-cb46a-lder-shows-entity-selection-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Export-Bui-cb46a-lder-shows-entity-selection-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Export-Bui-cb46a-lder-shows-entity-selection-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Export-Bui-cb46a-lder-shows-entity-selection-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Export-Bui-cb46a-lder-shows-entity-selection-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Export-Bui-cb46a-lder-shows-entity-selection-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Export Builder › EXPORT-003: Export builder shows format options" classname="data-management.spec.ts" time="13.25">
+<failure message="data-management.spec.ts:248:3 EXPORT-003: Export builder shows format options" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:248:3 › Export Builder › EXPORT-003: Export builder shows format options 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      211 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      212 |     await page.click('button[type="submit"]');
+    > 213 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      214 |   });
+      215 |
+      216 |   test('EXPORT-001: Open export builder from header', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:213:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Export-Bui-f1127-uilder-shows-format-options-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Export-Bui-f1127-uilder-shows-format-options-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Export-Bui-f1127-uilder-shows-format-options-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Export-Bui-f1127-uilder-shows-format-options-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Export-Bui-f1127-uilder-shows-format-options-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Export-Bui-f1127-uilder-shows-format-options-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Export Builder › EXPORT-004: Close export builder" classname="data-management.spec.ts" time="13.244">
+<failure message="data-management.spec.ts:269:3 EXPORT-004: Close export builder" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:269:3 › Export Builder › EXPORT-004: Close export builder ───
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      211 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      212 |     await page.click('button[type="submit"]');
+    > 213 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      214 |   });
+      215 |
+      216 |   test('EXPORT-001: Open export builder from header', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:213:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Export-Bui-289f3-RT-004-Close-export-builder-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Export-Bui-289f3-RT-004-Close-export-builder-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Export-Bui-289f3-RT-004-Close-export-builder-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Export-Bui-289f3-RT-004-Close-export-builder-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Export-Bui-289f3-RT-004-Close-export-builder-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Export-Bui-289f3-RT-004-Close-export-builder-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Duplicates Manager › DUP-001: Navigate to duplicates tab" classname="data-management.spec.ts" time="13.092">
+<failure message="data-management.spec.ts:303:3 DUP-001: Navigate to duplicates tab" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:303:3 › Duplicates Manager › DUP-001: Navigate to duplicates tab 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      298 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      299 |     await page.click('button[type="submit"]');
+    > 300 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      301 |   });
+      302 |
+      303 |   test('DUP-001: Navigate to duplicates tab', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:300:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Duplicates-38a06--Navigate-to-duplicates-tab-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Duplicates-38a06--Navigate-to-duplicates-tab-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Duplicates-38a06--Navigate-to-duplicates-tab-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Duplicates-38a06--Navigate-to-duplicates-tab-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Duplicates-38a06--Navigate-to-duplicates-tab-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Duplicates-38a06--Navigate-to-duplicates-tab-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Duplicates Manager › DUP-002: Entity type selection in duplicates" classname="data-management.spec.ts" time="13.033">
+<failure message="data-management.spec.ts:324:3 DUP-002: Entity type selection in duplicates" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:324:3 › Duplicates Manager › DUP-002: Entity type selection in duplicates 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      298 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      299 |     await page.click('button[type="submit"]');
+    > 300 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      301 |   });
+      302 |
+      303 |   test('DUP-001: Navigate to duplicates tab', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:300:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Duplicates-0a015-ype-selection-in-duplicates-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Duplicates-0a015-ype-selection-in-duplicates-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Duplicates-0a015-ype-selection-in-duplicates-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Duplicates-0a015-ype-selection-in-duplicates-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Duplicates-0a015-ype-selection-in-duplicates-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Duplicates-0a015-ype-selection-in-duplicates-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Duplicates Manager › DUP-003: Detect duplicates button exists" classname="data-management.spec.ts" time="11.84">
+<failure message="data-management.spec.ts:341:3 DUP-003: Detect duplicates button exists" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:341:3 › Duplicates Manager › DUP-003: Detect duplicates button exists 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      298 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      299 |     await page.click('button[type="submit"]');
+    > 300 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      301 |   });
+      302 |
+      303 |   test('DUP-001: Navigate to duplicates tab', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:300:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Duplicates-f4428-ct-duplicates-button-exists-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Duplicates-f4428-ct-duplicates-button-exists-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Duplicates-f4428-ct-duplicates-button-exists-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Duplicates-f4428-ct-duplicates-button-exists-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Duplicates-f4428-ct-duplicates-button-exists-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Duplicates-f4428-ct-duplicates-button-exists-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="GDPR Requests › GDPR-001: Navigate to GDPR tab" classname="data-management.spec.ts" time="11.982">
+<failure message="data-management.spec.ts:371:3 GDPR-001: Navigate to GDPR tab" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:371:3 › GDPR Requests › GDPR-001: Navigate to GDPR tab ──────
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      366 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      367 |     await page.click('button[type="submit"]');
+    > 368 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      369 |   });
+      370 |
+      371 |   test('GDPR-001: Navigate to GDPR tab', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:368:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-GDPR-Requests-GDPR-001-Navigate-to-GDPR-tab-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-GDPR-Requests-GDPR-001-Navigate-to-GDPR-tab-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-GDPR-Requests-GDPR-001-Navigate-to-GDPR-tab-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-GDPR-Requests-GDPR-001-Navigate-to-GDPR-tab-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-GDPR-Requests-GDPR-001-Navigate-to-GDPR-tab-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-GDPR-Requests-GDPR-001-Navigate-to-GDPR-tab-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="GDPR Requests › GDPR-002: New request button exists" classname="data-management.spec.ts" time="12.515">
+<failure message="data-management.spec.ts:392:3 GDPR-002: New request button exists" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:392:3 › GDPR Requests › GDPR-002: New request button exists ─
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      366 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      367 |     await page.click('button[type="submit"]');
+    > 368 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      369 |   });
+      370 |
+      371 |   test('GDPR-001: Navigate to GDPR tab', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:368:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-GDPR-Reque-0a86a-2-New-request-button-exists-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-GDPR-Reque-0a86a-2-New-request-button-exists-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-GDPR-Reque-0a86a-2-New-request-button-exists-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-GDPR-Reque-0a86a-2-New-request-button-exists-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-GDPR-Reque-0a86a-2-New-request-button-exists-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-GDPR-Reque-0a86a-2-New-request-button-exists-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="GDPR Requests › GDPR-003: Open new request dialog" classname="data-management.spec.ts" time="12.68">
+<failure message="data-management.spec.ts:409:3 GDPR-003: Open new request dialog" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:409:3 › GDPR Requests › GDPR-003: Open new request dialog ───
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      366 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      367 |     await page.click('button[type="submit"]');
+    > 368 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      369 |   });
+      370 |
+      371 |   test('GDPR-001: Navigate to GDPR tab', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:368:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-GDPR-Reque-cc967-003-Open-new-request-dialog-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-GDPR-Reque-cc967-003-Open-new-request-dialog-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-GDPR-Reque-cc967-003-Open-new-request-dialog-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-GDPR-Reque-cc967-003-Open-new-request-dialog-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-GDPR-Reque-cc967-003-Open-new-request-dialog-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-GDPR-Reque-cc967-003-Open-new-request-dialog-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Archive Manager › ARCHIVE-001: Navigate to archive tab" classname="data-management.spec.ts" time="12.642">
+<failure message="data-management.spec.ts:442:3 ARCHIVE-001: Navigate to archive tab" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:442:3 › Archive Manager › ARCHIVE-001: Navigate to archive tab 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      437 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      438 |     await page.click('button[type="submit"]');
+    > 439 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      440 |   });
+      441 |
+      442 |   test('ARCHIVE-001: Navigate to archive tab', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:439:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Archive-Ma-2ccf5-001-Navigate-to-archive-tab-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Archive-Ma-2ccf5-001-Navigate-to-archive-tab-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Archive-Ma-2ccf5-001-Navigate-to-archive-tab-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Archive-Ma-2ccf5-001-Navigate-to-archive-tab-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Archive-Ma-2ccf5-001-Navigate-to-archive-tab-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Archive-Ma-2ccf5-001-Navigate-to-archive-tab-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Archive Manager › ARCHIVE-002: Entity type filter in archive" classname="data-management.spec.ts" time="12.679">
+<failure message="data-management.spec.ts:462:3 ARCHIVE-002: Entity type filter in archive" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:462:3 › Archive Manager › ARCHIVE-002: Entity type filter in archive 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      437 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      438 |     await page.click('button[type="submit"]');
+    > 439 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      440 |   });
+      441 |
+      442 |   test('ARCHIVE-001: Navigate to archive tab', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:439:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Archive-Ma-0c8ff-tity-type-filter-in-archive-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Archive-Ma-0c8ff-tity-type-filter-in-archive-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Archive-Ma-0c8ff-tity-type-filter-in-archive-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Archive-Ma-0c8ff-tity-type-filter-in-archive-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Archive-Ma-0c8ff-tity-type-filter-in-archive-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Archive-Ma-0c8ff-tity-type-filter-in-archive-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Archive Manager › ARCHIVE-003: Search input in archive" classname="data-management.spec.ts" time="12.733">
+<failure message="data-management.spec.ts:479:3 ARCHIVE-003: Search input in archive" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:479:3 › Archive Manager › ARCHIVE-003: Search input in archive 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      437 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      438 |     await page.click('button[type="submit"]');
+    > 439 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      440 |   });
+      441 |
+      442 |   test('ARCHIVE-001: Navigate to archive tab', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:439:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Archive-Ma-f861d-003-Search-input-in-archive-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Archive-Ma-f861d-003-Search-input-in-archive-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Archive-Ma-f861d-003-Search-input-in-archive-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Archive-Ma-f861d-003-Search-input-in-archive-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Archive-Ma-f861d-003-Search-input-in-archive-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Archive-Ma-f861d-003-Search-input-in-archive-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Bulk Operations › BULK-001: Open bulk operations from quick actions" classname="data-management.spec.ts" time="12.613">
+<failure message="data-management.spec.ts:509:3 BULK-001: Open bulk operations from quick actions" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:509:3 › Bulk Operations › BULK-001: Open bulk operations from quick actions 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      504 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      505 |     await page.click('button[type="submit"]');
+    > 506 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      507 |   });
+      508 |
+      509 |   test('BULK-001: Open bulk operations from quick actions', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:506:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Bulk-Opera-5535a-erations-from-quick-actions-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Bulk-Opera-5535a-erations-from-quick-actions-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Bulk-Opera-5535a-erations-from-quick-actions-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Bulk-Opera-5535a-erations-from-quick-actions-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Bulk-Opera-5535a-erations-from-quick-actions-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Bulk-Opera-5535a-erations-from-quick-actions-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Bulk Operations › BULK-002: Bulk operations dialog shows entity selection" classname="data-management.spec.ts" time="11.724">
+<failure message="data-management.spec.ts:525:3 BULK-002: Bulk operations dialog shows entity selection" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:525:3 › Bulk Operations › BULK-002: Bulk operations dialog shows entity selection 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      504 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      505 |     await page.click('button[type="submit"]');
+    > 506 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      507 |   });
+      508 |
+      509 |   test('BULK-001: Open bulk operations from quick actions', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:506:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Bulk-Opera-dc52c-alog-shows-entity-selection-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Bulk-Opera-dc52c-alog-shows-entity-selection-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Bulk-Opera-dc52c-alog-shows-entity-selection-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Bulk-Opera-dc52c-alog-shows-entity-selection-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Bulk-Opera-dc52c-alog-shows-entity-selection-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Bulk-Opera-dc52c-alog-shows-entity-selection-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Bulk Operations › BULK-003: Close bulk operations dialog" classname="data-management.spec.ts" time="11.649">
+<failure message="data-management.spec.ts:547:3 BULK-003: Close bulk operations dialog" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:547:3 › Bulk Operations › BULK-003: Close bulk operations dialog 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      504 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      505 |     await page.click('button[type="submit"]');
+    > 506 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      507 |   });
+      508 |
+      509 |   test('BULK-001: Open bulk operations from quick actions', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:506:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Bulk-Opera-bf03d-lose-bulk-operations-dialog-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Bulk-Opera-bf03d-lose-bulk-operations-dialog-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Bulk-Opera-bf03d-lose-bulk-operations-dialog-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Bulk-Opera-bf03d-lose-bulk-operations-dialog-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Bulk-Opera-bf03d-lose-bulk-operations-dialog-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Bulk-Opera-bf03d-lose-bulk-operations-dialog-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Recent Operations › RECENT-001: View recent imports section" classname="data-management.spec.ts" time="11.87">
+<failure message="data-management.spec.ts:583:3 RECENT-001: View recent imports section" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:583:3 › Recent Operations › RECENT-001: View recent imports section 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      578 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      579 |     await page.click('button[type="submit"]');
+    > 580 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      581 |   });
+      582 |
+      583 |   test('RECENT-001: View recent imports section', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:580:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Recent-Ope-cbbbb-View-recent-imports-section-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Recent-Ope-cbbbb-View-recent-imports-section-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Recent-Ope-cbbbb-View-recent-imports-section-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Recent-Ope-cbbbb-View-recent-imports-section-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Recent-Ope-cbbbb-View-recent-imports-section-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Recent-Ope-cbbbb-View-recent-imports-section-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Recent Operations › RECENT-002: View recent exports section" classname="data-management.spec.ts" time="11.902">
+<failure message="data-management.spec.ts:598:3 RECENT-002: View recent exports section" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:598:3 › Recent Operations › RECENT-002: View recent exports section 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      578 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      579 |     await page.click('button[type="submit"]');
+    > 580 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      581 |   });
+      582 |
+      583 |   test('RECENT-001: View recent imports section', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:580:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Recent-Ope-e40a2-View-recent-exports-section-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Recent-Ope-e40a2-View-recent-exports-section-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Recent-Ope-e40a2-View-recent-exports-section-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Recent-Ope-e40a2-View-recent-exports-section-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Recent-Ope-e40a2-View-recent-exports-section-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Recent-Ope-e40a2-View-recent-exports-section-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Responsive Design › RESPONSIVE-001: Data management loads on mobile" classname="data-management.spec.ts" time="11.871">
+<failure message="data-management.spec.ts:626:3 RESPONSIVE-001: Data management loads on mobile" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:626:3 › Responsive Design › RESPONSIVE-001: Data management loads on mobile 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      621 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      622 |     await page.click('button[type="submit"]');
+    > 623 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      624 |   });
+      625 |
+      626 |   test('RESPONSIVE-001: Data management loads on mobile', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:623:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Responsive-c063f--management-loads-on-mobile-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Responsive-c063f--management-loads-on-mobile-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Responsive-c063f--management-loads-on-mobile-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Responsive-c063f--management-loads-on-mobile-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Responsive-c063f--management-loads-on-mobile-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Responsive-c063f--management-loads-on-mobile-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Responsive Design › RESPONSIVE-002: Tabs are accessible on tablet" classname="data-management.spec.ts" time="11.872">
+<failure message="data-management.spec.ts:639:3 RESPONSIVE-002: Tabs are accessible on tablet" type="FAILURE">
+<![CDATA[  [chromium] › data-management.spec.ts:639:3 › Responsive Design › RESPONSIVE-002: Tabs are accessible on tablet 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      621 |     await page.fill('input[type="password"]', ADMIN_PASSWORD);
+      622 |     await page.click('button[type="submit"]');
+    > 623 |     await page.waitForURL(/\/(employee|dashboard)/, { timeout: 10000 });
+          |                ^
+      624 |   });
+      625 |
+      626 |   test('RESPONSIVE-001: Data management loads on mobile', async ({ page }) => {
+        at /home/user/intime-v3/tests/e2e/data-management.spec.ts:623:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/data-management-Responsive-c1257-bs-are-accessible-on-tablet-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/data-management-Responsive-c1257-bs-are-accessible-on-tablet-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/data-management-Responsive-c1257-bs-are-accessible-on-tablet-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|data-management-Responsive-c1257-bs-are-accessible-on-tablet-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|data-management-Responsive-c1257-bs-are-accessible-on-tablet-chromium/video.webm]]
+
+[[ATTACHMENT|data-management-Responsive-c1257-bs-are-accessible-on-tablet-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>
