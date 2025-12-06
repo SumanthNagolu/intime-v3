@@ -1,0 +1,254 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e7]:
+        - link "I InTime Portal" [ref=e8] [cursor=pointer]:
+          - /url: /employee/admin/dashboard
+          - generic [ref=e10]: I
+          - generic [ref=e11]:
+            - generic [ref=e12]: InTime
+            - generic [ref=e13]: Portal
+        - button "admin" [ref=e16] [cursor=pointer]:
+          - img [ref=e18]
+          - generic [ref=e21]: admin
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - complementary [ref=e25]:
+          - navigation [ref=e26]:
+            - generic [ref=e27]:
+              - heading "Main" [level=3] [ref=e28]
+              - list [ref=e29]:
+                - listitem [ref=e30]:
+                  - link "Dashboard" [ref=e31] [cursor=pointer]:
+                    - /url: /employee/admin/dashboard
+                    - generic [ref=e32]:
+                      - img [ref=e33]
+                      - generic [ref=e38]: Dashboard
+            - generic [ref=e39]:
+              - heading "User Management" [level=3] [ref=e40]
+              - list [ref=e41]:
+                - listitem [ref=e42]:
+                  - link "Users" [ref=e43] [cursor=pointer]:
+                    - /url: /employee/admin/users
+                    - generic [ref=e44]:
+                      - img [ref=e45]
+                      - generic [ref=e50]: Users
+                - listitem [ref=e51]:
+                  - link "Pods" [ref=e52] [cursor=pointer]:
+                    - /url: /employee/admin/pods
+                    - generic [ref=e53]:
+                      - img [ref=e54]
+                      - generic [ref=e59]: Pods
+                - listitem [ref=e60]:
+                  - link "Roles" [ref=e61] [cursor=pointer]:
+                    - /url: /employee/admin/roles
+                    - generic [ref=e62]:
+                      - img [ref=e63]
+                      - generic [ref=e65]: Roles
+                - listitem [ref=e66]:
+                  - link "Permissions" [ref=e67] [cursor=pointer]:
+                    - /url: /employee/admin/permissions
+                    - generic [ref=e68]:
+                      - img [ref=e69]
+                      - generic [ref=e71]: Permissions
+            - generic [ref=e72]:
+              - heading "System" [level=3] [ref=e73]
+              - list [ref=e74]:
+                - listitem [ref=e75]:
+                  - link "Settings" [ref=e76] [cursor=pointer]:
+                    - /url: /employee/admin/settings
+                    - generic [ref=e77]:
+                      - img [ref=e78]
+                      - generic [ref=e81]: Settings
+                - listitem [ref=e82]:
+                  - link "Org Settings" [ref=e83] [cursor=pointer]:
+                    - /url: /employee/admin/org-settings
+                    - generic [ref=e84]:
+                      - img [ref=e85]
+                      - generic [ref=e89]: Org Settings
+                - listitem [ref=e90]:
+                  - link "Integrations" [ref=e91] [cursor=pointer]:
+                    - /url: /employee/admin/integrations
+                    - generic [ref=e92]:
+                      - img [ref=e93]
+                      - generic [ref=e97]: Integrations
+                - listitem [ref=e98]:
+                  - link "Workflows" [ref=e99] [cursor=pointer]:
+                    - /url: /employee/admin/workflows
+                    - generic [ref=e100]:
+                      - img [ref=e101]
+                      - generic [ref=e105]: Workflows
+                - listitem [ref=e106]:
+                  - link "SLA Config" [ref=e107] [cursor=pointer]:
+                    - /url: /employee/admin/sla
+                    - generic [ref=e108]:
+                      - img [ref=e109]
+                      - generic [ref=e112]: SLA Config
+                - listitem [ref=e113]:
+                  - link "Activity Patterns" [ref=e114] [cursor=pointer]:
+                    - /url: /employee/admin/activity-patterns
+                    - generic [ref=e115]:
+                      - img [ref=e116]
+                      - generic [ref=e118]: Activity Patterns
+                - listitem [ref=e119]:
+                  - link "Email Templates" [ref=e120] [cursor=pointer]:
+                    - /url: /employee/admin/email-templates
+                    - generic [ref=e121]:
+                      - img [ref=e122]
+                      - generic [ref=e125]: Email Templates
+                - listitem [ref=e126]:
+                  - link "API Tokens" [ref=e127] [cursor=pointer]:
+                    - /url: /employee/admin/api-tokens
+                    - generic [ref=e128]:
+                      - img [ref=e129]
+                      - generic [ref=e133]: API Tokens
+                - listitem [ref=e134]:
+                  - link "Feature Flags" [ref=e135] [cursor=pointer]:
+                    - /url: /employee/admin/feature-flags
+                    - generic [ref=e136]:
+                      - img [ref=e137]
+                      - generic [ref=e139]: Feature Flags
+            - generic [ref=e140]:
+              - heading "Monitoring" [level=3] [ref=e141]
+              - list [ref=e142]:
+                - listitem [ref=e143]:
+                  - link "Audit Logs" [ref=e144] [cursor=pointer]:
+                    - /url: /employee/admin/audit
+                    - generic [ref=e145]:
+                      - img [ref=e146]
+                      - generic [ref=e149]: Audit Logs
+                - listitem [ref=e150]:
+                  - link "Notifications" [ref=e151] [cursor=pointer]:
+                    - /url: /employee/admin/notifications
+                    - generic [ref=e152]:
+                      - img [ref=e153]
+                      - generic [ref=e156]: Notifications
+                - listitem [ref=e157]:
+                  - link "Data Management" [ref=e158] [cursor=pointer]:
+                    - /url: /employee/admin/data
+                    - generic [ref=e159]:
+                      - img [ref=e160]
+                      - generic [ref=e164]: Data Management
+                - listitem [ref=e165]:
+                  - link "Emergency" [ref=e166] [cursor=pointer]:
+                    - /url: /employee/admin/emergency
+                    - generic [ref=e167]:
+                      - img [ref=e168]
+                      - generic [ref=e170]: Emergency
+        - main [ref=e171]:
+          - generic [ref=e172]:
+            - heading "Admin Portal" [level=1] [ref=e175]
+            - generic [ref=e176]:
+              - generic [ref=e178]:
+                - generic [ref=e179]:
+                  - heading "Organization Settings" [level=1] [ref=e180]
+                  - generic [ref=e181]: Configure organization-wide settings including branding, regional settings, and defaults
+                - button "Options" [ref=e184] [cursor=pointer]:
+                  - img [ref=e185]
+                  - text: Options
+              - generic [ref=e188]:
+                - tablist [ref=e189]:
+                  - tab "Company" [ref=e190] [cursor=pointer]:
+                    - img [ref=e191]
+                    - generic [ref=e195]: Company
+                  - tab "Branding" [ref=e196] [cursor=pointer]:
+                    - img [ref=e197]
+                    - generic [ref=e203]: Branding
+                  - tab "Regional" [ref=e204] [cursor=pointer]:
+                    - img [ref=e205]
+                    - generic [ref=e208]: Regional
+                  - tab "Hours" [ref=e209] [cursor=pointer]:
+                    - img [ref=e210]
+                    - generic [ref=e213]: Hours
+                  - tab "Fiscal" [active] [selected] [ref=e214] [cursor=pointer]:
+                    - img [ref=e215]
+                    - generic [ref=e217]: Fiscal
+                  - tab "Defaults" [ref=e218] [cursor=pointer]:
+                    - img [ref=e219]
+                    - generic [ref=e222]: Defaults
+                  - tab "Contact" [ref=e223] [cursor=pointer]:
+                    - img [ref=e224]
+                    - generic [ref=e226]: Contact
+                - tabpanel "Fiscal" [ref=e227]:
+                  - generic [ref=e229]:
+                    - generic [ref=e230]:
+                      - generic [ref=e233]:
+                        - img [ref=e235]
+                        - generic [ref=e237]:
+                          - heading "Fiscal Year Configuration" [level=3] [ref=e238]
+                          - paragraph [ref=e239]: Set up your organization's fiscal year and reporting periods
+                      - generic [ref=e241]:
+                        - generic [ref=e242]:
+                          - text: Fiscal Year Start Month
+                          - combobox "Fiscal Year Start Month" [ref=e243] [cursor=pointer]:
+                            - generic: January
+                            - img [ref=e244]
+                          - combobox [ref=e246]
+                          - paragraph [ref=e247]: "Current Fiscal Year: FY2025"
+                        - generic [ref=e248]:
+                          - text: Reporting Period Type
+                          - combobox "Reporting Period Type" [ref=e249] [cursor=pointer]:
+                            - generic: Quarterly (Q1, Q2, Q3, Q4)
+                            - img [ref=e250]
+                          - combobox [ref=e252]
+                    - generic [ref=e253]:
+                      - generic [ref=e256]:
+                        - img [ref=e258]
+                        - generic [ref=e261]:
+                          - heading "Sprint Alignment" [level=3] [ref=e262]
+                          - paragraph [ref=e263]: Configure how sprints align with fiscal periods
+                      - generic [ref=e265]:
+                        - generic [ref=e266]:
+                          - paragraph [ref=e267]: Align sprints to fiscal periods
+                          - paragraph [ref=e268]: Sprint targets will reset at the start of each quarterly period
+                        - switch [checked] [ref=e269] [cursor=pointer]
+                        - checkbox [checked]
+                    - generic [ref=e270]:
+                      - generic [ref=e274]:
+                        - heading "Fiscal Year Preview" [level=3] [ref=e275]
+                        - paragraph [ref=e276]: See how your fiscal periods will be structured
+                      - table [ref=e279]:
+                        - rowgroup [ref=e280]:
+                          - row "Period Start Date End Date Status" [ref=e281]:
+                            - cell "Period" [ref=e282]
+                            - cell "Start Date" [ref=e283]
+                            - cell "End Date" [ref=e284]
+                            - cell "Status" [ref=e285]
+                        - rowgroup [ref=e286]:
+                          - row "Q1 2025 Jan 1, 2025 Mar 31, 2025 Closed" [ref=e287]:
+                            - cell "Q1 2025" [ref=e288]
+                            - cell "Jan 1, 2025" [ref=e289]
+                            - cell "Mar 31, 2025" [ref=e290]
+                            - cell "Closed" [ref=e291]:
+                              - generic [ref=e292]: Closed
+                          - row "Q2 2025 Apr 1, 2025 Jun 30, 2025 Closed" [ref=e293]:
+                            - cell "Q2 2025" [ref=e294]
+                            - cell "Apr 1, 2025" [ref=e295]
+                            - cell "Jun 30, 2025" [ref=e296]
+                            - cell "Closed" [ref=e297]:
+                              - generic [ref=e298]: Closed
+                          - row "Q3 2025 Jul 1, 2025 Sep 30, 2025 Closed" [ref=e299]:
+                            - cell "Q3 2025" [ref=e300]
+                            - cell "Jul 1, 2025" [ref=e301]
+                            - cell "Sep 30, 2025" [ref=e302]
+                            - cell "Closed" [ref=e303]:
+                              - generic [ref=e304]: Closed
+                          - row "Q4 2025 Oct 1, 2025 Dec 31, 2025 Current" [ref=e305]:
+                            - cell "Q4 2025" [ref=e306]
+                            - cell "Oct 1, 2025" [ref=e307]
+                            - cell "Dec 31, 2025" [ref=e308]
+                            - cell "Current" [ref=e309]:
+                              - generic [ref=e310]: Current
+                    - button "Save Fiscal Settings" [ref=e312] [cursor=pointer]
+              - paragraph [ref=e314]: "Keyboard shortcuts: Cmd+1-7 to switch tabs, Cmd+S to save"
+  - region "Notifications (F8)":
+    - list
+  - button "Open Next.js Dev Tools" [ref=e320] [cursor=pointer]:
+    - img [ref=e321]
+  - alert [ref=e324]
+```

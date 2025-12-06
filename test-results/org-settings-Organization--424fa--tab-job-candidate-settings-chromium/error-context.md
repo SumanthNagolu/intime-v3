@@ -1,0 +1,293 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e7]:
+        - link "I InTime Portal" [ref=e8] [cursor=pointer]:
+          - /url: /employee/admin/dashboard
+          - generic [ref=e10]: I
+          - generic [ref=e11]:
+            - generic [ref=e12]: InTime
+            - generic [ref=e13]: Portal
+        - button "admin" [ref=e16] [cursor=pointer]:
+          - img [ref=e18]
+          - generic [ref=e21]: admin
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - complementary [ref=e25]:
+          - navigation [ref=e26]:
+            - generic [ref=e27]:
+              - heading "Main" [level=3] [ref=e28]
+              - list [ref=e29]:
+                - listitem [ref=e30]:
+                  - link "Dashboard" [ref=e31] [cursor=pointer]:
+                    - /url: /employee/admin/dashboard
+                    - generic [ref=e32]:
+                      - img [ref=e33]
+                      - generic [ref=e38]: Dashboard
+            - generic [ref=e39]:
+              - heading "User Management" [level=3] [ref=e40]
+              - list [ref=e41]:
+                - listitem [ref=e42]:
+                  - link "Users" [ref=e43] [cursor=pointer]:
+                    - /url: /employee/admin/users
+                    - generic [ref=e44]:
+                      - img [ref=e45]
+                      - generic [ref=e50]: Users
+                - listitem [ref=e51]:
+                  - link "Pods" [ref=e52] [cursor=pointer]:
+                    - /url: /employee/admin/pods
+                    - generic [ref=e53]:
+                      - img [ref=e54]
+                      - generic [ref=e59]: Pods
+                - listitem [ref=e60]:
+                  - link "Roles" [ref=e61] [cursor=pointer]:
+                    - /url: /employee/admin/roles
+                    - generic [ref=e62]:
+                      - img [ref=e63]
+                      - generic [ref=e65]: Roles
+                - listitem [ref=e66]:
+                  - link "Permissions" [ref=e67] [cursor=pointer]:
+                    - /url: /employee/admin/permissions
+                    - generic [ref=e68]:
+                      - img [ref=e69]
+                      - generic [ref=e71]: Permissions
+            - generic [ref=e72]:
+              - heading "System" [level=3] [ref=e73]
+              - list [ref=e74]:
+                - listitem [ref=e75]:
+                  - link "Settings" [ref=e76] [cursor=pointer]:
+                    - /url: /employee/admin/settings
+                    - generic [ref=e77]:
+                      - img [ref=e78]
+                      - generic [ref=e81]: Settings
+                - listitem [ref=e82]:
+                  - link "Org Settings" [ref=e83] [cursor=pointer]:
+                    - /url: /employee/admin/org-settings
+                    - generic [ref=e84]:
+                      - img [ref=e85]
+                      - generic [ref=e89]: Org Settings
+                - listitem [ref=e90]:
+                  - link "Integrations" [ref=e91] [cursor=pointer]:
+                    - /url: /employee/admin/integrations
+                    - generic [ref=e92]:
+                      - img [ref=e93]
+                      - generic [ref=e97]: Integrations
+                - listitem [ref=e98]:
+                  - link "Workflows" [ref=e99] [cursor=pointer]:
+                    - /url: /employee/admin/workflows
+                    - generic [ref=e100]:
+                      - img [ref=e101]
+                      - generic [ref=e105]: Workflows
+                - listitem [ref=e106]:
+                  - link "SLA Config" [ref=e107] [cursor=pointer]:
+                    - /url: /employee/admin/sla
+                    - generic [ref=e108]:
+                      - img [ref=e109]
+                      - generic [ref=e112]: SLA Config
+                - listitem [ref=e113]:
+                  - link "Activity Patterns" [ref=e114] [cursor=pointer]:
+                    - /url: /employee/admin/activity-patterns
+                    - generic [ref=e115]:
+                      - img [ref=e116]
+                      - generic [ref=e118]: Activity Patterns
+                - listitem [ref=e119]:
+                  - link "Email Templates" [ref=e120] [cursor=pointer]:
+                    - /url: /employee/admin/email-templates
+                    - generic [ref=e121]:
+                      - img [ref=e122]
+                      - generic [ref=e125]: Email Templates
+                - listitem [ref=e126]:
+                  - link "API Tokens" [ref=e127] [cursor=pointer]:
+                    - /url: /employee/admin/api-tokens
+                    - generic [ref=e128]:
+                      - img [ref=e129]
+                      - generic [ref=e133]: API Tokens
+                - listitem [ref=e134]:
+                  - link "Feature Flags" [ref=e135] [cursor=pointer]:
+                    - /url: /employee/admin/feature-flags
+                    - generic [ref=e136]:
+                      - img [ref=e137]
+                      - generic [ref=e139]: Feature Flags
+            - generic [ref=e140]:
+              - heading "Monitoring" [level=3] [ref=e141]
+              - list [ref=e142]:
+                - listitem [ref=e143]:
+                  - link "Audit Logs" [ref=e144] [cursor=pointer]:
+                    - /url: /employee/admin/audit
+                    - generic [ref=e145]:
+                      - img [ref=e146]
+                      - generic [ref=e149]: Audit Logs
+                - listitem [ref=e150]:
+                  - link "Notifications" [ref=e151] [cursor=pointer]:
+                    - /url: /employee/admin/notifications
+                    - generic [ref=e152]:
+                      - img [ref=e153]
+                      - generic [ref=e156]: Notifications
+                - listitem [ref=e157]:
+                  - link "Data Management" [ref=e158] [cursor=pointer]:
+                    - /url: /employee/admin/data
+                    - generic [ref=e159]:
+                      - img [ref=e160]
+                      - generic [ref=e164]: Data Management
+                - listitem [ref=e165]:
+                  - link "Emergency" [ref=e166] [cursor=pointer]:
+                    - /url: /employee/admin/emergency
+                    - generic [ref=e167]:
+                      - img [ref=e168]
+                      - generic [ref=e170]: Emergency
+        - main [ref=e171]:
+          - generic [ref=e172]:
+            - heading "Admin Portal" [level=1] [ref=e175]
+            - generic [ref=e176]:
+              - generic [ref=e178]:
+                - generic [ref=e179]:
+                  - heading "Organization Settings" [level=1] [ref=e180]
+                  - generic [ref=e181]: Configure organization-wide settings including branding, regional settings, and defaults
+                - button "Options" [ref=e184] [cursor=pointer]:
+                  - img [ref=e185]
+                  - text: Options
+              - generic [ref=e188]:
+                - tablist [ref=e189]:
+                  - tab "Company" [ref=e190] [cursor=pointer]:
+                    - img [ref=e191]
+                    - generic [ref=e195]: Company
+                  - tab "Branding" [ref=e196] [cursor=pointer]:
+                    - img [ref=e197]
+                    - generic [ref=e203]: Branding
+                  - tab "Regional" [ref=e204] [cursor=pointer]:
+                    - img [ref=e205]
+                    - generic [ref=e208]: Regional
+                  - tab "Hours" [ref=e209] [cursor=pointer]:
+                    - img [ref=e210]
+                    - generic [ref=e213]: Hours
+                  - tab "Fiscal" [ref=e214] [cursor=pointer]:
+                    - img [ref=e215]
+                    - generic [ref=e217]: Fiscal
+                  - tab "Defaults" [active] [selected] [ref=e218] [cursor=pointer]:
+                    - img [ref=e219]
+                    - generic [ref=e222]: Defaults
+                  - tab "Contact" [ref=e223] [cursor=pointer]:
+                    - img [ref=e224]
+                    - generic [ref=e226]: Contact
+                - tabpanel "Defaults" [ref=e227]:
+                  - generic [ref=e229]:
+                    - generic [ref=e230]:
+                      - generic [ref=e233]:
+                        - img [ref=e235]
+                        - generic [ref=e238]:
+                          - heading "Job Defaults" [level=3] [ref=e239]
+                          - paragraph [ref=e240]: Default values for new job requisitions
+                      - generic [ref=e242]:
+                        - generic [ref=e243]:
+                          - text: Default Status
+                          - combobox "Default Status" [ref=e244] [cursor=pointer]:
+                            - generic: Draft
+                            - img [ref=e245]
+                          - combobox [ref=e247]
+                        - generic [ref=e248]:
+                          - text: Default Job Type
+                          - combobox "Default Job Type" [ref=e249] [cursor=pointer]:
+                            - generic: Contract
+                            - img [ref=e250]
+                          - combobox [ref=e252]
+                        - generic [ref=e253]:
+                          - text: Default Work Location
+                          - combobox "Default Work Location" [ref=e254] [cursor=pointer]:
+                            - generic: Hybrid
+                            - img [ref=e255]
+                          - combobox [ref=e257]
+                    - generic [ref=e258]:
+                      - generic [ref=e261]:
+                        - img [ref=e263]
+                        - generic [ref=e268]:
+                          - heading "Candidate Defaults" [level=3] [ref=e269]
+                          - paragraph [ref=e270]: Default values for new candidates
+                      - generic [ref=e271]:
+                        - generic [ref=e272]:
+                          - generic [ref=e273]:
+                            - text: Default Source
+                            - combobox "Default Source" [ref=e274] [cursor=pointer]:
+                              - generic: Direct Application
+                              - img [ref=e275]
+                            - combobox [ref=e277]
+                          - generic [ref=e278]:
+                            - text: Default Availability
+                            - combobox "Default Availability" [ref=e279] [cursor=pointer]:
+                              - generic: 2 Weeks
+                              - img [ref=e280]
+                            - combobox [ref=e282]
+                        - generic [ref=e283]:
+                          - generic [ref=e284]:
+                            - paragraph [ref=e285]: Auto-Parse Resumes
+                            - paragraph [ref=e286]: Automatically extract information from uploaded resumes
+                          - switch [checked] [ref=e287] [cursor=pointer]
+                          - checkbox [checked]
+                    - generic [ref=e288]:
+                      - generic [ref=e291]:
+                        - img [ref=e293]
+                        - generic [ref=e296]:
+                          - heading "Submission Defaults" [level=3] [ref=e297]
+                          - paragraph [ref=e298]: Default values for candidate submissions
+                      - generic [ref=e300]:
+                        - generic [ref=e301]:
+                          - text: Default Status
+                          - combobox "Default Status" [ref=e302] [cursor=pointer]:
+                            - generic: Pending Review
+                            - img [ref=e303]
+                          - combobox [ref=e305]
+                        - generic [ref=e306]:
+                          - generic [ref=e307]:
+                            - paragraph [ref=e308]: Auto-Send Client Email
+                            - paragraph [ref=e309]: Automatically email client on submission
+                          - switch [ref=e310] [cursor=pointer]
+                          - checkbox
+                    - generic [ref=e311]:
+                      - generic [ref=e314]:
+                        - img [ref=e316]
+                        - generic [ref=e319]:
+                          - heading "Activity Defaults" [level=3] [ref=e320]
+                          - paragraph [ref=e321]: Default settings for activities and follow-ups
+                      - generic [ref=e323]:
+                        - generic [ref=e324]:
+                          - text: Default Follow-Up Days
+                          - generic [ref=e325]:
+                            - spinbutton "Default Follow-Up Days" [ref=e326]: "3"
+                            - generic [ref=e327]: days
+                        - generic [ref=e328]:
+                          - generic [ref=e329]:
+                            - paragraph [ref=e330]: Auto-Create Follow-Up Task
+                            - paragraph [ref=e331]: Create follow-up tasks after activities
+                          - switch [checked] [ref=e332] [cursor=pointer]
+                          - checkbox [checked]
+                    - generic [ref=e333]:
+                      - generic [ref=e336]:
+                        - img [ref=e338]
+                        - generic [ref=e340]:
+                          - heading "Communication Defaults" [level=3] [ref=e341]
+                          - paragraph [ref=e342]: Default settings for emails and messages
+                      - generic [ref=e344]:
+                        - generic [ref=e345]:
+                          - text: Email Signature Location
+                          - combobox "Email Signature Location" [ref=e346] [cursor=pointer]:
+                            - generic: Below message
+                            - img [ref=e347]
+                          - combobox [ref=e349]
+                        - generic [ref=e350]:
+                          - generic [ref=e351]:
+                            - paragraph [ref=e352]: Include Company Disclaimer
+                            - paragraph [ref=e353]: Add legal disclaimer to outbound emails
+                          - switch [checked] [ref=e354] [cursor=pointer]
+                          - checkbox [checked]
+                    - button "Save Default Values" [ref=e356] [cursor=pointer]
+              - paragraph [ref=e358]: "Keyboard shortcuts: Cmd+1-7 to switch tabs, Cmd+S to save"
+  - region "Notifications (F8)":
+    - list
+  - button "Open Next.js Dev Tools" [ref=e364] [cursor=pointer]:
+    - img [ref=e365]
+  - alert [ref=e368]
+```

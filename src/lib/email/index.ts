@@ -275,3 +275,20 @@ export async function sendStatusChangeEmail(params: {
     return { success: false, error: err instanceof Error ? err.message : 'Unknown error' }
   }
 }
+
+// ============================================
+// TEMPLATE-BASED EMAIL SERVICE
+// ============================================
+export {
+  sendTemplatedEmail,
+  renderTemplate,
+  getAvailableTemplates,
+  getTemplateBySlug,
+  sendBulkTemplatedEmails,
+} from './template-service'
+
+export type {
+  TemplateContext,
+  SendTemplatedEmailParams,
+  SendTemplatedEmailResult
+} from './template-service'

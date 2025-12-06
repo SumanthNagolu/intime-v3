@@ -3,6 +3,7 @@ import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
 import { createClient } from '@supabase/supabase-js'
+import { randomBytes } from 'crypto'
 
 // Input schemas
 const integrationStatusSchema = z.enum(['active', 'inactive', 'error'])
@@ -684,6 +685,1177 @@ export const integrationsRouter = router({
           healthStatus: 'unhealthy',
         }
       }
+    }),
+
+  // ============================================
+  // WEBHOOK PROCEDURES
+  // ============================================
+
+  // List webhooks
+  listWebhooks: orgProtectedProcedure
+    .input(z.object({
+      status: z.enum(['active', 'inactive', 'disabled']).optional(),
+      page: z.number().default(1),
+      pageSize: z.number().default(20),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const { status, page, pageSize } = input
+      const adminClient = getAdminClient()
+
+      let query = adminClient
+        .from('webhooks')
+        .select('*', { count: 'exact' })
+        .eq('org_id', orgId)
+        .is('deleted_at', null)
+
+      if (status) {
+        query = query.eq('status', status)
+      }
+
+      const offset = (page - 1) * pageSize
+      query = query
+        .range(offset, offset + pageSize - 1)
+        .order('created_at', { ascending: false })
+
+      const { data, count, error } = await query
+
+      if (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to fetch webhooks',
+        })
+      }
+
+      return {
+        items: data ?? [],
+        pagination: {
+          total: count ?? 0,
+          page,
+          pageSize,
+          totalPages: Math.ceil((count ?? 0) / pageSize),
+        },
+      }
+    }),
+
+  // Get webhook stats
+  getWebhookStats: orgProtectedProcedure
+    .query(async ({ ctx }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      const { data, error } = await adminClient
+        .rpc('get_webhook_stats', { p_org_id: orgId })
+
+      if (error) {
+        console.error('Failed to fetch webhook stats:', error)
+        return {
+          totalWebhooks: 0,
+          activeWebhooks: 0,
+          totalDeliveries: 0,
+          successfulDeliveries: 0,
+          failedDeliveries: 0,
+          dlqCount: 0,
+        }
+      }
+
+      const stats = data?.[0] ?? {}
+      return {
+        totalWebhooks: Number(stats.total_webhooks) || 0,
+        activeWebhooks: Number(stats.active_webhooks) || 0,
+        totalDeliveries: Number(stats.total_deliveries) || 0,
+        successfulDeliveries: Number(stats.successful_deliveries) || 0,
+        failedDeliveries: Number(stats.failed_deliveries) || 0,
+        dlqCount: Number(stats.dlq_count) || 0,
+      }
+    }),
+
+  // Get webhook by ID
+  getWebhookById: orgProtectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      const { data, error } = await adminClient
+        .from('webhooks')
+        .select('*')
+        .eq('id', input.id)
+        .eq('org_id', orgId)
+        .is('deleted_at', null)
+        .single()
+
+      if (error || !data) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Webhook not found',
+        })
+      }
+
+      return data
+    }),
+
+  // Create webhook
+  createWebhook: orgProtectedProcedure
+    .input(z.object({
+      name: z.string().min(1).max(100),
+      description: z.string().optional(),
+      url: z.string().url(),
+      events: z.array(z.string()).min(1),
+      headers: z.record(z.string()).optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { supabase, orgId, user } = ctx
+
+      // Generate secret
+      const secret = randomBytes(32).toString('hex')
+
+      const { data: webhook, error } = await supabase
+        .from('webhooks')
+        .insert({
+          org_id: orgId,
+          name: input.name,
+          description: input.description,
+          url: input.url,
+          secret,
+          events: input.events,
+          headers: input.headers || {},
+          status: 'active',
+          created_by: user?.id,
+        })
+        .select()
+        .single()
+
+      if (error || !webhook) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to create webhook',
+        })
+      }
+
+      // Create audit log
+      await supabase.from('audit_logs').insert({
+        org_id: orgId,
+        user_id: user?.id,
+        user_email: user?.email,
+        action: 'create',
+        table_name: 'webhooks',
+        record_id: webhook.id,
+        new_values: { name: input.name, url: input.url, events: input.events },
+      })
+
+      return webhook
+    }),
+
+  // Update webhook
+  updateWebhook: orgProtectedProcedure
+    .input(z.object({
+      id: z.string().uuid(),
+      name: z.string().min(1).max(100).optional(),
+      description: z.string().optional().nullable(),
+      url: z.string().url().optional(),
+      events: z.array(z.string()).min(1).optional(),
+      headers: z.record(z.string()).optional(),
+      status: z.enum(['active', 'inactive']).optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { supabase, orgId } = ctx
+      const { id, ...updates } = input
+
+      const { data: webhook, error } = await supabase
+        .from('webhooks')
+        .update(updates)
+        .eq('id', id)
+        .eq('org_id', orgId)
+        .select()
+        .single()
+
+      if (error || !webhook) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to update webhook',
+        })
+      }
+
+      // Reset consecutive failures if re-enabling
+      if (updates.status === 'active') {
+        await supabase
+          .from('webhooks')
+          .update({ consecutive_failures: 0 })
+          .eq('id', id)
+      }
+
+      return webhook
+    }),
+
+  // Delete webhook
+  deleteWebhook: orgProtectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { supabase, orgId, user } = ctx
+
+      const { error } = await supabase
+        .from('webhooks')
+        .update({ deleted_at: new Date().toISOString(), status: 'inactive' })
+        .eq('id', input.id)
+        .eq('org_id', orgId)
+
+      if (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to delete webhook',
+        })
+      }
+
+      // Create audit log
+      await supabase.from('audit_logs').insert({
+        org_id: orgId,
+        user_id: user?.id,
+        user_email: user?.email,
+        action: 'delete',
+        table_name: 'webhooks',
+        record_id: input.id,
+      })
+
+      return { success: true }
+    }),
+
+  // Regenerate webhook secret
+  regenerateWebhookSecret: orgProtectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { supabase, orgId } = ctx
+
+      const secret = randomBytes(32).toString('hex')
+
+      const { data: webhook, error } = await supabase
+        .from('webhooks')
+        .update({ secret })
+        .eq('id', input.id)
+        .eq('org_id', orgId)
+        .select()
+        .single()
+
+      if (error || !webhook) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to regenerate secret',
+        })
+      }
+
+      return { secret }
+    }),
+
+  // Test webhook
+  testWebhook: orgProtectedProcedure
+    .input(z.object({
+      id: z.string().uuid(),
+      eventType: z.string(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Get webhook
+      const { data: webhook, error: webhookError } = await adminClient
+        .from('webhooks')
+        .select('*')
+        .eq('id', input.id)
+        .eq('org_id', orgId)
+        .single()
+
+      if (webhookError || !webhook) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Webhook not found',
+        })
+      }
+
+      // Create test payload
+      const testPayload = {
+        event: input.eventType,
+        test: true,
+        timestamp: new Date().toISOString(),
+        data: {
+          message: 'This is a test webhook delivery',
+          triggered_by: user?.email,
+        },
+      }
+
+      const requestBody = JSON.stringify(testPayload)
+
+      // Create delivery record
+      const { data: delivery, error: deliveryError } = await adminClient
+        .from('webhook_deliveries')
+        .insert({
+          org_id: orgId,
+          webhook_id: input.id,
+          event_type: input.eventType,
+          payload: testPayload,
+          request_url: webhook.url,
+          request_headers: {
+            'Content-Type': 'application/json',
+            'X-InTime-Event': input.eventType,
+          },
+          request_body: requestBody,
+          status: 'pending',
+        })
+        .select()
+        .single()
+
+      if (deliveryError || !delivery) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to create delivery record',
+        })
+      }
+
+      // Trigger edge function (fire and forget)
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+      const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+
+      fetch(`${supabaseUrl}/functions/v1/deliver-webhook`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${supabaseServiceKey}`,
+        },
+        body: JSON.stringify({
+          delivery_id: delivery.id,
+          webhook_id: input.id,
+          org_id: orgId,
+        }),
+      }).catch(err => console.error('Failed to trigger webhook delivery:', err))
+
+      return { deliveryId: delivery.id }
+    }),
+
+  // Get delivery history
+  getDeliveryHistory: orgProtectedProcedure
+    .input(z.object({
+      webhookId: z.string().uuid().optional(),
+      status: z.enum(['pending', 'success', 'failed', 'retrying', 'dlq']).optional(),
+      limit: z.number().default(50),
+      offset: z.number().default(0),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      let query = adminClient
+        .from('webhook_deliveries')
+        .select('*, webhooks(name)', { count: 'exact' })
+        .eq('org_id', orgId)
+
+      if (input.webhookId) {
+        query = query.eq('webhook_id', input.webhookId)
+      }
+      if (input.status) {
+        query = query.eq('status', input.status)
+      }
+
+      query = query
+        .order('created_at', { ascending: false })
+        .range(input.offset, input.offset + input.limit - 1)
+
+      const { data, count, error } = await query
+
+      if (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to fetch delivery history',
+        })
+      }
+
+      return {
+        items: data ?? [],
+        total: count ?? 0,
+      }
+    }),
+
+  // Get delivery details
+  getDeliveryById: orgProtectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      const { data, error } = await adminClient
+        .from('webhook_deliveries')
+        .select('*, webhooks(name, url)')
+        .eq('id', input.id)
+        .eq('org_id', orgId)
+        .single()
+
+      if (error || !data) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Delivery not found',
+        })
+      }
+
+      return data
+    }),
+
+  // Replay delivery
+  replayDelivery: orgProtectedProcedure
+    .input(z.object({ deliveryId: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      // Get original delivery
+      const { data: original, error: originalError } = await adminClient
+        .from('webhook_deliveries')
+        .select('*')
+        .eq('id', input.deliveryId)
+        .eq('org_id', orgId)
+        .single()
+
+      if (originalError || !original) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Delivery not found',
+        })
+      }
+
+      // Create new delivery with same payload
+      const { data: delivery, error: deliveryError } = await adminClient
+        .from('webhook_deliveries')
+        .insert({
+          org_id: orgId,
+          webhook_id: original.webhook_id,
+          event_type: original.event_type,
+          event_id: original.event_id,
+          payload: original.payload,
+          request_url: original.request_url,
+          request_headers: original.request_headers,
+          request_body: original.request_body,
+          status: 'pending',
+          attempt_number: 1,
+        })
+        .select()
+        .single()
+
+      if (deliveryError || !delivery) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to create replay delivery',
+        })
+      }
+
+      // Trigger edge function
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+      const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+
+      fetch(`${supabaseUrl}/functions/v1/deliver-webhook`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${supabaseServiceKey}`,
+        },
+        body: JSON.stringify({
+          delivery_id: delivery.id,
+          webhook_id: original.webhook_id,
+          org_id: orgId,
+        }),
+      }).catch(err => console.error('Failed to trigger replay:', err))
+
+      return { deliveryId: delivery.id }
+    }),
+
+  // ============================================
+  // RETRY CONFIGURATION PROCEDURES
+  // ============================================
+
+  // Get retry config
+  getRetryConfig: orgProtectedProcedure
+    .query(async ({ ctx }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      const { data, error } = await adminClient
+        .from('integration_retry_config')
+        .select('*')
+        .eq('org_id', orgId)
+        .single()
+
+      // Return defaults if no config exists
+      if (error || !data) {
+        return {
+          maxRetries: 3,
+          retryStrategy: 'exponential' as const,
+          baseDelaySeconds: 5,
+          maxDelaySeconds: 300,
+          enableJitter: true,
+          enableDlq: true,
+          dlqRetentionDays: 30,
+        }
+      }
+
+      return {
+        maxRetries: data.max_retries,
+        retryStrategy: data.retry_strategy as 'exponential' | 'linear' | 'fixed',
+        baseDelaySeconds: data.base_delay_seconds,
+        maxDelaySeconds: data.max_delay_seconds,
+        enableJitter: data.enable_jitter,
+        enableDlq: data.enable_dlq,
+        dlqRetentionDays: data.dlq_retention_days,
+      }
+    }),
+
+  // Update retry config
+  updateRetryConfig: orgProtectedProcedure
+    .input(z.object({
+      maxRetries: z.number().min(1).max(10),
+      retryStrategy: z.enum(['exponential', 'linear', 'fixed']),
+      baseDelaySeconds: z.number().min(1).max(60),
+      maxDelaySeconds: z.number().min(1).max(3600),
+      enableJitter: z.boolean(),
+      enableDlq: z.boolean(),
+      dlqRetentionDays: z.number().min(1).max(90).optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { supabase, orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Upsert config
+      const { data, error } = await adminClient
+        .from('integration_retry_config')
+        .upsert({
+          org_id: orgId,
+          max_retries: input.maxRetries,
+          retry_strategy: input.retryStrategy,
+          base_delay_seconds: input.baseDelaySeconds,
+          max_delay_seconds: input.maxDelaySeconds,
+          enable_jitter: input.enableJitter,
+          enable_dlq: input.enableDlq,
+          dlq_retention_days: input.dlqRetentionDays ?? 30,
+        }, { onConflict: 'org_id' })
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to update retry config',
+        })
+      }
+
+      // Create audit log
+      await supabase.from('audit_logs').insert({
+        org_id: orgId,
+        user_id: user?.id,
+        user_email: user?.email,
+        action: 'update',
+        table_name: 'integration_retry_config',
+        new_values: input,
+      })
+
+      return data
+    }),
+
+  // ============================================
+  // DLQ PROCEDURES
+  // ============================================
+
+  // Get DLQ items
+  getDlqItems: orgProtectedProcedure
+    .input(z.object({
+      limit: z.number().default(50),
+      offset: z.number().default(0),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      const { data, count, error } = await adminClient
+        .from('webhook_deliveries')
+        .select('*, webhooks(name, url)', { count: 'exact' })
+        .eq('org_id', orgId)
+        .eq('status', 'dlq')
+        .order('created_at', { ascending: false })
+        .range(input.offset, input.offset + input.limit - 1)
+
+      if (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to fetch DLQ items',
+        })
+      }
+
+      return {
+        items: data ?? [],
+        total: count ?? 0,
+      }
+    }),
+
+  // Retry DLQ item
+  retryDlqItem: orgProtectedProcedure
+    .input(z.object({ itemId: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      // Reset delivery to pending
+      const { data, error } = await adminClient
+        .from('webhook_deliveries')
+        .update({
+          status: 'pending',
+          attempt_number: 1,
+          next_retry_at: null,
+          error_message: null,
+        })
+        .eq('id', input.itemId)
+        .eq('org_id', orgId)
+        .eq('status', 'dlq')
+        .select()
+        .single()
+
+      if (error || !data) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to retry DLQ item',
+        })
+      }
+
+      // Trigger delivery
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+      const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+
+      fetch(`${supabaseUrl}/functions/v1/deliver-webhook`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${supabaseServiceKey}`,
+        },
+        body: JSON.stringify({
+          delivery_id: data.id,
+          webhook_id: data.webhook_id,
+          org_id: orgId,
+        }),
+      }).catch(err => console.error('Failed to trigger DLQ retry:', err))
+
+      return { success: true }
+    }),
+
+  // Clear DLQ item
+  clearDlqItem: orgProtectedProcedure
+    .input(z.object({ itemId: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      const { error } = await adminClient
+        .from('webhook_deliveries')
+        .update({ status: 'failed' }) // Mark as failed instead of deleting for audit
+        .eq('id', input.itemId)
+        .eq('org_id', orgId)
+        .eq('status', 'dlq')
+
+      if (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to clear DLQ item',
+        })
+      }
+
+      return { success: true }
+    }),
+
+  // Clear all DLQ items
+  clearAllDlqItems: orgProtectedProcedure
+    .mutation(async ({ ctx }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      // First count items to clear
+      const { count } = await adminClient
+        .from('webhook_deliveries')
+        .select('*', { count: 'exact', head: true })
+        .eq('org_id', orgId)
+        .eq('status', 'dlq')
+
+      const { error } = await adminClient
+        .from('webhook_deliveries')
+        .update({ status: 'failed' })
+        .eq('org_id', orgId)
+        .eq('status', 'dlq')
+
+      if (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to clear DLQ',
+        })
+      }
+
+      return { success: true, cleared: count ?? 0 }
+    }),
+
+  // ============================================
+  // OAUTH PROCEDURES
+  // ============================================
+
+  // Get OAuth status for integration
+  getOAuthStatus: orgProtectedProcedure
+    .input(z.object({ integrationId: z.string().uuid() }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      const { data, error } = await adminClient
+        .from('integration_oauth_tokens')
+        .select('id, provider, account_email, status, expires_at, scope, last_refreshed_at')
+        .eq('integration_id', input.integrationId)
+        .eq('org_id', orgId)
+        .eq('status', 'active')
+        .single()
+
+      if (error || !data) {
+        return {
+          connected: false,
+          token: null,
+        }
+      }
+
+      return {
+        connected: true,
+        token: {
+          id: data.id,
+          provider: data.provider,
+          accountEmail: data.account_email,
+          status: data.status,
+          expiresAt: data.expires_at,
+          scope: data.scope,
+          lastRefreshedAt: data.last_refreshed_at,
+        },
+      }
+    }),
+
+  // Initiate OAuth flow
+  initiateOAuth: orgProtectedProcedure
+    .input(z.object({
+      integrationId: z.string().uuid(),
+      provider: z.enum(['google', 'microsoft', 'zoom']),
+      scopes: z.array(z.string()).optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      // Get integration config for client credentials
+      const { data: integration, error } = await adminClient
+        .from('integrations')
+        .select('config')
+        .eq('id', input.integrationId)
+        .eq('org_id', orgId)
+        .single()
+
+      if (error || !integration) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Integration not found',
+        })
+      }
+
+      const config = integration.config as Record<string, string>
+      const clientId = config.client_id
+
+      if (!clientId) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Client ID not configured',
+        })
+      }
+
+      // Generate OAuth URL based on provider
+      const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/api/oauth/callback`
+      const state = Buffer.from(JSON.stringify({
+        integrationId: input.integrationId,
+        orgId,
+        provider: input.provider,
+      })).toString('base64url')
+
+      let authUrl: string
+      const defaultScopes: Record<string, string[]> = {
+        google: ['https://www.googleapis.com/auth/calendar'],
+        microsoft: ['Calendars.ReadWrite', 'User.Read'],
+        zoom: ['meeting:read', 'meeting:write'],
+      }
+
+      const scopes = input.scopes || defaultScopes[input.provider] || []
+
+      switch (input.provider) {
+        case 'google':
+          authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
+            `client_id=${clientId}&` +
+            `redirect_uri=${encodeURIComponent(redirectUri)}&` +
+            `response_type=code&` +
+            `scope=${encodeURIComponent(scopes.join(' '))}&` +
+            `access_type=offline&` +
+            `prompt=consent&` +
+            `state=${state}`
+          break
+        case 'microsoft':
+          authUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?` +
+            `client_id=${clientId}&` +
+            `redirect_uri=${encodeURIComponent(redirectUri)}&` +
+            `response_type=code&` +
+            `scope=${encodeURIComponent(scopes.join(' ') + ' offline_access')}&` +
+            `state=${state}`
+          break
+        case 'zoom':
+          authUrl = `https://zoom.us/oauth/authorize?` +
+            `client_id=${clientId}&` +
+            `redirect_uri=${encodeURIComponent(redirectUri)}&` +
+            `response_type=code&` +
+            `state=${state}`
+          break
+        default:
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'Unsupported provider',
+          })
+      }
+
+      return { authUrl }
+    }),
+
+  // Complete OAuth flow (called from callback)
+  completeOAuth: orgProtectedProcedure
+    .input(z.object({
+      code: z.string(),
+      state: z.string(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Decode state
+      let stateData: { integrationId: string; orgId: string; provider: string }
+      try {
+        stateData = JSON.parse(Buffer.from(input.state, 'base64url').toString())
+      } catch {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Invalid state parameter',
+        })
+      }
+
+      // Verify org matches
+      if (stateData.orgId !== orgId) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'Organization mismatch',
+        })
+      }
+
+      // Get integration config
+      const { data: integration, error: integrationError } = await adminClient
+        .from('integrations')
+        .select('config')
+        .eq('id', stateData.integrationId)
+        .eq('org_id', orgId)
+        .single()
+
+      if (integrationError || !integration) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Integration not found',
+        })
+      }
+
+      const config = integration.config as Record<string, string>
+      const clientId = config.client_id
+      const clientSecret = config.client_secret
+
+      if (!clientId || !clientSecret) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'OAuth credentials not configured',
+        })
+      }
+
+      // Exchange code for tokens
+      const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/api/oauth/callback`
+
+      const tokenUrls: Record<string, string> = {
+        google: 'https://oauth2.googleapis.com/token',
+        microsoft: 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+        zoom: 'https://zoom.us/oauth/token',
+      }
+
+      const tokenUrl = tokenUrls[stateData.provider]
+      const body = new URLSearchParams({
+        grant_type: 'authorization_code',
+        code: input.code,
+        redirect_uri: redirectUri,
+        client_id: clientId,
+        client_secret: clientSecret,
+      })
+
+      const tokenResponse = await fetch(tokenUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+      })
+
+      if (!tokenResponse.ok) {
+        const errorBody = await tokenResponse.text()
+        console.error('OAuth token exchange failed:', errorBody)
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to exchange OAuth code',
+        })
+      }
+
+      const tokenData = await tokenResponse.json()
+
+      // Calculate expiration
+      const expiresIn = tokenData.expires_in || 3600
+      const expiresAt = new Date(Date.now() + expiresIn * 1000).toISOString()
+
+      // Delete any existing active token for this integration
+      await adminClient
+        .from('integration_oauth_tokens')
+        .update({ status: 'revoked' })
+        .eq('integration_id', stateData.integrationId)
+        .eq('status', 'active')
+
+      // Create new token record
+      const { error: tokenError } = await adminClient
+        .from('integration_oauth_tokens')
+        .insert({
+          org_id: orgId,
+          integration_id: stateData.integrationId,
+          user_id: user?.id,
+          provider: stateData.provider,
+          access_token: tokenData.access_token,
+          refresh_token: tokenData.refresh_token,
+          token_type: tokenData.token_type || 'Bearer',
+          scope: tokenData.scope,
+          expires_at: expiresAt,
+          account_email: tokenData.email,
+          raw_token_response: tokenData,
+          status: 'active',
+        })
+        .select()
+        .single()
+
+      if (tokenError) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to store OAuth token',
+        })
+      }
+
+      // Update integration status
+      await adminClient
+        .from('integrations')
+        .update({
+          status: 'active',
+          health_status: 'healthy',
+          error_message: null,
+        })
+        .eq('id', stateData.integrationId)
+
+      return { success: true, integrationId: stateData.integrationId }
+    }),
+
+  // Disconnect OAuth
+  disconnectOAuth: orgProtectedProcedure
+    .input(z.object({ integrationId: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      // Revoke token
+      const { error } = await adminClient
+        .from('integration_oauth_tokens')
+        .update({ status: 'revoked' })
+        .eq('integration_id', input.integrationId)
+        .eq('org_id', orgId)
+        .eq('status', 'active')
+
+      if (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to disconnect OAuth',
+        })
+      }
+
+      // Update integration status
+      await adminClient
+        .from('integrations')
+        .update({
+          status: 'inactive',
+          health_status: 'unknown',
+        })
+        .eq('id', input.integrationId)
+
+      return { success: true }
+    }),
+
+  // ============================================
+  // FAILOVER PROCEDURES
+  // ============================================
+
+  // Get all failover configs
+  getFailoverConfigs: orgProtectedProcedure
+    .query(async ({ ctx }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      const { data, error } = await adminClient
+        .from('integration_failover_config')
+        .select(`
+          *,
+          primary_integration:integrations!integration_failover_config_primary_integration_id_fkey(id, name, status, health_status, provider),
+          backup_integration:integrations!integration_failover_config_backup_integration_id_fkey(id, name, status, health_status, provider)
+        `)
+        .eq('org_id', orgId)
+
+      if (error) {
+        console.error('Failed to fetch failover configs:', error)
+        return { configs: [] }
+      }
+
+      return { configs: data ?? [] }
+    }),
+
+  // Get failover config for type
+  getFailoverConfig: orgProtectedProcedure
+    .input(z.object({ integrationType: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      const { data, error } = await adminClient
+        .from('integration_failover_config')
+        .select(`
+          *,
+          primary_integration:integrations!integration_failover_config_primary_integration_id_fkey(id, name, status, health_status),
+          backup_integration:integrations!integration_failover_config_backup_integration_id_fkey(id, name, status, health_status)
+        `)
+        .eq('org_id', orgId)
+        .eq('integration_type', input.integrationType)
+        .single()
+
+      if (error || !data) {
+        return null
+      }
+
+      return data
+    }),
+
+  // Update failover config
+  updateFailoverConfig: orgProtectedProcedure
+    .input(z.object({
+      integrationType: z.string(),
+      primaryIntegrationId: z.string().uuid().optional().nullable(),
+      backupIntegrationId: z.string().uuid().optional().nullable(),
+      failoverThreshold: z.number().min(1).max(10).default(3),
+      autoFailover: z.boolean().default(true),
+      autoRecovery: z.boolean().default(false),
+      recoveryCheckIntervalMinutes: z.number().min(5).max(1440).default(30),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      const { data, error } = await adminClient
+        .from('integration_failover_config')
+        .upsert({
+          org_id: orgId,
+          integration_type: input.integrationType,
+          primary_integration_id: input.primaryIntegrationId,
+          backup_integration_id: input.backupIntegrationId,
+          failover_threshold: input.failoverThreshold,
+          auto_failover: input.autoFailover,
+          auto_recovery: input.autoRecovery,
+          recovery_check_interval_minutes: input.recoveryCheckIntervalMinutes,
+        }, { onConflict: 'org_id,integration_type' })
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to update failover config',
+        })
+      }
+
+      return data
+    }),
+
+  // Trigger manual failover
+  triggerFailover: orgProtectedProcedure
+    .input(z.object({
+      integrationType: z.string(),
+      targetActive: z.enum(['primary', 'backup']),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Get current config
+      const { data: config, error: configError } = await adminClient
+        .from('integration_failover_config')
+        .select('*')
+        .eq('org_id', orgId)
+        .eq('integration_type', input.integrationType)
+        .single()
+
+      if (configError || !config) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Failover config not found',
+        })
+      }
+
+      if (input.targetActive === 'backup' && !config.backup_integration_id) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'No backup integration configured',
+        })
+      }
+
+      // Update config
+      const updateData: Record<string, unknown> = {
+        current_active: input.targetActive,
+      }
+
+      if (input.targetActive === 'backup') {
+        updateData.last_failover_at = new Date().toISOString()
+        updateData.failover_count = (config.failover_count || 0) + 1
+      } else {
+        updateData.last_recovery_at = new Date().toISOString()
+      }
+
+      const { error: updateError } = await adminClient
+        .from('integration_failover_config')
+        .update(updateData)
+        .eq('id', config.id)
+
+      if (updateError) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to trigger failover',
+        })
+      }
+
+      // Create audit log
+      await adminClient.from('audit_logs').insert({
+        org_id: orgId,
+        user_id: user?.id,
+        user_email: user?.email,
+        action: input.targetActive === 'backup' ? 'failover' : 'recovery',
+        table_name: 'integration_failover_config',
+        record_id: config.id,
+        new_values: { current_active: input.targetActive },
+      })
+
+      return { success: true, currentActive: input.targetActive }
     }),
 })
 

@@ -1,0 +1,251 @@
+# Page snapshot
+
+```yaml
+- generic:
+  - link:
+    - /url: "#main-content"
+    - text: Skip to main content
+  - main:
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - link:
+              - /url: /employee/admin/dashboard
+              - generic:
+                - generic: I
+              - generic:
+                - generic: InTime
+                - generic: Portal
+            - generic:
+              - generic:
+                - button:
+                  - generic:
+                    - img
+                  - generic: admin
+                  - img
+      - generic:
+        - complementary:
+          - navigation:
+            - generic:
+              - heading [level=3]: Main
+              - list:
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/dashboard
+                    - generic:
+                      - img
+                      - generic: Dashboard
+            - generic:
+              - heading [level=3]: User Management
+              - list:
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/users
+                    - generic:
+                      - img
+                      - generic: Users
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/pods
+                    - generic:
+                      - img
+                      - generic: Pods
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/roles
+                    - generic:
+                      - img
+                      - generic: Roles
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/permissions
+                    - generic:
+                      - img
+                      - generic: Permissions
+            - generic:
+              - heading [level=3]: System
+              - list:
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/settings
+                    - generic:
+                      - img
+                      - generic: Settings
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/org-settings
+                    - generic:
+                      - img
+                      - generic: Org Settings
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/integrations
+                    - generic:
+                      - img
+                      - generic: Integrations
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/workflows
+                    - generic:
+                      - img
+                      - generic: Workflows
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/sla
+                    - generic:
+                      - img
+                      - generic: SLA Config
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/activity-patterns
+                    - generic:
+                      - img
+                      - generic: Activity Patterns
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/email-templates
+                    - generic:
+                      - img
+                      - generic: Email Templates
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/api-tokens
+                    - generic:
+                      - img
+                      - generic: API Tokens
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/feature-flags
+                    - generic:
+                      - img
+                      - generic: Feature Flags
+            - generic:
+              - heading [level=3]: Monitoring
+              - list:
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/audit
+                    - generic:
+                      - img
+                      - generic: Audit Logs
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/notifications
+                    - generic:
+                      - img
+                      - generic: Notifications
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/data
+                    - generic:
+                      - img
+                      - generic: Data Management
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/emergency
+                    - generic:
+                      - img
+                      - generic: Emergency
+        - main:
+          - generic:
+            - generic:
+              - generic:
+                - heading [level=1]: Admin Portal
+            - generic:
+              - generic:
+                - navigation:
+                  - link:
+                    - /url: /
+                    - img
+                  - img
+                  - link:
+                    - /url: /employee/admin
+                    - text: Admin
+                  - img
+                  - generic: Feature Flags
+                - generic:
+                  - generic:
+                    - heading [level=1]: Feature Flags
+                  - generic:
+                    - button:
+                      - img
+                      - text: New Feature
+              - generic:
+                - button:
+                  - generic:
+                    - img
+                    - generic: "0"
+                  - paragraph: Enabled
+                - button:
+                  - generic:
+                    - img
+                    - generic: "0"
+                  - paragraph: Disabled
+                - button:
+                  - generic:
+                    - img
+                    - generic: "0"
+                  - paragraph: Beta
+                - button:
+                  - generic:
+                    - img
+                    - generic: "0"
+                  - paragraph: Internal
+                - button:
+                  - generic:
+                    - img
+                    - generic: "0"
+                  - paragraph: Rollout
+                - button:
+                  - generic:
+                    - img
+                    - generic: "0"
+                  - paragraph: Coming Soon
+              - generic:
+                - generic:
+                  - img
+                  - textbox:
+                    - /placeholder: Search features... (press / to focus)
+                - combobox:
+                  - generic: All States
+                  - img
+                - combobox:
+                  - generic: All Categories
+                  - img
+  - list
+  - button "Open Next.js Dev Tools" [ref=e6] [cursor=pointer]:
+    - img [ref=e7]
+  - alert
+  - dialog "Create Feature Flag" [ref=e11]:
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - heading "Create Feature Flag" [level=2] [ref=e14]
+        - paragraph [ref=e15]: Create a new feature flag. It will be disabled by default.
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - text: Feature Name *
+          - textbox "Feature Name *" [active] [ref=e18]:
+            - /placeholder: AI Twin System
+        - generic [ref=e19]:
+          - text: Feature Key *
+          - textbox "Feature Key *" [ref=e20]:
+            - /placeholder: ai_twin_system
+          - paragraph [ref=e21]: Used in code to check feature status. Cannot be changed later.
+        - generic [ref=e22]:
+          - text: Description
+          - textbox "Description" [ref=e24]:
+            - /placeholder: AI-powered assistant for recruiters...
+        - generic [ref=e25]:
+          - text: Category
+          - combobox [ref=e26] [cursor=pointer]:
+            - generic: Select category
+            - img [ref=e27]
+          - combobox [ref=e29]
+      - generic [ref=e30]:
+        - button "Cancel" [ref=e31] [cursor=pointer]
+        - button "Create Feature Flag" [disabled]
+    - button "Close" [ref=e32] [cursor=pointer]:
+      - img [ref=e33]
+      - generic [ref=e36]: Close
+```

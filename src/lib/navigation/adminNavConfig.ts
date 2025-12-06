@@ -11,6 +11,9 @@ import {
   Database,
   Network,
   Key,
+  Timer,
+  Activity,
+  Building2,
 } from 'lucide-react'
 import type { SidebarSection } from '@/components/navigation/Sidebar'
 
@@ -59,6 +62,11 @@ export const adminNavSections: SidebarSection[] = [
         icon: Settings,
       },
       {
+        label: 'Org Settings',
+        href: '/employee/admin/org-settings',
+        icon: Building2,
+      },
+      {
         label: 'Integrations',
         href: '/employee/admin/integrations',
         icon: Workflow,
@@ -69,6 +77,16 @@ export const adminNavSections: SidebarSection[] = [
         icon: Workflow,
       },
       {
+        label: 'SLA Config',
+        href: '/employee/admin/sla',
+        icon: Timer,
+      },
+      {
+        label: 'Activity Patterns',
+        href: '/employee/admin/activity-patterns',
+        icon: Activity,
+      },
+      {
         label: 'Email Templates',
         href: '/employee/admin/email-templates',
         icon: FileText,
@@ -77,6 +95,11 @@ export const adminNavSections: SidebarSection[] = [
         label: 'API Tokens',
         href: '/employee/admin/api-tokens',
         icon: Key,
+      },
+      {
+        label: 'Feature Flags',
+        href: '/employee/admin/feature-flags',
+        icon: Flag,
       },
     ],
   },
@@ -92,11 +115,6 @@ export const adminNavSections: SidebarSection[] = [
         label: 'Notifications',
         href: '/employee/admin/notifications',
         icon: Bell,
-      },
-      {
-        label: 'Feature Flags',
-        href: '/employee/admin/feature-flags',
-        icon: Flag,
       },
       {
         label: 'Data Management',
