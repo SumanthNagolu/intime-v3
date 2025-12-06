@@ -34,6 +34,12 @@ yarn-error.log*
 # Testing
 coverage/
 .nyc_output/
+test-results/
+!test-results/UI_TEST_REPORT.md
+!test-results/.last-run.json
+!test-results/results.json
+!test-results/junit.xml
+playwright-report/
 
 # Misc
 .turbo/
