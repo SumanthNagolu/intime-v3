@@ -1,0 +1,275 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e7]:
+        - link "I InTime Portal" [ref=e8] [cursor=pointer]:
+          - /url: /employee/admin/dashboard
+          - generic [ref=e10]: I
+          - generic [ref=e11]:
+            - generic [ref=e12]: InTime
+            - generic [ref=e13]: Portal
+        - button "admin" [ref=e16] [cursor=pointer]:
+          - img [ref=e18]
+          - generic [ref=e21]: admin
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - complementary [ref=e25]:
+          - navigation [ref=e26]:
+            - generic [ref=e27]:
+              - heading "Main" [level=3] [ref=e28]
+              - list [ref=e29]:
+                - listitem [ref=e30]:
+                  - link "Dashboard" [ref=e31] [cursor=pointer]:
+                    - /url: /employee/admin/dashboard
+                    - generic [ref=e32]:
+                      - img [ref=e33]
+                      - generic [ref=e38]: Dashboard
+            - generic [ref=e39]:
+              - heading "User Management" [level=3] [ref=e40]
+              - list [ref=e41]:
+                - listitem [ref=e42]:
+                  - link "Users" [ref=e43] [cursor=pointer]:
+                    - /url: /employee/admin/users
+                    - generic [ref=e44]:
+                      - img [ref=e45]
+                      - generic [ref=e50]: Users
+                - listitem [ref=e51]:
+                  - link "Pods" [ref=e52] [cursor=pointer]:
+                    - /url: /employee/admin/pods
+                    - generic [ref=e53]:
+                      - img [ref=e54]
+                      - generic [ref=e59]: Pods
+                - listitem [ref=e60]:
+                  - link "Roles" [ref=e61] [cursor=pointer]:
+                    - /url: /employee/admin/roles
+                    - generic [ref=e62]:
+                      - img [ref=e63]
+                      - generic [ref=e65]: Roles
+                - listitem [ref=e66]:
+                  - link "Permissions" [ref=e67] [cursor=pointer]:
+                    - /url: /employee/admin/permissions
+                    - generic [ref=e68]:
+                      - img [ref=e69]
+                      - generic [ref=e71]: Permissions
+            - generic [ref=e72]:
+              - heading "System" [level=3] [ref=e73]
+              - list [ref=e74]:
+                - listitem [ref=e75]:
+                  - link "Settings" [ref=e76] [cursor=pointer]:
+                    - /url: /employee/admin/settings
+                    - generic [ref=e77]:
+                      - img [ref=e78]
+                      - generic [ref=e81]: Settings
+                - listitem [ref=e82]:
+                  - link "Org Settings" [ref=e83] [cursor=pointer]:
+                    - /url: /employee/admin/org-settings
+                    - generic [ref=e84]:
+                      - img [ref=e85]
+                      - generic [ref=e89]: Org Settings
+                - listitem [ref=e90]:
+                  - link "Integrations" [ref=e91] [cursor=pointer]:
+                    - /url: /employee/admin/integrations
+                    - generic [ref=e92]:
+                      - img [ref=e93]
+                      - generic [ref=e97]: Integrations
+                - listitem [ref=e98]:
+                  - link "Workflows" [ref=e99] [cursor=pointer]:
+                    - /url: /employee/admin/workflows
+                    - generic [ref=e100]:
+                      - img [ref=e101]
+                      - generic [ref=e105]: Workflows
+                - listitem [ref=e106]:
+                  - link "SLA Config" [ref=e107] [cursor=pointer]:
+                    - /url: /employee/admin/sla
+                    - generic [ref=e108]:
+                      - img [ref=e109]
+                      - generic [ref=e112]: SLA Config
+                - listitem [ref=e113]:
+                  - link "Activity Patterns" [ref=e114] [cursor=pointer]:
+                    - /url: /employee/admin/activity-patterns
+                    - generic [ref=e115]:
+                      - img [ref=e116]
+                      - generic [ref=e118]: Activity Patterns
+                - listitem [ref=e119]:
+                  - link "Email Templates" [ref=e120] [cursor=pointer]:
+                    - /url: /employee/admin/email-templates
+                    - generic [ref=e121]:
+                      - img [ref=e122]
+                      - generic [ref=e125]: Email Templates
+                - listitem [ref=e126]:
+                  - link "API Tokens" [ref=e127] [cursor=pointer]:
+                    - /url: /employee/admin/api-tokens
+                    - generic [ref=e128]:
+                      - img [ref=e129]
+                      - generic [ref=e133]: API Tokens
+                - listitem [ref=e134]:
+                  - link "Feature Flags" [ref=e135] [cursor=pointer]:
+                    - /url: /employee/admin/feature-flags
+                    - generic [ref=e136]:
+                      - img [ref=e137]
+                      - generic [ref=e139]: Feature Flags
+            - generic [ref=e140]:
+              - heading "Monitoring" [level=3] [ref=e141]
+              - list [ref=e142]:
+                - listitem [ref=e143]:
+                  - link "Audit Logs" [ref=e144] [cursor=pointer]:
+                    - /url: /employee/admin/audit
+                    - generic [ref=e145]:
+                      - img [ref=e146]
+                      - generic [ref=e149]: Audit Logs
+                - listitem [ref=e150]:
+                  - link "Notifications" [ref=e151] [cursor=pointer]:
+                    - /url: /employee/admin/notifications
+                    - generic [ref=e152]:
+                      - img [ref=e153]
+                      - generic [ref=e156]: Notifications
+                - listitem [ref=e157]:
+                  - link "Data Management" [ref=e158] [cursor=pointer]:
+                    - /url: /employee/admin/data
+                    - generic [ref=e159]:
+                      - img [ref=e160]
+                      - generic [ref=e164]: Data Management
+                - listitem [ref=e165]:
+                  - link "Emergency" [ref=e166] [cursor=pointer]:
+                    - /url: /employee/admin/emergency
+                    - generic [ref=e167]:
+                      - img [ref=e168]
+                      - generic [ref=e170]: Emergency
+        - main [ref=e171]:
+          - generic [ref=e172]:
+            - heading "Admin Portal" [level=1] [ref=e175]
+            - generic [ref=e176]:
+              - generic [ref=e177]:
+                - navigation "Breadcrumb" [ref=e178]:
+                  - link "Home" [ref=e179] [cursor=pointer]:
+                    - /url: /
+                    - img [ref=e180]
+                  - img [ref=e183]
+                  - link "Admin" [ref=e185] [cursor=pointer]:
+                    - /url: /employee/admin
+                  - img [ref=e186]
+                  - link "Integrations" [ref=e188] [cursor=pointer]:
+                    - /url: /employee/admin/integrations
+                  - img [ref=e189]
+                  - link "Webhooks" [ref=e191] [cursor=pointer]:
+                    - /url: /employee/admin/integrations/webhooks
+                  - img [ref=e192]
+                  - generic [ref=e194]: New
+                - generic [ref=e195]:
+                  - generic [ref=e196]:
+                    - heading "Create Webhook" [level=1] [ref=e197]
+                    - generic [ref=e198]: Configure a new webhook endpoint
+                  - link "Back to Webhooks" [ref=e200] [cursor=pointer]:
+                    - /url: /employee/admin/integrations/webhooks
+                    - button "Back to Webhooks" [ref=e201]:
+                      - img [ref=e202]
+                      - text: Back to Webhooks
+              - generic [ref=e205]:
+                - generic [ref=e206]:
+                  - generic [ref=e207]:
+                    - heading "Basic Information" [level=2] [ref=e209]
+                    - generic [ref=e210]:
+                      - generic [ref=e211]:
+                        - text: Webhook Name *
+                        - textbox "Webhook Name *" [ref=e212]:
+                          - /placeholder: e.g., Zapier Job Notifications
+                      - generic [ref=e213]:
+                        - text: Description
+                        - textbox "Description" [ref=e215]:
+                          - /placeholder: What this webhook is used for...
+                      - generic [ref=e216]:
+                        - text: Webhook URL * (HTTPS required)
+                        - textbox "Webhook URL * (HTTPS required)" [ref=e217]:
+                          - /placeholder: https://hooks.example.com/webhook/123
+                  - generic [ref=e218]:
+                    - heading "Events to Subscribe" [level=2] [ref=e220]
+                    - paragraph [ref=e221]: Select which events should trigger this webhook
+                    - generic [ref=e222]:
+                      - generic [ref=e223]:
+                        - generic [ref=e224]:
+                          - generic [ref=e225]: Jobs
+                          - generic [ref=e226]:
+                            - button "Select all" [ref=e227] [cursor=pointer]
+                            - button "Clear" [ref=e228] [cursor=pointer]
+                        - generic [ref=e229]:
+                          - button "job.created" [ref=e230] [cursor=pointer]
+                          - button "job.updated" [ref=e231] [cursor=pointer]
+                          - button "job.closed" [ref=e232] [cursor=pointer]
+                          - button "job.published" [ref=e233] [cursor=pointer]
+                      - generic [ref=e234]:
+                        - generic [ref=e235]:
+                          - generic [ref=e236]: Candidates
+                          - generic [ref=e237]:
+                            - button "Select all" [ref=e238] [cursor=pointer]
+                            - button "Clear" [ref=e239] [cursor=pointer]
+                        - generic [ref=e240]:
+                          - button "candidate.created" [ref=e241] [cursor=pointer]
+                          - button "candidate.updated" [ref=e242] [cursor=pointer]
+                          - button "candidate.status_changed" [ref=e243] [cursor=pointer]
+                      - generic [ref=e244]:
+                        - generic [ref=e245]:
+                          - generic [ref=e246]: Submissions
+                          - generic [ref=e247]:
+                            - button "Select all" [ref=e248] [cursor=pointer]
+                            - button "Clear" [ref=e249] [cursor=pointer]
+                        - generic [ref=e250]:
+                          - button "submission.created" [ref=e251] [cursor=pointer]
+                          - button "submission.status_changed" [ref=e252] [cursor=pointer]
+                          - button "submission.placed" [ref=e253] [cursor=pointer]
+                      - generic [ref=e254]:
+                        - generic [ref=e255]:
+                          - generic [ref=e256]: Interviews
+                          - generic [ref=e257]:
+                            - button "Select all" [ref=e258] [cursor=pointer]
+                            - button "Clear" [ref=e259] [cursor=pointer]
+                        - generic [ref=e260]:
+                          - button "interview.scheduled" [ref=e261] [cursor=pointer]
+                          - button "interview.completed" [ref=e262] [cursor=pointer]
+                          - button "interview.cancelled" [ref=e263] [cursor=pointer]
+                      - generic [ref=e264]:
+                        - generic [ref=e265]:
+                          - generic [ref=e266]: Users
+                          - generic [ref=e267]:
+                            - button "Select all" [ref=e268] [cursor=pointer]
+                            - button "Clear" [ref=e269] [cursor=pointer]
+                        - generic [ref=e270]:
+                          - button "user.created" [ref=e271] [cursor=pointer]
+                          - button "user.updated" [ref=e272] [cursor=pointer]
+                          - button "user.deactivated" [ref=e273] [cursor=pointer]
+                      - generic [ref=e274]:
+                        - generic [ref=e275]:
+                          - generic [ref=e276]: Placements
+                          - generic [ref=e277]:
+                            - button "Select all" [ref=e278] [cursor=pointer]
+                            - button "Clear" [ref=e279] [cursor=pointer]
+                        - generic [ref=e280]:
+                          - button "placement.created" [ref=e281] [cursor=pointer]
+                          - button "placement.started" [ref=e282] [cursor=pointer]
+                          - button "placement.ended" [ref=e283] [cursor=pointer]
+                    - paragraph [ref=e284]: Please select at least one event
+                  - generic [ref=e285]:
+                    - heading "Custom Headers (Optional)" [level=2] [ref=e287]
+                    - paragraph [ref=e288]: Add custom HTTP headers to include with each webhook request
+                    - button "Add Header" [ref=e290] [cursor=pointer]
+                - generic [ref=e291]:
+                  - generic [ref=e292]:
+                    - heading "Selected Events" [level=2] [ref=e294]
+                    - paragraph [ref=e295]: No events selected
+                  - generic [ref=e296]:
+                    - button "Create Webhook" [disabled]:
+                      - img
+                      - text: Create Webhook
+                    - link "Cancel" [ref=e297] [cursor=pointer]:
+                      - /url: /employee/admin/integrations/webhooks
+                      - button "Cancel" [ref=e298]
+  - region "Notifications (F8)":
+    - list
+  - button "Open Next.js Dev Tools" [ref=e304] [cursor=pointer]:
+    - img [ref=e305]
+  - alert [ref=e308]
+```

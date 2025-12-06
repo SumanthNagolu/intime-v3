@@ -1,0 +1,181 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - navigation [ref=e5]:
+        - generic [ref=e7]:
+          - link "I InTime Solutions" [ref=e8] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e10]: I
+            - generic [ref=e11]:
+              - generic [ref=e12]: InTime
+              - generic [ref=e13]: Solutions
+          - generic [ref=e14]:
+            - link "Solutions" [ref=e16] [cursor=pointer]:
+              - /url: /solutions
+              - generic [ref=e17]: Solutions
+              - img [ref=e18]
+            - link "Industries" [ref=e21] [cursor=pointer]:
+              - /url: /industries
+              - generic [ref=e22]: Industries
+              - img [ref=e23]
+            - link "Careers" [ref=e26] [cursor=pointer]:
+              - /url: /careers
+              - generic [ref=e27]: Careers
+              - img [ref=e28]
+            - link "Resources" [ref=e30] [cursor=pointer]:
+              - /url: /resources
+            - link "Academy" [ref=e31] [cursor=pointer]:
+              - /url: /academy
+            - button [ref=e33] [cursor=pointer]:
+              - img [ref=e35]
+              - img [ref=e38]
+      - main [ref=e40]:
+        - generic [ref=e46]:
+          - img [ref=e53]
+          - heading "Something Went Wrong" [level=1] [ref=e55]:
+            - text: Something Went
+            - generic [ref=e56]: Wrong
+          - paragraph [ref=e58]: We encountered an unexpected error. Our team has been notified and is working on a fix.
+          - generic [ref=e59]:
+            - button "Try Again" [ref=e60] [cursor=pointer]:
+              - img [ref=e61]
+              - text: Try Again
+            - link "Go to Homepage" [ref=e66] [cursor=pointer]:
+              - /url: /
+              - img [ref=e67]
+              - text: Go to Homepage
+          - button "Go back to previous page" [ref=e70] [cursor=pointer]:
+            - img [ref=e71]
+            - text: Go back to previous page
+          - button "Show Error Details (Dev Only)" [ref=e74] [cursor=pointer]:
+            - img [ref=e75]
+            - text: Show Error Details (Dev Only)
+          - generic [ref=e78]:
+            - img [ref=e80]
+            - generic [ref=e83]:
+              - heading "Still having issues?" [level=3] [ref=e84]
+              - paragraph [ref=e85]:
+                - text: If this problem persists, please contact our support team at
+                - link "support@intimeesolutions.com" [ref=e86] [cursor=pointer]:
+                  - /url: mailto:support@intimeesolutions.com
+          - generic [ref=e87]:
+            - paragraph [ref=e88]: Maybe try one of these instead
+            - generic [ref=e89]:
+              - link "Academy" [ref=e90] [cursor=pointer]:
+                - /url: /academy
+              - link "Solutions" [ref=e91] [cursor=pointer]:
+                - /url: /solutions
+              - link "Industries" [ref=e92] [cursor=pointer]:
+                - /url: /industries
+              - link "Careers" [ref=e93] [cursor=pointer]:
+                - /url: /careers
+              - link "Contact" [ref=e94] [cursor=pointer]:
+                - /url: /contact
+      - generic [ref=e95]:
+        - generic [ref=e97]:
+          - generic [ref=e98]:
+            - link "I InTime Solutions" [ref=e99] [cursor=pointer]:
+              - /url: /
+              - generic [ref=e101]: I
+              - generic [ref=e102]:
+                - generic [ref=e103]: InTime
+                - generic [ref=e104]: Solutions
+            - paragraph [ref=e105]: The premier staffing ecosystem for technology professionals. From world-class training to executive placements—we build careers that matter.
+            - generic [ref=e106]:
+              - generic [ref=e107]: Global Offices
+              - generic [ref=e108]:
+                - 'link "🇺🇸 USA: +1 307-650-2850" [ref=e109] [cursor=pointer]':
+                  - /url: tel:+13076502850
+                  - generic [ref=e110]: 🇺🇸
+                  - generic [ref=e111]: "USA: +1 307-650-2850"
+                - 'link "🇨🇦 Canada: +1 289-236-9000" [ref=e112] [cursor=pointer]':
+                  - /url: tel:+12892369000
+                  - generic [ref=e113]: 🇨🇦
+                  - generic [ref=e114]: "Canada: +1 289-236-9000"
+                - 'link "🇮🇳 India: +91 798-166-6144" [ref=e115] [cursor=pointer]':
+                  - /url: tel:+917981666144
+                  - generic [ref=e116]: 🇮🇳
+                  - generic [ref=e117]: "India: +91 798-166-6144"
+              - link "info@intimeesolutions.com" [ref=e118] [cursor=pointer]:
+                - /url: mailto:info@intimeesolutions.com
+                - img [ref=e119]
+                - text: info@intimeesolutions.com
+          - generic [ref=e122]:
+            - heading "Solutions" [level=4] [ref=e123]
+            - list [ref=e124]:
+              - listitem [ref=e125]:
+                - link "IT Staffing" [ref=e126] [cursor=pointer]:
+                  - /url: /solutions/staffing
+              - listitem [ref=e127]:
+                - link "Consulting" [ref=e128] [cursor=pointer]:
+                  - /url: /consulting
+              - listitem [ref=e129]:
+                - link "Cross-Border" [ref=e130] [cursor=pointer]:
+                  - /url: /solutions/cross-border
+              - listitem [ref=e131]:
+                - link "Training Academy" [ref=e132] [cursor=pointer]:
+                  - /url: /academy
+              - listitem [ref=e133]:
+                - link "Request Consultation" [ref=e134] [cursor=pointer]:
+                  - /url: /contact
+          - generic [ref=e135]:
+            - heading "Resources" [level=4] [ref=e136]
+            - list [ref=e137]:
+              - listitem [ref=e138]:
+                - link "Blog" [ref=e139] [cursor=pointer]:
+                  - /url: /resources
+              - listitem [ref=e140]:
+                - link "Industries" [ref=e141] [cursor=pointer]:
+                  - /url: /industries
+              - listitem [ref=e142]:
+                - link "Open Positions" [ref=e143] [cursor=pointer]:
+                  - /url: /careers/open-positions
+              - listitem [ref=e144]:
+                - link "Available Talent" [ref=e145] [cursor=pointer]:
+                  - /url: /careers/available-talent
+          - generic [ref=e146]:
+            - heading "Company" [level=4] [ref=e147]
+            - list [ref=e148]:
+              - listitem [ref=e149]:
+                - link "About InTime" [ref=e150] [cursor=pointer]:
+                  - /url: /company/about
+              - listitem [ref=e151]:
+                - link "Careers" [ref=e152] [cursor=pointer]:
+                  - /url: /careers/join-our-team
+              - listitem [ref=e153]:
+                - link "Contact Us" [ref=e154] [cursor=pointer]:
+                  - /url: /contact
+        - generic [ref=e157]:
+          - paragraph [ref=e158]: © 2025 InTime eSolutions. All rights reserved.
+          - generic [ref=e159]:
+            - link [ref=e160] [cursor=pointer]:
+              - /url: https://linkedin.com
+              - img [ref=e161]
+            - link [ref=e165] [cursor=pointer]:
+              - /url: https://twitter.com
+              - img [ref=e166]
+            - link [ref=e168] [cursor=pointer]:
+              - /url: https://youtube.com
+              - img [ref=e169]
+  - region "Notifications (F8)":
+    - list
+  - generic [ref=e176] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e177]:
+      - img [ref=e178]
+    - generic [ref=e181]:
+      - button "Open issues overlay" [ref=e182]:
+        - generic [ref=e183]:
+          - generic [ref=e184]: "1"
+          - generic [ref=e185]: "2"
+        - generic [ref=e186]:
+          - text: Issue
+          - generic [ref=e187]: s
+      - button "Collapse issues badge" [ref=e188]:
+        - img [ref=e189]
+  - alert [ref=e191]
+```

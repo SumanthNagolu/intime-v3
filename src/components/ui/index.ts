@@ -112,3 +112,9 @@ export { Checkbox } from './checkbox'
 
 // Progress
 export { Progress } from './progress'
+
+// Slider
+export { Slider } from './slider'
+
+// Skeleton
+export { Skeleton } from './skeleton'

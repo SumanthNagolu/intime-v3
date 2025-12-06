@@ -65,20 +65,93 @@ This documentation captures every aspect of the InTime OS unified workspace - ev
 
 #### 01-recruiter/ - Technical Recruiter
 
+The recruiter role follows the complete end-to-end recruiting lifecycle organized into 8 sections:
+
+**SECTION A: Campaigns and Lead Generation**
+
+| Document | Description |
+|----------|-------------|
+| [A01-run-campaign.md](./20-USER-ROLES/01-recruiter/A01-run-campaign.md) | Create and manage outreach campaigns |
+| [A02-track-campaign-metrics.md](./20-USER-ROLES/01-recruiter/A02-track-campaign-metrics.md) | Monitor campaign performance |
+| [A03-generate-lead-from-campaign.md](./20-USER-ROLES/01-recruiter/A03-generate-lead-from-campaign.md) | Convert responses to leads |
+| [A04-create-lead.md](./20-USER-ROLES/01-recruiter/A04-create-lead.md) | Manual lead creation |
+
+**SECTION B: Lead Qualification and Deals**
+
+| Document | Description |
+|----------|-------------|
+| [B01-prospect-new-client.md](./20-USER-ROLES/01-recruiter/B01-prospect-new-client.md) | Outbound prospecting |
+| [B02-qualify-opportunity.md](./20-USER-ROLES/01-recruiter/B02-qualify-opportunity.md) | BANT qualification |
+| [B03-create-deal.md](./20-USER-ROLES/01-recruiter/B03-create-deal.md) | Create deal from qualified lead |
+| [B04-manage-deal-pipeline.md](./20-USER-ROLES/01-recruiter/B04-manage-deal-pipeline.md) | Track deals through stages |
+| [B05-close-deal.md](./20-USER-ROLES/01-recruiter/B05-close-deal.md) | Win/loss recording |
+
+**SECTION C: Account Management**
+
+| Document | Description |
+|----------|-------------|
+| [C01-create-account.md](./20-USER-ROLES/01-recruiter/C01-create-account.md) | Create from deal or manual |
+| [C02-onboard-account.md](./20-USER-ROLES/01-recruiter/C02-onboard-account.md) | MSA, billing, contacts setup |
+| [C03-manage-account-profile.md](./20-USER-ROLES/01-recruiter/C03-manage-account-profile.md) | Maintain file, POCs, categories |
+| [C04-manage-client-relationship.md](./20-USER-ROLES/01-recruiter/C04-manage-client-relationship.md) | Ongoing relationship |
+| [C05-conduct-client-meeting.md](./20-USER-ROLES/01-recruiter/C05-conduct-client-meeting.md) | Job intake, status reviews |
+| [C06-handle-client-escalation.md](./20-USER-ROLES/01-recruiter/C06-handle-client-escalation.md) | Issue resolution |
+| [C07-take-job-requisition.md](./20-USER-ROLES/01-recruiter/C07-take-job-requisition.md) | Document job requirements |
+
+**SECTION D: Job Lifecycle**
+
+| Document | Description |
+|----------|-------------|
+| [D01-create-job.md](./20-USER-ROLES/01-recruiter/D01-create-job.md) | Create job requisition |
+| [D02-publish-job.md](./20-USER-ROLES/01-recruiter/D02-publish-job.md) | Activate and distribute |
+| [D03-update-job.md](./20-USER-ROLES/01-recruiter/D03-update-job.md) | Modify job details |
+| [D04-manage-pipeline.md](./20-USER-ROLES/01-recruiter/D04-manage-pipeline.md) | Kanban pipeline |
+| [D05-update-job-status.md](./20-USER-ROLES/01-recruiter/D05-update-job-status.md) | Status transitions |
+| [D06-close-job.md](./20-USER-ROLES/01-recruiter/D06-close-job.md) | Fill, cancel, hold |
+
+**SECTION E: Sourcing and Screening**
+
+| Document | Description |
+|----------|-------------|
+| [E01-source-candidates.md](./20-USER-ROLES/01-recruiter/E01-source-candidates.md) | Multi-channel sourcing |
+| [E02-search-candidates.md](./20-USER-ROLES/01-recruiter/E02-search-candidates.md) | ATS search/filtering |
+| [E03-screen-candidate.md](./20-USER-ROLES/01-recruiter/E03-screen-candidate.md) | Phone screen, assessment |
+| [E04-manage-hotlist.md](./20-USER-ROLES/01-recruiter/E04-manage-hotlist.md) | Hot candidate list |
+| [E05-prepare-candidate-profile.md](./20-USER-ROLES/01-recruiter/E05-prepare-candidate-profile.md) | Format for presentation |
+
+**SECTION F: Submission and Interview**
+
+| Document | Description |
+|----------|-------------|
+| [F01-submit-candidate.md](./20-USER-ROLES/01-recruiter/F01-submit-candidate.md) | Submit to client |
+| [F02-track-submission.md](./20-USER-ROLES/01-recruiter/F02-track-submission.md) | Follow-up cadence |
+| [F03-schedule-interview.md](./20-USER-ROLES/01-recruiter/F03-schedule-interview.md) | Interview coordination |
+| [F04-prepare-candidate-for-interview.md](./20-USER-ROLES/01-recruiter/F04-prepare-candidate-for-interview.md) | Prep call, coaching |
+| [F05-coordinate-interview-rounds.md](./20-USER-ROLES/01-recruiter/F05-coordinate-interview-rounds.md) | Multi-round management |
+| [F06-collect-interview-feedback.md](./20-USER-ROLES/01-recruiter/F06-collect-interview-feedback.md) | Debrief process |
+
+**SECTION G: Offers, Placements, and Commissions**
+
+| Document | Description |
+|----------|-------------|
+| [G01-extend-offer.md](./20-USER-ROLES/01-recruiter/G01-extend-offer.md) | Create and send offer |
+| [G02-negotiate-offer.md](./20-USER-ROLES/01-recruiter/G02-negotiate-offer.md) | Counter-offer handling |
+| [G03-confirm-placement.md](./20-USER-ROLES/01-recruiter/G03-confirm-placement.md) | Finalize placement |
+| [G04-manage-placement.md](./20-USER-ROLES/01-recruiter/G04-manage-placement.md) | 30/60/90 check-ins |
+| [G05-track-commission.md](./20-USER-ROLES/01-recruiter/G05-track-commission.md) | 5% gross commission |
+| [G06-handle-extension.md](./20-USER-ROLES/01-recruiter/G06-handle-extension.md) | Contract extensions |
+| [G07-handle-early-termination.md](./20-USER-ROLES/01-recruiter/G07-handle-early-termination.md) | Fall-off process |
+| [G08-make-placement.md](./20-USER-ROLES/01-recruiter/G08-make-placement.md) | Legacy workflow |
+
+**SECTION H: Daily Operations and Reporting**
+
 | Document | Description |
 |----------|-------------|
 | [00-OVERVIEW.md](./20-USER-ROLES/01-recruiter/00-OVERVIEW.md) | Role summary |
-| [01-daily-workflow.md](./20-USER-ROLES/01-recruiter/01-daily-workflow.md) | Typical day |
-| [02-create-job.md](./20-USER-ROLES/01-recruiter/02-create-job.md) | Create job |
-| [03-source-candidates.md](./20-USER-ROLES/01-recruiter/03-source-candidates.md) | Source candidates |
-| [04-submit-candidate.md](./20-USER-ROLES/01-recruiter/04-submit-candidate.md) | Submit candidate |
-| [05-schedule-interview.md](./20-USER-ROLES/01-recruiter/05-schedule-interview.md) | Schedule interview |
-| [06-make-placement.md](./20-USER-ROLES/01-recruiter/06-make-placement.md) | Make placement |
-| [07-log-activity.md](./20-USER-ROLES/01-recruiter/07-log-activity.md) | Log activity |
-| [08-manage-pipeline.md](./20-USER-ROLES/01-recruiter/08-manage-pipeline.md) | Manage pipeline |
-| [09-search-candidates.md](./20-USER-ROLES/01-recruiter/09-search-candidates.md) | Search candidates |
-| [10-update-job-status.md](./20-USER-ROLES/01-recruiter/10-update-job-status.md) | Update job status |
-| [11-create-lead.md](./20-USER-ROLES/01-recruiter/11-create-lead.md) | Create lead |
+| [H01-daily-workflow.md](./20-USER-ROLES/01-recruiter/H01-daily-workflow.md) | Typical day |
+| [H02-log-activity.md](./20-USER-ROLES/01-recruiter/H02-log-activity.md) | Activity logging |
+| [H03-recruiter-dashboard.md](./20-USER-ROLES/01-recruiter/H03-recruiter-dashboard.md) | Personal dashboard |
+| [H04-recruiter-reports.md](./20-USER-ROLES/01-recruiter/H04-recruiter-reports.md) | Performance reports |
 
 ---
 

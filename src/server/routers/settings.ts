@@ -37,6 +37,7 @@ export const settingsRouter = router({
   // ============================================
   updateOrganization: orgProtectedProcedure
     .input(z.object({
+      // Existing fields
       name: z.string().min(2).max(200).optional(),
       legal_name: z.string().max(200).optional().nullable(),
       industry: z.string().max(100).optional().nullable(),
@@ -52,6 +53,70 @@ export const settingsRouter = router({
       country: z.string().max(100).optional().nullable(),
       timezone: z.string().max(100).optional(),
       locale: z.string().max(20).optional(),
+
+      // NEW: Company Info fields
+      founded_year: z.number().min(1800).max(2100).optional().nullable(),
+
+      // NEW: Branding fields
+      logo_url: z.string().url().optional().nullable().or(z.literal('')),
+      favicon_url: z.string().url().optional().nullable().or(z.literal('')),
+      primary_color: z.string().regex(/^#[0-9A-Fa-f]{6}$/).optional().nullable(),
+      secondary_color: z.string().regex(/^#[0-9A-Fa-f]{6}$/).optional().nullable(),
+      background_color: z.string().regex(/^#[0-9A-Fa-f]{6}$/).optional().nullable(),
+      text_color: z.string().regex(/^#[0-9A-Fa-f]{6}$/).optional().nullable(),
+
+      // NEW: Regional fields
+      date_format: z.enum(['MM/DD/YYYY', 'DD/MM/YYYY', 'YYYY-MM-DD', 'MMM DD, YYYY', 'DD MMM YYYY']).optional(),
+      time_format: z.enum(['12h', '24h']).optional(),
+      week_start: z.enum(['sunday', 'monday']).optional(),
+      currency: z.string().length(3).optional(),
+      number_format: z.string().optional(),
+
+      // NEW: Fiscal fields
+      fiscal_year_start: z.number().min(1).max(12).optional(),
+      reporting_period: z.enum(['monthly', 'quarterly', 'semi-annual']).optional(),
+      sprint_alignment: z.boolean().optional(),
+
+      // NEW: Business Hours fields
+      business_hours: z.record(z.object({
+        open: z.boolean(),
+        start: z.string().optional(),
+        end: z.string().optional(),
+        break_minutes: z.number().optional(),
+      })).optional(),
+      holiday_calendar: z.enum(['us_federal', 'us_federal_common', 'custom']).optional(),
+      custom_holidays: z.array(z.object({
+        date: z.string(),
+        name: z.string(),
+      })).optional(),
+
+      // NEW: Default Values
+      default_values: z.object({
+        job_status: z.string().optional(),
+        job_type: z.string().optional(),
+        work_location: z.string().optional(),
+        candidate_source: z.string().optional(),
+        candidate_availability: z.string().optional(),
+        auto_parse_resume: z.boolean().optional(),
+        submission_status: z.string().optional(),
+        auto_send_client_email: z.boolean().optional(),
+        follow_up_days: z.number().optional(),
+        auto_create_followup: z.boolean().optional(),
+        email_signature_location: z.string().optional(),
+        include_company_disclaimer: z.boolean().optional(),
+      }).optional(),
+
+      // NEW: Contact Info
+      contact_info: z.object({
+        main_phone: z.string().optional().nullable(),
+        fax: z.string().optional().nullable(),
+        general_email: z.string().email().optional().nullable().or(z.literal('')),
+        support_email: z.string().email().optional().nullable().or(z.literal('')),
+        hr_email: z.string().email().optional().nullable().or(z.literal('')),
+        billing_email: z.string().email().optional().nullable().or(z.literal('')),
+        linkedin_url: z.string().url().optional().nullable().or(z.literal('')),
+        twitter_handle: z.string().optional().nullable(),
+      }).optional(),
     }))
     .mutation(async ({ ctx, input }) => {
       const { supabase, orgId, user } = ctx
@@ -71,12 +136,22 @@ export const settingsRouter = router({
       }
 
       // Build update object (only include defined values)
+      const urlFields = ['website', 'logo_url', 'favicon_url', 'linkedin_url']
       const updates: Record<string, unknown> = {}
       Object.entries(input).forEach(([key, value]) => {
         if (value !== undefined) {
-          // Handle empty string for URL field
-          if (key === 'website' && value === '') {
+          // Handle empty string for URL fields
+          if (urlFields.includes(key) && value === '') {
             updates[key] = null
+          } else if (key === 'contact_info' && typeof value === 'object' && value !== null) {
+            // Handle empty URLs in contact_info
+            const contactInfo = { ...value } as Record<string, unknown>
+            if (contactInfo.linkedin_url === '') contactInfo.linkedin_url = null
+            if (contactInfo.general_email === '') contactInfo.general_email = null
+            if (contactInfo.support_email === '') contactInfo.support_email = null
+            if (contactInfo.hr_email === '') contactInfo.hr_email = null
+            if (contactInfo.billing_email === '') contactInfo.billing_email = null
+            updates[key] = contactInfo
           } else {
             updates[key] = value
           }
@@ -696,5 +771,209 @@ export const settingsRouter = router({
         showCompanyName: settings.login_show_company_name as boolean ?? true,
         welcomeMessage: settings.login_welcome_message as string ?? '',
       }
+    }),
+
+  // ============================================
+  // EXPORT ORGANIZATION SETTINGS
+  // ============================================
+  exportOrgSettings: orgProtectedProcedure
+    .query(async ({ ctx }) => {
+      const { supabase, orgId } = ctx
+
+      const { data: org, error } = await supabase
+        .from('organizations')
+        .select(`
+          name, legal_name, industry, company_size, founded_year, website,
+          primary_color, secondary_color, background_color, text_color,
+          timezone, locale, date_format, time_format, week_start, currency, number_format,
+          fiscal_year_start, reporting_period, sprint_alignment,
+          business_hours, holiday_calendar, custom_holidays,
+          default_values, contact_info,
+          email, phone, address_line1, address_line2, city, state, postal_code, country
+        `)
+        .eq('id', orgId)
+        .single()
+
+      if (error || !org) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Organization not found',
+        })
+      }
+
+      return {
+        exportedAt: new Date().toISOString(),
+        version: '1.0',
+        settings: org,
+      }
+    }),
+
+  // ============================================
+  // IMPORT ORGANIZATION SETTINGS
+  // ============================================
+  importOrgSettings: orgProtectedProcedure
+    .input(z.object({
+      settings: z.record(z.unknown()),
+      overwriteExisting: z.boolean().default(true),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { supabase, orgId, user } = ctx
+
+      // Get current org for audit
+      const { data: currentOrg } = await supabase
+        .from('organizations')
+        .select('*')
+        .eq('id', orgId)
+        .single()
+
+      // Filter to only allowed fields
+      const allowedFields = [
+        'industry', 'company_size', 'founded_year',
+        'primary_color', 'secondary_color', 'background_color', 'text_color',
+        'timezone', 'locale', 'date_format', 'time_format', 'week_start', 'currency', 'number_format',
+        'fiscal_year_start', 'reporting_period', 'sprint_alignment',
+        'business_hours', 'holiday_calendar', 'custom_holidays',
+        'default_values', 'contact_info',
+      ]
+
+      const updates: Record<string, unknown> = {}
+      for (const field of allowedFields) {
+        if (input.settings[field] !== undefined) {
+          updates[field] = input.settings[field]
+        }
+      }
+
+      const { data: org, error } = await supabase
+        .from('organizations')
+        .update(updates)
+        .eq('id', orgId)
+        .select()
+        .single()
+
+      if (error || !org) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to import settings',
+        })
+      }
+
+      // Audit log
+      await supabase.from('audit_logs').insert({
+        org_id: orgId,
+        user_id: user?.id,
+        user_email: user?.email,
+        action: 'import',
+        table_name: 'organizations',
+        record_id: orgId,
+        old_values: currentOrg,
+        new_values: org,
+      })
+
+      return org
+    }),
+
+  // ============================================
+  // RESET ORGANIZATION SETTINGS SECTION
+  // ============================================
+  resetOrgSettingsSection: orgProtectedProcedure
+    .input(z.object({
+      section: z.enum(['branding', 'regional', 'fiscal', 'business_hours', 'defaults']),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { supabase, orgId, user } = ctx
+
+      const defaults: Record<string, Record<string, unknown>> = {
+        branding: {
+          primary_color: '#000000',
+          secondary_color: '#B76E79',
+          background_color: '#FDFBF7',
+          text_color: '#171717',
+        },
+        regional: {
+          timezone: 'America/New_York',
+          locale: 'en-US',
+          date_format: 'MM/DD/YYYY',
+          time_format: '12h',
+          week_start: 'sunday',
+          currency: 'USD',
+          number_format: '1,234.56',
+        },
+        fiscal: {
+          fiscal_year_start: 1,
+          reporting_period: 'quarterly',
+          sprint_alignment: true,
+        },
+        business_hours: {
+          business_hours: {
+            monday: { open: true, start: '09:00', end: '17:00', break_minutes: 60 },
+            tuesday: { open: true, start: '09:00', end: '17:00', break_minutes: 60 },
+            wednesday: { open: true, start: '09:00', end: '17:00', break_minutes: 60 },
+            thursday: { open: true, start: '09:00', end: '17:00', break_minutes: 60 },
+            friday: { open: true, start: '09:00', end: '17:00', break_minutes: 60 },
+            saturday: { open: false },
+            sunday: { open: false },
+          },
+          holiday_calendar: 'us_federal',
+          custom_holidays: [],
+        },
+        defaults: {
+          default_values: {
+            job_status: 'draft',
+            job_type: 'contract',
+            work_location: 'hybrid',
+            candidate_source: 'direct_application',
+            candidate_availability: '2_weeks',
+            auto_parse_resume: true,
+            submission_status: 'pending_review',
+            auto_send_client_email: false,
+            follow_up_days: 3,
+            auto_create_followup: true,
+            email_signature_location: 'below',
+            include_company_disclaimer: true,
+          },
+        },
+      }
+
+      const updates = defaults[input.section]
+      if (!updates) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Invalid section',
+        })
+      }
+
+      const { data: currentOrg } = await supabase
+        .from('organizations')
+        .select('*')
+        .eq('id', orgId)
+        .single()
+
+      const { data: org, error } = await supabase
+        .from('organizations')
+        .update(updates)
+        .eq('id', orgId)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to reset settings',
+        })
+      }
+
+      // Audit log
+      await supabase.from('audit_logs').insert({
+        org_id: orgId,
+        user_id: user?.id,
+        user_email: user?.email,
+        action: 'reset',
+        table_name: 'organizations',
+        record_id: orgId,
+        old_values: currentOrg,
+        new_values: org,
+      })
+
+      return org
     }),
 })

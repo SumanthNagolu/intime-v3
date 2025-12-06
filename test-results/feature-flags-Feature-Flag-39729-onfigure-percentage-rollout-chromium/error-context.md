@@ -1,0 +1,571 @@
+# Page snapshot
+
+```yaml
+- generic:
+  - link:
+    - /url: "#main-content"
+    - text: Skip to main content
+  - main:
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - link:
+              - /url: /employee/admin/dashboard
+              - generic:
+                - generic: I
+              - generic:
+                - generic: InTime
+                - generic: Portal
+            - generic:
+              - generic:
+                - button:
+                  - generic:
+                    - img
+                  - generic: admin
+                  - img
+      - generic:
+        - complementary:
+          - navigation:
+            - generic:
+              - heading [level=3]: Main
+              - list:
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/dashboard
+                    - generic:
+                      - img
+                      - generic: Dashboard
+            - generic:
+              - heading [level=3]: User Management
+              - list:
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/users
+                    - generic:
+                      - img
+                      - generic: Users
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/pods
+                    - generic:
+                      - img
+                      - generic: Pods
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/roles
+                    - generic:
+                      - img
+                      - generic: Roles
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/permissions
+                    - generic:
+                      - img
+                      - generic: Permissions
+            - generic:
+              - heading [level=3]: System
+              - list:
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/settings
+                    - generic:
+                      - img
+                      - generic: Settings
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/org-settings
+                    - generic:
+                      - img
+                      - generic: Org Settings
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/integrations
+                    - generic:
+                      - img
+                      - generic: Integrations
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/workflows
+                    - generic:
+                      - img
+                      - generic: Workflows
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/sla
+                    - generic:
+                      - img
+                      - generic: SLA Config
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/activity-patterns
+                    - generic:
+                      - img
+                      - generic: Activity Patterns
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/email-templates
+                    - generic:
+                      - img
+                      - generic: Email Templates
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/api-tokens
+                    - generic:
+                      - img
+                      - generic: API Tokens
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/feature-flags
+                    - generic:
+                      - img
+                      - generic: Feature Flags
+            - generic:
+              - heading [level=3]: Monitoring
+              - list:
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/audit
+                    - generic:
+                      - img
+                      - generic: Audit Logs
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/notifications
+                    - generic:
+                      - img
+                      - generic: Notifications
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/data
+                    - generic:
+                      - img
+                      - generic: Data Management
+                - listitem:
+                  - link:
+                    - /url: /employee/admin/emergency
+                    - generic:
+                      - img
+                      - generic: Emergency
+        - main:
+          - generic:
+            - generic:
+              - generic:
+                - heading [level=1]: Admin Portal
+            - generic:
+              - generic:
+                - navigation:
+                  - link:
+                    - /url: /
+                    - img
+                  - img
+                  - link:
+                    - /url: /employee/admin
+                    - text: Admin
+                  - img
+                  - generic: Feature Flags
+                - generic:
+                  - generic:
+                    - heading [level=1]: Feature Flags
+                  - generic:
+                    - button:
+                      - img
+                      - text: New Feature
+              - generic:
+                - button:
+                  - generic:
+                    - img
+                    - generic: "1"
+                  - paragraph: Enabled
+                - button:
+                  - generic:
+                    - img
+                    - generic: "9"
+                  - paragraph: Disabled
+                - button:
+                  - generic:
+                    - img
+                    - generic: "0"
+                  - paragraph: Beta
+                - button:
+                  - generic:
+                    - img
+                    - generic: "0"
+                  - paragraph: Internal
+                - button:
+                  - generic:
+                    - img
+                    - generic: "0"
+                  - paragraph: Rollout
+                - button:
+                  - generic:
+                    - img
+                    - generic: "0"
+                  - paragraph: Coming Soon
+              - generic:
+                - generic:
+                  - img
+                  - textbox:
+                    - /placeholder: Search features... (press / to focus)
+                - combobox:
+                  - generic: All States
+                  - img
+                - combobox:
+                  - generic: All Categories
+                  - img
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: Advanced Analytics
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: advanced_analytics
+                        - paragraph: Detailed analytics dashboard
+                        - paragraph: "Strategy: Specific Roles (9 roles)"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: AI Twin System
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: ai_twin
+                        - paragraph: AI-powered assistant for recruiters
+                        - paragraph: "Strategy: Specific Roles (6 roles)"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: API Access
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: api_access
+                        - paragraph: External API access
+                        - paragraph: "Strategy: Specific Roles (6 roles)"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: Bulk Email Campaigns
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: bulk_email
+                        - paragraph: Send bulk emails to candidates
+                        - paragraph: "Strategy: Disabled"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: Bulk Operations
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: bulk_operations
+                        - paragraph: Perform bulk updates on records
+                        - paragraph: "Strategy: Specific Roles (9 roles)"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: Custom Reports
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: custom_reports
+                        - paragraph: Create and save custom reports
+                        - paragraph: "Strategy: Specific Roles (6 roles)"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: Data Export
+                          - generic: Enabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: data_export
+                        - paragraph: Export data in various formats
+                        - paragraph: "Strategy: Specific Roles (12 roles)"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Disable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: Mobile App Access
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: mobile_app
+                        - paragraph: Access via mobile application
+                        - paragraph: "Strategy: Disabled"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: Third-party Integrations
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: integrations
+                        - paragraph: Connect with external services
+                        - paragraph: "Strategy: Disabled"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: Workflow Automation
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: workflow_automation
+                        - paragraph: Automated workflows and triggers
+                        - paragraph: "Strategy: Disabled"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+  - list
+  - generic [ref=e5] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e6]:
+      - img [ref=e7]
+    - generic [ref=e10]:
+      - button "Open issues overlay" [ref=e11]:
+        - generic [ref=e12]:
+          - generic [ref=e13]: "0"
+          - generic [ref=e14]: "1"
+        - generic [ref=e15]: Issue
+      - button "Collapse issues badge" [ref=e16]:
+        - img [ref=e17]
+  - alert
+  - dialog "Configure Feature Flag" [ref=e20]:
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - heading "Configure Feature Flag" [level=2] [ref=e23]
+        - paragraph [ref=e24]:
+          - text: "Key:"
+          - code [ref=e25]: advanced_analytics
+      - generic [ref=e26]:
+        - generic [ref=e27]:
+          - heading "Feature Details" [level=3] [ref=e28]
+          - generic [ref=e29]:
+            - generic [ref=e30]:
+              - text: Feature Name
+              - textbox "Feature Name" [ref=e31]: Advanced Analytics
+            - generic [ref=e32]:
+              - text: Description
+              - textbox "Description" [ref=e34]: Detailed analytics dashboard
+            - generic [ref=e35]:
+              - text: Category
+              - combobox [ref=e36] [cursor=pointer]:
+                - generic: Select category
+                - img [ref=e37]
+              - combobox [ref=e39]
+        - separator [ref=e40]
+        - generic [ref=e41]:
+          - heading "Rollout Strategy" [level=3] [ref=e42]
+          - radiogroup [ref=e43]:
+            - generic [ref=e44]:
+              - generic [ref=e45] [cursor=pointer]:
+                - radio "Enable for all users Everyone in the organization can access" [ref=e46]
+                - radio
+                - generic [ref=e47]:
+                  - paragraph [ref=e48]: Enable for all users
+                  - paragraph [ref=e49]: Everyone in the organization can access
+              - generic [ref=e50] [cursor=pointer]:
+                - radio "Enable for specific roles Only selected roles can access" [ref=e51]
+                - radio
+                - generic [ref=e52]:
+                  - paragraph [ref=e53]: Enable for specific roles
+                  - paragraph [ref=e54]: Only selected roles can access
+              - generic [ref=e55] [cursor=pointer]:
+                - radio "Enable for specific users Only selected users can access (beta testers)" [ref=e56]
+                - radio
+                - generic [ref=e57]:
+                  - paragraph [ref=e58]: Enable for specific users
+                  - paragraph [ref=e59]: Only selected users can access (beta testers)
+              - generic [ref=e60] [cursor=pointer]:
+                - radio "Percentage rollout Gradually roll out to a percentage of users" [checked] [active] [ref=e61]:
+                  - img [ref=e63]
+                - radio [checked]
+                - generic [ref=e65]:
+                  - paragraph [ref=e66]: Percentage rollout
+                  - paragraph [ref=e67]: Gradually roll out to a percentage of users
+              - generic [ref=e68] [cursor=pointer]:
+                - radio "Enable for specific pods Only selected teams/pods can access" [ref=e69]
+                - radio
+                - generic [ref=e70]:
+                  - paragraph [ref=e71]: Enable for specific pods
+                  - paragraph [ref=e72]: Only selected teams/pods can access
+              - generic [ref=e73] [cursor=pointer]:
+                - radio "Disable for all Feature is completely off" [ref=e74]
+                - radio
+                - generic [ref=e75]:
+                  - paragraph [ref=e76]: Disable for all
+                  - paragraph [ref=e77]: Feature is completely off
+          - generic [ref=e78]:
+            - generic [ref=e79]:
+              - generic [ref=e80]: Rollout Percentage
+              - generic [ref=e81]: 10%
+            - slider [ref=e86]
+            - generic [ref=e87]:
+              - generic [ref=e88]: 0%
+              - generic [ref=e89]: 25%
+              - generic [ref=e90]: 50%
+              - generic [ref=e91]: 75%
+              - generic [ref=e92]: 100%
+        - separator [ref=e93]
+        - generic [ref=e94]:
+          - heading "Additional Settings" [level=3] [ref=e95]
+          - generic [ref=e96]:
+            - generic [ref=e97]:
+              - checkbox "Show feature in navigation/menu" [checked] [ref=e98] [cursor=pointer]:
+                - generic:
+                  - img
+              - checkbox [checked]
+              - generic [ref=e99]: Show feature in navigation/menu
+            - generic [ref=e100]:
+              - checkbox "Show \"New\" badge on feature (for 30 days)" [ref=e101] [cursor=pointer]
+              - checkbox
+              - generic [ref=e102]: Show "New" badge on feature (for 30 days)
+            - generic [ref=e103]:
+              - checkbox "Show \"Beta\" badge on feature" [ref=e104] [cursor=pointer]
+              - checkbox
+              - generic [ref=e105]: Show "Beta" badge on feature
+            - generic [ref=e106]:
+              - checkbox "Log feature usage for analytics" [checked] [ref=e107] [cursor=pointer]:
+                - generic:
+                  - img
+              - checkbox [checked]
+              - generic [ref=e108]: Log feature usage for analytics
+            - generic [ref=e109]:
+              - checkbox "Show feedback prompt after first use" [ref=e110] [cursor=pointer]
+              - checkbox
+              - generic [ref=e111]: Show feedback prompt after first use
+      - generic [ref=e112]:
+        - button "Cancel" [ref=e113] [cursor=pointer]
+        - button "Save Changes" [ref=e114] [cursor=pointer]
+    - button "Close" [ref=e115] [cursor=pointer]:
+      - img [ref=e116]
+      - generic [ref=e119]: Close
+```

@@ -1,0 +1,7 @@
+export { CompanyInfoTab } from './CompanyInfoTab'
+export { BrandingTab } from './BrandingTab'
+export { RegionalTab } from './RegionalTab'
+export { BusinessHoursTab } from './BusinessHoursTab'
+export { FiscalYearTab } from './FiscalYearTab'
+export { DefaultsTab } from './DefaultsTab'
+export { ContactTab } from './ContactTab'
