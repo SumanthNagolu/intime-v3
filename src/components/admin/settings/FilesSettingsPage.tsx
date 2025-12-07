@@ -4,7 +4,7 @@ import * as React from 'react'
 import { HardDrive, FileType, Database, AlertTriangle } from 'lucide-react'
 import { toast } from 'sonner'
 import { trpc } from '@/lib/trpc/client'
-import { DashboardShell } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -70,33 +70,38 @@ export function FilesSettingsPage() {
     })
   }
 
+  const breadcrumbs = [
+    { label: 'Admin', href: '/employee/admin' },
+    { label: 'Settings', href: '/employee/admin/settings' },
+    { label: 'Files & Storage' },
+  ]
+
   if (isLoading) {
     return (
-      <DashboardShell
-        title="Files & Storage Settings"
-        description="Configure file upload limits and storage"
-      >
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="animate-pulse space-y-6">
           <div className="h-48 bg-charcoal-100 rounded-lg" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   return (
-    <DashboardShell
-      title="Files & Storage Settings"
-      description="Configure file upload limits and storage quotas"
-      actions={
-        <Button
-          onClick={handleSave}
-          loading={updateSettings.isPending}
-          disabled={updateSettings.isPending}
-        >
-          Save Changes
-        </Button>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Button
+            onClick={handleSave}
+            loading={updateSettings.isPending}
+            disabled={updateSettings.isPending}
+          >
+            Save Changes
+          </Button>
+        }
+      />
       <div className="space-y-8">
         {/* File Upload Limits */}
         <SettingsSection
@@ -195,6 +200,6 @@ export function FilesSettingsPage() {
           </div>
         </SettingsSection>
       </div>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

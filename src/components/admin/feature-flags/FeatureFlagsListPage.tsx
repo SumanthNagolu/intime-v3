@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { trpc } from '@/lib/trpc/client'
-import { DashboardShell, DashboardSection } from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -165,16 +166,17 @@ export function FeatureFlagsListPage() {
   ]
 
   return (
-    <DashboardShell
-      title="Feature Flags"
-      breadcrumbs={breadcrumbs}
-      actions={
-        <Button onClick={() => setCreateOpen(true)}>
-          <Plus className="w-4 h-4 mr-2" />
-          New Feature
-        </Button>
-      }
-    >
+    <AdminPageContent>
+      <AdminPageHeader
+        title="Feature Flags"
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Button onClick={() => setCreateOpen(true)}>
+            <Plus className="w-4 h-4 mr-2" />
+            New Feature
+          </Button>
+        }
+      />
       {/* Stats Overview */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
         {Object.entries(STATE_CONFIG).map(([state, config]) => {
@@ -459,6 +461,6 @@ export function FeatureFlagsListPage() {
           </div>
         </div>
       )}
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

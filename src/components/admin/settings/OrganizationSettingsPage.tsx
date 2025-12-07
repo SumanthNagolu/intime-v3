@@ -4,7 +4,7 @@ import * as React from 'react'
 import { Building2, Globe, Phone, Mail, MapPin } from 'lucide-react'
 import { toast } from 'sonner'
 import { trpc } from '@/lib/trpc/client'
-import { DashboardShell } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -154,34 +154,39 @@ export function OrganizationSettingsPage() {
     })
   }
 
+  const breadcrumbs = [
+    { label: 'Admin', href: '/employee/admin' },
+    { label: 'Settings', href: '/employee/admin/settings' },
+    { label: 'Organization' },
+  ]
+
   if (isLoading) {
     return (
-      <DashboardShell
-        title="Organization Settings"
-        description="Manage your organization profile and contact information"
-      >
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="animate-pulse space-y-6">
           <div className="h-48 bg-charcoal-100 rounded-lg" />
           <div className="h-48 bg-charcoal-100 rounded-lg" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   return (
-    <DashboardShell
-      title="Organization Settings"
-      description="Manage your organization profile and contact information"
-      actions={
-        <Button
-          onClick={handleSubmit}
-          loading={updateOrganization.isPending}
-          disabled={updateOrganization.isPending}
-        >
-          Save Changes
-        </Button>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Button
+            onClick={handleSubmit}
+            loading={updateOrganization.isPending}
+            disabled={updateOrganization.isPending}
+          >
+            Save Changes
+          </Button>
+        }
+      />
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* General Information */}
         <SettingsSection
@@ -371,6 +376,6 @@ export function OrganizationSettingsPage() {
           </Button>
         </div>
       </form>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

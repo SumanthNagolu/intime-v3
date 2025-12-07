@@ -28,8 +28,8 @@ export function Sidebar({ sections, className }: SidebarProps) {
   const pathname = usePathname()
 
   return (
-    <aside className={cn("w-64 flex-shrink-0", className)}>
-      <nav className="sticky top-0 p-6 space-y-6 max-h-[calc(100vh-4rem)] overflow-y-auto">
+    <aside className={cn("w-64 flex-shrink-0 overflow-y-auto", className)}>
+      <nav className="p-6 space-y-6">
         {sections.map((section, sectionIndex) => (
           <div key={sectionIndex}>
             {section.title && (

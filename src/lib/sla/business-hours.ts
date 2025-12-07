@@ -395,7 +395,7 @@ export function addBusinessDays(
   config: BusinessHoursConfig = DEFAULT_BUSINESS_HOURS
 ): Date {
   let remaining = daysToAdd
-  let current = new Date(startDate)
+  const current = new Date(startDate)
 
   while (remaining > 0) {
     current.setDate(current.getDate() + 1)

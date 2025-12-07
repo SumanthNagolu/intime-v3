@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { Plug, Gauge, Code } from 'lucide-react'
-import { DashboardShell } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -52,33 +52,38 @@ export function ApiSettingsPage() {
     save()
   }
 
+  const breadcrumbs = [
+    { label: 'Admin', href: '/employee/admin' },
+    { label: 'Settings', href: '/employee/admin/settings' },
+    { label: 'API' },
+  ]
+
   if (isLoading) {
     return (
-      <DashboardShell
-        title="API Settings"
-        description="Configure API access and rate limits"
-      >
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="animate-pulse space-y-6">
           <div className="h-48 bg-charcoal-100 rounded-lg" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   return (
-    <DashboardShell
-      title="API Settings"
-      description="Configure API access and rate limiting"
-      actions={
-        <Button
-          onClick={handleSave}
-          loading={isSaving}
-          disabled={isSaving}
-        >
-          Save Changes
-        </Button>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Button
+            onClick={handleSave}
+            loading={isSaving}
+            disabled={isSaving}
+          >
+            Save Changes
+          </Button>
+        }
+      />
       <div className="space-y-8">
         {/* Unsaved changes indicator */}
         {isDirty && (
@@ -202,6 +207,6 @@ export function ApiSettingsPage() {
           </div>
         </SettingsSection>
       </div>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

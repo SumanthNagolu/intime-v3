@@ -13,7 +13,7 @@
  *
  * Deployment:
  * - Set up as a cron job in Supabase: https://supabase.com/docs/guides/functions/schedule-functions
- * - Recommended schedule: every 15 minutes - "*/15 * * * *"
+ * - Recommended schedule: every 15 minutes (cron: 0,15,30,45 * * * *)
  */
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
@@ -398,7 +398,7 @@ async function createNewSlaEvents(
     const existingIds = new Set((existingEventIds || []).map(e => e.entity_id))
 
     // Query matching records
-    let query = supabase
+    const query = supabase
       .from(definition.entity_type)
       .select('id, created_at')
       .eq('org_id', definition.org_id)

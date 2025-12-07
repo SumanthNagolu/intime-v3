@@ -9,6 +9,75 @@ export interface AuthResponse {
   error: AuthError | null;
 }
 
+export interface UserRole {
+  code: string;
+  category: string;
+  displayName: string;
+}
+
+// Role categories that should go to admin dashboard
+const ADMIN_ROLE_CATEGORIES = ['admin', 'executive', 'leadership'];
+
+/**
+ * Get redirect path based on user role for employee portal
+ */
+export function getEmployeeRedirectPath(role: UserRole | null): string {
+  if (!role) {
+    // Default to recruiter workspace if no role found
+    return '/employee/workspace/dashboard';
+  }
+  
+  // Admin and leadership roles go to admin dashboard
+  if (ADMIN_ROLE_CATEGORIES.includes(role.category)) {
+    return '/employee/admin/dashboard';
+  }
+  
+  // All other roles (recruiters, sales, etc.) go to workspace dashboard
+  return '/employee/workspace/dashboard';
+}
+
+/**
+ * Get the current user's role from their profile
+ */
+export async function getUserRole(): Promise<UserRole | null> {
+  try {
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (!user) return null;
+    
+    const { data: profile } = await supabase
+      .from('user_profiles')
+      .select(`
+        role_id,
+        system_roles:role_id (
+          code,
+          category,
+          display_name
+        )
+      `)
+      .eq('auth_id', user.id)
+      .single();
+    
+    if (!profile?.system_roles) return null;
+    
+    // Handle array response from Supabase
+    const role = Array.isArray(profile.system_roles) 
+      ? profile.system_roles[0] 
+      : profile.system_roles;
+    
+    if (!role) return null;
+    
+    return {
+      code: role.code,
+      category: role.category,
+      displayName: role.display_name,
+    };
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Sign in with email and password
  */

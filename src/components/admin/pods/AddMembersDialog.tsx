@@ -126,7 +126,7 @@ export function AddMembersDialog({
                   <div
                     className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
                       selectedIds.includes(user.id)
-                        ? 'bg-forest-600 border-forest-600'
+                        ? 'bg-hublot-900 border-hublot-900'
                         : 'border-charcoal-300'
                     }`}
                     onClick={() => toggleUser(user.id)}
@@ -162,7 +162,7 @@ export function AddMembersDialog({
             <Button
               onClick={handleSubmit}
               disabled={selectedIds.length === 0 || addMembersMutation.isPending}
-              className="bg-forest-600 hover:bg-forest-700 text-white"
+              className="bg-hublot-900 hover:bg-hublot-800 text-white"
             >
               {addMembersMutation.isPending && (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />

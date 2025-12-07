@@ -17,7 +17,7 @@ import {
   ArrowRight,
   ChevronLeft,
 } from 'lucide-react';
-import { signIn, signInWithGoogle, type PortalType } from '@/lib/auth/client';
+import { signIn, signInWithGoogle, getUserRole, getEmployeeRedirectPath, type PortalType } from '@/lib/auth/client';
 
 const PORTALS: Array<{
   id: PortalType;
@@ -35,7 +35,7 @@ const PORTALS: Array<{
     icon: Users,
     color: 'text-forest-600',
     bgColor: 'bg-forest-50 hover:bg-forest-100 border-forest-200',
-    redirectPath: '/employee/admin/dashboard',
+    redirectPath: '/employee/workspace/dashboard',
   },
   {
     id: 'client',
@@ -108,7 +108,14 @@ export default function LoginPage() {
       if (error) {
         setError(error.message);
       } else {
-        router.push(portal.redirectPath);
+        // For employee portal, get user role and redirect based on it
+        if (selectedPortal === 'employee') {
+          const role = await getUserRole();
+          const redirectPath = getEmployeeRedirectPath(role);
+          router.push(redirectPath);
+        } else {
+          router.push(portal.redirectPath);
+        }
       }
     } catch {
       setError('An unexpected error occurred');

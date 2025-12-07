@@ -3,10 +3,8 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { trpc } from '@/lib/trpc/client'
-import {
-  DashboardShell,
-  DashboardSection,
-} from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -106,19 +104,19 @@ export function RetryConfigPage() {
   ]
 
   return (
-    <DashboardShell
-      title="Retry Configuration"
-      description="Configure retry behavior for failed webhook deliveries"
-      breadcrumbs={breadcrumbs}
-      actions={
-        <Link href="/employee/admin/integrations">
-          <Button variant="outline">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Integrations
-          </Button>
-        </Link>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Link href="/employee/admin/integrations">
+            <Button variant="outline">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Integrations
+            </Button>
+          </Link>
+        }
+      />
       {configQuery.isLoading ? (
         <div className="flex justify-center py-12">
           <Loader2 className="w-8 h-8 animate-spin text-charcoal-400" />
@@ -339,6 +337,6 @@ export function RetryConfigPage() {
           </div>
         </form>
       )}
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

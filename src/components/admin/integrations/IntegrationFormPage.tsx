@@ -3,10 +3,8 @@
 import { useState, useEffect, use } from 'react'
 import { useRouter } from 'next/navigation'
 import { trpc } from '@/lib/trpc/client'
-import {
-  DashboardShell,
-  DashboardSection,
-} from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -493,28 +491,29 @@ export function IntegrationFormPage({ paramsPromise }: IntegrationFormPageProps)
 
   if (isEdit && isLoadingIntegration) {
     return (
-      <DashboardShell title="Loading..." breadcrumbs={breadcrumbs}>
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="flex items-center justify-center p-12">
           <Loader2 className="w-8 h-8 animate-spin text-charcoal-400" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   return (
-    <DashboardShell
-      title={isEdit ? 'Edit Integration' : 'Add Integration'}
-      description={isEdit ? 'Update integration configuration' : 'Configure a new external service integration'}
-      breadcrumbs={breadcrumbs}
-      actions={
-        <Link href="/employee/admin/integrations">
-          <Button variant="outline">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
-        </Link>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Link href="/employee/admin/integrations">
+            <Button variant="outline">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Button>
+          </Link>
+        }
+      />
       <form onSubmit={handleSubmit}>
         <DashboardSection>
           <div className="max-w-2xl space-y-6">
@@ -691,6 +690,6 @@ export function IntegrationFormPage({ paramsPromise }: IntegrationFormPageProps)
           </div>
         </DashboardSection>
       </form>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

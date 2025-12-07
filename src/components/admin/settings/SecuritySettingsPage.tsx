@@ -4,7 +4,7 @@ import * as React from 'react'
 import { Key, Shield, Clock } from 'lucide-react'
 import { toast } from 'sonner'
 import { trpc } from '@/lib/trpc/client'
-import { DashboardShell } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -103,34 +103,39 @@ export function SecuritySettingsPage() {
     })
   }
 
+  const breadcrumbs = [
+    { label: 'Admin', href: '/employee/admin' },
+    { label: 'Settings', href: '/employee/admin/settings' },
+    { label: 'Security' },
+  ]
+
   if (isLoading) {
     return (
-      <DashboardShell
-        title="Security Settings"
-        description="Configure security policies"
-      >
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="animate-pulse space-y-6">
           <div className="h-64 bg-charcoal-100 rounded-lg" />
           <div className="h-48 bg-charcoal-100 rounded-lg" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   return (
-    <DashboardShell
-      title="Security Settings"
-      description="Configure platform-wide security policies"
-      actions={
-        <Button
-          onClick={handleSave}
-          loading={updateSettings.isPending}
-          disabled={updateSettings.isPending}
-        >
-          Save Changes
-        </Button>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Button
+            onClick={handleSave}
+            loading={updateSettings.isPending}
+            disabled={updateSettings.isPending}
+          >
+            Save Changes
+          </Button>
+        }
+      />
       <div className="space-y-8">
         {/* Password Policy */}
         <SettingsSection
@@ -304,6 +309,6 @@ export function SecuritySettingsPage() {
           </div>
         </SettingsSection>
       </div>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

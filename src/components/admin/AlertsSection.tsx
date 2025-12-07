@@ -40,7 +40,7 @@ export function AlertsSection({ alerts, isLoading }: AlertsSectionProps) {
       action={
         <a
           href="/employee/admin/notifications"
-          className="text-sm text-forest-600 hover:text-forest-700"
+          className="text-sm text-gold-600 hover:text-gold-700"
         >
           View All
         </a>

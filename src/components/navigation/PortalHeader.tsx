@@ -51,7 +51,7 @@ export function PortalHeader() {
   }
 
   return (
-    <header className="bg-white border-b border-charcoal-100 sticky top-0 z-50 shadow-sm">
+    <header className="bg-white border-b border-charcoal-100 z-50 shadow-sm flex-shrink-0">
       <div className="px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}

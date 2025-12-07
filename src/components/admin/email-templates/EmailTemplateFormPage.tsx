@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { trpc } from '@/lib/trpc/client'
-import { DashboardShell } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { RichTextEditor } from '@/components/ui/rich-text-editor'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -242,11 +242,12 @@ export function EmailTemplateFormPage() {
   ]
 
   return (
-    <DashboardShell
-      title={isEdit ? 'Edit Email Template' : 'New Email Template'}
-      description={isEdit ? `Editing: ${templateQuery.data?.name || ''}` : 'Create a new email template'}
-      breadcrumbs={breadcrumbs}
-    >
+    <AdminPageContent>
+      <AdminPageHeader
+        title={isEdit ? 'Edit Email Template' : 'New Email Template'}
+        description={isEdit ? `Editing: ${templateQuery.data?.name || ''}` : 'Create a new email template'}
+        breadcrumbs={breadcrumbs}
+      />
       <div className="space-y-8">
         {/* Template Settings */}
         <section className="bg-white rounded-lg border border-charcoal-100 p-6">
@@ -558,7 +559,7 @@ export function EmailTemplateFormPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }
 

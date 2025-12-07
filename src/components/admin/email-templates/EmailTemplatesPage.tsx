@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { trpc } from '@/lib/trpc/client'
-import { DashboardShell } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -128,19 +128,20 @@ export function EmailTemplatesPage() {
   ]
 
   return (
-    <DashboardShell
-      title="Email Templates"
-      description="Manage email templates for notifications and communications"
-      breadcrumbs={breadcrumbs}
-      actions={
-        <Link href="/employee/admin/email-templates/new">
-          <Button className="bg-hublot-900 hover:bg-hublot-800 text-white">
-            <Plus className="w-4 h-4 mr-2" />
-            New Template
-          </Button>
-        </Link>
-      }
-    >
+    <AdminPageContent>
+      <AdminPageHeader
+        title="Email Templates"
+        description="Manage email templates for notifications and communications"
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Link href="/employee/admin/email-templates/new">
+            <Button className="bg-hublot-900 hover:bg-hublot-800 text-white">
+              <Plus className="w-4 h-4 mr-2" />
+              New Template
+            </Button>
+          </Link>
+        }
+      />
       {/* Stats Bar */}
       {stats && (
         <div className="flex items-center gap-6 mb-6 text-sm">
@@ -418,7 +419,7 @@ export function EmailTemplatesPage() {
           Email Settings
         </Link>
       </div>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }
 

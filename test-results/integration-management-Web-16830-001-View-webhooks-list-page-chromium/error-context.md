@@ -66,147 +66,162 @@
                       - img [ref=e78]
                       - generic [ref=e81]: Settings
                 - listitem [ref=e82]:
-                  - link "Org Settings" [ref=e83] [cursor=pointer]:
-                    - /url: /employee/admin/org-settings
+                  - link "Integrations" [ref=e83] [cursor=pointer]:
+                    - /url: /employee/admin/integrations
                     - generic [ref=e84]:
                       - img [ref=e85]
-                      - generic [ref=e89]: Org Settings
+                      - generic [ref=e89]: Integrations
                 - listitem [ref=e90]:
-                  - link "Integrations" [ref=e91] [cursor=pointer]:
-                    - /url: /employee/admin/integrations
+                  - link "Workflows" [ref=e91] [cursor=pointer]:
+                    - /url: /employee/admin/workflows
                     - generic [ref=e92]:
                       - img [ref=e93]
-                      - generic [ref=e97]: Integrations
+                      - generic [ref=e97]: Workflows
                 - listitem [ref=e98]:
-                  - link "Workflows" [ref=e99] [cursor=pointer]:
-                    - /url: /employee/admin/workflows
+                  - link "SLA Config" [ref=e99] [cursor=pointer]:
+                    - /url: /employee/admin/sla
                     - generic [ref=e100]:
                       - img [ref=e101]
-                      - generic [ref=e105]: Workflows
-                - listitem [ref=e106]:
-                  - link "SLA Config" [ref=e107] [cursor=pointer]:
-                    - /url: /employee/admin/sla
-                    - generic [ref=e108]:
-                      - img [ref=e109]
-                      - generic [ref=e112]: SLA Config
-                - listitem [ref=e113]:
-                  - link "Activity Patterns" [ref=e114] [cursor=pointer]:
+                      - generic [ref=e104]: SLA Config
+                - listitem [ref=e105]:
+                  - link "Activity Patterns" [ref=e106] [cursor=pointer]:
                     - /url: /employee/admin/activity-patterns
-                    - generic [ref=e115]:
-                      - img [ref=e116]
-                      - generic [ref=e118]: Activity Patterns
-                - listitem [ref=e119]:
-                  - link "Email Templates" [ref=e120] [cursor=pointer]:
+                    - generic [ref=e107]:
+                      - img [ref=e108]
+                      - generic [ref=e110]: Activity Patterns
+                - listitem [ref=e111]:
+                  - link "Email Templates" [ref=e112] [cursor=pointer]:
                     - /url: /employee/admin/email-templates
-                    - generic [ref=e121]:
-                      - img [ref=e122]
-                      - generic [ref=e125]: Email Templates
-                - listitem [ref=e126]:
-                  - link "API Tokens" [ref=e127] [cursor=pointer]:
+                    - generic [ref=e113]:
+                      - img [ref=e114]
+                      - generic [ref=e117]: Email Templates
+                - listitem [ref=e118]:
+                  - link "API Tokens" [ref=e119] [cursor=pointer]:
                     - /url: /employee/admin/api-tokens
+                    - generic [ref=e120]:
+                      - img [ref=e121]
+                      - generic [ref=e125]: API Tokens
+                - listitem [ref=e126]:
+                  - link "Feature Flags" [ref=e127] [cursor=pointer]:
+                    - /url: /employee/admin/feature-flags
                     - generic [ref=e128]:
                       - img [ref=e129]
-                      - generic [ref=e133]: API Tokens
-                - listitem [ref=e134]:
-                  - link "Feature Flags" [ref=e135] [cursor=pointer]:
-                    - /url: /employee/admin/feature-flags
-                    - generic [ref=e136]:
-                      - img [ref=e137]
-                      - generic [ref=e139]: Feature Flags
-            - generic [ref=e140]:
-              - heading "Monitoring" [level=3] [ref=e141]
-              - list [ref=e142]:
-                - listitem [ref=e143]:
-                  - link "Audit Logs" [ref=e144] [cursor=pointer]:
+                      - generic [ref=e131]: Feature Flags
+            - generic [ref=e132]:
+              - heading "Monitoring" [level=3] [ref=e133]
+              - list [ref=e134]:
+                - listitem [ref=e135]:
+                  - link "Audit Logs" [ref=e136] [cursor=pointer]:
                     - /url: /employee/admin/audit
-                    - generic [ref=e145]:
-                      - img [ref=e146]
-                      - generic [ref=e149]: Audit Logs
-                - listitem [ref=e150]:
-                  - link "Notifications" [ref=e151] [cursor=pointer]:
+                    - generic [ref=e137]:
+                      - img [ref=e138]
+                      - generic [ref=e141]: Audit Logs
+                - listitem [ref=e142]:
+                  - link "Notifications" [ref=e143] [cursor=pointer]:
                     - /url: /employee/admin/notifications
-                    - generic [ref=e152]:
-                      - img [ref=e153]
-                      - generic [ref=e156]: Notifications
-                - listitem [ref=e157]:
-                  - link "Data Management" [ref=e158] [cursor=pointer]:
+                    - generic [ref=e144]:
+                      - img [ref=e145]
+                      - generic [ref=e148]: Notifications
+                - listitem [ref=e149]:
+                  - link "Data Management" [ref=e150] [cursor=pointer]:
                     - /url: /employee/admin/data
+                    - generic [ref=e151]:
+                      - img [ref=e152]
+                      - generic [ref=e156]: Data Management
+                - listitem [ref=e157]:
+                  - link "Emergency" [ref=e158] [cursor=pointer]:
+                    - /url: /employee/admin/emergency
                     - generic [ref=e159]:
                       - img [ref=e160]
-                      - generic [ref=e164]: Data Management
-                - listitem [ref=e165]:
-                  - link "Emergency" [ref=e166] [cursor=pointer]:
-                    - /url: /employee/admin/emergency
-                    - generic [ref=e167]:
-                      - img [ref=e168]
-                      - generic [ref=e170]: Emergency
-        - main [ref=e171]:
-          - generic [ref=e172]:
-            - heading "Admin Portal" [level=1] [ref=e175]
-            - generic [ref=e176]:
-              - generic [ref=e177]:
-                - navigation "Breadcrumb" [ref=e178]:
-                  - link "Home" [ref=e179] [cursor=pointer]:
-                    - /url: /
-                    - img [ref=e180]
-                  - img [ref=e183]
-                  - link "Admin" [ref=e185] [cursor=pointer]:
-                    - /url: /employee/admin
-                  - img [ref=e186]
-                  - link "Integrations" [ref=e188] [cursor=pointer]:
-                    - /url: /employee/admin/integrations
-                  - img [ref=e189]
-                  - generic [ref=e191]: Webhooks
-                - generic [ref=e192]:
-                  - generic [ref=e193]:
-                    - heading "Webhooks" [level=1] [ref=e194]
-                    - generic [ref=e195]: Manage outgoing webhooks for event notifications
-                  - generic [ref=e197]:
-                    - link "Back to Integrations" [ref=e198] [cursor=pointer]:
-                      - /url: /employee/admin/integrations
-                      - button "Back to Integrations" [ref=e199]:
-                        - img [ref=e200]
-                        - text: Back to Integrations
-                    - link "Create Webhook" [ref=e202] [cursor=pointer]:
-                      - /url: /employee/admin/integrations/webhooks/new
-                      - button "Create Webhook" [ref=e203]:
-                        - img [ref=e204]
-                        - text: Create Webhook
-              - generic [ref=e205]:
-                - generic [ref=e206]:
-                  - generic [ref=e207]:
-                    - generic [ref=e208]: Total Webhooks
-                    - img [ref=e209]
-                  - text: "0"
-                - generic [ref=e213]:
-                  - generic [ref=e214]:
-                    - generic [ref=e215]: Active
-                    - img [ref=e216]
-                  - text: "0"
-                - generic [ref=e219]:
-                  - generic [ref=e220]:
-                    - generic [ref=e221]: Successful Deliveries
-                    - img [ref=e222]
-                  - text: "0"
-                - link "In DLQ 0" [ref=e225] [cursor=pointer]:
+                      - generic [ref=e162]: Emergency
+        - main [ref=e163]:
+          - generic [ref=e164]:
+            - generic [ref=e165]:
+              - generic [ref=e166]:
+                - heading "Integrations" [level=1] [ref=e167]
+                - paragraph [ref=e168]: Manage third-party connections and webhook configurations
+              - navigation [ref=e171]:
+                - link "Integrations" [ref=e172] [cursor=pointer]:
+                  - /url: /employee/admin/integrations
+                  - img [ref=e173]
+                  - text: Integrations
+                - link "Webhooks" [ref=e175] [cursor=pointer]:
+                  - /url: /employee/admin/integrations/webhooks
+                  - img [ref=e176]
+                  - text: Webhooks
+                - link "Dead Letter Queue" [ref=e180] [cursor=pointer]:
                   - /url: /employee/admin/integrations/dlq
-                  - generic [ref=e226]:
-                    - generic [ref=e227]:
-                      - generic [ref=e228]: In DLQ
-                      - img [ref=e229]
+                  - img [ref=e181]
+                  - text: Dead Letter Queue
+                - link "Failover" [ref=e183] [cursor=pointer]:
+                  - /url: /employee/admin/integrations/failover
+                  - img [ref=e184]
+                  - text: Failover
+                - link "Retry Config" [ref=e189] [cursor=pointer]:
+                  - /url: /employee/admin/integrations/retry-config
+                  - img [ref=e190]
+                  - text: Retry Config
+            - main [ref=e193]:
+              - generic [ref=e195]:
+                - generic [ref=e196]:
+                  - navigation "Breadcrumb" [ref=e197]:
+                    - link "Home" [ref=e198] [cursor=pointer]:
+                      - /url: /
+                      - img [ref=e199]
+                    - img [ref=e202]
+                    - link "Admin" [ref=e204] [cursor=pointer]:
+                      - /url: /employee/admin
+                    - img [ref=e205]
+                    - link "Integrations" [ref=e207] [cursor=pointer]:
+                      - /url: /employee/admin/integrations
+                    - img [ref=e208]
+                    - generic [ref=e210]: Webhooks
+                  - generic [ref=e213]:
+                    - link "Back to Integrations" [ref=e214] [cursor=pointer]:
+                      - /url: /employee/admin/integrations
+                      - button "Back to Integrations" [ref=e215]:
+                        - img [ref=e216]
+                        - text: Back to Integrations
+                    - link "Create Webhook" [ref=e218] [cursor=pointer]:
+                      - /url: /employee/admin/integrations/webhooks/new
+                      - button "Create Webhook" [ref=e219]:
+                        - img [ref=e220]
+                        - text: Create Webhook
+                - generic [ref=e221]:
+                  - generic [ref=e222]:
+                    - generic [ref=e223]:
+                      - generic [ref=e224]: Total Webhooks
+                      - img [ref=e225]
                     - text: "0"
-              - generic [ref=e233]:
-                - img [ref=e235]
-                - heading "No webhooks configured" [level=3] [ref=e239]
-                - paragraph [ref=e240]: Create a webhook to receive event notifications
-                - link "Create Webhook" [ref=e241] [cursor=pointer]:
-                  - /url: /employee/admin/integrations/webhooks/new
-                  - button "Create Webhook" [ref=e242]:
-                    - img [ref=e243]
-                    - text: Create Webhook
+                  - generic [ref=e229]:
+                    - generic [ref=e230]:
+                      - generic [ref=e231]: Active
+                      - img [ref=e232]
+                    - text: "0"
+                  - generic [ref=e235]:
+                    - generic [ref=e236]:
+                      - generic [ref=e237]: Successful Deliveries
+                      - img [ref=e238]
+                    - text: "0"
+                  - link "In DLQ 0" [ref=e241] [cursor=pointer]:
+                    - /url: /employee/admin/integrations/dlq
+                    - generic [ref=e242]:
+                      - generic [ref=e243]:
+                        - generic [ref=e244]: In DLQ
+                        - img [ref=e245]
+                      - text: "0"
+                - generic [ref=e249]:
+                  - img [ref=e251]
+                  - heading "No webhooks configured" [level=3] [ref=e255]
+                  - paragraph [ref=e256]: Create a webhook to receive event notifications
+                  - link "Create Webhook" [ref=e257] [cursor=pointer]:
+                    - /url: /employee/admin/integrations/webhooks/new
+                    - button "Create Webhook" [ref=e258]:
+                      - img [ref=e259]
+                      - text: Create Webhook
   - region "Notifications (F8)":
     - list
-  - button "Open Next.js Dev Tools" [ref=e249] [cursor=pointer]:
-    - img [ref=e250]
-  - alert [ref=e253]
+  - button "Open Next.js Dev Tools" [ref=e265] [cursor=pointer]:
+    - img [ref=e266]
+  - alert [ref=e269]
 ```

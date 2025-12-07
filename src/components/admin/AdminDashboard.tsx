@@ -2,10 +2,10 @@
 
 import { trpc } from '@/lib/trpc/client'
 import {
-  DashboardShell,
   DashboardGrid,
   DashboardSection,
 } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { StatsCard } from '@/components/dashboard/StatsCard'
 import { ActivityFeedWidget } from '@/components/dashboard/ActivityFeedWidget'
 import { QuickActionsWidget } from '@/components/dashboard/QuickActionsWidget'
@@ -62,7 +62,7 @@ export function AdminDashboard() {
           </p>
           <Link
             href="/login"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-forest-600 text-white rounded-xl font-semibold hover:bg-forest-700 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-hublot-900 text-white rounded-lg font-semibold hover:bg-hublot-800 transition-colors"
           >
             <LogIn className="w-5 h-5" />
             Sign In
@@ -110,11 +110,12 @@ export function AdminDashboard() {
   ]
 
   return (
-    <DashboardShell
-      title="Admin Dashboard"
-      description="Monitor system health and manage platform settings"
-      breadcrumbs={breadcrumbs}
-    >
+    <AdminPageContent>
+      <AdminPageHeader
+        title="Admin Dashboard"
+        description="Monitor system health and manage platform settings"
+        breadcrumbs={breadcrumbs}
+      />
       {/* System Health Metrics */}
       <DashboardSection title="System Health">
         {healthQuery.isLoading ? (
@@ -189,7 +190,7 @@ export function AdminDashboard() {
         action={
           <a
             href="/employee/admin/audit"
-            className="text-sm text-forest-600 hover:text-forest-700"
+            className="text-sm text-gold-600 hover:text-gold-700"
           >
             View All
           </a>
@@ -218,6 +219,6 @@ export function AdminDashboard() {
           />
         )}
       </DashboardSection>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

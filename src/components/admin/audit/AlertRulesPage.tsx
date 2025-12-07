@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { DashboardShell, DashboardSection } from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Switch } from '@/components/ui/switch'
@@ -68,22 +69,24 @@ export function AlertRulesPage() {
     return <Badge variant="outline" className={colors[severity]}>{severity}</Badge>
   }
 
+  const breadcrumbs = [
+    { label: 'Admin', href: '/employee/admin' },
+    { label: 'Audit', href: '/employee/admin/audit' },
+    { label: 'Alert Rules' },
+  ]
+
   return (
-    <DashboardShell
-      title="Alert Rules Configuration"
-      description="Configure automated security alert triggers"
-      breadcrumbs={[
-        { label: 'Admin', href: '/employee/admin' },
-        { label: 'Audit Logs', href: '/employee/admin/audit' },
-        { label: 'Alert Rules', href: '/employee/admin/audit/rules' },
-      ]}
-      actions={
-        <Button onClick={() => setShowCreateDialog(true)}>
-          <Plus className="w-4 h-4 mr-2" />
-          Create Rule
-        </Button>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Button onClick={() => setShowCreateDialog(true)}>
+            <Plus className="w-4 h-4 mr-2" />
+            Create Rule
+          </Button>
+        }
+      />
       <DashboardSection>
         {rulesQuery.isLoading ? (
           <div className="bg-white rounded-xl border border-charcoal-100 p-8 flex justify-center">
@@ -194,6 +197,6 @@ export function AlertRulesPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

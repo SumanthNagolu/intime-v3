@@ -2,10 +2,8 @@
 
 import { useState } from 'react'
 import { trpc } from '@/lib/trpc/client'
-import {
-  DashboardShell,
-  DashboardSection,
-} from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import {
   Select,
@@ -164,35 +162,35 @@ export function PermissionMatrixPage() {
   }
 
   return (
-    <DashboardShell
-      title="Permission Matrix"
-      description="Configure role-based access control for your organization"
-      breadcrumbs={breadcrumbs}
-      actions={
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={() => setIsBulkUpdateOpen(true)}>
-            <Users className="w-4 h-4 mr-2" />
-            Bulk Update
-          </Button>
-          <Link href="/employee/admin/permissions/test">
-            <Button variant="outline">
-              <FlaskConical className="w-4 h-4 mr-2" />
-              Test Permission
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => setIsBulkUpdateOpen(true)}>
+              <Users className="w-4 h-4 mr-2" />
+              Bulk Update
             </Button>
-          </Link>
-          <Link href="/employee/admin/permissions/compare">
-            <Button variant="outline">
-              <GitCompare className="w-4 h-4 mr-2" />
-              Compare Roles
+            <Link href="/employee/admin/permissions/test">
+              <Button variant="outline">
+                <FlaskConical className="w-4 h-4 mr-2" />
+                Test Permission
+              </Button>
+            </Link>
+            <Link href="/employee/admin/permissions/compare">
+              <Button variant="outline">
+                <GitCompare className="w-4 h-4 mr-2" />
+                Compare Roles
+              </Button>
+            </Link>
+            <Button variant="outline" onClick={exportToCSV} disabled={!matrixQuery.data}>
+              <FileDown className="w-4 h-4 mr-2" />
+              Export CSV
             </Button>
-          </Link>
-          <Button variant="outline" onClick={exportToCSV} disabled={!matrixQuery.data}>
-            <FileDown className="w-4 h-4 mr-2" />
-            Export CSV
-          </Button>
-        </div>
-      }
-    >
+          </div>
+        }
+      />
       <DashboardSection>
         {/* Object Type Selector */}
         <div className="flex items-center gap-4 mb-6">
@@ -376,6 +374,6 @@ export function PermissionMatrixPage() {
       </DashboardSection>
 
       <BulkUpdateDialog open={isBulkUpdateOpen} onOpenChange={setIsBulkUpdateOpen} />
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

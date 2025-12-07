@@ -74,12 +74,6 @@
                       - generic: Settings
                 - listitem:
                   - link:
-                    - /url: /employee/admin/org-settings
-                    - generic:
-                      - img
-                      - generic: Org Settings
-                - listitem:
-                  - link:
                     - /url: /employee/admin/integrations
                     - generic:
                       - img
@@ -151,69 +145,92 @@
           - generic:
             - generic:
               - generic:
-                - heading [level=1]: Admin Portal
-            - generic:
+                - heading [level=1]: Integrations
+                - paragraph: Manage third-party connections and webhook configurations
               - generic:
-                - navigation:
-                  - link:
-                    - /url: /
-                    - img
-                  - img
-                  - link:
-                    - /url: /employee/admin
-                    - text: Admin
-                  - img
-                  - generic: Integrations
                 - generic:
-                  - generic:
-                    - heading [level=1]: Integrations
-                    - generic: Configure and monitor external service integrations
-                  - generic:
+                  - navigation:
                     - link:
-                      - /url: /employee/admin/integrations/new
-                      - button:
+                      - /url: /employee/admin/integrations
+                      - img
+                      - text: Integrations
+                    - link:
+                      - /url: /employee/admin/integrations/webhooks
+                      - img
+                      - text: Webhooks
+                    - link:
+                      - /url: /employee/admin/integrations/dlq
+                      - img
+                      - text: Dead Letter Queue
+                    - link:
+                      - /url: /employee/admin/integrations/failover
+                      - img
+                      - text: Failover
+                    - link:
+                      - /url: /employee/admin/integrations/retry-config
+                      - img
+                      - text: Retry Config
+            - main:
+              - generic:
+                - generic:
+                  - generic:
+                    - navigation:
+                      - link:
+                        - /url: /
                         - img
-                        - text: Add Integration
-              - generic:
-                - generic:
+                      - img
+                      - link:
+                        - /url: /employee/admin
+                        - text: Admin
+                      - img
+                      - generic: Integrations
+                    - generic:
+                      - generic:
+                        - link:
+                          - /url: /employee/admin/integrations/new
+                          - button:
+                            - img
+                            - text: Add Integration
                   - generic:
-                    - generic: Total
-                    - img
+                    - generic:
+                      - generic:
+                        - generic: Total
+                        - img
+                      - generic:
+                        - generic: "0"
+                    - generic:
+                      - generic:
+                        - generic: Active
+                        - img
+                      - generic:
+                        - generic: "0"
+                        - generic: (0%)
+                    - generic:
+                      - generic:
+                        - generic: Errors
+                        - img
+                      - generic:
+                        - generic: "0"
+                        - generic: (0%)
+                    - generic:
+                      - generic:
+                        - generic: Inactive
+                        - img
+                      - generic:
+                        - generic: "0"
+                        - generic: (0%)
                   - generic:
-                    - generic: "0"
-                - generic:
-                  - generic:
-                    - generic: Active
-                    - img
-                  - generic:
-                    - generic: "0"
-                    - generic: (0%)
-                - generic:
-                  - generic:
-                    - generic: Errors
-                    - img
-                  - generic:
-                    - generic: "0"
-                    - generic: (0%)
-                - generic:
-                  - generic:
-                    - generic: Inactive
-                    - img
-                  - generic:
-                    - generic: "0"
-                    - generic: (0%)
-              - generic:
-                - generic:
-                  - generic:
-                    - img
-                    - textbox:
-                      - /placeholder: Search integrations...
-                  - combobox:
-                    - generic: All Types
-                    - img
-                  - combobox [expanded]:
-                    - generic: All Status
-                    - img
+                    - generic:
+                      - generic:
+                        - img
+                        - textbox:
+                          - /placeholder: Search integrations...
+                      - combobox:
+                        - generic: All Types
+                        - img
+                      - combobox [expanded]:
+                        - generic: All Status
+                        - img
   - list
   - button "Open Next.js Dev Tools" [ref=e6] [cursor=pointer]:
     - img [ref=e7]

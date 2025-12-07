@@ -3,10 +3,8 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { trpc } from '@/lib/trpc/client'
-import {
-  DashboardShell,
-  DashboardSection,
-} from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -137,28 +135,29 @@ export function FailoverConfigPage() {
 
   if (failoverQuery.isLoading || integrationsQuery.isLoading) {
     return (
-      <DashboardShell title="Failover Configuration" breadcrumbs={breadcrumbs}>
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="flex justify-center py-12">
           <Loader2 className="w-8 h-8 animate-spin text-charcoal-400" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   return (
-    <DashboardShell
-      title="Failover Configuration"
-      description="Configure backup integrations and automatic failover rules"
-      breadcrumbs={breadcrumbs}
-      actions={
-        <Link href="/employee/admin/integrations">
-          <Button variant="outline">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Integrations
-          </Button>
-        </Link>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Link href="/employee/admin/integrations">
+            <Button variant="outline">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Integrations
+            </Button>
+          </Link>
+        }
+      />
       {/* Info Banner */}
       <div className="bg-charcoal-50 border border-charcoal-200 rounded-lg p-4 mb-6">
         <div className="flex items-start gap-3">
@@ -449,6 +448,6 @@ export function FailoverConfigPage() {
           )
         })}
       </div>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

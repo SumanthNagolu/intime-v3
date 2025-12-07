@@ -2,10 +2,8 @@
 
 import { useState } from 'react'
 import { trpc } from '@/lib/trpc/client'
-import {
-  DashboardShell,
-  DashboardSection,
-} from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -112,19 +110,20 @@ export function UsersListPage() {
   }
 
   return (
-    <DashboardShell
-      title="Users"
-      description="Manage user accounts, roles, and permissions"
-      breadcrumbs={breadcrumbs}
-      actions={
-        <Link href="/employee/admin/users/new">
-          <Button className="bg-forest-600 hover:bg-forest-700 text-white">
-            <Plus className="w-4 h-4 mr-2" />
-            New User
-          </Button>
-        </Link>
-      }
-    >
+    <AdminPageContent>
+      <AdminPageHeader
+        title="Users"
+        description="Manage user accounts, roles, and permissions"
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Link href="/employee/admin/users/new">
+            <Button className="bg-hublot-900 hover:bg-hublot-800 text-white">
+              <Plus className="w-4 h-4 mr-2" />
+              New User
+            </Button>
+          </Link>
+        }
+      />
       <DashboardSection>
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-4 mb-6">
@@ -205,7 +204,7 @@ export function UsersListPage() {
               </p>
               {!search && (!roleId || roleId === 'all') && (!podId || podId === 'all') && (
                 <Link href="/employee/admin/users/new">
-                  <Button className="bg-forest-600 hover:bg-forest-700 text-white">
+                  <Button className="bg-hublot-900 hover:bg-hublot-800 text-white">
                     <Plus className="w-4 h-4 mr-2" />
                     Create User
                   </Button>
@@ -231,13 +230,13 @@ export function UsersListPage() {
                     <tr key={user.id} className="hover:bg-charcoal-50 transition-colors">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-forest-100 flex items-center justify-center text-forest-700 font-medium">
+                          <div className="w-10 h-10 rounded-full bg-gold-100 flex items-center justify-center text-gold-700 font-medium">
                             {getInitials(user.full_name)}
                           </div>
                           <div>
                             <Link
                               href={`/employee/admin/users/${user.id}`}
-                              className="font-medium text-charcoal-900 hover:text-forest-600"
+                              className="font-medium text-charcoal-900 hover:text-gold-600"
                             >
                               {user.full_name}
                             </Link>
@@ -352,6 +351,6 @@ export function UsersListPage() {
           </div>
         )}
       </DashboardSection>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

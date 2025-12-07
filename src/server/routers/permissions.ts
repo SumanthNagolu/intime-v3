@@ -47,7 +47,7 @@ export const permissionsRouter = router({
   }),
 
   // ============================================
-  // GET ROLES
+  // GET ROLES (Simple - for dropdowns)
   // ============================================
   getRoles: orgProtectedProcedure.query(async () => {
     const adminClient = getAdminClient()
@@ -66,6 +66,501 @@ export const permissionsRouter = router({
     }
 
     return data
+  }),
+
+  // ============================================
+  // LIST ROLES (Full - for roles management page)
+  // ============================================
+  listRoles: orgProtectedProcedure
+    .input(
+      z.object({
+        search: z.string().optional(),
+        category: z.enum(['pod_ic', 'pod_manager', 'leadership', 'executive', 'portal', 'admin']).optional(),
+        isActive: z.boolean().optional(),
+        page: z.number().min(1).default(1),
+        pageSize: z.number().min(1).max(100).default(20),
+      })
+    )
+    .query(async ({ input }) => {
+      const adminClient = getAdminClient()
+      const { search, category, isActive, page, pageSize } = input
+
+      let query = adminClient
+        .from('system_roles')
+        .select('*', { count: 'exact' })
+
+      if (search) {
+        query = query.or(`name.ilike.%${search}%,display_name.ilike.%${search}%,code.ilike.%${search}%`)
+      }
+      if (category) {
+        query = query.eq('category', category)
+      }
+      if (isActive !== undefined) {
+        query = query.eq('is_active', isActive)
+      }
+
+      const from = (page - 1) * pageSize
+      const to = from + pageSize - 1
+
+      const { data, error, count } = await query
+        .order('hierarchy_level')
+        .range(from, to)
+
+      if (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: error.message,
+        })
+      }
+
+      return {
+        items: data ?? [],
+        pagination: {
+          page,
+          pageSize,
+          total: count ?? 0,
+          totalPages: Math.ceil((count ?? 0) / pageSize),
+        },
+      }
+    }),
+
+  // ============================================
+  // GET ROLE BY ID
+  // ============================================
+  getRoleById: orgProtectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .query(async ({ input }) => {
+      const adminClient = getAdminClient()
+
+      // Get role details
+      const { data: role, error: roleError } = await adminClient
+        .from('system_roles')
+        .select('*')
+        .eq('id', input.id)
+        .single()
+
+      if (roleError || !role) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Role not found',
+        })
+      }
+
+      // Get role permissions
+      const { data: permissions } = await adminClient
+        .from('role_permissions')
+        .select('permission_id, scope_condition, granted, permissions(id, code, name, object_type, action)')
+        .eq('role_id', input.id)
+
+      // Get feature flags
+      const { data: features } = await adminClient
+        .from('feature_flag_roles')
+        .select('feature_flag_id, enabled, feature_flags(id, key, name)')
+        .eq('role_id', input.id)
+
+      // Get user count
+      const { count: userCount } = await adminClient
+        .from('user_roles')
+        .select('*', { count: 'exact', head: true })
+        .eq('role_id', input.id)
+        .eq('is_active', true)
+
+      return {
+        ...role,
+        permissions: permissions ?? [],
+        features: features ?? [],
+        userCount: userCount ?? 0,
+      }
+    }),
+
+  // ============================================
+  // CREATE ROLE
+  // ============================================
+  createRole: orgProtectedProcedure
+    .input(
+      z.object({
+        code: z.string().min(2).max(50),
+        name: z.string().min(2).max(100),
+        displayName: z.string().min(2).max(100),
+        description: z.string().optional(),
+        category: z.enum(['pod_ic', 'pod_manager', 'leadership', 'executive', 'portal', 'admin']),
+        hierarchyLevel: z.number().min(0).max(10).default(0),
+        colorCode: z.string().default('#6366f1'),
+        iconName: z.string().optional(),
+        podType: z.enum(['recruiting', 'bench_sales', 'ta']).nullable().optional(),
+        permissionIds: z.array(z.string().uuid()).optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Check for duplicate code
+      const { data: existing } = await adminClient
+        .from('system_roles')
+        .select('id')
+        .eq('code', input.code)
+        .single()
+
+      if (existing) {
+        throw new TRPCError({
+          code: 'CONFLICT',
+          message: 'Role code already exists',
+        })
+      }
+
+      // Create role
+      const { data: role, error } = await adminClient
+        .from('system_roles')
+        .insert({
+          code: input.code,
+          name: input.name,
+          display_name: input.displayName,
+          description: input.description,
+          category: input.category,
+          hierarchy_level: input.hierarchyLevel,
+          color_code: input.colorCode,
+          icon_name: input.iconName,
+          pod_type: input.podType,
+          is_system_role: false,
+          is_active: true,
+        })
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: error.message,
+        })
+      }
+
+      // Add permissions if provided
+      if (input.permissionIds?.length) {
+        await adminClient.from('role_permissions').insert(
+          input.permissionIds.map((permissionId) => ({
+            role_id: role.id,
+            permission_id: permissionId,
+            scope_condition: 'org',
+            granted: true,
+          }))
+        )
+      }
+
+      // Audit log
+      await adminClient.from('audit_logs').insert({
+        org_id: orgId,
+        user_id: user?.id,
+        user_email: user?.email,
+        action: 'create_role',
+        table_name: 'system_roles',
+        record_id: role.id,
+        new_values: {
+          code: input.code,
+          name: input.name,
+          category: input.category,
+        },
+      })
+
+      return role
+    }),
+
+  // ============================================
+  // UPDATE ROLE
+  // ============================================
+  updateRole: orgProtectedProcedure
+    .input(
+      z.object({
+        id: z.string().uuid(),
+        displayName: z.string().min(2).max(100).optional(),
+        description: z.string().optional(),
+        hierarchyLevel: z.number().min(0).max(10).optional(),
+        colorCode: z.string().optional(),
+        iconName: z.string().optional(),
+        isActive: z.boolean().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+      const { id, ...updates } = input
+
+      // Check role exists
+      const { data: existing } = await adminClient
+        .from('system_roles')
+        .select('id, is_system_role')
+        .eq('id', id)
+        .single()
+
+      if (!existing) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Role not found',
+        })
+      }
+
+      // Build update object
+      const updateData: Record<string, unknown> = {}
+      if (updates.displayName !== undefined) updateData.display_name = updates.displayName
+      if (updates.description !== undefined) updateData.description = updates.description
+      if (updates.hierarchyLevel !== undefined) updateData.hierarchy_level = updates.hierarchyLevel
+      if (updates.colorCode !== undefined) updateData.color_code = updates.colorCode
+      if (updates.iconName !== undefined) updateData.icon_name = updates.iconName
+      if (updates.isActive !== undefined) updateData.is_active = updates.isActive
+      updateData.updated_at = new Date().toISOString()
+
+      const { data: role, error } = await adminClient
+        .from('system_roles')
+        .update(updateData)
+        .eq('id', id)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: error.message,
+        })
+      }
+
+      // Audit log
+      await adminClient.from('audit_logs').insert({
+        org_id: orgId,
+        user_id: user?.id,
+        user_email: user?.email,
+        action: 'update_role',
+        table_name: 'system_roles',
+        record_id: role.id,
+        new_values: updateData,
+      })
+
+      return role
+    }),
+
+  // ============================================
+  // DELETE ROLE (Soft delete)
+  // ============================================
+  deleteRole: orgProtectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Check role exists and is not a system role
+      const { data: role } = await adminClient
+        .from('system_roles')
+        .select('id, is_system_role, code')
+        .eq('id', input.id)
+        .single()
+
+      if (!role) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Role not found',
+        })
+      }
+
+      if (role.is_system_role) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'Cannot delete system roles',
+        })
+      }
+
+      // Check for users with this role
+      const { count: userCount } = await adminClient
+        .from('user_roles')
+        .select('*', { count: 'exact', head: true })
+        .eq('role_id', input.id)
+        .eq('is_active', true)
+
+      if (userCount && userCount > 0) {
+        throw new TRPCError({
+          code: 'PRECONDITION_FAILED',
+          message: `Cannot delete role with ${userCount} active users`,
+        })
+      }
+
+      // Soft delete by setting is_active = false
+      const { error } = await adminClient
+        .from('system_roles')
+        .update({ is_active: false, updated_at: new Date().toISOString() })
+        .eq('id', input.id)
+
+      if (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: error.message,
+        })
+      }
+
+      // Audit log
+      await adminClient.from('audit_logs').insert({
+        org_id: orgId,
+        user_id: user?.id,
+        user_email: user?.email,
+        action: 'delete_role',
+        table_name: 'system_roles',
+        record_id: input.id,
+        new_values: { deleted: true },
+      })
+
+      return { success: true }
+    }),
+
+  // ============================================
+  // CLONE ROLE
+  // ============================================
+  cloneRole: orgProtectedProcedure
+    .input(
+      z.object({
+        sourceRoleId: z.string().uuid(),
+        newCode: z.string().min(2).max(50),
+        newName: z.string().min(2).max(100),
+        newDisplayName: z.string().min(2).max(100),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Get source role
+      const { data: sourceRole } = await adminClient
+        .from('system_roles')
+        .select('*')
+        .eq('id', input.sourceRoleId)
+        .single()
+
+      if (!sourceRole) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Source role not found',
+        })
+      }
+
+      // Check for duplicate code
+      const { data: existing } = await adminClient
+        .from('system_roles')
+        .select('id')
+        .eq('code', input.newCode)
+        .single()
+
+      if (existing) {
+        throw new TRPCError({
+          code: 'CONFLICT',
+          message: 'Role code already exists',
+        })
+      }
+
+      // Create new role
+      const { data: newRole, error: createError } = await adminClient
+        .from('system_roles')
+        .insert({
+          code: input.newCode,
+          name: input.newName,
+          display_name: input.newDisplayName,
+          description: `Cloned from ${sourceRole.display_name}`,
+          category: sourceRole.category,
+          hierarchy_level: sourceRole.hierarchy_level,
+          color_code: sourceRole.color_code,
+          icon_name: sourceRole.icon_name,
+          pod_type: sourceRole.pod_type,
+          is_system_role: false,
+          is_active: true,
+        })
+        .select()
+        .single()
+
+      if (createError) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: createError.message,
+        })
+      }
+
+      // Copy permissions
+      const { data: sourcePermissions } = await adminClient
+        .from('role_permissions')
+        .select('permission_id, scope_condition, granted')
+        .eq('role_id', input.sourceRoleId)
+
+      if (sourcePermissions?.length) {
+        await adminClient.from('role_permissions').insert(
+          sourcePermissions.map((p) => ({
+            role_id: newRole.id,
+            permission_id: p.permission_id,
+            scope_condition: p.scope_condition,
+            granted: p.granted,
+          }))
+        )
+      }
+
+      // Copy feature flags
+      const { data: sourceFeatures } = await adminClient
+        .from('feature_flag_roles')
+        .select('feature_flag_id, enabled')
+        .eq('role_id', input.sourceRoleId)
+
+      if (sourceFeatures?.length) {
+        await adminClient.from('feature_flag_roles').insert(
+          sourceFeatures.map((f) => ({
+            role_id: newRole.id,
+            feature_flag_id: f.feature_flag_id,
+            enabled: f.enabled,
+          }))
+        )
+      }
+
+      // Audit log
+      await adminClient.from('audit_logs').insert({
+        org_id: orgId,
+        user_id: user?.id,
+        user_email: user?.email,
+        action: 'clone_role',
+        table_name: 'system_roles',
+        record_id: newRole.id,
+        new_values: {
+          sourceRoleId: input.sourceRoleId,
+          newCode: input.newCode,
+          newName: input.newName,
+        },
+      })
+
+      return newRole
+    }),
+
+  // ============================================
+  // GET ROLE STATS
+  // ============================================
+  getRoleStats: orgProtectedProcedure.query(async () => {
+    const adminClient = getAdminClient()
+
+    const { data: roles } = await adminClient
+      .from('system_roles')
+      .select('id, is_active, category, is_system_role')
+
+    const totalRoles = roles?.length ?? 0
+    const activeRoles = roles?.filter((r) => r.is_active).length ?? 0
+    const inactiveRoles = totalRoles - activeRoles
+    const systemRoles = roles?.filter((r) => r.is_system_role).length ?? 0
+    const customRoles = totalRoles - systemRoles
+
+    const byCategory = roles?.reduce(
+      (acc, r) => {
+        acc[r.category] = (acc[r.category] || 0) + 1
+        return acc
+      },
+      {} as Record<string, number>
+    ) ?? {}
+
+    return {
+      total: totalRoles,
+      active: activeRoles,
+      inactive: inactiveRoles,
+      system: systemRoles,
+      custom: customRoles,
+      byCategory,
+    }
   }),
 
   // ============================================

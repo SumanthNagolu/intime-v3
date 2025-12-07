@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { DashboardShell, DashboardSection, DashboardGrid } from '@/components/dashboard/DashboardShell'
+import { DashboardSection, DashboardGrid } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { StatsCard } from '@/components/dashboard/StatsCard'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -83,42 +84,48 @@ export function EmergencyDashboard() {
 
   const data = dashboardQuery.data
 
+  const breadcrumbs = [
+    { label: 'Admin', href: '/employee/admin' },
+    { label: 'Emergency' },
+  ]
+
   return (
-    <DashboardShell
-      title="Emergency Dashboard"
-      description="Monitor and respond to incidents, manage emergency procedures"
-      actions={
-        <div className="flex items-center gap-2">
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="ghost" size="sm">
-                <Keyboard className="w-4 h-4" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-72" align="end">
-              <EmergencyShortcutsHelp />
-            </PopoverContent>
-          </Popover>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleRefresh}
-            disabled={dashboardQuery.isFetching}
-          >
-            <RefreshCw className={`w-4 h-4 mr-2 ${dashboardQuery.isFetching ? 'animate-spin' : ''}`} />
-            Refresh
-          </Button>
-          <Button
-            variant="default"
-            size="sm"
-            onClick={() => setShowCreateIncident(true)}
-          >
-            <Siren className="w-4 h-4 mr-2" />
-            Create Incident
-          </Button>
-        </div>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <div className="flex items-center gap-2">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="sm">
+                  <Keyboard className="w-4 h-4" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-72" align="end">
+                <EmergencyShortcutsHelp />
+              </PopoverContent>
+            </Popover>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleRefresh}
+              disabled={dashboardQuery.isFetching}
+            >
+              <RefreshCw className={`w-4 h-4 mr-2 ${dashboardQuery.isFetching ? 'animate-spin' : ''}`} />
+              Refresh
+            </Button>
+            <Button
+              variant="default"
+              size="sm"
+              onClick={() => setShowCreateIncident(true)}
+            >
+              <Siren className="w-4 h-4 mr-2" />
+              Create Incident
+            </Button>
+          </div>
+        }
+      />
       {/* Stats Overview */}
       <DashboardSection title="Overview">
         <DashboardGrid>
@@ -320,6 +327,6 @@ export function EmergencyDashboard() {
         onOpenChange={setShowCreateIncident}
         onSuccess={handleIncidentCreated}
       />
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

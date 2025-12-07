@@ -4,7 +4,7 @@ import * as React from 'react'
 import { Globe, DollarSign } from 'lucide-react'
 import { toast } from 'sonner'
 import { trpc } from '@/lib/trpc/client'
-import { DashboardShell } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import {
@@ -108,33 +108,38 @@ export function SystemGeneralSettingsPage() {
     })
   }
 
+  const breadcrumbs = [
+    { label: 'Admin', href: '/employee/admin' },
+    { label: 'Settings', href: '/employee/admin/settings' },
+    { label: 'System General' },
+  ]
+
   if (isLoading) {
     return (
-      <DashboardShell
-        title="System General Settings"
-        description="Configure default platform-wide settings"
-      >
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="animate-pulse space-y-6">
           <div className="h-48 bg-charcoal-100 rounded-lg" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   return (
-    <DashboardShell
-      title="System General Settings"
-      description="Configure default platform-wide settings for new organizations"
-      actions={
-        <Button
-          onClick={handleSave}
-          loading={updateSettings.isPending}
-          disabled={updateSettings.isPending}
-        >
-          Save Changes
-        </Button>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Button
+            onClick={handleSave}
+            loading={updateSettings.isPending}
+            disabled={updateSettings.isPending}
+          >
+            Save Changes
+          </Button>
+        }
+      />
       <div className="space-y-8">
         <div className="bg-gold-50 border border-gold-200 rounded-lg p-4">
           <p className="text-sm text-gold-800">
@@ -251,6 +256,6 @@ export function SystemGeneralSettingsPage() {
           </div>
         </SettingsSection>
       </div>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

@@ -1,0 +1,626 @@
+import {
+  Briefcase, Search, Users, Calendar, FileText, CheckCircle,
+  UserCheck, ClipboardCheck, Send, Building2, Target, Handshake,
+  DollarSign, Award, Phone, Star, TrendingUp, Package,
+  PauseCircle, PlayCircle, Edit, XCircle, MessageSquare, Plus
+} from 'lucide-react'
+import { EntityJourneyConfig, EntityType } from './entity-navigation.types'
+
+export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
+  job: {
+    entityType: 'job',
+    steps: [
+      {
+        id: 'info',
+        label: 'Job Info',
+        icon: Briefcase,
+        description: 'Job requirements and details',
+        activeStatuses: ['draft'],
+        completedStatuses: ['open', 'active', 'on_hold', 'filled', 'cancelled'],
+        defaultTab: 'overview',
+      },
+      {
+        id: 'sourcing',
+        label: 'Sourcing',
+        icon: Search,
+        description: 'Finding candidates',
+        activeStatuses: ['open'],
+        completedStatuses: ['active', 'on_hold', 'filled'],
+        defaultTab: 'pipeline',
+      },
+      {
+        id: 'pipeline',
+        label: 'Pipeline',
+        icon: Users,
+        description: 'Managing submissions',
+        activeStatuses: ['active'],
+        completedStatuses: ['filled'],
+        defaultTab: 'pipeline',
+      },
+      {
+        id: 'interviews',
+        label: 'Interviews',
+        icon: Calendar,
+        description: 'Client interviews',
+        activeStatuses: ['active'], // Sub-state based on submissions
+        completedStatuses: ['filled'],
+        defaultTab: 'pipeline',
+      },
+      {
+        id: 'offers',
+        label: 'Offers',
+        icon: FileText,
+        description: 'Offer management',
+        activeStatuses: ['active'], // Sub-state based on submissions
+        completedStatuses: ['filled'],
+        defaultTab: 'pipeline',
+      },
+      {
+        id: 'placement',
+        label: 'Placement',
+        icon: CheckCircle,
+        description: 'Confirmed placements',
+        activeStatuses: ['filled'],
+        completedStatuses: [],
+        defaultTab: 'overview',
+      },
+    ],
+    quickActions: [
+      {
+        id: 'publish',
+        label: 'Publish Job',
+        icon: Send,
+        actionType: 'mutation',
+        showForStatuses: ['draft'],
+      },
+      {
+        id: 'edit',
+        label: 'Edit Job',
+        icon: Edit,
+        actionType: 'navigate',
+        href: '/employee/recruiting/jobs/:id/edit',
+        hideForStatuses: ['filled', 'cancelled'],
+      },
+      {
+        id: 'add-candidate',
+        label: 'Add Candidate',
+        icon: Plus,
+        actionType: 'navigate',
+        href: '/employee/recruiting/jobs/:id/add-candidate',
+        hideForStatuses: ['draft', 'filled', 'cancelled'],
+      },
+      {
+        id: 'hold',
+        label: 'Put on Hold',
+        icon: PauseCircle,
+        actionType: 'dialog',
+        dialogId: 'updateStatus',
+        showForStatuses: ['open', 'active'],
+      },
+      {
+        id: 'resume',
+        label: 'Resume Job',
+        icon: PlayCircle,
+        actionType: 'dialog',
+        dialogId: 'updateStatus',
+        showForStatuses: ['on_hold'],
+      },
+      {
+        id: 'close',
+        label: 'Close Job',
+        icon: XCircle,
+        actionType: 'dialog',
+        dialogId: 'closeJob',
+        variant: 'destructive',
+        hideForStatuses: ['draft', 'filled', 'cancelled'],
+      },
+    ],
+  },
+
+  candidate: {
+    entityType: 'candidate',
+    steps: [
+      {
+        id: 'profile',
+        label: 'Profile',
+        icon: UserCheck,
+        description: 'Candidate information',
+        activeStatuses: ['sourced', 'new'],
+        completedStatuses: ['screening', 'bench', 'active', 'placed'],
+      },
+      {
+        id: 'screening',
+        label: 'Screening',
+        icon: ClipboardCheck,
+        description: 'Initial assessment',
+        activeStatuses: ['screening'],
+        completedStatuses: ['bench', 'active', 'placed'],
+      },
+      {
+        id: 'submissions',
+        label: 'Submissions',
+        icon: Send,
+        description: 'Job submissions',
+        activeStatuses: ['bench', 'active'],
+        completedStatuses: ['placed'],
+      },
+      {
+        id: 'placed',
+        label: 'Placed',
+        icon: Award,
+        description: 'Active placement',
+        activeStatuses: ['placed'],
+        completedStatuses: [],
+      },
+    ],
+    quickActions: [
+      {
+        id: 'edit',
+        label: 'Edit Candidate',
+        icon: Edit,
+        actionType: 'navigate',
+        href: '/employee/recruiting/candidates/:id/edit'
+      },
+      {
+        id: 'screen',
+        label: 'Start Screening',
+        icon: ClipboardCheck,
+        actionType: 'dialog',
+        dialogId: 'startScreening',
+        showForStatuses: ['sourced', 'new'],
+      },
+      {
+        id: 'submit',
+        label: 'Submit to Job',
+        icon: Send,
+        actionType: 'dialog',
+        dialogId: 'submitToJob',
+        hideForStatuses: ['placed', 'inactive'],
+      },
+      {
+        id: 'hotlist',
+        label: 'Add to Hotlist',
+        icon: Star,
+        actionType: 'mutation'
+      },
+      {
+        id: 'activity',
+        label: 'Log Activity',
+        icon: MessageSquare,
+        actionType: 'dialog',
+        dialogId: 'logActivity'
+      },
+    ],
+  },
+
+  account: {
+    entityType: 'account',
+    steps: [
+      {
+        id: 'profile',
+        label: 'Company Profile',
+        icon: Building2,
+        description: 'Account information',
+        activeStatuses: ['prospect'],
+        completedStatuses: ['active'],
+      },
+      {
+        id: 'contacts',
+        label: 'Contacts',
+        icon: Users,
+        description: 'Key contacts',
+        activeStatuses: ['prospect', 'active'],
+        completedStatuses: [],
+      },
+      {
+        id: 'contracts',
+        label: 'Contracts & Terms',
+        icon: FileText,
+        description: 'Business terms',
+        activeStatuses: ['active'],
+        completedStatuses: [],
+      },
+      {
+        id: 'jobs',
+        label: 'Active Jobs',
+        icon: Briefcase,
+        description: 'Job requisitions',
+        activeStatuses: ['active'],
+        completedStatuses: [],
+      },
+      {
+        id: 'placements',
+        label: 'Placements',
+        icon: Award,
+        description: 'Placement history',
+        activeStatuses: ['active'],
+        completedStatuses: [],
+      },
+    ],
+    quickActions: [
+      {
+        id: 'edit',
+        label: 'Edit Account',
+        icon: Edit,
+        actionType: 'navigate',
+        href: '/employee/recruiting/accounts/:id/edit'
+      },
+      {
+        id: 'contact',
+        label: 'Add Contact',
+        icon: Users,
+        actionType: 'dialog',
+        dialogId: 'addContact'
+      },
+      {
+        id: 'job',
+        label: 'New Job',
+        icon: Briefcase,
+        actionType: 'dialog',
+        dialogId: 'jobIntake'
+      },
+      {
+        id: 'activity',
+        label: 'Log Activity',
+        icon: Phone,
+        actionType: 'dialog',
+        dialogId: 'logActivity'
+      },
+    ],
+  },
+
+  submission: {
+    entityType: 'submission',
+    steps: [
+      {
+        id: 'sourced',
+        label: 'Sourced',
+        icon: Search,
+        description: 'Candidate sourced',
+        activeStatuses: ['sourced'],
+        completedStatuses: ['screening', 'submission_ready', 'submitted_to_client', 'client_review', 'client_interview', 'offer_stage', 'placed']
+      },
+      {
+        id: 'screening',
+        label: 'Screening',
+        icon: ClipboardCheck,
+        description: 'Internal screening',
+        activeStatuses: ['screening'],
+        completedStatuses: ['submission_ready', 'submitted_to_client', 'client_review', 'client_interview', 'offer_stage', 'placed']
+      },
+      {
+        id: 'submission',
+        label: 'Submission',
+        icon: Send,
+        description: 'Ready for client',
+        activeStatuses: ['submission_ready', 'submitted_to_client'],
+        completedStatuses: ['client_review', 'client_interview', 'offer_stage', 'placed']
+      },
+      {
+        id: 'review',
+        label: 'Client Review',
+        icon: Users,
+        description: 'Client reviewing',
+        activeStatuses: ['client_review'],
+        completedStatuses: ['client_interview', 'offer_stage', 'placed']
+      },
+      {
+        id: 'interview',
+        label: 'Interview',
+        icon: Calendar,
+        description: 'Interview stage',
+        activeStatuses: ['client_interview'],
+        completedStatuses: ['offer_stage', 'placed']
+      },
+      {
+        id: 'offer',
+        label: 'Offer',
+        icon: FileText,
+        description: 'Offer stage',
+        activeStatuses: ['offer_stage'],
+        completedStatuses: ['placed']
+      },
+      {
+        id: 'placed',
+        label: 'Placed',
+        icon: CheckCircle,
+        description: 'Placement confirmed',
+        activeStatuses: ['placed'],
+        completedStatuses: []
+      },
+    ],
+    quickActions: [
+      {
+        id: 'advance',
+        label: 'Advance Status',
+        icon: TrendingUp,
+        actionType: 'dialog',
+        dialogId: 'updateSubmissionStatus',
+        hideForStatuses: ['placed', 'rejected', 'withdrawn'],
+      },
+      {
+        id: 'schedule',
+        label: 'Schedule Interview',
+        icon: Calendar,
+        actionType: 'dialog',
+        dialogId: 'scheduleInterview',
+        showForStatuses: ['client_review', 'client_interview'],
+      },
+      {
+        id: 'withdraw',
+        label: 'Withdraw',
+        icon: XCircle,
+        actionType: 'dialog',
+        dialogId: 'withdrawSubmission',
+        variant: 'destructive',
+        hideForStatuses: ['placed', 'rejected', 'withdrawn'],
+      },
+    ],
+  },
+
+  placement: {
+    entityType: 'placement',
+    steps: [
+      {
+        id: 'pending',
+        label: 'Pending Start',
+        icon: Calendar,
+        description: 'Awaiting start date',
+        activeStatuses: ['pending_start'],
+        completedStatuses: ['active', 'extended', 'ended']
+      },
+      {
+        id: 'active',
+        label: 'Active',
+        icon: CheckCircle,
+        description: 'Currently placed',
+        activeStatuses: ['active'],
+        completedStatuses: ['extended', 'ended']
+      },
+      {
+        id: 'extended',
+        label: 'Extended',
+        icon: TrendingUp,
+        description: 'Contract extended',
+        activeStatuses: ['extended'],
+        completedStatuses: ['ended']
+      },
+      {
+        id: 'ended',
+        label: 'Ended',
+        icon: Package,
+        description: 'Placement completed',
+        activeStatuses: ['ended'],
+        completedStatuses: []
+      },
+    ],
+    quickActions: [
+      {
+        id: 'extend',
+        label: 'Extend Placement',
+        icon: TrendingUp,
+        actionType: 'dialog',
+        dialogId: 'extendPlacement',
+        showForStatuses: ['active', 'extended'],
+      },
+      {
+        id: 'checkin',
+        label: 'Log Check-in',
+        icon: Phone,
+        actionType: 'dialog',
+        dialogId: 'placementCheckin',
+        showForStatuses: ['active', 'extended'],
+      },
+      {
+        id: 'end',
+        label: 'End Placement',
+        icon: Package,
+        actionType: 'dialog',
+        dialogId: 'endPlacement',
+        variant: 'destructive',
+        showForStatuses: ['active', 'extended'],
+      },
+    ],
+  },
+
+  lead: {
+    entityType: 'lead',
+    steps: [
+      {
+        id: 'new',
+        label: 'New',
+        icon: Target,
+        description: 'New lead',
+        activeStatuses: ['new'],
+        completedStatuses: ['contacted', 'qualified', 'converted']
+      },
+      {
+        id: 'contacted',
+        label: 'Contacted',
+        icon: Phone,
+        description: 'Initial contact made',
+        activeStatuses: ['contacted'],
+        completedStatuses: ['qualified', 'converted']
+      },
+      {
+        id: 'qualified',
+        label: 'Qualified',
+        icon: Star,
+        description: 'Lead qualified',
+        activeStatuses: ['qualified'],
+        completedStatuses: ['converted']
+      },
+      {
+        id: 'converted',
+        label: 'Converted',
+        icon: Handshake,
+        description: 'Converted to opportunity',
+        activeStatuses: ['converted'],
+        completedStatuses: []
+      },
+    ],
+    quickActions: [
+      {
+        id: 'edit',
+        label: 'Edit Lead',
+        icon: Edit,
+        actionType: 'navigate',
+        href: '/employee/crm/leads/:id/edit'
+      },
+      {
+        id: 'qualify',
+        label: 'Update BANT',
+        icon: Star,
+        actionType: 'dialog',
+        dialogId: 'qualifyLead',
+        hideForStatuses: ['converted', 'lost'],
+      },
+      {
+        id: 'activity',
+        label: 'Log Activity',
+        icon: Phone,
+        actionType: 'dialog',
+        dialogId: 'logActivity'
+      },
+      {
+        id: 'convert',
+        label: 'Convert to Deal',
+        icon: Handshake,
+        actionType: 'dialog',
+        dialogId: 'convertLead',
+        showForStatuses: ['qualified'],
+      },
+    ],
+  },
+
+  deal: {
+    entityType: 'deal',
+    steps: [
+      {
+        id: 'discovery',
+        label: 'Discovery',
+        icon: Search,
+        description: 'Understanding needs',
+        activeStatuses: ['discovery'],
+        completedStatuses: ['qualification', 'proposal', 'negotiation', 'verbal_commit', 'closed_won']
+      },
+      {
+        id: 'qualification',
+        label: 'Qualification',
+        icon: Star,
+        description: 'Qualifying opportunity',
+        activeStatuses: ['qualification'],
+        completedStatuses: ['proposal', 'negotiation', 'verbal_commit', 'closed_won']
+      },
+      {
+        id: 'proposal',
+        label: 'Proposal',
+        icon: FileText,
+        description: 'Proposal sent',
+        activeStatuses: ['proposal'],
+        completedStatuses: ['negotiation', 'verbal_commit', 'closed_won']
+      },
+      {
+        id: 'negotiation',
+        label: 'Negotiation',
+        icon: Handshake,
+        description: 'Terms negotiation',
+        activeStatuses: ['negotiation'],
+        completedStatuses: ['verbal_commit', 'closed_won']
+      },
+      {
+        id: 'verbal_commit',
+        label: 'Verbal Commit',
+        icon: CheckCircle,
+        description: 'Verbal agreement',
+        activeStatuses: ['verbal_commit'],
+        completedStatuses: ['closed_won']
+      },
+      {
+        id: 'closed',
+        label: 'Closed',
+        icon: DollarSign,
+        description: 'Deal closed',
+        activeStatuses: ['closed_won', 'closed_lost'],
+        completedStatuses: []
+      },
+    ],
+    quickActions: [
+      {
+        id: 'edit',
+        label: 'Edit Deal',
+        icon: Edit,
+        actionType: 'navigate',
+        href: '/employee/crm/deals/:id/edit'
+      },
+      {
+        id: 'moveStage',
+        label: 'Move Stage',
+        icon: TrendingUp,
+        actionType: 'dialog',
+        dialogId: 'moveStage',
+        hideForStatuses: ['closed_won', 'closed_lost'],
+      },
+      {
+        id: 'activity',
+        label: 'Log Activity',
+        icon: Phone,
+        actionType: 'dialog',
+        dialogId: 'logDealActivity'
+      },
+      {
+        id: 'closeWon',
+        label: 'Close Won',
+        icon: DollarSign,
+        actionType: 'dialog',
+        dialogId: 'closeWon',
+        hideForStatuses: ['closed_won', 'closed_lost'],
+      },
+    ],
+  },
+}
+
+// Helper function to get journey config for an entity type
+export function getEntityJourney(entityType: EntityType): EntityJourneyConfig {
+  return entityJourneys[entityType]
+}
+
+// Helper to determine current step index based on status
+export function getCurrentStepIndex(entityType: EntityType, status: string): number {
+  const journey = entityJourneys[entityType]
+
+  // Find the step where this status is active
+  const activeIndex = journey.steps.findIndex(step =>
+    step.activeStatuses.includes(status)
+  )
+
+  if (activeIndex >= 0) return activeIndex
+
+  // If not found as active, find the last completed step
+  for (let i = journey.steps.length - 1; i >= 0; i--) {
+    if (journey.steps[i].completedStatuses.includes(status)) {
+      return i + 1 // Return the next step after completed
+    }
+  }
+
+  return 0 // Default to first step
+}
+
+// Helper to get visible quick actions based on entity status
+export function getVisibleQuickActions(entityType: EntityType, status: string) {
+  const journey = entityJourneys[entityType]
+
+  return journey.quickActions.filter(action => {
+    // Check if action should be shown for this status
+    if (action.showForStatuses && !action.showForStatuses.includes(status)) {
+      return false
+    }
+
+    // Check if action should be hidden for this status
+    if (action.hideForStatuses && action.hideForStatuses.includes(status)) {
+      return false
+    }
+
+    return true
+  })
+}

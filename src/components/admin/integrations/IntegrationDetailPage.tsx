@@ -4,10 +4,8 @@ import { use } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { trpc } from '@/lib/trpc/client'
-import {
-  DashboardShell,
-  DashboardSection,
-} from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import {
@@ -157,17 +155,19 @@ export function IntegrationDetailPage({ paramsPromise }: IntegrationDetailPagePr
 
   if (isLoading) {
     return (
-      <DashboardShell title="Loading..." breadcrumbs={breadcrumbs}>
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="flex items-center justify-center p-12">
           <Loader2 className="w-8 h-8 animate-spin text-charcoal-400" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   if (error || !integration) {
     return (
-      <DashboardShell title="Error" breadcrumbs={breadcrumbs}>
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="text-center p-12">
           <p className="text-red-600 mb-4">Integration not found</p>
           <Link href="/employee/admin/integrations">
@@ -177,34 +177,34 @@ export function IntegrationDetailPage({ paramsPromise }: IntegrationDetailPagePr
             </Button>
           </Link>
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   const healthConfig = HEALTH_STATUS_CONFIG[integration.health_status] || HEALTH_STATUS_CONFIG.unknown
 
   return (
-    <DashboardShell
-      title={integration.name}
-      description={integration.description || `${TYPE_LABELS[integration.type]} integration via ${integration.provider}`}
-      breadcrumbs={breadcrumbs}
-      actions={
-        <div className="flex gap-2">
-          <Link href="/employee/admin/integrations">
-            <Button variant="outline">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Button>
-          </Link>
-          <Link href={`/employee/admin/integrations/${integrationId}/edit`}>
-            <Button variant="outline">
-              <Edit className="w-4 h-4 mr-2" />
-              Edit
-            </Button>
-          </Link>
-        </div>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <div className="flex gap-2">
+            <Link href="/employee/admin/integrations">
+              <Button variant="outline">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back
+              </Button>
+            </Link>
+            <Link href={`/employee/admin/integrations/${integrationId}/edit`}>
+              <Button variant="outline">
+                <Edit className="w-4 h-4 mr-2" />
+                Edit
+              </Button>
+            </Link>
+          </div>
+        }
+      />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
@@ -491,6 +491,6 @@ export function IntegrationDetailPage({ paramsPromise }: IntegrationDetailPagePr
           </div>
         </div>
       </div>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

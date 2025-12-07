@@ -2,10 +2,8 @@
 
 import { useState } from 'react'
 import { trpc } from '@/lib/trpc/client'
-import {
-  DashboardShell,
-  DashboardSection,
-} from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -183,20 +181,20 @@ export function OverridesListPage() {
   }
 
   return (
-    <DashboardShell
-      title="Permission Overrides"
-      description="Manage user-specific permission grants and denials"
-      breadcrumbs={breadcrumbs}
-      actions={
-        <Button
-          onClick={() => setIsCreateOpen(true)}
-          className="bg-hublot-900 hover:bg-hublot-800 text-white"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Create Override
-        </Button>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Button
+            onClick={() => setIsCreateOpen(true)}
+            className="bg-hublot-900 hover:bg-hublot-800 text-white"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Create Override
+          </Button>
+        }
+      />
       <DashboardSection>
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-4 mb-6">
@@ -514,6 +512,6 @@ export function OverridesListPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

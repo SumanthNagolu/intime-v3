@@ -4,7 +4,7 @@ import * as React from 'react'
 import { Globe, Calendar, DollarSign, Hash, Clock } from 'lucide-react'
 import { toast } from 'sonner'
 import { trpc } from '@/lib/trpc/client'
-import { DashboardShell } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import {
@@ -160,34 +160,39 @@ export function LocalizationSettingsPage() {
     return curr?.symbol || '$'
   }
 
+  const breadcrumbs = [
+    { label: 'Admin', href: '/employee/admin' },
+    { label: 'Settings', href: '/employee/admin/settings' },
+    { label: 'Localization' },
+  ]
+
   if (isLoading) {
     return (
-      <DashboardShell
-        title="Localization Settings"
-        description="Configure regional preferences for your organization"
-      >
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="animate-pulse space-y-6">
           <div className="h-48 bg-charcoal-100 rounded-lg" />
           <div className="h-48 bg-charcoal-100 rounded-lg" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   return (
-    <DashboardShell
-      title="Localization Settings"
-      description="Configure regional preferences for your organization"
-      actions={
-        <Button
-          onClick={handleSave}
-          loading={isSaving}
-          disabled={isSaving}
-        >
-          Save Changes
-        </Button>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Button
+            onClick={handleSave}
+            loading={isSaving}
+            disabled={isSaving}
+          >
+            Save Changes
+          </Button>
+        }
+      />
       <div className="space-y-8">
         {/* Timezone & Date/Time */}
         <SettingsSection
@@ -349,6 +354,6 @@ export function LocalizationSettingsPage() {
           </div>
         </SettingsSection>
       </div>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

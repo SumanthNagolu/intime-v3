@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { DashboardShell, DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -132,19 +132,27 @@ export function IncidentDetailPage({ incidentId }: IncidentDetailPageProps) {
     })
   }
 
+  const breadcrumbs = [
+    { label: 'Admin', href: '/employee/admin' },
+    { label: 'Emergency', href: '/employee/admin/emergency' },
+    { label: incident?.incident_number || 'Loading...' },
+  ]
+
   if (incidentQuery.isLoading) {
     return (
-      <DashboardShell title="Loading...">
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="flex items-center justify-center py-20">
           <Loader2 className="w-8 h-8 animate-spin text-charcoal-400" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   if (!incident) {
     return (
-      <DashboardShell title="Incident Not Found">
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="text-center py-20">
           <AlertTriangle className="w-12 h-12 mx-auto mb-4 text-charcoal-300" />
           <p className="text-charcoal-600">Incident not found</p>
@@ -154,49 +162,47 @@ export function IncidentDetailPage({ incidentId }: IncidentDetailPageProps) {
             </Button>
           </Link>
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   return (
-    <DashboardShell
-      title={
-        <div className="flex items-center gap-3">
-          <span>{incident.incident_number}</span>
-          <Badge variant="outline" className={SEVERITY_COLORS[incident.severity as keyof typeof SEVERITY_COLORS]}>
-            {incident.severity}
-          </Badge>
-          <Badge variant="outline" className={STATUS_COLORS[incident.status as keyof typeof STATUS_COLORS]}>
-            {incident.status}
-          </Badge>
-        </div>
-      }
-      description={incident.title}
-      breadcrumbs={[
-        { label: 'Emergency', href: '/employee/admin/emergency' },
-        { label: incident.incident_number },
-      ]}
-      actions={
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => utils.emergency.getIncident.invalidate({ id: incidentId })}
-          >
-            <RefreshCw className="w-4 h-4 mr-2" />
-            Refresh
-          </Button>
-          <Button
-            variant="default"
-            size="sm"
-            onClick={() => setShowSendNotification(true)}
-          >
-            <Bell className="w-4 h-4 mr-2" />
-            Send Notification
-          </Button>
-        </div>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => utils.emergency.getIncident.invalidate({ id: incidentId })}
+            >
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Refresh
+            </Button>
+            <Button
+              variant="default"
+              size="sm"
+              onClick={() => setShowSendNotification(true)}
+            >
+              <Bell className="w-4 h-4 mr-2" />
+              Send Notification
+            </Button>
+          </div>
+        }
+      />
+      {/* Incident Header */}
+      <div className="flex items-center gap-3 mb-6">
+        <span className="font-semibold text-lg">{incident.incident_number}</span>
+        <Badge variant="outline" className={SEVERITY_COLORS[incident.severity as keyof typeof SEVERITY_COLORS]}>
+          {incident.severity}
+        </Badge>
+        <Badge variant="outline" className={STATUS_COLORS[incident.status as keyof typeof STATUS_COLORS]}>
+          {incident.status}
+        </Badge>
+        <span className="text-charcoal-600">{incident.title}</span>
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
@@ -479,6 +485,6 @@ export function IncidentDetailPage({ incidentId }: IncidentDetailPageProps) {
           utils.emergency.getIncident.invalidate({ id: incidentId })
         }}
       />
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

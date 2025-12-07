@@ -2,10 +2,8 @@
 
 import { useState } from 'react'
 import { trpc } from '@/lib/trpc/client'
-import {
-  DashboardShell,
-  DashboardSection,
-} from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -121,11 +119,8 @@ export function PermissionTestPage() {
   }
 
   return (
-    <DashboardShell
-      title="Test Permission"
-      description="Test if a user has a specific permission with detailed evaluation chain"
-      breadcrumbs={breadcrumbs}
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Test Form */}
         <DashboardSection>
@@ -301,6 +296,6 @@ export function PermissionTestPage() {
           )}
         </DashboardSection>
       </div>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

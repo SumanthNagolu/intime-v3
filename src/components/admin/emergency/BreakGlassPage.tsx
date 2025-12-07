@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { DashboardShell } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -113,15 +113,15 @@ export function BreakGlassPage() {
   const pagination = breakGlassQuery.data?.pagination
   const accessLogs = breakGlassQuery.data?.items ?? []
 
+  const breadcrumbs = [
+    { label: 'Admin', href: '/employee/admin' },
+    { label: 'Emergency', href: '/employee/admin/emergency' },
+    { label: 'Break-Glass' },
+  ]
+
   return (
-    <DashboardShell
-      title="Break-Glass Access"
-      description="Emergency access for critical situations"
-      breadcrumbs={[
-        { label: 'Emergency', href: '/employee/admin/emergency' },
-        { label: 'Break-Glass' },
-      ]}
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
       {/* Warning Banner */}
       <Card className="border-red-300 bg-red-50 mb-6">
         <CardContent className="p-4">
@@ -356,6 +356,6 @@ export function BreakGlassPage() {
           </CardContent>
         </Card>
       </div>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

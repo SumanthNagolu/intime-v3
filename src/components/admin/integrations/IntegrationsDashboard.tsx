@@ -3,10 +3,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { trpc } from '@/lib/trpc/client'
-import {
-  DashboardShell,
-  DashboardSection,
-} from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -149,19 +147,19 @@ export function IntegrationsDashboard() {
   const stats = statsQuery.data
 
   return (
-    <DashboardShell
-      title="Integrations"
-      description="Configure and monitor external service integrations"
-      breadcrumbs={breadcrumbs}
-      actions={
-        <Link href="/employee/admin/integrations/new">
-          <Button className="bg-hublot-900 hover:bg-hublot-800 text-white">
-            <Plus className="w-4 h-4 mr-2" />
-            Add Integration
-          </Button>
-        </Link>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Link href="/employee/admin/integrations/new">
+            <Button className="bg-hublot-900 hover:bg-hublot-800 text-white">
+              <Plus className="w-4 h-4 mr-2" />
+              Add Integration
+            </Button>
+          </Link>
+        }
+      />
       {/* Health Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <StatCard
@@ -481,7 +479,7 @@ export function IntegrationsDashboard() {
           </div>
         )}
       </DashboardSection>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }
 
