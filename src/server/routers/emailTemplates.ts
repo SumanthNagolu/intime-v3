@@ -5,9 +5,9 @@ import { orgProtectedProcedure } from '../trpc/middleware'
 import { Resend } from 'resend'
 
 // ============================================
-// RESEND CLIENT
+// RESEND CLIENT (optional - only if API key is present)
 // ============================================
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
 // ============================================
 // HELPER: Slugify
@@ -698,6 +698,9 @@ export const emailTemplatesRouter = router({
       const html = renderTemplate(template.body_html, sampleData)
 
       // Send via Resend
+      if (!resend) {
+        throw new TRPCError({ code: 'PRECONDITION_FAILED', message: 'Email service not configured. Set RESEND_API_KEY to enable.' })
+      }
       const results = await Promise.all(
         input.recipients.map(async (to) => {
           try {

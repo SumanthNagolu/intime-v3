@@ -5,8 +5,8 @@ import { orgProtectedProcedure } from '../trpc/middleware'
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
 
-// Initialize Resend for email notifications
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Initialize Resend for email notifications (optional - only if API key is present)
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
 // Create service role client for admin operations
 function getServiceClient() {
@@ -536,6 +536,9 @@ export const emergencyRouter = router({
         try {
           if (input.notificationType === 'email') {
             // Send actual email via Resend
+            if (!resend) {
+              throw new Error('Email service not configured')
+            }
             const subject = input.subject || `[${incident.severity}] ${incident.title} - ${incident.incident_number}`
 
             await resend.emails.send({
