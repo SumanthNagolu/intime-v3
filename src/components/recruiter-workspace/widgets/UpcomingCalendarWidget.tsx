@@ -48,8 +48,26 @@ function InterviewItem({ scheduledAt, interviewType, candidateName, jobTitle, ac
   )
 }
 
-export function UpcomingCalendarWidget({ className }: { className?: string }) {
-  const { data, isLoading } = trpc.ats.interviews.getUpcoming.useQuery({ days: 7 })
+interface UpcomingInterview {
+  id: string
+  scheduledAt: string
+  interviewType: string
+  submission: {
+    job: { title: string; account: { name: string } | null } | null
+    candidate: { first_name: string; last_name: string } | null
+  } | null
+}
+
+interface UpcomingCalendarWidgetProps {
+  className?: string
+  initialData?: UpcomingInterview[]
+}
+
+export function UpcomingCalendarWidget({ className, initialData }: UpcomingCalendarWidgetProps) {
+  const { data, isLoading } = trpc.ats.interviews.getUpcoming.useQuery({ days: 7 }, {
+    initialData,
+    enabled: !initialData,
+  })
 
   if (isLoading) {
     return (

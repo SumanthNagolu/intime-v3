@@ -4,8 +4,12 @@ export const ADMIN_EMAIL = 'admin@intime.com'
 export const ADMIN_PASSWORD = 'TestPass123!'
 export const HR_EMAIL = 'hr@intime.com'
 export const HR_PASSWORD = 'TestPass123!'
-export const RECRUITER_EMAIL = 'recruiter@intime.com'
+// Recruiter credentials - using actual seed user
+export const RECRUITER_EMAIL = 'rec1@intime.com'
 export const RECRUITER_PASSWORD = 'TestPass123!'
+// Recruiter Manager credentials
+export const RECRUITER_MGR_EMAIL = 'rec_mgr1@intime.com'
+export const RECRUITER_MGR_PASSWORD = 'TestPass123!'
 export const LOGIN_URL = '/login'
 
 export interface LoginOptions {

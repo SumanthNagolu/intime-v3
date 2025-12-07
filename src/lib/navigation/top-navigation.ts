@@ -32,7 +32,7 @@ export const topNavigationTabs: EntityNavTab[] = [
     icon: Building2,
     defaultHref: '/employee/recruiting/accounts',
     dropdown: [
-      { id: 'search-accounts', label: 'Search Accounts', icon: Search, href: '/employee/recruiting/accounts', type: 'link' },
+      { id: 'search-accounts', label: 'Search Accounts', icon: Search, type: 'search', placeholder: 'Search by name...' },
       { id: 'recent-accounts', label: 'Recent Accounts', type: 'recent' },
       { id: 'divider-1', label: '', type: 'divider' },
       { id: 'my-accounts', label: 'My Accounts', icon: Users, href: '/employee/recruiting/accounts?owner=me', type: 'link' },

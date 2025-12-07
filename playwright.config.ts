@@ -72,6 +72,19 @@ export default defineConfig({
       name: 'mobile',
       use: { ...devices['iPhone 13'] },
     },
+
+    // Performance testing project
+    {
+      name: 'performance',
+      testDir: './tests/e2e/performance',
+      use: {
+        ...devices['Desktop Chrome'],
+        // Disable cache to measure real performance
+        bypassCSP: true,
+      },
+      // Run performance tests serially to avoid interference
+      fullyParallel: false,
+    },
   ],
 
   // Run your local dev server before starting the tests

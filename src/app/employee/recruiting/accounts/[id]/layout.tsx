@@ -1,35 +1,23 @@
-'use client'
-
 import { ReactNode } from 'react'
-import { useParams } from 'next/navigation'
-import { EntityContextProvider, EntityContentSkeleton, EntityContentError } from '@/components/layouts/EntityContextProvider'
-import { trpc } from '@/lib/trpc/client'
+import { notFound } from 'next/navigation'
+import { getServerCaller } from '@/server/trpc/server-caller'
+import { EntityContextProvider } from '@/components/layouts/EntityContextProvider'
 
-export default function AccountDetailLayout({ children }: { children: ReactNode }) {
-  const params = useParams()
-  const accountId = params.id as string
+export const dynamic = 'force-dynamic'
 
-  // Fetch account data for layout context
-  const { data: account, isLoading, error } = trpc.crm.accounts.getById.useQuery(
-    { id: accountId },
-    { enabled: !!accountId }
-  )
+interface AccountLayoutProps {
+  children: ReactNode
+  params: Promise<{ id: string }>
+}
 
-  // Loading state
-  if (isLoading) {
-    return <EntityContentSkeleton />
-  }
+export default async function AccountDetailLayout({ children, params }: AccountLayoutProps) {
+  const { id: accountId } = await params
+  const caller = await getServerCaller()
 
-  // Error state
-  if (error || !account) {
-    return (
-      <EntityContentError
-        title="Account not found"
-        message="The account you're looking for doesn't exist or you don't have access to it."
-        backHref="/employee/recruiting/accounts"
-        backLabel="Back to Accounts"
-      />
-    )
+  const account = await caller.crm.accounts.getById({ id: accountId }).catch(() => null)
+
+  if (!account) {
+    notFound()
   }
 
   // Build subtitle with industry
@@ -42,6 +30,7 @@ export default function AccountDetailLayout({ children }: { children: ReactNode 
       entityName={account.name}
       entitySubtitle={subtitle}
       entityStatus={account.status}
+      initialData={account}
     >
       {children}
     </EntityContextProvider>

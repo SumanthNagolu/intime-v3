@@ -39,8 +39,27 @@ function PipelineItem({ icon, label, value, sublabel, href }: PipelineItemProps)
   return content
 }
 
-export function PipelineHealthWidget({ className }: { className?: string }) {
-  const { data, isLoading } = trpc.dashboard.getPipelineHealth.useQuery()
+interface PipelineHealthData {
+  activeJobs: number
+  urgentJobs: number
+  candidatesSourcing: number
+  pendingSubmissions: number
+  interviewsThisWeek: number
+  outstandingOffers: number
+  activePlacements: number
+  urgentItems: { description: string }[]
+}
+
+interface PipelineHealthWidgetProps {
+  className?: string
+  initialData?: PipelineHealthData
+}
+
+export function PipelineHealthWidget({ className, initialData }: PipelineHealthWidgetProps) {
+  const { data, isLoading } = trpc.dashboard.getPipelineHealth.useQuery(undefined, {
+    initialData,
+    enabled: !initialData,
+  })
 
   if (isLoading) {
     return (

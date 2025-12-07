@@ -1,35 +1,23 @@
-'use client'
-
 import { ReactNode } from 'react'
-import { useParams } from 'next/navigation'
-import { EntityContextProvider, EntityContentSkeleton, EntityContentError } from '@/components/layouts/EntityContextProvider'
-import { trpc } from '@/lib/trpc/client'
+import { notFound } from 'next/navigation'
+import { getServerCaller } from '@/server/trpc/server-caller'
+import { EntityContextProvider } from '@/components/layouts/EntityContextProvider'
 
-export default function CandidateDetailLayout({ children }: { children: ReactNode }) {
-  const params = useParams()
-  const candidateId = params.id as string
+export const dynamic = 'force-dynamic'
 
-  // Fetch candidate data for layout context
-  const { data: candidate, isLoading, error } = trpc.ats.candidates.getById.useQuery(
-    { id: candidateId },
-    { enabled: !!candidateId }
-  )
+interface CandidateLayoutProps {
+  children: ReactNode
+  params: Promise<{ id: string }>
+}
 
-  // Loading state
-  if (isLoading) {
-    return <EntityContentSkeleton />
-  }
+export default async function CandidateDetailLayout({ children, params }: CandidateLayoutProps) {
+  const { id: candidateId } = await params
+  const caller = await getServerCaller()
 
-  // Error state
-  if (error || !candidate) {
-    return (
-      <EntityContentError
-        title="Candidate not found"
-        message="The candidate you're looking for doesn't exist or you don't have access to it."
-        backHref="/employee/recruiting/candidates"
-        backLabel="Back to Candidates"
-      />
-    )
+  const candidate = await caller.ats.candidates.getById({ id: candidateId }).catch(() => null)
+
+  if (!candidate) {
+    notFound()
   }
 
   // Build subtitle with headline or visa status
@@ -42,6 +30,7 @@ export default function CandidateDetailLayout({ children }: { children: ReactNod
       entityName={`${candidate.first_name} ${candidate.last_name}`}
       entitySubtitle={subtitle}
       entityStatus={candidate.status}
+      initialData={candidate}
     >
       {children}
     </EntityContextProvider>

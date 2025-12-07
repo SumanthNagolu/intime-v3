@@ -1,4 +1,5 @@
-export { RecruiterDashboard } from './RecruiterDashboard'
+export { RecruiterDashboard, type DashboardInitialData } from './RecruiterDashboard'
+export { RecruiterDashboardSkeleton } from './RecruiterDashboardSkeleton'
 export { LogActivityModal } from './LogActivityModal'
 export { ActivityShortcutProvider, useActivityShortcut } from './ActivityShortcutProvider'
 export { ReportViewer } from './ReportViewer'

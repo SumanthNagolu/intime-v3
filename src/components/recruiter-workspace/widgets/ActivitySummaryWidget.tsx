@@ -52,8 +52,32 @@ function ActivityRow({ icon, label, count, avg, target }: ActivityRowProps) {
   )
 }
 
-export function ActivitySummaryWidget({ className }: { className?: string }) {
-  const { data, isLoading } = trpc.dashboard.getActivitySummary.useQuery({ days: 7 })
+interface ActivityMetric {
+  count: number
+  avg: number
+  target: number
+}
+
+interface ActivitySummaryData {
+  days: number
+  calls: ActivityMetric
+  emails: ActivityMetric
+  meetings: ActivityMetric
+  candidatesSourced: ActivityMetric
+  phoneScreens: ActivityMetric
+  submissions: ActivityMetric
+}
+
+interface ActivitySummaryWidgetProps {
+  className?: string
+  initialData?: ActivitySummaryData
+}
+
+export function ActivitySummaryWidget({ className, initialData }: ActivitySummaryWidgetProps) {
+  const { data, isLoading } = trpc.dashboard.getActivitySummary.useQuery({ days: 7 }, {
+    initialData,
+    enabled: !initialData,
+  })
 
   if (isLoading) {
     return (

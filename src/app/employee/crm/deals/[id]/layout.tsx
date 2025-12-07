@@ -1,35 +1,23 @@
-'use client'
-
 import { ReactNode } from 'react'
-import { useParams } from 'next/navigation'
-import { EntityContextProvider, EntityContentSkeleton, EntityContentError } from '@/components/layouts/EntityContextProvider'
-import { trpc } from '@/lib/trpc/client'
+import { notFound } from 'next/navigation'
+import { getServerCaller } from '@/server/trpc/server-caller'
+import { EntityContextProvider } from '@/components/layouts/EntityContextProvider'
 
-export default function DealDetailLayout({ children }: { children: ReactNode }) {
-  const params = useParams()
-  const dealId = params.id as string
+export const dynamic = 'force-dynamic'
 
-  // Fetch deal data for layout context
-  const { data: deal, isLoading, error } = trpc.crm.deals.getById.useQuery(
-    { id: dealId },
-    { enabled: !!dealId }
-  )
+interface DealLayoutProps {
+  children: ReactNode
+  params: Promise<{ id: string }>
+}
 
-  // Loading state
-  if (isLoading) {
-    return <EntityContentSkeleton />
-  }
+export default async function DealDetailLayout({ children, params }: DealLayoutProps) {
+  const { id: dealId } = await params
+  const caller = await getServerCaller()
 
-  // Error state
-  if (error || !deal) {
-    return (
-      <EntityContentError
-        title="Deal not found"
-        message="The deal you're looking for doesn't exist or you don't have access to it."
-        backHref="/employee/crm/deals"
-        backLabel="Back to Deals"
-      />
-    )
+  const deal = await caller.crm.deals.getById({ id: dealId }).catch(() => null)
+
+  if (!deal) {
+    notFound()
   }
 
   // Build subtitle with account/company name and value
@@ -44,6 +32,7 @@ export default function DealDetailLayout({ children }: { children: ReactNode }) 
       entityName={deal.name}
       entitySubtitle={subtitle || undefined}
       entityStatus={deal.stage}
+      initialData={deal}
     >
       {children}
     </EntityContextProvider>

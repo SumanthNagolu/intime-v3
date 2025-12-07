@@ -89,7 +89,7 @@ export const crmRouter = router({
 
         const { data, error } = await adminClient
           .from('accounts')
-          .select('*, owner:user_profiles!owner_id(id, full_name, avatar_url), contacts(*), jobs(id, title, status)')
+          .select('*, owner:user_profiles!owner_id(id, full_name, avatar_url), contacts(*), jobs:jobs!account_id(id, title, status)')
           .eq('id', input.id)
           .eq('org_id', orgId)
           .single()

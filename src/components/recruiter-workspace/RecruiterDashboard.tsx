@@ -16,11 +16,24 @@ import {
 import { RefreshCw, Settings, Plus } from 'lucide-react'
 import { trpc } from '@/lib/trpc/client'
 
-interface RecruiterDashboardProps {
-  userName?: string
+// Types for initial data from server
+export interface DashboardInitialData {
+  sprintProgress?: unknown
+  todaysPriorities?: unknown
+  pipelineHealth?: unknown
+  activitySummary?: unknown
+  qualityMetrics?: unknown
+  recentWins?: unknown
+  accountHealth?: unknown
+  upcomingInterviews?: unknown
 }
 
-export function RecruiterDashboard({ userName = 'Recruiter' }: RecruiterDashboardProps) {
+interface RecruiterDashboardProps {
+  userName?: string
+  initialData?: DashboardInitialData
+}
+
+export function RecruiterDashboard({ userName = 'Recruiter', initialData }: RecruiterDashboardProps) {
   const [isRefreshing, setIsRefreshing] = useState(false)
   const utils = trpc.useUtils()
 
@@ -73,23 +86,23 @@ export function RecruiterDashboard({ userName = 'Recruiter' }: RecruiterDashboar
       }
     >
       {/* Sprint Progress - Full Width */}
-      <SprintProgressWidget />
+      <SprintProgressWidget initialData={initialData?.sprintProgress as Parameters<typeof SprintProgressWidget>[0]['initialData']} />
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left Column */}
         <div className="space-y-6">
-          <TodaysPrioritiesWidget />
-          <PipelineHealthWidget />
-          <ActivitySummaryWidget />
+          <TodaysPrioritiesWidget initialData={initialData?.todaysPriorities as Parameters<typeof TodaysPrioritiesWidget>[0]['initialData']} />
+          <PipelineHealthWidget initialData={initialData?.pipelineHealth as Parameters<typeof PipelineHealthWidget>[0]['initialData']} />
+          <ActivitySummaryWidget initialData={initialData?.activitySummary as Parameters<typeof ActivitySummaryWidget>[0]['initialData']} />
         </div>
 
         {/* Right Column */}
         <div className="space-y-6">
-          <AccountPortfolioWidget />
-          <QualityMetricsWidget />
-          <UpcomingCalendarWidget />
-          <RecentWinsWidget />
+          <AccountPortfolioWidget initialData={initialData?.accountHealth as Parameters<typeof AccountPortfolioWidget>[0]['initialData']} />
+          <QualityMetricsWidget initialData={initialData?.qualityMetrics as Parameters<typeof QualityMetricsWidget>[0]['initialData']} />
+          <UpcomingCalendarWidget initialData={initialData?.upcomingInterviews as Parameters<typeof UpcomingCalendarWidget>[0]['initialData']} />
+          <RecentWinsWidget initialData={initialData?.recentWins as Parameters<typeof RecentWinsWidget>[0]['initialData']} />
         </div>
       </div>
     </DashboardShell>

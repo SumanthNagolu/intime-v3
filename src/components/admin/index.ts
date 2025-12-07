@@ -1,4 +1,5 @@
-export { AdminDashboard } from './AdminDashboard'
+export { AdminDashboard, type AdminDashboardInitialData } from './AdminDashboard'
+export { AdminDashboardSkeleton } from './AdminDashboardSkeleton'
 export { SystemHealthSkeleton } from './SystemHealthSkeleton'
 export { AlertsSection } from './AlertsSection'
 export { AdminPageContent } from './AdminPageContent'

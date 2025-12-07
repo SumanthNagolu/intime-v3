@@ -64,8 +64,9 @@ export interface EntityNavDropdownItem {
   label: string
   icon?: LucideIcon
   href?: string
-  type: 'link' | 'recent' | 'divider'
+  type: 'link' | 'recent' | 'divider' | 'search'
   badge?: string | number
+  placeholder?: string  // For search type
 }
 
 // Current navigation context state

@@ -1,11 +1,36 @@
 'use client'
 
-import { useEffect, ReactNode } from 'react'
+import { createContext, useContext, useEffect, ReactNode } from 'react'
 import { useEntityNavigation } from '@/lib/navigation/EntityNavigationContext'
 import { EntityType } from '@/lib/navigation/entity-navigation.types'
 import { Skeleton } from '@/components/ui/skeleton'
 import { AlertCircle } from 'lucide-react'
 import Link from 'next/link'
+
+// Context for sharing server-fetched entity data with child components
+interface EntityDataContextValue {
+  entityType: EntityType
+  entityId: string
+  entityName: string
+  entitySubtitle?: string
+  entityStatus: string
+  initialData: unknown
+}
+
+const EntityDataContext = createContext<EntityDataContextValue | null>(null)
+
+/**
+ * Hook to access the server-fetched entity data in child components
+ */
+export function useEntityData<T = unknown>(): { data: T; entityType: EntityType; entityId: string } | null {
+  const context = useContext(EntityDataContext)
+  if (!context) return null
+  return {
+    data: context.initialData as T,
+    entityType: context.entityType,
+    entityId: context.entityId,
+  }
+}
 
 interface EntityContextProviderProps {
   children: ReactNode
@@ -14,11 +39,13 @@ interface EntityContextProviderProps {
   entityName: string
   entitySubtitle?: string
   entityStatus: string
+  initialData?: unknown // Server-fetched data to pass through context
 }
 
 /**
  * Sets the current entity in navigation context without providing layout shell.
  * Use this when the parent layout (SidebarLayout) handles the navigation and sidebar.
+ * Accepts initialData from server components to avoid client-side refetching.
  */
 export function EntityContextProvider({
   children,
@@ -27,6 +54,7 @@ export function EntityContextProvider({
   entityName,
   entitySubtitle,
   entityStatus,
+  initialData,
 }: EntityContextProviderProps) {
   const { setCurrentEntity, addRecentEntity, clearCurrentEntity } = useEntityNavigation()
 
@@ -52,7 +80,20 @@ export function EntityContextProvider({
     }
   }, [entityType, entityId, entityName, entityStatus, entitySubtitle, setCurrentEntity, addRecentEntity, clearCurrentEntity])
 
-  return <>{children}</>
+  return (
+    <EntityDataContext.Provider
+      value={{
+        entityType,
+        entityId,
+        entityName,
+        entitySubtitle,
+        entityStatus,
+        initialData,
+      }}
+    >
+      {children}
+    </EntityDataContext.Provider>
+  )
 }
 
 // Loading skeleton for entity pages (just content, no shell)

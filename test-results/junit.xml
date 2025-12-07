@@ -1,0 +1,54 @@
+<testsuites id="" name="" tests="10" failures="0" skipped="0" errors="0" time="57.912051">
+<testsuite name="account-creation.spec.ts" timestamp="2025-12-07T17:36:40.850Z" hostname="chromium" tests="10" failures="0" skipped="0" time="57.401" errors="0">
+<testcase name="Account Creation Wizard › Navigate to New Account wizard page" classname="account-creation.spec.ts" time="3.03">
+</testcase>
+<testcase name="Account Creation Wizard › New Account button navigates to wizard" classname="account-creation.spec.ts" time="3.571">
+</testcase>
+<testcase name="Account Creation Wizard › Create Account 1: Acme Technologies Inc" classname="account-creation.spec.ts" time="7.201">
+<system-out>
+<![CDATA[✓ Account Acme Technologies Inc created successfully
+]]>
+</system-out>
+</testcase>
+<testcase name="Account Creation Wizard › Create Account 2: Global Consulting Partners" classname="account-creation.spec.ts" time="7.493">
+<system-out>
+<![CDATA[✓ Account Global Consulting Partners created successfully
+]]>
+</system-out>
+</testcase>
+<testcase name="Account Creation Wizard › Create Account 3: HealthFirst Staffing Agency" classname="account-creation.spec.ts" time="7.128">
+<system-out>
+<![CDATA[✓ Account HealthFirst Staffing Agency created successfully
+]]>
+</system-out>
+</testcase>
+<testcase name="Account Creation Wizard › Create Account 4: Capital Finance Solutions" classname="account-creation.spec.ts" time="7.58">
+<system-out>
+<![CDATA[✓ Account Capital Finance Solutions created successfully
+]]>
+</system-out>
+</testcase>
+<testcase name="Account Creation Wizard › Create Account 5: MegaManufacturing Corp" classname="account-creation.spec.ts" time="7.294">
+<system-out>
+<![CDATA[✓ Account MegaManufacturing Corp created successfully
+]]>
+</system-out>
+</testcase>
+<testcase name="Account Creation Wizard › Verify all 5 accounts appear in list" classname="account-creation.spec.ts" time="4.561">
+<system-out>
+<![CDATA[Account Acme Technologies Inc not yet visible in list
+Account Global Consulting Partners not yet visible in list
+Account HealthFirst Staffing Agency not yet visible in list
+]]>
+</system-out>
+</testcase>
+<testcase name="Account Creation Wizard › Open and edit first created account" classname="account-creation.spec.ts" time="6.231">
+<system-out>
+<![CDATA[Overview tab not visible yet - page may still be loading
+]]>
+</system-out>
+</testcase>
+<testcase name="Account Creation Wizard › Account health page shows created accounts" classname="account-creation.spec.ts" time="3.312">
+</testcase>
+</testsuite>
+</testsuites>
