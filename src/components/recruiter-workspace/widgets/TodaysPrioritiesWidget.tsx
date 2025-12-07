@@ -75,8 +75,23 @@ function TaskItem({ id, subject, activityType, entityType, dueDate, daysOverdue,
   )
 }
 
-export function TodaysPrioritiesWidget({ className }: { className?: string }) {
-  const { data, isLoading } = trpc.dashboard.getTodaysPriorities.useQuery({})
+interface TodaysPrioritiesData {
+  overdue: TaskItemProps[]
+  dueToday: TaskItemProps[]
+  highPriority: TaskItemProps[]
+  counts: { total: number }
+}
+
+interface TodaysPrioritiesWidgetProps {
+  className?: string
+  initialData?: TodaysPrioritiesData
+}
+
+export function TodaysPrioritiesWidget({ className, initialData }: TodaysPrioritiesWidgetProps) {
+  const { data, isLoading } = trpc.dashboard.getTodaysPriorities.useQuery({}, {
+    initialData,
+    enabled: !initialData,
+  })
 
   if (isLoading) {
     return (

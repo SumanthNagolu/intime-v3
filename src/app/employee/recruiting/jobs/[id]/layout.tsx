@@ -1,38 +1,26 @@
-'use client'
-
 import { ReactNode } from 'react'
-import { useParams } from 'next/navigation'
-import { EntityContextProvider, EntityContentSkeleton, EntityContentError } from '@/components/layouts/EntityContextProvider'
-import { trpc } from '@/lib/trpc/client'
+import { notFound } from 'next/navigation'
+import { getServerCaller } from '@/server/trpc/server-caller'
+import { EntityContextProvider } from '@/components/layouts/EntityContextProvider'
 
-export default function JobDetailLayout({ children }: { children: ReactNode }) {
-  const params = useParams()
-  const jobId = params.id as string
+export const dynamic = 'force-dynamic'
 
-  // Fetch job data for layout context
-  const { data: job, isLoading, error } = trpc.ats.jobs.getById.useQuery(
-    { id: jobId },
-    { enabled: !!jobId }
-  )
+interface JobLayoutProps {
+  children: ReactNode
+  params: Promise<{ id: string }>
+}
 
-  // Loading state
-  if (isLoading) {
-    return <EntityContentSkeleton />
+export default async function JobDetailLayout({ children, params }: JobLayoutProps) {
+  const { id: jobId } = await params
+  const caller = await getServerCaller()
+
+  // Fetch job data on server
+  const job = await caller.ats.jobs.getById({ id: jobId }).catch(() => null)
+
+  if (!job) {
+    notFound()
   }
 
-  // Error state
-  if (error || !job) {
-    return (
-      <EntityContentError
-        title="Job not found"
-        message="The job you're looking for doesn't exist or you don't have access to it."
-        backHref="/employee/recruiting/jobs"
-        backLabel="Back to Jobs"
-      />
-    )
-  }
-
-  // Get account name for subtitle
   const accountName = job.account
     ? (job.account as { name: string }).name
     : undefined
@@ -44,6 +32,7 @@ export default function JobDetailLayout({ children }: { children: ReactNode }) {
       entityName={job.title}
       entitySubtitle={accountName}
       entityStatus={job.status}
+      initialData={job}
     >
       {children}
     </EntityContextProvider>

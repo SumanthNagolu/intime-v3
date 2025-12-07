@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { ChevronDown, User, LogOut, Clock, Command, Menu, X } from 'lucide-react'
+import { ChevronDown, ChevronRight, User, LogOut, Clock, Command, Menu, X, Search } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import type { User as SupabaseUser } from '@supabase/supabase-js'
 import { cn } from '@/lib/utils'
@@ -19,6 +19,7 @@ export function TopNavigation() {
   const [focusedIndex, setFocusedIndex] = useState<number>(-1)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [dropdownSearch, setDropdownSearch] = useState('')
   const pathname = usePathname()
   const router = useRouter()
   const entityNav = useEntityNavigationSafe()
@@ -27,6 +28,7 @@ export function TopNavigation() {
   const menuItemRefs = useRef<Record<string, (HTMLAnchorElement | HTMLButtonElement | null)[]>>({})
   const userMenuRef = useRef<HTMLDivElement>(null)
   const userMenuItemRefs = useRef<(HTMLAnchorElement | HTMLButtonElement | null)[]>([])
+  const closeTimerRef = useRef<NodeJS.Timeout | null>(null)
 
   // Auth state management
   useEffect(() => {
@@ -68,6 +70,15 @@ export function TopNavigation() {
   useEffect(() => {
     setFocusedIndex(-1)
   }, [activeDropdown, userMenuOpen])
+
+  // Cleanup close timer on unmount
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current)
+      }
+    }
+  }, [])
 
   // Get navigable items count for current dropdown
   const getNavigableItemsCount = useCallback((tabId: string | null): number => {
@@ -192,6 +203,16 @@ export function TopNavigation() {
     toggleDropdown(tabId)
   }
 
+  // Handle inline search in dropdown
+  const handleSearchSubmit = (tabId: string) => {
+    const tab = topNavigationTabs.find(t => t.id === tabId)
+    if (tab?.defaultHref && dropdownSearch.trim()) {
+      router.push(`${tab.defaultHref}?search=${encodeURIComponent(dropdownSearch.trim())}`)
+      setActiveDropdown(null)
+      setDropdownSearch('')
+    }
+  }
+
   const activeTab = getActiveTabFromPath(pathname)
 
   // Get recent entities from context (or empty if context not available)
@@ -240,12 +261,22 @@ export function TopNavigation() {
                   ref={(el) => { dropdownRefs.current[tab.id] = el }}
                   className="relative"
                   onMouseEnter={() => {
+                    // Clear any pending close timer
+                    if (closeTimerRef.current) {
+                      clearTimeout(closeTimerRef.current)
+                      closeTimerRef.current = null
+                    }
                     if (!menuItemRefs.current[tab.id]) {
                       menuItemRefs.current[tab.id] = []
                     }
                     setActiveDropdown(tab.id)
                   }}
-                  onMouseLeave={() => setActiveDropdown(null)}
+                  onMouseLeave={() => {
+                    // Add 150ms delay before closing
+                    closeTimerRef.current = setTimeout(() => {
+                      setActiveDropdown(null)
+                    }, 150)
+                  }}
                 >
                   <div
                     className={cn(
@@ -283,7 +314,7 @@ export function TopNavigation() {
                   {/* Dropdown Menu */}
                   <div
                     className={cn(
-                      'absolute left-0 top-full mt-1 w-64 bg-white rounded-lg shadow-xl py-2 border border-charcoal-100/50 z-50 transition-all duration-200',
+                      'absolute left-0 top-full pt-1 w-64 bg-white rounded-lg shadow-xl py-2 border border-charcoal-100/50 z-50 transition-all duration-200',
                       isOpen
                         ? 'opacity-100 visible translate-y-0'
                         : 'opacity-0 invisible -translate-y-2 pointer-events-none'
@@ -301,6 +332,36 @@ export function TopNavigation() {
                       return tab.dropdown.map((item) => {
                         if (item.type === 'divider') {
                           return <div key={item.id} className="my-2 border-t border-charcoal-100" role="separator" />
+                        }
+
+                        if (item.type === 'search') {
+                          return (
+                            <div key={item.id} className="px-2 py-2">
+                              <form
+                                onSubmit={(e) => {
+                                  e.preventDefault()
+                                  handleSearchSubmit(tab.id)
+                                }}
+                                className="relative"
+                              >
+                                <Search className="absolute left-3 top-2.5 w-4 h-4 text-charcoal-400" />
+                                <input
+                                  type="text"
+                                  placeholder={item.placeholder || 'Search...'}
+                                  value={dropdownSearch}
+                                  onChange={(e) => setDropdownSearch(e.target.value)}
+                                  className="w-full pl-9 pr-10 py-2 text-sm border border-charcoal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500"
+                                  onClick={(e) => e.stopPropagation()}
+                                />
+                                <button
+                                  type="submit"
+                                  className="absolute right-2 top-1.5 p-1 rounded hover:bg-charcoal-100 transition-colors"
+                                >
+                                  <ChevronRight className="w-4 h-4 text-charcoal-400" />
+                                </button>
+                              </form>
+                            </div>
+                          )
                         }
 
                         if (item.type === 'recent') {

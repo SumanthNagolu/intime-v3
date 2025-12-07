@@ -26,18 +26,60 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 
-export function AdminDashboard() {
+// Types for initial data from server
+interface SystemHealth {
+  activeUsers: number
+  activeIntegrations: number
+  totalIntegrations: number
+  pendingApprovals: number
+  uptime: number
+  storageUsed: number
+}
+
+interface CriticalAlert {
+  id: string
+  type: string
+  severity: string
+  message: string
+  timestamp: string
+}
+
+interface RecentActivity {
+  id: string
+  action: string
+  entity: string
+  actor: string | null
+  timestamp: string
+}
+
+export interface AdminDashboardInitialData {
+  systemHealth?: SystemHealth
+  criticalAlerts?: CriticalAlert[]
+  recentActivity?: RecentActivity[]
+}
+
+interface AdminDashboardProps {
+  initialData?: AdminDashboardInitialData
+}
+
+export function AdminDashboard({ initialData }: AdminDashboardProps) {
   const healthQuery = trpc.admin.getSystemHealth.useQuery(undefined, {
     refetchInterval: 60000, // Refresh every 60 seconds
     retry: false, // Don't retry on auth errors
+    initialData: initialData?.systemHealth,
+    enabled: !initialData?.systemHealth,
   })
 
   const alertsQuery = trpc.admin.getCriticalAlerts.useQuery(undefined, {
     retry: false,
+    initialData: initialData?.criticalAlerts,
+    enabled: !initialData?.criticalAlerts,
   })
 
   const activityQuery = trpc.admin.getRecentActivity.useQuery(undefined, {
     retry: false,
+    initialData: initialData?.recentActivity,
+    enabled: !initialData?.recentActivity,
   })
 
   // Check for auth errors

@@ -20,7 +20,7 @@ export function DashboardShell({
   className,
 }: DashboardShellProps) {
   return (
-    <div className={cn("space-y-8", className)}>
+    <div className={cn("space-y-8", className)} data-testid="page-content">
       {/* Header */}
       <div>
         {breadcrumbs && breadcrumbs.length > 0 && (

@@ -44,8 +44,34 @@ function MetricRow({ label, value, target, unit, status }: MetricRowProps) {
   )
 }
 
-export function QualityMetricsWidget({ className }: { className?: string }) {
-  const { data, isLoading } = trpc.dashboard.getQualityMetrics.useQuery({ days: 30 })
+interface QualityMetric {
+  value: number
+  target: number
+  unit: string
+  status: 'good' | 'warning' | 'poor'
+}
+
+interface QualityMetricsData {
+  days: number
+  timeToSubmit: QualityMetric
+  timeToFill: QualityMetric
+  submissionQuality: QualityMetric
+  interviewToOffer: QualityMetric
+  offerAcceptance: QualityMetric
+  retention: QualityMetric
+  overallScore: number
+}
+
+interface QualityMetricsWidgetProps {
+  className?: string
+  initialData?: QualityMetricsData
+}
+
+export function QualityMetricsWidget({ className, initialData }: QualityMetricsWidgetProps) {
+  const { data, isLoading } = trpc.dashboard.getQualityMetrics.useQuery({ days: 30 }, {
+    initialData,
+    enabled: !initialData,
+  })
 
   if (isLoading) {
     return (

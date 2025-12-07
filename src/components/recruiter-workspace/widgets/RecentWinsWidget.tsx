@@ -46,8 +46,22 @@ function WinItem({ type, description, date }: WinItemProps) {
   )
 }
 
-export function RecentWinsWidget({ className }: { className?: string }) {
-  const { data, isLoading } = trpc.dashboard.getRecentWins.useQuery({ limit: 5 })
+interface RecentWin {
+  type: string
+  description: string
+  date: string
+}
+
+interface RecentWinsWidgetProps {
+  className?: string
+  initialData?: RecentWin[]
+}
+
+export function RecentWinsWidget({ className, initialData }: RecentWinsWidgetProps) {
+  const { data, isLoading } = trpc.dashboard.getRecentWins.useQuery({ limit: 5 }, {
+    initialData,
+    enabled: !initialData,
+  })
 
   if (isLoading) {
     return (

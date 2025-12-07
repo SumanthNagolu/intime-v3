@@ -1,35 +1,23 @@
-'use client'
-
 import { ReactNode } from 'react'
-import { useParams } from 'next/navigation'
-import { EntityContextProvider, EntityContentSkeleton, EntityContentError } from '@/components/layouts/EntityContextProvider'
-import { trpc } from '@/lib/trpc/client'
+import { notFound } from 'next/navigation'
+import { getServerCaller } from '@/server/trpc/server-caller'
+import { EntityContextProvider } from '@/components/layouts/EntityContextProvider'
 
-export default function LeadDetailLayout({ children }: { children: ReactNode }) {
-  const params = useParams()
-  const leadId = params.id as string
+export const dynamic = 'force-dynamic'
 
-  // Fetch lead data for layout context
-  const { data: lead, isLoading, error } = trpc.crm.leads.getById.useQuery(
-    { id: leadId },
-    { enabled: !!leadId }
-  )
+interface LeadLayoutProps {
+  children: ReactNode
+  params: Promise<{ id: string }>
+}
 
-  // Loading state
-  if (isLoading) {
-    return <EntityContentSkeleton />
-  }
+export default async function LeadDetailLayout({ children, params }: LeadLayoutProps) {
+  const { id: leadId } = await params
+  const caller = await getServerCaller()
 
-  // Error state
-  if (error || !lead) {
-    return (
-      <EntityContentError
-        title="Lead not found"
-        message="The lead you're looking for doesn't exist or you don't have access to it."
-        backHref="/employee/crm/leads"
-        backLabel="Back to Leads"
-      />
-    )
+  const lead = await caller.crm.leads.getById({ id: leadId }).catch(() => null)
+
+  if (!lead) {
+    notFound()
   }
 
   // Build display name and subtitle
@@ -43,6 +31,7 @@ export default function LeadDetailLayout({ children }: { children: ReactNode }) 
       entityName={displayName}
       entitySubtitle={subtitle}
       entityStatus={lead.status}
+      initialData={lead}
     >
       {children}
     </EntityContextProvider>

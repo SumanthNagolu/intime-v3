@@ -59,8 +59,35 @@ function AccountRow({ id, name, healthStatus, activeJobs, ytdRevenue, npsScore, 
   )
 }
 
-export function AccountPortfolioWidget({ className }: { className?: string }) {
-  const { data, isLoading } = trpc.crm.accounts.getHealth.useQuery({})
+interface AccountHealthData {
+  accounts: {
+    id: string
+    name: string
+    industry?: string
+    healthStatus: 'healthy' | 'attention' | 'at_risk'
+    activeJobs: number
+    ytdRevenue: number
+    npsScore?: number | null
+    daysSinceContact: number
+  }[]
+  summary: {
+    total: number
+    healthy: number
+    needsAttention: number
+    atRisk: number
+  }
+}
+
+interface AccountPortfolioWidgetProps {
+  className?: string
+  initialData?: AccountHealthData
+}
+
+export function AccountPortfolioWidget({ className, initialData }: AccountPortfolioWidgetProps) {
+  const { data, isLoading } = trpc.crm.accounts.getHealth.useQuery({}, {
+    initialData,
+    enabled: !initialData,
+  })
 
   if (isLoading) {
     return (

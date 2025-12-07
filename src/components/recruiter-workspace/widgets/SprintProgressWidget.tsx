@@ -54,8 +54,33 @@ function MetricCard({ label, actual, target, percentage, status, format = 'numbe
   )
 }
 
-export function SprintProgressWidget({ className }: { className?: string }) {
-  const { data, isLoading } = trpc.dashboard.getSprintProgress.useQuery({})
+interface SprintProgressData {
+  sprintStart: string
+  sprintEnd: string
+  daysElapsed: number
+  daysRemaining: number
+  onTrackCount: number
+  totalGoals: number
+  metrics: {
+    placements: MetricCardProps
+    revenue: MetricCardProps
+    submissions: MetricCardProps
+    interviews: MetricCardProps
+    candidates: MetricCardProps
+    jobFill: MetricCardProps
+  }
+}
+
+interface SprintProgressWidgetProps {
+  className?: string
+  initialData?: SprintProgressData
+}
+
+export function SprintProgressWidget({ className, initialData }: SprintProgressWidgetProps) {
+  const { data, isLoading } = trpc.dashboard.getSprintProgress.useQuery({}, {
+    initialData,
+    enabled: !initialData, // Only fetch if no initial data
+  })
 
   if (isLoading) {
     return (
