@@ -1,0 +1,374 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e7]:
+        - link "I InTime Portal" [ref=e8] [cursor=pointer]:
+          - /url: /employee/admin/dashboard
+          - generic [ref=e10]: I
+          - generic [ref=e11]:
+            - generic [ref=e12]: InTime
+            - generic [ref=e13]: Portal
+        - button "admin" [ref=e16] [cursor=pointer]:
+          - img [ref=e18]
+          - generic [ref=e21]: admin
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - complementary [ref=e25]:
+          - navigation [ref=e26]:
+            - generic [ref=e27]:
+              - heading "Main" [level=3] [ref=e28]
+              - list [ref=e29]:
+                - listitem [ref=e30]:
+                  - link "Dashboard" [ref=e31] [cursor=pointer]:
+                    - /url: /employee/admin/dashboard
+                    - generic [ref=e32]:
+                      - img [ref=e33]
+                      - generic [ref=e38]: Dashboard
+            - generic [ref=e39]:
+              - heading "User Management" [level=3] [ref=e40]
+              - list [ref=e41]:
+                - listitem [ref=e42]:
+                  - link "Users" [ref=e43] [cursor=pointer]:
+                    - /url: /employee/admin/users
+                    - generic [ref=e44]:
+                      - img [ref=e45]
+                      - generic [ref=e50]: Users
+                - listitem [ref=e51]:
+                  - link "Pods" [ref=e52] [cursor=pointer]:
+                    - /url: /employee/admin/pods
+                    - generic [ref=e53]:
+                      - img [ref=e54]
+                      - generic [ref=e59]: Pods
+                - listitem [ref=e60]:
+                  - link "Roles" [ref=e61] [cursor=pointer]:
+                    - /url: /employee/admin/roles
+                    - generic [ref=e62]:
+                      - img [ref=e63]
+                      - generic [ref=e65]: Roles
+                - listitem [ref=e66]:
+                  - link "Permissions" [ref=e67] [cursor=pointer]:
+                    - /url: /employee/admin/permissions
+                    - generic [ref=e68]:
+                      - img [ref=e69]
+                      - generic [ref=e71]: Permissions
+            - generic [ref=e72]:
+              - heading "System" [level=3] [ref=e73]
+              - list [ref=e74]:
+                - listitem [ref=e75]:
+                  - link "Settings" [ref=e76] [cursor=pointer]:
+                    - /url: /employee/admin/settings
+                    - generic [ref=e77]:
+                      - img [ref=e78]
+                      - generic [ref=e81]: Settings
+                - listitem [ref=e82]:
+                  - link "Integrations" [ref=e83] [cursor=pointer]:
+                    - /url: /employee/admin/integrations
+                    - generic [ref=e84]:
+                      - img [ref=e85]
+                      - generic [ref=e89]: Integrations
+                - listitem [ref=e90]:
+                  - link "Workflows" [ref=e91] [cursor=pointer]:
+                    - /url: /employee/admin/workflows
+                    - generic [ref=e92]:
+                      - img [ref=e93]
+                      - generic [ref=e97]: Workflows
+                - listitem [ref=e98]:
+                  - link "SLA Config" [ref=e99] [cursor=pointer]:
+                    - /url: /employee/admin/sla
+                    - generic [ref=e100]:
+                      - img [ref=e101]
+                      - generic [ref=e104]: SLA Config
+                - listitem [ref=e105]:
+                  - link "Activity Patterns" [ref=e106] [cursor=pointer]:
+                    - /url: /employee/admin/activity-patterns
+                    - generic [ref=e107]:
+                      - img [ref=e108]
+                      - generic [ref=e110]: Activity Patterns
+                - listitem [ref=e111]:
+                  - link "Email Templates" [ref=e112] [cursor=pointer]:
+                    - /url: /employee/admin/email-templates
+                    - generic [ref=e113]:
+                      - img [ref=e114]
+                      - generic [ref=e117]: Email Templates
+                - listitem [ref=e118]:
+                  - link "API Tokens" [ref=e119] [cursor=pointer]:
+                    - /url: /employee/admin/api-tokens
+                    - generic [ref=e120]:
+                      - img [ref=e121]
+                      - generic [ref=e125]: API Tokens
+                - listitem [ref=e126]:
+                  - link "Feature Flags" [ref=e127] [cursor=pointer]:
+                    - /url: /employee/admin/feature-flags
+                    - generic [ref=e128]:
+                      - img [ref=e129]
+                      - generic [ref=e131]: Feature Flags
+            - generic [ref=e132]:
+              - heading "Monitoring" [level=3] [ref=e133]
+              - list [ref=e134]:
+                - listitem [ref=e135]:
+                  - link "Audit Logs" [ref=e136] [cursor=pointer]:
+                    - /url: /employee/admin/audit
+                    - generic [ref=e137]:
+                      - img [ref=e138]
+                      - generic [ref=e141]: Audit Logs
+                - listitem [ref=e142]:
+                  - link "Notifications" [ref=e143] [cursor=pointer]:
+                    - /url: /employee/admin/notifications
+                    - generic [ref=e144]:
+                      - img [ref=e145]
+                      - generic [ref=e148]: Notifications
+                - listitem [ref=e149]:
+                  - link "Data Management" [ref=e150] [cursor=pointer]:
+                    - /url: /employee/admin/data
+                    - generic [ref=e151]:
+                      - img [ref=e152]
+                      - generic [ref=e156]: Data Management
+                - listitem [ref=e157]:
+                  - link "Emergency" [ref=e158] [cursor=pointer]:
+                    - /url: /employee/admin/emergency
+                    - generic [ref=e159]:
+                      - img [ref=e160]
+                      - generic [ref=e162]: Emergency
+        - main [ref=e163]:
+          - generic [ref=e164]:
+            - generic [ref=e165]:
+              - navigation "Breadcrumb" [ref=e166]:
+                - link "Home" [ref=e167] [cursor=pointer]:
+                  - /url: /
+                  - img [ref=e168]
+                - img [ref=e171]
+                - link "Admin" [ref=e173] [cursor=pointer]:
+                  - /url: /employee/admin
+                - img [ref=e174]
+                - link "SLA Config" [ref=e176] [cursor=pointer]:
+                  - /url: /employee/admin/sla
+                - img [ref=e177]
+                - generic [ref=e179]: New Rule
+              - generic [ref=e180]:
+                - generic [ref=e181]:
+                  - heading "Create SLA Rule" [level=1] [ref=e182]
+                  - generic [ref=e183]: Define a new service level agreement
+                - generic [ref=e185]:
+                  - button "Cancel" [ref=e186] [cursor=pointer]:
+                    - img [ref=e187]
+                    - text: Cancel
+                  - button "Create Rule" [active] [ref=e189] [cursor=pointer]:
+                    - img [ref=e190]
+                    - text: Create Rule
+            - generic [ref=e194]:
+              - generic [ref=e195]:
+                - generic [ref=e196]:
+                  - heading "Basic Information" [level=2] [ref=e198]
+                  - generic [ref=e199]:
+                    - generic [ref=e200]:
+                      - text: Rule Name *
+                      - textbox "Rule Name *" [ref=e201]:
+                        - /placeholder: e.g., First Contact SLA
+                      - paragraph [ref=e202]: Minimum 5 characters
+                    - generic [ref=e203]:
+                      - text: Description
+                      - textbox "Description" [ref=e205]:
+                        - /placeholder: Describe what this SLA measures...
+                    - generic [ref=e206]:
+                      - generic [ref=e207]:
+                        - text: Category *
+                        - combobox [ref=e208] [cursor=pointer]:
+                          - generic: Select category
+                          - img [ref=e209]
+                      - generic [ref=e211]:
+                        - text: Applies To *
+                        - combobox [ref=e212] [cursor=pointer]:
+                          - generic: Select entity
+                          - img [ref=e213]
+                - generic [ref=e215]:
+                  - heading "SLA Timing" [level=2] [ref=e217]
+                  - generic [ref=e218]:
+                    - generic [ref=e219]:
+                      - generic [ref=e220]:
+                        - text: Clock Starts When *
+                        - combobox [disabled] [ref=e221]:
+                          - generic: Select start event
+                          - img [ref=e222]
+                      - generic [ref=e224]:
+                        - text: Clock Stops When *
+                        - combobox [disabled] [ref=e225]:
+                          - generic: Select end event
+                          - img [ref=e226]
+                    - generic [ref=e229]:
+                      - text: Target Time *
+                      - generic [ref=e230]:
+                        - spinbutton "Target Time *" [ref=e231]: "4"
+                        - combobox [ref=e232] [cursor=pointer]:
+                          - generic: Business Hours
+                          - img [ref=e233]
+                    - generic [ref=e235]:
+                      - heading "Time Calculation Options" [level=4] [ref=e236]
+                      - generic [ref=e237]:
+                        - generic [ref=e238]:
+                          - generic [ref=e239]:
+                            - text: Use Business Hours Only
+                            - paragraph [ref=e240]: Only count time during work hours (9am-5pm)
+                          - switch [checked] [ref=e241] [cursor=pointer]
+                        - generic [ref=e242]:
+                          - generic [ref=e243]:
+                            - text: Exclude Weekends
+                            - paragraph [ref=e244]: Don't count Saturday and Sunday
+                          - switch [checked] [ref=e245] [cursor=pointer]
+                        - generic [ref=e246]:
+                          - generic [ref=e247]:
+                            - text: Exclude Holidays
+                            - paragraph [ref=e248]: Don't count company holidays
+                          - switch [checked] [ref=e249] [cursor=pointer]
+                        - generic [ref=e250]:
+                          - generic [ref=e251]:
+                            - text: Pause When On Hold
+                            - paragraph [ref=e252]: Stop the clock when status is "On Hold"
+                          - switch [ref=e253] [cursor=pointer]
+                - generic [ref=e254]:
+                  - generic [ref=e255]:
+                    - heading "Escalation Levels" [level=2] [ref=e256]
+                    - button "Add Level" [ref=e257] [cursor=pointer]:
+                      - img [ref=e258]
+                      - text: Add Level
+                  - generic [ref=e259]:
+                    - generic [ref=e260]:
+                      - generic [ref=e261] [cursor=pointer]:
+                        - generic [ref=e262]:
+                          - generic [ref=e264]: "Level 1: Warning"
+                          - generic [ref=e265]: "@ 75%"
+                        - generic [ref=e266]:
+                          - button [ref=e267]:
+                            - img [ref=e268]
+                          - img [ref=e271]
+                      - generic [ref=e273]:
+                        - generic [ref=e274]:
+                          - generic [ref=e275]:
+                            - text: Level Name
+                            - textbox "e.g., Warning" [ref=e276]: Warning
+                          - generic [ref=e277]:
+                            - text: Trigger at %
+                            - spinbutton [ref=e278]: "75"
+                            - paragraph [ref=e279]: 100% = at target time
+                          - generic [ref=e280]:
+                            - text: Badge Color
+                            - combobox [ref=e281] [cursor=pointer]:
+                              - generic: Yellow
+                              - img [ref=e282]
+                        - generic [ref=e284]:
+                          - heading "Notifications" [level=5] [ref=e285]
+                          - generic [ref=e286]:
+                            - generic [ref=e287]:
+                              - checkbox "Send Email" [checked] [ref=e288] [cursor=pointer]:
+                                - generic:
+                                  - img
+                              - generic [ref=e289]: Send Email
+                            - generic [ref=e290]:
+                              - text: Recipients (comma-separated)
+                              - textbox "owner, owners_manager, pod_manager" [ref=e291]: owner
+                              - paragraph [ref=e292]: "Use: owner, owners_manager, pod_manager, or email addresses"
+                        - generic [ref=e293]:
+                          - heading "Actions" [level=5] [ref=e294]
+                          - generic [ref=e295]:
+                            - generic [ref=e296]:
+                              - checkbox "Show Badge" [checked] [ref=e297] [cursor=pointer]:
+                                - generic:
+                                  - img
+                              - generic [ref=e298]: Show Badge
+                            - generic [ref=e299]:
+                              - checkbox "Add to Report" [ref=e300] [cursor=pointer]
+                              - generic [ref=e301]: Add to Report
+                            - generic [ref=e302]:
+                              - checkbox "Show on Dashboard" [ref=e303] [cursor=pointer]
+                              - generic [ref=e304]: Show on Dashboard
+                            - generic [ref=e305]:
+                              - checkbox "Require Notes" [ref=e306] [cursor=pointer]
+                              - generic [ref=e307]: Require Notes
+                    - generic [ref=e308]:
+                      - generic [ref=e309] [cursor=pointer]:
+                        - generic [ref=e310]:
+                          - generic [ref=e312]: "Level 2: Breach"
+                          - generic [ref=e313]: "@ 100%"
+                        - generic [ref=e314]:
+                          - button [ref=e315]:
+                            - img [ref=e316]
+                          - img [ref=e319]
+                      - generic [ref=e321]:
+                        - generic [ref=e322]:
+                          - generic [ref=e323]:
+                            - text: Level Name
+                            - textbox "e.g., Warning" [ref=e324]: Breach
+                          - generic [ref=e325]:
+                            - text: Trigger at %
+                            - spinbutton [ref=e326]: "100"
+                            - paragraph [ref=e327]: 100% = at target time
+                          - generic [ref=e328]:
+                            - text: Badge Color
+                            - combobox [ref=e329] [cursor=pointer]:
+                              - generic: Red
+                              - img [ref=e330]
+                        - generic [ref=e332]:
+                          - heading "Notifications" [level=5] [ref=e333]
+                          - generic [ref=e334]:
+                            - generic [ref=e335]:
+                              - checkbox "Send Email" [checked] [ref=e336] [cursor=pointer]:
+                                - generic:
+                                  - img
+                              - generic [ref=e337]: Send Email
+                            - generic [ref=e338]:
+                              - text: Recipients (comma-separated)
+                              - textbox "owner, owners_manager, pod_manager" [ref=e339]: owner, owners_manager
+                              - paragraph [ref=e340]: "Use: owner, owners_manager, pod_manager, or email addresses"
+                        - generic [ref=e341]:
+                          - heading "Actions" [level=5] [ref=e342]
+                          - generic [ref=e343]:
+                            - generic [ref=e344]:
+                              - checkbox "Show Badge" [checked] [ref=e345] [cursor=pointer]:
+                                - generic:
+                                  - img
+                              - generic [ref=e346]: Show Badge
+                            - generic [ref=e347]:
+                              - checkbox "Add to Report" [checked] [ref=e348] [cursor=pointer]:
+                                - generic:
+                                  - img
+                              - generic [ref=e349]: Add to Report
+                            - generic [ref=e350]:
+                              - checkbox "Show on Dashboard" [checked] [ref=e351] [cursor=pointer]:
+                                - generic:
+                                  - img
+                              - generic [ref=e352]: Show on Dashboard
+                            - generic [ref=e353]:
+                              - checkbox "Require Notes" [checked] [ref=e354] [cursor=pointer]:
+                                - generic:
+                                  - img
+                              - generic [ref=e355]: Require Notes
+              - generic [ref=e356]:
+                - generic [ref=e357]:
+                  - heading "Activation" [level=2] [ref=e359]
+                  - generic [ref=e361]:
+                    - generic [ref=e362]:
+                      - text: Activate Now
+                      - paragraph [ref=e363]: Start monitoring immediately
+                    - switch [ref=e364] [cursor=pointer]
+                - generic [ref=e365]:
+                  - heading "Help" [level=2] [ref=e367]
+                  - generic [ref=e368]:
+                    - generic [ref=e369]:
+                      - img [ref=e370]
+                      - paragraph [ref=e372]: SLA rules track time between events and trigger escalations at specified thresholds.
+                    - generic [ref=e373]:
+                      - img [ref=e374]
+                      - paragraph [ref=e377]: "Trigger percentage: 75% of a 4-hour SLA = 3 hours elapsed"
+                    - generic [ref=e378]:
+                      - img [ref=e379]
+                      - paragraph [ref=e381]: 100% = SLA target time reached (breach)
+  - region "Notifications (F8)":
+    - list
+  - button "Open Next.js Dev Tools" [ref=e387] [cursor=pointer]:
+    - img [ref=e388]
+  - alert [ref=e391]
+```

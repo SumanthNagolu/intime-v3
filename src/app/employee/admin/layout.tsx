@@ -6,10 +6,7 @@ import type { ReactNode } from 'react'
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
-    <SidebarLayout
-      sections={adminNavSections}
-      title="Admin Portal"
-    >
+    <SidebarLayout sections={adminNavSections}>
       {children}
     </SidebarLayout>
   )

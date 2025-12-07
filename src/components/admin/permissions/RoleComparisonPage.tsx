@@ -2,10 +2,8 @@
 
 import { useState } from 'react'
 import { trpc } from '@/lib/trpc/client'
-import {
-  DashboardShell,
-  DashboardSection,
-} from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import {
   Select,
   SelectContent,
@@ -120,11 +118,8 @@ export function RoleComparisonPage() {
   }
 
   return (
-    <DashboardShell
-      title="Compare Roles"
-      description="Compare permissions and feature flags between two roles"
-      breadcrumbs={breadcrumbs}
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
       <DashboardSection>
         {/* Role Selectors */}
         <div className="flex flex-col sm:flex-row items-center gap-4 mb-6">
@@ -412,6 +407,6 @@ export function RoleComparisonPage() {
           </div>
         )}
       </DashboardSection>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

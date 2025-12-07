@@ -92,7 +92,7 @@ export function PodsListPage() {
       breadcrumbs={breadcrumbs}
       actions={
         <Link href="/employee/admin/pods/new">
-          <Button className="bg-forest-600 hover:bg-forest-700 text-white">
+          <Button className="bg-hublot-900 hover:bg-hublot-800 text-white">
             <Plus className="w-4 h-4 mr-2" />
             New Pod
           </Button>
@@ -159,7 +159,7 @@ export function PodsListPage() {
               </p>
               {!search && (!podType || podType === 'all') && (
                 <Link href="/employee/admin/pods/new">
-                  <Button className="bg-forest-600 hover:bg-forest-700 text-white">
+                  <Button className="bg-hublot-900 hover:bg-hublot-800 text-white">
                     <Plus className="w-4 h-4 mr-2" />
                     Create Pod
                   </Button>
@@ -185,7 +185,7 @@ export function PodsListPage() {
                     <td className="px-6 py-4">
                       <Link
                         href={`/employee/admin/pods/${pod.id}`}
-                        className="font-medium text-charcoal-900 hover:text-forest-600"
+                        className="font-medium text-charcoal-900 hover:text-gold-600"
                       >
                         {pod.name}
                       </Link>
@@ -193,7 +193,7 @@ export function PodsListPage() {
                     <td className="px-6 py-4">
                       {pod.manager ? (
                         <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 rounded-full bg-forest-100 flex items-center justify-center text-forest-700 font-medium text-sm">
+                          <div className="w-8 h-8 rounded-full bg-gold-100 flex items-center justify-center text-gold-700 font-medium text-sm">
                             {pod.manager.full_name?.split(' ').map((n: string) => n[0]).join('').slice(0, 2)}
                           </div>
                           <span className="text-charcoal-700">{pod.manager.full_name}</span>

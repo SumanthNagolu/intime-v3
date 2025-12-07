@@ -1,0 +1,197 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e7]:
+        - link "I InTime Portal" [ref=e8] [cursor=pointer]:
+          - /url: /employee/admin/dashboard
+          - generic [ref=e10]: I
+          - generic [ref=e11]:
+            - generic [ref=e12]: InTime
+            - generic [ref=e13]: Portal
+        - button "admin" [ref=e16] [cursor=pointer]:
+          - img [ref=e18]
+          - generic [ref=e21]: admin
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - complementary [ref=e25]:
+          - navigation [ref=e26]:
+            - generic [ref=e27]:
+              - heading "Main" [level=3] [ref=e28]
+              - list [ref=e29]:
+                - listitem [ref=e30]:
+                  - link "Dashboard" [ref=e31] [cursor=pointer]:
+                    - /url: /employee/admin/dashboard
+                    - generic [ref=e32]:
+                      - img [ref=e33]
+                      - generic [ref=e38]: Dashboard
+            - generic [ref=e39]:
+              - heading "User Management" [level=3] [ref=e40]
+              - list [ref=e41]:
+                - listitem [ref=e42]:
+                  - link "Users" [ref=e43] [cursor=pointer]:
+                    - /url: /employee/admin/users
+                    - generic [ref=e44]:
+                      - img [ref=e45]
+                      - generic [ref=e50]: Users
+                - listitem [ref=e51]:
+                  - link "Pods" [ref=e52] [cursor=pointer]:
+                    - /url: /employee/admin/pods
+                    - generic [ref=e53]:
+                      - img [ref=e54]
+                      - generic [ref=e59]: Pods
+                - listitem [ref=e60]:
+                  - link "Roles" [ref=e61] [cursor=pointer]:
+                    - /url: /employee/admin/roles
+                    - generic [ref=e62]:
+                      - img [ref=e63]
+                      - generic [ref=e65]: Roles
+                - listitem [ref=e66]:
+                  - link "Permissions" [ref=e67] [cursor=pointer]:
+                    - /url: /employee/admin/permissions
+                    - generic [ref=e68]:
+                      - img [ref=e69]
+                      - generic [ref=e71]: Permissions
+            - generic [ref=e72]:
+              - heading "System" [level=3] [ref=e73]
+              - list [ref=e74]:
+                - listitem [ref=e75]:
+                  - link "Settings" [ref=e76] [cursor=pointer]:
+                    - /url: /employee/admin/settings
+                    - generic [ref=e77]:
+                      - img [ref=e78]
+                      - generic [ref=e81]: Settings
+                - listitem [ref=e82]:
+                  - link "Integrations" [ref=e83] [cursor=pointer]:
+                    - /url: /employee/admin/integrations
+                    - generic [ref=e84]:
+                      - img [ref=e85]
+                      - generic [ref=e89]: Integrations
+                - listitem [ref=e90]:
+                  - link "Workflows" [ref=e91] [cursor=pointer]:
+                    - /url: /employee/admin/workflows
+                    - generic [ref=e92]:
+                      - img [ref=e93]
+                      - generic [ref=e97]: Workflows
+                - listitem [ref=e98]:
+                  - link "SLA Config" [ref=e99] [cursor=pointer]:
+                    - /url: /employee/admin/sla
+                    - generic [ref=e100]:
+                      - img [ref=e101]
+                      - generic [ref=e104]: SLA Config
+                - listitem [ref=e105]:
+                  - link "Activity Patterns" [ref=e106] [cursor=pointer]:
+                    - /url: /employee/admin/activity-patterns
+                    - generic [ref=e107]:
+                      - img [ref=e108]
+                      - generic [ref=e110]: Activity Patterns
+                - listitem [ref=e111]:
+                  - link "Email Templates" [ref=e112] [cursor=pointer]:
+                    - /url: /employee/admin/email-templates
+                    - generic [ref=e113]:
+                      - img [ref=e114]
+                      - generic [ref=e117]: Email Templates
+                - listitem [ref=e118]:
+                  - link "API Tokens" [ref=e119] [cursor=pointer]:
+                    - /url: /employee/admin/api-tokens
+                    - generic [ref=e120]:
+                      - img [ref=e121]
+                      - generic [ref=e125]: API Tokens
+                - listitem [ref=e126]:
+                  - link "Feature Flags" [ref=e127] [cursor=pointer]:
+                    - /url: /employee/admin/feature-flags
+                    - generic [ref=e128]:
+                      - img [ref=e129]
+                      - generic [ref=e131]: Feature Flags
+            - generic [ref=e132]:
+              - heading "Monitoring" [level=3] [ref=e133]
+              - list [ref=e134]:
+                - listitem [ref=e135]:
+                  - link "Audit Logs" [ref=e136] [cursor=pointer]:
+                    - /url: /employee/admin/audit
+                    - generic [ref=e137]:
+                      - img [ref=e138]
+                      - generic [ref=e141]: Audit Logs
+                - listitem [ref=e142]:
+                  - link "Notifications" [ref=e143] [cursor=pointer]:
+                    - /url: /employee/admin/notifications
+                    - generic [ref=e144]:
+                      - img [ref=e145]
+                      - generic [ref=e148]: Notifications
+                - listitem [ref=e149]:
+                  - link "Data Management" [ref=e150] [cursor=pointer]:
+                    - /url: /employee/admin/data
+                    - generic [ref=e151]:
+                      - img [ref=e152]
+                      - generic [ref=e156]: Data Management
+                - listitem [ref=e157]:
+                  - link "Emergency" [ref=e158] [cursor=pointer]:
+                    - /url: /employee/admin/emergency
+                    - generic [ref=e159]:
+                      - img [ref=e160]
+                      - generic [ref=e162]: Emergency
+        - main [ref=e163]:
+          - generic [ref=e165]:
+            - generic [ref=e166]:
+              - navigation "Breadcrumb" [ref=e167]:
+                - link "Home" [ref=e168] [cursor=pointer]:
+                  - /url: /
+                  - img [ref=e169]
+                - img [ref=e172]
+                - link "Admin" [ref=e174] [cursor=pointer]:
+                  - /url: /employee/admin
+                - img [ref=e175]
+                - generic [ref=e177]: Notifications
+              - generic [ref=e179]:
+                - heading "Notifications" [level=1] [ref=e180]
+                - paragraph [ref=e181]: Manage notification preferences and view recent notifications
+            - generic [ref=e182]:
+              - generic [ref=e184]:
+                - img [ref=e186]
+                - generic [ref=e189]:
+                  - paragraph [ref=e190]: Total
+                  - paragraph [ref=e191]: "0"
+              - generic [ref=e193]:
+                - img [ref=e195]
+                - generic [ref=e198]:
+                  - paragraph [ref=e199]: Unread
+                  - paragraph [ref=e200]: "0"
+              - generic [ref=e202]:
+                - img [ref=e204]
+                - generic [ref=e206]:
+                  - paragraph [ref=e207]: Read
+                  - paragraph [ref=e208]: "0"
+            - generic [ref=e209]:
+              - tablist [ref=e210]:
+                - tab "Recent Notifications" [selected] [ref=e211] [cursor=pointer]
+                - tab "Preferences" [ref=e212] [cursor=pointer]
+                - tab "Templates" [ref=e213] [cursor=pointer]
+              - tabpanel "Recent Notifications" [ref=e214]:
+                - generic [ref=e215]:
+                  - generic [ref=e216]:
+                    - generic [ref=e218] [cursor=pointer]:
+                      - checkbox "Unread Only" [ref=e219]
+                      - generic [ref=e220]: Unread Only
+                    - generic [ref=e221]:
+                      - button "Mark All Read" [disabled]:
+                        - img
+                        - text: Mark All Read
+                      - button "Clear Read" [ref=e222] [cursor=pointer]:
+                        - img [ref=e223]
+                        - text: Clear Read
+                      - button [ref=e226] [cursor=pointer]:
+                        - img [ref=e227]
+                  - generic [ref=e233]:
+                    - img [ref=e235]
+                    - heading "No notifications" [level=3] [ref=e240]
+                    - paragraph [ref=e241]: You don't have any notifications yet
+  - region "Notifications (F8)":
+    - list
+  - button "Open Next.js Dev Tools" [ref=e247] [cursor=pointer]:
+    - img [ref=e248]
+  - alert [ref=e251]
+```

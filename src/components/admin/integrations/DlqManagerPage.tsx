@@ -3,10 +3,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { trpc } from '@/lib/trpc/client'
-import {
-  DashboardShell,
-  DashboardSection,
-} from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -99,21 +97,21 @@ export function DlqManagerPage() {
   const totalCount = dlqQuery.data?.total || 0
 
   return (
-    <DashboardShell
-      title="Dead Letter Queue"
-      description="Review and retry failed webhook deliveries"
-      breadcrumbs={breadcrumbs}
-      actions={
-        <div className="flex items-center gap-3">
-          <Link href="/employee/admin/integrations">
-            <Button variant="outline">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Integrations
-            </Button>
-          </Link>
-        </div>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <div className="flex items-center gap-3">
+            <Link href="/employee/admin/integrations">
+              <Button variant="outline">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Integrations
+              </Button>
+            </Link>
+          </div>
+        }
+      />
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="bg-white border border-charcoal-100 rounded-lg p-4">
@@ -215,7 +213,7 @@ export function DlqManagerPage() {
           </div>
         )}
       </DashboardSection>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }
 

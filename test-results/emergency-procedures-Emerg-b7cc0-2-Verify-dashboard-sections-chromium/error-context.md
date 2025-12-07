@@ -5,60 +5,240 @@
   - link "Skip to main content" [ref=e2] [cursor=pointer]:
     - /url: "#main-content"
   - main [ref=e3]:
-    - generic [ref=e5]:
-      - generic [ref=e6]:
-        - link "InTime" [ref=e7] [cursor=pointer]:
-          - /url: /
-          - heading "InTime" [level=1] [ref=e8]
-        - paragraph [ref=e9]: Enterprise Staffing Platform
-      - generic [ref=e11]:
-        - generic [ref=e12]:
-          - button "Back" [ref=e13] [cursor=pointer]:
-            - img [ref=e14]
-            - generic [ref=e16]: Back
-          - generic [ref=e17]:
-            - img [ref=e19]
-            - generic [ref=e24]:
-              - heading "Employee Portal" [level=2] [ref=e25]
-              - paragraph [ref=e26]: Sign in to continue
-        - generic [ref=e27]:
-          - button "Continue with Google" [ref=e28] [cursor=pointer]:
-            - img [ref=e29]
-            - generic [ref=e34]: Continue with Google
-          - generic [ref=e39]: or
-          - generic [ref=e40]:
-            - img [ref=e41]
-            - generic [ref=e43]: Request rate limit reached
-          - generic [ref=e44]:
-            - generic [ref=e45]:
-              - generic [ref=e46]: Email
-              - generic [ref=e47]:
-                - img [ref=e48]
-                - textbox "you@company.com" [ref=e51]: admin@intime.com
-            - generic [ref=e52]:
-              - generic [ref=e53]: Password
-              - generic [ref=e54]:
-                - img [ref=e55]
-                - textbox "Enter your password" [ref=e58]: TestPass123!
-                - button [ref=e59] [cursor=pointer]:
-                  - img [ref=e60]
-            - link "Forgot password?" [ref=e64] [cursor=pointer]:
-              - /url: /auth/forgot-password
-            - button "Sign In" [ref=e65] [cursor=pointer]
-          - paragraph [ref=e66]:
-            - text: Don't have an account?
-            - link "Sign up" [ref=e67] [cursor=pointer]:
-              - /url: /auth/employee
-      - paragraph [ref=e69]:
-        - text: By continuing, you agree to our
-        - link "Terms" [ref=e70] [cursor=pointer]:
-          - /url: /legal/terms
-        - text: and
-        - link "Privacy Policy" [ref=e71] [cursor=pointer]:
-          - /url: /legal/privacy
+    - generic [ref=e4]:
+      - generic [ref=e7]:
+        - link "I InTime Portal" [ref=e8] [cursor=pointer]:
+          - /url: /employee/admin/dashboard
+          - generic [ref=e10]: I
+          - generic [ref=e11]:
+            - generic [ref=e12]: InTime
+            - generic [ref=e13]: Portal
+        - button "admin" [ref=e16] [cursor=pointer]:
+          - img [ref=e18]
+          - generic [ref=e21]: admin
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - complementary [ref=e25]:
+          - navigation [ref=e26]:
+            - generic [ref=e27]:
+              - heading "Main" [level=3] [ref=e28]
+              - list [ref=e29]:
+                - listitem [ref=e30]:
+                  - link "Dashboard" [ref=e31] [cursor=pointer]:
+                    - /url: /employee/admin/dashboard
+                    - generic [ref=e32]:
+                      - img [ref=e33]
+                      - generic [ref=e38]: Dashboard
+            - generic [ref=e39]:
+              - heading "User Management" [level=3] [ref=e40]
+              - list [ref=e41]:
+                - listitem [ref=e42]:
+                  - link "Users" [ref=e43] [cursor=pointer]:
+                    - /url: /employee/admin/users
+                    - generic [ref=e44]:
+                      - img [ref=e45]
+                      - generic [ref=e50]: Users
+                - listitem [ref=e51]:
+                  - link "Pods" [ref=e52] [cursor=pointer]:
+                    - /url: /employee/admin/pods
+                    - generic [ref=e53]:
+                      - img [ref=e54]
+                      - generic [ref=e59]: Pods
+                - listitem [ref=e60]:
+                  - link "Roles" [ref=e61] [cursor=pointer]:
+                    - /url: /employee/admin/roles
+                    - generic [ref=e62]:
+                      - img [ref=e63]
+                      - generic [ref=e65]: Roles
+                - listitem [ref=e66]:
+                  - link "Permissions" [ref=e67] [cursor=pointer]:
+                    - /url: /employee/admin/permissions
+                    - generic [ref=e68]:
+                      - img [ref=e69]
+                      - generic [ref=e71]: Permissions
+            - generic [ref=e72]:
+              - heading "System" [level=3] [ref=e73]
+              - list [ref=e74]:
+                - listitem [ref=e75]:
+                  - link "Settings" [ref=e76] [cursor=pointer]:
+                    - /url: /employee/admin/settings
+                    - generic [ref=e77]:
+                      - img [ref=e78]
+                      - generic [ref=e81]: Settings
+                - listitem [ref=e82]:
+                  - link "Integrations" [ref=e83] [cursor=pointer]:
+                    - /url: /employee/admin/integrations
+                    - generic [ref=e84]:
+                      - img [ref=e85]
+                      - generic [ref=e89]: Integrations
+                - listitem [ref=e90]:
+                  - link "Workflows" [ref=e91] [cursor=pointer]:
+                    - /url: /employee/admin/workflows
+                    - generic [ref=e92]:
+                      - img [ref=e93]
+                      - generic [ref=e97]: Workflows
+                - listitem [ref=e98]:
+                  - link "SLA Config" [ref=e99] [cursor=pointer]:
+                    - /url: /employee/admin/sla
+                    - generic [ref=e100]:
+                      - img [ref=e101]
+                      - generic [ref=e104]: SLA Config
+                - listitem [ref=e105]:
+                  - link "Activity Patterns" [ref=e106] [cursor=pointer]:
+                    - /url: /employee/admin/activity-patterns
+                    - generic [ref=e107]:
+                      - img [ref=e108]
+                      - generic [ref=e110]: Activity Patterns
+                - listitem [ref=e111]:
+                  - link "Email Templates" [ref=e112] [cursor=pointer]:
+                    - /url: /employee/admin/email-templates
+                    - generic [ref=e113]:
+                      - img [ref=e114]
+                      - generic [ref=e117]: Email Templates
+                - listitem [ref=e118]:
+                  - link "API Tokens" [ref=e119] [cursor=pointer]:
+                    - /url: /employee/admin/api-tokens
+                    - generic [ref=e120]:
+                      - img [ref=e121]
+                      - generic [ref=e125]: API Tokens
+                - listitem [ref=e126]:
+                  - link "Feature Flags" [ref=e127] [cursor=pointer]:
+                    - /url: /employee/admin/feature-flags
+                    - generic [ref=e128]:
+                      - img [ref=e129]
+                      - generic [ref=e131]: Feature Flags
+            - generic [ref=e132]:
+              - heading "Monitoring" [level=3] [ref=e133]
+              - list [ref=e134]:
+                - listitem [ref=e135]:
+                  - link "Audit Logs" [ref=e136] [cursor=pointer]:
+                    - /url: /employee/admin/audit
+                    - generic [ref=e137]:
+                      - img [ref=e138]
+                      - generic [ref=e141]: Audit Logs
+                - listitem [ref=e142]:
+                  - link "Notifications" [ref=e143] [cursor=pointer]:
+                    - /url: /employee/admin/notifications
+                    - generic [ref=e144]:
+                      - img [ref=e145]
+                      - generic [ref=e148]: Notifications
+                - listitem [ref=e149]:
+                  - link "Data Management" [ref=e150] [cursor=pointer]:
+                    - /url: /employee/admin/data
+                    - generic [ref=e151]:
+                      - img [ref=e152]
+                      - generic [ref=e156]: Data Management
+                - listitem [ref=e157]:
+                  - link "Emergency" [ref=e158] [cursor=pointer]:
+                    - /url: /employee/admin/emergency
+                    - generic [ref=e159]:
+                      - img [ref=e160]
+                      - generic [ref=e162]: Emergency
+        - main [ref=e163]:
+          - generic [ref=e164]:
+            - generic [ref=e165]:
+              - generic [ref=e166]:
+                - heading "Emergency" [level=1] [ref=e167]
+                - paragraph [ref=e168]: Emergency access controls, drills, and incident management
+              - navigation [ref=e171]:
+                - link "Overview" [ref=e172] [cursor=pointer]:
+                  - /url: /employee/admin/emergency
+                  - img [ref=e173]
+                  - text: Overview
+                - link "Break Glass" [ref=e175] [cursor=pointer]:
+                  - /url: /employee/admin/emergency/break-glass
+                  - img [ref=e176]
+                  - text: Break Glass
+                - link "Drills" [ref=e179] [cursor=pointer]:
+                  - /url: /employee/admin/emergency/drills
+                  - img [ref=e180]
+                  - text: Drills
+                - link "Incidents" [ref=e184] [cursor=pointer]:
+                  - /url: /employee/admin/emergency/incidents
+                  - img [ref=e185]
+                  - text: Incidents
+            - main [ref=e190]:
+              - generic [ref=e192]:
+                - generic [ref=e193]:
+                  - navigation "Breadcrumb" [ref=e194]:
+                    - link "Home" [ref=e195] [cursor=pointer]:
+                      - /url: /
+                      - img [ref=e196]
+                    - img [ref=e199]
+                    - link "Admin" [ref=e201] [cursor=pointer]:
+                      - /url: /employee/admin
+                    - img [ref=e202]
+                    - generic [ref=e204]: Emergency
+                  - generic [ref=e207]:
+                    - button [ref=e208] [cursor=pointer]:
+                      - img [ref=e209]
+                    - button "Refresh" [disabled]:
+                      - img
+                      - text: Refresh
+                    - button "Create Incident" [ref=e211] [cursor=pointer]:
+                      - img [ref=e212]
+                      - text: Create Incident
+                - generic [ref=e217]:
+                  - heading "Overview" [level=2] [ref=e219]
+                  - generic [ref=e220]:
+                    - generic [ref=e222]:
+                      - generic [ref=e223]:
+                        - paragraph [ref=e224]: Active Incidents
+                        - paragraph [ref=e225]: "0"
+                      - img [ref=e227]
+                    - generic [ref=e230]:
+                      - generic [ref=e231]:
+                        - paragraph [ref=e232]: Critical (24h)
+                        - paragraph [ref=e233]: "0"
+                      - img [ref=e235]
+                    - generic [ref=e241]:
+                      - generic [ref=e242]:
+                        - paragraph [ref=e243]: Resolved
+                        - paragraph [ref=e244]: "0"
+                      - img [ref=e246]
+                    - generic [ref=e249]:
+                      - generic [ref=e250]:
+                        - paragraph [ref=e251]: Upcoming Drills
+                        - paragraph [ref=e252]: "0"
+                      - img [ref=e254]
+                - generic [ref=e256]:
+                  - generic [ref=e257]:
+                    - generic [ref=e258]:
+                      - generic [ref=e259]:
+                        - heading "Active Incidents" [level=3] [ref=e260]
+                        - paragraph [ref=e261]: Ongoing incidents requiring attention
+                      - link "View All" [ref=e262] [cursor=pointer]:
+                        - /url: /employee/admin/emergency/incidents
+                        - button "View All" [ref=e263]:
+                          - text: View All
+                          - img [ref=e264]
+                    - generic [ref=e267]:
+                      - img [ref=e268]
+                      - paragraph [ref=e270]: No active incidents
+                      - paragraph [ref=e271]: All systems operational
+                  - generic [ref=e272]:
+                    - generic [ref=e273]:
+                      - heading "Recent Activity" [level=3] [ref=e275]
+                      - paragraph [ref=e277]: No recent activity
+                    - generic [ref=e278]:
+                      - generic [ref=e279]:
+                        - heading "Upcoming Drills" [level=3] [ref=e280]
+                        - link "View All" [ref=e281] [cursor=pointer]:
+                          - /url: /employee/admin/emergency/drills
+                          - button "View All" [ref=e282]
+                      - paragraph [ref=e284]: No upcoming drills scheduled
+                    - generic [ref=e285]:
+                      - generic [ref=e286]:
+                        - heading "Break-Glass Access" [level=3] [ref=e287]
+                        - link "View All" [ref=e288] [cursor=pointer]:
+                          - /url: /employee/admin/emergency/break-glass
+                          - button "View All" [ref=e289]
+                      - generic [ref=e291]:
+                        - img [ref=e292]
+                        - paragraph [ref=e296]: No recent break-glass access
   - region "Notifications (F8)":
     - list
-  - button "Open Next.js Dev Tools" [ref=e77] [cursor=pointer]:
-    - img [ref=e78]
-  - alert [ref=e81]
+  - button "Open Next.js Dev Tools" [ref=e302] [cursor=pointer]:
+    - img [ref=e303]
+  - alert [ref=e306]
 ```

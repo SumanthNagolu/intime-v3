@@ -185,7 +185,7 @@ export function PodFormPage({ mode, podId }: PodFormPageProps) {
     return (
       <DashboardShell title="Loading..." breadcrumbs={breadcrumbs}>
         <div className="flex items-center justify-center h-64">
-          <Loader2 className="w-8 h-8 animate-spin text-forest-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-hublot-600" />
         </div>
       </DashboardShell>
     )
@@ -200,7 +200,7 @@ export function PodFormPage({ mode, podId }: PodFormPageProps) {
         breadcrumbs={breadcrumbs}
       >
         <div className="flex items-center justify-center h-64">
-          <Loader2 className="w-8 h-8 animate-spin text-forest-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-hublot-600" />
         </div>
       </DashboardShell>
     )
@@ -311,7 +311,7 @@ export function PodFormPage({ mode, podId }: PodFormPageProps) {
                 {usersQuery.data?.map((user: UserProfile) => (
                   <SelectItem key={user.id} value={user.id}>
                     <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-forest-100 flex items-center justify-center text-forest-700 font-medium text-xs">
+                      <div className="w-6 h-6 rounded-full bg-gold-100 flex items-center justify-center text-gold-700 font-medium text-xs">
                         {user.full_name?.split(' ').map(n => n[0]).join('').slice(0, 2)}
                       </div>
                       {user.full_name}
@@ -352,7 +352,7 @@ export function PodFormPage({ mode, podId }: PodFormPageProps) {
                           onClick={() => addMember(user)}
                           className="w-full flex items-center gap-2 px-3 py-2 hover:bg-charcoal-50 text-left"
                         >
-                          <div className="w-6 h-6 rounded-full bg-forest-100 flex items-center justify-center text-forest-700 font-medium text-xs">
+                          <div className="w-6 h-6 rounded-full bg-gold-100 flex items-center justify-center text-gold-700 font-medium text-xs">
                             {user.full_name?.split(' ').map(n => n[0]).join('').slice(0, 2)}
                           </div>
                           <div>
@@ -437,7 +437,7 @@ export function PodFormPage({ mode, podId }: PodFormPageProps) {
             </Button>
             <Button
               type="submit"
-              className="bg-forest-600 hover:bg-forest-700 text-white"
+              className="bg-hublot-900 hover:bg-hublot-800 text-white"
               disabled={isLoading}
             >
               {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}

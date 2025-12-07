@@ -4,7 +4,7 @@ import * as React from 'react'
 import { Palette, Image, Type, Eye } from 'lucide-react'
 import { toast } from 'sonner'
 import { trpc } from '@/lib/trpc/client'
-import { DashboardShell } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -142,25 +142,27 @@ export function BrandingSettingsPage() {
 
   const isLoading = loadingAssets || loadingSettings
 
+  const breadcrumbs = [
+    { label: 'Admin', href: '/employee/admin' },
+    { label: 'Settings', href: '/employee/admin/settings' },
+    { label: 'Branding' },
+  ]
+
   if (isLoading) {
     return (
-      <DashboardShell
-        title="Branding Settings"
-        description="Customize your organization's visual identity"
-      >
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="animate-pulse space-y-6">
           <div className="h-64 bg-charcoal-100 rounded-lg" />
           <div className="h-48 bg-charcoal-100 rounded-lg" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   return (
-    <DashboardShell
-      title="Branding Settings"
-      description="Customize your organization's visual identity"
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
       <div className="space-y-8">
         {/* Logo Section */}
         <SettingsSection
@@ -415,6 +417,6 @@ export function BrandingSettingsPage() {
           </div>
         </SettingsSection>
       </div>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

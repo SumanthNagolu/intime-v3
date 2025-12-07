@@ -1,55 +1,112 @@
+'use client'
+
 import * as React from "react"
-import { Sidebar, SidebarSection } from "@/components/navigation/Sidebar"
-import { PortalHeader } from "@/components/navigation/PortalHeader"
-import { Breadcrumb, BreadcrumbItem } from "@/components/ui/breadcrumb"
+import { SectionSidebar } from "@/components/navigation/SectionSidebar"
+import { EntityJourneySidebar } from "@/components/navigation/EntityJourneySidebar"
+import { TopNavigation } from "@/components/navigation/TopNavigation"
+import { useEntityNavigationSafe } from "@/lib/navigation/EntityNavigationContext"
+import { EntityQuickAction, resolveHref } from "@/lib/navigation/entity-navigation.types"
+import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
+
+// Keep old interface for backwards compatibility but it's no longer used
+interface SidebarSection {
+  title?: string
+  items: Array<{ label: string; href?: string }>
+}
 
 interface SidebarLayoutProps {
   children: React.ReactNode
-  sections: SidebarSection[]
-  breadcrumbs?: BreadcrumbItem[]
-  title?: string
-  description?: string
-  actions?: React.ReactNode
+  /** @deprecated - sections is no longer used, sidebar is auto-detected from path */
+  sections?: SidebarSection[]
   className?: string
+  /** Hide the left sidebar entirely */
+  hideSidebar?: boolean
+  /** Optional: specify section ID explicitly */
+  sectionId?: string
+  /** Optional: custom quick action handler for entity sidebar */
+  onEntityQuickAction?: (action: EntityQuickAction) => void
 }
 
 export function SidebarLayout({
   children,
-  sections,
-  breadcrumbs,
-  title,
-  description,
-  actions,
   className,
+  hideSidebar = false,
+  sectionId,
+  onEntityQuickAction,
 }: SidebarLayoutProps) {
+  const entityNav = useEntityNavigationSafe()
+  const router = useRouter()
+  const currentEntity = entityNav?.currentEntity
+
+  // Default quick action handler
+  const handleQuickAction = React.useCallback((action: EntityQuickAction) => {
+    if (onEntityQuickAction) {
+      onEntityQuickAction(action)
+      return
+    }
+
+    // Default handling
+    if (!currentEntity) return
+
+    switch (action.actionType) {
+      case 'navigate':
+        if (action.href) {
+          router.push(resolveHref(action.href, currentEntity.id))
+        }
+        break
+      case 'dialog':
+        // Dispatch custom event for page to handle
+        window.dispatchEvent(new CustomEvent('openEntityDialog', {
+          detail: {
+            dialogId: action.dialogId,
+            entityType: currentEntity.type,
+            entityId: currentEntity.id,
+          }
+        }))
+        break
+      case 'mutation':
+        // Dispatch custom event for page to handle
+        window.dispatchEvent(new CustomEvent('entityMutation', {
+          detail: {
+            actionId: action.id,
+            entityType: currentEntity.type,
+            entityId: currentEntity.id,
+          }
+        }))
+        break
+    }
+  }, [currentEntity, router, onEntityQuickAction])
+
   return (
-    <div className={cn("min-h-screen flex flex-col", className)}>
-      <PortalHeader />
-      
-      <div className="flex flex-1">
-        <Sidebar sections={sections} className="hidden lg:block border-r border-charcoal-100 bg-white" />
+    <div className={cn("h-screen flex flex-col overflow-hidden", className)}>
+      <TopNavigation />
 
-        <main className="flex-1 min-w-0">
-          <div className="container-premium py-8">
-            {breadcrumbs && breadcrumbs.length > 0 && (
-              <Breadcrumb items={breadcrumbs} className="mb-6" />
-            )}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Dynamic sidebar: EntityJourneySidebar when viewing an entity, SectionSidebar otherwise */}
+        {!hideSidebar && (
+          currentEntity ? (
+            <EntityJourneySidebar
+              entityType={currentEntity.type}
+              entityId={currentEntity.id}
+              entityName={currentEntity.name}
+              entitySubtitle={currentEntity.subtitle}
+              entityStatus={currentEntity.status}
+              onQuickAction={handleQuickAction}
+              className="hidden lg:flex"
+            />
+          ) : (
+            <SectionSidebar sectionId={sectionId} className="hidden lg:flex" />
+          )
+        )}
 
-            {(title || actions) && (
-              <div className="flex items-center justify-between mb-8">
-                <div>
-                  {title && <h1 className="text-h2 text-charcoal-900">{title}</h1>}
-                  {description && <p className="text-body text-charcoal-600 mt-1">{description}</p>}
-                </div>
-                {actions && <div className="flex items-center gap-3">{actions}</div>}
-              </div>
-            )}
-
-            {children}
-          </div>
+        <main className="flex-1 min-w-0 overflow-y-auto bg-cream">
+          {children}
         </main>
       </div>
     </div>
   )
 }
+
+// Export SidebarSection type for backwards compatibility
+export type { SidebarSection }

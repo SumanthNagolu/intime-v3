@@ -4,7 +4,7 @@ import * as React from 'react'
 import { ShieldCheck, Database, FileText, Download } from 'lucide-react'
 import { toast } from 'sonner'
 import { trpc } from '@/lib/trpc/client'
-import { DashboardShell } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -96,34 +96,39 @@ export function ComplianceSettingsPage() {
     })
   }
 
+  const breadcrumbs = [
+    { label: 'Admin', href: '/employee/admin' },
+    { label: 'Settings', href: '/employee/admin/settings' },
+    { label: 'Compliance' },
+  ]
+
   if (isLoading) {
     return (
-      <DashboardShell
-        title="Compliance Settings"
-        description="Configure data retention and compliance policies"
-      >
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="animate-pulse space-y-6">
           <div className="h-48 bg-charcoal-100 rounded-lg" />
           <div className="h-48 bg-charcoal-100 rounded-lg" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   return (
-    <DashboardShell
-      title="Compliance Settings"
-      description="Configure data retention and compliance policies"
-      actions={
-        <Button
-          onClick={handleSave}
-          loading={updateSettings.isPending}
-          disabled={updateSettings.isPending}
-        >
-          Save Changes
-        </Button>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Button
+            onClick={handleSave}
+            loading={updateSettings.isPending}
+            disabled={updateSettings.isPending}
+          >
+            Save Changes
+          </Button>
+        }
+      />
       <div className="space-y-8">
         {/* Data Retention */}
         <SettingsSection
@@ -289,6 +294,6 @@ export function ComplianceSettingsPage() {
           </p>
         </SettingsSection>
       </div>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

@@ -1,0 +1,6 @@
+export { TalentListPage } from './TalentListPage'
+export { TalentDetailPage } from './TalentDetailPage'
+export { OnboardTalentDialog } from './OnboardTalentDialog'
+export { MarketingProfileEditor } from './MarketingProfileEditor'
+export { ImmigrationTracker } from './ImmigrationTracker'
+export { SubmitToJobDialog } from './SubmitToJobDialog'

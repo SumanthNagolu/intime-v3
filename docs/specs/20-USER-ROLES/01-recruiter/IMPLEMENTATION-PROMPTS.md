@@ -24,6 +24,7 @@ Based on entity dependencies and the revenue flow:
 
 CONTEXT (read first for full system understanding):
 /Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/00-OVERVIEW.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-05-recruiter-workspace-implementation-research.md
 
 we are working on the requirement in -> 
 /Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/H01-daily-workflow.md
@@ -41,8 +42,12 @@ Do not make an implementation plan or explain how to implement.
 ** PLAN 
 
 we are implementing -> Section H: Daily Operations (H01-H04)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/H01-daily-workflow.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/H02-log-activity.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/H03-recruiter-dashboard.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/H04-recruiter-reports.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-recruiter-workspace-h01-h04-research.md
 
 create a plan to implement.
 ```
@@ -52,10 +57,14 @@ create a plan to implement.
 ** IMPLEMENT
 
 we are implementing -> Section H: Daily Operations (H01-H04)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/H01-daily-workflow.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/H02-log-activity.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/H03-recruiter-dashboard.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/H04-recruiter-reports.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-recruiter-workspace-h01-h04-research.md
 
-we've created a plan to implement -> [paste plan]
+we've created a plan to implement -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/plans/2025-12-06-recruiter-daily-operations-h01-h04.md
 
 please implement the plan. I expect every element of page completed and every button working and doing action that is configured. Synced back to database. UI e2e tested. Plugged with prior flows for continuity.
 ```
@@ -71,6 +80,7 @@ please implement the plan. I expect every element of page completed and every bu
 
 CONTEXT (read first for full system understanding):
 /Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/00-OVERVIEW.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-05-recruiter-workspace-implementation-research.md
 
 we are working on the requirement in -> 
 /Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/D01-create-job.md
@@ -90,8 +100,14 @@ Do not make an implementation plan or explain how to implement.
 ** PLAN 
 
 we are implementing -> Section D: Job Lifecycle (D01-D06)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/D01-create-job.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/D02-publish-job.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/D03-update-job.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/D04-manage-pipeline.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/D05-update-job-status.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/D06-close-job.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-recruiter-job-management-d01-d06-research.md
 
 create a plan to implement.
 ```
@@ -101,10 +117,16 @@ create a plan to implement.
 ** IMPLEMENT
 
 we are implementing -> Section D: Job Lifecycle (D01-D06)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/D01-create-job.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/D02-publish-job.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/D03-update-job.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/D04-manage-pipeline.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/D05-update-job-status.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/D06-close-job.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-recruiter-job-management-d01-d06-research.md
 
-we've created a plan to implement -> [paste plan]
+we've created a plan to implement -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/plans/2025-12-06-recruiter-job-lifecycle-d01-d06.md
 
 please implement the plan. I expect every element of page completed and every button working and doing action that is configured. Synced back to database. UI e2e tested. Plugged with prior flows for continuity.
 ```
@@ -120,6 +142,7 @@ please implement the plan. I expect every element of page completed and every bu
 
 CONTEXT (read first for full system understanding):
 /Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/00-OVERVIEW.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-05-recruiter-workspace-implementation-research.md
 
 we are working on the requirement in -> 
 /Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/E01-source-candidates.md
@@ -138,8 +161,13 @@ Do not make an implementation plan or explain how to implement.
 ** PLAN 
 
 we are implementing -> Section E: Sourcing & Screening (E01-E05)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/E01-source-candidates.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/E02-search-candidates.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/E03-screen-candidate.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/E04-manage-hotlist.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/E05-prepare-candidate-profile.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-recruiter-candidate-management-e01-e05-research.md
 
 create a plan to implement.
 ```
@@ -149,10 +177,15 @@ create a plan to implement.
 ** IMPLEMENT
 
 we are implementing -> Section E: Sourcing & Screening (E01-E05)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/E01-source-candidates.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/E02-search-candidates.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/E03-screen-candidate.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/E04-manage-hotlist.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/E05-prepare-candidate-profile.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-recruiter-candidate-management-e01-e05-research.md
 
-we've created a plan to implement -> [paste plan]
+we've created a plan to implement -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/plans/2025-12-06-recruiter-sourcing-screening-e01-e05.md
 
 please implement the plan. I expect every element of page completed and every button working and doing action that is configured. Synced back to database. UI e2e tested. Plugged with prior flows for continuity.
 ```
@@ -187,10 +220,16 @@ Do not make an implementation plan or explain how to implement.
 ** PLAN 
 
 we are implementing -> Section F: Submissions & Interviews (F01-F06)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/F01-submit-candidate.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/F02-track-submission.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/F03-schedule-interview.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/F04-prepare-candidate-for-interview.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/F05-coordinate-interview-rounds.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/F06-collect-interview-feedback.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-recruiter-f01-f06-codebase-research.md
 
-create a plan to implement.
+create a plan to implement. Do not Implement.
 ```
 
 ### IMPLEMENT Prompt
@@ -198,10 +237,16 @@ create a plan to implement.
 ** IMPLEMENT
 
 we are implementing -> Section F: Submissions & Interviews (F01-F06)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/F01-submit-candidate.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/F02-track-submission.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/F03-schedule-interview.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/F04-prepare-candidate-for-interview.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/F05-coordinate-interview-rounds.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/F06-collect-interview-feedback.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-recruiter-f01-f06-codebase-research.md
 
-we've created a plan to implement -> [paste plan]
+we've created a plan to implement -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/plans/2025-12-06-recruiter-submissions-interviews-f01-f06.md
 
 please implement the plan. I expect every element of page completed and every button working and doing action that is configured. Synced back to database. UI e2e tested. Plugged with prior flows for continuity.
 ```
@@ -217,6 +262,7 @@ please implement the plan. I expect every element of page completed and every bu
 
 CONTEXT (read first for full system understanding):
 /Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/00-OVERVIEW.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-05-recruiter-workspace-implementation-research.md
 
 we are working on the requirement in -> 
 /Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G01-extend-offer.md
@@ -234,10 +280,14 @@ Do not make an implementation plan or explain how to implement.
 ** PLAN 
 
 we are implementing -> Section G Part 1: Offers & Placements (G01-G04)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G01-extend-offer.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G02-negotiate-offer.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G03-confirm-placement.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G04-manage-placement.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-recruiter-g01-g04-offers-placements-research.md
 
-create a plan to implement.
+create a plan to implement. Do not Implement.
 ```
 
 ### IMPLEMENT Prompt
@@ -245,10 +295,14 @@ create a plan to implement.
 ** IMPLEMENT
 
 we are implementing -> Section G Part 1: Offers & Placements (G01-G04)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G01-extend-offer.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G02-negotiate-offer.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G03-confirm-placement.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G04-manage-placement.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-recruiter-g01-g04-offers-placements-research.md
 
-we've created a plan to implement -> [paste plan]
+we've created a plan to implement -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/plans/2025-12-06-recruiter-offers-placements-g01-g04.md
 
 please implement the plan. I expect every element of page completed and every button working and doing action that is configured. Synced back to database. UI e2e tested. Plugged with prior flows for continuity.
 ```
@@ -281,10 +335,14 @@ Do not make an implementation plan or explain how to implement.
 ** PLAN 
 
 we are implementing -> Section G Part 2: Commissions & Lifecycle (G05-G08)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G05-track-commission.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G06-handle-extension.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G07-handle-early-termination.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G08-make-placement.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-recruiter-g05-g08-commissions-extensions-terminations-research.md
 
-create a plan to implement.
+create a plan to implement. Do not Implement.
 ```
 
 ### IMPLEMENT Prompt
@@ -292,10 +350,14 @@ create a plan to implement.
 ** IMPLEMENT
 
 we are implementing -> Section G Part 2: Commissions & Lifecycle (G05-G08)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G05-track-commission.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G06-handle-extension.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G07-handle-early-termination.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/G08-make-placement.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-recruiter-g05-g08-commissions-extensions-terminations-research.md
 
-we've created a plan to implement -> [paste plan]
+we've created a plan to implement -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/plans/2025-12-06-recruiter-commissions-lifecycle-g05-g08.md
 
 please implement the plan. I expect every element of page completed and every button working and doing action that is configured. Synced back to database. UI e2e tested. Plugged with prior flows for continuity.
 ```
@@ -311,6 +373,7 @@ please implement the plan. I expect every element of page completed and every bu
 
 CONTEXT (read first for full system understanding):
 /Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/00-OVERVIEW.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-05-recruiter-workspace-implementation-research.md
 
 we are working on the requirement in -> 
 /Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/C01-create-account.md
@@ -331,10 +394,17 @@ Do not make an implementation plan or explain how to implement.
 ** PLAN 
 
 we are implementing -> Section C: Account Management (C01-C07)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/C01-create-account.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/C02-onboard-account.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/C03-manage-account-profile.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/C04-manage-client-relationship.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/C05-conduct-client-meeting.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/C06-handle-client-escalation.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/C07-take-job-requisition.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-recruiter-account-management-c01-c07-research.md
 
-create a plan to implement.
+create a plan to implement. Do not Implement.
 ```
 
 ### IMPLEMENT Prompt
@@ -342,10 +412,17 @@ create a plan to implement.
 ** IMPLEMENT
 
 we are implementing -> Section C: Account Management (C01-C07)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/C01-create-account.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/C02-onboard-account.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/C03-manage-account-profile.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/C04-manage-client-relationship.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/C05-conduct-client-meeting.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/C06-handle-client-escalation.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/C07-take-job-requisition.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-recruiter-account-management-c01-c07-research.md
 
-we've created a plan to implement -> [paste plan]
+we've created a plan to implement -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/plans/2025-12-06-recruiter-account-management-c01-c07.md
 
 please implement the plan. I expect every element of page completed and every button working and doing action that is configured. Synced back to database. UI e2e tested. Plugged with prior flows for continuity.
 ```
@@ -361,6 +438,7 @@ please implement the plan. I expect every element of page completed and every bu
 
 CONTEXT (read first for full system understanding):
 /Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/00-OVERVIEW.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-05-recruiter-workspace-implementation-research.md
 
 we are working on the requirement in -> 
 /Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/B01-prospect-new-client.md
@@ -379,10 +457,15 @@ Do not make an implementation plan or explain how to implement.
 ** PLAN 
 
 we are implementing -> Section B: Deals Pipeline (B01-B05)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/B01-prospect-new-client.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/B02-qualify-opportunity.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/B03-create-deal.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/B04-manage-deal-pipeline.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/B05-close-deal.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-recruiter-crm-deal-management-research.md
 
-create a plan to implement.
+create a plan to implement. Do not Implement.
 ```
 
 ### IMPLEMENT Prompt
@@ -390,10 +473,15 @@ create a plan to implement.
 ** IMPLEMENT
 
 we are implementing -> Section B: Deals Pipeline (B01-B05)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/B01-prospect-new-client.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/B02-qualify-opportunity.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/B03-create-deal.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/B04-manage-deal-pipeline.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/B05-close-deal.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-recruiter-crm-deal-management-research.md
 
-we've created a plan to implement -> [paste plan]
+we've created a plan to implement -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/plans/2025-12-06-recruiter-crm-deals-pipeline-B01-B05.md
 
 please implement the plan. I expect every element of page completed and every button working and doing action that is configured. Synced back to database. UI e2e tested. Plugged with prior flows for continuity.
 ```
@@ -409,6 +497,7 @@ please implement the plan. I expect every element of page completed and every bu
 
 CONTEXT (read first for full system understanding):
 /Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/00-OVERVIEW.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-05-recruiter-workspace-implementation-research.md
 
 we are working on the requirement in -> 
 /Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/A01-run-campaign.md
@@ -426,10 +515,14 @@ Do not make an implementation plan or explain how to implement.
 ** PLAN 
 
 we are implementing -> Section A: Campaigns & Lead Gen (A01-A04)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/A01-run-campaign.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/A02-track-campaign-metrics.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/A03-generate-lead-from-campaign.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/A04-create-lead.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-campaign-lead-management-research.md
 
-create a plan to implement.
+create a plan to implement. Do not Implement.
 ```
 
 ### IMPLEMENT Prompt
@@ -437,10 +530,14 @@ create a plan to implement.
 ** IMPLEMENT
 
 we are implementing -> Section A: Campaigns & Lead Gen (A01-A04)
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/A01-run-campaign.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/A02-track-campaign-metrics.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/A03-generate-lead-from-campaign.md
+/Users/sumanthrajkumarnagolu/Projects/intime-v3/docs/specs/20-USER-ROLES/01-recruiter/A04-create-lead.md
 
-we've done the following research -> [paste research output]
+we've done the following research -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/research/2025-12-06-campaign-lead-management-research.md
 
-we've created a plan to implement -> [paste plan]
+we've created a plan to implement -> /Users/sumanthrajkumarnagolu/Projects/intime-v3/thoughts/shared/plans/2025-12-07-campaigns-lead-gen-a01-a04.md
 
 please implement the plan. I expect every element of page completed and every button working and doing action that is configured. Synced back to database. UI e2e tested. Plugged with prior flows for continuity.
 ```

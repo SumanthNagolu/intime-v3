@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { toast } from 'sonner'
 import { trpc } from '@/lib/trpc/client'
-import { DashboardShell } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
@@ -131,75 +131,84 @@ export function OrgSettingsPage() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
+  const breadcrumbs = [
+    { label: 'Admin', href: '/employee/admin' },
+    { label: 'Organization Settings' },
+  ]
+
   if (isLoading) {
     return (
-      <DashboardShell
-        title="Organization Settings"
-        description="Configure organization-wide settings"
-      >
+      <AdminPageContent>
+        <AdminPageHeader
+          title="Organization Settings"
+          description="Configure organization-wide settings"
+          breadcrumbs={breadcrumbs}
+        />
         <div className="animate-pulse space-y-4">
           <div className="h-12 bg-charcoal-100 rounded-lg w-full" />
           <div className="h-96 bg-charcoal-100 rounded-lg" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   return (
-    <DashboardShell
-      title="Organization Settings"
-      description="Configure organization-wide settings including branding, regional settings, and defaults"
-      actions={
-        <div className="flex items-center gap-2">
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".json"
-            onChange={handleImportFile}
-            className="hidden"
-          />
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm">
-                <Settings className="h-4 w-4 mr-2" />
-                Options
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={handleExport}>
-                <Download className="h-4 w-4 mr-2" />
-                Export Settings
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleImportClick}>
-                <Upload className="h-4 w-4 mr-2" />
-                Import Settings
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => handleReset('branding')}>
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Reset Branding
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleReset('regional')}>
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Reset Regional
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleReset('fiscal')}>
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Reset Fiscal
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleReset('business_hours')}>
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Reset Business Hours
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleReset('defaults')}>
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Reset Defaults
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      }
-    >
+    <AdminPageContent>
+      <AdminPageHeader
+        title="Organization Settings"
+        description="Configure organization-wide settings including branding, regional settings, and defaults"
+        breadcrumbs={breadcrumbs}
+        actions={
+          <div className="flex items-center gap-2">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".json"
+              onChange={handleImportFile}
+              className="hidden"
+            />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <Settings className="h-4 w-4 mr-2" />
+                  Options
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={handleExport}>
+                  <Download className="h-4 w-4 mr-2" />
+                  Export Settings
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleImportClick}>
+                  <Upload className="h-4 w-4 mr-2" />
+                  Import Settings
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => handleReset('branding')}>
+                  <RotateCcw className="h-4 w-4 mr-2" />
+                  Reset Branding
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleReset('regional')}>
+                  <RotateCcw className="h-4 w-4 mr-2" />
+                  Reset Regional
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleReset('fiscal')}>
+                  <RotateCcw className="h-4 w-4 mr-2" />
+                  Reset Fiscal
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleReset('business_hours')}>
+                  <RotateCcw className="h-4 w-4 mr-2" />
+                  Reset Business Hours
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleReset('defaults')}>
+                  <RotateCcw className="h-4 w-4 mr-2" />
+                  Reset Defaults
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        }
+      />
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
         <TabsList className="bg-white border border-charcoal-100 p-1 rounded-lg grid grid-cols-7 w-full">
           <TabsTrigger value="company" className="gap-2">
@@ -292,6 +301,6 @@ export function OrgSettingsPage() {
       <div className="mt-4 text-xs text-charcoal-400">
         <p>Keyboard shortcuts: Cmd+1-7 to switch tabs, Cmd+S to save</p>
       </div>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

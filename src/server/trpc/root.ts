@@ -13,12 +13,14 @@ import { emergencyRouter } from '../routers/emergency'
 import { slaRouter } from '../routers/sla'
 import { activityPatternsRouter } from '../routers/activityPatterns'
 import { featureFlagsRouter } from '../routers/featureFlags'
+import { notificationsRouter } from '../routers/notifications'
 // Recruiter workspace routers (H01-H04)
 import { activitiesRouter } from '../routers/activities'
 import { crmRouter } from '../routers/crm'
 import { atsRouter } from '../routers/ats'
 import { dashboardRouter } from '../routers/dashboard'
 import { reportsRouter } from '../routers/reports'
+import { benchRouter } from '../routers/bench'
 
 export const appRouter = router({
   admin: adminRouter,
@@ -35,12 +37,14 @@ export const appRouter = router({
   sla: slaRouter,
   activityPatterns: activityPatternsRouter,
   featureFlags: featureFlagsRouter,
+  notifications: notificationsRouter,
   // Recruiter workspace routers (H01-H04)
   activities: activitiesRouter,
   crm: crmRouter,
   ats: atsRouter,
   dashboard: dashboardRouter,
   reports: reportsRouter,
+  bench: benchRouter,
 })
 
 export type AppRouter = typeof appRouter

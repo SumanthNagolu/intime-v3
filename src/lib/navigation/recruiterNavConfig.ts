@@ -12,6 +12,12 @@ import {
   UserCircle,
   Clock,
   TrendingUp,
+  DollarSign,
+  Megaphone,
+  Warehouse,
+  UserCheck,
+  FileText,
+  Star,
 } from 'lucide-react'
 import type { SidebarSection } from '@/components/navigation/Sidebar'
 
@@ -45,6 +51,11 @@ export const recruiterNavSections: SidebarSection[] = [
         icon: Briefcase,
       },
       {
+        label: 'Talent',
+        href: '/employee/recruiting/talent',
+        icon: UserCheck,
+      },
+      {
         label: 'Candidates',
         href: '/employee/recruiting/candidates',
         icon: Users,
@@ -64,15 +75,40 @@ export const recruiterNavSections: SidebarSection[] = [
         href: '/employee/recruiting/placements',
         icon: TrendingUp,
       },
+      {
+        label: 'My Commissions',
+        href: '/employee/recruiting/commissions',
+        icon: DollarSign,
+      },
     ],
   },
   {
     title: 'CRM',
     items: [
       {
+        label: 'Campaigns',
+        href: '/employee/crm/campaigns',
+        icon: Megaphone,
+      },
+      {
         label: 'Accounts',
-        href: '/employee/crm/accounts',
+        href: '/employee/recruiting/accounts',
         icon: Building2,
+      },
+      {
+        label: 'Vendors',
+        href: '/employee/recruiting/vendors',
+        icon: Warehouse,
+      },
+      {
+        label: 'Job Orders',
+        href: '/employee/recruiting/job-orders',
+        icon: FileText,
+      },
+      {
+        label: 'Talent Hotlists',
+        href: '/employee/recruiting/talent-hotlists',
+        icon: Star,
       },
       {
         label: 'Leads',

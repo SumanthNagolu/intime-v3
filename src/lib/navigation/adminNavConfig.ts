@@ -13,7 +13,6 @@ import {
   Key,
   Timer,
   Activity,
-  Building2,
 } from 'lucide-react'
 import type { SidebarSection } from '@/components/navigation/Sidebar'
 
@@ -60,11 +59,6 @@ export const adminNavSections: SidebarSection[] = [
         label: 'Settings',
         href: '/employee/admin/settings',
         icon: Settings,
-      },
-      {
-        label: 'Org Settings',
-        href: '/employee/admin/org-settings',
-        icon: Building2,
       },
       {
         label: 'Integrations',

@@ -3,10 +3,8 @@
 import { useState, use } from 'react'
 import Link from 'next/link'
 import { trpc } from '@/lib/trpc/client'
-import {
-  DashboardShell,
-  DashboardSection,
-} from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -113,17 +111,19 @@ export function WebhookDebugPage({ paramsPromise }: WebhookDebugPageProps) {
 
   if (webhookQuery.isLoading) {
     return (
-      <DashboardShell title="Loading..." breadcrumbs={breadcrumbs}>
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="flex justify-center py-12">
           <Loader2 className="w-8 h-8 animate-spin text-charcoal-400" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   if (webhookQuery.error || !webhook) {
     return (
-      <DashboardShell title="Error" breadcrumbs={breadcrumbs}>
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="text-center py-12">
           <p className="text-red-600">Webhook not found</p>
           <Link href="/employee/admin/integrations/webhooks">
@@ -132,32 +132,32 @@ export function WebhookDebugPage({ paramsPromise }: WebhookDebugPageProps) {
             </Button>
           </Link>
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   return (
-    <DashboardShell
-      title={webhook.name}
-      description="Debug and monitor webhook deliveries"
-      breadcrumbs={breadcrumbs}
-      actions={
-        <div className="flex items-center gap-3">
-          <Link href="/employee/admin/integrations/webhooks">
-            <Button variant="outline">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Button>
-          </Link>
-          <Link href={`/employee/admin/integrations/webhooks/${webhookId}/edit`}>
-            <Button variant="outline">
-              <Edit className="w-4 h-4 mr-2" />
-              Edit
-            </Button>
-          </Link>
-        </div>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <div className="flex items-center gap-3">
+            <Link href="/employee/admin/integrations/webhooks">
+              <Button variant="outline">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back
+              </Button>
+            </Link>
+            <Link href={`/employee/admin/integrations/webhooks/${webhookId}/edit`}>
+              <Button variant="outline">
+                <Edit className="w-4 h-4 mr-2" />
+                Edit
+              </Button>
+            </Link>
+          </div>
+        }
+      />
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
@@ -321,7 +321,7 @@ export function WebhookDebugPage({ paramsPromise }: WebhookDebugPageProps) {
           </DashboardSection>
         </div>
       </div>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }
 

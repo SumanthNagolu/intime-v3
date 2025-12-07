@@ -4,10 +4,8 @@ import { useState, useEffect, use } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { trpc } from '@/lib/trpc/client'
-import {
-  DashboardShell,
-  DashboardSection,
-} from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -203,28 +201,29 @@ export function WebhookFormPage({ paramsPromise }: WebhookFormPageProps) {
 
   if (isEdit && webhookQuery.isLoading) {
     return (
-      <DashboardShell title="Loading..." breadcrumbs={breadcrumbs}>
+      <AdminPageContent insideTabLayout>
+        <AdminPageHeader insideTabLayout breadcrumbs={breadcrumbs} />
         <div className="flex justify-center py-12">
           <Loader2 className="w-8 h-8 animate-spin text-charcoal-400" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   return (
-    <DashboardShell
-      title={isEdit ? 'Edit Webhook' : 'Create Webhook'}
-      description={isEdit ? 'Update webhook configuration' : 'Configure a new webhook endpoint'}
-      breadcrumbs={breadcrumbs}
-      actions={
-        <Link href="/employee/admin/integrations/webhooks">
-          <Button variant="outline">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Webhooks
-          </Button>
-        </Link>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <Link href="/employee/admin/integrations/webhooks">
+            <Button variant="outline">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Webhooks
+            </Button>
+          </Link>
+        }
+      />
       <form onSubmit={handleSubmit}>
         <div className="grid gap-6 lg:grid-cols-3">
           {/* Main Form */}
@@ -458,6 +457,6 @@ export function WebhookFormPage({ paramsPromise }: WebhookFormPageProps) {
           </div>
         </div>
       </form>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

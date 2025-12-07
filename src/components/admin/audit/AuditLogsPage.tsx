@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { DashboardShell, DashboardSection, DashboardGrid } from '@/components/dashboard/DashboardShell'
+import { DashboardSection, DashboardGrid } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { StatsCard } from '@/components/dashboard/StatsCard'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -104,33 +105,35 @@ export function AuditLogsPage() {
     return <Badge variant="outline" className={colors[severityValue || 'INFO']}>{severityValue || 'INFO'}</Badge>
   }
 
+  const breadcrumbs = [
+    { label: 'Admin', href: '/employee/admin' },
+    { label: 'Audit' },
+  ]
+
   return (
-    <DashboardShell
-      title="Audit Logs & Security Monitoring"
-      description="Review audit trails, investigate security incidents, and monitor user activity"
-      breadcrumbs={[
-        { label: 'Admin', href: '/employee/admin' },
-        { label: 'Audit Logs', href: '/employee/admin/audit' },
-      ]}
-      actions={
-        <div className="flex gap-2">
-          <Link href="/employee/admin/audit/rules">
-            <Button variant="outline" size="sm">
-              <Settings className="w-4 h-4 mr-2" />
-              Alert Rules
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <div className="flex gap-2">
+            <Link href="/employee/admin/audit/rules">
+              <Button variant="outline" size="sm">
+                <Settings className="w-4 h-4 mr-2" />
+                Alert Rules
+              </Button>
+            </Link>
+            <Button variant="outline" size="sm" onClick={handleRefresh}>
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Refresh
             </Button>
-          </Link>
-          <Button variant="outline" size="sm" onClick={handleRefresh}>
-            <RefreshCw className="w-4 h-4 mr-2" />
-            Refresh
-          </Button>
-          <Button variant="outline" size="sm" onClick={() => setShowExportDialog(true)}>
-            <Download className="w-4 h-4 mr-2" />
-            Export
-          </Button>
-        </div>
-      }
-    >
+            <Button variant="outline" size="sm" onClick={() => setShowExportDialog(true)}>
+              <Download className="w-4 h-4 mr-2" />
+              Export
+            </Button>
+          </div>
+        }
+      />
       {/* Security Overview Stats */}
       <DashboardSection title="Security Overview (Last 24 Hours)">
         {statsQuery.isLoading ? (
@@ -416,6 +419,6 @@ export function AuditLogsPage() {
         open={showExportDialog}
         onClose={() => setShowExportDialog(false)}
       />
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

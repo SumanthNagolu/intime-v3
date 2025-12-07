@@ -66,364 +66,356 @@
                       - img [ref=e78]
                       - generic [ref=e81]: Settings
                 - listitem [ref=e82]:
-                  - link "Org Settings" [ref=e83] [cursor=pointer]:
-                    - /url: /employee/admin/org-settings
+                  - link "Integrations" [ref=e83] [cursor=pointer]:
+                    - /url: /employee/admin/integrations
                     - generic [ref=e84]:
                       - img [ref=e85]
-                      - generic [ref=e89]: Org Settings
+                      - generic [ref=e89]: Integrations
                 - listitem [ref=e90]:
-                  - link "Integrations" [ref=e91] [cursor=pointer]:
-                    - /url: /employee/admin/integrations
+                  - link "Workflows" [ref=e91] [cursor=pointer]:
+                    - /url: /employee/admin/workflows
                     - generic [ref=e92]:
                       - img [ref=e93]
-                      - generic [ref=e97]: Integrations
+                      - generic [ref=e97]: Workflows
                 - listitem [ref=e98]:
-                  - link "Workflows" [ref=e99] [cursor=pointer]:
-                    - /url: /employee/admin/workflows
+                  - link "SLA Config" [ref=e99] [cursor=pointer]:
+                    - /url: /employee/admin/sla
                     - generic [ref=e100]:
                       - img [ref=e101]
-                      - generic [ref=e105]: Workflows
-                - listitem [ref=e106]:
-                  - link "SLA Config" [ref=e107] [cursor=pointer]:
-                    - /url: /employee/admin/sla
-                    - generic [ref=e108]:
-                      - img [ref=e109]
-                      - generic [ref=e112]: SLA Config
-                - listitem [ref=e113]:
-                  - link "Activity Patterns" [ref=e114] [cursor=pointer]:
+                      - generic [ref=e104]: SLA Config
+                - listitem [ref=e105]:
+                  - link "Activity Patterns" [ref=e106] [cursor=pointer]:
                     - /url: /employee/admin/activity-patterns
-                    - generic [ref=e115]:
-                      - img [ref=e116]
-                      - generic [ref=e118]: Activity Patterns
-                - listitem [ref=e119]:
-                  - link "Email Templates" [ref=e120] [cursor=pointer]:
+                    - generic [ref=e107]:
+                      - img [ref=e108]
+                      - generic [ref=e110]: Activity Patterns
+                - listitem [ref=e111]:
+                  - link "Email Templates" [ref=e112] [cursor=pointer]:
                     - /url: /employee/admin/email-templates
-                    - generic [ref=e121]:
-                      - img [ref=e122]
-                      - generic [ref=e125]: Email Templates
-                - listitem [ref=e126]:
-                  - link "API Tokens" [ref=e127] [cursor=pointer]:
+                    - generic [ref=e113]:
+                      - img [ref=e114]
+                      - generic [ref=e117]: Email Templates
+                - listitem [ref=e118]:
+                  - link "API Tokens" [ref=e119] [cursor=pointer]:
                     - /url: /employee/admin/api-tokens
+                    - generic [ref=e120]:
+                      - img [ref=e121]
+                      - generic [ref=e125]: API Tokens
+                - listitem [ref=e126]:
+                  - link "Feature Flags" [ref=e127] [cursor=pointer]:
+                    - /url: /employee/admin/feature-flags
                     - generic [ref=e128]:
                       - img [ref=e129]
-                      - generic [ref=e133]: API Tokens
-                - listitem [ref=e134]:
-                  - link "Feature Flags" [ref=e135] [cursor=pointer]:
-                    - /url: /employee/admin/feature-flags
-                    - generic [ref=e136]:
-                      - img [ref=e137]
-                      - generic [ref=e139]: Feature Flags
-            - generic [ref=e140]:
-              - heading "Monitoring" [level=3] [ref=e141]
-              - list [ref=e142]:
-                - listitem [ref=e143]:
-                  - link "Audit Logs" [ref=e144] [cursor=pointer]:
+                      - generic [ref=e131]: Feature Flags
+            - generic [ref=e132]:
+              - heading "Monitoring" [level=3] [ref=e133]
+              - list [ref=e134]:
+                - listitem [ref=e135]:
+                  - link "Audit Logs" [ref=e136] [cursor=pointer]:
                     - /url: /employee/admin/audit
-                    - generic [ref=e145]:
-                      - img [ref=e146]
-                      - generic [ref=e149]: Audit Logs
-                - listitem [ref=e150]:
-                  - link "Notifications" [ref=e151] [cursor=pointer]:
+                    - generic [ref=e137]:
+                      - img [ref=e138]
+                      - generic [ref=e141]: Audit Logs
+                - listitem [ref=e142]:
+                  - link "Notifications" [ref=e143] [cursor=pointer]:
                     - /url: /employee/admin/notifications
-                    - generic [ref=e152]:
-                      - img [ref=e153]
-                      - generic [ref=e156]: Notifications
-                - listitem [ref=e157]:
-                  - link "Data Management" [ref=e158] [cursor=pointer]:
+                    - generic [ref=e144]:
+                      - img [ref=e145]
+                      - generic [ref=e148]: Notifications
+                - listitem [ref=e149]:
+                  - link "Data Management" [ref=e150] [cursor=pointer]:
                     - /url: /employee/admin/data
+                    - generic [ref=e151]:
+                      - img [ref=e152]
+                      - generic [ref=e156]: Data Management
+                - listitem [ref=e157]:
+                  - link "Emergency" [ref=e158] [cursor=pointer]:
+                    - /url: /employee/admin/emergency
                     - generic [ref=e159]:
                       - img [ref=e160]
-                      - generic [ref=e164]: Data Management
-                - listitem [ref=e165]:
-                  - link "Emergency" [ref=e166] [cursor=pointer]:
-                    - /url: /employee/admin/emergency
-                    - generic [ref=e167]:
-                      - img [ref=e168]
-                      - generic [ref=e170]: Emergency
-        - main [ref=e171]:
-          - generic [ref=e172]:
-            - heading "Admin Portal" [level=1] [ref=e175]
-            - generic [ref=e176]:
-              - generic [ref=e177]:
-                - navigation "Breadcrumb" [ref=e178]:
-                  - link "Home" [ref=e179] [cursor=pointer]:
-                    - /url: /
-                    - img [ref=e180]
+                      - generic [ref=e162]: Emergency
+        - main [ref=e163]:
+          - generic [ref=e165]:
+            - generic [ref=e166]:
+              - navigation "Breadcrumb" [ref=e167]:
+                - link "Home" [ref=e168] [cursor=pointer]:
+                  - /url: /
+                  - img [ref=e169]
+                - img [ref=e172]
+                - link "Admin" [ref=e174] [cursor=pointer]:
+                  - /url: /employee/admin
+                - img [ref=e175]
+                - generic [ref=e177]: Feature Flags
+              - generic [ref=e178]:
+                - heading "Feature Flags" [level=1] [ref=e180]
+                - button "New Feature" [ref=e182] [cursor=pointer]:
                   - img [ref=e183]
-                  - link "Admin" [ref=e185] [cursor=pointer]:
-                    - /url: /employee/admin
-                  - img [ref=e186]
-                  - generic [ref=e188]: Feature Flags
-                - generic [ref=e189]:
-                  - heading "Feature Flags" [level=1] [ref=e191]
-                  - button "New Feature" [ref=e193] [cursor=pointer]:
-                    - img [ref=e194]
-                    - text: New Feature
-              - generic [ref=e195]:
-                - button "1 Enabled" [ref=e196] [cursor=pointer]:
-                  - generic [ref=e197]:
-                    - img [ref=e198]
-                    - generic [ref=e201]: "1"
-                  - paragraph [ref=e202]: Enabled
-                - button "9 Disabled" [ref=e203] [cursor=pointer]:
-                  - generic [ref=e204]:
-                    - img [ref=e205]
-                    - generic [ref=e209]: "9"
-                  - paragraph [ref=e210]: Disabled
-                - button "0 Beta" [ref=e211] [cursor=pointer]:
-                  - generic [ref=e212]:
-                    - img [ref=e213]
-                    - generic [ref=e215]: "0"
-                  - paragraph [ref=e216]: Beta
-                - button "0 Internal" [ref=e217] [cursor=pointer]:
-                  - generic [ref=e218]:
-                    - img [ref=e219]
-                    - generic [ref=e221]: "0"
-                  - paragraph [ref=e222]: Internal
-                - button "0 Rollout" [ref=e223] [cursor=pointer]:
-                  - generic [ref=e224]:
-                    - img [ref=e225]
-                    - generic [ref=e229]: "0"
-                  - paragraph [ref=e230]: Rollout
-                - button "0 Coming Soon" [ref=e231] [cursor=pointer]:
-                  - generic [ref=e232]:
-                    - img [ref=e233]
-                    - generic [ref=e236]: "0"
-                  - paragraph [ref=e237]: Coming Soon
-              - generic [ref=e238]:
-                - generic [ref=e239]:
-                  - img [ref=e240]
-                  - textbox "Search features... (press / to focus)" [active] [ref=e243]
-                - combobox [ref=e244] [cursor=pointer]:
-                  - generic: All States
-                  - img [ref=e245]
-                - combobox [ref=e247] [cursor=pointer]:
-                  - generic: All Categories
-                  - img [ref=e248]
-              - generic [ref=e251]:
-                - generic [ref=e253]:
-                  - generic [ref=e254]:
-                    - generic [ref=e255]:
-                      - img [ref=e256]
-                      - heading "Advanced Analytics" [level=3] [ref=e260]
-                      - generic [ref=e261]: Disabled
-                      - generic [ref=e262]: Global
-                    - paragraph [ref=e263]:
-                      - text: "Key:"
-                      - code [ref=e264]: advanced_analytics
-                    - paragraph [ref=e265]: Detailed analytics dashboard
-                    - paragraph [ref=e266]: "Strategy: Specific Roles (9 roles)"
-                  - generic [ref=e267]:
-                    - button "Configure" [ref=e268] [cursor=pointer]:
-                      - img [ref=e269]
-                      - text: Configure
-                    - button "Usage" [ref=e272] [cursor=pointer]:
-                      - img [ref=e273]
-                      - text: Usage
-                    - button "Enable" [ref=e274] [cursor=pointer]
-                    - button [ref=e275] [cursor=pointer]:
-                      - img [ref=e276]
-                - generic [ref=e281]:
-                  - generic [ref=e282]:
-                    - generic [ref=e283]:
-                      - img [ref=e284]
-                      - heading "AI Twin System" [level=3] [ref=e288]
-                      - generic [ref=e289]: Disabled
-                      - generic [ref=e290]: Global
-                    - paragraph [ref=e291]:
-                      - text: "Key:"
-                      - code [ref=e292]: ai_twin
-                    - paragraph [ref=e293]: AI-powered assistant for recruiters
-                    - paragraph [ref=e294]: "Strategy: Specific Roles (6 roles)"
-                  - generic [ref=e295]:
-                    - button "Configure" [ref=e296] [cursor=pointer]:
-                      - img [ref=e297]
-                      - text: Configure
-                    - button "Usage" [ref=e300] [cursor=pointer]:
-                      - img [ref=e301]
-                      - text: Usage
-                    - button "Enable" [ref=e302] [cursor=pointer]
-                    - button [ref=e303] [cursor=pointer]:
-                      - img [ref=e304]
-                - generic [ref=e309]:
-                  - generic [ref=e310]:
-                    - generic [ref=e311]:
-                      - img [ref=e312]
-                      - heading "API Access" [level=3] [ref=e316]
-                      - generic [ref=e317]: Disabled
-                      - generic [ref=e318]: Global
-                    - paragraph [ref=e319]:
-                      - text: "Key:"
-                      - code [ref=e320]: api_access
-                    - paragraph [ref=e321]: External API access
-                    - paragraph [ref=e322]: "Strategy: Specific Roles (6 roles)"
-                  - generic [ref=e323]:
-                    - button "Configure" [ref=e324] [cursor=pointer]:
-                      - img [ref=e325]
-                      - text: Configure
-                    - button "Usage" [ref=e328] [cursor=pointer]:
-                      - img [ref=e329]
-                      - text: Usage
-                    - button "Enable" [ref=e330] [cursor=pointer]
-                    - button [ref=e331] [cursor=pointer]:
-                      - img [ref=e332]
-                - generic [ref=e337]:
-                  - generic [ref=e338]:
-                    - generic [ref=e339]:
-                      - img [ref=e340]
-                      - heading "Bulk Email Campaigns" [level=3] [ref=e344]
-                      - generic [ref=e345]: Disabled
-                      - generic [ref=e346]: Global
-                    - paragraph [ref=e347]:
-                      - text: "Key:"
-                      - code [ref=e348]: bulk_email
-                    - paragraph [ref=e349]: Send bulk emails to candidates
-                    - paragraph [ref=e350]: "Strategy: Disabled"
-                  - generic [ref=e351]:
-                    - button "Configure" [ref=e352] [cursor=pointer]:
-                      - img [ref=e353]
-                      - text: Configure
-                    - button "Usage" [ref=e356] [cursor=pointer]:
-                      - img [ref=e357]
-                      - text: Usage
-                    - button "Enable" [ref=e358] [cursor=pointer]
-                    - button [ref=e359] [cursor=pointer]:
-                      - img [ref=e360]
-                - generic [ref=e365]:
-                  - generic [ref=e366]:
-                    - generic [ref=e367]:
-                      - img [ref=e368]
-                      - heading "Bulk Operations" [level=3] [ref=e372]
-                      - generic [ref=e373]: Disabled
-                      - generic [ref=e374]: Global
-                    - paragraph [ref=e375]:
-                      - text: "Key:"
-                      - code [ref=e376]: bulk_operations
-                    - paragraph [ref=e377]: Perform bulk updates on records
-                    - paragraph [ref=e378]: "Strategy: Specific Roles (9 roles)"
-                  - generic [ref=e379]:
-                    - button "Configure" [ref=e380] [cursor=pointer]:
-                      - img [ref=e381]
-                      - text: Configure
-                    - button "Usage" [ref=e384] [cursor=pointer]:
-                      - img [ref=e385]
-                      - text: Usage
-                    - button "Enable" [ref=e386] [cursor=pointer]
-                    - button [ref=e387] [cursor=pointer]:
-                      - img [ref=e388]
-                - generic [ref=e393]:
-                  - generic [ref=e394]:
-                    - generic [ref=e395]:
-                      - img [ref=e396]
-                      - heading "Custom Reports" [level=3] [ref=e400]
-                      - generic [ref=e401]: Disabled
-                      - generic [ref=e402]: Global
-                    - paragraph [ref=e403]:
-                      - text: "Key:"
-                      - code [ref=e404]: custom_reports
-                    - paragraph [ref=e405]: Create and save custom reports
-                    - paragraph [ref=e406]: "Strategy: Specific Roles (6 roles)"
-                  - generic [ref=e407]:
-                    - button "Configure" [ref=e408] [cursor=pointer]:
-                      - img [ref=e409]
-                      - text: Configure
-                    - button "Usage" [ref=e412] [cursor=pointer]:
-                      - img [ref=e413]
-                      - text: Usage
-                    - button "Enable" [ref=e414] [cursor=pointer]
-                    - button [ref=e415] [cursor=pointer]:
-                      - img [ref=e416]
-                - generic [ref=e421]:
-                  - generic [ref=e422]:
-                    - generic [ref=e423]:
-                      - img [ref=e424]
-                      - heading "Data Export" [level=3] [ref=e427]
-                      - generic [ref=e428]: Enabled
-                      - generic [ref=e429]: Global
-                    - paragraph [ref=e430]:
-                      - text: "Key:"
-                      - code [ref=e431]: data_export
-                    - paragraph [ref=e432]: Export data in various formats
-                    - paragraph [ref=e433]: "Strategy: Specific Roles (12 roles)"
-                  - generic [ref=e434]:
-                    - button "Configure" [ref=e435] [cursor=pointer]:
-                      - img [ref=e436]
-                      - text: Configure
-                    - button "Usage" [ref=e439] [cursor=pointer]:
-                      - img [ref=e440]
-                      - text: Usage
-                    - button "Disable" [ref=e441] [cursor=pointer]
-                    - button [ref=e442] [cursor=pointer]:
-                      - img [ref=e443]
-                - generic [ref=e448]:
-                  - generic [ref=e449]:
-                    - generic [ref=e450]:
-                      - img [ref=e451]
-                      - heading "Mobile App Access" [level=3] [ref=e455]
-                      - generic [ref=e456]: Disabled
-                      - generic [ref=e457]: Global
-                    - paragraph [ref=e458]:
-                      - text: "Key:"
-                      - code [ref=e459]: mobile_app
-                    - paragraph [ref=e460]: Access via mobile application
-                    - paragraph [ref=e461]: "Strategy: Disabled"
-                  - generic [ref=e462]:
-                    - button "Configure" [ref=e463] [cursor=pointer]:
-                      - img [ref=e464]
-                      - text: Configure
-                    - button "Usage" [ref=e467] [cursor=pointer]:
-                      - img [ref=e468]
-                      - text: Usage
-                    - button "Enable" [ref=e469] [cursor=pointer]
-                    - button [ref=e470] [cursor=pointer]:
-                      - img [ref=e471]
-                - generic [ref=e476]:
-                  - generic [ref=e477]:
-                    - generic [ref=e478]:
-                      - img [ref=e479]
-                      - heading "Third-party Integrations" [level=3] [ref=e483]
-                      - generic [ref=e484]: Disabled
-                      - generic [ref=e485]: Global
-                    - paragraph [ref=e486]:
-                      - text: "Key:"
-                      - code [ref=e487]: integrations
-                    - paragraph [ref=e488]: Connect with external services
-                    - paragraph [ref=e489]: "Strategy: Disabled"
-                  - generic [ref=e490]:
-                    - button "Configure" [ref=e491] [cursor=pointer]:
-                      - img [ref=e492]
-                      - text: Configure
-                    - button "Usage" [ref=e495] [cursor=pointer]:
-                      - img [ref=e496]
-                      - text: Usage
-                    - button "Enable" [ref=e497] [cursor=pointer]
-                    - button [ref=e498] [cursor=pointer]:
-                      - img [ref=e499]
-                - generic [ref=e504]:
-                  - generic [ref=e505]:
-                    - generic [ref=e506]:
-                      - img [ref=e507]
-                      - heading "Workflow Automation" [level=3] [ref=e511]
-                      - generic [ref=e512]: Disabled
-                      - generic [ref=e513]: Global
-                    - paragraph [ref=e514]:
-                      - text: "Key:"
-                      - code [ref=e515]: workflow_automation
-                    - paragraph [ref=e516]: Automated workflows and triggers
-                    - paragraph [ref=e517]: "Strategy: Disabled"
-                  - generic [ref=e518]:
-                    - button "Configure" [ref=e519] [cursor=pointer]:
-                      - img [ref=e520]
-                      - text: Configure
-                    - button "Usage" [ref=e523] [cursor=pointer]:
-                      - img [ref=e524]
-                      - text: Usage
-                    - button "Enable" [ref=e525] [cursor=pointer]
-                    - button [ref=e526] [cursor=pointer]:
-                      - img [ref=e527]
+                  - text: New Feature
+            - generic [ref=e184]:
+              - button "1 Enabled" [ref=e185] [cursor=pointer]:
+                - generic [ref=e186]:
+                  - img [ref=e187]
+                  - generic [ref=e190]: "1"
+                - paragraph [ref=e191]: Enabled
+              - button "9 Disabled" [ref=e192] [cursor=pointer]:
+                - generic [ref=e193]:
+                  - img [ref=e194]
+                  - generic [ref=e198]: "9"
+                - paragraph [ref=e199]: Disabled
+              - button "0 Beta" [ref=e200] [cursor=pointer]:
+                - generic [ref=e201]:
+                  - img [ref=e202]
+                  - generic [ref=e204]: "0"
+                - paragraph [ref=e205]: Beta
+              - button "0 Internal" [ref=e206] [cursor=pointer]:
+                - generic [ref=e207]:
+                  - img [ref=e208]
+                  - generic [ref=e210]: "0"
+                - paragraph [ref=e211]: Internal
+              - button "0 Rollout" [ref=e212] [cursor=pointer]:
+                - generic [ref=e213]:
+                  - img [ref=e214]
+                  - generic [ref=e218]: "0"
+                - paragraph [ref=e219]: Rollout
+              - button "0 Coming Soon" [ref=e220] [cursor=pointer]:
+                - generic [ref=e221]:
+                  - img [ref=e222]
+                  - generic [ref=e225]: "0"
+                - paragraph [ref=e226]: Coming Soon
+            - generic [ref=e227]:
+              - generic [ref=e228]:
+                - img [ref=e229]
+                - textbox "Search features... (press / to focus)" [active] [ref=e232]
+              - combobox [ref=e233] [cursor=pointer]:
+                - generic: All States
+                - img [ref=e234]
+              - combobox [ref=e236] [cursor=pointer]:
+                - generic: All Categories
+                - img [ref=e237]
+            - generic [ref=e240]:
+              - generic [ref=e242]:
+                - generic [ref=e243]:
+                  - generic [ref=e244]:
+                    - img [ref=e245]
+                    - heading "Advanced Analytics" [level=3] [ref=e249]
+                    - generic [ref=e250]: Disabled
+                    - generic [ref=e251]: Global
+                  - paragraph [ref=e252]:
+                    - text: "Key:"
+                    - code [ref=e253]: advanced_analytics
+                  - paragraph [ref=e254]: Detailed analytics dashboard
+                  - paragraph [ref=e255]: "Strategy: Specific Roles (9 roles)"
+                - generic [ref=e256]:
+                  - button "Configure" [ref=e257] [cursor=pointer]:
+                    - img [ref=e258]
+                    - text: Configure
+                  - button "Usage" [ref=e261] [cursor=pointer]:
+                    - img [ref=e262]
+                    - text: Usage
+                  - button "Enable" [ref=e263] [cursor=pointer]
+                  - button [ref=e264] [cursor=pointer]:
+                    - img [ref=e265]
+              - generic [ref=e270]:
+                - generic [ref=e271]:
+                  - generic [ref=e272]:
+                    - img [ref=e273]
+                    - heading "AI Twin System" [level=3] [ref=e277]
+                    - generic [ref=e278]: Disabled
+                    - generic [ref=e279]: Global
+                  - paragraph [ref=e280]:
+                    - text: "Key:"
+                    - code [ref=e281]: ai_twin
+                  - paragraph [ref=e282]: AI-powered assistant for recruiters
+                  - paragraph [ref=e283]: "Strategy: Specific Roles (6 roles)"
+                - generic [ref=e284]:
+                  - button "Configure" [ref=e285] [cursor=pointer]:
+                    - img [ref=e286]
+                    - text: Configure
+                  - button "Usage" [ref=e289] [cursor=pointer]:
+                    - img [ref=e290]
+                    - text: Usage
+                  - button "Enable" [ref=e291] [cursor=pointer]
+                  - button [ref=e292] [cursor=pointer]:
+                    - img [ref=e293]
+              - generic [ref=e298]:
+                - generic [ref=e299]:
+                  - generic [ref=e300]:
+                    - img [ref=e301]
+                    - heading "API Access" [level=3] [ref=e305]
+                    - generic [ref=e306]: Disabled
+                    - generic [ref=e307]: Global
+                  - paragraph [ref=e308]:
+                    - text: "Key:"
+                    - code [ref=e309]: api_access
+                  - paragraph [ref=e310]: External API access
+                  - paragraph [ref=e311]: "Strategy: Specific Roles (6 roles)"
+                - generic [ref=e312]:
+                  - button "Configure" [ref=e313] [cursor=pointer]:
+                    - img [ref=e314]
+                    - text: Configure
+                  - button "Usage" [ref=e317] [cursor=pointer]:
+                    - img [ref=e318]
+                    - text: Usage
+                  - button "Enable" [ref=e319] [cursor=pointer]
+                  - button [ref=e320] [cursor=pointer]:
+                    - img [ref=e321]
+              - generic [ref=e326]:
+                - generic [ref=e327]:
+                  - generic [ref=e328]:
+                    - img [ref=e329]
+                    - heading "Bulk Email Campaigns" [level=3] [ref=e333]
+                    - generic [ref=e334]: Disabled
+                    - generic [ref=e335]: Global
+                  - paragraph [ref=e336]:
+                    - text: "Key:"
+                    - code [ref=e337]: bulk_email
+                  - paragraph [ref=e338]: Send bulk emails to candidates
+                  - paragraph [ref=e339]: "Strategy: Disabled"
+                - generic [ref=e340]:
+                  - button "Configure" [ref=e341] [cursor=pointer]:
+                    - img [ref=e342]
+                    - text: Configure
+                  - button "Usage" [ref=e345] [cursor=pointer]:
+                    - img [ref=e346]
+                    - text: Usage
+                  - button "Enable" [ref=e347] [cursor=pointer]
+                  - button [ref=e348] [cursor=pointer]:
+                    - img [ref=e349]
+              - generic [ref=e354]:
+                - generic [ref=e355]:
+                  - generic [ref=e356]:
+                    - img [ref=e357]
+                    - heading "Bulk Operations" [level=3] [ref=e361]
+                    - generic [ref=e362]: Disabled
+                    - generic [ref=e363]: Global
+                  - paragraph [ref=e364]:
+                    - text: "Key:"
+                    - code [ref=e365]: bulk_operations
+                  - paragraph [ref=e366]: Perform bulk updates on records
+                  - paragraph [ref=e367]: "Strategy: Specific Roles (9 roles)"
+                - generic [ref=e368]:
+                  - button "Configure" [ref=e369] [cursor=pointer]:
+                    - img [ref=e370]
+                    - text: Configure
+                  - button "Usage" [ref=e373] [cursor=pointer]:
+                    - img [ref=e374]
+                    - text: Usage
+                  - button "Enable" [ref=e375] [cursor=pointer]
+                  - button [ref=e376] [cursor=pointer]:
+                    - img [ref=e377]
+              - generic [ref=e382]:
+                - generic [ref=e383]:
+                  - generic [ref=e384]:
+                    - img [ref=e385]
+                    - heading "Custom Reports" [level=3] [ref=e389]
+                    - generic [ref=e390]: Disabled
+                    - generic [ref=e391]: Global
+                  - paragraph [ref=e392]:
+                    - text: "Key:"
+                    - code [ref=e393]: custom_reports
+                  - paragraph [ref=e394]: Create and save custom reports
+                  - paragraph [ref=e395]: "Strategy: Specific Roles (6 roles)"
+                - generic [ref=e396]:
+                  - button "Configure" [ref=e397] [cursor=pointer]:
+                    - img [ref=e398]
+                    - text: Configure
+                  - button "Usage" [ref=e401] [cursor=pointer]:
+                    - img [ref=e402]
+                    - text: Usage
+                  - button "Enable" [ref=e403] [cursor=pointer]
+                  - button [ref=e404] [cursor=pointer]:
+                    - img [ref=e405]
+              - generic [ref=e410]:
+                - generic [ref=e411]:
+                  - generic [ref=e412]:
+                    - img [ref=e413]
+                    - heading "Data Export" [level=3] [ref=e416]
+                    - generic [ref=e417]: Enabled
+                    - generic [ref=e418]: Global
+                  - paragraph [ref=e419]:
+                    - text: "Key:"
+                    - code [ref=e420]: data_export
+                  - paragraph [ref=e421]: Export data in various formats
+                  - paragraph [ref=e422]: "Strategy: Specific Roles (12 roles)"
+                - generic [ref=e423]:
+                  - button "Configure" [ref=e424] [cursor=pointer]:
+                    - img [ref=e425]
+                    - text: Configure
+                  - button "Usage" [ref=e428] [cursor=pointer]:
+                    - img [ref=e429]
+                    - text: Usage
+                  - button "Disable" [ref=e430] [cursor=pointer]
+                  - button [ref=e431] [cursor=pointer]:
+                    - img [ref=e432]
+              - generic [ref=e437]:
+                - generic [ref=e438]:
+                  - generic [ref=e439]:
+                    - img [ref=e440]
+                    - heading "Mobile App Access" [level=3] [ref=e444]
+                    - generic [ref=e445]: Disabled
+                    - generic [ref=e446]: Global
+                  - paragraph [ref=e447]:
+                    - text: "Key:"
+                    - code [ref=e448]: mobile_app
+                  - paragraph [ref=e449]: Access via mobile application
+                  - paragraph [ref=e450]: "Strategy: Disabled"
+                - generic [ref=e451]:
+                  - button "Configure" [ref=e452] [cursor=pointer]:
+                    - img [ref=e453]
+                    - text: Configure
+                  - button "Usage" [ref=e456] [cursor=pointer]:
+                    - img [ref=e457]
+                    - text: Usage
+                  - button "Enable" [ref=e458] [cursor=pointer]
+                  - button [ref=e459] [cursor=pointer]:
+                    - img [ref=e460]
+              - generic [ref=e465]:
+                - generic [ref=e466]:
+                  - generic [ref=e467]:
+                    - img [ref=e468]
+                    - heading "Third-party Integrations" [level=3] [ref=e472]
+                    - generic [ref=e473]: Disabled
+                    - generic [ref=e474]: Global
+                  - paragraph [ref=e475]:
+                    - text: "Key:"
+                    - code [ref=e476]: integrations
+                  - paragraph [ref=e477]: Connect with external services
+                  - paragraph [ref=e478]: "Strategy: Disabled"
+                - generic [ref=e479]:
+                  - button "Configure" [ref=e480] [cursor=pointer]:
+                    - img [ref=e481]
+                    - text: Configure
+                  - button "Usage" [ref=e484] [cursor=pointer]:
+                    - img [ref=e485]
+                    - text: Usage
+                  - button "Enable" [ref=e486] [cursor=pointer]
+                  - button [ref=e487] [cursor=pointer]:
+                    - img [ref=e488]
+              - generic [ref=e493]:
+                - generic [ref=e494]:
+                  - generic [ref=e495]:
+                    - img [ref=e496]
+                    - heading "Workflow Automation" [level=3] [ref=e500]
+                    - generic [ref=e501]: Disabled
+                    - generic [ref=e502]: Global
+                  - paragraph [ref=e503]:
+                    - text: "Key:"
+                    - code [ref=e504]: workflow_automation
+                  - paragraph [ref=e505]: Automated workflows and triggers
+                  - paragraph [ref=e506]: "Strategy: Disabled"
+                - generic [ref=e507]:
+                  - button "Configure" [ref=e508] [cursor=pointer]:
+                    - img [ref=e509]
+                    - text: Configure
+                  - button "Usage" [ref=e512] [cursor=pointer]:
+                    - img [ref=e513]
+                    - text: Usage
+                  - button "Enable" [ref=e514] [cursor=pointer]
+                  - button [ref=e515] [cursor=pointer]:
+                    - img [ref=e516]
   - region "Notifications (F8)":
     - list
-  - button "Open Next.js Dev Tools" [ref=e536] [cursor=pointer]:
-    - img [ref=e537]
-  - alert [ref=e540]
+  - button "Open Next.js Dev Tools" [ref=e525] [cursor=pointer]:
+    - img [ref=e526]
+  - alert [ref=e529]
 ```

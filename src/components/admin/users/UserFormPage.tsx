@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { trpc } from '@/lib/trpc/client'
-import { DashboardShell } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -212,20 +212,22 @@ export function UserFormPage({ mode, userId }: UserFormPageProps) {
 
   if (mode === 'edit' && userQuery.isLoading) {
     return (
-      <DashboardShell title="Loading..." breadcrumbs={breadcrumbs}>
+      <AdminPageContent>
+        <AdminPageHeader title="Loading..." breadcrumbs={breadcrumbs} />
         <div className="flex items-center justify-center h-64">
-          <Loader2 className="w-8 h-8 animate-spin text-forest-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-hublot-600" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   return (
-    <DashboardShell
-      title={mode === 'create' ? 'Create New User' : 'Edit User'}
-      description={mode === 'create' ? 'Add a new user to the organization' : 'Update user details'}
-      breadcrumbs={breadcrumbs}
-    >
+    <AdminPageContent>
+      <AdminPageHeader
+        title={mode === 'create' ? 'Create New User' : 'Edit User'}
+        description={mode === 'create' ? 'Add a new user to the organization' : 'Update user details'}
+        breadcrumbs={breadcrumbs}
+      />
       <form onSubmit={handleSubmit} className="max-w-2xl">
         <div className="bg-white rounded-xl border border-charcoal-100 p-6 space-y-6">
           {/* Basic Information */}
@@ -371,7 +373,7 @@ export function UserFormPage({ mode, userId }: UserFormPageProps) {
                       name="authMethod"
                       checked={authMethod === 'invitation'}
                       onChange={() => setAuthMethod('invitation')}
-                      className="w-4 h-4 text-forest-600 focus:ring-forest-500"
+                      className="w-4 h-4 text-hublot-600 focus:ring-gold-500"
                     />
                     <div>
                       <p className="font-medium text-charcoal-900">Send invitation email</p>
@@ -384,7 +386,7 @@ export function UserFormPage({ mode, userId }: UserFormPageProps) {
                       name="authMethod"
                       checked={authMethod === 'password'}
                       onChange={() => setAuthMethod('password')}
-                      className="w-4 h-4 text-forest-600 focus:ring-forest-500"
+                      className="w-4 h-4 text-hublot-600 focus:ring-gold-500"
                     />
                     <div>
                       <p className="font-medium text-charcoal-900">Set initial password</p>
@@ -421,7 +423,7 @@ export function UserFormPage({ mode, userId }: UserFormPageProps) {
                     type="checkbox"
                     checked={requireTwoFactor}
                     onChange={(e) => setRequireTwoFactor(e.target.checked)}
-                    className="w-4 h-4 text-forest-600 focus:ring-forest-500 rounded"
+                    className="w-4 h-4 text-hublot-600 focus:ring-gold-500 rounded"
                   />
                   <div>
                     <p className="font-medium text-charcoal-900">Require two-factor authentication</p>
@@ -444,7 +446,7 @@ export function UserFormPage({ mode, userId }: UserFormPageProps) {
             </Button>
             <Button
               type="submit"
-              className="bg-forest-600 hover:bg-forest-700 text-white"
+              className="bg-hublot-900 hover:bg-hublot-800 text-white"
               disabled={isLoading}
             >
               {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
@@ -453,6 +455,6 @@ export function UserFormPage({ mode, userId }: UserFormPageProps) {
           </div>
         </div>
       </form>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

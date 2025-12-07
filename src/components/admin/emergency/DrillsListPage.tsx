@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { DashboardShell, DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -107,36 +107,39 @@ export function DrillsListPage() {
   const drills = drillsQuery.data?.items ?? []
   const pagination = drillsQuery.data?.pagination
 
+  const breadcrumbs = [
+    { label: 'Admin', href: '/employee/admin' },
+    { label: 'Emergency', href: '/employee/admin/emergency' },
+    { label: 'Drills' },
+  ]
+
   return (
-    <DashboardShell
-      title="Emergency Drills"
-      description="Schedule and track emergency response drills"
-      breadcrumbs={[
-        { label: 'Emergency', href: '/employee/admin/emergency' },
-        { label: 'Drills' },
-      ]}
-      actions={
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleRefresh}
-            disabled={drillsQuery.isFetching}
-          >
-            <RefreshCw className={`w-4 h-4 mr-2 ${drillsQuery.isFetching ? 'animate-spin' : ''}`} />
-            Refresh
-          </Button>
-          <Button
-            variant="default"
-            size="sm"
-            onClick={() => setShowCreateDrill(true)}
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            Schedule Drill
-          </Button>
-        </div>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleRefresh}
+              disabled={drillsQuery.isFetching}
+            >
+              <RefreshCw className={`w-4 h-4 mr-2 ${drillsQuery.isFetching ? 'animate-spin' : ''}`} />
+              Refresh
+            </Button>
+            <Button
+              variant="default"
+              size="sm"
+              onClick={() => setShowCreateDrill(true)}
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Schedule Drill
+            </Button>
+          </div>
+        }
+      />
       {/* Filters */}
       <Card className="mb-6">
         <CardContent className="p-4">
@@ -339,6 +342,6 @@ export function DrillsListPage() {
           utils.emergency.listDrills.invalidate()
         }}
       />
-    </DashboardShell>
+    </AdminPageContent>
   )
 }

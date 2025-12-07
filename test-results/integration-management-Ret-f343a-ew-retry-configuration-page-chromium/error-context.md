@@ -66,208 +66,223 @@
                       - img [ref=e78]
                       - generic [ref=e81]: Settings
                 - listitem [ref=e82]:
-                  - link "Org Settings" [ref=e83] [cursor=pointer]:
-                    - /url: /employee/admin/org-settings
+                  - link "Integrations" [ref=e83] [cursor=pointer]:
+                    - /url: /employee/admin/integrations
                     - generic [ref=e84]:
                       - img [ref=e85]
-                      - generic [ref=e89]: Org Settings
+                      - generic [ref=e89]: Integrations
                 - listitem [ref=e90]:
-                  - link "Integrations" [ref=e91] [cursor=pointer]:
-                    - /url: /employee/admin/integrations
+                  - link "Workflows" [ref=e91] [cursor=pointer]:
+                    - /url: /employee/admin/workflows
                     - generic [ref=e92]:
                       - img [ref=e93]
-                      - generic [ref=e97]: Integrations
+                      - generic [ref=e97]: Workflows
                 - listitem [ref=e98]:
-                  - link "Workflows" [ref=e99] [cursor=pointer]:
-                    - /url: /employee/admin/workflows
+                  - link "SLA Config" [ref=e99] [cursor=pointer]:
+                    - /url: /employee/admin/sla
                     - generic [ref=e100]:
                       - img [ref=e101]
-                      - generic [ref=e105]: Workflows
-                - listitem [ref=e106]:
-                  - link "SLA Config" [ref=e107] [cursor=pointer]:
-                    - /url: /employee/admin/sla
-                    - generic [ref=e108]:
-                      - img [ref=e109]
-                      - generic [ref=e112]: SLA Config
-                - listitem [ref=e113]:
-                  - link "Activity Patterns" [ref=e114] [cursor=pointer]:
+                      - generic [ref=e104]: SLA Config
+                - listitem [ref=e105]:
+                  - link "Activity Patterns" [ref=e106] [cursor=pointer]:
                     - /url: /employee/admin/activity-patterns
-                    - generic [ref=e115]:
-                      - img [ref=e116]
-                      - generic [ref=e118]: Activity Patterns
-                - listitem [ref=e119]:
-                  - link "Email Templates" [ref=e120] [cursor=pointer]:
+                    - generic [ref=e107]:
+                      - img [ref=e108]
+                      - generic [ref=e110]: Activity Patterns
+                - listitem [ref=e111]:
+                  - link "Email Templates" [ref=e112] [cursor=pointer]:
                     - /url: /employee/admin/email-templates
-                    - generic [ref=e121]:
-                      - img [ref=e122]
-                      - generic [ref=e125]: Email Templates
-                - listitem [ref=e126]:
-                  - link "API Tokens" [ref=e127] [cursor=pointer]:
+                    - generic [ref=e113]:
+                      - img [ref=e114]
+                      - generic [ref=e117]: Email Templates
+                - listitem [ref=e118]:
+                  - link "API Tokens" [ref=e119] [cursor=pointer]:
                     - /url: /employee/admin/api-tokens
+                    - generic [ref=e120]:
+                      - img [ref=e121]
+                      - generic [ref=e125]: API Tokens
+                - listitem [ref=e126]:
+                  - link "Feature Flags" [ref=e127] [cursor=pointer]:
+                    - /url: /employee/admin/feature-flags
                     - generic [ref=e128]:
                       - img [ref=e129]
-                      - generic [ref=e133]: API Tokens
-                - listitem [ref=e134]:
-                  - link "Feature Flags" [ref=e135] [cursor=pointer]:
-                    - /url: /employee/admin/feature-flags
-                    - generic [ref=e136]:
-                      - img [ref=e137]
-                      - generic [ref=e139]: Feature Flags
-            - generic [ref=e140]:
-              - heading "Monitoring" [level=3] [ref=e141]
-              - list [ref=e142]:
-                - listitem [ref=e143]:
-                  - link "Audit Logs" [ref=e144] [cursor=pointer]:
+                      - generic [ref=e131]: Feature Flags
+            - generic [ref=e132]:
+              - heading "Monitoring" [level=3] [ref=e133]
+              - list [ref=e134]:
+                - listitem [ref=e135]:
+                  - link "Audit Logs" [ref=e136] [cursor=pointer]:
                     - /url: /employee/admin/audit
-                    - generic [ref=e145]:
-                      - img [ref=e146]
-                      - generic [ref=e149]: Audit Logs
-                - listitem [ref=e150]:
-                  - link "Notifications" [ref=e151] [cursor=pointer]:
+                    - generic [ref=e137]:
+                      - img [ref=e138]
+                      - generic [ref=e141]: Audit Logs
+                - listitem [ref=e142]:
+                  - link "Notifications" [ref=e143] [cursor=pointer]:
                     - /url: /employee/admin/notifications
-                    - generic [ref=e152]:
-                      - img [ref=e153]
-                      - generic [ref=e156]: Notifications
-                - listitem [ref=e157]:
-                  - link "Data Management" [ref=e158] [cursor=pointer]:
+                    - generic [ref=e144]:
+                      - img [ref=e145]
+                      - generic [ref=e148]: Notifications
+                - listitem [ref=e149]:
+                  - link "Data Management" [ref=e150] [cursor=pointer]:
                     - /url: /employee/admin/data
+                    - generic [ref=e151]:
+                      - img [ref=e152]
+                      - generic [ref=e156]: Data Management
+                - listitem [ref=e157]:
+                  - link "Emergency" [ref=e158] [cursor=pointer]:
+                    - /url: /employee/admin/emergency
                     - generic [ref=e159]:
                       - img [ref=e160]
-                      - generic [ref=e164]: Data Management
-                - listitem [ref=e165]:
-                  - link "Emergency" [ref=e166] [cursor=pointer]:
-                    - /url: /employee/admin/emergency
-                    - generic [ref=e167]:
-                      - img [ref=e168]
-                      - generic [ref=e170]: Emergency
-        - main [ref=e171]:
-          - generic [ref=e172]:
-            - heading "Admin Portal" [level=1] [ref=e175]
-            - generic [ref=e176]:
-              - generic [ref=e177]:
-                - navigation "Breadcrumb" [ref=e178]:
-                  - link "Home" [ref=e179] [cursor=pointer]:
-                    - /url: /
-                    - img [ref=e180]
-                  - img [ref=e183]
-                  - link "Admin" [ref=e185] [cursor=pointer]:
-                    - /url: /employee/admin
-                  - img [ref=e186]
-                  - link "Integrations" [ref=e188] [cursor=pointer]:
-                    - /url: /employee/admin/integrations
-                  - img [ref=e189]
-                  - generic [ref=e191]: Retry Configuration
-                - generic [ref=e192]:
-                  - generic [ref=e193]:
-                    - heading "Retry Configuration" [level=1] [ref=e194]
-                    - generic [ref=e195]: Configure retry behavior for failed webhook deliveries
-                  - link "Back to Integrations" [ref=e197] [cursor=pointer]:
-                    - /url: /employee/admin/integrations
-                    - button "Back to Integrations" [ref=e198]:
+                      - generic [ref=e162]: Emergency
+        - main [ref=e163]:
+          - generic [ref=e164]:
+            - generic [ref=e165]:
+              - generic [ref=e166]:
+                - heading "Integrations" [level=1] [ref=e167]
+                - paragraph [ref=e168]: Manage third-party connections and webhook configurations
+              - navigation [ref=e171]:
+                - link "Integrations" [ref=e172] [cursor=pointer]:
+                  - /url: /employee/admin/integrations
+                  - img [ref=e173]
+                  - text: Integrations
+                - link "Webhooks" [ref=e175] [cursor=pointer]:
+                  - /url: /employee/admin/integrations/webhooks
+                  - img [ref=e176]
+                  - text: Webhooks
+                - link "Dead Letter Queue" [ref=e180] [cursor=pointer]:
+                  - /url: /employee/admin/integrations/dlq
+                  - img [ref=e181]
+                  - text: Dead Letter Queue
+                - link "Failover" [ref=e183] [cursor=pointer]:
+                  - /url: /employee/admin/integrations/failover
+                  - img [ref=e184]
+                  - text: Failover
+                - link "Retry Config" [ref=e189] [cursor=pointer]:
+                  - /url: /employee/admin/integrations/retry-config
+                  - img [ref=e190]
+                  - text: Retry Config
+            - main [ref=e193]:
+              - generic [ref=e195]:
+                - generic [ref=e196]:
+                  - navigation "Breadcrumb" [ref=e197]:
+                    - link "Home" [ref=e198] [cursor=pointer]:
+                      - /url: /
                       - img [ref=e199]
+                    - img [ref=e202]
+                    - link "Admin" [ref=e204] [cursor=pointer]:
+                      - /url: /employee/admin
+                    - img [ref=e205]
+                    - link "Integrations" [ref=e207] [cursor=pointer]:
+                      - /url: /employee/admin/integrations
+                    - img [ref=e208]
+                    - generic [ref=e210]: Retry Configuration
+                  - link "Back to Integrations" [ref=e213] [cursor=pointer]:
+                    - /url: /employee/admin/integrations
+                    - button "Back to Integrations" [ref=e214]:
+                      - img [ref=e215]
                       - text: Back to Integrations
-              - generic [ref=e202]:
-                - generic [ref=e203]:
-                  - generic [ref=e204]:
-                    - heading "Retry Settings" [level=2] [ref=e206]
-                    - generic [ref=e207]:
-                      - generic [ref=e208]:
-                        - text: Retry Strategy
-                        - generic [ref=e209]:
-                          - generic [ref=e210] [cursor=pointer]:
-                            - radio "Exponential Backoff Delay doubles after each attempt (recommended)" [checked] [ref=e211]
-                            - generic [ref=e212]:
-                              - text: Exponential Backoff
-                              - paragraph [ref=e213]: Delay doubles after each attempt (recommended)
-                          - generic [ref=e214] [cursor=pointer]:
-                            - radio "Linear Backoff Delay increases by base amount each attempt" [ref=e215]
-                            - generic [ref=e216]:
-                              - text: Linear Backoff
-                              - paragraph [ref=e217]: Delay increases by base amount each attempt
-                          - generic [ref=e218] [cursor=pointer]:
-                            - radio "Fixed Delay Same delay between all attempts" [ref=e219]
-                            - generic [ref=e220]:
-                              - text: Fixed Delay
-                              - paragraph [ref=e221]: Same delay between all attempts
-                      - generic [ref=e222]:
-                        - generic [ref=e223]:
-                          - text: Maximum Retries
-                          - spinbutton "Maximum Retries" [ref=e224]: "5"
-                          - paragraph [ref=e225]: 1-10 attempts after initial failure
-                        - generic [ref=e226]:
-                          - text: Base Delay (seconds)
-                          - spinbutton "Base Delay (seconds)" [ref=e227]: "10"
-                          - paragraph [ref=e228]: Initial delay between retries
-                      - generic [ref=e229]:
-                        - text: Maximum Delay (seconds)
-                        - spinbutton "Maximum Delay (seconds)" [ref=e230]: "600"
-                        - paragraph [ref=e231]: Delay will never exceed this value
-                      - generic [ref=e232]:
-                        - generic [ref=e233] [cursor=pointer]:
-                          - checkbox "Enable Jitter" [checked] [ref=e234]
-                          - generic [ref=e235]: Enable Jitter
-                        - paragraph [ref=e236]: Add random variance to delays to prevent thundering herd
-                  - generic [ref=e237]:
-                    - heading "Dead Letter Queue (DLQ)" [level=2] [ref=e239]
-                    - generic [ref=e240]:
-                      - generic [ref=e241]:
-                        - generic [ref=e242] [cursor=pointer]:
-                          - checkbox "Enable Dead Letter Queue" [checked] [ref=e243]
-                          - generic [ref=e244]: Enable Dead Letter Queue
-                        - paragraph [ref=e245]: Store failed deliveries for manual review and retry
-                      - generic [ref=e246]:
-                        - text: DLQ Retention (days)
-                        - spinbutton "DLQ Retention (days)" [ref=e247]: "30"
-                        - paragraph [ref=e248]: Items older than this will be automatically removed
-                      - generic [ref=e249]:
-                        - img [ref=e250]
-                        - generic [ref=e252]:
-                          - paragraph [ref=e253]: When DLQ is enabled, failed deliveries are stored for manual retry.
-                          - link "Manage DLQ" [ref=e254] [cursor=pointer]:
-                            - /url: /employee/admin/integrations/dlq
-                - generic [ref=e255]:
-                  - generic [ref=e256]:
-                    - heading "Retry Preview" [level=2] [ref=e258]
-                    - generic [ref=e259]:
-                      - generic [ref=e260]:
-                        - img [ref=e261]
-                        - text: Estimated retry delays
-                      - generic [ref=e264]:
-                        - generic [ref=e265]: Retry 1
-                        - generic [ref=e266]: 10s ± jitter
-                      - generic [ref=e267]:
-                        - generic [ref=e268]: Retry 2
-                        - generic [ref=e269]: 20s ± jitter
-                      - generic [ref=e270]:
-                        - generic [ref=e271]: Retry 3
-                        - generic [ref=e272]: 40s ± jitter
-                      - generic [ref=e273]:
-                        - generic [ref=e274]: Retry 4
-                        - generic [ref=e275]: 1m 20s ± jitter
-                      - generic [ref=e276]:
-                        - generic [ref=e277]: Retry 5
-                        - generic [ref=e278]: 2m 40s ± jitter
-                      - generic [ref=e280]:
-                        - generic [ref=e281]: Total max duration
-                        - generic [ref=e282]: 5m 10s
-                  - generic [ref=e283]:
-                    - heading "Retry Behavior" [level=2] [ref=e285]
-                    - generic [ref=e286]:
-                      - generic [ref=e287]:
-                        - img [ref=e288]
-                        - generic [ref=e293]: Server errors (5xx) and timeouts are retried
-                      - generic [ref=e294]:
-                        - img [ref=e295]
-                        - generic [ref=e297]: Client errors (4xx except 429) are not retried
-                      - generic [ref=e298]:
-                        - img [ref=e299]
-                        - generic [ref=e302]: Rate limits (429) are retried with backoff
-                  - button "Save Configuration" [ref=e303] [cursor=pointer]:
-                    - img [ref=e304]
-                    - text: Save Configuration
+                - generic [ref=e218]:
+                  - generic [ref=e219]:
+                    - generic [ref=e220]:
+                      - heading "Retry Settings" [level=2] [ref=e222]
+                      - generic [ref=e223]:
+                        - generic [ref=e224]:
+                          - text: Retry Strategy
+                          - generic [ref=e225]:
+                            - generic [ref=e226] [cursor=pointer]:
+                              - radio "Exponential Backoff Delay doubles after each attempt (recommended)" [checked] [ref=e227]
+                              - generic [ref=e228]:
+                                - text: Exponential Backoff
+                                - paragraph [ref=e229]: Delay doubles after each attempt (recommended)
+                            - generic [ref=e230] [cursor=pointer]:
+                              - radio "Linear Backoff Delay increases by base amount each attempt" [ref=e231]
+                              - generic [ref=e232]:
+                                - text: Linear Backoff
+                                - paragraph [ref=e233]: Delay increases by base amount each attempt
+                            - generic [ref=e234] [cursor=pointer]:
+                              - radio "Fixed Delay Same delay between all attempts" [ref=e235]
+                              - generic [ref=e236]:
+                                - text: Fixed Delay
+                                - paragraph [ref=e237]: Same delay between all attempts
+                        - generic [ref=e238]:
+                          - generic [ref=e239]:
+                            - text: Maximum Retries
+                            - spinbutton "Maximum Retries" [ref=e240]: "5"
+                            - paragraph [ref=e241]: 1-10 attempts after initial failure
+                          - generic [ref=e242]:
+                            - text: Base Delay (seconds)
+                            - spinbutton "Base Delay (seconds)" [ref=e243]: "10"
+                            - paragraph [ref=e244]: Initial delay between retries
+                        - generic [ref=e245]:
+                          - text: Maximum Delay (seconds)
+                          - spinbutton "Maximum Delay (seconds)" [ref=e246]: "600"
+                          - paragraph [ref=e247]: Delay will never exceed this value
+                        - generic [ref=e248]:
+                          - generic [ref=e249] [cursor=pointer]:
+                            - checkbox "Enable Jitter" [checked] [ref=e250]
+                            - generic [ref=e251]: Enable Jitter
+                          - paragraph [ref=e252]: Add random variance to delays to prevent thundering herd
+                    - generic [ref=e253]:
+                      - heading "Dead Letter Queue (DLQ)" [level=2] [ref=e255]
+                      - generic [ref=e256]:
+                        - generic [ref=e257]:
+                          - generic [ref=e258] [cursor=pointer]:
+                            - checkbox "Enable Dead Letter Queue" [checked] [ref=e259]
+                            - generic [ref=e260]: Enable Dead Letter Queue
+                          - paragraph [ref=e261]: Store failed deliveries for manual review and retry
+                        - generic [ref=e262]:
+                          - text: DLQ Retention (days)
+                          - spinbutton "DLQ Retention (days)" [ref=e263]: "30"
+                          - paragraph [ref=e264]: Items older than this will be automatically removed
+                        - generic [ref=e265]:
+                          - img [ref=e266]
+                          - generic [ref=e268]:
+                            - paragraph [ref=e269]: When DLQ is enabled, failed deliveries are stored for manual retry.
+                            - link "Manage DLQ" [ref=e270] [cursor=pointer]:
+                              - /url: /employee/admin/integrations/dlq
+                  - generic [ref=e271]:
+                    - generic [ref=e272]:
+                      - heading "Retry Preview" [level=2] [ref=e274]
+                      - generic [ref=e275]:
+                        - generic [ref=e276]:
+                          - img [ref=e277]
+                          - text: Estimated retry delays
+                        - generic [ref=e280]:
+                          - generic [ref=e281]: Retry 1
+                          - generic [ref=e282]: 10s ± jitter
+                        - generic [ref=e283]:
+                          - generic [ref=e284]: Retry 2
+                          - generic [ref=e285]: 20s ± jitter
+                        - generic [ref=e286]:
+                          - generic [ref=e287]: Retry 3
+                          - generic [ref=e288]: 40s ± jitter
+                        - generic [ref=e289]:
+                          - generic [ref=e290]: Retry 4
+                          - generic [ref=e291]: 1m 20s ± jitter
+                        - generic [ref=e292]:
+                          - generic [ref=e293]: Retry 5
+                          - generic [ref=e294]: 2m 40s ± jitter
+                        - generic [ref=e296]:
+                          - generic [ref=e297]: Total max duration
+                          - generic [ref=e298]: 5m 10s
+                    - generic [ref=e299]:
+                      - heading "Retry Behavior" [level=2] [ref=e301]
+                      - generic [ref=e302]:
+                        - generic [ref=e303]:
+                          - img [ref=e304]
+                          - generic [ref=e309]: Server errors (5xx) and timeouts are retried
+                        - generic [ref=e310]:
+                          - img [ref=e311]
+                          - generic [ref=e313]: Client errors (4xx except 429) are not retried
+                        - generic [ref=e314]:
+                          - img [ref=e315]
+                          - generic [ref=e318]: Rate limits (429) are retried with backoff
+                    - button "Save Configuration" [ref=e319] [cursor=pointer]:
+                      - img [ref=e320]
+                      - text: Save Configuration
   - region "Notifications (F8)":
     - list
-  - button "Open Next.js Dev Tools" [ref=e313] [cursor=pointer]:
-    - img [ref=e314]
-  - alert [ref=e317]
+  - button "Open Next.js Dev Tools" [ref=e329] [cursor=pointer]:
+    - img [ref=e330]
+  - alert [ref=e333]
 ```

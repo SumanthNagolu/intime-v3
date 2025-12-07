@@ -1,0 +1,740 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e7]:
+        - link "I InTime Portal" [ref=e8] [cursor=pointer]:
+          - /url: /employee/admin/dashboard
+          - generic [ref=e10]: I
+          - generic [ref=e11]:
+            - generic [ref=e12]: InTime
+            - generic [ref=e13]: Portal
+        - button "admin" [ref=e16] [cursor=pointer]:
+          - img [ref=e18]
+          - generic [ref=e21]: admin
+          - img [ref=e22]
+      - generic [ref=e24]:
+        - complementary [ref=e25]:
+          - navigation [ref=e26]:
+            - generic [ref=e27]:
+              - heading "Main" [level=3] [ref=e28]
+              - list [ref=e29]:
+                - listitem [ref=e30]:
+                  - link "Dashboard" [ref=e31] [cursor=pointer]:
+                    - /url: /employee/admin/dashboard
+                    - generic [ref=e32]:
+                      - img [ref=e33]
+                      - generic [ref=e38]: Dashboard
+            - generic [ref=e39]:
+              - heading "User Management" [level=3] [ref=e40]
+              - list [ref=e41]:
+                - listitem [ref=e42]:
+                  - link "Users" [ref=e43] [cursor=pointer]:
+                    - /url: /employee/admin/users
+                    - generic [ref=e44]:
+                      - img [ref=e45]
+                      - generic [ref=e50]: Users
+                - listitem [ref=e51]:
+                  - link "Pods" [ref=e52] [cursor=pointer]:
+                    - /url: /employee/admin/pods
+                    - generic [ref=e53]:
+                      - img [ref=e54]
+                      - generic [ref=e59]: Pods
+                - listitem [ref=e60]:
+                  - link "Roles" [ref=e61] [cursor=pointer]:
+                    - /url: /employee/admin/roles
+                    - generic [ref=e62]:
+                      - img [ref=e63]
+                      - generic [ref=e65]: Roles
+                - listitem [ref=e66]:
+                  - link "Permissions" [ref=e67] [cursor=pointer]:
+                    - /url: /employee/admin/permissions
+                    - generic [ref=e68]:
+                      - img [ref=e69]
+                      - generic [ref=e71]: Permissions
+            - generic [ref=e72]:
+              - heading "System" [level=3] [ref=e73]
+              - list [ref=e74]:
+                - listitem [ref=e75]:
+                  - link "Settings" [ref=e76] [cursor=pointer]:
+                    - /url: /employee/admin/settings
+                    - generic [ref=e77]:
+                      - img [ref=e78]
+                      - generic [ref=e81]: Settings
+                - listitem [ref=e82]:
+                  - link "Integrations" [ref=e83] [cursor=pointer]:
+                    - /url: /employee/admin/integrations
+                    - generic [ref=e84]:
+                      - img [ref=e85]
+                      - generic [ref=e89]: Integrations
+                - listitem [ref=e90]:
+                  - link "Workflows" [ref=e91] [cursor=pointer]:
+                    - /url: /employee/admin/workflows
+                    - generic [ref=e92]:
+                      - img [ref=e93]
+                      - generic [ref=e97]: Workflows
+                - listitem [ref=e98]:
+                  - link "SLA Config" [ref=e99] [cursor=pointer]:
+                    - /url: /employee/admin/sla
+                    - generic [ref=e100]:
+                      - img [ref=e101]
+                      - generic [ref=e104]: SLA Config
+                - listitem [ref=e105]:
+                  - link "Activity Patterns" [ref=e106] [cursor=pointer]:
+                    - /url: /employee/admin/activity-patterns
+                    - generic [ref=e107]:
+                      - img [ref=e108]
+                      - generic [ref=e110]: Activity Patterns
+                - listitem [ref=e111]:
+                  - link "Email Templates" [ref=e112] [cursor=pointer]:
+                    - /url: /employee/admin/email-templates
+                    - generic [ref=e113]:
+                      - img [ref=e114]
+                      - generic [ref=e117]: Email Templates
+                - listitem [ref=e118]:
+                  - link "API Tokens" [ref=e119] [cursor=pointer]:
+                    - /url: /employee/admin/api-tokens
+                    - generic [ref=e120]:
+                      - img [ref=e121]
+                      - generic [ref=e125]: API Tokens
+                - listitem [ref=e126]:
+                  - link "Feature Flags" [ref=e127] [cursor=pointer]:
+                    - /url: /employee/admin/feature-flags
+                    - generic [ref=e128]:
+                      - img [ref=e129]
+                      - generic [ref=e131]: Feature Flags
+            - generic [ref=e132]:
+              - heading "Monitoring" [level=3] [ref=e133]
+              - list [ref=e134]:
+                - listitem [ref=e135]:
+                  - link "Audit Logs" [ref=e136] [cursor=pointer]:
+                    - /url: /employee/admin/audit
+                    - generic [ref=e137]:
+                      - img [ref=e138]
+                      - generic [ref=e141]: Audit Logs
+                - listitem [ref=e142]:
+                  - link "Notifications" [ref=e143] [cursor=pointer]:
+                    - /url: /employee/admin/notifications
+                    - generic [ref=e144]:
+                      - img [ref=e145]
+                      - generic [ref=e148]: Notifications
+                - listitem [ref=e149]:
+                  - link "Data Management" [ref=e150] [cursor=pointer]:
+                    - /url: /employee/admin/data
+                    - generic [ref=e151]:
+                      - img [ref=e152]
+                      - generic [ref=e156]: Data Management
+                - listitem [ref=e157]:
+                  - link "Emergency" [ref=e158] [cursor=pointer]:
+                    - /url: /employee/admin/emergency
+                    - generic [ref=e159]:
+                      - img [ref=e160]
+                      - generic [ref=e162]: Emergency
+        - main [ref=e163]:
+          - generic [ref=e164]:
+            - generic [ref=e165]:
+              - generic [ref=e166]:
+                - heading "Audit" [level=1] [ref=e167]
+                - paragraph [ref=e168]: Review system activity and configure audit rules
+              - navigation [ref=e171]:
+                - link "Logs" [ref=e172] [cursor=pointer]:
+                  - /url: /employee/admin/audit
+                  - img [ref=e173]
+                  - text: Logs
+                - link "Rules" [ref=e176] [cursor=pointer]:
+                  - /url: /employee/admin/audit/rules
+                  - img [ref=e177]
+                  - text: Rules
+            - main [ref=e181]:
+              - generic [ref=e183]:
+                - generic [ref=e184]:
+                  - navigation "Breadcrumb" [ref=e185]:
+                    - link "Home" [ref=e186] [cursor=pointer]:
+                      - /url: /
+                      - img [ref=e187]
+                    - img [ref=e190]
+                    - link "Admin" [ref=e192] [cursor=pointer]:
+                      - /url: /employee/admin
+                    - img [ref=e193]
+                    - generic [ref=e195]: Audit
+                  - generic [ref=e198]:
+                    - link "Alert Rules" [ref=e199] [cursor=pointer]:
+                      - /url: /employee/admin/audit/rules
+                      - button "Alert Rules" [ref=e200]:
+                        - img [ref=e201]
+                        - text: Alert Rules
+                    - button "Refresh" [ref=e204] [cursor=pointer]:
+                      - img [ref=e205]
+                      - text: Refresh
+                    - button "Export" [ref=e210] [cursor=pointer]:
+                      - img [ref=e211]
+                      - text: Export
+                - generic [ref=e214]:
+                  - heading "Security Overview (Last 24 Hours)" [level=2] [ref=e216]
+                  - generic [ref=e217]:
+                    - generic [ref=e219]:
+                      - generic [ref=e220]:
+                        - paragraph [ref=e221]: Total Events
+                        - paragraph [ref=e222]: "0"
+                      - img [ref=e224]
+                    - generic [ref=e228]:
+                      - generic [ref=e229]:
+                        - paragraph [ref=e230]: Failed Logins
+                        - paragraph [ref=e231]: "0"
+                      - img [ref=e233]
+                    - generic [ref=e239]:
+                      - generic [ref=e240]:
+                        - paragraph [ref=e241]: Security Alerts
+                        - paragraph [ref=e242]: "0"
+                      - img [ref=e244]
+                    - generic [ref=e247]:
+                      - generic [ref=e248]:
+                        - paragraph [ref=e249]: Data Exports
+                        - paragraph [ref=e250]: "0"
+                      - img [ref=e252]
+                - generic [ref=e256]:
+                  - img [ref=e257]
+                  - generic [ref=e260]:
+                    - paragraph [ref=e261]: No Active Security Alerts
+                    - paragraph [ref=e262]: All systems operating normally
+                - generic [ref=e263]:
+                  - heading "Audit Logs" [level=2] [ref=e265]
+                  - generic [ref=e267]:
+                    - generic [ref=e268]:
+                      - generic [ref=e269]:
+                        - img [ref=e270]
+                        - textbox "Search by email, record ID, or name..." [ref=e273]
+                      - generic [ref=e274]:
+                        - textbox [ref=e275]:
+                          - /placeholder: From
+                        - textbox [ref=e276]:
+                          - /placeholder: To
+                    - generic [ref=e277]:
+                      - combobox [ref=e278] [cursor=pointer]:
+                        - generic: All Users
+                        - img [ref=e279]
+                      - combobox [ref=e281] [cursor=pointer]:
+                        - generic: All Actions
+                        - img [ref=e282]
+                      - combobox [ref=e284] [cursor=pointer]:
+                        - generic: All Objects
+                        - img [ref=e285]
+                      - combobox [ref=e287] [cursor=pointer]:
+                        - generic: All Results
+                        - img [ref=e288]
+                      - combobox [ref=e290] [cursor=pointer]:
+                        - generic: All Severity
+                        - img [ref=e291]
+                      - button "Clear Filters" [ref=e293] [cursor=pointer]
+                  - generic [ref=e294]:
+                    - table [ref=e296]:
+                      - rowgroup [ref=e297]:
+                        - row "Time User Action Object Result Severity IP Actions" [ref=e298]:
+                          - cell "Time" [ref=e299]
+                          - cell "User" [ref=e300]
+                          - cell "Action" [ref=e301]
+                          - cell "Object" [ref=e302]
+                          - cell "Result" [ref=e303]
+                          - cell "Severity" [ref=e304]
+                          - cell "IP" [ref=e305]
+                          - cell "Actions" [ref=e306]
+                      - rowgroup [ref=e307]:
+                        - row "Nov 30, 8:17 AM 7 days ago bs2@intime.com UPDATE user_profiles Success info -" [ref=e308] [cursor=pointer]:
+                          - cell "Nov 30, 8:17 AM 7 days ago" [ref=e309]:
+                            - generic [ref=e310]:
+                              - img [ref=e311]
+                              - generic [ref=e314]:
+                                - paragraph [ref=e315]: Nov 30, 8:17 AM
+                                - paragraph [ref=e316]: 7 days ago
+                          - cell "bs2@intime.com" [ref=e317]:
+                            - paragraph [ref=e318]: bs2@intime.com
+                          - cell "UPDATE" [ref=e319]:
+                            - generic [ref=e320]: UPDATE
+                          - cell "user_profiles" [ref=e321]:
+                            - paragraph [ref=e322]: user_profiles
+                          - cell "Success" [ref=e323]:
+                            - generic [ref=e324]:
+                              - img [ref=e325]
+                              - text: Success
+                          - cell "info" [ref=e328]:
+                            - generic [ref=e329]: info
+                          - cell "-" [ref=e330]:
+                            - paragraph [ref=e331]: "-"
+                          - cell [ref=e332]:
+                            - button [ref=e333]:
+                              - img [ref=e334]
+                        - row "Nov 30, 8:17 AM 7 days ago bs_mgr2@intime.com UPDATE user_profiles Success info -" [ref=e337] [cursor=pointer]:
+                          - cell "Nov 30, 8:17 AM 7 days ago" [ref=e338]:
+                            - generic [ref=e339]:
+                              - img [ref=e340]
+                              - generic [ref=e343]:
+                                - paragraph [ref=e344]: Nov 30, 8:17 AM
+                                - paragraph [ref=e345]: 7 days ago
+                          - cell "bs_mgr2@intime.com" [ref=e346]:
+                            - paragraph [ref=e347]: bs_mgr2@intime.com
+                          - cell "UPDATE" [ref=e348]:
+                            - generic [ref=e349]: UPDATE
+                          - cell "user_profiles" [ref=e350]:
+                            - paragraph [ref=e351]: user_profiles
+                          - cell "Success" [ref=e352]:
+                            - generic [ref=e353]:
+                              - img [ref=e354]
+                              - text: Success
+                          - cell "info" [ref=e357]:
+                            - generic [ref=e358]: info
+                          - cell "-" [ref=e359]:
+                            - paragraph [ref=e360]: "-"
+                          - cell [ref=e361]:
+                            - button [ref=e362]:
+                              - img [ref=e363]
+                        - row "Nov 30, 8:17 AM 7 days ago bs1@intime.com UPDATE user_profiles Success info -" [ref=e366] [cursor=pointer]:
+                          - cell "Nov 30, 8:17 AM 7 days ago" [ref=e367]:
+                            - generic [ref=e368]:
+                              - img [ref=e369]
+                              - generic [ref=e372]:
+                                - paragraph [ref=e373]: Nov 30, 8:17 AM
+                                - paragraph [ref=e374]: 7 days ago
+                          - cell "bs1@intime.com" [ref=e375]:
+                            - paragraph [ref=e376]: bs1@intime.com
+                          - cell "UPDATE" [ref=e377]:
+                            - generic [ref=e378]: UPDATE
+                          - cell "user_profiles" [ref=e379]:
+                            - paragraph [ref=e380]: user_profiles
+                          - cell "Success" [ref=e381]:
+                            - generic [ref=e382]:
+                              - img [ref=e383]
+                              - text: Success
+                          - cell "info" [ref=e386]:
+                            - generic [ref=e387]: info
+                          - cell "-" [ref=e388]:
+                            - paragraph [ref=e389]: "-"
+                          - cell [ref=e390]:
+                            - button [ref=e391]:
+                              - img [ref=e392]
+                        - row "Nov 30, 8:17 AM 7 days ago bs_mgr1@intime.com UPDATE user_profiles Success info -" [ref=e395] [cursor=pointer]:
+                          - cell "Nov 30, 8:17 AM 7 days ago" [ref=e396]:
+                            - generic [ref=e397]:
+                              - img [ref=e398]
+                              - generic [ref=e401]:
+                                - paragraph [ref=e402]: Nov 30, 8:17 AM
+                                - paragraph [ref=e403]: 7 days ago
+                          - cell "bs_mgr1@intime.com" [ref=e404]:
+                            - paragraph [ref=e405]: bs_mgr1@intime.com
+                          - cell "UPDATE" [ref=e406]:
+                            - generic [ref=e407]: UPDATE
+                          - cell "user_profiles" [ref=e408]:
+                            - paragraph [ref=e409]: user_profiles
+                          - cell "Success" [ref=e410]:
+                            - generic [ref=e411]:
+                              - img [ref=e412]
+                              - text: Success
+                          - cell "info" [ref=e415]:
+                            - generic [ref=e416]: info
+                          - cell "-" [ref=e417]:
+                            - paragraph [ref=e418]: "-"
+                          - cell [ref=e419]:
+                            - button [ref=e420]:
+                              - img [ref=e421]
+                        - row "Nov 30, 8:17 AM 7 days ago rec2@intime.com UPDATE user_profiles Success info -" [ref=e424] [cursor=pointer]:
+                          - cell "Nov 30, 8:17 AM 7 days ago" [ref=e425]:
+                            - generic [ref=e426]:
+                              - img [ref=e427]
+                              - generic [ref=e430]:
+                                - paragraph [ref=e431]: Nov 30, 8:17 AM
+                                - paragraph [ref=e432]: 7 days ago
+                          - cell "rec2@intime.com" [ref=e433]:
+                            - paragraph [ref=e434]: rec2@intime.com
+                          - cell "UPDATE" [ref=e435]:
+                            - generic [ref=e436]: UPDATE
+                          - cell "user_profiles" [ref=e437]:
+                            - paragraph [ref=e438]: user_profiles
+                          - cell "Success" [ref=e439]:
+                            - generic [ref=e440]:
+                              - img [ref=e441]
+                              - text: Success
+                          - cell "info" [ref=e444]:
+                            - generic [ref=e445]: info
+                          - cell "-" [ref=e446]:
+                            - paragraph [ref=e447]: "-"
+                          - cell [ref=e448]:
+                            - button [ref=e449]:
+                              - img [ref=e450]
+                        - row "Nov 30, 8:17 AM 7 days ago rec_mgr2@intime.com UPDATE user_profiles Success info -" [ref=e453] [cursor=pointer]:
+                          - cell "Nov 30, 8:17 AM 7 days ago" [ref=e454]:
+                            - generic [ref=e455]:
+                              - img [ref=e456]
+                              - generic [ref=e459]:
+                                - paragraph [ref=e460]: Nov 30, 8:17 AM
+                                - paragraph [ref=e461]: 7 days ago
+                          - cell "rec_mgr2@intime.com" [ref=e462]:
+                            - paragraph [ref=e463]: rec_mgr2@intime.com
+                          - cell "UPDATE" [ref=e464]:
+                            - generic [ref=e465]: UPDATE
+                          - cell "user_profiles" [ref=e466]:
+                            - paragraph [ref=e467]: user_profiles
+                          - cell "Success" [ref=e468]:
+                            - generic [ref=e469]:
+                              - img [ref=e470]
+                              - text: Success
+                          - cell "info" [ref=e473]:
+                            - generic [ref=e474]: info
+                          - cell "-" [ref=e475]:
+                            - paragraph [ref=e476]: "-"
+                          - cell [ref=e477]:
+                            - button [ref=e478]:
+                              - img [ref=e479]
+                        - row "Nov 30, 8:17 AM 7 days ago rec1@intime.com UPDATE user_profiles Success info -" [ref=e482] [cursor=pointer]:
+                          - cell "Nov 30, 8:17 AM 7 days ago" [ref=e483]:
+                            - generic [ref=e484]:
+                              - img [ref=e485]
+                              - generic [ref=e488]:
+                                - paragraph [ref=e489]: Nov 30, 8:17 AM
+                                - paragraph [ref=e490]: 7 days ago
+                          - cell "rec1@intime.com" [ref=e491]:
+                            - paragraph [ref=e492]: rec1@intime.com
+                          - cell "UPDATE" [ref=e493]:
+                            - generic [ref=e494]: UPDATE
+                          - cell "user_profiles" [ref=e495]:
+                            - paragraph [ref=e496]: user_profiles
+                          - cell "Success" [ref=e497]:
+                            - generic [ref=e498]:
+                              - img [ref=e499]
+                              - text: Success
+                          - cell "info" [ref=e502]:
+                            - generic [ref=e503]: info
+                          - cell "-" [ref=e504]:
+                            - paragraph [ref=e505]: "-"
+                          - cell [ref=e506]:
+                            - button [ref=e507]:
+                              - img [ref=e508]
+                        - row "Nov 30, 8:17 AM 7 days ago rec_mgr1@intime.com UPDATE user_profiles Success info -" [ref=e511] [cursor=pointer]:
+                          - cell "Nov 30, 8:17 AM 7 days ago" [ref=e512]:
+                            - generic [ref=e513]:
+                              - img [ref=e514]
+                              - generic [ref=e517]:
+                                - paragraph [ref=e518]: Nov 30, 8:17 AM
+                                - paragraph [ref=e519]: 7 days ago
+                          - cell "rec_mgr1@intime.com" [ref=e520]:
+                            - paragraph [ref=e521]: rec_mgr1@intime.com
+                          - cell "UPDATE" [ref=e522]:
+                            - generic [ref=e523]: UPDATE
+                          - cell "user_profiles" [ref=e524]:
+                            - paragraph [ref=e525]: user_profiles
+                          - cell "Success" [ref=e526]:
+                            - generic [ref=e527]:
+                              - img [ref=e528]
+                              - text: Success
+                          - cell "info" [ref=e531]:
+                            - generic [ref=e532]: info
+                          - cell "-" [ref=e533]:
+                            - paragraph [ref=e534]: "-"
+                          - cell [ref=e535]:
+                            - button [ref=e536]:
+                              - img [ref=e537]
+                        - row "Nov 30, 8:17 AM 7 days ago hr@intime.com UPDATE user_profiles Success info -" [ref=e540] [cursor=pointer]:
+                          - cell "Nov 30, 8:17 AM 7 days ago" [ref=e541]:
+                            - generic [ref=e542]:
+                              - img [ref=e543]
+                              - generic [ref=e546]:
+                                - paragraph [ref=e547]: Nov 30, 8:17 AM
+                                - paragraph [ref=e548]: 7 days ago
+                          - cell "hr@intime.com" [ref=e549]:
+                            - paragraph [ref=e550]: hr@intime.com
+                          - cell "UPDATE" [ref=e551]:
+                            - generic [ref=e552]: UPDATE
+                          - cell "user_profiles" [ref=e553]:
+                            - paragraph [ref=e554]: user_profiles
+                          - cell "Success" [ref=e555]:
+                            - generic [ref=e556]:
+                              - img [ref=e557]
+                              - text: Success
+                          - cell "info" [ref=e560]:
+                            - generic [ref=e561]: info
+                          - cell "-" [ref=e562]:
+                            - paragraph [ref=e563]: "-"
+                          - cell [ref=e564]:
+                            - button [ref=e565]:
+                              - img [ref=e566]
+                        - row "Nov 30, 8:17 AM 7 days ago admin@intime.com UPDATE user_profiles Success info -" [ref=e569] [cursor=pointer]:
+                          - cell "Nov 30, 8:17 AM 7 days ago" [ref=e570]:
+                            - generic [ref=e571]:
+                              - img [ref=e572]
+                              - generic [ref=e575]:
+                                - paragraph [ref=e576]: Nov 30, 8:17 AM
+                                - paragraph [ref=e577]: 7 days ago
+                          - cell "admin@intime.com" [ref=e578]:
+                            - paragraph [ref=e579]: admin@intime.com
+                          - cell "UPDATE" [ref=e580]:
+                            - generic [ref=e581]: UPDATE
+                          - cell "user_profiles" [ref=e582]:
+                            - paragraph [ref=e583]: user_profiles
+                          - cell "Success" [ref=e584]:
+                            - generic [ref=e585]:
+                              - img [ref=e586]
+                              - text: Success
+                          - cell "info" [ref=e589]:
+                            - generic [ref=e590]: info
+                          - cell "-" [ref=e591]:
+                            - paragraph [ref=e592]: "-"
+                          - cell [ref=e593]:
+                            - button [ref=e594]:
+                              - img [ref=e595]
+                        - row "Nov 30, 8:10 AM 7 days ago bs2@intime.com INSERT user_profiles Success info -" [ref=e598] [cursor=pointer]:
+                          - cell "Nov 30, 8:10 AM 7 days ago" [ref=e599]:
+                            - generic [ref=e600]:
+                              - img [ref=e601]
+                              - generic [ref=e604]:
+                                - paragraph [ref=e605]: Nov 30, 8:10 AM
+                                - paragraph [ref=e606]: 7 days ago
+                          - cell "bs2@intime.com" [ref=e607]:
+                            - paragraph [ref=e608]: bs2@intime.com
+                          - cell "INSERT" [ref=e609]:
+                            - generic [ref=e610]: INSERT
+                          - cell "user_profiles" [ref=e611]:
+                            - paragraph [ref=e612]: user_profiles
+                          - cell "Success" [ref=e613]:
+                            - generic [ref=e614]:
+                              - img [ref=e615]
+                              - text: Success
+                          - cell "info" [ref=e618]:
+                            - generic [ref=e619]: info
+                          - cell "-" [ref=e620]:
+                            - paragraph [ref=e621]: "-"
+                          - cell [ref=e622]:
+                            - button [ref=e623]:
+                              - img [ref=e624]
+                        - row "Nov 30, 8:10 AM 7 days ago bs_mgr2@intime.com INSERT user_profiles Success info -" [ref=e627] [cursor=pointer]:
+                          - cell "Nov 30, 8:10 AM 7 days ago" [ref=e628]:
+                            - generic [ref=e629]:
+                              - img [ref=e630]
+                              - generic [ref=e633]:
+                                - paragraph [ref=e634]: Nov 30, 8:10 AM
+                                - paragraph [ref=e635]: 7 days ago
+                          - cell "bs_mgr2@intime.com" [ref=e636]:
+                            - paragraph [ref=e637]: bs_mgr2@intime.com
+                          - cell "INSERT" [ref=e638]:
+                            - generic [ref=e639]: INSERT
+                          - cell "user_profiles" [ref=e640]:
+                            - paragraph [ref=e641]: user_profiles
+                          - cell "Success" [ref=e642]:
+                            - generic [ref=e643]:
+                              - img [ref=e644]
+                              - text: Success
+                          - cell "info" [ref=e647]:
+                            - generic [ref=e648]: info
+                          - cell "-" [ref=e649]:
+                            - paragraph [ref=e650]: "-"
+                          - cell [ref=e651]:
+                            - button [ref=e652]:
+                              - img [ref=e653]
+                        - row "Nov 30, 8:10 AM 7 days ago bs1@intime.com INSERT user_profiles Success info -" [ref=e656] [cursor=pointer]:
+                          - cell "Nov 30, 8:10 AM 7 days ago" [ref=e657]:
+                            - generic [ref=e658]:
+                              - img [ref=e659]
+                              - generic [ref=e662]:
+                                - paragraph [ref=e663]: Nov 30, 8:10 AM
+                                - paragraph [ref=e664]: 7 days ago
+                          - cell "bs1@intime.com" [ref=e665]:
+                            - paragraph [ref=e666]: bs1@intime.com
+                          - cell "INSERT" [ref=e667]:
+                            - generic [ref=e668]: INSERT
+                          - cell "user_profiles" [ref=e669]:
+                            - paragraph [ref=e670]: user_profiles
+                          - cell "Success" [ref=e671]:
+                            - generic [ref=e672]:
+                              - img [ref=e673]
+                              - text: Success
+                          - cell "info" [ref=e676]:
+                            - generic [ref=e677]: info
+                          - cell "-" [ref=e678]:
+                            - paragraph [ref=e679]: "-"
+                          - cell [ref=e680]:
+                            - button [ref=e681]:
+                              - img [ref=e682]
+                        - row "Nov 30, 8:10 AM 7 days ago bs_mgr1@intime.com INSERT user_profiles Success info -" [ref=e685] [cursor=pointer]:
+                          - cell "Nov 30, 8:10 AM 7 days ago" [ref=e686]:
+                            - generic [ref=e687]:
+                              - img [ref=e688]
+                              - generic [ref=e691]:
+                                - paragraph [ref=e692]: Nov 30, 8:10 AM
+                                - paragraph [ref=e693]: 7 days ago
+                          - cell "bs_mgr1@intime.com" [ref=e694]:
+                            - paragraph [ref=e695]: bs_mgr1@intime.com
+                          - cell "INSERT" [ref=e696]:
+                            - generic [ref=e697]: INSERT
+                          - cell "user_profiles" [ref=e698]:
+                            - paragraph [ref=e699]: user_profiles
+                          - cell "Success" [ref=e700]:
+                            - generic [ref=e701]:
+                              - img [ref=e702]
+                              - text: Success
+                          - cell "info" [ref=e705]:
+                            - generic [ref=e706]: info
+                          - cell "-" [ref=e707]:
+                            - paragraph [ref=e708]: "-"
+                          - cell [ref=e709]:
+                            - button [ref=e710]:
+                              - img [ref=e711]
+                        - row "Nov 30, 8:10 AM 7 days ago rec2@intime.com INSERT user_profiles Success info -" [ref=e714] [cursor=pointer]:
+                          - cell "Nov 30, 8:10 AM 7 days ago" [ref=e715]:
+                            - generic [ref=e716]:
+                              - img [ref=e717]
+                              - generic [ref=e720]:
+                                - paragraph [ref=e721]: Nov 30, 8:10 AM
+                                - paragraph [ref=e722]: 7 days ago
+                          - cell "rec2@intime.com" [ref=e723]:
+                            - paragraph [ref=e724]: rec2@intime.com
+                          - cell "INSERT" [ref=e725]:
+                            - generic [ref=e726]: INSERT
+                          - cell "user_profiles" [ref=e727]:
+                            - paragraph [ref=e728]: user_profiles
+                          - cell "Success" [ref=e729]:
+                            - generic [ref=e730]:
+                              - img [ref=e731]
+                              - text: Success
+                          - cell "info" [ref=e734]:
+                            - generic [ref=e735]: info
+                          - cell "-" [ref=e736]:
+                            - paragraph [ref=e737]: "-"
+                          - cell [ref=e738]:
+                            - button [ref=e739]:
+                              - img [ref=e740]
+                        - row "Nov 30, 8:10 AM 7 days ago rec_mgr2@intime.com INSERT user_profiles Success info -" [ref=e743] [cursor=pointer]:
+                          - cell "Nov 30, 8:10 AM 7 days ago" [ref=e744]:
+                            - generic [ref=e745]:
+                              - img [ref=e746]
+                              - generic [ref=e749]:
+                                - paragraph [ref=e750]: Nov 30, 8:10 AM
+                                - paragraph [ref=e751]: 7 days ago
+                          - cell "rec_mgr2@intime.com" [ref=e752]:
+                            - paragraph [ref=e753]: rec_mgr2@intime.com
+                          - cell "INSERT" [ref=e754]:
+                            - generic [ref=e755]: INSERT
+                          - cell "user_profiles" [ref=e756]:
+                            - paragraph [ref=e757]: user_profiles
+                          - cell "Success" [ref=e758]:
+                            - generic [ref=e759]:
+                              - img [ref=e760]
+                              - text: Success
+                          - cell "info" [ref=e763]:
+                            - generic [ref=e764]: info
+                          - cell "-" [ref=e765]:
+                            - paragraph [ref=e766]: "-"
+                          - cell [ref=e767]:
+                            - button [ref=e768]:
+                              - img [ref=e769]
+                        - row "Nov 30, 8:10 AM 7 days ago rec1@intime.com INSERT user_profiles Success info -" [ref=e772] [cursor=pointer]:
+                          - cell "Nov 30, 8:10 AM 7 days ago" [ref=e773]:
+                            - generic [ref=e774]:
+                              - img [ref=e775]
+                              - generic [ref=e778]:
+                                - paragraph [ref=e779]: Nov 30, 8:10 AM
+                                - paragraph [ref=e780]: 7 days ago
+                          - cell "rec1@intime.com" [ref=e781]:
+                            - paragraph [ref=e782]: rec1@intime.com
+                          - cell "INSERT" [ref=e783]:
+                            - generic [ref=e784]: INSERT
+                          - cell "user_profiles" [ref=e785]:
+                            - paragraph [ref=e786]: user_profiles
+                          - cell "Success" [ref=e787]:
+                            - generic [ref=e788]:
+                              - img [ref=e789]
+                              - text: Success
+                          - cell "info" [ref=e792]:
+                            - generic [ref=e793]: info
+                          - cell "-" [ref=e794]:
+                            - paragraph [ref=e795]: "-"
+                          - cell [ref=e796]:
+                            - button [ref=e797]:
+                              - img [ref=e798]
+                        - row "Nov 30, 8:10 AM 7 days ago rec_mgr1@intime.com INSERT user_profiles Success info -" [ref=e801] [cursor=pointer]:
+                          - cell "Nov 30, 8:10 AM 7 days ago" [ref=e802]:
+                            - generic [ref=e803]:
+                              - img [ref=e804]
+                              - generic [ref=e807]:
+                                - paragraph [ref=e808]: Nov 30, 8:10 AM
+                                - paragraph [ref=e809]: 7 days ago
+                          - cell "rec_mgr1@intime.com" [ref=e810]:
+                            - paragraph [ref=e811]: rec_mgr1@intime.com
+                          - cell "INSERT" [ref=e812]:
+                            - generic [ref=e813]: INSERT
+                          - cell "user_profiles" [ref=e814]:
+                            - paragraph [ref=e815]: user_profiles
+                          - cell "Success" [ref=e816]:
+                            - generic [ref=e817]:
+                              - img [ref=e818]
+                              - text: Success
+                          - cell "info" [ref=e821]:
+                            - generic [ref=e822]: info
+                          - cell "-" [ref=e823]:
+                            - paragraph [ref=e824]: "-"
+                          - cell [ref=e825]:
+                            - button [ref=e826]:
+                              - img [ref=e827]
+                        - row "Nov 30, 8:10 AM 7 days ago student@intime.com UPDATE user_profiles Success info -" [ref=e830] [cursor=pointer]:
+                          - cell "Nov 30, 8:10 AM 7 days ago" [ref=e831]:
+                            - generic [ref=e832]:
+                              - img [ref=e833]
+                              - generic [ref=e836]:
+                                - paragraph [ref=e837]: Nov 30, 8:10 AM
+                                - paragraph [ref=e838]: 7 days ago
+                          - cell "student@intime.com" [ref=e839]:
+                            - paragraph [ref=e840]: student@intime.com
+                          - cell "UPDATE" [ref=e841]:
+                            - generic [ref=e842]: UPDATE
+                          - cell "user_profiles" [ref=e843]:
+                            - paragraph [ref=e844]: user_profiles
+                          - cell "Success" [ref=e845]:
+                            - generic [ref=e846]:
+                              - img [ref=e847]
+                              - text: Success
+                          - cell "info" [ref=e850]:
+                            - generic [ref=e851]: info
+                          - cell "-" [ref=e852]:
+                            - paragraph [ref=e853]: "-"
+                          - cell [ref=e854]:
+                            - button [ref=e855]:
+                              - img [ref=e856]
+                        - row "Nov 30, 8:10 AM 7 days ago trainer@intime.com UPDATE user_profiles Success info -" [ref=e859] [cursor=pointer]:
+                          - cell "Nov 30, 8:10 AM 7 days ago" [ref=e860]:
+                            - generic [ref=e861]:
+                              - img [ref=e862]
+                              - generic [ref=e865]:
+                                - paragraph [ref=e866]: Nov 30, 8:10 AM
+                                - paragraph [ref=e867]: 7 days ago
+                          - cell "trainer@intime.com" [ref=e868]:
+                            - paragraph [ref=e869]: trainer@intime.com
+                          - cell "UPDATE" [ref=e870]:
+                            - generic [ref=e871]: UPDATE
+                          - cell "user_profiles" [ref=e872]:
+                            - paragraph [ref=e873]: user_profiles
+                          - cell "Success" [ref=e874]:
+                            - generic [ref=e875]:
+                              - img [ref=e876]
+                              - text: Success
+                          - cell "info" [ref=e879]:
+                            - generic [ref=e880]: info
+                          - cell "-" [ref=e881]:
+                            - paragraph [ref=e882]: "-"
+                          - cell [ref=e883]:
+                            - button [ref=e884]:
+                              - img [ref=e885]
+                    - generic [ref=e888]:
+                      - paragraph [ref=e889]: Showing 1 - 20 of 81 events
+                      - generic [ref=e890]:
+                        - button "Previous" [disabled]:
+                          - img
+                          - text: Previous
+                        - button "Next" [ref=e891] [cursor=pointer]:
+                          - text: Next
+                          - img [ref=e892]
+  - region "Notifications (F8)":
+    - list
+  - button "Open Next.js Dev Tools" [ref=e899] [cursor=pointer]:
+    - img [ref=e900]
+  - alert [ref=e903]
+```

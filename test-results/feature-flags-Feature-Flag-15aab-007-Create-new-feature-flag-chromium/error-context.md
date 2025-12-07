@@ -74,12 +74,6 @@
                       - generic: Settings
                 - listitem:
                   - link:
-                    - /url: /employee/admin/org-settings
-                    - generic:
-                      - img
-                      - generic: Org Settings
-                - listitem:
-                  - link:
                     - /url: /employee/admin/integrations
                     - generic:
                       - img
@@ -149,9 +143,6 @@
                       - generic: Emergency
         - main:
           - generic:
-            - generic:
-              - generic:
-                - heading [level=1]: Admin Portal
             - generic:
               - generic:
                 - navigation:
@@ -465,12 +456,12 @@
           - text: Feature Name *
           - textbox "Feature Name *" [ref=e27]:
             - /placeholder: AI Twin System
-            - text: Test Feature 1765034591323
+            - text: Test Feature 1765077147398
         - generic [ref=e28]:
           - text: Feature Key *
           - textbox "Feature Key *" [ref=e29]:
             - /placeholder: ai_twin_system
-            - text: test_feature_1765034591323
+            - text: test_feature_1765077147398
           - paragraph [ref=e30]: Used in code to check feature status. Cannot be changed later.
         - generic [ref=e31]:
           - text: Description

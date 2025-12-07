@@ -97,7 +97,7 @@ test.describe('Feature Flag Management', () => {
 
     // Verify dialog is visible
     await expect(page.getByRole('dialog')).toBeVisible();
-    await expect(page.getByText('Create Feature Flag')).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Create Feature Flag/i })).toBeVisible();
 
     // Verify form fields are present
     await expect(page.getByLabel('Feature Name *')).toBeVisible();
@@ -121,7 +121,7 @@ test.describe('Feature Flag Management', () => {
 
     // Verify dialog is visible
     await expect(page.getByRole('dialog')).toBeVisible();
-    await expect(page.getByText('Create Feature Flag')).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Create Feature Flag/i })).toBeVisible();
   });
 
   test('ADMIN-FF-006: Show keyboard shortcuts help', async ({ page }) => {

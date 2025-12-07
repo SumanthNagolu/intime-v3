@@ -74,12 +74,6 @@
                       - generic: Settings
                 - listitem:
                   - link:
-                    - /url: /employee/admin/org-settings
-                    - generic:
-                      - img
-                      - generic: Org Settings
-                - listitem:
-                  - link:
                     - /url: /employee/admin/integrations
                     - generic:
                       - img
@@ -151,9 +145,6 @@
           - generic:
             - generic:
               - generic:
-                - heading [level=1]: Admin Portal
-            - generic:
-              - generic:
                 - navigation:
                   - link:
                     - /url: /
@@ -175,12 +166,12 @@
                 - button:
                   - generic:
                     - img
-                    - generic: "0"
+                    - generic: "1"
                   - paragraph: Enabled
                 - button:
                   - generic:
                     - img
-                    - generic: "0"
+                    - generic: "9"
                   - paragraph: Disabled
                 - button:
                   - generic:
@@ -213,6 +204,238 @@
                 - combobox:
                   - generic: All Categories
                   - img
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: Advanced Analytics
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: advanced_analytics
+                        - paragraph: Detailed analytics dashboard
+                        - paragraph: "Strategy: Specific Roles (9 roles)"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: AI Twin System
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: ai_twin
+                        - paragraph: AI-powered assistant for recruiters
+                        - paragraph: "Strategy: Specific Roles (6 roles)"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: API Access
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: api_access
+                        - paragraph: External API access
+                        - paragraph: "Strategy: Specific Roles (6 roles)"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: Bulk Email Campaigns
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: bulk_email
+                        - paragraph: Send bulk emails to candidates
+                        - paragraph: "Strategy: Disabled"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: Bulk Operations
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: bulk_operations
+                        - paragraph: Perform bulk updates on records
+                        - paragraph: "Strategy: Specific Roles (9 roles)"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: Custom Reports
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: custom_reports
+                        - paragraph: Create and save custom reports
+                        - paragraph: "Strategy: Specific Roles (6 roles)"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: Data Export
+                          - generic: Enabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: data_export
+                        - paragraph: Export data in various formats
+                        - paragraph: "Strategy: Specific Roles (12 roles)"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Disable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: Mobile App Access
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: mobile_app
+                        - paragraph: Access via mobile application
+                        - paragraph: "Strategy: Disabled"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: Third-party Integrations
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: integrations
+                        - paragraph: Connect with external services
+                        - paragraph: "Strategy: Disabled"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                          - heading [level=3]: Workflow Automation
+                          - generic: Disabled
+                          - generic: Global
+                        - paragraph:
+                          - text: "Key:"
+                          - code: workflow_automation
+                        - paragraph: Automated workflows and triggers
+                        - paragraph: "Strategy: Disabled"
+                      - generic:
+                        - button:
+                          - img
+                          - text: Configure
+                        - button:
+                          - img
+                          - text: Usage
+                        - button: Enable
+                        - button:
+                          - img
   - list
   - button "Open Next.js Dev Tools" [ref=e6] [cursor=pointer]:
     - img [ref=e7]

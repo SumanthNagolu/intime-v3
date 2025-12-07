@@ -3,10 +3,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { trpc } from '@/lib/trpc/client'
-import {
-  DashboardShell,
-  DashboardSection,
-} from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -71,27 +69,27 @@ export function WebhooksListPage() {
   const stats = statsQuery.data
 
   return (
-    <DashboardShell
-      title="Webhooks"
-      description="Manage outgoing webhooks for event notifications"
-      breadcrumbs={breadcrumbs}
-      actions={
-        <div className="flex items-center gap-3">
-          <Link href="/employee/admin/integrations">
-            <Button variant="outline">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Integrations
-            </Button>
-          </Link>
-          <Link href="/employee/admin/integrations/webhooks/new">
-            <Button className="bg-hublot-900 hover:bg-hublot-800 text-white">
-              <Plus className="w-4 h-4 mr-2" />
-              Create Webhook
-            </Button>
-          </Link>
-        </div>
-      }
-    >
+    <AdminPageContent insideTabLayout>
+      <AdminPageHeader
+        insideTabLayout
+        breadcrumbs={breadcrumbs}
+        actions={
+          <div className="flex items-center gap-3">
+            <Link href="/employee/admin/integrations">
+              <Button variant="outline">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Integrations
+              </Button>
+            </Link>
+            <Link href="/employee/admin/integrations/webhooks/new">
+              <Button className="bg-hublot-900 hover:bg-hublot-800 text-white">
+                <Plus className="w-4 h-4 mr-2" />
+                Create Webhook
+              </Button>
+            </Link>
+          </div>
+        }
+      />
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <StatCard
@@ -277,7 +275,7 @@ export function WebhooksListPage() {
           )}
         </div>
       </DashboardSection>
-    </DashboardShell>
+    </AdminPageContent>
   )
 }
 

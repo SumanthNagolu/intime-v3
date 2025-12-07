@@ -170,12 +170,10 @@
     - generic [ref=e181]:
       - button "Open issues overlay" [ref=e182]:
         - generic [ref=e183]:
-          - generic [ref=e184]: "1"
-          - generic [ref=e185]: "2"
-        - generic [ref=e186]:
-          - text: Issue
-          - generic [ref=e187]: s
-      - button "Collapse issues badge" [ref=e188]:
-        - img [ref=e189]
-  - alert [ref=e191]
+          - generic [ref=e184]: "0"
+          - generic [ref=e185]: "1"
+        - generic [ref=e186]: Issue
+      - button "Collapse issues badge" [ref=e187]:
+        - img [ref=e188]
+  - alert [ref=e190]
 ```

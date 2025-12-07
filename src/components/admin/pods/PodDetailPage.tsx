@@ -132,7 +132,7 @@ export function PodDetailPage({ podId }: PodDetailPageProps) {
     return (
       <DashboardShell title="Loading..." breadcrumbs={breadcrumbs}>
         <div className="flex items-center justify-center h-64">
-          <Loader2 className="w-8 h-8 animate-spin text-forest-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-hublot-600" />
         </div>
       </DashboardShell>
     )
@@ -184,7 +184,7 @@ export function PodDetailPage({ podId }: PodDetailPageProps) {
             </>
           ) : (
             <Button
-              className="bg-forest-600 hover:bg-forest-700 text-white"
+              className="bg-hublot-900 hover:bg-hublot-800 text-white"
               onClick={() => reactivateMutation.mutate({ id: podId })}
               disabled={reactivateMutation.isPending}
             >
@@ -252,9 +252,9 @@ export function PodDetailPage({ podId }: PodDetailPageProps) {
         <div className="bg-white rounded-xl border border-charcoal-100 divide-y divide-charcoal-100">
           {/* Manager */}
           {pod.manager && (
-            <div className="p-4 flex items-center justify-between bg-forest-50/50">
+            <div className="p-4 flex items-center justify-between bg-gold-50/50">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-forest-100 flex items-center justify-center text-forest-700 font-medium">
+                <div className="w-10 h-10 rounded-full bg-gold-100 flex items-center justify-center text-gold-700 font-medium">
                   {pod.manager.full_name?.split(' ').map((n: string) => n[0]).join('').slice(0, 2)}
                 </div>
                 <div>
@@ -262,7 +262,7 @@ export function PodDetailPage({ podId }: PodDetailPageProps) {
                     <span className="font-medium text-charcoal-900">
                       {pod.manager.full_name}
                     </span>
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-forest-100 text-forest-800 rounded-full text-xs font-medium">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-gold-100 text-gold-800 rounded-full text-xs font-medium">
                       <Crown className="w-3 h-3" />
                       Manager
                     </span>

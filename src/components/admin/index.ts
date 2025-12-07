@@ -1,3 +1,5 @@
 export { AdminDashboard } from './AdminDashboard'
 export { SystemHealthSkeleton } from './SystemHealthSkeleton'
 export { AlertsSection } from './AlertsSection'
+export { AdminPageContent } from './AdminPageContent'
+export { AdminPageHeader } from './AdminPageHeader'

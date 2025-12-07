@@ -1,0 +1,320 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e7]:
+        - link "I InTime Portal" [ref=e8] [cursor=pointer]:
+          - /url: /employee/admin/dashboard
+          - generic [ref=e10]: I
+          - generic [ref=e11]:
+            - generic [ref=e12]: InTime
+            - generic [ref=e13]: Portal
+        - link "Sign In" [ref=e15] [cursor=pointer]:
+          - /url: /login
+      - generic [ref=e16]:
+        - complementary [ref=e17]:
+          - navigation [ref=e18]:
+            - generic [ref=e19]:
+              - heading "Main" [level=3] [ref=e20]
+              - list [ref=e21]:
+                - listitem [ref=e22]:
+                  - link "Dashboard" [ref=e23] [cursor=pointer]:
+                    - /url: /employee/admin/dashboard
+                    - generic [ref=e24]:
+                      - img [ref=e25]
+                      - generic [ref=e30]: Dashboard
+            - generic [ref=e31]:
+              - heading "User Management" [level=3] [ref=e32]
+              - list [ref=e33]:
+                - listitem [ref=e34]:
+                  - link "Users" [ref=e35] [cursor=pointer]:
+                    - /url: /employee/admin/users
+                    - generic [ref=e36]:
+                      - img [ref=e37]
+                      - generic [ref=e42]: Users
+                - listitem [ref=e43]:
+                  - link "Pods" [ref=e44] [cursor=pointer]:
+                    - /url: /employee/admin/pods
+                    - generic [ref=e45]:
+                      - img [ref=e46]
+                      - generic [ref=e51]: Pods
+                - listitem [ref=e52]:
+                  - link "Roles" [ref=e53] [cursor=pointer]:
+                    - /url: /employee/admin/roles
+                    - generic [ref=e54]:
+                      - img [ref=e55]
+                      - generic [ref=e57]: Roles
+                - listitem [ref=e58]:
+                  - link "Permissions" [ref=e59] [cursor=pointer]:
+                    - /url: /employee/admin/permissions
+                    - generic [ref=e60]:
+                      - img [ref=e61]
+                      - generic [ref=e63]: Permissions
+            - generic [ref=e64]:
+              - heading "System" [level=3] [ref=e65]
+              - list [ref=e66]:
+                - listitem [ref=e67]:
+                  - link "Settings" [ref=e68] [cursor=pointer]:
+                    - /url: /employee/admin/settings
+                    - generic [ref=e69]:
+                      - img [ref=e70]
+                      - generic [ref=e73]: Settings
+                - listitem [ref=e74]:
+                  - link "Integrations" [ref=e75] [cursor=pointer]:
+                    - /url: /employee/admin/integrations
+                    - generic [ref=e76]:
+                      - img [ref=e77]
+                      - generic [ref=e81]: Integrations
+                - listitem [ref=e82]:
+                  - link "Workflows" [ref=e83] [cursor=pointer]:
+                    - /url: /employee/admin/workflows
+                    - generic [ref=e84]:
+                      - img [ref=e85]
+                      - generic [ref=e89]: Workflows
+                - listitem [ref=e90]:
+                  - link "SLA Config" [ref=e91] [cursor=pointer]:
+                    - /url: /employee/admin/sla
+                    - generic [ref=e92]:
+                      - img [ref=e93]
+                      - generic [ref=e96]: SLA Config
+                - listitem [ref=e97]:
+                  - link "Activity Patterns" [ref=e98] [cursor=pointer]:
+                    - /url: /employee/admin/activity-patterns
+                    - generic [ref=e99]:
+                      - img [ref=e100]
+                      - generic [ref=e102]: Activity Patterns
+                - listitem [ref=e103]:
+                  - link "Email Templates" [ref=e104] [cursor=pointer]:
+                    - /url: /employee/admin/email-templates
+                    - generic [ref=e105]:
+                      - img [ref=e106]
+                      - generic [ref=e109]: Email Templates
+                - listitem [ref=e110]:
+                  - link "API Tokens" [ref=e111] [cursor=pointer]:
+                    - /url: /employee/admin/api-tokens
+                    - generic [ref=e112]:
+                      - img [ref=e113]
+                      - generic [ref=e117]: API Tokens
+                - listitem [ref=e118]:
+                  - link "Feature Flags" [ref=e119] [cursor=pointer]:
+                    - /url: /employee/admin/feature-flags
+                    - generic [ref=e120]:
+                      - img [ref=e121]
+                      - generic [ref=e123]: Feature Flags
+            - generic [ref=e124]:
+              - heading "Monitoring" [level=3] [ref=e125]
+              - list [ref=e126]:
+                - listitem [ref=e127]:
+                  - link "Audit Logs" [ref=e128] [cursor=pointer]:
+                    - /url: /employee/admin/audit
+                    - generic [ref=e129]:
+                      - img [ref=e130]
+                      - generic [ref=e133]: Audit Logs
+                - listitem [ref=e134]:
+                  - link "Notifications" [ref=e135] [cursor=pointer]:
+                    - /url: /employee/admin/notifications
+                    - generic [ref=e136]:
+                      - img [ref=e137]
+                      - generic [ref=e140]: Notifications
+                - listitem [ref=e141]:
+                  - link "Data Management" [ref=e142] [cursor=pointer]:
+                    - /url: /employee/admin/data
+                    - generic [ref=e143]:
+                      - img [ref=e144]
+                      - generic [ref=e148]: Data Management
+                - listitem [ref=e149]:
+                  - link "Emergency" [ref=e150] [cursor=pointer]:
+                    - /url: /employee/admin/emergency
+                    - generic [ref=e151]:
+                      - img [ref=e152]
+                      - generic [ref=e154]: Emergency
+        - main [ref=e155]:
+          - generic [ref=e156]:
+            - generic [ref=e157]:
+              - navigation "Breadcrumb" [ref=e158]:
+                - link "Home" [ref=e159] [cursor=pointer]:
+                  - /url: /
+                  - img [ref=e160]
+                - img [ref=e163]
+                - link "Admin" [ref=e165] [cursor=pointer]:
+                  - /url: /employee/admin
+                - img [ref=e166]
+                - link "Activity Patterns" [ref=e168] [cursor=pointer]:
+                  - /url: /employee/admin/activity-patterns
+                - img [ref=e169]
+                - generic [ref=e171]: New Pattern
+              - generic [ref=e172]:
+                - generic [ref=e173]:
+                  - heading "New Activity Pattern" [level=1] [ref=e174]
+                  - generic [ref=e175]: Configure a new activity type
+                - generic [ref=e177]:
+                  - button "Cancel" [ref=e178] [cursor=pointer]:
+                    - img [ref=e179]
+                    - text: Cancel
+                  - button "Save Pattern" [ref=e181] [cursor=pointer]:
+                    - img [ref=e182]
+                    - text: Save Pattern
+            - generic [ref=e186]:
+              - heading "Basic Information" [level=2] [ref=e188]
+              - generic [ref=e189]:
+                - generic [ref=e190]:
+                  - generic [ref=e191]:
+                    - text: Pattern Name *
+                    - textbox "Pattern Name *" [ref=e192]:
+                      - /placeholder: e.g., Phone Call - Outbound
+                      - text: Toggle Test 1765076662361
+                  - generic [ref=e193]:
+                    - text: Code (auto-generated)
+                    - textbox "Code (auto-generated)" [ref=e194]:
+                      - /placeholder: e.g., phone_call_outbound
+                      - text: toggle_test_1765076662361
+                    - paragraph [ref=e195]: Unique identifier used in API calls
+                  - generic [ref=e196]:
+                    - text: Category *
+                    - combobox [ref=e197] [cursor=pointer]:
+                      - img [ref=e198]
+                  - generic [ref=e200]:
+                    - text: Entity Type *
+                    - combobox [ref=e201] [cursor=pointer]:
+                      - img [ref=e202]
+                - generic [ref=e204]:
+                  - generic [ref=e205]:
+                    - text: Description
+                    - textbox "Description" [ref=e207]:
+                      - /placeholder: Brief description of when to use this activity type...
+                  - generic [ref=e208]:
+                    - text: Icon
+                    - generic [ref=e209]:
+                      - button "📞" [ref=e210] [cursor=pointer]
+                      - button "📧" [ref=e211] [cursor=pointer]
+                      - button "📅" [ref=e212] [cursor=pointer]
+                      - button "📝" [ref=e213] [cursor=pointer]
+                      - button "✅" [ref=e214] [cursor=pointer]
+                      - button "📋" [ref=e215] [cursor=pointer]
+                      - button "🔍" [ref=e216] [cursor=pointer]
+                      - button "💼" [ref=e217] [cursor=pointer]
+                      - button "📊" [ref=e218] [cursor=pointer]
+                      - button "📈" [ref=e219] [cursor=pointer]
+                      - button "🤝" [ref=e220] [cursor=pointer]
+                      - button "💬" [ref=e221] [cursor=pointer]
+                      - button "📁" [ref=e222] [cursor=pointer]
+                      - button "🎯" [ref=e223] [cursor=pointer]
+                      - button "⏰" [ref=e224] [cursor=pointer]
+                      - button "📌" [ref=e225] [cursor=pointer]
+                  - generic [ref=e226]:
+                    - generic [ref=e227]:
+                      - text: Default Priority
+                      - combobox [ref=e228] [cursor=pointer]:
+                        - generic: Normal
+                        - img [ref=e229]
+                    - generic [ref=e231]:
+                      - text: Target Days
+                      - spinbutton "Target Days" [ref=e232]: "1"
+            - generic [ref=e233]:
+              - heading "Custom Fields" [level=2] [ref=e235]
+              - paragraph [ref=e236]: Define additional fields that users must fill when logging this activity type.
+              - button "Add Field" [ref=e238] [cursor=pointer]:
+                - img [ref=e239]
+                - text: Add Field
+            - generic [ref=e240]:
+              - heading "Outcomes *" [level=2] [ref=e242]
+              - paragraph [ref=e243]: Define the possible outcomes when this activity is completed. At least one outcome is required.
+              - generic [ref=e244]:
+                - generic [ref=e246]:
+                  - generic [ref=e247]:
+                    - text: Label *
+                    - textbox "e.g., Connected" [ref=e248]: Successful
+                  - generic [ref=e249]:
+                    - text: Value *
+                    - textbox "e.g., connected" [ref=e250]: successful
+                  - generic [ref=e251]:
+                    - text: Color
+                    - combobox [ref=e252] [cursor=pointer]:
+                      - generic:
+                        - generic: Green (Success)
+                      - img [ref=e253]
+                  - generic [ref=e255]:
+                    - generic [ref=e256]:
+                      - text: Next Action
+                      - combobox [ref=e257] [cursor=pointer]:
+                        - generic: Log additional notes
+                        - img [ref=e258]
+                    - button [ref=e260] [cursor=pointer]:
+                      - img [ref=e261]
+                - generic [ref=e265]:
+                  - generic [ref=e266]:
+                    - text: Label *
+                    - textbox "e.g., Connected" [ref=e267]: Unsuccessful
+                  - generic [ref=e268]:
+                    - text: Value *
+                    - textbox "e.g., connected" [ref=e269]: unsuccessful
+                  - generic [ref=e270]:
+                    - text: Color
+                    - combobox [ref=e271] [cursor=pointer]:
+                      - generic:
+                        - generic: Red (Failed)
+                      - img [ref=e272]
+                  - generic [ref=e274]:
+                    - generic [ref=e275]:
+                      - text: Next Action
+                      - combobox [ref=e276] [cursor=pointer]:
+                        - generic: Schedule follow-up
+                        - img [ref=e277]
+                    - button [ref=e279] [cursor=pointer]:
+                      - img [ref=e280]
+                - button "Add Outcome" [ref=e283] [cursor=pointer]:
+                  - img [ref=e284]
+                  - text: Add Outcome
+            - generic [ref=e285]:
+              - heading "Automation & Points" [level=2] [ref=e287]
+              - generic [ref=e288]:
+                - generic [ref=e289]:
+                  - generic [ref=e290]:
+                    - text: Auto-Log Integrations
+                    - paragraph [ref=e291]: Select integrations that should automatically log this activity type
+                    - generic [ref=e292]:
+                      - generic [ref=e293]:
+                        - checkbox "gmail" [ref=e294]
+                        - generic [ref=e295]: gmail
+                      - generic [ref=e296]:
+                        - checkbox "outlook" [ref=e297]
+                        - generic [ref=e298]: outlook
+                      - generic [ref=e299]:
+                        - checkbox "calendar" [ref=e300]
+                        - generic [ref=e301]: calendar
+                      - generic [ref=e302]:
+                        - checkbox "slack" [ref=e303]
+                        - generic [ref=e304]: slack
+                  - generic [ref=e305]:
+                    - generic [ref=e306]: Show in Timeline
+                    - switch "Show in Timeline" [checked] [ref=e307] [cursor=pointer]
+                  - generic [ref=e308]:
+                    - text: Default Assignee
+                    - combobox [ref=e309] [cursor=pointer]:
+                      - generic: Entity Owner
+                      - img [ref=e310]
+                - generic [ref=e312]:
+                  - generic [ref=e313]:
+                    - text: Base Points
+                    - spinbutton "Base Points" [ref=e314]: "0"
+                    - paragraph [ref=e315]: Points earned when this activity is logged
+                  - generic [ref=e316]:
+                    - text: Display Order
+                    - spinbutton [ref=e317]: "100"
+                    - paragraph [ref=e318]: Lower numbers appear first in lists
+              - generic [ref=e319]:
+                - text: Follow-up Rules
+                - paragraph [ref=e320]: Automatically create follow-up tasks based on the activity outcome
+                - button "Add Follow-up Rule" [ref=e322] [cursor=pointer]:
+                  - img [ref=e323]
+                  - text: Add Follow-up Rule
+  - region "Notifications (F8)":
+    - list
+  - button "Open Next.js Dev Tools" [ref=e329] [cursor=pointer]:
+    - img [ref=e330]
+  - alert [ref=e333]
+```

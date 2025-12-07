@@ -3,10 +3,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { trpc } from '@/lib/trpc/client'
-import {
-  DashboardShell,
-  DashboardSection,
-} from '@/components/dashboard/DashboardShell'
+import { DashboardSection } from '@/components/dashboard/DashboardShell'
+import { AdminPageContent, AdminPageHeader } from '@/components/admin'
 import { Button } from '@/components/ui/button'
 import {
   Edit,
@@ -186,17 +184,19 @@ export function UserDetailPage({ userId }: UserDetailPageProps) {
 
   if (userQuery.isLoading) {
     return (
-      <DashboardShell title="Loading..." breadcrumbs={breadcrumbs}>
+      <AdminPageContent>
+        <AdminPageHeader title="Loading..." breadcrumbs={breadcrumbs} />
         <div className="flex items-center justify-center h-64">
-          <Loader2 className="w-8 h-8 animate-spin text-forest-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-hublot-600" />
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   if (userQuery.error || !user) {
     return (
-      <DashboardShell title="Error" breadcrumbs={breadcrumbs}>
+      <AdminPageContent>
+        <AdminPageHeader title="Error" breadcrumbs={breadcrumbs} />
         <div className="text-center py-12">
           <p className="text-red-600">User not found or failed to load.</p>
           <Button
@@ -207,56 +207,57 @@ export function UserDetailPage({ userId }: UserDetailPageProps) {
             Back to Users
           </Button>
         </div>
-      </DashboardShell>
+      </AdminPageContent>
     )
   }
 
   const activePod = getActivePod()
 
   return (
-    <DashboardShell
-      title={user.full_name}
-      description={
-        <div className="flex items-center gap-2 mt-1">
-          <span className="text-charcoal-500">{user.email}</span>
-          {user.role && (
-            <>
-              <span className="text-charcoal-300">•</span>
-              <span
-                className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium"
-                style={{
-                  backgroundColor: `${user.role.color_code}20`,
-                  color: user.role.color_code,
-                }}
-              >
-                {user.role.display_name}
-              </span>
-            </>
-          )}
-          {activePod && (
-            <>
-              <span className="text-charcoal-300">•</span>
-              <span className="text-charcoal-500">{activePod.name}</span>
-            </>
-          )}
-          <span className="text-charcoal-300">•</span>
-          <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[user.status]}`}>
-            {STATUS_LABELS[user.status]}
-          </span>
-        </div>
-      }
-      breadcrumbs={breadcrumbs}
-      actions={
-        <div className="flex gap-2">
-          <Link href={`/employee/admin/users/${userId}/edit`}>
-            <Button variant="outline">
-              <Edit className="w-4 h-4 mr-2" />
-              Edit
-            </Button>
-          </Link>
-        </div>
-      }
-    >
+    <AdminPageContent>
+      <AdminPageHeader
+        title={user.full_name}
+        description={
+          <div className="flex items-center gap-2 mt-1">
+            <span className="text-charcoal-500">{user.email}</span>
+            {user.role && (
+              <>
+                <span className="text-charcoal-300">•</span>
+                <span
+                  className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium"
+                  style={{
+                    backgroundColor: `${user.role.color_code}20`,
+                    color: user.role.color_code,
+                  }}
+                >
+                  {user.role.display_name}
+                </span>
+              </>
+            )}
+            {activePod && (
+              <>
+                <span className="text-charcoal-300">•</span>
+                <span className="text-charcoal-500">{activePod.name}</span>
+              </>
+            )}
+            <span className="text-charcoal-300">•</span>
+            <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_COLORS[user.status]}`}>
+              {STATUS_LABELS[user.status]}
+            </span>
+          </div>
+        }
+        breadcrumbs={breadcrumbs}
+        actions={
+          <div className="flex gap-2">
+            <Link href={`/employee/admin/users/${userId}/edit`}>
+              <Button variant="outline">
+                <Edit className="w-4 h-4 mr-2" />
+                Edit
+              </Button>
+            </Link>
+          </div>
+        }
+      />
       {/* Status Banner for non-active users */}
       {user.status !== 'active' && (
         <div className={`rounded-lg p-4 mb-6 flex items-center gap-3 ${
@@ -290,7 +291,7 @@ export function UserDetailPage({ userId }: UserDetailPageProps) {
               onClick={() => setActiveTab(tab as typeof activeTab)}
               className={`pb-3 px-1 text-sm font-medium border-b-2 transition-colors capitalize ${
                 activeTab === tab
-                  ? 'border-forest-600 text-forest-600'
+                  ? 'border-gold-600 text-gold-600'
                   : 'border-transparent text-charcoal-500 hover:text-charcoal-700'
               }`}
             >
@@ -306,7 +307,7 @@ export function UserDetailPage({ userId }: UserDetailPageProps) {
           <DashboardSection title="User Information">
             <div className="bg-white rounded-xl border border-charcoal-100 p-6">
               <div className="flex items-start gap-6">
-                <div className="w-20 h-20 rounded-full bg-forest-100 flex items-center justify-center text-forest-700 font-semibold text-2xl">
+                <div className="w-20 h-20 rounded-full bg-gold-100 flex items-center justify-center text-gold-700 font-semibold text-2xl">
                   {getInitials(user.full_name)}
                 </div>
                 <div className="flex-1 grid grid-cols-2 gap-6">
@@ -414,7 +415,7 @@ export function UserDetailPage({ userId }: UserDetailPageProps) {
           <div className="bg-white rounded-xl border border-charcoal-100">
             {activityQuery.isLoading ? (
               <div className="p-8 flex justify-center">
-                <Loader2 className="w-6 h-6 animate-spin text-forest-600" />
+                <Loader2 className="w-6 h-6 animate-spin text-hublot-600" />
               </div>
             ) : !activityQuery.data?.length ? (
               <div className="p-12 text-center">
@@ -484,7 +485,7 @@ export function UserDetailPage({ userId }: UserDetailPageProps) {
             <div className="bg-white rounded-xl border border-charcoal-100">
               {loginHistoryQuery.isLoading ? (
                 <div className="p-8 flex justify-center">
-                  <Loader2 className="w-6 h-6 animate-spin text-forest-600" />
+                  <Loader2 className="w-6 h-6 animate-spin text-hublot-600" />
                 </div>
               ) : !loginHistoryQuery.data?.length ? (
                 <div className="p-12 text-center">
@@ -601,7 +602,7 @@ export function UserDetailPage({ userId }: UserDetailPageProps) {
                 Cancel
               </Button>
               <Button
-                className="bg-forest-600 hover:bg-forest-700 text-white"
+                className="bg-hublot-900 hover:bg-hublot-800 text-white"
                 onClick={() => resetPasswordMutation.mutate({ id: userId })}
                 disabled={resetPasswordMutation.isPending}
               >
@@ -640,6 +641,6 @@ export function UserDetailPage({ userId }: UserDetailPageProps) {
           </div>
         </div>
       )}
-    </DashboardShell>
+    </AdminPageContent>
   )
 }
