@@ -1,7 +1,7 @@
 import { Resend } from 'resend'
 
-// Initialize Resend client
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Initialize Resend client only if API key is present
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
 // Default sender
 const DEFAULT_FROM = process.env.EMAIL_FROM || 'InTime <noreply@intime.solutions>'
@@ -23,6 +23,10 @@ export async function sendInvitationEmail(params: {
   inviteLink: string
   orgName?: string
 }): Promise<SendEmailResult> {
+  if (!resend) {
+    console.warn('Resend not configured - skipping invitation email')
+    return { success: false, error: 'Email service not configured' }
+  }
   try {
     const { data, error } = await resend.emails.send({
       from: DEFAULT_FROM,
@@ -85,6 +89,10 @@ export async function sendPasswordResetEmail(params: {
   firstName: string
   resetLink: string
 }): Promise<SendEmailResult> {
+  if (!resend) {
+    console.warn('Resend not configured - skipping password reset email')
+    return { success: false, error: 'Email service not configured' }
+  }
   try {
     const { data, error } = await resend.emails.send({
       from: DEFAULT_FROM,
@@ -145,6 +153,10 @@ export async function sendWelcomeEmail(params: {
   loginUrl: string
   orgName?: string
 }): Promise<SendEmailResult> {
+  if (!resend) {
+    console.warn('Resend not configured - skipping welcome email')
+    return { success: false, error: 'Email service not configured' }
+  }
   try {
     const { data, error } = await resend.emails.send({
       from: DEFAULT_FROM,
@@ -225,6 +237,10 @@ export async function sendStatusChangeEmail(params: {
 
   const { subject, title, message } = statusMessages[params.status]
 
+  if (!resend) {
+    console.warn('Resend not configured - skipping status change email')
+    return { success: false, error: 'Email service not configured' }
+  }
   try {
     const { data, error } = await resend.emails.send({
       from: DEFAULT_FROM,
