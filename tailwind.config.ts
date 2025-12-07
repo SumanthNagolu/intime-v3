@@ -10,7 +10,21 @@ const config: Config = {
 	theme: {
 		extend: {
 			colors: {
-				// Hublot Black - Primary Brand Color
+				// Forest Green - Primary Brand Color (InTime Original)
+				forest: {
+					'50': '#E8F5F1',
+					'100': '#D1EBE3',
+					'200': '#A3D7C7',
+					'300': '#75C3AB',
+					'400': '#47AF8F',
+					'500': '#0D4C3B',  // Primary forest
+					'600': '#0A3A2A',  // Dark forest
+					'700': '#082D21',
+					'800': '#062018',
+					'900': '#04130F',
+					'950': '#020908'
+				},
+				// Hublot Black - Secondary Brand Color
 				hublot: {
 					'50': '#F5F5F5',
 					'100': '#E5E5E5',
@@ -24,32 +38,32 @@ const config: Config = {
 					'900': '#000000',
 					'950': '#000000'
 				},
-				// Rose Gold - Hublot Accent Color
+				// Gold - Premium Accent Color (InTime Original)
 				gold: {
-					'50': '#FDF8F6',
-					'100': '#FAEFEC',
-					'200': '#F5DDD6',
-					'300': '#EBBEAF',
-					'400': '#D4A574',  // Rose gold light
-					'500': '#B76E79',  // King Gold (primary accent)
-					'600': '#A25D68',
-					'700': '#8A4D57',
-					'800': '#724046',
-					'900': '#5F3639',
-					'950': '#331C1E'
+					'50': '#FBF9F3',
+					'100': '#F7F3E7',
+					'200': '#EFE7CF',
+					'300': '#E3D5AF',
+					'400': '#D4AF37',  // Classic gold
+					'500': '#C9A961',  // Primary gold
+					'600': '#B8964E',
+					'700': '#9A7B3F',
+					'800': '#7C6030',
+					'900': '#5E4521',
+					'950': '#3A2912'
 				},
 				// Keep amber for backwards compatibility (maps to gold)
 				amber: {
-					'50': '#FDF8F6',
-					'100': '#FAEFEC',
-					'200': '#F5DDD6',
-					'300': '#EBBEAF',
-					'400': '#D4A574',
-					'500': '#B76E79',
-					'600': '#A25D68',
-					'700': '#8A4D57',
-					'800': '#724046',
-					'900': '#5F3639'
+					'50': '#FBF9F3',
+					'100': '#F7F3E7',
+					'200': '#EFE7CF',
+					'300': '#E3D5AF',
+					'400': '#D4AF37',
+					'500': '#C9A961',
+					'600': '#B8964E',
+					'700': '#9A7B3F',
+					'800': '#7C6030',
+					'900': '#5E4521'
 				},
 				// Premium Neutrals (refined)
 				charcoal: {
@@ -208,8 +222,8 @@ const config: Config = {
 					'100%': { transform: 'translateY(-2px)' },
 				},
 				glow: {
-					'0%, 100%': { opacity: '1', boxShadow: '0 0 20px rgba(183, 110, 121, 0.5)' },
-					'50%': { opacity: '0.8', boxShadow: '0 0 30px rgba(183, 110, 121, 0.8)' },
+					'0%, 100%': { opacity: '1', boxShadow: '0 0 20px rgba(201, 169, 97, 0.5)' },
+					'50%': { opacity: '0.8', boxShadow: '0 0 30px rgba(201, 169, 97, 0.8)' },
 				},
 			},
 			fontFamily: {
@@ -255,7 +269,7 @@ const config: Config = {
 				'nav': ['0.875rem', { lineHeight: '1.25rem', fontWeight: '500', letterSpacing: '0.03em' }],
 			},
 			boxShadow: {
-				// Hublot-style neutral elevation system
+				// Premium elevation system
 				'elevation-xs': '0 1px 2px rgba(0, 0, 0, 0.05)',
 				'elevation-sm': '0 2px 8px rgba(0, 0, 0, 0.08)',
 				'elevation-md': '0 4px 16px rgba(0, 0, 0, 0.10)',
@@ -263,12 +277,12 @@ const config: Config = {
 				'elevation-xl': '0 16px 32px rgba(0, 0, 0, 0.16)',
 				'elevation-2xl': '0 24px 48px rgba(0, 0, 0, 0.20)',
 				// Specialty shadows
-				'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.12)',
-				'inner-glow': 'inset 0 2px 4px rgba(183, 110, 121, 0.1)',
-				'premium': '0 20px 40px -12px rgba(0, 0, 0, 0.25)',
-				'premium-lg': '0 32px 64px -12px rgba(0, 0, 0, 0.3)',
-				'gold-glow': '0 4px 12px rgba(183, 110, 121, 0.3)',
-				'gold-glow-lg': '0 6px 16px rgba(183, 110, 121, 0.4)',
+				'glass': '0 8px 32px 0 rgba(13, 76, 59, 0.12)',
+				'inner-glow': 'inset 0 2px 4px rgba(201, 169, 97, 0.1)',
+				'premium': '0 20px 40px -12px rgba(13, 76, 59, 0.25)',
+				'premium-lg': '0 32px 64px -12px rgba(13, 76, 59, 0.3)',
+				'gold-glow': '0 4px 12px rgba(201, 169, 97, 0.3)',
+				'gold-glow-lg': '0 6px 16px rgba(201, 169, 97, 0.4)',
 			},
 			spacing: {
 				// Formalized 8px grid spacing scale
