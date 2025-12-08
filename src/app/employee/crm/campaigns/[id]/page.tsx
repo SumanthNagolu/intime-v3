@@ -1,10 +1,11 @@
-import { CampaignDetailPage } from '@/components/crm/campaigns'
+'use client'
 
-interface Props {
-  params: Promise<{ id: string }>
-}
+import { useParams } from 'next/navigation'
+import { CampaignDetailPage } from '@/components/crm/campaigns/CampaignDetailPage'
 
-export default async function CampaignPage({ params }: Props) {
-  const { id } = await params
-  return <CampaignDetailPage campaignId={id} />
+export default function CampaignPage() {
+  const params = useParams()
+  const campaignId = params.id as string
+
+  return <CampaignDetailPage campaignId={campaignId} />
 }

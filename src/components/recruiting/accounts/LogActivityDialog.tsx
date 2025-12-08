@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Loader2, Phone, Mail, Users, MessageSquare } from 'lucide-react'
+import { Loader2, Phone, Mail, Users, MessageSquare, CheckSquare, Linkedin } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
 
 interface LogActivityDialogProps {
@@ -31,13 +31,15 @@ interface LogActivityDialogProps {
   contactId?: string
 }
 
-type ActivityType = 'call' | 'email' | 'meeting' | 'note'
+type ActivityType = 'call' | 'email' | 'meeting' | 'note' | 'task' | 'linkedin_message'
 
 const activityTypes: { value: ActivityType; label: string; icon: React.ReactNode }[] = [
   { value: 'call', label: 'Phone Call', icon: <Phone className="w-4 h-4" /> },
   { value: 'email', label: 'Email', icon: <Mail className="w-4 h-4" /> },
   { value: 'meeting', label: 'Meeting', icon: <Users className="w-4 h-4" /> },
   { value: 'note', label: 'Note', icon: <MessageSquare className="w-4 h-4" /> },
+  { value: 'task', label: 'Task', icon: <CheckSquare className="w-4 h-4" /> },
+  { value: 'linkedin_message', label: 'LinkedIn', icon: <Linkedin className="w-4 h-4" /> },
 ]
 
 // These match the outcome enum in the activities.log mutation
@@ -63,7 +65,7 @@ export function LogActivityDialog({
   const [activityType, setActivityType] = useState<ActivityType>('call')
   const [subject, setSubject] = useState('')
   const [description, setDescription] = useState('')
-  const [outcome, setOutcome] = useState('')
+  const [outcome, setOutcome] = useState('none')
   const [duration, setDuration] = useState('')
   const [selectedContactId, setSelectedContactId] = useState(contactId || '')
 
@@ -97,7 +99,7 @@ export function LogActivityDialog({
     setActivityType('call')
     setSubject('')
     setDescription('')
-    setOutcome('')
+    setOutcome('none')
     setDuration('')
     setSelectedContactId(contactId || '')
   }
@@ -120,7 +122,7 @@ export function LogActivityDialog({
       activityType,
       subject: subject.trim(),
       description: description.trim() || undefined,
-      outcome: outcome as 'positive' | 'neutral' | 'negative' | 'no_response' | 'left_voicemail' | 'busy' | 'connected' | undefined,
+      outcome: outcome && outcome !== 'none' ? outcome as 'positive' | 'neutral' | 'negative' | 'no_response' | 'left_voicemail' | 'busy' | 'connected' : undefined,
       durationMinutes: duration ? parseInt(duration, 10) : undefined,
       relatedContactId: selectedContactId || undefined,
     })
@@ -135,20 +137,20 @@ export function LogActivityDialog({
           <DialogHeader>
             <DialogTitle>Log Activity</DialogTitle>
             <DialogDescription>
-              Record a call, email, meeting, or note for this account.
+              Record interactions with this account: calls, emails, meetings, notes, tasks, or LinkedIn messages.
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-4">
             {/* Activity Type Selection */}
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-3 gap-2">
               {activityTypes.map((type) => (
                 <button
                   key={type.value}
                   type="button"
                   onClick={() => {
                     setActivityType(type.value)
-                    setOutcome('')
+                    setOutcome('none')
                   }}
                   className={`flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-colors ${
                     activityType === type.value
@@ -165,12 +167,12 @@ export function LogActivityDialog({
             {/* Contact Selection */}
             <div className="space-y-2">
               <Label htmlFor="contact">Contact (Optional)</Label>
-              <Select value={selectedContactId} onValueChange={setSelectedContactId}>
+              <Select value={selectedContactId || 'none'} onValueChange={(val) => setSelectedContactId(val === 'none' ? '' : val)}>
                 <SelectTrigger id="contact">
                   <SelectValue placeholder="Select a contact" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">No specific contact</SelectItem>
+                  <SelectItem value="none">No specific contact</SelectItem>
                   {contacts.map((contact: { id: string; first_name: string; last_name?: string; title?: string }) => (
                     <SelectItem key={contact.id} value={contact.id}>
                       {contact.first_name} {contact.last_name}
@@ -196,11 +198,12 @@ export function LogActivityDialog({
             {/* Outcome */}
             <div className="space-y-2">
               <Label htmlFor="outcome">Outcome</Label>
-              <Select value={outcome} onValueChange={setOutcome}>
+              <Select value={outcome || 'none'} onValueChange={(val) => setOutcome(val === 'none' ? '' : val)}>
                 <SelectTrigger id="outcome">
                   <SelectValue placeholder="Select outcome" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="none">No outcome selected</SelectItem>
                   {outcomeOptions.map((opt) => (
                     <SelectItem key={opt.value} value={opt.value}>
                       {opt.label}

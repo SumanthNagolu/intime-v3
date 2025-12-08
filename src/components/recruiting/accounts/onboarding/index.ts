@@ -1,0 +1,6 @@
+export { OnboardingStep1Profile } from './OnboardingStep1Profile'
+export { OnboardingStep2Contract } from './OnboardingStep2Contract'
+export { OnboardingStep3Billing } from './OnboardingStep3Billing'
+export { OnboardingStep4Contacts } from './OnboardingStep4Contacts'
+export { OnboardingStep5Categories } from './OnboardingStep5Categories'
+export { OnboardingStep6Kickoff } from './OnboardingStep6Kickoff'

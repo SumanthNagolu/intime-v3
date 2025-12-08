@@ -20,17 +20,26 @@ async function AccountsListServer({ searchParams }: { searchParams: AccountsPage
   const [accountsResult, healthData] = await Promise.all([
     caller.crm.accounts.list({
       search: params.search || undefined,
-      industry: params.industry || undefined,
       limit: 50,
     }),
     caller.crm.accounts.getHealth({}),
   ])
 
+  // Transform health data to match expected type
+  const transformedHealth = healthData ? {
+    summary: healthData.summary,
+    accounts: healthData.accounts.map(a => ({
+      id: a.id,
+      healthStatus: a.healthStatus as 'healthy' | 'attention' | 'at_risk',
+      healthScore: a.healthScore,
+    })),
+  } : null
+
   return (
     <AccountsListClient
       initialAccounts={accountsResult.items}
       initialTotal={accountsResult.total}
-      initialHealth={healthData}
+      initialHealth={transformedHealth}
       initialSearch={params.search || ''}
       initialIndustry={params.industry || ''}
     />

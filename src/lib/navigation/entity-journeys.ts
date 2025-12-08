@@ -2,7 +2,8 @@ import {
   Briefcase, Search, Users, Calendar, FileText, CheckCircle,
   UserCheck, ClipboardCheck, Send, Building2, Target, Handshake,
   DollarSign, Award, Phone, Star, TrendingUp, Package,
-  PauseCircle, PlayCircle, Edit, XCircle, MessageSquare, Plus
+  PauseCircle, PlayCircle, Edit, XCircle, MessageSquare, Plus,
+  UserCircle, Mail, Megaphone, BarChart3, Pause, Play
 } from 'lucide-react'
 import { EntityJourneyConfig, EntityType } from './entity-navigation.types'
 
@@ -203,6 +204,7 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
         description: 'Account information',
         activeStatuses: ['prospect'],
         completedStatuses: ['active'],
+        defaultTab: 'overview',
       },
       {
         id: 'contacts',
@@ -211,6 +213,7 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
         description: 'Key contacts',
         activeStatuses: ['prospect', 'active'],
         completedStatuses: [],
+        defaultTab: 'contacts',
       },
       {
         id: 'contracts',
@@ -219,6 +222,7 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
         description: 'Business terms',
         activeStatuses: ['active'],
         completedStatuses: [],
+        defaultTab: 'overview',
       },
       {
         id: 'jobs',
@@ -227,6 +231,7 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
         description: 'Job requisitions',
         activeStatuses: ['active'],
         completedStatuses: [],
+        defaultTab: 'jobs',
       },
       {
         id: 'placements',
@@ -235,6 +240,7 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
         description: 'Placement history',
         activeStatuses: ['active'],
         completedStatuses: [],
+        defaultTab: 'placements',
       },
     ],
     quickActions: [
@@ -265,6 +271,78 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
         icon: Phone,
         actionType: 'dialog',
         dialogId: 'logActivity'
+      },
+    ],
+  },
+
+  contact: {
+    entityType: 'contact',
+    steps: [
+      {
+        id: 'profile',
+        label: 'Contact Profile',
+        icon: UserCircle,
+        description: 'Contact information',
+        activeStatuses: ['active'],
+        completedStatuses: [],
+        defaultTab: 'overview',
+      },
+      {
+        id: 'accounts',
+        label: 'Accounts',
+        icon: Building2,
+        description: 'Associated accounts',
+        activeStatuses: ['active'],
+        completedStatuses: [],
+        defaultTab: 'accounts',
+      },
+      {
+        id: 'submissions',
+        label: 'Submissions',
+        icon: Send,
+        description: 'Submission history',
+        activeStatuses: ['active'],
+        completedStatuses: [],
+        defaultTab: 'submissions',
+      },
+      {
+        id: 'activities',
+        label: 'Activities',
+        icon: Phone,
+        description: 'Activity history',
+        activeStatuses: ['active'],
+        completedStatuses: [],
+        defaultTab: 'activities',
+      },
+    ],
+    quickActions: [
+      {
+        id: 'edit',
+        label: 'Edit Contact',
+        icon: Edit,
+        actionType: 'navigate',
+        href: '/employee/contacts/:id/edit'
+      },
+      {
+        id: 'call',
+        label: 'Log Call',
+        icon: Phone,
+        actionType: 'dialog',
+        dialogId: 'logCall'
+      },
+      {
+        id: 'email',
+        label: 'Send Email',
+        icon: Mail,
+        actionType: 'dialog',
+        dialogId: 'sendEmail'
+      },
+      {
+        id: 'meeting',
+        label: 'Schedule Meeting',
+        icon: Calendar,
+        actionType: 'dialog',
+        dialogId: 'scheduleMeeting'
       },
     ],
   },
@@ -575,6 +653,105 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
         actionType: 'dialog',
         dialogId: 'closeWon',
         hideForStatuses: ['closed_won', 'closed_lost'],
+      },
+    ],
+  },
+
+  // Campaign uses sections-based navigation with enhanced quick actions
+  campaign: {
+    entityType: 'campaign',
+    steps: [
+      {
+        id: 'setup',
+        label: 'Setup',
+        icon: Megaphone,
+        description: 'Configure campaign settings and audience',
+        activeStatuses: ['draft', 'scheduled'],
+        completedStatuses: ['active', 'paused', 'completed']
+      },
+      {
+        id: 'active',
+        label: 'Running',
+        icon: Play,
+        description: 'Campaign actively sending to prospects',
+        activeStatuses: ['active'],
+        completedStatuses: ['completed']
+      },
+      {
+        id: 'paused',
+        label: 'Paused',
+        icon: Pause,
+        description: 'Campaign temporarily stopped',
+        activeStatuses: ['paused'],
+        completedStatuses: ['completed']
+      },
+      {
+        id: 'completed',
+        label: 'Completed',
+        icon: CheckCircle,
+        description: 'Campaign finished - review results',
+        activeStatuses: ['completed'],
+        completedStatuses: []
+      },
+    ],
+    quickActions: [
+      {
+        id: 'start',
+        label: 'Start Campaign',
+        icon: Play,
+        actionType: 'mutation',
+        showForStatuses: ['draft'],
+      },
+      {
+        id: 'resume',
+        label: 'Resume Campaign',
+        icon: Play,
+        actionType: 'mutation',
+        showForStatuses: ['paused'],
+      },
+      {
+        id: 'pause',
+        label: 'Pause Campaign',
+        icon: Pause,
+        actionType: 'mutation',
+        showForStatuses: ['active'],
+      },
+      {
+        id: 'complete',
+        label: 'Complete Campaign',
+        icon: CheckCircle,
+        actionType: 'dialog',
+        dialogId: 'completeCampaign',
+        showForStatuses: ['active', 'paused'],
+      },
+      {
+        id: 'edit',
+        label: 'Edit Campaign',
+        icon: Edit,
+        actionType: 'dialog',
+        dialogId: 'editCampaign',
+        hideForStatuses: ['completed'],
+      },
+      {
+        id: 'activity',
+        label: 'Log Activity',
+        icon: Phone,
+        actionType: 'dialog',
+        dialogId: 'logActivity'
+      },
+      {
+        id: 'duplicate',
+        label: 'Duplicate Campaign',
+        icon: Edit,
+        actionType: 'dialog',
+        dialogId: 'duplicateCampaign'
+      },
+      {
+        id: 'analytics',
+        label: 'View Analytics',
+        icon: BarChart3,
+        actionType: 'navigate',
+        href: '/employee/crm/campaigns/:id?section=analytics'
       },
     ],
   },

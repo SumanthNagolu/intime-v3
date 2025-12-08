@@ -1,14 +1,25 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { trpc } from '@/lib/trpc/client'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Skeleton } from '@/components/ui/skeleton'
 import { UpdateStatusDialog, CloseJobWizard } from '@/components/recruiting/jobs'
 import { SubmissionPipeline } from '@/components/recruiting/submissions'
+import {
+  JobOverviewSection,
+  JobRequirementsSection,
+  JobSubmissionsSection,
+  JobInterviewsSection,
+  JobOffersSection,
+  JobActivitiesSection,
+  JobDocumentsSection,
+  JobNotesSection,
+} from '@/components/recruiting/jobs/sections'
 import {
   MapPin,
   DollarSign,
@@ -17,6 +28,8 @@ import {
   Building2,
   Briefcase,
   History,
+  Workflow,
+  LayoutGrid,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { format, formatDistanceToNow } from 'date-fns'
@@ -42,11 +55,28 @@ declare global {
 export default function JobDetailPage() {
   const params = useParams()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const jobId = params.id as string
+
+  // View mode: journey (default) or sections
+  const viewMode = searchParams.get('view') || 'journey'
+  const currentSection = searchParams.get('section') || 'overview'
 
   const [activeTab, setActiveTab] = useState('overview')
   const [showStatusDialog, setShowStatusDialog] = useState(false)
   const [showCloseWizard, setShowCloseWizard] = useState(false)
+
+  // Helper to toggle view mode
+  const toggleViewMode = (mode: 'journey' | 'sections') => {
+    const url = new URL(window.location.href)
+    if (mode === 'sections') {
+      url.searchParams.set('view', 'sections')
+    } else {
+      url.searchParams.delete('view')
+      url.searchParams.delete('section')
+    }
+    router.push(url.pathname + url.search)
+  }
 
   // Queries
   const jobQuery = trpc.ats.jobs.getById.useQuery({ id: jobId })
@@ -92,29 +122,125 @@ export default function JobDetailPage() {
   const createdDate = new Date(job.created_at)
   const daysOpen = Math.floor((Date.now() - createdDate.getTime()) / (1000 * 60 * 60 * 24))
 
+  // Render section content based on current section (for sections view)
+  const renderSectionContent = () => {
+    switch (currentSection) {
+      case 'overview':
+        return <JobOverviewSection job={job as unknown as Parameters<typeof JobOverviewSection>[0]['job']} jobId={jobId} />
+      case 'requirements':
+        return <JobRequirementsSection jobId={jobId} />
+      case 'submissions':
+        return <JobSubmissionsSection jobId={jobId} />
+      case 'pipeline':
+        return (
+          <Card className="bg-white">
+            <CardHeader>
+              <CardTitle>Candidate Pipeline</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <SubmissionPipeline
+                submissions={submissions as Array<{
+                  id: string
+                  status: string
+                  created_at: string
+                  submitted_at?: string
+                  candidate?: { id: string; first_name: string; last_name: string; email?: string; phone?: string }
+                  job?: { id: string; title: string; account?: { id: string; name: string } | null; rate_min?: number; rate_max?: number }
+                  ai_match_score?: number
+                  recruiter_match_score?: number
+                  submitted_rate?: number
+                }>}
+                job={{
+                  id: jobId,
+                  title: job.title,
+                  account: job.account as { id: string; name: string } | null,
+                  rate_min: job.rate_min,
+                  rate_max: job.rate_max,
+                }}
+                onCandidateClick={(submissionId) => {
+                  router.push(`/employee/recruiting/submissions/${submissionId}`)
+                }}
+                onAddCandidate={() => {
+                  router.push(`/employee/recruiting/jobs/${jobId}/add-candidate`)
+                }}
+                onRefresh={() => {
+                  submissionsQuery.refetch()
+                }}
+              />
+            </CardContent>
+          </Card>
+        )
+      case 'interviews':
+        return <JobInterviewsSection jobId={jobId} />
+      case 'offers':
+        return <JobOffersSection jobId={jobId} />
+      case 'activities':
+        return <JobActivitiesSection jobId={jobId} />
+      case 'documents':
+        return <JobDocumentsSection jobId={jobId} />
+      case 'notes':
+        return <JobNotesSection jobId={jobId} />
+      default:
+        return <JobOverviewSection job={job as unknown as Parameters<typeof JobOverviewSection>[0]['job']} jobId={jobId} />
+    }
+  }
+
   return (
     <div className="container mx-auto px-6 py-6">
-      {/* Job Quick Info */}
-      <div className="flex flex-wrap items-center gap-4 text-sm text-charcoal-500 mb-6 bg-white p-4 rounded-lg">
-        {job.account && (
+      {/* Job Quick Info + View Mode Toggle */}
+      <div className="flex items-center justify-between mb-6 bg-white p-4 rounded-lg">
+        <div className="flex items-center gap-4 text-sm text-charcoal-500">
+          {job.account && (
+            <span className="flex items-center gap-1">
+              <Building2 className="w-4 h-4" />
+              {(job.account as { name: string }).name}
+            </span>
+          )}
+          {job.location && (
+            <span className="flex items-center gap-1">
+              <MapPin className="w-4 h-4" />
+              {job.location}
+              {job.is_remote && ' (Remote)'}
+              {job.hybrid_days && ` (Hybrid ${job.hybrid_days}d/wk)`}
+            </span>
+          )}
           <span className="flex items-center gap-1">
-            <Building2 className="w-4 h-4" />
-            {(job.account as { name: string }).name}
+            <Briefcase className="w-4 h-4" />
+            {job.job_type?.replace(/_/g, ' ')}
           </span>
-        )}
-        {job.location && (
-          <span className="flex items-center gap-1">
-            <MapPin className="w-4 h-4" />
-            {job.location}
-            {job.is_remote && ' (Remote)'}
-            {job.hybrid_days && ` (Hybrid ${job.hybrid_days}d/wk)`}
-          </span>
-        )}
-        <span className="flex items-center gap-1">
-          <Briefcase className="w-4 h-4" />
-          {job.job_type?.replace(/_/g, ' ')}
-        </span>
+        </div>
+
+        {/* View Toggle */}
+        <div className="flex items-center gap-1 bg-charcoal-50 p-1 rounded-lg">
+          <Button
+            variant={viewMode === 'journey' ? 'default' : 'ghost'}
+            size="sm"
+            onClick={() => toggleViewMode('journey')}
+            className="gap-1.5"
+          >
+            <Workflow className="w-4 h-4" />
+            Journey
+          </Button>
+          <Button
+            variant={viewMode === 'sections' ? 'default' : 'ghost'}
+            size="sm"
+            onClick={() => toggleViewMode('sections')}
+            className="gap-1.5"
+          >
+            <LayoutGrid className="w-4 h-4" />
+            Sections
+          </Button>
+        </div>
       </div>
+
+      {/* Sections View */}
+      {viewMode === 'sections' ? (
+        <div className="space-y-6">
+          {renderSectionContent()}
+        </div>
+      ) : (
+        <>
+          {/* Journey View - Summary Cards */}
 
       {/* Summary Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
@@ -443,6 +569,8 @@ export default function JobDetailPage() {
           </Card>
         </TabsContent>
       </Tabs>
+        </>
+      )}
 
       {/* Update Status Dialog */}
       <UpdateStatusDialog

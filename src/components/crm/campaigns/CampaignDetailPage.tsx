@@ -1,103 +1,99 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { trpc } from '@/lib/trpc/client'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Progress } from '@/components/ui/progress'
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import {
-  ArrowLeft,
   Play,
   Pause,
   Settings,
-  MoreHorizontal,
   Mail,
   Linkedin,
   Phone,
   Users,
-  Target,
   Calendar,
-  DollarSign,
-  TrendingUp,
-  MessageSquare,
   CheckCircle,
   Loader2,
-  ExternalLink,
-  UserPlus,
-  ArrowRight,
+  Target,
+  TrendingUp,
+  Zap,
+  Clock,
+  DollarSign,
+  BarChart3,
+  ArrowLeft,
+  Copy,
+  MoreHorizontal,
 } from 'lucide-react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { format } from 'date-fns'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { useSearchParams, useRouter } from 'next/navigation'
+import { format, differenceInDays } from 'date-fns'
 import { toast } from 'sonner'
-import { cn } from '@/lib/utils'
-import { ConvertProspectDialog } from './ConvertProspectDialog'
 import { EditCampaignDialog } from './EditCampaignDialog'
+import { CompleteCampaignDialog } from './CompleteCampaignDialog'
+import { DuplicateCampaignDialog } from './DuplicateCampaignDialog'
+import {
+  CampaignOverviewSection,
+  CampaignSequencesSection,
+  CampaignProspectsSection,
+  CampaignLeadsSection,
+  CampaignActivitiesSection,
+  CampaignDocumentsSection,
+  CampaignNotesSection,
+  CampaignAnalyticsSection,
+  CampaignHistorySection,
+} from './sections'
+import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 interface CampaignDetailPageProps {
   campaignId: string
 }
 
-interface ProspectData {
-  id: string
-  first_name?: string
-  last_name?: string
-  email?: string
-  company_name?: string
-  title?: string
-  status: string
-  response_type?: string
-  response_text?: string
-  engagement_score?: number
-  converted_lead_id?: string
-  linkedin_url?: string
-  responded_at?: string
-}
-
-const statusColors: Record<string, string> = {
-  draft: 'bg-gray-100 text-gray-700',
-  scheduled: 'bg-blue-100 text-blue-700',
-  active: 'bg-green-100 text-green-700',
-  paused: 'bg-yellow-100 text-yellow-700',
-  completed: 'bg-purple-100 text-purple-700',
-}
-
-const prospectStatusColors: Record<string, string> = {
-  enrolled: 'bg-gray-100 text-gray-700',
-  contacted: 'bg-blue-100 text-blue-700',
-  engaged: 'bg-cyan-100 text-cyan-700',
-  responded: 'bg-green-100 text-green-700',
-  converted: 'bg-purple-100 text-purple-700',
-  unsubscribed: 'bg-red-100 text-red-700',
-  bounced: 'bg-orange-100 text-orange-700',
-}
-
-const responseTypeColors: Record<string, string> = {
-  positive: 'text-green-600 bg-green-50',
-  neutral: 'text-gray-600 bg-gray-50',
-  negative: 'text-red-600 bg-red-50',
+const statusConfig: Record<string, { color: string; bgColor: string; icon: React.ReactNode; label: string }> = {
+  draft: { 
+    color: 'text-charcoal-700', 
+    bgColor: 'bg-charcoal-100 border-charcoal-200', 
+    icon: <Clock className="w-3.5 h-3.5" />,
+    label: 'Draft'
+  },
+  scheduled: { 
+    color: 'text-blue-700', 
+    bgColor: 'bg-blue-50 border-blue-200', 
+    icon: <Calendar className="w-3.5 h-3.5" />,
+    label: 'Scheduled'
+  },
+  active: { 
+    color: 'text-emerald-700', 
+    bgColor: 'bg-emerald-50 border-emerald-200', 
+    icon: <Zap className="w-3.5 h-3.5" />,
+    label: 'Active'
+  },
+  paused: { 
+    color: 'text-amber-700', 
+    bgColor: 'bg-amber-50 border-amber-200', 
+    icon: <Pause className="w-3.5 h-3.5" />,
+    label: 'Paused'
+  },
+  completed: { 
+    color: 'text-violet-700', 
+    bgColor: 'bg-violet-50 border-violet-200', 
+    icon: <CheckCircle className="w-3.5 h-3.5" />,
+    label: 'Completed'
+  },
 }
 
 const channelIcons: Record<string, React.ReactNode> = {
@@ -107,27 +103,31 @@ const channelIcons: Record<string, React.ReactNode> = {
 }
 
 export function CampaignDetailPage({ campaignId }: CampaignDetailPageProps) {
+  const searchParams = useSearchParams()
   const router = useRouter()
-  const [activeTab, setActiveTab] = useState('overview')
-  const [prospectFilter, setProspectFilter] = useState<string>('all')
-  const [convertDialogOpen, setConvertDialogOpen] = useState(false)
+  const currentSection = searchParams.get('section') || 'overview'
+  const headerRef = useRef<HTMLDivElement>(null)
+  const [isHeaderSticky, setIsHeaderSticky] = useState(false)
+
   const [editDialogOpen, setEditDialogOpen] = useState(false)
-  const [selectedProspect, setSelectedProspect] = useState<ProspectData | null>(null)
+  const [completeDialogOpen, setCompleteDialogOpen] = useState(false)
+  const [duplicateDialogOpen, setDuplicateDialogOpen] = useState(false)
 
   const utils = trpc.useUtils()
 
-  const { data: campaign, isLoading } = trpc.crm.campaigns.getById.useQuery({ id: campaignId })
-  const { data: metrics } = trpc.crm.campaigns.getMetrics.useQuery({ id: campaignId })
-  const { data: prospects } = trpc.crm.campaigns.getProspects.useQuery({
-    campaignId,
-    status: prospectFilter as 'enrolled' | 'contacted' | 'engaged' | 'responded' | 'converted' | 'unsubscribed' | 'bounced' | 'all',
-    limit: 50,
-  })
+  // Use optimized query that fetches campaign + all counts in one call
+  const { data: campaign, isLoading } = trpc.crm.campaigns.getByIdWithCounts.useQuery(
+    { id: campaignId },
+    {
+      staleTime: 5 * 60 * 1000, // 5 minutes cache
+      refetchOnWindowFocus: false,
+    }
+  )
 
   const updateStatus = trpc.crm.campaigns.updateStatus.useMutation({
     onSuccess: () => {
       toast.success('Campaign status updated')
-      utils.crm.campaigns.getById.invalidate({ id: campaignId })
+      utils.crm.campaigns.getByIdWithCounts.invalidate({ id: campaignId })
       utils.crm.campaigns.list.invalidate()
     },
     onError: (error) => {
@@ -135,21 +135,62 @@ export function CampaignDetailPage({ campaignId }: CampaignDetailPageProps) {
     },
   })
 
+  // Sticky header detection
+  useEffect(() => {
+    const handleScroll = () => {
+      if (headerRef.current) {
+        const rect = headerRef.current.getBoundingClientRect()
+        setIsHeaderSticky(rect.top <= 0)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Listen for dialog events from sidebar
+  useEffect(() => {
+    const handleCampaignDialog = (e: CustomEvent<{ dialogId: string }>) => {
+      if (e.detail.dialogId === 'editCampaign') {
+        setEditDialogOpen(true)
+      } else if (e.detail.dialogId === 'logActivity') {
+        router.push(`/employee/crm/campaigns/${campaignId}?section=activities`)
+      }
+    }
+
+    window.addEventListener('openCampaignDialog', handleCampaignDialog as EventListener)
+    return () => {
+      window.removeEventListener('openCampaignDialog', handleCampaignDialog as EventListener)
+    }
+  }, [campaignId, router])
+
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <Loader2 className="w-6 h-6 animate-spin text-charcoal-400" />
+      <div className="flex items-center justify-center py-16">
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 className="w-8 h-8 animate-spin text-hublot-500" />
+          <p className="text-sm text-charcoal-500">Loading campaign...</p>
+        </div>
       </div>
     )
   }
 
   if (!campaign) {
     return (
-      <div className="text-center py-12">
-        <p className="text-charcoal-500">Campaign not found</p>
-        <Button variant="outline" onClick={() => router.back()} className="mt-4">
-          Go Back
-        </Button>
+      <div className="flex flex-col items-center justify-center py-16">
+        <div className="p-4 bg-charcoal-50 rounded-full mb-4">
+          <Target className="w-10 h-10 text-charcoal-300" />
+        </div>
+        <h3 className="text-lg font-semibold text-charcoal-900">Campaign not found</h3>
+        <p className="text-sm text-charcoal-500 mt-1">
+          The campaign you're looking for doesn't exist or you don't have access.
+        </p>
+        <Link href="/employee/crm/campaigns">
+          <Button variant="outline" className="mt-4 gap-2">
+            <ArrowLeft className="w-4 h-4" />
+            Back to Campaigns
+          </Button>
+        </Link>
       </div>
     )
   }
@@ -159,16 +200,11 @@ export function CampaignDetailPage({ campaignId }: CampaignDetailPageProps) {
     updateStatus.mutate({ id: campaignId, status: newStatus })
   }
 
-  const handleConvert = (prospect: ProspectData) => {
-    setSelectedProspect(prospect)
-    setConvertDialogOpen(true)
-  }
-
-  const funnel = metrics?.funnel ?? {
+  // Calculate key metrics for sticky header
+  const funnel = campaign?.funnel ?? {
     total_prospects: 0,
     contacted: 0,
     opened: 0,
-    clicked: 0,
     responded: 0,
     leads: 0,
     meetings: 0,
@@ -177,492 +213,374 @@ export function CampaignDetailPage({ campaignId }: CampaignDetailPageProps) {
     conversion_rate: 0,
   }
 
+  const leadsProgress = campaign?.targets?.targetLeads
+    ? Math.round(((campaign.metrics?.leads || 0) / campaign.targets.targetLeads) * 100)
+    : 0
+
+  const daysRemaining = campaign?.endDate
+    ? Math.max(0, differenceInDays(new Date(campaign.endDate), new Date()))
+    : null
+
+  const statusInfo = statusConfig[campaign?.status || 'draft'] || statusConfig.draft
+
+  // Render current section (lazy-loaded)
+  const renderSection = () => {
+    switch (currentSection) {
+      case 'sequences':
+        return <CampaignSequencesSection campaignId={campaignId} />
+      case 'prospects':
+        return <CampaignProspectsSection campaignId={campaignId} />
+      case 'leads':
+        return <CampaignLeadsSection campaignId={campaignId} />
+      case 'activities':
+        return <CampaignActivitiesSection campaignId={campaignId} />
+      case 'documents':
+        return <CampaignDocumentsSection campaignId={campaignId} />
+      case 'notes':
+        return <CampaignNotesSection campaignId={campaignId} />
+      case 'analytics':
+        return <CampaignAnalyticsSection campaignId={campaignId} />
+      case 'history':
+        return <CampaignHistorySection campaignId={campaignId} />
+      case 'overview':
+      default:
+        return (
+          <CampaignOverviewSection
+            campaignId={campaignId}
+            campaign={campaign}
+            metrics={campaign?.metrics}
+          />
+        )
+    }
+  }
+
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-start justify-between">
-        <div className="flex items-start gap-4">
-          <Button variant="ghost" size="icon" onClick={() => router.back()}>
-            <ArrowLeft className="w-4 h-4" />
-          </Button>
-          <div>
-            <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-heading font-semibold text-charcoal-900">
-                {campaign.name}
-              </h1>
-              <Badge className={statusColors[campaign.status]}>{campaign.status}</Badge>
-            </div>
-            <div className="flex items-center gap-4 mt-2 text-sm text-charcoal-500">
-              <span className="flex items-center gap-1.5">
-                <Calendar className="w-4 h-4" />
-                {campaign.start_date && format(new Date(campaign.start_date), 'MMM d, yyyy')}
-                {' - '}
-                {campaign.end_date && format(new Date(campaign.end_date), 'MMM d, yyyy')}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Users className="w-4 h-4" />
-                {campaign.audience_size?.toLocaleString() || 0} prospects
-              </span>
-              <div className="flex gap-1.5">
-                {campaign.channels?.map((channel: string) => (
-                  <span key={channel} className="p-1 bg-charcoal-100 rounded">
-                    {channelIcons[channel]}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          {campaign.status !== 'completed' && (
-            <Button
-              variant="outline"
-              onClick={handleToggleStatus}
-              disabled={updateStatus.isPending}
-            >
-              {campaign.status === 'active' ? (
-                <>
-                  <Pause className="w-4 h-4 mr-2" />
-                  Pause
-                </>
-              ) : (
-                <>
-                  <Play className="w-4 h-4 mr-2" />
-                  Resume
-                </>
-              )}
-            </Button>
+    <TooltipProvider>
+      <div className="flex flex-col min-h-full">
+        {/* Sticky Header */}
+        <div 
+          ref={headerRef}
+          className={cn(
+            'sticky top-0 z-20 bg-white transition-shadow duration-200',
+            isHeaderSticky && 'shadow-md border-b border-charcoal-100'
           )}
-          <Button variant="outline" size="icon" onClick={() => setEditDialogOpen(true)}>
-            <Settings className="w-4 h-4" />
-          </Button>
-        </div>
-      </div>
-
-      {/* Metrics Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-charcoal-500">Prospects</p>
-                <p className="text-2xl font-semibold">{funnel.total_prospects}</p>
-                <p className="text-xs text-charcoal-400">{funnel.contacted} contacted</p>
-              </div>
-              <Users className="w-8 h-8 text-charcoal-300" />
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-charcoal-500">Open Rate</p>
-                <p className="text-2xl font-semibold">{funnel.open_rate}%</p>
-                <p className="text-xs text-charcoal-400">{funnel.opened} opened</p>
-              </div>
-              <Mail className="w-8 h-8 text-charcoal-300" />
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-charcoal-500">Response Rate</p>
-                <p className="text-2xl font-semibold">{funnel.response_rate}%</p>
-                <p className="text-xs text-charcoal-400">{funnel.responded} replied</p>
-              </div>
-              <MessageSquare className="w-8 h-8 text-charcoal-300" />
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-charcoal-500">Leads Generated</p>
-                <p className="text-2xl font-semibold text-green-600">{funnel.leads}</p>
-                <p className="text-xs text-charcoal-400">{funnel.conversion_rate}% conversion</p>
-              </div>
-              <Target className="w-8 h-8 text-green-300" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Funnel Visualization */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Campaign Funnel</CardTitle>
-          <CardDescription>Prospect journey through the campaign</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-end justify-between gap-2 h-40">
-            {[
-              { label: 'Enrolled', value: funnel.total_prospects, color: 'bg-charcoal-200' },
-              { label: 'Contacted', value: funnel.contacted, color: 'bg-blue-200' },
-              { label: 'Opened', value: funnel.opened, color: 'bg-cyan-200' },
-              { label: 'Clicked', value: funnel.clicked, color: 'bg-teal-200' },
-              { label: 'Responded', value: funnel.responded, color: 'bg-green-200' },
-              { label: 'Leads', value: funnel.leads, color: 'bg-green-400' },
-              { label: 'Meetings', value: funnel.meetings, color: 'bg-gold-400' },
-            ].map((stage, idx) => {
-              const maxValue = Math.max(funnel.total_prospects || 1, 1)
-              const height = (stage.value / maxValue) * 100
-              return (
-                <div key={stage.label} className="flex-1 flex flex-col items-center">
-                  <div className="text-sm font-medium mb-1">{stage.value}</div>
-                  <div
-                    className={cn('w-full rounded-t transition-all', stage.color)}
-                    style={{ height: `${Math.max(height, 5)}%` }}
-                  />
-                  <div className="text-xs text-charcoal-500 mt-2 text-center">{stage.label}</div>
+        >
+          {/* Main Header */}
+          <div className="px-6 py-4">
+            <div className="flex items-start justify-between">
+              <div className="flex-1 min-w-0">
+                {/* Breadcrumb */}
+                <div className="flex items-center gap-2 mb-2">
+                  <Link 
+                    href="/employee/crm/campaigns"
+                    className="text-sm text-charcoal-500 hover:text-charcoal-700 transition-colors"
+                  >
+                    Campaigns
+                  </Link>
+                  <span className="text-charcoal-300">/</span>
+                  <span className="text-sm text-charcoal-700 truncate max-w-[200px]">
+                    {campaign?.name}
+                  </span>
                 </div>
-              )
-            })}
-          </div>
-        </CardContent>
-      </Card>
 
-      {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="prospects">Prospects ({prospects?.total || 0})</TabsTrigger>
-          <TabsTrigger value="responses">Responses</TabsTrigger>
-          <TabsTrigger value="performance">Performance</TabsTrigger>
-        </TabsList>
+                {/* Title Row */}
+                <div className="flex items-center gap-3 flex-wrap">
+                  <h1 className="text-2xl font-heading font-semibold text-charcoal-900 tracking-tight">
+                    {campaign?.name}
+                  </h1>
+                  <Badge className={cn('gap-1.5 font-medium border', statusInfo.bgColor, statusInfo.color)}>
+                    {statusInfo.icon}
+                    {statusInfo.label}
+                  </Badge>
+                </div>
 
-        <TabsContent value="overview" className="mt-4 space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            {/* Target Progress */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Target Progress</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span>Leads</span>
-                    <span>{metrics?.targets.leads.actual} / {metrics?.targets.leads.target}</span>
-                  </div>
-                  <div className="h-2 bg-charcoal-100 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-green-500"
-                      style={{
-                        width: `${Math.min((metrics?.targets.leads.actual || 0) / (metrics?.targets.leads.target || 1) * 100, 100)}%`
-                      }}
-                    />
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span>Meetings</span>
-                    <span>{metrics?.targets.meetings.actual} / {metrics?.targets.meetings.target}</span>
-                  </div>
-                  <div className="h-2 bg-charcoal-100 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-blue-500"
-                      style={{
-                        width: `${Math.min((metrics?.targets.meetings.actual || 0) / (metrics?.targets.meetings.target || 1) * 100, 100)}%`
-                      }}
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Budget */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Budget & Costs</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between">
-                  <span className="text-sm text-charcoal-500">Budget</span>
-                  <span className="font-medium">${metrics?.budget.total?.toLocaleString() || 0}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-sm text-charcoal-500">Spent</span>
-                  <span className="font-medium">${metrics?.budget.spent?.toLocaleString() || 0}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-sm text-charcoal-500">Cost per Lead</span>
-                  <span className="font-medium text-green-600">${metrics?.costs.perLead?.toFixed(2) || '0.00'}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-sm text-charcoal-500">Cost per Meeting</span>
-                  <span className="font-medium">${metrics?.costs.perMeeting?.toFixed(2) || '0.00'}</span>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Channel Performance */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Channel Performance</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Channel</TableHead>
-                    <TableHead className="text-right">Sent</TableHead>
-                    <TableHead className="text-right">Open Rate</TableHead>
-                    <TableHead className="text-right">Click Rate</TableHead>
-                    <TableHead className="text-right">Response Rate</TableHead>
-                    <TableHead className="text-right">Leads</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {metrics?.channelPerformance?.map((ch: { channel: string; sent: number; open_rate: number; click_rate: number; response_rate: number; leads: number }) => (
-                    <TableRow key={ch.channel}>
-                      <TableCell className="flex items-center gap-2">
-                        {channelIcons[ch.channel]}
-                        <span className="capitalize">{ch.channel}</span>
-                      </TableCell>
-                      <TableCell className="text-right">{ch.sent}</TableCell>
-                      <TableCell className="text-right">{ch.open_rate}%</TableCell>
-                      <TableCell className="text-right">{ch.click_rate}%</TableCell>
-                      <TableCell className="text-right">{ch.response_rate}%</TableCell>
-                      <TableCell className="text-right font-medium text-green-600">{ch.leads}</TableCell>
-                    </TableRow>
-                  ))}
-                  {(!metrics?.channelPerformance || metrics.channelPerformance.length === 0) && (
-                    <TableRow>
-                      <TableCell colSpan={6} className="text-center text-charcoal-500 py-8">
-                        No channel data yet
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="prospects" className="mt-4">
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-base">Prospects</CardTitle>
-                <Select value={prospectFilter} onValueChange={setProspectFilter}>
-                  <SelectTrigger className="w-[160px]">
-                    <SelectValue placeholder="Filter" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="enrolled">Enrolled</SelectItem>
-                    <SelectItem value="contacted">Contacted</SelectItem>
-                    <SelectItem value="engaged">Engaged</SelectItem>
-                    <SelectItem value="responded">Responded</SelectItem>
-                    <SelectItem value="converted">Converted</SelectItem>
-                    <SelectItem value="unsubscribed">Unsubscribed</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </CardHeader>
-            <CardContent className="p-0">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Prospect</TableHead>
-                    <TableHead>Company</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Response</TableHead>
-                    <TableHead>Score</TableHead>
-                    <TableHead className="w-[50px]"></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {prospects?.items?.map((prospect: ProspectData) => (
-                    <TableRow key={prospect.id}>
-                      <TableCell>
-                        <div>
-                          <div className="font-medium">
-                            {prospect.first_name} {prospect.last_name}
-                          </div>
-                          <div className="text-sm text-charcoal-500">{prospect.email}</div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div>
-                          <div className="font-medium">{prospect.company_name || '-'}</div>
-                          <div className="text-sm text-charcoal-500">{prospect.title || '-'}</div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge className={prospectStatusColors[prospect.status]}>
-                          {prospect.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        {prospect.response_type ? (
-                          <div>
-                            <Badge className={responseTypeColors[prospect.response_type]}>
-                              {prospect.response_type}
-                            </Badge>
-                            {prospect.response_text && (
-                              <p className="text-xs text-charcoal-500 mt-1 max-w-[200px] truncate">
-                                {prospect.response_text}
-                              </p>
-                            )}
-                          </div>
-                        ) : (
-                          <span className="text-charcoal-400">-</span>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <div className="w-12 h-1.5 bg-charcoal-100 rounded-full overflow-hidden">
-                            <div
-                              className="h-full bg-green-500"
-                              style={{ width: `${prospect.engagement_score || 0}%` }}
-                            />
-                          </div>
-                          <span className="text-sm">{prospect.engagement_score || 0}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8">
-                              <MoreHorizontal className="w-4 h-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            {prospect.linkedin_url && (
-                              <DropdownMenuItem asChild>
-                                <a href={prospect.linkedin_url} target="_blank" rel="noopener noreferrer">
-                                  <ExternalLink className="w-4 h-4 mr-2" />
-                                  View LinkedIn
-                                </a>
-                              </DropdownMenuItem>
-                            )}
-                            {!prospect.converted_lead_id && prospect.status === 'responded' && (
-                              <DropdownMenuItem onClick={() => handleConvert(prospect)}>
-                                <UserPlus className="w-4 h-4 mr-2" />
-                                Convert to Lead
-                              </DropdownMenuItem>
-                            )}
-                            {prospect.converted_lead_id && (
-                              <DropdownMenuItem asChild>
-                                <Link href={`/employee/crm/leads/${prospect.converted_lead_id}`}>
-                                  <ArrowRight className="w-4 h-4 mr-2" />
-                                  View Lead
-                                </Link>
-                              </DropdownMenuItem>
-                            )}
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  {(!prospects?.items || prospects.items.length === 0) && (
-                    <TableRow>
-                      <TableCell colSpan={6} className="text-center text-charcoal-500 py-8">
-                        No prospects found
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="responses" className="mt-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Recent Responses</CardTitle>
-              <CardDescription>Positive responses ready for conversion</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {campaign.recentResponses && campaign.recentResponses.length > 0 ? (
-                <div className="space-y-4">
-                  {campaign.recentResponses.map((response: ProspectData) => (
-                    <div key={response.id} className="flex items-start gap-4 p-4 border rounded-lg">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium">
-                            {response.first_name} {response.last_name}
+                {/* Meta Info */}
+                <div className="flex items-center gap-4 mt-2 text-sm text-charcoal-500 flex-wrap">
+                  <span className="flex items-center gap-1.5">
+                    <Calendar className="w-4 h-4" />
+                    {campaign?.startDate && format(new Date(campaign.startDate), 'MMM d, yyyy')}
+                    {campaign?.endDate && ` - ${format(new Date(campaign.endDate), 'MMM d, yyyy')}`}
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <Users className="w-4 h-4" />
+                    {(campaign?.audienceSize || 0).toLocaleString()} prospects
+                  </span>
+                  <div className="flex gap-1">
+                    {campaign?.channels?.map((channel: string) => (
+                      <Tooltip key={channel}>
+                        <TooltipTrigger asChild>
+                          <span className="p-1.5 bg-charcoal-100 rounded-md text-charcoal-600">
+                            {channelIcons[channel]}
                           </span>
-                          <span className="text-charcoal-500">at {response.company_name}</span>
-                          {response.response_type && (
-                            <Badge className={responseTypeColors[response.response_type]}>
-                              {response.response_type}
-                            </Badge>
+                        </TooltipTrigger>
+                        <TooltipContent className="capitalize">{channel}</TooltipContent>
+                      </Tooltip>
+                    ))}
+                  </div>
+                  {daysRemaining !== null && campaign?.status === 'active' && (
+                    <Badge variant="outline" className="text-xs">
+                      <Clock className="w-3 h-3 mr-1" />
+                      {daysRemaining === 0 ? 'Ends today' : `${daysRemaining} days left`}
+                    </Badge>
+                  )}
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="flex items-center gap-2">
+                {campaign?.status !== 'completed' && (
+                  <>
+                    <Button
+                      variant="outline"
+                      onClick={handleToggleStatus}
+                      disabled={updateStatus.isPending}
+                      className="gap-2"
+                    >
+                      {updateStatus.isPending ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : campaign?.status === 'active' ? (
+                        <>
+                          <Pause className="w-4 h-4" />
+                          Pause
+                        </>
+                      ) : (
+                        <>
+                          <Play className="w-4 h-4" />
+                          {campaign?.status === 'draft' ? 'Start' : 'Resume'}
+                        </>
+                      )}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => setCompleteDialogOpen(true)}
+                      className="gap-2"
+                    >
+                      <CheckCircle className="w-4 h-4" />
+                      Complete
+                    </Button>
+                  </>
+                )}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="icon">
+                      <MoreHorizontal className="w-4 h-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem onClick={() => setEditDialogOpen(true)}>
+                      <Settings className="w-4 h-4 mr-2" />
+                      Edit Campaign
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setDuplicateDialogOpen(true)}>
+                      <Copy className="w-4 h-4 mr-2" />
+                      Duplicate
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href={`/employee/crm/campaigns/${campaignId}?section=analytics`}>
+                        <BarChart3 className="w-4 h-4 mr-2" />
+                        View Analytics
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
+          </div>
+
+          {/* Key Metrics Bar - Always visible */}
+          <div className="px-6 py-3 bg-charcoal-50/50 border-t border-charcoal-100">
+            <div className="flex items-center justify-between gap-6">
+              {/* Quick Stats */}
+              <div className="flex items-center gap-6 flex-wrap">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="flex items-center gap-2">
+                      <div className="p-1.5 bg-blue-100 rounded-md">
+                        <Users className="w-4 h-4 text-blue-600" />
+                      </div>
+                      <div>
+                        <div className="text-xs text-charcoal-500">Contacted</div>
+                        <div className="text-sm font-semibold tabular-nums">
+                          {funnel.contacted.toLocaleString()}
+                          <span className="text-charcoal-400 font-normal ml-1">
+                            / {funnel.total_prospects.toLocaleString()}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {funnel.total_prospects > 0 
+                      ? `${Math.round((funnel.contacted / funnel.total_prospects) * 100)}% of audience contacted`
+                      : 'No prospects enrolled yet'}
+                  </TooltipContent>
+                </Tooltip>
+
+                <div className="h-8 w-px bg-charcoal-200" />
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="flex items-center gap-2">
+                      <div className="p-1.5 bg-cyan-100 rounded-md">
+                        <TrendingUp className="w-4 h-4 text-cyan-600" />
+                      </div>
+                      <div>
+                        <div className="text-xs text-charcoal-500">Response Rate</div>
+                        <div className="text-sm font-semibold tabular-nums">
+                          {funnel.conversion_rate || 0}%
+                        </div>
+                      </div>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {funnel.responded} responses from {funnel.contacted} contacted
+                  </TooltipContent>
+                </Tooltip>
+
+                <div className="h-8 w-px bg-charcoal-200" />
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="flex items-center gap-2">
+                      <div className="p-1.5 bg-emerald-100 rounded-md">
+                        <Target className="w-4 h-4 text-emerald-600" />
+                      </div>
+                      <div>
+                        <div className="text-xs text-charcoal-500">Leads</div>
+                        <div className="text-sm font-semibold text-emerald-600 tabular-nums">
+                          {funnel.leads}
+                          {campaign?.targets?.targetLeads && (
+                            <span className="text-charcoal-400 font-normal ml-1">
+                              / {campaign.targets.targetLeads}
+                            </span>
                           )}
                         </div>
-                        {response.response_text && (
-                          <p className="text-sm text-charcoal-600 mt-2">{response.response_text}</p>
-                        )}
-                        <p className="text-xs text-charcoal-400 mt-2">
-                          {response.responded_at && format(new Date(response.responded_at), 'PPpp')}
-                        </p>
                       </div>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleConvert(response)}
-                      >
-                        <UserPlus className="w-4 h-4 mr-2" />
-                        Convert
-                      </Button>
                     </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-8 text-charcoal-500">
-                  No responses yet
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {leadsProgress}% of target achieved
+                  </TooltipContent>
+                </Tooltip>
+
+                <div className="h-8 w-px bg-charcoal-200" />
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="flex items-center gap-2">
+                      <div className="p-1.5 bg-amber-100 rounded-md">
+                        <Calendar className="w-4 h-4 text-amber-600" />
+                      </div>
+                      <div>
+                        <div className="text-xs text-charcoal-500">Meetings</div>
+                        <div className="text-sm font-semibold tabular-nums">
+                          {funnel.meetings}
+                        </div>
+                      </div>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>Meetings booked from this campaign</TooltipContent>
+                </Tooltip>
+
+                {campaign?.budgetSpent !== undefined && campaign.budgetSpent > 0 && funnel.leads > 0 && (
+                  <>
+                    <div className="h-8 w-px bg-charcoal-200" />
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex items-center gap-2">
+                          <div className="p-1.5 bg-violet-100 rounded-md">
+                            <DollarSign className="w-4 h-4 text-violet-600" />
+                          </div>
+                          <div>
+                            <div className="text-xs text-charcoal-500">Cost/Lead</div>
+                            <div className="text-sm font-semibold tabular-nums">
+                              ${(campaign.budgetSpent / funnel.leads).toFixed(2)}
+                            </div>
+                          </div>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        ${campaign.budgetSpent.toLocaleString()} spent
+                      </TooltipContent>
+                    </Tooltip>
+                  </>
+                )}
+              </div>
+
+              {/* Progress to Target */}
+              {campaign?.targets?.targetLeads && campaign.targets.targetLeads > 0 && (
+                <div className="flex items-center gap-3 min-w-[200px]">
+                  <div className="flex-1">
+                    <div className="flex justify-between text-xs mb-1">
+                      <span className="text-charcoal-500">Target Progress</span>
+                      <span className={cn(
+                        'font-medium',
+                        leadsProgress >= 100 ? 'text-emerald-600' : 'text-charcoal-600'
+                      )}>
+                        {leadsProgress}%
+                      </span>
+                    </div>
+                    <div className="h-2 bg-charcoal-100 rounded-full overflow-hidden">
+                      <div 
+                        className={cn(
+                          'h-full transition-all duration-500 rounded-full',
+                          leadsProgress >= 100 ? 'bg-emerald-500' :
+                          leadsProgress >= 75 ? 'bg-blue-500' :
+                          leadsProgress >= 50 ? 'bg-amber-500' : 'bg-charcoal-300'
+                        )}
+                        style={{ width: `${Math.min(leadsProgress, 100)}%` }}
+                      />
+                    </div>
+                  </div>
                 </div>
               )}
-            </CardContent>
-          </Card>
-        </TabsContent>
+            </div>
+          </div>
+        </div>
 
-        <TabsContent value="performance" className="mt-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Performance Analytics</CardTitle>
-              <CardDescription>Detailed campaign performance metrics</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center py-8 text-charcoal-500">
-                Performance charts coming soon
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+        {/* Section Content */}
+        <div className="flex-1 px-6 py-6 bg-charcoal-50/30">
+          {renderSection()}
+        </div>
 
-      {/* Convert Dialog */}
-      {selectedProspect && (
-        <ConvertProspectDialog
-          open={convertDialogOpen}
-          onOpenChange={setConvertDialogOpen}
-          prospect={selectedProspect}
-          onSuccess={() => {
-            utils.crm.campaigns.getProspects.invalidate({ campaignId })
-            utils.crm.campaigns.getById.invalidate({ id: campaignId })
-            utils.crm.campaigns.getMetrics.invalidate({ id: campaignId })
-            setSelectedProspect(null)
-          }}
-        />
-      )}
+        {/* Dialogs */}
+        {campaign && (
+          <>
+            <EditCampaignDialog
+              open={editDialogOpen}
+              onOpenChange={setEditDialogOpen}
+              campaignId={campaignId}
+              onSuccess={() => {
+                utils.crm.campaigns.getByIdWithCounts.invalidate({ id: campaignId })
+                utils.crm.campaigns.list.invalidate()
+              }}
+            />
 
-      {/* Edit Campaign Dialog */}
-      <EditCampaignDialog
-        open={editDialogOpen}
-        onOpenChange={setEditDialogOpen}
-        campaignId={campaignId}
-        onSuccess={() => {
-          utils.crm.campaigns.getById.invalidate({ id: campaignId })
-          utils.crm.campaigns.getMetrics.invalidate({ id: campaignId })
-        }}
-      />
-    </div>
+            <CompleteCampaignDialog
+              open={completeDialogOpen}
+              onOpenChange={setCompleteDialogOpen}
+              campaignId={campaignId}
+              campaignName={campaign.name}
+              metrics={{ funnel: campaign.funnel, targets: campaign.targets }}
+              onSuccess={() => {
+                utils.crm.campaigns.getByIdWithCounts.invalidate({ id: campaignId })
+                utils.crm.campaigns.list.invalidate()
+              }}
+            />
+
+            <DuplicateCampaignDialog
+              open={duplicateDialogOpen}
+              onOpenChange={setDuplicateDialogOpen}
+              campaignId={campaignId}
+              originalName={campaign.name}
+              onSuccess={() => {
+                utils.crm.campaigns.list.invalidate()
+              }}
+            />
+          </>
+        )}
+      </div>
+    </TooltipProvider>
   )
 }

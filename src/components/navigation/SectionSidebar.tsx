@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Clock, Plus, LucideIcon, List, Home, LayoutDashboard } from 'lucide-react'
+import { Clock, Plus, LucideIcon, List, Home, LayoutDashboard, Calendar, Activity, Building2, Briefcase, Send, FileBarChart } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useEntityNavigationSafe } from '@/lib/navigation/EntityNavigationContext'
 import { EntityType, ENTITY_BASE_PATHS } from '@/lib/navigation/entity-navigation.types'
@@ -109,6 +109,19 @@ export const sectionConfigs: Record<string, SectionConfig> = {
       { id: 'all-placements', label: 'All Placements', icon: List, href: '/employee/recruiting/placements' },
     ],
   },
+  campaigns: {
+    id: 'campaigns',
+    title: 'Campaigns',
+    icon: List,
+    entityType: 'campaign',
+    basePath: '/employee/crm/campaigns',
+    quickActions: [
+      { id: 'new-campaign', label: 'New Campaign', icon: Plus, href: '/employee/crm/campaigns/new' },
+    ],
+    navLinks: [
+      { id: 'all-campaigns', label: 'All Campaigns', icon: List, href: '/employee/crm/campaigns' },
+    ],
+  },
   workspace: {
     id: 'workspace',
     title: 'My Work',
@@ -116,10 +129,15 @@ export const sectionConfigs: Record<string, SectionConfig> = {
     basePath: '/employee/workspace',
     navLinks: [
       { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, href: '/employee/workspace/dashboard' },
-      { id: 'today', label: 'Today', icon: List, href: '/employee/workspace/today' },
-      { id: 'reports', label: 'Reports', icon: List, href: '/employee/workspace/reports' },
+      { id: 'today', label: 'Today', icon: Calendar, href: '/employee/workspace/today' },
+      { id: 'activities', label: 'My Activities', icon: Activity, href: '/employee/workspace/desktop?tab=activities' },
+      { id: 'my-accounts', label: 'My Accounts', icon: Building2, href: '/employee/recruiting/accounts?owner=me' },
+      { id: 'my-jobs', label: 'My Jobs', icon: Briefcase, href: '/employee/recruiting/jobs?assigned=me' },
+      { id: 'my-submissions', label: 'My Submissions', icon: Send, href: '/employee/recruiting/submissions?owner=me' },
+      { id: 'reports', label: 'Reports', icon: FileBarChart, href: '/employee/workspace/reports' },
     ],
   },
+
 }
 
 interface SectionSidebarProps {
@@ -278,6 +296,7 @@ function detectSectionFromPath(pathname: string): string | null {
   if (pathname.includes('/recruiting/placements')) return 'placements'
   if (pathname.includes('/crm/leads')) return 'leads'
   if (pathname.includes('/crm/deals')) return 'deals'
+  if (pathname.includes('/crm/campaigns')) return 'campaigns'
   if (pathname.includes('/workspace')) return 'workspace'
   return null
 }

@@ -680,14 +680,12 @@ export const atsRouter = router({
           .insert({
             org_id: orgId,
             account_id: input.accountId,
-            client_id: input.accountId, // Sync with account_id
             deal_id: input.dealId,
             title: input.title,
             description: input.description,
             job_type: input.jobType,
             location: input.location,
             is_remote: input.isRemote || input.intakeData?.workArrangement === 'remote',
-            is_hybrid: input.isHybrid || input.intakeData?.workArrangement === 'hybrid',
             hybrid_days: input.hybridDays ?? input.intakeData?.hybridDays,
             rate_min: input.rateMin,
             rate_max: input.rateMax,
@@ -700,15 +698,10 @@ export const atsRouter = router({
             min_experience_years: minExp,
             max_experience_years: maxExp,
             visa_requirements: input.visaRequirements || input.intakeData?.workAuthorizations || [],
-            priority: input.priority,
             urgency: input.urgency,
-            target_fill_date: input.targetFillDate,
-            target_start_date: input.targetStartDate,
+            target_fill_date: input.targetFillDate || input.targetStartDate,
             client_submission_instructions: input.clientSubmissionInstructions,
             client_interview_process: input.clientInterviewProcess || (input.intakeData?.interviewRounds ? JSON.stringify(input.intakeData.interviewRounds) : null),
-            // Extended intake data from Job Intake Wizard (C07)
-            intake_data: input.intakeData || null,
-            hiring_manager_id: input.intakeData?.hiringManagerId,
             status: 'draft',
             owner_id: user.id,
             recruiter_ids: [user.id],
@@ -2118,6 +2111,7 @@ export const atsRouter = router({
     list: orgProtectedProcedure
       .input(z.object({
         submissionId: z.string().uuid().optional(),
+        jobId: z.string().uuid().optional(),
         status: z.string().optional(),
         scheduledAfter: z.coerce.date().optional(),
         scheduledBefore: z.coerce.date().optional(),
@@ -2128,12 +2122,24 @@ export const atsRouter = router({
         const { orgId } = ctx
         const adminClient = getAdminClient()
 
+        // If filtering by jobId, we need to first get submission IDs for that job
+        let submissionIds: string[] | null = null
+        if (input.jobId) {
+          const { data: submissions } = await adminClient
+            .from('submissions')
+            .select('id')
+            .eq('job_id', input.jobId)
+            .eq('org_id', orgId)
+          submissionIds = submissions?.map(s => s.id) ?? []
+        }
+
         let query = adminClient
           .from('interviews')
           .select(`
             *,
             submission:submissions(
               id,
+              job_id,
               job:jobs(id, title, account:accounts!jobs_account_id_fkey(id, name)),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name)
             )
@@ -2143,6 +2149,13 @@ export const atsRouter = router({
 
         if (input.submissionId) {
           query = query.eq('submission_id', input.submissionId)
+        }
+        if (submissionIds !== null) {
+          if (submissionIds.length === 0) {
+            // No submissions for this job, return empty
+            return { items: [], total: 0 }
+          }
+          query = query.in('submission_id', submissionIds)
         }
         if (input.status) {
           query = query.eq('status', input.status)
@@ -3664,6 +3677,7 @@ export const atsRouter = router({
         status: z.enum(['pending_start', 'active', 'extended', 'completed', 'terminated', 'on_hold', 'all']).default('all'),
         healthStatus: z.enum(['healthy', 'at_risk', 'critical']).optional(),
         recruiterId: z.string().uuid().optional(),
+        accountId: z.string().uuid().optional(), // Filter by account
         endingSoon: z.boolean().optional(), // Filter for placements ending within 30 days
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -3703,6 +3717,10 @@ export const atsRouter = router({
 
         if (input.healthStatus) {
           query = query.eq('health_status', input.healthStatus)
+        }
+
+        if (input.accountId) {
+          query = query.eq('account_id', input.accountId)
         }
 
         // Filter for placements ending within 30 days

@@ -59,9 +59,12 @@ export function EntityJourneySidebar({
     return getVisibleQuickActions(entityType, entityStatus)
   }, [entityType, entityStatus])
 
-  // Build step href
-  const buildStepHref = (stepId: string) => {
+  // Build step href - use defaultTab if available, otherwise use step query param
+  const buildStepHref = (stepId: string, defaultTab?: string) => {
     const basePath = ENTITY_BASE_PATHS[entityType]
+    if (defaultTab) {
+      return `${basePath}/${entityId}?tab=${defaultTab}`
+    }
     return `${basePath}/${entityId}?step=${stepId}`
   }
 
@@ -104,7 +107,7 @@ export function EntityJourneySidebar({
             return (
               <li key={step.id}>
                 <Link
-                  href={buildStepHref(step.id)}
+                  href={buildStepHref(step.id, step.defaultTab)}
                   className={cn(
                     'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
                     isCurrent && 'bg-gold-50 text-gold-700 font-medium',
