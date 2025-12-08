@@ -21,10 +21,12 @@ const initialRecentEntities: Record<EntityType, RecentEntity[]> = {
   job: [],
   candidate: [],
   account: [],
+  contact: [],
   submission: [],
   placement: [],
   lead: [],
   deal: [],
+  campaign: [],
 }
 
 export function EntityNavigationProvider({ children }: { children: ReactNode }) {

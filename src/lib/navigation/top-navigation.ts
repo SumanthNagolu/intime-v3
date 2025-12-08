@@ -2,7 +2,7 @@ import {
   Briefcase, Building2, Users, Target, Handshake, LayoutDashboard,
   Search, Clock, Plus, Gauge, Settings, Bell, ListTodo,
   Calendar, CheckCircle, Package, TrendingUp, DollarSign,
-  UserCheck, Send, Megaphone, Shield, Activity
+  UserCheck, Send, Megaphone, Shield, Activity, UserCircle, Star
 } from 'lucide-react'
 import { EntityNavTab } from './entity-navigation.types'
 
@@ -15,14 +15,15 @@ export const topNavigationTabs: EntityNavTab[] = [
     icon: LayoutDashboard,
     defaultHref: '/employee/workspace/dashboard',
     dropdown: [
-      { id: 'dashboard', label: 'My Dashboard', icon: LayoutDashboard, href: '/employee/workspace/dashboard', type: 'link' },
-      { id: 'today', label: "Today's Tasks", icon: Calendar, href: '/employee/workspace/today', type: 'link' },
+      { id: 'dashboard', label: 'Dashboard', icon: TrendingUp, href: '/employee/workspace/dashboard', type: 'link' },
+      { id: 'today', label: 'Today', icon: Calendar, href: '/employee/workspace/today', type: 'link' },
+      { id: 'activities', label: 'My Activities', icon: Activity, href: '/employee/workspace/desktop?tab=activities', type: 'link' },
       { id: 'divider-1', label: '', type: 'divider' },
-      { id: 'activities', label: 'My Activities', icon: Activity, href: '/employee/workspace/activities', type: 'link' },
-      { id: 'approvals', label: 'Pending Approvals', icon: CheckCircle, href: '/employee/workspace/approvals', type: 'link' },
-      { id: 'reports', label: 'Reports', icon: ListTodo, href: '/employee/workspace/reports', type: 'link' },
+      { id: 'my-accounts', label: 'My Accounts', icon: Building2, href: '/employee/recruiting/accounts?owner=me', type: 'link' },
+      { id: 'my-jobs', label: 'My Jobs', icon: Briefcase, href: '/employee/recruiting/jobs?assigned=me', type: 'link' },
+      { id: 'my-submissions', label: 'My Submissions', icon: Send, href: '/employee/recruiting/submissions?owner=me', type: 'link' },
       { id: 'divider-2', label: '', type: 'divider' },
-      { id: 'notifications', label: 'Notifications', icon: Bell, href: '/employee/workspace/notifications', type: 'link' },
+      { id: 'reports', label: 'Reports', icon: ListTodo, href: '/employee/workspace/reports', type: 'link' },
     ],
   },
   {
@@ -40,6 +41,23 @@ export const topNavigationTabs: EntityNavTab[] = [
       { id: 'account-health', label: 'Account Health', icon: Gauge, href: '/employee/recruiting/accounts/health', type: 'link' },
       { id: 'divider-2', label: '', type: 'divider' },
       { id: 'new-account', label: 'Create Account', icon: Plus, href: '/employee/recruiting/accounts/new', type: 'link' },
+    ],
+  },
+  {
+    id: 'contacts',
+    label: 'Contacts',
+    entityType: 'contact',
+    icon: UserCircle,
+    defaultHref: '/employee/contacts',
+    dropdown: [
+      { id: 'search-contacts', label: 'Search Contacts', icon: Search, type: 'search', placeholder: 'Search by name...' },
+      { id: 'recent-contacts', label: 'Recent Contacts', type: 'recent' },
+      { id: 'divider-1', label: '', type: 'divider' },
+      { id: 'my-contacts', label: 'My Contacts', icon: Users, href: '/employee/contacts?owner=me', type: 'link' },
+      { id: 'key-contacts', label: 'Key Contacts', icon: Star, href: '/employee/contacts?type=key', type: 'link' },
+      { id: 'recent-activity', label: 'Recent Activity', icon: Activity, href: '/employee/contacts?activity=recent', type: 'link' },
+      { id: 'divider-2', label: '', type: 'divider' },
+      { id: 'new-contact', label: 'Create Contact', icon: Plus, href: '/employee/contacts/new', type: 'link' },
     ],
   },
   {
@@ -136,6 +154,7 @@ export function getNavTab(tabId: string): EntityNavTab | undefined {
 export function getActiveTabFromPath(pathname: string): string | null {
   if (pathname.includes('/employee/recruiting/jobs')) return 'jobs'
   if (pathname.includes('/employee/recruiting/accounts')) return 'accounts'
+  if (pathname.includes('/employee/contacts')) return 'contacts'
   if (pathname.includes('/employee/recruiting/candidates') ||
       pathname.includes('/employee/recruiting/talent') ||
       pathname.includes('/employee/recruiting/hotlist')) return 'candidates'

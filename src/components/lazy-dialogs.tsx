@@ -7,7 +7,7 @@
  * Import from this file to ensure proper code splitting.
  *
  * Usage:
- * import { LazyJobIntakeWizardDialog, LazyScheduleInterviewDialog } from '@/components/lazy-dialogs'
+ * import { LazyCreateJobDialog, LazyScheduleInterviewDialog } from '@/components/lazy-dialogs'
  */
 
 import dynamic from 'next/dynamic'
@@ -48,15 +48,11 @@ function WizardLoadingFallback() {
 // JOB DIALOGS
 // ==============================================
 
-export const LazyJobIntakeWizardDialog = dynamic(
-  () => import('./recruiting/jobs/JobIntakeWizardDialog').then((mod) => mod.JobIntakeWizardDialog),
-  { loading: () => <WizardLoadingFallback />, ssr: false }
-)
+// JobIntakeWizardDialog has been migrated to a dedicated page:
+// /employee/recruiting/jobs/intake
 
-export const LazyCreateJobDialog = dynamic(
-  () => import('./recruiting/jobs/CreateJobDialog').then((mod) => mod.CreateJobDialog),
-  { loading: () => <DialogLoadingFallback />, ssr: false }
-)
+// CreateJobDialog has been migrated to a dedicated page:
+// /employee/recruiting/jobs/new
 
 export const LazyCloseJobWizard = dynamic(
   () => import('./recruiting/jobs/CloseJobWizard').then((mod) => mod.CloseJobWizard),
@@ -100,10 +96,8 @@ export const LazySubmitToClientDialog = dynamic(
 // ACCOUNT DIALOGS
 // ==============================================
 
-export const LazyOnboardingWizardDialog = dynamic(
-  () => import('./recruiting/accounts/OnboardingWizardDialog').then((mod) => mod.OnboardingWizardDialog),
-  { loading: () => <WizardLoadingFallback />, ssr: false }
-)
+// OnboardingWizardDialog has been migrated to a dedicated page:
+// /employee/recruiting/accounts/[id]/onboarding
 
 export const LazyCreateAccountDialog = dynamic(
   () => import('./recruiting/accounts/CreateAccountDialog').then((mod) => mod.CreateAccountDialog),

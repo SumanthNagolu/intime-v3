@@ -31,15 +31,15 @@ CREATE TABLE IF NOT EXISTS integrations (
   deleted_at TIMESTAMPTZ
 );
 
--- Indexes
-CREATE INDEX idx_integrations_org_id ON integrations(org_id);
-CREATE INDEX idx_integrations_type ON integrations(type);
-CREATE INDEX idx_integrations_status ON integrations(status);
-CREATE INDEX idx_integrations_org_type ON integrations(org_id, type);
-CREATE INDEX idx_integrations_org_primary ON integrations(org_id, type, is_primary) WHERE is_primary = true AND deleted_at IS NULL;
+-- Indexes (use IF NOT EXISTS for idempotency)
+CREATE INDEX IF NOT EXISTS idx_integrations_org_id ON integrations(org_id);
+CREATE INDEX IF NOT EXISTS idx_integrations_type ON integrations(type);
+CREATE INDEX IF NOT EXISTS idx_integrations_status ON integrations(status);
+CREATE INDEX IF NOT EXISTS idx_integrations_org_type ON integrations(org_id, type);
+CREATE INDEX IF NOT EXISTS idx_integrations_org_primary ON integrations(org_id, type, is_primary) WHERE is_primary = true AND deleted_at IS NULL;
 
 -- Unique constraint: only one primary per type per org
-CREATE UNIQUE INDEX idx_integrations_unique_primary
+CREATE UNIQUE INDEX IF NOT EXISTS idx_integrations_unique_primary
   ON integrations(org_id, type)
   WHERE is_primary = true AND deleted_at IS NULL;
 
@@ -60,11 +60,11 @@ CREATE TABLE IF NOT EXISTS integration_health_logs (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- Indexes
-CREATE INDEX idx_health_logs_integration ON integration_health_logs(integration_id);
-CREATE INDEX idx_health_logs_org ON integration_health_logs(org_id);
-CREATE INDEX idx_health_logs_created ON integration_health_logs(created_at DESC);
-CREATE INDEX idx_health_logs_status ON integration_health_logs(status);
+-- Indexes (use IF NOT EXISTS for idempotency)
+CREATE INDEX IF NOT EXISTS idx_health_logs_integration ON integration_health_logs(integration_id);
+CREATE INDEX IF NOT EXISTS idx_health_logs_org ON integration_health_logs(org_id);
+CREATE INDEX IF NOT EXISTS idx_health_logs_created ON integration_health_logs(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_health_logs_status ON integration_health_logs(status);
 
 -- ============================================
 -- INTEGRATION TYPES LOOKUP (For UI)
@@ -102,6 +102,7 @@ ON CONFLICT (id) DO NOTHING;
 -- Integrations RLS
 ALTER TABLE integrations ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "integrations_org_access" ON integrations;
 CREATE POLICY "integrations_org_access" ON integrations
   FOR ALL USING (
     org_id IN (SELECT org_id FROM user_profiles WHERE auth_id = auth.uid())
@@ -111,6 +112,7 @@ CREATE POLICY "integrations_org_access" ON integrations
 -- Health Logs RLS
 ALTER TABLE integration_health_logs ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "health_logs_org_access" ON integration_health_logs;
 CREATE POLICY "health_logs_org_access" ON integration_health_logs
   FOR ALL USING (
     org_id IN (SELECT org_id FROM user_profiles WHERE auth_id = auth.uid())
@@ -120,6 +122,7 @@ CREATE POLICY "health_logs_org_access" ON integration_health_logs
 -- Integration Types RLS (public read)
 ALTER TABLE integration_types ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "integration_types_read" ON integration_types;
 CREATE POLICY "integration_types_read" ON integration_types
   FOR SELECT USING (true);
 
@@ -136,6 +139,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trigger_integrations_updated_at ON integrations;
 CREATE TRIGGER trigger_integrations_updated_at
   BEFORE UPDATE ON integrations
   FOR EACH ROW

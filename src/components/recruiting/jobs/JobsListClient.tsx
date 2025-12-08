@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition, lazy, Suspense } from 'react'
+import { useState, useTransition } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { trpc } from '@/lib/trpc/client'
 import { Button } from '@/components/ui/button'
@@ -15,8 +15,8 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-// Dynamic import for heavy create dialog - only loaded when needed
-const CreateJobDialog = lazy(() => import('./CreateJobDialog').then(m => ({ default: m.CreateJobDialog })))
+// CreateJobDialog has been migrated to a dedicated page:
+// /employee/recruiting/jobs/new
 import {
   Plus,
   Search,
@@ -80,7 +80,6 @@ export function JobsListClient({
 
   const [search, setSearch] = useState(initialSearch)
   const [statusFilter, setStatusFilter] = useState<JobStatus>((initialStatus as JobStatus) || 'all')
-  const [showCreateDialog, setShowCreateDialog] = useState(false)
 
   // Use server data as initial, allow client refetch for mutations
   const jobsQuery = trpc.ats.jobs.list.useQuery(
@@ -150,7 +149,7 @@ export function JobsListClient({
               Manage your job requisitions and pipelines
             </p>
           </div>
-          <Button onClick={() => setShowCreateDialog(true)}>
+          <Button onClick={() => router.push('/employee/recruiting/jobs/new')}>
             <Plus className="w-4 h-4 mr-2" />
             New Job
           </Button>
@@ -239,7 +238,7 @@ export function JobsListClient({
                   : 'Create your first job to get started'}
               </p>
               {!search && statusFilter === 'all' && (
-                <Button onClick={() => setShowCreateDialog(true)}>
+                <Button onClick={() => router.push('/employee/recruiting/jobs/new')}>
                   <Plus className="w-4 h-4 mr-2" />
                   Create Job
                 </Button>
@@ -319,13 +318,6 @@ export function JobsListClient({
           Showing {jobs.length} of {jobsQuery.data?.total ?? initialTotal} jobs
         </p>
       </div>
-
-      {/* Create Job Dialog - lazy loaded */}
-      {showCreateDialog && (
-        <Suspense fallback={null}>
-          <CreateJobDialog open={showCreateDialog} onOpenChange={setShowCreateDialog} />
-        </Suspense>
-      )}
     </div>
   )
 }

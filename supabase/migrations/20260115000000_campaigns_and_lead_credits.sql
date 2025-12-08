@@ -9,7 +9,7 @@
 -- 1. CAMPAIGNS (Marketing/Outreach Campaigns)
 -- =====================================================
 
-CREATE TABLE campaigns (
+CREATE TABLE IF NOT EXISTS campaigns (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
 
@@ -104,13 +104,17 @@ CREATE TABLE campaigns (
   search_vector TSVECTOR
 );
 
+-- Add search_vector column if it doesn't exist (for existing campaigns tables)
+ALTER TABLE campaigns ADD COLUMN IF NOT EXISTS search_vector TSVECTOR;
+ALTER TABLE campaigns ADD COLUMN IF NOT EXISTS campaign_type TEXT DEFAULT 'lead_generation';
+
 -- Indexes for campaigns
-CREATE INDEX idx_campaigns_org ON campaigns(org_id) WHERE deleted_at IS NULL;
-CREATE INDEX idx_campaigns_owner ON campaigns(owner_id);
-CREATE INDEX idx_campaigns_status ON campaigns(status) WHERE deleted_at IS NULL;
-CREATE INDEX idx_campaigns_type ON campaigns(campaign_type);
-CREATE INDEX idx_campaigns_dates ON campaigns(start_date, end_date);
-CREATE INDEX idx_campaigns_search ON campaigns USING GIN(search_vector);
+CREATE INDEX IF NOT EXISTS idx_campaigns_org ON campaigns(org_id) WHERE deleted_at IS NULL;
+CREATE INDEX IF NOT EXISTS idx_campaigns_owner ON campaigns(owner_id);
+CREATE INDEX IF NOT EXISTS idx_campaigns_status ON campaigns(status) WHERE deleted_at IS NULL;
+CREATE INDEX IF NOT EXISTS idx_campaigns_type ON campaigns(campaign_type);
+CREATE INDEX IF NOT EXISTS idx_campaigns_dates ON campaigns(start_date, end_date);
+CREATE INDEX IF NOT EXISTS idx_campaigns_search ON campaigns USING GIN(search_vector);
 
 -- Auto-update search vector for campaigns
 CREATE OR REPLACE FUNCTION update_campaigns_search_vector()
@@ -124,11 +128,13 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trigger_campaigns_search_vector ON campaigns;
 CREATE TRIGGER trigger_campaigns_search_vector
   BEFORE INSERT OR UPDATE ON campaigns
   FOR EACH ROW EXECUTE FUNCTION update_campaigns_search_vector();
 
 -- Auto-update updated_at for campaigns
+DROP TRIGGER IF EXISTS trigger_campaigns_updated_at ON campaigns;
 CREATE TRIGGER trigger_campaigns_updated_at
   BEFORE UPDATE ON campaigns
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
@@ -137,7 +143,7 @@ CREATE TRIGGER trigger_campaigns_updated_at
 -- 2. CAMPAIGN_PROSPECTS (Enrolled Prospects)
 -- =====================================================
 
-CREATE TABLE campaign_prospects (
+CREATE TABLE IF NOT EXISTS campaign_prospects (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
   campaign_id UUID NOT NULL REFERENCES campaigns(id) ON DELETE CASCADE,
@@ -193,19 +199,20 @@ CREATE TABLE campaign_prospects (
 );
 
 -- Indexes for campaign_prospects
-CREATE INDEX idx_campaign_prospects_campaign ON campaign_prospects(campaign_id);
-CREATE INDEX idx_campaign_prospects_org ON campaign_prospects(org_id);
-CREATE INDEX idx_campaign_prospects_lead ON campaign_prospects(lead_id);
-CREATE INDEX idx_campaign_prospects_status ON campaign_prospects(status);
-CREATE INDEX idx_campaign_prospects_email ON campaign_prospects(email);
-CREATE INDEX idx_campaign_prospects_converted ON campaign_prospects(converted_lead_id) WHERE converted_lead_id IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_campaign_prospects_campaign ON campaign_prospects(campaign_id);
+CREATE INDEX IF NOT EXISTS idx_campaign_prospects_org ON campaign_prospects(org_id);
+CREATE INDEX IF NOT EXISTS idx_campaign_prospects_lead ON campaign_prospects(lead_id);
+CREATE INDEX IF NOT EXISTS idx_campaign_prospects_status ON campaign_prospects(status);
+CREATE INDEX IF NOT EXISTS idx_campaign_prospects_email ON campaign_prospects(email);
+CREATE INDEX IF NOT EXISTS idx_campaign_prospects_converted ON campaign_prospects(converted_lead_id) WHERE converted_lead_id IS NOT NULL;
 
 -- Unique constraint to prevent duplicate enrollments
-CREATE UNIQUE INDEX idx_campaign_prospects_unique_email
+CREATE UNIQUE INDEX IF NOT EXISTS idx_campaign_prospects_unique_email
   ON campaign_prospects(campaign_id, email)
   WHERE email IS NOT NULL;
 
 -- Auto-update updated_at
+DROP TRIGGER IF EXISTS trigger_campaign_prospects_updated_at ON campaign_prospects;
 CREATE TRIGGER trigger_campaign_prospects_updated_at
   BEFORE UPDATE ON campaign_prospects
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
@@ -214,7 +221,7 @@ CREATE TRIGGER trigger_campaign_prospects_updated_at
 -- 3. CAMPAIGN_SEQUENCE_LOGS (Send/Action History)
 -- =====================================================
 
-CREATE TABLE campaign_sequence_logs (
+CREATE TABLE IF NOT EXISTS campaign_sequence_logs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
   campaign_id UUID NOT NULL REFERENCES campaigns(id) ON DELETE CASCADE,
@@ -246,16 +253,16 @@ CREATE TABLE campaign_sequence_logs (
 );
 
 -- Indexes for sequence logs
-CREATE INDEX idx_campaign_sequence_logs_campaign ON campaign_sequence_logs(campaign_id);
-CREATE INDEX idx_campaign_sequence_logs_prospect ON campaign_sequence_logs(prospect_id);
-CREATE INDEX idx_campaign_sequence_logs_action_type ON campaign_sequence_logs(action_type);
-CREATE INDEX idx_campaign_sequence_logs_action_at ON campaign_sequence_logs(action_at DESC);
+CREATE INDEX IF NOT EXISTS idx_campaign_sequence_logs_campaign ON campaign_sequence_logs(campaign_id);
+CREATE INDEX IF NOT EXISTS idx_campaign_sequence_logs_prospect ON campaign_sequence_logs(prospect_id);
+CREATE INDEX IF NOT EXISTS idx_campaign_sequence_logs_action_type ON campaign_sequence_logs(action_type);
+CREATE INDEX IF NOT EXISTS idx_campaign_sequence_logs_action_at ON campaign_sequence_logs(action_at DESC);
 
 -- =====================================================
 -- 4. LEAD_SOURCING_CREDITS (Cross-Pillar Tracking)
 -- =====================================================
 
-CREATE TABLE lead_sourcing_credits (
+CREATE TABLE IF NOT EXISTS lead_sourcing_credits (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
   lead_id UUID NOT NULL REFERENCES leads(id) ON DELETE CASCADE,
@@ -284,13 +291,14 @@ CREATE TABLE lead_sourcing_credits (
 );
 
 -- Indexes for lead sourcing credits
-CREATE INDEX idx_lead_sourcing_credits_org ON lead_sourcing_credits(org_id);
-CREATE INDEX idx_lead_sourcing_credits_lead ON lead_sourcing_credits(lead_id);
-CREATE INDEX idx_lead_sourcing_credits_sourced_by ON lead_sourcing_credits(sourced_by);
-CREATE INDEX idx_lead_sourcing_credits_target ON lead_sourcing_credits(target_pillar);
-CREATE INDEX idx_lead_sourcing_credits_status ON lead_sourcing_credits(status);
+CREATE INDEX IF NOT EXISTS idx_lead_sourcing_credits_org ON lead_sourcing_credits(org_id);
+CREATE INDEX IF NOT EXISTS idx_lead_sourcing_credits_lead ON lead_sourcing_credits(lead_id);
+CREATE INDEX IF NOT EXISTS idx_lead_sourcing_credits_sourced_by ON lead_sourcing_credits(sourced_by);
+CREATE INDEX IF NOT EXISTS idx_lead_sourcing_credits_target ON lead_sourcing_credits(target_pillar);
+CREATE INDEX IF NOT EXISTS idx_lead_sourcing_credits_status ON lead_sourcing_credits(status);
 
 -- Auto-update updated_at
+DROP TRIGGER IF EXISTS trigger_lead_sourcing_credits_updated_at ON lead_sourcing_credits;
 CREATE TRIGGER trigger_lead_sourcing_credits_updated_at
   BEFORE UPDATE ON lead_sourcing_credits
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
@@ -348,12 +356,14 @@ ALTER TABLE lead_sourcing_credits ENABLE ROW LEVEL SECURITY;
 -- =====================================================
 
 -- Organization isolation
+DROP POLICY IF EXISTS "campaigns_org_isolation" ON campaigns;
 CREATE POLICY "campaigns_org_isolation"
   ON campaigns
   FOR ALL
   USING (org_id = auth_org_id());
 
 -- Employees can view all campaigns in their org
+DROP POLICY IF EXISTS "campaigns_employee_select" ON campaigns;
 CREATE POLICY "campaigns_employee_select"
   ON campaigns
   FOR SELECT
@@ -364,6 +374,7 @@ CREATE POLICY "campaigns_employee_select"
   );
 
 -- Campaign owners and admins can update
+DROP POLICY IF EXISTS "campaigns_owner_update" ON campaigns;
 CREATE POLICY "campaigns_owner_update"
   ON campaigns
   FOR UPDATE
@@ -374,6 +385,7 @@ CREATE POLICY "campaigns_owner_update"
   );
 
 -- Recruiters and admins can create campaigns
+DROP POLICY IF EXISTS "campaigns_create" ON campaigns;
 CREATE POLICY "campaigns_create"
   ON campaigns
   FOR INSERT
@@ -386,11 +398,13 @@ CREATE POLICY "campaigns_create"
 -- RLS POLICIES: CAMPAIGN_PROSPECTS
 -- =====================================================
 
+DROP POLICY IF EXISTS "campaign_prospects_org_isolation" ON campaign_prospects;
 CREATE POLICY "campaign_prospects_org_isolation"
   ON campaign_prospects
   FOR ALL
   USING (org_id = auth_org_id());
 
+DROP POLICY IF EXISTS "campaign_prospects_select" ON campaign_prospects;
 CREATE POLICY "campaign_prospects_select"
   ON campaign_prospects
   FOR SELECT
@@ -404,11 +418,13 @@ CREATE POLICY "campaign_prospects_select"
 -- RLS POLICIES: CAMPAIGN_SEQUENCE_LOGS
 -- =====================================================
 
+DROP POLICY IF EXISTS "campaign_sequence_logs_org_isolation" ON campaign_sequence_logs;
 CREATE POLICY "campaign_sequence_logs_org_isolation"
   ON campaign_sequence_logs
   FOR ALL
   USING (org_id = auth_org_id());
 
+DROP POLICY IF EXISTS "campaign_sequence_logs_select" ON campaign_sequence_logs;
 CREATE POLICY "campaign_sequence_logs_select"
   ON campaign_sequence_logs
   FOR SELECT
@@ -422,11 +438,13 @@ CREATE POLICY "campaign_sequence_logs_select"
 -- RLS POLICIES: LEAD_SOURCING_CREDITS
 -- =====================================================
 
+DROP POLICY IF EXISTS "lead_sourcing_credits_org_isolation" ON lead_sourcing_credits;
 CREATE POLICY "lead_sourcing_credits_org_isolation"
   ON lead_sourcing_credits
   FOR ALL
   USING (org_id = auth_org_id());
 
+DROP POLICY IF EXISTS "lead_sourcing_credits_select" ON lead_sourcing_credits;
 CREATE POLICY "lead_sourcing_credits_select"
   ON lead_sourcing_credits
   FOR SELECT
@@ -436,6 +454,7 @@ CREATE POLICY "lead_sourcing_credits_select"
     auth_has_role('recruiter')
   );
 
+DROP POLICY IF EXISTS "lead_sourcing_credits_create" ON lead_sourcing_credits;
 CREATE POLICY "lead_sourcing_credits_create"
   ON lead_sourcing_credits
   FOR INSERT
@@ -583,6 +602,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trigger_update_campaign_metrics ON campaign_prospects;
 CREATE TRIGGER trigger_update_campaign_metrics
   AFTER INSERT OR UPDATE ON campaign_prospects
   FOR EACH ROW EXECUTE FUNCTION update_campaign_metrics();

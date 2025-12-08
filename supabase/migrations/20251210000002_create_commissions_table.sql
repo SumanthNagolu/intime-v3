@@ -75,11 +75,12 @@ DROP POLICY IF EXISTS commissions_user_select ON commissions;
 CREATE POLICY commissions_user_select ON commissions
   FOR SELECT
   USING (
-    user_id = auth.uid() OR
+    user_id = (SELECT id FROM user_profiles WHERE auth_id = auth.uid()) OR
     EXISTS (
-      SELECT 1 FROM user_profiles
-      WHERE auth_id = auth.uid()
-      AND (role IN ('admin', 'pod_manager', 'finance'))
+      SELECT 1 FROM user_profiles up
+      LEFT JOIN system_roles sr ON sr.id = up.role_id
+      WHERE up.auth_id = auth.uid()
+      AND (sr.name IN ('admin', 'pod_manager', 'finance') OR up.employee_role IN ('admin', 'pod_manager', 'finance'))
     )
   );
 

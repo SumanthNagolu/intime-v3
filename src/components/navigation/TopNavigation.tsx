@@ -350,7 +350,7 @@ export function TopNavigation() {
                                   placeholder={item.placeholder || 'Search...'}
                                   value={dropdownSearch}
                                   onChange={(e) => setDropdownSearch(e.target.value)}
-                                  className="w-full pl-9 pr-10 py-2 text-sm border border-charcoal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500"
+                                  className="w-full pl-9 pr-10 py-2 text-sm text-charcoal-900 border border-charcoal-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500"
                                   onClick={(e) => e.stopPropagation()}
                                 />
                                 <button

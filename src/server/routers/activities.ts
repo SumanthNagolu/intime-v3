@@ -496,6 +496,101 @@ export const activitiesRouter = router({
     }),
 
   // ============================================
+  // GET MY ACTIVITIES (DESKTOP VIEW)
+  // ============================================
+  getMyActivities: orgProtectedProcedure
+    .input(z.object({
+      activityType: ActivityTypeEnum.optional(),
+      status: StatusEnum.optional(),
+      dueBefore: z.coerce.date().optional(),
+      dueAfter: z.coerce.date().optional(),
+      limit: z.number().min(1).max(100).default(50),
+      offset: z.number().min(0).default(0),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      const now = new Date()
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+
+      let query = adminClient
+        .from('activities')
+        .select(`
+          id, subject, description, activity_type, status, priority, due_date,
+          entity_type, entity_id, created_at, completed_at,
+          poc:contacts!poc_id(id, first_name, last_name),
+          account:accounts!entity_id(id, name)
+        `, { count: 'exact' })
+        .eq('org_id', orgId)
+        .eq('assigned_to', user?.id)
+        .order('due_date', { ascending: true, nullsFirst: false })
+        .order('priority', { ascending: false })
+
+      // Apply filters
+      if (input.activityType) {
+        query = query.eq('activity_type', input.activityType)
+      }
+      if (input.status) {
+        query = query.eq('status', input.status)
+      } else {
+        // Default: show pending activities
+        query = query.in('status', ['scheduled', 'open', 'in_progress'])
+      }
+      if (input.dueBefore) {
+        query = query.lt('due_date', input.dueBefore.toISOString())
+      }
+      if (input.dueAfter) {
+        query = query.gte('due_date', input.dueAfter.toISOString())
+      }
+
+      query = query.range(input.offset, input.offset + input.limit - 1)
+
+      const { data, error, count } = await query
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return {
+        items: data?.map(a => {
+          const dueDate = a.due_date ? new Date(a.due_date) : null
+          const tomorrow = new Date(today)
+          tomorrow.setDate(tomorrow.getDate() + 1)
+
+          // Get account name - handle both direct account activities and other entity types
+          let accountName: string | null = null
+          if (a.entity_type === 'account' && a.account) {
+            const account = a.account as { id: string; name: string } | null
+            accountName = account?.name ?? null
+          }
+
+          return {
+            id: a.id,
+            subject: a.subject,
+            description: a.description,
+            activityType: a.activity_type,
+            status: a.status,
+            priority: a.priority,
+            dueDate: a.due_date,
+            entityType: a.entity_type,
+            entityId: a.entity_id,
+            accountName,
+            contact: a.poc ? {
+              id: (a.poc as { id: string; first_name: string; last_name: string }).id,
+              name: `${(a.poc as { id: string; first_name: string; last_name: string }).first_name} ${(a.poc as { id: string; first_name: string; last_name: string }).last_name}`,
+            } : null,
+            isOverdue: dueDate ? dueDate < today : false,
+            isDueToday: dueDate ? dueDate >= today && dueDate < tomorrow : false,
+            createdAt: a.created_at,
+            completedAt: a.completed_at,
+          }
+        }) ?? [],
+        total: count ?? 0,
+      }
+    }),
+
+  // ============================================
   // GET RECENT ACTIVITIES (ACTIVITY FEED)
   // ============================================
   getRecent: orgProtectedProcedure

@@ -1,4 +1,6 @@
-export { CreateJobDialog } from './CreateJobDialog'
+// CreateJobDialog has been migrated to a dedicated page:
+// /employee/recruiting/jobs/new
+
 export { UpdateStatusDialog } from './UpdateStatusDialog'
 export { PipelineView, PIPELINE_STAGES, type PipelineStage } from './PipelineView'
 export { CloseJobWizard } from './CloseJobWizard'

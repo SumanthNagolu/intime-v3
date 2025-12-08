@@ -80,7 +80,8 @@ export const crmRouter = router({
         }
       }),
 
-    // Get account by ID
+    // Get account by ID - returns account core data only (no nested relations)
+    // Use this for full account details on detail page
     getById: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
@@ -89,7 +90,29 @@ export const crmRouter = router({
 
         const { data, error } = await adminClient
           .from('accounts')
-          .select('*, owner:user_profiles!owner_id(id, full_name, avatar_url), contacts(*), jobs:jobs!account_id(id, title, status)')
+          .select('*, owner:user_profiles!owner_id(id, full_name, avatar_url)')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Account not found' })
+        }
+
+        return data
+      }),
+
+    // Get account by ID - lightweight version for server layout/navigation
+    // Returns minimal fields needed for header display
+    getByIdLite: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { data, error } = await adminClient
+          .from('accounts')
+          .select('id, name, industry, status, website, phone, city, state')
           .eq('id', input.id)
           .eq('org_id', orgId)
           .single()
@@ -588,6 +611,226 @@ export const crmRouter = router({
           })
 
         return data
+      }),
+  }),
+
+  // ============================================
+  // CONTRACTS (Account Documents - MSA, SOW, NDA)
+  // ============================================
+  contracts: router({
+    // List contracts/documents for an account
+    listByAccount: orgProtectedProcedure
+      .input(z.object({
+        accountId: z.string().uuid(),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { data, error } = await adminClient
+          .from('account_contracts')
+          .select('*')
+          .eq('account_id', input.accountId)
+          .order('created_at', { ascending: false })
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data || []
+      }),
+
+    // Create a new contract
+    create: orgProtectedProcedure
+      .input(z.object({
+        accountId: z.string().uuid(),
+        contractType: z.enum(['msa', 'sow', 'nda', 'amendment', 'addendum', 'other']),
+        name: z.string().min(1),
+        status: z.enum(['draft', 'pending_review', 'active', 'expired', 'terminated']).default('draft'),
+        startDate: z.string().datetime().optional(),
+        endDate: z.string().datetime().optional(),
+        signedDate: z.string().datetime().optional(),
+        value: z.number().optional(),
+        currency: z.string().default('USD'),
+        paymentTermsDays: z.number().optional(),
+        documentUrl: z.string().url().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { data, error } = await adminClient
+          .from('account_contracts')
+          .insert({
+            account_id: input.accountId,
+            contract_type: input.contractType,
+            name: input.name,
+            status: input.status,
+            start_date: input.startDate,
+            end_date: input.endDate,
+            signed_date: input.signedDate,
+            value: input.value,
+            currency: input.currency,
+            payment_terms_days: input.paymentTermsDays,
+            document_url: input.documentUrl,
+            notes: input.notes,
+          })
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
+      }),
+
+    // Upload document file to Supabase Storage
+    uploadFile: orgProtectedProcedure
+      .input(z.object({
+        accountId: z.string().uuid(),
+        contractId: z.string().uuid(),
+        fileData: z.string(), // base64 encoded file
+        fileName: z.string(),
+        mimeType: z.string(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Decode base64 file
+        const base64Data = input.fileData.split(',')[1] || input.fileData
+        const fileBuffer = Buffer.from(base64Data, 'base64')
+
+        // Generate storage path
+        const timestamp = Date.now()
+        const sanitizedFileName = input.fileName.replace(/[^a-zA-Z0-9.-]/g, '_')
+        const storagePath = `${orgId}/contracts/${input.accountId}/${timestamp}_${sanitizedFileName}`
+
+        // Upload to Supabase Storage using admin client to bypass RLS
+        const { error: uploadError } = await adminClient
+          .storage
+          .from('documents')
+          .upload(storagePath, fileBuffer, {
+            contentType: input.mimeType,
+            upsert: true,
+          })
+
+        if (uploadError) {
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: `Failed to upload file: ${uploadError.message}`,
+          })
+        }
+
+        // Get public URL
+        const { data: urlData } = adminClient
+          .storage
+          .from('documents')
+          .getPublicUrl(storagePath)
+
+        // Update the contract with the document URL
+        const { data, error } = await adminClient
+          .from('account_contracts')
+          .update({
+            document_url: urlData.publicUrl,
+          })
+          .eq('id', input.contractId)
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return {
+          ...data,
+          document_url: urlData.publicUrl,
+        }
+      }),
+
+    // Get contract by ID
+    getById: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const adminClient = getAdminClient()
+
+        const { data, error } = await adminClient
+          .from('account_contracts')
+          .select('*, account:accounts(id, name)')
+          .eq('id', input.id)
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Contract not found' })
+        }
+
+        return data
+      }),
+
+    // Update contract
+    update: orgProtectedProcedure
+      .input(z.object({
+        id: z.string().uuid(),
+        name: z.string().min(1).optional(),
+        contractType: z.enum(['msa', 'sow', 'nda', 'amendment', 'addendum', 'other']).optional(),
+        status: z.enum(['draft', 'pending_review', 'active', 'expired', 'terminated']).optional(),
+        startDate: z.string().datetime().optional().nullable(),
+        endDate: z.string().datetime().optional().nullable(),
+        signedDate: z.string().datetime().optional().nullable(),
+        value: z.number().optional().nullable(),
+        currency: z.string().optional(),
+        paymentTermsDays: z.number().optional().nullable(),
+        documentUrl: z.string().url().optional().nullable(),
+        notes: z.string().optional().nullable(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const adminClient = getAdminClient()
+
+        const updateData: Record<string, unknown> = {}
+        if (input.name !== undefined) updateData.name = input.name
+        if (input.contractType !== undefined) updateData.contract_type = input.contractType
+        if (input.status !== undefined) updateData.status = input.status
+        if (input.startDate !== undefined) updateData.start_date = input.startDate
+        if (input.endDate !== undefined) updateData.end_date = input.endDate
+        if (input.signedDate !== undefined) updateData.signed_date = input.signedDate
+        if (input.value !== undefined) updateData.value = input.value
+        if (input.currency !== undefined) updateData.currency = input.currency
+        if (input.paymentTermsDays !== undefined) updateData.payment_terms_days = input.paymentTermsDays
+        if (input.documentUrl !== undefined) updateData.document_url = input.documentUrl
+        if (input.notes !== undefined) updateData.notes = input.notes
+
+        const { data, error } = await adminClient
+          .from('account_contracts')
+          .update(updateData)
+          .eq('id', input.id)
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
+      }),
+
+    // Delete contract
+    delete: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const adminClient = getAdminClient()
+
+        const { error } = await adminClient
+          .from('account_contracts')
+          .delete()
+          .eq('id', input.id)
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return { success: true }
       }),
   }),
 
@@ -1375,6 +1618,32 @@ export const crmRouter = router({
 
         return { success: true }
       }),
+
+    // List leads by campaign
+    listByCampaign: orgProtectedProcedure
+      .input(z.object({
+        campaignId: z.string().uuid(),
+        limit: z.number().min(1).max(100).default(50),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { data, error } = await adminClient
+          .from('leads')
+          .select('*, owner:user_profiles!owner_id(id, full_name, avatar_url)')
+          .eq('org_id', orgId)
+          .eq('campaign_id', input.campaignId)
+          .is('deleted_at', null)
+          .order('created_at', { ascending: false })
+          .limit(input.limit)
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data ?? []
+      }),
   }),
 
   // ============================================
@@ -1406,7 +1675,7 @@ export const crmRouter = router({
             *,
             owner:user_profiles!owner_id(id, full_name, avatar_url),
             account:accounts(id, name, industry),
-            lead:leads(id, company_name, first_name, last_name)
+            lead:leads!lead_id(id, company_name, first_name, last_name)
           `, { count: 'exact' })
           .eq('org_id', orgId)
           .is('deleted_at', null)
@@ -1466,7 +1735,7 @@ export const crmRouter = router({
             *,
             owner:user_profiles!owner_id(id, full_name, avatar_url),
             account:accounts(id, name),
-            lead:leads(id, company_name)
+            lead:leads!lead_id(id, company_name)
           `)
           .eq('org_id', orgId)
           .is('deleted_at', null)
@@ -1537,7 +1806,7 @@ export const crmRouter = router({
             secondary_owner:user_profiles!secondary_owner_id(id, full_name),
             pod_manager:user_profiles!pod_manager_id(id, full_name),
             account:accounts(id, name, industry, website),
-            lead:leads(id, company_name, first_name, last_name, email, phone),
+            lead:leads!lead_id(id, company_name, first_name, last_name, email, phone),
             created_account:accounts!created_account_id(id, name)
           `)
           .eq('id', input.id)
@@ -1891,7 +2160,7 @@ export const crmRouter = router({
         // Get current deal
         const { data: deal } = await adminClient
           .from('deals')
-          .select('*, lead:leads(company_name, first_name, last_name)')
+          .select('*, lead:leads!lead_id(company_name, first_name, last_name)')
           .eq('id', input.id)
           .eq('org_id', orgId)
           .single()
@@ -2539,6 +2808,56 @@ export const crmRouter = router({
         })) ?? []
       }),
 
+    // List all contacts with optional filters
+    list: orgProtectedProcedure
+      .input(z.object({
+        search: z.string().optional(),
+        accountId: z.string().uuid().optional(),
+        status: z.string().optional(),
+        isPrimary: z.boolean().optional(),
+        limit: z.number().min(1).max(100).default(50),
+        offset: z.number().default(0),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        let query = adminClient
+          .from('contacts')
+          .select('*, account:accounts!company_id(id, name)', { count: 'exact' })
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .order('created_at', { ascending: false })
+          .range(input.offset, input.offset + input.limit - 1)
+
+        if (input.search) {
+          query = query.or(`first_name.ilike.%${input.search}%,last_name.ilike.%${input.search}%,email.ilike.%${input.search}%`)
+        }
+
+        if (input.accountId) {
+          query = query.eq('company_id', input.accountId)
+        }
+
+        if (input.status) {
+          query = query.eq('status', input.status)
+        }
+
+        if (input.isPrimary !== undefined) {
+          query = query.eq('is_primary', input.isPrimary)
+        }
+
+        const { data, error, count } = await query
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return {
+          items: data ?? [],
+          total: count ?? 0,
+        }
+      }),
+
     // List contacts by account
     listByAccount: orgProtectedProcedure
       .input(z.object({
@@ -2562,6 +2881,27 @@ export const crmRouter = router({
         }
 
         return data ?? []
+      }),
+
+    // Get contact by ID
+    getById: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { data, error } = await adminClient
+          .from('contacts')
+          .select('*, account:accounts!company_id(id, name)')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Contact not found' })
+        }
+
+        return data
       }),
 
     // Create contact
@@ -2753,6 +3093,27 @@ export const crmRouter = router({
         }
 
         return data ?? []
+      }),
+
+    // Get note by ID
+    getById: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { data, error } = await adminClient
+          .from('account_notes')
+          .select('*, author:user_profiles!created_by(id, full_name, avatar_url), account:accounts(id, name)')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Note not found' })
+        }
+
+        return data
       }),
 
     // Create note
@@ -3113,6 +3474,26 @@ export const crmRouter = router({
         }
 
         return data
+      }),
+
+    // Delete meeting (soft delete)
+    delete: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        const { error } = await adminClient
+          .from('meeting_notes')
+          .update({ deleted_at: new Date().toISOString(), updated_by: user?.id })
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return { success: true }
       }),
   }),
 
@@ -3589,6 +3970,38 @@ export const crmRouter = router({
         return data ?? []
       }),
 
+    // List activities for contact
+    listByContact: orgProtectedProcedure
+      .input(z.object({
+        contactId: z.string().uuid(),
+        activityType: z.enum(['call', 'email', 'meeting', 'note', 'task', 'all']).default('all'),
+        limit: z.number().min(1).max(100).default(50),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        let query = adminClient
+          .from('crm_activities')
+          .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
+          .eq('org_id', orgId)
+          .eq('related_contact_id', input.contactId)
+          .order('created_at', { ascending: false })
+          .limit(input.limit)
+
+        if (input.activityType !== 'all') {
+          query = query.eq('activity_type', input.activityType)
+        }
+
+        const { data, error } = await query
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return { items: data ?? [] }
+      }),
+
     // Log activity
     log: orgProtectedProcedure
       .input(z.object({
@@ -3647,6 +4060,117 @@ export const crmRouter = router({
         }
 
         return data
+      }),
+
+    // Get activity by ID
+    getById: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { data, error } = await adminClient
+          .from('crm_activities')
+          .select('*, creator:user_profiles!created_by(id, full_name, avatar_url), contact:contacts!related_contact_id(id, first_name, last_name)')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Activity not found' })
+        }
+
+        return data
+      }),
+
+    // Update activity
+    update: orgProtectedProcedure
+      .input(z.object({
+        id: z.string().uuid(),
+        subject: z.string().optional(),
+        description: z.string().optional(),
+        outcome: z.enum(['positive', 'neutral', 'negative', 'no_response', 'left_voicemail', 'busy', 'connected']).optional(),
+        nextSteps: z.string().optional(),
+        nextFollowUpDate: z.string().datetime().optional().nullable(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        const updateData: Record<string, unknown> = { updated_by: user?.id }
+        if (input.subject !== undefined) updateData.subject = input.subject
+        if (input.description !== undefined) updateData.description = input.description
+        if (input.outcome !== undefined) updateData.outcome = input.outcome
+        if (input.nextSteps !== undefined) updateData.next_steps = input.nextSteps
+        if (input.nextFollowUpDate !== undefined) updateData.next_follow_up_date = input.nextFollowUpDate
+
+        const { data, error } = await adminClient
+          .from('crm_activities')
+          .update(updateData)
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
+      }),
+
+    // Delete activity
+    delete: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { error } = await adminClient
+          .from('crm_activities')
+          .delete()
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return { success: true }
+      }),
+
+    // List activities by entity (generic)
+    listByEntity: orgProtectedProcedure
+      .input(z.object({
+        entityType: z.string(),
+        entityId: z.string().uuid(),
+        activityType: z.enum(['call', 'email', 'meeting', 'note', 'task', 'linkedin_message', 'all']).default('all'),
+        limit: z.number().min(1).max(100).default(50),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        let query = adminClient
+          .from('crm_activities')
+          .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
+          .eq('org_id', orgId)
+          .eq('entity_type', input.entityType)
+          .eq('entity_id', input.entityId)
+          .order('created_at', { ascending: false })
+          .limit(input.limit)
+
+        if (input.activityType !== 'all') {
+          query = query.eq('activity_type', input.activityType)
+        }
+
+        const { data, error } = await query
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data ?? []
       }),
   }),
 
@@ -3770,6 +4294,154 @@ export const crmRouter = router({
           funnel: funnel?.[0] ?? null,
           channelPerformance: channelPerformance ?? [],
           recentResponses: recentResponses ?? [],
+        }
+      }),
+
+    // Get campaign by ID with all counts (optimized for sidebar)
+    getByIdWithCounts: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Single query with campaign data
+        const { data: campaign, error } = await adminClient
+          .from('campaigns')
+          .select(`
+            *,
+            owner:user_profiles!owner_id(id, full_name, avatar_url, email),
+            approved_by_user:user_profiles!approved_by(id, full_name)
+          `)
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Campaign not found' })
+        }
+
+        // Get all counts in parallel
+        const [
+          { count: prospectsCount },
+          { count: leadsCount },
+          { count: activitiesCount },
+          { count: notesCount },
+          { data: funnel },
+        ] = await Promise.all([
+          // Prospects count
+          adminClient
+            .from('campaign_prospects')
+            .select('*', { count: 'exact', head: true })
+            .eq('campaign_id', input.id),
+          
+          // Leads count (from campaigns relation)
+          adminClient
+            .from('leads')
+            .select('*', { count: 'exact', head: true })
+            .eq('campaign_id', input.id)
+            .eq('org_id', orgId),
+          
+          // Activities count
+          adminClient
+            .from('crm_activities')
+            .select('*', { count: 'exact', head: true })
+            .eq('entity_type', 'campaign')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId),
+          
+          // Notes count (subset of activities)
+          adminClient
+            .from('crm_activities')
+            .select('*', { count: 'exact', head: true })
+            .eq('entity_type', 'campaign')
+            .eq('entity_id', input.id)
+            .eq('activity_type', 'note')
+            .eq('org_id', orgId),
+          
+          // Funnel metrics via RPC
+          adminClient.rpc('get_campaign_funnel', { p_campaign_id: input.id }),
+        ])
+
+        // Calculate sequences count from JSONB
+        const sequencesCount = campaign.channels?.length || 0
+
+        // Documents count will be 0 until table is created
+        const documentsCount = 0
+
+        // Build funnel data
+        const funnelData = funnel?.[0] || {
+          total_prospects: 0,
+          contacted: 0,
+          opened: 0,
+          clicked: 0,
+          responded: 0,
+          leads: 0,
+          meetings: 0,
+          open_rate: 0,
+          response_rate: 0,
+          conversion_rate: 0,
+        }
+
+        return {
+          // Campaign data
+          ...campaign,
+          campaignType: campaign.campaign_type,
+          targetCriteria: campaign.target_criteria,
+          sequences: campaign.sequences,
+          complianceSettings: campaign.compliance_settings,
+          abTestConfig: campaign.ab_test_config,
+          startDate: campaign.start_date,
+          endDate: campaign.end_date,
+          targetLeads: campaign.target_leads,
+          targetMeetings: campaign.target_meetings,
+          targetRevenue: campaign.target_revenue,
+          budgetTotal: campaign.budget_total,
+          budgetSpent: campaign.budget_spent,
+          audienceSize: campaign.audience_size,
+          prospectsContacted: campaign.prospects_contacted,
+          prospectsOpened: campaign.prospects_opened,
+          prospectsResponded: campaign.prospects_responded,
+          leadsGenerated: campaign.leads_generated,
+          meetingsBooked: campaign.meetings_booked,
+
+          // Counts
+          counts: {
+            prospects: prospectsCount || 0,
+            leads: leadsCount || 0,
+            activities: activitiesCount || 0,
+            notes: notesCount || 0,
+            documents: documentsCount,
+            sequences: sequencesCount,
+          },
+
+          // Metrics for sidebar
+          metrics: {
+            prospects: funnelData.total_prospects,
+            contacted: funnelData.contacted,
+            opened: funnelData.opened,
+            responded: funnelData.responded,
+            leads: funnelData.leads,
+            meetings: funnelData.meetings,
+            conversionRate: funnelData.conversion_rate,
+            openRate: funnelData.open_rate,
+            responseRate: funnelData.response_rate,
+          },
+
+          // Targets
+          targets: {
+            targetLeads: campaign.target_leads,
+            targetMeetings: campaign.target_meetings,
+            targetRevenue: campaign.target_revenue,
+          },
+
+          // Dates
+          dates: {
+            startDate: campaign.start_date,
+            endDate: campaign.end_date,
+          },
+
+          // Funnel for analytics
+          funnel: funnelData,
         }
       }),
 
@@ -3928,6 +4600,22 @@ export const crmRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
+        // Log activity for campaign update
+        const changedFields = Object.keys(updateData).filter(k => k !== 'updated_by')
+        if (changedFields.length > 0) {
+          await adminClient
+            .from('crm_activities')
+            .insert({
+              org_id: orgId,
+              entity_type: 'campaign',
+              entity_id: input.id,
+              activity_type: 'note',
+              subject: 'Campaign Updated',
+              description: `Campaign updated. Changed fields: ${changedFields.join(', ')}`,
+              created_by: user?.id,
+            })
+        }
+
         return data
       }),
 
@@ -3966,6 +4654,72 @@ export const crmRouter = router({
             activity_type: 'note',
             subject: `Campaign ${input.status === 'active' ? 'Resumed' : input.status === 'paused' ? 'Paused' : 'Completed'}`,
             description: `Campaign status changed to ${input.status}`,
+            created_by: user?.id,
+          })
+
+        return data
+      }),
+
+    // Complete campaign with outcome
+    complete: orgProtectedProcedure
+      .input(z.object({
+        id: z.string().uuid(),
+        outcome: z.enum(['exceeded', 'met', 'partial', 'failed']),
+        completionNotes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get campaign details for activity logging
+        const { data: campaign } = await adminClient
+          .from('campaigns')
+          .select('name, leads_generated, target_leads, meetings_booked, target_meetings')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .single()
+
+        if (!campaign) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Campaign not found' })
+        }
+
+        // Update campaign status and outcome
+        const { data, error } = await adminClient
+          .from('campaigns')
+          .update({
+            status: 'completed',
+            outcome: input.outcome,
+            completion_notes: input.completionNotes,
+            completed_at: new Date().toISOString(),
+            updated_by: user?.id,
+          })
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Determine outcome label for activity
+        const outcomeLabels: Record<string, string> = {
+          exceeded: 'Exceeded Targets',
+          met: 'Met Targets',
+          partial: 'Partially Successful',
+          failed: 'Did Not Meet Goals',
+        }
+
+        // Log completion activity
+        await adminClient
+          .from('crm_activities')
+          .insert({
+            org_id: orgId,
+            entity_type: 'campaign',
+            entity_id: input.id,
+            activity_type: 'note',
+            subject: 'Campaign Completed',
+            description: `Campaign "${campaign.name}" completed with outcome: ${outcomeLabels[input.outcome]}. Leads: ${campaign.leads_generated}/${campaign.target_leads}, Meetings: ${campaign.meetings_booked}/${campaign.target_meetings}.${input.completionNotes ? ` Notes: ${input.completionNotes}` : ''}`,
             created_by: user?.id,
           })
 
@@ -4137,7 +4891,24 @@ export const crmRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
-        return { added: data?.length ?? 0 }
+        const addedCount = data?.length ?? 0
+
+        // Log activity for prospect addition
+        if (addedCount > 0) {
+          await adminClient
+            .from('crm_activities')
+            .insert({
+              org_id: orgId,
+              entity_type: 'campaign',
+              entity_id: input.campaignId,
+              activity_type: 'note',
+              subject: 'Prospects Added',
+              description: `${addedCount} ${addedCount === 1 ? 'prospect' : 'prospects'} enrolled via ${input.channel} channel`,
+              created_by: ctx.user?.id,
+            })
+        }
+
+        return { added: addedCount }
       }),
 
     // Convert prospect to lead (A03)
@@ -4281,6 +5052,14 @@ export const crmRouter = router({
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
 
+        // Get campaign name before deleting
+        const { data: campaign } = await adminClient
+          .from('campaigns')
+          .select('name')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .single()
+
         const { error } = await adminClient
           .from('campaigns')
           .update({
@@ -4292,6 +5071,21 @@ export const crmRouter = router({
 
         if (error) {
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Log activity for deletion
+        if (campaign) {
+          await adminClient
+            .from('crm_activities')
+            .insert({
+              org_id: orgId,
+              entity_type: 'campaign',
+              entity_id: input.id,
+              activity_type: 'note',
+              subject: 'Campaign Deleted',
+              description: `Campaign "${campaign.name}" was deleted`,
+              created_by: user?.id,
+            })
         }
 
         return { success: true }
@@ -4347,6 +5141,19 @@ export const crmRouter = router({
         if (error) {
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
+
+        // Log activity for duplication
+        await adminClient
+          .from('crm_activities')
+          .insert({
+            org_id: orgId,
+            entity_type: 'campaign',
+            entity_id: data.id,
+            activity_type: 'note',
+            subject: 'Campaign Duplicated',
+            description: `Campaign duplicated from "${source.name}" as "${input.newName}"`,
+            created_by: user?.id,
+          })
 
         return data
       }),

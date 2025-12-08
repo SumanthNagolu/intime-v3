@@ -5,10 +5,30 @@ export type EntityType =
   | 'job'
   | 'candidate'
   | 'account'
+  | 'contact'
   | 'submission'
   | 'placement'
   | 'lead'
   | 'deal'
+  | 'campaign'
+
+// Navigation style for entity types
+// - 'journey': Sequential workflow steps (jobs, submissions)
+// - 'sections': Section-based navigation (accounts, deals, leads)
+export type NavigationStyle = 'journey' | 'sections'
+
+// Map entity types to their navigation style
+export const ENTITY_NAVIGATION_STYLES: Record<EntityType, NavigationStyle> = {
+  job: 'journey',
+  candidate: 'journey',
+  submission: 'journey',
+  placement: 'journey',
+  account: 'sections',
+  contact: 'sections',
+  deal: 'sections',
+  lead: 'sections',
+  campaign: 'sections',
+}
 
 // Entity journey step definition
 export interface EntityJourneyStep {
@@ -97,10 +117,12 @@ export const ENTITY_BASE_PATHS: Record<EntityType, string> = {
   job: '/employee/recruiting/jobs',
   candidate: '/employee/recruiting/candidates',
   account: '/employee/recruiting/accounts',
+  contact: '/employee/contacts',
   submission: '/employee/recruiting/submissions',
   placement: '/employee/recruiting/placements',
   lead: '/employee/crm/leads',
   deal: '/employee/crm/deals',
+  campaign: '/employee/crm/campaigns',
 }
 
 // Helper to get entity URL
