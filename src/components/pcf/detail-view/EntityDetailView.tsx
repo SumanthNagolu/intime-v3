@@ -28,9 +28,11 @@ export function EntityDetailView<T extends Record<string, unknown>>({
   const [isHeaderSticky, setIsHeaderSticky] = useState(false)
   const [dialogStates, setDialogStates] = useState<Record<string, boolean>>({})
 
-  // Get current section from URL
+  // Get current navigation mode and section/step from URL
+  const currentMode = searchParams.get('mode') || 'sections'
   const currentSection =
     searchParams.get('section') || config.defaultSection || config.sections?.[0]?.id || 'overview'
+  const currentStep = searchParams.get('step') || config.journeySteps?.[0]?.id || 'setup'
 
   // Use server data or fetch client-side
   const entityQuery = config.useEntityQuery(entityId)
@@ -68,7 +70,18 @@ export function EntityDetailView<T extends Record<string, unknown>>({
     }
   }, [config.eventNamespace, config.dialogHandlers])
 
-  // Render current section
+  // Render current journey step (when in journey mode)
+  const renderJourneyStep = () => {
+    if (!entity || !config.journeySteps) return null
+
+    const step = config.journeySteps.find((s) => s.id === currentStep) || config.journeySteps[0]
+    if (!step || !step.component) return null
+
+    const StepComponent = step.component
+    return <StepComponent entityId={entityId} entity={entity} />
+  }
+
+  // Render current section (when in sections mode)
   const renderSection = () => {
     if (!entity || !config.sections) return null
 
@@ -77,6 +90,16 @@ export function EntityDetailView<T extends Record<string, unknown>>({
 
     const SectionComponent = section.component
     return <SectionComponent entityId={entityId} entity={entity} />
+  }
+
+  // Render content based on current navigation mode
+  const renderContent = () => {
+    // If in journey mode and journey steps are configured, render step
+    if (currentMode === 'journey' && config.journeySteps && config.journeySteps.length > 0) {
+      return renderJourneyStep()
+    }
+    // Otherwise render section
+    return renderSection()
   }
 
   if (isLoading) {
@@ -150,9 +173,9 @@ export function EntityDetailView<T extends Record<string, unknown>>({
         )}
       </div>
 
-      {/* Section Content */}
+      {/* Section/Step Content */}
       <div className="flex-1 px-6 py-6 bg-charcoal-50/30">
-        {renderSection()}
+        {renderContent()}
       </div>
 
       {/* Dialog Handlers */}

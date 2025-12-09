@@ -6,8 +6,61 @@ import { orgProtectedProcedure } from '../trpc/middleware'
 // Input schemas
 const podTypeSchema = z.enum(['recruiting', 'bench_sales', 'ta', 'hr', 'mixed'])
 const podStatusSchema = z.enum(['active', 'inactive'])
+const podSortFieldSchema = z.enum([
+  'created_at',
+  'name',
+  'pod_type',
+  'status',
+])
 
 export const podsRouter = router({
+  // ============================================
+  // GET POD STATS
+  // ============================================
+  stats: orgProtectedProcedure.query(async ({ ctx }) => {
+    const { supabase, orgId } = ctx
+
+    // Get all pods with member counts
+    const { data: pods, error } = await supabase
+      .from('pods')
+      .select(`
+        id,
+        status,
+        pod_members(id, is_active)
+      `)
+      .eq('org_id', orgId)
+      .is('deleted_at', null)
+
+    if (error) {
+      console.error('Failed to fetch pod stats:', error)
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Failed to fetch pod stats',
+      })
+    }
+
+    type PodMember = { id: string; is_active: boolean }
+    type PodWithMembers = { id: string; status: string; pod_members: PodMember[] }
+
+    const total = pods?.length ?? 0
+    const active = pods?.filter((p) => p.status === 'active').length ?? 0
+
+    // Calculate total members and average size
+    let totalMembers = 0
+    pods?.forEach((pod) => {
+      const activeMembers = (pod as PodWithMembers).pod_members?.filter((m) => m.is_active).length ?? 0
+      totalMembers += activeMembers
+    })
+    const avgSize = total > 0 ? Math.round((totalMembers / total) * 10) / 10 : 0
+
+    return {
+      total,
+      active,
+      avgSize,
+      totalMembers,
+    }
+  }),
+
   // ============================================
   // LIST PODS
   // ============================================
@@ -15,13 +68,22 @@ export const podsRouter = router({
     .input(z.object({
       search: z.string().optional(),
       podType: podTypeSchema.optional(),
-      status: podStatusSchema.optional(),
-      page: z.number().default(1),
-      pageSize: z.number().default(20),
+      status: podStatusSchema.or(z.literal('all')).optional(),
+      limit: z.number().min(1).max(100).default(20),
+      offset: z.number().min(0).default(0),
+      sortBy: podSortFieldSchema.default('created_at'),
+      sortOrder: z.enum(['asc', 'desc']).default('desc'),
+      // Legacy pagination support
+      page: z.number().optional(),
+      pageSize: z.number().optional(),
     }))
     .query(async ({ ctx, input }) => {
       const { supabase, orgId } = ctx
-      const { search, podType, status, page, pageSize } = input
+      const { search, podType, status, sortBy, sortOrder } = input
+
+      // Support both new (limit/offset) and legacy (page/pageSize) pagination
+      const limit = input.limit ?? input.pageSize ?? 20
+      const offset = input.offset ?? (input.page ? (input.page - 1) * limit : 0)
 
       let query = supabase
         .from('pods')
@@ -46,15 +108,15 @@ export const podsRouter = router({
       if (podType) {
         query = query.eq('pod_type', podType)
       }
-      if (status) {
+      if (status && status !== 'all') {
         query = query.eq('status', status)
       }
 
+      // Sorting
+      query = query.order(sortBy, { ascending: sortOrder === 'asc' })
+
       // Pagination
-      const offset = (page - 1) * pageSize
-      query = query
-        .range(offset, offset + pageSize - 1)
-        .order('created_at', { ascending: false })
+      query = query.range(offset, offset + limit - 1)
 
       const { data, count, error } = await query
 
@@ -65,13 +127,29 @@ export const podsRouter = router({
         })
       }
 
+      // Transform data with computed fields
+      type PodMember = { id: string; is_active: boolean }
+      const items = (data ?? []).map((pod) => {
+        const activeMembers = (pod.members as PodMember[])?.filter((m) => m.is_active).length ?? 0
+        return {
+          ...pod,
+          memberCount: activeMembers,
+          // CamelCase versions for frontend
+          podType: pod.pod_type,
+          createdAt: pod.created_at,
+          updatedAt: pod.updated_at,
+        }
+      })
+
       return {
-        items: data ?? [],
+        items,
+        total: count ?? 0,
+        // Legacy pagination object for backward compatibility
         pagination: {
           total: count ?? 0,
-          page,
-          pageSize,
-          totalPages: Math.ceil((count ?? 0) / pageSize),
+          page: input.page ?? Math.floor(offset / limit) + 1,
+          pageSize: limit,
+          totalPages: Math.ceil((count ?? 0) / limit),
         },
       }
     }),

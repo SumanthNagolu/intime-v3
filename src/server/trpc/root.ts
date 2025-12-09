@@ -21,6 +21,8 @@ import { atsRouter } from '../routers/ats'
 import { dashboardRouter } from '../routers/dashboard'
 import { reportsRouter } from '../routers/reports'
 import { benchRouter } from '../routers/bench'
+// HR module router
+import { hrRouter } from '../routers/hr'
 // Academy portal router
 import { academyRouter } from '../routers/academy'
 // Sequence templates router
@@ -49,6 +51,8 @@ export const appRouter = router({
   dashboard: dashboardRouter,
   reports: reportsRouter,
   bench: benchRouter,
+  // HR module
+  hr: hrRouter,
   // Academy portal
   academy: academyRouter,
   // Sequence templates

@@ -15,6 +15,60 @@ Every screen combines technical precision with refined luxury. Content breathes,
 
 ---
 
+## Screen Architecture (PCF)
+
+**Every screen MUST follow this three-zone layout:**
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    HEADER                               │
+│              (TopNavigation)                            │
+├───────────────┬─────────────────────────────────────────┤
+│               │                                         │
+│  SIDE NAV     │           SCREEN AREA                   │
+│               │                                         │
+│  (Sidebar)    │    (EntityListView or EntityDetailView) │
+│               │                                         │
+└───────────────┴─────────────────────────────────────────┘
+```
+
+### Components
+
+| Zone | Component | File |
+|------|-----------|------|
+| Header | TopNavigation | `src/components/navigation/TopNavigation.tsx` |
+| Side Nav | EntityJourneySidebar (detail) or SectionSidebar (list) | `src/components/navigation/` |
+| Screen Area | EntityListView or EntityDetailView | `src/components/pcf/` |
+| Layout Wrapper | SidebarLayout | `src/components/layouts/SidebarLayout.tsx` |
+
+### Implementation Pattern
+
+All pages use SidebarLayout which composes the three zones:
+
+```
+Page → SidebarLayout → TopNavigation + Sidebar + Content
+```
+
+### Screen Types
+
+**List Pages**:
+- Use `EntityListView<T>` with config from `@/configs/entities/`
+- Sidebar: SectionSidebar (section links + recent entities)
+- URL state: `?search=&status=&page=`
+
+**Detail Pages**:
+- Use `EntityDetailView` with config from `@/configs/entities/`
+- Sidebar: EntityJourneySidebar (journey steps OR sections + tools + quick actions)
+- URL state: `?section=overview`
+
+### DO NOT
+- Create custom layouts bypassing SidebarLayout
+- Build screens without TopNavigation
+- Implement custom sidebars (use existing patterns)
+- Skip the config-driven approach for list/detail views
+
+---
+
 ## Color Usage
 
 ### Primary Palette
@@ -158,7 +212,42 @@ Glass card:
 
 ## Navigation Patterns
 
-### Sidebar
+### Unified Sidebar System
+
+The sidebar is **context-dependent** - it changes based on where the user is:
+
+| Context | Sidebar Type | Shows |
+|---------|-------------|-------|
+| **List pages** (from top nav) | `SectionSidebar` | Navigation links + Recent entities (10) |
+| **Detail pages** (entity open) | `EntityJourneySidebar` | Journey steps OR Sections + Tools + Quick actions |
+
+**Automatic Detection** (in `SidebarLayout.tsx`):
+```tsx
+// If currentEntity exists → EntityJourneySidebar (detail pages)
+// If no currentEntity → SectionSidebar (list pages)
+{currentEntity ? <EntityJourneySidebar /> : <SectionSidebar sectionId={sectionId} />}
+```
+
+**Key Rule**: Sidebar content is driven by the entity type being viewed, not the route.
+
+### Recent Entities System
+
+Recent entities are tracked per entity type and shown in:
+- **SectionSidebar**: Recent items for current section's entity type
+- **TopNavigation dropdowns**: Recent items per tab
+- **CommandPalette**: Recent actions
+
+**Configuration** (MAX = 10 items):
+| File | Purpose |
+|------|---------|
+| `EntityNavigationContext.tsx:8` | Storage limit |
+| `SectionSidebar.tsx:240` | Sidebar display |
+| `TopNavigation.tsx:95,375` | Dropdown display |
+| `CommandPalette.tsx:203` | Palette display |
+
+**IMPORTANT**: If changing the limit, update ALL these locations.
+
+### Sidebar Styling
 - Width: 256px
 - Background: `bg-white` with subtle border
 - Section titles: Uppercase, `text-nav` style
@@ -174,7 +263,7 @@ Glass card:
 ### Command Palette (Cmd+K)
 - Centered glass modal
 - Search with auto-focus
-- Recent actions + suggestions
+- Recent actions + suggestions (10 max)
 - Keyboard navigation
 
 ---
@@ -214,6 +303,135 @@ Category tabs with counts:
 - **Active section**: `bg-gold-50 text-gold-600 border-l-[3px] border-gold-500`
 - **Counts**: Badge after section name (e.g., "Contacts (12)")
 - **Alert styling**: Red badge for escalations
+
+---
+
+## PCF List View Architecture
+
+List pages use a **configuration-driven architecture** where all behavior is defined in config objects, not page code.
+
+### Page File Pattern
+
+List pages should be minimal (< 10 lines):
+
+```tsx
+// src/app/employee/crm/campaigns/page.tsx
+'use client'
+import { EntityListView } from '@/components/pcf/list-view/EntityListView'
+import { campaignsListConfig, Campaign } from '@/configs/entities/campaigns.config'
+
+export default function CampaignsPage() {
+  return <EntityListView<Campaign> config={campaignsListConfig} />
+}
+```
+
+### Config File Structure
+
+All list behavior defined in `src/configs/entities/{entity}.config.ts`:
+
+```tsx
+export const campaignsListConfig: ListViewConfig<Campaign> = {
+  // Entity metadata
+  entityType: 'campaign',
+  entityName: { singular: 'Campaign', plural: 'Campaigns' },
+  baseRoute: '/employee/crm/campaigns',
+  title: 'Campaigns',
+  icon: Megaphone,
+
+  // Stats cards (connected to useStatsQuery)
+  statsCards: [
+    { key: 'total', label: 'Total Campaigns', icon: Megaphone },
+    { key: 'active', label: 'Active', color: 'bg-green-100 text-green-800' },
+  ],
+
+  // Filters (synced to URL params)
+  filters: [
+    { key: 'search', type: 'search', placeholder: 'Search...' },
+    { key: 'status', type: 'select', options: [...] },
+  ],
+
+  // Columns (for table view)
+  columns: [
+    { key: 'name', header: 'Name', sortable: true },
+    { key: 'status', header: 'Status', format: 'status' },
+    { key: 'createdAt', header: 'Created', format: 'relative-date' },
+  ],
+
+  // Render mode
+  renderMode: 'table',  // or 'cards'
+  statusField: 'status',
+  statusConfig: CAMPAIGN_STATUS_CONFIG,
+
+  // Data hooks
+  useListQuery: (filters) => trpc.crm.campaigns.list.useQuery({...}),
+  useStatsQuery: () => trpc.crm.campaigns.stats.useQuery(),
+}
+```
+
+### Table View with Sortable Columns
+
+When `renderMode: 'table'`, columns support sorting:
+
+```tsx
+columns: [
+  {
+    key: 'name',           // Field key (maps to data property)
+    header: 'Campaign Name', // Display header
+    sortable: true,         // Enable click-to-sort
+    width: 'min-w-[200px]', // Tailwind width class
+  },
+  {
+    key: 'status',
+    header: 'Status',
+    sortable: true,
+    format: 'status',       // Use StatusBadge component
+  },
+  {
+    key: 'budgetSpent',
+    header: 'Budget',
+    sortable: true,
+    align: 'right',         // Right-align numbers
+    render: (value, entity) => `$${value.toLocaleString()}`, // Custom render
+  },
+]
+```
+
+**Sort State**: Stored in URL params (`?sortBy=name&sortOrder=asc`)
+
+**Sort Field Mapping**: Frontend column keys must map to backend fields:
+```tsx
+const sortFieldMap: Record<string, string> = {
+  startDate: 'start_date',   // camelCase → snake_case
+  campaignType: 'campaign_type',
+}
+```
+
+### Stats Cards with Real Data
+
+Stats connect to a dedicated tRPC procedure:
+
+```tsx
+// In router (crm.ts)
+stats: orgProtectedProcedure.query(async ({ ctx }) => {
+  const { count } = await adminClient.from('campaigns').select('*', { count: 'exact' })
+  return { total: count, active: activeCount, ... }
+})
+
+// In config
+useStatsQuery: () => trpc.crm.campaigns.stats.useQuery()
+```
+
+### URL State Management
+
+All filter/pagination/sort state lives in URL params:
+- **Filters**: `?search=test&status=active`
+- **Pagination**: `?page=2`
+- **Sorting**: `?sortBy=name&sortOrder=asc`
+
+Benefits:
+- Shareable links
+- Browser back/forward works
+- No state loss on refresh
 
 ---
 
@@ -387,6 +605,75 @@ Hublot-style pure black aesthetic:
 
 ---
 
+## Component Reuse Rules (CRITICAL)
+
+### One Component Per Pattern
+
+**NEVER duplicate components. ALWAYS reuse unified components with configuration.**
+
+| Pattern | Single Component | Config Location |
+|---------|------------------|-----------------|
+| **List View** | `EntityListView` | `src/configs/entities/{entity}.config.ts` |
+| **Detail View** | `EntityDetailView` | `src/configs/entities/{entity}.config.ts` |
+| **Intake Form** | `EntityIntakeForm` | `src/configs/entities/{entity}.config.ts` |
+| **Wizard** | `EntityWizard` | `src/configs/entities/{entity}.config.ts` |
+| **Inline Panel** | `InlinePanel` | Props only |
+| **Stats Cards** | `ListStats` | Config `statsCards` |
+| **Filters** | `ListFilters` | Config `filters` |
+| **Table** | `ListTable` | Config `columns` |
+
+### The Pattern
+
+```
+Page (< 10 lines) → Unified Component → Config Object
+```
+
+### WRONG - Creating Duplicates
+```tsx
+// ❌ DON'T: Create entity-specific list components
+src/components/crm/CampaignsList.tsx
+src/components/crm/LeadsList.tsx
+src/components/recruiting/JobsList.tsx
+
+// ❌ DON'T: Create entity-specific detail components
+src/components/crm/CampaignDetail.tsx
+src/components/recruiting/JobDetail.tsx
+```
+
+### RIGHT - Reusing Unified Components
+```tsx
+// ✅ DO: One unified component, multiple configs
+src/components/pcf/list-view/EntityListView.tsx  // ONE component
+src/configs/entities/campaigns.config.ts          // Config for campaigns
+src/configs/entities/leads.config.ts              // Config for leads
+src/configs/entities/jobs.config.ts               // Config for jobs
+
+// ✅ DO: Minimal page files
+// src/app/employee/crm/campaigns/page.tsx
+export default function CampaignsPage() {
+  return <EntityListView config={campaignsListConfig} />
+}
+```
+
+### When to Extend vs Create New
+
+| Situation | Action |
+|-----------|--------|
+| Need new column type | Add to `ColumnConfig` type + `ListTable` |
+| Need new filter type | Add to `FilterConfig` type + `ListFilters` |
+| Need new stat format | Add to `StatCardConfig` type + `ListStats` |
+| Need entity-specific behavior | Add to config, not new component |
+| Need completely different layout | Discuss first, probably config variant |
+
+### Config-Driven Architecture Benefits
+- Single source of truth per pattern
+- Consistent behavior across entities
+- Easier testing (test once, works everywhere)
+- Smaller bundle size
+- Faster development (config vs code)
+
+---
+
 ## DO's and DON'Ts
 
 ### DO
@@ -397,6 +684,8 @@ Hublot-style pure black aesthetic:
 - Use Raleway for headings with wide letter-spacing
 - Use uppercase for navigation text
 - Keep corners sharp (4px-8px radius)
+- **REUSE unified components with config**
+- **Extend existing components, don't duplicate**
 
 ### DON'T
 - Use forest green (deprecated)
@@ -406,3 +695,6 @@ Hublot-style pure black aesthetic:
 - Box everything with heavy borders
 - Use too many accent colors
 - Skip hover/focus states
+- **Create entity-specific list/detail/form components**
+- **Duplicate component logic across entities**
+- **Build custom pages when config works**

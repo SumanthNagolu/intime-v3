@@ -17,6 +17,8 @@ import {
   Search,
   ClipboardCheck,
   Send,
+  TrendingUp,
+  Users,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
@@ -40,16 +42,29 @@ export interface Candidate extends Record<string, unknown> {
   status: string
   availability?: string | null
   years_experience?: number | null
+  experience?: number | null
   visa_status?: string | null
   minimum_rate?: number | null
   desired_rate?: number | null
+  salary_expected?: number | null
   is_on_hotlist?: boolean
   lead_source?: string | null
+  source?: string | null
   professional_summary?: string | null
   skills?: Array<{ skill_name: string; years_experience?: number }> | null
   tags?: string[] | null
   sourced_by?: string | null
+  owner?: {
+    id: string
+    full_name: string
+    avatar_url?: string
+  } | null
+  owner_id?: string
+  submissions_count?: number
+  last_activity_date?: string | null
+  lastActivityDate?: string | null
   created_at: string
+  createdAt?: string
   updated_at?: string
 }
 
@@ -140,6 +155,54 @@ export const CANDIDATE_AVAILABILITY_CONFIG: Record<string, StatusConfig> = {
   },
 }
 
+// Candidate source configuration
+export const CANDIDATE_SOURCE_CONFIG: Record<string, StatusConfig> = {
+  linkedin: {
+    label: 'LinkedIn',
+    color: 'bg-blue-100 text-blue-800',
+    bgColor: 'bg-blue-100',
+    textColor: 'text-blue-800',
+  },
+  referral: {
+    label: 'Referral',
+    color: 'bg-green-100 text-green-800',
+    bgColor: 'bg-green-100',
+    textColor: 'text-green-800',
+  },
+  job_board: {
+    label: 'Job Board',
+    color: 'bg-purple-100 text-purple-800',
+    bgColor: 'bg-purple-100',
+    textColor: 'text-purple-800',
+  },
+  website: {
+    label: 'Website',
+    color: 'bg-amber-100 text-amber-800',
+    bgColor: 'bg-amber-100',
+    textColor: 'text-amber-800',
+  },
+  agency: {
+    label: 'Agency',
+    color: 'bg-cyan-100 text-cyan-800',
+    bgColor: 'bg-cyan-100',
+    textColor: 'text-cyan-800',
+  },
+  other: {
+    label: 'Other',
+    color: 'bg-charcoal-100 text-charcoal-600',
+    bgColor: 'bg-charcoal-100',
+    textColor: 'text-charcoal-600',
+  },
+}
+
+// Experience range options for filters
+export const EXPERIENCE_RANGE_OPTIONS = [
+  { value: '0-2', label: '0-2 years' },
+  { value: '2-5', label: '2-5 years' },
+  { value: '5-10', label: '5-10 years' },
+  { value: '10+', label: '10+ years' },
+]
+
 // Candidates List View Configuration
 export const candidatesListConfig: ListViewConfig<Candidate> = {
   entityType: 'candidate',
@@ -160,7 +223,7 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
     {
       key: 'total',
       label: 'Total Candidates',
-      icon: User,
+      icon: Users,
     },
     {
       key: 'active',
@@ -169,15 +232,23 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
       icon: CheckCircle,
     },
     {
-      key: 'hotlist',
-      label: 'On Hotlist',
+      key: 'placedThisMonth',
+      label: 'Placed This Month',
       color: 'bg-gold-100 text-gold-800',
-      icon: Star,
+      icon: Award,
     },
     {
-      key: 'addedThisWeek',
-      label: 'Added This Week',
+      key: 'avgPlacementRate',
+      label: 'Placement Rate',
+      color: 'bg-purple-100 text-purple-800',
+      icon: TrendingUp,
+      format: (value: number) => `${value}%`,
+    },
+    {
+      key: 'newThisWeek',
+      label: 'New This Week',
       color: 'bg-blue-100 text-blue-800',
+      icon: Plus,
     },
   ],
 
@@ -201,12 +272,21 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
       ],
     },
     {
-      key: 'availability',
+      key: 'experienceRange',
       type: 'select',
-      label: 'Availability',
+      label: 'Experience',
       options: [
-        { value: 'all', label: 'All' },
-        ...Object.entries(CANDIDATE_AVAILABILITY_CONFIG).map(([value, config]) => ({
+        { value: 'all', label: 'All Experience' },
+        ...EXPERIENCE_RANGE_OPTIONS,
+      ],
+    },
+    {
+      key: 'source',
+      type: 'select',
+      label: 'Source',
+      options: [
+        { value: 'all', label: 'All Sources' },
+        ...Object.entries(CANDIDATE_SOURCE_CONFIG).map(([value, config]) => ({
           value,
           label: config.label,
         })),
@@ -222,8 +302,10 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
   columns: [
     {
       key: 'name',
+      header: 'Name',
       label: 'Name',
       sortable: true,
+      width: 'min-w-[180px]',
       render: (value, entity) => {
         const candidate = entity as Candidate
         const name = `${candidate.first_name} ${candidate.last_name}`.trim()
@@ -232,43 +314,127 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
     },
     {
       key: 'title',
+      header: 'Title',
       label: 'Title',
+      sortable: true,
+      width: 'w-[150px]',
     },
     {
-      key: 'status',
-      label: 'Status',
-    },
-    {
-      key: 'location',
-      label: 'Location',
-      icon: MapPin,
-    },
-    {
-      key: 'availability',
-      label: 'Availability',
-      render: (value) => {
-        const avail = value as string | null
-        return CANDIDATE_AVAILABILITY_CONFIG[avail || '']?.label || avail || '—'
+      key: 'skills',
+      header: 'Skills',
+      label: 'Skills',
+      width: 'w-[200px]',
+      render: (value, entity) => {
+        const candidate = entity as Candidate
+        const skills = candidate.skills?.slice(0, 3) ?? []
+        if (skills.length === 0) return '—'
+        return skills.map(s => s.skill_name).join(', ')
       },
     },
     {
-      key: 'years_experience',
+      key: 'location',
+      header: 'Location',
+      label: 'Location',
+      sortable: true,
+      width: 'w-[130px]',
+    },
+    {
+      key: 'status',
+      header: 'Status',
+      label: 'Status',
+      sortable: true,
+      width: 'w-[90px]',
+      format: 'status' as const,
+    },
+    {
+      key: 'experience',
+      header: 'Exp',
       label: 'Experience',
-      render: (value) => {
-        const years = value as number | null
+      sortable: true,
+      width: 'w-[80px]',
+      align: 'right' as const,
+      render: (value, entity) => {
+        const candidate = entity as Candidate
+        const years = candidate.experience ?? candidate.years_experience
         if (years === null || years === undefined) return '—'
         return `${years} yrs`
       },
     },
     {
-      key: 'desired_rate',
+      key: 'salaryExpected',
+      header: 'Rate',
       label: 'Rate',
-      type: 'currency',
-      render: (value) => {
-        const rate = value as number | null
+      width: 'w-[100px]',
+      align: 'right' as const,
+      render: (value, entity) => {
+        const candidate = entity as Candidate
+        const rate = candidate.salary_expected ?? candidate.desired_rate
         if (rate === null || rate === undefined) return '—'
         return `$${rate}/hr`
       },
+    },
+    {
+      key: 'source',
+      header: 'Source',
+      label: 'Source',
+      sortable: true,
+      width: 'w-[100px]',
+      render: (value, entity) => {
+        const candidate = entity as Candidate
+        const source = candidate.source ?? candidate.lead_source
+        return CANDIDATE_SOURCE_CONFIG[source || '']?.label || source || '—'
+      },
+    },
+    {
+      key: 'submissions',
+      header: 'Subs',
+      label: 'Submissions',
+      sortable: true,
+      width: 'w-[80px]',
+      align: 'right' as const,
+      render: (value, entity) => {
+        const candidate = entity as Candidate
+        return (candidate.submissions_count || 0).toString()
+      },
+    },
+    {
+      key: 'owner',
+      header: 'Owner',
+      label: 'Owner',
+      sortable: true,
+      width: 'w-[130px]',
+      render: (value) => {
+        const owner = value as Candidate['owner']
+        return owner?.full_name || '—'
+      },
+    },
+    {
+      key: 'lastActivity',
+      header: 'Last Activity',
+      label: 'Last Activity',
+      sortable: true,
+      width: 'w-[100px]',
+      render: (value, entity) => {
+        const candidate = entity as Candidate
+        const date = candidate.lastActivityDate || candidate.last_activity_date
+        if (!date) return '—'
+        const d = new Date(date)
+        const now = new Date()
+        const days = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24))
+        if (days === 0) return 'Today'
+        if (days === 1) return 'Yesterday'
+        if (days < 7) return `${days} days ago`
+        if (days < 30) return `${Math.floor(days / 7)} weeks ago`
+        return `${Math.floor(days / 30)} months ago`
+      },
+    },
+    {
+      key: 'createdAt',
+      header: 'Created',
+      label: 'Created',
+      sortable: true,
+      width: 'w-[100px]',
+      format: 'relative-date' as const,
     },
   ],
 
@@ -294,7 +460,11 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
   // tRPC hooks for data fetching using advancedSearch
   useListQuery: (filters) => {
     const statusValue = filters.status as string | undefined
-    const availabilityValue = filters.availability as string | undefined
+    const sourceValue = filters.source as string | undefined
+    const experienceRangeValue = filters.experienceRange as string | undefined
+    const sortByValue = filters.sortBy as string | undefined
+    const sortOrderValue = filters.sortOrder as string | undefined
+
     const validStatuses = [
       'active',
       'sourced',
@@ -305,20 +475,78 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
       'archived',
     ] as const
 
+    const validSortFields = [
+      'first_name',
+      'title',
+      'location',
+      'status',
+      'years_experience',
+      'lead_source',
+      'submissions_count',
+      'owner_id',
+      'last_activity_date',
+      'created_at',
+    ] as const
+
+    type SortField = (typeof validSortFields)[number]
+
+    // Map frontend column keys to database columns
+    const sortFieldMap: Record<string, SortField> = {
+      name: 'first_name',
+      title: 'title',
+      location: 'location',
+      status: 'status',
+      experience: 'years_experience',
+      source: 'lead_source',
+      submissions: 'submissions_count',
+      owner: 'owner_id',
+      lastActivity: 'last_activity_date',
+      createdAt: 'created_at',
+    }
+
+    const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
+      ? sortFieldMap[sortByValue]
+      : 'created_at'
+
+    // Convert experience range to min/max
+    let minExperience: number | undefined
+    let maxExperience: number | undefined
+    if (experienceRangeValue && experienceRangeValue !== 'all') {
+      switch (experienceRangeValue) {
+        case '0-2':
+          minExperience = 0
+          maxExperience = 2
+          break
+        case '2-5':
+          minExperience = 2
+          maxExperience = 5
+          break
+        case '5-10':
+          minExperience = 5
+          maxExperience = 10
+          break
+        case '10+':
+          minExperience = 10
+          break
+      }
+    }
+
     return trpc.ats.candidates.advancedSearch.useQuery({
       search: filters.search as string | undefined,
       statuses:
         statusValue && statusValue !== 'all' ? [statusValue as (typeof validStatuses)[number]] : undefined,
-      availability: availabilityValue !== 'all' ? (availabilityValue as never) : undefined,
+      source: sourceValue !== 'all' ? sourceValue : undefined,
+      minExperience,
+      maxExperience,
       isOnHotlist: filters.isOnHotlist as boolean | undefined,
       limit: (filters.limit as number) || 25,
       offset: (filters.offset as number) || 0,
-      sortBy: 'last_updated',
-      sortOrder: 'desc',
+      sortBy: mappedSortBy,
+      sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'desc'),
     })
   },
 
-  useStatsQuery: () => trpc.ats.candidates.getSourcingStats.useQuery({ period: 'week' }),
+  useStatsQuery: () => trpc.ats.candidates.stats.useQuery(),
 }
 
 // Candidates Detail View Configuration

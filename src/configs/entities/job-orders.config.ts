@@ -16,44 +16,43 @@ import {
   Edit,
   Trash2,
   UserPlus,
+  MapPin,
+  Timer,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
-// Note: trpc router for jobOrders not implemented yet
+import { trpc } from '@/lib/trpc/client'
 
 // Type definition for JobOrder entity
 export interface JobOrder extends Record<string, unknown> {
   id: string
   title: string
-  client_name?: string
-  vendor_id?: string
+  description?: string | null
+  client_name?: string | null
+  vendor_id?: string | null
   vendor?: {
     id: string
     name: string
+    type?: string | null
+    tier?: string | null
   } | null
   status: string
-  priority?: string
-  rate_min?: number
-  rate_max?: number
-  rate_type?: string
-  duration?: string
-  location?: string
-  remote_type?: string
-  start_date?: string
-  end_date?: string
-  positions_count?: number
-  positions_filled?: number
-  submissions_count?: number
-  owner_id?: string
-  owner?: {
-    id: string
-    full_name: string
-    avatar_url?: string
-  } | null
+  priority?: string | null
+  bill_rate?: number | null
+  rate_type?: string | null
+  duration_months?: number | null
+  location?: string | null
+  work_mode?: string | null
+  positions?: number | null
+  received_at?: string | null
+  response_due_at?: string | null
+  source?: string | null
+  original_source_url?: string | null
+  submissions?: Array<{ count: number }> | null
   created_at: string
-  updated_at?: string
+  updated_at?: string | null
 }
 
-// JobOrder status configuration
+// JobOrder status configuration (matches router: new, working, filled, closed, on_hold)
 export const JOB_ORDER_STATUS_CONFIG: Record<string, StatusConfig> = {
   new: {
     label: 'New',
@@ -62,19 +61,12 @@ export const JOB_ORDER_STATUS_CONFIG: Record<string, StatusConfig> = {
     textColor: 'text-blue-800',
     icon: Clock,
   },
-  sourcing: {
-    label: 'Sourcing',
+  working: {
+    label: 'Working',
     color: 'bg-amber-100 text-amber-800',
     bgColor: 'bg-amber-100',
     textColor: 'text-amber-800',
     icon: Target,
-  },
-  submitted: {
-    label: 'Submitted',
-    color: 'bg-purple-100 text-purple-800',
-    bgColor: 'bg-purple-100',
-    textColor: 'text-purple-800',
-    icon: Send,
   },
   filled: {
     label: 'Filled',
@@ -83,23 +75,23 @@ export const JOB_ORDER_STATUS_CONFIG: Record<string, StatusConfig> = {
     textColor: 'text-green-800',
     icon: CheckCircle,
   },
-  on_hold: {
-    label: 'On Hold',
+  closed: {
+    label: 'Closed',
     color: 'bg-charcoal-100 text-charcoal-600',
     bgColor: 'bg-charcoal-100',
     textColor: 'text-charcoal-600',
-    icon: AlertCircle,
-  },
-  cancelled: {
-    label: 'Cancelled',
-    color: 'bg-red-100 text-red-800',
-    bgColor: 'bg-red-100',
-    textColor: 'text-red-800',
     icon: XCircle,
+  },
+  on_hold: {
+    label: 'On Hold',
+    color: 'bg-purple-100 text-purple-800',
+    bgColor: 'bg-purple-100',
+    textColor: 'text-purple-800',
+    icon: AlertCircle,
   },
 }
 
-// Priority configuration
+// Priority configuration (matches router: low, medium, high, urgent)
 export const JOB_ORDER_PRIORITY_CONFIG: Record<string, StatusConfig> = {
   urgent: {
     label: 'Urgent',
@@ -114,8 +106,8 @@ export const JOB_ORDER_PRIORITY_CONFIG: Record<string, StatusConfig> = {
     bgColor: 'bg-amber-100',
     textColor: 'text-amber-800',
   },
-  normal: {
-    label: 'Normal',
+  medium: {
+    label: 'Medium',
     color: 'bg-blue-100 text-blue-800',
     bgColor: 'bg-blue-100',
     textColor: 'text-blue-800',
@@ -209,49 +201,109 @@ export const jobOrdersListConfig: ListViewConfig<JobOrder> = {
   columns: [
     {
       key: 'title',
+      header: 'Title',
       label: 'Title',
       sortable: true,
+      width: 'min-w-[200px]',
     },
     {
       key: 'vendor',
+      header: 'Vendor',
       label: 'Vendor',
+      width: 'w-[150px]',
       render: (value) => {
         const vendor = value as JobOrder['vendor']
         return vendor?.name || '—'
       },
     },
     {
-      key: 'status',
-      label: 'Status',
-    },
-    {
-      key: 'priority',
-      label: 'Priority',
+      key: 'client_name',
+      header: 'Client',
+      label: 'Client',
+      width: 'w-[140px]',
       render: (value) => {
-        const priority = value as string
-        return JOB_ORDER_PRIORITY_CONFIG[priority]?.label || priority || '—'
+        return (value as string) || '—'
       },
     },
     {
-      key: 'rate_max',
-      label: 'Rate',
+      key: 'status',
+      header: 'Status',
+      label: 'Status',
+      sortable: true,
+      width: 'w-[100px]',
+      format: 'status' as const,
+    },
+    {
+      key: 'priority',
+      header: 'Priority',
+      label: 'Priority',
+      sortable: true,
+      width: 'w-[80px]',
+      align: 'center' as const,
+      render: (value) => {
+        const priority = value as string | null
+        return JOB_ORDER_PRIORITY_CONFIG[priority || '']?.label || priority || '—'
+      },
+    },
+    {
+      key: 'bill_rate',
+      header: 'Bill Rate',
+      label: 'Bill Rate',
+      sortable: true,
+      width: 'w-[90px]',
+      align: 'right' as const,
       render: (value, entity) => {
         const jo = entity as JobOrder
-        if (jo.rate_max) {
-          return `$${jo.rate_max}/${jo.rate_type || 'hr'}`
+        if (jo.bill_rate) {
+          return `$${jo.bill_rate}/${jo.rate_type || 'hr'}`
         }
         return '—'
       },
     },
     {
-      key: 'submissions_count',
-      label: 'Submissions',
-      format: 'number',
+      key: 'duration_months',
+      header: 'Duration',
+      label: 'Duration',
+      sortable: true,
+      width: 'w-[80px]',
+      align: 'center' as const,
+      render: (value) => {
+        const months = value as number | null
+        if (!months) return '—'
+        return `${months} mo`
+      },
     },
     {
-      key: 'start_date',
-      label: 'Start Date',
-      format: 'date',
+      key: 'location',
+      header: 'Location',
+      label: 'Location',
+      width: 'w-[130px]',
+      render: (value, entity) => {
+        const jo = entity as JobOrder
+        const location = value as string | null
+        if (!location) return jo.work_mode || '—'
+        return location
+      },
+    },
+    {
+      key: 'submissions',
+      header: 'Submissions',
+      label: 'Submissions',
+      width: 'w-[90px]',
+      align: 'right' as const,
+      render: (value) => {
+        const submissions = value as JobOrder['submissions']
+        const count = submissions?.[0]?.count || 0
+        return String(count)
+      },
+    },
+    {
+      key: 'received_at',
+      header: 'Received',
+      label: 'Received',
+      sortable: true,
+      width: 'w-[100px]',
+      format: 'relative-date' as const,
     },
   ],
 
@@ -278,15 +330,54 @@ export const jobOrdersListConfig: ListViewConfig<JobOrder> = {
     },
   },
 
-  useListQuery: () => {
-    // TODO: Implement jobOrders router
-    // For now, return empty data
-    return {
-      data: { items: [], total: 0 },
-      isLoading: false,
-      error: null,
-      refetch: () => Promise.resolve({ data: { items: [], total: 0 } }),
-    } as any
+  // tRPC hooks for data fetching
+  useListQuery: (filters) => {
+    const statusValue = filters.status as string | undefined
+    const priorityValue = filters.priority as string | undefined
+    const sortByValue = filters.sortBy as string | undefined
+    const sortOrderValue = filters.sortOrder as string | undefined
+
+    const validStatuses = ['new', 'working', 'filled', 'closed', 'on_hold', 'all'] as const
+    const validPriorities = ['low', 'medium', 'high', 'urgent', 'all'] as const
+    const validSortFields = ['received_at', 'title', 'status', 'priority', 'bill_rate', 'duration_months', 'created_at'] as const
+
+    type JobOrderStatus = (typeof validStatuses)[number]
+    type JobOrderPriority = (typeof validPriorities)[number]
+    type SortField = (typeof validSortFields)[number]
+
+    // Map frontend column keys to database columns
+    const sortFieldMap: Record<string, SortField> = {
+      title: 'title',
+      status: 'status',
+      priority: 'priority',
+      bill_rate: 'bill_rate',
+      duration_months: 'duration_months',
+      received_at: 'received_at',
+      createdAt: 'created_at',
+    }
+
+    const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
+      ? sortFieldMap[sortByValue]
+      : 'received_at'
+
+    return trpc.bench.jobOrders.list.useQuery({
+      search: filters.search as string | undefined,
+      status: (statusValue && validStatuses.includes(statusValue as JobOrderStatus)
+        ? statusValue
+        : 'all') as JobOrderStatus,
+      priority: (priorityValue && validPriorities.includes(priorityValue as JobOrderPriority)
+        ? priorityValue
+        : 'all') as JobOrderPriority,
+      limit: (filters.limit as number) || 20,
+      offset: (filters.offset as number) || 0,
+      sortBy: mappedSortBy,
+      sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'desc'),
+    })
+  },
+
+  // Stats query for metrics cards
+  useStatsQuery: () => {
+    return trpc.bench.jobOrders.stats.useQuery()
   },
 }
 
@@ -310,7 +401,7 @@ export const jobOrdersDetailConfig: DetailViewConfig<JobOrder> = {
       format: (value) => (value as JobOrder['vendor'])?.name || 'No vendor',
     },
     {
-      key: 'start_date',
+      key: 'received_at',
       icon: Calendar,
       format: (value) => {
         if (!value) return ''
@@ -318,11 +409,11 @@ export const jobOrdersDetailConfig: DetailViewConfig<JobOrder> = {
       },
     },
     {
-      key: 'rate_max',
+      key: 'bill_rate',
       icon: DollarSign,
       format: (value, entity) => {
         const jo = entity as JobOrder
-        if (jo?.rate_max) return `$${jo.rate_max}/${jo?.rate_type || 'hr'}`
+        if (jo?.bill_rate) return `$${jo.bill_rate}/${jo?.rate_type || 'hr'}`
         return ''
       },
     },
@@ -335,7 +426,10 @@ export const jobOrdersDetailConfig: DetailViewConfig<JobOrder> = {
       icon: Send,
       iconBg: 'bg-purple-100',
       iconColor: 'text-purple-600',
-      getValue: (entity) => (entity as JobOrder).submissions_count || 0,
+      getValue: (entity) => {
+        const jo = entity as JobOrder
+        return jo.submissions?.[0]?.count || 0
+      },
       tooltip: 'Total submissions made',
     },
     {
@@ -346,7 +440,7 @@ export const jobOrdersDetailConfig: DetailViewConfig<JobOrder> = {
       iconColor: 'text-blue-600',
       getValue: (entity) => {
         const jo = entity as JobOrder
-        return `${jo.positions_filled || 0}/${jo.positions_count || 1}`
+        return jo.positions || 1
       },
       tooltip: 'Positions filled / total',
     },
@@ -434,15 +528,8 @@ export const jobOrdersDetailConfig: DetailViewConfig<JobOrder> = {
 
   eventNamespace: 'jobOrder',
 
-  useEntityQuery: () => {
-    // TODO: Implement jobOrders router
-    // For now, return empty data
-    return {
-      data: undefined,
-      isLoading: false,
-      error: null,
-      refetch: () => Promise.resolve({ data: undefined }),
-    } as any
+  useEntityQuery: (id: string) => {
+    return trpc.bench.jobOrders.getById.useQuery({ id })
   },
 }
 

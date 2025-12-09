@@ -3,7 +3,8 @@ import {
   UserCheck, ClipboardCheck, Send, Building2, Target, Handshake,
   DollarSign, Award, Phone, Star, TrendingUp, Package,
   PauseCircle, PlayCircle, Edit, XCircle, MessageSquare, Plus,
-  UserCircle, Mail, Megaphone, BarChart3, Pause, Play
+  UserCircle, Mail, Megaphone, BarChart3, Pause, Play,
+  Settings, UserPlus, Rocket, Heart, Flag, Copy, Download,
 } from 'lucide-react'
 import { EntityJourneyConfig, EntityType } from './entity-navigation.types'
 
@@ -657,73 +658,142 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
     ],
   },
 
-  // Campaign uses sections-based navigation with enhanced quick actions
+  /**
+   * Campaign Journey - Enterprise 5-Step Workflow
+   *
+   * This journey guides users through the complete campaign lifecycle:
+   *
+   * 1. SETUP: Configure campaign settings, goals, channels, and templates
+   * 2. AUDIENCE: Build prospect list, import contacts, define segments
+   * 3. EXECUTE: Launch sequences, monitor sends, track engagement
+   * 4. NURTURE: Follow up with engaged prospects, qualify leads
+   * 5. CLOSE: Complete campaign, analyze results, document learnings
+   *
+   * The journey supports both sequential workflow (Journey Mode) and
+   * random-access navigation (Sections Mode) for flexible campaign management.
+   */
   campaign: {
     entityType: 'campaign',
     steps: [
       {
         id: 'setup',
         label: 'Setup',
-        icon: Megaphone,
-        description: 'Configure campaign settings and audience',
+        icon: Settings,
+        description: 'Configure campaign settings, goals, and channels',
+        activeStatuses: ['draft'],
+        completedStatuses: ['scheduled', 'active', 'paused', 'completed'],
+        defaultTab: 'overview',
+        // Checklist items for this step:
+        // - Campaign name and type defined
+        // - Goal description added
+        // - Target metrics set (leads, meetings, budget)
+        // - Channels selected (email, LinkedIn, phone)
+        // - Email templates configured
+        // - Start/end dates set
+      },
+      {
+        id: 'audience',
+        label: 'Audience',
+        icon: UserPlus,
+        description: 'Build and refine your prospect list',
         activeStatuses: ['draft', 'scheduled'],
-        completedStatuses: ['active', 'paused', 'completed']
+        completedStatuses: ['active', 'paused', 'completed'],
+        defaultTab: 'prospects',
+        // Checklist items for this step:
+        // - Target audience criteria defined
+        // - Prospects imported (minimum 10)
+        // - Duplicates removed
+        // - Invalid contacts cleaned
+        // - Segments assigned
       },
       {
-        id: 'active',
-        label: 'Running',
-        icon: Play,
-        description: 'Campaign actively sending to prospects',
+        id: 'execute',
+        label: 'Execute',
+        icon: Rocket,
+        description: 'Launch and monitor outreach sequences',
         activeStatuses: ['active'],
-        completedStatuses: ['completed']
+        completedStatuses: ['paused', 'completed'],
+        defaultTab: 'sequence',
+        // Checklist items for this step:
+        // - First batch sent
+        // - Open/click tracking enabled
+        // - Response monitoring active
+        // - LinkedIn automation connected (if applicable)
       },
       {
-        id: 'paused',
-        label: 'Paused',
-        icon: Pause,
-        description: 'Campaign temporarily stopped',
-        activeStatuses: ['paused'],
-        completedStatuses: ['completed']
+        id: 'nurture',
+        label: 'Nurture',
+        icon: Heart,
+        description: 'Follow up with engaged prospects',
+        activeStatuses: ['active'],
+        completedStatuses: ['completed'],
+        defaultTab: 'leads',
+        // Checklist items for this step:
+        // - Responded prospects identified
+        // - Follow-up tasks created
+        // - Meetings scheduled
+        // - Leads qualified (BANT)
       },
       {
-        id: 'completed',
-        label: 'Completed',
-        icon: CheckCircle,
-        description: 'Campaign finished - review results',
+        id: 'close',
+        label: 'Close',
+        icon: Flag,
+        description: 'Complete campaign and analyze results',
         activeStatuses: ['completed'],
-        completedStatuses: []
+        completedStatuses: [],
+        defaultTab: 'analytics',
+        // Checklist items for this step:
+        // - All sequences completed
+        // - Final metrics captured
+        // - ROI calculated
+        // - Learnings documented
       },
     ],
     quickActions: [
+      // Primary status actions
       {
         id: 'start',
         label: 'Start Campaign',
         icon: Play,
         actionType: 'mutation',
-        showForStatuses: ['draft'],
+        showForStatuses: ['draft', 'scheduled'],
+        variant: 'default',
       },
       {
         id: 'resume',
-        label: 'Resume Campaign',
+        label: 'Resume',
         icon: Play,
         actionType: 'mutation',
         showForStatuses: ['paused'],
       },
       {
         id: 'pause',
-        label: 'Pause Campaign',
+        label: 'Pause',
         icon: Pause,
         actionType: 'mutation',
         showForStatuses: ['active'],
+        variant: 'outline',
+      },
+
+      // Prospect management
+      {
+        id: 'add-prospect',
+        label: 'Add Prospect',
+        icon: UserPlus,
+        actionType: 'dialog',
+        dialogId: 'addProspect',
+        hideForStatuses: ['completed'],
       },
       {
-        id: 'complete',
-        label: 'Complete Campaign',
-        icon: CheckCircle,
+        id: 'import-prospects',
+        label: 'Import Prospects',
+        icon: Download,
         actionType: 'dialog',
-        dialogId: 'completeCampaign',
-        showForStatuses: ['active', 'paused'],
+        dialogId: 'importProspects',
+        showForStatuses: ['draft', 'scheduled'],
       },
+
+      // Campaign management
       {
         id: 'edit',
         label: 'Edit Campaign',
@@ -733,25 +803,35 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
         hideForStatuses: ['completed'],
       },
       {
+        id: 'complete',
+        label: 'Complete Campaign',
+        icon: CheckCircle,
+        actionType: 'dialog',
+        dialogId: 'completeCampaign',
+        showForStatuses: ['active', 'paused'],
+      },
+
+      // Tools
+      {
         id: 'activity',
         label: 'Log Activity',
         icon: Phone,
         actionType: 'dialog',
-        dialogId: 'logActivity'
-      },
-      {
-        id: 'duplicate',
-        label: 'Duplicate Campaign',
-        icon: Edit,
-        actionType: 'dialog',
-        dialogId: 'duplicateCampaign'
+        dialogId: 'logActivity',
       },
       {
         id: 'analytics',
-        label: 'View Analytics',
+        label: 'Analytics',
         icon: BarChart3,
         actionType: 'navigate',
-        href: '/employee/crm/campaigns/:id?section=analytics'
+        href: '/employee/crm/campaigns/:id?section=analytics',
+      },
+      {
+        id: 'duplicate',
+        label: 'Duplicate',
+        icon: Copy,
+        actionType: 'dialog',
+        dialogId: 'duplicateCampaign',
       },
     ],
   },

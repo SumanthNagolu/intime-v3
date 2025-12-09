@@ -3,6 +3,5 @@ export { EntitySidebar } from './EntitySidebar'
 export { SidebarHeader } from './SidebarHeader'
 export { SidebarJourney } from './SidebarJourney'
 export { SidebarSections } from './SidebarSections'
-export { SidebarActions } from './SidebarActions'
-export type { EntitySidebarConfig, SidebarSectionConfig, SidebarActionConfig } from './types'
+export type { EntitySidebarConfig, SidebarSectionConfig } from './types'
 

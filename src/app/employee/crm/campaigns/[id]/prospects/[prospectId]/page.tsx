@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { EntityDetailView } from '@/components/pcf/detail-view/EntityDetailView'
 import { prospectsDetailConfig, Prospect } from '@/configs/entities/prospects.config'
 import { EditProspectDialog } from '@/components/crm/campaigns/EditProspectDialog'
@@ -9,20 +9,15 @@ import { ConvertProspectDialog } from '@/components/crm/campaigns/ConvertProspec
 import { trpc } from '@/lib/trpc/client'
 import { toast } from 'sonner'
 
-// Custom event handler types
-declare global {
-  interface WindowEventMap {
-    openCampaignDialog: CustomEvent<{
-      dialogId: string
-      campaignId?: string
-      prospectId?: string
-    }>
-  }
-}
+// Event type for dialog handlers (extends the one from campaign page)
+type CampaignDialogEvent = CustomEvent<{
+  dialogId: string
+  campaignId?: string
+  prospectId?: string
+}>
 
 export default function ProspectDetailPage() {
   const params = useParams()
-  const router = useRouter()
   const campaignId = params.id as string
   const prospectId = params.prospectId as string
 
@@ -40,7 +35,7 @@ export default function ProspectDetailPage() {
   const prospect = prospectQuery.data
 
   // Update status mutation
-  const updateProspectMutation = trpc.crm.campaigns.updateProspectStatus.useMutation({
+  const updateProspectMutation = trpc.crm.campaigns.updateProspect.useMutation({
     onSuccess: () => {
       toast.success('Prospect updated')
       prospectQuery.refetch()
@@ -52,9 +47,7 @@ export default function ProspectDetailPage() {
 
   // Listen for dialog events from sidebar quick actions and PCF components
   useEffect(() => {
-    const handleCampaignDialog = (
-      event: CustomEvent<{ dialogId: string; campaignId?: string; prospectId?: string }>
-    ) => {
+    const handleCampaignDialog = (event: CampaignDialogEvent) => {
       // Check if this event is for this prospect
       if (event.detail.prospectId && event.detail.prospectId !== prospectId) return
 
@@ -74,7 +67,6 @@ export default function ProspectDetailPage() {
         case 'unsubscribeProspect':
           // Update status to unsubscribed
           updateProspectMutation.mutate({
-            campaignId,
             prospectId,
             status: 'unsubscribed',
           })
@@ -122,10 +114,9 @@ export default function ProspectDetailPage() {
             open={convertDialogOpen}
             onOpenChange={setConvertDialogOpen}
             prospect={prospect as any}
-            campaignId={campaignId}
-            onSuccess={(leadId) => {
+            onSuccess={() => {
               prospectQuery.refetch()
-              router.push(`/employee/crm/leads/${leadId}`)
+              toast.success('Prospect converted to lead')
             }}
           />
         </>

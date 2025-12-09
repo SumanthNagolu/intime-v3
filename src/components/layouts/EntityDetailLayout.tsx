@@ -4,10 +4,8 @@ import { useEffect, ReactNode } from 'react'
 import { TopNavigation } from '@/components/navigation/TopNavigation'
 import { EntityJourneySidebar } from '@/components/navigation/EntityJourneySidebar'
 import { useEntityNavigation } from '@/lib/navigation/EntityNavigationContext'
-import { EntityType, EntityQuickAction, resolveHref } from '@/lib/navigation/entity-navigation.types'
+import { EntityType } from '@/lib/navigation/entity-navigation.types'
 import { cn } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
-
 interface EntityDetailLayoutProps {
   children: ReactNode
   entityType: EntityType
@@ -15,8 +13,6 @@ interface EntityDetailLayoutProps {
   entityName: string
   entitySubtitle?: string
   entityStatus: string
-  /** Custom quick action handler - if not provided, default behavior is used */
-  onQuickAction?: (action: EntityQuickAction) => void
   className?: string
 }
 
@@ -27,11 +23,9 @@ export function EntityDetailLayout({
   entityName,
   entitySubtitle,
   entityStatus,
-  onQuickAction,
   className,
 }: EntityDetailLayoutProps) {
   const { setCurrentEntity, addRecentEntity } = useEntityNavigation()
-  const router = useRouter()
 
   // Set current entity in context and add to recent
   useEffect(() => {
@@ -55,44 +49,6 @@ export function EntityDetailLayout({
     }
   }, [entityType, entityId, entityName, entityStatus, entitySubtitle, setCurrentEntity, addRecentEntity])
 
-  // Default quick action handler
-  const handleQuickAction = (action: EntityQuickAction) => {
-    // If custom handler provided, use it
-    if (onQuickAction) {
-      onQuickAction(action)
-      return
-    }
-
-    // Default handling
-    switch (action.actionType) {
-      case 'navigate':
-        if (action.href) {
-          router.push(resolveHref(action.href, entityId))
-        }
-        break
-      case 'dialog':
-        // Dispatch custom event for page to handle
-        window.dispatchEvent(new CustomEvent('openEntityDialog', {
-          detail: {
-            dialogId: action.dialogId,
-            entityType,
-            entityId,
-          }
-        }))
-        break
-      case 'mutation':
-        // Dispatch custom event for page to handle
-        window.dispatchEvent(new CustomEvent('entityMutation', {
-          detail: {
-            actionId: action.id,
-            entityType,
-            entityId,
-          }
-        }))
-        break
-    }
-  }
-
   return (
     <div className={cn('h-screen flex flex-col overflow-hidden', className)}>
       <TopNavigation />
@@ -105,7 +61,6 @@ export function EntityDetailLayout({
           entityName={entityName}
           entitySubtitle={entitySubtitle}
           entityStatus={entityStatus}
-          onQuickAction={handleQuickAction}
           className="hidden lg:flex"
         />
 

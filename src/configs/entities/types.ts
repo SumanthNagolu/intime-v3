@@ -280,6 +280,8 @@ export interface JourneyStepConfig {
   icon?: LucideIcon
   completedStatuses: string[]
   activeStatuses: string[]
+  /** Component to render when this journey step is active (PCF pattern) */
+  component?: React.ComponentType<{ entityId: string; entity?: unknown }>
 }
 
 export interface QuickActionConfig {

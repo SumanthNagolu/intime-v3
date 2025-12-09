@@ -218,12 +218,17 @@ export const vendorsListConfig: ListViewConfig<Vendor> = {
   columns: [
     {
       key: 'name',
+      header: 'Vendor Name',
       label: 'Vendor Name',
       sortable: true,
+      width: 'min-w-[200px]',
     },
     {
       key: 'type',
+      header: 'Type',
       label: 'Type',
+      sortable: true,
+      width: 'w-[100px]',
       render: (value) => {
         const config = VENDOR_TYPE_CONFIG[value as string]
         return config?.label || (value as string) || '—'
@@ -231,7 +236,11 @@ export const vendorsListConfig: ListViewConfig<Vendor> = {
     },
     {
       key: 'tier',
+      header: 'Tier',
       label: 'Tier',
+      sortable: true,
+      width: 'w-[80px]',
+      align: 'center' as const,
       render: (value) => {
         if (!value) return '—'
         const config = VENDOR_TIER_CONFIG[value as string]
@@ -240,11 +249,17 @@ export const vendorsListConfig: ListViewConfig<Vendor> = {
     },
     {
       key: 'status',
+      header: 'Status',
       label: 'Status',
+      sortable: true,
+      width: 'w-[100px]',
+      format: 'status' as const,
     },
     {
       key: 'primary_contact',
-      label: 'Primary Contact',
+      header: 'Contact',
+      label: 'Contact',
+      width: 'w-[130px]',
       render: (value) => {
         const contacts = value as Vendor['primary_contact']
         const primary = contacts?.find(c => c.is_primary)
@@ -253,8 +268,10 @@ export const vendorsListConfig: ListViewConfig<Vendor> = {
     },
     {
       key: 'primary_contact',
+      header: 'Email',
       label: 'Email',
       icon: Mail,
+      width: 'w-[180px]',
       render: (value) => {
         const contacts = value as Vendor['primary_contact']
         const primary = contacts?.find(c => c.is_primary)
@@ -263,13 +280,23 @@ export const vendorsListConfig: ListViewConfig<Vendor> = {
     },
     {
       key: 'primary_contact',
+      header: 'Phone',
       label: 'Phone',
       icon: Phone,
+      width: 'w-[120px]',
       render: (value) => {
         const contacts = value as Vendor['primary_contact']
         const primary = contacts?.find(c => c.is_primary)
         return primary?.phone || '—'
       },
+    },
+    {
+      key: 'created_at',
+      header: 'Created',
+      label: 'Created',
+      sortable: true,
+      width: 'w-[100px]',
+      format: 'relative-date' as const,
     },
   ],
 
@@ -297,14 +324,32 @@ export const vendorsListConfig: ListViewConfig<Vendor> = {
     const statusValue = filters.status as string | undefined
     const typeValue = filters.type as string | undefined
     const tierValue = filters.tier as string | undefined
+    const sortByValue = filters.sortBy as string | undefined
+    const sortOrderValue = filters.sortOrder as string | undefined
 
     const validStatuses = ['active', 'inactive', 'all'] as const
     const validTypes = ['direct_client', 'prime_vendor', 'sub_vendor', 'msp', 'vms', 'all'] as const
     const validTiers = ['preferred', 'standard', 'new', 'all'] as const
+    const validSortFields = ['name', 'type', 'tier', 'status', 'created_at'] as const
 
     type VendorStatus = (typeof validStatuses)[number]
     type VendorType = (typeof validTypes)[number]
     type VendorTier = (typeof validTiers)[number]
+    type SortField = (typeof validSortFields)[number]
+
+    // Map frontend column keys to database columns
+    const sortFieldMap: Record<string, SortField> = {
+      name: 'name',
+      type: 'type',
+      tier: 'tier',
+      status: 'status',
+      created_at: 'created_at',
+      createdAt: 'created_at',
+    }
+
+    const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
+      ? sortFieldMap[sortByValue]
+      : 'name'
 
     return trpc.bench.vendors.list.useQuery({
       search: filters.search as string | undefined,
@@ -319,7 +364,14 @@ export const vendorsListConfig: ListViewConfig<Vendor> = {
         : 'all') as VendorTier,
       limit: (filters.limit as number) || 50,
       offset: (filters.offset as number) || 0,
+      sortBy: mappedSortBy,
+      sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'asc'),
     })
+  },
+
+  // Stats query for metrics cards
+  useStatsQuery: () => {
+    return trpc.bench.vendors.stats.useQuery()
   },
 }
 

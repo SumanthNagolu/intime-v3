@@ -16,6 +16,8 @@ import {
   CheckCircle,
   AlertTriangle,
   MessageSquare,
+  Target,
+  UserCheck,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
@@ -45,17 +47,27 @@ export interface Account extends Record<string, unknown> {
   state?: string | null
   country?: string | null
   company_type?: string
+  type?: string
   tier?: string | null
   description?: string | null
   nps_score?: number | null
   annual_revenue_target?: number | null
   last_contact_date?: string | null
+  lastContactDate?: string | null
   owner?: {
     id: string
     full_name: string
     avatar_url?: string
   } | null
+  owner_id?: string
+  jobsCount?: number
+  jobs_count?: number
+  contactsCount?: number
+  contacts_count?: number
+  placementsCount?: number
+  placements_count?: number
   created_at: string
+  createdAt?: string
   updated_at?: string
 }
 
@@ -132,6 +144,44 @@ export const ACCOUNT_HEALTH_CONFIG: Record<string, StatusConfig> = {
   },
 }
 
+// Account type configuration
+export const ACCOUNT_TYPE_CONFIG: Record<string, StatusConfig> = {
+  enterprise: {
+    label: 'Enterprise',
+    color: 'bg-purple-100 text-purple-800',
+    bgColor: 'bg-purple-100',
+    textColor: 'text-purple-800',
+  },
+  mid_market: {
+    label: 'Mid-Market',
+    color: 'bg-blue-100 text-blue-800',
+    bgColor: 'bg-blue-100',
+    textColor: 'text-blue-800',
+  },
+  smb: {
+    label: 'SMB',
+    color: 'bg-green-100 text-green-800',
+    bgColor: 'bg-green-100',
+    textColor: 'text-green-800',
+  },
+  startup: {
+    label: 'Startup',
+    color: 'bg-amber-100 text-amber-800',
+    bgColor: 'bg-amber-100',
+    textColor: 'text-amber-800',
+  },
+}
+
+// Industry options for filters
+export const ACCOUNT_INDUSTRY_OPTIONS = [
+  { value: 'technology', label: 'Technology' },
+  { value: 'healthcare', label: 'Healthcare' },
+  { value: 'finance', label: 'Finance' },
+  { value: 'manufacturing', label: 'Manufacturing' },
+  { value: 'retail', label: 'Retail' },
+  { value: 'other', label: 'Other' },
+]
+
 // Accounts List View Configuration
 export const accountsListConfig: ListViewConfig<Account> = {
   entityType: 'account',
@@ -155,22 +205,28 @@ export const accountsListConfig: ListViewConfig<Account> = {
       icon: Building2,
     },
     {
-      key: 'healthy',
-      label: 'Healthy',
+      key: 'activeClients',
+      label: 'Active Clients',
       color: 'bg-green-100 text-green-800',
-      icon: TrendingUp,
+      icon: CheckCircle,
     },
     {
-      key: 'needsAttention',
-      label: 'Needs Attention',
-      color: 'bg-amber-100 text-amber-800',
-      icon: Minus,
+      key: 'prospects',
+      label: 'Prospects',
+      color: 'bg-blue-100 text-blue-800',
+      icon: Target,
     },
     {
-      key: 'atRisk',
-      label: 'At Risk',
-      color: 'bg-red-100 text-red-700',
-      icon: TrendingDown,
+      key: 'jobsThisQuarter',
+      label: 'Jobs This Qtr',
+      color: 'bg-purple-100 text-purple-800',
+      icon: Briefcase,
+    },
+    {
+      key: 'placementsYTD',
+      label: 'Placements YTD',
+      color: 'bg-gold-100 text-gold-800',
+      icon: UserCheck,
     },
   ],
 
@@ -193,26 +249,69 @@ export const accountsListConfig: ListViewConfig<Account> = {
         })),
       ],
     },
+    {
+      key: 'type',
+      type: 'select',
+      label: 'Type',
+      options: [
+        { value: 'all', label: 'All Types' },
+        ...Object.entries(ACCOUNT_TYPE_CONFIG).map(([value, config]) => ({
+          value,
+          label: config.label,
+        })),
+      ],
+    },
+    {
+      key: 'industry',
+      type: 'select',
+      label: 'Industry',
+      options: [
+        { value: 'all', label: 'All Industries' },
+        ...ACCOUNT_INDUSTRY_OPTIONS,
+      ],
+    },
   ],
 
   columns: [
     {
       key: 'name',
-      label: 'Account Name',
+      header: 'Company Name',
+      label: 'Company Name',
       sortable: true,
+      width: 'min-w-[200px]',
     },
     {
       key: 'industry',
+      header: 'Industry',
       label: 'Industry',
+      sortable: true,
+      width: 'w-[130px]',
+    },
+    {
+      key: 'type',
+      header: 'Type',
+      label: 'Type',
+      sortable: true,
+      width: 'w-[100px]',
+      render: (value, entity) => {
+        const account = entity as Account
+        const type = account.type || account.company_type
+        return ACCOUNT_TYPE_CONFIG[type || '']?.label || type || '—'
+      },
     },
     {
       key: 'status',
+      header: 'Status',
       label: 'Status',
+      sortable: true,
+      width: 'w-[100px]',
+      format: 'status' as const,
     },
     {
-      key: 'city',
+      key: 'location',
+      header: 'Location',
       label: 'Location',
-      icon: MapPin,
+      width: 'w-[140px]',
       render: (value, entity) => {
         const account = entity as Account
         if (account.city && account.state) {
@@ -222,13 +321,49 @@ export const accountsListConfig: ListViewConfig<Account> = {
       },
     },
     {
-      key: 'phone',
-      label: 'Phone',
-      icon: Phone,
+      key: 'jobsCount',
+      header: 'Jobs',
+      label: 'Jobs',
+      sortable: true,
+      width: 'w-[70px]',
+      align: 'right' as const,
+      render: (value, entity) => {
+        const account = entity as Account
+        const count = account.jobsCount ?? account.jobs_count ?? 0
+        return count.toLocaleString()
+      },
+    },
+    {
+      key: 'contactsCount',
+      header: 'Contacts',
+      label: 'Contacts',
+      width: 'w-[80px]',
+      align: 'right' as const,
+      render: (value, entity) => {
+        const account = entity as Account
+        const count = account.contactsCount ?? account.contacts_count ?? 0
+        return count.toLocaleString()
+      },
+    },
+    {
+      key: 'placementsCount',
+      header: 'Placements',
+      label: 'Placements',
+      sortable: true,
+      width: 'w-[90px]',
+      align: 'right' as const,
+      render: (value, entity) => {
+        const account = entity as Account
+        const count = account.placementsCount ?? account.placements_count ?? 0
+        return count.toLocaleString()
+      },
     },
     {
       key: 'owner',
+      header: 'Owner',
       label: 'Owner',
+      sortable: true,
+      width: 'w-[130px]',
       render: (value) => {
         const owner = value as Account['owner']
         return owner?.full_name || '—'
@@ -236,8 +371,32 @@ export const accountsListConfig: ListViewConfig<Account> = {
     },
     {
       key: 'lastContactDate',
+      header: 'Last Contact',
       label: 'Last Contact',
-      type: 'date',
+      sortable: true,
+      width: 'w-[110px]',
+      format: 'relative-date' as const,
+      render: (value, entity) => {
+        const account = entity as Account
+        const date = account.lastContactDate || account.last_contact_date
+        if (!date) return '—'
+        const d = new Date(date)
+        const now = new Date()
+        const days = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24))
+        if (days === 0) return 'Today'
+        if (days === 1) return 'Yesterday'
+        if (days < 7) return `${days} days ago`
+        if (days < 30) return `${Math.floor(days / 7)} weeks ago`
+        return `${Math.floor(days / 30)} months ago`
+      },
+    },
+    {
+      key: 'createdAt',
+      header: 'Created',
+      label: 'Created',
+      sortable: true,
+      width: 'w-[100px]',
+      format: 'relative-date' as const,
     },
   ],
 
@@ -263,25 +422,64 @@ export const accountsListConfig: ListViewConfig<Account> = {
   // tRPC hooks for data fetching
   useListQuery: (filters) => {
     const statusValue = filters.status as string | undefined
-    const validStatuses = ['active', 'inactive', 'prospect', 'all'] as const
+    const typeValue = filters.type as string | undefined
+    const industryValue = filters.industry as string | undefined
+    const sortByValue = filters.sortBy as string | undefined
+    const sortOrderValue = filters.sortOrder as string | undefined
+
+    const validStatuses = ['active', 'inactive', 'prospect', 'on_hold', 'all'] as const
+    const validTypes = ['enterprise', 'mid_market', 'smb', 'startup'] as const
+    const validSortFields = [
+      'name',
+      'industry',
+      'type',
+      'status',
+      'jobs_count',
+      'placements_count',
+      'owner_id',
+      'last_contact_date',
+      'created_at',
+    ] as const
+
     type AccountStatus = (typeof validStatuses)[number]
+    type AccountType = (typeof validTypes)[number]
+    type SortField = (typeof validSortFields)[number]
+
+    // Map frontend column keys to database columns
+    const sortFieldMap: Record<string, SortField> = {
+      name: 'name',
+      industry: 'industry',
+      type: 'type',
+      status: 'status',
+      jobsCount: 'jobs_count',
+      placementsCount: 'placements_count',
+      owner: 'owner_id',
+      lastContactDate: 'last_contact_date',
+      createdAt: 'created_at',
+    }
+
+    const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
+      ? sortFieldMap[sortByValue]
+      : 'created_at'
 
     return trpc.crm.accounts.list.useQuery({
       search: filters.search as string | undefined,
       status: (statusValue && validStatuses.includes(statusValue as AccountStatus)
         ? statusValue
         : 'all') as AccountStatus,
+      type: typeValue && typeValue !== 'all' && validTypes.includes(typeValue as AccountType)
+        ? typeValue as AccountType
+        : undefined,
+      industry: industryValue !== 'all' ? industryValue : undefined,
       limit: (filters.limit as number) || 50,
       offset: (filters.offset as number) || 0,
+      sortBy: mappedSortBy,
+      sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'desc'),
     })
   },
 
   useStatsQuery: () => {
-    const healthQuery = trpc.crm.accounts.getHealth.useQuery({})
-    return {
-      data: healthQuery.data?.summary,
-      isLoading: healthQuery.isLoading,
-    }
+    return trpc.crm.accounts.stats.useQuery()
   },
 }
 

@@ -1,7 +1,8 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { format, formatDistanceToNow } from 'date-fns'
+import { ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react'
 import {
   Table,
   TableBody,
@@ -22,6 +23,7 @@ interface ListTableProps<T> {
   statusField?: keyof T
   statusConfig?: Record<string, StatusConfig>
   onRowClick?: (item: T) => void
+  onSort?: (sortBy: string, sortOrder: 'asc' | 'desc') => void
 }
 
 export function ListTable<T extends Record<string, unknown>>({
@@ -32,8 +34,14 @@ export function ListTable<T extends Record<string, unknown>>({
   statusField: _statusField, // Available for row-level status styling
   statusConfig,
   onRowClick,
+  onSort,
 }: ListTableProps<T>) {
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // Get current sort state from URL
+  const currentSortBy = searchParams.get('sortBy') || ''
+  const currentSortOrder = (searchParams.get('sortOrder') || 'desc') as 'asc' | 'desc'
 
   const handleRowClick = (item: T) => {
     if (onRowClick) {
@@ -41,6 +49,31 @@ export function ListTable<T extends Record<string, unknown>>({
     } else {
       router.push(`${baseRoute}/${item[idField]}`)
     }
+  }
+
+  const handleSort = (columnKey: string) => {
+    if (onSort) {
+      // Toggle sort order if same column, otherwise default to desc
+      const newOrder = currentSortBy === columnKey && currentSortOrder === 'desc' ? 'asc' : 'desc'
+      onSort(columnKey, newOrder)
+    } else {
+      // Update URL params directly
+      const params = new URLSearchParams(searchParams.toString())
+      const newOrder = currentSortBy === columnKey && currentSortOrder === 'desc' ? 'asc' : 'desc'
+      params.set('sortBy', columnKey)
+      params.set('sortOrder', newOrder)
+      params.delete('page') // Reset to page 1 when sorting
+      router.replace(`?${params.toString()}`)
+    }
+  }
+
+  const getSortIcon = (columnKey: string) => {
+    if (currentSortBy !== columnKey) {
+      return <ArrowUpDown className="ml-1 h-3.5 w-3.5 text-charcoal-400" />
+    }
+    return currentSortOrder === 'asc'
+      ? <ArrowUp className="ml-1 h-3.5 w-3.5 text-gold-600" />
+      : <ArrowDown className="ml-1 h-3.5 w-3.5 text-gold-600" />
   }
 
   const formatCellValue = (item: T, column: ColumnConfig<T>) => {
@@ -97,17 +130,23 @@ export function ListTable<T extends Record<string, unknown>>({
   return (
     <Table>
       <TableHeader>
-        <TableRow>
+        <TableRow className="bg-charcoal-50 border-b border-charcoal-200">
           {columns.map((column) => (
             <TableHead
               key={column.key}
               className={cn(
+                'font-semibold text-charcoal-700 text-xs uppercase tracking-wider',
                 column.width,
                 column.align === 'center' && 'text-center',
-                column.align === 'right' && 'text-right'
+                column.align === 'right' && 'text-right',
+                column.sortable && 'cursor-pointer select-none hover:bg-charcoal-100 transition-colors'
               )}
+              onClick={column.sortable ? () => handleSort(column.key) : undefined}
             >
-              {column.header}
+              <span className="flex items-center">
+                {column.header || column.label}
+                {column.sortable && getSortIcon(column.key)}
+              </span>
             </TableHead>
           ))}
         </TableRow>

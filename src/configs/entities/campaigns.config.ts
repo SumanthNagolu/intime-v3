@@ -12,10 +12,14 @@ import {
   Pause,
   Play,
   TrendingUp,
+  TrendingDown,
   Mail,
   BarChart3,
   UserPlus,
   MessageSquare,
+  Workflow,
+  History,
+  StickyNote,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
@@ -23,15 +27,28 @@ import {
   CampaignOverviewSectionPCF,
   CampaignProspectsSectionPCF,
   CampaignLeadsSectionPCF,
+  CampaignFunnelSectionPCF,
+  CampaignSequenceSectionPCF,
   CampaignAnalyticsSectionPCF,
   CampaignActivitiesSectionPCF,
+  CampaignNotesSectionPCF,
   CampaignDocumentsSectionPCF,
+  CampaignHistorySectionPCF,
 } from './sections/campaigns.sections'
+import {
+  CampaignSetupStepPCF,
+  CampaignAudienceStepPCF,
+  CampaignExecuteStepPCF,
+  CampaignNurtureStepPCF,
+  CampaignCloseStepPCF,
+} from './steps/campaigns.steps'
+import { Settings, Rocket, Heart, Flag } from 'lucide-react'
 
 // Type definition for Campaign entity
 export interface Campaign extends Record<string, unknown> {
   id: string
   name: string
+  description?: string
   campaign_type?: string
   campaignType?: string
   goal?: string
@@ -47,24 +64,34 @@ export interface Campaign extends Record<string, unknown> {
   prospectsContacted?: number
   prospects_responded?: number
   prospectsResponded?: number
+  // Email engagement metrics for funnel
+  emails_opened?: number
+  emailsOpened?: number
+  links_clicked?: number
+  linksClicked?: number
+  // Lead conversion metrics
   leads_generated?: number
   leadsGenerated?: number
   meetings_booked?: number
   meetingsBooked?: number
+  // Targets
   target_leads?: number
   targetLeads?: number
   target_meetings?: number
   targetMeetings?: number
+  // Budget
   budget_total?: number
   budgetTotal?: number
   budget_spent?: number
   budgetSpent?: number
+  // Owner
   owner_id?: string
   owner?: {
     id: string
     full_name: string
     avatar_url?: string
   } | null
+  // Timestamps
   created_at: string
   updated_at?: string
 }
@@ -227,12 +254,17 @@ export const campaignsListConfig: ListViewConfig<Campaign> = {
   columns: [
     {
       key: 'name',
+      header: 'Campaign Name',
       label: 'Campaign Name',
       sortable: true,
+      width: 'min-w-[200px]',
     },
     {
       key: 'campaignType',
+      header: 'Type',
       label: 'Type',
+      sortable: true,
+      width: 'w-[140px]',
       render: (value) => {
         const type = value as string
         return CAMPAIGN_TYPE_CONFIG[type]?.label || type
@@ -240,29 +272,87 @@ export const campaignsListConfig: ListViewConfig<Campaign> = {
     },
     {
       key: 'status',
+      header: 'Status',
       label: 'Status',
+      sortable: true,
+      width: 'w-[100px]',
+      format: 'status' as const,
+    },
+    {
+      key: 'channels',
+      header: 'Channels',
+      label: 'Channels',
+      width: 'w-[150px]',
+      render: (value) => {
+        const channels = value as string[] | undefined
+        if (!channels?.length) return '—'
+        return channels.map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(', ')
+      },
     },
     {
       key: 'startDate',
+      header: 'Start Date',
       label: 'Start Date',
-      type: 'date',
+      sortable: true,
+      width: 'w-[110px]',
+      format: 'date' as const,
+    },
+    {
+      key: 'endDate',
+      header: 'End Date',
+      label: 'End Date',
+      sortable: true,
+      width: 'w-[110px]',
+      format: 'date' as const,
+    },
+    {
+      key: 'audienceSize',
+      header: 'Audience',
+      label: 'Audience',
+      sortable: true,
+      width: 'w-[90px]',
+      align: 'right' as const,
+      render: (value) => {
+        const size = value as number | undefined
+        return size ? size.toLocaleString() : '—'
+      },
+    },
+    {
+      key: 'prospectsContacted',
+      header: 'Contacted',
+      label: 'Contacted',
+      sortable: true,
+      width: 'w-[90px]',
+      align: 'right' as const,
+      render: (value) => {
+        const count = value as number | undefined
+        return count ? count.toLocaleString() : '0'
+      },
     },
     {
       key: 'leadsGenerated',
+      header: 'Leads',
       label: 'Leads',
+      sortable: true,
+      width: 'w-[100px]',
+      align: 'right' as const,
       render: (value, entity) => {
         const campaign = entity as Campaign
         const generated = campaign.leadsGenerated || campaign.leads_generated || 0
         const target = campaign.targetLeads || campaign.target_leads
         if (target) {
-          return `${generated}/${target}`
+          return `${generated} / ${target}`
         }
         return String(generated)
       },
     },
     {
       key: 'budgetSpent',
+      header: 'Budget',
       label: 'Budget',
+      sortable: true,
+      width: 'w-[140px]',
+      align: 'right' as const,
       render: (value, entity) => {
         const campaign = entity as Campaign
         const spent = campaign.budgetSpent || campaign.budget_spent || 0
@@ -275,15 +365,26 @@ export const campaignsListConfig: ListViewConfig<Campaign> = {
     },
     {
       key: 'owner',
+      header: 'Owner',
       label: 'Owner',
+      sortable: true,
+      width: 'w-[140px]',
       render: (value) => {
         const owner = value as Campaign['owner']
         return owner?.full_name || '—'
       },
     },
+    {
+      key: 'createdAt',
+      header: 'Created',
+      label: 'Created',
+      sortable: true,
+      width: 'w-[100px]',
+      format: 'relative-date' as const,
+    },
   ],
 
-  renderMode: 'cards',
+  renderMode: 'table',
   statusField: 'status',
   statusConfig: CAMPAIGN_STATUS_CONFIG,
 
@@ -308,6 +409,9 @@ export const campaignsListConfig: ListViewConfig<Campaign> = {
   useListQuery: (filters) => {
     const statusValue = filters.status as string | undefined
     const typeValue = filters.type as string | undefined
+    const sortByValue = filters.sortBy as string | undefined
+    const sortOrderValue = filters.sortOrder as string | undefined
+
     const validStatuses = ['draft', 'scheduled', 'active', 'paused', 'completed', 'all'] as const
     const validTypes = [
       'lead_generation',
@@ -317,8 +421,29 @@ export const campaignsListConfig: ListViewConfig<Campaign> = {
       'candidate_sourcing',
       'all',
     ] as const
+    const validSortFields = ['created_at', 'start_date', 'end_date', 'name', 'leads_generated', 'audience_size', 'prospects_contacted', 'budget_spent', 'status', 'campaign_type'] as const
+
     type CampaignStatus = (typeof validStatuses)[number]
     type CampaignType = (typeof validTypes)[number]
+    type SortField = (typeof validSortFields)[number]
+
+    // Map frontend column keys to database columns
+    const sortFieldMap: Record<string, SortField> = {
+      name: 'name',
+      campaignType: 'campaign_type',
+      status: 'status',
+      startDate: 'start_date',
+      endDate: 'end_date',
+      audienceSize: 'audience_size',
+      prospectsContacted: 'prospects_contacted',
+      leadsGenerated: 'leads_generated',
+      budgetSpent: 'budget_spent',
+      createdAt: 'created_at',
+    }
+
+    const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
+      ? sortFieldMap[sortByValue]
+      : 'created_at'
 
     return trpc.crm.campaigns.list.useQuery({
       search: filters.search as string | undefined,
@@ -330,9 +455,14 @@ export const campaignsListConfig: ListViewConfig<Campaign> = {
         : 'all') as CampaignType,
       limit: (filters.limit as number) || 20,
       offset: (filters.offset as number) || 0,
-      sortBy: 'created_at',
-      sortOrder: 'desc',
+      sortBy: mappedSortBy,
+      sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'desc'),
     })
+  },
+
+  // Stats query for metrics cards
+  useStatsQuery: () => {
+    return trpc.crm.campaigns.stats.useQuery()
   },
 }
 
@@ -447,17 +577,20 @@ export const campaignsDetailConfig: DetailViewConfig<Campaign> = {
   },
 
   // Sidebar handles all navigation - sections here are for content rendering only
+  // Campaign uses dual-mode navigation (Journey + Sections) via CampaignEntitySidebar
   navigationMode: 'sections',
-  defaultSection: 'dashboard',
+  defaultSection: 'overview',
 
-  // Sections match the sidebar structure (main + tools)
-  // Note: Sidebar navigation is primary - these define content components
+  // Sections match the enhanced campaign workspace structure:
+  // - Main: Overview, Prospects, Leads, Funnel
+  // - Automation: Sequence, Analytics
+  // - Tools: Activities, Notes, Documents, History
   sections: [
-    // Main sections
+    // Main sections - Core campaign management
     {
-      id: 'dashboard',
-      label: 'Dashboard',
-      icon: FileText,
+      id: 'overview',
+      label: 'Overview',
+      icon: BarChart3,
       component: CampaignOverviewSectionPCF,
     },
     {
@@ -474,6 +607,25 @@ export const campaignsDetailConfig: DetailViewConfig<Campaign> = {
       showCount: true,
       component: CampaignLeadsSectionPCF,
     },
+    {
+      id: 'funnel',
+      label: 'Funnel',
+      icon: TrendingDown,
+      component: CampaignFunnelSectionPCF,
+    },
+    // Automation sections
+    {
+      id: 'sequence',
+      label: 'Sequence',
+      icon: Workflow,
+      component: CampaignSequenceSectionPCF,
+    },
+    {
+      id: 'analytics',
+      label: 'Analytics',
+      icon: BarChart3,
+      component: CampaignAnalyticsSectionPCF,
+    },
     // Tool sections
     {
       id: 'activities',
@@ -485,10 +637,9 @@ export const campaignsDetailConfig: DetailViewConfig<Campaign> = {
     {
       id: 'notes',
       label: 'Notes',
-      icon: FileText,
+      icon: StickyNote,
       showCount: true,
-      // Notes component uses standard notes section
-      component: CampaignActivitiesSectionPCF, // TODO: Add CampaignNotesSectionPCF
+      component: CampaignNotesSectionPCF,
     },
     {
       id: 'documents',
@@ -498,17 +649,54 @@ export const campaignsDetailConfig: DetailViewConfig<Campaign> = {
       component: CampaignDocumentsSectionPCF,
     },
     {
-      id: 'analytics',
-      label: 'Analytics',
-      icon: BarChart3,
-      component: CampaignAnalyticsSectionPCF,
-    },
-    {
       id: 'history',
       label: 'History',
-      icon: Clock,
-      // History component shows audit trail
-      component: CampaignActivitiesSectionPCF, // TODO: Add CampaignHistorySectionPCF
+      icon: History,
+      component: CampaignHistorySectionPCF,
+    },
+  ],
+
+  // Journey steps for campaign workflow (Setup → Audience → Execute → Nurture → Close)
+  journeySteps: [
+    {
+      id: 'setup',
+      label: 'Setup',
+      icon: Settings,
+      activeStatuses: ['draft'],
+      completedStatuses: ['scheduled', 'active', 'paused', 'completed'],
+      component: CampaignSetupStepPCF,
+    },
+    {
+      id: 'audience',
+      label: 'Audience',
+      icon: UserPlus,
+      activeStatuses: ['draft', 'scheduled'],
+      completedStatuses: ['active', 'paused', 'completed'],
+      component: CampaignAudienceStepPCF,
+    },
+    {
+      id: 'execute',
+      label: 'Execute',
+      icon: Rocket,
+      activeStatuses: ['active'],
+      completedStatuses: ['paused', 'completed'],
+      component: CampaignExecuteStepPCF,
+    },
+    {
+      id: 'nurture',
+      label: 'Nurture',
+      icon: Heart,
+      activeStatuses: ['active'],
+      completedStatuses: ['completed'],
+      component: CampaignNurtureStepPCF,
+    },
+    {
+      id: 'close',
+      label: 'Close',
+      icon: Flag,
+      activeStatuses: ['completed'],
+      completedStatuses: [],
+      component: CampaignCloseStepPCF,
     },
   ],
 

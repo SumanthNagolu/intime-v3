@@ -66,6 +66,10 @@ export function EntityListView<T extends Record<string, unknown>>({
   // Current page from URL
   const currentPage = parseInt(searchParams.get('page') || '1')
 
+  // Sort params from URL
+  const sortBy = searchParams.get('sortBy') || undefined
+  const sortOrder = (searchParams.get('sortOrder') || 'desc') as 'asc' | 'desc'
+
   // Update URL when filters change
   const updateFilters = useCallback((key: string, value: unknown) => {
     startTransition(() => {
@@ -91,6 +95,8 @@ export function EntityListView<T extends Record<string, unknown>>({
     ...filterValues,
     limit: effectivePageSize,
     offset: (currentPage - 1) * effectivePageSize,
+    sortBy,
+    sortOrder,
   })
 
   const statsQuery = config.useStatsQuery?.()

@@ -36,12 +36,21 @@ export interface Placement extends Record<string, unknown> {
   end_date?: string | null
   pay_rate?: number | null
   bill_rate?: number | null
+  rate_type?: 'hourly' | 'daily' | 'weekly' | 'monthly' | 'annual' | null
+  employment_type?: 'w2' | 'c2c' | '1099' | 'fulltime' | null
+  work_location?: 'remote' | 'hybrid' | 'onsite' | null
   next_check_in_date?: string | null
   last_check_in_date?: string | null
   checkin_7_day_completed?: boolean
   checkin_30_day_completed?: boolean
   checkin_60_day_completed?: boolean
   checkin_90_day_completed?: boolean
+  recruiter_id?: string
+  recruiter?: {
+    id: string
+    full_name: string
+    avatar_url?: string
+  } | null
   job?: {
     id: string
     title: string
@@ -50,6 +59,8 @@ export interface Placement extends Record<string, unknown> {
     id: string
     first_name: string
     last_name: string
+    email?: string
+    phone?: string
   } | null
   account?: {
     id: string
@@ -59,8 +70,42 @@ export interface Placement extends Record<string, unknown> {
     id: string
     submitted_by?: string
   } | null
+  offer_id?: string
+  placed_at?: string | null
   created_at: string
   updated_at?: string
+}
+
+// Employment type configuration for placements
+export const PLACEMENT_EMPLOYMENT_TYPE_CONFIG: Record<string, StatusConfig> = {
+  w2: {
+    label: 'W-2',
+    color: 'bg-blue-100 text-blue-800',
+    bgColor: 'bg-blue-100',
+    textColor: 'text-blue-800',
+    icon: User,
+  },
+  c2c: {
+    label: 'Corp-to-Corp',
+    color: 'bg-purple-100 text-purple-800',
+    bgColor: 'bg-purple-100',
+    textColor: 'text-purple-800',
+    icon: Building2,
+  },
+  '1099': {
+    label: '1099',
+    color: 'bg-amber-100 text-amber-800',
+    bgColor: 'bg-amber-100',
+    textColor: 'text-amber-800',
+    icon: FileText,
+  },
+  fulltime: {
+    label: 'Full-Time',
+    color: 'bg-green-100 text-green-800',
+    bgColor: 'bg-green-100',
+    textColor: 'text-green-800',
+    icon: CheckCircle2,
+  },
 }
 
 // Placement status configuration
@@ -152,10 +197,11 @@ export const placementsListConfig: ListViewConfig<Placement> = {
     },
   },
 
+  // Enterprise-grade stats cards (5)
   statsCards: [
     {
       key: 'total',
-      label: 'Total Placements',
+      label: 'Total',
       icon: Award,
     },
     {
@@ -165,19 +211,28 @@ export const placementsListConfig: ListViewConfig<Placement> = {
       icon: CheckCircle2,
     },
     {
-      key: 'endingSoon',
-      label: 'Ending Soon',
-      color: 'bg-amber-100 text-amber-800',
-      icon: Clock,
+      key: 'completed',
+      label: 'This Month',
+      color: 'bg-gold-100 text-gold-800',
+      icon: Award,
     },
     {
-      key: 'atRisk',
-      label: 'At Risk',
-      color: 'bg-red-100 text-red-700',
-      icon: AlertCircle,
+      key: 'revenue',
+      label: 'Revenue YTD',
+      color: 'bg-blue-100 text-blue-800',
+      icon: DollarSign,
+      format: (value) => `$${(value || 0).toLocaleString()}`,
+    },
+    {
+      key: 'avgBillingRate',
+      label: 'Avg Rate',
+      color: 'bg-purple-100 text-purple-800',
+      icon: TrendingUp,
+      format: (value) => `$${value || 0}/hr`,
     },
   ],
 
+  // Enterprise-grade filters (6)
   filters: [
     {
       key: 'search',
@@ -210,16 +265,32 @@ export const placementsListConfig: ListViewConfig<Placement> = {
       ],
     },
     {
+      key: 'accountId',
+      type: 'select',
+      label: 'Account',
+      options: [], // Populated dynamically
+      dynamic: true,
+    },
+    {
+      key: 'recruiterId',
+      type: 'select',
+      label: 'Owner',
+      options: [], // Populated dynamically
+      dynamic: true,
+    },
+    {
       key: 'endingSoon',
       type: 'toggle',
       label: 'Ending Soon',
     },
   ],
 
+  // Enterprise-grade columns (12)
   columns: [
     {
       key: 'candidate',
       label: 'Candidate',
+      sortable: true,
       render: (value) => {
         const candidate = value as Placement['candidate']
         if (!candidate) return '—'
@@ -230,6 +301,7 @@ export const placementsListConfig: ListViewConfig<Placement> = {
       key: 'job',
       label: 'Job',
       icon: Briefcase,
+      sortable: true,
       render: (value) => {
         const job = value as Placement['job']
         return job?.title || '—'
@@ -239,14 +311,24 @@ export const placementsListConfig: ListViewConfig<Placement> = {
       key: 'account',
       label: 'Account',
       icon: Building2,
+      sortable: true,
       render: (value) => {
         const account = value as Placement['account']
         return account?.name || '—'
       },
     },
     {
+      key: 'employment_type',
+      label: 'Type',
+      render: (value) => {
+        const type = value as string | null
+        return PLACEMENT_EMPLOYMENT_TYPE_CONFIG[type || '']?.label || '—'
+      },
+    },
+    {
       key: 'status',
       label: 'Status',
+      sortable: true,
     },
     {
       key: 'health_status',
@@ -260,19 +342,50 @@ export const placementsListConfig: ListViewConfig<Placement> = {
       key: 'start_date',
       label: 'Start Date',
       type: 'date',
+      sortable: true,
     },
     {
       key: 'end_date',
       label: 'End Date',
       type: 'date',
+      sortable: true,
     },
     {
       key: 'bill_rate',
       label: 'Bill Rate',
       type: 'currency',
+      sortable: true,
       render: (value) => {
         const rate = value as number | null
         return rate ? `$${rate}/hr` : '—'
+      },
+    },
+    {
+      key: 'pay_rate',
+      label: 'Pay Rate',
+      type: 'currency',
+      sortable: true,
+      render: (value) => {
+        const rate = value as number | null
+        return rate ? `$${rate}/hr` : '—'
+      },
+    },
+    {
+      key: 'margin',
+      label: 'Margin',
+      render: (_value, entity) => {
+        const placement = entity as Placement
+        if (!placement.bill_rate || !placement.pay_rate) return '—'
+        const margin = Math.round(((placement.bill_rate - placement.pay_rate) / placement.bill_rate) * 100)
+        return `${margin}%`
+      },
+    },
+    {
+      key: 'recruiter',
+      label: 'Owner',
+      render: (value) => {
+        const recruiter = value as Placement['recruiter']
+        return recruiter?.full_name || '—'
       },
     },
   ],
@@ -282,6 +395,18 @@ export const placementsListConfig: ListViewConfig<Placement> = {
   statusConfig: PLACEMENT_STATUS_CONFIG,
 
   pageSize: 50,
+
+  // Sort field mapping for backend
+  sortFieldMap: {
+    candidate: 'candidate.last_name',
+    job: 'job.title',
+    account: 'account.name',
+    status: 'status',
+    start_date: 'start_date',
+    end_date: 'end_date',
+    bill_rate: 'bill_rate',
+    pay_rate: 'pay_rate',
+  },
 
   emptyState: {
     icon: Award,
@@ -315,6 +440,8 @@ export const placementsListConfig: ListViewConfig<Placement> = {
       healthStatus: healthValue && validHealth.includes(healthValue as HealthStatus)
         ? (healthValue as HealthStatus)
         : undefined,
+      accountId: filters.accountId as string | undefined,
+      recruiterId: filters.recruiterId as string | undefined,
       endingSoon: filters.endingSoon as boolean | undefined,
       limit: (filters.limit as number) || 50,
       offset: (filters.offset as number) || 0,
