@@ -58,7 +58,8 @@ Page → SidebarLayout → TopNavigation + Sidebar + Content
 
 **Detail Pages**:
 - Use `EntityDetailView` with config from `@/configs/entities/`
-- Sidebar: EntityJourneySidebar (journey steps OR sections + tools + quick actions)
+- Sidebar: EntityJourneySidebar (journey steps OR sections + tools)
+- Quick Actions: Header area only (top-right via DetailHeader)
 - URL state: `?section=overview`
 
 ### DO NOT
@@ -219,7 +220,7 @@ The sidebar is **context-dependent** - it changes based on where the user is:
 | Context | Sidebar Type | Shows |
 |---------|-------------|-------|
 | **List pages** (from top nav) | `SectionSidebar` | Navigation links + Recent entities (10) |
-| **Detail pages** (entity open) | `EntityJourneySidebar` | Journey steps OR Sections + Tools + Quick actions |
+| **Detail pages** (entity open) | `EntityJourneySidebar` | Journey steps OR Sections + Tools |
 
 **Automatic Detection** (in `SidebarLayout.tsx`):
 ```tsx
@@ -303,6 +304,83 @@ Category tabs with counts:
 - **Active section**: `bg-gold-50 text-gold-600 border-l-[3px] border-gold-500`
 - **Counts**: Badge after section name (e.g., "Contacts (12)")
 - **Alert styling**: Red badge for escalations
+
+---
+
+## Quick Actions Placement (CRITICAL)
+
+**Quick actions MUST only appear in the header area (top-right), NEVER in sidebars.**
+
+### The Rule
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  HEADER                              [Quick Actions] [⋮ More]   │  ← Actions HERE
+├───────────────┬─────────────────────────────────────────────────┤
+│               │                                                 │
+│  SIDEBAR      │           CONTENT AREA                          │
+│               │                                                 │
+│  Journey/     │                                                 │
+│  Sections     │                                                 │
+│  + Tools      │                                                 │
+│               │                                                 │
+│  NO ACTIONS   │                                                 │  ← NO actions here
+│               │                                                 │
+└───────────────┴─────────────────────────────────────────────────┘
+```
+
+### Implementation
+
+**Header Quick Actions** (via `DetailHeader.tsx`):
+- Primary actions as buttons (max 3 visible)
+- Overflow actions in dropdown menu (⋮)
+- Defined in entity config: `quickActions` and `dropdownActions`
+- Context-aware: actions change based on entity status
+
+```tsx
+// In entity config (e.g., jobs.config.ts)
+detailConfig: {
+  quickActions: [
+    { id: 'edit', label: 'Edit', icon: Edit, onClick: ... },
+    { id: 'publish', label: 'Publish', icon: Send, variant: 'default', ... },
+  ],
+  dropdownActions: [
+    { id: 'duplicate', label: 'Duplicate', icon: Copy, ... },
+    { id: 'archive', label: 'Archive', icon: Archive, variant: 'destructive', ... },
+  ],
+}
+```
+
+### Sidebar Content (NO actions)
+
+Sidebars contain ONLY:
+- **Journey steps** (for workflow entities) - job, candidate, submission, placement
+- **Section links** (for info entities) - account, contact, deal, lead
+- **Tools** (collapsible) - Activities, Notes, Documents
+- **Recent entities** (list pages only)
+
+### Why This Pattern?
+
+1. **Consistency**: Actions always in same location across all pages
+2. **Discoverability**: Users know where to find actions
+3. **Mobile-friendly**: Header actions collapse to menu on mobile
+4. **Focus**: Sidebar is for navigation, header is for actions
+
+### DO NOT
+
+- Add quick action buttons to sidebars
+- Add "New X" buttons to sidebar bottom
+- Create action sections in sidebars
+- Use `SidebarActions` component (deleted)
+- Pass `onQuickAction` prop to sidebar components
+
+### Files Involved
+
+| Purpose | File |
+|---------|------|
+| Header actions | `src/components/pcf/detail-view/DetailHeader.tsx` |
+| Action bar | `src/components/pcf/shared/QuickActionBar.tsx` |
+| Entity configs | `src/configs/entities/*.config.ts` |
 
 ---
 
@@ -698,3 +776,5 @@ export default function CampaignsPage() {
 - **Create entity-specific list/detail/form components**
 - **Duplicate component logic across entities**
 - **Build custom pages when config works**
+- **Add quick actions to sidebars** (actions go in header only)
+- **Add "New X" buttons to sidebar bottom**
