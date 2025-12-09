@@ -49,9 +49,13 @@ import {
   Linkedin,
   Phone,
   X,
+  GitBranch,
+  ExternalLink,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
+import { SequenceTemplatePicker } from '@/components/crm/sequences/SequenceTemplatePicker'
 
 const campaignFormSchema = z.object({
   // Step 1: Campaign Setup
@@ -163,6 +167,7 @@ const CHANNEL_OPTIONS = [
 export function CreateCampaignDialog({ open, onOpenChange, onSuccess }: CreateCampaignDialogProps) {
   const [step, setStep] = useState(1)
   const [titleInput, setTitleInput] = useState('')
+  const [selectedSequenceTemplateIds, setSelectedSequenceTemplateIds] = useState<string[]>([])
 
   const form = useForm<CampaignFormValues>({
     resolver: zodResolver(campaignFormSchema),
@@ -269,6 +274,7 @@ export function CreateCampaignDialog({ open, onOpenChange, onSuccess }: CreateCa
       campaignType: data.campaignType,
       goal: data.goal,
       description: data.description,
+      sequenceTemplateIds: selectedSequenceTemplateIds.length > 0 ? selectedSequenceTemplateIds : undefined,
       targetCriteria: {
         audienceSource: data.audienceSource,
         industries: data.industries,
@@ -734,6 +740,38 @@ export function CreateCampaignDialog({ open, onOpenChange, onSuccess }: CreateCa
                     )}
                   />
 
+                  {/* Sequence Templates - Pick from Library */}
+                  {channels.length > 0 && (
+                    <div className="border rounded-lg p-4 space-y-3 bg-charcoal-50/50">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <GitBranch className="w-4 h-4 text-hublot-600" />
+                          <h4 className="font-medium">Sequence Templates</h4>
+                        </div>
+                        <Link href="/employee/crm/sequences" target="_blank">
+                          <Button variant="ghost" size="sm" className="text-xs gap-1">
+                            <ExternalLink className="w-3 h-3" />
+                            Manage Library
+                          </Button>
+                        </Link>
+                      </div>
+                      <p className="text-sm text-charcoal-500">
+                        Use pre-built sequence templates or configure manually below
+                      </p>
+                      <SequenceTemplatePicker
+                        selectedIds={selectedSequenceTemplateIds}
+                        onChange={setSelectedSequenceTemplateIds}
+                      />
+                    </div>
+                  )}
+
+                  {/* Manual Configuration - Only show if no templates selected */}
+                  {selectedSequenceTemplateIds.length === 0 && (
+                    <>
+                      <p className="text-sm text-charcoal-500 italic">
+                        Or configure sequences manually:
+                      </p>
+
                   {channels.includes('email') && (
                     <div className="border rounded-lg p-4 space-y-4">
                       <h4 className="font-medium flex items-center gap-2">
@@ -874,6 +912,8 @@ export function CreateCampaignDialog({ open, onOpenChange, onSuccess }: CreateCa
                       />
                     </div>
                   </div>
+                    </>
+                  )}
                 </div>
               )}
 

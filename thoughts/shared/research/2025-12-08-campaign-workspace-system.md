@@ -186,14 +186,13 @@ Key columns:
 
 | Table | Used For |
 |-------|----------|
-| `activities` | Recruiting, ATS, submissions, placements, candidates, jobs |
-| `crm_activities` | Accounts, leads, deals, campaigns, contacts |
+| `activities` | Unified table for all entity types: recruiting, ATS, submissions, placements, candidates, jobs, accounts, leads, deals, campaigns, contacts |
 
 #### Campaign Activity Creation (in crm.ts)
 
 **Campaign Created** (lines 4333-4343):
 ```typescript
-await adminClient.from('crm_activities').insert({
+await adminClient.from('activities').insert({
   org_id: orgId,
   entity_type: 'campaign',
   entity_id: data.id,
@@ -206,7 +205,7 @@ await adminClient.from('crm_activities').insert({
 
 **Campaign Status Changed** (lines 4424-4434):
 ```typescript
-await adminClient.from('crm_activities').insert({
+await adminClient.from('activities').insert({
   org_id: orgId,
   entity_type: 'campaign',
   entity_id: input.id,
@@ -219,7 +218,7 @@ await adminClient.from('crm_activities').insert({
 
 **Lead Created from Campaign** (lines 4726-4736):
 ```typescript
-await adminClient.from('crm_activities').insert({
+await adminClient.from('activities').insert({
   org_id: orgId,
   entity_type: 'lead',
   entity_id: lead.id,
@@ -243,7 +242,7 @@ await adminClient.from('crm_activities').insert({
 
 ```typescript
 let query = adminClient
-  .from('crm_activities')
+  .from('activities')
   .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
   .eq('org_id', orgId)
   .eq('entity_type', 'account')  // or 'campaign', 'lead', etc.
@@ -462,7 +461,7 @@ User Action (create campaign, convert prospect, etc.)
     ↓
 tRPC Mutation (campaigns.create, campaigns.convertProspectToLead)
     ↓
-Insert to crm_activities table
+Insert to activities table
     ↓
 Activity logged with entity_type='campaign' or 'lead'
 ```

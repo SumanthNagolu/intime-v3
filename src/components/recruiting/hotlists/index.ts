@@ -1,4 +1,5 @@
-export { HotlistsListPage } from './HotlistsListPage'
-export { HotlistDetailPage } from './HotlistDetailPage'
+// Hotlist components - dialogs and utilities
+// List and detail views now use PCF EntityListView/EntityDetailView with hotlistsConfig
+
 export { CreateHotlistDialog } from './CreateHotlistDialog'
 export { AddToHotlistDialog } from './AddToHotlistDialog'

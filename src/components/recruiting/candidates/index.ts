@@ -1,4 +1,3 @@
 export { ScreeningRoom } from './ScreeningRoom'
 export { ProfileBuilder } from './ProfileBuilder'
-export { CandidatesListClient } from './CandidatesListClient'
-export { CandidatesListSkeleton } from './CandidatesListSkeleton'
+// List components have been migrated to PCF EntityListView

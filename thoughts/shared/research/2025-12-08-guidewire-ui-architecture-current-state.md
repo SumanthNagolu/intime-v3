@@ -412,12 +412,13 @@ export function IntakeStep1BasicInfo() {
 
 ### 7.1 Dual Activity Tables
 
-**Two parallel systems**:
+**Unified activity system**:
 
 | Table | Purpose | Columns | Status Default |
 |-------|---------|---------|----------------|
-| `activities` | Full task management | 69 | 'open' |
-| `crm_activities` | Lightweight CRM logging | 17 | 'completed' |
+| `activities` | Unified activity table for all entity types (tasks, CRM logging, etc.) | 69 | 'open' (for tasks) or 'completed' (for logs) |
+
+Note: The `crm_activities` table has been deprecated in favor of the unified `activities` table.
 
 ### 7.2 Activity Types and Statuses
 

@@ -1,7 +1,7 @@
+// List components have been migrated to PCF EntityListView
+
 export { CreateLeadDialog } from './CreateLeadDialog'
 export { QualifyLeadDialog } from './QualifyLeadDialog'
 export { ConvertLeadDialog } from './ConvertLeadDialog'
 export { CrossPillarLeadDialog } from './CrossPillarLeadDialog'
 export { CrossPillarLeadProvider, useCrossPillarLead } from './CrossPillarLeadProvider'
-export { LeadsListClient } from './LeadsListClient'
-export { LeadsListSkeleton } from './LeadsListSkeleton'

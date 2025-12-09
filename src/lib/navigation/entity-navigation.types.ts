@@ -1,4 +1,9 @@
 import { LucideIcon } from 'lucide-react'
+import { SectionDefinition, getSectionsByGroup as getSectionsByGroupInternal } from './entity-sections'
+
+// Re-export section types for convenience
+export type { SectionDefinition }
+export { getSectionsByGroupInternal as getSectionsByGroup }
 
 // Entity types supported in the system
 export type EntityType =

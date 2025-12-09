@@ -1,3 +1,5 @@
+// List components have been migrated to PCF EntityListView
+
 export { CreateAccountDialog } from './CreateAccountDialog'
 export { LogActivityDialog } from './LogActivityDialog'
 export { AddContactDialog } from './AddContactDialog'
@@ -5,8 +7,6 @@ export { CreateMeetingDialog } from './CreateMeetingDialog'
 export { CreateEscalationDialog } from './CreateEscalationDialog'
 export { AddNoteDialog } from './AddNoteDialog'
 export { AddDocumentDialog } from './AddDocumentDialog'
-export { AccountsListClient } from './AccountsListClient'
-export { AccountsListSkeleton } from './AccountsListSkeleton'
 
 // Inline panels for viewing/editing items (Guidewire pattern - no popups)
 export { ActivityInlinePanel } from './ActivityInlinePanel'

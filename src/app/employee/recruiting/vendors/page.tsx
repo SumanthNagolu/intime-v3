@@ -1,5 +1,8 @@
-import { VendorsListPage } from '@/components/recruiting/vendors/VendorsListPage'
+'use client'
+
+import { EntityListView } from '@/components/pcf/list-view/EntityListView'
+import { vendorsListConfig, Vendor } from '@/configs/entities/vendors.config'
 
 export default function VendorsPage() {
-  return <VendorsListPage />
+  return <EntityListView<Vendor> config={vendorsListConfig} />
 }

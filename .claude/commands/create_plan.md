@@ -33,6 +33,32 @@ For deeper analysis, try: `/create_plan think deeply about thoughts/allison/tick
 
 Then wait for the user's input.
 
+## Pre-flight Check
+
+Before creating a plan, verify prerequisites:
+
+1. **Check for existing research**:
+   - Search `thoughts/shared/research/` for related documents
+   - If research exists and is recent (< 7 days), read it first
+   - If research is stale or missing, suggest running `/research_codebase` first
+
+2. **Check for related issues**:
+   - Search `thoughts/shared/issues/` for the issue being addressed
+   - Read the issue file if it exists
+   - Link the plan to the issue
+
+3. **Verify branch state**:
+   - Check current branch: `git branch --show-current`
+   - Ensure no uncommitted changes that might conflict
+
+4. **Architecture alignment check**:
+   - Review relevant architecture docs in `thoughts/shared/architecture/`:
+     - Does this touch existing entities? → Read `data-model.md`
+     - Does this need new permissions? → Follow `permissions.md` patterns
+     - Does this add API endpoints? → Follow `api-conventions.md`
+     - Does this add UI? → Use patterns from `ui-patterns.md`
+   - Note any architecture docs that need updating after implementation
+
 ## Process Steps
 
 ### Step 1: Context Gathering & Initial Analysis
@@ -203,6 +229,36 @@ After structure approval:
 
 [Explicitly list out-of-scope items to prevent scope creep]
 
+## Risk Assessment
+
+| Risk | Likelihood | Impact | Mitigation |
+|------|------------|--------|------------|
+| [What could go wrong] | Low/Med/High | Low/Med/High | [How to handle] |
+| [Another risk] | Low/Med/High | Low/Med/High | [Mitigation strategy] |
+
+## Effort Estimation
+
+| Phase | Estimated Time | Confidence | Notes |
+|-------|---------------|------------|-------|
+| Phase 1 | [X hours/days] | High/Med/Low | [Any caveats] |
+| Phase 2 | [X hours/days] | High/Med/Low | [Any caveats] |
+| **Total** | [X hours/days] | [Overall confidence] | |
+
+## T-Shirt Sizing
+
+**Size**: [S/M/L/XL]
+**Estimated Sessions**: [N]
+**Recommended Session Breaks**:
+- After Phase [X]: [reason - e.g., "database changes complete, good checkpoint"]
+- After Phase [Y]: [reason]
+
+| Size | Effort | Phases | Sessions | Characteristics |
+|------|--------|--------|----------|-----------------|
+| **S** | 1-2 hours | 1-2 | 1 | Single feature, minimal dependencies |
+| **M** | 2-4 hours | 2-3 | 1-2 | Multiple files, some integration |
+| **L** | 4-8 hours | 3-5 | 2-3 | Cross-module, database changes |
+| **XL** | 8+ hours | 5+ | 3+ | Architecture changes, migrations |
+
 ## Implementation Approach
 
 [High-level strategy and reasoning]
@@ -236,6 +292,11 @@ After structure approval:
 - [ ] Performance is acceptable under load
 - [ ] Edge case handling verified manually
 - [ ] No regressions in related features
+
+### Rollback Strategy:
+- **How to revert**: [git revert / migration down / feature flag off]
+- **Data impact**: [None / Reversible / Destructive - explain]
+- **Time to rollback**: [Minutes / Hours / Manual intervention required]
 
 **Implementation Note**: After completing this phase and all automated verification passes, pause here for manual confirmation from the human that the manual testing was successful before proceeding to the next phase.
 
@@ -271,9 +332,10 @@ After structure approval:
 
 ## References
 
-- Original ticket: `thoughts/allison/tickets/eng_XXXX.md`
-- Related research: `thoughts/shared/research/[relevant].md`
-- Similar implementation: `[file:line]`
+- **Issue**: `thoughts/shared/issues/[module]-[number]` (if applicable)
+- **Research**: `thoughts/shared/research/[relevant].md`
+- **Original ticket**: `thoughts/allison/tickets/eng_XXXX.md` (if applicable)
+- **Similar implementation**: `[file:line]`
 ````
 
 ### Step 5: Sync and Review
@@ -341,6 +403,19 @@ After structure approval:
    - Do NOT write the plan with unresolved questions
    - The implementation plan must be complete and actionable
    - Every decision must be made before finalizing the plan
+
+7. **Always Include T-Shirt Sizing**:
+   - Estimate total effort and assign a size (S/M/L/XL)
+   - Identify natural session break points based on size:
+     - **S**: Complete in single session - no breaks needed
+     - **M**: Consider break after Phase 2 if fatigue sets in
+     - **L**: MUST break after each major phase (DB → API → UI)
+     - **XL**: MUST break after every phase with handoff documentation
+   - Session breaks typically occur after:
+     - Database/migration changes (good checkpoint before API work)
+     - Backend API completion (good checkpoint before UI work)
+     - Core feature complete (before edge cases and polish)
+   - For L/XL plans, explicitly document recommended break points
 
 ## Success Criteria Guidelines
 

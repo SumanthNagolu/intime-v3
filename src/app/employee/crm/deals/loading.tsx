@@ -1,5 +1,5 @@
-import { DealsPipelineSkeleton } from '@/components/crm/deals'
+import { EntityListViewSkeleton } from '@/components/pcf/shared/Skeletons'
 
 export default function DealsLoading() {
-  return <DealsPipelineSkeleton />
+  return <EntityListViewSkeleton />
 }

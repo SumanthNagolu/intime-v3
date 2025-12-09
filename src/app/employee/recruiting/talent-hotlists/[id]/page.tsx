@@ -1,7 +1,13 @@
 'use client'
 
-import { use } from 'react'
-import { HotlistDetailPage } from '@/components/recruiting/hotlists'
+import { use, Suspense } from 'react'
+import { EntityDetailView } from '@/components/pcf/detail-view'
+import { EntityDetailViewSkeleton } from '@/components/pcf/shared'
+import { hotlistsDetailConfig, type Hotlist } from '@/configs/entities/hotlists.config'
+
+function HotlistDetailContent({ id }: { id: string }) {
+  return <EntityDetailView<Hotlist> config={hotlistsDetailConfig} entityId={id} />
+}
 
 export default function TalentHotlistDetailRoute({
   params
@@ -9,5 +15,9 @@ export default function TalentHotlistDetailRoute({
   params: Promise<{ id: string }>
 }) {
   const { id } = use(params)
-  return <HotlistDetailPage hotlistId={id} />
+  return (
+    <Suspense fallback={<EntityDetailViewSkeleton />}>
+      <HotlistDetailContent id={id} />
+    </Suspense>
+  )
 }

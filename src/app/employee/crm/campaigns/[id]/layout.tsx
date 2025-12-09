@@ -2,7 +2,6 @@ import { ReactNode } from 'react'
 import { notFound } from 'next/navigation'
 import { getServerCaller } from '@/server/trpc/server-caller'
 import { EntityContextProvider } from '@/components/layouts/EntityContextProvider'
-import { SidebarLayout } from '@/components/layouts/SidebarLayout'
 
 export const dynamic = 'force-dynamic'
 
@@ -34,14 +33,7 @@ export default async function CampaignDetailLayout({ children, params }: Campaig
       entityStatus={campaign.status}
       initialData={campaign}
     >
-      <SidebarLayout
-        campaignSectionCounts={campaign.counts}
-        campaignMetrics={campaign.metrics}
-        campaignTargets={campaign.targets}
-        campaignDates={campaign.dates}
-      >
-        {children}
-      </SidebarLayout>
+      {children}
     </EntityContextProvider>
   )
 }

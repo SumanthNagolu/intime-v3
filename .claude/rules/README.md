@@ -17,9 +17,9 @@ This directory contains architecture rules and guidelines for the InTime v3 code
 ### Design System
 - **Background**: `bg-cream` (#FDFBF7)
 - **Cards**: `bg-white` with `shadow-elevation-sm`
-- **Primary**: `forest-500` (#0D4C3B)
-- **Accent**: `gold-500` gradient
-- **Headlines**: `font-heading` (Cormorant Garamond)
+- **Primary**: `hublot-900` (#000000) - pure black
+- **Accent**: `gold-500` (#C9A961) - warm gold
+- **Headlines**: `font-heading` (Raleway) - geometric sans-serif
 
 ### Backend
 - Filter all queries by `org_id`

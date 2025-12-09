@@ -1,0 +1,5 @@
+export { EntityDetailView } from './EntityDetailView'
+export { DetailHeader } from './DetailHeader'
+export { DetailMetrics } from './DetailMetrics'
+export { DetailSections } from './DetailSections'
+export { DetailJourney } from './DetailJourney'

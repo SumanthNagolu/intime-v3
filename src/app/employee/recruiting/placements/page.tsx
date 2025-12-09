@@ -1,27 +1,8 @@
-import { Suspense } from 'react'
-import { getServerCaller } from '@/server/trpc/server-caller'
-import { PlacementsListClient, PlacementsListSkeleton } from '@/components/recruiting/placements'
+'use client'
 
-export const dynamic = 'force-dynamic'
+import { EntityListView } from '@/components/pcf/list-view/EntityListView'
+import { placementsListConfig, Placement } from '@/configs/entities/placements.config'
 
-async function PlacementsListServer() {
-  const caller = await getServerCaller()
-
-  const placementsData = await caller.ats.placements.list({
-    limit: 50,
-  })
-
-  return (
-    <PlacementsListClient
-      initialPlacements={placementsData.items}
-    />
-  )
-}
-
-export default async function PlacementsPage() {
-  return (
-    <Suspense fallback={<PlacementsListSkeleton />}>
-      <PlacementsListServer />
-    </Suspense>
-  )
+export default function PlacementsPage() {
+  return <EntityListView<Placement> config={placementsListConfig} />
 }

@@ -1,5 +1,5 @@
-import { LeadsListSkeleton } from '@/components/crm/leads'
+import { EntityListViewSkeleton } from '@/components/pcf/shared/Skeletons'
 
 export default function LeadsLoading() {
-  return <LeadsListSkeleton />
+  return <EntityListViewSkeleton />
 }

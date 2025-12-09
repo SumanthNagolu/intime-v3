@@ -1,5 +1,5 @@
-import { AccountsListSkeleton } from '@/components/recruiting/accounts'
+import { EntityListViewSkeleton } from '@/components/pcf/shared/Skeletons'
 
 export default function AccountsLoading() {
-  return <AccountsListSkeleton />
+  return <EntityListViewSkeleton />
 }

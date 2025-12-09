@@ -1,7 +1,13 @@
 'use client'
 
-import { use } from 'react'
-import { JobOrderDetailPage } from '@/components/recruiting/job-orders'
+import { use, Suspense } from 'react'
+import { EntityDetailView } from '@/components/pcf/detail-view'
+import { EntityDetailViewSkeleton } from '@/components/pcf/shared'
+import { jobOrdersDetailConfig, type JobOrder } from '@/configs/entities/job-orders.config'
+
+function JobOrderDetailContent({ id }: { id: string }) {
+  return <EntityDetailView<JobOrder> config={jobOrdersDetailConfig} entityId={id} />
+}
 
 export default function JobOrderDetailRoute({
   params
@@ -9,5 +15,9 @@ export default function JobOrderDetailRoute({
   params: Promise<{ id: string }>
 }) {
   const { id } = use(params)
-  return <JobOrderDetailPage jobOrderId={id} />
+  return (
+    <Suspense fallback={<EntityDetailViewSkeleton />}>
+      <JobOrderDetailContent id={id} />
+    </Suspense>
+  )
 }

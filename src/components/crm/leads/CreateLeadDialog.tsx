@@ -48,7 +48,7 @@ const leadFormSchema = z.object({
   email: z.string().email().optional().or(z.literal('')),
   phone: z.string().optional(),
   linkedinUrl: z.string().url().optional().or(z.literal('')),
-  source: z.enum(['linkedin', 'referral', 'cold_outreach', 'inbound', 'event', 'website', 'other']),
+  source: z.enum(['linkedin', 'referral', 'cold_outreach', 'inbound', 'event', 'website', 'campaign', 'other']),
   sourceDetails: z.string().optional(),
   estimatedValue: z.number().min(0).optional(),
   hiringNeeds: z.string().optional(),
@@ -74,6 +74,8 @@ interface CreateLeadDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   onSuccess?: (lead: any) => void
+  /** Optional campaign ID to associate the lead with */
+  campaignId?: string
 }
 
 const INDUSTRY_OPTIONS = [
@@ -90,7 +92,7 @@ const INDUSTRY_OPTIONS = [
   'Other',
 ]
 
-export function CreateLeadDialog({ open, onOpenChange, onSuccess }: CreateLeadDialogProps) {
+export function CreateLeadDialog({ open, onOpenChange, onSuccess, campaignId }: CreateLeadDialogProps) {
   const [skillInput, setSkillInput] = useState('')
   const utils = trpc.useUtils()
 
@@ -98,7 +100,7 @@ export function CreateLeadDialog({ open, onOpenChange, onSuccess }: CreateLeadDi
     resolver: zodResolver(leadFormSchema),
     defaultValues: {
       leadType: 'company',
-      source: 'linkedin',
+      source: campaignId ? 'campaign' : 'linkedin',
       positionsCount: 1,
       skillsNeeded: [],
     },
@@ -112,6 +114,10 @@ export function CreateLeadDialog({ open, onOpenChange, onSuccess }: CreateLeadDi
       toast.success('Lead created successfully')
       utils.crm.leads.list.invalidate()
       utils.crm.leads.getStats.invalidate()
+      if (campaignId) {
+        utils.crm.leads.listByCampaign.invalidate({ campaignId })
+        utils.crm.campaigns.getByIdWithCounts.invalidate({ id: campaignId })
+      }
       form.reset()
       onOpenChange(false)
       onSuccess?.(data)
@@ -136,6 +142,7 @@ export function CreateLeadDialog({ open, onOpenChange, onSuccess }: CreateLeadDi
       linkedinUrl: data.linkedinUrl || undefined,
       source: data.source,
       sourceDetails: data.sourceDetails,
+      campaignId: campaignId,
       estimatedValue: data.estimatedValue,
       hiringNeeds: data.hiringNeeds,
       positionsCount: data.positionsCount,
@@ -410,6 +417,7 @@ export function CreateLeadDialog({ open, onOpenChange, onSuccess }: CreateLeadDi
                           <SelectItem value="inbound">Inbound</SelectItem>
                           <SelectItem value="event">Event</SelectItem>
                           <SelectItem value="website">Website</SelectItem>
+                          <SelectItem value="campaign">Campaign</SelectItem>
                           <SelectItem value="other">Other</SelectItem>
                         </SelectContent>
                       </Select>

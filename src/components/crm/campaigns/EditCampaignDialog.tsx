@@ -339,6 +339,8 @@ export function EditCampaignDialog({ open, onOpenChange, campaignId, onSuccess }
     updateCampaign.mutate({
       id: campaignId,
       name: data.name,
+      campaignType: data.campaignType,
+      goal: data.goal,
       description: data.description,
       targetCriteria: {
         audienceSource: data.audienceSource,
