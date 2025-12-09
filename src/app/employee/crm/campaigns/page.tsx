@@ -1,5 +1,8 @@
-import { CampaignsListPage } from '@/components/crm/campaigns'
+'use client'
+
+import { EntityListView } from '@/components/pcf/list-view/EntityListView'
+import { campaignsListConfig, Campaign } from '@/configs/entities/campaigns.config'
 
 export default function CampaignsPage() {
-  return <CampaignsListPage />
+  return <EntityListView<Campaign> config={campaignsListConfig} />
 }

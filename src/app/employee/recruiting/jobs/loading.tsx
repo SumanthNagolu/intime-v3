@@ -1,5 +1,5 @@
-import { JobsListSkeleton } from '@/components/recruiting/jobs'
+import { EntityListViewSkeleton } from '@/components/pcf/shared/Skeletons'
 
 export default function JobsLoading() {
-  return <JobsListSkeleton />
+  return <EntityListViewSkeleton />
 }

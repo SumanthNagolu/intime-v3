@@ -48,7 +48,7 @@ Implement a fully functional Campaign workspace with section-based navigation, a
 - Section definitions in `src/lib/navigation/entity-sections.ts` - need to add `campaignSections`
 - Activity pattern in `src/components/recruiting/accounts/sections/AccountActivitiesSection.tsx`
 - Entity navigation styles in `src/lib/navigation/entity-navigation.types.ts`
-- CRM activities use `crm_activities` table with `entity_type='campaign'`
+- CRM activities use unified `activities` table with `entity_type='campaign'`
 
 ## Desired End State
 
@@ -86,7 +86,7 @@ Follow the established patterns from Account workspace:
 2. Create `CampaignSectionSidebar` following `AccountSectionSidebar` pattern
 3. Refactor `CampaignDetailPage` to section-based routing with query params
 4. Create section components following existing patterns
-5. Add activity system using `crm_activities` table (already supports campaigns)
+5. Add activity system using unified `activities` table (already supports campaigns)
 
 ---
 
@@ -552,7 +552,7 @@ Move the prospects table, filtering, and convert actions into this section. Add 
 ## Phase 3: Activities System
 
 ### Overview
-Implement full activity tracking for campaigns using the existing `crm_activities` table and following the Account activities pattern.
+Implement full activity tracking for campaigns using the unified `activities` table and following the Account activities pattern.
 
 ### Changes Required:
 
@@ -639,7 +639,7 @@ listByEntity: orgProtectedProcedure
     const { adminClient, orgId } = ctx
 
     let query = adminClient
-      .from('crm_activities')
+      .from('activities')
       .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
       .eq('org_id', orgId)
       .eq('entity_type', input.entityType)
@@ -1024,7 +1024,7 @@ Add notes functionality for campaign-level note-taking.
 **File**: `src/components/crm/campaigns/sections/CampaignNotesSection.tsx` (new file)
 **Changes**: Create notes section following activity pattern
 
-Notes can use the same `crm_activities` table with `activity_type='note'`, or a dedicated notes table if one exists. For consistency, use the activity system:
+Notes can use the unified `activities` table with `activity_type='note'`, or a dedicated notes table if one exists. For consistency, use the activity system:
 
 ```typescript
 'use client'
@@ -1322,7 +1322,7 @@ complete: orgProtectedProcedure
     if (error) throw new Error(error.message)
 
     // Log activity
-    await adminClient.from('crm_activities').insert({
+    await adminClient.from('activities').insert({
       org_id: orgId,
       entity_type: 'campaign',
       entity_id: input.id,
@@ -1421,7 +1421,7 @@ Add a "Campaign Results" card that shows:
 
 ## Migration Notes
 
-- No database migrations required (using existing `crm_activities` table)
+- No database migrations required (using unified `activities` table)
 - Existing campaign data will work with new UI
 - New `outcome` and `completion_notes` columns may need migration if not present
 

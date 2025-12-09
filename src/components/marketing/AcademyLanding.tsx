@@ -301,7 +301,7 @@ export const AcademyLanding: React.FC = () => {
                 {/* CTA Section */}
                 <div className="flex flex-col sm:flex-row items-start gap-4 mb-16">
                   <Link
-                    href="/academy/dashboard"
+                    href="/training/courses"
                     className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gold-500 hover:bg-gold-400 text-charcoal-900 font-bold text-sm uppercase tracking-wider transition-all duration-300"
                     style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0% 100%)' }}
                   >
@@ -735,7 +735,7 @@ export const AcademyLanding: React.FC = () => {
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                 <Link
-                  href="/academy/dashboard"
+                  href="/training/courses"
                   className="group px-10 py-5 bg-gold-500 hover:bg-gold-400 text-charcoal-900 font-bold uppercase tracking-widest text-sm transition-all duration-300 flex items-center gap-3"
                   style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0% 100%)' }}
                 >
@@ -769,7 +769,7 @@ export const AcademyLanding: React.FC = () => {
             {
               title: 'Resources',
               links: [
-                { label: 'Course Catalog', href: '/academy/catalog' },
+                { label: 'Course Catalog', href: '/training/courses' },
                 { label: 'Blog', href: '/resources' },
                 { label: 'Success Stories', href: '/academy#testimonials' },
                 { label: 'Employer Partners', href: '/employers' },
@@ -779,7 +779,7 @@ export const AcademyLanding: React.FC = () => {
               title: 'Support',
               links: [
                 { label: 'Contact Us', href: '/contact' },
-                { label: 'Student Portal', href: '/academy/dashboard' },
+                { label: 'Student Portal', href: '/training/dashboard' },
                 { label: 'Terms', href: '/terms' },
                 { label: 'Privacy', href: '/privacy' },
               ],

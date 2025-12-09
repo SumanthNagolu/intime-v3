@@ -604,8 +604,7 @@ export const crmRouter = router({
             entity_type: 'account',
             entity_id: input.accountId,
             activity_type: 'status_change',
-            activity_subtype: 'onboarding_completed',
-            title: 'Onboarding Completed',
+            subject: 'Onboarding Completed',
             description: 'Account onboarding wizard has been completed.',
             created_by: user?.id,
           })
@@ -845,6 +844,7 @@ export const crmRouter = router({
         status: z.enum(['new', 'contacted', 'qualified', 'unqualified', 'nurture', 'converted', 'all']).default('all'),
         source: z.string().optional(),
         ownerId: z.string().uuid().optional(),
+        campaignId: z.string().uuid().optional(),
         minScore: z.number().min(0).max(100).optional(),
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
@@ -872,6 +872,9 @@ export const crmRouter = router({
         }
         if (input.ownerId) {
           query = query.eq('owner_id', input.ownerId)
+        }
+        if (input.campaignId) {
+          query = query.eq('campaign_id', input.campaignId)
         }
         if (input.minScore !== undefined) {
           query = query.gte('bant_total_score', input.minScore)
@@ -927,7 +930,7 @@ export const crmRouter = router({
 
         // Get lead activities
         const { data: activities } = await adminClient
-          .from('crm_activities')
+          .from('activities')
           .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
           .eq('entity_type', 'lead')
           .eq('entity_id', input.id)
@@ -960,9 +963,11 @@ export const crmRouter = router({
         phone: z.string().optional(),
         linkedinUrl: z.string().url().optional().or(z.literal('')),
         // Source
-        source: z.enum(['linkedin', 'referral', 'cold_outreach', 'inbound', 'event', 'website', 'other']),
+        source: z.enum(['linkedin', 'referral', 'cold_outreach', 'inbound', 'event', 'website', 'campaign', 'other']),
         sourceDetails: z.string().optional(),
         referralName: z.string().optional(),
+        // Campaign association
+        campaignId: z.string().uuid().optional(),
         // Initial assessment
         estimatedValue: z.number().min(0).optional(),
         hiringNeeds: z.string().optional(),
@@ -1016,6 +1021,7 @@ export const crmRouter = router({
             phone: input.phone,
             linkedin_url: input.linkedinUrl || null,
             source: input.source,
+            campaign_id: input.campaignId || null,
             estimated_value: input.estimatedValue,
             business_need: input.hiringNeeds,
             positions_count: input.positionsCount || 1,
@@ -1033,7 +1039,7 @@ export const crmRouter = router({
 
         // Log activity
         await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'lead',
@@ -1084,6 +1090,7 @@ export const crmRouter = router({
         positionsCount: z.number().min(1).max(100).optional(),
         skillsNeeded: z.array(z.string()).optional(),
         ownerId: z.string().uuid().optional(),
+        campaignId: z.string().uuid().nullable().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
         const { orgId, user } = ctx
@@ -1106,6 +1113,7 @@ export const crmRouter = router({
         if (input.positionsCount !== undefined) updateData.positions_count = input.positionsCount
         if (input.skillsNeeded !== undefined) updateData.skills_needed = input.skillsNeeded
         if (input.ownerId !== undefined) updateData.owner_id = input.ownerId
+        if (input.campaignId !== undefined) updateData.campaign_id = input.campaignId
 
         const { data, error } = await adminClient
           .from('leads')
@@ -1120,6 +1128,93 @@ export const crmRouter = router({
         }
 
         return data
+      }),
+
+    // Link existing leads to a campaign
+    linkToCampaign: orgProtectedProcedure
+      .input(z.object({
+        campaignId: z.string().uuid(),
+        leadIds: z.array(z.string().uuid()).min(1).max(100),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Verify the campaign exists and belongs to the org
+        const { data: campaign, error: campaignError } = await adminClient
+          .from('campaigns')
+          .select('id, name')
+          .eq('id', input.campaignId)
+          .eq('org_id', orgId)
+          .single()
+
+        if (campaignError || !campaign) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Campaign not found' })
+        }
+
+        // Update leads to link them to the campaign
+        const { data, error } = await adminClient
+          .from('leads')
+          .update({ campaign_id: input.campaignId })
+          .in('id', input.leadIds)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .select('id, company_name, first_name, last_name')
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        const linkedCount = data?.length || 0
+
+        // Log activity for the campaign
+        if (linkedCount > 0) {
+          await adminClient
+            .from('activities')
+            .insert({
+              org_id: orgId,
+              entity_type: 'campaign',
+              entity_id: input.campaignId,
+              activity_type: 'note',
+              subject: 'Leads Linked',
+              description: `${linkedCount} existing ${linkedCount === 1 ? 'lead' : 'leads'} linked to campaign`,
+              created_by: user?.id,
+            })
+        }
+
+        return { linked: linkedCount, leads: data }
+      }),
+
+    // List leads available for linking (not already linked to a campaign)
+    listAvailableForCampaign: orgProtectedProcedure
+      .input(z.object({
+        search: z.string().optional(),
+        limit: z.number().min(1).max(100).default(50),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        let query = adminClient
+          .from('leads')
+          .select('id, company_name, first_name, last_name, email, status, lead_score, created_at')
+          .eq('org_id', orgId)
+          .is('campaign_id', null)
+          .is('deleted_at', null)
+          .order('created_at', { ascending: false })
+          .limit(input.limit)
+
+        if (input.search) {
+          query = query.or(`company_name.ilike.%${input.search}%,first_name.ilike.%${input.search}%,last_name.ilike.%${input.search}%,email.ilike.%${input.search}%`)
+        }
+
+        const { data, error } = await query
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data || []
       }),
 
     // Qualify lead (B02) - Update BANT scores
@@ -1204,7 +1299,7 @@ export const crmRouter = router({
         // Log qualification activity
         const totalScore = input.bantBudget + input.bantAuthority + input.bantNeed + input.bantTimeline
         await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'lead',
@@ -1320,7 +1415,7 @@ export const crmRouter = router({
 
         // Log activity on lead
         await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'lead',
@@ -1334,7 +1429,7 @@ export const crmRouter = router({
 
         // Log activity on deal
         await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'deal',
@@ -1410,7 +1505,7 @@ export const crmRouter = router({
 
         // Log activity
         await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'lead',
@@ -1458,7 +1553,7 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         const { data: activity, error } = await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'lead',
@@ -1827,13 +1922,13 @@ export const crmRouter = router({
         // Get stakeholders
         const { data: stakeholders } = await adminClient
           .from('deal_stakeholders')
-          .select('*, contact:crm_contacts(id, first_name, last_name, email)')
+          .select('*, contact:contacts(id, first_name, last_name, email)')
           .eq('deal_id', input.id)
           .eq('is_active', true)
 
         // Get activities
         const { data: activities } = await adminClient
-          .from('crm_activities')
+          .from('activities')
           .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
           .eq('entity_type', 'deal')
           .eq('entity_id', input.id)
@@ -1951,7 +2046,7 @@ export const crmRouter = router({
 
         // Log activity
         await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'deal',
@@ -2104,7 +2199,7 @@ export const crmRouter = router({
 
         // Log activity
         await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'deal',
@@ -2257,7 +2352,7 @@ export const crmRouter = router({
 
         // Log activity
         await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'deal',
@@ -2314,7 +2409,7 @@ export const crmRouter = router({
 
         // Log activity
         await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'deal',
@@ -2364,7 +2459,7 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         const { data, error } = await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'deal',
@@ -3949,7 +4044,7 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         let query = adminClient
-          .from('crm_activities')
+          .from('activities')
           .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
           .eq('org_id', orgId)
           .eq('entity_type', 'account')
@@ -3982,7 +4077,7 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         let query = adminClient
-          .from('crm_activities')
+          .from('activities')
           .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
           .eq('org_id', orgId)
           .eq('related_contact_id', input.contactId)
@@ -4024,7 +4119,7 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         const { data, error } = await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: input.entityType,
@@ -4035,7 +4130,7 @@ export const crmRouter = router({
             outcome: input.outcome,
             direction: input.direction,
             duration_minutes: input.durationMinutes,
-            scheduled_at: input.scheduledAt,
+            scheduled_for: input.scheduledAt,
             completed_at: input.completedAt || new Date().toISOString(),
             next_steps: input.nextSteps,
             next_follow_up_date: input.nextFollowUpDate,
@@ -4070,7 +4165,7 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         const { data, error } = await adminClient
-          .from('crm_activities')
+          .from('activities')
           .select('*, creator:user_profiles!created_by(id, full_name, avatar_url), contact:contacts!related_contact_id(id, first_name, last_name)')
           .eq('id', input.id)
           .eq('org_id', orgId)
@@ -4105,7 +4200,7 @@ export const crmRouter = router({
         if (input.nextFollowUpDate !== undefined) updateData.next_follow_up_date = input.nextFollowUpDate
 
         const { data, error } = await adminClient
-          .from('crm_activities')
+          .from('activities')
           .update(updateData)
           .eq('id', input.id)
           .eq('org_id', orgId)
@@ -4127,7 +4222,7 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         const { error } = await adminClient
-          .from('crm_activities')
+          .from('activities')
           .delete()
           .eq('id', input.id)
           .eq('org_id', orgId)
@@ -4152,7 +4247,7 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         let query = adminClient
-          .from('crm_activities')
+          .from('activities')
           .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
           .eq('org_id', orgId)
           .eq('entity_type', input.entityType)
@@ -4326,6 +4421,7 @@ export const crmRouter = router({
           { count: leadsCount },
           { count: activitiesCount },
           { count: notesCount },
+          { count: documentsCount },
           { data: funnel },
         ] = await Promise.all([
           // Prospects count
@@ -4333,40 +4429,45 @@ export const crmRouter = router({
             .from('campaign_prospects')
             .select('*', { count: 'exact', head: true })
             .eq('campaign_id', input.id),
-          
+
           // Leads count (from campaigns relation)
           adminClient
             .from('leads')
             .select('*', { count: 'exact', head: true })
             .eq('campaign_id', input.id)
             .eq('org_id', orgId),
-          
+
           // Activities count
           adminClient
-            .from('crm_activities')
+            .from('activities')
             .select('*', { count: 'exact', head: true })
             .eq('entity_type', 'campaign')
             .eq('entity_id', input.id)
             .eq('org_id', orgId),
-          
+
           // Notes count (subset of activities)
           adminClient
-            .from('crm_activities')
+            .from('activities')
             .select('*', { count: 'exact', head: true })
             .eq('entity_type', 'campaign')
             .eq('entity_id', input.id)
             .eq('activity_type', 'note')
             .eq('org_id', orgId),
-          
+
+          // Documents count
+          adminClient
+            .from('campaign_documents')
+            .select('*', { count: 'exact', head: true })
+            .eq('campaign_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null),
+
           // Funnel metrics via RPC
           adminClient.rpc('get_campaign_funnel', { p_campaign_id: input.id }),
         ])
 
         // Calculate sequences count from JSONB
         const sequencesCount = campaign.channels?.length || 0
-
-        // Documents count will be 0 until table is created
-        const documentsCount = 0
 
         // Build funnel data
         const funnelData = funnel?.[0] || {
@@ -4410,7 +4511,7 @@ export const crmRouter = router({
             leads: leadsCount || 0,
             activities: activitiesCount || 0,
             notes: notesCount || 0,
-            documents: documentsCount,
+            documents: documentsCount || 0,
             sequences: sequencesCount,
           },
 
@@ -4467,8 +4568,9 @@ export const crmRouter = router({
             excludeCompetitors: z.boolean().default(true),
           }).optional(),
         }),
-        // Step 3: Channels
+        // Step 3: Channels & Sequences
         channels: z.array(z.enum(['linkedin', 'email', 'phone', 'event', 'direct_mail'])),
+        sequenceTemplateIds: z.array(z.string().uuid()).optional(),
         sequences: z.record(z.object({
           steps: z.array(z.object({
             stepNumber: z.number(),
@@ -4518,6 +4620,7 @@ export const crmRouter = router({
             target_criteria: input.targetCriteria,
             channels: input.channels,
             sequences: input.sequences ?? {},
+            sequence_template_ids: input.sequenceTemplateIds ?? [],
             start_date: input.startDate,
             end_date: input.endDate,
             status,
@@ -4539,7 +4642,7 @@ export const crmRouter = router({
 
         // Log activity
         await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'campaign',
@@ -4558,6 +4661,8 @@ export const crmRouter = router({
       .input(z.object({
         id: z.string().uuid(),
         name: z.string().min(3).max(100).optional(),
+        campaignType: z.string().optional(),
+        goal: z.string().optional(),
         description: z.string().optional(),
         targetCriteria: z.record(z.unknown()).optional(),
         channels: z.array(z.string()).optional(),
@@ -4576,6 +4681,8 @@ export const crmRouter = router({
 
         const updateData: Record<string, unknown> = { updated_by: user?.id }
         if (input.name !== undefined) updateData.name = input.name
+        if (input.campaignType !== undefined) updateData.campaign_type = input.campaignType
+        if (input.goal !== undefined) updateData.goal = input.goal
         if (input.description !== undefined) updateData.description = input.description
         if (input.targetCriteria !== undefined) updateData.target_criteria = input.targetCriteria
         if (input.channels !== undefined) updateData.channels = input.channels
@@ -4604,7 +4711,7 @@ export const crmRouter = router({
         const changedFields = Object.keys(updateData).filter(k => k !== 'updated_by')
         if (changedFields.length > 0) {
           await adminClient
-            .from('crm_activities')
+            .from('activities')
             .insert({
               org_id: orgId,
               entity_type: 'campaign',
@@ -4646,7 +4753,7 @@ export const crmRouter = router({
 
         // Log activity
         await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'campaign',
@@ -4712,7 +4819,7 @@ export const crmRouter = router({
 
         // Log completion activity
         await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'campaign',
@@ -4797,6 +4904,31 @@ export const crmRouter = router({
         }
       }),
 
+    // Get a single prospect by ID
+    getProspectById: orgProtectedProcedure
+      .input(z.object({
+        prospectId: z.string().uuid(),
+        campaignId: z.string().uuid(),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { data, error } = await adminClient
+          .from('campaign_prospects')
+          .select('*, campaign:campaigns!campaign_id(id, name, status)')
+          .eq('id', input.prospectId)
+          .eq('campaign_id', input.campaignId)
+          .eq('org_id', orgId)
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Prospect not found' })
+        }
+
+        return data
+      }),
+
     // Get prospects for a campaign
     getProspects: orgProtectedProcedure
       .input(z.object({
@@ -4861,7 +4993,27 @@ export const crmRouter = router({
         const { orgId } = ctx
         const adminClient = getAdminClient()
 
-        const prospectsToInsert = input.prospects.map(p => ({
+        // Get existing emails for this campaign to avoid duplicates
+        const emails = input.prospects.map(p => p.email.toLowerCase())
+        const { data: existing } = await adminClient
+          .from('campaign_prospects')
+          .select('email')
+          .eq('campaign_id', input.campaignId)
+          .eq('org_id', orgId)
+          .in('email', emails)
+
+        const existingEmails = new Set((existing ?? []).map(e => e.email?.toLowerCase()))
+
+        // Filter out prospects that already exist
+        const newProspects = input.prospects.filter(
+          p => !existingEmails.has(p.email.toLowerCase())
+        )
+
+        if (newProspects.length === 0) {
+          return { added: 0 }
+        }
+
+        const prospectsToInsert = newProspects.map(p => ({
           org_id: orgId,
           campaign_id: input.campaignId,
           first_name: p.firstName,
@@ -4881,10 +5033,7 @@ export const crmRouter = router({
 
         const { data, error } = await adminClient
           .from('campaign_prospects')
-          .upsert(prospectsToInsert, {
-            onConflict: 'campaign_id,email',
-            ignoreDuplicates: true,
-          })
+          .insert(prospectsToInsert)
           .select()
 
         if (error) {
@@ -4896,7 +5045,7 @@ export const crmRouter = router({
         // Log activity for prospect addition
         if (addedCount > 0) {
           await adminClient
-            .from('crm_activities')
+            .from('activities')
             .insert({
               org_id: orgId,
               entity_type: 'campaign',
@@ -4909,6 +5058,83 @@ export const crmRouter = router({
         }
 
         return { added: addedCount }
+      }),
+
+    // Update a prospect
+    updateProspect: orgProtectedProcedure
+      .input(z.object({
+        prospectId: z.string().uuid(),
+        firstName: z.string().optional(),
+        lastName: z.string().optional(),
+        email: z.string().email().optional(),
+        phone: z.string().optional(),
+        linkedinUrl: z.string().optional(),
+        companyName: z.string().optional(),
+        companyIndustry: z.string().optional(),
+        companySize: z.string().optional(),
+        title: z.string().optional(),
+        location: z.string().optional(),
+        timezone: z.string().optional(),
+        status: z.enum(['enrolled', 'contacted', 'engaged', 'responded', 'converted', 'unsubscribed', 'bounced']).optional(),
+        responseType: z.enum(['positive', 'neutral', 'negative']).optional(),
+        responseText: z.string().optional(),
+        engagementScore: z.number().min(0).max(100).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Verify prospect exists and belongs to org
+        const { data: existing, error: fetchError } = await adminClient
+          .from('campaign_prospects')
+          .select('id, campaign_id')
+          .eq('id', input.prospectId)
+          .eq('org_id', orgId)
+          .single()
+
+        if (fetchError || !existing) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Prospect not found' })
+        }
+
+        // Build update object
+        const updateData: Record<string, unknown> = {
+          updated_at: new Date().toISOString(),
+        }
+
+        if (input.firstName !== undefined) updateData.first_name = input.firstName
+        if (input.lastName !== undefined) updateData.last_name = input.lastName
+        if (input.email !== undefined) updateData.email = input.email
+        if (input.phone !== undefined) updateData.phone = input.phone
+        if (input.linkedinUrl !== undefined) updateData.linkedin_url = input.linkedinUrl
+        if (input.companyName !== undefined) updateData.company_name = input.companyName
+        if (input.companyIndustry !== undefined) updateData.company_industry = input.companyIndustry
+        if (input.companySize !== undefined) updateData.company_size = input.companySize
+        if (input.title !== undefined) updateData.title = input.title
+        if (input.location !== undefined) updateData.location = input.location
+        if (input.timezone !== undefined) updateData.timezone = input.timezone
+        if (input.status !== undefined) updateData.status = input.status
+        if (input.responseType !== undefined) updateData.response_type = input.responseType
+        if (input.responseText !== undefined) updateData.response_text = input.responseText
+        if (input.engagementScore !== undefined) updateData.engagement_score = input.engagementScore
+
+        // If response type is set, also set responded_at
+        if (input.responseType && !existing.responded_at) {
+          updateData.responded_at = new Date().toISOString()
+        }
+
+        const { data, error } = await adminClient
+          .from('campaign_prospects')
+          .update(updateData)
+          .eq('id', input.prospectId)
+          .eq('org_id', orgId)
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
       }),
 
     // Convert prospect to lead (A03)
@@ -5031,7 +5257,7 @@ export const crmRouter = router({
 
         // Log activity
         await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'lead',
@@ -5076,7 +5302,7 @@ export const crmRouter = router({
         // Log activity for deletion
         if (campaign) {
           await adminClient
-            .from('crm_activities')
+            .from('activities')
             .insert({
               org_id: orgId,
               entity_type: 'campaign',
@@ -5144,7 +5370,7 @@ export const crmRouter = router({
 
         // Log activity for duplication
         await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'campaign',
@@ -5157,6 +5383,960 @@ export const crmRouter = router({
 
         return data
       }),
+
+    // ================================================
+    // Campaign Documents CRUD
+    // ================================================
+    documents: router({
+      list: orgProtectedProcedure
+        .input(
+          z.object({
+            campaignId: z.string().uuid(),
+            documentType: z.enum(['template', 'collateral', 'report', 'attachment', 'all']).default('all'),
+            category: z.string().optional(),
+            limit: z.number().min(1).max(100).default(50),
+          })
+        )
+        .query(async ({ ctx, input }) => {
+          const { orgId } = ctx
+          const adminClient = getAdminClient()
+
+          let query = adminClient
+            .from('campaign_documents')
+            .select('*, uploader:user_profiles!uploaded_by(id, full_name, avatar_url)')
+            .eq('org_id', orgId)
+            .eq('campaign_id', input.campaignId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(input.limit)
+
+          if (input.documentType !== 'all') {
+            query = query.eq('document_type', input.documentType)
+          }
+          if (input.category) {
+            query = query.eq('category', input.category)
+          }
+
+          const { data, error } = await query
+          if (error) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          return data ?? []
+        }),
+
+      getById: orgProtectedProcedure
+        .input(z.object({ id: z.string().uuid() }))
+        .query(async ({ ctx, input }) => {
+          const { orgId } = ctx
+          const adminClient = getAdminClient()
+
+          const { data, error } = await adminClient
+            .from('campaign_documents')
+            .select('*, uploader:user_profiles!uploaded_by(id, full_name, avatar_url)')
+            .eq('org_id', orgId)
+            .eq('id', input.id)
+            .is('deleted_at', null)
+            .single()
+
+          if (error || !data) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Document not found' })
+          }
+          return data
+        }),
+
+      create: orgProtectedProcedure
+        .input(
+          z.object({
+            campaignId: z.string().uuid(),
+            name: z.string().min(1).max(255),
+            description: z.string().optional(),
+            documentType: z.enum(['template', 'collateral', 'report', 'attachment']).default('attachment'),
+            category: z.string().optional(),
+            fileUrl: z.string().url(),
+            fileName: z.string(),
+            fileSize: z.number().int().positive(),
+            mimeType: z.string(),
+            templateVariables: z.record(z.any()).optional(),
+          })
+        )
+        .mutation(async ({ ctx, input }) => {
+          const { orgId, user } = ctx
+          const adminClient = getAdminClient()
+
+          const { data, error } = await adminClient
+            .from('campaign_documents')
+            .insert({
+              campaign_id: input.campaignId,
+              org_id: orgId,
+              name: input.name,
+              description: input.description,
+              document_type: input.documentType,
+              category: input.category,
+              file_url: input.fileUrl,
+              file_name: input.fileName,
+              file_size: input.fileSize,
+              mime_type: input.mimeType,
+              template_variables: input.templateVariables,
+              uploaded_by: user?.id,
+            })
+            .select()
+            .single()
+
+          if (error) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+
+          // Log activity
+          await adminClient.from('activities').insert({
+            org_id: orgId,
+            entity_type: 'campaign',
+            entity_id: input.campaignId,
+            activity_type: 'note',
+            subject: 'Document Uploaded',
+            description: `"${input.name}" (${input.documentType}) uploaded to campaign`,
+            created_by: user?.id,
+          })
+
+          return data
+        }),
+
+      update: orgProtectedProcedure
+        .input(
+          z.object({
+            id: z.string().uuid(),
+            name: z.string().min(1).max(255).optional(),
+            description: z.string().optional(),
+            category: z.string().optional(),
+            templateVariables: z.record(z.any()).optional(),
+          })
+        )
+        .mutation(async ({ ctx, input }) => {
+          const { orgId, user } = ctx
+          const adminClient = getAdminClient()
+          const { id, ...updates } = input
+
+          const cleanUpdates = Object.fromEntries(
+            Object.entries({
+              name: updates.name,
+              description: updates.description,
+              category: updates.category,
+              template_variables: updates.templateVariables,
+            }).filter(([, v]) => v !== undefined)
+          )
+
+          const { data, error } = await adminClient
+            .from('campaign_documents')
+            .update(cleanUpdates)
+            .eq('org_id', orgId)
+            .eq('id', id)
+            .select('*, campaign_id')
+            .single()
+
+          if (error) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+
+          // Log activity
+          await adminClient.from('activities').insert({
+            org_id: orgId,
+            entity_type: 'campaign',
+            entity_id: data.campaign_id,
+            activity_type: 'note',
+            subject: 'Document Updated',
+            description: `"${data.name}" document updated`,
+            created_by: user?.id,
+          })
+
+          return data
+        }),
+
+      delete: orgProtectedProcedure
+        .input(z.object({ id: z.string().uuid() }))
+        .mutation(async ({ ctx, input }) => {
+          const { orgId, user } = ctx
+          const adminClient = getAdminClient()
+
+          // Get document first for activity log
+          const { data: doc } = await adminClient
+            .from('campaign_documents')
+            .select('name, campaign_id')
+            .eq('org_id', orgId)
+            .eq('id', input.id)
+            .single()
+
+          // Soft delete
+          const { error } = await adminClient
+            .from('campaign_documents')
+            .update({ deleted_at: new Date().toISOString() })
+            .eq('org_id', orgId)
+            .eq('id', input.id)
+
+          if (error) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+
+          // Log activity
+          if (doc) {
+            await adminClient.from('activities').insert({
+              org_id: orgId,
+              entity_type: 'campaign',
+              entity_id: doc.campaign_id,
+              activity_type: 'note',
+              subject: 'Document Deleted',
+              description: `"${doc.name}" document removed from campaign`,
+              created_by: user?.id,
+            })
+          }
+
+          return { success: true }
+        }),
+
+      incrementUsage: orgProtectedProcedure
+        .input(z.object({ id: z.string().uuid() }))
+        .mutation(async ({ ctx, input }) => {
+          const { orgId } = ctx
+          const adminClient = getAdminClient()
+
+          // Update last used timestamp (usage_count requires DB trigger/function)
+          const { error } = await adminClient
+            .from('campaign_documents')
+            .update({
+              last_used_at: new Date().toISOString(),
+            })
+            .eq('org_id', orgId)
+            .eq('id', input.id)
+
+          // If update fails silently, it's okay
+          return { success: !error }
+        }),
+    }),
+
+    // ================================================
+    // Campaign Sequence Stats
+    // ================================================
+    getSequenceStats: orgProtectedProcedure
+      .input(z.object({ campaignId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const adminClient = getAdminClient()
+
+        // Aggregate stats from campaign_sequence_logs
+        const { data, error } = await adminClient
+          .from('campaign_sequence_logs')
+          .select('channel, action_type')
+          .eq('campaign_id', input.campaignId)
+
+        if (error) {
+          return {}
+        }
+
+        // Group by channel and calculate stats
+        const stats: Record<string, { sent: number; opens: number; replies: number }> = {}
+
+        for (const log of data || []) {
+          if (!stats[log.channel]) {
+            stats[log.channel] = { sent: 0, opens: 0, replies: 0 }
+          }
+
+          switch (log.action_type) {
+            case 'sent':
+            case 'delivered':
+              stats[log.channel].sent++
+              break
+            case 'opened':
+            case 'viewed':
+              stats[log.channel].opens++
+              break
+            case 'replied':
+            case 'responded':
+              stats[log.channel].replies++
+              break
+          }
+        }
+
+        return stats
+      }),
+
+    // ================================================
+    // CAMPAIGN ACTIVITIES (Unified Workflow System)
+    // Uses the main activities table with full workflow features
+    // ================================================
+    workflowActivities: router({
+      // List activities for a campaign (from unified activities table)
+      list: orgProtectedProcedure
+        .input(z.object({
+          campaignId: z.string().uuid(),
+          status: z.enum(['open', 'in_progress', 'completed', 'skipped', 'canceled', 'blocked', 'all']).default('all'),
+          includeCompleted: z.boolean().default(true),
+          limit: z.number().min(1).max(100).default(50),
+          offset: z.number().min(0).default(0),
+        }))
+        .query(async ({ ctx, input }) => {
+          const { orgId } = ctx
+          const adminClient = getAdminClient()
+
+          let query = adminClient
+            .from('activities')
+            .select(`
+              *,
+              assigned_user:user_profiles!assigned_to(id, full_name, avatar_url),
+              created_by_user:user_profiles!created_by(id, full_name, avatar_url),
+              pattern:activity_patterns!pattern_id(id, code, name, category, icon, color)
+            `, { count: 'exact' })
+            .eq('org_id', orgId)
+            .eq('entity_type', 'campaign')
+            .eq('entity_id', input.campaignId)
+            .order('created_at', { ascending: false })
+
+          if (input.status !== 'all') {
+            query = query.eq('status', input.status)
+          } else if (!input.includeCompleted) {
+            query = query.in('status', ['open', 'in_progress', 'blocked'])
+          }
+
+          query = query.range(input.offset, input.offset + input.limit - 1)
+
+          const { data, error, count } = await query
+
+          if (error) {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          }
+
+          // Calculate overdue status
+          const now = new Date()
+          const items = (data ?? []).map(activity => {
+            const dueDate = activity.due_date ? new Date(activity.due_date) : null
+            const escalationDate = activity.escalation_date ? new Date(activity.escalation_date) : null
+            
+            return {
+              id: activity.id,
+              subject: activity.subject,
+              description: activity.description,
+              instructions: activity.instructions,
+              checklist: activity.checklist,
+              checklistProgress: activity.checklist_progress,
+              status: activity.status,
+              priority: activity.priority,
+              category: activity.category,
+              activityType: activity.activity_type,
+              patternCode: activity.pattern_code,
+              pattern: activity.pattern,
+              dueDate: activity.due_date,
+              escalationDate: activity.escalation_date,
+              isOverdue: dueDate ? dueDate < now && activity.status !== 'completed' : false,
+              isEscalated: escalationDate ? escalationDate < now && activity.status !== 'completed' : false,
+              escalationCount: activity.escalation_count,
+              assignedTo: activity.assigned_user,
+              createdBy: activity.created_by_user,
+              completedAt: activity.completed_at,
+              outcome: activity.outcome,
+              outcomeNotes: activity.outcome_notes,
+              autoCreated: activity.auto_created,
+              predecessorActivityId: activity.predecessor_activity_id,
+              createdAt: activity.created_at,
+              updatedAt: activity.updated_at,
+            }
+          })
+
+          return {
+            items,
+            total: count ?? 0,
+            // Summary counts
+            summary: {
+              open: items.filter(a => a.status === 'open').length,
+              inProgress: items.filter(a => a.status === 'in_progress').length,
+              completed: items.filter(a => a.status === 'completed').length,
+              overdue: items.filter(a => a.isOverdue).length,
+              escalated: items.filter(a => a.isEscalated).length,
+            },
+          }
+        }),
+
+      // Get single activity by ID
+      getById: orgProtectedProcedure
+        .input(z.object({ id: z.string().uuid() }))
+        .query(async ({ ctx, input }) => {
+          const { orgId } = ctx
+          const adminClient = getAdminClient()
+
+          const { data, error } = await adminClient
+            .from('activities')
+            .select(`
+              *,
+              assigned_user:user_profiles!assigned_to(id, full_name, avatar_url, email),
+              created_by_user:user_profiles!created_by(id, full_name, avatar_url),
+              pattern:activity_patterns!pattern_id(id, code, name, description, category, icon, color, instructions, checklist),
+              history:activity_history(*)
+            `)
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+            .single()
+
+          if (error) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Activity not found' })
+          }
+
+          return data
+        }),
+
+      // Create manual activity (ad-hoc, not from workflow)
+      create: orgProtectedProcedure
+        .input(z.object({
+          campaignId: z.string().uuid(),
+          // Activity details
+          subject: z.string().min(3).max(200),
+          description: z.string().max(2000).optional(),
+          activityType: z.enum(['task', 'call', 'email', 'meeting', 'note', 'follow_up', 'review']).default('task'),
+          priority: z.enum(['low', 'normal', 'high', 'urgent']).default('normal'),
+          category: z.string().optional(),
+          // Pattern (optional - for using predefined pattern)
+          patternCode: z.string().optional(),
+          // Assignment
+          assignedTo: z.string().uuid().optional(),
+          // Dates
+          dueDate: z.string().datetime().optional(),
+          // Checklist (optional)
+          checklist: z.array(z.object({
+            item: z.string(),
+            required: z.boolean().default(false),
+          })).optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const { orgId, user } = ctx
+          const adminClient = getAdminClient()
+
+          // Get pattern if specified
+          let pattern = null
+          if (input.patternCode) {
+            const { data: patternData } = await adminClient
+              .from('activity_patterns')
+              .select('*')
+              .eq('code', input.patternCode)
+              .or(`org_id.is.null,org_id.eq.${orgId}`)
+              .order('org_id', { nullsFirst: false })
+              .limit(1)
+              .single()
+
+            pattern = patternData
+          }
+
+          // Calculate due date if not provided but pattern has target_days
+          let dueDate = input.dueDate ? new Date(input.dueDate) : null
+          let escalationDate: Date | null = null
+
+          if (!dueDate && pattern?.target_days) {
+            dueDate = new Date()
+            dueDate.setDate(dueDate.getDate() + pattern.target_days)
+          }
+
+          if (dueDate && pattern?.escalation_days) {
+            escalationDate = new Date()
+            escalationDate.setDate(escalationDate.getDate() + pattern.escalation_days)
+          }
+
+          // Create the activity
+          const { data, error } = await adminClient
+            .from('activities')
+            .insert({
+              org_id: orgId,
+              entity_type: 'campaign',
+              entity_id: input.campaignId,
+              subject: input.subject,
+              description: input.description,
+              activity_type: input.activityType,
+              priority: input.priority,
+              category: input.category || pattern?.category,
+              pattern_code: input.patternCode,
+              pattern_id: pattern?.id,
+              instructions: pattern?.instructions,
+              checklist: input.checklist || pattern?.checklist,
+              due_date: dueDate?.toISOString(),
+              escalation_date: escalationDate?.toISOString(),
+              assigned_to: input.assignedTo || user?.id,
+              status: 'open',
+              auto_created: false,
+              created_by: user?.id,
+            })
+            .select(`
+              *,
+              assigned_user:user_profiles!assigned_to(id, full_name, avatar_url)
+            `)
+            .single()
+
+          if (error) {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          }
+
+          // Log history
+          await adminClient
+            .from('activity_history')
+            .insert({
+              activity_id: data.id,
+              action: 'created',
+              changed_by: user?.id,
+              notes: `Manual activity created: ${input.subject}`,
+            })
+
+          return data
+        }),
+
+      // Start working on activity (change status to in_progress)
+      start: orgProtectedProcedure
+        .input(z.object({ id: z.string().uuid() }))
+        .mutation(async ({ ctx, input }) => {
+          const { orgId, user, supabase } = ctx
+          const adminClient = getAdminClient()
+
+          // Get current activity
+          const { data: activity, error: fetchError } = await adminClient
+            .from('activities')
+            .select('status')
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+            .single()
+
+          if (fetchError || !activity) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Activity not found' })
+          }
+
+          if (activity.status !== 'open') {
+            throw new TRPCError({ code: 'BAD_REQUEST', message: 'Activity must be open to start' })
+          }
+
+          const { data, error } = await supabase
+            .from('activities')
+            .update({
+              status: 'in_progress',
+              started_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+              updated_by: user?.id,
+            })
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+            .select()
+            .single()
+
+          if (error) {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          }
+
+          // Log history
+          await supabase
+            .from('activity_history')
+            .insert({
+              activity_id: input.id,
+              action: 'status_changed',
+              field_changed: 'status',
+              old_value: 'open',
+              new_value: 'in_progress',
+              changed_by: user?.id,
+            })
+
+          return data
+        }),
+
+      // Complete an activity (triggers successors via DB function)
+      complete: orgProtectedProcedure
+        .input(z.object({
+          id: z.string().uuid(),
+          outcome: z.enum(['completed', 'positive', 'neutral', 'negative', 'deferred']).default('completed'),
+          outcomeNotes: z.string().max(2000).optional(),
+          checklistProgress: z.record(z.boolean()).optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const { orgId, user } = ctx
+          const adminClient = getAdminClient()
+
+          // Use DB function to complete and trigger successors
+          const { data: results, error } = await adminClient
+            .rpc('complete_campaign_activity', {
+              p_activity_id: input.id,
+              p_completed_by: user?.id,
+              p_outcome: input.outcome,
+              p_outcome_notes: input.outcomeNotes,
+            })
+
+          if (error) {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          }
+
+          // Update checklist progress if provided
+          if (input.checklistProgress) {
+            await adminClient
+              .from('activities')
+              .update({ checklist_progress: input.checklistProgress })
+              .eq('id', input.id)
+          }
+
+          // Get the updated activity
+          const { data: activity } = await adminClient
+            .from('activities')
+            .select(`
+              *,
+              assigned_user:user_profiles!assigned_to(id, full_name, avatar_url)
+            `)
+            .eq('id', input.id)
+            .single()
+
+          // Format successors info
+          const successors = (results ?? [])
+            .filter((r: { successor_created: boolean }) => r.successor_created)
+            .map((r: { successor_id: string; successor_name: string }) => ({
+              id: r.successor_id,
+              name: r.successor_name,
+            }))
+
+          return {
+            activity,
+            successorsCreated: successors.length,
+            successors,
+          }
+        }),
+
+      // Skip an activity
+      skip: orgProtectedProcedure
+        .input(z.object({
+          id: z.string().uuid(),
+          reason: z.string().max(500).optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const { orgId, user, supabase } = ctx
+
+          const { data, error } = await supabase
+            .from('activities')
+            .update({
+              status: 'skipped',
+              skip_reason: input.reason,
+              skipped_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+              updated_by: user?.id,
+            })
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+            .select()
+            .single()
+
+          if (error) {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          }
+
+          // Log history
+          await supabase
+            .from('activity_history')
+            .insert({
+              activity_id: input.id,
+              action: 'status_changed',
+              field_changed: 'status',
+              old_value: 'open',
+              new_value: 'skipped',
+              changed_by: user?.id,
+              notes: input.reason,
+            })
+
+          return data
+        }),
+
+      // Reassign activity to another user
+      reassign: orgProtectedProcedure
+        .input(z.object({
+          id: z.string().uuid(),
+          assignedTo: z.string().uuid(),
+          notes: z.string().max(500).optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const { orgId, user, supabase } = ctx
+          const adminClient = getAdminClient()
+
+          // Get current assignee
+          const { data: current } = await adminClient
+            .from('activities')
+            .select('assigned_to')
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+            .single()
+
+          const { data, error } = await supabase
+            .from('activities')
+            .update({
+              assigned_to: input.assignedTo,
+              assigned_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+              updated_by: user?.id,
+            })
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+            .select(`
+              *,
+              assigned_user:user_profiles!assigned_to(id, full_name, avatar_url)
+            `)
+            .single()
+
+          if (error) {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          }
+
+          // Log history
+          await supabase
+            .from('activity_history')
+            .insert({
+              activity_id: input.id,
+              action: 'assigned',
+              field_changed: 'assigned_to',
+              old_value: current?.assigned_to,
+              new_value: input.assignedTo,
+              changed_by: user?.id,
+              notes: input.notes,
+            })
+
+          return data
+        }),
+
+      // Update activity (subject, description, due date, etc.)
+      update: orgProtectedProcedure
+        .input(z.object({
+          id: z.string().uuid(),
+          subject: z.string().min(3).max(200).optional(),
+          description: z.string().max(2000).optional(),
+          priority: z.enum(['low', 'normal', 'high', 'urgent']).optional(),
+          dueDate: z.string().datetime().optional().nullable(),
+          escalationDate: z.string().datetime().optional().nullable(),
+          checklistProgress: z.record(z.boolean()).optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const { orgId, user, supabase } = ctx
+          const { id, ...updateFields } = input
+
+          const updateData: Record<string, unknown> = {
+            updated_at: new Date().toISOString(),
+            updated_by: user?.id,
+          }
+
+          if (updateFields.subject !== undefined) updateData.subject = updateFields.subject
+          if (updateFields.description !== undefined) updateData.description = updateFields.description
+          if (updateFields.priority !== undefined) updateData.priority = updateFields.priority
+          if (updateFields.dueDate !== undefined) updateData.due_date = updateFields.dueDate
+          if (updateFields.escalationDate !== undefined) updateData.escalation_date = updateFields.escalationDate
+          if (updateFields.checklistProgress !== undefined) updateData.checklist_progress = updateFields.checklistProgress
+
+          const { data, error } = await supabase
+            .from('activities')
+            .update(updateData)
+            .eq('id', id)
+            .eq('org_id', orgId)
+            .select(`
+              *,
+              assigned_user:user_profiles!assigned_to(id, full_name, avatar_url)
+            `)
+            .single()
+
+          if (error) {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          }
+
+          // Log history
+          await supabase
+            .from('activity_history')
+            .insert({
+              activity_id: id,
+              action: 'updated',
+              changed_by: user?.id,
+              notes: `Activity updated`,
+            })
+
+          return data
+        }),
+
+      // Get available activity patterns for campaigns
+      getPatterns: orgProtectedProcedure
+        .query(async ({ ctx }) => {
+          const { orgId } = ctx
+          const adminClient = getAdminClient()
+
+          const { data, error } = await adminClient
+            .from('activity_patterns')
+            .select('*')
+            .eq('entity_type', 'campaign')
+            .eq('is_active', true)
+            .or(`org_id.is.null,org_id.eq.${orgId}`)
+            .order('category')
+            .order('display_order')
+
+          if (error) {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          }
+
+          return data ?? []
+        }),
+
+      // Get campaign team members for assignment
+      getAssignees: orgProtectedProcedure
+        .input(z.object({ campaignId: z.string().uuid() }))
+        .query(async ({ ctx, input }) => {
+          const { orgId } = ctx
+          const adminClient = getAdminClient()
+
+          // Get campaign owner
+          const { data: campaign } = await adminClient
+            .from('campaigns')
+            .select('owner_id, owner:user_profiles!owner_id(id, full_name, avatar_url)')
+            .eq('id', input.campaignId)
+            .single()
+
+          // Get team members (simplified - get all users in org for now)
+          const { data: teamMembers } = await adminClient
+            .from('user_profiles')
+            .select('id, full_name, avatar_url')
+            .eq('org_id', orgId)
+            .eq('status', 'active')
+            .order('full_name')
+            .limit(50)
+
+          return {
+            owner: campaign?.owner,
+            teamMembers: teamMembers ?? [],
+          }
+        }),
+
+      // Get workplan instance for campaign
+      getWorkplan: orgProtectedProcedure
+        .input(z.object({ campaignId: z.string().uuid() }))
+        .query(async ({ ctx, input }) => {
+          const { orgId } = ctx
+          const adminClient = getAdminClient()
+
+          const { data, error } = await adminClient
+            .from('workplan_instances')
+            .select(`
+              *,
+              template:workplan_templates!template_id(id, code, name, description)
+            `)
+            .eq('org_id', orgId)
+            .eq('entity_type', 'campaign')
+            .eq('entity_id', input.campaignId)
+            .single()
+
+          if (error && error.code !== 'PGRST116') {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          }
+
+          return data
+        }),
+
+      // Manually trigger workplan creation (if not auto-created)
+      createWorkplan: orgProtectedProcedure
+        .input(z.object({ campaignId: z.string().uuid() }))
+        .mutation(async ({ ctx, input }) => {
+          const { orgId, user } = ctx
+          const adminClient = getAdminClient()
+
+          // Check if workplan already exists
+          const { data: existing } = await adminClient
+            .from('workplan_instances')
+            .select('id')
+            .eq('entity_type', 'campaign')
+            .eq('entity_id', input.campaignId)
+            .single()
+
+          if (existing) {
+            throw new TRPCError({ code: 'CONFLICT', message: 'Workplan already exists for this campaign' })
+          }
+
+          // Call DB function to create workplan
+          const { data, error } = await adminClient
+            .rpc('create_campaign_workplan', {
+              p_campaign_id: input.campaignId,
+              p_org_id: orgId,
+              p_created_by: user?.id,
+            })
+
+          if (error) {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          }
+
+          return { workplanInstanceId: data }
+        }),
+
+      // Check and update campaign status based on activities
+      checkStatus: orgProtectedProcedure
+        .input(z.object({ campaignId: z.string().uuid() }))
+        .mutation(async ({ ctx, input }) => {
+          const { orgId } = ctx
+          const adminClient = getAdminClient()
+
+          const { data, error } = await adminClient
+            .rpc('check_campaign_status_progression', {
+              p_campaign_id: input.campaignId,
+              p_org_id: orgId,
+            })
+
+          if (error) {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          }
+
+          return { status: data }
+        }),
+
+      // Get activity progress summary
+      getProgress: orgProtectedProcedure
+        .input(z.object({ campaignId: z.string().uuid() }))
+        .query(async ({ ctx, input }) => {
+          const { orgId } = ctx
+          const adminClient = getAdminClient()
+
+          // Get all activities for this campaign
+          const { data: activities } = await adminClient
+            .from('activities')
+            .select('id, pattern_code, status, auto_created, due_date, completed_at')
+            .eq('org_id', orgId)
+            .eq('entity_type', 'campaign')
+            .eq('entity_id', input.campaignId)
+
+          if (!activities) return { phases: [], overall: { total: 0, completed: 0, percentage: 0 } }
+
+          // Define workflow phases
+          const phases = [
+            { phase: 'setup', label: 'Setup', patterns: ['campaign_setup'] },
+            { phase: 'sourcing', label: 'Sourcing', patterns: ['campaign_build_list'] },
+            { phase: 'configuration', label: 'Configuration', patterns: ['campaign_configure_sequences'] },
+            { phase: 'launch', label: 'Launch', patterns: ['campaign_review_launch'] },
+            { phase: 'monitoring', label: 'Monitoring', patterns: ['campaign_7_day_review', 'campaign_30_day_review', 'campaign_performance_review'] },
+          ]
+
+          const phaseProgress = phases.map(phase => {
+            const phaseActivities = activities.filter(a => 
+              a.pattern_code && phase.patterns.includes(a.pattern_code)
+            )
+            const completed = phaseActivities.filter(a => a.status === 'completed').length
+            const total = phaseActivities.length
+
+            return {
+              phase: phase.phase,
+              label: phase.label,
+              total,
+              completed,
+              percentage: total > 0 ? Math.round((completed / total) * 100) : 0,
+              status: total === 0 ? 'pending' : completed === total ? 'completed' : completed > 0 ? 'in_progress' : 'pending',
+            }
+          })
+
+          // Overall progress
+          const workflowActivities = activities.filter(a => a.auto_created)
+          const completedWorkflow = workflowActivities.filter(a => a.status === 'completed').length
+
+          return {
+            phases: phaseProgress,
+            overall: {
+              total: workflowActivities.length,
+              completed: completedWorkflow,
+              percentage: workflowActivities.length > 0 
+                ? Math.round((completedWorkflow / workflowActivities.length) * 100) 
+                : 0,
+            },
+            // Additional metrics
+            metrics: {
+              totalActivities: activities.length,
+              completedActivities: activities.filter(a => a.status === 'completed').length,
+              overdueActivities: activities.filter(a => {
+                if (a.status === 'completed') return false
+                if (!a.due_date) return false
+                return new Date(a.due_date) < new Date()
+              }).length,
+              manualActivities: activities.filter(a => !a.auto_created).length,
+            },
+          }
+        }),
+    }),
   }),
 
   // ============================================
@@ -5294,7 +6474,7 @@ export const crmRouter = router({
 
         // Log activity
         await adminClient
-          .from('crm_activities')
+          .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'lead',

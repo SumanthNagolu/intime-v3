@@ -1,7 +1,18 @@
 'use client'
 
-import { HotlistsListPage } from '@/components/recruiting/hotlists'
+import { Suspense } from 'react'
+import { EntityListView } from '@/components/pcf/list-view'
+import { EntityListViewSkeleton } from '@/components/pcf/shared'
+import { hotlistsListConfig, type Hotlist } from '@/configs/entities/hotlists.config'
+
+function HotlistsListContent() {
+  return <EntityListView<Hotlist> config={hotlistsListConfig} />
+}
 
 export default function TalentHotlistsPage() {
-  return <HotlistsListPage />
+  return (
+    <Suspense fallback={<EntityListViewSkeleton />}>
+      <HotlistsListContent />
+    </Suspense>
+  )
 }

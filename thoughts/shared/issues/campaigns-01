@@ -1,0 +1,209 @@
+# ISSUE: Campaign Workspace - Guidewire-Inspired Architecture
+
+**Issue ID:** CAMPAIGNS-01  
+**Created:** December 8, 2025  
+**Status:** Pending  
+**Priority:** High  
+**Epic:** 01-campaigns  
+
+---
+
+## Description
+
+### Current State
+
+The Campaign Workspace currently has:
+- Basic campaign list view at `/employee/crm/campaigns`
+- Campaign detail page with limited sections (Overview, Prospects, Leads, Activities, Analytics, Notes)
+- Multiple separate API calls per screen
+- Missing sections: Sequences, Documents, History
+- Incomplete sidebar with basic metrics only
+- No campaign journey visualization
+- Inconsistent UI patterns across sections
+
+### Desired State
+
+Transform the Campaign Workspace into a **Guidewire-inspired system** where:
+
+1. **Campaign is the root object** - Everything flows from and relates back to the campaign
+2. **9 complete sections** cover the full campaign lifecycle:
+   - Dashboard, Sequences, Prospects, Leads, Activities, Documents, Notes, Analytics, History
+3. **Activity-centric logging** - No action happens without being recorded in History
+4. **Efficient queries** - One optimized query per screen with caching
+5. **Consistent UI** - Inline panels instead of modals, list views with detail worksheets
+6 **All Pages with add/edit options.
+
+### UI Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  HEADER - Main navigation                                   │
+├─────────────┬───────────────────────────────────────────────┤
+│  INFOBAR    │                                               │
+│  Campaign   │  SCREEN AREA                                  │
+│  Journey &  │  - List view with inline detail panel         │
+│  Metrics    │  - Or dashboard/analytics multi-element       │
+│             │                                               │
+├─────────────┤                                               │
+│  SECTION    │                                               │
+│  NAVIGATION │                                               │
+│  (9 tabs)   │                                               │
+└─────────────┴───────────────────────────────────────────────┘
+```
+
+---
+
+## Acceptance Criteria
+
+### Sidebar & Navigation
+- [ ] Campaign journey visualization shows 4 stages (Setup → Active → Converting → Complete)
+- [ ] Sidebar displays 4 key metrics: Contacted, Opened, Responded, Leads
+- [ ] Progress bars show target completion percentage
+- [ ] Health indicator shows campaign status (On Track, Behind, At Risk)
+- [ ] All 9 sections visible in navigation
+
+### Sections
+- [ ] **Dashboard** - Campaign summary, funnel visualization, key metrics
+- [ ] **Sequences** - List of channel sequences with performance stats, inline detail panel
+- [ ] **Prospects** - List with status filter, inline panel shows prospect details
+- [ ] **Leads** - Generated leads list with conversion tracking
+- [ ] **Activities** - Activity log with template-based creation
+- [ ] **Documents** - Upload/manage templates, collateral, reports
+- [ ] **Notes** - Internal notes for team reference
+- [ ] **Analytics** - Performance charts, A/B test results, ROI metrics
+- [ ] **History** - Complete timeline of all campaign events and activities
+
+### Query Efficiency
+- [ ] Campaign detail page loads with single optimized query
+- [ ] Section data lazy-loads on navigation
+- [ ] Cached data used when available
+
+### Activity Logging
+- [ ] Campaign creation logged
+- [ ] Status changes logged (active, paused, completed)
+- [ ] Prospect additions logged
+- [ ] Lead conversions logged
+- [ ] Every activity is logged either by loggind comleted ones or creating new future ones for planning/reminder. Following guidewre rpinciples of the work flow.
+- [ ] All events appear in History section
+
+### UI Consistency
+- [ ] List views use table format with zebra striping
+- [ ] Clicking a row opens inline detail panel (not modal)
+- [ ] All sections have consistent padding and spacing
+- [ ] Selected rows remain highlighted
+
+---
+
+## Manual Validation Steps
+
+### Test 1: Create and Launch a Campaign
+
+1. Navigate to `/employee/crm/campaigns`
+2. Click "New Campaign" button
+3. Complete the 5-step wizard:
+   - **Step 1**: Enter campaign name, select type (Lead Generation), set goal
+   - **Step 2**: Define target audience (industries, company sizes, regions)
+   - **Step 3**: Select channels (Email, LinkedIn), configure sequences
+   - **Step 4**: Set start/end dates, budget, targets
+   - **Step 5**: Review and click "Launch"
+4. **Expected**: Campaign appears in list with "Active" status
+5. **Verify**: History section shows "Campaign Created" event
+
+### Test 2: View Campaign Dashboard
+
+1. Click on a campaign from the list
+2. **Expected**: Dashboard section loads by default
+3. **Verify**: 
+   - Sidebar shows campaign journey stage
+   - Key metrics display (Contacted, Opened, Responded, Leads)
+   - Progress bars show target completion
+   - Funnel visualization appears
+
+### Test 3: Manage Prospects
+
+1. Navigate to campaign → Prospects section
+2. **Verify**: Table shows enrolled prospects with status
+3. Click on a prospect row
+4. **Expected**: Inline panel opens on right showing prospect details
+5. Use filter to show only "Responded" prospects
+6. Click "Convert to Lead" on a responded prospect
+7. **Verify**: 
+   - Lead created successfully
+   - Prospect status changes to "Converted"
+   - History shows conversion event
+
+### Test 4: View Sequences
+
+1. Navigate to campaign → Sequences section
+2. **Expected**: Table shows all configured sequences (Email, LinkedIn, etc.)
+3. **Verify** columns: Channel, Steps, Status, Sent, Open Rate, Response Rate
+4. Click on a sequence row
+5. **Expected**: Inline panel shows sequence details (steps, stop conditions, settings)
+
+### Test 5: Upload Documents
+
+1. Navigate to campaign → Documents section
+2. Click "Upload Document"
+3. Select a file and choose category (Email Template)
+4. **Expected**: Document appears in list
+5. Click on document row
+6. **Expected**: Inline panel shows document details and preview
+
+### Test 6: Log Activity
+
+1. Navigate to campaign → Activities section
+2. Click "Log Activity"
+3. Select template (e.g., "Campaign Review") or enter free-form
+4. Fill in details and save
+5. **Verify**: 
+   - Activity appears in Activities list
+   - Activity also appears in History section
+
+### Test 7: Review History
+
+1. Navigate to campaign → History section
+2. **Expected**: Timeline shows all events in chronological order (newest first)
+3. **Verify events include**:
+   - Campaign created
+   - Status changes
+   - Prospect additions
+   - Sequence sends
+   - Responses received
+   - Lead conversions
+   - Manual activities
+4. Use filter to show only "System Events"
+5. Use search to find specific events
+
+### Test 8: Pause and Resume Campaign
+
+1. From campaign detail page, click "Pause" button
+2. **Expected**: Campaign status changes to "Paused"
+3. **Verify**: History shows "Campaign Paused" event
+4. Click "Resume" button
+5. **Expected**: Campaign status returns to "Active"
+6. **Verify**: History shows "Campaign Resumed" event
+
+### Test 9: Complete Campaign
+
+1. Click "Complete" button on an active campaign
+2. Enter completion notes/outcome
+3. **Expected**: Campaign status changes to "Completed"
+4. **Verify**: 
+   - History shows "Campaign Completed" event with outcome
+   - Campaign journey shows "Complete" stage highlighted
+   - Campaign moves to "Completed" filter in list view
+
+### Test 10: Duplicate Campaign
+
+1. From campaign detail page, open actions menu
+2. Click "Duplicate"
+3. Enter new name
+4. **Expected**: New campaign created in "Draft" status
+5. **Verify**: History on new campaign shows "Campaign Duplicated from [Original Name]"
+
+---
+
+## Related Documentation
+
+- [Campaign Workspace System Analysis](../research/2025-12-08-campaign-workspace-system.md)
+- [Guidewire UI Architecture Research](../research/2025-12-08-guidewire-ui-architecture-current-state.md)

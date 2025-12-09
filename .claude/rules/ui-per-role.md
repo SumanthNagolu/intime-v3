@@ -27,8 +27,8 @@ This document provides detailed UI specifications for each user role in InTime O
 ```
 
 ### Color Scheme
-- **Primary accent**: Forest green
-- **Success states**: Gold gradient for placements/wins
+- **Primary accent**: `hublot-900` (black) for primary actions
+- **Premium accent**: `gold-500` (warm gold) for wins/highlights
 - **Status colors**: Standard semantic palette
 
 ### Key Components
@@ -132,9 +132,9 @@ This document provides detailed UI specifications for each user role in InTime O
 ```
 
 ### Color Scheme
-- **Pipeline stages**: Gradient from forest to gold
+- **Pipeline stages**: Gradient from charcoal to gold
 - **Deal sizes**: Gold accent for large deals
-- **Win rates**: Green for high conversion
+- **Win rates**: Success green for high conversion
 
 ### Key Components
 - **Revenue metrics**: Large, prominent numbers
@@ -404,7 +404,7 @@ Helper text explaining this section
 ### Color Scheme
 - **Performance tiers**: Green/Yellow/Orange/Red
 - **Leaderboard**: Gold for top performers
-- **Targets**: Forest green for met, amber for in-progress
+- **Targets**: Success green for met, amber for in-progress
 
 ### Key Components
 - **Team grid**: Performance comparison
@@ -484,8 +484,8 @@ const Layout = ROLE_LAYOUTS[role] || DefaultLayout;
 ### Color Theming by Role
 ```css
 /* Inject role-specific accent via CSS variable */
-[data-role="recruiter"] { --role-accent: var(--forest-500); }
-[data-role="bench-sales"] { --role-accent: var(--rust-500); }
+[data-role="recruiter"] { --role-accent: var(--gold-500); }
+[data-role="bench-sales"] { --role-accent: var(--warning-500); }
 [data-role="ta-specialist"] { --role-accent: var(--gold-600); }
 [data-role="client"] { --role-accent: var(--client-primary); }
 ```

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Clock, Plus, LucideIcon, List, Home, LayoutDashboard, Calendar, Activity, Building2, Briefcase, Send, FileBarChart } from 'lucide-react'
+import { Clock, Plus, LucideIcon, List, Home, LayoutDashboard, Calendar, Activity, Building2, Briefcase, Send, FileBarChart, GraduationCap, BookOpen, Users, Award } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useEntityNavigationSafe } from '@/lib/navigation/EntityNavigationContext'
 import { EntityType, ENTITY_BASE_PATHS } from '@/lib/navigation/entity-navigation.types'
@@ -137,7 +137,22 @@ export const sectionConfigs: Record<string, SectionConfig> = {
       { id: 'reports', label: 'Reports', icon: FileBarChart, href: '/employee/workspace/reports' },
     ],
   },
-
+  academy: {
+    id: 'academy',
+    title: 'Academy Admin',
+    icon: GraduationCap,
+    basePath: '/employee/academy',
+    quickActions: [
+      { id: 'new-course', label: 'New Course', icon: Plus, href: '/employee/academy/courses/new' },
+    ],
+    navLinks: [
+      { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, href: '/employee/academy/dashboard' },
+      { id: 'courses', label: 'Courses', icon: BookOpen, href: '/employee/academy/courses' },
+      { id: 'students', label: 'Students', icon: Users, href: '/employee/academy/students' },
+      { id: 'cohorts', label: 'Cohorts', icon: GraduationCap, href: '/employee/academy/cohorts' },
+      { id: 'certificates', label: 'Certificates', icon: Award, href: '/employee/academy/certificates' },
+    ],
+  },
 }
 
 interface SectionSidebarProps {
@@ -298,5 +313,6 @@ function detectSectionFromPath(pathname: string): string | null {
   if (pathname.includes('/crm/deals')) return 'deals'
   if (pathname.includes('/crm/campaigns')) return 'campaigns'
   if (pathname.includes('/workspace')) return 'workspace'
+  if (pathname.includes('/employee/academy')) return 'academy'
   return null
 }

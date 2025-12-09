@@ -21,6 +21,10 @@ import { atsRouter } from '../routers/ats'
 import { dashboardRouter } from '../routers/dashboard'
 import { reportsRouter } from '../routers/reports'
 import { benchRouter } from '../routers/bench'
+// Academy portal router
+import { academyRouter } from '../routers/academy'
+// Sequence templates router
+import { sequencesRouter } from '../routers/sequences'
 
 export const appRouter = router({
   admin: adminRouter,
@@ -45,6 +49,10 @@ export const appRouter = router({
   dashboard: dashboardRouter,
   reports: reportsRouter,
   bench: benchRouter,
+  // Academy portal
+  academy: academyRouter,
+  // Sequence templates
+  sequences: sequencesRouter,
 })
 
 export type AppRouter = typeof appRouter

@@ -26,10 +26,11 @@ Every screen combines technical precision with refined luxury. Content breathes,
 
 ### Brand Colors
 - **Primary actions**: `hublot-900` (pure black #000000)
-- **Premium actions**: `gold-500` (#B76E79 rose gold)
+- **Premium actions**: `gold-500` (#C9A961 warm gold)
+- **Classic gold accent**: `gold-400` (#D4AF37)
 - **Active/selected states**: `gold-500` or gold gradient
 - **Focus rings**: `ring-gold-500`
-- **Hover accents**: `gold-400` (#D4A574)
+- **Hover accents**: `gold-400`
 
 ### Status Colors
 - **Success**: `success-500` (#0A8754)
@@ -175,6 +176,130 @@ Glass card:
 - Search with auto-focus
 - Recent actions + suggestions
 - Keyboard navigation
+
+---
+
+## Guidewire-Inspired Patterns
+
+### Navigation Styles
+
+Two distinct navigation patterns based on entity type:
+
+| Style | Entities | Use Case | URL Pattern |
+|-------|----------|----------|-------------|
+| **Journey** | job, candidate, submission, placement | Sequential workflow stages | `?step=1` |
+| **Sections** | account, contact, deal, lead | Information categories | `?section=overview` |
+
+### Journey Navigation (Workflow Entities)
+
+Visual step indicator with state colors:
+- **Completed**: Green circle with checkmark
+- **Current**: Gold circle with number, highlighted background
+- **Future**: Gray circle with number
+- **Connector lines**: Between steps, colored based on completion
+
+```tsx
+// Journey step styling
+<div className={cn(
+  'rounded-full w-8 h-8 flex items-center justify-center',
+  isCompleted && 'bg-success-500 text-white',
+  isCurrent && 'bg-gold-500 text-charcoal-900',
+  isFuture && 'bg-charcoal-200 text-charcoal-500'
+)}>
+```
+
+### Section Navigation (Information Entities)
+
+Category tabs with counts:
+- **Active section**: `bg-gold-50 text-gold-600 border-l-[3px] border-gold-500`
+- **Counts**: Badge after section name (e.g., "Contacts (12)")
+- **Alert styling**: Red badge for escalations
+
+---
+
+## Inline Panel Pattern
+
+Inline panels slide in from the right, replacing modal dialogs for entity details:
+
+### Panel Widths
+- `sm`: 320px - Compact info
+- `md`: 384px - Standard forms
+- `lg`: 480px - Most common, detail views
+- `xl`: 560px - Complex content
+
+### Layout Pattern
+
+```tsx
+<div className="flex gap-4">
+  {/* List area - shrinks when panel open */}
+  <div className={cn(
+    'flex-1 transition-all duration-300',
+    selectedId ? 'max-w-[calc(100%-496px)]' : 'max-w-full'
+  )}>
+    {items.map(item => <Card onClick={() => setSelectedId(item.id)} />)}
+  </div>
+  
+  {/* Inline panel - appears when item selected */}
+  {selectedId && (
+    <InlinePanel onClose={() => setSelectedId(null)} width="lg">
+      <InlinePanelHeader title="Contact Details" />
+      <InlinePanelContent>...</InlinePanelContent>
+    </InlinePanel>
+  )}
+</div>
+```
+
+### Panel States
+- **View mode**: Display content with Edit button in header
+- **Edit mode**: Form inputs with Save/Cancel/Delete in footer
+- **Transition**: 300ms slide-in animation
+- **Escape key**: Closes panel
+
+---
+
+## Editable Info Card Pattern
+
+In-place editing for entity details without navigation:
+
+```tsx
+<EditableInfoCard
+  title="Company Details"
+  fields={[
+    { key: 'name', label: 'Company Name', type: 'text', required: true },
+    { key: 'industry', label: 'Industry', type: 'select', options: [...] },
+    { key: 'website', label: 'Website', type: 'url' },
+  ]}
+  data={account}
+  onSave={handleSave}
+  columns={2}
+/>
+```
+
+### Field Types
+`text`, `email`, `phone`, `url`, `number`, `currency`, `date`, `select`, `textarea`, `checkbox`
+
+---
+
+## Inline Form Pattern
+
+Quick entry without leaving context:
+
+```tsx
+// Collapsed state: "+ Log Activity" button
+// Expanded state: Full form with fields
+<InlineActivityForm 
+  entityType="account" 
+  entityId={accountId} 
+  onSuccess={refetch} 
+/>
+```
+
+### Behavior
+- Collapsed by default (shows action button)
+- Expands in place when clicked
+- Validates on submit
+- Collapses after successful submit
+- Shows toast notification
 
 ---
 

@@ -52,7 +52,19 @@ When this command is invoked:
    - Understand the current structure, phases, and scope
    - Note the success criteria and implementation approach
 
-2. **Understand the requested changes**:
+2. **Check for version history**:
+   - Look for `## Revision History` section at the bottom of the plan
+   - Note the current iteration number (if any)
+   - If no revision history exists, this will be "Iteration 1"
+
+3. **Conflict detection** - Check if codebase has changed:
+   ```bash
+   # Check if files mentioned in the plan have changed since plan creation
+   git log --since="[plan date from frontmatter]" -- [files mentioned in plan]
+   ```
+   - If files have changed, warn: "⚠️ These files have changed since the plan was written: [list]. The plan may need updates beyond your requested changes."
+
+4. **Understand the requested changes**:
    - Parse what the user wants to add/modify/remove
    - Identify if changes require codebase research
    - Determine scope of the update
@@ -88,9 +100,9 @@ If the user's feedback requires understanding new code patterns or validating as
 
 4. **Wait for ALL sub-tasks to complete** before proceeding
 
-### Step 3: Present Understanding and Approach
+### Step 3: Present Understanding and Diff Preview
 
-Before making changes, confirm your understanding:
+Before making changes, show exactly what will change:
 
 ```
 Based on your feedback, I understand you want to:
@@ -101,14 +113,26 @@ My research found:
 - [Relevant code pattern or constraint]
 - [Important discovery that affects the change]
 
-I plan to update the plan by:
-1. [Specific modification to make]
-2. [Another modification]
+## Proposed Changes (Diff Preview)
 
-Does this align with your intent?
+### Change 1: [Section being modified]
+```diff
+- [Current text to be removed/changed]
++ [New text to be added]
 ```
 
-Get user confirmation before proceeding.
+### Change 2: [Another section]
+```diff
+- [Current text]
++ [Updated text]
+```
+
+This will be **Iteration [N]** of the plan.
+
+Does this look correct? Should I proceed with these changes?
+```
+
+Get user confirmation before proceeding. The diff preview ensures the user knows exactly what will change.
 
 ### Step 4: Update the Plan
 
@@ -129,6 +153,21 @@ Get user confirmation before proceeding.
    - Write measurable success criteria
    - Use `make` commands for automated verification
    - Keep language clear and actionable
+
+4. **Add version tracking** - Update or create revision history at the bottom:
+   ```markdown
+   ---
+   
+   ## Revision History
+   
+   | Iteration | Date | Changes |
+   |-----------|------|---------|
+   | 1 | YYYY-MM-DD | Initial plan created |
+   | 2 | YYYY-MM-DD | [Brief description of changes made] |
+   ```
+   - Always increment the iteration number
+   - Briefly summarize what changed
+   - This provides audit trail for plan evolution
 
 ### Step 5: Sync and Review
 

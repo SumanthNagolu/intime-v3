@@ -1,10 +1,21 @@
 ---
-description: Validate implementation against plan, verify success criteria, identify issues
+description: Validate implementation, auto-fix issues, and close out the plan/issue
+model: opus
 ---
 
-# Validate Plan
+# Validate Plan - Closure Protocol
 
-You are tasked with validating that an implementation plan was correctly executed, verifying all success criteria and identifying any deviations or issues.
+You are tasked with validating that an implementation plan was correctly executed, auto-fixing what can be fixed, and formally closing out the work. This is the final quality gate before committing.
+
+## GOAL: Get to "All Green" Status
+
+Your job is to:
+1. Run ALL automated checks
+2. Auto-fix what can be fixed (lint, format, simple type errors)
+3. Verify all success criteria are met
+4. Mark the issue as RESOLVED
+5. Update the plan status to COMPLETE
+6. Generate a final validation report
 
 ## Initial Setup
 
@@ -57,7 +68,53 @@ If starting fresh or need more context:
    Return: Test status and any missing coverage
    ```
 
-### Step 2: Systematic Validation
+### Step 2: Run All Automated Checks
+
+Run comprehensive verification:
+
+```bash
+# Run all checks in order
+pnpm typecheck        # Type errors
+pnpm lint             # Lint issues
+pnpm test             # All tests
+```
+
+Document results:
+```
+## Automated Check Results
+
+| Check | Status | Issues |
+|-------|--------|--------|
+| TypeScript | ✓/✗ | [count] errors |
+| Lint | ✓/✗ | [count] warnings |
+| Tests | ✓/✗ | [pass]/[fail] |
+```
+
+### Step 3: Auto-Fix What Can Be Fixed
+
+For issues that can be auto-fixed, apply fixes WITHOUT asking:
+
+1. **Lint/Format issues**:
+   ```bash
+   pnpm lint --fix
+   pnpm format
+   ```
+
+2. **Simple type errors** (missing imports, unused vars):
+   - Add missing imports
+   - Remove unused imports
+   - Fix obvious type mismatches
+
+3. **After auto-fix, re-run checks** to verify fixes worked
+
+For issues that CANNOT be auto-fixed:
+- Complex type errors
+- Test failures
+- Logic errors
+
+Flag these for user attention with specific details.
+
+### Step 4: Verify Success Criteria
 
 For each phase in the plan:
 
@@ -68,7 +125,7 @@ For each phase in the plan:
 2. **Run automated verification**:
    - Execute each command from "Automated Verification"
    - Document pass/fail status
-   - If failures, investigate root cause
+   - If failures after auto-fix, flag for user
 
 3. **Assess manual criteria**:
    - List what needs manual testing
@@ -153,14 +210,112 @@ Always verify:
 - [ ] Documentation updated if needed
 - [ ] Manual test steps are clear
 
+## Step 5: Closure Protocol
+
+If all automated checks pass:
+
+### 5a. Update Plan Status
+
+Add completion marker to the plan file:
+
+```markdown
+---
+
+## Completion Status
+
+**Status**: ✅ COMPLETE
+**Validated**: [Current Date]
+**All automated checks**: PASSED
+**Manual verification**: [Pending/Complete]
+
+### Final Metrics
+- Phases completed: [X]/[X]
+- Tests passing: [X]/[X]
+- Type errors: 0
+- Lint warnings: 0
+```
+
+### 5b. Update Issue Status (if applicable)
+
+If the plan references an issue in `thoughts/shared/issues/`:
+
+1. Read the issue file
+2. Update the status:
+   ```markdown
+   **Status:** ~~Open~~ → **Resolved**
+   **Resolved Date:** [Current Date]
+   **Resolution:** Implemented per plan [plan-file-path]
+   ```
+3. Check off all acceptance criteria that are met
+
+### 5c. Generate Closure Report
+
+```markdown
+## Validation Complete ✓
+
+**Plan**: `thoughts/shared/plans/[filename].md`
+**Issue**: `thoughts/shared/issues/[module]-[number]` (if applicable)
+
+### All Checks Passed
+✓ TypeScript - No errors
+✓ Lint - No warnings  
+✓ Tests - All passing
+
+### Auto-Fixed Issues
+- [List any auto-fixed items]
+
+### Manual Verification Required
+- [ ] [Item 1]
+- [ ] [Item 2]
+
+### Ready for Next Steps
+1. `/commit` - Commit these changes
+2. `/describe_pr` - Create PR description
+
+**Implementation is complete and validated.**
+```
+
+## If Validation Fails
+
+If checks fail after auto-fix:
+
+```markdown
+## Validation Failed ✗
+
+### Issues Requiring Attention
+
+| Issue | File | Line | Severity |
+|-------|------|------|----------|
+| [Error] | [file] | [line] | Blocking |
+
+### Recommended Actions
+1. [Specific fix needed]
+2. [Another fix]
+
+### Options
+- Fix issues manually and re-run `/validate_plan`
+- Use `/run_ui_tests` for interactive fix assistance
+- Use `/iterate_plan` if plan needs updates
+
+**Cannot close until all checks pass.**
+```
+
 ## Relationship to Other Commands
 
-Recommended workflow:
-1. `/implement_plan` - Execute the implementation
-2. `/commit` - Create atomic commits for changes
-3. `/validate_plan` - Verify implementation correctness
-4. `/describe_pr` - Generate PR description
+**Full workflow**:
+```
+/create_issue → /research_codebase → /create_plan → /implement_plan 
+    → /run_ui_tests → /validate_plan → /commit → /describe_pr
+```
 
-The validation works best after commits are made, as it can analyze the git history to understand what was implemented.
+**validate_plan position**:
+- Comes AFTER `/implement_plan` and `/run_ui_tests`
+- Comes BEFORE `/commit` and `/describe_pr`
+- This is the quality gate before committing
 
-Remember: Good validation catches issues before they reach production. Be constructive but thorough in identifying gaps or improvements.
+**If validation fails**:
+- Use `/run_ui_tests` to fix test failures interactively
+- Use `/iterate_plan` if the plan needs changes
+- Re-run `/validate_plan` after fixes
+
+Remember: This is the final gate. Don't close until everything is green.

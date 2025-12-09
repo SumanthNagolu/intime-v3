@@ -16,6 +16,24 @@ You are tasked with conducting comprehensive research across the codebase to ans
 - ONLY describe what exists, where it exists, how it works, and how components interact
 - You are creating a technical map/documentation of the existing system
 
+## CONFIDENCE SCORING
+
+For every finding, assign a confidence level:
+
+| Level | Meaning | When to Use |
+|-------|---------|-------------|
+| **HIGH** | Directly verified | Read the code, traced the flow, confirmed behavior |
+| **MEDIUM** | Partially verified | Found references but didn't trace completely |
+| **LOW** | Inferred | Based on patterns, naming, or indirect evidence |
+
+Include confidence in your findings:
+```markdown
+### Finding: User Authentication Flow
+**Confidence**: HIGH - Directly read `src/lib/auth/session.ts:45-120`
+
+[detailed findings...]
+```
+
 ## Initial Setup:
 
 When this command is invoked, respond with:
@@ -82,6 +100,12 @@ Then wait for the user's research query.
    - Highlight patterns, connections, and architectural decisions
    - Answer the user's specific questions with concrete evidence
 
+   **Cross-Verification of Agent Results:**
+   - If two agents return conflicting information, spawn a third to verify
+   - If an agent says "couldn't find X", verify X truly doesn't exist before reporting
+   - If findings seem inconsistent with what you know, re-check the specific files
+   - Flag any findings that couldn't be cross-verified
+
 5. **Gather metadata for the research document:**
    - Run the `hack/spec_metadata.sh` script to generate all relevant metadata
    - Filename: `thoughts/shared/research/YYYY-MM-DD-ENG-XXXX-description.md`
@@ -147,12 +171,28 @@ Then wait for the user's research query.
      - `thoughts/local/notes.md` - Past exploration of Y
      Note: Paths exclude "searchable/" even if found there
 
-     ## Related Research
-     [Links to other research documents in thoughts/shared/research/]
+    ## Related Research
+    [Links to other research documents in thoughts/shared/research/]
 
-     ## Open Questions
-     [Any areas that need further investigation]
-     ```
+    ## Gaps in Research (REQUIRED)
+    
+    **Could not locate:**
+    - [Specific things searched for but not found]
+    
+    **Uncertain about:**
+    - [Things found but not fully understood - with confidence level]
+    
+    **Out of scope:**
+    - [Related areas deliberately not explored]
+    
+    **Needs deeper investigation:**
+    - [Areas that warrant follow-up research]
+
+    ## Open Questions
+    [Any areas that need further investigation]
+    ```
+
+**IMPORTANT**: The "Gaps in Research" section is REQUIRED. Never omit it. If there are no gaps, explicitly state "No significant gaps identified."
 
 7. **Add GitHub permalinks (if applicable):**
    - Check if on main branch or if commit is pushed: `git branch --show-current` and `git status`
