@@ -698,6 +698,24 @@ export const campaignsDetailConfig: DetailViewConfig<Campaign> = {
 
   quickActions: [
     {
+      id: 'resume-campaign',
+      label: 'Resume Campaign',
+      icon: Play,
+      variant: 'default',
+      onClick: (entity: unknown) => {
+        const campaign = entity as Campaign
+        window.dispatchEvent(
+          new CustomEvent('openCampaignDialog', {
+            detail: { dialogId: 'resume', campaignId: campaign.id },
+          })
+        )
+      },
+      isVisible: (entity: unknown) => {
+        const campaign = entity as Campaign
+        return campaign.status === 'paused'
+      },
+    },
+    {
       id: 'add-prospect',
       label: 'Add Prospect',
       icon: UserPlus,
@@ -760,10 +778,30 @@ export const campaignsDetailConfig: DetailViewConfig<Campaign> = {
         const campaign = entity as Campaign
         window.location.href = `/employee/crm/campaigns/${campaign.id}?section=analytics`
       },
+      isVisible: (entity: unknown) => {
+        const campaign = entity as Campaign
+        // Hide analytics when paused - only show Resume as primary action
+        return campaign.status !== 'paused'
+      },
     },
   ],
 
   dropdownActions: [
+    {
+      label: 'Resume Campaign',
+      icon: Play,
+      onClick: (entity) => {
+        window.dispatchEvent(
+          new CustomEvent('openCampaignDialog', {
+            detail: { dialogId: 'resume', campaignId: entity.id },
+          })
+        )
+      },
+      isVisible: (entity) => {
+        const campaign = entity as Campaign
+        return campaign.status === 'paused'
+      },
+    },
     {
       label: 'Edit Campaign',
       icon: FileText,
@@ -773,6 +811,11 @@ export const campaignsDetailConfig: DetailViewConfig<Campaign> = {
             detail: { dialogId: 'edit', campaignId: entity.id },
           })
         )
+      },
+      isVisible: (entity) => {
+        const campaign = entity as Campaign
+        // Hide edit when paused - must resume first
+        return campaign.status !== 'paused'
       },
     },
     {

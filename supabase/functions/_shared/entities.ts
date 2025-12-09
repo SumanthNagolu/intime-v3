@@ -3,7 +3,7 @@ export const ENTITY_TABLES: Record<string, string> = {
   candidates: 'user_profiles',
   jobs: 'jobs',
   accounts: 'accounts',
-  contacts: 'point_of_contacts',
+  contacts: 'contacts',
   leads: 'leads',
   employees: 'employees',
   consultants: 'consultants',
@@ -21,7 +21,7 @@ export const getEntityTable = (entityType: string): string => {
 // GDPR-related tables to scan for subject data
 export const GDPR_TABLES = [
   { table: 'user_profiles', emailField: 'email', nameFields: ['first_name', 'last_name'] },
-  { table: 'point_of_contacts', emailField: 'email', nameFields: ['first_name', 'last_name'] },
+  { table: 'contacts', emailField: 'email', nameFields: ['first_name', 'last_name'] },
   { table: 'leads', emailField: 'email', nameFields: ['first_name', 'last_name'] },
   { table: 'submissions', emailField: null, candidateRef: 'candidate_id' },
   { table: 'interviews', emailField: null, candidateRef: 'candidate_id' },

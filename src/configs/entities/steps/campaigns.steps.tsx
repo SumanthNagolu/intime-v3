@@ -14,8 +14,7 @@
  * 5. Close - Complete campaign and analyze results
  */
 
-import React, { useMemo, useCallback, memo } from 'react'
-import { useRouter } from 'next/navigation'
+import React, { useMemo, memo } from 'react'
 import { format } from 'date-fns'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -46,13 +45,11 @@ import {
   Upload,
   Play,
   Pause,
-  TrendingUp,
   BarChart3,
   Clock,
   AlertCircle,
   ChevronRight,
   CheckCircle,
-  XCircle,
   Sparkles,
 } from 'lucide-react'
 
@@ -157,7 +154,7 @@ const ChecklistItemComponent = memo(function ChecklistItemComponent({
     >
       <button
         onClick={() => onToggle(item.id)}
-        className="mt-0.5 flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2 rounded"
+        className="flex-shrink-0 mt-0.5 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2 rounded"
         aria-label={item.completed ? `Mark "${item.label}" as incomplete` : `Mark "${item.label}" as complete`}
       >
         {item.completed ? (
@@ -184,7 +181,7 @@ const ChecklistItemComponent = memo(function ChecklistItemComponent({
           size="sm"
           variant="ghost"
           onClick={onAction}
-          className="text-gold-600 hover:text-gold-700 flex-shrink-0"
+          className="text-gold-600 hover:text-gold-700 flex-shrink-0 whitespace-nowrap mt-0.5"
         >
           {actionLabel}
           <ChevronRight className="w-4 h-4 ml-1" />
@@ -267,7 +264,6 @@ const StepHeader = memo(function StepHeader({
 
 export function CampaignSetupStepPCF({ entityId, entity }: PCFStepProps) {
   const campaign = entity as Campaign | undefined
-  const router = useRouter()
 
   // Checklist items for setup step
   const checklistItems: JourneyChecklistItem[] = useMemo(
@@ -361,9 +357,9 @@ export function CampaignSetupStepPCF({ entityId, entity }: PCFStepProps) {
         nextLabel="Build Audience"
       />
 
-      <div className="grid grid-cols-12 gap-6">
+      <div className="flex flex-col lg:flex-row gap-6">
         {/* Checklist */}
-        <Card className="col-span-7 bg-white">
+        <Card className="flex-1 min-w-0 lg:min-w-[320px] bg-white">
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 text-gold-500" />
@@ -398,7 +394,7 @@ export function CampaignSetupStepPCF({ entityId, entity }: PCFStepProps) {
         </Card>
 
         {/* Campaign Summary */}
-        <div className="col-span-5 space-y-4">
+        <div className="lg:w-[340px] flex-shrink-0 space-y-4">
           <Card className="bg-white">
             <CardHeader className="pb-3">
               <CardTitle className="text-base">Campaign Details</CardTitle>
@@ -606,9 +602,9 @@ export function CampaignAudienceStepPCF({ entityId, entity }: PCFStepProps) {
         nextLabel="Configure Sequence"
       />
 
-      <div className="grid grid-cols-12 gap-6">
+      <div className="flex flex-col lg:flex-row gap-6">
         {/* Checklist */}
-        <Card className="col-span-7 bg-white">
+        <Card className="flex-1 min-w-0 lg:min-w-[320px] bg-white">
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 text-gold-500" />
@@ -643,7 +639,7 @@ export function CampaignAudienceStepPCF({ entityId, entity }: PCFStepProps) {
         </Card>
 
         {/* Audience Stats */}
-        <div className="col-span-5 space-y-4">
+        <div className="lg:w-[340px] flex-shrink-0 space-y-4">
           <Card className="bg-white">
             <CardHeader className="pb-3">
               <CardTitle className="text-base">Audience Overview</CardTitle>
@@ -715,6 +711,7 @@ export function CampaignExecuteStepPCF({ entityId, entity }: PCFStepProps) {
   ) || !!(campaign?.sequence_template_ids && campaign.sequence_template_ids.length > 0)
 
   const isActive = campaign?.status === 'active'
+  const isPaused = campaign?.status === 'paused'
   const contacted = campaign?.prospectsContacted || campaign?.prospects_contacted || 0
   const audienceSize = campaign?.audienceSize || campaign?.audience_size || 0
 
@@ -774,6 +771,34 @@ export function CampaignExecuteStepPCF({ entityId, entity }: PCFStepProps) {
 
   return (
     <div className="space-y-6">
+      {/* Paused Banner */}
+      {isPaused && (
+        <Card className="bg-amber-50 border-amber-200">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
+                  <Pause className="w-5 h-5 text-amber-600" />
+                </div>
+                <div>
+                  <p className="font-medium text-amber-900">Campaign Paused</p>
+                  <p className="text-sm text-amber-700">
+                    All outreach activities are on hold. Resume to continue execution.
+                  </p>
+                </div>
+              </div>
+              <Button
+                onClick={() => dispatchCampaignDialog('resume', entityId)}
+                className="bg-amber-600 hover:bg-amber-700 text-white"
+              >
+                <Play className="w-4 h-4 mr-2" />
+                Resume Campaign
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Step Header */}
       <StepHeader
         icon={<Rocket className="w-6 h-6" />}
@@ -781,13 +806,17 @@ export function CampaignExecuteStepPCF({ entityId, entity }: PCFStepProps) {
         description="Launch and monitor your outreach sequences"
         progress={progress}
         status={status}
-        onNext={() => navigateToStep(entityId, 'nurture')}
+        onNext={isPaused ? undefined : () => navigateToStep(entityId, 'nurture')}
         nextLabel="Nurture Leads"
+        showNextButton={!isPaused}
       />
 
-      <div className="grid grid-cols-12 gap-6">
+      <div className={cn(
+        'flex flex-col lg:flex-row gap-6',
+        isPaused && 'opacity-60 pointer-events-none'
+      )}>
         {/* Checklist */}
-        <Card className="col-span-7 bg-white">
+        <Card className="flex-1 min-w-0 lg:min-w-[320px] bg-white">
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 text-gold-500" />
@@ -800,8 +829,9 @@ export function CampaignExecuteStepPCF({ entityId, entity }: PCFStepProps) {
                 <ChecklistItemComponent
                   key={item.id}
                   item={item}
-                  onToggle={toggleItem}
+                  onToggle={isPaused ? () => {} : toggleItem}
                   onAction={
+                    isPaused ? undefined :
                     item.id === 'sequence'
                       ? () => navigateToSection(entityId, 'sequence')
                       : item.id === 'first-batch'
@@ -809,6 +839,7 @@ export function CampaignExecuteStepPCF({ entityId, entity }: PCFStepProps) {
                         : undefined
                   }
                   actionLabel={
+                    isPaused ? undefined :
                     item.id === 'sequence' && !item.completed
                       ? 'Configure'
                       : item.id === 'first-batch' && !item.completed
@@ -822,7 +853,7 @@ export function CampaignExecuteStepPCF({ entityId, entity }: PCFStepProps) {
         </Card>
 
         {/* Execution Stats */}
-        <div className="col-span-5 space-y-4">
+        <div className="lg:w-[340px] flex-shrink-0 space-y-4">
           <Card className="bg-white">
             <CardHeader className="pb-3">
               <CardTitle className="text-base">Execution Progress</CardTitle>
@@ -834,12 +865,12 @@ export function CampaignExecuteStepPCF({ entityId, entity }: PCFStepProps) {
                   className={cn(
                     isActive
                       ? 'bg-green-100 text-green-700'
-                      : campaign?.status === 'paused'
+                      : isPaused
                         ? 'bg-amber-100 text-amber-700'
                         : 'bg-charcoal-100 text-charcoal-600'
                   )}
                 >
-                  {isActive ? 'Active' : campaign?.status === 'paused' ? 'Paused' : 'Not Started'}
+                  {isActive ? 'Active' : isPaused ? 'Paused' : 'Not Started'}
                 </Badge>
               </div>
               <div>
@@ -859,13 +890,22 @@ export function CampaignExecuteStepPCF({ entityId, entity }: PCFStepProps) {
               <CardTitle className="text-base">Controls</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              {!isActive && campaign?.status !== 'completed' && (
+              {isPaused && (
+                <Button
+                  className="w-full justify-start pointer-events-auto"
+                  onClick={() => dispatchCampaignDialog('resume', entityId)}
+                >
+                  <Play className="w-4 h-4 mr-2" />
+                  Resume Campaign
+                </Button>
+              )}
+              {!isActive && !isPaused && campaign?.status !== 'completed' && (
                 <Button
                   className="w-full justify-start"
                   onClick={() => dispatchCampaignDialog('start', entityId)}
                 >
                   <Play className="w-4 h-4 mr-2" />
-                  {campaign?.status === 'paused' ? 'Resume Campaign' : 'Start Campaign'}
+                  Start Campaign
                 </Button>
               )}
               {isActive && (
@@ -881,6 +921,7 @@ export function CampaignExecuteStepPCF({ entityId, entity }: PCFStepProps) {
               <Button
                 className="w-full justify-start"
                 variant="outline"
+                disabled={isPaused}
                 onClick={() => navigateToSection(entityId, 'sequence')}
               >
                 <FileText className="w-4 h-4 mr-2" />
@@ -889,6 +930,7 @@ export function CampaignExecuteStepPCF({ entityId, entity }: PCFStepProps) {
               <Button
                 className="w-full justify-start"
                 variant="outline"
+                disabled={isPaused}
                 onClick={() => navigateToSection(entityId, 'analytics')}
               >
                 <BarChart3 className="w-4 h-4 mr-2" />
@@ -978,9 +1020,9 @@ export function CampaignNurtureStepPCF({ entityId, entity }: PCFStepProps) {
         nextLabel="Complete Campaign"
       />
 
-      <div className="grid grid-cols-12 gap-6">
+      <div className="flex flex-col lg:flex-row gap-6">
         {/* Checklist */}
-        <Card className="col-span-7 bg-white">
+        <Card className="flex-1 min-w-0 lg:min-w-[320px] bg-white">
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 text-gold-500" />
@@ -1019,7 +1061,7 @@ export function CampaignNurtureStepPCF({ entityId, entity }: PCFStepProps) {
         </Card>
 
         {/* Nurture Stats */}
-        <div className="col-span-5 space-y-4">
+        <div className="lg:w-[340px] flex-shrink-0 space-y-4">
           <Card className="bg-white">
             <CardHeader className="pb-3">
               <CardTitle className="text-base">Engagement Metrics</CardTitle>
@@ -1169,9 +1211,9 @@ export function CampaignCloseStepPCF({ entityId, entity }: PCFStepProps) {
         showNextButton={false}
       />
 
-      <div className="grid grid-cols-12 gap-6">
+      <div className="flex flex-col lg:flex-row gap-6">
         {/* Checklist */}
-        <Card className="col-span-7 bg-white">
+        <Card className="flex-1 min-w-0 lg:min-w-[320px] bg-white">
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 text-gold-500" />
@@ -1206,7 +1248,7 @@ export function CampaignCloseStepPCF({ entityId, entity }: PCFStepProps) {
         </Card>
 
         {/* Final Stats */}
-        <div className="col-span-5 space-y-4">
+        <div className="lg:w-[340px] flex-shrink-0 space-y-4">
           <Card className="bg-white">
             <CardHeader className="pb-3">
               <CardTitle className="text-base">Goal Achievement</CardTitle>

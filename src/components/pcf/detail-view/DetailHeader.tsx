@@ -28,6 +28,7 @@ interface DropdownAction<T> {
   href?: string
   separator?: boolean
   variant?: 'default' | 'destructive'
+  isVisible?: (entity: T) => boolean
 }
 
 interface DetailHeaderProps<T> {
@@ -160,6 +161,11 @@ export function DetailHeader<T extends Record<string, unknown>>({
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
                 {dropdownActions.map((action, index) => {
+                  // Filter by isVisible
+                  if (action.isVisible && !action.isVisible(entity)) {
+                    return null
+                  }
+
                   if (action.separator) {
                     return <DropdownMenuSeparator key={`sep-${index}`} />
                   }

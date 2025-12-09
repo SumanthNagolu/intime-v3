@@ -103,7 +103,7 @@ export const ENTITY_CONFIGS: Record<string, EntityConfig> = {
 
   contacts: {
     name: 'contacts',
-    table: 'point_of_contacts',
+    table: 'contacts',
     displayName: 'Contacts',
     importable: true,
     exportable: true,
@@ -113,12 +113,15 @@ export const ENTITY_CONFIGS: Record<string, EntityConfig> = {
       { name: 'email', dbColumn: 'email', displayName: 'Email', type: 'email', required: false, importable: true, exportable: true },
       { name: 'phone', dbColumn: 'phone', displayName: 'Phone', type: 'phone', required: false, importable: true, exportable: true },
       { name: 'title', dbColumn: 'title', displayName: 'Title', type: 'string', required: false, importable: true, exportable: true },
-      { name: 'account_name', dbColumn: 'account_id', displayName: 'Account', type: 'string', required: true, importable: true, exportable: true },
+      { name: 'contact_type', dbColumn: 'contact_type', displayName: 'Type', type: 'string', required: false, importable: true, exportable: true, enumValues: ['client_poc', 'candidate', 'vendor', 'partner', 'internal', 'general'], defaultValue: 'general' },
+      { name: 'company_name', dbColumn: 'company_name', displayName: 'Company', type: 'string', required: false, importable: true, exportable: true },
+      { name: 'linkedin_url', dbColumn: 'linkedin_url', displayName: 'LinkedIn URL', type: 'string', required: false, importable: true, exportable: true },
+      { name: 'status', dbColumn: 'status', displayName: 'Status', type: 'string', required: false, importable: true, exportable: true, enumValues: ['active', 'inactive', 'do_not_contact', 'bounced', 'unsubscribed'], defaultValue: 'active' },
       { name: 'created_at', dbColumn: 'created_at', displayName: 'Created At', type: 'datetime', required: false, importable: false, exportable: true },
     ],
     uniqueConstraints: [],
     foreignKeys: [
-      { field: 'account_name', referencesTable: 'accounts', referencesColumn: 'id', lookupField: 'name' },
+      { field: 'company_name', referencesTable: 'accounts', referencesColumn: 'id', lookupField: 'name' },
     ],
   },
 

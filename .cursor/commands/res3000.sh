@@ -8,3 +8,5 @@ echo "Starting dev server..."
 cd /Users/sumanthrajkumarnagolu/Projects/intime-v3
 NODE_TLS_REJECT_UNAUTHORIZED=0 pnpm dev
 
+
+
