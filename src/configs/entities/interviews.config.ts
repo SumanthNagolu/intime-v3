@@ -14,6 +14,9 @@ import {
   FileText,
   ThumbsUp,
   ThumbsDown,
+  Target,
+  TrendingUp,
+  Users,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
@@ -28,21 +31,31 @@ import {
 export interface Interview extends Record<string, unknown> {
   id: string
   interview_type: string
+  round_number?: number
   status: string
   scheduled_at: string
   duration_minutes?: number | null
   location?: string | null
   meeting_link?: string | null
+  timezone?: string | null
   notes?: string | null
+  internal_notes?: string | null
+  description?: string | null
   feedback?: string | null
-  recommendation?: string | null
+  recommendation?: 'strong_hire' | 'hire' | 'no_hire' | 'strong_no_hire' | null
+  overall_rating?: number | null
   submission_id: string
+  job_id?: string
+  candidate_id?: string
   submission?: {
     id: string
+    submitted_by?: string
     candidate?: {
       id: string
       first_name: string
       last_name: string
+      email?: string
+      phone?: string
     }
     job?: {
       id: string
@@ -53,11 +66,20 @@ export interface Interview extends Record<string, unknown> {
       }
     }
   } | null
+  interviewer_names?: string[] | null
+  interviewer_emails?: string[] | null
   interviewers?: Array<{
     id: string
     name: string
     email?: string
+    title?: string
   }> | null
+  scheduled_by?: string
+  scheduled_by_user?: {
+    id: string
+    full_name: string
+    avatar_url?: string
+  } | null
   created_at: string
   updated_at?: string
   completed_at?: string | null
@@ -65,6 +87,13 @@ export interface Interview extends Record<string, unknown> {
 
 // Interview status configuration
 export const INTERVIEW_STATUS_CONFIG: Record<string, StatusConfig> = {
+  proposed: {
+    label: 'Proposed',
+    color: 'bg-charcoal-100 text-charcoal-700',
+    bgColor: 'bg-charcoal-100',
+    textColor: 'text-charcoal-700',
+    icon: Clock,
+  },
   scheduled: {
     label: 'Scheduled',
     color: 'bg-blue-100 text-blue-800',
@@ -125,15 +154,15 @@ export const INTERVIEW_TYPE_CONFIG: Record<string, StatusConfig> = {
     textColor: 'text-blue-800',
     icon: Phone,
   },
-  video: {
-    label: 'Video Interview',
+  video_call: {
+    label: 'Video Call',
     color: 'bg-purple-100 text-purple-800',
     bgColor: 'bg-purple-100',
     textColor: 'text-purple-800',
     icon: Video,
   },
-  onsite: {
-    label: 'On-Site',
+  in_person: {
+    label: 'In-Person',
     color: 'bg-amber-100 text-amber-800',
     bgColor: 'bg-amber-100',
     textColor: 'text-amber-800',
@@ -146,19 +175,65 @@ export const INTERVIEW_TYPE_CONFIG: Record<string, StatusConfig> = {
     textColor: 'text-green-800',
     icon: FileText,
   },
+  behavioral: {
+    label: 'Behavioral',
+    color: 'bg-cyan-100 text-cyan-800',
+    bgColor: 'bg-cyan-100',
+    textColor: 'text-cyan-800',
+    icon: User,
+  },
   panel: {
     label: 'Panel',
     color: 'bg-orange-100 text-orange-800',
     bgColor: 'bg-orange-100',
     textColor: 'text-orange-800',
-    icon: User,
+    icon: Users,
   },
-  final: {
+  final_round: {
     label: 'Final Round',
     color: 'bg-gold-100 text-gold-800',
     bgColor: 'bg-gold-100',
     textColor: 'text-gold-800',
     icon: CheckCircle2,
+  },
+}
+
+// Interview outcome/recommendation configuration
+export const INTERVIEW_OUTCOME_CONFIG: Record<string, StatusConfig> = {
+  strong_hire: {
+    label: 'Strong Hire',
+    color: 'bg-green-600 text-white',
+    bgColor: 'bg-green-600',
+    textColor: 'text-white',
+    icon: ThumbsUp,
+  },
+  hire: {
+    label: 'Hire',
+    color: 'bg-green-100 text-green-800',
+    bgColor: 'bg-green-100',
+    textColor: 'text-green-800',
+    icon: ThumbsUp,
+  },
+  no_hire: {
+    label: 'No Hire',
+    color: 'bg-red-100 text-red-800',
+    bgColor: 'bg-red-100',
+    textColor: 'text-red-800',
+    icon: ThumbsDown,
+  },
+  strong_no_hire: {
+    label: 'Strong No Hire',
+    color: 'bg-red-600 text-white',
+    bgColor: 'bg-red-600',
+    textColor: 'text-white',
+    icon: ThumbsDown,
+  },
+  pending: {
+    label: 'Pending',
+    color: 'bg-charcoal-100 text-charcoal-700',
+    bgColor: 'bg-charcoal-100',
+    textColor: 'text-charcoal-700',
+    icon: Clock,
   },
 }
 
@@ -180,6 +255,35 @@ export const interviewsListConfig: ListViewConfig<Interview> = {
     },
   },
 
+  // Enterprise-grade stats cards (4)
+  statsCards: [
+    {
+      key: 'total',
+      label: 'Total',
+      icon: Calendar,
+    },
+    {
+      key: 'scheduled',
+      label: 'This Week',
+      icon: Clock,
+      color: 'bg-blue-100 text-blue-800',
+    },
+    {
+      key: 'completed',
+      label: 'Completed (Month)',
+      icon: CheckCircle2,
+      color: 'bg-green-100 text-green-800',
+    },
+    {
+      key: 'passRate',
+      label: 'Pass Rate',
+      icon: Target,
+      color: 'bg-purple-100 text-purple-800',
+      format: (value) => `${value || 0}%`,
+    },
+  ],
+
+  // Enterprise-grade filters (6)
   filters: [
     {
       key: 'search',
@@ -211,13 +315,41 @@ export const interviewsListConfig: ListViewConfig<Interview> = {
         })),
       ],
     },
+    {
+      key: 'recommendation',
+      type: 'select',
+      label: 'Outcome',
+      options: [
+        { value: 'all', label: 'All Outcomes' },
+        ...Object.entries(INTERVIEW_OUTCOME_CONFIG).map(([value, config]) => ({
+          value,
+          label: config.label,
+        })),
+      ],
+    },
+    {
+      key: 'accountId',
+      type: 'select',
+      label: 'Account',
+      options: [], // Populated dynamically
+      dynamic: true,
+    },
+    {
+      key: 'jobId',
+      type: 'select',
+      label: 'Job',
+      options: [], // Populated dynamically
+      dynamic: true,
+    },
   ],
 
+  // Enterprise-grade columns (11)
   columns: [
     {
       key: 'candidate',
       label: 'Candidate',
-      render: (value, entity) => {
+      sortable: true,
+      render: (_value, entity) => {
         const interview = entity as Interview
         const candidate = interview.submission?.candidate
         if (!candidate) return '—'
@@ -228,14 +360,26 @@ export const interviewsListConfig: ListViewConfig<Interview> = {
       key: 'job',
       label: 'Job',
       icon: Briefcase,
-      render: (value, entity) => {
+      sortable: true,
+      render: (_value, entity) => {
         const interview = entity as Interview
         return interview.submission?.job?.title || '—'
       },
     },
     {
+      key: 'account',
+      label: 'Account',
+      icon: Building2,
+      sortable: true,
+      render: (_value, entity) => {
+        const interview = entity as Interview
+        return interview.submission?.job?.account?.name || '—'
+      },
+    },
+    {
       key: 'interview_type',
       label: 'Type',
+      sortable: true,
       render: (value) => {
         const type = value as string
         return INTERVIEW_TYPE_CONFIG[type]?.label || type
@@ -244,27 +388,65 @@ export const interviewsListConfig: ListViewConfig<Interview> = {
     {
       key: 'status',
       label: 'Status',
+      sortable: true,
     },
     {
       key: 'scheduled_at',
       label: 'Scheduled',
       type: 'date',
+      sortable: true,
+      render: (value) => {
+        if (!value) return '—'
+        const date = new Date(value as string)
+        return date.toLocaleString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit',
+        })
+      },
     },
     {
       key: 'duration_minutes',
       label: 'Duration',
+      sortable: true,
       render: (value) => {
         const mins = value as number | null
         return mins ? `${mins} min` : '—'
       },
     },
     {
-      key: 'location',
-      label: 'Location',
-      render: (value, entity) => {
-        const interview = entity as Interview
-        return interview.meeting_link ? 'Virtual' : interview.location || '—'
+      key: 'interviewer_names',
+      label: 'Interviewers',
+      render: (value) => {
+        const names = value as string[] | null
+        if (!names || names.length === 0) return '—'
+        if (names.length === 1) return names[0]
+        return `${names[0]} +${names.length - 1}`
       },
+    },
+    {
+      key: 'recommendation',
+      label: 'Outcome',
+      render: (value) => {
+        const outcome = value as string | null
+        if (!outcome) return '—'
+        return INTERVIEW_OUTCOME_CONFIG[outcome]?.label || outcome
+      },
+    },
+    {
+      key: 'scheduled_by_user',
+      label: 'Owner',
+      render: (value) => {
+        const user = value as Interview['scheduled_by_user']
+        return user?.full_name || '—'
+      },
+    },
+    {
+      key: 'created_at',
+      label: 'Created',
+      type: 'date',
+      sortable: true,
     },
   ],
 
@@ -273,6 +455,18 @@ export const interviewsListConfig: ListViewConfig<Interview> = {
   statusConfig: INTERVIEW_STATUS_CONFIG,
 
   pageSize: 50,
+
+  // Sort field mapping for backend
+  sortFieldMap: {
+    candidate: 'submission.candidate.last_name',
+    job: 'submission.job.title',
+    account: 'submission.job.account.name',
+    interview_type: 'interview_type',
+    status: 'status',
+    scheduled_at: 'scheduled_at',
+    duration_minutes: 'duration_minutes',
+    created_at: 'created_at',
+  },
 
   emptyState: {
     icon: Calendar,
@@ -295,10 +489,13 @@ export const interviewsListConfig: ListViewConfig<Interview> = {
 
     return trpc.ats.interviews.list.useQuery({
       status: statusValue !== 'all' ? statusValue : undefined,
+      jobId: filters.jobId as string | undefined,
       limit: (filters.limit as number) || 50,
       offset: (filters.offset as number) || 0,
     })
   },
+
+  useStatsQuery: () => trpc.ats.interviews.getThisWeekCount.useQuery(),
 }
 
 // Interviews Detail View Configuration

@@ -18,6 +18,8 @@ import {
   History,
   Briefcase,
   ClipboardList,
+  Trophy,
+  BarChart,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
@@ -183,27 +185,34 @@ export const dealsListConfig: ListViewConfig<Deal> = {
   statsCards: [
     {
       key: 'total',
-      label: 'Total Pipeline',
+      label: 'Total Deals',
+      icon: Briefcase,
+    },
+    {
+      key: 'pipelineValue',
+      label: 'Pipeline Value',
       icon: DollarSign,
+      color: 'bg-green-100 text-green-800',
       format: (value: number) => `$${value.toLocaleString()}`,
     },
     {
-      key: 'weighted',
-      label: 'Weighted Value',
+      key: 'wonThisMonth',
+      label: 'Won This Month',
+      icon: Trophy,
+      color: 'bg-purple-100 text-purple-800',
+    },
+    {
+      key: 'winRate',
+      label: 'Win Rate',
       icon: TrendingUp,
       color: 'bg-blue-100 text-blue-800',
+      format: (value: number) => `${value.toFixed(1)}%`,
+    },
+    {
+      key: 'avgDealSize',
+      label: 'Avg Deal Size',
+      icon: BarChart,
       format: (value: number) => `$${value.toLocaleString()}`,
-    },
-    {
-      key: 'atRisk',
-      label: 'At Risk',
-      color: 'bg-red-100 text-red-700',
-      icon: AlertCircle,
-    },
-    {
-      key: 'closingThisMonth',
-      label: 'Closing This Month',
-      color: 'bg-green-100 text-green-800',
     },
   ],
 
@@ -227,6 +236,25 @@ export const dealsListConfig: ListViewConfig<Deal> = {
       ],
     },
     {
+      key: 'ownerId',
+      type: 'select',
+      label: 'Owner',
+      options: [
+        { value: 'all', label: 'All Owners' },
+        { value: 'me', label: 'My Deals' },
+        // Note: Dynamic user options would be loaded at runtime
+      ],
+    },
+    {
+      key: 'accountId',
+      type: 'select',
+      label: 'Account',
+      options: [
+        { value: 'all', label: 'All Accounts' },
+        // Note: Dynamic account options would be loaded at runtime
+      ],
+    },
+    {
       key: 'healthStatus',
       type: 'select',
       label: 'Health',
@@ -243,57 +271,129 @@ export const dealsListConfig: ListViewConfig<Deal> = {
   columns: [
     {
       key: 'name',
+      header: 'Deal Name',
       label: 'Deal Name',
       sortable: true,
+      width: 'min-w-[200px]',
     },
     {
       key: 'account',
+      header: 'Account',
       label: 'Account',
-      icon: Building2,
+      sortable: true,
+      width: 'w-[150px]',
       render: (value) => {
         const account = value as Deal['account']
         return account?.name || '—'
       },
     },
     {
+      key: 'contact',
+      header: 'Contact',
+      label: 'Contact',
+      width: 'w-[130px]',
+      render: (value, entity) => {
+        const deal = entity as Deal
+        // Contact info from lead if available
+        if (deal.lead?.first_name || deal.lead?.last_name) {
+          return `${deal.lead.first_name || ''} ${deal.lead.last_name || ''}`.trim()
+        }
+        return '—'
+      },
+    },
+    {
       key: 'stage',
+      header: 'Stage',
       label: 'Stage',
+      sortable: true,
+      width: 'w-[120px]',
+      format: 'status' as const,
     },
     {
       key: 'value',
+      header: 'Value',
       label: 'Value',
-      type: 'currency',
       sortable: true,
+      width: 'w-[100px]',
+      align: 'right' as const,
+      render: (value) => {
+        const amount = value as number | null
+        return amount ? `$${amount.toLocaleString()}` : '—'
+      },
     },
     {
       key: 'probability',
+      header: 'Prob.',
       label: 'Probability',
+      sortable: true,
+      width: 'w-[70px]',
+      align: 'right' as const,
       render: (value) => {
         const prob = value as number | null
         return prob !== null ? `${prob}%` : '—'
       },
     },
     {
+      key: 'weightedValue',
+      header: 'Weighted',
+      label: 'Weighted Value',
+      width: 'w-[100px]',
+      align: 'right' as const,
+      render: (value, entity) => {
+        const deal = entity as Deal
+        const weighted = (deal.value || 0) * ((deal.probability || 0) / 100)
+        return weighted > 0 ? `$${Math.round(weighted).toLocaleString()}` : '—'
+      },
+    },
+    {
       key: 'expected_close_date',
+      header: 'Expected Close',
       label: 'Expected Close',
-      type: 'date',
       sortable: true,
+      width: 'w-[110px]',
+      format: 'date' as const,
     },
     {
       key: 'owner',
+      header: 'Owner',
       label: 'Owner',
+      sortable: true,
+      width: 'w-[130px]',
       render: (value) => {
         const owner = value as Deal['owner']
         return owner?.full_name || '—'
       },
     },
     {
-      key: 'health_status',
-      label: 'Health',
-      render: (value) => {
-        const health = value as string | null
-        return DEAL_HEALTH_CONFIG[health || '']?.label || '—'
+      key: 'last_activity_at',
+      header: 'Last Activity',
+      label: 'Last Activity',
+      sortable: true,
+      width: 'w-[110px]',
+      format: 'relative-date' as const,
+    },
+    {
+      key: 'daysInStage',
+      header: 'Days in Stage',
+      label: 'Days in Stage',
+      width: 'w-[80px]',
+      align: 'right' as const,
+      render: (value, entity) => {
+        const deal = entity as Deal
+        // Calculate days in current stage (simplified - would need stage_changed_at from backend)
+        const created = new Date(deal.created_at)
+        const now = new Date()
+        const days = Math.floor((now.getTime() - created.getTime()) / (1000 * 60 * 60 * 24))
+        return days.toString()
       },
+    },
+    {
+      key: 'created_at',
+      header: 'Created',
+      label: 'Created',
+      sortable: true,
+      width: 'w-[100px]',
+      format: 'relative-date' as const,
     },
   ],
 
@@ -322,8 +422,41 @@ export const dealsListConfig: ListViewConfig<Deal> = {
   useListQuery: (filters) => {
     const stageValue = filters.stage as string | undefined
     const healthValue = filters.healthStatus as string | undefined
+    const ownerIdValue = filters.ownerId as string | undefined
+    const accountIdValue = filters.accountId as string | undefined
+    const sortByValue = filters.sortBy as string | undefined
+    const sortOrderValue = filters.sortOrder as string | undefined
+
     const validHealth = ['on_track', 'slow', 'stale', 'urgent', 'at_risk', 'all'] as const
+    const validSortFields = ['created_at', 'expected_close_date', 'value', 'last_activity_at', 'name', 'stage', 'probability'] as const
+
     type HealthStatus = (typeof validHealth)[number]
+    type SortField = (typeof validSortFields)[number]
+
+    // Map frontend column keys to database columns
+    const sortFieldMap: Record<string, SortField> = {
+      name: 'name',
+      account: 'created_at', // Fallback - account sorting needs join
+      stage: 'stage',
+      value: 'value',
+      probability: 'probability',
+      expected_close_date: 'expected_close_date',
+      owner: 'created_at', // Fallback - owner sorting needs join
+      last_activity_at: 'last_activity_at',
+      created_at: 'created_at',
+    }
+
+    const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
+      ? sortFieldMap[sortByValue]
+      : 'expected_close_date'
+
+    // Handle owner filter
+    let ownerIdFilter: string | undefined
+    if (ownerIdValue === 'me') {
+      ownerIdFilter = undefined // Will use current user in backend
+    } else if (ownerIdValue && ownerIdValue !== 'all') {
+      ownerIdFilter = ownerIdValue
+    }
 
     return trpc.crm.deals.list.useQuery({
       search: filters.search as string | undefined,
@@ -331,15 +464,18 @@ export const dealsListConfig: ListViewConfig<Deal> = {
       healthStatus: (healthValue && validHealth.includes(healthValue as HealthStatus)
         ? healthValue
         : 'all') as HealthStatus,
+      ownerId: ownerIdFilter,
+      accountId: accountIdValue !== 'all' ? accountIdValue : undefined,
       excludeClosed: false,
       limit: (filters.limit as number) || 50,
       offset: (filters.offset as number) || 0,
-      sortBy: 'expected_close_date',
-      sortOrder: 'asc',
+      sortBy: mappedSortBy,
+      sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'asc'),
     })
   },
 
-  useStatsQuery: () => trpc.crm.deals.getStats.useQuery({ period: 'quarter' }),
+  // Stats query for metrics cards
+  useStatsQuery: () => trpc.crm.deals.stats.useQuery(),
 }
 
 // Deals Detail View Configuration

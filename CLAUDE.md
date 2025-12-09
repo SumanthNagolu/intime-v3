@@ -90,7 +90,7 @@ The UI implements a PolicyCenter-inspired architecture with two navigation style
 
 #### Top Navigation (8 Tabs)
 - **My Work** - Workspace, dashboard, today, activities
-- **Accounts** - Account search and recent entities (last 5)
+- **Accounts** - Account search and recent entities (last 10)
 - **Contacts** - Contact management
 - **Jobs** - Job requisitions
 - **Candidates** - Talent database
@@ -98,7 +98,11 @@ The UI implements a PolicyCenter-inspired architecture with two navigation style
 - **Pipeline** - Submissions, interviews, offers
 - **Administration** - System settings
 
-Each dropdown shows recent entities (max 5 per type) with timestamps.
+Each dropdown shows recent entities (max 10 per type) with timestamps.
+
+**Unified Sidebar**: Sidebar is context-dependent:
+- **List pages** → `SectionSidebar` (nav links + recent entities)
+- **Detail pages** → `EntityJourneySidebar` (journey/sections + tools + quick actions)
 
 **Key files**:
 - Config: `src/lib/navigation/top-navigation.ts`
@@ -339,6 +343,31 @@ src/server/routers/
 ---
 
 ## Common Tasks
+
+### Adding a List Page (PCF Pattern)
+
+List pages are **configuration-driven** - minimal page code, all behavior in config:
+
+1. Create config in `src/configs/entities/[entity].config.ts`:
+   - Define `ListViewConfig<Entity>` with columns, filters, stats, render mode
+   - Add `useListQuery` hook calling tRPC procedure
+   - Add `useStatsQuery` hook for stats cards (optional)
+
+2. Create page (< 10 lines):
+   ```tsx
+   'use client'
+   import { EntityListView } from '@/components/pcf/list-view/EntityListView'
+   import { myEntityListConfig } from '@/configs/entities/my-entity.config'
+   export default function MyEntityPage() {
+     return <EntityListView config={myEntityListConfig} />
+   }
+   ```
+
+3. Add tRPC procedures in `src/server/routers/`:
+   - `list` procedure with filters, pagination, sorting
+   - `stats` procedure for dashboard metrics
+
+4. For sortable columns, map frontend keys to backend fields in config
 
 ### Adding a Detail Page with Sections
 

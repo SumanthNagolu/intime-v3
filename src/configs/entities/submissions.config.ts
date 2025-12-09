@@ -14,6 +14,10 @@ import {
   Eye,
   ThumbsUp,
   ThumbsDown,
+  Timer,
+  Target,
+  DollarSign,
+  MessageSquare,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
@@ -28,11 +32,15 @@ export interface Submission extends Record<string, unknown> {
   id: string
   status: string
   submitted_at: string
-  rate?: number | null
+  submission_rate?: number | null
+  bill_rate?: number | null
   pay_rate?: number | null
   match_score?: number | null
+  ai_match_score?: number | null
+  recruiter_match_score?: number | null
   client_feedback?: string | null
   internal_notes?: string | null
+  submission_notes?: string | null
   job_id: string
   job?: {
     id: string
@@ -53,56 +61,93 @@ export interface Submission extends Record<string, unknown> {
   submitted_by_user?: {
     id: string
     full_name: string
+    avatar_url?: string
+  } | null
+  owner?: {
+    id: string
+    full_name: string
+    avatar_url?: string
   } | null
   rejection_reason?: string | null
   client_viewed_at?: string | null
+  interview_date?: string | null
+  interview_count?: number
+  stage_changed_at?: string | null
   created_at: string
   updated_at?: string
 }
 
-// Submission status configuration
+// Submission status configuration (aligned with plan stages)
 export const SUBMISSION_STATUS_CONFIG: Record<string, StatusConfig> = {
-  pending_review: {
-    label: 'Pending Review',
+  sourced: {
+    label: 'Sourced',
     color: 'bg-charcoal-100 text-charcoal-700',
     bgColor: 'bg-charcoal-100',
     textColor: 'text-charcoal-700',
-    icon: Clock,
+    icon: User,
   },
-  client_review: {
-    label: 'Client Review',
+  screening: {
+    label: 'Screening',
     color: 'bg-blue-100 text-blue-800',
     bgColor: 'bg-blue-100',
     textColor: 'text-blue-800',
     icon: Eye,
   },
-  interview_requested: {
-    label: 'Interview Requested',
+  submission_ready: {
+    label: 'Ready to Submit',
     color: 'bg-purple-100 text-purple-800',
     bgColor: 'bg-purple-100',
     textColor: 'text-purple-800',
-    icon: Calendar,
+    icon: Send,
   },
-  interview_scheduled: {
-    label: 'Interview Scheduled',
+  submitted: {
+    label: 'Submitted',
     color: 'bg-amber-100 text-amber-800',
     bgColor: 'bg-amber-100',
     textColor: 'text-amber-800',
+    icon: Clock,
+  },
+  submitted_to_client: {
+    label: 'Client Submitted',
+    color: 'bg-amber-100 text-amber-800',
+    bgColor: 'bg-amber-100',
+    textColor: 'text-amber-800',
+    icon: Send,
+  },
+  client_review: {
+    label: 'Client Review',
+    color: 'bg-blue-200 text-blue-800',
+    bgColor: 'bg-blue-200',
+    textColor: 'text-blue-800',
+    icon: Eye,
+  },
+  interview_scheduled: {
+    label: 'Interview Scheduled',
+    color: 'bg-cyan-100 text-cyan-800',
+    bgColor: 'bg-cyan-100',
+    textColor: 'text-cyan-800',
     icon: Calendar,
   },
-  offer_pending: {
-    label: 'Offer Pending',
+  client_interview: {
+    label: 'Interviewing',
+    color: 'bg-purple-200 text-purple-800',
+    bgColor: 'bg-purple-200',
+    textColor: 'text-purple-800',
+    icon: Calendar,
+  },
+  interviewed: {
+    label: 'Interviewed',
+    color: 'bg-purple-100 text-purple-800',
+    bgColor: 'bg-purple-100',
+    textColor: 'text-purple-800',
+    icon: CheckCircle2,
+  },
+  offer_stage: {
+    label: 'Offer Stage',
     color: 'bg-green-100 text-green-800',
     bgColor: 'bg-green-100',
     textColor: 'text-green-800',
     icon: ThumbsUp,
-  },
-  offer_extended: {
-    label: 'Offer Extended',
-    color: 'bg-gold-100 text-gold-800',
-    bgColor: 'bg-gold-100',
-    textColor: 'text-gold-800',
-    icon: Send,
   },
   placed: {
     label: 'Placed',
@@ -127,6 +172,47 @@ export const SUBMISSION_STATUS_CONFIG: Record<string, StatusConfig> = {
   },
 }
 
+// Feedback configuration
+export const SUBMISSION_FEEDBACK_CONFIG: Record<string, StatusConfig> = {
+  positive: {
+    label: 'Positive',
+    color: 'bg-green-100 text-green-800',
+    bgColor: 'bg-green-100',
+    textColor: 'text-green-800',
+    icon: ThumbsUp,
+  },
+  negative: {
+    label: 'Negative',
+    color: 'bg-red-100 text-red-800',
+    bgColor: 'bg-red-100',
+    textColor: 'text-red-800',
+    icon: ThumbsDown,
+  },
+  neutral: {
+    label: 'Neutral',
+    color: 'bg-charcoal-100 text-charcoal-700',
+    bgColor: 'bg-charcoal-100',
+    textColor: 'text-charcoal-700',
+    icon: MessageSquare,
+  },
+  pending: {
+    label: 'Pending',
+    color: 'bg-amber-100 text-amber-800',
+    bgColor: 'bg-amber-100',
+    textColor: 'text-amber-800',
+    icon: Clock,
+  },
+}
+
+// Helper to calculate days in stage
+function getDaysInStage(submission: Submission): number {
+  const changedAt = submission.stage_changed_at || submission.submitted_at
+  if (!changedAt) return 0
+  const changed = new Date(changedAt)
+  const now = new Date()
+  return Math.floor((now.getTime() - changed.getTime()) / (1000 * 60 * 60 * 24))
+}
+
 // Submissions List View Configuration
 export const submissionsListConfig: ListViewConfig<Submission> = {
   entityType: 'submission',
@@ -145,6 +231,41 @@ export const submissionsListConfig: ListViewConfig<Submission> = {
     },
   },
 
+  // Enterprise-grade stats cards (5)
+  statsCards: [
+    {
+      key: 'total',
+      label: 'Total',
+      icon: Send,
+    },
+    {
+      key: 'pending',
+      label: 'Pending Review',
+      icon: Clock,
+      color: 'bg-amber-100 text-amber-800',
+    },
+    {
+      key: 'interviewing',
+      label: 'Interviewing',
+      icon: Calendar,
+      color: 'bg-purple-100 text-purple-800',
+    },
+    {
+      key: 'offerRate',
+      label: 'Offer Rate',
+      icon: Target,
+      color: 'bg-green-100 text-green-800',
+      format: (value) => `${value || 0}%`,
+    },
+    {
+      key: 'avgDaysInStage',
+      label: 'Avg Days in Stage',
+      icon: Timer,
+      color: 'bg-blue-100 text-blue-800',
+    },
+  ],
+
+  // Enterprise-grade filters (6)
   filters: [
     {
       key: 'search',
@@ -155,21 +276,44 @@ export const submissionsListConfig: ListViewConfig<Submission> = {
     {
       key: 'status',
       type: 'select',
-      label: 'Status',
+      label: 'Stage',
       options: [
-        { value: 'all', label: 'All Status' },
+        { value: 'all', label: 'All Stages' },
         ...Object.entries(SUBMISSION_STATUS_CONFIG).map(([value, config]) => ({
           value,
           label: config.label,
         })),
       ],
     },
+    {
+      key: 'accountId',
+      type: 'select',
+      label: 'Account',
+      options: [], // Populated dynamically
+      dynamic: true,
+    },
+    {
+      key: 'jobId',
+      type: 'select',
+      label: 'Job',
+      options: [], // Populated dynamically
+      dynamic: true,
+    },
+    {
+      key: 'recruiterId',
+      type: 'select',
+      label: 'Owner',
+      options: [], // Populated dynamically
+      dynamic: true,
+    },
   ],
 
+  // Enterprise-grade columns (11)
   columns: [
     {
       key: 'candidate',
       label: 'Candidate',
+      sortable: true,
       render: (value) => {
         const candidate = value as Submission['candidate']
         if (!candidate) return '—'
@@ -180,6 +324,7 @@ export const submissionsListConfig: ListViewConfig<Submission> = {
       key: 'job',
       label: 'Job',
       icon: Briefcase,
+      sortable: true,
       render: (value) => {
         const job = value as Submission['job']
         return job?.title || '—'
@@ -189,35 +334,80 @@ export const submissionsListConfig: ListViewConfig<Submission> = {
       key: 'job.account',
       label: 'Account',
       icon: Building2,
-      render: (value, entity) => {
+      sortable: true,
+      render: (_value, entity) => {
         const submission = entity as Submission
         return submission.job?.account?.name || '—'
       },
     },
     {
       key: 'status',
-      label: 'Status',
+      label: 'Stage',
+      sortable: true,
     },
     {
-      key: 'rate',
+      key: 'submitted_at',
+      label: 'Submitted',
+      type: 'date',
+      sortable: true,
+    },
+    {
+      key: 'interview_date',
+      label: 'Interview Date',
+      type: 'date',
+      sortable: true,
+      render: (value) => {
+        if (!value) return '—'
+        return new Date(value as string).toLocaleDateString()
+      },
+    },
+    {
+      key: 'client_feedback',
+      label: 'Feedback',
+      render: (value, entity) => {
+        const submission = entity as Submission
+        if (!submission.client_feedback) return '—'
+        // Check if feedback exists and return appropriate indicator
+        return submission.client_feedback.slice(0, 30) + (submission.client_feedback.length > 30 ? '...' : '')
+      },
+    },
+    {
+      key: 'submission_rate',
       label: 'Bill Rate',
       type: 'currency',
+      sortable: true,
       render: (value) => {
         const rate = value as number | null
         return rate ? `$${rate}/hr` : '—'
       },
     },
     {
-      key: 'submitted_at',
-      label: 'Submitted',
-      type: 'date',
+      key: 'pay_rate',
+      label: 'Pay Rate',
+      type: 'currency',
+      sortable: true,
+      render: (value) => {
+        const rate = value as number | null
+        return rate ? `$${rate}/hr` : '—'
+      },
     },
     {
       key: 'submitted_by_user',
-      label: 'Submitted By',
+      label: 'Owner',
       render: (value) => {
         const user = value as Submission['submitted_by_user']
         return user?.full_name || '—'
+      },
+    },
+    {
+      key: 'daysInStage',
+      label: 'Days in Stage',
+      sortable: true,
+      render: (_value, entity) => {
+        const submission = entity as Submission
+        const days = getDaysInStage(submission)
+        const isStale = days > 7
+        return isStale ? `${days}d ⚠️` : `${days}d`
       },
     },
   ],
@@ -227,6 +417,19 @@ export const submissionsListConfig: ListViewConfig<Submission> = {
   statusConfig: SUBMISSION_STATUS_CONFIG,
 
   pageSize: 50,
+
+  // Sort field mapping for backend
+  sortFieldMap: {
+    candidate: 'candidate.last_name',
+    job: 'job.title',
+    'job.account': 'job.account.name',
+    status: 'status',
+    submitted_at: 'submitted_at',
+    interview_date: 'interview_date',
+    submission_rate: 'submission_rate',
+    pay_rate: 'pay_rate',
+    daysInStage: 'stage_changed_at',
+  },
 
   emptyState: {
     icon: Send,
@@ -249,10 +452,14 @@ export const submissionsListConfig: ListViewConfig<Submission> = {
 
     return trpc.ats.submissions.list.useQuery({
       status: statusValue !== 'all' ? statusValue : undefined,
+      jobId: filters.jobId as string | undefined,
+      recruiterId: filters.recruiterId as string | undefined,
       limit: (filters.limit as number) || 50,
       offset: (filters.offset as number) || 0,
     })
   },
+
+  useStatsQuery: () => trpc.ats.submissions.getStats.useQuery({ period: 'month' }),
 }
 
 // Submissions Detail View Configuration

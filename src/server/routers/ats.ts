@@ -433,6 +433,7 @@ const searchCandidatesInput = z.object({
   tags: z.array(z.string()).optional(),
   ownerId: z.string().uuid().optional(),
   isOnHotlist: z.boolean().optional(),
+  source: z.string().optional(), // Source filter (linkedin, referral, job_board, etc.)
 
   // Pagination
   limit: z.number().min(1).max(100).default(25),
@@ -441,7 +442,9 @@ const searchCandidatesInput = z.object({
   // Sorting
   sortBy: z.enum([
     'match_score', 'experience', 'rate', 'availability',
-    'last_updated', 'created_at', 'name'
+    'last_updated', 'created_at', 'name',
+    'first_name', 'title', 'location', 'status', 'years_experience',
+    'lead_source', 'submissions_count', 'owner_id', 'last_activity_date'
   ]).default('last_updated'),
   sortOrder: z.enum(['asc', 'desc']).default('desc'),
 })
@@ -455,18 +458,22 @@ export const atsRouter = router({
   // JOBS
   // ============================================
   jobs: router({
-    // List jobs with filtering
+    // List jobs with filtering and sorting
     list: orgProtectedProcedure
       .input(z.object({
         search: z.string().optional(),
-        status: z.enum(['draft', 'open', 'active', 'on_hold', 'filled', 'cancelled', 'all']).default('all'),
+        status: z.enum(['draft', 'open', 'active', 'on_hold', 'filled', 'cancelled', 'closed', 'all']).default('all'),
+        type: z.enum(['full_time', 'contract', 'contract_to_hire', 'part_time']).optional(),
+        priority: z.string().optional(),
         accountId: z.string().uuid().optional(),
         recruiterId: z.string().uuid().optional(),
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
+        sortBy: z.enum(['title', 'account_id', 'location', 'job_type', 'status', 'positions_available', 'submissions_count', 'interviews_count', 'owner_id', 'due_date', 'created_at']).default('created_at'),
+        sortOrder: z.enum(['asc', 'desc']).default('desc'),
       }))
       .query(async ({ ctx, input }) => {
-        const { orgId, user } = ctx
+        const { orgId } = ctx
         const adminClient = getAdminClient()
 
         let query = adminClient
@@ -474,18 +481,24 @@ export const atsRouter = router({
           .select(`
             *,
             account:accounts!jobs_account_id_fkey(id, name),
-            owner:user_profiles!owner_id(id, full_name),
-            submissions(id, status)
+            owner:user_profiles!owner_id(id, full_name, avatar_url),
+            submissions(id, status),
+            interviews(id, status)
           `, { count: 'exact' })
           .eq('org_id', orgId)
           .is('deleted_at', null)
-          .order('created_at', { ascending: false })
 
         if (input.search) {
           query = query.or(`title.ilike.%${input.search}%,description.ilike.%${input.search}%`)
         }
         if (input.status && input.status !== 'all') {
           query = query.eq('status', input.status)
+        }
+        if (input.type) {
+          query = query.eq('job_type', input.type)
+        }
+        if (input.priority) {
+          query = query.eq('priority', input.priority)
         }
         if (input.accountId) {
           query = query.eq('account_id', input.accountId)
@@ -494,6 +507,8 @@ export const atsRouter = router({
           query = query.eq('owner_id', input.recruiterId)
         }
 
+        // Apply sorting
+        query = query.order(input.sortBy, { ascending: input.sortOrder === 'asc' })
         query = query.range(input.offset, input.offset + input.limit - 1)
 
         const { data, error, count } = await query
@@ -507,13 +522,26 @@ export const atsRouter = router({
             id: j.id,
             title: j.title,
             status: j.status,
-            jobType: j.job_type,
+            job_type: j.job_type,
+            type: j.job_type,
             location: j.location,
-            billingRate: j.billing_rate,
+            billing_rate: j.billing_rate,
+            bill_rate_min: j.bill_rate_min,
+            bill_rate_max: j.bill_rate_max,
+            salary_min: j.salary_min,
+            salary_max: j.salary_max,
+            positions_available: j.positions_available,
+            openings: j.positions_available,
+            positions_filled: j.positions_filled,
+            due_date: j.due_date,
+            dueDate: j.due_date,
+            priority: j.priority,
             account: j.account,
             owner: j.owner,
-            submissionCount: (j.submissions as Array<{ status: string }> | null)?.length ?? 0,
+            submissions_count: (j.submissions as Array<{ status: string }> | null)?.length ?? 0,
+            interviews_count: (j.interviews as Array<{ status: string }> | null)?.length ?? 0,
             createdAt: j.created_at,
+            created_at: j.created_at,
           })) ?? [],
           total: count ?? 0,
         }
@@ -581,6 +609,68 @@ export const atsRouter = router({
           filled: byStatus['filled'] ?? 0,
           cancelled: byStatus['cancelled'] ?? 0,
           urgentJobs,
+        }
+      }),
+
+    // Stats for jobs list view (aggregate metrics)
+    stats: orgProtectedProcedure
+      .query(async ({ ctx }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Get all jobs with their placements and submissions
+        const { data: jobs } = await adminClient
+          .from('jobs')
+          .select(`
+            id, status, created_at, filled_date,
+            submissions(id),
+            placements(id, created_at)
+          `)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+
+        const total = jobs?.length ?? 0
+
+        // Count active jobs (active + open status)
+        const active = jobs?.filter(j => j.status === 'active' || j.status === 'open').length ?? 0
+
+        // Count filled this month
+        const startOfMonth = new Date()
+        startOfMonth.setDate(1)
+        startOfMonth.setHours(0, 0, 0, 0)
+        const filledThisMonth = jobs?.filter(j => {
+          const filledDate = (j as { filled_date?: string }).filled_date
+          return j.status === 'filled' && filledDate && new Date(filledDate) >= startOfMonth
+        }).length ?? 0
+
+        // Calculate average time to fill (for filled jobs)
+        const filledJobs = jobs?.filter(j => {
+          const filledDate = (j as { filled_date?: string }).filled_date
+          return j.status === 'filled' && filledDate
+        }) ?? []
+        let avgTimeToFill = 0
+        if (filledJobs.length > 0) {
+          const totalDays = filledJobs.reduce((sum, j) => {
+            const created = new Date(j.created_at)
+            const filled = new Date((j as { filled_date?: string }).filled_date!)
+            const days = Math.floor((filled.getTime() - created.getTime()) / (1000 * 60 * 60 * 24))
+            return sum + days
+          }, 0)
+          avgTimeToFill = Math.round(totalDays / filledJobs.length)
+        }
+
+        // Calculate average submissions per job
+        const totalSubmissions = jobs?.reduce((sum, j) => {
+          return sum + ((j.submissions as Array<unknown> | null)?.length ?? 0)
+        }, 0) ?? 0
+        const avgSubmissions = total > 0 ? totalSubmissions / total : 0
+
+        return {
+          total,
+          active,
+          filledThisMonth,
+          avgTimeToFill,
+          avgSubmissions: Math.round(avgSubmissions * 10) / 10, // Round to 1 decimal
         }
       }),
 
@@ -4824,6 +4914,76 @@ export const atsRouter = router({
         }
       }),
 
+    // Stats for candidates list view (aggregate metrics)
+    stats: orgProtectedProcedure
+      .query(async ({ ctx }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Total candidates
+        const { count: total } = await adminClient
+          .from('candidates')
+          .select('id', { count: 'exact', head: true })
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+
+        // Active candidates
+        const { count: active } = await adminClient
+          .from('candidates')
+          .select('id', { count: 'exact', head: true })
+          .eq('org_id', orgId)
+          .eq('status', 'active')
+          .is('deleted_at', null)
+
+        // Placed this month
+        const startOfMonth = new Date()
+        startOfMonth.setDate(1)
+        startOfMonth.setHours(0, 0, 0, 0)
+        const { count: placedThisMonth } = await adminClient
+          .from('candidates')
+          .select('id', { count: 'exact', head: true })
+          .eq('org_id', orgId)
+          .eq('status', 'placed')
+          .gte('updated_at', startOfMonth.toISOString())
+          .is('deleted_at', null)
+
+        // Calculate placement rate (placed / total submitted candidates)
+        const { count: totalSubmitted } = await adminClient
+          .from('submissions')
+          .select('candidate_id', { count: 'exact', head: true })
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+
+        const { count: placedTotal } = await adminClient
+          .from('candidates')
+          .select('id', { count: 'exact', head: true })
+          .eq('org_id', orgId)
+          .eq('status', 'placed')
+          .is('deleted_at', null)
+
+        const avgPlacementRate = totalSubmitted && totalSubmitted > 0
+          ? Math.round(((placedTotal ?? 0) / totalSubmitted) * 100)
+          : 0
+
+        // New this week
+        const startOfWeek = new Date()
+        startOfWeek.setDate(startOfWeek.getDate() - 7)
+        const { count: newThisWeek } = await adminClient
+          .from('candidates')
+          .select('id', { count: 'exact', head: true })
+          .eq('org_id', orgId)
+          .gte('created_at', startOfWeek.toISOString())
+          .is('deleted_at', null)
+
+        return {
+          total: total ?? 0,
+          active: active ?? 0,
+          placedThisMonth: placedThisMonth ?? 0,
+          avgPlacementRate,
+          newThisWeek: newThisWeek ?? 0,
+        }
+      }),
+
     // ============================================
     // CREATE CANDIDATE (E01)
     // ============================================
@@ -5120,6 +5280,11 @@ export const atsRouter = router({
           query = query.eq('sourced_by', input.ownerId)
         }
 
+        // Source filter
+        if (input.source) {
+          query = query.eq('lead_source', input.source)
+        }
+
         // Sorting
         const sortColumn = {
           match_score: 'created_at', // Placeholder
@@ -5129,6 +5294,13 @@ export const atsRouter = router({
           last_updated: 'updated_at',
           created_at: 'created_at',
           name: 'first_name',
+          title: 'title',
+          location: 'city',
+          status: 'status',
+          source: 'lead_source',
+          skills: 'created_at', // Skills sorting not directly supported
+          submissions: 'created_at', // Related count, placeholder
+          lastActivity: 'updated_at',
         }[input.sortBy] || 'updated_at'
 
         query = query.order(sortColumn, { ascending: input.sortOrder === 'asc' })

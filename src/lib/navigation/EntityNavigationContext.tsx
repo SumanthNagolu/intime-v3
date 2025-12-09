@@ -5,7 +5,7 @@ import { EntityNavigationState, EntityType, RecentEntity } from './entity-naviga
 import { entityJourneys, getCurrentStepIndex } from './entity-journeys'
 
 const RECENT_ENTITIES_KEY = 'intime_recent_entities'
-const MAX_RECENT_ENTITIES = 5
+const MAX_RECENT_ENTITIES = 10
 
 interface EntityNavigationContextValue extends EntityNavigationState {
   setCurrentEntity: (entity: EntityNavigationState['currentEntity']) => void

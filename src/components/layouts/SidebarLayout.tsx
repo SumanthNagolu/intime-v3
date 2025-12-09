@@ -4,11 +4,11 @@ import * as React from "react"
 import { Suspense } from "react"
 import { SectionSidebar } from "@/components/navigation/SectionSidebar"
 import { EntityJourneySidebar } from "@/components/navigation/EntityJourneySidebar"
+import { CampaignEntitySidebar } from "@/components/navigation/CampaignEntitySidebar"
 import { TopNavigation } from "@/components/navigation/TopNavigation"
 import { useEntityNavigationSafe } from "@/lib/navigation/EntityNavigationContext"
 import { useEntityData } from "@/components/layouts/EntityContextProvider"
-import { EntityQuickAction, resolveHref, ENTITY_NAVIGATION_STYLES } from "@/lib/navigation/entity-navigation.types"
-import { useRouter, useSearchParams } from "next/navigation"
+import { ENTITY_NAVIGATION_STYLES } from "@/lib/navigation/entity-navigation.types"
 import { cn } from "@/lib/utils"
 
 // Keep old interface for backwards compatibility but it's no longer used
@@ -26,8 +26,6 @@ interface SidebarLayoutProps {
   hideSidebar?: boolean
   /** Optional: specify section ID explicitly */
   sectionId?: string
-  /** Optional: custom quick action handler for entity sidebar */
-  onEntityQuickAction?: (action: EntityQuickAction) => void
   /** Optional: tool section counts for entity sidebar */
   toolCounts?: {
     activities?: number
@@ -58,54 +56,11 @@ function SidebarLayoutInner({
   className,
   hideSidebar = false,
   sectionId,
-  onEntityQuickAction,
   toolCounts,
 }: SidebarLayoutProps) {
   const entityNav = useEntityNavigationSafe()
   const entityData = useEntityData()
-  const router = useRouter()
   const currentEntity = entityNav?.currentEntity
-
-  // Default quick action handler
-  const handleQuickAction = React.useCallback((action: EntityQuickAction) => {
-    if (onEntityQuickAction) {
-      onEntityQuickAction(action)
-      return
-    }
-
-    // Default handling
-    if (!currentEntity) return
-
-    switch (action.actionType) {
-      case 'navigate':
-        if (action.href) {
-          router.push(resolveHref(action.href, currentEntity.id))
-        }
-        break
-      case 'dialog':
-        // Dispatch custom event for page to handle
-        // Use entity-type-specific event name for backward compatibility
-        const eventName = `open${currentEntity.type.charAt(0).toUpperCase()}${currentEntity.type.slice(1)}Dialog`
-        window.dispatchEvent(new CustomEvent(eventName, {
-          detail: {
-            dialogId: action.dialogId,
-            entityType: currentEntity.type,
-            entityId: currentEntity.id,
-          }
-        }))
-        break
-      case 'mutation':
-        // Dispatch custom event for page to handle
-        window.dispatchEvent(new CustomEvent('entityMutation', {
-          detail: {
-            actionId: action.id,
-            entityType: currentEntity.type,
-            entityId: currentEntity.id,
-          }
-        }))
-        break
-    }
-  }, [currentEntity, router, onEntityQuickAction])
 
   return (
     <div className={cn("h-screen flex flex-col overflow-hidden", className)}>
@@ -115,18 +70,27 @@ function SidebarLayoutInner({
         {/* Dynamic sidebar based on entity type */}
         {!hideSidebar && (
           currentEntity ? (
-            // Use unified EntityJourneySidebar for all entity types
-            // It handles both journey and section navigation based on entity type
-            <EntityJourneySidebar
-              entityType={currentEntity.type}
-              entityId={currentEntity.id}
-              entityName={currentEntity.name}
-              entitySubtitle={currentEntity.subtitle}
-              entityStatus={currentEntity.status}
-              onQuickAction={handleQuickAction}
-              toolCounts={toolCounts}
-              className="hidden lg:flex"
-            />
+            // Use entity-specific sidebars where available
+            currentEntity.type === 'campaign' && entityData?.data ? (
+              // Campaign uses specialized dual-mode sidebar (Journey + Sections)
+              <CampaignEntitySidebar
+                campaign={entityData.data as any}
+                counts={toolCounts}
+                className="hidden lg:flex"
+              />
+            ) : (
+              // All other entities use unified EntityJourneySidebar
+              // It handles both journey and section navigation based on entity type
+              <EntityJourneySidebar
+                entityType={currentEntity.type}
+                entityId={currentEntity.id}
+                entityName={currentEntity.name}
+                entitySubtitle={currentEntity.subtitle}
+                entityStatus={currentEntity.status}
+                toolCounts={toolCounts}
+                className="hidden lg:flex"
+              />
+            )
           ) : (
             <SectionSidebar sectionId={sectionId} className="hidden lg:flex" />
           )

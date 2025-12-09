@@ -5,10 +5,9 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { Check, ChevronRight, ChevronDown, Wrench, ArrowLeft } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { entityJourneys, getVisibleQuickActions } from '@/lib/navigation/entity-journeys'
-import { EntityType, EntityQuickAction, ENTITY_BASE_PATHS, resolveHref } from '@/lib/navigation/entity-navigation.types'
+import { entityJourneys } from '@/lib/navigation/entity-journeys'
+import { EntityType, ENTITY_BASE_PATHS } from '@/lib/navigation/entity-navigation.types'
 import { commonToolSections } from '@/lib/navigation/entity-sections'
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import {
   Collapsible,
@@ -22,7 +21,6 @@ interface EntityJourneySidebarProps {
   entityName: string
   entitySubtitle?: string
   entityStatus: string
-  onQuickAction?: (action: EntityQuickAction) => void
   /** Tool section counts */
   toolCounts?: {
     activities?: number
@@ -51,7 +49,6 @@ export function EntityJourneySidebar({
   entityName,
   entitySubtitle,
   entityStatus,
-  onQuickAction,
   toolCounts = {},
   className,
 }: EntityJourneySidebarProps) {
@@ -85,10 +82,6 @@ export function EntityJourneySidebar({
     return { currentStepIndex: currentIdx, steps: stepsWithState }
   }, [journeyConfig, entityStatus])
 
-  // Get visible quick actions based on current status
-  const visibleQuickActions = useMemo(() => {
-    return getVisibleQuickActions(entityType, entityStatus)
-  }, [entityType, entityStatus])
 
   // Build step href - use defaultTab if available, otherwise use step query param
   const buildStepHref = (stepId: string, defaultTab?: string) => {
@@ -115,12 +108,6 @@ export function EntityJourneySidebar({
     }
   }
 
-  // Handle quick action click
-  const handleQuickAction = (action: EntityQuickAction) => {
-    if (onQuickAction) {
-      onQuickAction(action)
-    }
-  }
 
   return (
     <aside className={cn('w-64 bg-white border-r border-charcoal-100 flex flex-col flex-shrink-0', className)}>
@@ -295,57 +282,6 @@ export function EntityJourneySidebar({
         </Collapsible>
       </nav>
 
-      {/* Quick Actions */}
-      {visibleQuickActions.length > 0 && (
-        <div className="p-3 border-t border-charcoal-100">
-          <div className="text-xs font-medium text-charcoal-400 uppercase tracking-wider px-2 mb-2">
-            Actions
-          </div>
-          <div className="space-y-1.5">
-            {visibleQuickActions.slice(0, 5).map((action) => {
-              const ActionIcon = action.icon
-
-              // Handle navigation actions with links
-              if (action.actionType === 'navigate' && action.href) {
-                return (
-                  <Button
-                    key={action.id}
-                    variant={action.variant === 'destructive' ? 'destructive' : 'ghost'}
-                    size="sm"
-                    className={cn(
-                      'w-full justify-start gap-2 h-9',
-                      action.variant !== 'destructive' && 'text-charcoal-600 hover:text-charcoal-800 hover:bg-charcoal-50'
-                    )}
-                    asChild
-                  >
-                    <Link href={resolveHref(action.href, entityId)}>
-                      <ActionIcon className="w-4 h-4" />
-                      {action.label}
-                    </Link>
-                  </Button>
-                )
-              }
-
-              // Handle dialog and mutation actions with buttons
-              return (
-                <Button
-                  key={action.id}
-                  variant={action.variant === 'destructive' ? 'destructive' : 'ghost'}
-                  size="sm"
-                  className={cn(
-                    'w-full justify-start gap-2 h-9',
-                    action.variant !== 'destructive' && 'text-charcoal-600 hover:text-charcoal-800 hover:bg-charcoal-50'
-                  )}
-                  onClick={() => handleQuickAction(action)}
-                >
-                  <ActionIcon className="w-4 h-4" />
-                  {action.label}
-                </Button>
-              )
-            })}
-          </div>
-        </div>
-      )}
     </aside>
   )
 }

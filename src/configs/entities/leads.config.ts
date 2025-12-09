@@ -46,6 +46,10 @@ export interface Lead extends Record<string, unknown> {
   estimated_value?: number | null
   skills_needed?: string[] | null
   campaign_id?: string | null
+  campaign?: {
+    id: string
+    name: string
+  } | null
   business_need?: string | null
   positions_count?: number | null
   owner_id?: string | null
@@ -58,6 +62,7 @@ export interface Lead extends Record<string, unknown> {
   updated_at?: string | null
   qualified_at?: string | null
   converted_at?: string | null
+  last_contacted_at?: string | null
 }
 
 // Lead status configuration
@@ -191,8 +196,8 @@ export const leadsListConfig: ListViewConfig<Lead> = {
     },
     {
       key: 'new',
-      label: 'New',
-      color: 'bg-charcoal-100 text-charcoal-700',
+      label: 'New This Week',
+      color: 'bg-blue-100 text-blue-800',
       icon: UserPlus,
     },
     {
@@ -240,67 +245,165 @@ export const leadsListConfig: ListViewConfig<Lead> = {
         })),
       ],
     },
+    {
+      key: 'campaignId',
+      type: 'select',
+      label: 'Campaign',
+      options: [
+        { value: 'all', label: 'All Campaigns' },
+        // Note: Dynamic campaign options would be loaded at runtime
+      ],
+    },
+    {
+      key: 'minScore',
+      type: 'select',
+      label: 'Score Range',
+      options: [
+        { value: 'all', label: 'All Scores' },
+        { value: '80', label: 'Hot (80+)' },
+        { value: '60', label: 'Warm (60+)' },
+        { value: '40', label: 'Cool (40+)' },
+        { value: '0', label: 'Cold (0+)' },
+      ],
+    },
+    {
+      key: 'ownerId',
+      type: 'select',
+      label: 'Assigned To',
+      options: [
+        { value: 'all', label: 'All Owners' },
+        { value: 'me', label: 'Assigned to Me' },
+        { value: 'unassigned', label: 'Unassigned' },
+      ],
+    },
   ],
 
   columns: [
     {
-      key: 'company_name',
-      label: 'Company / Name',
+      key: 'name',
+      header: 'Lead Name',
+      label: 'Lead Name',
       sortable: true,
+      width: 'min-w-[180px]',
       render: (value, entity) => {
         const lead = entity as Lead
-        if (lead.lead_type === 'company') {
-          return lead.company_name || '—'
+        if (lead.lead_type === 'individual') {
+          return `${lead.first_name || ''} ${lead.last_name || ''}`.trim() || '—'
         }
-        return `${lead.first_name || ''} ${lead.last_name || ''}`.trim() || '—'
+        const contactName = `${lead.first_name || ''} ${lead.last_name || ''}`.trim()
+        return contactName || lead.company_name || '—'
       },
     },
     {
-      key: 'title',
-      label: 'Title',
+      key: 'company_name',
+      header: 'Company',
+      label: 'Company',
+      sortable: true,
+      width: 'w-[150px]',
+      render: (value, entity) => {
+        const lead = entity as Lead
+        return lead.company_name || '—'
+      },
     },
     {
-      key: 'status',
-      label: 'Status',
+      key: 'email',
+      header: 'Email',
+      label: 'Email',
+      sortable: false,
+      width: 'w-[180px]',
+      render: (value, entity) => {
+        const lead = entity as Lead
+        return lead.email || '—'
+      },
+    },
+    {
+      key: 'phone',
+      header: 'Phone',
+      label: 'Phone',
+      sortable: false,
+      width: 'w-[120px]',
+      render: (value, entity) => {
+        const lead = entity as Lead
+        return lead.phone || '—'
+      },
     },
     {
       key: 'source',
+      header: 'Source',
       label: 'Source',
-    },
-    {
-      key: 'bant_total_score',
-      label: 'Score',
+      sortable: true,
+      width: 'w-[120px]',
       render: (value) => {
-        const score = value as number | null
-        if (!score) return '—'
-        return `${score}/100`
+        const source = value as string
+        return LEAD_SOURCE_CONFIG[source]?.label || source || '—'
       },
     },
     {
-      key: 'estimated_value',
-      label: 'Est. Value',
-      type: 'currency',
+      key: 'status',
+      header: 'Status',
+      label: 'Status',
+      sortable: true,
+      width: 'w-[100px]',
+      format: 'status' as const,
+    },
+    {
+      key: 'bant_total_score',
+      header: 'Score',
+      label: 'Score',
+      sortable: true,
+      width: 'w-[80px]',
+      align: 'right' as const,
+      render: (value) => {
+        const score = value as number | null
+        if (!score) return '—'
+        return `${score}`
+      },
+    },
+    {
+      key: 'campaign',
+      header: 'Campaign',
+      label: 'Campaign',
+      sortable: true,
+      width: 'w-[140px]',
+      render: (value) => {
+        const campaign = value as Lead['campaign']
+        return campaign?.name || '—'
+      },
     },
     {
       key: 'owner',
-      label: 'Owner',
+      header: 'Assigned To',
+      label: 'Assigned To',
+      sortable: true,
+      width: 'w-[130px]',
       render: (value) => {
         const owner = value as Lead['owner']
         return owner?.full_name || '—'
       },
     },
     {
+      key: 'last_contacted_at',
+      header: 'Last Activity',
+      label: 'Last Activity',
+      sortable: true,
+      width: 'w-[110px]',
+      format: 'relative-date' as const,
+    },
+    {
       key: 'created_at',
+      header: 'Created',
       label: 'Created',
-      type: 'date',
+      sortable: true,
+      width: 'w-[100px]',
+      format: 'relative-date' as const,
     },
   ],
 
-  renderMode: 'cards',
+  renderMode: 'table',
   statusField: 'status',
   statusConfig: LEAD_STATUS_CONFIG,
 
-  pageSize: 50,
+  pageSize: 20,
 
   emptyState: {
     icon: Target,
@@ -321,6 +424,11 @@ export const leadsListConfig: ListViewConfig<Lead> = {
   useListQuery: (filters) => {
     const statusValue = filters.status as string | undefined
     const sourceValue = filters.source as string | undefined
+    const sortByValue = filters.sortBy as string | undefined
+    const sortOrderValue = filters.sortOrder as string | undefined
+    const minScoreValue = filters.minScore as string | undefined
+    const ownerIdValue = filters.ownerId as string | undefined
+
     const validStatuses = [
       'new',
       'contacted',
@@ -330,7 +438,38 @@ export const leadsListConfig: ListViewConfig<Lead> = {
       'converted',
       'all',
     ] as const
+    const validSortFields = ['created_at', 'bant_total_score', 'company_name', 'first_name', 'status', 'last_contacted_at', 'source', 'campaign_id'] as const
+
     type LeadStatus = (typeof validStatuses)[number]
+    type SortField = (typeof validSortFields)[number]
+
+    // Map frontend column keys to database columns
+    const sortFieldMap: Record<string, SortField> = {
+      name: 'first_name',
+      company_name: 'company_name',
+      source: 'source',
+      status: 'status',
+      bant_total_score: 'bant_total_score',
+      campaign: 'campaign_id',
+      owner: 'created_at', // Fallback - owner sorting not directly supported
+      last_contacted_at: 'last_contacted_at',
+      created_at: 'created_at',
+    }
+
+    const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
+      ? sortFieldMap[sortByValue]
+      : 'created_at'
+
+    // Handle owner filter
+    let ownerIdFilter: string | undefined
+    if (ownerIdValue === 'me') {
+      // This will be handled by the useQuery - we pass undefined and let the backend default to current user
+      ownerIdFilter = undefined // Will be handled specially in the query
+    } else if (ownerIdValue === 'unassigned') {
+      ownerIdFilter = undefined // Need special handling in backend for null owner
+    } else if (ownerIdValue && ownerIdValue !== 'all') {
+      ownerIdFilter = ownerIdValue
+    }
 
     return trpc.crm.leads.list.useQuery({
       search: filters.search as string | undefined,
@@ -338,15 +477,20 @@ export const leadsListConfig: ListViewConfig<Lead> = {
         ? statusValue
         : 'all') as LeadStatus,
       source: sourceValue !== 'all' ? sourceValue : undefined,
+      ownerId: ownerIdFilter,
       campaignId: filters.campaignId as string | undefined,
-      limit: (filters.limit as number) || 50,
+      minScore: minScoreValue && minScoreValue !== 'all' ? parseInt(minScoreValue, 10) : undefined,
+      limit: (filters.limit as number) || 20,
       offset: (filters.offset as number) || 0,
-      sortBy: 'created_at',
-      sortOrder: 'desc',
+      sortBy: mappedSortBy,
+      sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'desc'),
     })
   },
 
-  useStatsQuery: () => trpc.crm.leads.getStats.useQuery({ period: 'month' }),
+  // Stats query for metrics cards
+  useStatsQuery: () => {
+    return trpc.crm.leads.stats.useQuery()
+  },
 }
 
 // Leads Detail View Configuration

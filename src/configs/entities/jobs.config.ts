@@ -17,6 +17,7 @@ import {
   Activity,
   Send,
   Kanban,
+  Play,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
@@ -43,19 +44,33 @@ export interface Job extends Record<string, unknown> {
     id: string
     name: string
   }
+  owner?: {
+    id: string
+    full_name: string
+    avatar_url?: string
+  } | null
   location?: string
   job_type?: string
+  type?: string
   billing_rate?: number
   bill_rate_min?: number
   bill_rate_max?: number
+  salary_min?: number
+  salary_max?: number
   priority?: string
   positions_available?: number
+  openings?: number
   positions_filled?: number
+  submissions_count?: number
+  interviews_count?: number
   description?: string
   requirements?: string
   start_date?: string
   end_date?: string
+  due_date?: string
+  dueDate?: string
   created_at: string
+  createdAt?: string
   updated_at?: string
   created_by?: string
   owner_id?: string
@@ -144,6 +159,34 @@ export const JOB_PRIORITY_CONFIG: Record<string, StatusConfig> = {
   },
 }
 
+// Job type configuration
+export const JOB_TYPE_CONFIG: Record<string, StatusConfig> = {
+  full_time: {
+    label: 'Full-Time',
+    color: 'bg-blue-100 text-blue-800',
+    bgColor: 'bg-blue-100',
+    textColor: 'text-blue-800',
+  },
+  contract: {
+    label: 'Contract',
+    color: 'bg-purple-100 text-purple-800',
+    bgColor: 'bg-purple-100',
+    textColor: 'text-purple-800',
+  },
+  contract_to_hire: {
+    label: 'Contract-to-Hire',
+    color: 'bg-green-100 text-green-800',
+    bgColor: 'bg-green-100',
+    textColor: 'text-green-800',
+  },
+  part_time: {
+    label: 'Part-Time',
+    color: 'bg-amber-100 text-amber-800',
+    bgColor: 'bg-amber-100',
+    textColor: 'text-amber-800',
+  },
+}
+
 // Jobs List View Configuration
 export const jobsListConfig: ListViewConfig<Job> = {
   entityType: 'job',
@@ -170,21 +213,27 @@ export const jobsListConfig: ListViewConfig<Job> = {
       key: 'active',
       label: 'Active',
       color: 'bg-green-100 text-green-800',
+      icon: Play,
     },
     {
-      key: 'onHold',
-      label: 'On Hold',
-      color: 'bg-amber-100 text-amber-800',
-    },
-    {
-      key: 'filled',
-      label: 'Filled',
+      key: 'filledThisMonth',
+      label: 'Filled This Month',
       color: 'bg-purple-100 text-purple-800',
+      icon: CheckCircle,
     },
     {
-      key: 'urgent',
-      label: 'Urgent',
-      color: 'bg-red-100 text-red-700',
+      key: 'avgTimeToFill',
+      label: 'Avg Time to Fill',
+      color: 'bg-amber-100 text-amber-800',
+      icon: Clock,
+      format: (value: number) => `${value} days`,
+    },
+    {
+      key: 'avgSubmissions',
+      label: 'Avg Submissions',
+      color: 'bg-blue-100 text-blue-800',
+      icon: Users,
+      format: (value: number) => value.toFixed(1),
     },
   ],
 
@@ -199,31 +248,54 @@ export const jobsListConfig: ListViewConfig<Job> = {
       key: 'status',
       type: 'select',
       label: 'Status',
-      options: Object.entries(JOB_STATUS_CONFIG).map(([value, config]) => ({
-        value,
-        label: config.label,
-      })),
+      options: [
+        { value: 'all', label: 'All Status' },
+        ...Object.entries(JOB_STATUS_CONFIG).map(([value, config]) => ({
+          value,
+          label: config.label,
+        })),
+      ],
+    },
+    {
+      key: 'type',
+      type: 'select',
+      label: 'Type',
+      options: [
+        { value: 'all', label: 'All Types' },
+        ...Object.entries(JOB_TYPE_CONFIG).map(([value, config]) => ({
+          value,
+          label: config.label,
+        })),
+      ],
     },
     {
       key: 'priority',
       type: 'select',
       label: 'Priority',
-      options: Object.entries(JOB_PRIORITY_CONFIG).map(([value, config]) => ({
-        value,
-        label: config.label,
-      })),
+      options: [
+        { value: 'all', label: 'All Priorities' },
+        ...Object.entries(JOB_PRIORITY_CONFIG).map(([value, config]) => ({
+          value,
+          label: config.label,
+        })),
+      ],
     },
   ],
 
   columns: [
     {
       key: 'title',
-      label: 'Title',
+      header: 'Job Title',
+      label: 'Job Title',
       sortable: true,
+      width: 'min-w-[200px]',
     },
     {
       key: 'account',
-      label: 'Account',
+      header: 'Client',
+      label: 'Client',
+      sortable: true,
+      width: 'w-[150px]',
       render: (value) => {
         const account = value as Job['account']
         return account?.name || '—'
@@ -231,35 +303,121 @@ export const jobsListConfig: ListViewConfig<Job> = {
     },
     {
       key: 'location',
+      header: 'Location',
       label: 'Location',
-      icon: MapPin,
+      sortable: true,
+      width: 'w-[130px]',
     },
     {
-      key: 'status',
-      label: 'Status',
-    },
-    {
-      key: 'billing_rate',
-      label: 'Bill Rate',
-      type: 'currency',
-      icon: DollarSign,
-    },
-    {
-      key: 'positions_available',
-      label: 'Positions',
+      key: 'type',
+      header: 'Type',
+      label: 'Type',
+      sortable: true,
+      width: 'w-[100px]',
       render: (value, entity) => {
         const job = entity as Job
-        return `${job.positions_filled || 0}/${job.positions_available || 1}`
+        const type = job.type || job.job_type
+        return JOB_TYPE_CONFIG[type || '']?.label || type || '—'
       },
     },
     {
-      key: 'created_at',
+      key: 'status',
+      header: 'Status',
+      label: 'Status',
+      sortable: true,
+      width: 'w-[100px]',
+      format: 'status' as const,
+    },
+    {
+      key: 'salaryRange',
+      header: 'Salary Range',
+      label: 'Salary Range',
+      width: 'w-[120px]',
+      align: 'right' as const,
+      render: (value, entity) => {
+        const job = entity as Job
+        const min = job.salary_min || job.bill_rate_min
+        const max = job.salary_max || job.bill_rate_max
+        if (min && max) {
+          return `$${(min / 1000).toFixed(0)}k-$${(max / 1000).toFixed(0)}k`
+        }
+        if (min) return `$${(min / 1000).toFixed(0)}k+`
+        if (max) return `Up to $${(max / 1000).toFixed(0)}k`
+        return '—'
+      },
+    },
+    {
+      key: 'openings',
+      header: 'Openings',
+      label: 'Openings',
+      sortable: true,
+      width: 'w-[80px]',
+      align: 'right' as const,
+      render: (value, entity) => {
+        const job = entity as Job
+        return (job.openings || job.positions_available || 1).toString()
+      },
+    },
+    {
+      key: 'submissions',
+      header: 'Submissions',
+      label: 'Submissions',
+      sortable: true,
+      width: 'w-[90px]',
+      align: 'right' as const,
+      render: (value, entity) => {
+        const job = entity as Job
+        return (job.submissions_count || 0).toString()
+      },
+    },
+    {
+      key: 'interviews',
+      header: 'Interviews',
+      label: 'Interviews',
+      sortable: true,
+      width: 'w-[80px]',
+      align: 'right' as const,
+      render: (value, entity) => {
+        const job = entity as Job
+        return (job.interviews_count || 0).toString()
+      },
+    },
+    {
+      key: 'owner',
+      header: 'Owner',
+      label: 'Owner',
+      sortable: true,
+      width: 'w-[130px]',
+      render: (value) => {
+        const owner = value as Job['owner']
+        return owner?.full_name || '—'
+      },
+    },
+    {
+      key: 'dueDate',
+      header: 'Due Date',
+      label: 'Due Date',
+      sortable: true,
+      width: 'w-[100px]',
+      format: 'date' as const,
+      render: (value, entity) => {
+        const job = entity as Job
+        const date = job.dueDate || job.due_date
+        if (!date) return '—'
+        return new Date(date).toLocaleDateString()
+      },
+    },
+    {
+      key: 'createdAt',
+      header: 'Created',
       label: 'Created',
-      type: 'date',
+      sortable: true,
+      width: 'w-[100px]',
+      format: 'relative-date' as const,
     },
   ],
 
-  renderMode: 'cards',
+  renderMode: 'table',
   statusField: 'status',
   statusConfig: JOB_STATUS_CONFIG,
 
@@ -281,18 +439,65 @@ export const jobsListConfig: ListViewConfig<Job> = {
   // tRPC hooks for data fetching
   useListQuery: (filters) => {
     const statusValue = filters.status as string | undefined
-    const validStatuses = ['draft', 'open', 'active', 'on_hold', 'filled', 'cancelled', 'all'] as const
-    type JobStatus = typeof validStatuses[number]
+    const typeValue = filters.type as string | undefined
+    const priorityValue = filters.priority as string | undefined
+    const sortByValue = filters.sortBy as string | undefined
+    const sortOrderValue = filters.sortOrder as string | undefined
+
+    const validStatuses = ['draft', 'open', 'active', 'on_hold', 'filled', 'cancelled', 'closed', 'all'] as const
+    const validTypes = ['full_time', 'contract', 'contract_to_hire', 'part_time'] as const
+    const validSortFields = [
+      'title',
+      'account_id',
+      'location',
+      'job_type',
+      'status',
+      'positions_available',
+      'submissions_count',
+      'interviews_count',
+      'owner_id',
+      'due_date',
+      'created_at',
+    ] as const
+
+    type JobStatus = (typeof validStatuses)[number]
+    type JobType = (typeof validTypes)[number]
+    type SortField = (typeof validSortFields)[number]
+
+    // Map frontend column keys to database columns
+    const sortFieldMap: Record<string, SortField> = {
+      title: 'title',
+      account: 'account_id',
+      location: 'location',
+      type: 'job_type',
+      status: 'status',
+      openings: 'positions_available',
+      submissions: 'submissions_count',
+      interviews: 'interviews_count',
+      owner: 'owner_id',
+      dueDate: 'due_date',
+      createdAt: 'created_at',
+    }
+
+    const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
+      ? sortFieldMap[sortByValue]
+      : 'created_at'
 
     return trpc.ats.jobs.list.useQuery({
       search: filters.search as string | undefined,
       status: (statusValue && validStatuses.includes(statusValue as JobStatus) ? statusValue : 'all') as JobStatus,
+      type: typeValue && typeValue !== 'all' && validTypes.includes(typeValue as JobType)
+        ? typeValue as JobType
+        : undefined,
+      priority: priorityValue !== 'all' ? priorityValue : undefined,
       limit: (filters.limit as number) || 20,
       offset: (filters.offset as number) || 0,
+      sortBy: mappedSortBy,
+      sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'desc'),
     })
   },
 
-  useStatsQuery: () => trpc.ats.jobs.getStats.useQuery({}),
+  useStatsQuery: () => trpc.ats.jobs.stats.useQuery(),
 }
 
 // Jobs Detail View Configuration

@@ -2,11 +2,10 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Clock, Plus, LucideIcon, List, Home, LayoutDashboard, Calendar, Activity, Building2, Briefcase, Send, FileBarChart, GraduationCap, BookOpen, Users, Award } from 'lucide-react'
+import { Clock, LucideIcon, List, Home, LayoutDashboard, Calendar, Activity, Building2, Briefcase, Send, FileBarChart, GraduationCap, BookOpen, Users, Award } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useEntityNavigationSafe } from '@/lib/navigation/EntityNavigationContext'
 import { EntityType, ENTITY_BASE_PATHS } from '@/lib/navigation/entity-navigation.types'
-import { Button } from '@/components/ui/button'
 import { formatDistanceToNow } from 'date-fns'
 
 // Section configuration for different areas of the app
@@ -16,13 +15,6 @@ interface SectionConfig {
   icon: LucideIcon
   entityType?: EntityType
   basePath: string
-  quickActions?: Array<{
-    id: string
-    label: string
-    icon: LucideIcon
-    href?: string
-    variant?: 'default' | 'outline'
-  }>
   navLinks?: Array<{
     id: string
     label: string
@@ -39,9 +31,6 @@ export const sectionConfigs: Record<string, SectionConfig> = {
     icon: List,
     entityType: 'job',
     basePath: '/employee/recruiting/jobs',
-    quickActions: [
-      { id: 'new-job', label: 'New Job', icon: Plus, href: '/employee/recruiting/jobs/new' },
-    ],
     navLinks: [
       { id: 'all-jobs', label: 'All Jobs', icon: List, href: '/employee/recruiting/jobs' },
     ],
@@ -52,9 +41,6 @@ export const sectionConfigs: Record<string, SectionConfig> = {
     icon: List,
     entityType: 'candidate',
     basePath: '/employee/recruiting/candidates',
-    quickActions: [
-      { id: 'new-candidate', label: 'Add Candidate', icon: Plus, href: '/employee/recruiting/candidates/new' },
-    ],
     navLinks: [
       { id: 'all-candidates', label: 'All Candidates', icon: List, href: '/employee/recruiting/candidates' },
       { id: 'hotlists', label: 'Hotlists', icon: List, href: '/employee/recruiting/hotlists' },
@@ -66,9 +52,6 @@ export const sectionConfigs: Record<string, SectionConfig> = {
     icon: List,
     entityType: 'account',
     basePath: '/employee/recruiting/accounts',
-    quickActions: [
-      { id: 'new-account', label: 'New Account', icon: Plus, href: '/employee/recruiting/accounts/new' },
-    ],
     navLinks: [
       { id: 'all-accounts', label: 'All Accounts', icon: List, href: '/employee/recruiting/accounts' },
     ],
@@ -79,9 +62,6 @@ export const sectionConfigs: Record<string, SectionConfig> = {
     icon: List,
     entityType: 'lead',
     basePath: '/employee/crm/leads',
-    quickActions: [
-      { id: 'new-lead', label: 'New Lead', icon: Plus, href: '/employee/crm/leads/new' },
-    ],
     navLinks: [
       { id: 'all-leads', label: 'All Leads', icon: List, href: '/employee/crm/leads' },
     ],
@@ -92,9 +72,6 @@ export const sectionConfigs: Record<string, SectionConfig> = {
     icon: List,
     entityType: 'deal',
     basePath: '/employee/crm/deals',
-    quickActions: [
-      { id: 'new-deal', label: 'New Deal', icon: Plus, href: '/employee/crm/deals/new' },
-    ],
     navLinks: [
       { id: 'all-deals', label: 'All Deals', icon: List, href: '/employee/crm/deals' },
     ],
@@ -115,9 +92,6 @@ export const sectionConfigs: Record<string, SectionConfig> = {
     icon: List,
     entityType: 'campaign',
     basePath: '/employee/crm/campaigns',
-    quickActions: [
-      { id: 'new-campaign', label: 'New Campaign', icon: Plus, href: '/employee/crm/campaigns/new' },
-    ],
     navLinks: [
       { id: 'all-campaigns', label: 'All Campaigns', icon: List, href: '/employee/crm/campaigns' },
     ],
@@ -142,9 +116,6 @@ export const sectionConfigs: Record<string, SectionConfig> = {
     title: 'Academy Admin',
     icon: GraduationCap,
     basePath: '/employee/academy',
-    quickActions: [
-      { id: 'new-course', label: 'New Course', icon: Plus, href: '/employee/academy/courses/new' },
-    ],
     navLinks: [
       { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, href: '/employee/academy/dashboard' },
       { id: 'courses', label: 'Courses', icon: BookOpen, href: '/employee/academy/courses' },
@@ -237,7 +208,7 @@ export function SectionSidebar({ sectionId, className }: SectionSidebarProps) {
             Recent
           </h3>
           <ul className="space-y-1">
-            {recentEntities.slice(0, 5).map((entity) => (
+            {recentEntities.slice(0, 10).map((entity) => (
               <li key={entity.id}>
                 <Link
                   href={`${ENTITY_BASE_PATHS[section.entityType!]}/${entity.id}`}
@@ -272,33 +243,6 @@ export function SectionSidebar({ sectionId, className }: SectionSidebarProps) {
         </div>
       )}
 
-      {/* Quick Actions */}
-      {section.quickActions && section.quickActions.length > 0 && (
-        <div className="p-4 border-t border-charcoal-100">
-          <h3 className="text-xs font-medium text-charcoal-500 uppercase tracking-wide mb-3">
-            Quick Actions
-          </h3>
-          <div className="space-y-2">
-            {section.quickActions.map((action) => {
-              const ActionIcon = action.icon
-              return (
-                <Button
-                  key={action.id}
-                  variant={action.variant || 'outline'}
-                  size="sm"
-                  className="w-full justify-start gap-2"
-                  asChild
-                >
-                  <Link href={action.href || '#'}>
-                    <ActionIcon className="w-4 h-4" />
-                    {action.label}
-                  </Link>
-                </Button>
-              )
-            })}
-          </div>
-        </div>
-      )}
     </aside>
   )
 }

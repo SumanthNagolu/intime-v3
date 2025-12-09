@@ -92,7 +92,7 @@ export function TopNavigation() {
     for (const item of tab.dropdown) {
       if (item.type === 'link') count++
       if (item.type === 'recent' && recentEntities.length > 0) {
-        count += Math.min(recentEntities.length, 5)
+        count += Math.min(recentEntities.length, 10)
       }
     }
     return count
@@ -372,7 +372,7 @@ export function TopNavigation() {
                               <div className="px-3 py-1.5 text-xs font-medium text-charcoal-500 uppercase tracking-wide">
                                 Recent
                               </div>
-                              {recentEntities.slice(0, 5).map((entity) => {
+                              {recentEntities.slice(0, 10).map((entity) => {
                                 const currentIndex = itemIndex++
                                 return (
                                   <Link

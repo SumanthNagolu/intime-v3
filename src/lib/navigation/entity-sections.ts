@@ -21,6 +21,9 @@ import {
   StickyNote,
   History,
   Layers,
+  TrendingDown,
+  Workflow,
+  BarChart3,
 } from 'lucide-react'
 
 /**
@@ -34,23 +37,111 @@ export interface SectionDefinition {
   showCount?: boolean
   alertOnCount?: boolean // Show alert styling when count > 0
   isToolSection?: boolean // Marks section as part of the collapsible Tools group
+  group?: 'main' | 'automation' | 'tools' // For grouping in sidebar
+  description?: string // Tooltip/description for the section
 }
 
 /**
- * Campaign sections - Guidewire-style with main sections + tools
- * Main: Dashboard, Prospects, Leads (sub-object collections)
- * Tools: Activities, Notes, Documents, History
+ * Campaign sections - Enterprise-grade with main sections + automation + tools
+ *
+ * MAIN: Core campaign management
+ *   - Overview: Campaign health dashboard with key metrics
+ *   - Prospects: Audience management and prospect tracking
+ *   - Leads: Converted prospects and lead tracking
+ *   - Funnel: Visual pipeline progression visualization
+ *
+ * AUTOMATION: Outreach execution and analysis
+ *   - Sequence: Email/LinkedIn/Phone automation workflow
+ *   - Analytics: Deep performance metrics and ROI
+ *
+ * TOOLS: Supporting functions
+ *   - Activities, Notes, Documents, History
  */
 export const campaignSections: SectionDefinition[] = [
-  // Main sections
-  { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { id: 'prospects', label: 'Prospects', icon: Users, showCount: true },
-  { id: 'leads', label: 'Leads', icon: Target, showCount: true },
-  // Tools section
-  { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true },
-  { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },
-  { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true },
-  { id: 'history', label: 'History', icon: History, isToolSection: true },
+  // Main sections - Core campaign management
+  {
+    id: 'overview',
+    label: 'Overview',
+    icon: LayoutDashboard,
+    group: 'main',
+    description: 'Campaign health and key metrics at a glance',
+  },
+  {
+    id: 'prospects',
+    label: 'Prospects',
+    icon: Users,
+    showCount: true,
+    group: 'main',
+    description: 'Manage campaign audience and prospect list',
+  },
+  {
+    id: 'leads',
+    label: 'Leads',
+    icon: Target,
+    showCount: true,
+    group: 'main',
+    description: 'Track converted prospects and qualified leads',
+  },
+  {
+    id: 'funnel',
+    label: 'Funnel',
+    icon: TrendingDown,
+    group: 'main',
+    description: 'Visual pipeline showing prospect progression',
+  },
+
+  // Automation sections - Outreach execution
+  {
+    id: 'sequence',
+    label: 'Sequence',
+    icon: Workflow,
+    group: 'automation',
+    description: 'Email, LinkedIn, and phone automation workflow',
+  },
+  {
+    id: 'analytics',
+    label: 'Analytics',
+    icon: BarChart3,
+    group: 'automation',
+    description: 'Performance metrics, ROI, and channel analysis',
+  },
+
+  // Tool sections - Supporting functions
+  {
+    id: 'activities',
+    label: 'Activities',
+    icon: Activity,
+    showCount: true,
+    isToolSection: true,
+    group: 'tools',
+    description: 'All campaign touchpoints and interactions',
+  },
+  {
+    id: 'notes',
+    label: 'Notes',
+    icon: StickyNote,
+    showCount: true,
+    isToolSection: true,
+    group: 'tools',
+    description: 'Campaign notes and observations',
+  },
+  {
+    id: 'documents',
+    label: 'Documents',
+    icon: FileText,
+    showCount: true,
+    isToolSection: true,
+    group: 'tools',
+    description: 'Templates, reports, and attachments',
+  },
+  {
+    id: 'history',
+    label: 'History',
+    icon: History,
+    isToolSection: true,
+    group: 'tools',
+    description: 'Campaign changelog and audit trail',
+  },
 ]
 
 /**
@@ -232,6 +323,22 @@ export function getSectionsByGroup(entityType: string): {
   return {
     mainSections: sections.filter(s => !s.isToolSection),
     toolSections: sections.filter(s => s.isToolSection),
+  }
+}
+
+/**
+ * Helper to get campaign sections organized by group
+ * Returns sections grouped for enterprise sidebar rendering
+ */
+export function getCampaignSectionsByGroup(): {
+  mainSections: SectionDefinition[]
+  automationSections: SectionDefinition[]
+  toolSections: SectionDefinition[]
+} {
+  return {
+    mainSections: campaignSections.filter(s => s.group === 'main'),
+    automationSections: campaignSections.filter(s => s.group === 'automation'),
+    toolSections: campaignSections.filter(s => s.group === 'tools'),
   }
 }
 

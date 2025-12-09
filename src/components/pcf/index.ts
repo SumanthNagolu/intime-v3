@@ -121,10 +121,8 @@ export {
   SidebarHeader,
   SidebarSections,
   SidebarJourney,
-  SidebarActions,
 } from './sidebar'
 export type {
   EntitySidebarConfig,
   SidebarSectionConfig,
-  SidebarActionConfig,
 } from './sidebar'

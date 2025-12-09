@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { format, formatDistanceToNow } from 'date-fns'
 import {
   Edit,
@@ -11,11 +12,22 @@ import {
   User,
   Pin,
   PinOff,
+  ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Textarea } from '@/components/ui/textarea'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,24 +39,17 @@ import { InlinePanel, InlinePanelSection } from '@/components/ui/inline-panel'
 import { cn } from '@/lib/utils'
 import { EmptyState } from '@/components/pcf/shared/EmptyState'
 import { toast } from '@/components/ui/use-toast'
-
-interface NoteType {
-  id: string
-  content: string
-  is_pinned?: boolean
-  created_at: string
-  updated_at?: string
-  creator?: {
-    id: string
-    full_name: string
-    avatar_url?: string
-  }
-}
+import {
+  NOTE_TYPE_CONFIG,
+  NOTES_COLUMNS,
+  NOTES_SORT_FIELD_MAP,
+  type NoteItem,
+} from '@/configs/sections/notes.config'
 
 interface NotesSectionProps {
   entityType: string
   entityId: string
-  notes?: NoteType[]
+  notes?: NoteItem[]
   isLoading?: boolean
   onAddNote?: (content: string) => Promise<void>
   onEditNote?: (id: string, content: string) => Promise<void>
@@ -64,19 +69,87 @@ export function NotesSection({
   onTogglePin,
   showInlineForm = true,
 }: NotesSectionProps) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const [selectedNoteId, setSelectedNoteId] = useState<string | null>(null)
   const [isCreating, setIsCreating] = useState(false)
   const [newNoteContent, setNewNoteContent] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  // Get current sort state from URL
+  const currentSortBy = searchParams.get('notesSortBy') || 'createdAt'
+  const currentSortOrder = (searchParams.get('notesSortOrder') || 'desc') as 'asc' | 'desc'
+
   const selectedNote = notes.find((n) => n.id === selectedNoteId)
 
-  // Sort notes: pinned first, then by date
-  const sortedNotes = [...notes].sort((a, b) => {
-    if (a.is_pinned && !b.is_pinned) return -1
-    if (!a.is_pinned && b.is_pinned) return 1
-    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-  })
+  // Transform and sort notes
+  const sortedNotes = useMemo(() => {
+    // Normalize data
+    const normalized = notes.map(item => ({
+      ...item,
+      isPinned: item.is_pinned || item.isPinned,
+      createdAt: item.created_at || item.createdAt,
+      updatedAt: item.updated_at || item.updatedAt,
+      noteType: item.note_type || item.noteType,
+      entityType: item.entity_type || item.entityType,
+      entityId: item.entity_id || item.entityId,
+    }))
+
+    // Sort: pinned first, then by selected column
+    return [...normalized].sort((a, b) => {
+      // Pinned always first
+      if (a.isPinned && !b.isPinned) return -1
+      if (!a.isPinned && b.isPinned) return 1
+
+      // Then sort by selected field
+      const sortField = NOTES_SORT_FIELD_MAP[currentSortBy] || 'created_at'
+      let aVal: string | number | undefined
+      let bVal: string | number | undefined
+
+      switch (sortField) {
+        case 'subject':
+          aVal = a.subject
+          bVal = b.subject
+          break
+        case 'created_at':
+          aVal = a.createdAt
+          bVal = b.createdAt
+          break
+        case 'updated_at':
+          aVal = a.updatedAt
+          bVal = b.updatedAt
+          break
+        default:
+          aVal = a.createdAt
+          bVal = b.createdAt
+          break
+      }
+
+      if (!aVal && !bVal) return 0
+      if (!aVal) return 1
+      if (!bVal) return -1
+
+      const comparison = String(aVal).localeCompare(String(bVal))
+      return currentSortOrder === 'asc' ? comparison : -comparison
+    })
+  }, [notes, currentSortBy, currentSortOrder])
+
+  const handleSort = (columnKey: string) => {
+    const params = new URLSearchParams(searchParams.toString())
+    const newOrder = currentSortBy === columnKey && currentSortOrder === 'desc' ? 'asc' : 'desc'
+    params.set('notesSortBy', columnKey)
+    params.set('notesSortOrder', newOrder)
+    router.replace(`?${params.toString()}`, { scroll: false })
+  }
+
+  const getSortIcon = (columnKey: string) => {
+    if (currentSortBy !== columnKey) {
+      return <ArrowUpDown className="ml-1 h-3.5 w-3.5 text-charcoal-400" />
+    }
+    return currentSortOrder === 'asc'
+      ? <ArrowUp className="ml-1 h-3.5 w-3.5 text-gold-600" />
+      : <ArrowDown className="ml-1 h-3.5 w-3.5 text-gold-600" />
+  }
 
   const handleCreateNote = async () => {
     if (!newNoteContent.trim() || !onAddNote) return
@@ -117,238 +190,328 @@ export function NotesSection({
     }
   }
 
+  const formatCellValue = (item: NoteItem, column: typeof NOTES_COLUMNS[number]) => {
+    const keys = column.key.split('.')
+    let value: unknown = item
+    for (const key of keys) {
+      value = (value as Record<string, unknown>)?.[key]
+    }
+
+    // Custom render function takes priority
+    if (column.render) {
+      return column.render(value, item)
+    }
+
+    // Handle null/undefined
+    if (value === null || value === undefined) {
+      return <span className="text-charcoal-400">—</span>
+    }
+
+    // Format based on column type
+    switch (column.format) {
+      case 'date':
+        try {
+          return format(new Date(String(value)), 'MMM d, yyyy')
+        } catch {
+          return String(value)
+        }
+
+      case 'relative-date':
+        try {
+          return formatDistanceToNow(new Date(String(value)), { addSuffix: true })
+        } catch {
+          return String(value)
+        }
+
+      default:
+        return String(value)
+    }
+  }
+
   if (isLoading) {
     return (
-      <div className="space-y-4">
-        {[1, 2, 3].map((i) => (
-          <Card key={i} className="bg-white animate-pulse">
-            <CardContent className="py-4">
-              <div className="h-16 bg-charcoal-100 rounded" />
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <Card className="bg-white animate-pulse">
+        <CardContent className="py-4">
+          <div className="h-64 bg-charcoal-100 rounded" />
+        </CardContent>
+      </Card>
     )
   }
 
   return (
-    <div className="flex gap-4">
-      {/* Notes List */}
-      <div
-        className={cn(
-          'flex-1 space-y-3 transition-all duration-300',
-          selectedNoteId ? 'max-w-[calc(100%-400px)]' : 'max-w-full'
-        )}
-      >
-        {/* Inline Create Form */}
-        {showInlineForm && onAddNote && (
-          <Card className="bg-white">
-            <CardContent className="py-4">
-              {isCreating ? (
-                <div className="space-y-3">
-                  <Textarea
-                    placeholder="Write your note..."
-                    value={newNoteContent}
-                    onChange={(e) => setNewNoteContent(e.target.value)}
-                    rows={3}
-                    autoFocus
-                  />
-                  <div className="flex justify-end gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        setIsCreating(false)
-                        setNewNoteContent('')
-                      }}
-                      disabled={isSubmitting}
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      size="sm"
-                      onClick={handleCreateNote}
-                      disabled={!newNoteContent.trim() || isSubmitting}
-                    >
-                      {isSubmitting ? 'Adding...' : 'Add Note'}
-                    </Button>
-                  </div>
+    <div className="space-y-4">
+      {/* Inline Create Form */}
+      {showInlineForm && onAddNote && (
+        <Card className="bg-white">
+          <CardContent className="py-4">
+            {isCreating ? (
+              <div className="space-y-3">
+                <Textarea
+                  placeholder="Write your note..."
+                  value={newNoteContent}
+                  onChange={(e) => setNewNoteContent(e.target.value)}
+                  rows={3}
+                  autoFocus
+                />
+                <div className="flex justify-end gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setIsCreating(false)
+                      setNewNoteContent('')
+                    }}
+                    disabled={isSubmitting}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={handleCreateNote}
+                    disabled={!newNoteContent.trim() || isSubmitting}
+                  >
+                    {isSubmitting ? 'Adding...' : 'Add Note'}
+                  </Button>
                 </div>
-              ) : (
-                <button
-                  className="w-full flex items-center gap-2 text-charcoal-500 hover:text-charcoal-700 transition-colors"
-                  onClick={() => setIsCreating(true)}
-                >
-                  <Plus className="w-4 h-4" />
-                  <span>Add a note...</span>
-                </button>
-              )}
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Empty state */}
-        {sortedNotes.length === 0 && !isCreating && (
-          <EmptyState
-            config={{
-              icon: StickyNote,
-              title: 'No notes yet',
-              description: 'Add notes to capture important information',
-              action: showInlineForm && onAddNote
-                ? { label: 'Add Note', onClick: () => setIsCreating(true) }
-                : undefined,
-            }}
-            variant="inline"
-          />
-        )}
-
-        {/* Note cards */}
-        {sortedNotes.map((note) => (
-          <Card
-            key={note.id}
-            className={cn(
-              'bg-white cursor-pointer transition-all duration-200',
-              selectedNoteId === note.id
-                ? 'ring-2 ring-gold-500 bg-gold-50/30'
-                : 'hover:shadow-sm',
-              note.is_pinned && 'border-l-4 border-l-gold-500'
+              </div>
+            ) : (
+              <button
+                className="w-full flex items-center gap-2 text-charcoal-500 hover:text-charcoal-700 transition-colors"
+                onClick={() => setIsCreating(true)}
+              >
+                <Plus className="w-4 h-4" />
+                <span>Add a note...</span>
+              </button>
             )}
-            onClick={() => setSelectedNoteId(note.id)}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Empty state */}
+      {sortedNotes.length === 0 && !isCreating && (
+        <EmptyState
+          config={{
+            icon: StickyNote,
+            title: 'No notes yet',
+            description: 'Add notes to capture important information',
+            action: showInlineForm && onAddNote
+              ? { label: 'Add Note', onClick: () => setIsCreating(true) }
+              : undefined,
+          }}
+          variant="inline"
+        />
+      )}
+
+      {/* Table and Inline Panel */}
+      {sortedNotes.length > 0 && (
+        <div className="flex gap-4">
+          {/* Notes Table */}
+          <div
+            className={cn(
+              'flex-1 transition-all duration-300',
+              selectedNoteId ? 'max-w-[calc(100%-400px)]' : 'max-w-full'
+            )}
           >
-            <CardContent className="py-4">
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex-1 min-w-0">
-                  {/* Content preview */}
-                  <p className="text-charcoal-700 line-clamp-3 whitespace-pre-wrap">
-                    {note.content}
-                  </p>
-
-                  {/* Meta */}
-                  <div className="flex items-center gap-3 mt-3 text-xs text-charcoal-500">
-                    {note.creator && (
-                      <span className="flex items-center gap-1">
-                        <User className="w-3 h-3" />
-                        {note.creator.full_name}
-                      </span>
-                    )}
-                    <span>
-                      {formatDistanceToNow(new Date(note.created_at), { addSuffix: true })}
-                    </span>
-                    {note.is_pinned && (
-                      <Badge variant="outline" className="text-xs">
-                        <Pin className="w-3 h-3 mr-1" />
-                        Pinned
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-
-                {/* Actions */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                      <MoreVertical className="w-4 h-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    {onEditNote && (
-                      <DropdownMenuItem>
-                        <Edit className="w-4 h-4 mr-2" />
-                        Edit
-                      </DropdownMenuItem>
-                    )}
-                    {onTogglePin && (
-                      <DropdownMenuItem
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          handleTogglePin(note.id, !!note.is_pinned)
-                        }}
+            <Card className="bg-white overflow-hidden">
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="bg-charcoal-50 border-b border-charcoal-200">
+                      {NOTES_COLUMNS.map((column) => (
+                        <TableHead
+                          key={column.key}
+                          className={cn(
+                            'font-semibold text-charcoal-700 text-xs uppercase tracking-wider',
+                            column.width,
+                            column.align === 'center' && 'text-center',
+                            column.align === 'right' && 'text-right',
+                            column.sortable && 'cursor-pointer select-none hover:bg-charcoal-100 transition-colors'
+                          )}
+                          onClick={column.sortable ? () => handleSort(column.key) : undefined}
+                        >
+                          <span className="flex items-center">
+                            {column.header || column.label}
+                            {column.sortable && getSortIcon(column.key)}
+                          </span>
+                        </TableHead>
+                      ))}
+                      <TableHead className="w-[60px]"></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {sortedNotes.map((note) => (
+                      <TableRow
+                        key={note.id}
+                        className={cn(
+                          'cursor-pointer transition-colors',
+                          selectedNoteId === note.id
+                            ? 'bg-gold-50/50'
+                            : note.isPinned
+                              ? 'bg-gold-50/20 hover:bg-gold-50/30'
+                              : 'hover:bg-charcoal-50'
+                        )}
+                        onClick={() => setSelectedNoteId(note.id)}
                       >
-                        {note.is_pinned ? (
+                        {NOTES_COLUMNS.map((column) => (
+                          <TableCell
+                            key={column.key}
+                            className={cn(
+                              column.align === 'center' && 'text-center',
+                              column.align === 'right' && 'text-right'
+                            )}
+                          >
+                            {formatCellValue(note, column)}
+                          </TableCell>
+                        ))}
+                        <TableCell>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                <MoreVertical className="w-4 h-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              {onEditNote && (
+                                <DropdownMenuItem>
+                                  <Edit className="w-4 h-4 mr-2" />
+                                  Edit
+                                </DropdownMenuItem>
+                              )}
+                              {onTogglePin && (
+                                <DropdownMenuItem
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    handleTogglePin(note.id, !!note.isPinned)
+                                  }}
+                                >
+                                  {note.isPinned ? (
+                                    <>
+                                      <PinOff className="w-4 h-4 mr-2" />
+                                      Unpin
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Pin className="w-4 h-4 mr-2" />
+                                      Pin to top
+                                    </>
+                                  )}
+                                </DropdownMenuItem>
+                              )}
+                              {onDeleteNote && (
+                                <>
+                                  <DropdownMenuSeparator />
+                                  <DropdownMenuItem
+                                    className="text-red-600"
+                                    onClick={(e) => {
+                                      e.stopPropagation()
+                                      handleDeleteNote(note.id)
+                                    }}
+                                  >
+                                    <Trash2 className="w-4 h-4 mr-2" />
+                                    Delete
+                                  </DropdownMenuItem>
+                                </>
+                              )}
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </Card>
+          </div>
+
+          {/* Inline Panel */}
+          <InlinePanel
+            isOpen={!!selectedNote}
+            onClose={() => setSelectedNoteId(null)}
+            title="Note"
+            description={selectedNote?.creator?.full_name || selectedNote?.author?.full_name || 'Note details'}
+            width="md"
+            headerActions={
+              onEditNote && (
+                <Button variant="outline" size="sm">
+                  <Edit className="w-4 h-4 mr-1" />
+                  Edit
+                </Button>
+              )
+            }
+          >
+            {selectedNote && (
+              <>
+                <InlinePanelSection title="Content">
+                  <p className="text-sm text-charcoal-700 whitespace-pre-wrap">
+                    {selectedNote.content}
+                  </p>
+                </InlinePanelSection>
+
+                <InlinePanelSection title="Details">
+                  <div className="space-y-3 text-sm">
+                    {(selectedNote.isPinned) && (
+                      <div className="flex justify-between">
+                        <span className="text-charcoal-500">Status</span>
+                        <Badge className="bg-gold-100 text-gold-700">
+                          <Pin className="w-3 h-3 mr-1" />
+                          Pinned
+                        </Badge>
+                      </div>
+                    )}
+                    {selectedNote.noteType && (
+                      <div className="flex justify-between">
+                        <span className="text-charcoal-500">Type</span>
+                        <Badge className={NOTE_TYPE_CONFIG[selectedNote.noteType]?.color || 'bg-charcoal-100 text-charcoal-700'}>
+                          {NOTE_TYPE_CONFIG[selectedNote.noteType]?.label || selectedNote.noteType}
+                        </Badge>
+                      </div>
+                    )}
+                    <div className="flex justify-between">
+                      <span className="text-charcoal-500">Created by</span>
+                      <div className="flex items-center gap-2">
+                        {(selectedNote.creator || selectedNote.author) ? (
                           <>
-                            <PinOff className="w-4 h-4 mr-2" />
-                            Unpin
+                            {(selectedNote.creator?.avatar_url || selectedNote.author?.avatar_url) ? (
+                              <img
+                                src={selectedNote.creator?.avatar_url || selectedNote.author?.avatar_url}
+                                alt={selectedNote.creator?.full_name || selectedNote.author?.full_name}
+                                className="w-5 h-5 rounded-full"
+                              />
+                            ) : (
+                              <div className="w-5 h-5 rounded-full bg-charcoal-200 flex items-center justify-center">
+                                <User className="w-3 h-3 text-charcoal-500" />
+                              </div>
+                            )}
+                            <span className="font-medium">
+                              {selectedNote.creator?.full_name || selectedNote.author?.full_name}
+                            </span>
                           </>
                         ) : (
-                          <>
-                            <Pin className="w-4 h-4 mr-2" />
-                            Pin to top
-                          </>
+                          <span className="text-charcoal-400">Unknown</span>
                         )}
-                      </DropdownMenuItem>
+                      </div>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-charcoal-500">Created</span>
+                      <span className="font-medium">
+                        {selectedNote.createdAt && format(new Date(selectedNote.createdAt), 'MMM d, yyyy h:mm a')}
+                      </span>
+                    </div>
+                    {selectedNote.updatedAt && selectedNote.updatedAt !== selectedNote.createdAt && (
+                      <div className="flex justify-between">
+                        <span className="text-charcoal-500">Last updated</span>
+                        <span className="font-medium">
+                          {format(new Date(selectedNote.updatedAt), 'MMM d, yyyy h:mm a')}
+                        </span>
+                      </div>
                     )}
-                    {onDeleteNote && (
-                      <>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                          className="text-red-600"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleDeleteNote(note.id)
-                          }}
-                        >
-                          <Trash2 className="w-4 h-4 mr-2" />
-                          Delete
-                        </DropdownMenuItem>
-                      </>
-                    )}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Inline Panel */}
-      <InlinePanel
-        isOpen={!!selectedNote}
-        onClose={() => setSelectedNoteId(null)}
-        title="Note"
-        description={selectedNote?.creator?.full_name || 'Note details'}
-        width="md"
-        headerActions={
-          onEditNote && (
-            <Button variant="outline" size="sm">
-              <Edit className="w-4 h-4 mr-1" />
-              Edit
-            </Button>
-          )
-        }
-      >
-        {selectedNote && (
-          <>
-            <InlinePanelSection title="Content">
-              <p className="text-sm text-charcoal-700 whitespace-pre-wrap">
-                {selectedNote.content}
-              </p>
-            </InlinePanelSection>
-
-            <InlinePanelSection title="Details">
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-charcoal-500">Created by</span>
-                  <span className="font-medium">{selectedNote.creator?.full_name || 'Unknown'}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-charcoal-500">Created</span>
-                  <span className="font-medium">
-                    {format(new Date(selectedNote.created_at), 'MMM d, yyyy h:mm a')}
-                  </span>
-                </div>
-                {selectedNote.updated_at && selectedNote.updated_at !== selectedNote.created_at && (
-                  <div className="flex justify-between">
-                    <span className="text-charcoal-500">Last updated</span>
-                    <span className="font-medium">
-                      {format(new Date(selectedNote.updated_at), 'MMM d, yyyy h:mm a')}
-                    </span>
                   </div>
-                )}
-              </div>
-            </InlinePanelSection>
-          </>
-        )}
-      </InlinePanel>
+                </InlinePanelSection>
+              </>
+            )}
+          </InlinePanel>
+        </div>
+      )}
     </div>
   )
 }

@@ -59,6 +59,7 @@ export default function CampaignPage() {
   useEffect(() => {
     const handleCampaignDialog = (event: CustomEvent<{ dialogId: string; campaignId?: string }>) => {
       switch (event.detail.dialogId) {
+        // Campaign management dialogs
         case 'edit':
           setEditDialogOpen(true)
           break
@@ -68,21 +69,46 @@ export default function CampaignPage() {
         case 'duplicate':
           setDuplicateDialogOpen(true)
           break
+
+        // Prospect management
         case 'addProspect':
           setAddProspectOpen(true)
           break
         case 'importProspects':
           setImportProspectsOpen(true)
           break
+
+        // Lead management
         case 'linkLeads':
           setLinkLeadsOpen(true)
           break
+
+        // Document management
         case 'uploadDocument':
           setUploadDocumentOpen(true)
           break
+
+        // Activity logging
         case 'logActivity':
           setLogActivityOpen(true)
           break
+
+        // Sequence management (from Sequence section and sidebar)
+        case 'addSequenceStep':
+        case 'editSequence':
+        case 'viewSequenceStep':
+        case 'editSequenceStep':
+          toast.info('Sequence editor coming soon')
+          break
+        case 'toggleSequence':
+          // Toggle sequence running state
+          if (campaign) {
+            const newStatus = campaign.status === 'active' ? 'paused' : 'active'
+            updateStatus.mutate({ id: campaignId, status: newStatus })
+          }
+          break
+
+        // Status changes
         case 'start':
           if (campaign) {
             updateStatus.mutate({ id: campaignId, status: 'active' })
@@ -93,9 +119,34 @@ export default function CampaignPage() {
             updateStatus.mutate({ id: campaignId, status: 'paused' })
           }
           break
+        case 'resume':
+          if (campaign) {
+            updateStatus.mutate({ id: campaignId, status: 'active' })
+          }
+          break
+
+        // Reports and analytics
         case 'exportReport':
-          // Handle export logic
           toast.info('Export report feature coming soon')
+          break
+        case 'viewAnalytics':
+          // Navigate to analytics section
+          window.history.pushState({}, '', `/employee/crm/campaigns/${campaignId}?mode=sections&section=analytics`)
+          window.dispatchEvent(new PopStateEvent('popstate'))
+          break
+
+        // Quick navigation from sidebar
+        case 'viewFunnel':
+          window.history.pushState({}, '', `/employee/crm/campaigns/${campaignId}?mode=sections&section=funnel`)
+          window.dispatchEvent(new PopStateEvent('popstate'))
+          break
+        case 'viewProspects':
+          window.history.pushState({}, '', `/employee/crm/campaigns/${campaignId}?mode=sections&section=prospects`)
+          window.dispatchEvent(new PopStateEvent('popstate'))
+          break
+        case 'viewLeads':
+          window.history.pushState({}, '', `/employee/crm/campaigns/${campaignId}?mode=sections&section=leads`)
+          window.dispatchEvent(new PopStateEvent('popstate'))
           break
       }
     }
@@ -117,7 +168,7 @@ export default function CampaignPage() {
           <EditCampaignDialog
             open={editDialogOpen}
             onOpenChange={setEditDialogOpen}
-            campaign={campaign as any}
+            campaignId={campaignId}
             onSuccess={() => {
               campaignQuery.refetch()
               utils.crm.campaigns.list.invalidate()
@@ -138,9 +189,11 @@ export default function CampaignPage() {
           <DuplicateCampaignDialog
             open={duplicateDialogOpen}
             onOpenChange={setDuplicateDialogOpen}
-            campaign={campaign as any}
-            onSuccess={(newId) => {
-              router.push(`/employee/crm/campaigns/${newId}`)
+            campaignId={campaignId}
+            originalName={campaign.name}
+            onSuccess={() => {
+              utils.crm.campaigns.list.invalidate()
+              toast.success('Campaign duplicated successfully')
             }}
           />
 

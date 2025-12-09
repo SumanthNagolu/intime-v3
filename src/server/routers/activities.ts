@@ -768,4 +768,67 @@ export const activitiesRouter = router({
         email: c.email,
       })) ?? []
     }),
+
+  // ============================================
+  // GET STATS FOR ENTITY ACTIVITIES (SECTION VIEW)
+  // ============================================
+  statsByEntity: orgProtectedProcedure
+    .input(z.object({
+      entityType: z.string(),
+      entityId: z.string().uuid(),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      const now = new Date()
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+      const tomorrow = new Date(today)
+      tomorrow.setDate(tomorrow.getDate() + 1)
+
+      // Get all activities for this entity
+      const { data: activities } = await adminClient
+        .from('activities')
+        .select('id, activity_type, status, due_date, completed_at')
+        .eq('org_id', orgId)
+        .eq('entity_type', input.entityType)
+        .eq('entity_id', input.entityId)
+
+      // Calculate stats
+      const total = activities?.length ?? 0
+
+      // Completed today
+      const completedToday = activities?.filter(a => {
+        if (a.status !== 'completed' || !a.completed_at) return false
+        const completedDate = new Date(a.completed_at)
+        return completedDate >= today && completedDate < tomorrow
+      }).length ?? 0
+
+      // Overdue
+      const overdue = activities?.filter(a => {
+        if (!a.due_date) return false
+        if (['completed', 'skipped', 'canceled'].includes(a.status)) return false
+        return new Date(a.due_date) < today
+      }).length ?? 0
+
+      // By type breakdown
+      const byType: Record<string, number> = {}
+      activities?.forEach(a => {
+        byType[a.activity_type] = (byType[a.activity_type] || 0) + 1
+      })
+
+      // By status breakdown
+      const byStatus: Record<string, number> = {}
+      activities?.forEach(a => {
+        byStatus[a.status] = (byStatus[a.status] || 0) + 1
+      })
+
+      return {
+        total,
+        completedToday,
+        overdue,
+        byType,
+        byStatus,
+      }
+    }),
 })

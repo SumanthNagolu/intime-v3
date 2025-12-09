@@ -200,7 +200,7 @@ const actionItems: CommandItem[] = [
 
 // Local storage key for recent searches
 const RECENT_SEARCHES_KEY = "command-palette-recent"
-const MAX_RECENT_ITEMS = 5
+const MAX_RECENT_ITEMS = 10
 
 export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
   const router = useRouter()

@@ -18,6 +18,51 @@ function getAdminClient() {
 // ============================================
 
 const vendorsRouter = router({
+  // Get vendor stats for dashboard
+  stats: orgProtectedProcedure
+    .query(async ({ ctx }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      // Total vendors
+      const { count: total } = await adminClient
+        .from('vendors')
+        .select('*', { count: 'exact', head: true })
+        .eq('org_id', orgId)
+        .is('deleted_at', null)
+
+      // Active vendors
+      const { count: active } = await adminClient
+        .from('vendors')
+        .select('*', { count: 'exact', head: true })
+        .eq('org_id', orgId)
+        .eq('status', 'active')
+        .is('deleted_at', null)
+
+      // Preferred tier vendors (Tier 1)
+      const { count: preferred } = await adminClient
+        .from('vendors')
+        .select('*', { count: 'exact', head: true })
+        .eq('org_id', orgId)
+        .eq('tier', 'preferred')
+        .is('deleted_at', null)
+
+      // Active job orders count
+      const { count: jobOrders } = await adminClient
+        .from('job_orders')
+        .select('*', { count: 'exact', head: true })
+        .eq('org_id', orgId)
+        .in('status', ['new', 'working'])
+        .is('deleted_at', null)
+
+      return {
+        total: total || 0,
+        active: active || 0,
+        preferred: preferred || 0,
+        jobOrders: jobOrders || 0,
+      }
+    }),
+
   // List vendors with filtering
   list: orgProtectedProcedure
     .input(z.object({
@@ -27,6 +72,8 @@ const vendorsRouter = router({
       status: z.enum(['active', 'inactive', 'all']).default('active'),
       limit: z.number().min(1).max(100).default(50),
       offset: z.number().min(0).default(0),
+      sortBy: z.enum(['name', 'type', 'tier', 'status', 'created_at']).default('name'),
+      sortOrder: z.enum(['asc', 'desc']).default('asc'),
     }))
     .query(async ({ ctx, input }) => {
       const { orgId } = ctx
@@ -37,7 +84,6 @@ const vendorsRouter = router({
         .select('*, primary_contact:vendor_contacts!vendor_id(id, name, email, phone, is_primary)', { count: 'exact' })
         .eq('org_id', orgId)
         .is('deleted_at', null)
-        .order('name')
 
       if (input.search) {
         query = query.or(`name.ilike.%${input.search}%`)
@@ -51,6 +97,9 @@ const vendorsRouter = router({
       if (input.status !== 'all') {
         query = query.eq('status', input.status)
       }
+
+      // Apply sorting
+      query = query.order(input.sortBy, { ascending: input.sortOrder === 'asc' })
 
       query = query.range(input.offset, input.offset + input.limit - 1)
 
@@ -430,6 +479,67 @@ const vendorsRouter = router({
 // ============================================
 
 const talentRouter = router({
+  // Get consultant stats for dashboard
+  stats: orgProtectedProcedure
+    .query(async ({ ctx }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      // Total consultants
+      const { count: total } = await adminClient
+        .from('bench_consultants')
+        .select('*', { count: 'exact', head: true })
+        .eq('org_id', orgId)
+        .is('deleted_at', null)
+
+      // On bench (available status)
+      const { count: onBench } = await adminClient
+        .from('bench_consultants')
+        .select('*', { count: 'exact', head: true })
+        .eq('org_id', orgId)
+        .eq('status', 'available')
+        .is('deleted_at', null)
+
+      // Deployed (placed status)
+      const { count: deployed } = await adminClient
+        .from('bench_consultants')
+        .select('*', { count: 'exact', head: true })
+        .eq('org_id', orgId)
+        .eq('status', 'placed')
+        .is('deleted_at', null)
+
+      // Calculate utilization rate
+      const utilization = total && total > 0 ? ((deployed || 0) / total) * 100 : 0
+
+      // Average days on bench for available consultants
+      const { data: availableConsultants } = await adminClient
+        .from('bench_consultants')
+        .select('bench_start_date')
+        .eq('org_id', orgId)
+        .eq('status', 'available')
+        .is('deleted_at', null)
+        .not('bench_start_date', 'is', null)
+
+      let avgDaysOnBench = 0
+      if (availableConsultants && availableConsultants.length > 0) {
+        const now = new Date()
+        const totalDays = availableConsultants.reduce((sum, c) => {
+          const benchDate = new Date(c.bench_start_date)
+          const days = Math.floor((now.getTime() - benchDate.getTime()) / (1000 * 60 * 60 * 24))
+          return sum + days
+        }, 0)
+        avgDaysOnBench = Math.round(totalDays / availableConsultants.length)
+      }
+
+      return {
+        total: total || 0,
+        onBench: onBench || 0,
+        deployed: deployed || 0,
+        utilization: Math.round(utilization * 10) / 10,
+        avgDaysOnBench,
+      }
+    }),
+
   // List bench consultants
   list: orgProtectedProcedure
     .input(z.object({
@@ -441,6 +551,8 @@ const talentRouter = router({
       willingRelocate: z.boolean().optional(),
       limit: z.number().min(1).max(100).default(50),
       offset: z.number().min(0).default(0),
+      sortBy: z.enum(['bench_start_date', 'status', 'visa_type', 'target_rate', 'created_at']).default('bench_start_date'),
+      sortOrder: z.enum(['asc', 'desc']).default('desc'),
     }))
     .query(async ({ ctx, input }) => {
       const { orgId } = ctx
@@ -455,11 +567,10 @@ const talentRouter = router({
         `, { count: 'exact' })
         .eq('org_id', orgId)
         .is('deleted_at', null)
-        .order('bench_start_date', { ascending: false })
 
       if (input.search) {
-        // We'll do a simpler search approach
-        query = query.textSearch('candidate.full_name', input.search, { type: 'plain' })
+        // Search by name (can't do text search on joined table, use ilike)
+        query = query.or(`candidate.full_name.ilike.%${input.search}%`)
       }
       if (input.status !== 'all') {
         query = query.eq('status', input.status)
@@ -476,6 +587,9 @@ const talentRouter = router({
       if (input.willingRelocate !== undefined) {
         query = query.eq('willing_relocate', input.willingRelocate)
       }
+
+      // Apply sorting
+      query = query.order(input.sortBy, { ascending: input.sortOrder === 'asc' })
 
       query = query.range(input.offset, input.offset + input.limit - 1)
 
@@ -765,6 +879,68 @@ const talentRouter = router({
 // ============================================
 
 const jobOrdersRouter = router({
+  // Get job order stats for dashboard
+  stats: orgProtectedProcedure
+    .query(async ({ ctx }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      // Total job orders
+      const { count: total } = await adminClient
+        .from('job_orders')
+        .select('*', { count: 'exact', head: true })
+        .eq('org_id', orgId)
+        .is('deleted_at', null)
+
+      // Active job orders (new + working)
+      const { count: active } = await adminClient
+        .from('job_orders')
+        .select('*', { count: 'exact', head: true })
+        .eq('org_id', orgId)
+        .in('status', ['new', 'working'])
+        .is('deleted_at', null)
+
+      // Filled this month
+      const startOfMonth = new Date()
+      startOfMonth.setDate(1)
+      startOfMonth.setHours(0, 0, 0, 0)
+
+      const { count: filled } = await adminClient
+        .from('job_orders')
+        .select('*', { count: 'exact', head: true })
+        .eq('org_id', orgId)
+        .eq('status', 'filled')
+        .gte('updated_at', startOfMonth.toISOString())
+        .is('deleted_at', null)
+
+      // Calculate average time to fill (rough estimate based on filled orders)
+      const { data: filledOrders } = await adminClient
+        .from('job_orders')
+        .select('created_at, updated_at')
+        .eq('org_id', orgId)
+        .eq('status', 'filled')
+        .is('deleted_at', null)
+        .limit(100)
+
+      let avgTimeToFill = 0
+      if (filledOrders && filledOrders.length > 0) {
+        const totalDays = filledOrders.reduce((sum, order) => {
+          const created = new Date(order.created_at)
+          const updated = new Date(order.updated_at)
+          const days = Math.floor((updated.getTime() - created.getTime()) / (1000 * 60 * 60 * 24))
+          return sum + days
+        }, 0)
+        avgTimeToFill = Math.round(totalDays / filledOrders.length)
+      }
+
+      return {
+        total: total || 0,
+        active: active || 0,
+        filled: filled || 0,
+        avgTimeToFill,
+      }
+    }),
+
   // List job orders
   list: orgProtectedProcedure
     .input(z.object({
@@ -774,6 +950,8 @@ const jobOrdersRouter = router({
       priority: z.enum(['low', 'medium', 'high', 'urgent', 'all']).default('all'),
       limit: z.number().min(1).max(100).default(50),
       offset: z.number().min(0).default(0),
+      sortBy: z.enum(['received_at', 'title', 'status', 'priority', 'bill_rate', 'duration_months', 'created_at']).default('received_at'),
+      sortOrder: z.enum(['asc', 'desc']).default('desc'),
     }))
     .query(async ({ ctx, input }) => {
       const { orgId } = ctx
@@ -788,7 +966,6 @@ const jobOrdersRouter = router({
         `, { count: 'exact' })
         .eq('org_id', orgId)
         .is('deleted_at', null)
-        .order('received_at', { ascending: false })
 
       if (input.search) {
         query = query.or(`title.ilike.%${input.search}%,client_name.ilike.%${input.search}%`)
@@ -802,6 +979,9 @@ const jobOrdersRouter = router({
       if (input.priority !== 'all') {
         query = query.eq('priority', input.priority)
       }
+
+      // Apply sorting
+      query = query.order(input.sortBy, { ascending: input.sortOrder === 'asc' })
 
       query = query.range(input.offset, input.offset + input.limit - 1)
 

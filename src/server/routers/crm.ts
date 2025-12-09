@@ -22,25 +22,28 @@ export const crmRouter = router({
   // ACCOUNTS
   // ============================================
   accounts: router({
-    // List accounts with filtering
+    // List accounts with filtering and sorting
     list: orgProtectedProcedure
       .input(z.object({
         search: z.string().optional(),
-        status: z.enum(['active', 'inactive', 'prospect', 'all']).default('all'),
+        status: z.enum(['active', 'inactive', 'prospect', 'on_hold', 'all']).default('all'),
+        type: z.enum(['enterprise', 'mid_market', 'smb', 'startup']).optional(),
+        industry: z.string().optional(),
         ownerId: z.string().uuid().optional(),
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
+        sortBy: z.enum(['name', 'industry', 'type', 'status', 'jobs_count', 'placements_count', 'owner_id', 'last_contact_date', 'created_at']).default('created_at'),
+        sortOrder: z.enum(['asc', 'desc']).default('desc'),
       }))
       .query(async ({ ctx, input }) => {
-        const { orgId, user } = ctx
+        const { orgId } = ctx
         const adminClient = getAdminClient()
 
         let query = adminClient
           .from('accounts')
-          .select('*, owner:user_profiles!owner_id(id, full_name)', { count: 'exact' })
+          .select('*, owner:user_profiles!owner_id(id, full_name, avatar_url)', { count: 'exact' })
           .eq('org_id', orgId)
           .is('deleted_at', null)
-          .order('name')
 
         if (input.search) {
           query = query.or(`name.ilike.%${input.search}%,industry.ilike.%${input.search}%`)
@@ -48,10 +51,18 @@ export const crmRouter = router({
         if (input.status && input.status !== 'all') {
           query = query.eq('status', input.status)
         }
+        if (input.type) {
+          query = query.eq('company_type', input.type)
+        }
+        if (input.industry) {
+          query = query.eq('industry', input.industry)
+        }
         if (input.ownerId) {
           query = query.eq('owner_id', input.ownerId)
         }
 
+        // Apply sorting
+        query = query.order(input.sortBy, { ascending: input.sortOrder === 'asc' })
         query = query.range(input.offset, input.offset + input.limit - 1)
 
         const { data, error, count } = await query
@@ -66,15 +77,20 @@ export const crmRouter = router({
             name: a.name,
             industry: a.industry,
             status: a.status,
+            type: a.company_type,
+            company_type: a.company_type,
             website: a.website,
             phone: a.phone,
             address: a.address,
             city: a.city,
             state: a.state,
             country: a.country,
+            tier: a.tier,
             owner: a.owner,
             lastContactDate: a.last_contact_date,
+            last_contact_date: a.last_contact_date,
             createdAt: a.created_at,
+            created_at: a.created_at,
           })) ?? [],
           total: count ?? 0,
         }
@@ -611,6 +627,54 @@ export const crmRouter = router({
 
         return data
       }),
+
+    // Stats for accounts list view
+    stats: orgProtectedProcedure
+      .query(async ({ ctx }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Get account counts by status
+        const { data: accounts, error: accountsError } = await adminClient
+          .from('accounts')
+          .select('id, status')
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+
+        if (accountsError) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: accountsError.message })
+        }
+
+        // Get jobs count this quarter
+        const startOfQuarter = new Date()
+        startOfQuarter.setMonth(Math.floor(startOfQuarter.getMonth() / 3) * 3, 1)
+        startOfQuarter.setHours(0, 0, 0, 0)
+
+        const { count: jobsThisQuarter } = await adminClient
+          .from('jobs')
+          .select('id', { count: 'exact', head: true })
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .gte('created_at', startOfQuarter.toISOString())
+
+        // Get placements YTD
+        const startOfYear = new Date(new Date().getFullYear(), 0, 1)
+
+        const { count: placementsYTD } = await adminClient
+          .from('placements')
+          .select('id', { count: 'exact', head: true })
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .gte('created_at', startOfYear.toISOString())
+
+        return {
+          total: accounts?.length ?? 0,
+          activeClients: accounts?.filter(a => a.status === 'active').length ?? 0,
+          prospects: accounts?.filter(a => a.status === 'prospect').length ?? 0,
+          jobsThisQuarter: jobsThisQuarter ?? 0,
+          placementsYTD: placementsYTD ?? 0,
+        }
+      }),
   }),
 
   // ============================================
@@ -848,7 +912,7 @@ export const crmRouter = router({
         minScore: z.number().min(0).max(100).optional(),
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        sortBy: z.enum(['created_at', 'bant_total_score', 'company_name', 'last_contacted_at']).default('created_at'),
+        sortBy: z.enum(['created_at', 'bant_total_score', 'company_name', 'first_name', 'status', 'last_contacted_at', 'source', 'campaign_id']).default('created_at'),
         sortOrder: z.enum(['asc', 'desc']).default('desc'),
       }))
       .query(async ({ ctx, input }) => {
@@ -857,7 +921,7 @@ export const crmRouter = router({
 
         let query = adminClient
           .from('leads')
-          .select('*, owner:user_profiles!owner_id(id, full_name, avatar_url)', { count: 'exact' })
+          .select('*, owner:user_profiles!owner_id(id, full_name, avatar_url), campaign:campaigns!campaign_id(id, name)', { count: 'exact' })
           .eq('org_id', orgId)
           .is('deleted_at', null)
 
@@ -1739,6 +1803,42 @@ export const crmRouter = router({
 
         return data ?? []
       }),
+
+    // Get aggregate stats for leads list page (no owner filtering)
+    stats: orgProtectedProcedure
+      .query(async ({ ctx }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Get all leads for this org (not deleted)
+        const { data: leads, count: totalCount } = await adminClient
+          .from('leads')
+          .select('id, status, bant_total_score, created_at', { count: 'exact' })
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+
+        // Count new leads this week
+        const oneWeekAgo = new Date()
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
+        const newThisWeek = leads?.filter(l => new Date(l.created_at) >= oneWeekAgo).length ?? 0
+
+        // Count qualified leads
+        const qualified = leads?.filter(l => l.status === 'qualified').length ?? 0
+
+        // Calculate conversion rate (converted / total non-new leads)
+        const converted = leads?.filter(l => l.status === 'converted').length ?? 0
+        const totalProcessed = (leads?.length ?? 0) - (leads?.filter(l => l.status === 'new').length ?? 0)
+        const conversionRate = totalProcessed > 0
+          ? (converted / totalProcessed) * 100
+          : 0
+
+        return {
+          total: totalCount ?? 0,
+          new: newThisWeek,
+          qualified,
+          conversionRate: Math.round(conversionRate * 10) / 10, // Round to 1 decimal
+        }
+      }),
   }),
 
   // ============================================
@@ -1757,7 +1857,7 @@ export const crmRouter = router({
         excludeClosed: z.boolean().default(false),
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        sortBy: z.enum(['created_at', 'expected_close_date', 'value', 'last_activity_at']).default('expected_close_date'),
+        sortBy: z.enum(['created_at', 'expected_close_date', 'value', 'last_activity_at', 'name', 'stage', 'probability']).default('expected_close_date'),
         sortOrder: z.enum(['asc', 'desc']).default('asc'),
       }))
       .query(async ({ ctx, input }) => {
@@ -2855,6 +2955,59 @@ export const crmRouter = router({
 
         return { success: true }
       }),
+
+    // Get aggregate stats for deals list page (no owner filtering)
+    stats: orgProtectedProcedure
+      .query(async ({ ctx }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Get all deals for this org (not deleted)
+        const { data: deals } = await adminClient
+          .from('deals')
+          .select('id, stage, value, probability, closed_at, created_at')
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+
+        // Calculate total deals count
+        const total = deals?.length ?? 0
+
+        // Calculate pipeline value (deals not won or lost)
+        const activePipelineDeals = deals?.filter(d =>
+          d.stage !== 'closed_won' && d.stage !== 'closed_lost'
+        ) ?? []
+        const pipelineValue = activePipelineDeals.reduce((sum, d) => sum + (d.value || 0), 0)
+
+        // Count won this month
+        const startOfMonth = new Date()
+        startOfMonth.setDate(1)
+        startOfMonth.setHours(0, 0, 0, 0)
+        const wonThisMonth = deals?.filter(d =>
+          d.stage === 'closed_won' &&
+          d.closed_at &&
+          new Date(d.closed_at) >= startOfMonth
+        ).length ?? 0
+
+        // Calculate win rate
+        const closedWon = deals?.filter(d => d.stage === 'closed_won').length ?? 0
+        const closedLost = deals?.filter(d => d.stage === 'closed_lost').length ?? 0
+        const totalClosed = closedWon + closedLost
+        const winRate = totalClosed > 0 ? (closedWon / totalClosed) * 100 : 0
+
+        // Calculate average deal size (from won deals)
+        const wonDeals = deals?.filter(d => d.stage === 'closed_won' && d.value) ?? []
+        const avgDealSize = wonDeals.length > 0
+          ? wonDeals.reduce((sum, d) => sum + (d.value || 0), 0) / wonDeals.length
+          : 0
+
+        return {
+          total,
+          pipelineValue,
+          wonThisMonth,
+          winRate: Math.round(winRate * 10) / 10, // Round to 1 decimal
+          avgDealSize: Math.round(avgDealSize),
+        }
+      }),
   }),
 
   // ============================================
@@ -2903,15 +3056,18 @@ export const crmRouter = router({
         })) ?? []
       }),
 
-    // List all contacts with optional filters
+    // List all contacts with optional filters and sorting
     list: orgProtectedProcedure
       .input(z.object({
         search: z.string().optional(),
         accountId: z.string().uuid().optional(),
         status: z.string().optional(),
+        type: z.string().optional(),
         isPrimary: z.boolean().optional(),
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().default(0),
+        sortBy: z.enum(['name', 'title', 'company_id', 'contact_type', 'status', 'last_contact_date', 'owner_id', 'created_at']).default('created_at'),
+        sortOrder: z.enum(['asc', 'desc']).default('desc'),
       }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx
@@ -2919,11 +3075,9 @@ export const crmRouter = router({
 
         let query = adminClient
           .from('contacts')
-          .select('*, account:accounts!company_id(id, name)', { count: 'exact' })
+          .select('*, account:accounts!company_id(id, name), owner:user_profiles!owner_id(id, full_name, avatar_url)', { count: 'exact' })
           .eq('org_id', orgId)
           .is('deleted_at', null)
-          .order('created_at', { ascending: false })
-          .range(input.offset, input.offset + input.limit - 1)
 
         if (input.search) {
           query = query.or(`first_name.ilike.%${input.search}%,last_name.ilike.%${input.search}%,email.ilike.%${input.search}%`)
@@ -2937,9 +3091,18 @@ export const crmRouter = router({
           query = query.eq('status', input.status)
         }
 
+        if (input.type) {
+          query = query.eq('contact_type', input.type)
+        }
+
         if (input.isPrimary !== undefined) {
           query = query.eq('is_primary', input.isPrimary)
         }
+
+        // Handle sorting - for 'name' we sort by first_name
+        const sortColumn = input.sortBy === 'name' ? 'first_name' : input.sortBy
+        query = query.order(sortColumn, { ascending: input.sortOrder === 'asc' })
+        query = query.range(input.offset, input.offset + input.limit - 1)
 
         const { data, error, count } = await query
 
@@ -2948,8 +3111,49 @@ export const crmRouter = router({
         }
 
         return {
-          items: data ?? [],
+          items: data?.map(c => ({
+            ...c,
+            lastContactDate: c.last_contact_date,
+            createdAt: c.created_at,
+            type: c.contact_type,
+          })) ?? [],
           total: count ?? 0,
+        }
+      }),
+
+    // Stats for contacts list view
+    stats: orgProtectedProcedure
+      .query(async ({ ctx }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Get all contacts for this org
+        const { data: contacts, error } = await adminClient
+          .from('contacts')
+          .select('id, status, is_decision_maker, last_contact_date')
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        const total = contacts?.length ?? 0
+        const active = contacts?.filter(c => c.status === 'active').length ?? 0
+        const decisionMakers = contacts?.filter(c => c.is_decision_maker).length ?? 0
+
+        // Recently contacted (last 30 days)
+        const thirtyDaysAgo = new Date()
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+        const recentlyContacted = contacts?.filter(c =>
+          c.last_contact_date && new Date(c.last_contact_date) >= thirtyDaysAgo
+        ).length ?? 0
+
+        return {
+          total,
+          active,
+          decisionMakers,
+          recentlyContacted,
         }
       }),
 
@@ -4282,7 +4486,7 @@ export const crmRouter = router({
         ownerId: z.string().uuid().optional(),
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        sortBy: z.enum(['created_at', 'start_date', 'name', 'leads_generated']).default('created_at'),
+        sortBy: z.enum(['created_at', 'start_date', 'end_date', 'name', 'leads_generated', 'audience_size', 'prospects_contacted', 'budget_spent', 'status', 'campaign_type']).default('created_at'),
         sortOrder: z.enum(['asc', 'desc']).default('desc'),
       }))
       .query(async ({ ctx, input }) => {
@@ -4340,6 +4544,39 @@ export const crmRouter = router({
             createdAt: c.created_at,
           })) ?? [],
           total: count ?? 0,
+        }
+      }),
+
+    // Get aggregate stats for campaigns list page
+    stats: orgProtectedProcedure
+      .query(async ({ ctx }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Get all campaigns for this org (not deleted)
+        const { data: campaigns, count: totalCount } = await adminClient
+          .from('campaigns')
+          .select('id, status, leads_generated, prospects_contacted', { count: 'exact' })
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+
+        // Count active campaigns
+        const activeCampaigns = campaigns?.filter(c => c.status === 'active').length ?? 0
+
+        // Sum leads generated across all campaigns
+        const leadsGenerated = campaigns?.reduce((sum, c) => sum + (c.leads_generated ?? 0), 0) ?? 0
+
+        // Calculate average conversion rate (leads / prospects contacted)
+        const totalProspectsContacted = campaigns?.reduce((sum, c) => sum + (c.prospects_contacted ?? 0), 0) ?? 0
+        const conversionRate = totalProspectsContacted > 0
+          ? (leadsGenerated / totalProspectsContacted) * 100
+          : 0
+
+        return {
+          total: totalCount ?? 0,
+          active: activeCampaigns,
+          leadsGenerated,
+          conversionRate: Math.round(conversionRate * 10) / 10, // Round to 1 decimal
         }
       }),
 
@@ -5647,6 +5884,289 @@ export const crmRouter = router({
 
         return stats
       }),
+
+    // ================================================
+    // Campaign Sequence Management
+    // CRUD operations for campaign sequence steps
+    // ================================================
+    sequence: router({
+      // List sequence steps for a campaign (from sequences JSONB column)
+      list: orgProtectedProcedure
+        .input(z.object({ campaignId: z.string().uuid() }))
+        .query(async ({ ctx, input }) => {
+          const adminClient = getAdminClient()
+
+          // Get campaign with sequences
+          const { data: campaign, error } = await adminClient
+            .from('campaigns')
+            .select('id, sequences, sequence_template_ids')
+            .eq('id', input.campaignId)
+            .eq('org_id', ctx.orgId)
+            .single()
+
+          if (error || !campaign) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Campaign not found' })
+          }
+
+          // Parse sequences JSONB
+          const sequences = campaign.sequences || {}
+          const steps: Array<{
+            id: string
+            stepNumber: number
+            channel: string
+            subject?: string
+            templateId?: string
+            templateName?: string
+            dayOffset: number
+            status: string
+          }> = []
+
+          // Convert JSONB structure to flat array of steps
+          let stepNumber = 1
+          for (const [channel, channelData] of Object.entries(sequences)) {
+            const channelSteps = (channelData as any)?.steps || []
+            for (const step of channelSteps) {
+              steps.push({
+                id: `${channel}-${step.stepNumber || stepNumber}`,
+                stepNumber: step.stepNumber || stepNumber,
+                channel,
+                subject: step.subject,
+                templateId: step.templateId,
+                templateName: step.templateName,
+                dayOffset: step.dayOffset || 0,
+                status: 'pending',
+              })
+              stepNumber++
+            }
+          }
+
+          // Sort by stepNumber
+          steps.sort((a, b) => a.stepNumber - b.stepNumber)
+
+          return { steps, templateIds: campaign.sequence_template_ids || [] }
+        }),
+
+      // Add a step to a campaign sequence
+      addStep: orgProtectedProcedure
+        .input(z.object({
+          campaignId: z.string().uuid(),
+          channel: z.enum(['email', 'linkedin', 'phone', 'sms']),
+          step: z.object({
+            stepNumber: z.number().optional(),
+            dayOffset: z.number().default(1),
+            subject: z.string().optional(),
+            templateId: z.string().optional(),
+            templateName: z.string().optional(),
+          }),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const adminClient = getAdminClient()
+
+          // Get current sequences
+          const { data: campaign, error: fetchError } = await adminClient
+            .from('campaigns')
+            .select('sequences')
+            .eq('id', input.campaignId)
+            .eq('org_id', ctx.orgId)
+            .single()
+
+          if (fetchError || !campaign) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Campaign not found' })
+          }
+
+          const sequences = campaign.sequences || {}
+          const channelData = sequences[input.channel] || { steps: [], stopConditions: ['reply'] }
+          const steps = channelData.steps || []
+
+          // Add new step
+          const newStepNumber = input.step.stepNumber || steps.length + 1
+          steps.push({
+            stepNumber: newStepNumber,
+            dayOffset: input.step.dayOffset,
+            subject: input.step.subject,
+            templateId: input.step.templateId,
+            templateName: input.step.templateName,
+          })
+
+          // Update sequences
+          sequences[input.channel] = { ...channelData, steps }
+
+          const { error: updateError } = await adminClient
+            .from('campaigns')
+            .update({ sequences, updated_at: new Date().toISOString() })
+            .eq('id', input.campaignId)
+            .eq('org_id', ctx.orgId)
+
+          if (updateError) {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: updateError.message })
+          }
+
+          return { success: true, stepNumber: newStepNumber }
+        }),
+
+      // Update a specific step
+      updateStep: orgProtectedProcedure
+        .input(z.object({
+          campaignId: z.string().uuid(),
+          channel: z.enum(['email', 'linkedin', 'phone', 'sms']),
+          stepNumber: z.number(),
+          updates: z.object({
+            dayOffset: z.number().optional(),
+            subject: z.string().optional(),
+            templateId: z.string().optional(),
+            templateName: z.string().optional(),
+          }),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const adminClient = getAdminClient()
+
+          // Get current sequences
+          const { data: campaign, error: fetchError } = await adminClient
+            .from('campaigns')
+            .select('sequences')
+            .eq('id', input.campaignId)
+            .eq('org_id', ctx.orgId)
+            .single()
+
+          if (fetchError || !campaign) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Campaign not found' })
+          }
+
+          const sequences = campaign.sequences || {}
+          const channelData = sequences[input.channel]
+          if (!channelData?.steps) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Channel or steps not found' })
+          }
+
+          // Find and update step
+          const stepIndex = channelData.steps.findIndex((s: any) => s.stepNumber === input.stepNumber)
+          if (stepIndex === -1) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Step not found' })
+          }
+
+          channelData.steps[stepIndex] = {
+            ...channelData.steps[stepIndex],
+            ...input.updates,
+          }
+          sequences[input.channel] = channelData
+
+          const { error: updateError } = await adminClient
+            .from('campaigns')
+            .update({ sequences, updated_at: new Date().toISOString() })
+            .eq('id', input.campaignId)
+            .eq('org_id', ctx.orgId)
+
+          if (updateError) {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: updateError.message })
+          }
+
+          return { success: true }
+        }),
+
+      // Delete a step
+      deleteStep: orgProtectedProcedure
+        .input(z.object({
+          campaignId: z.string().uuid(),
+          channel: z.enum(['email', 'linkedin', 'phone', 'sms']),
+          stepNumber: z.number(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const adminClient = getAdminClient()
+
+          // Get current sequences
+          const { data: campaign, error: fetchError } = await adminClient
+            .from('campaigns')
+            .select('sequences')
+            .eq('id', input.campaignId)
+            .eq('org_id', ctx.orgId)
+            .single()
+
+          if (fetchError || !campaign) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Campaign not found' })
+          }
+
+          const sequences = campaign.sequences || {}
+          const channelData = sequences[input.channel]
+          if (!channelData?.steps) {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Channel or steps not found' })
+          }
+
+          // Remove step and renumber remaining
+          channelData.steps = channelData.steps
+            .filter((s: any) => s.stepNumber !== input.stepNumber)
+            .map((s: any, idx: number) => ({ ...s, stepNumber: idx + 1 }))
+
+          sequences[input.channel] = channelData
+
+          const { error: updateError } = await adminClient
+            .from('campaigns')
+            .update({ sequences, updated_at: new Date().toISOString() })
+            .eq('id', input.campaignId)
+            .eq('org_id', ctx.orgId)
+
+          if (updateError) {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: updateError.message })
+          }
+
+          return { success: true }
+        }),
+
+      // Get detailed performance for sequence steps
+      getPerformance: orgProtectedProcedure
+        .input(z.object({
+          campaignId: z.string().uuid(),
+          channel: z.enum(['email', 'linkedin', 'phone', 'sms']).optional(),
+        }))
+        .query(async ({ ctx, input }) => {
+          const adminClient = getAdminClient()
+
+          let query = adminClient
+            .from('campaign_sequence_logs')
+            .select('step_number, channel, action_type')
+            .eq('campaign_id', input.campaignId)
+
+          if (input.channel) {
+            query = query.eq('channel', input.channel)
+          }
+
+          const { data, error } = await query
+
+          if (error) {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          }
+
+          // Group by step and channel
+          const performance: Record<string, Record<string, number>> = {}
+
+          for (const log of data || []) {
+            const key = `${log.channel}-${log.step_number}`
+            if (!performance[key]) {
+              performance[key] = {
+                stepNumber: log.step_number,
+                channel: log.channel,
+                sent: 0,
+                delivered: 0,
+                opened: 0,
+                clicked: 0,
+                replied: 0,
+                bounced: 0,
+              }
+            }
+
+            const stat = performance[key]
+            switch (log.action_type) {
+              case 'sent': stat.sent++; break
+              case 'delivered': stat.delivered++; break
+              case 'opened': case 'viewed': stat.opened++; break
+              case 'clicked': stat.clicked++; break
+              case 'replied': case 'responded': stat.replied++; break
+              case 'bounced': case 'failed': stat.bounced++; break
+            }
+          }
+
+          return Object.values(performance)
+        }),
+    }),
 
     // ================================================
     // CAMPAIGN ACTIVITIES (Unified Workflow System)

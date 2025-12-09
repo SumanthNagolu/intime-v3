@@ -13,6 +13,9 @@ import {
   FileText,
   Star,
   Calendar,
+  Users,
+  Crown,
+  MessageCircle,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
@@ -33,6 +36,8 @@ export interface Contact extends Record<string, unknown> {
   title?: string | null
   department?: string | null
   status?: string | null
+  contact_type?: string | null
+  type?: string | null
   is_primary?: boolean
   is_decision_maker?: boolean
   company_id?: string | null
@@ -40,6 +45,12 @@ export interface Contact extends Record<string, unknown> {
     id: string
     name: string
   } | null
+  owner?: {
+    id: string
+    full_name: string
+    avatar_url?: string
+  } | null
+  owner_id?: string
   linkedin_url?: string | null
   city?: string | null
   state?: string | null
@@ -47,7 +58,9 @@ export interface Contact extends Record<string, unknown> {
   notes?: string | null
   preferred_contact_method?: string | null
   last_contact_date?: string | null
+  lastContactDate?: string | null
   created_at: string
+  createdAt?: string
   updated_at?: string
 }
 
@@ -83,11 +96,52 @@ export const CONTACT_STATUS_CONFIG: Record<string, StatusConfig> = {
   },
 }
 
+// Contact type configuration
+export const CONTACT_TYPE_CONFIG: Record<string, StatusConfig> = {
+  hiring_manager: {
+    label: 'Hiring Manager',
+    color: 'bg-blue-100 text-blue-800',
+    bgColor: 'bg-blue-100',
+    textColor: 'text-blue-800',
+  },
+  hr: {
+    label: 'HR',
+    color: 'bg-purple-100 text-purple-800',
+    bgColor: 'bg-purple-100',
+    textColor: 'text-purple-800',
+  },
+  executive: {
+    label: 'Executive',
+    color: 'bg-gold-100 text-gold-800',
+    bgColor: 'bg-gold-100',
+    textColor: 'text-gold-800',
+    icon: Crown,
+  },
+  technical_lead: {
+    label: 'Technical Lead',
+    color: 'bg-green-100 text-green-800',
+    bgColor: 'bg-green-100',
+    textColor: 'text-green-800',
+  },
+  procurement: {
+    label: 'Procurement',
+    color: 'bg-amber-100 text-amber-800',
+    bgColor: 'bg-amber-100',
+    textColor: 'text-amber-800',
+  },
+  client_poc: {
+    label: 'Client POC',
+    color: 'bg-cyan-100 text-cyan-800',
+    bgColor: 'bg-cyan-100',
+    textColor: 'text-cyan-800',
+  },
+}
+
 // Contacts List View Configuration
 export const contactsListConfig: ListViewConfig<Contact> = {
   entityType: 'contact',
   entityName: { singular: 'Contact', plural: 'Contacts' },
-  baseRoute: '/employee/contacts',
+  baseRoute: '/employee/recruiting/contacts',
 
   title: 'Contacts',
   description: 'Manage your professional contacts',
@@ -100,6 +154,32 @@ export const contactsListConfig: ListViewConfig<Contact> = {
       window.dispatchEvent(new CustomEvent('openContactDialog', { detail: { dialogId: 'create' } }))
     },
   },
+
+  statsCards: [
+    {
+      key: 'total',
+      label: 'Total Contacts',
+      icon: Users,
+    },
+    {
+      key: 'active',
+      label: 'Active',
+      color: 'bg-green-100 text-green-800',
+      icon: CheckCircle,
+    },
+    {
+      key: 'decisionMakers',
+      label: 'Decision Makers',
+      color: 'bg-gold-100 text-gold-800',
+      icon: Crown,
+    },
+    {
+      key: 'recentlyContacted',
+      label: 'Recently Contacted',
+      color: 'bg-blue-100 text-blue-800',
+      icon: MessageCircle,
+    },
+  ],
 
   filters: [
     {
@@ -121,17 +201,26 @@ export const contactsListConfig: ListViewConfig<Contact> = {
       ],
     },
     {
-      key: 'isPrimary',
-      type: 'toggle',
-      label: 'Primary Only',
+      key: 'type',
+      type: 'select',
+      label: 'Type',
+      options: [
+        { value: 'all', label: 'All Types' },
+        ...Object.entries(CONTACT_TYPE_CONFIG).map(([value, config]) => ({
+          value,
+          label: config.label,
+        })),
+      ],
     },
   ],
 
   columns: [
     {
       key: 'name',
+      header: 'Name',
       label: 'Name',
       sortable: true,
+      width: 'min-w-[180px]',
       render: (value, entity) => {
         const contact = entity as Contact
         return `${contact.first_name} ${contact.last_name}`.trim() || '—'
@@ -139,12 +228,17 @@ export const contactsListConfig: ListViewConfig<Contact> = {
     },
     {
       key: 'title',
+      header: 'Title',
       label: 'Title',
+      sortable: true,
+      width: 'w-[150px]',
     },
     {
       key: 'account',
+      header: 'Account',
       label: 'Account',
-      icon: Building2,
+      sortable: true,
+      width: 'w-[150px]',
       render: (value) => {
         const account = value as Contact['account']
         return account?.name || '—'
@@ -152,24 +246,84 @@ export const contactsListConfig: ListViewConfig<Contact> = {
     },
     {
       key: 'email',
+      header: 'Email',
       label: 'Email',
-      icon: Mail,
+      width: 'w-[180px]',
     },
     {
       key: 'phone',
+      header: 'Phone',
       label: 'Phone',
-      icon: Phone,
+      width: 'w-[120px]',
+    },
+    {
+      key: 'type',
+      header: 'Type',
+      label: 'Type',
+      sortable: true,
+      width: 'w-[110px]',
+      render: (value, entity) => {
+        const contact = entity as Contact
+        const type = contact.type || contact.contact_type
+        return CONTACT_TYPE_CONFIG[type || '']?.label || type || '—'
+      },
     },
     {
       key: 'status',
+      header: 'Status',
       label: 'Status',
+      sortable: true,
+      width: 'w-[90px]',
+      format: 'status' as const,
     },
     {
-      key: 'is_primary',
-      label: 'Primary',
+      key: 'is_decision_maker',
+      header: 'DM',
+      label: 'DM',
+      width: 'w-[50px]',
+      align: 'center' as const,
       render: (value) => {
-        return value ? 'Yes' : '—'
+        return value ? '✓' : '—'
       },
+    },
+    {
+      key: 'lastContactDate',
+      header: 'Last Contact',
+      label: 'Last Contact',
+      sortable: true,
+      width: 'w-[110px]',
+      render: (value, entity) => {
+        const contact = entity as Contact
+        const date = contact.lastContactDate || contact.last_contact_date
+        if (!date) return '—'
+        const d = new Date(date)
+        const now = new Date()
+        const days = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24))
+        if (days === 0) return 'Today'
+        if (days === 1) return 'Yesterday'
+        if (days < 7) return `${days} days ago`
+        if (days < 30) return `${Math.floor(days / 7)} weeks ago`
+        return `${Math.floor(days / 30)} months ago`
+      },
+    },
+    {
+      key: 'owner',
+      header: 'Owner',
+      label: 'Owner',
+      sortable: true,
+      width: 'w-[130px]',
+      render: (value) => {
+        const owner = value as Contact['owner']
+        return owner?.full_name || '—'
+      },
+    },
+    {
+      key: 'createdAt',
+      header: 'Created',
+      label: 'Created',
+      sortable: true,
+      width: 'w-[100px]',
+      format: 'relative-date' as const,
     },
   ],
 
@@ -197,14 +351,53 @@ export const contactsListConfig: ListViewConfig<Contact> = {
   // tRPC hooks for data fetching
   useListQuery: (filters) => {
     const statusValue = filters.status as string | undefined
+    const typeValue = filters.type as string | undefined
+    const sortByValue = filters.sortBy as string | undefined
+    const sortOrderValue = filters.sortOrder as string | undefined
+
+    const validSortFields = [
+      'name',
+      'title',
+      'company_id',
+      'contact_type',
+      'status',
+      'last_contact_date',
+      'owner_id',
+      'created_at',
+    ] as const
+
+    type SortField = (typeof validSortFields)[number]
+
+    // Map frontend column keys to database columns
+    const sortFieldMap: Record<string, SortField> = {
+      name: 'name',
+      title: 'title',
+      account: 'company_id',
+      type: 'contact_type',
+      status: 'status',
+      lastContactDate: 'last_contact_date',
+      owner: 'owner_id',
+      createdAt: 'created_at',
+    }
+
+    const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
+      ? sortFieldMap[sortByValue]
+      : 'created_at'
 
     return trpc.crm.contacts.list.useQuery({
       search: filters.search as string | undefined,
       status: statusValue !== 'all' ? statusValue : undefined,
+      type: typeValue !== 'all' ? typeValue : undefined,
       isPrimary: filters.isPrimary as boolean | undefined,
       limit: (filters.limit as number) || 50,
       offset: (filters.offset as number) || 0,
+      sortBy: mappedSortBy,
+      sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'desc'),
     })
+  },
+
+  useStatsQuery: () => {
+    return trpc.crm.contacts.stats.useQuery()
   },
 }
 

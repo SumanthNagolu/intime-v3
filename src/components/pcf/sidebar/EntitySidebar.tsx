@@ -4,9 +4,8 @@ import { useSearchParams } from 'next/navigation'
 import { SidebarHeader } from './SidebarHeader'
 import { SidebarSections } from './SidebarSections'
 import { SidebarJourney } from './SidebarJourney'
-import { SidebarActions } from './SidebarActions'
 import { cn } from '@/lib/utils'
-import type { EntitySidebarConfig, SidebarActionConfig, SidebarSectionConfig } from './types'
+import type { EntitySidebarConfig, SidebarSectionConfig } from './types'
 
 interface EntitySidebarProps {
   config: EntitySidebarConfig
@@ -15,7 +14,6 @@ interface EntitySidebarProps {
   entitySubtitle?: string
   entityStatus: string
   counts?: Record<string, number>
-  onQuickAction?: (action: SidebarActionConfig) => void
   className?: string
 }
 
@@ -26,7 +24,6 @@ export function EntitySidebar({
   entitySubtitle,
   entityStatus,
   counts = {},
-  onQuickAction,
   className,
 }: EntitySidebarProps) {
   const searchParams = useSearchParams()
@@ -73,15 +70,6 @@ export function EntitySidebar({
         />
       ) : null}
 
-      {/* Quick Actions */}
-      {config.quickActions && config.quickActions.length > 0 && (
-        <SidebarActions
-          actions={config.quickActions}
-          entityId={entityId}
-          entityStatus={entityStatus}
-          onAction={onQuickAction}
-        />
-      )}
     </aside>
   )
 }
@@ -90,6 +78,5 @@ export function EntitySidebar({
 export { SidebarHeader } from './SidebarHeader'
 export { SidebarSections } from './SidebarSections'
 export { SidebarJourney } from './SidebarJourney'
-export { SidebarActions } from './SidebarActions'
-export type { EntitySidebarConfig, SidebarActionConfig, SidebarSectionConfig } from './types'
+export type { EntitySidebarConfig, SidebarSectionConfig } from './types'
 
