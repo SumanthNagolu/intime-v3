@@ -21,3 +21,7 @@ export type { AccountOnboardingFormData, AdditionalContact } from './account-onb
 // Placement Stores
 export { useTerminatePlacementStore, TERMINATION_INITIATED_BY, TERMINATION_REASONS, GUARANTEE_TIERS, OFFBOARDING_CHECKLIST } from './terminate-placement-store'
 export type { TerminatePlacementFormData } from './terminate-placement-store'
+
+// Campaign Stores
+export { useCreateCampaignStore, CAMPAIGN_TYPES, GOALS, INDUSTRIES as CAMPAIGN_INDUSTRIES, COMPANY_SIZES as CAMPAIGN_COMPANY_SIZES, REGIONS, FUNDING_STAGES, CHANNEL_OPTIONS } from './create-campaign-store'
+export type { CreateCampaignFormData } from './create-campaign-store'

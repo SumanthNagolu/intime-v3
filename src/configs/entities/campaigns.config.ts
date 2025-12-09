@@ -187,9 +187,7 @@ export const campaignsListConfig: ListViewConfig<Campaign> = {
   primaryAction: {
     label: 'New Campaign',
     icon: Plus,
-    onClick: () => {
-      window.dispatchEvent(new CustomEvent('openCampaignDialog', { detail: { dialogId: 'create' } }))
-    },
+    href: '/employee/crm/campaigns/new',
   },
 
   statsCards: [
@@ -399,9 +397,7 @@ export const campaignsListConfig: ListViewConfig<Campaign> = {
         : 'Create your first campaign to start generating leads',
     action: {
       label: 'Create Campaign',
-      onClick: () => {
-        window.dispatchEvent(new CustomEvent('openCampaignDialog', { detail: { dialogId: 'create' } }))
-      },
+      href: '/employee/crm/campaigns/new',
     },
   },
 
