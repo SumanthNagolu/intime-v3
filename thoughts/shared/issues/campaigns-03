@@ -1,0 +1,476 @@
+# EPIC: Unified Contact Workspace - Best-in-Class CRM Experience
+
+**Issue ID:** CAMPAIGNS-03
+**Created:** December 9, 2025
+**Status:** Open
+**Priority:** Critical
+**Type:** Epic - Feature Enhancement
+**Reporter:** User
+
+---
+
+## Vision Statement
+
+**Campaigns is the heart of the CRM application.** The goal is to build the definitive contact management experience that surpasses all market leaders:
+- HubSpot (Sequences & Contacts)
+- Salesforce (High Velocity Sales)
+- Outreach.io (Prospect Management)
+- Apollo.io (Engagement & Enrichment)
+- Salesloft (Cadence & Plays)
+
+This is not about matching features—it's about creating **the best contact engagement platform in the market**.
+
+---
+
+## Architecture Decision: Unified Contact Workspace
+
+Instead of building separate workspaces for Prospects, Leads, and Candidates, we build **ONE reusable Contact Workspace** with context-aware sections.
+
+### Why Unified?
+
+| Benefit | Impact |
+|---------|--------|
+| **Single source of truth** | `contacts` table holds all people |
+| **Seamless conversion** | Prospect → Lead just changes context, no data migration |
+| **Reusable UI** | Build once, use everywhere |
+| **Complete history** | All activities stay with the contact forever |
+| **Multi-role contacts** | One person can be prospect + candidate simultaneously |
+
+### Data Model
+
+```
+contacts (single source of truth)
+├── id, name, email, phone, company, title, linkedin...
+├── types: string[]  // ['prospect', 'lead', 'candidate'] - can have multiple
+├── created_at, updated_at, org_id
+└── Linked via:
+    ├── campaign_prospects → enrollment in campaigns
+    ├── leads → lead-specific data (score, status, deal)
+    ├── candidates → candidate data (pipeline, submissions)
+    └── activities, notes, documents → polymorphic (entity_type='contact')
+```
+
+### URL Structure
+
+```
+/crm/campaigns/{campaignId}/prospects/{contactId}  → Prospect context
+/crm/leads/{contactId}                              → Lead context
+/contacts/{contactId}                               → Full context (all sections)
+/recruiting/candidates/{contactId}                  → Candidate context
+```
+
+---
+
+## Current State Analysis
+
+### Screenshot 1: Prospects List View
+**Location:** `/employee/crm/campaigns/{id}` → Prospects section
+
+**Current State (Demo-Grade):**
+- Minimal list showing only name and basic status
+- Single row: "tweat rar / safef" with "enrolled" status
+- No visible columns for: engagement score, last activity, sequence step, response status, company, title
+- No bulk actions visible
+- No filtering beyond basic search
+- No visual indicators for prospect health/priority
+- Stats bar shows: Prospects: 1, Contacted: 0, Leads: 0/50, Meetings: 0/10
+
+### Screenshot 2: Prospect Detail Page (Work Page)
+**Location:** `/employee/crm/campaigns/{id}/prospects/{prospectId}`
+
+**Current State:**
+- Basic contact info card (email, phone, title)
+- Campaign card showing enrollment
+- Status sidebar (Status: Enrolled, Sequence Step: 1)
+- Timeline showing only "Added" date
+- Metrics: Engagement Score: 0, Sequence Step: 1, Response Status: No Response, Days in Campaign: 0
+- Single action: "Log Activity"
+- **Missing:** Clear qualification workflow, prominent convert/disqualify actions, activity history, email thread, engagement signals
+
+---
+
+## Desired State: Enterprise-Grade Experience
+
+### Part 1: Prospects List View - The Command Center
+
+The list view should be a **power user command center** where recruiters can:
+- See all prospects at a glance with rich data
+- Quickly identify who needs attention
+- Take bulk actions efficiently
+- Filter and segment intelligently
+
+#### Required Columns (Configurable)
+| Column | Description | Sortable |
+|--------|-------------|----------|
+| **Checkbox** | Bulk selection | - |
+| **Name** | Full name with avatar/initials | Yes |
+| **Company** | Company name + logo | Yes |
+| **Title** | Job title | Yes |
+| **Engagement Score** | 0-100 score with visual indicator (heat) | Yes |
+| **Sequence Step** | Current step (e.g., "2 of 5") with progress bar | Yes |
+| **Response Status** | No Response / Opened / Clicked / Replied / Bounced | Yes |
+| **Last Activity** | Relative time (e.g., "2h ago") with tooltip for details | Yes |
+| **Days in Campaign** | Count with aging indicator | Yes |
+| **Owner** | Assigned rep with avatar | Yes |
+| **Tags** | Visual tag chips | - |
+| **Actions** | Quick action menu (•••) | - |
+
+#### Visual Indicators
+- **Engagement heat**: Color gradient from cold (blue) → warm (yellow) → hot (red)
+- **Response badges**: Color-coded pills (Replied=green, Opened=blue, No Response=gray, Bounced=red)
+- **Sequence progress**: Mini progress bar showing step completion
+- **Priority flags**: Star/flag for high-priority prospects
+- **Overdue indicators**: Warning icon for stale prospects
+
+#### Bulk Actions
+- [ ] Select all / Select page / Select filtered
+- [ ] Bulk enroll in different sequence
+- [ ] Bulk pause/resume
+- [ ] Bulk assign to team member
+- [ ] Bulk add tags
+- [ ] Bulk move to different campaign
+- [ ] Bulk convert to leads
+- [ ] Bulk disqualify/remove
+- [ ] Bulk export to CSV
+
+#### Filtering & Segmentation
+- [ ] Response status (multi-select)
+- [ ] Engagement score range (slider)
+- [ ] Sequence step (multi-select)
+- [ ] Days in campaign range
+- [ ] Owner/assignee
+- [ ] Tags (include/exclude)
+- [ ] Last activity date range
+- [ ] Custom saved filters
+
+#### List Actions
+- [ ] Column customization (show/hide, reorder)
+- [ ] Saved views (e.g., "Hot Prospects", "Needs Follow-up", "Ready to Convert")
+- [ ] Export current view
+- [ ] Quick stats summary bar
+
+---
+
+### Part 2: Unified Contact Workspace - The Full Playground
+
+This is **the page where all the work happens**. One reusable workspace component that adapts based on context.
+
+#### Sidebar Section Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│  CONTACT WORKSPACE                                                       │
+├─────────────┬───────────────────────────────────────────────────────────┤
+│  SIDEBAR    │  CONTENT AREA (section-specific)                          │
+│             │                                                           │
+│ ┌─────────┐ │                                                           │
+│ │CONTEXT  │ │  Renders based on selected section                        │
+│ │SECTIONS │ │                                                           │
+│ │         │ │                                                           │
+│ │Overview │ │                                                           │
+│ │Comms    │ │                                                           │
+│ │Campaigns│ ← Prospect/Lead only                                        │
+│ │Engage   │ ← Prospect/Lead only                                        │
+│ │Qualify  │ ← Prospect only                                             │
+│ │Deals    │ ← Lead only                                                 │
+│ │Pipeline │ ← Candidate only                                            │
+│ │Submiss  │ ← Candidate only                                            │
+│ ├─────────┤ │                                                           │
+│ │UNIVERSAL│ │  ← ALWAYS VISIBLE (NO EXCEPTIONS)                         │
+│ │         │ │                                                           │
+│ │Activities│ │                                                           │
+│ │Notes    │ │                                                           │
+│ │Documents│ │                                                           │
+│ │History  │ │                                                           │
+│ └─────────┘ │                                                           │
+└─────────────┴───────────────────────────────────────────────────────────┘
+```
+
+#### Section Visibility by Context
+
+| Section | Prospect | Lead | Candidate | Contact (Full) |
+|---------|:--------:|:----:|:---------:|:--------------:|
+| **Overview** | ✓ | ✓ | ✓ | ✓ |
+| **Communication** | ✓ | ✓ | ✓ | ✓ |
+| **Campaigns** | ✓ | ✓ | - | ✓ |
+| **Engagement** | ✓ | ✓ | - | ✓ |
+| **Qualification** | ✓ | - | - | ✓ |
+| **Deals** | - | ✓ | - | ✓ |
+| **Pipeline** | - | - | ✓ | ✓ |
+| **Submissions** | - | - | ✓ | ✓ |
+| **Activities** | ✓ | ✓ | ✓ | ✓ |
+| **Notes** | ✓ | ✓ | ✓ | ✓ |
+| **Documents** | ✓ | ✓ | ✓ | ✓ |
+| **History** | ✓ | ✓ | ✓ | ✓ |
+
+#### Section Content Details
+
+#### Core Components
+
+**1. Prominent Qualification Actions**
+- [ ] **CONVERT TO LEAD** - Primary CTA (green, top-right)
+  - Opens qualification form: lead score, interest level, next steps, notes
+  - Creates lead record linked to this prospect
+  - Updates prospect status to "Converted"
+  - Logs activity in history
+- [ ] **DISQUALIFY** - Secondary action (red/gray)
+  - Requires reason selection: Not Interested, Wrong Contact, Bad Timing, Competitor, Other
+  - Optional notes field
+  - Updates prospect status to "Disqualified"
+  - Removes from active sequence
+  - Logs activity in history
+
+**2. Next Action Card**
+- [ ] Shows the next scheduled action (email, call, task)
+- [ ] Countdown timer or "Overdue" badge
+- [ ] One-click to execute (opens email composer, call logger, etc.)
+- [ ] Option to skip or reschedule
+
+**3. Activity Timeline**
+- [ ] Chronological feed of ALL interactions
+- [ ] Email sends with open/click tracking
+- [ ] Email replies (full thread view)
+- [ ] Calls logged with duration and outcome
+- [ ] LinkedIn messages
+- [ ] Notes added
+- [ ] Status changes
+- [ ] Sequence step progression
+- [ ] Visual indicators for engagement (opened, clicked, replied)
+
+**4. Quick Actions Bar**
+- [ ] Send Email (opens composer with templates)
+- [ ] Log Call (quick call logging form)
+- [ ] LinkedIn Message (opens LinkedIn or logs message)
+- [ ] Add Note (inline note entry)
+- [ ] Pause Sequence (with resume date option)
+- [ ] Skip Step (move to next sequence step)
+- [ ] Change Owner (reassign prospect)
+
+**5. Contact Information Card**
+- [ ] Email (click to copy, click to send)
+- [ ] Phone (click to copy, click to call)
+- [ ] LinkedIn profile link
+- [ ] Company name (links to company record)
+- [ ] Title
+- [ ] Location/Timezone
+- [ ] Best time to contact (if known)
+
+**6. Company Information Card**
+- [ ] Company name and logo
+- [ ] Industry
+- [ ] Company size
+- [ ] Location
+- [ ] Website
+- [ ] Other contacts at same company
+
+**7. Status Sidebar**
+- [ ] Current status (Enrolled, Contacted, Engaged, Converted, Disqualified)
+- [ ] Sequence position (step X of Y)
+- [ ] Response status
+- [ ] Days in campaign
+- [ ] Engagement score with breakdown
+- [ ] Owner/assignee
+
+**8. Tags & Segmentation**
+- [ ] Visual tag chips
+- [ ] Quick add/remove tags
+- [ ] Suggested tags based on behavior
+
+---
+
+### Part 3: Workflow - The Qualification Journey
+
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│  ENROLLED   │ ──▶ │  CONTACTED  │ ──▶ │   ENGAGED   │ ──▶ │  QUALIFIED  │
+│  (New)      │     │  (Outreach) │     │  (Response) │     │  (Decision) │
+└─────────────┘     └─────────────┘     └─────────────┘     └─────────────┘
+                                                                   │
+                                              ┌────────────────────┼────────────────────┐
+                                              ▼                    ▼                    ▼
+                                        ┌──────────┐         ┌──────────┐         ┌──────────┐
+                                        │   LEAD   │         │ NURTURE  │         │DISQUALIFY│
+                                        │ (Convert)│         │ (Later)  │         │ (No Fit) │
+                                        └──────────┘         └──────────┘         └──────────┘
+```
+
+#### Status Definitions
+| Status | Description | Trigger |
+|--------|-------------|---------|
+| **Enrolled** | Added to campaign, no outreach yet | Import or manual add |
+| **Contacted** | First outreach sent | First email/message sent |
+| **Engaged** | Prospect showed interest | Opened, clicked, or replied |
+| **Qualified** | Ready for decision | Manual or score threshold |
+| **Lead** | Converted to sales lead | User clicks "Convert to Lead" |
+| **Nurture** | Not ready now, follow up later | User selects "Nurture" |
+| **Disqualified** | Not a fit | User clicks "Disqualify" |
+
+---
+
+## Sub-Issues Breakdown
+
+### CAMPAIGNS-03-A: Unified Contact Workspace Component
+- [ ] Create `ContactWorkspace` component with context-aware sections
+- [ ] Implement section visibility logic based on URL/contact types
+- [ ] Build sidebar with universal sections (Activities, Notes, Documents, History)
+- [ ] Add context-specific sections (Campaigns, Qualification, Deals, Pipeline)
+- [ ] Create section routing via `?section=X` URL parameter
+
+### CAMPAIGNS-03-B: Campaign Prospects List View Enhancement
+- [ ] Add all required columns (engagement score, sequence step, response status, etc.)
+- [ ] Implement visual indicators (engagement heat, badges, progress bars)
+- [ ] Build bulk action system (enroll, pause, remove, convert, assign)
+- [ ] Create filtering & saved views
+- [ ] Add column customization
+
+### CAMPAIGNS-03-C: Overview Section
+- [ ] Contact header with photo/initials, name, company, title
+- [ ] Prominent Convert to Lead / Disqualify actions
+- [ ] Metrics bar (engagement score, sequence step, days in campaign)
+- [ ] Contact info card (email, phone, LinkedIn)
+- [ ] Company info card
+- [ ] Tags management
+- [ ] Related contacts at same company
+
+### CAMPAIGNS-03-D: Communication Section
+- [ ] Unified communication timeline (all channels)
+- [ ] Email threads with tracking (opens, clicks, replies)
+- [ ] Call log with duration and outcomes
+- [ ] LinkedIn message history
+- [ ] SMS history (if applicable)
+- [ ] Quick compose actions per channel
+
+### CAMPAIGNS-03-E: Engagement Section (Prospect/Lead)
+- [ ] Engagement score with breakdown
+- [ ] Activity heatmap (by day/time)
+- [ ] Response rate analytics
+- [ ] Sequence performance (which steps work)
+- [ ] Best time to contact insights
+
+### CAMPAIGNS-03-F: Qualification Section (Prospect Only)
+- [ ] Qualification checklist/criteria
+- [ ] Fit score assessment
+- [ ] Convert to Lead flow with form
+- [ ] Disqualify flow with reasons
+- [ ] Nurture flow with follow-up scheduling
+- [ ] All transitions logged to History
+
+### CAMPAIGNS-03-G: Universal Sections (Reusable Components)
+- [ ] Activities section - polymorphic activity list with inline logging
+- [ ] Notes section - team notes with rich text
+- [ ] Documents section - file attachments with preview
+- [ ] History section - complete audit trail timeline
+
+### CAMPAIGNS-03-H: Data Model Updates
+- [ ] Ensure `contacts` table supports `types: string[]`
+- [ ] Create/update junction tables (campaign_prospects, leads, candidates)
+- [ ] Add polymorphic support for activities, notes, documents on contacts
+- [ ] Migration for any schema changes
+
+---
+
+## Competitive Analysis Reference
+
+### What to Surpass
+
+**HubSpot:**
+- ✓ Sequences with email templates
+- ✓ Contact timeline
+- ✗ Limited engagement scoring
+- ✗ Basic list view
+
+**Outreach.io:**
+- ✓ Sophisticated sequences
+- ✓ AI insights
+- ✗ Complex UI, steep learning curve
+- ✗ Expensive
+
+**Apollo.io:**
+- ✓ Contact enrichment
+- ✓ Intent signals
+- ✗ Data quality issues
+- ✗ Cluttered interface
+
+**Salesloft:**
+- ✓ Cadence management
+- ✓ Call integration
+- ✗ Dated UI
+- ✗ Limited customization
+
+### Our Advantages to Build
+1. **Cleaner, more intuitive UI** (Hublot-inspired luxury design)
+2. **Faster qualification workflow** (prominent Convert/Disqualify)
+3. **Better visual indicators** (engagement heat, progress bars)
+4. **Unified experience** (no switching between tools)
+5. **Activity-centric design** (Guidewire principles - everything logged)
+
+---
+
+## Acceptance Criteria
+
+### List View
+- [ ] User can see 10+ data points per prospect at a glance
+- [ ] User can sort by any column
+- [ ] User can filter by multiple criteria simultaneously
+- [ ] User can perform bulk actions on 100+ prospects
+- [ ] User can save and switch between views
+- [ ] List loads in < 2 seconds with 1000+ prospects
+
+### Detail Page
+- [ ] User can convert prospect to lead in 2 clicks
+- [ ] User can disqualify prospect in 2 clicks
+- [ ] User can see complete activity history
+- [ ] User can send email without leaving page
+- [ ] User can log call without leaving page
+- [ ] User can see engagement score and breakdown
+- [ ] User can see next scheduled action
+- [ ] Page loads in < 1 second
+
+### Workflow
+- [ ] Clear visual journey from Enrolled → Lead/Disqualified
+- [ ] All status changes logged in history
+- [ ] Converted leads appear in Leads section
+- [ ] Disqualified prospects removed from active sequences
+
+---
+
+## Evidence
+
+### Screenshots Provided
+1. **Prospects List View** - Shows minimal list with single prospect, basic columns only
+2. **Prospect Detail Page** - Shows basic contact/campaign info, limited actions
+
+### User Feedback
+- "Demo grade information showing"
+- "Campaigns is the heart of CRM application"
+- "Want to surpass every tool mentioned (HubSpot, Salesforce, Outreach, Apollo, Salesloft)"
+- "The detail page is where we do all the work and determine if it is a lead or not"
+
+---
+
+## Technical Considerations
+
+- **Performance**: List must handle 10,000+ prospects with virtualization
+- **Real-time**: Activity timeline should update without refresh
+- **Mobile**: Consider responsive design for field sales
+- **Keyboard**: Power users need keyboard shortcuts
+- **Accessibility**: WCAG 2.1 AA compliance
+
+---
+
+## Related Issues
+
+- **CAMPAIGNS-01**: Campaign Workspace Architecture (parent architecture)
+- **CAMPAIGNS-02**: New Campaign Button Fix (blocking issue)
+
+---
+
+## Notes
+
+This epic represents a major product investment. Recommend phased implementation:
+1. **Phase 1**: List view columns + filtering + basic bulk actions
+2. **Phase 2**: Detail page layout + Convert/Disqualify workflow
+3. **Phase 3**: Activity timeline + engagement scoring
+4. **Phase 4**: Advanced features (AI insights, automation triggers)
+
+The prospect experience is the core value proposition - getting this right is essential for competing with established players.

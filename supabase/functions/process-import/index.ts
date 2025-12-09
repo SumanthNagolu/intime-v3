@@ -12,7 +12,7 @@ const ENTITY_TABLES: Record<string, string> = {
   candidates: 'user_profiles',
   jobs: 'jobs',
   accounts: 'accounts',
-  contacts: 'point_of_contacts',
+  contacts: 'contacts',
   leads: 'leads',
   employees: 'employees',
   consultants: 'consultants',

@@ -199,7 +199,89 @@ const navigateToStep = (step: number) => {
 
 **Stores** (Zustand with persistence): `src/stores/job-intake-store.ts`, `account-onboarding-store.ts`, etc.
 
-### 6. Activity System
+### 6. Entity Creation Patterns
+
+**IMPORTANT**: Use **Page/Wizard pattern** for entity creation, NOT dialogs.
+
+#### Why Page/Wizard over Dialogs
+
+| Criteria | Page/Wizard | Dialog |
+|----------|-------------|--------|
+| **Persistence** | localStorage via Zustand | None - lost on close |
+| **Draft Recovery** | Survives refresh/navigation | Lost immediately |
+| **Multi-step** | Native URL tracking `?step=N` | Tabs within modal |
+| **Architecture** | Unified with existing wizards | Inconsistent |
+
+#### Pattern: Persistent Creation Wizard
+
+```typescript
+// 1. Create Zustand store with persist
+// src/stores/create-[entity]-store.ts
+export const useCreate[Entity]Store = create<Store>()(
+  persist(
+    (set) => ({
+      formData: defaultFormData,
+      currentStep: 1,
+      setFormData: (data) => set((state) => ({
+        formData: { ...state.formData, ...data },
+        lastSaved: new Date(),
+      })),
+      resetForm: () => set({ formData: defaultFormData, currentStep: 1 }),
+    }),
+    { name: 'create-[entity]-draft' }  // localStorage key
+  )
+)
+
+// 2. Create wizard page
+// src/app/employee/[module]/[entity]/new/page.tsx
+export default function New[Entity]Page() {
+  const { formData, setFormData, currentStep } = useCreate[Entity]Store()
+  const searchParams = useSearchParams()
+  const step = parseInt(searchParams.get('step') || '1')
+  // ... wizard UI with step components
+}
+
+// 3. Use href in config (NOT onClick)
+// src/configs/entities/[entity].config.ts
+primaryAction: {
+  label: 'New [Entity]',
+  icon: Plus,
+  href: '/employee/[module]/[entity]/new',  // ✓ Use href
+  // onClick: () => { ... }                  // ✗ Don't use onClick + events
+}
+```
+
+#### Persistence Behavior
+
+| Scenario | Result |
+|----------|--------|
+| Close tab | Draft saved in localStorage |
+| Refresh page | Form data + step restored |
+| Navigate away | Draft preserved |
+| Click Cancel | Draft preserved (can resume later) |
+| Submit success | Draft cleared, redirect to entity |
+| Click "Discard" | Draft cleared, form reset |
+
+#### Existing Wizard Stores
+
+| Store | Entity | Steps |
+|-------|--------|-------|
+| `job-intake-store.ts` | Job | 6 steps |
+| `account-onboarding-store.ts` | Account | 6 steps |
+| `candidate-intake-store.ts` | Candidate | 5 steps |
+| `create-campaign-store.ts` | Campaign | 5 steps |
+| `extend-offer-store.ts` | Offer | 4 steps |
+
+#### When to Use Each Pattern
+
+| Pattern | Use Case | Example |
+|---------|----------|---------|
+| **Page/Wizard** | Multi-step creation, complex forms | New Campaign, New Account |
+| **Inline Panel** | Quick view/edit existing entity | Contact details, Activity log |
+| **Inline Form** | Single-field quick entry | Log activity, Add note |
+| **Dialog** | Simple confirmation, quick action | Delete confirm, Status change |
+
+### 7. Activity System
 
 Unified activity table for all entity types:
 
@@ -234,7 +316,111 @@ Personal workspace with "My X" tables and summary metrics:
 
 **Files**: `src/app/employee/workspace/desktop/page.tsx`, `src/components/workspace/MySummary.tsx`
 
-### 8. tRPC Routers
+### 8. Entity Workspace Architecture
+
+**CRITICAL RULE**: All entity workspaces follow a consistent sidebar structure with **universal sections** and **context-specific sections**.
+
+#### Universal Sections (ALWAYS Present)
+
+These four sections appear on EVERY entity workspace - no exceptions:
+
+| Section | Purpose | Polymorphic Query |
+|---------|---------|-------------------|
+| **Activities** | Logged actions (calls, emails, meetings, tasks) | `entity_type` + `entity_id` |
+| **Notes** | Internal team notes and observations | `entity_type` + `entity_id` |
+| **Documents** | Attached files, templates, collateral | `entity_type` + `entity_id` |
+| **History** | Complete audit trail of all changes | `entity_type` + `entity_id` |
+
+```typescript
+// Universal sections - NEVER conditionally hide these
+const UNIVERSAL_SECTIONS = ['activities', 'notes', 'documents', 'history'] as const
+```
+
+#### Context-Specific Sections (Vary by Entity Type)
+
+These sections appear based on entity type or context:
+
+| Entity Type | Context Sections |
+|-------------|------------------|
+| **Account** | Overview, Contacts, Jobs, Deals |
+| **Contact** | Overview, Communication, Campaigns, Engagement, Qualification, Deals, Pipeline |
+| **Campaign** | Overview, Prospects, Leads, Funnel, Sequence, Analytics |
+| **Job** | Overview, Requirements, Submissions, Interviews |
+| **Candidate** | Overview, Experience, Pipeline, Submissions |
+| **Submission** | Overview, Interview, Feedback, Offer |
+| **Placement** | Overview, Assignment, Timesheets, Compliance |
+
+#### Unified Contact Workspace Pattern
+
+The `contacts` table is the **single source of truth** for people. The same Contact Workspace component renders differently based on context:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    CONTACT WORKSPACE                             │
+│            (Single reusable component)                           │
+├─────────────────────────────────────────────────────────────────┤
+│  SIDEBAR                                                         │
+│  ┌─────────────────┐                                            │
+│  │ CONTEXT-SPECIFIC│ ← Varies by entry point                    │
+│  │ • Overview      │                                            │
+│  │ • Communication │                                            │
+│  │ • [Campaigns]   │ ← Only for prospect/lead context           │
+│  │ • [Qualification]│ ← Only for prospect context               │
+│  │ • [Deals]       │ ← Only for lead context                    │
+│  │ • [Pipeline]    │ ← Only for candidate context               │
+│  ├─────────────────┤                                            │
+│  │ UNIVERSAL       │ ← ALWAYS visible                           │
+│  │ • Activities    │                                            │
+│  │ • Notes         │                                            │
+│  │ • Documents     │                                            │
+│  │ • History       │                                            │
+│  └─────────────────┘                                            │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**URL Routing (same workspace, different contexts):**
+```
+/crm/campaigns/{id}/prospects/{contactId}  → Contact Workspace (prospect context)
+/crm/leads/{contactId}                      → Contact Workspace (lead context)
+/contacts/{contactId}                       → Contact Workspace (full context)
+/recruiting/candidates/{contactId}          → Contact Workspace (candidate context)
+```
+
+**Data Model:**
+```
+contacts (single source of truth for people)
+├── id, name, email, phone, company, title...
+├── types: string[]  // ['prospect', 'lead', 'candidate'] - can be multiple
+└── Linked via junction tables:
+    ├── campaign_prospects → prospect enrollment in campaigns
+    ├── leads → lead-specific data (score, status, deal link)
+    ├── candidates → candidate-specific data (pipeline stage)
+    └── activities, notes, documents → polymorphic (entity_type='contact')
+```
+
+**Context Detection:**
+```typescript
+// Determine which sections to show based on URL and contact types
+function getContactSections(pathname: string, contactTypes: string[]) {
+  const sections = ['overview', 'communication']  // Always show
+
+  if (pathname.includes('/prospects') || contactTypes.includes('prospect')) {
+    sections.push('campaigns', 'qualification', 'engagement')
+  }
+  if (pathname.includes('/leads') || contactTypes.includes('lead')) {
+    sections.push('campaigns', 'deals', 'engagement')
+  }
+  if (pathname.includes('/candidates') || contactTypes.includes('candidate')) {
+    sections.push('pipeline', 'submissions')
+  }
+
+  // Universal sections ALWAYS added last
+  sections.push('activities', 'notes', 'documents', 'history')
+  return sections
+}
+```
+
+### 9. tRPC Routers
 
 Type-safe API layer organized by domain:
 
@@ -390,11 +576,32 @@ List pages are **configuration-driven** - minimal page code, all behavior in con
 3. Use `orgProtectedProcedure` for org-scoped data
 4. Filter by `org_id` and check `deleted_at`
 
-### Creating a Wizard
+### Creating an Entity Creation Wizard
 
-1. Create Zustand store in `src/stores/[name]-store.ts` with `persist` middleware
-2. Create page with URL step tracking via `?step=N`
-3. Create step components in `src/components/[module]/[name]/`
+1. **Create Zustand store** in `src/stores/create-[entity]-store.ts`:
+   - Use `persist` middleware for localStorage
+   - Define `formData` interface matching all form fields
+   - Include `currentStep`, `isDirty`, `lastSaved` state
+   - Add `setFormData`, `setCurrentStep`, `resetForm` actions
+
+2. **Create wizard page** at `src/app/employee/[module]/[entity]/new/page.tsx`:
+   - Use URL step tracking via `?step=N`
+   - Show draft recovery banner if `lastSaved` exists
+   - Sync URL step with store state
+
+3. **Create step components** in `src/app/employee/[module]/[entity]/new/steps/`:
+   - One component per step (e.g., `SetupStep.tsx`, `DetailsStep.tsx`)
+   - Each receives `formData`, `setFormData`, `onNext`, `onPrev`, `onSubmit`
+
+4. **Update entity config** to use `href`:
+   ```typescript
+   primaryAction: {
+     label: 'New [Entity]',
+     href: '/employee/[module]/[entity]/new',  // NOT onClick
+   }
+   ```
+
+5. **Export store** from `src/stores/index.ts`
 
 ---
 
@@ -412,6 +619,8 @@ List pages are **configuration-driven** - minimal page code, all behavior in con
 - Filter data by `org_id` and `isNull(deleted_at)`
 - Use tRPC for API calls
 - Read files before editing them
+- Use **Page/Wizard + Zustand persist** for entity creation (drafts survive refresh)
+- Use `href` in primaryAction config for "New X" buttons
 
 ### DON'T
 
@@ -424,6 +633,8 @@ List pages are **configuration-driven** - minimal page code, all behavior in con
 - Add features not specified in requirements
 - Over-engineer or add unnecessary abstractions
 - Use modals for entity details (use inline panels)
+- Use dialogs for multi-step entity creation (use Page/Wizard instead)
+- Use `onClick` + custom events for "New X" buttons (use `href` instead)
 
 ---
 
@@ -493,9 +704,15 @@ Key research documents:
 - `src/components/workspace/MySummary.tsx` - Summary metrics
 - `src/components/workspace/MyActivitiesTable.tsx` - Activities table
 
-### Stores
-- `src/stores/job-intake-store.ts` - Job intake wizard
-- `src/stores/account-onboarding-store.ts` - Account onboarding
+### Stores (Zustand with Persist)
+- `src/stores/job-intake-store.ts` - Job intake wizard (6 steps)
+- `src/stores/account-onboarding-store.ts` - Account onboarding (6 steps)
+- `src/stores/candidate-intake-store.ts` - Candidate intake (5 steps)
+- `src/stores/create-campaign-store.ts` - Campaign creation (5 steps)
+- `src/stores/create-job-store.ts` - Quick job creation
+- `src/stores/extend-offer-store.ts` - Offer extension (4 steps)
+- `src/stores/schedule-interview-store.ts` - Interview scheduling
+- `src/stores/submit-to-client-store.ts` - Submission to client
 
 ### API Layer
 - `src/server/trpc/root.ts` - Router composition

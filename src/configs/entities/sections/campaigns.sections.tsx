@@ -146,17 +146,17 @@ export function CampaignOverviewSectionPCF({ entityId, entity }: PCFSectionProps
 
   return (
     <div className="space-y-6">
-      {/* Hero Section with Health Ring - Responsive grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
+      {/* Hero Section with Health Ring - Responsive flex layout */}
+      <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
         {/* Health Ring */}
-        <Card className="lg:col-span-3 bg-white" role="region" aria-label="Campaign health score">
+        <Card className="lg:w-64 flex-shrink-0 bg-white" role="region" aria-label="Campaign health score">
           <CardContent className="p-4 lg:p-6 flex flex-col items-center justify-center h-full min-h-[180px]">
             <CampaignHealthRing metrics={healthMetrics} size="lg" />
           </CardContent>
         </Card>
 
         {/* Key Metrics Grid - Responsive */}
-        <div className="lg:col-span-9 grid grid-cols-2 md:grid-cols-3 gap-3 lg:gap-4">
+        <div className="flex-1 min-w-0 grid grid-cols-2 md:grid-cols-3 gap-3 lg:gap-4">
           {/* Audience & Reach */}
           <Card className="bg-white">
             <CardContent className="p-4">
@@ -547,7 +547,7 @@ export function CampaignProspectsSectionPCF({ entityId, entity }: PCFSectionProp
     { enabled: !!entityId }
   )
 
-  const prospects = prospectsQuery.data?.prospects || []
+  const prospects = prospectsQuery.data?.items || []
   const total = prospectsQuery.data?.total || campaign?.audienceSize || campaign?.audience_size || 0
 
   return (

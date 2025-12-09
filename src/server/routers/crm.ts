@@ -4610,8 +4610,8 @@ export const crmRouter = router({
 
         // Get recent prospects with responses
         const { data: recentResponses } = await adminClient
-          .from('campaign_prospects')
-          .select('*')
+          .from('campaign_enrollments')
+          .select('*, contact:contacts!contact_id(id, first_name, last_name, email, phone, company_name, title)')
           .eq('campaign_id', input.id)
           .not('responded_at', 'is', null)
           .order('responded_at', { ascending: false })
@@ -4663,7 +4663,7 @@ export const crmRouter = router({
         ] = await Promise.all([
           // Prospects count
           adminClient
-            .from('campaign_prospects')
+            .from('campaign_enrollments')
             .select('*', { count: 'exact', head: true })
             .eq('campaign_id', input.id),
 
@@ -4842,6 +4842,15 @@ export const crmRouter = router({
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
 
+        // Get the user's profile ID (user_profiles.id may differ from auth user id)
+        const { data: userProfile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user?.id)
+          .single()
+
+        const profileId = userProfile?.id ?? user?.id
+
         // Determine initial status
         const status = input.launchImmediately ? 'active' : 'scheduled'
 
@@ -4867,8 +4876,8 @@ export const crmRouter = router({
             target_meetings: input.targetMeetings,
             target_revenue: input.targetRevenue,
             compliance_settings: input.complianceSettings ?? { gdpr: true, canSpam: true, casl: true, includeUnsubscribe: true },
-            owner_id: user?.id,
-            created_by: user?.id,
+            owner_id: profileId,
+            created_by: profileId,
           })
           .select('*, owner:user_profiles!owner_id(id, full_name, avatar_url)')
           .single()
@@ -4887,7 +4896,7 @@ export const crmRouter = router({
             activity_type: 'note',
             subject: 'Campaign Created',
             description: `Campaign "${input.name}" created with ${input.channels.length} channels`,
-            created_by: user?.id,
+            created_by: profileId,
           })
 
         return data
@@ -5141,7 +5150,7 @@ export const crmRouter = router({
         }
       }),
 
-    // Get a single prospect by ID
+    // Get a single enrollment (prospect) by ID
     getProspectById: orgProtectedProcedure
       .input(z.object({
         prospectId: z.string().uuid(),
@@ -5152,8 +5161,12 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         const { data, error } = await adminClient
-          .from('campaign_prospects')
-          .select('*, campaign:campaigns!campaign_id(id, name, status)')
+          .from('campaign_enrollments')
+          .select(`
+            *,
+            contact:contacts!contact_id(id, first_name, last_name, email, phone, linkedin_url, company_name, title),
+            campaign:campaigns!campaign_id(id, name, status)
+          `)
           .eq('id', input.prospectId)
           .eq('campaign_id', input.campaignId)
           .eq('org_id', orgId)
@@ -5166,7 +5179,7 @@ export const crmRouter = router({
         return data
       }),
 
-    // Get prospects for a campaign
+    // Get prospects (enrollments) for a campaign
     getProspects: orgProtectedProcedure
       .input(z.object({
         campaignId: z.string().uuid(),
@@ -5180,8 +5193,12 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         let query = adminClient
-          .from('campaign_prospects')
-          .select('*, converted_lead:leads!converted_lead_id(*)', { count: 'exact' })
+          .from('campaign_enrollments')
+          .select(`
+            *,
+            contact:contacts!contact_id(id, first_name, last_name, email, phone, linkedin_url, company_name, title),
+            converted_lead:leads!converted_lead_id(*)
+          `, { count: 'exact' })
           .eq('campaign_id', input.campaignId)
           .eq('org_id', orgId)
 
@@ -5207,7 +5224,7 @@ export const crmRouter = router({
         }
       }),
 
-    // Add prospects to campaign
+    // Add prospects to campaign (creates contacts + enrollments)
     addProspects: orgProtectedProcedure
       .input(z.object({
         campaignId: z.string().uuid(),
@@ -5230,18 +5247,21 @@ export const crmRouter = router({
         const { orgId } = ctx
         const adminClient = getAdminClient()
 
-        // Get existing emails for this campaign to avoid duplicates
+        // Get existing enrollments for this campaign to avoid duplicates
         const emails = input.prospects.map(p => p.email.toLowerCase())
-        const { data: existing } = await adminClient
-          .from('campaign_prospects')
-          .select('email')
+        const { data: existingEnrollments } = await adminClient
+          .from('campaign_enrollments')
+          .select('contact:contacts!contact_id(email)')
           .eq('campaign_id', input.campaignId)
           .eq('org_id', orgId)
-          .in('email', emails)
 
-        const existingEmails = new Set((existing ?? []).map(e => e.email?.toLowerCase()))
+        const existingEmails = new Set(
+          (existingEnrollments ?? [])
+            .map(e => (e.contact as { email: string } | null)?.email?.toLowerCase())
+            .filter(Boolean)
+        )
 
-        // Filter out prospects that already exist
+        // Filter out prospects that already exist in this campaign
         const newProspects = input.prospects.filter(
           p => !existingEmails.has(p.email.toLowerCase())
         )
@@ -5250,34 +5270,74 @@ export const crmRouter = router({
           return { added: 0 }
         }
 
-        const prospectsToInsert = newProspects.map(p => ({
-          org_id: orgId,
-          campaign_id: input.campaignId,
-          first_name: p.firstName,
-          last_name: p.lastName,
-          email: p.email,
-          phone: p.phone,
-          linkedin_url: p.linkedinUrl,
-          company_name: p.companyName,
-          company_industry: p.companyIndustry,
-          company_size: p.companySize,
-          title: p.title,
-          location: p.location,
-          timezone: p.timezone,
-          primary_channel: input.channel,
-          status: 'enrolled',
-        }))
+        let addedCount = 0
 
-        const { data, error } = await adminClient
-          .from('campaign_prospects')
-          .insert(prospectsToInsert)
-          .select()
+        // Process each new prospect
+        for (const p of newProspects) {
+          // First, find or create the contact
+          let { data: existingContact } = await adminClient
+            .from('contacts')
+            .select('id')
+            .eq('email', p.email.toLowerCase())
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .single()
 
-        if (error) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          let contactId: string
+
+          if (existingContact) {
+            contactId = existingContact.id
+            // Add 'prospect' to types if not already there
+            await adminClient
+              .from('contacts')
+              .update({ 
+                types: adminClient.rpc('array_append_unique', { arr: 'types', val: 'prospect' })
+              })
+              .eq('id', contactId)
+          } else {
+            // Create new contact
+            const { data: newContact, error: contactError } = await adminClient
+              .from('contacts')
+              .insert({
+                org_id: orgId,
+                contact_type: 'prospect',
+                types: ['prospect'],
+                first_name: p.firstName || null,
+                last_name: p.lastName || null,
+                email: p.email,
+                phone: p.phone || null,
+                linkedin_url: p.linkedinUrl || null,
+                company_name: p.companyName || null,
+                title: p.title || null,
+                work_location: p.location || null,
+                timezone: p.timezone || null,
+                status: 'active',
+              })
+              .select('id')
+              .single()
+
+            if (contactError || !newContact) {
+              console.error('Failed to create contact:', contactError)
+              continue
+            }
+            contactId = newContact.id
+          }
+
+          // Create the enrollment
+          const { error: enrollError } = await adminClient
+            .from('campaign_enrollments')
+            .insert({
+              org_id: orgId,
+              campaign_id: input.campaignId,
+              contact_id: contactId,
+              primary_channel: input.channel,
+              status: 'enrolled',
+            })
+
+          if (!enrollError) {
+            addedCount++
+          }
         }
-
-        const addedCount = data?.length ?? 0
 
         // Log activity for prospect addition
         if (addedCount > 0) {
@@ -5297,7 +5357,7 @@ export const crmRouter = router({
         return { added: addedCount }
       }),
 
-    // Update a prospect
+    // Update a prospect (enrollment + contact)
     updateProspect: orgProtectedProcedure
       .input(z.object({
         prospectId: z.string().uuid(),
@@ -5321,50 +5381,57 @@ export const crmRouter = router({
         const { orgId } = ctx
         const adminClient = getAdminClient()
 
-        // Verify prospect exists and belongs to org
+        // Get enrollment with contact
         const { data: existing, error: fetchError } = await adminClient
-          .from('campaign_prospects')
-          .select('id, campaign_id')
+          .from('campaign_enrollments')
+          .select('id, campaign_id, contact_id, responded_at')
           .eq('id', input.prospectId)
           .eq('org_id', orgId)
           .single()
 
         if (fetchError || !existing) {
-          throw new TRPCError({ code: 'NOT_FOUND', message: 'Prospect not found' })
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Enrollment not found' })
         }
 
-        // Build update object
-        const updateData: Record<string, unknown> = {
+        // Update contact data if any contact fields provided
+        const contactUpdateData: Record<string, unknown> = {}
+        if (input.firstName !== undefined) contactUpdateData.first_name = input.firstName
+        if (input.lastName !== undefined) contactUpdateData.last_name = input.lastName
+        if (input.email !== undefined) contactUpdateData.email = input.email
+        if (input.phone !== undefined) contactUpdateData.phone = input.phone
+        if (input.linkedinUrl !== undefined) contactUpdateData.linkedin_url = input.linkedinUrl
+        if (input.companyName !== undefined) contactUpdateData.company_name = input.companyName
+        if (input.title !== undefined) contactUpdateData.title = input.title
+        if (input.location !== undefined) contactUpdateData.work_location = input.location
+        if (input.timezone !== undefined) contactUpdateData.timezone = input.timezone
+
+        if (Object.keys(contactUpdateData).length > 0) {
+          await adminClient
+            .from('contacts')
+            .update(contactUpdateData)
+            .eq('id', existing.contact_id)
+        }
+
+        // Update enrollment data
+        const enrollmentUpdateData: Record<string, unknown> = {
           updated_at: new Date().toISOString(),
         }
-
-        if (input.firstName !== undefined) updateData.first_name = input.firstName
-        if (input.lastName !== undefined) updateData.last_name = input.lastName
-        if (input.email !== undefined) updateData.email = input.email
-        if (input.phone !== undefined) updateData.phone = input.phone
-        if (input.linkedinUrl !== undefined) updateData.linkedin_url = input.linkedinUrl
-        if (input.companyName !== undefined) updateData.company_name = input.companyName
-        if (input.companyIndustry !== undefined) updateData.company_industry = input.companyIndustry
-        if (input.companySize !== undefined) updateData.company_size = input.companySize
-        if (input.title !== undefined) updateData.title = input.title
-        if (input.location !== undefined) updateData.location = input.location
-        if (input.timezone !== undefined) updateData.timezone = input.timezone
-        if (input.status !== undefined) updateData.status = input.status
-        if (input.responseType !== undefined) updateData.response_type = input.responseType
-        if (input.responseText !== undefined) updateData.response_text = input.responseText
-        if (input.engagementScore !== undefined) updateData.engagement_score = input.engagementScore
+        if (input.status !== undefined) enrollmentUpdateData.status = input.status
+        if (input.responseType !== undefined) enrollmentUpdateData.response_type = input.responseType
+        if (input.responseText !== undefined) enrollmentUpdateData.response_text = input.responseText
+        if (input.engagementScore !== undefined) enrollmentUpdateData.engagement_score = input.engagementScore
 
         // If response type is set, also set responded_at
         if (input.responseType && !existing.responded_at) {
-          updateData.responded_at = new Date().toISOString()
+          enrollmentUpdateData.responded_at = new Date().toISOString()
         }
 
         const { data, error } = await adminClient
-          .from('campaign_prospects')
-          .update(updateData)
+          .from('campaign_enrollments')
+          .update(enrollmentUpdateData)
           .eq('id', input.prospectId)
           .eq('org_id', orgId)
-          .select()
+          .select('*, contact:contacts!contact_id(*)')
           .single()
 
         if (error) {
@@ -5405,41 +5472,45 @@ export const crmRouter = router({
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
 
-        // Get prospect data
-        const { data: prospect, error: prospectError } = await adminClient
-          .from('campaign_prospects')
-          .select('*, campaign:campaigns!campaign_id(id, name)')
+        // Get enrollment with contact data
+        const { data: enrollment, error: enrollmentError } = await adminClient
+          .from('campaign_enrollments')
+          .select(`
+            *,
+            contact:contacts!contact_id(id, first_name, last_name, email, phone, linkedin_url, company_name, title),
+            campaign:campaigns!campaign_id(id, name)
+          `)
           .eq('id', input.prospectId)
           .eq('org_id', orgId)
           .single()
 
-        if (prospectError || !prospect) {
-          throw new TRPCError({ code: 'NOT_FOUND', message: 'Prospect not found' })
+        if (enrollmentError || !enrollment) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Enrollment not found' })
         }
 
         // Check if already converted
-        if (prospect.converted_lead_id) {
+        if (enrollment.converted_lead_id) {
           throw new TRPCError({ code: 'CONFLICT', message: 'Prospect already converted to lead' })
         }
 
-        // Create lead
+        const contact = enrollment.contact as { id: string; first_name: string; last_name: string; email: string; phone: string; linkedin_url: string; company_name: string; title: string } | null
+
+        // Create lead with contact_id reference
         const { data: lead, error: leadError } = await adminClient
           .from('leads')
           .insert({
             org_id: orgId,
             lead_type: 'company',
-            company_name: prospect.company_name,
-            industry: prospect.company_industry,
-            company_size: prospect.company_size,
-            first_name: prospect.first_name,
-            last_name: prospect.last_name,
-            title: prospect.title,
-            email: prospect.email,
-            phone: prospect.phone,
-            linkedin_url: prospect.linkedin_url,
+            contact_id: contact?.id,  // Link to unified contact
+            company_name: contact?.company_name,
+            first_name: contact?.first_name,
+            last_name: contact?.last_name,
+            title: contact?.title,
+            email: contact?.email,
+            phone: contact?.phone,
+            linkedin_url: contact?.linkedin_url,
             source: 'campaign',
-            campaign_id: prospect.campaign_id,
-            campaign_prospect_id: prospect.id,
+            campaign_id: enrollment.campaign_id,
             status: 'qualified',
             lead_score: input.leadScore,
             interest_level: input.interestLevel,
@@ -5466,15 +5537,23 @@ export const crmRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: leadError.message })
         }
 
-        // Update prospect as converted
+        // Update enrollment as converted
         await adminClient
-          .from('campaign_prospects')
+          .from('campaign_enrollments')
           .update({
             converted_to_lead_at: new Date().toISOString(),
             converted_lead_id: lead.id,
             status: 'converted',
           })
           .eq('id', input.prospectId)
+
+        // Add 'lead' to contact types
+        if (contact?.id) {
+          await adminClient
+            .from('contacts')
+            .update({ types: adminClient.rpc('array_append_unique', { arr: 'types', val: 'lead' }) })
+            .eq('id', contact.id)
+        }
 
         // Create follow-up task if next action specified
         if (input.nextAction && input.nextActionDate) {

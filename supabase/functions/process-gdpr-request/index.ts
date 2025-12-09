@@ -9,7 +9,7 @@ const corsHeaders = {
 // Tables to scan for GDPR data discovery
 const GDPR_TABLES = [
   { table: 'user_profiles', emailField: 'email', nameFields: ['first_name', 'last_name'], type: 'candidate' },
-  { table: 'point_of_contacts', emailField: 'email', nameFields: ['first_name', 'last_name'], type: 'contact' },
+  { table: 'contacts', emailField: 'email', nameFields: ['first_name', 'last_name'], type: 'contact' },
   { table: 'leads', emailField: 'email', nameFields: ['first_name', 'last_name'], type: 'lead' },
   { table: 'employees', emailField: 'email', nameFields: ['first_name', 'last_name'], type: 'employee' },
   { table: 'consultants', emailField: 'email', nameFields: [], type: 'consultant' },

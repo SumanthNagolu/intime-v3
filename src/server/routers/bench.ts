@@ -81,7 +81,7 @@ const vendorsRouter = router({
 
       let query = adminClient
         .from('vendors')
-        .select('*, primary_contact:vendor_contacts!vendor_id(id, name, email, phone, is_primary)', { count: 'exact' })
+        .select('*, primary_contact:contacts!vendor_id(id, first_name, last_name, email, phone)', { count: 'exact' })
         .eq('org_id', orgId)
         .is('deleted_at', null)
 
@@ -123,7 +123,7 @@ const vendorsRouter = router({
         .from('vendors')
         .select(`
           *,
-          contacts:vendor_contacts(*),
+          contacts:contacts!vendor_id(id, first_name, last_name, email, phone, title, department),
           terms:vendor_terms(*),
           performance:vendor_performance(*)
         `)
@@ -181,15 +181,23 @@ const vendorsRouter = router({
 
       // Create primary contact if provided
       if (input.primaryContactEmail && input.primaryContactName) {
+        // Parse name into first/last
+        const nameParts = input.primaryContactName.split(' ')
+        const firstName = nameParts[0] || ''
+        const lastName = nameParts.slice(1).join(' ') || ''
+        
         await adminClient
-          .from('vendor_contacts')
+          .from('contacts')
           .insert({
+            org_id: orgId,
+            contact_type: 'vendor',
             vendor_id: vendor.id,
-            name: input.primaryContactName,
+            first_name: firstName,
+            last_name: lastName,
             email: input.primaryContactEmail,
             phone: input.primaryContactPhone || null,
             title: input.primaryContactTitle || null,
-            is_primary: true,
+            status: 'active',
             created_by: user?.id,
           })
       }
@@ -271,27 +279,27 @@ const vendorsRouter = router({
       isPrimary: z.boolean().default(false),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { user } = ctx
+      const { orgId, user } = ctx
       const adminClient = getAdminClient()
 
-      // If setting as primary, unset other primaries
-      if (input.isPrimary) {
-        await adminClient
-          .from('vendor_contacts')
-          .update({ is_primary: false })
-          .eq('vendor_id', input.vendorId)
-      }
+      // Parse name into first/last
+      const nameParts = input.name.split(' ')
+      const firstName = nameParts[0] || ''
+      const lastName = nameParts.slice(1).join(' ') || ''
 
       const { data, error } = await adminClient
-        .from('vendor_contacts')
+        .from('contacts')
         .insert({
+          org_id: orgId,
+          contact_type: 'vendor',
           vendor_id: input.vendorId,
-          name: input.name,
+          first_name: firstName,
+          last_name: lastName,
           email: input.email || null,
           phone: input.phone || null,
           title: input.title || null,
           department: input.department || null,
-          is_primary: input.isPrimary,
+          status: 'active',
           created_by: user?.id,
         })
         .select()
@@ -317,28 +325,26 @@ const vendorsRouter = router({
       isPrimary: z.boolean().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx
       const adminClient = getAdminClient()
 
-      // If setting as primary, unset other primaries
-      if (input.isPrimary) {
-        await adminClient
-          .from('vendor_contacts')
-          .update({ is_primary: false })
-          .eq('vendor_id', input.vendorId)
-      }
-
       const updateData: Record<string, unknown> = {}
-      if (input.name !== undefined) updateData.name = input.name
+      if (input.name !== undefined) {
+        // Parse name into first/last
+        const nameParts = input.name.split(' ')
+        updateData.first_name = nameParts[0] || ''
+        updateData.last_name = nameParts.slice(1).join(' ') || ''
+      }
       if (input.email !== undefined) updateData.email = input.email
       if (input.phone !== undefined) updateData.phone = input.phone
       if (input.title !== undefined) updateData.title = input.title
       if (input.department !== undefined) updateData.department = input.department
-      if (input.isPrimary !== undefined) updateData.is_primary = input.isPrimary
 
       const { data, error } = await adminClient
-        .from('vendor_contacts')
+        .from('contacts')
         .update(updateData)
         .eq('id', input.contactId)
+        .eq('org_id', orgId)
         .select()
         .single()
 
@@ -349,16 +355,18 @@ const vendorsRouter = router({
       return data
     }),
 
-  // Delete contact
+  // Delete contact (soft delete)
   deleteContact: orgProtectedProcedure
     .input(z.object({ contactId: z.string().uuid() }))
     .mutation(async ({ ctx, input }) => {
+      const { orgId } = ctx
       const adminClient = getAdminClient()
 
       const { error } = await adminClient
-        .from('vendor_contacts')
-        .delete()
+        .from('contacts')
+        .update({ deleted_at: new Date().toISOString() })
         .eq('id', input.contactId)
+        .eq('org_id', orgId)
 
       if (error) {
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })

@@ -71,10 +71,12 @@ function SidebarLayoutInner({
         {!hideSidebar && (
           currentEntity ? (
             // Use entity-specific sidebars where available
-            currentEntity.type === 'campaign' && entityData?.data ? (
+            currentEntity.type === 'campaign' ? (
               // Campaign uses specialized dual-mode sidebar (Journey + Sections)
+              // Note: CampaignEntitySidebar fetches its own data using the ID
               <CampaignEntitySidebar
-                campaign={entityData.data as any}
+                campaignId={currentEntity.id}
+                campaignStatus={currentEntity.status}
                 counts={toolCounts}
                 className="hidden lg:flex"
               />

@@ -1,10 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
 import {
   Tooltip,
   TooltipContent,
@@ -19,15 +17,17 @@ import {
   Check,
   Circle,
   LucideIcon,
+  Loader2,
 } from 'lucide-react'
 import { getCampaignSectionsByGroup, SectionDefinition } from '@/lib/navigation/entity-sections'
-import { getEntityJourney, getVisibleQuickActions, getCurrentStepIndex } from '@/lib/navigation/entity-journeys'
-import { Campaign } from '@/configs/entities/campaigns.config'
+import { getEntityJourney, getCurrentStepIndex } from '@/lib/navigation/entity-journeys'
+import { trpc } from '@/lib/trpc/client'
 
 type NavigationMode = 'journey' | 'sections'
 
 interface CampaignEntitySidebarProps {
-  campaign: Campaign
+  campaignId: string
+  campaignStatus: string
   counts?: {
     prospects?: number
     leads?: number
@@ -52,12 +52,19 @@ interface CampaignEntitySidebarProps {
  * - Section counts with badges
  */
 export function CampaignEntitySidebar({
-  campaign,
+  campaignId,
+  campaignStatus,
   counts = {},
   className,
 }: CampaignEntitySidebarProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
+
+  // Fetch campaign data - lightweight query for sidebar
+  const { data: campaign, isLoading } = trpc.crm.campaigns.getById.useQuery(
+    { id: campaignId },
+    { enabled: !!campaignId }
+  )
 
   // Navigation mode from URL or default to sections
   const urlMode = searchParams.get('mode') as NavigationMode | null
@@ -74,11 +81,8 @@ export function CampaignEntitySidebar({
   const journeyConfig = getEntityJourney('campaign')
   const { mainSections, automationSections, toolSections } = getCampaignSectionsByGroup()
 
-  // Get current journey step index
-  const currentStepIndex = getCurrentStepIndex('campaign', campaign.status)
-
-  // Get visible quick actions based on status
-  const quickActions = getVisibleQuickActions('campaign', campaign.status)
+  // Get current journey step index - use passed status for immediate UI
+  const currentStepIndex = getCurrentStepIndex('campaign', campaignStatus)
 
   // Calculate journey progress percentage
   const progressPercentage = Math.round(((currentStepIndex + 1) / journeyConfig.steps.length) * 100)
@@ -122,25 +126,18 @@ export function CampaignEntitySidebar({
     router.push(`?${params.toString()}`, { scroll: false })
   }
 
-  // Handle quick action click
-  const handleQuickAction = (action: typeof quickActions[0]) => {
-    if (action.actionType === 'navigate' && action.href) {
-      const href = action.href.replace(':id', campaign.id)
-      router.push(href)
-    } else if (action.actionType === 'dialog' && action.dialogId) {
-      window.dispatchEvent(
-        new CustomEvent('openCampaignDialog', {
-          detail: { dialogId: action.dialogId, campaignId: campaign.id },
-        })
-      )
-    } else if (action.actionType === 'mutation') {
-      // Handle direct mutations (start, pause, resume)
-      window.dispatchEvent(
-        new CustomEvent('openCampaignDialog', {
-          detail: { dialogId: action.id, campaignId: campaign.id },
-        })
-      )
-    }
+  // Show loading state while fetching campaign
+  if (isLoading) {
+    return (
+      <aside
+        className={cn(
+          'w-64 bg-white border-r border-charcoal-100 flex flex-col flex-shrink-0 h-full items-center justify-center',
+          className
+        )}
+      >
+        <Loader2 className="w-6 h-6 animate-spin text-charcoal-400" />
+      </aside>
+    )
   }
 
   // Get count for a section
@@ -360,29 +357,6 @@ export function CampaignEntitySidebar({
           </div>
         )}
 
-        {/* Quick Actions (Always visible) */}
-        <div className="p-4 border-t border-charcoal-100 bg-charcoal-50/50">
-          <h3 className="text-xs font-medium text-charcoal-500 uppercase tracking-wide mb-3">
-            Quick Actions
-          </h3>
-          <div className="space-y-2">
-            {quickActions.slice(0, 4).map((action) => {
-              const ActionIcon = action.icon
-              return (
-                <Button
-                  key={action.id}
-                  variant={action.variant === 'default' ? 'default' : 'outline'}
-                  size="sm"
-                  className="w-full justify-start gap-2 text-xs"
-                  onClick={() => handleQuickAction(action)}
-                >
-                  <ActionIcon className="w-3.5 h-3.5" />
-                  {action.label}
-                </Button>
-              )
-            })}
-          </div>
-        </div>
       </aside>
     </TooltipProvider>
   )

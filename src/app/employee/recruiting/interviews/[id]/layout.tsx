@@ -4,3 +4,5 @@ export default function InterviewDetailLayout({ children }: { children: ReactNod
   return children
 }
 
+
+
