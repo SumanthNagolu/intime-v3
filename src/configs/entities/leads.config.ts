@@ -423,47 +423,49 @@ export const leadsListConfig: ListViewConfig<Lead> = {
   // tRPC hooks for data fetching
   useListQuery: (filters) => {
     const statusValue = filters.status as string | undefined
-    const sourceValue = filters.source as string | undefined
     const sortByValue = filters.sortBy as string | undefined
     const sortOrderValue = filters.sortOrder as string | undefined
     const minScoreValue = filters.minScore as string | undefined
     const ownerIdValue = filters.ownerId as string | undefined
 
+    // Valid status values from the router's LeadStatus enum
     const validStatuses = [
       'new',
       'contacted',
+      'warm',
+      'hot',
+      'cold',
       'qualified',
       'unqualified',
-      'nurture',
       'converted',
-      'all',
     ] as const
-    const validSortFields = ['created_at', 'bant_total_score', 'company_name', 'first_name', 'status', 'last_contacted_at', 'source', 'campaign_id'] as const
-
     type LeadStatus = (typeof validStatuses)[number]
+
+    // Valid sort fields from the router's sortBy enum
+    const validSortFields = ['name', 'lead_status', 'lead_score', 'lead_estimated_value', 'created_at'] as const
     type SortField = (typeof validSortFields)[number]
 
-    // Map frontend column keys to database columns
+    // Map frontend column keys to valid router sort fields
     const sortFieldMap: Record<string, SortField> = {
-      name: 'first_name',
-      company_name: 'company_name',
-      source: 'source',
-      status: 'status',
-      bant_total_score: 'bant_total_score',
-      campaign: 'campaign_id',
-      owner: 'created_at', // Fallback - owner sorting not directly supported
-      last_contacted_at: 'last_contacted_at',
+      name: 'name',
+      company_name: 'name', // Map to name (sorts by first_name in router)
+      status: 'lead_status',
+      bant_total_score: 'lead_score',
       created_at: 'created_at',
+      // Fallbacks for columns without direct sort support
+      source: 'created_at',
+      campaign: 'created_at',
+      owner: 'created_at',
+      last_contacted_at: 'created_at',
     }
 
-    const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
+    const mappedSortBy: SortField = sortByValue && sortFieldMap[sortByValue]
       ? sortFieldMap[sortByValue]
       : 'created_at'
 
     // Handle owner filter
     let ownerIdFilter: string | undefined
     if (ownerIdValue === 'me') {
-      // This will be handled by the useQuery - we pass undefined and let the backend default to current user
       ownerIdFilter = undefined // Will be handled specially in the query
     } else if (ownerIdValue === 'unassigned') {
       ownerIdFilter = undefined // Need special handling in backend for null owner
@@ -471,14 +473,16 @@ export const leadsListConfig: ListViewConfig<Lead> = {
       ownerIdFilter = ownerIdValue
     }
 
-    return trpc.crm.leads.list.useQuery({
+    // Map frontend status values to router status values
+    // 'nurture' is not in router enum, map to undefined (no filter)
+    const mappedStatus: LeadStatus | undefined = statusValue && statusValue !== 'all' && statusValue !== 'nurture'
+      ? (validStatuses.includes(statusValue as LeadStatus) ? statusValue as LeadStatus : undefined)
+      : undefined
+
+    return trpc.unifiedContacts.leads.list.useQuery({
       search: filters.search as string | undefined,
-      status: (statusValue && validStatuses.includes(statusValue as LeadStatus)
-        ? statusValue
-        : 'all') as LeadStatus,
-      source: sourceValue !== 'all' ? sourceValue : undefined,
+      status: mappedStatus,
       ownerId: ownerIdFilter,
-      campaignId: filters.campaignId as string | undefined,
       minScore: minScoreValue && minScoreValue !== 'all' ? parseInt(minScoreValue, 10) : undefined,
       limit: (filters.limit as number) || 20,
       offset: (filters.offset as number) || 0,
@@ -489,7 +493,7 @@ export const leadsListConfig: ListViewConfig<Lead> = {
 
   // Stats query for metrics cards
   useStatsQuery: () => {
-    return trpc.crm.leads.stats.useQuery()
+    return trpc.unifiedContacts.leads.stats.useQuery()
   },
 }
 
@@ -720,5 +724,5 @@ export const leadsDetailConfig: DetailViewConfig<Lead> = {
 
   eventNamespace: 'lead',
 
-  useEntityQuery: (entityId) => trpc.crm.leads.getById.useQuery({ id: entityId }),
+  useEntityQuery: (entityId) => trpc.unifiedContacts.leads.getById.useQuery({ id: entityId }),
 }

@@ -18,23 +18,49 @@ import {
 import { ListViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
 
-// Type definition for Consultant (Bench Talent) entity
+// Type definition for Consultant (Bench Talent) entity - uses contactBench data shape
 export interface Consultant extends Record<string, unknown> {
   id: string
-  status: string
+  contactId: string
+  benchStatus: string
+  benchType?: string | null
+  visaType?: string | null
+  visaExpiryDate?: string | null
+  workAuthStatus?: string | null
+  minAcceptableRate?: number | null
+  targetRate?: number | null
+  currency?: string | null
+  willingToRelocate?: boolean | null
+  preferredLocations?: string[] | null
+  benchSalesRepId?: string | null
+  marketingStatus?: string | null
+  benchStartDate?: string | null
+  createdAt: string
+  updatedAt?: string
+  // Legacy snake_case aliases for backwards compatibility during transition
+  status?: string
   visa_type?: string | null
   visa_expiry_date?: string | null
   work_auth_status?: string | null
   min_acceptable_rate?: number | null
   target_rate?: number | null
-  currency?: string | null
   willing_relocate?: boolean | null
   preferred_locations?: string[] | null
   bench_sales_rep_id?: string | null
   marketing_status?: string | null
   bench_start_date?: string | null
-  created_at: string
+  created_at?: string
   updated_at?: string
+  // Joined contact (replaces candidate)
+  contact?: {
+    id: string
+    first_name: string
+    last_name: string
+    email?: string | null
+    phone?: string | null
+    title?: string | null
+  } | null
+  // Legacy candidate alias
   candidate?: {
     id: string
     full_name: string
@@ -42,6 +68,12 @@ export interface Consultant extends Record<string, unknown> {
     phone?: string | null
     avatar_url?: string | null
     location?: string | null
+  } | null
+  // Sales rep (replaces bench_sales_rep)
+  salesRep?: {
+    id: string
+    full_name: string
+    avatar_url?: string | null
   } | null
   bench_sales_rep?: {
     id: string
@@ -287,49 +319,63 @@ export const consultantsListConfig: ListViewConfig<Consultant> = {
 
   columns: [
     {
-      key: 'candidate',
+      key: 'contact',
       header: 'Name',
       label: 'Name',
       sortable: false, // Can't sort on joined field directly
       width: 'min-w-[180px]',
-      render: (value) => {
-        const candidate = value as Consultant['candidate']
+      render: (value, entity) => {
+        const consultant = entity as Consultant
+        // Handle both new contact shape and legacy candidate shape
+        const contact = consultant.contact
+        const candidate = consultant.candidate
+        if (contact) {
+          return `${contact.first_name || ''} ${contact.last_name || ''}`.trim() || '—'
+        }
         return candidate?.full_name || '—'
       },
     },
     {
-      key: 'candidate',
-      header: 'Location',
-      label: 'Location',
+      key: 'contact',
+      header: 'Title',
+      label: 'Title',
       width: 'w-[130px]',
-      render: (value) => {
-        const candidate = value as Consultant['candidate']
-        return candidate?.location || '—'
+      render: (value, entity) => {
+        const consultant = entity as Consultant
+        const contact = consultant.contact
+        return contact?.title || '—'
       },
     },
     {
-      key: 'status',
+      key: 'benchStatus',
       header: 'Status',
       label: 'Status',
       sortable: true,
       width: 'w-[100px]',
+      render: (value, entity) => {
+        const consultant = entity as Consultant
+        // Handle both camelCase and snake_case
+        const status = consultant.benchStatus || consultant.status
+        return status || '—'
+      },
       format: 'status' as const,
     },
     {
-      key: 'visa_type',
+      key: 'visaType',
       header: 'Visa',
       label: 'Visa',
-      sortable: true,
+      sortable: false, // Can't sort directly on this field
       width: 'w-[80px]',
-      render: (value) => {
-        const visaType = value as string | null
+      render: (value, entity) => {
+        const consultant = entity as Consultant
+        const visaType = consultant.visaType || consultant.visa_type
         if (!visaType) return '—'
         const config = VISA_TYPE_CONFIG[visaType.toLowerCase()]
         return config?.label || visaType.toUpperCase()
       },
     },
     {
-      key: 'target_rate',
+      key: 'targetRate',
       header: 'Bill Rate',
       label: 'Bill Rate',
       sortable: true,
@@ -337,14 +383,14 @@ export const consultantsListConfig: ListViewConfig<Consultant> = {
       align: 'right' as const,
       render: (value, entity) => {
         const consultant = entity as Consultant
-        const rate = consultant.target_rate
+        const rate = consultant.targetRate || consultant.target_rate
         if (!rate) return '—'
         const currency = consultant.currency || 'USD'
         return `$${rate}/${currency === 'USD' ? 'hr' : currency}`
       },
     },
     {
-      key: 'bench_start_date',
+      key: 'benchStartDate',
       header: 'Days on Bench',
       label: 'Days on Bench',
       sortable: true,
@@ -352,53 +398,67 @@ export const consultantsListConfig: ListViewConfig<Consultant> = {
       align: 'right' as const,
       render: (value, entity) => {
         const consultant = entity as Consultant
-        if (consultant.status !== 'available') return '—'
-        const days = calculateDaysOnBench(consultant.bench_start_date)
+        const status = consultant.benchStatus || consultant.status
+        if (status !== 'available') return '—'
+        const benchStart = consultant.benchStartDate || consultant.bench_start_date
+        const days = calculateDaysOnBench(benchStart)
         return String(days)
       },
     },
     {
-      key: 'marketing_status',
+      key: 'marketingStatus',
       header: 'Marketing',
       label: 'Marketing',
       width: 'w-[100px]',
-      render: (value) => {
-        const status = value as string | null
+      render: (value, entity) => {
+        const consultant = entity as Consultant
+        const status = consultant.marketingStatus || consultant.marketing_status
         if (!status) return '—'
         const config = MARKETING_STATUS_CONFIG[status]
         return config?.label || status
       },
     },
     {
-      key: 'bench_sales_rep',
+      key: 'salesRep',
       header: 'Owner',
       label: 'Owner',
       width: 'w-[130px]',
-      render: (value) => {
-        const rep = value as Consultant['bench_sales_rep']
+      render: (value, entity) => {
+        const consultant = entity as Consultant
+        // Handle both salesRep and bench_sales_rep
+        const rep = consultant.salesRep || consultant.bench_sales_rep
         return rep?.full_name || '—'
       },
     },
     {
-      key: 'bench_start_date',
+      key: 'benchStartDate',
       header: 'Bench Start',
       label: 'Bench Start',
       sortable: true,
       width: 'w-[100px]',
+      render: (value, entity) => {
+        const consultant = entity as Consultant
+        const benchStart = consultant.benchStartDate || consultant.bench_start_date
+        return benchStart || '—'
+      },
       format: 'date' as const,
     },
     {
-      key: 'created_at',
+      key: 'createdAt',
       header: 'Created',
       label: 'Created',
       sortable: true,
       width: 'w-[100px]',
+      render: (value, entity) => {
+        const consultant = entity as Consultant
+        return consultant.createdAt || consultant.created_at || '—'
+      },
       format: 'relative-date' as const,
     },
   ],
 
   renderMode: 'table',
-  statusField: 'status',
+  statusField: 'benchStatus', // Use camelCase field from contactBench router
   statusConfig: CONSULTANT_STATUS_CONFIG,
 
   pageSize: 20,
@@ -420,7 +480,7 @@ export const consultantsListConfig: ListViewConfig<Consultant> = {
     },
   },
 
-  // tRPC hooks for data fetching
+  // tRPC hooks for data fetching - uses contactBench router
   useListQuery: (filters) => {
     const statusValue = filters.status as string | undefined
     const visaTypeValue = filters.visaType as string | undefined
@@ -428,18 +488,19 @@ export const consultantsListConfig: ListViewConfig<Consultant> = {
     const sortByValue = filters.sortBy as string | undefined
     const sortOrderValue = filters.sortOrder as string | undefined
 
-    const validStatuses = ['onboarding', 'available', 'marketing', 'interviewing', 'placed', 'inactive', 'all'] as const
-    const validMarketingStatuses = ['draft', 'active', 'paused', 'archived', 'all'] as const
-    const validSortFields = ['bench_start_date', 'status', 'visa_type', 'target_rate', 'created_at'] as const
+    const validStatuses = ['onboarding', 'available', 'marketing', 'interviewing', 'placed', 'inactive'] as const
+    const validMarketingStatuses = ['draft', 'active', 'paused', 'archived'] as const
+    const validSortFields = ['bench_start_date', 'bench_status', 'marketing_status', 'target_rate', 'created_at'] as const
 
-    type ConsultantStatus = (typeof validStatuses)[number]
+    type BenchStatus = (typeof validStatuses)[number]
     type MarketingStatus = (typeof validMarketingStatuses)[number]
     type SortField = (typeof validSortFields)[number]
 
     // Map frontend column keys to database columns
     const sortFieldMap: Record<string, SortField> = {
-      status: 'status',
-      visa_type: 'visa_type',
+      status: 'bench_status',
+      benchStatus: 'bench_status',
+      visa_type: 'bench_status', // No direct visa sort, fallback
       target_rate: 'target_rate',
       bench_start_date: 'bench_start_date',
       createdAt: 'created_at',
@@ -449,15 +510,14 @@ export const consultantsListConfig: ListViewConfig<Consultant> = {
       ? sortFieldMap[sortByValue]
       : 'bench_start_date'
 
-    return trpc.bench.talent.list.useQuery({
+    return trpc.contactBench.list.useQuery({
       search: filters.search as string | undefined,
-      status: (statusValue && validStatuses.includes(statusValue as ConsultantStatus)
-        ? statusValue
-        : 'all') as ConsultantStatus,
-      visaType: visaTypeValue || undefined,
-      marketingStatus: (marketingStatusValue && validMarketingStatuses.includes(marketingStatusValue as MarketingStatus)
-        ? marketingStatusValue
-        : 'all') as MarketingStatus,
+      benchStatus: (statusValue && validStatuses.includes(statusValue as BenchStatus))
+        ? (statusValue as BenchStatus)
+        : undefined,
+      marketingStatus: (marketingStatusValue && validMarketingStatuses.includes(marketingStatusValue as MarketingStatus))
+        ? (marketingStatusValue as MarketingStatus)
+        : undefined,
       limit: (filters.limit as number) || 20,
       offset: (filters.offset as number) || 0,
       sortBy: mappedSortBy,
@@ -465,8 +525,8 @@ export const consultantsListConfig: ListViewConfig<Consultant> = {
     })
   },
 
-  // Stats query for metrics cards
+  // Stats query for metrics cards - uses contactBench router
   useStatsQuery: () => {
-    return trpc.bench.talent.stats.useQuery()
+    return trpc.contactBench.stats.useQuery({})
   },
 }

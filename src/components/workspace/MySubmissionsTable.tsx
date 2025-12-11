@@ -204,13 +204,13 @@ export function MySubmissionsTable({ className }: MySubmissionsTableProps) {
                     )}
                   </TableCell>
                   <TableCell>
-                    {submission.job?.account ? (
+                    {submission.job?.company ? (
                       <Link
-                        href={`/employee/recruiting/accounts/${submission.job.account.id}`}
+                        href={`/employee/recruiting/accounts/${submission.job.company.id}`}
                         className="flex items-center gap-1 text-charcoal-600 hover:text-hublot-700"
                       >
                         <Building2 className="w-3 h-3" />
-                        {submission.job.account.name}
+                        {submission.job.company.name}
                       </Link>
                     ) : (
                       <span className="text-charcoal-400">-</span>

@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { LocationPicker } from '@/components/addresses'
 import { FieldDefinition } from '@/configs/entities/types'
 import { cn } from '@/lib/utils'
 
@@ -204,6 +205,31 @@ export function FormFieldRenderer({
             placeholder={field.placeholder || 'https://example.com'}
             disabled={disabled || field.readOnly}
             className={cn(error && 'border-red-500')}
+          />
+        )
+
+      case 'location':
+        // LocationPicker for structured city/state/country input
+        // Value is expected to be the display string (e.g., "Austin, TX")
+        // The parent form should also update locationCity, locationState, locationCountry fields
+        return (
+          <LocationPicker
+            label=""
+            value={{
+              city: (value as string)?.split(',')[0]?.trim() || '',
+              stateProvince: (value as string)?.split(',')[1]?.trim() || '',
+              countryCode: 'US',
+            }}
+            onChange={(data) => {
+              // Build display string from structured data
+              const displayValue = data.city && data.stateProvince
+                ? `${data.city}, ${data.stateProvince}`
+                : data.city || ''
+              onChange(displayValue)
+            }}
+            required={field.required}
+            disabled={disabled || field.readOnly}
+            showCountry={false}
           />
         )
 

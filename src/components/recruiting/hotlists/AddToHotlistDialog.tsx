@@ -32,9 +32,22 @@ const statusColors: Record<string, string> = {
 
 interface TalentItem {
   id: string
+  // contactBench camelCase fields
+  benchStatus?: string
+  visaType?: string
+  targetRate?: number
+  // Legacy snake_case fields
   status?: string
   visa_type?: string
   target_rate?: number
+  // Contact (new shape from contactBench)
+  contact?: {
+    id: string
+    first_name?: string
+    last_name?: string
+    email?: string
+  }
+  // Legacy candidate shape
   candidate?: {
     id: string
     full_name?: string
@@ -66,9 +79,9 @@ export function AddToHotlistDialog({
   const [selectedConsultants, setSelectedConsultants] = useState<string[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  // Fetch available talent
-  const { data: talentData, isLoading } = trpc.bench.talent.list.useQuery({
-    status: statusFilter !== 'all' ? statusFilter as 'onboarding' | 'available' | 'marketing' | 'interviewing' | 'placed' | 'inactive' : undefined,
+  // Fetch available talent - uses contactBench router
+  const { data: talentData, isLoading } = trpc.contactBench.list.useQuery({
+    benchStatus: statusFilter !== 'all' ? statusFilter as 'onboarding' | 'available' | 'marketing' | 'interviewing' | 'placed' | 'inactive' : undefined,
     search: searchQuery || undefined,
     limit: 50
   }, {
@@ -191,7 +204,14 @@ export function AddToHotlistDialog({
             ) : (
               availableTalents.map((talent: TalentItem) => {
                 const isSelected = selectedConsultants.includes(talent.id)
-                const candidateName = talent.candidate?.full_name || 'Unknown'
+                // Handle both contact (new) and candidate (legacy) shapes
+                const candidateName = talent.contact
+                  ? `${talent.contact.first_name || ''} ${talent.contact.last_name || ''}`.trim()
+                  : talent.candidate?.full_name || 'Unknown'
+                const candidateEmail = talent.contact?.email || talent.candidate?.email || 'No email'
+                const status = talent.benchStatus || talent.status || ''
+                const visaType = talent.visaType || talent.visa_type
+                const targetRate = talent.targetRate || talent.target_rate
 
                 return (
                   <Card
@@ -214,23 +234,23 @@ export function AddToHotlistDialog({
                             <span className="font-medium text-charcoal-900">
                               {candidateName}
                             </span>
-                            <Badge className={statusColors[talent.status || ''] || 'bg-charcoal-100'}>
-                              {talent.status?.replace('_', ' ')}
+                            <Badge className={statusColors[status] || 'bg-charcoal-100'}>
+                              {status.replace('_', ' ')}
                             </Badge>
                           </div>
                           <p className="text-sm text-charcoal-600 truncate">
-                            {talent.candidate?.email || 'No email'}
+                            {candidateEmail}
                           </p>
                           <div className="flex items-center gap-4 mt-1 text-xs text-charcoal-500">
-                            {talent.visa_type && (
-                              <Badge className={`${visaStatusColors[talent.visa_type] || 'bg-charcoal-100'} text-xs`}>
-                                {talent.visa_type.replace('_', ' ')}
+                            {visaType && (
+                              <Badge className={`${visaStatusColors[visaType] || 'bg-charcoal-100'} text-xs`}>
+                                {visaType.replace('_', ' ')}
                               </Badge>
                             )}
-                            {talent.target_rate && (
+                            {targetRate && (
                               <span className="flex items-center gap-1">
                                 <DollarSign className="h-3 w-3" />
-                                ${talent.target_rate}/hr
+                                ${targetRate}/hr
                               </span>
                             )}
                           </div>

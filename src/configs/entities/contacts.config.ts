@@ -36,8 +36,8 @@ export interface Contact extends Record<string, unknown> {
   title?: string | null
   department?: string | null
   status?: string | null
-  contact_type?: string | null
-  type?: string | null
+  subtype?: string | null
+  type?: string | null // Legacy alias for subtype
   is_primary?: boolean
   is_decision_maker?: boolean
   company_id?: string | null
@@ -264,7 +264,7 @@ export const contactsListConfig: ListViewConfig<Contact> = {
       width: 'w-[110px]',
       render: (value, entity) => {
         const contact = entity as Contact
-        const type = contact.type || contact.contact_type
+        const type = contact.subtype || contact.type
         return CONTACT_TYPE_CONFIG[type || '']?.label || type || '—'
       },
     },
@@ -348,35 +348,38 @@ export const contactsListConfig: ListViewConfig<Contact> = {
     },
   },
 
-  // tRPC hooks for data fetching
+  // tRPC hooks for data fetching - Using unified contacts router
   useListQuery: (filters) => {
     const statusValue = filters.status as string | undefined
-    const typeValue = filters.type as string | undefined
+    const subtypeValue = filters.type as string | undefined // Maps to subtype in unified router
     const sortByValue = filters.sortBy as string | undefined
     const sortOrderValue = filters.sortOrder as string | undefined
 
+    // Valid sort fields in unified contacts router
     const validSortFields = [
       'name',
+      'first_name',
+      'last_name',
       'title',
-      'company_id',
-      'contact_type',
+      'company_name',
       'status',
-      'last_contact_date',
-      'owner_id',
+      'subtype',
+      'email',
       'created_at',
+      'updated_at',
     ] as const
 
     type SortField = (typeof validSortFields)[number]
 
-    // Map frontend column keys to database columns
+    // Map frontend column keys to unified contacts database columns
     const sortFieldMap: Record<string, SortField> = {
       name: 'name',
       title: 'title',
-      account: 'company_id',
-      type: 'contact_type',
+      account: 'company_name',
+      type: 'subtype',
       status: 'status',
-      lastContactDate: 'last_contact_date',
-      owner: 'owner_id',
+      lastContactDate: 'updated_at', // Closest equivalent
+      owner: 'updated_at', // Owner sorting not available, fallback
       createdAt: 'created_at',
     }
 
@@ -384,11 +387,11 @@ export const contactsListConfig: ListViewConfig<Contact> = {
       ? sortFieldMap[sortByValue]
       : 'created_at'
 
-    return trpc.crm.contacts.list.useQuery({
+    return trpc.unifiedContacts.list.useQuery({
       search: filters.search as string | undefined,
       status: statusValue !== 'all' ? statusValue : undefined,
-      type: typeValue !== 'all' ? typeValue : undefined,
-      isPrimary: filters.isPrimary as boolean | undefined,
+      // Note: 'type' filter is for contact roles (hiring_manager, hr, etc.), not database subtypes
+      // The subtype parameter requires database subtype format (person_candidate, person_lead, etc.)
       limit: (filters.limit as number) || 50,
       offset: (filters.offset as number) || 0,
       sortBy: mappedSortBy,
@@ -397,7 +400,7 @@ export const contactsListConfig: ListViewConfig<Contact> = {
   },
 
   useStatsQuery: () => {
-    return trpc.crm.contacts.stats.useQuery()
+    return trpc.unifiedContacts.stats.useQuery()
   },
 }
 
@@ -596,5 +599,5 @@ export const contactsDetailConfig: DetailViewConfig<Contact> = {
 
   eventNamespace: 'contact',
 
-  useEntityQuery: (entityId) => trpc.crm.contacts.getById.useQuery({ id: entityId }),
+  useEntityQuery: (entityId) => trpc.unifiedContacts.getById.useQuery({ id: entityId }),
 }

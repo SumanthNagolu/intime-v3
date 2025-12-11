@@ -380,16 +380,16 @@ export function CloseJobWizard({
                       </SelectTrigger>
                       <SelectContent>
                         {similarJobs.map((job) => {
-                          const accountName = Array.isArray(job.account)
-                            ? job.account[0]?.name
-                            : (job.account as { name?: string } | null)?.name
+                          const companyName = Array.isArray(job.company)
+                            ? job.company[0]?.name
+                            : (job.company as { name?: string } | null)?.name
                           return (
                             <SelectItem key={job.id} value={job.id}>
                               <div className="flex items-center gap-2">
                                 <span>{job.title}</span>
-                                {accountName && (
+                                {companyName && (
                                   <Badge variant="outline" className="text-xs">
-                                    {accountName}
+                                    {companyName}
                                   </Badge>
                                 )}
                               </div>

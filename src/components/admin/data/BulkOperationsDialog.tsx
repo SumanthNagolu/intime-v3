@@ -71,7 +71,7 @@ export function BulkOperationsDialog({
 
   const bulkUpdateMutation = trpc.data.bulkUpdate.useMutation({
     onSuccess: (data) => {
-      setResult(data)
+      setResult({ processed: data.updatedCount, failed: 0 })
       setStep(4)
       utils.data.getDashboardStats.invalidate()
       onSuccess?.()
@@ -80,7 +80,7 @@ export function BulkOperationsDialog({
 
   const bulkDeleteMutation = trpc.data.bulkDelete.useMutation({
     onSuccess: (data) => {
-      setResult(data)
+      setResult({ processed: data.deletedCount, failed: 0 })
       setStep(4)
       utils.data.getDashboardStats.invalidate()
       utils.data.listArchivedRecords.invalidate()
@@ -129,14 +129,14 @@ export function BulkOperationsDialog({
 
       bulkUpdateMutation.mutate({
         entityType,
-        recordIds: ids,
+        ids,
         updates,
       })
     } else {
       bulkDeleteMutation.mutate({
         entityType,
-        recordIds: ids,
-        archive: archiveInstead,
+        ids,
+        permanent: !archiveInstead,
       })
     }
   }

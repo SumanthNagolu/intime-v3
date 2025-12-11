@@ -33,7 +33,11 @@ export interface CandidateIntakeFormData {
   // Step 4: Work Authorization
   visaStatus: 'us_citizen' | 'green_card' | 'h1b' | 'l1' | 'tn' | 'opt' | 'cpt' | 'ead' | 'other'
   availability: 'immediate' | '2_weeks' | '30_days' | 'not_available'
-  location: string
+  location: string // Display string (e.g., "Austin, TX")
+  // Structured location fields for centralized addresses
+  locationCity?: string
+  locationState?: string
+  locationCountry?: string
   willingToRelocate: boolean
   isRemoteOk: boolean
   minimumHourlyRate?: number
@@ -221,9 +225,11 @@ const step4Fields: FieldDefinition[] = [
   {
     key: 'location',
     label: 'Location',
-    type: 'text',
-    placeholder: 'San Francisco, CA',
+    type: 'location',
+    placeholder: 'Select city and state',
     required: true,
+    // Note: type 'location' should render LocationPicker component
+    // and sync with locationCity, locationState, locationCountry fields
   },
   {
     key: 'isRemoteOk',

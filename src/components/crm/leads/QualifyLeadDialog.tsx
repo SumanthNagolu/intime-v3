@@ -137,12 +137,12 @@ export function QualifyLeadDialog({ lead, open, onOpenChange, onSuccess }: Quali
   const totalScore = watchedValues.bantBudget + watchedValues.bantAuthority + watchedValues.bantNeed + watchedValues.bantTimeline
   const skills = watchedValues.skillsNeeded || []
 
-  const qualifyLead = trpc.crm.leads.qualify.useMutation({
+  const qualifyLead = trpc.unifiedContacts.leads.qualify.useMutation({
     onSuccess: () => {
       toast.success('Lead qualified successfully')
-      utils.crm.leads.getById.invalidate({ id: lead.id })
-      utils.crm.leads.list.invalidate()
-      utils.crm.leads.getStats.invalidate()
+      utils.unifiedContacts.leads.getById.invalidate({ id: lead.id })
+      utils.unifiedContacts.leads.list.invalidate()
+      utils.unifiedContacts.leads.stats.invalidate()
       onOpenChange(false)
       onSuccess?.()
     },
@@ -152,9 +152,12 @@ export function QualifyLeadDialog({ lead, open, onOpenChange, onSuccess }: Quali
   })
 
   const onSubmit = (data: QualifyFormValues) => {
+    // The qualify mutation only accepts: id, result, notes, dealId
+    // BANT scores should be saved via a separate update if needed
     qualifyLead.mutate({
       id: lead.id,
-      ...data,
+      result: data.qualificationResult,
+      notes: data.qualificationNotes,
     })
   }
 

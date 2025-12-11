@@ -99,24 +99,24 @@ export function LeadInlinePanel({
   const [positionsCount, setPositionsCount] = useState('')
 
   // Fetch lead data
-  const leadQuery = trpc.crm.leads.getById.useQuery(
+  const leadQuery = trpc.unifiedContacts.leads.getById.useQuery(
     { id: leadId! },
     { enabled: !!leadId }
   )
 
   // Update mutation
-  const updateMutation = trpc.crm.leads.update.useMutation({
+  const updateMutation = trpc.unifiedContacts.leads.update.useMutation({
     onSuccess: () => {
       toast({ title: 'Lead updated successfully' })
       if (campaignId) {
-        utils.crm.leads.listByCampaign.invalidate({ campaignId })
+        utils.unifiedContacts.leads.listByCampaign.invalidate({ campaignId })
       }
-      utils.crm.leads.getById.invalidate({ id: leadId! })
+      utils.unifiedContacts.leads.getById.invalidate({ id: leadId! })
       setIsEditing(false)
       onUpdate?.()
     },
     onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' })
+      toast({ title: 'Error', description: error.message, variant: 'error' })
     },
   })
 
@@ -157,13 +157,12 @@ export function LeadInlinePanel({
       phone: phone.trim() || undefined,
       title: title.trim() || undefined,
       industry: industry.trim() || undefined,
-      companySize: companySize as '1-10' | '11-50' | '51-200' | '201-500' | '501-1000' | '1000+' | undefined,
+      // Note: companySize is stored on the contact record but not updatable via leads.update
       website: website.trim() || undefined,
       linkedinUrl: linkedinUrl.trim() || undefined,
-      status: status as 'new' | 'contacted' | 'qualified' | 'unqualified' | 'nurture' | 'converted',
+      status: status as 'new' | 'contacted' | 'qualified' | 'unqualified' | 'converted',
       estimatedValue: estimatedValue ? parseFloat(estimatedValue) : undefined,
       hiringNeeds: hiringNeeds.trim() || undefined,
-      positionsCount: positionsCount ? parseInt(positionsCount) : undefined,
     })
   }
 
@@ -592,6 +591,7 @@ export function LeadInlinePanel({
     </InlinePanel>
   )
 }
+
 
 
 

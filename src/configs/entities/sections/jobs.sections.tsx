@@ -11,11 +11,15 @@
  */
 
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Job } from '../jobs.config'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { trpc } from '@/lib/trpc/client'
 import { SubmissionPipeline } from '@/components/recruiting/submissions'
+import { AddressDisplay } from '@/components/addresses'
+import { Plus, MapPin } from 'lucide-react'
 import {
   JobOverviewSection,
   JobRequirementsSection,
@@ -166,5 +170,54 @@ export function JobNotesSectionPCF({ entityId }: PCFSectionProps) {
   )
 }
 
+/**
+ * Addresses Section Adapter - Shows job location/addresses
+ */
+export function JobAddressesSectionPCF({ entityId }: PCFSectionProps) {
+  const addressesQuery = trpc.addresses.getByEntity.useQuery({
+    entityType: 'job',
+    entityId,
+  })
 
+  const addresses = addressesQuery.data ?? []
 
+  return (
+    <Card className="bg-white">
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle className="text-lg flex items-center gap-2">
+          <MapPin className="w-5 h-5" />
+          Job Location
+        </CardTitle>
+        <Link href={`/employee/admin/addresses/new?entityType=job&entityId=${entityId}`}>
+          <Button variant="outline" size="sm">
+            <Plus className="w-4 h-4 mr-2" />
+            Add Address
+          </Button>
+        </Link>
+      </CardHeader>
+      <CardContent>
+        {addressesQuery.isLoading ? (
+          <p className="text-charcoal-400 text-sm">Loading...</p>
+        ) : addresses.length === 0 ? (
+          <p className="text-charcoal-500 text-sm">No location set</p>
+        ) : (
+          <div className="space-y-4">
+            {addresses.map((address) => (
+              <Link
+                key={address.id}
+                href={`/employee/admin/addresses/${address.id}`}
+                className="block hover:bg-charcoal-50 rounded-lg p-2 -m-2 transition-colors"
+              >
+                <AddressDisplay
+                  address={address}
+                  variant="compact"
+                  showPrimary
+                />
+              </Link>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  )
+}

@@ -1,8 +1,9 @@
 'use client'
 
 import { EntityListView } from '@/components/pcf/list-view/EntityListView'
-import { accountsListConfig, Account } from '@/configs/entities/accounts.config'
+// Use unified companies config for accounts (clients + prospects)
+import { clientsListConfig, Company } from '@/configs/entities/companies.config'
 
 export default function AccountsPage() {
-  return <EntityListView<Account> config={accountsListConfig} />
+  return <EntityListView<Company> config={clientsListConfig} />
 }

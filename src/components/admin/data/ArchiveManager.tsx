@@ -60,12 +60,12 @@ export function ArchiveManager() {
 
   const utils = trpc.useUtils()
 
+  const limit = 20
   const { data: entities } = trpc.data.getExportableEntities.useQuery()
   const { data: archivedData, isLoading } = trpc.data.listArchivedRecords.useQuery({
     entityType,
-    search: searchQuery || undefined,
-    page,
-    limit: 20,
+    offset: (page - 1) * limit,
+    limit,
   })
 
   const restoreMutation = trpc.data.restoreArchivedRecord.useMutation({
@@ -88,12 +88,12 @@ export function ArchiveManager() {
 
   const handleRestore = () => {
     if (!selectedRecord) return
-    restoreMutation.mutate({ archiveId: selectedRecord })
+    restoreMutation.mutate({ id: selectedRecord })
   }
 
   const handlePermanentDelete = () => {
     if (!selectedRecord) return
-    deleteMutation.mutate({ archiveId: selectedRecord })
+    deleteMutation.mutate({ id: selectedRecord })
   }
 
   const getEntityLabel = (type: string) => {
@@ -261,10 +261,10 @@ export function ArchiveManager() {
               </Table>
 
               {/* Pagination */}
-              {archivedData.totalPages > 1 && (
+              {archivedData.total > limit && (
                 <div className="flex items-center justify-between px-4 py-3 border-t">
                   <span className="text-sm text-charcoal-500">
-                    Page {page} of {archivedData.totalPages} ({archivedData.total} records)
+                    Page {page} of {Math.ceil(archivedData.total / limit)} ({archivedData.total} records)
                   </span>
                   <div className="flex gap-2">
                     <Button
@@ -278,8 +278,8 @@ export function ArchiveManager() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => setPage(p => Math.min(archivedData.totalPages, p + 1))}
-                      disabled={page === archivedData.totalPages}
+                      onClick={() => setPage(p => Math.min(Math.ceil(archivedData.total / limit), p + 1))}
+                      disabled={page === Math.ceil(archivedData.total / limit)}
                     >
                       Next
                     </Button>

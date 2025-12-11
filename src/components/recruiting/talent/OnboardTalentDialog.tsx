@@ -59,18 +59,34 @@ export function OnboardTalentDialog({ open, onOpenChange }: OnboardTalentDialogP
   const [willingRelocate, setWillingRelocate] = useState(false)
   const [preferredLocations, setPreferredLocations] = useState('')
 
-  // Fetch candidates to select from
-  const candidatesQuery = trpc.ats.candidates.list.useQuery({
+  // Fetch candidates to select from - using unified contacts (candidates are contacts with specific subtype)
+  const candidatesQuery = trpc.unifiedContacts.candidates.list.useQuery({
     search: candidateSearch || undefined,
     limit: 20,
   })
 
-  const candidates = candidatesQuery.data?.candidates || []
+  // Type annotation for candidates
+  interface CandidateItem {
+    id: string
+    full_name: string
+    email?: string | null
+    first_name?: string | null
+    last_name?: string | null
+  }
 
-  const createMutation = trpc.bench.talent.create.useMutation({
+  const candidates: CandidateItem[] = (candidatesQuery.data?.items || []).map((c: Record<string, unknown>) => ({
+    id: c.id as string,
+    full_name: `${c.first_name || ''} ${c.last_name || ''}`.trim() || 'Unknown',
+    email: c.email as string | null,
+    first_name: c.first_name as string | null,
+    last_name: c.last_name as string | null,
+  }))
+
+  // Uses contactBench router for creating bench records
+  const createMutation = trpc.contactBench.convertToBench.useMutation({
     onSuccess: (data) => {
       toast.success('Talent onboarded successfully')
-      utils.bench.talent.list.invalidate()
+      utils.contactBench.list.invalidate()
       onOpenChange(false)
       resetForm()
       router.push(`/employee/recruiting/talent/${data.id}`)
@@ -106,20 +122,18 @@ export function OnboardTalentDialog({ open, onOpenChange }: OnboardTalentDialogP
       return
     }
 
+    // In unified contacts, candidates are contacts - so candidateId IS the contactId
     createMutation.mutate({
-      candidateId,
+      contactId: candidateId, // Candidate's ID is their contact ID
       benchStartDate,
+      benchType: 'w2_internal' as const, // Default for onboarding - must match enum values
       visaType: visaType || undefined,
       visaExpiryDate: visaExpiryDate || undefined,
-      workAuthStatus: workAuthStatus || undefined,
-      minAcceptableRate: minAcceptableRate ? parseFloat(minAcceptableRate) : undefined,
       targetRate: targetRate ? parseFloat(targetRate) : undefined,
-      willingRelocate,
-      preferredLocations: preferredLocations ? preferredLocations.split(',').map(s => s.trim()) : undefined,
     })
   }
 
-  const selectedCandidate = candidates.find(c => c.id === candidateId)
+  const selectedCandidate = candidates.find((c: CandidateItem) => c.id === candidateId)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -167,7 +181,7 @@ export function OnboardTalentDialog({ open, onOpenChange }: OnboardTalentDialogP
                     <CommandList>
                       <CommandEmpty>No candidates found.</CommandEmpty>
                       <CommandGroup>
-                        {candidates.map((candidate) => (
+                        {candidates.map((candidate: CandidateItem) => (
                           <CommandItem
                             key={candidate.id}
                             value={candidate.id}

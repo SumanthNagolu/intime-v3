@@ -4,9 +4,7 @@ import { useState } from 'react'
 import { trpc } from '@/lib/trpc/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { Checkbox } from '@/components/ui/checkbox'
 import {
   Loader2,
   StickyNote,
@@ -15,7 +13,6 @@ import {
   FileText,
   Plus,
   X,
-  Pin,
 } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils'
@@ -45,15 +42,15 @@ export function InlineNoteForm({
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [noteType, setNoteType] = useState('general')
-  const [isPinned, setIsPinned] = useState(false)
 
-  const createNoteMutation = trpc.crm.notes.create.useMutation({
+  // Using centralized notes router (NOTES-01)
+  const createNoteMutation = trpc.notes.create.useMutation({
     onSuccess: () => {
       toast({
         title: 'Note added',
         description: 'The note has been saved to this account.',
       })
-      utils.crm.notes.listByAccount.invalidate({ accountId })
+      utils.notes.listByEntity.invalidate({ entityType: 'account', entityId: accountId })
       resetForm()
       setIsExpanded(false)
       onSuccess?.()
@@ -71,7 +68,6 @@ export function InlineNoteForm({
     setTitle('')
     setContent('')
     setNoteType('general')
-    setIsPinned(false)
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -87,11 +83,11 @@ export function InlineNoteForm({
     }
 
     createNoteMutation.mutate({
-      accountId,
+      entityType: 'account',
+      entityId: accountId,
       title: title.trim() || undefined,
       content: content.trim(),
       noteType: noteType as 'general' | 'internal' | 'important' | 'reminder',
-      isPinned,
     })
   }
 
@@ -173,18 +169,6 @@ export function InlineNoteForm({
             />
           </div>
 
-          {/* Pin Checkbox */}
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              id="isPinnedInline"
-              checked={isPinned}
-              onCheckedChange={(checked) => setIsPinned(checked === true)}
-            />
-            <Label htmlFor="isPinnedInline" className="text-sm font-normal flex items-center gap-1">
-              <Pin className="w-3 h-3" />
-              Pin this note
-            </Label>
-          </div>
         </div>
 
         {/* Actions */}

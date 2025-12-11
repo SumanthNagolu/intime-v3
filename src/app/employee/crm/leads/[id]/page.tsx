@@ -26,17 +26,17 @@ export default function LeadDetailPage() {
 
   const utils = trpc.useUtils()
 
-  // Query for lead data (needed for dialogs)
-  const leadQuery = trpc.crm.leads.getById.useQuery({ id: leadId })
+  // Query for lead data (needed for dialogs) - uses unified contacts router
+  const leadQuery = trpc.unifiedContacts.leads.getById.useQuery({ id: leadId })
   const lead = leadQuery.data
 
-  // Delete mutation
-  const deleteLead = trpc.crm.leads.delete.useMutation({
+  // Delete mutation - uses unified contacts router (delete is at root level)
+  const deleteLead = trpc.unifiedContacts.delete.useMutation({
     onSuccess: () => {
       toast.success('Lead deleted')
       router.push('/employee/crm/leads')
     },
-    onError: (error) => {
+    onError: (error: { message?: string }) => {
       toast.error(error.message || 'Failed to delete lead')
     },
   })
@@ -70,12 +70,12 @@ export default function LeadDetailPage() {
 
   const handleQualifySuccess = () => {
     leadQuery.refetch()
-    utils.crm.leads.list.invalidate()
+    utils.unifiedContacts.leads.list.invalidate()
   }
 
   const handleConvertSuccess = () => {
     leadQuery.refetch()
-    utils.crm.leads.list.invalidate()
+    utils.unifiedContacts.leads.list.invalidate()
   }
 
   return (

@@ -9,8 +9,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { format, formatDistanceToNow } from 'date-fns'
-import { User, Briefcase, Building2, Calendar, Clock, Video, MapPin, FileText, ThumbsUp, ThumbsDown, Activity, Users } from 'lucide-react'
+import { User, Briefcase, Building2, Calendar, Clock, Video, MapPin, FileText, ThumbsUp, ThumbsDown, Activity, Users, Plus } from 'lucide-react'
 import Link from 'next/link'
+import { trpc } from '@/lib/trpc/client'
+import { AddressDisplay } from '@/components/addresses'
 
 interface PCFSectionProps {
   entityId: string
@@ -302,5 +304,54 @@ export function InterviewActivitiesSectionPCF({ entityId }: PCFSectionProps) {
   )
 }
 
+/**
+ * Location Section - Shows interview meeting location
+ */
+export function InterviewLocationSectionPCF({ entityId }: PCFSectionProps) {
+  const addressesQuery = trpc.addresses.getByEntity.useQuery({
+    entityType: 'interview',
+    entityId,
+  })
 
+  const addresses = addressesQuery.data ?? []
 
+  return (
+    <Card className="bg-white">
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle className="text-lg flex items-center gap-2">
+          <MapPin className="w-5 h-5" />
+          Meeting Location
+        </CardTitle>
+        <Link href={`/employee/admin/addresses/new?entityType=interview&entityId=${entityId}`}>
+          <Button variant="outline" size="sm">
+            <Plus className="w-4 h-4 mr-2" />
+            Add Location
+          </Button>
+        </Link>
+      </CardHeader>
+      <CardContent>
+        {addressesQuery.isLoading ? (
+          <p className="text-charcoal-400 text-sm">Loading...</p>
+        ) : addresses.length === 0 ? (
+          <p className="text-charcoal-500 text-sm">No in-person location set (virtual meeting or TBD)</p>
+        ) : (
+          <div className="space-y-4">
+            {addresses.map((address) => (
+              <Link
+                key={address.id}
+                href={`/employee/admin/addresses/${address.id}`}
+                className="block hover:bg-charcoal-50 rounded-lg p-2 -m-2 transition-colors"
+              >
+                <AddressDisplay
+                  address={address}
+                  variant="compact"
+                  showPrimary
+                />
+              </Link>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  )
+}

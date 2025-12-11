@@ -38,18 +38,19 @@ export function LinkLeadsToCampaignDialog({
   const utils = trpc.useUtils()
 
   // Fetch leads available for linking (not already linked to a campaign)
-  const { data: availableLeads, isLoading } = trpc.crm.leads.listAvailableForCampaign.useQuery(
+  // Uses unified contacts router for leads
+  const { data: availableLeads, isLoading } = trpc.unifiedContacts.leads.listAvailableForCampaign.useQuery(
     { search: search || undefined, limit: 50 },
     { enabled: open }
   )
 
-  const linkLeads = trpc.crm.leads.linkToCampaign.useMutation({
+  const linkLeads = trpc.unifiedContacts.leads.linkToCampaign.useMutation({
     onSuccess: (result) => {
       toast.success(`${result.linked} ${result.linked === 1 ? 'lead' : 'leads'} linked to campaign`)
       setSelectedLeadIds([])
       setSearch('')
-      utils.crm.leads.listByCampaign.invalidate({ campaignId })
-      utils.crm.leads.listAvailableForCampaign.invalidate()
+      utils.unifiedContacts.leads.listByCampaign.invalidate({ campaignId })
+      utils.unifiedContacts.leads.listAvailableForCampaign.invalidate()
       utils.crm.campaigns.getByIdWithCounts.invalidate({ id: campaignId })
       onOpenChange(false)
       onSuccess?.()
@@ -161,6 +162,8 @@ export function LinkLeadsToCampaignDialog({
                 const isSelected = selectedLeadIds.includes(lead.id)
                 const displayName = lead.company_name || `${lead.first_name || ''} ${lead.last_name || ''}`.trim() || 'Unknown'
                 const contactName = lead.company_name ? `${lead.first_name || ''} ${lead.last_name || ''}`.trim() : null
+                // Handle both lead_status (unified contacts) and status (legacy) field names
+                const leadStatus = lead.lead_status || 'new'
 
                 return (
                   <label
@@ -179,8 +182,8 @@ export function LinkLeadsToCampaignDialog({
                         <span className="font-medium text-charcoal-900 truncate">
                           {displayName}
                         </span>
-                        <Badge className={cn('text-xs', statusColors[lead.status] || statusColors.new)}>
-                          {lead.status}
+                        <Badge className={cn('text-xs', statusColors[leadStatus] || statusColors.new)}>
+                          {leadStatus}
                         </Badge>
                       </div>
                       <div className="flex items-center gap-3 text-sm text-charcoal-500 mt-0.5">
@@ -226,6 +229,7 @@ export function LinkLeadsToCampaignDialog({
     </Dialog>
   )
 }
+
 
 
 

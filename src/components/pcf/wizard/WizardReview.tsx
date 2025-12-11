@@ -20,7 +20,7 @@ interface WizardReviewProps<T> {
   onEditStep: (step: number) => void
 }
 
-export function WizardReview<T extends Record<string, unknown>>({
+export function WizardReview<T>({
   title,
   sections,
   formData,

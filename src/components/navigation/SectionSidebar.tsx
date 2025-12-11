@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Clock, LucideIcon, List, Home, LayoutDashboard, Calendar, Activity, Building2, Briefcase, Send, FileBarChart, GraduationCap, BookOpen, Users, Award } from 'lucide-react'
+import { Clock, LucideIcon, List, Home, LayoutDashboard, Calendar, Activity, Building2, Briefcase, Send, FileBarChart, GraduationCap, BookOpen, Users, Award, Contact } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useEntityNavigationSafe } from '@/lib/navigation/EntityNavigationContext'
 import { EntityType, ENTITY_BASE_PATHS } from '@/lib/navigation/entity-navigation.types'
@@ -94,6 +94,16 @@ export const sectionConfigs: Record<string, SectionConfig> = {
     basePath: '/employee/crm/campaigns',
     navLinks: [
       { id: 'all-campaigns', label: 'All Campaigns', icon: List, href: '/employee/crm/campaigns' },
+    ],
+  },
+  contacts: {
+    id: 'contacts',
+    title: 'Contacts',
+    icon: Contact,
+    entityType: 'contact',
+    basePath: '/employee/contacts',
+    navLinks: [
+      { id: 'all-contacts', label: 'All Contacts', icon: List, href: '/employee/contacts' },
     ],
   },
   workspace: {
@@ -256,6 +266,7 @@ function detectSectionFromPath(pathname: string): string | null {
   if (pathname.includes('/crm/leads')) return 'leads'
   if (pathname.includes('/crm/deals')) return 'deals'
   if (pathname.includes('/crm/campaigns')) return 'campaigns'
+  if (pathname.includes('/employee/contacts')) return 'contacts'
   if (pathname.includes('/workspace')) return 'workspace'
   if (pathname.includes('/employee/academy')) return 'academy'
   return null

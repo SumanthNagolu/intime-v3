@@ -89,7 +89,7 @@ export function ApiTokensPage() {
       toast({
         title: 'Error',
         description: error.message || 'Failed to generate token',
-        variant: 'destructive',
+        variant: 'error',
       })
     },
   })
@@ -107,7 +107,7 @@ export function ApiTokensPage() {
       toast({
         title: 'Error',
         description: error.message || 'Failed to revoke token',
-        variant: 'destructive',
+        variant: 'error',
       })
     },
   })

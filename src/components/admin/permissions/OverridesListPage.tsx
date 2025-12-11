@@ -114,7 +114,7 @@ export function OverridesListPage() {
       toast({
         title: 'Error',
         description: error.message || 'Failed to create override',
-        variant: 'destructive',
+        variant: 'error',
       })
     },
   })
@@ -132,7 +132,7 @@ export function OverridesListPage() {
       toast({
         title: 'Error',
         description: error.message || 'Failed to revoke override',
-        variant: 'destructive',
+        variant: 'error',
       })
     },
   })

@@ -109,13 +109,13 @@ export function CreateLeadDialog({ open, onOpenChange, onSuccess, campaignId }: 
   const leadType = form.watch('leadType')
   const skills = form.watch('skillsNeeded') || []
 
-  const createLead = trpc.crm.leads.create.useMutation({
+  const createLead = trpc.unifiedContacts.leads.create.useMutation({
     onSuccess: (data) => {
       toast.success('Lead created successfully')
-      utils.crm.leads.list.invalidate()
-      utils.crm.leads.getStats.invalidate()
+      utils.unifiedContacts.leads.list.invalidate()
+      utils.unifiedContacts.leads.stats.invalidate()
       if (campaignId) {
-        utils.crm.leads.listByCampaign.invalidate({ campaignId })
+        utils.unifiedContacts.leads.listByCampaign.invalidate({ campaignId })
         utils.crm.campaigns.getByIdWithCounts.invalidate({ id: campaignId })
       }
       form.reset()

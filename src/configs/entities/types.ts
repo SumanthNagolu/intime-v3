@@ -24,6 +24,7 @@ export type FieldType =
   | 'skills'
   | 'rich-text'
   | 'file'
+  | 'location' // Structured city/state/country picker
 
 export interface SelectOption {
   value: string

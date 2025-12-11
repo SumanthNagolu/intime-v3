@@ -100,7 +100,7 @@ export function BulkUpdateDialog({ open, onOpenChange }: BulkUpdateDialogProps) 
       toast({
         title: 'Error',
         description: error.message || 'Failed to apply bulk update',
-        variant: 'destructive',
+        variant: 'error',
       })
     },
   })

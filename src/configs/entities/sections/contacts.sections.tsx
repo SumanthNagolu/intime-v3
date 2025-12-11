@@ -57,11 +57,11 @@ interface PCFSectionProps {
 }
 
 // Field definitions for editable cards
+// Note: department removed as it's not in the unified contacts schema
 const basicInfoFields: FieldDefinition[] = [
   { key: 'first_name', label: 'First Name', type: 'text', required: true },
   { key: 'last_name', label: 'Last Name', type: 'text', required: true },
   { key: 'title', label: 'Title', type: 'text' },
-  { key: 'department', label: 'Department', type: 'text' },
 ]
 
 const contactInfoFields: FieldDefinition[] = [
@@ -87,11 +87,11 @@ export function ContactOverviewSectionPCF({ entityId, entity }: PCFSectionProps)
   )
   const activities = activitiesQuery.data?.items || []
 
-  // Update mutation
-  const updateContactMutation = trpc.crm.contacts.update.useMutation({
+  // Update mutation - Using unified contacts router
+  const updateContactMutation = trpc.unifiedContacts.update.useMutation({
     onSuccess: () => {
       toast({ title: 'Contact updated successfully' })
-      utils.crm.contacts.getById.invalidate({ id: entityId })
+      utils.unifiedContacts.getById.invalidate({ id: entityId })
     },
     onError: (error) => {
       toast({ title: 'Failed to update contact', description: error.message, variant: 'error' })
@@ -107,7 +107,6 @@ export function ContactOverviewSectionPCF({ entityId, entity }: PCFSectionProps)
       firstName: data.first_name as string,
       lastName: data.last_name as string,
       title: data.title as string,
-      department: data.department as string,
     })
   }
 

@@ -184,10 +184,10 @@ export function SubmitToJobDialog({
                           <span className="font-medium text-charcoal-900">{job.title}</span>
                         </div>
                         <div className="flex items-center gap-4 mt-1 text-sm text-charcoal-500">
-                          {job.account && (
+                          {job.company && (
                             <span className="flex items-center gap-1">
                               <Building2 className="w-3 h-3" />
-                              {(job.account as { name?: string })?.name}
+                              {Array.isArray(job.company) ? job.company[0]?.name : (job.company as { name?: string })?.name}
                             </span>
                           )}
                           {job.location && (

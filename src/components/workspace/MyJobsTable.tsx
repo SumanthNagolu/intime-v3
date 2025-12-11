@@ -166,13 +166,13 @@ export function MyJobsTable({ className }: MyJobsTableProps) {
                     </Link>
                   </TableCell>
                   <TableCell>
-                    {job.account ? (
+                    {job.company ? (
                       <Link
-                        href={`/employee/recruiting/accounts/${job.account.id}`}
+                        href={`/employee/recruiting/accounts/${job.company.id}`}
                         className="flex items-center gap-1 text-charcoal-600 hover:text-hublot-700"
                       >
                         <Building2 className="w-3 h-3" />
-                        {job.account.name}
+                        {job.company.name}
                       </Link>
                     ) : (
                       <span className="text-charcoal-400">-</span>

@@ -21,7 +21,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Checkbox } from '@/components/ui/checkbox'
 import { Loader2, StickyNote, AlertTriangle, Bell, FileText } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils'
@@ -50,15 +49,15 @@ export function AddNoteDialog({
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [noteType, setNoteType] = useState('general')
-  const [isPinned, setIsPinned] = useState(false)
 
-  const createNoteMutation = trpc.crm.notes.create.useMutation({
+  // Using centralized notes router (NOTES-01)
+  const createNoteMutation = trpc.notes.create.useMutation({
     onSuccess: () => {
       toast({
         title: 'Note added',
         description: 'The note has been saved to this account.',
       })
-      utils.crm.notes.listByAccount.invalidate({ accountId })
+      utils.notes.listByEntity.invalidate({ entityType: 'account', entityId: accountId })
       resetForm()
       onOpenChange(false)
     },
@@ -75,7 +74,6 @@ export function AddNoteDialog({
     setTitle('')
     setContent('')
     setNoteType('general')
-    setIsPinned(false)
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -91,11 +89,11 @@ export function AddNoteDialog({
     }
 
     createNoteMutation.mutate({
-      accountId,
+      entityType: 'account',
+      entityId: accountId,
       title: title.trim() || undefined,
       content: content.trim(),
       noteType: noteType as 'general' | 'internal' | 'important' | 'reminder',
-      isPinned,
     })
   }
 
@@ -156,18 +154,6 @@ export function AddNoteDialog({
                 rows={6}
                 required
               />
-            </div>
-
-            {/* Pin Checkbox */}
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="isPinned"
-                checked={isPinned}
-                onCheckedChange={(checked) => setIsPinned(checked === true)}
-              />
-              <Label htmlFor="isPinned" className="text-sm font-normal">
-                Pin this note (shows at top of notes list)
-              </Label>
             </div>
 
             {/* Note Type Hints */}

@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useJobIntakeStore, WORK_ARRANGEMENTS, WORK_AUTHORIZATIONS } from '@/stores/job-intake-store'
+import { LocationPicker } from '@/components/addresses'
 import { cn } from '@/lib/utils'
 
 export function IntakeStep4Compensation() {
@@ -69,14 +70,23 @@ export function IntakeStep4Compensation() {
         )}
 
         {(formData.workArrangement === 'hybrid' || formData.workArrangement === 'onsite') && (
-          <div className="space-y-2">
-            <Label>Office Location</Label>
-            <Input
-              value={formData.officeLocation}
-              onChange={(e) => setFormData({ officeLocation: e.target.value })}
-              placeholder="e.g., San Francisco, CA"
-            />
-          </div>
+          <LocationPicker
+            label="Office Location"
+            value={{
+              city: formData.locationCity,
+              stateProvince: formData.locationState,
+              countryCode: formData.locationCountry,
+            }}
+            onChange={(data) =>
+              setFormData({
+                locationCity: data.city || '',
+                locationState: data.stateProvince || '',
+                locationCountry: data.countryCode || 'US',
+              })
+            }
+            required
+            showCountry
+          />
         )}
       </div>
 

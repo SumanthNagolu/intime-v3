@@ -53,7 +53,7 @@ export function CreateFeatureFlagDialog({
       resetForm()
     },
     onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' })
+      toast({ title: 'Error', description: error.message, variant: 'error' })
     },
   })
 

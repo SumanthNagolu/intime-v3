@@ -25,6 +25,7 @@ import {
   InterviewOverviewSectionPCF,
   InterviewFeedbackSectionPCF,
   InterviewActivitiesSectionPCF,
+  InterviewLocationSectionPCF,
 } from './sections/interviews.sections'
 
 // Type definition for Interview entity
@@ -588,6 +589,12 @@ export const interviewsDetailConfig: DetailViewConfig<Interview> = {
       label: 'Overview',
       icon: FileText,
       component: InterviewOverviewSectionPCF,
+    },
+    {
+      id: 'location',
+      label: 'Location',
+      icon: MapPin,
+      component: InterviewLocationSectionPCF,
     },
     {
       id: 'feedback',
