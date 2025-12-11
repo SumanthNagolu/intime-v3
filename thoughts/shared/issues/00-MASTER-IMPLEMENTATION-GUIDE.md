@@ -2,7 +2,7 @@
 
 **Created:** 2025-12-10
 **Updated:** 2025-12-11
-**Status:** FINAL (Architecture Review + Gap Analysis Complete)
+**Status:** WAVE 2 COMPLETE (CONTACTS-01 Phase 2 & 3 Done)
 **Total Issues:** 25 (was 23, added ADDRESSES-01, ENTITIES-01)
 **Estimated Effort:** 18-22 weeks
 
@@ -59,8 +59,8 @@ Before starting **Wave 2 (Contacts)**, you must run these validation checks. If 
 | **ADDRESSES-01** | - | ✅ **DONE** | `addresses` table | Documentation created |
 | **ACCOUNTS-02** | - | ✅ **DONE** | `companies` table | - |
 | **CONTACTS-01** | Phase 1 | ✅ **DONE** | `contacts` base + extensions | - |
-| **CONTACTS-01** | Phase 2 (Leads) | ⚠️ **PARTIAL** | `contact_lead_data` exists | Legacy `leads` table not deprecated |
-| **CONTACTS-01** | Phase 3 (Bench) | ❌ **NOT DONE** | - | `contact_bench_data` missing, `bench_consultants` still separate |
+| **CONTACTS-01** | Phase 2 (Leads) | ✅ **DONE** | Frontend uses `unifiedContacts.leads.*` | Legacy routers deprecated |
+| **CONTACTS-01** | Phase 3 (Bench) | ✅ **DONE** | `contact_bench_data`, `contactBench` router | Legacy routers deprecated |
 
 ---
 
@@ -69,13 +69,13 @@ Before starting **Wave 2 (Contacts)**, you must run these validation checks. If 
 
 | # | Issue ID | Title | Priority | Status | Effort |
 |---|----------|-------|----------|--------|--------|
-| **01** | **ENTITIES-01** | **Entity Resolution Service** | **High** | **🔴 TODO** | **0.5 week** |
-| **02** | SKILLS-01 | Skills Taxonomy & Matching | Critical | 🔴 TODO | 1 week |
-| **03** | DOCS-01 | Centralized Documents System | High | 🔴 TODO | 1 week |
-| **04** | NOTES-01 | Centralized Notes System | Medium | 🔴 TODO | 0.5 week |
-| **05** | HISTORY-01 | Unified Audit Trail | High | 🔴 TODO | 1 week |
+| **01** | **ENTITIES-01** | **Entity Resolution Service** | **High** | ✅ **DONE** | **0.5 week** |
+| **02** | SKILLS-01 | Skills Taxonomy & Matching | Critical | ✅ **DONE** | 1 week |
+| **03** | DOCS-01 | Centralized Documents System | High | ✅ **DONE** | 1 week |
+| **04** | NOTES-01 | Centralized Notes System | Medium | ✅ **DONE** | 0.5 week |
+| **05** | HISTORY-01 | Unified Audit Trail | High | ✅ **DONE** | 1 week |
 
-**Rationale:** These are foundation tables with NO dependencies. Can be implemented in parallel.
+**Rationale:** These are foundation tables with NO dependencies. Implemented in parallel (2025-12-11).
 
 ---
 
@@ -84,8 +84,10 @@ Before starting **Wave 2 (Contacts)**, you must run these validation checks. If 
 
 | # | Issue ID | Title | Priority | Status | Effort |
 |---|----------|-------|----------|--------|--------|
-| **06** | CONTACTS-01 Phase 2 | Deprecate legacy `leads` table | High | ⚠️ PARTIAL | 0.5 week |
-| **07** | CONTACTS-01 Phase 3 | Bench Integration - Create `contact_bench_data` | High | 🔴 TODO | 1 week |
+| **06** | CONTACTS-01 Phase 2 | Unified leads router (`unifiedContacts.leads.*`) | High | ✅ **DONE** | 0.5 week |
+| **07** | CONTACTS-01 Phase 3 | Bench Integration (`contactBench` router) | High | ✅ **DONE** | 1 week |
+
+**Completed 2025-12-11:** All frontend components migrated to unified routers, legacy routers deprecated.
 
 **👉 CONTACTS-01 Scope Clarification:**
 
@@ -525,18 +527,17 @@ For each issue, follow this workflow:
 |----------|-----------|--------|
 | **ADDRESSES-01** | `thoughts/shared/issues/addresses-01` | ✅ DONE |
 | **ACCOUNTS-02** | `thoughts/shared/issues/accounts-02` | ✅ DONE |
-| **CONTACTS-01** | `thoughts/shared/issues/contacts-01` | ✅ DONE (Phase 1) |
+| **CONTACTS-01** | `thoughts/shared/issues/contacts-01` | ✅ DONE (All 3 Phases) |
+| **ENTITIES-01** | `thoughts/shared/issues/entities-01` | ✅ DONE |
+| **SKILLS-01** | `thoughts/shared/issues/skills-01` | ✅ DONE |
+| **DOCS-01** | `thoughts/shared/issues/docs-01` | ✅ DONE |
+| **NOTES-01** | `thoughts/shared/issues/notes-01` | ✅ DONE |
+| **HISTORY-01** | `thoughts/shared/issues/history-01` | ✅ DONE |
 
 ### Remaining (in order)
 | # | Issue ID | File Path | Dependencies |
 |---|----------|-----------|--------------|
-| 01 | **ENTITIES-01** | `thoughts/shared/issues/entities-01` | None |
-| 02 | SKILLS-01 | `thoughts/shared/issues/skills-01` | None |
-| 03 | DOCS-01 | `thoughts/shared/issues/docs-01` | None |
-| 04 | NOTES-01 | `thoughts/shared/issues/notes-01` | None |
-| 05 | HISTORY-01 | `thoughts/shared/issues/history-01` | None |
-| 06-07 | CONTACTS-01 | `thoughts/shared/issues/contacts-01` | None |
-| 08 | COMPLIANCE-01 | `thoughts/shared/issues/compliance-01` | DOCS-01 |
+| 08 | COMPLIANCE-01 | `thoughts/shared/issues/compliance-01` | DOCS-01 ✅ |
 | 09 | CONTRACTS-01 | `thoughts/shared/issues/contracts-01` | DOCS-01, CONTACTS-01, ACCOUNTS-02 |
 | 10 | RATES-01 | `thoughts/shared/issues/rates-01` | CONTACTS-01, ACCOUNTS-02 |
 | 11 | JOBS-01 | `thoughts/shared/issues/jobs-01` | SKILLS-01, ACCOUNTS-02, CONTACTS-01 |
@@ -577,19 +578,24 @@ These issues may be needed for enterprise completeness but are not in the initia
 
 ## Next Action
 
-**👉 START with Wave 1: Foundation (Parallel)**
+**👉 START with Wave 3: Legal & Financial Infrastructure**
 
-These 5 issues have NO dependencies and can be done in parallel or any order:
+Wave 0, 1, and 2 are **COMPLETE**. Proceed to Wave 3:
 
-1. **ENTITIES-01** - Entity Resolution Service
-2. **SKILLS-01** - Skills taxonomy with vector embeddings
-3. **DOCS-01** - Centralized document storage
-4. **NOTES-01** - Unified notes system
-5. **HISTORY-01** - Audit trail infrastructure
+| # | Issue ID | Title | Depends On |
+|---|----------|-------|------------|
+| **08** | COMPLIANCE-01 | Compliance Tracking System | DOCS-01 ✅ |
+| **09** | CONTRACTS-01 | Contract Management System | DOCS-01 ✅, CONTACTS-01 ✅, ACCOUNTS-02 ✅ |
+| **10** | RATES-01 | Entity Rate Cards System | CONTACTS-01 ✅, ACCOUNTS-02 ✅ |
 
-Then complete CONTACTS-01 Phases 2-3 before Wave 3.
+All dependencies are satisfied. Can start any of these in parallel.
 
 ```bash
-# Example: Start with SKILLS-01
-/research_codebase SKILLS-01
+# Example: Start with COMPLIANCE-01
+/research_codebase COMPLIANCE-01
 ```
+
+### Completed Waves
+- ✅ **Wave 0**: ADDRESSES-01, ACCOUNTS-02
+- ✅ **Wave 1**: ENTITIES-01, SKILLS-01, DOCS-01, NOTES-01, HISTORY-01
+- ✅ **Wave 2**: CONTACTS-01 (All 3 phases complete)
