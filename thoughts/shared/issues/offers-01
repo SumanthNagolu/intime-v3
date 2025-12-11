@@ -1,0 +1,660 @@
+# ISSUE: Offers & Negotiations System
+
+**Issue ID:** OFFERS-01
+**Created:** 2025-12-11
+**Status:** Open
+**Priority:** Critical
+**Type:** New Feature
+**Reporter:** Architecture Review
+**Depends On:** INTERVIEWS-01 (interview completion), CONTACTS-01 (unified contacts), RATES-01 (rate cards)
+
+---
+
+## Summary
+
+Define a comprehensive offer management system to track the critical step between interview completion and placement creation. This is a **CRITICAL GAP** in the current ATS pipeline - there is no formal tracking of offers extended, negotiations, counter-offers, acceptances, and declines. Without this, the pipeline jumps directly from interviews to placements, losing visibility into offer metrics and conversion rates.
+
+## Location
+
+- **New Tables**: `offers`, `offer_versions`, `offer_approvals`, `offer_documents`
+- **Related Tables**: `submissions`, `interviews`, `placements`, `contacts`, `jobs`, `entity_rates`
+- **Affected Modules**: ATS, Recruiting, Pipeline, Reporting
+
+## Problem Description
+
+### Current State
+
+No formal offer tracking exists in the schema. This gap means:
+
+1. **No Offer Metrics**: Cannot track offer-to-acceptance rate
+2. **No Counter-Offer History**: Negotiations not documented
+3. **No Offer Approval Workflow**: Rate exceptions not tracked
+4. **No Offer Letter Generation**: Manual document creation
+5. **No Decline Analysis**: Don't know why candidates decline
+6. **Pipeline Gap**: Direct jump from interview → placement loses critical data
+
+### Business Requirements
+
+Staffing companies require:
+- Formal offer creation from approved submissions
+- Offer approval workflow (especially for rate exceptions)
+- Counter-offer tracking with version history
+- Start date coordination
+- Offer letter generation and e-signature
+- Decline reason tracking for analytics
+- Offer expiration management
+- Multiple offer scenarios (backup offers)
+
+## Proposed Schema Design
+
+### Offers Table (Main Record)
+
+```sql
+CREATE TABLE offers (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  
+  -- Identity
+  offer_number VARCHAR NOT NULL,  -- 'OFR-2024-001234'
+  
+  -- References
+  submission_id UUID NOT NULL REFERENCES submissions(id),
+  job_id UUID NOT NULL REFERENCES jobs(id),
+  contact_id UUID NOT NULL REFERENCES contacts(id),  -- The candidate
+  
+  -- Companies involved
+  client_company_id UUID NOT NULL REFERENCES companies(id),
+  work_site_company_id UUID REFERENCES companies(id),  -- If different from client
+  vendor_company_id UUID REFERENCES companies(id),  -- For C2C
+  
+  -- Hiring contacts
+  hiring_manager_contact_id UUID REFERENCES contacts(id),
+  hr_contact_id UUID REFERENCES contacts(id),
+  
+  -- Offer type
+  offer_type VARCHAR NOT NULL,  -- 'contract', 'permanent', 'contract_to_hire'
+  employment_type VARCHAR,  -- 'w2', '1099', 'c2c'
+  
+  -- Current version tracking
+  current_version INTEGER DEFAULT 1,
+  
+  -- Status
+  status VARCHAR NOT NULL DEFAULT 'draft',
+  /* Status values:
+     'draft' - Being prepared
+     'pending_approval' - Needs internal approval
+     'approved' - Ready to extend
+     'extended' - Sent to candidate
+     'pending_response' - Awaiting candidate decision
+     'negotiating' - Counter-offer in progress
+     'accepted' - Candidate accepted
+     'declined' - Candidate declined
+     'expired' - Offer expired without response
+     'withdrawn' - We withdrew the offer
+     'superseded' - Replaced by new offer
+  */
+  
+  -- Compensation (current version)
+  bill_rate NUMERIC(10,2),
+  pay_rate NUMERIC(10,2),
+  salary NUMERIC(12,2),  -- For perm placements
+  bonus NUMERIC(12,2),
+  sign_on_bonus NUMERIC(10,2),
+  
+  -- Overtime
+  ot_bill_rate NUMERIC(10,2),
+  ot_pay_rate NUMERIC(10,2),
+  includes_overtime BOOLEAN DEFAULT true,
+  estimated_weekly_hours INTEGER DEFAULT 40,
+  
+  -- Benefits (for W2)
+  benefits_eligible BOOLEAN DEFAULT true,
+  benefits_start_date DATE,
+  pto_days INTEGER,
+  health_insurance BOOLEAN DEFAULT true,
+  dental_insurance BOOLEAN DEFAULT false,
+  vision_insurance BOOLEAN DEFAULT false,
+  retirement_401k BOOLEAN DEFAULT false,
+  
+  -- Rate card reference
+  rate_card_id UUID REFERENCES rate_cards(id),
+  rate_within_card BOOLEAN DEFAULT true,  -- Does offer fall within rate card limits?
+  rate_exception_reason TEXT,  -- If outside rate card
+  
+  -- Margin tracking
+  gross_margin NUMERIC(10,2) GENERATED ALWAYS AS (bill_rate - pay_rate) STORED,
+  margin_percentage NUMERIC(5,2) GENERATED ALWAYS AS (
+    CASE WHEN bill_rate > 0 THEN ((bill_rate - pay_rate) / bill_rate * 100) ELSE 0 END
+  ) STORED,
+  
+  -- Dates
+  start_date DATE,
+  end_date DATE,  -- For contracts
+  offer_extended_at TIMESTAMPTZ,
+  response_deadline TIMESTAMPTZ,
+  accepted_at TIMESTAMPTZ,
+  declined_at TIMESTAMPTZ,
+  expired_at TIMESTAMPTZ,
+  withdrawn_at TIMESTAMPTZ,
+  
+  -- Location
+  work_location VARCHAR,
+  is_remote BOOLEAN DEFAULT false,
+  remote_percentage INTEGER,  -- 0-100
+  
+  -- Candidate's previous/current compensation
+  candidate_current_rate NUMERIC(10,2),
+  candidate_current_salary NUMERIC(12,2),
+  candidate_expectations JSONB,  -- { min_rate, desired_rate, min_salary, desired_salary }
+  
+  -- Counter-offer tracking
+  is_counter_offer BOOLEAN DEFAULT false,
+  original_offer_id UUID REFERENCES offers(id),
+  counter_offer_count INTEGER DEFAULT 0,
+  
+  -- Decline tracking
+  decline_reason VARCHAR,
+  /* Decline reasons:
+     'compensation_low', 'better_offer', 'counter_offer_accepted',
+     'location', 'start_date', 'job_scope', 'company_fit',
+     'personal_reasons', 'stayed_current_job', 'other'
+  */
+  decline_reason_detail TEXT,
+  decline_competing_company VARCHAR,
+  decline_competing_rate NUMERIC(10,2),
+  
+  -- Withdrawal tracking
+  withdrawn_by UUID REFERENCES user_profiles(id),
+  withdrawal_reason VARCHAR,
+  withdrawal_reason_detail TEXT,
+  
+  -- Documents
+  offer_letter_document_id UUID REFERENCES documents(id),
+  signed_offer_document_id UUID REFERENCES documents(id),
+  
+  -- E-signature
+  esign_provider VARCHAR,  -- 'docusign', 'hellosign', 'adobe_sign'
+  esign_envelope_id VARCHAR,  -- External envelope ID
+  esign_status VARCHAR,  -- 'pending', 'viewed', 'signed', 'declined'
+  esign_sent_at TIMESTAMPTZ,
+  esign_viewed_at TIMESTAMPTZ,
+  esign_signed_at TIMESTAMPTZ,
+  
+  -- Approval tracking (denormalized)
+  requires_approval BOOLEAN DEFAULT false,
+  approval_status VARCHAR DEFAULT 'not_required',  -- 'not_required', 'pending', 'approved', 'rejected'
+  approved_at TIMESTAMPTZ,
+  approved_by UUID REFERENCES user_profiles(id),
+  
+  -- Placement link (after acceptance)
+  placement_id UUID REFERENCES placements(id),
+  
+  -- Notes
+  internal_notes TEXT,
+  candidate_notes TEXT,  -- Notes about candidate's concerns/preferences
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  created_by UUID REFERENCES user_profiles(id),
+  extended_by UUID REFERENCES user_profiles(id),
+  deleted_at TIMESTAMPTZ,
+  
+  -- Constraints
+  CONSTRAINT offer_rate_check CHECK (
+    (offer_type = 'permanent' AND salary IS NOT NULL) OR
+    (offer_type != 'permanent' AND (bill_rate IS NOT NULL OR pay_rate IS NOT NULL))
+  )
+);
+
+-- Indexes
+CREATE INDEX idx_offers_submission ON offers(submission_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_offers_contact ON offers(contact_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_offers_job ON offers(job_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_offers_client ON offers(client_company_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_offers_status ON offers(status) WHERE deleted_at IS NULL;
+CREATE INDEX idx_offers_pending ON offers(response_deadline)
+  WHERE status IN ('extended', 'pending_response', 'negotiating') AND deleted_at IS NULL;
+CREATE INDEX idx_offers_number ON offers(offer_number) WHERE deleted_at IS NULL;
+
+-- Unique offer number per org
+CREATE UNIQUE INDEX idx_offers_number_unique
+ON offers(org_id, offer_number) WHERE deleted_at IS NULL;
+```
+
+### Offer Versions Table (Negotiation History)
+
+```sql
+-- Track all versions of an offer (original + counter-offers)
+CREATE TABLE offer_versions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  offer_id UUID NOT NULL REFERENCES offers(id) ON DELETE CASCADE,
+  
+  -- Version tracking
+  version_number INTEGER NOT NULL,
+  version_type VARCHAR NOT NULL,  -- 'original', 'counter_offer', 'amendment'
+  
+  -- Who initiated this version
+  initiated_by VARCHAR NOT NULL,  -- 'company', 'candidate'
+  
+  -- Compensation
+  bill_rate NUMERIC(10,2),
+  pay_rate NUMERIC(10,2),
+  salary NUMERIC(12,2),
+  bonus NUMERIC(12,2),
+  sign_on_bonus NUMERIC(10,2),
+  
+  -- OT rates
+  ot_bill_rate NUMERIC(10,2),
+  ot_pay_rate NUMERIC(10,2),
+  
+  -- Dates
+  start_date DATE,
+  end_date DATE,
+  
+  -- What changed from previous version
+  changes_summary TEXT,
+  changes_detail JSONB,  -- { field: { old: value, new: value } }
+  
+  -- Status
+  status VARCHAR NOT NULL,  -- 'proposed', 'accepted', 'rejected', 'superseded'
+  response_at TIMESTAMPTZ,
+  response_notes TEXT,
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  created_by UUID REFERENCES user_profiles(id),
+  
+  CONSTRAINT version_unique UNIQUE (offer_id, version_number)
+);
+
+CREATE INDEX idx_offer_versions_offer ON offer_versions(offer_id, version_number DESC);
+```
+
+### Offer Approvals Table
+
+```sql
+-- Approval workflow for offers (especially rate exceptions)
+CREATE TABLE offer_approvals (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  offer_id UUID NOT NULL REFERENCES offers(id) ON DELETE CASCADE,
+  
+  -- Approval details
+  approval_type VARCHAR NOT NULL,  -- 'rate_exception', 'margin_exception', 'standard'
+  approval_level INTEGER DEFAULT 1,  -- For multi-level approvals
+  
+  -- Approver
+  approver_id UUID NOT NULL REFERENCES user_profiles(id),
+  
+  -- Status
+  status VARCHAR NOT NULL DEFAULT 'pending',  -- 'pending', 'approved', 'rejected', 'escalated'
+  
+  -- Decision
+  decided_at TIMESTAMPTZ,
+  decision_notes TEXT,
+  
+  -- Escalation
+  escalated_to UUID REFERENCES user_profiles(id),
+  escalated_at TIMESTAMPTZ,
+  escalation_reason TEXT,
+  
+  -- Request details
+  requested_at TIMESTAMPTZ DEFAULT now(),
+  requested_by UUID REFERENCES user_profiles(id),
+  request_notes TEXT,
+  
+  -- What needs approval
+  approval_details JSONB,  -- { bill_rate: X, rate_card_max: Y, exception_amount: Z }
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL
+);
+
+CREATE INDEX idx_offer_approvals_offer ON offer_approvals(offer_id);
+CREATE INDEX idx_offer_approvals_pending ON offer_approvals(approver_id, status)
+  WHERE status = 'pending';
+```
+
+### Offer Competitors Table (Added per Architecture Review)
+
+```sql
+-- Track competing offers during negotiation
+CREATE TABLE offer_competitors (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  offer_id UUID NOT NULL REFERENCES offers(id) ON DELETE CASCADE,
+
+  -- Competitor details
+  company_id UUID REFERENCES companies(id),  -- If known company in system
+  company_name VARCHAR,  -- If external/unknown company
+
+  -- Competing offer details
+  offer_amount NUMERIC(10,2),
+  offer_rate NUMERIC(10,2),  -- Hourly/annual rate
+  offer_type VARCHAR,  -- 'hourly', 'salary'
+  offer_details TEXT,
+
+  -- Status
+  status VARCHAR DEFAULT 'active',  -- 'active', 'declined', 'accepted_competitor'
+
+  -- Intel
+  source VARCHAR,  -- 'candidate', 'recruiter', 'linkedin', 'other'
+  confidence_level VARCHAR DEFAULT 'confirmed',  -- 'confirmed', 'suspected', 'rumored'
+
+  -- Dates
+  offer_date DATE,
+  deadline DATE,
+
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  created_by UUID REFERENCES user_profiles(id),
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL
+);
+
+CREATE INDEX idx_offer_competitors_offer ON offer_competitors(offer_id);
+CREATE INDEX idx_offer_competitors_company ON offer_competitors(company_id) WHERE company_id IS NOT NULL;
+```
+
+### Offer Templates Table
+
+```sql
+-- Templates for offer letters
+CREATE TABLE offer_templates (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  
+  -- Identity
+  template_name VARCHAR NOT NULL,
+  template_code VARCHAR,
+  description TEXT,
+  
+  -- Applicability
+  offer_type VARCHAR,  -- 'contract', 'permanent', 'contract_to_hire', NULL = all
+  employment_type VARCHAR,  -- 'w2', '1099', 'c2c', NULL = all
+  client_company_id UUID REFERENCES companies(id),  -- Client-specific template
+  
+  -- Content
+  subject_template VARCHAR,  -- For email
+  body_html_template TEXT,  -- HTML with {{variables}}
+  body_text_template TEXT,  -- Plain text version
+  
+  -- Variables
+  available_variables JSONB,  -- ['candidate_name', 'job_title', 'start_date', ...]
+  
+  -- Attachments
+  include_attachments JSONB,  -- ['benefits_summary', 'employee_handbook']
+  
+  -- Status
+  is_active BOOLEAN DEFAULT true,
+  is_default BOOLEAN DEFAULT false,
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  created_by UUID REFERENCES user_profiles(id)
+);
+
+CREATE INDEX idx_offer_templates_active ON offer_templates(org_id) WHERE is_active = true;
+```
+
+## Offer Lifecycle Flow
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                      OFFER LIFECYCLE                             │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  [Interview Passed] ──► [Create Offer] ──► [Draft]              │
+│                              │                                   │
+│                              ▼                                   │
+│                   [Rate Exception?] ─── Yes ──► [Pending Approval]
+│                         │                            │
+│                         No                           │
+│                         │                            │
+│                         ▼                            ▼
+│                    [Approved] ◄───────── [Approval Decision]
+│                         │                      │
+│                    ┌────┴────┐            Rejected
+│                    │         │                │
+│                    ▼         │                ▼
+│              [Extended]      │           [Withdrawn]
+│                    │         │
+│                    ▼         │
+│           [Pending Response] │
+│                    │         │
+│        ┌───────────┼─────────┼───────────┐
+│        ▼           ▼         ▼           ▼
+│   [Accepted]  [Declined] [Expired] [Negotiating]
+│        │           │                     │
+│        │           │                     ▼
+│        │           │            [Counter Offer]
+│        │           │                     │
+│        │           │         ┌───────────┤
+│        │           │         ▼           ▼
+│        │           │    [Accepted]  [Declined]
+│        │           │         │
+│        ▼           │         ▼
+│  [Create Placement]│    [Create Placement]
+│        │           │         │
+│        ▼           ▼         ▼
+│   [PLACEMENTS-01]  [Trigger: Onboarding]
+│        │           │         │
+│        ▼           ▼         ▼
+│   [Update Analytics]  [ONBOARDING-01]
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+## Integration Points
+
+### From INTERVIEWS-01
+```sql
+-- When interview passes, offer can be created
+UPDATE submissions SET status = 'passed_interview' WHERE ...;
+
+-- Create offer from submission
+INSERT INTO offers (
+  org_id, submission_id, job_id, contact_id, client_company_id,
+  offer_type, bill_rate, pay_rate, start_date, status
+)
+SELECT
+  s.org_id, s.id, s.job_id, s.contact_id, j.client_company_id,
+  j.job_type, s.negotiated_bill_rate, s.negotiated_pay_rate, $start_date, 'draft'
+FROM submissions s
+JOIN jobs j ON j.id = s.job_id
+WHERE s.id = $submission_id;
+```
+
+### To PLACEMENTS-01
+```sql
+-- When offer accepted, create placement
+INSERT INTO placements (
+  org_id, job_id, submission_id, contact_id, client_company_id,
+  start_date, end_date, bill_rate, pay_rate, status
+)
+SELECT
+  o.org_id, o.job_id, o.submission_id, o.contact_id, o.client_company_id,
+  o.start_date, o.end_date, o.bill_rate, o.pay_rate, 'pending'
+FROM offers o
+WHERE o.id = $offer_id AND o.status = 'accepted'
+RETURNING id INTO v_placement_id;
+
+-- Link offer to placement
+UPDATE offers SET placement_id = v_placement_id WHERE id = $offer_id;
+
+-- NOTE: Placement creation automatically triggers ONBOARDING-01
+-- via database trigger 'trg_create_onboarding_on_placement'
+```
+
+### With RATES-01
+```sql
+-- Check if offer rate is within rate card
+SELECT
+  rci.min_bill_rate, rci.max_bill_rate, rci.standard_bill_rate,
+  $proposed_bill_rate BETWEEN rci.min_bill_rate AND rci.max_bill_rate as within_card
+FROM rate_cards rc
+JOIN rate_card_items rci ON rci.rate_card_id = rc.id
+WHERE rc.entity_type = 'company'
+  AND rc.entity_id = $client_company_id
+  AND rc.is_active = true
+  AND rci.job_category = $job_category;
+```
+
+## Acceptance Criteria
+
+### Schema Implementation
+- [ ] Create `offers` table with all fields
+- [ ] Create `offer_versions` table for negotiation history
+- [ ] Create `offer_approvals` table for approval workflow
+- [ ] Create `offer_templates` table
+- [ ] All indexes created
+- [ ] RLS policies enforced
+
+### Offer Lifecycle
+- [ ] Draft creation from submission working
+- [ ] Rate exception detection working
+- [ ] Approval workflow functional
+- [ ] Offer extension tracking
+- [ ] Counter-offer version tracking
+- [ ] Acceptance → Placement creation
+- [ ] Decline reason capture
+- [ ] Expiration handling
+
+### Integration
+- [ ] INTERVIEWS-01: Offer created after interview pass
+- [ ] PLACEMENTS-01: Placement created after acceptance
+- [ ] RATES-01: Rate card validation
+- [ ] DOCS-01: Offer letter storage
+- [ ] NOTIFICATIONS-01: Offer notifications
+
+### E-Signature
+- [ ] DocuSign/HelloSign integration hooks
+- [ ] Envelope status tracking
+- [ ] Signed document storage
+
+### Frontend Requirements
+- [ ] Offer creation wizard
+- [ ] Offer detail view with version history
+- [ ] Counter-offer workflow UI
+- [ ] Approval queue for managers
+- [ ] Offer letter preview and send
+- [ ] Decline reason modal
+
+### Analytics
+- [ ] Offer-to-acceptance rate
+- [ ] Average negotiation rounds
+- [ ] Decline reason distribution
+- [ ] Time to acceptance
+- [ ] Rate exception frequency
+
+---
+
+## Technical Context
+
+### Offer Types
+
+| Type | Pay Tracking | End Date | Benefits |
+|------|--------------|----------|----------|
+| Contract | Hourly rate | Required | Optional |
+| Permanent | Salary | None | Required |
+| Contract-to-Hire | Hourly → Salary | Conversion date | After conversion |
+
+### Counter-Offer Flow
+
+```
+Version 1 (Original): $95/hr bill, $75/hr pay - PROPOSED by Company
+    ↓
+Version 2 (Counter): $100/hr bill, $80/hr pay - PROPOSED by Candidate
+    ↓
+Version 3 (Counter): $97/hr bill, $77/hr pay - PROPOSED by Company
+    ↓
+Version 3 ACCEPTED by Candidate
+```
+
+### Approval Matrix
+
+| Scenario | Approver |
+|----------|----------|
+| Within rate card, normal margin | Auto-approved |
+| Within rate card, low margin (<20%) | Team Lead |
+| Above rate card (<10%) | Director |
+| Above rate card (>10%) | VP/Executive |
+| Below minimum margin | CEO/Owner |
+
+---
+
+## Notes
+
+This issue fills a **critical gap** in the ATS pipeline:
+
+1. **Pipeline Visibility**: Know exactly where candidates are in the offer process
+2. **Negotiation History**: Full audit trail of all offer versions
+3. **Margin Protection**: Approval workflow for rate exceptions
+4. **Decline Intelligence**: Understand why candidates decline
+5. **Conversion Metrics**: Measure offer-to-placement conversion
+6. **Compliance**: Formal offer documentation for legal protection
+
+Without this issue, the platform jumps from "interview passed" directly to "placed" - losing all visibility into the offer process which typically takes 3-14 days and involves significant negotiation.
+
+---
+
+## Rollback Plan
+
+### Schema Rollback
+```sql
+-- Drop in reverse order of creation (dependencies first)
+DROP TABLE IF EXISTS offer_templates;
+DROP TABLE IF EXISTS offer_approvals;
+DROP TABLE IF EXISTS offer_versions;
+DROP TABLE IF EXISTS offers;
+```
+
+### Full Rollback Procedure
+1. Stop application deployments
+2. Verify no in-flight offer operations
+3. If offers exist that were already accepted and created placements:
+   - DO NOT rollback if placements depend on offer data
+   - Instead, keep offers table but disable offer UI
+4. Execute schema rollback SQL
+5. Restore tRPC router to previous git commit (remove offers procedures)
+6. Restore UI components to previous git commit
+7. Update submission pipeline to skip offer step
+8. Verify submission → placement flow works directly
+9. Document incident and root cause
+
+### Data Preservation (If Needed)
+```sql
+-- Before dropping, export offer data for manual reference
+CREATE TABLE offers_archive AS 
+SELECT * FROM offers WHERE deleted_at IS NULL;
+
+CREATE TABLE offer_versions_archive AS
+SELECT * FROM offer_versions;
+
+-- Export to JSON for backup
+COPY (
+  SELECT json_agg(o)
+  FROM offers o
+  WHERE o.deleted_at IS NULL
+) TO '/tmp/offers_backup.json';
+```
+
+### Migration Path Notes
+Since OFFERS-01 is a **new table** (not a migration of existing data), rollback is simpler:
+- No legacy data to restore
+- Simply remove the new tables and disable the feature
+- Submissions can flow directly to placements as before
+- Loss: Any offers created during the feature period need manual handling
+
+### Placement Link Handling
+```sql
+-- If placements were created with offer_id references, null them out
+ALTER TABLE placements DROP COLUMN IF EXISTS offer_id;
+
+-- Or if keeping column but removing FK:
+ALTER TABLE placements DROP CONSTRAINT IF EXISTS placements_offer_id_fkey;
+UPDATE placements SET offer_id = NULL;
+```

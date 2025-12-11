@@ -1,0 +1,452 @@
+# ISSUE: Unified History & Audit Trail System
+
+**Issue ID:** HISTORY-01
+**Created:** 2025-12-10
+**Status:** Open
+**Priority:** Medium
+**Type:** Feature/Enhancement (Database Schema Redesign)
+**Reporter:** User
+
+---
+
+## Summary
+
+Unify the fragmented history and audit trail system into a centralized `entity_history` table with polymorphic entity references. Currently, history is scattered across 10+ entity-specific tables with inconsistent schemas, no unified query interface, and limited analytics. This issue creates an enterprise-grade audit system compliant with SOC 2, GDPR, and industry regulations.
+
+## Location
+
+- **Current Tables**: `job_status_history`, `submission_status_history`, `deal_stages_history`, `lead_status_history`, `placement_history`, `workflow_history`, `activity_log`, `user_activity_log`, `email_tracking_events`
+- **Related Tables**: `activities` (overlapping event tracking)
+- **Affected Modules**: All modules (cross-cutting concern)
+
+## Problem Description
+
+### Current State Issues
+
+1. **Fragmented History Tables**: 10+ separate tables
+   - `job_status_history` - Job state changes
+   - `submission_status_history` - Submission pipeline tracking
+   - `deal_stages_history` - Deal progression
+   - `lead_status_history` - Lead qualification
+   - `placement_history` - Placement lifecycle
+   - `workflow_history` - Workflow execution
+   - `activity_log` - General activity
+   - `user_activity_log` - User actions
+   - `email_tracking_events` - Email engagement
+
+2. **Schema Inconsistency**:
+   - Different field names (`old_status` vs `previous_status` vs `from_status`)
+   - Different timestamp patterns
+   - Different user reference columns
+
+3. **No Unified Query Interface**:
+   - Cannot query "all history for entity X"
+   - Cannot generate compliance reports easily
+   - Cannot correlate events across entities
+
+4. **Missing Enterprise Features**:
+   - No data retention policies
+   - No PII masking for GDPR
+   - No event correlation
+   - No timeline visualization support
+
+## Expected Behavior
+
+A unified history system that:
+1. Single `entity_history` table for all status/state changes
+2. `audit_log` for field-level changes (who changed what when)
+3. Polymorphic entity reference for all entity types
+4. Event correlation (link related events)
+5. GDPR-compliant with PII masking
+6. Retention policies with archiving
+7. Timeline API for visualization
+8. Compliance reporting ready
+
+## Proposed Schema Design
+
+### Entity History (Status/State Changes)
+
+```sql
+entity_history:
+  id UUID PRIMARY KEY
+  org_id UUID NOT NULL
+
+-- Polymorphic entity reference
+  entity_type VARCHAR NOT NULL  -- 'job', 'submission', 'lead', 'deal', 'placement', 'contact', 'campaign'
+  entity_id UUID NOT NULL
+
+-- Change type
+  change_type VARCHAR NOT NULL
+    -- 'status_change', 'stage_change', 'owner_change', 'assignment_change',
+    -- 'score_change', 'priority_change', 'category_change', 'custom'
+
+-- Status/Stage change
+  field_name VARCHAR NOT NULL  -- 'status', 'stage', 'owner_id', 'priority', etc.
+  old_value VARCHAR
+  new_value VARCHAR
+  old_value_label VARCHAR  -- Human-readable label
+  new_value_label VARCHAR
+
+-- Context
+  reason TEXT  -- Why the change was made
+  comment TEXT  -- Additional notes
+
+-- Related entities (for correlation)
+  related_entity_type VARCHAR
+  related_entity_id UUID
+  correlation_id UUID  -- Link related events together
+
+-- Workflow context
+  workflow_id UUID
+  workflow_step_id UUID
+  is_automated BOOLEAN DEFAULT false  -- Triggered by automation
+
+-- Duration tracking
+  time_in_previous_state INTERVAL  -- How long was it in old state
+
+-- Audit
+  changed_by UUID REFERENCES user_profiles(id)
+  changed_at TIMESTAMPTZ DEFAULT now() NOT NULL
+
+-- Metadata
+  metadata JSONB  -- Additional context-specific data
+
+-- Indexes
+CREATE INDEX idx_entity_history_entity ON entity_history(entity_type, entity_id, changed_at DESC);
+CREATE INDEX idx_entity_history_field ON entity_history(entity_type, field_name, changed_at DESC);
+CREATE INDEX idx_entity_history_user ON entity_history(changed_by, changed_at DESC);
+CREATE INDEX idx_entity_history_correlation ON entity_history(correlation_id) WHERE correlation_id IS NOT NULL;
+CREATE INDEX idx_entity_history_date ON entity_history(changed_at DESC);
+
+-- Partitioning by date for performance
+-- Consider partitioning by month for large deployments
+```
+
+### Audit Log (Field-Level Changes)
+
+```sql
+audit_log:
+  id UUID PRIMARY KEY
+  org_id UUID NOT NULL
+
+-- Polymorphic entity reference
+  entity_type VARCHAR NOT NULL
+  entity_id UUID NOT NULL
+
+-- Operation
+  operation VARCHAR NOT NULL  -- 'create', 'update', 'delete', 'restore'
+
+-- Change details
+  changes JSONB NOT NULL
+    -- { field_name: { old: value, new: value, type: 'string' } }
+
+  change_count INTEGER  -- Number of fields changed
+
+-- PII tracking (for GDPR)
+  contains_pii BOOLEAN DEFAULT false
+  pii_fields TEXT[]  -- ['email', 'phone', 'ssn']
+  is_masked BOOLEAN DEFAULT false  -- For archived records
+
+-- Request context
+  request_id UUID  -- Correlation with API request
+  ip_address INET
+  user_agent TEXT
+  session_id VARCHAR
+
+-- User
+  performed_by UUID REFERENCES user_profiles(id)
+  performed_at TIMESTAMPTZ DEFAULT now() NOT NULL
+
+-- Impersonation tracking
+  impersonated_by UUID REFERENCES user_profiles(id)  -- If admin acting as user
+
+-- Retention
+  retention_until DATE  -- When record can be purged
+  archived_at TIMESTAMPTZ  -- When moved to cold storage
+
+-- Indexes
+CREATE INDEX idx_audit_log_entity ON audit_log(entity_type, entity_id, performed_at DESC);
+CREATE INDEX idx_audit_log_user ON audit_log(performed_by, performed_at DESC);
+CREATE INDEX idx_audit_log_date ON audit_log(performed_at DESC);
+CREATE INDEX idx_audit_log_pii ON audit_log(contains_pii, is_masked) WHERE contains_pii = true;
+CREATE INDEX idx_audit_log_retention ON audit_log(retention_until) WHERE retention_until IS NOT NULL;
+```
+
+### System Events (Application-Level)
+
+```sql
+system_events:
+  id UUID PRIMARY KEY
+  org_id UUID  -- NULL for system-wide events
+
+-- Event identification
+  event_type VARCHAR NOT NULL
+    -- 'user_login', 'user_logout', 'permission_change', 'api_call',
+    -- 'export_data', 'import_data', 'bulk_operation', 'integration_sync',
+    -- 'system_error', 'security_alert', 'configuration_change'
+
+  event_category VARCHAR  -- 'security', 'data', 'system', 'integration'
+
+-- Entity reference (optional)
+  entity_type VARCHAR
+  entity_id UUID
+
+-- Event details
+  details JSONB NOT NULL
+  severity VARCHAR DEFAULT 'info'  -- 'debug', 'info', 'warning', 'error', 'critical'
+
+-- User context
+  user_id UUID REFERENCES user_profiles(id)
+  ip_address INET
+  user_agent TEXT
+
+-- Request context
+  request_id UUID
+  api_endpoint VARCHAR
+  http_method VARCHAR
+
+-- Timing
+  occurred_at TIMESTAMPTZ DEFAULT now() NOT NULL
+  duration_ms INTEGER  -- For performance tracking
+
+-- Indexes
+CREATE INDEX idx_system_events_type ON system_events(event_type, occurred_at DESC);
+CREATE INDEX idx_system_events_user ON system_events(user_id, occurred_at DESC);
+CREATE INDEX idx_system_events_date ON system_events(occurred_at DESC);
+CREATE INDEX idx_system_events_severity ON system_events(severity, occurred_at DESC) WHERE severity IN ('warning', 'error', 'critical');
+```
+
+### Data Retention Policies
+
+```sql
+data_retention_policies:
+  id UUID PRIMARY KEY
+  org_id UUID NOT NULL
+
+-- What to retain
+  entity_type VARCHAR NOT NULL
+  event_type VARCHAR  -- NULL = all events for entity type
+
+-- Retention rules
+  retention_days INTEGER NOT NULL  -- How long to keep
+  archive_after_days INTEGER  -- When to move to cold storage
+  mask_pii_after_days INTEGER  -- When to mask PII fields
+
+-- Actions
+  action_on_expiry VARCHAR DEFAULT 'archive'  -- 'archive', 'delete', 'anonymize'
+
+-- Schedule
+  last_processed_at TIMESTAMPTZ
+  processing_frequency VARCHAR DEFAULT 'daily'
+
+-- Status
+  is_active BOOLEAN DEFAULT true
+
+-- Audit
+  created_at, updated_at, created_by
+
+CREATE UNIQUE INDEX idx_retention_policies_unique ON data_retention_policies(org_id, entity_type, event_type) WHERE is_active = true;
+```
+
+## Migration Strategy
+
+### Phase 1: Schema Creation
+- Create `entity_history` table
+- Create `audit_log` table
+- Create `system_events` table
+- Create `data_retention_policies` table
+- Add partitioning strategy for large tables
+
+### Phase 2: Data Migration
+1. Migrate `job_status_history` → `entity_history` (entity_type='job', field_name='status')
+2. Migrate `submission_status_history` → `entity_history` (entity_type='submission')
+3. Migrate `deal_stages_history` → `entity_history` (entity_type='deal', field_name='stage')
+4. Migrate `lead_status_history` → `entity_history` (entity_type='lead')
+5. Migrate `placement_history` → `entity_history` (entity_type='placement')
+6. Migrate `workflow_history` → `entity_history` (is_automated=true)
+7. Migrate `user_activity_log` → `system_events`
+8. Migrate `activity_log` → `system_events`
+
+### Phase 3: Trigger Setup
+- Create PostgreSQL triggers for automatic history capture
+- Configure which tables/fields to track
+- Set up PII field detection
+
+### Phase 4: Router & UI Updates
+- `history` tRPC router
+- EntityTimeline component
+- AuditLogViewer component
+- ComplianceReports
+- RetentionPolicyManager
+
+## Acceptance Criteria
+
+### Schema Implementation
+- [ ] Create unified `entity_history` table
+- [ ] Create `audit_log` for field-level changes
+- [ ] Create `system_events` for application events
+- [ ] Partitioning strategy implemented
+- [ ] RLS policies enforced
+
+### Automatic Capture
+- [ ] Triggers capturing status changes
+- [ ] Audit log capturing field changes
+- [ ] Duration calculation working
+
+### GDPR Compliance
+- [ ] PII field detection
+- [ ] Masking functionality
+- [ ] Retention policies enforced
+- [ ] Data export capability
+
+### Data Migration
+- [ ] All legacy history tables migrated
+- [ ] No data loss
+- [ ] Timestamps preserved accurately
+
+### Frontend Updates
+- [ ] EntityTimeline (visual history)
+- [ ] AuditLogViewer (compliance view)
+- [ ] HistorySearch (cross-entity)
+- [ ] ExportHistory (compliance reports)
+
+---
+
+## Technical Context
+
+### Event Categories
+
+```
+entity_history (status/state changes)
+├── Status Changes
+│   ├── job: draft → open → filled → closed
+│   ├── submission: submitted → interviewing → offered → placed
+│   ├── lead: new → contacted → qualified → converted
+│   └── deal: discovery → proposal → negotiation → won/lost
+├── Assignment Changes
+│   ├── owner_change (recruiter reassignment)
+│   └── team_change
+├── Score/Priority Changes
+│   ├── lead_score_change
+│   └── priority_change
+└── Stage Transitions
+    ├── pipeline_stage
+    └── workflow_step
+
+audit_log (field-level changes)
+├── create (all initial values)
+├── update (changed fields only)
+├── delete (soft delete)
+└── restore (undelete)
+
+system_events (application events)
+├── Security
+│   ├── user_login
+│   ├── user_logout
+│   └── permission_change
+├── Data Operations
+│   ├── bulk_import
+│   ├── bulk_export
+│   └── data_sync
+└── Integration
+    ├── webhook_received
+    └── api_call
+```
+
+### Timeline API Design
+
+```typescript
+// Query: Get all history for an entity
+const timeline = await trpc.history.getEntityTimeline({
+  entityType: 'submission',
+  entityId: 'uuid',
+  limit: 50,
+  includeRelated: true,  // Include related entity events
+})
+
+// Returns unified timeline
+[
+  { type: 'status_change', field: 'status', from: 'submitted', to: 'interviewing', at: Date },
+  { type: 'field_change', changes: { recruiter_id: {...} }, at: Date },
+  { type: 'related', entityType: 'interview', event: 'scheduled', at: Date },
+]
+```
+
+### Automatic History Capture
+
+```sql
+-- Trigger function for automatic history
+CREATE OR REPLACE FUNCTION capture_entity_history()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF TG_OP = 'UPDATE' AND OLD.status IS DISTINCT FROM NEW.status THEN
+    INSERT INTO entity_history (
+      org_id, entity_type, entity_id, change_type, field_name,
+      old_value, new_value, changed_by, changed_at
+    ) VALUES (
+      NEW.org_id, TG_ARGV[0], NEW.id, 'status_change', 'status',
+      OLD.status, NEW.status, NEW.updated_by, now()
+    );
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Apply to tables
+CREATE TRIGGER jobs_history_trigger
+AFTER UPDATE ON jobs
+FOR EACH ROW EXECUTE FUNCTION capture_entity_history('job');
+```
+
+---
+
+## Post-Implementation Enhancement (Added per Architecture Review)
+
+After ENTITIES-01 is implemented, add entity_type validation:
+
+```sql
+-- Add CHECK constraint to validate entity_type against registry
+-- Run AFTER ENTITIES-01 entity_type_registry is populated
+
+ALTER TABLE entity_history ADD CONSTRAINT chk_entity_history_type
+  CHECK (entity_type IN (SELECT entity_type FROM entity_type_registry WHERE is_active = true));
+
+ALTER TABLE audit_log ADD CONSTRAINT chk_audit_log_type
+  CHECK (entity_type IN (SELECT entity_type FROM entity_type_registry WHERE is_active = true));
+
+-- Alternative: Use trigger for dynamic validation (allows registry updates)
+CREATE OR REPLACE FUNCTION validate_entity_type()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM entity_type_registry
+    WHERE entity_type = NEW.entity_type AND is_active = true
+  ) THEN
+    RAISE EXCEPTION 'Invalid entity_type: %. Must be registered in entity_type_registry', NEW.entity_type;
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_validate_entity_history_type
+BEFORE INSERT OR UPDATE ON entity_history
+FOR EACH ROW EXECUTE FUNCTION validate_entity_type();
+
+CREATE TRIGGER trg_validate_audit_log_type
+BEFORE INSERT OR UPDATE ON audit_log
+FOR EACH ROW EXECUTE FUNCTION validate_entity_type();
+```
+
+---
+
+## Notes
+
+This is **compliance-critical infrastructure**. Key enterprise features:
+
+1. **Unified Timeline**: Single source for all entity history
+2. **Automatic Capture**: Triggers ensure nothing is missed
+3. **GDPR Ready**: PII masking and retention policies
+4. **SOC 2 Compliant**: Complete audit trail for all changes
+5. **Performance**: Partitioning strategy for scale
+6. **Correlation**: Link related events for context
+7. **Analytics Ready**: Structured data for reporting

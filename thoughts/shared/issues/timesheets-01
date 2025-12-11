@@ -1,0 +1,780 @@
+# ISSUE: Define Timesheet System
+
+**Issue ID:** TIMESHEETS-01
+**Created:** 2025-12-11
+**Status:** Open
+**Priority:** Critical
+**Type:** Feature/New System
+**Reporter:** System (Architecture Review)
+**Depends On:** PLACEMENTS-01 (placements migration), CONTACTS-01 (unified contacts), ACCOUNTS-02 (unified companies)
+
+---
+
+## Summary
+
+Define a comprehensive timesheet system for tracking consultant work hours, client approvals, and billing integration. This is a **new system** that does not exist in the current schema but is **critical for staffing operations** - timesheets are the basis for billing clients and paying consultants. This issue creates an enterprise-grade timesheet management system.
+
+## Location
+
+- **New Tables**: `timesheets`, `timesheet_entries`, `timesheet_approvals`, `timesheet_adjustments`
+- **Related Tables**: `placements`, `contacts`, `companies`, `invoices` (from INVOICES-01)
+- **Affected Modules**: Operations, Billing, Payroll
+
+## Problem Description
+
+### Current State
+
+No formal timesheet system exists in the current schema. This gap means:
+
+1. **No Hour Tracking**: Cannot track hours worked per placement
+2. **No Approval Workflow**: No client approval for hours
+3. **No Billing Basis**: Cannot generate invoices from hours
+4. **No Payroll Integration**: Cannot calculate consultant pay
+5. **No Overtime Tracking**: Cannot track OT/DT for rate calculations
+
+### Business Requirements
+
+Staffing companies require:
+- Weekly/bi-weekly timesheet submission by consultants
+- Client approval workflow (single or multi-level)
+- Internal review before invoicing
+- Rate application (regular, OT, DT)
+- Expense tracking on timesheets
+- Integration with invoicing (INVOICES-01)
+- Integration with payroll
+
+## Proposed Schema Design
+
+### Timesheets Table (Main Record)
+
+```sql
+CREATE TABLE timesheets (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  
+  -- Timesheet identity
+  timesheet_number VARCHAR GENERATED ALWAYS AS (
+    'TS-' || TO_CHAR(period_start, 'YYYYMMDD') || '-' || 
+    LPAD(EXTRACT(EPOCH FROM created_at)::TEXT, 6, '0')
+  ) STORED,
+  
+  -- Placement reference
+  placement_id UUID NOT NULL REFERENCES placements(id),
+  
+  -- The consultant (denormalized for quick access)
+  contact_id UUID NOT NULL REFERENCES contacts(id),
+  
+  -- Client (denormalized for quick access)
+  client_company_id UUID NOT NULL REFERENCES companies(id),
+  
+  -- Period
+  period_type VARCHAR NOT NULL DEFAULT 'weekly',  -- 'weekly', 'biweekly', 'semi_monthly', 'monthly'
+  period_start DATE NOT NULL,
+  period_end DATE NOT NULL,
+  
+  -- Status
+  status VARCHAR NOT NULL DEFAULT 'draft',
+  /* Status values:
+     'draft' - Consultant is entering hours
+     'submitted' - Consultant submitted, awaiting approval
+     'pending_client_approval' - Awaiting client approval
+     'client_approved' - Client approved
+     'client_rejected' - Client rejected (needs revision)
+     'pending_internal_review' - Internal review before processing
+     'approved' - Fully approved, ready for billing
+     'rejected' - Rejected (needs revision)
+     'processed' - Billed and/or paid
+     'void' - Voided timesheet
+  */
+  
+  -- Hours summary (denormalized, calculated from entries)
+  total_regular_hours NUMERIC(6,2) DEFAULT 0,
+  total_overtime_hours NUMERIC(6,2) DEFAULT 0,
+  total_double_time_hours NUMERIC(6,2) DEFAULT 0,
+  total_hours NUMERIC(6,2) DEFAULT 0,
+  
+  -- Billable summary
+  total_billable_hours NUMERIC(6,2) DEFAULT 0,
+  total_non_billable_hours NUMERIC(6,2) DEFAULT 0,
+  
+  -- Financial summary (calculated)
+  bill_amount NUMERIC(12,2) DEFAULT 0,
+  pay_amount NUMERIC(12,2) DEFAULT 0,
+  gross_margin NUMERIC(12,2) DEFAULT 0,
+  
+  -- Rates applied (snapshot from placement at time of submission)
+  regular_bill_rate NUMERIC(10,2),
+  regular_pay_rate NUMERIC(10,2),
+  ot_bill_rate NUMERIC(10,2),
+  ot_pay_rate NUMERIC(10,2),
+  dt_bill_rate NUMERIC(10,2),
+  dt_pay_rate NUMERIC(10,2),
+  
+  -- Expenses
+  total_expenses NUMERIC(10,2) DEFAULT 0,
+  expenses_billable NUMERIC(10,2) DEFAULT 0,
+  expenses_non_billable NUMERIC(10,2) DEFAULT 0,
+  
+  -- Submission tracking
+  submitted_at TIMESTAMPTZ,
+  submitted_by UUID REFERENCES user_profiles(id),  -- If submitted by internal user on behalf
+  submission_notes TEXT,
+  
+  -- Client approval tracking
+  client_approved_at TIMESTAMPTZ,
+  client_approved_by UUID REFERENCES contacts(id),  -- Client contact who approved
+  client_approval_notes TEXT,
+  
+  -- Internal approval tracking
+  internal_approved_at TIMESTAMPTZ,
+  internal_approved_by UUID REFERENCES user_profiles(id),
+  internal_approval_notes TEXT,
+  
+  -- Rejection tracking
+  rejected_at TIMESTAMPTZ,
+  rejected_by UUID,  -- Can be user or contact
+  rejection_reason TEXT,
+  
+  -- Processing
+  processed_at TIMESTAMPTZ,
+  processed_by UUID REFERENCES user_profiles(id),
+  
+  -- Invoice linkage
+  invoice_id UUID,  -- REFERENCES invoices(id) - added after INVOICES-01
+  invoice_line_item_id UUID,
+  
+  -- Payroll linkage
+  payroll_batch_id UUID,
+  payroll_processed_at TIMESTAMPTZ,
+  
+  -- Documents
+  attachment_count INTEGER DEFAULT 0,
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  created_by UUID REFERENCES user_profiles(id),
+  deleted_at TIMESTAMPTZ,
+  
+  -- Constraints
+  CONSTRAINT valid_period CHECK (period_end >= period_start),
+  CONSTRAINT valid_hours CHECK (total_hours >= 0)
+);
+
+-- Indexes
+CREATE INDEX idx_timesheets_placement ON timesheets(placement_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_timesheets_contact ON timesheets(contact_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_timesheets_client ON timesheets(client_company_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_timesheets_period ON timesheets(period_start, period_end) WHERE deleted_at IS NULL;
+CREATE INDEX idx_timesheets_status ON timesheets(status) WHERE deleted_at IS NULL;
+CREATE INDEX idx_timesheets_pending ON timesheets(status) WHERE status IN ('submitted', 'pending_client_approval', 'pending_internal_review') AND deleted_at IS NULL;
+CREATE INDEX idx_timesheets_invoice ON timesheets(invoice_id) WHERE invoice_id IS NOT NULL;
+
+-- Unique constraint: one timesheet per placement per period
+CREATE UNIQUE INDEX idx_timesheets_unique_period
+ON timesheets(placement_id, period_start, period_end)
+WHERE deleted_at IS NULL AND status != 'void';
+
+-- Composite index for high-frequency query pattern (Added per Architecture Review)
+CREATE INDEX idx_timesheets_placement_period
+ON timesheets(placement_id, period_id)
+WHERE deleted_at IS NULL;
+```
+
+### Timesheet Entries Table (Daily Hours)
+
+```sql
+CREATE TABLE timesheet_entries (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  timesheet_id UUID NOT NULL REFERENCES timesheets(id) ON DELETE CASCADE,
+  
+  -- Date
+  work_date DATE NOT NULL,
+  day_of_week INTEGER NOT NULL,  -- 0=Sunday, 6=Saturday
+  
+  -- Hours breakdown
+  regular_hours NUMERIC(4,2) DEFAULT 0,
+  overtime_hours NUMERIC(4,2) DEFAULT 0,
+  double_time_hours NUMERIC(4,2) DEFAULT 0,
+  total_hours NUMERIC(4,2) GENERATED ALWAYS AS (
+    regular_hours + overtime_hours + double_time_hours
+  ) STORED,
+  
+  -- Billable tracking
+  is_billable BOOLEAN DEFAULT true,
+  non_billable_reason VARCHAR,  -- 'training', 'internal_meeting', 'bench_time'
+  
+  -- Time in/out (optional, for detailed tracking)
+  time_in TIME,
+  time_out TIME,
+  break_minutes INTEGER DEFAULT 0,
+  
+  -- Work description
+  work_description TEXT,
+  project_code VARCHAR,
+  task_code VARCHAR,
+  
+  -- PTO/Leave
+  is_pto BOOLEAN DEFAULT false,
+  pto_type VARCHAR,  -- 'vacation', 'sick', 'personal', 'holiday'
+  pto_hours NUMERIC(4,2) DEFAULT 0,
+  
+  -- Calculated amounts (snapshot rates from timesheet)
+  bill_amount NUMERIC(10,2),
+  pay_amount NUMERIC(10,2),
+  
+  -- Status
+  status VARCHAR DEFAULT 'entered',  -- 'entered', 'approved', 'adjusted', 'voided'
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  
+  -- Constraints
+  CONSTRAINT valid_hours_entry CHECK (
+    regular_hours >= 0 AND overtime_hours >= 0 AND double_time_hours >= 0
+  ),
+  CONSTRAINT valid_work_date CHECK (
+    work_date >= (SELECT period_start FROM timesheets WHERE id = timesheet_id) AND
+    work_date <= (SELECT period_end FROM timesheets WHERE id = timesheet_id)
+  )
+);
+
+-- Indexes
+CREATE INDEX idx_timesheet_entries_timesheet ON timesheet_entries(timesheet_id);
+CREATE INDEX idx_timesheet_entries_date ON timesheet_entries(work_date);
+
+-- Unique: one entry per day per timesheet
+CREATE UNIQUE INDEX idx_timesheet_entries_unique_date 
+ON timesheet_entries(timesheet_id, work_date);
+```
+
+### Timesheet Approvals Table (Approval History)
+
+```sql
+CREATE TABLE timesheet_approvals (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  timesheet_id UUID NOT NULL REFERENCES timesheets(id) ON DELETE CASCADE,
+  
+  -- Approval level
+  approval_level INTEGER NOT NULL,  -- 1, 2, 3... for multi-level approval
+  approval_type VARCHAR NOT NULL,  -- 'client', 'internal', 'manager', 'finance'
+  
+  -- Who should approve
+  required_approver_type VARCHAR,  -- 'user', 'contact', 'role'
+  required_approver_id UUID,  -- user_id or contact_id
+  required_role VARCHAR,  -- 'hiring_manager', 'hr', 'finance'
+  
+  -- Approval decision
+  decision VARCHAR,  -- 'pending', 'approved', 'rejected', 'delegated'
+  decision_at TIMESTAMPTZ,
+  
+  -- Who approved
+  decided_by_user_id UUID REFERENCES user_profiles(id),
+  decided_by_contact_id UUID REFERENCES contacts(id),
+  
+  -- Delegation
+  delegated_to_user_id UUID REFERENCES user_profiles(id),
+  delegated_at TIMESTAMPTZ,
+  delegation_reason TEXT,
+  
+  -- Feedback
+  notes TEXT,
+  
+  -- Reminder tracking
+  reminder_sent_at TIMESTAMPTZ,
+  reminder_count INTEGER DEFAULT 0,
+  escalated_at TIMESTAMPTZ,
+  escalated_to UUID,
+  
+  -- Due date
+  due_at TIMESTAMPTZ,
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL
+);
+
+-- Indexes
+CREATE INDEX idx_timesheet_approvals_timesheet ON timesheet_approvals(timesheet_id);
+CREATE INDEX idx_timesheet_approvals_pending ON timesheet_approvals(decision, due_at) WHERE decision = 'pending';
+CREATE INDEX idx_timesheet_approvals_user ON timesheet_approvals(required_approver_id) WHERE required_approver_type = 'user' AND decision = 'pending';
+```
+
+### Timesheet Adjustments Table
+
+```sql
+-- Track any adjustments made to timesheets after approval
+CREATE TABLE timesheet_adjustments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  timesheet_id UUID NOT NULL REFERENCES timesheets(id) ON DELETE CASCADE,
+  
+  -- What was adjusted
+  adjustment_type VARCHAR NOT NULL,  -- 'hours', 'rate', 'expense', 'billing'
+  
+  -- Original values
+  original_value JSONB NOT NULL,
+  
+  -- New values
+  adjusted_value JSONB NOT NULL,
+  
+  -- Reason
+  reason TEXT NOT NULL,
+  
+  -- Approval
+  approved_by UUID REFERENCES user_profiles(id),
+  approved_at TIMESTAMPTZ,
+  
+  -- Financial impact
+  bill_amount_change NUMERIC(10,2),
+  pay_amount_change NUMERIC(10,2),
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  created_by UUID REFERENCES user_profiles(id)
+);
+
+CREATE INDEX idx_timesheet_adjustments_timesheet ON timesheet_adjustments(timesheet_id);
+```
+
+### Timesheet Expenses Table
+
+```sql
+-- Expenses submitted with timesheets
+CREATE TABLE timesheet_expenses (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  timesheet_id UUID NOT NULL REFERENCES timesheets(id) ON DELETE CASCADE,
+  
+  -- Expense details
+  expense_date DATE NOT NULL,
+  expense_category VARCHAR NOT NULL,  -- 'travel', 'lodging', 'meals', 'supplies', 'other'
+  description TEXT NOT NULL,
+  amount NUMERIC(10,2) NOT NULL,
+  currency VARCHAR DEFAULT 'USD',
+  
+  -- Billable
+  is_billable BOOLEAN DEFAULT true,
+  markup_percentage NUMERIC(5,2) DEFAULT 0,
+  bill_amount NUMERIC(10,2),  -- amount * (1 + markup)
+  
+  -- Receipt
+  receipt_document_id UUID REFERENCES documents(id),
+  receipt_url VARCHAR,
+  
+  -- Approval
+  status VARCHAR DEFAULT 'pending',  -- 'pending', 'approved', 'rejected'
+  approved_by UUID REFERENCES user_profiles(id),
+  approved_at TIMESTAMPTZ,
+  rejection_reason TEXT,
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL
+);
+
+CREATE INDEX idx_timesheet_expenses_timesheet ON timesheet_expenses(timesheet_id);
+```
+
+### Timesheet Templates Table
+
+```sql
+-- Templates for recurring timesheets
+CREATE TABLE timesheet_templates (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  
+  -- Template identity
+  template_name VARCHAR NOT NULL,
+  template_code VARCHAR,
+  
+  -- Default entries
+  default_entries JSONB,
+  /* Example:
+  [
+    { "day_of_week": 1, "regular_hours": 8, "work_description": "Standard workday" },
+    { "day_of_week": 2, "regular_hours": 8, "work_description": "Standard workday" },
+    ...
+  ]
+  */
+  
+  -- Default hours
+  default_weekly_hours INTEGER DEFAULT 40,
+  
+  -- Applicability
+  applies_to_client_id UUID REFERENCES companies(id),
+  applies_to_placement_type VARCHAR,
+  
+  -- Status
+  is_active BOOLEAN DEFAULT true,
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  created_by UUID REFERENCES user_profiles(id)
+);
+```
+
+## Approval Workflow Configuration
+
+```sql
+-- Define approval workflows per client/placement
+CREATE TABLE timesheet_approval_workflows (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  
+  -- Applicability
+  client_company_id UUID REFERENCES companies(id),  -- NULL = org default
+  
+  -- Workflow name
+  workflow_name VARCHAR NOT NULL,
+  
+  -- Approval levels
+  approval_levels JSONB NOT NULL,
+  /* Example:
+  [
+    { 
+      "level": 1, 
+      "type": "client", 
+      "approver_type": "contact", 
+      "role": "hiring_manager",
+      "timeout_hours": 72,
+      "escalate_to": "hr_contact"
+    },
+    { 
+      "level": 2, 
+      "type": "internal", 
+      "approver_type": "role", 
+      "role": "operations_manager",
+      "timeout_hours": 24
+    }
+  ]
+  */
+  
+  -- Auto-approve settings
+  auto_approve_if_unchanged BOOLEAN DEFAULT false,
+  auto_approve_hours_threshold NUMERIC(4,2),  -- Auto-approve if <= this
+  
+  -- Status
+  is_active BOOLEAN DEFAULT true,
+  is_default BOOLEAN DEFAULT false,
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  created_by UUID REFERENCES user_profiles(id)
+);
+
+CREATE INDEX idx_timesheet_workflows_client ON timesheet_approval_workflows(client_company_id) WHERE is_active = true;
+```
+
+## Triggers and Functions
+
+```sql
+-- Calculate timesheet totals when entries change
+CREATE OR REPLACE FUNCTION calculate_timesheet_totals()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE timesheets t
+  SET 
+    total_regular_hours = COALESCE((
+      SELECT SUM(regular_hours) FROM timesheet_entries WHERE timesheet_id = t.id
+    ), 0),
+    total_overtime_hours = COALESCE((
+      SELECT SUM(overtime_hours) FROM timesheet_entries WHERE timesheet_id = t.id
+    ), 0),
+    total_double_time_hours = COALESCE((
+      SELECT SUM(double_time_hours) FROM timesheet_entries WHERE timesheet_id = t.id
+    ), 0),
+    total_hours = COALESCE((
+      SELECT SUM(total_hours) FROM timesheet_entries WHERE timesheet_id = t.id
+    ), 0),
+    total_billable_hours = COALESCE((
+      SELECT SUM(total_hours) FROM timesheet_entries WHERE timesheet_id = t.id AND is_billable = true
+    ), 0),
+    total_non_billable_hours = COALESCE((
+      SELECT SUM(total_hours) FROM timesheet_entries WHERE timesheet_id = t.id AND is_billable = false
+    ), 0),
+    bill_amount = COALESCE((
+      SELECT SUM(
+        (regular_hours * t.regular_bill_rate) +
+        (overtime_hours * COALESCE(t.ot_bill_rate, t.regular_bill_rate * 1.5)) +
+        (double_time_hours * COALESCE(t.dt_bill_rate, t.regular_bill_rate * 2))
+      ) FROM timesheet_entries WHERE timesheet_id = t.id AND is_billable = true
+    ), 0),
+    pay_amount = COALESCE((
+      SELECT SUM(
+        (regular_hours * t.regular_pay_rate) +
+        (overtime_hours * COALESCE(t.ot_pay_rate, t.regular_pay_rate * 1.5)) +
+        (double_time_hours * COALESCE(t.dt_pay_rate, t.regular_pay_rate * 2))
+      ) FROM timesheet_entries WHERE timesheet_id = t.id
+    ), 0),
+    updated_at = now()
+  WHERE t.id = NEW.timesheet_id;
+  
+  -- Update gross margin
+  UPDATE timesheets
+  SET gross_margin = bill_amount - pay_amount
+  WHERE id = NEW.timesheet_id;
+  
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_calculate_timesheet_totals
+AFTER INSERT OR UPDATE OR DELETE ON timesheet_entries
+FOR EACH ROW EXECUTE FUNCTION calculate_timesheet_totals();
+```
+
+## Acceptance Criteria
+
+### Schema Implementation
+- [ ] Create `timesheets` table
+- [ ] Create `timesheet_entries` table
+- [ ] Create `timesheet_approvals` table
+- [ ] Create `timesheet_adjustments` table
+- [ ] Create `timesheet_expenses` table
+- [ ] Create `timesheet_templates` table
+- [ ] Create `timesheet_approval_workflows` table
+- [ ] Create calculation triggers
+- [ ] All indexes created
+- [ ] RLS policies enforced
+
+### Workflow Implementation
+- [ ] Draft → Submitted flow working
+- [ ] Client approval flow working
+- [ ] Internal approval flow working
+- [ ] Rejection and revision flow working
+- [ ] Multi-level approval working
+- [ ] Auto-approve rules working
+
+### Financial Calculations
+- [ ] Regular/OT/DT hours calculated correctly
+- [ ] Bill amounts calculated correctly
+- [ ] Pay amounts calculated correctly
+- [ ] Expense billable amounts calculated
+- [ ] Gross margin calculated
+
+### Integration
+- [ ] Placement rates applied correctly
+- [ ] Invoice generation ready (for INVOICES-01)
+- [ ] Payroll integration ready
+- [ ] Activity logging working
+
+### Frontend Requirements
+- [ ] Consultant timesheet entry portal
+- [ ] Client approval portal
+- [ ] Internal approval dashboard
+- [ ] Timesheet history view
+- [ ] Expense submission
+- [ ] Adjustment tracking
+
+---
+
+## Technical Context
+
+### Timesheet Lifecycle
+
+```
+┌─────────┐    ┌───────────┐    ┌──────────────────────┐    ┌──────────┐
+│  Draft  │───►│ Submitted │───►│ Pending Client Apprv │───►│ Approved │
+└─────────┘    └───────────┘    └──────────────────────┘    └──────────┘
+                    │                      │                      │
+                    │                      ▼                      ▼
+                    │               ┌──────────────┐        ┌───────────┐
+                    │               │   Rejected   │        │ Processed │
+                    │               └──────────────┘        └───────────┘
+                    │                      │
+                    └──────────────────────┘
+                         (revision loop)
+```
+
+### Rate Application
+
+```
+Rates from Placement (at submission time):
+├── regular_bill_rate = $100/hr
+├── regular_pay_rate = $70/hr
+├── ot_bill_rate = $150/hr (1.5x)
+├── ot_pay_rate = $105/hr (1.5x)
+├── dt_bill_rate = $200/hr (2x)
+└── dt_pay_rate = $140/hr (2x)
+
+Entry Calculation:
+├── 40 regular hours × $100 = $4,000 billed
+├── 5 OT hours × $150 = $750 billed
+├── Total Bill = $4,750
+├── Total Pay = $2,800 + $525 = $3,325
+└── Gross Margin = $1,425 (30%)
+```
+
+---
+
+## Notes
+
+This system is **critical for staffing operations**:
+
+1. **Revenue Basis**: Timesheets drive invoicing
+2. **Payroll Basis**: Timesheets drive consultant pay
+3. **Compliance**: Proper hour tracking for labor laws
+4. **Client Satisfaction**: Easy approval workflow
+5. **Financial Accuracy**: Rate snapshots prevent disputes
+6. **Audit Trail**: Full history of submissions and approvals
+
+---
+
+## RLS Policies
+
+```sql
+-- timesheets table RLS
+ALTER TABLE timesheets ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "timesheets_org_isolation" ON timesheets
+  FOR ALL USING (org_id = auth.org_id());
+
+-- timesheet_entries table RLS
+ALTER TABLE timesheet_entries ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "timesheet_entries_org_isolation" ON timesheet_entries
+  FOR ALL USING (org_id = auth.org_id());
+
+-- timesheet_approvals table RLS
+ALTER TABLE timesheet_approvals ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "timesheet_approvals_org_isolation" ON timesheet_approvals
+  FOR ALL USING (org_id = auth.org_id());
+
+-- timesheet_adjustments table RLS
+ALTER TABLE timesheet_adjustments ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "timesheet_adjustments_org_isolation" ON timesheet_adjustments
+  FOR ALL USING (org_id = auth.org_id());
+
+-- timesheet_expenses table RLS
+ALTER TABLE timesheet_expenses ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "timesheet_expenses_org_isolation" ON timesheet_expenses
+  FOR ALL USING (org_id = auth.org_id());
+
+-- timesheet_templates table RLS
+ALTER TABLE timesheet_templates ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "timesheet_templates_org_isolation" ON timesheet_templates
+  FOR ALL USING (org_id = auth.org_id());
+
+-- timesheet_approval_workflows table RLS
+ALTER TABLE timesheet_approval_workflows ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "timesheet_workflows_org_isolation" ON timesheet_approval_workflows
+  FOR ALL USING (org_id = auth.org_id());
+```
+
+---
+
+## Migration Template
+
+### Phase 1: Schema Creation
+
+```sql
+-- Create tables in order
+CREATE TABLE timesheets (...);
+CREATE TABLE timesheet_entries (...);
+CREATE TABLE timesheet_approvals (...);
+CREATE TABLE timesheet_adjustments (...);
+CREATE TABLE timesheet_expenses (...);
+CREATE TABLE timesheet_templates (...);
+CREATE TABLE timesheet_approval_workflows (...);
+
+-- Create all indexes
+CREATE INDEX idx_timesheets_placement ON timesheets(placement_id) WHERE deleted_at IS NULL;
+-- ... all other indexes
+
+-- Create triggers
+CREATE TRIGGER trg_calculate_timesheet_totals ...;
+
+-- Enable RLS
+ALTER TABLE timesheets ENABLE ROW LEVEL SECURITY;
+-- ... all policies
+```
+
+### Phase 2: Seed Data
+
+```sql
+-- Seed default approval workflows
+INSERT INTO timesheet_approval_workflows (org_id, workflow_name, approval_levels, is_default)
+SELECT 
+  o.id,
+  'Standard Approval',
+  '[{"level": 1, "type": "client", "approver_type": "role", "role": "hiring_manager"}]'::jsonb,
+  true
+FROM organizations o;
+
+-- Seed timesheet templates
+INSERT INTO timesheet_templates (org_id, template_name, default_weekly_hours, is_active)
+SELECT o.id, 'Standard 40-Hour Week', 40, true
+FROM organizations o;
+```
+
+### Phase 3: tRPC Router Creation
+
+```typescript
+// src/server/routers/timesheets.ts
+export const timesheetsRouter = router({
+  create: orgProtectedProcedure.input(...).mutation(...),
+  submit: orgProtectedProcedure.input(...).mutation(...),
+  approve: orgProtectedProcedure.input(...).mutation(...),
+  reject: orgProtectedProcedure.input(...).mutation(...),
+  list: orgProtectedProcedure.input(...).query(...),
+  getByPlacement: orgProtectedProcedure.input(...).query(...),
+  getPendingApprovals: orgProtectedProcedure.query(...),
+});
+```
+
+---
+
+## Rollback Plan
+
+### Schema Rollback
+```sql
+-- Drop triggers first
+DROP TRIGGER IF EXISTS trg_calculate_timesheet_totals ON timesheet_entries;
+DROP FUNCTION IF EXISTS calculate_timesheet_totals;
+
+-- Drop tables in reverse order
+DROP TABLE IF EXISTS timesheet_approval_workflows;
+DROP TABLE IF EXISTS timesheet_templates;
+DROP TABLE IF EXISTS timesheet_expenses;
+DROP TABLE IF EXISTS timesheet_adjustments;
+DROP TABLE IF EXISTS timesheet_approvals;
+DROP TABLE IF EXISTS timesheet_entries;
+DROP TABLE IF EXISTS timesheets;
+```
+
+### Full Rollback Procedure
+1. Stop application deployments
+2. Verify no timesheets in 'processing' or 'submitted' status
+3. Export any critical timesheet data for manual processing
+4. Execute schema rollback SQL
+5. Restore tRPC router to previous git commit
+6. Restore UI components to previous git commit
+7. Notify operations team of manual timesheet processing required
+8. Document incident and root cause
+
+### Data Preservation
+```sql
+-- Before rollback, export timesheets for manual processing
+COPY (
+  SELECT 
+    t.*, 
+    c.first_name, c.last_name, c.email,
+    co.name as client_name,
+    p.id as placement_id
+  FROM timesheets t
+  JOIN contacts c ON c.id = t.contact_id
+  JOIN companies co ON co.id = t.client_company_id
+  JOIN placements p ON p.id = t.placement_id
+  WHERE t.status NOT IN ('void', 'processed')
+) TO '/tmp/timesheets_backup.csv' WITH CSV HEADER;
+```

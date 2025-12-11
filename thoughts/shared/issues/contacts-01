@@ -1,0 +1,625 @@
+# ISSUE: Enterprise-Grade Contact System Redesign
+
+**Issue ID:** CONTACTS-01
+**Created:** 2025-12-10
+**Status:** Open
+**Priority:** Critical
+**Type:** Feature/Enhancement (Epic)
+**Reporter:** User
+**Blocks:** Multiple downstream features dependent on contact architecture
+
+---
+
+## Summary
+
+Comprehensive redesign of the contacts system to make it enterprise-grade for ATS/CRM in the recruiting industry. The current single-table design with a simple `subtype` field is insufficient for complex recruiting workflows. This epic introduces a Person/Company category split, rich subtypes for each category, centralized addresses, relationship tracking, and 15+ supporting tables to handle skills, work history, compliance, rate cards, and more.
+
+## Current State
+
+- Single `contacts` table with ~150 columns
+- Single `subtype` field (mutually exclusive roles)
+- Embedded address fields (not normalized)
+- Limited relationship tracking (contact can only have one company)
+- Mixed `contact_type` (legacy) and `subtype` (new) fields causing confusion
+- No support for a person having multiple concurrent roles
+
+## Problem Description
+
+The recruiting industry requires contacts to represent complex, multi-faceted relationships:
+
+1. **A person can be multiple things simultaneously**: A placed candidate becomes a hiring manager at the client, who also refers candidates
+2. **Companies have different roles**: A company can be a client AND a vendor (they buy from us AND supply candidates)
+3. **Missing enterprise features**: Rate cards, compliance tracking, agreements, work history verification
+4. **No proper address management**: Addresses embedded in contact, no billing/shipping distinction
+5. **Limited relationship modeling**: Can't properly track "John works at Acme AND previously worked at Beta Corp"
+
+## Expected Behavior / Acceptance Criteria
+
+### 1. Core Architecture
+
+- [ ] Contacts table has `category` field: `'person'` | `'company'`
+- [ ] Contacts table has `subtype` field for primary classification
+- [ ] Contacts table has `status` field for state within subtype
+- [ ] All contacts have `owner_id`, `created_by`, `updated_by` audit fields
+- [ ] All contacts reference `primary_address_id` (FK to addresses table)
+- [ ] Full-text search via `search_vector` tsvector column
+
+### 2. Person Subtypes
+
+All person subtypes implemented with appropriate status values:
+
+| Subtype | Status Values |
+|---------|---------------|
+| - [ ] `person_prospect` | new, contacted, engaged, unresponsive |
+| - [ ] `person_lead` | new, contacted, warm, hot, qualified, converted, lost |
+| - [ ] `person_candidate` | active, passive, interviewing, offered, placed, withdrawn |
+| - [ ] `person_bench_internal` | available, interviewing, offered, starting, placed |
+| - [ ] `person_bench_vendor` | available, submitted, interviewing, offered, starting |
+| - [ ] `person_placed` | active, ending_soon, extended, completed |
+| - [ ] `person_client_contact` | active, inactive, former |
+| - [ ] `person_hiring_manager` | active, inactive |
+| - [ ] `person_hr_contact` | active, inactive |
+| - [ ] `person_vendor_contact` | active, inactive |
+| - [ ] `person_employee` | active, on_leave, terminated |
+| - [ ] `person_referral_source` | active, inactive |
+| - [ ] `person_alumni` | available, not_available, do_not_contact |
+
+### 3. Company Subtypes
+
+All company subtypes implemented with appropriate status values:
+
+| Subtype | Status Values |
+|---------|---------------|
+| - [ ] `company_prospect` | new, contacted, engaged, unresponsive |
+| - [ ] `company_lead` | new, warm, hot, qualified, converted, lost |
+| - [ ] `company_client` | active, dormant, former, blacklisted |
+| - [ ] `company_vendor` | pending, approved, preferred, suspended, blacklisted |
+| - [ ] `company_msp` | active, inactive |
+| - [ ] `company_vms` | active, inactive |
+| - [ ] `company_end_client` | active, inactive |
+| - [ ] `company_agency` | partner, competitor, both |
+| - [ ] `company_institution` | active, inactive |
+
+### 4. Person-Specific Fields
+
+#### Universal Person Fields
+- [ ] `first_name`, `middle_name`, `last_name`, `suffix`, `preferred_name`
+- [ ] `full_name` (generated/computed column)
+- [ ] `pronouns`, `date_of_birth`, `photo_url`
+- [ ] `secondary_email`, `work_email`, `mobile_phone`, `work_phone`, `home_phone`
+- [ ] `linkedin_url`, `twitter_url`, `github_url`, `portfolio_url`
+- [ ] `current_company_id` (FK to company contact), `current_title`, `current_department`
+- [ ] `timezone`, `language`, `preferred_contact_method`
+- [ ] `best_time_to_contact`, `do_not_call_before`, `do_not_call_after`
+
+#### Prospect/Lead Fields (person_prospect, person_lead)
+- [ ] `lead_score` (0-100)
+- [ ] `lead_source`, `lead_campaign_id`
+- [ ] BANT scoring: `lead_bant_budget`, `lead_bant_authority`, `lead_bant_need`, `lead_bant_timeline` (each 0-25)
+- [ ] `lead_bant_total` (generated column, max 100)
+- [ ] `lead_qualification_result`, `lead_qualification_notes`, `lead_qualified_at`, `lead_qualified_by`
+- [ ] `lead_converted_at`, `lead_converted_to_type`, `lead_converted_to_id`
+
+#### Source Tracking & Duplicate Detection Fields
+- [ ] `contact_source VARCHAR` ('job_board', 'referral', 'linkedin', 'direct', 'vendor', 'import', 'website', 'event')
+- [ ] `contact_source_detail TEXT` (e.g., "LinkedIn recruiter outreach", "Indeed Apply", "Referral from John Smith")
+- [ ] `contact_source_date DATE`
+- [ ] `original_resume_id UUID REFERENCES documents(id)` (first resume uploaded)
+- [ ] `is_potential_duplicate BOOLEAN DEFAULT false`
+- [ ] `duplicate_of_contact_id UUID REFERENCES contacts(id)` (if confirmed duplicate, points to master)
+- [ ] `duplicate_confidence NUMERIC(3,2)` (0.00-1.00 confidence score from matching algorithm)
+- [ ] `duplicate_detection_method VARCHAR` ('email_match', 'phone_match', 'name_fuzzy', 'resume_hash', 'manual')
+- [ ] `duplicate_reviewed_at TIMESTAMPTZ`
+- [ ] `duplicate_reviewed_by UUID REFERENCES user_profiles(id)`
+
+#### Candidate Fields (person_candidate, person_alumni)
+- [ ] `candidate_status`, `candidate_availability`, `candidate_earliest_start`, `candidate_notice_period_days`
+- [ ] Work authorization: `candidate_work_auth_type`, `candidate_work_auth_expiry`, `candidate_work_auth_sponsor_needed`
+- [ ] Compensation: `candidate_current_rate_hourly`, `candidate_desired_rate_hourly`, `candidate_current_salary`, `candidate_desired_salary`, `candidate_rate_negotiable`
+- [ ] Location: `candidate_current_location`, `candidate_willing_to_relocate`, `candidate_preferred_locations[]`, `candidate_remote_preference`
+- [ ] Experience: `candidate_years_experience`, `candidate_headline`, `candidate_summary`, `candidate_primary_skill`
+- [ ] Documents: `candidate_resume_url`, `candidate_resume_updated_at`, `candidate_cover_letter_url`
+- [ ] Assessment: `candidate_recruiter_rating` (1-5), `candidate_recruiter_notes`, `candidate_interview_notes`
+- [ ] Hotlist: `candidate_is_on_hotlist`, `candidate_hotlist_added_at`, `candidate_hotlist_added_by`, `candidate_hotlist_reason`, `candidate_priority`
+- [ ] Exclusions: `candidate_do_not_submit_to[]` (array of client company IDs)
+
+#### Bench Fields (person_bench_internal, person_bench_vendor)
+- [ ] `bench_type` ('w2_internal', 'w2_vendor', '1099', 'c2c')
+- [ ] `bench_status`, `bench_vendor_id`, `bench_vendor_contact_id`
+- [ ] `bench_start_date`, `bench_target_end_date`, `bench_max_bench_days`
+- [ ] Rates: `bench_bill_rate`, `bench_pay_rate`, `bench_markup_percentage`, `bench_cost_per_day`
+- [ ] History: `bench_total_placements`, `bench_last_placement_end`, `bench_utilization_rate`
+
+#### Client Contact Fields (person_client_contact, person_hiring_manager, person_hr_contact)
+- [ ] `client_contact_company_id`, `client_contact_role`
+- [ ] Decision authority: `client_contact_decision_authority`, `client_contact_budget_authority`, `client_contact_contract_signer`
+- [ ] Relationship: `client_contact_relationship_strength` (1-10), `client_contact_relationship_owner_id`
+- [ ] `client_contact_first_meeting_date`, `client_contact_last_meeting_date`, `client_contact_meeting_cadence`
+- [ ] Preferences: `client_contact_preferred_vendors[]`, `client_contact_hiring_style`, `client_contact_interview_style`
+
+#### Vendor Contact Fields (person_vendor_contact)
+- [ ] `vendor_contact_company_id`, `vendor_contact_role`
+- [ ] `vendor_contact_specialty_areas[]`
+- [ ] `vendor_contact_response_rating`, `vendor_contact_quality_rating` (1-5)
+
+#### Employee Fields (person_employee)
+- [ ] `employee_id`, `employee_hire_date`, `employee_department`, `employee_title`
+- [ ] `employee_manager_id`, `employee_team_id`, `employee_status`, `employee_termination_date`
+
+### 5. Company-Specific Fields
+
+#### Universal Company Fields
+- [ ] `company_name`, `legal_name`, `dba_name`, `trade_names[]`
+- [ ] `company_type` ('corporation', 'llc', 'partnership', 'sole_prop', 'nonprofit')
+- [ ] `company_structure` ('public', 'private', 'subsidiary', 'franchise')
+- [ ] Industry: `industry_id`, `industry_secondary_id`, `naics_code`, `sic_code`
+- [ ] Size: `employee_count`, `employee_count_range`, `annual_revenue`, `annual_revenue_range`
+- [ ] Info: `founded_year`, `website_url`, `linkedin_url`, `twitter_url`, `logo_url`, `description`
+- [ ] Hierarchy: `parent_company_id`, `ultimate_parent_id`, `subsidiary_count`
+- [ ] Legal: `ein_tax_id` (encrypted), `duns_number`, `registration_state`, `registration_country`
+
+#### Company Lead Fields
+- [ ] `lead_estimated_annual_value`, `lead_estimated_positions_per_year`, `lead_primary_hiring_needs[]`
+
+#### Client Fields (company_client)
+- [ ] `client_status`, `client_tier`, `client_segment`
+- [ ] Dates: `client_prospect_date`, `client_converted_date`, `client_first_placement_date`, `client_last_active_date`, `client_dormant_since`, `client_churned_date`, `client_churn_reason`
+- [ ] Contracts: `client_contract_type`, `client_contract_start_date`, `client_contract_end_date`, `client_contract_auto_renew`, `client_contract_url`
+- [ ] Financials: `client_payment_terms`, `client_credit_limit`, `client_credit_status`, `client_default_markup`, `client_default_bill_rate`
+- [ ] VMS/MSP: `client_uses_vms`, `client_vms_system`, `client_vms_supplier_id`, `client_msp_id`
+- [ ] Assignments: `client_team_lead_id`, `client_recruiter_ids[]`, `client_open_positions_count`, `client_active_placements_count`, `client_total_placements_count`, `client_lifetime_revenue`
+
+#### Vendor Fields (company_vendor)
+- [ ] `vendor_status`, `vendor_tier`, `vendor_type`
+- [ ] Capabilities: `vendor_specialty_areas[]`, `vendor_geographic_coverage[]`, `vendor_resource_types[]`
+- [ ] Terms: `vendor_payment_terms`, `vendor_default_markup`, `vendor_referral_fee_percentage`
+- [ ] Compliance: `vendor_approved_date`, `vendor_approved_by`, `vendor_last_review_date`, `vendor_next_review_date`
+- [ ] `vendor_insurance_verified`, `vendor_insurance_expiry_date`, `vendor_w9_on_file`, `vendor_w9_received_date`
+- [ ] `vendor_compliance_status`, `vendor_background_check_compliant`, `vendor_drug_test_compliant`
+- [ ] Performance: `vendor_quality_rating`, `vendor_response_rating`, `vendor_fill_rate`, `vendor_submissions_count`, `vendor_placements_count`, `vendor_active_resources_count`
+
+#### MSP/VMS Fields (company_msp, company_vms)
+- [ ] `msp_program_name`, `msp_managed_clients[]`, `msp_our_tier_status`, `msp_contract_start_date`, `msp_contract_end_date`, `msp_fee_percentage`
+- [ ] `vms_platform_name`, `vms_integration_status`
+
+#### Agency Fields (company_agency)
+- [ ] `agency_relationship`, `agency_partnership_type`, `agency_partnership_agreement`
+- [ ] `agency_do_not_recruit_from`, `agency_specialty_areas[]`, `agency_geographic_focus[]`
+
+### 6. Supporting Tables
+
+#### addresses (Centralized Address Management)
+- [ ] Table created with: `id`, `org_id`, `contact_id`
+- [ ] `address_type` ('primary', 'billing', 'shipping', 'work', 'home', 'legal', 'mailing')
+- [ ] `is_primary` boolean
+- [ ] Address components: `street_line_1`, `street_line_2`, `city`, `state_province`, `postal_code`, `country`, `country_code`
+- [ ] Validation: `is_verified`, `verified_at`, `verification_source`
+- [ ] Geo: `latitude`, `longitude`, `timezone`
+- [ ] `formatted_address` (computed full string)
+- [ ] Unique constraint on `(contact_id, address_type)` where not deleted
+
+#### contact_relationships (Person↔Company, Person↔Person)
+- [ ] Table created with: `id`, `org_id`, `source_contact_id`, `target_contact_id`
+- [ ] `relationship_type` ('works_at', 'worked_at', 'owns', 'founded', 'board_member', 'reports_to', 'manages', 'referred_by', 'knows', 'mentors', 'spouse_of')
+- [ ] Employment context: `title_at_company`, `department_at_company`, `start_date`, `end_date`, `is_current`
+- [ ] `relationship_strength` (1-10), `notes`
+- [ ] Unique constraint on `(source_contact_id, target_contact_id, relationship_type)` where not deleted
+
+#### contact_roles (Multiple Concurrent Roles)
+- [ ] Table created with: `id`, `org_id`, `contact_id`
+- [ ] `role_type`, `role_status`
+- [ ] `context_company_id`, `context_details` (jsonb)
+- [ ] `role_started_at`, `role_ended_at`
+- [ ] Unique constraint on `(contact_id, role_type, context_company_id)` where role not ended
+
+#### contact_skills (Candidate Skill Matrix)
+- [ ] Table created with: `id`, `org_id`, `contact_id`
+- [ ] `skill_id` (FK to skills master), `skill_name`, `skill_category`
+- [ ] `proficiency_level` (1-5), `years_experience`, `last_used_date`, `is_primary`
+- [ ] Verification: `is_verified`, `verified_by`, `verified_at`, `verification_method`
+
+#### contact_work_history (Employment History)
+- [ ] Table created with: `id`, `org_id`, `contact_id`
+- [ ] Company: `company_name`, `company_contact_id` (optional FK)
+- [ ] Position: `title`, `department`, `employment_type`
+- [ ] Dates: `start_date`, `end_date`, `is_current`
+- [ ] Details: `description`, `achievements`, `reason_for_leaving`, `manager_name`, `manager_contact`
+- [ ] Location: `location`, `is_remote`
+- [ ] Verification: `is_verified`, `verified_by`, `verified_at`
+- [ ] `display_order` for UI ordering
+
+#### contact_education
+- [ ] Table created with: `id`, `org_id`, `contact_id`
+- [ ] Institution: `institution_name`, `institution_type`
+- [ ] Degree: `degree_type`, `field_of_study`, `major`, `minor`
+- [ ] Dates: `start_date`, `end_date`, `graduation_date`, `is_completed`
+- [ ] Performance: `gpa`, `gpa_scale`, `honors`
+- [ ] `activities`, `achievements`
+- [ ] Verification: `is_verified`, `verified_by`
+- [ ] `display_order`
+
+#### contact_certifications
+- [ ] Table created with: `id`, `org_id`, `contact_id`
+- [ ] `certification_name`, `issuing_organization`
+- [ ] `issue_date`, `expiry_date`, `is_active`
+- [ ] `credential_id`, `verification_url`
+- [ ] `renewal_required`, `renewal_reminder_sent_at`
+
+#### contact_rate_cards (Bill/Pay Rates by Context)
+- [ ] Table created with: `id`, `org_id`, `contact_id`
+- [ ] Context: `client_id`, `skill_id`, `job_id` (optional FKs for rate specificity)
+- [ ] Rates: `bill_rate_hourly`, `pay_rate_hourly`, `markup_percentage`, `overtime_multiplier`
+- [ ] Validity: `effective_date`, `expiry_date`, `is_active`
+- [ ] Approval: `approved_by`, `approved_at`, `notes`
+
+#### contact_agreements (MSAs, Contracts for Companies)
+- [ ] Table created with: `id`, `org_id`, `contact_id`
+- [ ] `agreement_type` ('msa', 'nda', 'sow', 'rate_card', 'sla', 'vendor_agreement')
+- [ ] `agreement_name`
+- [ ] Dates: `effective_date`, `expiry_date`, `auto_renew`, `renewal_notice_days`
+- [ ] `status` ('draft', 'pending', 'active', 'expired', 'terminated')
+- [ ] Documents: `document_url`, `signed_document_url`
+- [ ] Signatories: `our_signer_id`, `our_signed_at`, `their_signer_name`, `their_signed_at`
+- [ ] `terms` (jsonb for flexible term storage)
+
+#### contact_compliance (Insurance, W9, Background Checks)
+- [ ] Table created with: `id`, `org_id`, `contact_id`
+- [ ] `compliance_type` (company: 'general_liability', 'workers_comp', 'e_o', 'cyber', 'w9', 'coi'; person: 'background_check', 'drug_test', 'i9', 'w4', 'direct_deposit')
+- [ ] `status` ('pending', 'received', 'verified', 'expiring', 'expired')
+- [ ] Documents: `document_url`, `document_received_at`
+- [ ] Validity: `effective_date`, `expiry_date`
+- [ ] Verification: `verified_by`, `verified_at`, `verification_notes`
+- [ ] Insurance specifics: `policy_number`, `coverage_amount`, `insurance_carrier`
+- [ ] Alerts: `expiry_alert_sent_at`
+
+#### contact_pipeline_stages (Sales/Recruiting Funnel)
+- [ ] Table created with: `id`, `org_id`, `contact_id`
+- [ ] `pipeline_type` ('sales', 'recruiting', 'vendor_onboarding')
+- [ ] `pipeline_id`, `stage_id` (FKs to pipeline definitions)
+- [ ] Tracking: `entered_stage_at`, `expected_close_date`, `probability_percentage`, `expected_value`
+- [ ] Outcome: `is_active`, `outcome` ('won', 'lost', 'stalled'), `outcome_reason`, `outcome_at`
+- [ ] `owner_id`, `notes`
+
+#### contact_campaign_enrollments (Outreach Campaigns)
+- [ ] Table created with: `id`, `org_id`, `contact_id`, `campaign_id`
+- [ ] `status` ('enrolled', 'in_progress', 'paused', 'completed', 'stopped', 'converted')
+- [ ] Sequence: `current_sequence_step`, `sequence_status`, `next_step_scheduled_at`
+- [ ] Engagement metrics: `first_contacted_at`, `last_contacted_at`, `emails_sent`, `emails_opened`, `emails_clicked`, `calls_made`, `calls_connected`, `linkedin_messages_sent`
+- [ ] Response: `first_response_at`, `last_response_at`, `response_type`, `response_sentiment`
+- [ ] `engagement_score` (0-100)
+- [ ] Conversion: `converted_at`, `converted_to_type`, `converted_to_id`
+- [ ] Opt-out: `unsubscribed_at`, `unsubscribe_reason`
+- [ ] Audit: `enrolled_at`, `enrolled_by`, `stopped_at`, `stopped_by`, `stopped_reason`
+- [ ] Unique constraint on `(contact_id, campaign_id)`
+
+#### contact_communication_preferences
+- [ ] Table created with: `id`, `org_id`, `contact_id`
+- [ ] `channel` ('email', 'phone', 'sms', 'linkedin', 'whatsapp', 'mail')
+- [ ] Opt-in/out: `is_opted_in`, `opted_in_at`, `opted_out_at`, `consent_source`
+- [ ] Preferences: `frequency_preference`, `content_preferences[]`
+- [ ] Deliverability: `bounce_count`, `last_bounce_at`, `complaint_count`, `last_complaint_at`
+- [ ] Unique constraint on `(contact_id, channel)`
+
+#### contact_merge_history (Deduplication Audit)
+- [ ] Table created with: `id`, `org_id`
+- [ ] `survivor_contact_id`, `merged_contact_id` (no FK - record deleted)
+- [ ] `merged_at`, `merged_by`
+- [ ] `field_selections` (jsonb - which fields came from which record)
+- [ ] `merged_contact_snapshot` (jsonb - full backup of deleted record)
+- [ ] `notes`
+
+### 7. Polymorphic Integration
+
+- [ ] Activities table supports `entity_type='contact'` for all contact subtypes
+- [ ] Notes table supports `entity_type='contact'` for all contact subtypes
+- [ ] Documents table supports `entity_type='contact'` for all contact subtypes
+- [ ] Events/History table captures all contact changes for audit trail
+
+### 8. tRPC Router Updates
+
+- [ ] `unified-contacts` router updated to handle all new subtypes
+- [ ] New procedures for each subtype category (persons.*, companies.*)
+- [ ] Subtype conversion procedures (prospect→lead, lead→candidate, etc.)
+- [ ] Relationship CRUD procedures
+- [ ] Role management procedures
+- [ ] Supporting table CRUD (skills, work history, education, certifications, etc.)
+- [ ] Address CRUD with validation
+- [ ] Compliance tracking procedures
+- [ ] Rate card management procedures
+
+### 9. UI Components
+
+- [ ] ContactWorkspace renders correctly for all person subtypes
+- [ ] ContactWorkspace renders correctly for all company subtypes
+- [ ] Sidebar sections adapt based on category and subtype
+- [ ] Address management UI component
+- [ ] Relationship visualization component
+- [ ] Skill matrix editor
+- [ ] Work history timeline
+- [ ] Education editor
+- [ ] Certification tracker
+- [ ] Rate card manager
+- [ ] Compliance dashboard
+- [ ] Contact conversion flow (e.g., prospect → lead → candidate)
+
+### 10. Data Migration
+
+- [ ] Migration script preserves existing contact data
+- [ ] `contact_type` field values migrated to new `subtype` values
+- [ ] Embedded addresses extracted to `addresses` table
+- [ ] Existing relationships preserved in `contact_relationships`
+- [ ] Backward compatibility maintained during transition
+- [ ] Rollback script available
+
+### 11. Testing
+
+- [ ] Unit tests for all new tRPC procedures
+- [ ] Integration tests for subtype conversions
+- [ ] E2E tests for contact creation flows (all subtypes)
+- [ ] E2E tests for contact workspace (all subtypes)
+- [ ] Data migration tests with production-like data
+- [ ] Performance tests for contact queries with relationships
+
+---
+
+## Technical Context
+
+### Architecture Diagram
+
+```
+                                    ┌─────────────────────────────────────┐
+                                    │            CONTACTS                 │
+                                    │  (Central Entity - Single Table)    │
+                                    ├─────────────────────────────────────┤
+                                    │ category: person | company          │
+                                    │ subtype: <specific role>            │
+                                    │ status: <state within role>         │
+                                    └──────────────┬──────────────────────┘
+                                                   │
+              ┌────────────────────────────────────┼────────────────────────────────────┐
+              │                                    │                                    │
+              ▼                                    ▼                                    ▼
+    ┌─────────────────┐                ┌─────────────────────┐              ┌──────────────────┐
+    │   PERSON        │                │   COMPANY           │              │  POLYMORPHIC     │
+    │   SUBTYPES      │                │   SUBTYPES          │              │  TABLES          │
+    │   (13 types)    │                │   (9 types)         │              │                  │
+    └─────────────────┘                └─────────────────────┘              │ activities       │
+              │                                    │                        │ notes            │
+              └──────────────┬─────────────────────┘                        │ documents        │
+                             │                                              │ events/history   │
+         ┌───────────────────┼───────────────────────────────────────────┐  └──────────────────┘
+         │                   │                   │                       │
+         ▼                   ▼                   ▼                       ▼
+┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ┌──────────────────────┐
+│   ADDRESSES     │ │  RELATIONSHIPS  │ │     ROLES       │ │  DOMAIN TABLES       │
+│                 │ │                 │ │                 │ │                      │
+│ Centralized     │ │ Person↔Company  │ │ Multiple        │ │ contact_skills       │
+│ address mgmt    │ │ Person↔Person   │ │ concurrent      │ │ contact_work_history │
+│ with geo        │ │ with dates      │ │ roles per       │ │ contact_education    │
+│                 │ │                 │ │ contact         │ │ contact_certs        │
+└─────────────────┘ └─────────────────┘ └─────────────────┘ │ contact_rate_cards   │
+                                                            │ contact_agreements   │
+                                                            │ contact_compliance   │
+                                                            │ contact_pipeline     │
+                                                            │ contact_campaigns    │
+                                                            │ contact_comm_prefs   │
+                                                            │ contact_merge_history│
+                                                            └──────────────────────┘
+```
+
+### Key Design Decisions
+
+| Decision | Rationale |
+|----------|-----------|
+| Single contacts table | Unified identity for people and companies - no JOINs for basic info |
+| Category + Subtype + Status | Three-level classification for flexibility |
+| Prefixed columns | `candidate_*`, `lead_*`, `client_*` keeps schema discoverable |
+| contact_relationships | Enables many-to-many person↔company without duplicating contacts |
+| contact_roles | Supports one person being candidate + client contact + referrer simultaneously |
+| Centralized addresses | One source of truth, proper geo/validation, shared across subtypes |
+| Polymorphic activities/notes | `entity_type='contact'` pattern already proven |
+| JSONB for extensibility | `custom_fields`, `terms` for client-specific needs |
+
+### Related Files
+
+- Current schema: `supabase/migrations/00000000000000_baseline.sql:13865-14009`
+- Current router: `src/server/routers/unified-contacts.ts`
+- Legacy router: `src/server/routers/crm.ts:3200-3350`
+- Contact workspace: `src/components/contacts/ContactWorkspace.tsx`
+- Section definitions: `src/lib/navigation/entity-sections.ts:357-490`
+- List config: `src/configs/entities/contacts.config.ts`
+
+### Migration Strategy (Phased)
+
+1. **Phase 1 - Schema**: Add new columns and tables without breaking existing code
+2. **Phase 2 - Data**: Migrate existing data to new structure
+3. **Phase 3 - Routers**: Update tRPC procedures to use new schema
+4. **Phase 4 - UI**: Update components to leverage new capabilities
+5. **Phase 5 - Cleanup**: Remove legacy fields and code paths
+
+---
+
+## RLS Policies
+
+```sql
+-- contacts table RLS
+ALTER TABLE contacts ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "contacts_org_isolation" ON contacts
+  FOR ALL USING (org_id = auth.org_id());
+
+CREATE POLICY "contacts_owner_full_access" ON contacts
+  FOR ALL USING (owner_id = auth.uid());
+
+-- addresses table RLS
+ALTER TABLE addresses ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "addresses_org_isolation" ON addresses
+  FOR ALL USING (org_id = auth.org_id());
+
+-- contact_relationships table RLS
+ALTER TABLE contact_relationships ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "relationships_org_isolation" ON contact_relationships
+  FOR ALL USING (org_id = auth.org_id());
+
+-- contact_roles table RLS
+ALTER TABLE contact_roles ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "roles_org_isolation" ON contact_roles
+  FOR ALL USING (org_id = auth.org_id());
+
+-- contact_work_history table RLS
+ALTER TABLE contact_work_history ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "work_history_org_isolation" ON contact_work_history
+  FOR ALL USING (org_id = auth.org_id());
+
+-- contact_education table RLS
+ALTER TABLE contact_education ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "education_org_isolation" ON contact_education
+  FOR ALL USING (org_id = auth.org_id());
+
+-- contact_certifications table RLS
+ALTER TABLE contact_certifications ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "certifications_org_isolation" ON contact_certifications
+  FOR ALL USING (org_id = auth.org_id());
+```
+
+---
+
+## Required Indexes
+
+```sql
+-- Contacts core indexes
+CREATE INDEX idx_contacts_org_category ON contacts(org_id, category) WHERE deleted_at IS NULL;
+CREATE INDEX idx_contacts_org_subtype ON contacts(org_id, subtype) WHERE deleted_at IS NULL;
+CREATE INDEX idx_contacts_org_status ON contacts(org_id, status) WHERE deleted_at IS NULL;
+CREATE INDEX idx_contacts_owner ON contacts(owner_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_contacts_email ON contacts(primary_email) WHERE deleted_at IS NULL;
+CREATE INDEX idx_contacts_search ON contacts USING gin(search_vector);
+CREATE INDEX idx_contacts_company ON contacts(current_company_id) WHERE category = 'person' AND deleted_at IS NULL;
+
+-- Addresses indexes
+CREATE INDEX idx_addresses_contact ON addresses(contact_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_addresses_type ON addresses(contact_id, address_type) WHERE deleted_at IS NULL;
+CREATE INDEX idx_addresses_primary ON addresses(contact_id) WHERE is_primary = true AND deleted_at IS NULL;
+CREATE INDEX idx_addresses_geo ON addresses(latitude, longitude) WHERE latitude IS NOT NULL;
+
+-- Relationships indexes
+CREATE INDEX idx_relationships_source ON contact_relationships(source_contact_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_relationships_target ON contact_relationships(target_contact_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_relationships_type ON contact_relationships(relationship_type) WHERE deleted_at IS NULL;
+CREATE INDEX idx_relationships_current ON contact_relationships(source_contact_id) WHERE is_current = true AND deleted_at IS NULL;
+
+-- Roles indexes
+CREATE INDEX idx_roles_contact ON contact_roles(contact_id) WHERE role_ended_at IS NULL;
+CREATE INDEX idx_roles_type ON contact_roles(role_type) WHERE role_ended_at IS NULL;
+CREATE INDEX idx_roles_company ON contact_roles(context_company_id) WHERE context_company_id IS NOT NULL;
+
+-- Work history indexes
+CREATE INDEX idx_work_history_contact ON contact_work_history(contact_id, start_date DESC);
+CREATE INDEX idx_work_history_current ON contact_work_history(contact_id) WHERE is_current = true;
+
+-- Education indexes
+CREATE INDEX idx_education_contact ON contact_education(contact_id, display_order);
+
+-- Certifications indexes
+CREATE INDEX idx_certifications_contact ON contact_certifications(contact_id);
+CREATE INDEX idx_certifications_expiry ON contact_certifications(expiry_date) WHERE is_active = true;
+```
+
+---
+
+## Rollback Plan
+
+### Phase 1 Rollback (Schema Changes)
+```sql
+-- If Phase 1 fails, drop new columns and tables
+ALTER TABLE contacts DROP COLUMN IF EXISTS category;
+ALTER TABLE contacts DROP COLUMN IF EXISTS subtype;
+-- ... drop other new columns
+
+DROP TABLE IF EXISTS contact_merge_history;
+DROP TABLE IF EXISTS contact_certifications;
+DROP TABLE IF EXISTS contact_education;
+DROP TABLE IF EXISTS contact_work_history;
+DROP TABLE IF EXISTS contact_roles;
+DROP TABLE IF EXISTS contact_relationships;
+DROP TABLE IF EXISTS addresses;
+```
+
+### Phase 2 Rollback (Data Migration)
+```sql
+-- Restore from backup table
+INSERT INTO contacts SELECT * FROM contacts_backup_[timestamp];
+TRUNCATE addresses;
+TRUNCATE contact_relationships;
+-- etc.
+```
+
+### Full Rollback Procedure
+1. Stop application deployments
+2. Execute rollback SQL scripts in reverse order
+3. Restore tRPC router to previous git commit
+4. Restore UI components to previous git commit
+5. Clear any caches
+6. Verify application functionality
+7. Document incident and root cause
+
+---
+
+## Impact
+
+- **Severity**: Critical - Foundation for entire ATS/CRM
+- **Affected Features**: Recruiting, CRM, Vendor Management, Placements, Reporting
+- **Blocked Features**: Multiple downstream features dependent on proper contact architecture
+- **Workaround**: None - current architecture insufficient for enterprise needs
+
+---
+
+## Scope Clarification
+
+**IMPORTANT**: This issue focuses on the **core contact architecture** only. The following supporting tables are **documented here for context** but are **implemented in their respective domain issues**:
+
+| Table | Implemented In | Reason |
+|-------|----------------|--------|
+| `contact_skills` | **SKILLS-01** | Part of unified skills system with skill taxonomy |
+| `contact_compliance` | **COMPLIANCE-01** | Part of unified compliance tracking |
+| `contact_rate_cards` | **RATES-01** | Part of unified rate card system |
+| `contact_agreements` | **CONTRACTS-01** | Part of unified contracts system |
+| `contact_campaign_enrollments` | **CAMPAIGNS-01** | Part of campaign prospect/enrollment system |
+| `contact_communication_preferences` | **COMMS-01** | Part of unified communications system |
+
+**Tables that ARE in-scope for CONTACTS-01:**
+- `contacts` (core table with category/subtype/status)
+- `addresses` (centralized address management)
+- `contact_relationships` (person↔company, person↔person)
+- `contact_roles` (multiple concurrent roles per contact)
+- `contact_work_history` (employment history)
+- `contact_education` (education records)
+- `contact_certifications` (professional certifications)
+- `contact_merge_history` (deduplication audit trail)
+- `contact_pipeline_stages` (sales/recruiting funnel tracking)
+
+This separation ensures:
+1. Each domain issue owns its full vertical slice
+2. No schema conflicts or version mismatches
+3. Clear implementation boundaries
+4. Issues can be implemented in parallel after CONTACTS-01
+
+---
+
+## Notes
+
+This is an epic-level issue that may be broken into sub-tasks during implementation planning. The design has been thoroughly analyzed and represents industry best practices for enterprise ATS/CRM systems in the recruiting/staffing industry.
+
+Key differentiators from current design:
+1. **Person vs Company** as first-class citizens (not just a field)
+2. **Multiple concurrent roles** (a person can be candidate AND client contact)
+3. **Proper relationship modeling** (work history, reporting structures)
+4. **Enterprise compliance** (insurance, W9, background checks)
+5. **Rate card management** (context-specific bill/pay rates)
+6. **Address centralization** (billing, shipping, work, home addresses)
