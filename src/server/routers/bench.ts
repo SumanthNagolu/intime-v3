@@ -24,26 +24,29 @@ const vendorsRouter = router({
       const { orgId } = ctx
       const adminClient = getAdminClient()
 
-      // Total vendors
+      // Total vendors (companies with category='vendor')
       const { count: total } = await adminClient
-        .from('vendors')
+        .from('companies')
         .select('*', { count: 'exact', head: true })
         .eq('org_id', orgId)
+        .eq('category', 'vendor')
         .is('deleted_at', null)
 
       // Active vendors
       const { count: active } = await adminClient
-        .from('vendors')
+        .from('companies')
         .select('*', { count: 'exact', head: true })
         .eq('org_id', orgId)
+        .eq('category', 'vendor')
         .eq('status', 'active')
         .is('deleted_at', null)
 
       // Preferred tier vendors (Tier 1)
       const { count: preferred } = await adminClient
-        .from('vendors')
+        .from('companies')
         .select('*', { count: 'exact', head: true })
         .eq('org_id', orgId)
+        .eq('category', 'vendor')
         .eq('tier', 'preferred')
         .is('deleted_at', null)
 
@@ -80,16 +83,17 @@ const vendorsRouter = router({
       const adminClient = getAdminClient()
 
       let query = adminClient
-        .from('vendors')
-        .select('*, primary_contact:contacts!vendor_id(id, first_name, last_name, email, phone)', { count: 'exact' })
+        .from('companies')
+        .select('*, primary_contact:company_contacts!company_id(id, first_name, last_name, email, phone)', { count: 'exact' })
         .eq('org_id', orgId)
+        .eq('category', 'vendor')
         .is('deleted_at', null)
 
       if (input.search) {
         query = query.or(`name.ilike.%${input.search}%`)
       }
       if (input.type !== 'all') {
-        query = query.eq('type', input.type)
+        query = query.eq('vendor_type', input.type)
       }
       if (input.tier !== 'all') {
         query = query.eq('tier', input.tier)
@@ -120,15 +124,17 @@ const vendorsRouter = router({
       const adminClient = getAdminClient()
 
       const { data, error } = await adminClient
-        .from('vendors')
+        .from('companies')
         .select(`
           *,
-          contacts:contacts!vendor_id(id, first_name, last_name, email, phone, title, department),
-          terms:vendor_terms(*),
-          performance:vendor_performance(*)
+          contacts:company_contacts!company_id(id, first_name, last_name, email, phone, title, department),
+          vendor_details:company_vendor_details(*),
+          terms:company_vendor_terms(*),
+          performance:company_vendor_performance(*)
         `)
         .eq('id', input.id)
         .eq('org_id', orgId)
+        .eq('category', 'vendor')
         .single()
 
       if (error) {
@@ -159,16 +165,16 @@ const vendorsRouter = router({
       const adminClient = getAdminClient()
 
       const { data: vendor, error } = await adminClient
-        .from('vendors')
+        .from('companies')
         .insert({
           org_id: orgId,
+          category: 'vendor',
           name: input.name,
-          type: input.type,
+          vendor_type: input.type,
           tier: input.tier || 'standard',
           status: 'active',
           website: input.website || null,
-          industry_focus: input.industryFocus || [],
-          geographic_focus: input.geographicFocus || [],
+          industries: input.industryFocus || [],
           notes: input.notes || null,
           created_by: user?.id,
         })
@@ -179,24 +185,33 @@ const vendorsRouter = router({
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
       }
 
+      // Create vendor details record
+      await adminClient
+        .from('company_vendor_details')
+        .insert({
+          company_id: vendor.id,
+          geographic_focus: input.geographicFocus || [],
+        })
+
       // Create primary contact if provided
       if (input.primaryContactEmail && input.primaryContactName) {
         // Parse name into first/last
         const nameParts = input.primaryContactName.split(' ')
         const firstName = nameParts[0] || ''
         const lastName = nameParts.slice(1).join(' ') || ''
-        
+
         await adminClient
-          .from('contacts')
+          .from('company_contacts')
           .insert({
             org_id: orgId,
-            contact_type: 'vendor',
-            vendor_id: vendor.id,
+            company_id: vendor.id,
+            contact_type: 'vendor_poc',
             first_name: firstName,
             last_name: lastName,
             email: input.primaryContactEmail,
             phone: input.primaryContactPhone || null,
             title: input.primaryContactTitle || null,
+            is_primary: true,
             status: 'active',
             created_by: user?.id,
           })
@@ -224,24 +239,34 @@ const vendorsRouter = router({
 
       const updateData: Record<string, unknown> = {}
       if (input.name !== undefined) updateData.name = input.name
-      if (input.type !== undefined) updateData.type = input.type
+      if (input.type !== undefined) updateData.vendor_type = input.type
       if (input.tier !== undefined) updateData.tier = input.tier
       if (input.status !== undefined) updateData.status = input.status
       if (input.website !== undefined) updateData.website = input.website || null
-      if (input.industryFocus !== undefined) updateData.industry_focus = input.industryFocus
-      if (input.geographicFocus !== undefined) updateData.geographic_focus = input.geographicFocus
+      if (input.industryFocus !== undefined) updateData.industries = input.industryFocus
       if (input.notes !== undefined) updateData.notes = input.notes
 
       const { data, error } = await adminClient
-        .from('vendors')
+        .from('companies')
         .update(updateData)
         .eq('id', input.id)
         .eq('org_id', orgId)
+        .eq('category', 'vendor')
         .select()
         .single()
 
       if (error) {
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      // Update vendor details if geographic_focus provided
+      if (input.geographicFocus !== undefined) {
+        await adminClient
+          .from('company_vendor_details')
+          .upsert({
+            company_id: input.id,
+            geographic_focus: input.geographicFocus,
+          }, { onConflict: 'company_id' })
       }
 
       return data
@@ -255,10 +280,11 @@ const vendorsRouter = router({
       const adminClient = getAdminClient()
 
       const { error } = await adminClient
-        .from('vendors')
+        .from('companies')
         .update({ deleted_at: new Date().toISOString() })
         .eq('id', input.id)
         .eq('org_id', orgId)
+        .eq('category', 'vendor')
 
       if (error) {
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
@@ -288,17 +314,18 @@ const vendorsRouter = router({
       const lastName = nameParts.slice(1).join(' ') || ''
 
       const { data, error } = await adminClient
-        .from('contacts')
+        .from('company_contacts')
         .insert({
           org_id: orgId,
-          contact_type: 'vendor',
-          vendor_id: input.vendorId,
+          company_id: input.vendorId,
+          contact_type: 'vendor_poc',
           first_name: firstName,
           last_name: lastName,
           email: input.email || null,
           phone: input.phone || null,
           title: input.title || null,
           department: input.department || null,
+          is_primary: input.isPrimary,
           status: 'active',
           created_by: user?.id,
         })
@@ -339,9 +366,10 @@ const vendorsRouter = router({
       if (input.phone !== undefined) updateData.phone = input.phone
       if (input.title !== undefined) updateData.title = input.title
       if (input.department !== undefined) updateData.department = input.department
+      if (input.isPrimary !== undefined) updateData.is_primary = input.isPrimary
 
       const { data, error } = await adminClient
-        .from('contacts')
+        .from('company_contacts')
         .update(updateData)
         .eq('id', input.contactId)
         .eq('org_id', orgId)
@@ -363,7 +391,7 @@ const vendorsRouter = router({
       const adminClient = getAdminClient()
 
       const { error } = await adminClient
-        .from('contacts')
+        .from('company_contacts')
         .update({ deleted_at: new Date().toISOString() })
         .eq('id', input.contactId)
         .eq('org_id', orgId)
@@ -392,9 +420,9 @@ const vendorsRouter = router({
       const adminClient = getAdminClient()
 
       const { data, error } = await adminClient
-        .from('vendor_terms')
+        .from('company_vendor_terms')
         .upsert({
-          vendor_id: input.vendorId,
+          company_id: input.vendorId,
           payment_terms_days: input.paymentTermsDays,
           markup_min_percent: input.markupMinPercent,
           markup_max_percent: input.markupMaxPercent,
@@ -403,7 +431,7 @@ const vendorsRouter = router({
           contract_type: input.contractType,
           contract_expiry: input.contractExpiry,
           msa_on_file: input.msaOnFile,
-        }, { onConflict: 'vendor_id' })
+        }, { onConflict: 'company_id' })
         .select()
         .single()
 
@@ -425,9 +453,9 @@ const vendorsRouter = router({
       const adminClient = getAdminClient()
 
       let query = adminClient
-        .from('vendor_performance')
+        .from('company_vendor_performance')
         .select('*')
-        .eq('vendor_id', input.vendorId)
+        .eq('company_id', input.vendorId)
         .order('period', { ascending: false })
 
       if (input.periodStart) {
@@ -485,6 +513,10 @@ const vendorsRouter = router({
 // ============================================
 // TALENT (BENCH CONSULTANTS) SUB-ROUTER
 // ============================================
+// @deprecated WAVE 2 Migration - Use contactBench router instead
+// This legacy router maintains backwards compatibility but will be removed in a future release.
+// All new code should use trpc.contactBench.* procedures.
+// Migration completed: 2025-12-11
 
 const talentRouter = router({
   // Get consultant stats for dashboard
@@ -969,7 +1001,7 @@ const jobOrdersRouter = router({
         .from('job_orders')
         .select(`
           *,
-          vendor:vendors!vendor_id(id, name, type, tier),
+          vendor:companies!vendor_id(id, name, vendor_type, tier),
           submissions:job_order_submissions(count)
         `, { count: 'exact' })
         .eq('org_id', orgId)
@@ -1013,7 +1045,7 @@ const jobOrdersRouter = router({
         .from('job_orders')
         .select(`
           *,
-          vendor:vendors!vendor_id(*),
+          vendor:companies!vendor_id(*),
           requirements:job_order_requirements(*),
           skills:job_order_skills(*),
           submissions:job_order_submissions(
@@ -1402,7 +1434,7 @@ const submissionsRouter = router({
         .from('job_order_submissions')
         .select(`
           *,
-          job_order:job_orders(*, vendor:vendors(id, name)),
+          job_order:job_orders(*, vendor:companies!vendor_id(id, name)),
           consultant:bench_consultants(
             *,
             candidate:user_profiles!candidate_id(id, full_name, email, avatar_url)
@@ -1453,7 +1485,7 @@ const submissionsRouter = router({
         .from('job_order_submissions')
         .select(`
           *,
-          job_order:job_orders(*, vendor:vendors(id, name))
+          job_order:job_orders(*, vendor:companies!vendor_id(id, name))
         `)
         .eq('consultant_id', input.consultantId)
         .order('submitted_at', { ascending: false })
@@ -1560,7 +1592,7 @@ const submissionsRouter = router({
           location,
           work_mode,
           bill_rate,
-          account:accounts(id, name)
+          company:companies!company_id(id, name)
         `)
         .eq('org_id', orgId)
         .in('status', ['open', 'sourcing', 'interviewing'])

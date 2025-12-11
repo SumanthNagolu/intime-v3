@@ -29,6 +29,10 @@ const createJobInput = z.object({
   dealId: z.string().uuid().optional(),
   jobType: jobTypeEnum.default('contract'),
   location: z.string().max(200).optional(),
+  // Structured location fields for centralized addresses
+  locationCity: z.string().max(100).optional(),
+  locationState: z.string().max(100).optional(),
+  locationCountry: z.string().max(3).default('US').optional(),
   isRemote: z.boolean().default(false),
   isHybrid: z.boolean().default(false),
   hybridDays: z.number().int().min(1).max(5).optional(),
@@ -368,6 +372,10 @@ const createCandidateInput = z.object({
   // Availability
   availability: availabilityEnum,
   location: z.string().min(2).max(200),
+  // Structured location fields for centralized addresses
+  locationCity: z.string().max(100).optional(),
+  locationState: z.string().max(100).optional(),
+  locationCountry: z.string().max(3).default('US').optional(),
   willingToRelocate: z.boolean().default(false),
   isRemoteOk: z.boolean().default(false),
 
@@ -403,6 +411,10 @@ const updateCandidateInput = z.object({
   visaExpiryDate: z.coerce.date().optional().nullable(),
   availability: availabilityEnum.optional(),
   location: z.string().min(2).max(200).optional(),
+  // Structured location fields for centralized addresses
+  locationCity: z.string().max(100).optional().nullable(),
+  locationState: z.string().max(100).optional().nullable(),
+  locationCountry: z.string().max(3).optional().nullable(),
   willingToRelocate: z.boolean().optional(),
   isRemoteOk: z.boolean().optional(),
   minimumHourlyRate: z.number().min(0).optional().nullable(),
@@ -480,7 +492,7 @@ export const atsRouter = router({
           .from('jobs')
           .select(`
             *,
-            account:accounts!jobs_account_id_fkey(id, name),
+            company:companies!company_id(id, name),
             owner:user_profiles!owner_id(id, full_name, avatar_url),
             submissions(id, status),
             interviews(id, status)
@@ -558,7 +570,7 @@ export const atsRouter = router({
           .from('jobs')
           .select(`
             *,
-            account:accounts!jobs_account_id_fkey(id, name, industry),
+            company:companies!company_id(id, name, industry),
             owner:user_profiles!owner_id(id, full_name, avatar_url),
             submissions(id, status, candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name))
           `)
@@ -688,7 +700,7 @@ export const atsRouter = router({
           .from('jobs')
           .select(`
             id, title, status, job_type, location, billing_rate, created_at,
-            account:accounts!jobs_account_id_fkey(id, name),
+            company:companies!company_id(id, name),
             submissions(id, status)
           `)
           .eq('org_id', orgId)
@@ -716,7 +728,7 @@ export const atsRouter = router({
           jobType: j.job_type,
           location: j.location,
           billingRate: j.billing_rate,
-          account: j.account,
+          account: j.company,
           submissionCount: (j.submissions as Array<{ status: string }> | null)?.length ?? 0,
           activeSubmissions: (j.submissions as Array<{ status: string }> | null)?.filter(s =>
             ['submitted', 'interviewing', 'offered'].includes(s.status)
@@ -740,15 +752,16 @@ export const atsRouter = router({
           throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
         }
 
-        // Validate account exists
-        const { data: account, error: accountError } = await adminClient
-          .from('accounts')
+        // Validate company exists
+        const { data: company, error: companyError } = await adminClient
+          .from('companies')
           .select('id, name')
           .eq('id', input.accountId)
           .eq('org_id', orgId)
+          .in('category', ['client', 'prospect'])
           .single()
 
-        if (accountError || !account) {
+        if (companyError || !company) {
           throw new TRPCError({ code: 'BAD_REQUEST', message: 'Invalid account' })
         }
 
@@ -828,11 +841,29 @@ export const atsRouter = router({
             entity_id: job.id,
             activity_type: 'note',
             subject: `Job created: ${job.title}`,
-            description: `Created job "${job.title}" for ${account.name}`,
+            description: `Created job "${job.title}" for ${company.name}`,
             outcome: 'positive',
             created_by: user.id,
             created_at: new Date().toISOString(),
           })
+
+        // Create address record if structured location fields are provided
+        if (input.locationCity || input.locationState) {
+          await adminClient
+            .from('addresses')
+            .insert({
+              org_id: orgId,
+              entity_type: 'job',
+              entity_id: job.id,
+              address_type: 'job_location',
+              city: input.locationCity || null,
+              state_province: input.locationState || null,
+              country_code: input.locationCountry || 'US',
+              is_primary: true,
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+            })
+        }
 
         return {
           jobId: job.id,
@@ -946,7 +977,7 @@ export const atsRouter = router({
         // Get current job
         const { data: job, error: jobError } = await adminClient
           .from('jobs')
-          .select('*, account:accounts!jobs_account_id_fkey(id, name)')
+          .select('*, company:companies!company_id(id, name)')
           .eq('id', input.jobId)
           .eq('org_id', orgId)
           .single()
@@ -1357,7 +1388,7 @@ export const atsRouter = router({
         // Find similar jobs (same account or overlapping skills)
         const { data: similarJobs, error } = await adminClient
           .from('jobs')
-          .select('id, title, status, account:accounts!jobs_account_id_fkey(id, name)')
+          .select('id, title, status, company:companies!company_id(id, name)')
           .eq('org_id', orgId)
           .neq('id', input.jobId)
           .in('status', ['open', 'active'])
@@ -1443,7 +1474,7 @@ export const atsRouter = router({
           .from('submissions')
           .select(`
             *,
-            job:jobs(id, title, account:accounts!jobs_account_id_fkey(id, name)),
+            job:jobs(id, title, company:companies!company_id(id, name)),
             candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, email),
             submitted_by:user_profiles!submitted_by(id, full_name)
           `, { count: 'exact' })
@@ -1572,7 +1603,7 @@ export const atsRouter = router({
           .from('submissions')
           .select(`
             id, status, submitted_at, submission_rate,
-            job:jobs(id, title, account:accounts!jobs_account_id_fkey(id, name)),
+            job:jobs(id, title, company:companies!company_id(id, name)),
             candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name)
           `)
           .eq('org_id', orgId)
@@ -1933,7 +1964,7 @@ export const atsRouter = router({
           .select(`
             id, status, job_id, candidate_id,
             job:jobs(id, title, account_id, rate_min, rate_max,
-              account:accounts!jobs_account_id_fkey(id, name)
+              company:companies!company_id(id, name)
             ),
             candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, email)
           `)
@@ -1967,7 +1998,7 @@ export const atsRouter = router({
           account_id: string;
           rate_min?: number;
           rate_max?: number;
-          account: { id: string; name: string } | null;
+          company: { id: string; name: string } | null;
         } | null
         const candidate = submission.candidate as {
           id: string;
@@ -2033,7 +2064,7 @@ export const atsRouter = router({
             entity_type: 'submission',
             entity_id: input.id,
             activity_type: 'submitted_to_client',
-            description: `${candidate?.first_name} ${candidate?.last_name} submitted to ${job?.account?.name} for ${job?.title}`,
+            description: `${candidate?.first_name} ${candidate?.last_name} submitted to ${job?.company?.name} for ${job?.title}`,
             created_by: user.id,
             created_at: new Date().toISOString(),
             metadata: {
@@ -2041,7 +2072,7 @@ export const atsRouter = router({
               job_title: job?.title,
               candidate_id: candidate?.id,
               candidate_name: candidate ? `${candidate.first_name} ${candidate.last_name}` : null,
-              account_name: job?.account?.name,
+              company_name: job?.company?.name,
               bill_rate: input.billRate,
               pay_rate: input.payRate,
               margin_percent: marginPercent,
@@ -2058,7 +2089,7 @@ export const atsRouter = router({
             .from('tasks')
             .insert({
               org_id: orgId,
-              title: `Confirm external submission: ${candidate?.first_name} ${candidate?.last_name} to ${job?.account?.name}`,
+              title: `Confirm external submission: ${candidate?.first_name} ${candidate?.last_name} to ${job?.company?.name}`,
               description: 'Please confirm you have submitted this candidate externally and update the submission status.',
               entity_type: 'submission',
               entity_id: input.id,
@@ -2080,7 +2111,7 @@ export const atsRouter = router({
           submittedAt: updated.submitted_at,
           method: input.submissionMethod,
           candidate: candidate ? { id: candidate.id, name: `${candidate.first_name} ${candidate.last_name}` } : null,
-          job: job ? { id: job.id, title: job.title, account: job.account?.name } : null,
+          job: job ? { id: job.id, title: job.title, account: job.company?.name } : null,
         }
       }),
 
@@ -2230,7 +2261,7 @@ export const atsRouter = router({
             submission:submissions(
               id,
               job_id,
-              job:jobs(id, title, account:accounts!jobs_account_id_fkey(id, name)),
+              job:jobs(id, title, company:companies!company_id(id, name)),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name)
             )
           `, { count: 'exact' })
@@ -2291,7 +2322,7 @@ export const atsRouter = router({
             id, scheduled_at, interview_type, duration_minutes, status, location,
             submission:submissions!inner(
               id, submitted_by,
-              job:jobs(id, title, account:accounts!jobs_account_id_fkey(id, name)),
+              job:jobs(id, title, company:companies!company_id(id, name)),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, phone, email)
             )
           `)
@@ -2381,7 +2412,7 @@ export const atsRouter = router({
             *,
             submission:submissions(
               id, status,
-              job:jobs(id, title, account:accounts!jobs_account_id_fkey(id, name)),
+              job:jobs(id, title, company:companies!company_id(id, name)),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, email, phone)
             ),
             scheduled_by_user:user_profiles!scheduled_by(id, full_name)
@@ -2419,6 +2450,10 @@ export const atsRouter = router({
         })).min(1).max(10),
         meetingLink: z.string().url().optional(),
         meetingLocation: z.string().max(200).optional(),
+        // Structured location fields for centralized addresses (in-person interviews)
+        locationCity: z.string().max(100).optional(),
+        locationState: z.string().max(100).optional(),
+        locationCountry: z.string().max(3).default('US').optional(),
         description: z.string().max(500).optional(),
         internalNotes: z.string().max(1000).optional(),
       }))
@@ -2435,7 +2470,7 @@ export const atsRouter = router({
           .from('submissions')
           .select(`
             id, status, job_id, candidate_id,
-            job:jobs(id, title, account:accounts!jobs_account_id_fkey(id, name)),
+            job:jobs(id, title, company:companies!company_id(id, name)),
             candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, email)
           `)
           .eq('id', input.submissionId)
@@ -2522,6 +2557,25 @@ export const atsRouter = router({
 
         if (interviewError) {
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: interviewError.message })
+        }
+
+        // Create address record for in-person interviews if structured location provided
+        if (input.interviewType === 'in_person' && (input.locationCity || input.locationState)) {
+          await adminClient
+            .from('addresses')
+            .insert({
+              org_id: orgId,
+              entity_type: 'interview',
+              entity_id: interview.id,
+              address_type: 'meeting',
+              city: input.locationCity || null,
+              state_province: input.locationState || null,
+              country_code: input.locationCountry || 'US',
+              is_primary: true,
+              notes: `Interview location for ${input.interviewType.replace(/_/g, ' ')}`,
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+            })
         }
 
         // Update submission status if needed
@@ -2985,7 +3039,7 @@ export const atsRouter = router({
             id, scheduled_at, interview_type, round_number, status,
             submission:submissions!inner(
               id, submitted_by,
-              job:jobs(id, title, account:accounts!jobs_account_id_fkey(id, name)),
+              job:jobs(id, title, company:companies!company_id(id, name)),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name)
             )
           `)
@@ -3129,7 +3183,7 @@ export const atsRouter = router({
             submission:submissions!offers_submission_id_fkey(
               id, status,
               job:jobs!submissions_job_id_fkey(id, title, account_id,
-                account:accounts!jobs_account_id_fkey(id, name)
+                company:companies!company_id(id, name)
               ),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, email, phone)
             ),
@@ -3379,7 +3433,7 @@ export const atsRouter = router({
             submission:submissions!offers_submission_id_fkey(
               id, status,
               job:jobs!submissions_job_id_fkey(id, title, account_id,
-                account:accounts!jobs_account_id_fkey(id, name)
+                company:companies!company_id(id, name)
               ),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, email)
             )
@@ -3795,7 +3849,7 @@ export const atsRouter = router({
             created_at,
             job:jobs!placements_job_id_fkey(id, title),
             candidate:user_profiles!placements_candidate_id_fkey(id, first_name, last_name),
-            account:accounts!placements_account_id_fkey(id, name),
+            company:companies!company_id(id, name),
             submission:submissions(id, submitted_by)
           `, { count: 'exact' })
           .eq('org_id', orgId)
@@ -3952,7 +4006,7 @@ export const atsRouter = router({
             id, start_date, last_check_in_date, status,
             submission:submissions(
               id,
-              job:jobs(id, title, account:accounts!jobs_account_id_fkey(id, name)),
+              job:jobs(id, title, company:companies!company_id(id, name)),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name)
             )
           `)
@@ -3982,7 +4036,7 @@ export const atsRouter = router({
           .select(`
             *,
             job:jobs!placements_job_id_fkey(id, title, description,
-              account:accounts!jobs_account_id_fkey(id, name)
+              company:companies!company_id(id, name)
             ),
             candidate:user_profiles!placements_candidate_id_fkey(id, first_name, last_name, email, phone),
             offer:offers!placements_offer_id_fkey(id, pay_rate, bill_rate, employment_type),
@@ -4660,7 +4714,7 @@ export const atsRouter = router({
             id, status, start_date, end_date,
             bill_rate, pay_rate,
             candidate:user_profiles!placements_candidate_id_fkey(first_name, last_name),
-            account:accounts!placements_account_id_fkey(name)
+            company:companies!company_id(name)
           `)
           .eq('org_id', orgId)
           .eq('recruiter_id', user.id)
@@ -5066,6 +5120,24 @@ export const atsRouter = router({
           }))
 
           await adminClient.from('candidate_skills').insert(skillsToInsert)
+        }
+
+        // Create address record if structured location fields are provided
+        if (input.locationCity || input.locationState) {
+          await adminClient
+            .from('addresses')
+            .insert({
+              org_id: orgId,
+              entity_type: 'candidate',
+              entity_id: candidate.id,
+              address_type: 'current',
+              city: input.locationCity || null,
+              state_province: input.locationState || null,
+              country_code: input.locationCountry || 'US',
+              is_primary: true,
+              created_at: now,
+              updated_at: now,
+            })
         }
 
         // Create submissions for associated jobs
@@ -6186,7 +6258,7 @@ export const atsRouter = router({
           .select(`
             *,
             candidate:candidates(id, first_name, last_name, email, headline),
-            job:jobs(id, title, account:accounts(name))
+            job:jobs(id, title, company:companies!company_id(name))
           `)
           .eq('id', input.profileId)
           .eq('org_id', orgId)
@@ -6296,7 +6368,7 @@ export const atsRouter = router({
           .from('candidate_prepared_profiles')
           .select(`
             id,
-            job:jobs(id, title, account:accounts(name)),
+            job:jobs(id, title, company:companies!company_id(name)),
             template_type,
             status,
             finalized_at,
