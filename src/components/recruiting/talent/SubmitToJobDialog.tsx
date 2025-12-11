@@ -67,7 +67,7 @@ export function SubmitToJobDialog({
   const submitToClientJobMutation = trpc.bench.submissions.submitToClientJob.useMutation({
     onSuccess: () => {
       toast.success(`${talentName} submitted to client job`)
-      utils.bench.talent.getById.invalidate({ id: consultantId })
+      utils.contactBench.getById.invalidate({ contactId: consultantId })
       utils.bench.submissions.listByConsultant.invalidate({ consultantId })
       onOpenChange(false)
       resetForm()
@@ -82,7 +82,7 @@ export function SubmitToJobDialog({
   const submitToJobOrderMutation = trpc.bench.submissions.submitToJobOrder.useMutation({
     onSuccess: () => {
       toast.success(`${talentName} submitted to job order`)
-      utils.bench.talent.getById.invalidate({ id: consultantId })
+      utils.contactBench.getById.invalidate({ contactId: consultantId })
       utils.bench.submissions.listByConsultant.invalidate({ consultantId })
       onOpenChange(false)
       resetForm()

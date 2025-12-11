@@ -145,7 +145,8 @@ export function CrossPillarLeadDialog({
   const createLead = trpc.crm.crossPillarLeads.create.useMutation({
     onSuccess: () => {
       toast.success('Cross-pillar lead created! Points earned.')
-      utils.crm.leads.list.invalidate()
+      utils.unifiedContacts.leads.list.invalidate()
+      utils.unifiedContacts.leads.stats.invalidate()
       utils.crm.crossPillarLeads.getLeaderboard.invalidate()
       form.reset()
       onOpenChange(false)

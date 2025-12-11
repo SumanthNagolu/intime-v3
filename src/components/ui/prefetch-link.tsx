@@ -59,7 +59,7 @@ export function PrefetchLink({
           await utils.crm.accounts.getById.prefetch({ id: entityId })
           break
         case 'lead':
-          await utils.crm.leads.getById.prefetch({ id: entityId })
+          await utils.unifiedContacts.leads.getById.prefetch({ id: entityId })
           break
         case 'deal':
           await utils.crm.deals.getById.prefetch({ id: entityId })
@@ -133,7 +133,7 @@ export function usePrefetchEntity() {
             await utils.crm.accounts.getById.prefetch({ id: entityId })
             break
           case 'lead':
-            await utils.crm.leads.getById.prefetch({ id: entityId })
+            await utils.unifiedContacts.leads.getById.prefetch({ id: entityId })
             break
           case 'deal':
             await utils.crm.deals.getById.prefetch({ id: entityId })
