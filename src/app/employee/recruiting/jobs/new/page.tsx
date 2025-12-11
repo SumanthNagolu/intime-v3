@@ -61,7 +61,7 @@ export default function CreateJobPage() {
   })
 
   // Build account options for select
-  const accountOptions = accountsData?.accounts?.map((a) => ({
+  const accountOptions = accountsData?.items?.map((a) => ({
     value: a.id,
     label: a.name,
   })) || []

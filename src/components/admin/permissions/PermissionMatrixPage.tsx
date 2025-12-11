@@ -98,7 +98,7 @@ export function PermissionMatrixPage() {
       toast({
         title: 'Error',
         description: error.message || 'Failed to update permission',
-        variant: 'destructive',
+        variant: 'error',
       })
     },
   })

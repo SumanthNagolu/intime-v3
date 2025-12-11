@@ -53,7 +53,10 @@ export interface JobIntakeFormData {
   workArrangement: string
   hybridDays: number
   locationRestrictions: string[]
-  officeLocation: string
+  // Structured location fields (for centralized addresses)
+  locationCity: string
+  locationState: string
+  locationCountry: string
   workAuthorizations: string[]
   billRateMin: string
   billRateMax: string
@@ -129,7 +132,9 @@ const defaultFormData: JobIntakeFormData = {
   workArrangement: 'remote',
   hybridDays: 3,
   locationRestrictions: ['us_based'],
-  officeLocation: '',
+  locationCity: '',
+  locationState: '',
+  locationCountry: 'US',
   workAuthorizations: ['us_citizen', 'green_card'],
   billRateMin: '',
   billRateMax: '',

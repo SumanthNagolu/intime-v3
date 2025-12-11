@@ -30,6 +30,10 @@ const defaultFormData: CandidateIntakeFormData = {
   visaStatus: 'us_citizen',
   availability: '2_weeks',
   location: '',
+  // Structured location fields for centralized addresses
+  locationCity: '',
+  locationState: '',
+  locationCountry: 'US',
   willingToRelocate: false,
   isRemoteOk: false,
   minimumHourlyRate: undefined,

@@ -34,14 +34,16 @@ interface SystemHealth {
   pendingApprovals: number
   uptime: number
   storageUsed: number
+  storageTotal: number
 }
 
 interface CriticalAlert {
   id: string
+  title: string
+  message: string | null
   type: string
-  severity: string
-  message: string
-  timestamp: string
+  severity: 'critical' | 'warning'
+  createdAt: string
 }
 
 interface RecentActivity {
@@ -50,6 +52,7 @@ interface RecentActivity {
   entity: string
   actor: string | null
   timestamp: string
+  details: unknown
 }
 
 export interface AdminDashboardInitialData {

@@ -140,13 +140,13 @@ export function JobOverviewSection({ job, jobId }: JobOverviewSectionProps) {
       <div className="col-span-2 space-y-6">
         {/* Job Quick Info Bar */}
         <div className="flex flex-wrap items-center gap-4 text-sm text-charcoal-500 bg-white p-4 rounded-lg">
-          {job.account && (
+          {job.company && (
             <Link
-              href={`/employee/recruiting/accounts/${job.account.id}`}
+              href={`/employee/recruiting/accounts/${job.company.id}`}
               className="flex items-center gap-1 hover:text-hublot-600"
             >
               <Building2 className="w-4 h-4" />
-              {job.account.name}
+              {job.company.name}
             </Link>
           )}
           {job.location && (

@@ -16,6 +16,7 @@ import {
   Briefcase,
   Heart,
   Pause,
+  MapPin,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
@@ -25,6 +26,7 @@ import {
   PlacementTimesheetsSectionPCF,
   PlacementActivitiesSectionPCF,
   PlacementDocumentsSectionPCF,
+  PlacementLocationSectionPCF,
 } from './sections/placements.sections'
 
 // Type definition for Placement entity
@@ -584,6 +586,12 @@ export const placementsDetailConfig: DetailViewConfig<Placement> = {
       label: 'Overview',
       icon: FileText,
       component: PlacementOverviewSectionPCF,
+    },
+    {
+      id: 'location',
+      label: 'Location',
+      icon: MapPin,
+      component: PlacementLocationSectionPCF,
     },
     {
       id: 'timesheets',

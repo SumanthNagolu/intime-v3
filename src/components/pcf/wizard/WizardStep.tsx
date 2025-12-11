@@ -11,7 +11,7 @@ interface WizardStepProps<T> {
   errors: Record<string, string>
 }
 
-export function WizardStep<T extends Record<string, unknown>>({
+export function WizardStep<T>({
   step,
   formData,
   setFormData,

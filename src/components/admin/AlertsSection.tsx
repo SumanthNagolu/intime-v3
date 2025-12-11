@@ -5,7 +5,8 @@ import { cn } from '@/lib/utils'
 interface Alert {
   id: string
   title: string
-  message: string
+  message: string | null
+  type: string
   severity: 'critical' | 'warning'
   createdAt: string
 }
@@ -64,7 +65,9 @@ export function AlertsSection({ alerts, isLoading }: AlertsSectionProps) {
             )}
             <div className="flex-1 min-w-0">
               <p className="font-medium text-charcoal-900">{alert.title}</p>
-              <p className="text-sm text-charcoal-600 mt-1">{alert.message}</p>
+              {alert.message && (
+                <p className="text-sm text-charcoal-600 mt-1">{alert.message}</p>
+              )}
               <p className="text-xs text-charcoal-400 mt-2">
                 {new Date(alert.createdAt).toLocaleString()}
               </p>

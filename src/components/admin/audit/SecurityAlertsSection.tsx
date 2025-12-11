@@ -1,5 +1,6 @@
 'use client'
 
+import { ReactElement } from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { trpc } from '@/lib/trpc/client'
@@ -21,7 +22,7 @@ export function SecurityAlertsSection() {
   })
 
   const getSeverityConfig = (severity: string) => {
-    const configs: Record<string, { color: string; icon: JSX.Element }> = {
+    const configs: Record<string, { color: string; icon: ReactElement }> = {
       LOW: { color: 'bg-blue-50 text-blue-700 border-blue-200', icon: <Shield className="w-4 h-4" /> },
       MEDIUM: { color: 'bg-amber-50 text-amber-700 border-amber-200', icon: <AlertTriangle className="w-4 h-4" /> },
       HIGH: { color: 'bg-orange-50 text-orange-700 border-orange-200', icon: <AlertTriangle className="w-4 h-4" /> },

@@ -33,7 +33,7 @@ export default function CourseDetailPage() {
       toast({
         title: 'Error',
         description: 'Failed to enroll in course. Please try again.',
-        variant: 'destructive',
+        variant: 'error',
       })
     },
   })

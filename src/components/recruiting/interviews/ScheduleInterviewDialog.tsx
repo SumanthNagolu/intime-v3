@@ -44,6 +44,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { format, addDays, parse, isValid } from 'date-fns'
+import { LocationPicker } from '@/components/addresses'
 
 // Interview types configuration
 const INTERVIEW_TYPES = [
@@ -186,6 +187,10 @@ export function ScheduleInterviewDialog({
   })
 
   const onSubmit = (data: ScheduleInterviewFormData) => {
+    // Parse structured location from meetingLocation display string
+    const locationCity = data.meetingLocation?.split(',')[0]?.trim() || undefined
+    const locationState = data.meetingLocation?.split(',')[1]?.trim() || undefined
+
     scheduleMutation.mutate({
       submissionId,
       interviewType: data.interviewType,
@@ -196,6 +201,10 @@ export function ScheduleInterviewDialog({
       interviewers: data.interviewers.filter(i => i.name && i.email),
       meetingLink: data.meetingLink || undefined,
       meetingLocation: data.meetingLocation || undefined,
+      // Structured location fields for centralized address creation
+      locationCity,
+      locationState,
+      locationCountry: 'US',
       description: data.description || undefined,
       internalNotes: data.internalNotes || undefined,
     })
@@ -498,14 +507,25 @@ export function ScheduleInterviewDialog({
               {/* Location (required for in-person) */}
               {requiresLocation && (
                 <div className="space-y-2">
-                  <Label htmlFor="meetingLocation" className="flex items-center gap-2">
+                  <Label className="flex items-center gap-2">
                     <MapPin className="w-4 h-4" />
                     Location *
                   </Label>
-                  <Input
-                    id="meetingLocation"
-                    {...register('meetingLocation')}
-                    placeholder="123 Main St, Suite 100, New York, NY"
+                  <LocationPicker
+                    label=""
+                    value={{
+                      city: meetingLocation?.split(',')[0]?.trim() || '',
+                      stateProvince: meetingLocation?.split(',')[1]?.trim() || '',
+                      countryCode: 'US',
+                    }}
+                    onChange={(data) => {
+                      const displayValue = data.city && data.stateProvince
+                        ? `${data.city}, ${data.stateProvince}`
+                        : data.city || ''
+                      setValue('meetingLocation', displayValue)
+                    }}
+                    required
+                    showCountry={false}
                   />
                 </div>
               )}

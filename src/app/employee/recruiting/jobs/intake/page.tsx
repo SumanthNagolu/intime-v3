@@ -48,11 +48,18 @@ export default function JobIntakePage() {
         positionsCount: formData.positionsCount,
         priority: formData.priority as 'low' | 'normal' | 'high' | 'urgent' | 'critical',
         targetStartDate: formData.targetStartDate || undefined,
-        // Location
+        // Location (structured for centralized addresses)
         isRemote: formData.workArrangement === 'remote',
         isHybrid: formData.workArrangement === 'hybrid',
         hybridDays: formData.workArrangement === 'hybrid' ? formData.hybridDays : undefined,
-        location: formData.officeLocation || undefined,
+        // Build location string from structured fields for backward compatibility
+        location: formData.locationCity && formData.locationState
+          ? `${formData.locationCity}, ${formData.locationState}`
+          : undefined,
+        // Structured location for address creation
+        locationCity: formData.locationCity || undefined,
+        locationState: formData.locationState || undefined,
+        locationCountry: formData.locationCountry || undefined,
         // Requirements
         minExperience: formData.minExperience ? parseInt(formData.minExperience) : undefined,
         maxExperience: formData.preferredExperience ? parseInt(formData.preferredExperience) : undefined,

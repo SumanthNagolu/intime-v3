@@ -403,7 +403,7 @@ export function SubmissionPipeline({
               : 'Unknown'
           }
           jobTitle={job.title}
-          accountName={job.account?.name || 'Client'}
+          accountName={job.company?.name || 'Client'}
           jobRateMin={job.rate_min}
           jobRateMax={job.rate_max}
           onSuccess={() => {
@@ -425,7 +425,7 @@ export function SubmissionPipeline({
               : 'Unknown'
           }
           jobTitle={job.title}
-          accountName={job.account?.name || 'Client'}
+          accountName={job.company?.name || 'Client'}
           currentStatus={selectedSubmission.status}
           daysPending={
             selectedSubmission.submitted_at
@@ -455,7 +455,7 @@ export function SubmissionPipeline({
           }
           candidateEmail={selectedSubmission.candidate?.email}
           jobTitle={job.title}
-          accountName={job.account?.name || 'Client'}
+          accountName={job.company?.name || 'Client'}
           onSuccess={() => {
             onRefresh?.()
             utils.ats.submissions.list.invalidate()

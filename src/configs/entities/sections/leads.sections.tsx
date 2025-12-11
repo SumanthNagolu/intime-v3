@@ -486,11 +486,13 @@ export function LeadActivitiesSectionPCF({ entityId, entity }: PCFSectionProps) 
 
   const utils = trpc.useUtils()
 
-  const logActivity = trpc.crm.leads.logActivity.useMutation({
+  // Use the activities router for logging activities
+  const logActivity = trpc.activities.log.useMutation({
     onSuccess: () => {
       toast.success('Activity logged')
       setActivityNote('')
-      utils.crm.leads.getById.invalidate({ id: entityId })
+      utils.unifiedContacts.leads.getById.invalidate({ id: entityId })
+      utils.activities.listByEntity.invalidate({ entityType: 'lead', entityId })
     },
     onError: (error) => {
       toast.error(error.message || 'Failed to log activity')
@@ -500,9 +502,11 @@ export function LeadActivitiesSectionPCF({ entityId, entity }: PCFSectionProps) 
   const handleLogActivity = () => {
     if (!activityNote.trim()) return
     logActivity.mutate({
-      leadId: entityId,
+      entityType: 'lead',
+      entityId: entityId,
       activityType,
-      description: activityNote,
+      subject: activityType.charAt(0).toUpperCase() + activityType.slice(1).replace('_', ' '),
+      body: activityNote,
     })
   }
 

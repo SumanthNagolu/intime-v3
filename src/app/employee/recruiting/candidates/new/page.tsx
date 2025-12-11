@@ -40,6 +40,11 @@ export default function AddCandidatePage() {
 
   // Handle form submission
   const handleSubmit = async (data: CandidateIntakeFormData): Promise<unknown> => {
+    // Parse structured location from display string if not set directly
+    const locationCity = data.locationCity || data.location?.split(',')[0]?.trim() || undefined
+    const locationState = data.locationState || data.location?.split(',')[1]?.trim() || undefined
+    const locationCountry = data.locationCountry || 'US'
+
     return createMutation.mutateAsync({
       firstName: data.firstName,
       lastName: data.lastName,
@@ -53,6 +58,10 @@ export default function AddCandidatePage() {
       visaStatus: data.visaStatus,
       availability: data.availability,
       location: data.location,
+      // Structured location fields for centralized address creation
+      locationCity,
+      locationState,
+      locationCountry,
       willingToRelocate: data.willingToRelocate,
       isRemoteOk: data.isRemoteOk,
       minimumHourlyRate: data.minimumHourlyRate,

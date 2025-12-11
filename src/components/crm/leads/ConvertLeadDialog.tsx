@@ -122,11 +122,11 @@ export function ConvertLeadDialog({ lead, open, onOpenChange, onSuccess }: Conve
   const services = form.watch('servicesRequired') || []
   const competitors = form.watch('competitors') || []
 
-  const convertLead = trpc.crm.leads.convertToDeal.useMutation({
+  const convertLead = trpc.unifiedContacts.leads.convertToDeal.useMutation({
     onSuccess: (deal) => {
       toast.success('Lead converted to deal successfully')
-      utils.crm.leads.list.invalidate()
-      utils.crm.leads.getStats.invalidate()
+      utils.unifiedContacts.leads.list.invalidate()
+      utils.unifiedContacts.leads.stats.invalidate()
       utils.crm.deals.list.invalidate()
       utils.crm.deals.pipeline.invalidate()
       onOpenChange(false)

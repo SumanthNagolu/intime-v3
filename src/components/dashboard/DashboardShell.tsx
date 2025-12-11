@@ -4,7 +4,7 @@ import { Breadcrumb, BreadcrumbItem } from "@/components/ui/breadcrumb"
 
 interface DashboardShellProps {
   children: React.ReactNode
-  title: string
+  title: React.ReactNode
   description?: React.ReactNode
   breadcrumbs?: BreadcrumbItem[]
   actions?: React.ReactNode
@@ -29,7 +29,11 @@ export function DashboardShell({
 
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-h1 text-charcoal-900">{title}</h1>
+            {typeof title === 'string' ? (
+              <h1 className="text-h1 text-charcoal-900">{title}</h1>
+            ) : (
+              title
+            )}
             {description && (
               <div className="text-body-lg text-charcoal-600 mt-2">{description}</div>
             )}

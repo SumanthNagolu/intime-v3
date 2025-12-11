@@ -14,8 +14,8 @@ export default async function ContactDetailLayout({ children, params }: ContactL
   const { id: contactId } = await params
   const caller = await getServerCaller()
 
-  // Fetch contact data on server
-  const contact = await caller.crm.contacts.getById({ id: contactId }).catch(() => null)
+  // Fetch contact data on server - Using unified contacts router
+  const contact = await caller.unifiedContacts.getById({ id: contactId }).catch(() => null)
 
   if (!contact) {
     notFound()

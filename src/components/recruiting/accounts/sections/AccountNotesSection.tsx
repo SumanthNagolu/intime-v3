@@ -25,8 +25,12 @@ export function AccountNotesSection({ accountId, onAddNote: _onAddNote }: Accoun
   const [selectedNoteId, setSelectedNoteId] = useState<string | null>(null)
 
   // This query fires when this component is rendered
-  const notesQuery = trpc.crm.notes.listByAccount.useQuery({ accountId })
-  const notes = notesQuery.data || []
+  // Using centralized notes router (NOTES-01)
+  const notesQuery = trpc.notes.listByEntity.useQuery({
+    entityType: 'account',
+    entityId: accountId,
+  })
+  const notes = notesQuery.data?.items || []
 
   const handleNoteClick = (noteId: string) => {
     setSelectedNoteId(noteId)
@@ -66,13 +70,13 @@ export function AccountNotesSection({ accountId, onAddNote: _onAddNote }: Accoun
               </div>
             ) : (
               <div className="space-y-4">
-                {notes.map((note: any) => (
+                {notes.map((note) => (
                   <div
                     key={note.id}
                     onClick={() => handleNoteClick(note.id)}
                     className={cn(
                       'p-4 border rounded-lg cursor-pointer transition-colors',
-                      note.is_pinned && selectedNoteId !== note.id && 'border-gold-300 bg-gold-50',
+                      note.isPinned && selectedNoteId !== note.id && 'border-gold-300 bg-gold-50',
                       selectedNoteId === note.id
                         ? 'border-hublot-500 bg-hublot-50'
                         : 'hover:border-hublot-300'
@@ -83,12 +87,12 @@ export function AccountNotesSection({ accountId, onAddNote: _onAddNote }: Accoun
                         {note.title && <p className="font-medium truncate">{note.title}</p>}
                         <p className="text-sm text-charcoal-600 line-clamp-2">{note.content}</p>
                       </div>
-                      {note.is_pinned && <Star className="w-4 h-4 text-gold-500 fill-gold-500 flex-shrink-0 ml-2" />}
+                      {note.isPinned && <Star className="w-4 h-4 text-gold-500 fill-gold-500 flex-shrink-0 ml-2" />}
                     </div>
                     <div className="flex items-center gap-2 mt-2 text-xs text-charcoal-500">
-                      <span>{note.author?.full_name}</span>
+                      <span>{note.creator?.full_name}</span>
                       <span>&bull;</span>
-                      <span>{formatDistanceToNow(new Date(note.created_at), { addSuffix: true })}</span>
+                      <span>{formatDistanceToNow(new Date(note.createdAt), { addSuffix: true })}</span>
                     </div>
                   </div>
                 ))}

@@ -55,7 +55,7 @@ export function FeatureFlagsPage() {
       toast({
         title: 'Error',
         description: error.message || 'Failed to update feature flag',
-        variant: 'destructive',
+        variant: 'error',
       })
     },
   })

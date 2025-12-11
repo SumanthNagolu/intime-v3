@@ -24,6 +24,7 @@ import {
   TrendingDown,
   Workflow,
   BarChart3,
+  MapPin,
 } from 'lucide-react'
 
 /**
@@ -155,6 +156,7 @@ export const accountSections: SectionDefinition[] = [
   { id: 'contacts', label: 'Contacts', icon: Users, showCount: true },
   { id: 'jobs', label: 'Jobs', icon: Briefcase, showCount: true },
   { id: 'placements', label: 'Placements', icon: Award, showCount: true },
+  { id: 'addresses', label: 'Addresses', icon: MapPin, showCount: true },
   // Tools section
   { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true },
   { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },
@@ -173,6 +175,7 @@ export const jobSections: SectionDefinition[] = [
   // Main sections
   { id: 'overview', label: 'Overview', icon: FileText },
   { id: 'requirements', label: 'Requirements', icon: ListChecks },
+  { id: 'location', label: 'Location', icon: MapPin },
   { id: 'pipeline', label: 'Pipeline', icon: Layers, showCount: true },
   { id: 'submissions', label: 'Submissions', icon: Send, showCount: true },
   { id: 'interviews', label: 'Interviews', icon: Calendar, showCount: true },
@@ -194,6 +197,7 @@ export const contactSections: SectionDefinition[] = [
   { id: 'overview', label: 'Overview', icon: UserCircle },
   { id: 'accounts', label: 'Accounts', icon: Building2, showCount: true },
   { id: 'submissions', label: 'Submissions', icon: Send, showCount: true },
+  { id: 'addresses', label: 'Addresses', icon: MapPin, showCount: true },
   // Tools section
   { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true },
   { id: 'communications', label: 'Communications', icon: Mail, showCount: true, isToolSection: true },
@@ -352,3 +356,138 @@ export const commonToolSections: SectionDefinition[] = [
   { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true },
   { id: 'history', label: 'History', icon: History, isToolSection: true },
 ]
+
+// ============================================================================
+// UNIFIED CONTACT SECTIONS (Guidewire-Inspired Subtype Model)
+// ============================================================================
+// Contact sections vary by subtype: candidate, employee, client_poc, vendor_poc, prospect, lead
+
+/**
+ * Universal sections - ALWAYS visible on ALL contact subtypes
+ * These are the Guidewire-style "tool sections" that every contact has
+ */
+export const universalContactSections: SectionDefinition[] = [
+  { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true, description: 'All interactions and touchpoints' },
+  { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true, description: 'Internal team notes' },
+  { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true, description: 'Attached files and documents' },
+  { id: 'history', label: 'History', icon: History, isToolSection: true, description: 'Complete audit trail' },
+]
+
+/**
+ * Candidate subtype sections
+ */
+export const candidateContactSections: SectionDefinition[] = [
+  { id: 'overview', label: 'Overview', icon: UserCircle, group: 'main', description: 'Profile and professional details' },
+  { id: 'experience', label: 'Experience', icon: Briefcase, group: 'main', description: 'Work history and skills' },
+  { id: 'pipeline', label: 'Pipeline', icon: Layers, showCount: true, group: 'main', description: 'Active job submissions' },
+  { id: 'placements', label: 'Placements', icon: Award, showCount: true, group: 'main', description: 'Completed placements' },
+]
+
+/**
+ * Lead subtype sections
+ */
+export const leadContactSections: SectionDefinition[] = [
+  { id: 'overview', label: 'Overview', icon: Target, group: 'main', description: 'Lead profile and company info' },
+  { id: 'qualification', label: 'Qualification', icon: ListChecks, group: 'main', description: 'BANT scoring and qualification' },
+  { id: 'engagement', label: 'Engagement', icon: BarChart3, group: 'main', description: 'Engagement metrics and scoring' },
+  { id: 'deals', label: 'Deals', icon: Briefcase, showCount: true, group: 'main', description: 'Associated deal opportunities' },
+]
+
+/**
+ * Prospect subtype sections
+ */
+export const prospectContactSections: SectionDefinition[] = [
+  { id: 'overview', label: 'Overview', icon: UserCircle, group: 'main', description: 'Contact and company details' },
+  { id: 'campaigns', label: 'Campaigns', icon: Layers, showCount: true, group: 'main', description: 'Campaign enrollments' },
+  { id: 'qualification', label: 'Qualification', icon: ListChecks, group: 'main', description: 'Lead qualification checklist' },
+  { id: 'engagement', label: 'Engagement', icon: BarChart3, group: 'main', description: 'Engagement score and signals' },
+]
+
+/**
+ * Client POC subtype sections
+ */
+export const clientPocContactSections: SectionDefinition[] = [
+  { id: 'overview', label: 'Overview', icon: UserCircle, group: 'main', description: 'Contact details and role' },
+  { id: 'account', label: 'Account', icon: Building2, group: 'main', description: 'Associated client account' },
+  { id: 'jobs', label: 'Jobs', icon: Briefcase, showCount: true, group: 'main', description: 'Jobs they manage' },
+  { id: 'communications', label: 'Communications', icon: Mail, showCount: true, group: 'main', description: 'Email and call history' },
+]
+
+/**
+ * Vendor POC subtype sections
+ */
+export const vendorPocContactSections: SectionDefinition[] = [
+  { id: 'overview', label: 'Overview', icon: UserCircle, group: 'main', description: 'Contact details' },
+  { id: 'vendor', label: 'Vendor', icon: Building2, group: 'main', description: 'Associated vendor company' },
+  { id: 'consultants', label: 'Consultants', icon: Users, showCount: true, group: 'main', description: 'Managed consultants' },
+  { id: 'communications', label: 'Communications', icon: Mail, showCount: true, group: 'main', description: 'Communication history' },
+]
+
+/**
+ * Employee subtype sections
+ */
+export const employeeContactSections: SectionDefinition[] = [
+  { id: 'overview', label: 'Overview', icon: UserCircle, group: 'main', description: 'Employee profile' },
+  { id: 'team', label: 'Team', icon: Users, group: 'main', description: 'Team and reporting' },
+  { id: 'performance', label: 'Performance', icon: TrendingDown, group: 'main', description: 'Metrics and goals' },
+]
+
+/**
+ * General contact sections (fallback)
+ */
+export const generalContactSections: SectionDefinition[] = [
+  { id: 'overview', label: 'Overview', icon: UserCircle, group: 'main', description: 'Contact details' },
+  { id: 'accounts', label: 'Accounts', icon: Building2, showCount: true, group: 'main', description: 'Associated accounts' },
+]
+
+/**
+ * Get sections for a contact based on subtype
+ * Returns context-specific sections + universal tool sections
+ */
+export type ContactSubtype = 'candidate' | 'employee' | 'client_poc' | 'vendor_poc' | 'prospect' | 'lead' | 'general'
+
+export function getContactSectionsBySubtype(subtype: ContactSubtype): SectionDefinition[] {
+  let contextSections: SectionDefinition[] = []
+  
+  switch (subtype) {
+    case 'candidate':
+      contextSections = candidateContactSections
+      break
+    case 'employee':
+      contextSections = employeeContactSections
+      break
+    case 'client_poc':
+      contextSections = clientPocContactSections
+      break
+    case 'vendor_poc':
+      contextSections = vendorPocContactSections
+      break
+    case 'prospect':
+      contextSections = prospectContactSections
+      break
+    case 'lead':
+      contextSections = leadContactSections
+      break
+    case 'general':
+    default:
+      contextSections = generalContactSections
+      break
+  }
+  
+  // Always append universal sections
+  return [...contextSections, ...universalContactSections]
+}
+
+/**
+ * Get contact sections organized by group for sidebar rendering
+ */
+export function getContactSectionsByGroup(subtype: ContactSubtype): {
+  mainSections: SectionDefinition[]
+  toolSections: SectionDefinition[]
+} {
+  const sections = getContactSectionsBySubtype(subtype)
+  return {
+    mainSections: sections.filter(s => !s.isToolSection),
+    toolSections: sections.filter(s => s.isToolSection),
+  }
+}

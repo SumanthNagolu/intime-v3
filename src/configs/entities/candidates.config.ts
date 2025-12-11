@@ -30,16 +30,44 @@ import {
   CandidateActivitiesSectionPCF,
 } from './sections/candidates.sections'
 
-// Type definition for Candidate entity
+// Type definition for Candidate entity (Unified Contact Model)
+// Candidates are now stored in the contacts table with subtype='candidate'
 export interface Candidate extends Record<string, unknown> {
   id: string
+  // Core contact fields
   first_name: string
   last_name: string
   email?: string | null
   phone?: string | null
+  mobile?: string | null
   title?: string | null
+  linkedin_url?: string | null
+  avatar_url?: string | null
+  // Subtype (should always be 'candidate' for this entity)
+  subtype?: string
+  // Legacy fields (for backward compatibility during migration)
   location?: string | null
   status: string
+  // Candidate-specific fields (prefixed in contacts table)
+  candidate_status?: string | null
+  candidate_availability?: string | null
+  candidate_skills?: string[] | null
+  candidate_experience_years?: number | null
+  candidate_current_visa?: string | null
+  candidate_visa_expiry?: string | null
+  candidate_hourly_rate?: number | null
+  candidate_bench_start_date?: string | null
+  candidate_location?: string | null
+  candidate_willing_to_relocate?: boolean
+  candidate_preferred_locations?: string[] | null
+  candidate_resume_url?: string | null
+  candidate_is_on_hotlist?: boolean
+  candidate_hotlist_added_at?: string | null
+  candidate_hotlist_notes?: string | null
+  candidate_professional_headline?: string | null
+  candidate_professional_summary?: string | null
+  candidate_recruiter_rating?: number | null
+  // Legacy field mappings (for backward compatibility)
   availability?: string | null
   years_experience?: number | null
   experience?: number | null
@@ -51,7 +79,7 @@ export interface Candidate extends Record<string, unknown> {
   lead_source?: string | null
   source?: string | null
   professional_summary?: string | null
-  skills?: Array<{ skill_name: string; years_experience?: number }> | null
+  skills?: Array<{ skill_name: string; years_experience?: number }> | string[] | null
   tags?: string[] | null
   sourced_by?: string | null
   owner?: {
@@ -326,9 +354,14 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
       width: 'w-[200px]',
       render: (value, entity) => {
         const candidate = entity as Candidate
-        const skills = candidate.skills?.slice(0, 3) ?? []
-        if (skills.length === 0) return '—'
-        return skills.map(s => s.skill_name).join(', ')
+        // Support both unified model (candidate_skills array) and legacy (skills object array)
+        const skills = candidate.candidate_skills ?? candidate.skills
+        if (!skills || skills.length === 0) return '—'
+        // Handle both string[] and object[] formats
+        const skillNames = skills.slice(0, 3).map(s => 
+          typeof s === 'string' ? s : (s as { skill_name: string }).skill_name
+        )
+        return skillNames.join(', ')
       },
     },
     {
@@ -337,6 +370,11 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
       label: 'Location',
       sortable: true,
       width: 'w-[130px]',
+      render: (value, entity) => {
+        const candidate = entity as Candidate
+        // Support both unified model and legacy field names
+        return candidate.candidate_location ?? candidate.location ?? '—'
+      },
     },
     {
       key: 'status',
@@ -345,6 +383,11 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
       sortable: true,
       width: 'w-[90px]',
       format: 'status' as const,
+      render: (value, entity) => {
+        const candidate = entity as Candidate
+        // Prefer candidate_status from unified model, fallback to status
+        return candidate.candidate_status ?? candidate.status ?? '—'
+      },
     },
     {
       key: 'experience',
@@ -355,7 +398,8 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
       align: 'right' as const,
       render: (value, entity) => {
         const candidate = entity as Candidate
-        const years = candidate.experience ?? candidate.years_experience
+        // Support unified model and legacy field names
+        const years = candidate.candidate_experience_years ?? candidate.experience ?? candidate.years_experience
         if (years === null || years === undefined) return '—'
         return `${years} yrs`
       },
@@ -368,7 +412,8 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
       align: 'right' as const,
       render: (value, entity) => {
         const candidate = entity as Candidate
-        const rate = candidate.salary_expected ?? candidate.desired_rate
+        // Support unified model and legacy field names
+        const rate = candidate.candidate_hourly_rate ?? candidate.salary_expected ?? candidate.desired_rate
         if (rate === null || rate === undefined) return '—'
         return `$${rate}/hr`
       },
@@ -386,15 +431,29 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
       },
     },
     {
-      key: 'submissions',
-      header: 'Subs',
-      label: 'Submissions',
+      key: 'availability',
+      header: 'Availability',
+      label: 'Availability',
       sortable: true,
-      width: 'w-[80px]',
-      align: 'right' as const,
+      width: 'w-[100px]',
       render: (value, entity) => {
         const candidate = entity as Candidate
-        return (candidate.submissions_count || 0).toString()
+        // Support unified model and legacy field names
+        const avail = candidate.candidate_availability ?? candidate.availability
+        return CANDIDATE_AVAILABILITY_CONFIG[avail || '']?.label || avail || '—'
+      },
+    },
+    {
+      key: 'hotlist',
+      header: '★',
+      label: 'Hotlist',
+      width: 'w-[50px]',
+      align: 'center' as const,
+      render: (value, entity) => {
+        const candidate = entity as Candidate
+        // Support unified model and legacy field names
+        const isOnHotlist = candidate.candidate_is_on_hotlist ?? candidate.is_on_hotlist
+        return isOnHotlist ? '★' : '—'
       },
     },
     {
@@ -406,26 +465,6 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
       render: (value) => {
         const owner = value as Candidate['owner']
         return owner?.full_name || '—'
-      },
-    },
-    {
-      key: 'lastActivity',
-      header: 'Last Activity',
-      label: 'Last Activity',
-      sortable: true,
-      width: 'w-[100px]',
-      render: (value, entity) => {
-        const candidate = entity as Candidate
-        const date = candidate.lastActivityDate || candidate.last_activity_date
-        if (!date) return '—'
-        const d = new Date(date)
-        const now = new Date()
-        const days = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24))
-        if (days === 0) return 'Today'
-        if (days === 1) return 'Yesterday'
-        if (days < 7) return `${days} days ago`
-        if (days < 30) return `${Math.floor(days / 7)} weeks ago`
-        return `${Math.floor(days / 30)} months ago`
       },
     },
     {
@@ -457,7 +496,9 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
     },
   },
 
-  // tRPC hooks for data fetching using advancedSearch
+  // tRPC hooks for data fetching
+  // Uses unified contacts router with subtype='candidate' (Guidewire-inspired model)
+  // Falls back to legacy ATS router if unified router unavailable
   useListQuery: (filters) => {
     const statusValue = filters.status as string | undefined
     const sourceValue = filters.source as string | undefined
@@ -465,40 +506,25 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
     const sortByValue = filters.sortBy as string | undefined
     const sortOrderValue = filters.sortOrder as string | undefined
 
-    const validStatuses = [
-      'active',
-      'sourced',
-      'screening',
-      'bench',
-      'placed',
-      'inactive',
-      'archived',
-    ] as const
+    // Map candidate statuses for the unified model
+    const candidateStatusMap: Record<string, string> = {
+      active: 'active',
+      sourced: 'active', // Legacy status maps to active
+      screening: 'active', // Screening is an activity, not a status
+      bench: 'bench',
+      placed: 'placed',
+      inactive: 'inactive',
+      archived: 'inactive',
+    }
 
-    const validSortFields = [
-      'first_name',
-      'title',
-      'location',
-      'status',
-      'years_experience',
-      'lead_source',
-      'submissions_count',
-      'owner_id',
-      'last_activity_date',
-      'created_at',
-    ] as const
-
-    type SortField = (typeof validSortFields)[number]
-
-    // Map frontend column keys to database columns
-    const sortFieldMap: Record<string, SortField> = {
+    // Map frontend sort keys to unified contacts table columns
+    const sortFieldMap: Record<string, string> = {
       name: 'first_name',
       title: 'title',
-      location: 'location',
-      status: 'status',
-      experience: 'years_experience',
-      source: 'lead_source',
-      submissions: 'submissions_count',
+      location: 'candidate_location',
+      status: 'candidate_status',
+      experience: 'candidate_experience_years',
+      source: 'source',
       owner: 'owner_id',
       lastActivity: 'last_activity_date',
       createdAt: 'created_at',
@@ -531,22 +557,27 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
       }
     }
 
-    return trpc.ats.candidates.advancedSearch.useQuery({
+    // Map the status to candidate_status
+    const candidateStatus = statusValue && statusValue !== 'all' 
+      ? candidateStatusMap[statusValue] as 'active' | 'passive' | 'placed' | 'bench' | 'inactive' | 'blacklisted' | undefined
+      : undefined
+
+    // Use unified contacts router with candidate subtype
+    return trpc.unifiedContacts.candidates.list.useQuery({
       search: filters.search as string | undefined,
-      statuses:
-        statusValue && statusValue !== 'all' ? [statusValue as (typeof validStatuses)[number]] : undefined,
-      source: sourceValue !== 'all' ? sourceValue : undefined,
+      status: candidateStatus,
+      onHotlist: filters.isOnHotlist as boolean | undefined,
       minExperience,
       maxExperience,
-      isOnHotlist: filters.isOnHotlist as boolean | undefined,
       limit: (filters.limit as number) || 25,
       offset: (filters.offset as number) || 0,
-      sortBy: mappedSortBy,
+      sortBy: mappedSortBy as 'name' | 'candidate_status' | 'candidate_experience_years' | 'candidate_hourly_rate' | 'created_at',
       sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'desc'),
     })
   },
 
-  useStatsQuery: () => trpc.ats.candidates.stats.useQuery(),
+  // Use unified contacts candidate stats
+  useStatsQuery: () => trpc.unifiedContacts.candidates.stats.useQuery(),
 }
 
 // Candidates Detail View Configuration
@@ -583,7 +614,8 @@ export const candidatesDetailConfig: DetailViewConfig<Candidate> = {
       iconColor: 'text-blue-600',
       getValue: (entity: unknown) => {
         const candidate = entity as Candidate
-        return candidate.years_experience || 0
+        // Support unified model and legacy field names
+        return candidate.candidate_experience_years ?? candidate.years_experience ?? 0
       },
       tooltip: 'Years of experience',
     },
@@ -595,7 +627,8 @@ export const candidatesDetailConfig: DetailViewConfig<Candidate> = {
       iconColor: 'text-green-600',
       getValue: (entity: unknown) => {
         const candidate = entity as Candidate
-        return candidate.desired_rate || 0
+        // Support unified model and legacy field names
+        return candidate.candidate_hourly_rate ?? candidate.desired_rate ?? 0
       },
       format: (value) => `$${Number(value)}/hr`,
       tooltip: 'Desired hourly rate',
@@ -608,7 +641,8 @@ export const candidatesDetailConfig: DetailViewConfig<Candidate> = {
       iconColor: 'text-amber-600',
       getValue: (entity: unknown) => {
         const candidate = entity as Candidate
-        const avail = candidate.availability
+        // Support unified model and legacy field names
+        const avail = candidate.candidate_availability ?? candidate.availability
         return CANDIDATE_AVAILABILITY_CONFIG[avail || '']?.label || avail || 'Unknown'
       },
       tooltip: 'Availability status',
@@ -621,7 +655,8 @@ export const candidatesDetailConfig: DetailViewConfig<Candidate> = {
       iconColor: 'text-gold-600',
       getValue: (entity: unknown) => {
         const candidate = entity as Candidate
-        return candidate.is_on_hotlist ? 'Yes' : 'No'
+        // Support unified model and legacy field names
+        return (candidate.candidate_is_on_hotlist ?? candidate.is_on_hotlist) ? 'Yes' : 'No'
       },
       tooltip: 'On hotlist',
     },
@@ -801,5 +836,6 @@ export const candidatesDetailConfig: DetailViewConfig<Candidate> = {
 
   eventNamespace: 'candidate',
 
-  useEntityQuery: (entityId) => trpc.ats.candidates.getById.useQuery({ id: entityId }),
+  // Use unified contacts router for candidate details
+  useEntityQuery: (entityId) => trpc.unifiedContacts.getById.useQuery({ id: entityId }),
 }

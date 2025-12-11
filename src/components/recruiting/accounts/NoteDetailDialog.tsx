@@ -68,17 +68,17 @@ export function NoteDetailDialog({
   const [noteType, setNoteType] = useState('general')
   const [isPinned, setIsPinned] = useState(false)
 
-  // Fetch note data
-  const noteQuery = trpc.crm.notes.getById.useQuery(
+  // Fetch note data - Using centralized notes router (NOTES-01)
+  const noteQuery = trpc.notes.getById.useQuery(
     { id: noteId! },
     { enabled: !!noteId && open }
   )
 
   // Update mutation
-  const updateMutation = trpc.crm.notes.update.useMutation({
+  const updateMutation = trpc.notes.update.useMutation({
     onSuccess: () => {
       toast({ title: 'Note updated' })
-      utils.crm.notes.listByAccount.invalidate({ accountId })
+      utils.notes.listByEntity.invalidate({ entityType: 'account', entityId: accountId })
       setIsEditing(false)
     },
     onError: (error) => {
@@ -87,10 +87,10 @@ export function NoteDetailDialog({
   })
 
   // Delete mutation
-  const deleteMutation = trpc.crm.notes.delete.useMutation({
+  const deleteMutation = trpc.notes.delete.useMutation({
     onSuccess: () => {
       toast({ title: 'Note deleted' })
-      utils.crm.notes.listByAccount.invalidate({ accountId })
+      utils.notes.listByEntity.invalidate({ entityType: 'account', entityId: accountId })
       onOpenChange(false)
     },
     onError: (error) => {
@@ -104,8 +104,8 @@ export function NoteDetailDialog({
       const n = noteQuery.data
       setTitle(n.title || '')
       setContent(n.content || '')
-      setNoteType(n.note_type || 'general')
-      setIsPinned(n.is_pinned || false)
+      setNoteType(n.noteType || 'general')
+      setIsPinned(n.isPinned || false)
     }
   }, [noteQuery.data])
 
@@ -219,12 +219,12 @@ export function NoteDetailDialog({
                 <div>
                   {note.title && <h3 className="text-lg font-semibold">{note.title}</h3>}
                   <div className="flex items-center gap-2 text-sm text-charcoal-500 mt-1">
-                    <span>{note.author?.full_name}</span>
+                    <span>{note.creator?.full_name}</span>
                     <span>&bull;</span>
-                    <span>{formatDistanceToNow(new Date(note.created_at), { addSuffix: true })}</span>
+                    <span>{formatDistanceToNow(new Date(note.createdAt), { addSuffix: true })}</span>
                   </div>
                 </div>
-                {note.is_pinned && <Star className="w-5 h-5 text-gold-500 fill-gold-500" />}
+                {note.isPinned && <Star className="w-5 h-5 text-gold-500 fill-gold-500" />}
               </div>
 
               <div className="bg-charcoal-50 rounded-lg p-4">
@@ -233,7 +233,7 @@ export function NoteDetailDialog({
 
               <div className="flex items-center gap-2">
                 <span className="text-sm text-charcoal-500">Type:</span>
-                <span className="text-sm capitalize">{note.note_type}</span>
+                <span className="text-sm capitalize">{note.noteType}</span>
               </div>
             </div>
           )

@@ -5,8 +5,8 @@
 export {
   jobIntakeWizardConfig,
   jobIntakeSteps,
-  type JobIntakeFormData,
 } from './job-intake.config'
+export { type JobIntakeFormData } from '@/stores/job-intake-store'
 
 // Job Create Wizard (simple 3-step creation)
 export {

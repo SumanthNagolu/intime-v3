@@ -23,7 +23,7 @@ interface EntityWizardProps<T> {
   onCancel?: () => void
 }
 
-export function EntityWizard<T extends Record<string, unknown>>({
+export function EntityWizard<T extends object>({
   config,
   store,
   onCancel,

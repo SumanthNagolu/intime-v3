@@ -32,6 +32,7 @@ import {
   JobActivitiesSectionPCF,
   JobDocumentsSectionPCF,
   JobNotesSectionPCF,
+  JobAddressesSectionPCF,
 } from './sections/jobs.sections'
 
 // Type definition for Job entity
@@ -606,6 +607,12 @@ export const jobsDetailConfig: DetailViewConfig<Job> = {
       label: 'Requirements',
       icon: Target,
       component: JobRequirementsSectionPCF,
+    },
+    {
+      id: 'location',
+      label: 'Location',
+      icon: MapPin,
+      component: JobAddressesSectionPCF,
     },
     {
       id: 'pipeline',

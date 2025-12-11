@@ -36,6 +36,7 @@ import { cn } from '@/lib/utils'
 import { format, formatDistanceToNow } from 'date-fns'
 import { ActivitiesSection } from '@/components/pcf/sections/ActivitiesSection'
 import { NotesSection } from '@/components/pcf/sections/NotesSection'
+import type { NoteItem } from '@/configs/sections/notes.config'
 
 /**
  * Dispatch a dialog open event for the Campaign entity
@@ -432,14 +433,13 @@ export function ProspectActivitiesSectionPCF({ entityId, entity }: PCFSectionPro
 }
 
 /**
- * Notes Section Adapter
+ * Notes Section Adapter - Using centralized notes router (NOTES-01)
  */
-export function ProspectNotesSectionPCF({ entityId, entity }: PCFSectionProps) {
-  const prospect = entity as Prospect | undefined
-  const notesQuery = trpc.crm.notes.list.useQuery({ entityType: 'prospect', entityId })
-  const addNoteMutation = trpc.crm.notes.create.useMutation()
-  const updateNoteMutation = trpc.crm.notes.update.useMutation()
-  const deleteNoteMutation = trpc.crm.notes.delete.useMutation()
+export function ProspectNotesSectionPCF({ entityId }: PCFSectionProps) {
+  const notesQuery = trpc.notes.listByEntity.useQuery({ entityType: 'prospect', entityId })
+  const addNoteMutation = trpc.notes.create.useMutation()
+  const updateNoteMutation = trpc.notes.update.useMutation()
+  const deleteNoteMutation = trpc.notes.delete.useMutation()
   const utils = trpc.useUtils()
 
   const handleAddNote = async (content: string) => {
@@ -448,29 +448,29 @@ export function ProspectNotesSectionPCF({ entityId, entity }: PCFSectionProps) {
       entityId,
       content,
     })
-    utils.crm.notes.list.invalidate({ entityType: 'prospect', entityId })
+    utils.notes.listByEntity.invalidate({ entityType: 'prospect', entityId })
   }
 
   const handleEditNote = async (id: string, content: string) => {
     await updateNoteMutation.mutateAsync({ id, content })
-    utils.crm.notes.list.invalidate({ entityType: 'prospect', entityId })
+    utils.notes.listByEntity.invalidate({ entityType: 'prospect', entityId })
   }
 
   const handleDeleteNote = async (id: string) => {
     await deleteNoteMutation.mutateAsync({ id })
-    utils.crm.notes.list.invalidate({ entityType: 'prospect', entityId })
+    utils.notes.listByEntity.invalidate({ entityType: 'prospect', entityId })
   }
 
   const handleTogglePin = async (id: string, isPinned: boolean) => {
     await updateNoteMutation.mutateAsync({ id, isPinned })
-    utils.crm.notes.list.invalidate({ entityType: 'prospect', entityId })
+    utils.notes.listByEntity.invalidate({ entityType: 'prospect', entityId })
   }
 
   return (
     <NotesSection
       entityType="prospect"
       entityId={entityId}
-      notes={notesQuery.data?.items as any}
+      notes={notesQuery.data?.items as unknown as NoteItem[]}
       isLoading={notesQuery.isLoading}
       onAddNote={handleAddNote}
       onEditNote={handleEditNote}

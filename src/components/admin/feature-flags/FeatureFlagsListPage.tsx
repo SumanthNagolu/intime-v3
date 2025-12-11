@@ -137,7 +137,7 @@ export function FeatureFlagsListPage() {
       toast({ title: 'Feature flag updated' })
     },
     onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' })
+      toast({ title: 'Error', description: error.message, variant: 'error' })
     },
   })
 

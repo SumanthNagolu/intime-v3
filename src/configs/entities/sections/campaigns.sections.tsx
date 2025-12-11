@@ -641,11 +641,10 @@ export function CampaignProspectsSectionPCF({ entityId, entity }: PCFSectionProp
 export function CampaignLeadsSectionPCF({ entityId, entity }: PCFSectionProps) {
   const campaign = entity as Campaign | undefined
 
-  // Query leads linked to this campaign
-  const leadsQuery = trpc.crm.leads.list.useQuery({
+  // Query leads linked to this campaign - uses unified contacts router
+  const leadsQuery = trpc.unifiedContacts.leads.listByCampaign.useQuery({
     campaignId: entityId,
     limit: 100,
-    status: 'all',
   })
 
   const leads = leadsQuery.data?.items || []

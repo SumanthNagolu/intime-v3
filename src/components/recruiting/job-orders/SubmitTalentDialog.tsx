@@ -45,11 +45,25 @@ const statusColors: Record<string, string> = {
 
 interface TalentItem {
   id: string
+  // contactBench camelCase fields
+  benchStatus?: string
+  visaType?: string
+  targetRate?: number
+  skills?: string[]
+  // Legacy snake_case fields
   status?: string
   visa_type?: string
   target_rate?: number
   years_experience?: number
-  skills?: string[]
+  // Contact (new shape from contactBench)
+  contact?: {
+    id: string
+    first_name?: string
+    last_name?: string
+    email?: string
+    title?: string
+  }
+  // Legacy candidate shape
   candidate?: {
     id: string
     full_name?: string
@@ -74,9 +88,9 @@ export function SubmitTalentDialog({
   const [notes, setNotes] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  // Fetch available talent
-  const { data: talentData, isLoading: isLoadingTalent } = trpc.bench.talent.list.useQuery({
-    status: statusFilter !== 'all' ? statusFilter as 'onboarding' | 'available' | 'marketing' | 'interviewing' | 'placed' | 'inactive' : undefined,
+  // Fetch available talent - uses contactBench router
+  const { data: talentData, isLoading: isLoadingTalent } = trpc.contactBench.list.useQuery({
+    benchStatus: statusFilter !== 'all' ? statusFilter as 'onboarding' | 'available' | 'marketing' | 'interviewing' | 'placed' | 'inactive' : undefined,
     search: searchQuery || undefined,
     limit: 50
   }, {
@@ -206,7 +220,14 @@ export function SubmitTalentDialog({
                 talents.map((talent: TalentItem) => {
                   const matchingSkills = getMatchingSkills(talent.skills || [])
                   const isSelected = selectedTalent === talent.id
-                  const candidateName = talent.candidate?.full_name || 'Unknown'
+                  // Handle both contact (new) and candidate (legacy) shapes
+                  const candidateName = talent.contact
+                    ? `${talent.contact.first_name || ''} ${talent.contact.last_name || ''}`.trim()
+                    : talent.candidate?.full_name || 'Unknown'
+                  const candidateTitle = talent.contact?.title || talent.candidate?.title || 'No title'
+                  const status = talent.benchStatus || talent.status || ''
+                  const visaType = talent.visaType || talent.visa_type
+                  const targetRate = talent.targetRate || talent.target_rate
 
                   return (
                     <Card
@@ -229,27 +250,27 @@ export function SubmitTalentDialog({
                               <span className="font-medium text-charcoal-900">
                                 {candidateName}
                               </span>
-                              <Badge className={statusColors[talent.status || ''] || 'bg-charcoal-100'}>
-                                {talent.status?.replace('_', ' ')}
+                              <Badge className={statusColors[status] || 'bg-charcoal-100'}>
+                                {status.replace('_', ' ')}
                               </Badge>
                             </div>
                             <p className="text-sm text-charcoal-600 truncate">
-                              {talent.candidate?.title || 'No title'}
+                              {candidateTitle}
                             </p>
                             <div className="flex items-center gap-4 mt-1 text-xs text-charcoal-500">
                               <span className="flex items-center gap-1">
                                 <Briefcase className="h-3 w-3" />
                                 {talent.years_experience || 0}+ years
                               </span>
-                              {talent.visa_type && (
-                                <Badge className={`${visaStatusColors[talent.visa_type] || 'bg-charcoal-100'} text-xs`}>
-                                  {talent.visa_type.replace('_', ' ')}
+                              {visaType && (
+                                <Badge className={`${visaStatusColors[visaType] || 'bg-charcoal-100'} text-xs`}>
+                                  {visaType.replace('_', ' ')}
                                 </Badge>
                               )}
-                              {talent.target_rate && (
+                              {targetRate && (
                                 <span className="flex items-center gap-1">
                                   <DollarSign className="h-3 w-3" />
-                                  ${talent.target_rate}/hr
+                                  ${targetRate}/hr
                                 </span>
                               )}
                             </div>
@@ -290,10 +311,12 @@ export function SubmitTalentDialog({
                       </div>
                       <div>
                         <p className="font-medium">
-                          {selectedTalentData.candidate?.full_name || 'Unknown'}
+                          {selectedTalentData.contact
+                            ? `${selectedTalentData.contact.first_name || ''} ${selectedTalentData.contact.last_name || ''}`.trim()
+                            : selectedTalentData.candidate?.full_name || 'Unknown'}
                         </p>
                         <p className="text-sm text-charcoal-600">
-                          {selectedTalentData.candidate?.title || 'No title'}
+                          {selectedTalentData.contact?.title || selectedTalentData.candidate?.title || 'No title'}
                         </p>
                       </div>
                     </div>
@@ -312,13 +335,13 @@ export function SubmitTalentDialog({
                         type="number"
                         value={proposedRate}
                         onChange={(e) => setProposedRate(e.target.value)}
-                        placeholder={selectedTalentData.target_rate ? `Suggested: $${selectedTalentData.target_rate}` : 'Enter rate'}
+                        placeholder={(selectedTalentData.targetRate || selectedTalentData.target_rate) ? `Suggested: $${selectedTalentData.targetRate || selectedTalentData.target_rate}` : 'Enter rate'}
                         className="pl-10"
                       />
                     </div>
-                    {selectedTalentData.target_rate && (
+                    {(selectedTalentData.targetRate || selectedTalentData.target_rate) && (
                       <p className="text-xs text-charcoal-500">
-                        Talent's standard rate: ${selectedTalentData.target_rate}/hr
+                        Talent's standard rate: ${selectedTalentData.targetRate || selectedTalentData.target_rate}/hr
                       </p>
                     )}
                   </div>
