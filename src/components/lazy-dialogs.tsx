@@ -74,7 +74,7 @@ export const LazyScheduleInterviewDialog = dynamic(
 )
 
 export const LazyRecordFeedbackDialog = dynamic(
-  () => import('./recruiting/interviews/RecordFeedbackDialog').then((mod) => mod.RecordFeedbackDialog),
+  () => import('./recruiting/submissions/RecordFeedbackDialog').then((mod) => mod.RecordFeedbackDialog),
   { loading: () => <DialogLoadingFallback />, ssr: false }
 )
 
@@ -143,7 +143,7 @@ export const LazyProfileBuilder = dynamic(
 )
 
 export const LazyAddToHotlistDialog = dynamic(
-  () => import('./recruiting/candidates/AddToHotlistDialog').then((mod) => mod.AddToHotlistDialog),
+  () => import('./recruiting/hotlists/AddToHotlistDialog').then((mod) => mod.AddToHotlistDialog),
   { loading: () => <DialogLoadingFallback />, ssr: false }
 )
 
