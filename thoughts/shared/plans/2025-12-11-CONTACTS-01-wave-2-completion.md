@@ -1226,6 +1226,9 @@ git checkout HEAD~1 -- src/components/crm/campaigns/LinkLeadsToCampaignDialog.ts
 1. `LeadInlinePanel.tsx` - Removed invalid `companySize` field from update mutation
 2. `QualifyLeadDialog.tsx` - Fixed qualify mutation to pass only required fields
 3. `leads.config.ts` - Updated status enum and sortBy mapping to match router schema
+4. `prefetch-link.tsx` - Updated `utils.crm.leads.getById.prefetch` → `utils.unifiedContacts.leads.getById.prefetch`
+5. `CrossPillarLeadDialog.tsx` - Updated `utils.crm.leads.list.invalidate` → `utils.unifiedContacts.leads.list.invalidate`
+6. `SubmitToJobDialog.tsx` - Updated `utils.bench.talent.getById.invalidate` → `utils.contactBench.getById.invalidate`
 
 ### Post-Implementation
 - [ ] Commit all changes
