@@ -137,6 +137,131 @@ CREATE TYPE public.benefit_type AS ENUM (
 
 
 --
+-- Name: company_category; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.company_category AS ENUM (
+    'client',
+    'vendor',
+    'partner',
+    'prospect'
+);
+
+
+--
+-- Name: company_note_type; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.company_note_type AS ENUM (
+    'general',
+    'meeting',
+    'call',
+    'strategy',
+    'warning',
+    'opportunity',
+    'competitive_intel'
+);
+
+
+--
+-- Name: company_relationship_category; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.company_relationship_category AS ENUM (
+    'parent_child',
+    'msp_client',
+    'prime_sub',
+    'referral_partner',
+    'competitor',
+    'affiliate',
+    'merger_acquisition'
+);
+
+
+--
+-- Name: company_relationship_type; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.company_relationship_type AS ENUM (
+    'direct_client',
+    'msp_client',
+    'prime_vendor',
+    'sub_vendor',
+    'implementation_partner',
+    'referral_partner',
+    'competitor'
+);
+
+
+--
+-- Name: company_segment; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.company_segment AS ENUM (
+    'enterprise',
+    'mid_market',
+    'smb',
+    'startup'
+);
+
+
+--
+-- Name: company_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.company_status AS ENUM (
+    'active',
+    'inactive',
+    'on_hold',
+    'churned',
+    'do_not_use',
+    'pending_approval'
+);
+
+
+--
+-- Name: company_team_role; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.company_team_role AS ENUM (
+    'owner',
+    'account_manager',
+    'recruiter',
+    'sales',
+    'coordinator',
+    'executive_sponsor',
+    'viewer'
+);
+
+
+--
+-- Name: company_tier; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.company_tier AS ENUM (
+    'strategic',
+    'preferred',
+    'standard',
+    'transactional'
+);
+
+
+--
+-- Name: company_vendor_type; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.company_vendor_type AS ENUM (
+    'direct_client',
+    'prime_vendor',
+    'sub_vendor',
+    'msp',
+    'vms_provider',
+    'talent_supplier',
+    'referral_source'
+);
+
+
+--
 -- Name: compliance_applies_to; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -179,6 +304,54 @@ CREATE TYPE public.compliance_type AS ENUM (
     'federal',
     'state',
     'local'
+);
+
+
+--
+-- Name: contact_decision_authority; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.contact_decision_authority AS ENUM (
+    'decision_maker',
+    'influencer',
+    'champion',
+    'gatekeeper',
+    'end_user',
+    'budget_holder',
+    'technical_evaluator',
+    'procurement'
+);
+
+
+--
+-- Name: contract_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.contract_status AS ENUM (
+    'draft',
+    'in_review',
+    'pending_signature',
+    'active',
+    'expired',
+    'terminated',
+    'superseded'
+);
+
+
+--
+-- Name: contract_type; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.contract_type AS ENUM (
+    'msa',
+    'sow',
+    'nda',
+    'amendment',
+    'addendum',
+    'rate_agreement',
+    'referral_agreement',
+    'subcontract',
+    'other'
 );
 
 
@@ -412,6 +585,19 @@ CREATE TYPE public.marketing_status AS ENUM (
 
 
 --
+-- Name: metric_period_type; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.metric_period_type AS ENUM (
+    'daily',
+    'weekly',
+    'monthly',
+    'quarterly',
+    'yearly'
+);
+
+
+--
 -- Name: onboarding_status; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -463,6 +649,19 @@ CREATE TYPE public.performance_goal_category AS ENUM (
 CREATE TYPE public.pod_member_role AS ENUM (
     'senior',
     'junior'
+);
+
+
+--
+-- Name: rate_card_status; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.rate_card_status AS ENUM (
+    'draft',
+    'pending_approval',
+    'active',
+    'expired',
+    'superseded'
 );
 
 
@@ -9336,6 +9535,54 @@ $$;
 
 
 --
+-- Name: update_companies_hierarchy_path(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.update_companies_hierarchy_path() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+  parent_path TEXT;
+BEGIN
+  IF NEW.parent_company_id IS NULL THEN
+    NEW.hierarchy_path := '/' || NEW.id::TEXT;
+    NEW.hierarchy_level := 0;
+  ELSE
+    SELECT hierarchy_path, hierarchy_level + 1
+    INTO parent_path, NEW.hierarchy_level
+    FROM companies
+    WHERE id = NEW.parent_company_id;
+
+    NEW.hierarchy_path := parent_path || '/' || NEW.id::TEXT;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+
+--
+-- Name: update_companies_search_vector(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.update_companies_search_vector() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  NEW.search_vector := to_tsvector('english',
+    COALESCE(NEW.name, '') || ' ' ||
+    COALESCE(NEW.legal_name, '') || ' ' ||
+    COALESCE(NEW.dba_name, '') || ' ' ||
+    COALESCE(NEW.industry, '') || ' ' ||
+    COALESCE(NEW.headquarters_city, '') || ' ' ||
+    COALESCE(NEW.headquarters_state, '')
+  );
+  NEW.updated_at := now();
+  RETURN NEW;
+END;
+$$;
+
+
+--
 -- Name: update_contact_from_engagement(); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -10774,31 +11021,181 @@ COMMENT ON FUNCTION public.validate_traffic_allocation() IS 'Ensures traffic per
 
 
 --
--- Name: account_addresses; Type: TABLE; Schema: public; Owner: -
+-- Name: _migration_candidate_mapping; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.account_addresses (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
-    account_id uuid NOT NULL,
-    address_type text DEFAULT 'office'::text NOT NULL,
-    street text,
-    street2 text,
-    city text,
-    state text,
-    country text DEFAULT 'USA'::text,
-    postal_code text,
-    is_primary boolean DEFAULT false,
-    is_active boolean DEFAULT true,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL
+CREATE TABLE public._migration_candidate_mapping (
+    user_profile_id uuid NOT NULL,
+    contact_id uuid NOT NULL,
+    migrated_at timestamp with time zone DEFAULT now()
 );
 
 
 --
--- Name: TABLE account_addresses; Type: COMMENT; Schema: public; Owner: -
+-- Name: _migration_lead_mapping; Type: TABLE; Schema: public; Owner: -
 --
 
-COMMENT ON TABLE public.account_addresses IS 'Multiple addresses per account (HQ, billing, offices)';
+CREATE TABLE public._migration_lead_mapping (
+    lead_id uuid NOT NULL,
+    contact_id uuid NOT NULL,
+    migrated_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: accounts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.accounts (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    name text NOT NULL,
+    industry text,
+    company_type text DEFAULT 'direct_client'::text,
+    status text DEFAULT 'prospect'::text NOT NULL,
+    tier text,
+    account_manager_id uuid,
+    responsiveness text,
+    preferred_quality text,
+    description text,
+    contract_start_date timestamp with time zone,
+    contract_end_date timestamp with time zone,
+    payment_terms_days integer DEFAULT 30,
+    markup_percentage numeric(5,2),
+    annual_revenue_target numeric(12,2),
+    website text,
+    phone text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by uuid,
+    updated_by uuid,
+    deleted_at timestamp with time zone,
+    search_vector tsvector,
+    legal_name text,
+    founded_year integer,
+    employee_count integer,
+    annual_revenue numeric(15,2),
+    health_score integer,
+    primary_contact_id uuid,
+    onboarding_status text DEFAULT 'pending'::text,
+    onboarding_completed_at timestamp with time zone,
+    onboarding_completed_by uuid,
+    nps_score integer,
+    last_contact_date timestamp with time zone,
+    next_contact_date timestamp with time zone,
+    relationship_health text DEFAULT 'healthy'::text,
+    billing_entity_name text,
+    billing_email text,
+    billing_phone text,
+    billing_currency text DEFAULT 'USD'::text,
+    billing_frequency text DEFAULT 'monthly'::text,
+    po_required boolean DEFAULT false,
+    current_po_number text,
+    preferred_contact_method text DEFAULT 'email'::text,
+    meeting_cadence text DEFAULT 'weekly'::text,
+    communication_channel text,
+    tax_id text,
+    funding_stage text,
+    company_size text,
+    linkedin_url text,
+    owner_id uuid,
+    CONSTRAINT accounts_nps_score_check CHECK (((nps_score >= 0) AND (nps_score <= 10)))
+);
+
+
+--
+-- Name: TABLE accounts; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.accounts IS 'Client companies and prospects';
+
+
+--
+-- Name: COLUMN accounts.onboarding_status; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.accounts.onboarding_status IS 'Account onboarding status: pending, in_progress, completed';
+
+
+--
+-- Name: COLUMN accounts.relationship_health; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.accounts.relationship_health IS 'Overall account health: healthy, attention, at_risk';
+
+
+--
+-- Name: addresses; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.addresses (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    entity_type text NOT NULL,
+    entity_id uuid NOT NULL,
+    address_type text NOT NULL,
+    address_line_1 text,
+    address_line_2 text,
+    address_line_3 text,
+    city text,
+    state_province text,
+    postal_code text,
+    country_code text DEFAULT 'US'::text NOT NULL,
+    county text,
+    latitude numeric(10,7),
+    longitude numeric(10,7),
+    is_verified boolean DEFAULT false,
+    verified_at timestamp with time zone,
+    verification_source text,
+    is_primary boolean DEFAULT false,
+    effective_from date,
+    effective_to date,
+    notes text,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now(),
+    created_by uuid,
+    updated_by uuid,
+    CONSTRAINT addresses_address_type_check CHECK ((address_type = ANY (ARRAY['current'::text, 'permanent'::text, 'mailing'::text, 'work'::text, 'billing'::text, 'shipping'::text, 'headquarters'::text, 'office'::text, 'job_location'::text, 'meeting'::text, 'first_day'::text]))),
+    CONSTRAINT addresses_entity_type_check CHECK ((entity_type = ANY (ARRAY['candidate'::text, 'account'::text, 'contact'::text, 'vendor'::text, 'organization'::text, 'lead'::text, 'job'::text, 'interview'::text, 'employee'::text, 'placement'::text])))
+);
+
+
+--
+-- Name: account_addresses_view; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.account_addresses_view AS
+ SELECT a.id AS account_id,
+    a.org_id,
+    a.name AS account_name,
+    addr.id AS address_id,
+    addr.address_type,
+    addr.address_line_1,
+    addr.address_line_2,
+    addr.address_line_3,
+    addr.city,
+    addr.state_province,
+    addr.postal_code,
+    addr.country_code,
+    addr.county,
+    addr.latitude,
+    addr.longitude,
+    addr.is_verified,
+    addr.is_primary,
+    addr.effective_from,
+    addr.effective_to,
+    addr.notes,
+    addr.created_at,
+    addr.updated_at
+   FROM (public.accounts a
+     LEFT JOIN public.addresses addr ON (((addr.entity_type = 'account'::text) AND (addr.entity_id = a.id))));
+
+
+--
+-- Name: VIEW account_addresses_view; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON VIEW public.account_addresses_view IS 'View for accessing account addresses from the unified addresses table';
 
 
 --
@@ -10980,91 +11377,272 @@ COMMENT ON TABLE public.account_team IS 'RCAI team assignments for accounts';
 
 
 --
--- Name: accounts; Type: TABLE; Schema: public; Owner: -
+-- Name: companies; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.accounts (
+CREATE TABLE public.companies (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     org_id uuid NOT NULL,
+    company_number character varying(50),
+    category public.company_category NOT NULL,
+    relationship_type public.company_relationship_type DEFAULT 'direct_client'::public.company_relationship_type NOT NULL,
+    segment public.company_segment,
+    tier public.company_tier DEFAULT 'standard'::public.company_tier,
+    status public.company_status DEFAULT 'active'::public.company_status NOT NULL,
     name text NOT NULL,
+    legal_name text,
+    dba_name text,
     industry text,
-    company_type text DEFAULT 'direct_client'::text,
-    status text DEFAULT 'prospect'::text NOT NULL,
-    tier text,
-    account_manager_id uuid,
-    responsiveness text,
-    preferred_quality text,
-    description text,
-    contract_start_date timestamp with time zone,
-    contract_end_date timestamp with time zone,
-    payment_terms_days integer DEFAULT 30,
-    markup_percentage numeric(5,2),
-    annual_revenue_target numeric(12,2),
+    sub_industry text,
+    sic_code character varying(10),
+    naics_code character varying(10),
+    employee_count integer,
+    employee_range character varying(20),
+    annual_revenue numeric(15,2),
+    revenue_range character varying(20),
+    founded_year integer,
+    ownership_type character varying(50),
+    parent_company_id uuid,
+    hierarchy_level integer DEFAULT 0,
+    hierarchy_path text,
+    is_headquarters boolean DEFAULT true,
     website text,
-    headquarters_location text,
     phone text,
+    linkedin_url text,
+    headquarters_city text,
+    headquarters_state text,
+    headquarters_country text DEFAULT 'USA'::text,
+    timezone text DEFAULT 'America/New_York'::text,
+    owner_id uuid,
+    account_manager_id uuid,
+    pod_id uuid,
+    primary_contact_id uuid,
+    is_msp_program boolean DEFAULT false,
+    msp_provider_id uuid,
+    our_msp_tier integer,
+    vms_platform character varying(50),
+    vms_vendor_id character varying(100),
+    vms_api_enabled boolean DEFAULT false,
+    msa_status character varying(20) DEFAULT 'none'::character varying,
+    msa_effective_date date,
+    msa_expiration_date date,
+    msa_auto_renews boolean DEFAULT false,
+    default_payment_terms character varying(20) DEFAULT 'Net 30'::character varying,
+    default_currency character varying(3) DEFAULT 'USD'::character varying,
+    default_markup_percentage numeric(5,2),
+    default_fee_percentage numeric(5,2),
+    credit_limit numeric(12,2),
+    credit_status character varying(20) DEFAULT 'approved'::character varying,
+    account_score integer,
+    account_grade character(1),
+    health_score integer,
+    health_status character varying(20) DEFAULT 'healthy'::character varying,
+    churn_risk integer,
+    nps_score integer,
+    lifetime_revenue numeric(15,2) DEFAULT 0,
+    lifetime_placements integer DEFAULT 0,
+    revenue_ytd numeric(15,2) DEFAULT 0,
+    placements_ytd integer DEFAULT 0,
+    revenue_last_12m numeric(15,2) DEFAULT 0,
+    avg_margin_percentage numeric(5,2),
+    first_engagement_date date,
+    last_job_date date,
+    last_placement_date date,
+    last_activity_date timestamp with time zone,
+    last_contacted_date timestamp with time zone,
+    next_scheduled_contact date,
+    active_jobs_count integer DEFAULT 0,
+    active_placements_count integer DEFAULT 0,
+    total_contacts_count integer DEFAULT 0,
+    source character varying(50),
+    source_detail text,
+    source_campaign_id uuid,
+    referring_company_id uuid,
+    referring_contact_id uuid,
+    converted_from_lead_id uuid,
+    preferred_contact_method character varying(20) DEFAULT 'email'::character varying,
+    submission_method character varying(20) DEFAULT 'email'::character varying,
+    invoice_delivery_method character varying(20) DEFAULT 'email'::character varying,
+    meeting_cadence character varying(20),
+    is_strategic boolean DEFAULT false,
+    requires_po boolean DEFAULT false,
+    requires_approval_for_submission boolean DEFAULT false,
+    allows_remote_work boolean DEFAULT true,
+    onboarding_status text DEFAULT 'pending'::text,
+    onboarding_completed_at timestamp with time zone,
+    onboarding_completed_by uuid,
+    onboarding_data jsonb DEFAULT '{}'::jsonb,
+    tags text[],
+    custom_fields jsonb DEFAULT '{}'::jsonb,
+    preferences jsonb DEFAULT '{}'::jsonb,
+    legacy_account_id uuid,
+    legacy_vendor_id uuid,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     created_by uuid,
     updated_by uuid,
     deleted_at timestamp with time zone,
     search_vector tsvector,
-    legal_name text,
-    founded_year integer,
-    employee_count integer,
-    annual_revenue numeric(15,2),
-    health_score integer,
-    primary_contact_id uuid,
-    onboarding_status text DEFAULT 'pending'::text,
-    onboarding_completed_at timestamp with time zone,
-    onboarding_completed_by uuid,
-    nps_score integer,
-    last_contact_date timestamp with time zone,
-    next_contact_date timestamp with time zone,
-    relationship_health text DEFAULT 'healthy'::text,
-    billing_entity_name text,
-    billing_email text,
-    billing_phone text,
-    billing_address text,
-    billing_city text,
-    billing_state text,
-    billing_postal_code text,
-    billing_country text DEFAULT 'USA'::text,
-    billing_currency text DEFAULT 'USD'::text,
-    billing_frequency text DEFAULT 'monthly'::text,
-    po_required boolean DEFAULT false,
-    current_po_number text,
-    preferred_contact_method text DEFAULT 'email'::text,
-    meeting_cadence text DEFAULT 'weekly'::text,
-    communication_channel text,
-    tax_id text,
-    funding_stage text,
-    company_size text,
-    linkedin_url text,
-    owner_id uuid,
-    CONSTRAINT accounts_nps_score_check CHECK (((nps_score >= 0) AND (nps_score <= 10)))
+    CONSTRAINT companies_account_grade_check CHECK ((account_grade = ANY (ARRAY['A'::bpchar, 'B'::bpchar, 'C'::bpchar, 'D'::bpchar]))),
+    CONSTRAINT companies_account_score_check CHECK (((account_score >= 0) AND (account_score <= 100))),
+    CONSTRAINT companies_churn_risk_check CHECK (((churn_risk >= 0) AND (churn_risk <= 100))),
+    CONSTRAINT companies_health_score_check CHECK (((health_score >= 0) AND (health_score <= 100))),
+    CONSTRAINT companies_nps_score_check CHECK (((nps_score >= '-100'::integer) AND (nps_score <= 100))),
+    CONSTRAINT companies_our_msp_tier_check CHECK (((our_msp_tier >= 1) AND (our_msp_tier <= 5))),
+    CONSTRAINT valid_hierarchy CHECK (((parent_company_id IS NULL) OR (parent_company_id <> id))),
+    CONSTRAINT valid_msp_reference CHECK (((msp_provider_id IS NULL) OR (msp_provider_id <> id)))
 );
 
 
 --
--- Name: TABLE accounts; Type: COMMENT; Schema: public; Owner: -
+-- Name: TABLE companies; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON TABLE public.accounts IS 'Client companies and prospects';
-
-
---
--- Name: COLUMN accounts.onboarding_status; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.accounts.onboarding_status IS 'Account onboarding status: pending, in_progress, completed';
+COMMENT ON TABLE public.companies IS 'Unified table for all business entities (clients, vendors, partners, prospects)';
 
 
 --
--- Name: COLUMN accounts.relationship_health; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN companies.category; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.accounts.relationship_health IS 'Overall account health: healthy, attention, at_risk';
+COMMENT ON COLUMN public.companies.category IS 'Primary classification: client, vendor, partner, prospect';
+
+
+--
+-- Name: COLUMN companies.legacy_account_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.companies.legacy_account_id IS 'Reference to original accounts.id for migration tracking';
+
+
+--
+-- Name: COLUMN companies.legacy_vendor_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.companies.legacy_vendor_id IS 'Reference to original vendors.id for migration tracking';
+
+
+--
+-- Name: company_client_details; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_client_details (
+    company_id uuid NOT NULL,
+    org_id uuid NOT NULL,
+    billing_entity_name text,
+    billing_email text,
+    billing_phone text,
+    billing_contact_id uuid,
+    po_required boolean DEFAULT false,
+    current_po_number text,
+    po_expiration_date date,
+    invoice_format character varying(20) DEFAULT 'standard'::character varying,
+    invoice_consolidation character varying(20) DEFAULT 'per_placement'::character varying,
+    invoice_due_reminder_days integer DEFAULT 7,
+    billing_address_line_1 text,
+    billing_address_line_2 text,
+    billing_city text,
+    billing_state text,
+    billing_postal_code text,
+    billing_country text DEFAULT 'USA'::text,
+    preferred_work_arrangements text[],
+    preferred_contract_types text[],
+    allows_contract_to_hire boolean DEFAULT true,
+    cth_conversion_fee_percentage numeric(5,2),
+    cth_conversion_credit_days integer DEFAULT 90,
+    responsiveness_rating character varying(20),
+    feedback_quality_rating character varying(20),
+    hiring_speed_rating character varying(20),
+    preferred_experience_levels text[],
+    typical_interview_rounds integer,
+    avg_time_to_decision_days integer,
+    interview_process_notes text,
+    exclusive_supplier boolean DEFAULT false,
+    exclusive_start_date date,
+    exclusive_end_date date,
+    known_competitors text[],
+    wallet_share_percentage numeric(5,2),
+    qbr_frequency character varying(20),
+    last_qbr_date date,
+    next_qbr_date date,
+    executive_sponsor_id uuid,
+    legacy_billing_data jsonb DEFAULT '{}'::jsonb,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: TABLE company_client_details; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.company_client_details IS 'Extension table for client/prospect-specific fields (class table inheritance)';
+
+
+--
+-- Name: accounts_v; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.accounts_v AS
+ SELECT c.id,
+    c.org_id,
+    c.name,
+    c.legal_name,
+    c.industry,
+    (c.status)::text AS status,
+    (c.tier)::text AS tier,
+    (c.segment)::text AS company_type,
+    c.website,
+    c.phone,
+    c.linkedin_url,
+    c.headquarters_city,
+    c.headquarters_state,
+    concat(c.headquarters_city, ', ', c.headquarters_state) AS headquarters_location,
+    c.employee_count,
+    c.annual_revenue,
+    c.founded_year,
+    c.owner_id,
+    c.account_manager_id,
+    c.primary_contact_id,
+    c.health_score,
+    c.health_status AS relationship_health,
+    c.nps_score,
+    c.last_contacted_date AS last_contact_date,
+    c.next_scheduled_contact AS next_contact_date,
+    c.default_markup_percentage AS markup_percentage,
+    c.onboarding_status,
+    c.onboarding_completed_at,
+    c.onboarding_completed_by,
+    c.preferred_contact_method,
+    c.meeting_cadence,
+    c.requires_po AS po_required,
+    cd.billing_entity_name,
+    cd.billing_email,
+    cd.billing_phone,
+    cd.billing_address_line_1 AS billing_address,
+    cd.billing_city,
+    cd.billing_state,
+    cd.billing_postal_code,
+    cd.billing_country,
+    cd.current_po_number,
+    c.tags,
+    c.custom_fields,
+    c.created_at,
+    c.updated_at,
+    c.created_by,
+    c.updated_by,
+    c.deleted_at,
+    c.search_vector
+   FROM (public.companies c
+     LEFT JOIN public.company_client_details cd ON ((cd.company_id = c.id)))
+  WHERE ((c.category = ANY (ARRAY['client'::public.company_category, 'prospect'::public.company_category])) AND (c.deleted_at IS NULL));
+
+
+--
+-- Name: VIEW accounts_v; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON VIEW public.accounts_v IS 'Backward compatibility view for accounts table - maps to companies with category IN (client, prospect)';
 
 
 --
@@ -11869,42 +12447,6 @@ CREATE TABLE public.activity_time_entries (
 --
 
 COMMENT ON TABLE public.activity_time_entries IS 'Time tracking for activities';
-
-
---
--- Name: addresses; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.addresses (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
-    org_id uuid NOT NULL,
-    entity_type text NOT NULL,
-    entity_id uuid NOT NULL,
-    address_type text NOT NULL,
-    address_line_1 text,
-    address_line_2 text,
-    address_line_3 text,
-    city text,
-    state_province text,
-    postal_code text,
-    country_code text DEFAULT 'US'::text NOT NULL,
-    county text,
-    latitude numeric(10,7),
-    longitude numeric(10,7),
-    is_verified boolean DEFAULT false,
-    verified_at timestamp with time zone,
-    verification_source text,
-    is_primary boolean DEFAULT false,
-    effective_from date,
-    effective_to date,
-    notes text,
-    created_at timestamp with time zone DEFAULT now(),
-    updated_at timestamp with time zone DEFAULT now(),
-    created_by uuid,
-    updated_by uuid,
-    CONSTRAINT addresses_address_type_check CHECK ((address_type = ANY (ARRAY['current'::text, 'permanent'::text, 'mailing'::text, 'work'::text, 'billing'::text, 'shipping'::text]))),
-    CONSTRAINT addresses_entity_type_check CHECK ((entity_type = ANY (ARRAY['candidate'::text, 'account'::text, 'contact'::text, 'vendor'::text])))
-);
 
 
 --
@@ -13647,7 +14189,8 @@ CREATE TABLE public.bench_consultants (
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     created_by uuid,
-    deleted_at timestamp with time zone
+    deleted_at timestamp with time zone,
+    contact_id uuid
 );
 
 
@@ -13864,7 +14407,6 @@ CREATE TABLE public.campaign_enrollments (
 CREATE TABLE public.contacts (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     org_id uuid NOT NULL,
-    contact_type text DEFAULT 'general'::text NOT NULL,
     first_name text,
     last_name text,
     email text,
@@ -13876,7 +14418,6 @@ CREATE TABLE public.contacts (
     company_name text,
     company_id uuid,
     department text,
-    work_location text,
     timezone text DEFAULT 'America/New_York'::text,
     preferred_contact_method text DEFAULT 'email'::text,
     best_time_to_contact text,
@@ -13916,7 +14457,314 @@ CREATE TABLE public.contacts (
     meeting_duration integer DEFAULT 30,
     communication_frequency text,
     vendor_id uuid,
-    types text[] DEFAULT '{}'::text[]
+    types text[] DEFAULT '{}'::text[],
+    subtype text DEFAULT 'general'::text,
+    candidate_status text,
+    candidate_resume_url text,
+    candidate_skills text[],
+    candidate_experience_years integer,
+    candidate_current_visa text,
+    candidate_visa_expiry timestamp with time zone,
+    candidate_hourly_rate numeric(10,2),
+    candidate_bench_start_date timestamp with time zone,
+    candidate_availability text,
+    candidate_willing_to_relocate boolean DEFAULT false,
+    candidate_preferred_locations text[],
+    candidate_current_employment_status text,
+    candidate_notice_period_days integer,
+    candidate_earliest_start_date date,
+    candidate_preferred_employment_type text[],
+    candidate_desired_salary_annual numeric(12,2),
+    candidate_desired_salary_currency text DEFAULT 'USD'::text,
+    candidate_minimum_hourly_rate numeric(10,2),
+    candidate_minimum_annual_salary numeric(12,2),
+    candidate_benefits_required text[],
+    candidate_compensation_notes text,
+    candidate_professional_headline text,
+    candidate_professional_summary text,
+    candidate_career_objectives text,
+    candidate_recruiter_rating integer,
+    candidate_recruiter_rating_notes text,
+    candidate_profile_completeness_score integer DEFAULT 0,
+    candidate_is_on_hotlist boolean DEFAULT false,
+    candidate_hotlist_added_at timestamp with time zone,
+    candidate_hotlist_notes text,
+    employee_id uuid,
+    employee_department text,
+    employee_hire_date date,
+    employee_position text,
+    employee_status text,
+    lead_status text,
+    lead_score integer,
+    lead_source text,
+    lead_estimated_value numeric(12,2),
+    lead_converted_to_deal_id uuid,
+    lead_converted_to_account_id uuid,
+    lead_converted_at timestamp with time zone,
+    lead_lost_reason text,
+    lead_bant_budget integer DEFAULT 0,
+    lead_bant_authority integer DEFAULT 0,
+    lead_bant_need integer DEFAULT 0,
+    lead_bant_timeline integer DEFAULT 0,
+    lead_bant_budget_notes text,
+    lead_bant_authority_notes text,
+    lead_bant_need_notes text,
+    lead_bant_timeline_notes text,
+    lead_bant_total_score integer GENERATED ALWAYS AS ((((COALESCE(lead_bant_budget, 0) + COALESCE(lead_bant_authority, 0)) + COALESCE(lead_bant_need, 0)) + COALESCE(lead_bant_timeline, 0))) STORED,
+    lead_budget_status text,
+    lead_estimated_monthly_spend numeric(12,2),
+    lead_authority_level text,
+    lead_business_need text,
+    lead_urgency text,
+    lead_target_start_date date,
+    lead_positions_count integer DEFAULT 1,
+    lead_skills_needed text[],
+    lead_contract_types text[],
+    lead_qualification_result text,
+    lead_qualification_notes text,
+    lead_qualified_at timestamp with time zone,
+    lead_qualified_by uuid,
+    lead_interest_level text,
+    lead_hiring_needs text,
+    lead_pain_points text,
+    lead_next_action text,
+    lead_next_action_date date,
+    prospect_primary_campaign_id uuid,
+    prospect_current_sequence_step integer,
+    prospect_sequence_status text,
+    prospect_converted_to_lead_at timestamp with time zone,
+    prospect_first_contacted_at timestamp with time zone,
+    prospect_responded_at timestamp with time zone,
+    prospect_response_type text,
+    auth_id uuid,
+    account_id uuid,
+    date_of_birth date,
+    gender text,
+    nationality text,
+    languages jsonb DEFAULT '[]'::jsonb,
+    middle_name text,
+    preferred_name text,
+    phone_home text,
+    phone_work text,
+    email_secondary text,
+    emergency_contact_name text,
+    emergency_contact_relationship text,
+    emergency_contact_phone text,
+    emergency_contact_email text,
+    portfolio_url text,
+    personal_website text,
+    do_not_email boolean DEFAULT false,
+    do_not_text boolean DEFAULT false,
+    last_activity_date timestamp with time zone,
+    last_contacted_by uuid,
+    category text NOT NULL,
+    contact_status text DEFAULT 'active'::text,
+    primary_address_id uuid,
+    suffix text,
+    pronouns text,
+    photo_url text,
+    secondary_email text,
+    work_email text,
+    work_phone text,
+    home_phone text,
+    current_company_id uuid,
+    current_title text,
+    current_department text,
+    language text DEFAULT 'en'::text,
+    bench_type text,
+    bench_status text,
+    bench_vendor_id uuid,
+    bench_vendor_contact_id uuid,
+    bench_start_date date,
+    bench_target_end_date date,
+    bench_max_bench_days integer,
+    bench_bill_rate numeric(10,2),
+    bench_pay_rate numeric(10,2),
+    bench_markup_percentage numeric(5,2),
+    bench_cost_per_day numeric(10,2),
+    bench_total_placements integer DEFAULT 0,
+    bench_last_placement_end date,
+    bench_utilization_rate numeric(5,2),
+    placed_status text,
+    placed_client_id uuid,
+    placed_job_id uuid,
+    placed_start_date date,
+    placed_end_date date,
+    placed_extension_count integer DEFAULT 0,
+    client_contact_company_id uuid,
+    client_contact_role text,
+    client_contact_decision_authority boolean DEFAULT false,
+    client_contact_budget_authority boolean DEFAULT false,
+    client_contact_contract_signer boolean DEFAULT false,
+    client_contact_relationship_strength integer,
+    client_contact_relationship_owner_id uuid,
+    client_contact_first_meeting_date date,
+    client_contact_last_meeting_date date,
+    client_contact_meeting_cadence text,
+    client_contact_preferred_vendors text[],
+    client_contact_hiring_style text,
+    client_contact_interview_style text,
+    vendor_contact_company_id uuid,
+    vendor_contact_role text,
+    vendor_contact_specialty_areas text[],
+    vendor_contact_response_rating integer,
+    vendor_contact_quality_rating integer,
+    referral_source_type text,
+    referral_total_referrals integer DEFAULT 0,
+    referral_successful_placements integer DEFAULT 0,
+    referral_success_rate numeric(5,2),
+    referral_fee_percentage numeric(5,2),
+    referral_last_referral_date date,
+    alumni_former_employee_id uuid,
+    alumni_departure_date date,
+    alumni_departure_reason text,
+    alumni_rehire_eligible boolean DEFAULT true,
+    alumni_current_employer text,
+    alumni_last_contact_date date,
+    candidate_hotlist_added_by uuid,
+    candidate_hotlist_reason text,
+    candidate_priority integer DEFAULT 0,
+    candidate_do_not_submit_to uuid[],
+    candidate_remote_preference text,
+    candidate_years_experience numeric(4,1),
+    candidate_cover_letter_url text,
+    candidate_resume_updated_at timestamp with time zone,
+    lead_converted_to_type text,
+    lead_converted_to_id uuid,
+    company_name_legal text,
+    company_dba_name text,
+    company_trade_names text[],
+    company_type text,
+    company_structure text,
+    industry_id uuid,
+    industry_secondary_id uuid,
+    naics_code text,
+    sic_code text,
+    employee_count integer,
+    employee_count_range text,
+    annual_revenue numeric(15,2),
+    annual_revenue_range text,
+    founded_year integer,
+    website_url text,
+    company_linkedin_url text,
+    company_twitter_url text,
+    logo_url text,
+    company_description text,
+    parent_company_id uuid,
+    ultimate_parent_id uuid,
+    subsidiary_count integer DEFAULT 0,
+    ein_tax_id_encrypted text,
+    duns_number text,
+    registration_state text,
+    registration_country text DEFAULT 'US'::text,
+    company_lead_estimated_annual_value numeric(12,2),
+    company_lead_estimated_positions_per_year integer,
+    company_lead_primary_hiring_needs text[],
+    client_status text,
+    client_tier text,
+    client_segment text,
+    client_prospect_date date,
+    client_converted_date date,
+    client_first_placement_date date,
+    client_last_active_date date,
+    client_dormant_since date,
+    client_churned_date date,
+    client_churn_reason text,
+    client_contract_type text,
+    client_contract_start_date date,
+    client_contract_end_date date,
+    client_contract_auto_renew boolean DEFAULT false,
+    client_contract_url text,
+    client_payment_terms integer DEFAULT 30,
+    client_credit_limit numeric(12,2),
+    client_credit_status text,
+    client_default_markup numeric(5,2),
+    client_default_bill_rate numeric(10,2),
+    client_uses_vms boolean DEFAULT false,
+    client_vms_system text,
+    client_vms_supplier_id text,
+    client_msp_id uuid,
+    client_team_lead_id uuid,
+    client_recruiter_ids uuid[],
+    client_open_positions_count integer DEFAULT 0,
+    client_active_placements_count integer DEFAULT 0,
+    client_total_placements_count integer DEFAULT 0,
+    client_lifetime_revenue numeric(15,2) DEFAULT 0,
+    vendor_status text,
+    vendor_tier text,
+    vendor_type text,
+    vendor_specialty_areas text[],
+    vendor_geographic_coverage text[],
+    vendor_resource_types text[],
+    vendor_payment_terms integer DEFAULT 30,
+    vendor_default_markup numeric(5,2),
+    vendor_referral_fee_percentage numeric(5,2),
+    vendor_approved_date date,
+    vendor_approved_by uuid,
+    vendor_last_review_date date,
+    vendor_next_review_date date,
+    vendor_insurance_verified boolean DEFAULT false,
+    vendor_insurance_expiry_date date,
+    vendor_w9_on_file boolean DEFAULT false,
+    vendor_w9_received_date date,
+    vendor_compliance_status text,
+    vendor_background_check_compliant boolean DEFAULT false,
+    vendor_drug_test_compliant boolean DEFAULT false,
+    vendor_quality_rating numeric(3,2),
+    vendor_response_rating numeric(3,2),
+    vendor_fill_rate numeric(5,2),
+    vendor_submissions_count integer DEFAULT 0,
+    vendor_placements_count integer DEFAULT 0,
+    vendor_active_resources_count integer DEFAULT 0,
+    msp_program_name text,
+    msp_managed_clients uuid[],
+    msp_our_tier_status text,
+    msp_contract_start_date date,
+    msp_contract_end_date date,
+    msp_fee_percentage numeric(5,2),
+    vms_platform_name text,
+    vms_integration_status text,
+    agency_relationship text,
+    agency_partnership_type text,
+    agency_partnership_agreement text,
+    agency_do_not_recruit_from boolean DEFAULT false,
+    agency_specialty_areas text[],
+    agency_geographic_focus text[],
+    linked_company_id uuid,
+    vendor_company_id uuid,
+    source_company_id uuid,
+    employer_company_id uuid,
+    CONSTRAINT contacts_agency_relationship_check CHECK (((agency_relationship IS NULL) OR (agency_relationship = ANY (ARRAY['partner'::text, 'competitor'::text, 'both'::text])))),
+    CONSTRAINT contacts_bench_type_check CHECK (((bench_type IS NULL) OR (bench_type = ANY (ARRAY['w2_internal'::text, 'w2_vendor'::text, '1099'::text, 'c2c'::text])))),
+    CONSTRAINT contacts_candidate_availability_check CHECK (((candidate_availability IS NULL) OR (candidate_availability = ANY (ARRAY['immediate'::text, '2_weeks'::text, '1_month'::text, '2_months'::text, '3_months'::text, 'not_available'::text])))),
+    CONSTRAINT contacts_candidate_remote_preference_check CHECK (((candidate_remote_preference IS NULL) OR (candidate_remote_preference = ANY (ARRAY['remote'::text, 'hybrid'::text, 'onsite'::text, 'flexible'::text])))),
+    CONSTRAINT contacts_candidate_status_check CHECK (((candidate_status IS NULL) OR (candidate_status = ANY (ARRAY['active'::text, 'passive'::text, 'placed'::text, 'bench'::text, 'inactive'::text, 'blacklisted'::text])))),
+    CONSTRAINT contacts_category_check CHECK ((category = ANY (ARRAY['person'::text, 'company'::text]))),
+    CONSTRAINT contacts_category_subtype_consistency CHECK ((((category = 'person'::text) AND (subtype ~~ 'person_%'::text)) OR ((category = 'company'::text) AND (subtype ~~ 'company_%'::text)))),
+    CONSTRAINT contacts_client_relationship_strength_check CHECK (((client_contact_relationship_strength IS NULL) OR ((client_contact_relationship_strength >= 1) AND (client_contact_relationship_strength <= 10)))),
+    CONSTRAINT contacts_client_status_check CHECK (((client_status IS NULL) OR (client_status = ANY (ARRAY['active'::text, 'dormant'::text, 'former'::text, 'blacklisted'::text])))),
+    CONSTRAINT contacts_client_tier_check CHECK (((client_tier IS NULL) OR (client_tier = ANY (ARRAY['enterprise'::text, 'strategic'::text, 'growth'::text, 'standard'::text, 'startup'::text])))),
+    CONSTRAINT contacts_company_status_check CHECK (((category <> 'company'::text) OR (contact_status = ANY (ARRAY['active'::text, 'inactive'::text, 'pending'::text, 'dormant'::text, 'former'::text, 'blacklisted'::text, 'suspended'::text])))),
+    CONSTRAINT contacts_company_structure_check CHECK (((company_structure IS NULL) OR (company_structure = ANY (ARRAY['public'::text, 'private'::text, 'subsidiary'::text, 'franchise'::text])))),
+    CONSTRAINT contacts_company_type_check CHECK (((company_type IS NULL) OR (company_type = ANY (ARRAY['corporation'::text, 'llc'::text, 'partnership'::text, 'sole_prop'::text, 'nonprofit'::text])))),
+    CONSTRAINT contacts_employee_status_check CHECK (((employee_status IS NULL) OR (employee_status = ANY (ARRAY['active'::text, 'on_leave'::text, 'terminated'::text])))),
+    CONSTRAINT contacts_lead_authority_level_check CHECK (((lead_authority_level IS NULL) OR (lead_authority_level = ANY (ARRAY['decision_maker'::text, 'influencer'::text, 'gatekeeper'::text, 'no_authority'::text])))),
+    CONSTRAINT contacts_lead_bant_authority_check CHECK (((lead_bant_authority IS NULL) OR ((lead_bant_authority >= 0) AND (lead_bant_authority <= 25)))),
+    CONSTRAINT contacts_lead_bant_budget_check CHECK (((lead_bant_budget IS NULL) OR ((lead_bant_budget >= 0) AND (lead_bant_budget <= 25)))),
+    CONSTRAINT contacts_lead_bant_need_check CHECK (((lead_bant_need IS NULL) OR ((lead_bant_need >= 0) AND (lead_bant_need <= 25)))),
+    CONSTRAINT contacts_lead_bant_timeline_check CHECK (((lead_bant_timeline IS NULL) OR ((lead_bant_timeline >= 0) AND (lead_bant_timeline <= 25)))),
+    CONSTRAINT contacts_lead_qualification_result_check CHECK (((lead_qualification_result IS NULL) OR (lead_qualification_result = ANY (ARRAY['qualified_convert'::text, 'qualified_nurture'::text, 'not_qualified'::text])))),
+    CONSTRAINT contacts_lead_score_check CHECK (((lead_score IS NULL) OR ((lead_score >= 0) AND (lead_score <= 100)))),
+    CONSTRAINT contacts_lead_status_check CHECK (((lead_status IS NULL) OR (lead_status = ANY (ARRAY['new'::text, 'contacted'::text, 'warm'::text, 'hot'::text, 'cold'::text, 'qualified'::text, 'unqualified'::text, 'converted'::text, 'lost'::text, 'nurture'::text])))),
+    CONSTRAINT contacts_placed_status_check CHECK (((placed_status IS NULL) OR (placed_status = ANY (ARRAY['active'::text, 'ending_soon'::text, 'extended'::text, 'completed'::text])))),
+    CONSTRAINT contacts_prospect_response_type_check CHECK (((prospect_response_type IS NULL) OR (prospect_response_type = ANY (ARRAY['positive'::text, 'neutral'::text, 'negative'::text, 'auto_reply'::text, 'out_of_office'::text])))),
+    CONSTRAINT contacts_prospect_sequence_status_check CHECK (((prospect_sequence_status IS NULL) OR (prospect_sequence_status = ANY (ARRAY['pending'::text, 'in_progress'::text, 'paused'::text, 'completed'::text, 'stopped'::text])))),
+    CONSTRAINT contacts_subtype_check CHECK ((subtype = ANY (ARRAY['person_prospect'::text, 'person_lead'::text, 'person_candidate'::text, 'person_bench_internal'::text, 'person_bench_vendor'::text, 'person_placed'::text, 'person_client_contact'::text, 'person_hiring_manager'::text, 'person_hr_contact'::text, 'person_vendor_contact'::text, 'person_employee'::text, 'person_referral_source'::text, 'person_alumni'::text, 'company_prospect'::text, 'company_lead'::text, 'company_client'::text, 'company_vendor'::text, 'company_msp'::text, 'company_vms'::text, 'company_end_client'::text, 'company_agency'::text, 'company_institution'::text]))),
+    CONSTRAINT contacts_vendor_quality_rating_check CHECK (((vendor_contact_quality_rating IS NULL) OR ((vendor_contact_quality_rating >= 1) AND (vendor_contact_quality_rating <= 5)))),
+    CONSTRAINT contacts_vendor_response_rating_check CHECK (((vendor_contact_response_rating IS NULL) OR ((vendor_contact_response_rating >= 1) AND (vendor_contact_response_rating <= 5)))),
+    CONSTRAINT contacts_vendor_status_check CHECK (((vendor_status IS NULL) OR (vendor_status = ANY (ARRAY['pending'::text, 'approved'::text, 'preferred'::text, 'suspended'::text, 'blacklisted'::text])))),
+    CONSTRAINT contacts_vendor_tier_check CHECK (((vendor_tier IS NULL) OR (vendor_tier = ANY (ARRAY['preferred'::text, 'approved'::text, 'probationary'::text, 'new'::text])))),
+    CONSTRAINT contacts_vms_integration_status_check CHECK (((vms_integration_status IS NULL) OR (vms_integration_status = ANY (ARRAY['not_integrated'::text, 'pending'::text, 'active'::text, 'suspended'::text]))))
 );
 
 
@@ -13925,6 +14773,153 @@ CREATE TABLE public.contacts (
 --
 
 COMMENT ON TABLE public.contacts IS 'Unified contacts table for all contact types (client POCs, candidates, vendors, partners) - replaces crm_contacts';
+
+
+--
+-- Name: COLUMN contacts.user_profile_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.user_profile_id IS 'Bridge column for migration from user_profiles table. Will be deprecated after full migration.';
+
+
+--
+-- Name: COLUMN contacts.subtype; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.subtype IS 'Contact subtype following enterprise pattern. 13 person subtypes (person_*) and 9 company subtypes (company_*).';
+
+
+--
+-- Name: COLUMN contacts.candidate_status; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.candidate_status IS 'Candidate lifecycle: active (sourced) → passive (not actively looking) → bench (available) → placed (working) → inactive (not pursuing) → blacklisted';
+
+
+--
+-- Name: COLUMN contacts.candidate_skills; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.candidate_skills IS 'Array of technical/professional skills for candidates';
+
+
+--
+-- Name: COLUMN contacts.employee_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.employee_id IS 'Link to employees table for employee contacts (HR data)';
+
+
+--
+-- Name: COLUMN contacts.lead_bant_total_score; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.lead_bant_total_score IS 'Computed BANT score (0-100): Budget + Authority + Need + Timeline';
+
+
+--
+-- Name: COLUMN contacts.auth_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.auth_id IS 'Link to Supabase auth.users for contacts who can log in (employees, clients)';
+
+
+--
+-- Name: COLUMN contacts.account_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.account_id IS 'Link to accounts table for client_poc and lead contacts';
+
+
+--
+-- Name: COLUMN contacts.category; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.category IS 'Contact category: person or company. Determines which subtype prefixes are valid.';
+
+
+--
+-- Name: COLUMN contacts.contact_status; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.contact_status IS 'Current status within the subtype context. Values depend on subtype.';
+
+
+--
+-- Name: COLUMN contacts.primary_address_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.primary_address_id IS 'FK to primary address in centralized addresses table.';
+
+
+--
+-- Name: COLUMN contacts.current_company_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.current_company_id IS 'FK to company contact (category=company) where this person currently works';
+
+
+--
+-- Name: COLUMN contacts.bench_type; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.bench_type IS 'Employment type for bench resources: w2_internal (direct employee), w2_vendor (via vendor), 1099 (contractor), c2c (corp-to-corp)';
+
+
+--
+-- Name: COLUMN contacts.bench_status; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.bench_status IS 'Current bench status for availability tracking';
+
+
+--
+-- Name: COLUMN contacts.placed_status; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.placed_status IS 'Current placement status: active, ending_soon (within 30 days), extended, completed';
+
+
+--
+-- Name: COLUMN contacts.client_contact_relationship_strength; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.client_contact_relationship_strength IS 'Relationship strength score 1-10 (1=cold, 10=champion)';
+
+
+--
+-- Name: COLUMN contacts.candidate_remote_preference; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.candidate_remote_preference IS 'Remote work preference: remote, hybrid, onsite, or flexible';
+
+
+--
+-- Name: COLUMN contacts.linked_company_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.linked_company_id IS 'FK to companies table for primary company association (replaces account_id)';
+
+
+--
+-- Name: COLUMN contacts.vendor_company_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.vendor_company_id IS 'FK to companies table for vendor association (replaces vendor_id)';
+
+
+--
+-- Name: COLUMN contacts.source_company_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.source_company_id IS 'FK to companies table for talent source (replaces bench_vendor_id)';
+
+
+--
+-- Name: COLUMN contacts.employer_company_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.employer_company_id IS 'FK to companies table for current employer';
 
 
 --
@@ -13945,7 +14940,7 @@ CREATE VIEW public.campaign_prospects_view AS
     NULL::text AS company_industry,
     NULL::text AS company_size,
     c.title,
-    c.work_location AS location,
+    NULL::text AS location,
     c.timezone,
     ce.primary_channel,
     ce.sequence_step,
@@ -13969,6 +14964,13 @@ CREATE VIEW public.campaign_prospects_view AS
     ce.contact_id
    FROM (public.campaign_enrollments ce
      JOIN public.contacts c ON (((c.id = ce.contact_id) AND (c.deleted_at IS NULL))));
+
+
+--
+-- Name: VIEW campaign_prospects_view; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON VIEW public.campaign_prospects_view IS 'View of campaign enrollments with prospect details - location now from addresses table';
 
 
 --
@@ -14118,7 +15120,8 @@ CREATE TABLE public.candidate_availability (
     currency text DEFAULT 'USD'::text,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    deleted_at timestamp with time zone
+    deleted_at timestamp with time zone,
+    contact_id uuid
 );
 
 
@@ -14171,7 +15174,8 @@ CREATE TABLE public.candidate_background_checks (
     created_at timestamp with time zone DEFAULT now(),
     updated_at timestamp with time zone DEFAULT now(),
     created_by uuid,
-    updated_by uuid
+    updated_by uuid,
+    contact_id uuid
 );
 
 
@@ -14219,7 +15223,8 @@ CREATE TABLE public.candidate_certifications (
     created_at timestamp with time zone DEFAULT now(),
     updated_at timestamp with time zone DEFAULT now(),
     created_by uuid,
-    updated_by uuid
+    updated_by uuid,
+    contact_id uuid
 );
 
 
@@ -14274,7 +15279,8 @@ CREATE TABLE public.candidate_compliance_documents (
     created_at timestamp with time zone DEFAULT now(),
     updated_at timestamp with time zone DEFAULT now(),
     created_by uuid,
-    updated_by uuid
+    updated_by uuid,
+    contact_id uuid
 );
 
 
@@ -14294,7 +15300,8 @@ CREATE TABLE public.candidate_documents (
     uploaded_at timestamp with time zone DEFAULT now() NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    deleted_at timestamp with time zone
+    deleted_at timestamp with time zone,
+    contact_id uuid
 );
 
 
@@ -14339,7 +15346,8 @@ CREATE TABLE public.candidate_education (
     created_at timestamp with time zone DEFAULT now(),
     updated_at timestamp with time zone DEFAULT now(),
     created_by uuid,
-    updated_by uuid
+    updated_by uuid,
+    contact_id uuid
 );
 
 
@@ -14358,6 +15366,7 @@ CREATE TABLE public.candidate_embeddings (
     availability text,
     created_at timestamp with time zone DEFAULT now(),
     updated_at timestamp with time zone DEFAULT now(),
+    contact_id uuid,
     CONSTRAINT candidate_embeddings_availability_check CHECK ((availability = ANY (ARRAY['immediate'::text, '2-weeks'::text, '1-month'::text]))),
     CONSTRAINT candidate_embeddings_experience_level_check CHECK ((experience_level = ANY (ARRAY['entry'::text, 'mid'::text, 'senior'::text])))
 );
@@ -14392,7 +15401,8 @@ CREATE TABLE public.candidate_preferences (
     max_commute_miles integer,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    deleted_at timestamp with time zone
+    deleted_at timestamp with time zone,
+    contact_id uuid
 );
 
 
@@ -14421,7 +15431,8 @@ CREATE TABLE public.candidate_prepared_profiles (
     created_by uuid NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    deleted_at timestamp with time zone
+    deleted_at timestamp with time zone,
+    contact_id uuid
 );
 
 
@@ -14448,7 +15459,8 @@ CREATE TABLE public.candidate_profiles (
     portfolio_url text,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    deleted_at timestamp with time zone
+    deleted_at timestamp with time zone,
+    contact_id uuid
 );
 
 
@@ -14496,7 +15508,8 @@ CREATE TABLE public.candidate_references (
     created_at timestamp with time zone DEFAULT now(),
     updated_at timestamp with time zone DEFAULT now(),
     created_by uuid,
-    updated_by uuid
+    updated_by uuid,
+    contact_id uuid
 );
 
 
@@ -14530,7 +15543,8 @@ CREATE TABLE public.candidate_resumes (
     archived_at timestamp with time zone,
     archived_by uuid,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    contact_id uuid
 );
 
 
@@ -14568,7 +15582,8 @@ CREATE TABLE public.candidate_screenings (
     next_steps jsonb DEFAULT '[]'::jsonb,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    deleted_at timestamp with time zone
+    deleted_at timestamp with time zone,
+    contact_id uuid
 );
 
 
@@ -14625,7 +15640,8 @@ CREATE TABLE public.candidate_skills (
     skill_name text,
     certification_expiry date,
     is_primary boolean DEFAULT false,
-    source text
+    source text,
+    contact_id uuid
 );
 
 
@@ -14696,7 +15712,8 @@ CREATE TABLE public.candidate_work_authorizations (
     created_at timestamp with time zone DEFAULT now(),
     updated_at timestamp with time zone DEFAULT now(),
     created_by uuid,
-    updated_by uuid
+    updated_by uuid,
+    contact_id uuid
 );
 
 
@@ -14752,7 +15769,8 @@ CREATE TABLE public.candidate_work_history (
     created_at timestamp with time zone DEFAULT now(),
     updated_at timestamp with time zone DEFAULT now(),
     created_by uuid,
-    updated_by uuid
+    updated_by uuid,
+    contact_id uuid
 );
 
 
@@ -15023,6 +16041,556 @@ COMMENT ON COLUMN public.commissions.status IS 'pending=awaiting first placement
 
 
 --
+-- Name: company_addresses; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_addresses (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    company_id uuid NOT NULL,
+    address_id uuid NOT NULL,
+    address_type character varying(30) NOT NULL,
+    is_primary boolean DEFAULT false,
+    label text,
+    is_active boolean DEFAULT true,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: company_compliance_requirements; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_compliance_requirements (
+    company_id uuid NOT NULL,
+    org_id uuid NOT NULL,
+    general_liability_required boolean DEFAULT false,
+    general_liability_minimum text,
+    professional_liability_required boolean DEFAULT false,
+    professional_liability_minimum text,
+    workers_comp_required boolean DEFAULT true,
+    cyber_liability_required boolean DEFAULT false,
+    cyber_liability_minimum text,
+    umbrella_required boolean DEFAULT false,
+    umbrella_minimum text,
+    coi_on_file boolean DEFAULT false,
+    coi_expiration_date date,
+    coi_document_url text,
+    client_named_on_coi boolean DEFAULT false,
+    background_check_required boolean DEFAULT false,
+    background_check_level character varying(50),
+    background_check_vendor character varying(50),
+    background_check_max_age_days integer DEFAULT 365,
+    drug_test_required boolean DEFAULT false,
+    drug_test_type character varying(20),
+    drug_test_frequency character varying(20),
+    security_clearance_required boolean DEFAULT false,
+    security_clearance_level character varying(50),
+    citizenship_required character varying(50),
+    hipaa_training_required boolean DEFAULT false,
+    sox_compliance_required boolean DEFAULT false,
+    pci_compliance_required boolean DEFAULT false,
+    fedramp_required boolean DEFAULT false,
+    w9_required boolean DEFAULT true,
+    nda_required boolean DEFAULT false,
+    non_compete_required boolean DEFAULT false,
+    i9_verification_method character varying(20) DEFAULT 'standard'::character varying,
+    work_authorization_types text[],
+    soc2_attestation_required boolean DEFAULT false,
+    gdpr_compliance_required boolean DEFAULT false,
+    ccpa_compliance_required boolean DEFAULT false,
+    data_retention_years integer DEFAULT 7,
+    data_handling_instructions text,
+    safety_training_required boolean DEFAULT false,
+    safety_certifications text[],
+    ppe_requirements text[],
+    custom_requirements jsonb DEFAULT '{}'::jsonb,
+    updated_at timestamp with time zone DEFAULT now(),
+    updated_by uuid
+);
+
+
+--
+-- Name: company_contacts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_contacts (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    company_id uuid NOT NULL,
+    contact_id uuid NOT NULL,
+    job_title text,
+    department text,
+    role_description text,
+    decision_authority public.contact_decision_authority,
+    influence_level integer,
+    is_primary boolean DEFAULT false,
+    is_active boolean DEFAULT true,
+    relationship_strength integer,
+    last_contact_date date,
+    preferred_contact_method character varying(20),
+    started_at date,
+    left_at date,
+    left_reason text,
+    vendor_company_id uuid,
+    notes text,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now(),
+    created_by uuid,
+    CONSTRAINT company_contacts_influence_level_check CHECK (((influence_level >= 1) AND (influence_level <= 5))),
+    CONSTRAINT company_contacts_relationship_strength_check CHECK (((relationship_strength >= 1) AND (relationship_strength <= 5)))
+);
+
+
+--
+-- Name: company_contracts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_contracts (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    company_id uuid NOT NULL,
+    contract_type public.contract_type NOT NULL,
+    contract_number character varying(50),
+    name text NOT NULL,
+    description text,
+    status public.contract_status DEFAULT 'draft'::public.contract_status,
+    effective_date date,
+    expiration_date date,
+    signed_date date,
+    terminated_date date,
+    auto_renews boolean DEFAULT false,
+    renewal_term_months integer,
+    renewal_notice_days integer DEFAULT 30,
+    contract_value numeric(15,2),
+    currency character varying(3) DEFAULT 'USD'::character varying,
+    our_signatory_id uuid,
+    their_signatory_name text,
+    their_signatory_title text,
+    their_signatory_email text,
+    document_url text,
+    document_storage_key text,
+    terms jsonb DEFAULT '{}'::jsonb,
+    parent_contract_id uuid,
+    expiration_alert_sent boolean DEFAULT false,
+    expiration_alert_date date,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now(),
+    created_by uuid,
+    deleted_at timestamp with time zone
+);
+
+
+--
+-- Name: company_health_scores; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_health_scores (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    company_id uuid NOT NULL,
+    score_date date DEFAULT CURRENT_DATE NOT NULL,
+    overall_score integer,
+    overall_grade character(1),
+    health_status character varying(20),
+    engagement_score integer,
+    days_since_last_contact integer,
+    days_since_last_job integer,
+    response_rate_percentage numeric(5,2),
+    meetings_last_90d integer,
+    financial_score integer,
+    revenue_trend character varying(10),
+    revenue_vs_target_percentage numeric(5,2),
+    payment_timeliness_score integer,
+    outstanding_ar_amount numeric(12,2),
+    relationship_score integer,
+    nps_score integer,
+    satisfaction_score numeric(3,1),
+    escalations_last_90d integer,
+    decision_maker_turnover boolean DEFAULT false,
+    opportunity_score integer,
+    active_jobs_count integer,
+    pipeline_value numeric(12,2),
+    expansion_potential character varying(20),
+    risk_factors jsonb DEFAULT '[]'::jsonb,
+    recommended_actions jsonb DEFAULT '[]'::jsonb,
+    calculated_at timestamp with time zone DEFAULT now(),
+    calculated_by character varying(50) DEFAULT 'system'::character varying,
+    CONSTRAINT company_health_scores_engagement_score_check CHECK (((engagement_score >= 0) AND (engagement_score <= 30))),
+    CONSTRAINT company_health_scores_financial_score_check CHECK (((financial_score >= 0) AND (financial_score <= 30))),
+    CONSTRAINT company_health_scores_opportunity_score_check CHECK (((opportunity_score >= 0) AND (opportunity_score <= 20))),
+    CONSTRAINT company_health_scores_overall_grade_check CHECK ((overall_grade = ANY (ARRAY['A'::bpchar, 'B'::bpchar, 'C'::bpchar, 'D'::bpchar, 'F'::bpchar]))),
+    CONSTRAINT company_health_scores_overall_score_check CHECK (((overall_score >= 0) AND (overall_score <= 100))),
+    CONSTRAINT company_health_scores_relationship_score_check CHECK (((relationship_score >= 0) AND (relationship_score <= 20)))
+);
+
+
+--
+-- Name: company_metrics; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_metrics (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    company_id uuid NOT NULL,
+    period_type public.metric_period_type NOT NULL,
+    period_start date NOT NULL,
+    period_end date NOT NULL,
+    jobs_posted integer DEFAULT 0,
+    jobs_filled integer DEFAULT 0,
+    jobs_cancelled integer DEFAULT 0,
+    fill_rate numeric(5,2),
+    avg_time_to_fill_days integer,
+    submissions_sent integer DEFAULT 0,
+    submissions_accepted integer DEFAULT 0,
+    submissions_rejected integer DEFAULT 0,
+    submission_to_interview_rate numeric(5,2),
+    interviews_scheduled integer DEFAULT 0,
+    interviews_completed integer DEFAULT 0,
+    interviews_cancelled integer DEFAULT 0,
+    interview_to_offer_rate numeric(5,2),
+    placements_started integer DEFAULT 0,
+    placements_ended integer DEFAULT 0,
+    placements_active_eop integer DEFAULT 0,
+    avg_placement_duration_days integer,
+    gross_revenue numeric(15,2) DEFAULT 0,
+    net_revenue numeric(15,2) DEFAULT 0,
+    gross_margin numeric(15,2) DEFAULT 0,
+    gross_margin_percentage numeric(5,2),
+    revenue_per_placement numeric(12,2),
+    activities_logged integer DEFAULT 0,
+    emails_sent integer DEFAULT 0,
+    calls_made integer DEFAULT 0,
+    meetings_held integer DEFAULT 0,
+    engagement_score integer,
+    performance_score integer,
+    created_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: company_notes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_notes (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    company_id uuid NOT NULL,
+    note_type public.company_note_type DEFAULT 'general'::public.company_note_type,
+    title text,
+    content text NOT NULL,
+    is_pinned boolean DEFAULT false,
+    is_private boolean DEFAULT false,
+    related_contact_id uuid,
+    related_job_id uuid,
+    related_deal_id uuid,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now(),
+    created_by uuid NOT NULL,
+    deleted_at timestamp with time zone
+);
+
+
+--
+-- Name: company_partner_details; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_partner_details (
+    company_id uuid NOT NULL,
+    org_id uuid NOT NULL,
+    partnership_type character varying(50),
+    partnership_tier character varying(20),
+    partnership_start_date date,
+    partnership_renewal_date date,
+    referral_fee_percentage numeric(5,2),
+    referral_fee_flat numeric(10,2),
+    referral_tracking_period_days integer DEFAULT 365,
+    total_referrals integer DEFAULT 0,
+    successful_referrals integer DEFAULT 0,
+    referral_conversion_rate numeric(5,2),
+    total_referral_revenue numeric(15,2) DEFAULT 0,
+    co_marketing_fund numeric(10,2),
+    co_marketing_activities text[],
+    joint_case_studies text[],
+    api_integration_enabled boolean DEFAULT false,
+    integration_type character varying(50),
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: TABLE company_partner_details; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.company_partner_details IS 'Extension table for partner-specific fields (class table inheritance)';
+
+
+--
+-- Name: company_preferences; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_preferences (
+    company_id uuid NOT NULL,
+    org_id uuid NOT NULL,
+    preferred_skills text[],
+    excluded_skills text[],
+    required_certifications text[],
+    min_years_experience integer,
+    max_years_experience integer,
+    preferred_experience_levels text[],
+    degree_required boolean DEFAULT false,
+    preferred_degree_levels text[],
+    preferred_universities text[],
+    visa_types_accepted text[],
+    requires_us_citizen boolean DEFAULT false,
+    work_mode_preference character varying(20),
+    office_locations text[],
+    remote_states_allowed text[],
+    relocation_assistance boolean DEFAULT false,
+    rate_range_min numeric(10,2),
+    rate_range_max numeric(10,2),
+    rate_type character varying(20) DEFAULT 'hourly'::character varying,
+    typical_start_timeline_days integer,
+    interview_format_preference text[],
+    decision_timeline_days integer,
+    preferred_submission_format character varying(50),
+    submission_limit_per_job integer,
+    feedback_commitment character varying(50),
+    custom_preferences jsonb DEFAULT '{}'::jsonb,
+    special_instructions text,
+    updated_at timestamp with time zone DEFAULT now(),
+    updated_by uuid
+);
+
+
+--
+-- Name: company_rate_card_items; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_rate_card_items (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    rate_card_id uuid NOT NULL,
+    job_category text NOT NULL,
+    job_level text,
+    job_family text,
+    min_pay_rate numeric(10,2),
+    max_pay_rate numeric(10,2),
+    target_pay_rate numeric(10,2),
+    min_bill_rate numeric(10,2),
+    max_bill_rate numeric(10,2),
+    standard_bill_rate numeric(10,2),
+    target_margin_percentage numeric(5,2),
+    min_margin_percentage numeric(5,2),
+    rate_type character varying(20) DEFAULT 'hourly'::character varying,
+    overtime_multiplier numeric(3,2),
+    sort_order integer DEFAULT 0,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: company_rate_cards; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_rate_cards (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    company_id uuid NOT NULL,
+    name text NOT NULL,
+    version integer DEFAULT 1,
+    effective_start_date date NOT NULL,
+    effective_end_date date,
+    status public.rate_card_status DEFAULT 'draft'::public.rate_card_status,
+    currency character varying(3) DEFAULT 'USD'::character varying,
+    applicable_regions text[],
+    msp_program_id uuid,
+    msp_tier integer,
+    default_markup_percentage numeric(5,2),
+    max_markup_percentage numeric(5,2),
+    min_margin_percentage numeric(5,2),
+    overtime_multiplier numeric(3,2) DEFAULT 1.5,
+    double_time_multiplier numeric(3,2) DEFAULT 2.0,
+    direct_hire_fee_percentage numeric(5,2) DEFAULT 20.00,
+    guarantee_period_days integer DEFAULT 90,
+    cth_conversion_fee_percentage numeric(5,2),
+    cth_hours_credit integer DEFAULT 0,
+    per_diem_rate numeric(8,2),
+    mileage_rate numeric(5,3),
+    expense_markup_percentage numeric(5,2) DEFAULT 0,
+    notes text,
+    approved_by uuid,
+    approved_at timestamp with time zone,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now(),
+    created_by uuid,
+    deleted_at timestamp with time zone
+);
+
+
+--
+-- Name: company_relationships; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_relationships (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    company_a_id uuid NOT NULL,
+    company_b_id uuid NOT NULL,
+    relationship_category public.company_relationship_category NOT NULL,
+    relationship_direction character varying(10) NOT NULL,
+    relationship_label_a_to_b text,
+    relationship_label_b_to_a text,
+    is_active boolean DEFAULT true,
+    started_date date,
+    ended_date date,
+    details jsonb DEFAULT '{}'::jsonb,
+    notes text,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now(),
+    created_by uuid,
+    deleted_at timestamp with time zone,
+    CONSTRAINT company_relationships_check CHECK ((company_a_id <> company_b_id))
+);
+
+
+--
+-- Name: company_revenue; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_revenue (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    company_id uuid NOT NULL,
+    revenue_type character varying(50) NOT NULL,
+    placement_id uuid,
+    job_id uuid,
+    invoice_id uuid,
+    revenue_date date NOT NULL,
+    period_start date,
+    period_end date,
+    gross_revenue numeric(12,2) NOT NULL,
+    cost numeric(12,2) DEFAULT 0,
+    gross_margin numeric(12,2),
+    margin_percentage numeric(5,2),
+    currency character varying(3) DEFAULT 'USD'::character varying,
+    billing_company_id uuid,
+    end_client_company_id uuid,
+    job_category text,
+    job_level text,
+    work_location_state text,
+    contract_type character varying(20),
+    created_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: company_tags; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_tags (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    company_id uuid NOT NULL,
+    tag_name text NOT NULL,
+    tag_category text,
+    created_at timestamp with time zone DEFAULT now(),
+    created_by uuid
+);
+
+
+--
+-- Name: company_team; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_team (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    company_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    role public.company_team_role NOT NULL,
+    is_primary boolean DEFAULT false,
+    region text,
+    job_categories text[],
+    assigned_at timestamp with time zone DEFAULT now(),
+    assigned_by uuid,
+    removed_at timestamp with time zone,
+    removed_by uuid,
+    notify_on_new_job boolean DEFAULT true,
+    notify_on_placement boolean DEFAULT true,
+    notify_on_activity boolean DEFAULT false,
+    created_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: company_vendor_details; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.company_vendor_details (
+    company_id uuid NOT NULL,
+    org_id uuid NOT NULL,
+    vendor_type public.company_vendor_type DEFAULT 'prime_vendor'::public.company_vendor_type NOT NULL,
+    industry_focus text[],
+    geographic_focus text[],
+    skill_focus text[],
+    vendor_manager_id uuid,
+    onboarded_date date,
+    last_job_order_date date,
+    payment_terms_to_us character varying(20) DEFAULT 'Net 60'::character varying,
+    typical_markup_to_client numeric(5,2),
+    our_typical_margin numeric(5,2),
+    preferred_job_categories text[],
+    excluded_job_categories text[],
+    min_rate_hourly numeric(10,2),
+    max_rate_hourly numeric(10,2),
+    accepts_corp_to_corp boolean DEFAULT true,
+    accepts_1099 boolean DEFAULT true,
+    total_job_orders integer DEFAULT 0,
+    filled_job_orders integer DEFAULT 0,
+    fill_rate numeric(5,2),
+    avg_time_to_fill_days integer,
+    total_revenue_from_vendor numeric(15,2) DEFAULT 0,
+    job_order_delivery_method character varying(20) DEFAULT 'email'::character varying,
+    submission_format character varying(20) DEFAULT 'email'::character varying,
+    requires_right_to_represent boolean DEFAULT true,
+    rtr_validity_hours integer DEFAULT 24,
+    is_blacklisted boolean DEFAULT false,
+    blacklist_reason text,
+    blacklist_date date,
+    has_payment_issues boolean DEFAULT false,
+    payment_issue_notes text,
+    supplies_talent boolean DEFAULT false,
+    talent_categories text[],
+    talent_specializations text[],
+    bench_consultants_count integer DEFAULT 0,
+    candidates_supplied_count integer DEFAULT 0,
+    candidates_placed_count integer DEFAULT 0,
+    talent_placement_rate numeric(5,2),
+    avg_talent_quality_score numeric(3,1),
+    legacy_terms_data jsonb DEFAULT '{}'::jsonb,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now()
+);
+
+
+--
+-- Name: TABLE company_vendor_details; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.company_vendor_details IS 'Extension table for vendor-specific fields (class table inheritance)';
+
+
+--
+-- Name: COLUMN company_vendor_details.vendor_type; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.company_vendor_details.vendor_type IS 'Type of vendor (company_vendor_type enum): direct_client, prime_vendor, sub_vendor, msp, vms_provider, talent_supplier, referral_source';
+
+
+--
 -- Name: compliance_requirements; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -15148,6 +16716,212 @@ COMMENT ON TABLE public.consultant_work_authorization IS 'Work authorization doc
 
 
 --
+-- Name: contact_addresses_view; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.contact_addresses_view AS
+ SELECT c.id AS contact_id,
+    c.org_id,
+    c.first_name,
+    c.last_name,
+    c.email,
+    addr.id AS address_id,
+    addr.address_type,
+    addr.address_line_1,
+    addr.city,
+    addr.state_province,
+    addr.postal_code,
+    addr.country_code,
+    addr.is_primary,
+    addr.created_at,
+    addr.updated_at
+   FROM (public.contacts c
+     LEFT JOIN public.addresses addr ON (((addr.entity_type = 'contact'::text) AND (addr.entity_id = c.id))))
+  WHERE (c.deleted_at IS NULL);
+
+
+--
+-- Name: VIEW contact_addresses_view; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON VIEW public.contact_addresses_view IS 'View for accessing contact addresses';
+
+
+--
+-- Name: contact_agreements; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contact_agreements (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    contact_id uuid NOT NULL,
+    agreement_type text NOT NULL,
+    agreement_name text,
+    effective_date date,
+    expiry_date date,
+    auto_renew boolean DEFAULT false,
+    renewal_notice_days integer DEFAULT 30,
+    status text DEFAULT 'draft'::text NOT NULL,
+    document_url text,
+    signed_document_url text,
+    our_signer_id uuid,
+    our_signed_at timestamp with time zone,
+    their_signer_name text,
+    their_signed_at timestamp with time zone,
+    terms jsonb DEFAULT '{}'::jsonb,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    deleted_at timestamp with time zone,
+    CONSTRAINT contact_agreements_status_check CHECK ((status = ANY (ARRAY['draft'::text, 'pending'::text, 'active'::text, 'expired'::text, 'terminated'::text]))),
+    CONSTRAINT contact_agreements_type_check CHECK ((agreement_type = ANY (ARRAY['msa'::text, 'nda'::text, 'sow'::text, 'rate_card'::text, 'sla'::text, 'vendor_agreement'::text, 'other'::text])))
+);
+
+
+--
+-- Name: TABLE contact_agreements; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.contact_agreements IS 'MSAs, contracts, NDAs for company contacts';
+
+
+--
+-- Name: contact_certifications; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contact_certifications (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    contact_id uuid NOT NULL,
+    certification_name text NOT NULL,
+    issuing_organization text,
+    issue_date date,
+    expiry_date date,
+    is_active boolean DEFAULT true,
+    credential_id text,
+    verification_url text,
+    renewal_required boolean DEFAULT false,
+    renewal_reminder_sent_at timestamp with time zone,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    deleted_at timestamp with time zone
+);
+
+
+--
+-- Name: TABLE contact_certifications; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.contact_certifications IS 'Professional certifications, migrated from candidate_certifications';
+
+
+--
+-- Name: contact_communication_preferences; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contact_communication_preferences (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    contact_id uuid NOT NULL,
+    channel text NOT NULL,
+    is_opted_in boolean DEFAULT true,
+    opted_in_at timestamp with time zone,
+    opted_out_at timestamp with time zone,
+    consent_source text,
+    frequency_preference text,
+    content_preferences text[],
+    bounce_count integer DEFAULT 0,
+    last_bounce_at timestamp with time zone,
+    complaint_count integer DEFAULT 0,
+    last_complaint_at timestamp with time zone,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT contact_comm_prefs_channel_check CHECK ((channel = ANY (ARRAY['email'::text, 'phone'::text, 'sms'::text, 'linkedin'::text, 'whatsapp'::text, 'mail'::text])))
+);
+
+
+--
+-- Name: TABLE contact_communication_preferences; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.contact_communication_preferences IS 'Channel-specific opt-in/out preferences';
+
+
+--
+-- Name: contact_compliance; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contact_compliance (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    contact_id uuid NOT NULL,
+    compliance_type text NOT NULL,
+    status text DEFAULT 'pending'::text NOT NULL,
+    document_url text,
+    document_received_at timestamp with time zone,
+    effective_date date,
+    expiry_date date,
+    verified_by uuid,
+    verified_at timestamp with time zone,
+    verification_notes text,
+    policy_number text,
+    coverage_amount numeric(15,2),
+    insurance_carrier text,
+    expiry_alert_sent_at timestamp with time zone,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    deleted_at timestamp with time zone,
+    CONSTRAINT contact_compliance_status_check CHECK ((status = ANY (ARRAY['pending'::text, 'received'::text, 'verified'::text, 'expiring'::text, 'expired'::text, 'rejected'::text]))),
+    CONSTRAINT contact_compliance_type_check CHECK ((compliance_type = ANY (ARRAY['general_liability'::text, 'workers_comp'::text, 'e_o'::text, 'cyber'::text, 'w9'::text, 'coi'::text, 'background_check'::text, 'drug_test'::text, 'i9'::text, 'w4'::text, 'direct_deposit'::text])))
+);
+
+
+--
+-- Name: TABLE contact_compliance; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.contact_compliance IS 'Insurance, W9, background checks, and other compliance documents';
+
+
+--
+-- Name: contact_education; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contact_education (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    contact_id uuid NOT NULL,
+    institution_name text NOT NULL,
+    institution_type text,
+    degree_type text,
+    field_of_study text,
+    major text,
+    minor text,
+    start_date date,
+    end_date date,
+    graduation_date date,
+    is_completed boolean DEFAULT false,
+    gpa numeric(4,2),
+    gpa_scale numeric(3,1) DEFAULT 4.0,
+    honors text,
+    activities text,
+    achievements text[],
+    is_verified boolean DEFAULT false,
+    verified_by uuid,
+    display_order integer DEFAULT 0,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    deleted_at timestamp with time zone
+);
+
+
+--
+-- Name: TABLE contact_education; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.contact_education IS 'Education records for contacts, migrated from candidate_education';
+
+
+--
 -- Name: contact_lead_data; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -15174,6 +16948,201 @@ CREATE TABLE public.contact_lead_data (
     CONSTRAINT contact_lead_data_lead_status_check CHECK ((lead_status = ANY (ARRAY['new'::text, 'warm'::text, 'hot'::text, 'cold'::text, 'qualified'::text, 'unqualified'::text, 'converted'::text, 'lost'::text]))),
     CONSTRAINT contact_lead_data_qualification_status_check CHECK ((qualification_status = ANY (ARRAY['unqualified'::text, 'marketing_qualified'::text, 'sales_qualified'::text, 'opportunity'::text])))
 );
+
+
+--
+-- Name: contact_merge_history; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contact_merge_history (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    survivor_contact_id uuid NOT NULL,
+    merged_contact_id uuid NOT NULL,
+    merged_at timestamp with time zone DEFAULT now() NOT NULL,
+    merged_by uuid,
+    field_selections jsonb DEFAULT '{}'::jsonb,
+    merged_contact_snapshot jsonb NOT NULL,
+    notes text
+);
+
+
+--
+-- Name: TABLE contact_merge_history; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.contact_merge_history IS 'Audit trail for contact deduplication merges';
+
+
+--
+-- Name: contact_rate_cards; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contact_rate_cards (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    contact_id uuid NOT NULL,
+    client_id uuid,
+    skill_id uuid,
+    job_id uuid,
+    bill_rate_hourly numeric(10,2),
+    pay_rate_hourly numeric(10,2),
+    markup_percentage numeric(5,2),
+    overtime_multiplier numeric(3,2) DEFAULT 1.5,
+    effective_date date NOT NULL,
+    expiry_date date,
+    is_active boolean DEFAULT true,
+    approved_by uuid,
+    approved_at timestamp with time zone,
+    notes text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    deleted_at timestamp with time zone
+);
+
+
+--
+-- Name: TABLE contact_rate_cards; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.contact_rate_cards IS 'Bill/pay rates by context (client, skill, job)';
+
+
+--
+-- Name: contact_relationships; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contact_relationships (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    source_contact_id uuid NOT NULL,
+    target_contact_id uuid NOT NULL,
+    relationship_type text NOT NULL,
+    title_at_company text,
+    department_at_company text,
+    start_date date,
+    end_date date,
+    is_current boolean DEFAULT false,
+    relationship_strength integer,
+    notes text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by uuid,
+    updated_by uuid,
+    deleted_at timestamp with time zone,
+    CONSTRAINT contact_relationships_strength_check CHECK (((relationship_strength IS NULL) OR ((relationship_strength >= 1) AND (relationship_strength <= 10)))),
+    CONSTRAINT contact_relationships_type_check CHECK ((relationship_type = ANY (ARRAY['works_at'::text, 'worked_at'::text, 'owns'::text, 'founded'::text, 'board_member'::text, 'reports_to'::text, 'manages'::text, 'referred_by'::text, 'knows'::text, 'mentors'::text, 'spouse_of'::text])))
+);
+
+
+--
+-- Name: TABLE contact_relationships; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.contact_relationships IS 'Tracks relationships between contacts (person-company employment, person-person referrals, etc.)';
+
+
+--
+-- Name: contact_roles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contact_roles (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    contact_id uuid NOT NULL,
+    role_type text NOT NULL,
+    role_status text DEFAULT 'active'::text NOT NULL,
+    context_company_id uuid,
+    context_details jsonb DEFAULT '{}'::jsonb,
+    role_started_at timestamp with time zone DEFAULT now(),
+    role_ended_at timestamp with time zone,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by uuid,
+    deleted_at timestamp with time zone,
+    CONSTRAINT contact_roles_status_check CHECK ((role_status = ANY (ARRAY['active'::text, 'inactive'::text, 'pending'::text, 'suspended'::text]))),
+    CONSTRAINT contact_roles_type_check CHECK ((role_type = ANY (ARRAY['candidate'::text, 'employee'::text, 'client_contact'::text, 'hiring_manager'::text, 'hr_contact'::text, 'vendor_contact'::text, 'bench_internal'::text, 'bench_vendor'::text, 'placed'::text, 'referral_source'::text, 'alumni'::text])))
+);
+
+
+--
+-- Name: TABLE contact_roles; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.contact_roles IS 'Tracks multiple concurrent roles a contact can have (candidate, employee, vendor contact, etc.)';
+
+
+--
+-- Name: contact_skills; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contact_skills (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    contact_id uuid NOT NULL,
+    skill_id uuid,
+    skill_name text NOT NULL,
+    skill_category text,
+    proficiency_level integer DEFAULT 3,
+    years_experience numeric(4,1),
+    last_used_date date,
+    is_primary boolean DEFAULT false,
+    is_verified boolean DEFAULT false,
+    verified_by uuid,
+    verified_at timestamp with time zone,
+    verification_method text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    deleted_at timestamp with time zone,
+    CONSTRAINT contact_skills_proficiency_check CHECK (((proficiency_level >= 1) AND (proficiency_level <= 5)))
+);
+
+
+--
+-- Name: TABLE contact_skills; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.contact_skills IS 'Unified skills for all contact types, migrated from candidate_skills';
+
+
+--
+-- Name: contact_work_history; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.contact_work_history (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    contact_id uuid NOT NULL,
+    company_name text NOT NULL,
+    company_contact_id uuid,
+    title text NOT NULL,
+    department text,
+    employment_type text,
+    start_date date NOT NULL,
+    end_date date,
+    is_current boolean DEFAULT false,
+    description text,
+    achievements text[],
+    reason_for_leaving text,
+    manager_name text,
+    manager_contact text,
+    location text,
+    is_remote boolean DEFAULT false,
+    is_verified boolean DEFAULT false,
+    verified_by uuid,
+    verified_at timestamp with time zone,
+    display_order integer DEFAULT 0,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    deleted_at timestamp with time zone
+);
+
+
+--
+-- Name: TABLE contact_work_history; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.contact_work_history IS 'Employment history for contacts, migrated from candidate_work_history';
 
 
 --
@@ -15612,6 +17581,7 @@ CREATE TABLE public.deals (
     reengagement_date date,
     lessons_learned text,
     created_account_id uuid,
+    company_id uuid,
     CONSTRAINT deals_billing_frequency_check CHECK ((billing_frequency = ANY (ARRAY['weekly'::text, 'biweekly'::text, 'monthly'::text]))),
     CONSTRAINT deals_contract_type_check CHECK ((contract_type = ANY (ARRAY['msa'::text, 'sow'::text, 'po'::text, 'email'::text]))),
     CONSTRAINT deals_future_potential_check CHECK ((future_potential = ANY (ARRAY['yes'::text, 'maybe'::text, 'no'::text]))),
@@ -15657,6 +17627,13 @@ COMMENT ON COLUMN public.deals.weighted_value IS 'Auto-calculated: value * proba
 --
 
 COMMENT ON COLUMN public.deals.health_status IS 'Deal pipeline health: on_track (active), slow (7-14d stale), stale (>14d), urgent (close <14d), at_risk (manual)';
+
+
+--
+-- Name: COLUMN deals.company_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.deals.company_id IS 'FK to companies table (replaces account_id)';
 
 
 --
@@ -16076,6 +18053,68 @@ COMMENT ON TABLE public.emergency_drills IS 'Scheduled emergency drill tracking'
 
 
 --
+-- Name: employees; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.employees (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    employee_number text,
+    status public.employment_status DEFAULT 'onboarding'::public.employment_status NOT NULL,
+    employment_type public.employment_type DEFAULT 'fte'::public.employment_type NOT NULL,
+    hire_date date NOT NULL,
+    termination_date date,
+    termination_reason text,
+    department text,
+    job_title text,
+    manager_id uuid,
+    location text,
+    work_mode public.work_mode DEFAULT 'on_site'::public.work_mode,
+    salary_type public.salary_type DEFAULT 'annual'::public.salary_type NOT NULL,
+    salary_amount numeric(12,2),
+    currency text DEFAULT 'USD'::text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by uuid,
+    updated_by uuid,
+    deleted_at timestamp with time zone
+);
+
+
+--
+-- Name: employee_addresses_view; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.employee_addresses_view AS
+ SELECT e.id AS employee_id,
+    e.org_id,
+    up.full_name AS employee_name,
+    up.email,
+    addr.id AS address_id,
+    addr.address_type,
+    addr.address_line_1,
+    addr.city,
+    addr.state_province,
+    addr.postal_code,
+    addr.country_code,
+    addr.is_primary,
+    addr.created_at,
+    addr.updated_at
+   FROM ((public.employees e
+     LEFT JOIN public.user_profiles up ON ((up.id = e.user_id)))
+     LEFT JOIN public.addresses addr ON (((addr.entity_type = 'employee'::text) AND (addr.entity_id = e.id))))
+  WHERE (e.deleted_at IS NULL);
+
+
+--
+-- Name: VIEW employee_addresses_view; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON VIEW public.employee_addresses_view IS 'View for accessing employee addresses';
+
+
+--
 -- Name: employee_benefits; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -16342,36 +18381,6 @@ CREATE TABLE public.employee_twin_interactions (
 --
 
 COMMENT ON TABLE public.employee_twin_interactions IS 'Tracks all Employee AI Twin interactions';
-
-
---
--- Name: employees; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.employees (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
-    org_id uuid NOT NULL,
-    user_id uuid NOT NULL,
-    employee_number text,
-    status public.employment_status DEFAULT 'onboarding'::public.employment_status NOT NULL,
-    employment_type public.employment_type DEFAULT 'fte'::public.employment_type NOT NULL,
-    hire_date date NOT NULL,
-    termination_date date,
-    termination_reason text,
-    department text,
-    job_title text,
-    manager_id uuid,
-    location text,
-    work_mode public.work_mode DEFAULT 'on_site'::public.work_mode,
-    salary_type public.salary_type DEFAULT 'annual'::public.salary_type NOT NULL,
-    salary_amount numeric(12,2),
-    currency text DEFAULT 'USD'::text,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    created_by uuid,
-    updated_by uuid,
-    deleted_at timestamp with time zone
-);
 
 
 --
@@ -16872,7 +18881,8 @@ CREATE TABLE public.external_job_orders (
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     created_by uuid,
-    deleted_at timestamp with time zone
+    deleted_at timestamp with time zone,
+    vendor_company_id uuid
 );
 
 
@@ -16881,6 +18891,13 @@ CREATE TABLE public.external_job_orders (
 --
 
 COMMENT ON TABLE public.external_job_orders IS 'External job orders from vendors (bench sales module). NOT the same as workspace.job_orders which are confirmed client orders.';
+
+
+--
+-- Name: COLUMN external_job_orders.vendor_company_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.external_job_orders.vendor_company_id IS 'FK to companies table (replaces vendor_id)';
 
 
 --
@@ -17751,6 +19768,122 @@ CREATE TABLE public.integrations (
 
 
 --
+-- Name: interviews; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.interviews (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    submission_id uuid NOT NULL,
+    job_id uuid NOT NULL,
+    candidate_id uuid NOT NULL,
+    round_number integer DEFAULT 1 NOT NULL,
+    interview_type text DEFAULT 'technical'::text,
+    scheduled_at timestamp with time zone,
+    duration_minutes integer DEFAULT 60,
+    timezone text DEFAULT 'America/New_York'::text,
+    meeting_link text,
+    meeting_location text,
+    interviewer_names text[],
+    interviewer_emails text[],
+    scheduled_by uuid,
+    status text DEFAULT 'scheduled'::text NOT NULL,
+    cancellation_reason text,
+    feedback text,
+    rating integer,
+    recommendation text,
+    submitted_by uuid,
+    feedback_submitted_at timestamp with time zone,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    org_id uuid NOT NULL,
+    proposed_times jsonb DEFAULT '[]'::jsonb,
+    confirmed_at timestamp with time zone,
+    confirmed_by uuid,
+    rescheduled_at timestamp with time zone,
+    rescheduled_by uuid,
+    reschedule_reason text,
+    reschedule_count integer DEFAULT 0,
+    cancelled_at timestamp with time zone,
+    cancelled_by uuid,
+    cancellation_notes text,
+    prep_completed_at timestamp with time zone,
+    prep_completed_by uuid,
+    prep_notes text,
+    prep_checklist jsonb DEFAULT '[]'::jsonb,
+    prep_materials_sent_at timestamp with time zone,
+    technical_rating integer,
+    communication_rating integer,
+    problem_solving_rating integer,
+    culture_fit_rating integer,
+    strengths text,
+    concerns text,
+    description text,
+    internal_notes text,
+    location text,
+    candidate_experience text,
+    candidate_interest_level text,
+    candidate_feedback text,
+    candidate_concerns text,
+    attendance_status text,
+    next_steps text,
+    ics_uid text,
+    ics_sequence integer DEFAULT 0,
+    contact_id uuid,
+    CONSTRAINT interviews_attendance_status_check CHECK ((attendance_status = ANY (ARRAY['attended'::text, 'no_show'::text, 'cancelled'::text, 'rescheduled'::text]))),
+    CONSTRAINT interviews_candidate_experience_check CHECK ((candidate_experience = ANY (ARRAY['great'::text, 'good'::text, 'okay'::text, 'poor'::text]))),
+    CONSTRAINT interviews_candidate_interest_level_check CHECK ((candidate_interest_level = ANY (ARRAY['very_high'::text, 'high'::text, 'medium'::text, 'low'::text, 'withdrawn'::text]))),
+    CONSTRAINT interviews_communication_rating_check CHECK (((communication_rating >= 1) AND (communication_rating <= 5))),
+    CONSTRAINT interviews_culture_fit_rating_check CHECK (((culture_fit_rating >= 1) AND (culture_fit_rating <= 5))),
+    CONSTRAINT interviews_next_steps_check CHECK ((next_steps = ANY (ARRAY['schedule_next_round'::text, 'extend_offer'::text, 'reject'::text, 'on_hold'::text]))),
+    CONSTRAINT interviews_problem_solving_rating_check CHECK (((problem_solving_rating >= 1) AND (problem_solving_rating <= 5))),
+    CONSTRAINT interviews_rating_check CHECK (((rating >= 1) AND (rating <= 5))),
+    CONSTRAINT interviews_technical_rating_check CHECK (((technical_rating >= 1) AND (technical_rating <= 5)))
+);
+
+
+--
+-- Name: TABLE interviews; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.interviews IS 'Interview records with full lifecycle tracking: scheduling, confirmation, prep, feedback';
+
+
+--
+-- Name: COLUMN interviews.status; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.interviews.status IS 'Valid values: proposed, scheduled, confirmed, completed, cancelled, no_show';
+
+
+--
+-- Name: interview_addresses_view; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.interview_addresses_view AS
+ SELECT i.id AS interview_id,
+    i.org_id,
+    i.interview_type,
+    i.scheduled_at,
+    addr.id AS address_id,
+    addr.address_type,
+    addr.address_line_1,
+    addr.city,
+    addr.state_province,
+    addr.notes AS address_notes,
+    addr.is_primary
+   FROM (public.interviews i
+     LEFT JOIN public.addresses addr ON (((addr.entity_type = 'interview'::text) AND (addr.entity_id = i.id))))
+  WHERE (i.cancelled_at IS NULL);
+
+
+--
+-- Name: VIEW interview_addresses_view; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON VIEW public.interview_addresses_view IS 'View for accessing interview meeting locations';
+
+
+--
 -- Name: interview_feedback; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -17840,90 +19973,105 @@ COMMENT ON COLUMN public.interview_sessions.average_score IS 'Average score acro
 
 
 --
--- Name: interviews; Type: TABLE; Schema: public; Owner: -
+-- Name: jobs; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.interviews (
+CREATE TABLE public.jobs (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
-    submission_id uuid NOT NULL,
-    job_id uuid NOT NULL,
-    candidate_id uuid NOT NULL,
-    round_number integer DEFAULT 1 NOT NULL,
-    interview_type text DEFAULT 'technical'::text,
-    scheduled_at timestamp with time zone,
-    duration_minutes integer DEFAULT 60,
-    timezone text DEFAULT 'America/New_York'::text,
-    meeting_link text,
-    meeting_location text,
-    interviewer_names text[],
-    interviewer_emails text[],
-    scheduled_by uuid,
-    status text DEFAULT 'scheduled'::text NOT NULL,
-    cancellation_reason text,
-    feedback text,
-    rating integer,
-    recommendation text,
-    submitted_by uuid,
-    feedback_submitted_at timestamp with time zone,
+    org_id uuid NOT NULL,
+    account_id uuid,
+    deal_id uuid,
+    title text NOT NULL,
+    description text,
+    job_type text DEFAULT 'contract'::text,
+    location text,
+    is_remote boolean DEFAULT false,
+    hybrid_days integer,
+    rate_min numeric(10,2),
+    rate_max numeric(10,2),
+    rate_type text DEFAULT 'hourly'::text,
+    currency text DEFAULT 'USD'::text,
+    status text DEFAULT 'draft'::text NOT NULL,
+    urgency text DEFAULT 'medium'::text,
+    positions_count integer DEFAULT 1,
+    positions_filled integer DEFAULT 0,
+    required_skills text[],
+    nice_to_have_skills text[],
+    min_experience_years integer,
+    max_experience_years integer,
+    visa_requirements text[],
+    owner_id uuid NOT NULL,
+    recruiter_ids uuid[],
+    posted_date date,
+    target_fill_date date,
+    filled_date date,
+    client_submission_instructions text,
+    client_interview_process text,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    org_id uuid NOT NULL,
-    proposed_times jsonb DEFAULT '[]'::jsonb,
-    confirmed_at timestamp with time zone,
-    confirmed_by uuid,
-    rescheduled_at timestamp with time zone,
-    rescheduled_by uuid,
-    reschedule_reason text,
-    reschedule_count integer DEFAULT 0,
-    cancelled_at timestamp with time zone,
-    cancelled_by uuid,
-    cancellation_notes text,
-    prep_completed_at timestamp with time zone,
-    prep_completed_by uuid,
-    prep_notes text,
-    prep_checklist jsonb DEFAULT '[]'::jsonb,
-    prep_materials_sent_at timestamp with time zone,
-    technical_rating integer,
-    communication_rating integer,
-    problem_solving_rating integer,
-    culture_fit_rating integer,
-    strengths text,
-    concerns text,
-    description text,
-    internal_notes text,
-    location text,
-    candidate_experience text,
-    candidate_interest_level text,
-    candidate_feedback text,
-    candidate_concerns text,
-    attendance_status text,
-    next_steps text,
-    ics_uid text,
-    ics_sequence integer DEFAULT 0,
-    CONSTRAINT interviews_attendance_status_check CHECK ((attendance_status = ANY (ARRAY['attended'::text, 'no_show'::text, 'cancelled'::text, 'rescheduled'::text]))),
-    CONSTRAINT interviews_candidate_experience_check CHECK ((candidate_experience = ANY (ARRAY['great'::text, 'good'::text, 'okay'::text, 'poor'::text]))),
-    CONSTRAINT interviews_candidate_interest_level_check CHECK ((candidate_interest_level = ANY (ARRAY['very_high'::text, 'high'::text, 'medium'::text, 'low'::text, 'withdrawn'::text]))),
-    CONSTRAINT interviews_communication_rating_check CHECK (((communication_rating >= 1) AND (communication_rating <= 5))),
-    CONSTRAINT interviews_culture_fit_rating_check CHECK (((culture_fit_rating >= 1) AND (culture_fit_rating <= 5))),
-    CONSTRAINT interviews_next_steps_check CHECK ((next_steps = ANY (ARRAY['schedule_next_round'::text, 'extend_offer'::text, 'reject'::text, 'on_hold'::text]))),
-    CONSTRAINT interviews_problem_solving_rating_check CHECK (((problem_solving_rating >= 1) AND (problem_solving_rating <= 5))),
-    CONSTRAINT interviews_rating_check CHECK (((rating >= 1) AND (rating <= 5))),
-    CONSTRAINT interviews_technical_rating_check CHECK (((technical_rating >= 1) AND (technical_rating <= 5)))
+    created_by uuid,
+    deleted_at timestamp with time zone,
+    search_vector tsvector,
+    client_id uuid,
+    priority text DEFAULT 'medium'::text,
+    target_start_date timestamp with time zone,
+    closed_at timestamp with time zone,
+    closed_by uuid,
+    closure_reason text,
+    closure_note text,
+    on_hold_reason text,
+    expected_reactivation_date date,
+    published_at timestamp with time zone,
+    published_by uuid,
+    days_to_fill integer,
+    company_id uuid
 );
 
 
 --
--- Name: TABLE interviews; Type: COMMENT; Schema: public; Owner: -
+-- Name: TABLE jobs; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON TABLE public.interviews IS 'Interview records with full lifecycle tracking: scheduling, confirmation, prep, feedback';
+COMMENT ON TABLE public.jobs IS 'Job requisitions from clients';
 
 
 --
--- Name: COLUMN interviews.status; Type: COMMENT; Schema: public; Owner: -
+-- Name: COLUMN jobs.company_id; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.interviews.status IS 'Valid values: proposed, scheduled, confirmed, completed, cancelled, no_show';
+COMMENT ON COLUMN public.jobs.company_id IS 'FK to companies table (replaces account_id)';
+
+
+--
+-- Name: job_addresses_view; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.job_addresses_view AS
+ SELECT j.id AS job_id,
+    j.org_id,
+    j.title AS job_title,
+    a.name AS account_name,
+    addr.id AS address_id,
+    addr.address_type,
+    addr.address_line_1,
+    addr.city,
+    addr.state_province,
+    addr.postal_code,
+    addr.country_code,
+    addr.is_primary,
+    addr.created_at,
+    addr.updated_at
+   FROM ((public.jobs j
+     LEFT JOIN public.accounts a ON ((a.id = j.account_id)))
+     LEFT JOIN public.addresses addr ON (((addr.entity_type = 'job'::text) AND (addr.entity_id = j.id))))
+  WHERE (j.deleted_at IS NULL);
+
+
+--
+-- Name: VIEW job_addresses_view; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON VIEW public.job_addresses_view IS 'View for accessing job location addresses';
 
 
 --
@@ -18046,68 +20194,6 @@ CREATE TABLE public.job_status_history (
 
 
 --
--- Name: jobs; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.jobs (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
-    org_id uuid NOT NULL,
-    account_id uuid,
-    deal_id uuid,
-    title text NOT NULL,
-    description text,
-    job_type text DEFAULT 'contract'::text,
-    location text,
-    is_remote boolean DEFAULT false,
-    hybrid_days integer,
-    rate_min numeric(10,2),
-    rate_max numeric(10,2),
-    rate_type text DEFAULT 'hourly'::text,
-    currency text DEFAULT 'USD'::text,
-    status text DEFAULT 'draft'::text NOT NULL,
-    urgency text DEFAULT 'medium'::text,
-    positions_count integer DEFAULT 1,
-    positions_filled integer DEFAULT 0,
-    required_skills text[],
-    nice_to_have_skills text[],
-    min_experience_years integer,
-    max_experience_years integer,
-    visa_requirements text[],
-    owner_id uuid NOT NULL,
-    recruiter_ids uuid[],
-    posted_date date,
-    target_fill_date date,
-    filled_date date,
-    client_submission_instructions text,
-    client_interview_process text,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    created_by uuid,
-    deleted_at timestamp with time zone,
-    search_vector tsvector,
-    client_id uuid,
-    priority text DEFAULT 'medium'::text,
-    target_start_date timestamp with time zone,
-    closed_at timestamp with time zone,
-    closed_by uuid,
-    closure_reason text,
-    closure_note text,
-    on_hold_reason text,
-    expected_reactivation_date date,
-    published_at timestamp with time zone,
-    published_by uuid,
-    days_to_fill integer
-);
-
-
---
--- Name: TABLE jobs; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.jobs IS 'Job requisitions from clients';
-
-
---
 -- Name: lab_instances; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -18197,6 +20283,194 @@ CREATE TABLE public.lab_templates (
 --
 
 COMMENT ON TABLE public.lab_templates IS 'Store metadata about lab template repositories';
+
+
+--
+-- Name: leads; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.leads (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    lead_type text DEFAULT 'company'::text NOT NULL,
+    company_name text,
+    industry text,
+    company_size text,
+    first_name text,
+    last_name text,
+    title text,
+    email text,
+    phone text,
+    linkedin_url text,
+    status text DEFAULT 'new'::text NOT NULL,
+    estimated_value numeric(12,2),
+    source text,
+    source_campaign_id uuid,
+    owner_id uuid,
+    last_contacted_at timestamp with time zone,
+    last_response_at timestamp with time zone,
+    engagement_score integer,
+    converted_to_deal_id uuid,
+    converted_to_account_id uuid,
+    converted_at timestamp with time zone,
+    lost_reason text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by uuid,
+    deleted_at timestamp with time zone,
+    company_type text,
+    website text,
+    tier text,
+    company_description text,
+    decision_authority text,
+    preferred_contact_method text DEFAULT 'email'::text,
+    account_id uuid,
+    notes text,
+    search_vector tsvector,
+    bant_budget integer DEFAULT 0,
+    bant_authority integer DEFAULT 0,
+    bant_need integer DEFAULT 0,
+    bant_timeline integer DEFAULT 0,
+    bant_budget_notes text,
+    bant_authority_notes text,
+    bant_need_notes text,
+    bant_timeline_notes text,
+    bant_total_score integer GENERATED ALWAYS AS ((((COALESCE(bant_budget, 0) + COALESCE(bant_authority, 0)) + COALESCE(bant_need, 0)) + COALESCE(bant_timeline, 0))) STORED,
+    budget_status text,
+    estimated_monthly_spend numeric(12,2),
+    authority_level text,
+    business_need text,
+    urgency text,
+    target_start_date date,
+    positions_count integer DEFAULT 1,
+    skills_needed text[],
+    contract_types text[],
+    qualification_result text,
+    qualification_notes text,
+    qualified_at timestamp with time zone,
+    qualified_by uuid,
+    campaign_id uuid,
+    campaign_prospect_id uuid,
+    cross_pillar_type text,
+    target_pillar text,
+    handoff_notes text,
+    interest_level text,
+    hiring_needs text,
+    pain_points text,
+    budget_notes text,
+    authority_status text,
+    authority_notes text,
+    need_status text,
+    need_notes text,
+    timeline_status text,
+    timeline_notes text,
+    next_action text,
+    next_action_date date,
+    lead_score integer,
+    contact_id uuid,
+    company_id uuid,
+    converted_to_company_id uuid,
+    CONSTRAINT leads_authority_level_check CHECK ((authority_level = ANY (ARRAY['decision_maker'::text, 'influencer'::text, 'gatekeeper'::text, 'no_authority'::text]))),
+    CONSTRAINT leads_bant_authority_check CHECK (((bant_authority >= 0) AND (bant_authority <= 25))),
+    CONSTRAINT leads_bant_budget_check CHECK (((bant_budget >= 0) AND (bant_budget <= 25))),
+    CONSTRAINT leads_bant_need_check CHECK (((bant_need >= 0) AND (bant_need <= 25))),
+    CONSTRAINT leads_bant_timeline_check CHECK (((bant_timeline >= 0) AND (bant_timeline <= 25))),
+    CONSTRAINT leads_budget_status_check CHECK ((budget_status = ANY (ARRAY['confirmed'::text, 'likely'::text, 'unclear'::text, 'no_budget'::text]))),
+    CONSTRAINT leads_engagement_score_check CHECK (((engagement_score >= 0) AND (engagement_score <= 100))),
+    CONSTRAINT leads_lead_score_check CHECK (((lead_score >= 0) AND (lead_score <= 100))),
+    CONSTRAINT leads_positions_count_check CHECK (((positions_count >= 1) AND (positions_count <= 100))),
+    CONSTRAINT leads_qualification_result_check CHECK ((qualification_result = ANY (ARRAY['qualified_convert'::text, 'qualified_nurture'::text, 'not_qualified'::text]))),
+    CONSTRAINT leads_urgency_check CHECK ((urgency = ANY (ARRAY['immediate'::text, 'high'::text, 'medium'::text, 'low'::text])))
+);
+
+
+--
+-- Name: TABLE leads; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.leads IS 'CRM leads for recruiting/staffing - can be company or person type';
+
+
+--
+-- Name: COLUMN leads.status; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.leads.status IS 'Valid values: new, contacted, qualified, unqualified, nurture, converted. Status colors: new=gray, contacted=blue, qualified=green, unqualified=red, nurture=yellow, converted=purple';
+
+
+--
+-- Name: COLUMN leads.budget_status; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.leads.budget_status IS 'BANT Budget: confirmed=25pts, likely=15pts, unclear=5pts, no_budget=0pts';
+
+
+--
+-- Name: COLUMN leads.authority_level; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.leads.authority_level IS 'BANT Authority: decision_maker=25pts, influencer=20pts, gatekeeper=10pts, no_authority=0pts';
+
+
+--
+-- Name: COLUMN leads.urgency; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.leads.urgency IS 'BANT Timeline urgency: immediate=25pts, high=20pts, medium=10pts, low=5pts';
+
+
+--
+-- Name: COLUMN leads.company_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.leads.company_id IS 'FK to companies table (replaces account_id)';
+
+
+--
+-- Name: COLUMN leads.converted_to_company_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.leads.converted_to_company_id IS 'FK to companies table for converted company (replaces converted_to_account_id)';
+
+
+--
+-- Name: lead_addresses_view; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.lead_addresses_view AS
+ SELECT l.id AS lead_id,
+    l.org_id,
+    l.company_name,
+    l.first_name,
+    l.last_name,
+    addr.id AS address_id,
+    addr.address_type,
+    addr.address_line_1,
+    addr.address_line_2,
+    addr.address_line_3,
+    addr.city,
+    addr.state_province,
+    addr.postal_code,
+    addr.country_code,
+    addr.county,
+    addr.latitude,
+    addr.longitude,
+    addr.is_verified,
+    addr.is_primary,
+    addr.effective_from,
+    addr.effective_to,
+    addr.notes,
+    addr.created_at,
+    addr.updated_at
+   FROM (public.leads l
+     LEFT JOIN public.addresses addr ON (((addr.entity_type = 'lead'::text) AND (addr.entity_id = l.id))));
+
+
+--
+-- Name: VIEW lead_addresses_view; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON VIEW public.lead_addresses_view IS 'View for accessing lead addresses from the unified addresses table';
 
 
 --
@@ -18722,139 +20996,6 @@ CREATE TABLE public.leaderboards (
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL
 );
-
-
---
--- Name: leads; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.leads (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
-    org_id uuid NOT NULL,
-    lead_type text DEFAULT 'company'::text NOT NULL,
-    company_name text,
-    industry text,
-    company_size text,
-    first_name text,
-    last_name text,
-    title text,
-    email text,
-    phone text,
-    linkedin_url text,
-    status text DEFAULT 'new'::text NOT NULL,
-    estimated_value numeric(12,2),
-    source text,
-    source_campaign_id uuid,
-    owner_id uuid,
-    last_contacted_at timestamp with time zone,
-    last_response_at timestamp with time zone,
-    engagement_score integer,
-    converted_to_deal_id uuid,
-    converted_to_account_id uuid,
-    converted_at timestamp with time zone,
-    lost_reason text,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    created_by uuid,
-    deleted_at timestamp with time zone,
-    company_type text,
-    website text,
-    headquarters text,
-    tier text,
-    company_description text,
-    decision_authority text,
-    preferred_contact_method text DEFAULT 'email'::text,
-    account_id uuid,
-    notes text,
-    search_vector tsvector,
-    bant_budget integer DEFAULT 0,
-    bant_authority integer DEFAULT 0,
-    bant_need integer DEFAULT 0,
-    bant_timeline integer DEFAULT 0,
-    bant_budget_notes text,
-    bant_authority_notes text,
-    bant_need_notes text,
-    bant_timeline_notes text,
-    bant_total_score integer GENERATED ALWAYS AS ((((COALESCE(bant_budget, 0) + COALESCE(bant_authority, 0)) + COALESCE(bant_need, 0)) + COALESCE(bant_timeline, 0))) STORED,
-    budget_status text,
-    estimated_monthly_spend numeric(12,2),
-    authority_level text,
-    business_need text,
-    urgency text,
-    target_start_date date,
-    positions_count integer DEFAULT 1,
-    skills_needed text[],
-    contract_types text[],
-    qualification_result text,
-    qualification_notes text,
-    qualified_at timestamp with time zone,
-    qualified_by uuid,
-    campaign_id uuid,
-    campaign_prospect_id uuid,
-    cross_pillar_type text,
-    target_pillar text,
-    handoff_notes text,
-    interest_level text,
-    hiring_needs text,
-    pain_points text,
-    budget_notes text,
-    authority_status text,
-    authority_notes text,
-    need_status text,
-    need_notes text,
-    timeline_status text,
-    timeline_notes text,
-    next_action text,
-    next_action_date date,
-    lead_score integer,
-    contact_id uuid,
-    CONSTRAINT leads_authority_level_check CHECK ((authority_level = ANY (ARRAY['decision_maker'::text, 'influencer'::text, 'gatekeeper'::text, 'no_authority'::text]))),
-    CONSTRAINT leads_bant_authority_check CHECK (((bant_authority >= 0) AND (bant_authority <= 25))),
-    CONSTRAINT leads_bant_budget_check CHECK (((bant_budget >= 0) AND (bant_budget <= 25))),
-    CONSTRAINT leads_bant_need_check CHECK (((bant_need >= 0) AND (bant_need <= 25))),
-    CONSTRAINT leads_bant_timeline_check CHECK (((bant_timeline >= 0) AND (bant_timeline <= 25))),
-    CONSTRAINT leads_budget_status_check CHECK ((budget_status = ANY (ARRAY['confirmed'::text, 'likely'::text, 'unclear'::text, 'no_budget'::text]))),
-    CONSTRAINT leads_engagement_score_check CHECK (((engagement_score >= 0) AND (engagement_score <= 100))),
-    CONSTRAINT leads_lead_score_check CHECK (((lead_score >= 0) AND (lead_score <= 100))),
-    CONSTRAINT leads_positions_count_check CHECK (((positions_count >= 1) AND (positions_count <= 100))),
-    CONSTRAINT leads_qualification_result_check CHECK ((qualification_result = ANY (ARRAY['qualified_convert'::text, 'qualified_nurture'::text, 'not_qualified'::text]))),
-    CONSTRAINT leads_urgency_check CHECK ((urgency = ANY (ARRAY['immediate'::text, 'high'::text, 'medium'::text, 'low'::text])))
-);
-
-
---
--- Name: TABLE leads; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.leads IS 'CRM leads for recruiting/staffing - can be company or person type';
-
-
---
--- Name: COLUMN leads.status; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.leads.status IS 'Valid values: new, contacted, qualified, unqualified, nurture, converted. Status colors: new=gray, contacted=blue, qualified=green, unqualified=red, nurture=yellow, converted=purple';
-
-
---
--- Name: COLUMN leads.budget_status; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.leads.budget_status IS 'BANT Budget: confirmed=25pts, likely=15pts, unclear=5pts, no_budget=0pts';
-
-
---
--- Name: COLUMN leads.authority_level; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.leads.authority_level IS 'BANT Authority: decision_maker=25pts, influencer=20pts, gatekeeper=10pts, no_authority=0pts';
-
-
---
--- Name: COLUMN leads.urgency; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.leads.urgency IS 'BANT Timeline urgency: immediate=25pts, high=20pts, medium=10pts, low=5pts';
 
 
 --
@@ -19475,69 +21616,6 @@ COMMENT ON TABLE public.org_standups IS 'Daily standup reports generated by Orga
 
 
 --
--- Name: organization_branding; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.organization_branding (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
-    org_id uuid NOT NULL,
-    asset_type character varying(50) NOT NULL,
-    storage_path text NOT NULL,
-    file_name text NOT NULL,
-    file_size integer,
-    mime_type character varying(100),
-    width integer,
-    height integer,
-    created_at timestamp with time zone DEFAULT now(),
-    uploaded_by uuid
-);
-
-
---
--- Name: TABLE organization_branding; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.organization_branding IS 'Organization branding asset metadata';
-
-
---
--- Name: COLUMN organization_branding.asset_type; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.organization_branding.asset_type IS 'Asset type: logo_light, logo_dark, favicon, login_background';
-
-
---
--- Name: organization_settings; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.organization_settings (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
-    org_id uuid NOT NULL,
-    key character varying(100) NOT NULL,
-    value jsonb DEFAULT '{}'::jsonb NOT NULL,
-    category character varying(50) NOT NULL,
-    created_at timestamp with time zone DEFAULT now(),
-    updated_at timestamp with time zone DEFAULT now(),
-    updated_by uuid
-);
-
-
---
--- Name: TABLE organization_settings; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.organization_settings IS 'Per-organization configuration settings';
-
-
---
--- Name: COLUMN organization_settings.category; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.organization_settings.category IS 'Setting category: general, branding, localization, business, compliance';
-
-
---
 -- Name: organizations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -19549,12 +21627,6 @@ CREATE TABLE public.organizations (
     email text,
     phone text,
     website text,
-    address_line1 text,
-    address_line2 text,
-    city text,
-    state text,
-    postal_code text,
-    country text DEFAULT 'US'::text,
     billing_email text,
     tax_id text,
     subscription_tier text DEFAULT 'free'::text NOT NULL,
@@ -19805,6 +21877,106 @@ COMMENT ON COLUMN public.organizations.default_values IS 'Default values for new
 --
 
 COMMENT ON COLUMN public.organizations.contact_info IS 'Extended contact information including social media';
+
+
+--
+-- Name: organization_addresses_view; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.organization_addresses_view AS
+ SELECT o.id AS organization_id,
+    o.name AS organization_name,
+    addr.id AS address_id,
+    addr.address_type,
+    addr.address_line_1,
+    addr.address_line_2,
+    addr.address_line_3,
+    addr.city,
+    addr.state_province,
+    addr.postal_code,
+    addr.country_code,
+    addr.county,
+    addr.latitude,
+    addr.longitude,
+    addr.is_verified,
+    addr.is_primary,
+    addr.effective_from,
+    addr.effective_to,
+    addr.notes,
+    addr.created_at,
+    addr.updated_at
+   FROM (public.organizations o
+     LEFT JOIN public.addresses addr ON (((addr.entity_type = 'organization'::text) AND (addr.entity_id = o.id))));
+
+
+--
+-- Name: VIEW organization_addresses_view; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON VIEW public.organization_addresses_view IS 'View for accessing organization addresses from the unified addresses table';
+
+
+--
+-- Name: organization_branding; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.organization_branding (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    asset_type character varying(50) NOT NULL,
+    storage_path text NOT NULL,
+    file_name text NOT NULL,
+    file_size integer,
+    mime_type character varying(100),
+    width integer,
+    height integer,
+    created_at timestamp with time zone DEFAULT now(),
+    uploaded_by uuid
+);
+
+
+--
+-- Name: TABLE organization_branding; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.organization_branding IS 'Organization branding asset metadata';
+
+
+--
+-- Name: COLUMN organization_branding.asset_type; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.organization_branding.asset_type IS 'Asset type: logo_light, logo_dark, favicon, login_background';
+
+
+--
+-- Name: organization_settings; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.organization_settings (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    key character varying(100) NOT NULL,
+    value jsonb DEFAULT '{}'::jsonb NOT NULL,
+    category character varying(50) NOT NULL,
+    created_at timestamp with time zone DEFAULT now(),
+    updated_at timestamp with time zone DEFAULT now(),
+    updated_by uuid
+);
+
+
+--
+-- Name: TABLE organization_settings; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.organization_settings IS 'Per-organization configuration settings';
+
+
+--
+-- Name: COLUMN organization_settings.category; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.organization_settings.category IS 'Setting category: general, branding, localization, business, compliance';
 
 
 --
@@ -20116,6 +22288,129 @@ CREATE TABLE public.permissions (
 
 
 --
+-- Name: placements; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.placements (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    submission_id uuid NOT NULL,
+    offer_id uuid,
+    job_id uuid NOT NULL,
+    candidate_id uuid NOT NULL,
+    account_id uuid NOT NULL,
+    placement_type text DEFAULT 'contract'::text,
+    start_date date NOT NULL,
+    end_date date,
+    bill_rate numeric(10,2) NOT NULL,
+    pay_rate numeric(10,2) NOT NULL,
+    markup_percentage numeric(5,2) GENERATED ALWAYS AS (round((((bill_rate - pay_rate) / pay_rate) * (100)::numeric), 2)) STORED,
+    status text DEFAULT 'active'::text NOT NULL,
+    end_reason text,
+    actual_end_date date,
+    total_revenue numeric(12,2),
+    total_paid numeric(12,2),
+    onboarding_status text DEFAULT 'pending'::text,
+    onboarding_completed_at timestamp with time zone,
+    performance_rating integer,
+    extension_count integer DEFAULT 0,
+    recruiter_id uuid NOT NULL,
+    account_manager_id uuid,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by uuid,
+    health_status character varying(20) DEFAULT 'healthy'::character varying,
+    next_check_in_date date,
+    last_check_in_date date,
+    last_check_in_by uuid,
+    rate_type character varying(20) DEFAULT 'hourly'::character varying,
+    employment_type character varying(20) DEFAULT 'w2'::character varying,
+    work_location character varying(20) DEFAULT 'remote'::character varying,
+    work_schedule character varying(100),
+    timezone character varying(50) DEFAULT 'America/New_York'::character varying,
+    onboarding_format character varying(20) DEFAULT 'virtual'::character varying,
+    first_day_meeting_link text,
+    first_day_location text,
+    hiring_manager_name character varying(100),
+    hiring_manager_email character varying(200),
+    hiring_manager_phone character varying(30),
+    hr_contact_name character varying(100),
+    hr_contact_email character varying(200),
+    paperwork_complete boolean DEFAULT false,
+    background_check_status character varying(20),
+    i9_complete boolean DEFAULT false,
+    nda_signed boolean DEFAULT false,
+    equipment_ordered boolean DEFAULT false,
+    equipment_notes text,
+    internal_notes text,
+    deleted_at timestamp with time zone,
+    contact_id uuid,
+    company_id uuid,
+    billing_company_id uuid,
+    end_client_company_id uuid,
+    CONSTRAINT placements_background_check_status_check CHECK (((background_check_status)::text = ANY ((ARRAY['pending'::character varying, 'passed'::character varying, 'failed'::character varying, 'waived'::character varying])::text[]))),
+    CONSTRAINT placements_health_status_check CHECK (((health_status)::text = ANY ((ARRAY['healthy'::character varying, 'at_risk'::character varying, 'critical'::character varying])::text[]))),
+    CONSTRAINT placements_onboarding_format_check CHECK (((onboarding_format)::text = ANY ((ARRAY['virtual'::character varying, 'in_person'::character varying, 'hybrid'::character varying])::text[]))),
+    CONSTRAINT placements_performance_rating_check CHECK (((performance_rating >= 1) AND (performance_rating <= 5)))
+);
+
+
+--
+-- Name: TABLE placements; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.placements IS 'Successful hires and active placements';
+
+
+--
+-- Name: COLUMN placements.company_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.placements.company_id IS 'FK to companies table for primary client (replaces account_id)';
+
+
+--
+-- Name: COLUMN placements.billing_company_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.placements.billing_company_id IS 'FK to companies table for billing entity (may differ from primary client)';
+
+
+--
+-- Name: COLUMN placements.end_client_company_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.placements.end_client_company_id IS 'FK to companies table for end client (for MSP arrangements)';
+
+
+--
+-- Name: placement_addresses_view; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.placement_addresses_view AS
+ SELECT p.id AS placement_id,
+    p.org_id,
+    p.status AS placement_status,
+    p.start_date,
+    addr.id AS address_id,
+    addr.address_type,
+    addr.address_line_1,
+    addr.city,
+    addr.state_province,
+    addr.notes AS address_notes,
+    addr.is_primary
+   FROM (public.placements p
+     LEFT JOIN public.addresses addr ON (((addr.entity_type = 'placement'::text) AND (addr.entity_id = p.id))));
+
+
+--
+-- Name: VIEW placement_addresses_view; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON VIEW public.placement_addresses_view IS 'View for accessing placement first day locations';
+
+
+--
 -- Name: placement_checkins; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -20318,77 +22613,6 @@ CREATE TABLE public.placement_timesheets (
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     deleted_at timestamp with time zone
 );
-
-
---
--- Name: placements; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.placements (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
-    org_id uuid NOT NULL,
-    submission_id uuid NOT NULL,
-    offer_id uuid,
-    job_id uuid NOT NULL,
-    candidate_id uuid NOT NULL,
-    account_id uuid NOT NULL,
-    placement_type text DEFAULT 'contract'::text,
-    start_date date NOT NULL,
-    end_date date,
-    bill_rate numeric(10,2) NOT NULL,
-    pay_rate numeric(10,2) NOT NULL,
-    markup_percentage numeric(5,2) GENERATED ALWAYS AS (round((((bill_rate - pay_rate) / pay_rate) * (100)::numeric), 2)) STORED,
-    status text DEFAULT 'active'::text NOT NULL,
-    end_reason text,
-    actual_end_date date,
-    total_revenue numeric(12,2),
-    total_paid numeric(12,2),
-    onboarding_status text DEFAULT 'pending'::text,
-    onboarding_completed_at timestamp with time zone,
-    performance_rating integer,
-    extension_count integer DEFAULT 0,
-    recruiter_id uuid NOT NULL,
-    account_manager_id uuid,
-    created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    created_by uuid,
-    health_status character varying(20) DEFAULT 'healthy'::character varying,
-    next_check_in_date date,
-    last_check_in_date date,
-    last_check_in_by uuid,
-    rate_type character varying(20) DEFAULT 'hourly'::character varying,
-    employment_type character varying(20) DEFAULT 'w2'::character varying,
-    work_location character varying(20) DEFAULT 'remote'::character varying,
-    work_schedule character varying(100),
-    timezone character varying(50) DEFAULT 'America/New_York'::character varying,
-    onboarding_format character varying(20) DEFAULT 'virtual'::character varying,
-    first_day_meeting_link text,
-    first_day_location text,
-    hiring_manager_name character varying(100),
-    hiring_manager_email character varying(200),
-    hiring_manager_phone character varying(30),
-    hr_contact_name character varying(100),
-    hr_contact_email character varying(200),
-    paperwork_complete boolean DEFAULT false,
-    background_check_status character varying(20),
-    i9_complete boolean DEFAULT false,
-    nda_signed boolean DEFAULT false,
-    equipment_ordered boolean DEFAULT false,
-    equipment_notes text,
-    internal_notes text,
-    deleted_at timestamp with time zone,
-    CONSTRAINT placements_background_check_status_check CHECK (((background_check_status)::text = ANY ((ARRAY['pending'::character varying, 'passed'::character varying, 'failed'::character varying, 'waived'::character varying])::text[]))),
-    CONSTRAINT placements_health_status_check CHECK (((health_status)::text = ANY ((ARRAY['healthy'::character varying, 'at_risk'::character varying, 'critical'::character varying])::text[]))),
-    CONSTRAINT placements_onboarding_format_check CHECK (((onboarding_format)::text = ANY ((ARRAY['virtual'::character varying, 'in_person'::character varying, 'hybrid'::character varying])::text[]))),
-    CONSTRAINT placements_performance_rating_check CHECK (((performance_rating >= 1) AND (performance_rating <= 5)))
-);
-
-
---
--- Name: TABLE placements; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON TABLE public.placements IS 'Successful hires and active placements';
 
 
 --
@@ -21970,6 +24194,8 @@ CREATE TABLE public.submissions (
     client_decision_notes text,
     offer_id uuid,
     placement_id uuid,
+    contact_id uuid,
+    company_id uuid,
     CONSTRAINT submissions_ai_match_score_check CHECK (((ai_match_score >= 0) AND (ai_match_score <= 100))),
     CONSTRAINT submissions_recruiter_match_score_check CHECK (((recruiter_match_score >= 0) AND (recruiter_match_score <= 100)))
 );
@@ -21994,6 +24220,13 @@ COMMENT ON COLUMN public.submissions.vendor_decision IS 'Vendor approval status:
 --
 
 COMMENT ON COLUMN public.submissions.client_decision IS 'Client decision status: pending, accepted, or rejected';
+
+
+--
+-- Name: COLUMN submissions.company_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.submissions.company_id IS 'FK to companies table (replaces account_id)';
 
 
 --
@@ -23390,7 +25623,14 @@ CREATE VIEW public.vendor_contacts_view AS
     created_at,
     updated_at
    FROM public.contacts c
-  WHERE ((contact_type = 'vendor'::text) AND (vendor_id IS NOT NULL) AND (deleted_at IS NULL));
+  WHERE ((subtype = 'person_vendor_contact'::text) AND (vendor_id IS NOT NULL) AND (deleted_at IS NULL));
+
+
+--
+-- Name: VIEW vendor_contacts_view; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON VIEW public.vendor_contacts_view IS 'View of contacts who are vendor contacts (subtype=person_vendor_contact) - migrated from contact_type=vendor';
 
 
 --
@@ -23500,6 +25740,36 @@ CREATE TABLE public.vendors (
 --
 
 COMMENT ON TABLE public.vendors IS 'Vendor/partner companies';
+
+
+--
+-- Name: vendors_v; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.vendors_v AS
+ SELECT c.id,
+    c.org_id,
+    c.name,
+    (vd.vendor_type)::text AS type,
+    (c.status)::text AS status,
+    (c.tier)::text AS tier,
+    c.website,
+    vd.industry_focus,
+    vd.geographic_focus,
+    c.created_at,
+    c.updated_at,
+    c.created_by,
+    c.deleted_at
+   FROM (public.companies c
+     JOIN public.company_vendor_details vd ON ((vd.company_id = c.id)))
+  WHERE ((c.category = 'vendor'::public.company_category) AND (c.deleted_at IS NULL));
+
+
+--
+-- Name: VIEW vendors_v; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON VIEW public.vendors_v IS 'Backward compatibility view for vendors table - maps to companies with category = vendor';
 
 
 --
@@ -23899,11 +26169,19 @@ ALTER TABLE ONLY public.audit_logs ALTER COLUMN event_id SET DEFAULT nextval('pu
 
 
 --
--- Name: account_addresses account_addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: _migration_candidate_mapping _migration_candidate_mapping_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.account_addresses
-    ADD CONSTRAINT account_addresses_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public._migration_candidate_mapping
+    ADD CONSTRAINT _migration_candidate_mapping_pkey PRIMARY KEY (user_profile_id);
+
+
+--
+-- Name: _migration_lead_mapping _migration_lead_mapping_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public._migration_lead_mapping
+    ADD CONSTRAINT _migration_lead_mapping_pkey PRIMARY KEY (lead_id);
 
 
 --
@@ -24787,6 +27065,158 @@ ALTER TABLE ONLY public.commissions
 
 
 --
+-- Name: companies companies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: company_addresses company_addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_addresses
+    ADD CONSTRAINT company_addresses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: company_client_details company_client_details_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_client_details
+    ADD CONSTRAINT company_client_details_pkey PRIMARY KEY (company_id);
+
+
+--
+-- Name: company_compliance_requirements company_compliance_requirements_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_compliance_requirements
+    ADD CONSTRAINT company_compliance_requirements_pkey PRIMARY KEY (company_id);
+
+
+--
+-- Name: company_contacts company_contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_contacts
+    ADD CONSTRAINT company_contacts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: company_contracts company_contracts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_contracts
+    ADD CONSTRAINT company_contracts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: company_health_scores company_health_scores_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_health_scores
+    ADD CONSTRAINT company_health_scores_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: company_metrics company_metrics_company_id_period_type_period_start_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_metrics
+    ADD CONSTRAINT company_metrics_company_id_period_type_period_start_key UNIQUE (company_id, period_type, period_start);
+
+
+--
+-- Name: company_metrics company_metrics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_metrics
+    ADD CONSTRAINT company_metrics_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: company_notes company_notes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_notes
+    ADD CONSTRAINT company_notes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: company_partner_details company_partner_details_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_partner_details
+    ADD CONSTRAINT company_partner_details_pkey PRIMARY KEY (company_id);
+
+
+--
+-- Name: company_preferences company_preferences_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_preferences
+    ADD CONSTRAINT company_preferences_pkey PRIMARY KEY (company_id);
+
+
+--
+-- Name: company_rate_card_items company_rate_card_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_rate_card_items
+    ADD CONSTRAINT company_rate_card_items_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: company_rate_cards company_rate_cards_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_rate_cards
+    ADD CONSTRAINT company_rate_cards_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: company_relationships company_relationships_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_relationships
+    ADD CONSTRAINT company_relationships_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: company_revenue company_revenue_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_revenue
+    ADD CONSTRAINT company_revenue_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: company_tags company_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_tags
+    ADD CONSTRAINT company_tags_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: company_team company_team_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_team
+    ADD CONSTRAINT company_team_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: company_vendor_details company_vendor_details_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_vendor_details
+    ADD CONSTRAINT company_vendor_details_pkey PRIMARY KEY (company_id);
+
+
+--
 -- Name: compliance_requirements compliance_requirements_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -24827,6 +27257,54 @@ ALTER TABLE ONLY public.consultant_work_authorization
 
 
 --
+-- Name: contact_agreements contact_agreements_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_agreements
+    ADD CONSTRAINT contact_agreements_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contact_certifications contact_certifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_certifications
+    ADD CONSTRAINT contact_certifications_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contact_communication_preferences contact_comm_prefs_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_communication_preferences
+    ADD CONSTRAINT contact_comm_prefs_unique UNIQUE (contact_id, channel);
+
+
+--
+-- Name: contact_communication_preferences contact_communication_preferences_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_communication_preferences
+    ADD CONSTRAINT contact_communication_preferences_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contact_compliance contact_compliance_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_compliance
+    ADD CONSTRAINT contact_compliance_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contact_education contact_education_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_education
+    ADD CONSTRAINT contact_education_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: contact_lead_data contact_lead_data_contact_id_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -24840,6 +27318,62 @@ ALTER TABLE ONLY public.contact_lead_data
 
 ALTER TABLE ONLY public.contact_lead_data
     ADD CONSTRAINT contact_lead_data_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contact_merge_history contact_merge_history_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_merge_history
+    ADD CONSTRAINT contact_merge_history_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contact_rate_cards contact_rate_cards_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_rate_cards
+    ADD CONSTRAINT contact_rate_cards_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contact_relationships contact_relationships_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_relationships
+    ADD CONSTRAINT contact_relationships_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contact_relationships contact_relationships_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_relationships
+    ADD CONSTRAINT contact_relationships_unique UNIQUE (source_contact_id, target_contact_id, relationship_type);
+
+
+--
+-- Name: contact_roles contact_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_roles
+    ADD CONSTRAINT contact_roles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contact_skills contact_skills_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_skills
+    ADD CONSTRAINT contact_skills_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contact_work_history contact_work_history_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_work_history
+    ADD CONSTRAINT contact_work_history_pkey PRIMARY KEY (id);
 
 
 --
@@ -28074,20 +30608,6 @@ CREATE INDEX bulk_activity_jobs_status_idx ON public.bulk_activity_jobs USING bt
 
 
 --
--- Name: idx_account_addresses_account_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX idx_account_addresses_account_id ON public.account_addresses USING btree (account_id);
-
-
---
--- Name: idx_account_addresses_type; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX idx_account_addresses_type ON public.account_addresses USING btree (address_type);
-
-
---
 -- Name: idx_account_contacts_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -28627,10 +31147,38 @@ CREATE INDEX idx_addresses_entity ON public.addresses USING btree (entity_type, 
 
 
 --
+-- Name: idx_addresses_entity_lookup; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_addresses_entity_lookup ON public.addresses USING btree (entity_type, entity_id);
+
+
+--
 -- Name: idx_addresses_org; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_addresses_org ON public.addresses USING btree (org_id);
+
+
+--
+-- Name: idx_addresses_org_city_state; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_addresses_org_city_state ON public.addresses USING btree (org_id, city, state_province);
+
+
+--
+-- Name: idx_addresses_primary; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_addresses_primary ON public.addresses USING btree (entity_type, entity_id, is_primary) WHERE (is_primary = true);
+
+
+--
+-- Name: idx_addresses_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_addresses_type ON public.addresses USING btree (org_id, address_type);
 
 
 --
@@ -29082,6 +31630,13 @@ CREATE INDEX idx_bench_consultants_candidate_id ON public.bench_consultants USIN
 
 
 --
+-- Name: idx_bench_consultants_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_bench_consultants_contact_id ON public.bench_consultants USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
 -- Name: idx_bench_consultants_org; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -29362,6 +31917,34 @@ CREATE INDEX idx_campaigns_type ON public.campaigns USING btree (campaign_type);
 
 
 --
+-- Name: idx_candidate_availability_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidate_availability_contact_id ON public.candidate_availability USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
+-- Name: idx_candidate_background_checks_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidate_background_checks_contact_id ON public.candidate_background_checks USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
+-- Name: idx_candidate_certifications_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidate_certifications_contact_id ON public.candidate_certifications USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
+-- Name: idx_candidate_compliance_documents_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidate_compliance_documents_contact_id ON public.candidate_compliance_documents USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
 -- Name: idx_candidate_documents_candidate_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -29369,10 +31952,31 @@ CREATE INDEX idx_candidate_documents_candidate_id ON public.candidate_documents 
 
 
 --
+-- Name: idx_candidate_documents_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidate_documents_contact_id ON public.candidate_documents USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
+-- Name: idx_candidate_education_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidate_education_contact_id ON public.candidate_education USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
 -- Name: idx_candidate_embeddings_availability; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_candidate_embeddings_availability ON public.candidate_embeddings USING btree (availability);
+
+
+--
+-- Name: idx_candidate_embeddings_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidate_embeddings_contact_id ON public.candidate_embeddings USING btree (contact_id) WHERE (contact_id IS NOT NULL);
 
 
 --
@@ -29411,10 +32015,24 @@ COMMENT ON INDEX public.idx_candidate_embeddings_vector IS 'ivfflat index optimi
 
 
 --
+-- Name: idx_candidate_preferences_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidate_preferences_contact_id ON public.candidate_preferences USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
 -- Name: idx_candidate_prepared_profiles_candidate; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_candidate_prepared_profiles_candidate ON public.candidate_prepared_profiles USING btree (candidate_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_candidate_prepared_profiles_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidate_prepared_profiles_contact_id ON public.candidate_prepared_profiles USING btree (contact_id) WHERE (contact_id IS NOT NULL);
 
 
 --
@@ -29425,10 +32043,31 @@ CREATE INDEX idx_candidate_prepared_profiles_job ON public.candidate_prepared_pr
 
 
 --
+-- Name: idx_candidate_profiles_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidate_profiles_contact_id ON public.candidate_profiles USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
+-- Name: idx_candidate_references_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidate_references_contact_id ON public.candidate_references USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
 -- Name: idx_candidate_resumes_candidate_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_candidate_resumes_candidate_id ON public.candidate_resumes USING btree (candidate_id);
+
+
+--
+-- Name: idx_candidate_resumes_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidate_resumes_contact_id ON public.candidate_resumes USING btree (contact_id) WHERE (contact_id IS NOT NULL);
 
 
 --
@@ -29467,6 +32106,13 @@ CREATE INDEX idx_candidate_screenings_candidate ON public.candidate_screenings U
 
 
 --
+-- Name: idx_candidate_screenings_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidate_screenings_contact_id ON public.candidate_screenings USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
 -- Name: idx_candidate_screenings_job; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -29502,6 +32148,13 @@ CREATE INDEX idx_candidate_skills_candidate ON public.candidate_skills USING btr
 
 
 --
+-- Name: idx_candidate_skills_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidate_skills_contact_id ON public.candidate_skills USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
 -- Name: idx_candidate_skills_primary; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -29520,6 +32173,20 @@ CREATE INDEX idx_candidate_skills_proficiency ON public.candidate_skills USING b
 --
 
 CREATE INDEX idx_candidate_skills_skill ON public.candidate_skills USING btree (skill_id);
+
+
+--
+-- Name: idx_candidate_work_authorizations_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidate_work_authorizations_contact_id ON public.candidate_work_authorizations USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
+-- Name: idx_candidate_work_history_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidate_work_history_contact_id ON public.candidate_work_history USING btree (contact_id) WHERE (contact_id IS NOT NULL);
 
 
 --
@@ -29768,6 +32435,251 @@ CREATE INDEX idx_commissions_user_status ON public.commissions USING btree (user
 
 
 --
+-- Name: idx_companies_account_manager; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_companies_account_manager ON public.companies USING btree (account_manager_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_companies_category; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_companies_category ON public.companies USING btree (org_id, category) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_companies_health; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_companies_health ON public.companies USING btree (org_id, health_status, health_score) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_companies_hierarchy; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_companies_hierarchy ON public.companies USING btree (org_id, hierarchy_path) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_companies_legacy_account; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_companies_legacy_account ON public.companies USING btree (legacy_account_id) WHERE (legacy_account_id IS NOT NULL);
+
+
+--
+-- Name: idx_companies_legacy_vendor; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_companies_legacy_vendor ON public.companies USING btree (legacy_vendor_id) WHERE (legacy_vendor_id IS NOT NULL);
+
+
+--
+-- Name: idx_companies_name_trgm; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_companies_name_trgm ON public.companies USING gin (name public.gin_trgm_ops);
+
+
+--
+-- Name: idx_companies_org; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_companies_org ON public.companies USING btree (org_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_companies_owner; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_companies_owner ON public.companies USING btree (owner_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_companies_parent; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_companies_parent ON public.companies USING btree (parent_company_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_companies_search; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_companies_search ON public.companies USING gin (search_vector);
+
+
+--
+-- Name: idx_companies_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_companies_status ON public.companies USING btree (org_id, status) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_companies_tier; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_companies_tier ON public.companies USING btree (org_id, tier) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_company_addresses_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_addresses_company ON public.company_addresses USING btree (company_id) WHERE (is_active = true);
+
+
+--
+-- Name: idx_company_addresses_unique; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_company_addresses_unique ON public.company_addresses USING btree (company_id, address_id, address_type);
+
+
+--
+-- Name: idx_company_client_details_org; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_client_details_org ON public.company_client_details USING btree (org_id);
+
+
+--
+-- Name: idx_company_contacts_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_contacts_company ON public.company_contacts USING btree (company_id) WHERE (is_active = true);
+
+
+--
+-- Name: idx_company_contacts_contact; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_contacts_contact ON public.company_contacts USING btree (contact_id) WHERE (is_active = true);
+
+
+--
+-- Name: idx_company_contacts_unique; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_company_contacts_unique ON public.company_contacts USING btree (company_id, contact_id) WHERE (is_active = true);
+
+
+--
+-- Name: idx_company_metrics_lookup; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_metrics_lookup ON public.company_metrics USING btree (company_id, period_type, period_start DESC);
+
+
+--
+-- Name: idx_company_notes_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_notes_company ON public.company_notes USING btree (company_id, created_at DESC) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_company_partner_details_org; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_partner_details_org ON public.company_partner_details USING btree (org_id);
+
+
+--
+-- Name: idx_company_relationships_a; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_relationships_a ON public.company_relationships USING btree (company_a_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_company_relationships_b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_relationships_b ON public.company_relationships USING btree (company_b_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_company_relationships_unique; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_company_relationships_unique ON public.company_relationships USING btree (company_a_id, company_b_id, relationship_category) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_company_revenue_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_revenue_company ON public.company_revenue USING btree (company_id, revenue_date DESC);
+
+
+--
+-- Name: idx_company_tags_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_tags_company ON public.company_tags USING btree (company_id);
+
+
+--
+-- Name: idx_company_tags_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_tags_name ON public.company_tags USING btree (org_id, tag_name);
+
+
+--
+-- Name: idx_company_tags_unique; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_company_tags_unique ON public.company_tags USING btree (company_id, tag_name);
+
+
+--
+-- Name: idx_company_team_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_team_company ON public.company_team USING btree (company_id) WHERE (removed_at IS NULL);
+
+
+--
+-- Name: idx_company_team_unique; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_company_team_unique ON public.company_team USING btree (company_id, user_id, role) WHERE (removed_at IS NULL);
+
+
+--
+-- Name: idx_company_team_user; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_team_user ON public.company_team USING btree (user_id) WHERE (removed_at IS NULL);
+
+
+--
+-- Name: idx_company_vendor_details_blacklist; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_vendor_details_blacklist ON public.company_vendor_details USING btree (company_id) WHERE (is_blacklisted = true);
+
+
+--
+-- Name: idx_company_vendor_details_org; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_vendor_details_org ON public.company_vendor_details USING btree (org_id);
+
+
+--
+-- Name: idx_company_vendor_details_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_company_vendor_details_type ON public.company_vendor_details USING btree (vendor_type);
+
+
+--
 -- Name: idx_compliance_docs_candidate; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -29838,6 +32750,83 @@ CREATE INDEX idx_consultant_work_auth_consultant_id ON public.consultant_work_au
 
 
 --
+-- Name: idx_contact_agreements_contact; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_agreements_contact ON public.contact_agreements USING btree (contact_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contact_agreements_expiry; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_agreements_expiry ON public.contact_agreements USING btree (expiry_date) WHERE ((status = 'active'::text) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contact_agreements_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_agreements_status ON public.contact_agreements USING btree (status) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contact_certifications_contact; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_certifications_contact ON public.contact_certifications USING btree (contact_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contact_certifications_expiry; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_certifications_expiry ON public.contact_certifications USING btree (expiry_date) WHERE ((is_active = true) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contact_comm_prefs_contact; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_comm_prefs_contact ON public.contact_communication_preferences USING btree (contact_id);
+
+
+--
+-- Name: idx_contact_comm_prefs_opted_out; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_comm_prefs_opted_out ON public.contact_communication_preferences USING btree (channel) WHERE (is_opted_in = false);
+
+
+--
+-- Name: idx_contact_compliance_contact; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_compliance_contact ON public.contact_compliance USING btree (contact_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contact_compliance_expiry; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_compliance_expiry ON public.contact_compliance USING btree (expiry_date) WHERE ((status = ANY (ARRAY['verified'::text, 'expiring'::text])) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contact_compliance_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_compliance_type ON public.contact_compliance USING btree (compliance_type, status) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contact_education_contact; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_education_contact ON public.contact_education USING btree (contact_id) WHERE (deleted_at IS NULL);
+
+
+--
 -- Name: idx_contact_lead_data_contact_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -29852,6 +32841,223 @@ CREATE INDEX idx_contact_lead_data_status ON public.contact_lead_data USING btre
 
 
 --
+-- Name: idx_contact_merge_history_merged; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_merge_history_merged ON public.contact_merge_history USING btree (merged_contact_id);
+
+
+--
+-- Name: idx_contact_merge_history_survivor; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_merge_history_survivor ON public.contact_merge_history USING btree (survivor_contact_id);
+
+
+--
+-- Name: idx_contact_rate_cards_active; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_rate_cards_active ON public.contact_rate_cards USING btree (contact_id, is_active) WHERE ((is_active = true) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contact_rate_cards_client; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_rate_cards_client ON public.contact_rate_cards USING btree (client_id) WHERE ((client_id IS NOT NULL) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contact_rate_cards_contact; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_rate_cards_contact ON public.contact_rate_cards USING btree (contact_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contact_relationships_current; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_relationships_current ON public.contact_relationships USING btree (source_contact_id, is_current) WHERE ((is_current = true) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contact_relationships_source; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_relationships_source ON public.contact_relationships USING btree (source_contact_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contact_relationships_target; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_relationships_target ON public.contact_relationships USING btree (target_contact_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contact_relationships_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_relationships_type ON public.contact_relationships USING btree (relationship_type) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contact_roles_active; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_roles_active ON public.contact_roles USING btree (contact_id, role_type) WHERE ((role_status = 'active'::text) AND (role_ended_at IS NULL) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contact_roles_contact; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_roles_contact ON public.contact_roles USING btree (contact_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contact_roles_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_roles_type ON public.contact_roles USING btree (role_type, role_status) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contact_skills_contact; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_skills_contact ON public.contact_skills USING btree (contact_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contact_skills_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_skills_name ON public.contact_skills USING btree (skill_name) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contact_skills_primary; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_skills_primary ON public.contact_skills USING btree (contact_id) WHERE ((is_primary = true) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contact_skills_skill; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_skills_skill ON public.contact_skills USING btree (skill_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contact_work_history_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_work_history_company ON public.contact_work_history USING btree (company_contact_id) WHERE ((company_contact_id IS NOT NULL) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contact_work_history_contact; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_work_history_contact ON public.contact_work_history USING btree (contact_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contact_work_history_current; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contact_work_history_current ON public.contact_work_history USING btree (contact_id) WHERE ((is_current = true) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_alumni_employee; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_alumni_employee ON public.contacts USING btree (alumni_former_employee_id) WHERE ((subtype = 'person_alumni'::text) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_auth_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_auth_id ON public.contacts USING btree (auth_id) WHERE (auth_id IS NOT NULL);
+
+
+--
+-- Name: idx_contacts_bench_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_bench_status ON public.contacts USING btree (bench_status) WHERE ((category = 'person'::text) AND (subtype ~~ 'person_bench_%'::text) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_candidate_hotlist; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_candidate_hotlist ON public.contacts USING btree (org_id, candidate_hotlist_added_at DESC) WHERE ((subtype = 'candidate'::text) AND (candidate_is_on_hotlist = true) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_candidate_skills; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_candidate_skills ON public.contacts USING gin (candidate_skills) WHERE ((subtype = 'candidate'::text) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_candidates; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_candidates ON public.contacts USING btree (org_id, candidate_status, created_at DESC) WHERE ((subtype = 'candidate'::text) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_category; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_category ON public.contacts USING btree (category) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contacts_category_subtype; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_category_subtype ON public.contacts USING btree (category, subtype) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contacts_client_contact_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_client_contact_company ON public.contacts USING btree (client_contact_company_id) WHERE ((category = 'person'::text) AND (subtype ~~ 'person_%_contact'::text) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_client_msp; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_client_msp ON public.contacts USING btree (client_msp_id) WHERE ((client_msp_id IS NOT NULL) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_client_pocs; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_client_pocs ON public.contacts USING btree (org_id, account_id) WHERE ((subtype = 'client_poc'::text) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_client_tier; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_client_tier ON public.contacts USING btree (client_tier, client_status) WHERE ((category = 'company'::text) AND (subtype = 'company_client'::text) AND (deleted_at IS NULL));
+
+
+--
 -- Name: idx_contacts_company_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -29859,10 +33065,24 @@ CREATE INDEX idx_contacts_company_id ON public.contacts USING btree (company_id)
 
 
 --
--- Name: idx_contacts_contact_type; Type: INDEX; Schema: public; Owner: -
+-- Name: idx_contacts_company_subtypes; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX idx_contacts_contact_type ON public.contacts USING btree (contact_type);
+CREATE INDEX idx_contacts_company_subtypes ON public.contacts USING btree (subtype) WHERE ((category = 'company'::text) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_contact_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_contact_status ON public.contacts USING btree (contact_status) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contacts_current_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_current_company ON public.contacts USING btree (current_company_id) WHERE ((current_company_id IS NOT NULL) AND (deleted_at IS NULL));
 
 
 --
@@ -29873,10 +33093,45 @@ CREATE INDEX idx_contacts_email ON public.contacts USING btree (email);
 
 
 --
+-- Name: idx_contacts_employees; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_employees ON public.contacts USING btree (org_id, employee_status) WHERE ((subtype = 'employee'::text) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_employer_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_employer_company ON public.contacts USING btree (employer_company_id) WHERE (deleted_at IS NULL);
+
+
+--
 -- Name: idx_contacts_engagement; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_contacts_engagement ON public.contacts USING btree (engagement_score);
+
+
+--
+-- Name: idx_contacts_lead_skills_needed; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_lead_skills_needed ON public.contacts USING gin (lead_skills_needed) WHERE ((subtype = 'lead'::text) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_leads; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_leads ON public.contacts USING btree (org_id, lead_status, lead_score DESC) WHERE ((subtype = 'lead'::text) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_linked_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_linked_company ON public.contacts USING btree (linked_company_id) WHERE (deleted_at IS NULL);
 
 
 --
@@ -29894,10 +33149,38 @@ CREATE INDEX idx_contacts_owner_id ON public.contacts USING btree (owner_id);
 
 
 --
+-- Name: idx_contacts_parent_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_parent_company ON public.contacts USING btree (parent_company_id) WHERE ((parent_company_id IS NOT NULL) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_placed_client; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_placed_client ON public.contacts USING btree (placed_client_id, placed_status) WHERE ((category = 'person'::text) AND (subtype = 'person_placed'::text) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_primary_address; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_primary_address ON public.contacts USING btree (primary_address_id) WHERE (primary_address_id IS NOT NULL);
+
+
+--
 -- Name: idx_contacts_primary_company; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_contacts_primary_company ON public.contacts USING btree (company_id, is_primary) WHERE ((is_primary = true) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_prospects; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_prospects ON public.contacts USING btree (org_id, prospect_sequence_status, engagement_score DESC) WHERE ((subtype = 'prospect'::text) AND (deleted_at IS NULL));
 
 
 --
@@ -29908,10 +33191,24 @@ CREATE INDEX idx_contacts_search ON public.contacts USING gin (search_vector);
 
 
 --
+-- Name: idx_contacts_source_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_source_company ON public.contacts USING btree (source_company_id) WHERE (deleted_at IS NULL);
+
+
+--
 -- Name: idx_contacts_status; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_contacts_status ON public.contacts USING btree (status);
+
+
+--
+-- Name: idx_contacts_subtype; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_subtype ON public.contacts USING btree (subtype) WHERE (deleted_at IS NULL);
 
 
 --
@@ -29922,10 +33219,45 @@ CREATE INDEX idx_contacts_types ON public.contacts USING gin (types);
 
 
 --
+-- Name: idx_contacts_user_profile_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_user_profile_id ON public.contacts USING btree (user_profile_id) WHERE (user_profile_id IS NOT NULL);
+
+
+--
+-- Name: idx_contacts_vendor_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_vendor_company ON public.contacts USING btree (vendor_company_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contacts_vendor_contact_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_vendor_contact_company ON public.contacts USING btree (vendor_contact_company_id) WHERE ((category = 'person'::text) AND (subtype = 'person_vendor_contact'::text) AND (deleted_at IS NULL));
+
+
+--
 -- Name: idx_contacts_vendor_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_contacts_vendor_id ON public.contacts USING btree (vendor_id) WHERE (vendor_id IS NOT NULL);
+
+
+--
+-- Name: idx_contacts_vendor_pocs; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_vendor_pocs ON public.contacts USING btree (org_id, vendor_id) WHERE ((subtype = 'vendor_poc'::text) AND (deleted_at IS NULL));
+
+
+--
+-- Name: idx_contacts_vendor_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_vendor_status ON public.contacts USING btree (vendor_status, vendor_tier) WHERE ((category = 'company'::text) AND (subtype = 'company_vendor'::text) AND (deleted_at IS NULL));
 
 
 --
@@ -29975,6 +33307,20 @@ CREATE INDEX idx_content_assets_topic ON public.content_assets USING btree (topi
 --
 
 CREATE INDEX idx_content_assets_uploaded_by ON public.content_assets USING btree (uploaded_by);
+
+
+--
+-- Name: idx_contracts_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contracts_company ON public.company_contracts USING btree (company_id, status) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contracts_expiration; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contracts_expiration ON public.company_contracts USING btree (expiration_date) WHERE ((status = 'active'::public.contract_status) AND (deleted_at IS NULL));
 
 
 --
@@ -30122,6 +33468,13 @@ CREATE INDEX idx_deals_account ON public.deals USING btree (account_id);
 --
 
 CREATE INDEX idx_deals_account_id ON public.deals USING btree (account_id);
+
+
+--
+-- Name: idx_deals_company_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_deals_company_id ON public.deals USING btree (company_id) WHERE (deleted_at IS NULL);
 
 
 --
@@ -31007,6 +34360,13 @@ CREATE INDEX idx_external_job_orders_status ON public.external_job_orders USING 
 
 
 --
+-- Name: idx_external_job_orders_vendor_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_external_job_orders_vendor_company ON public.external_job_orders USING btree (vendor_company_id) WHERE (deleted_at IS NULL);
+
+
+--
 -- Name: idx_failover_config_backup; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -31308,6 +34668,20 @@ CREATE INDEX idx_health_logs_status ON public.integration_health_logs USING btre
 
 
 --
+-- Name: idx_health_scores_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_health_scores_company ON public.company_health_scores USING btree (company_id, score_date DESC);
+
+
+--
+-- Name: idx_health_scores_date; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_health_scores_date ON public.company_health_scores USING btree (org_id, score_date DESC);
+
+
+--
 -- Name: idx_hotlist_consultants_consultant_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -31602,6 +34976,13 @@ CREATE INDEX idx_interviews_confirmed_at ON public.interviews USING btree (confi
 
 
 --
+-- Name: idx_interviews_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_interviews_contact_id ON public.interviews USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
 -- Name: idx_interviews_job; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -31788,6 +35169,13 @@ CREATE INDEX idx_job_status_history_org_changed_at ON public.job_status_history 
 --
 
 CREATE INDEX idx_jobs_account ON public.jobs USING btree (account_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_jobs_company_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_jobs_company_id ON public.jobs USING btree (company_id) WHERE (deleted_at IS NULL);
 
 
 --
@@ -32134,10 +35522,24 @@ CREATE INDEX idx_leads_campaign ON public.leads USING btree (campaign_id);
 
 
 --
+-- Name: idx_leads_company_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_leads_company_id ON public.leads USING btree (company_id) WHERE (deleted_at IS NULL);
+
+
+--
 -- Name: idx_leads_contact_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_leads_contact_id ON public.leads USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
+-- Name: idx_leads_converted_to_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_leads_converted_to_company ON public.leads USING btree (converted_to_company_id) WHERE (converted_to_company_id IS NOT NULL);
 
 
 --
@@ -33156,10 +36558,38 @@ CREATE INDEX idx_placements_account ON public.placements USING btree (account_id
 
 
 --
+-- Name: idx_placements_billing_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_placements_billing_company ON public.placements USING btree (billing_company_id) WHERE (billing_company_id IS NOT NULL);
+
+
+--
 -- Name: idx_placements_candidate; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_placements_candidate ON public.placements USING btree (candidate_id);
+
+
+--
+-- Name: idx_placements_company_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_placements_company_id ON public.placements USING btree (company_id);
+
+
+--
+-- Name: idx_placements_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_placements_contact_id ON public.placements USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
+-- Name: idx_placements_end_client; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_placements_end_client ON public.placements USING btree (end_client_company_id) WHERE (end_client_company_id IS NOT NULL);
 
 
 --
@@ -33545,6 +36975,20 @@ CREATE INDEX idx_raci_change_log_changed_at ON public.raci_change_log USING btre
 --
 
 CREATE INDEX idx_raci_change_log_entity ON public.raci_change_log USING btree (entity_type, entity_id);
+
+
+--
+-- Name: idx_rate_card_items_card; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_rate_card_items_card ON public.company_rate_card_items USING btree (rate_card_id);
+
+
+--
+-- Name: idx_rate_cards_company; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_rate_cards_company ON public.company_rate_cards USING btree (company_id, status) WHERE (deleted_at IS NULL);
 
 
 --
@@ -34182,6 +37626,20 @@ CREATE INDEX idx_submissions_candidate ON public.submissions USING btree (candid
 --
 
 CREATE INDEX idx_submissions_client_decision ON public.submissions USING btree (client_decision) WHERE (client_decision IS NOT NULL);
+
+
+--
+-- Name: idx_submissions_company_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_submissions_company_id ON public.submissions USING btree (company_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_submissions_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_submissions_contact_id ON public.submissions USING btree (contact_id) WHERE (contact_id IS NOT NULL);
 
 
 --
@@ -36471,6 +39929,20 @@ CREATE TRIGGER trg_campaign_workplan AFTER INSERT ON public.campaigns FOR EACH R
 
 
 --
+-- Name: companies trg_companies_hierarchy_path; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER trg_companies_hierarchy_path BEFORE INSERT OR UPDATE OF parent_company_id ON public.companies FOR EACH ROW EXECUTE FUNCTION public.update_companies_hierarchy_path();
+
+
+--
+-- Name: companies trg_companies_search_vector; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER trg_companies_search_vector BEFORE INSERT OR UPDATE ON public.companies FOR EACH ROW EXECUTE FUNCTION public.update_companies_search_vector();
+
+
+--
 -- Name: account_contacts trigger_account_contacts_updated_at; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -37294,14 +40766,6 @@ CREATE TRIGGER validate_traffic_before_insert BEFORE INSERT ON public.ai_prompt_
 --
 
 CREATE TRIGGER validate_traffic_before_update BEFORE UPDATE ON public.ai_prompt_variants FOR EACH ROW WHEN (((new.is_active IS DISTINCT FROM old.is_active) OR (new.traffic_percentage IS DISTINCT FROM old.traffic_percentage))) EXECUTE FUNCTION public.validate_traffic_allocation();
-
-
---
--- Name: account_addresses account_addresses_account_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.account_addresses
-    ADD CONSTRAINT account_addresses_account_id_fkey FOREIGN KEY (account_id) REFERENCES public.accounts(id) ON DELETE CASCADE;
 
 
 --
@@ -38313,6 +41777,14 @@ ALTER TABLE ONLY public.bench_consultants
 
 
 --
+-- Name: bench_consultants bench_consultants_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bench_consultants
+    ADD CONSTRAINT bench_consultants_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
+
+
+--
 -- Name: bench_consultants bench_consultants_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -38585,6 +42057,14 @@ ALTER TABLE ONLY public.candidate_availability
 
 
 --
+-- Name: candidate_availability candidate_availability_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidate_availability
+    ADD CONSTRAINT candidate_availability_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
+
+
+--
 -- Name: candidate_availability candidate_availability_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -38598,6 +42078,14 @@ ALTER TABLE ONLY public.candidate_availability
 
 ALTER TABLE ONLY public.candidate_background_checks
     ADD CONSTRAINT candidate_background_checks_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.user_profiles(id) ON DELETE CASCADE;
+
+
+--
+-- Name: candidate_background_checks candidate_background_checks_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidate_background_checks
+    ADD CONSTRAINT candidate_background_checks_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
 
 
 --
@@ -38633,6 +42121,14 @@ ALTER TABLE ONLY public.candidate_certifications
 
 
 --
+-- Name: candidate_certifications candidate_certifications_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidate_certifications
+    ADD CONSTRAINT candidate_certifications_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
+
+
+--
 -- Name: candidate_certifications candidate_certifications_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -38646,6 +42142,14 @@ ALTER TABLE ONLY public.candidate_certifications
 
 ALTER TABLE ONLY public.candidate_compliance_documents
     ADD CONSTRAINT candidate_compliance_documents_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.user_profiles(id) ON DELETE CASCADE;
+
+
+--
+-- Name: candidate_compliance_documents candidate_compliance_documents_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidate_compliance_documents
+    ADD CONSTRAINT candidate_compliance_documents_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
 
 
 --
@@ -38681,6 +42185,14 @@ ALTER TABLE ONLY public.candidate_documents
 
 
 --
+-- Name: candidate_documents candidate_documents_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidate_documents
+    ADD CONSTRAINT candidate_documents_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
+
+
+--
 -- Name: candidate_documents candidate_documents_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -38697,11 +42209,27 @@ ALTER TABLE ONLY public.candidate_education
 
 
 --
+-- Name: candidate_education candidate_education_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidate_education
+    ADD CONSTRAINT candidate_education_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
+
+
+--
 -- Name: candidate_education candidate_education_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.candidate_education
     ADD CONSTRAINT candidate_education_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: candidate_embeddings candidate_embeddings_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidate_embeddings
+    ADD CONSTRAINT candidate_embeddings_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
 
 
 --
@@ -38721,6 +42249,14 @@ ALTER TABLE ONLY public.candidate_preferences
 
 
 --
+-- Name: candidate_preferences candidate_preferences_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidate_preferences
+    ADD CONSTRAINT candidate_preferences_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
+
+
+--
 -- Name: candidate_preferences candidate_preferences_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -38734,6 +42270,14 @@ ALTER TABLE ONLY public.candidate_preferences
 
 ALTER TABLE ONLY public.candidate_prepared_profiles
     ADD CONSTRAINT candidate_prepared_profiles_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.user_profiles(id) ON DELETE CASCADE;
+
+
+--
+-- Name: candidate_prepared_profiles candidate_prepared_profiles_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidate_prepared_profiles
+    ADD CONSTRAINT candidate_prepared_profiles_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
 
 
 --
@@ -38777,6 +42321,14 @@ ALTER TABLE ONLY public.candidate_profiles
 
 
 --
+-- Name: candidate_profiles candidate_profiles_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidate_profiles
+    ADD CONSTRAINT candidate_profiles_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
+
+
+--
 -- Name: candidate_profiles candidate_profiles_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -38790,6 +42342,14 @@ ALTER TABLE ONLY public.candidate_profiles
 
 ALTER TABLE ONLY public.candidate_references
     ADD CONSTRAINT candidate_references_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.user_profiles(id) ON DELETE CASCADE;
+
+
+--
+-- Name: candidate_references candidate_references_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidate_references
+    ADD CONSTRAINT candidate_references_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
 
 
 --
@@ -38814,6 +42374,14 @@ ALTER TABLE ONLY public.candidate_resumes
 
 ALTER TABLE ONLY public.candidate_resumes
     ADD CONSTRAINT candidate_resumes_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.user_profiles(id) ON DELETE CASCADE;
+
+
+--
+-- Name: candidate_resumes candidate_resumes_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidate_resumes
+    ADD CONSTRAINT candidate_resumes_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
 
 
 --
@@ -38846,6 +42414,14 @@ ALTER TABLE ONLY public.candidate_resumes
 
 ALTER TABLE ONLY public.candidate_screenings
     ADD CONSTRAINT candidate_screenings_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.user_profiles(id) ON DELETE CASCADE;
+
+
+--
+-- Name: candidate_screenings candidate_screenings_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidate_screenings
+    ADD CONSTRAINT candidate_screenings_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
 
 
 --
@@ -38889,6 +42465,14 @@ ALTER TABLE ONLY public.candidate_skills
 
 
 --
+-- Name: candidate_skills candidate_skills_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidate_skills
+    ADD CONSTRAINT candidate_skills_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
+
+
+--
 -- Name: candidate_skills candidate_skills_skill_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -38905,6 +42489,14 @@ ALTER TABLE ONLY public.candidate_work_authorizations
 
 
 --
+-- Name: candidate_work_authorizations candidate_work_authorizations_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidate_work_authorizations
+    ADD CONSTRAINT candidate_work_authorizations_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
+
+
+--
 -- Name: candidate_work_authorizations candidate_work_authorizations_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -38918,6 +42510,14 @@ ALTER TABLE ONLY public.candidate_work_authorizations
 
 ALTER TABLE ONLY public.candidate_work_history
     ADD CONSTRAINT candidate_work_history_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.user_profiles(id) ON DELETE CASCADE;
+
+
+--
+-- Name: candidate_work_history candidate_work_history_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidate_work_history
+    ADD CONSTRAINT candidate_work_history_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
 
 
 --
@@ -39065,6 +42665,518 @@ ALTER TABLE ONLY public.commissions
 
 
 --
+-- Name: companies companies_account_manager_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_account_manager_id_fkey FOREIGN KEY (account_manager_id) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: companies companies_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: companies companies_msp_provider_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_msp_provider_id_fkey FOREIGN KEY (msp_provider_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: companies companies_onboarding_completed_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_onboarding_completed_by_fkey FOREIGN KEY (onboarding_completed_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: companies companies_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: companies companies_owner_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_owner_id_fkey FOREIGN KEY (owner_id) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: companies companies_parent_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_parent_company_id_fkey FOREIGN KEY (parent_company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: companies companies_pod_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_pod_id_fkey FOREIGN KEY (pod_id) REFERENCES public.pods(id);
+
+
+--
+-- Name: companies companies_referring_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_referring_company_id_fkey FOREIGN KEY (referring_company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: companies companies_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_updated_by_fkey FOREIGN KEY (updated_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: company_addresses company_addresses_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_addresses
+    ADD CONSTRAINT company_addresses_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: company_addresses company_addresses_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_addresses
+    ADD CONSTRAINT company_addresses_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: company_client_details company_client_details_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_client_details
+    ADD CONSTRAINT company_client_details_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: company_client_details company_client_details_executive_sponsor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_client_details
+    ADD CONSTRAINT company_client_details_executive_sponsor_id_fkey FOREIGN KEY (executive_sponsor_id) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: company_client_details company_client_details_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_client_details
+    ADD CONSTRAINT company_client_details_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: company_compliance_requirements company_compliance_requirements_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_compliance_requirements
+    ADD CONSTRAINT company_compliance_requirements_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: company_compliance_requirements company_compliance_requirements_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_compliance_requirements
+    ADD CONSTRAINT company_compliance_requirements_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: company_compliance_requirements company_compliance_requirements_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_compliance_requirements
+    ADD CONSTRAINT company_compliance_requirements_updated_by_fkey FOREIGN KEY (updated_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: company_contacts company_contacts_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_contacts
+    ADD CONSTRAINT company_contacts_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: company_contacts company_contacts_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_contacts
+    ADD CONSTRAINT company_contacts_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: company_contacts company_contacts_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_contacts
+    ADD CONSTRAINT company_contacts_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: company_contacts company_contacts_vendor_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_contacts
+    ADD CONSTRAINT company_contacts_vendor_company_id_fkey FOREIGN KEY (vendor_company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: company_contracts company_contracts_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_contracts
+    ADD CONSTRAINT company_contracts_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: company_contracts company_contracts_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_contracts
+    ADD CONSTRAINT company_contracts_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: company_contracts company_contracts_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_contracts
+    ADD CONSTRAINT company_contracts_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: company_contracts company_contracts_our_signatory_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_contracts
+    ADD CONSTRAINT company_contracts_our_signatory_id_fkey FOREIGN KEY (our_signatory_id) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: company_contracts company_contracts_parent_contract_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_contracts
+    ADD CONSTRAINT company_contracts_parent_contract_id_fkey FOREIGN KEY (parent_contract_id) REFERENCES public.company_contracts(id);
+
+
+--
+-- Name: company_health_scores company_health_scores_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_health_scores
+    ADD CONSTRAINT company_health_scores_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: company_health_scores company_health_scores_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_health_scores
+    ADD CONSTRAINT company_health_scores_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: company_metrics company_metrics_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_metrics
+    ADD CONSTRAINT company_metrics_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: company_metrics company_metrics_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_metrics
+    ADD CONSTRAINT company_metrics_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: company_notes company_notes_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_notes
+    ADD CONSTRAINT company_notes_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: company_notes company_notes_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_notes
+    ADD CONSTRAINT company_notes_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: company_notes company_notes_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_notes
+    ADD CONSTRAINT company_notes_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: company_partner_details company_partner_details_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_partner_details
+    ADD CONSTRAINT company_partner_details_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: company_partner_details company_partner_details_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_partner_details
+    ADD CONSTRAINT company_partner_details_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: company_preferences company_preferences_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_preferences
+    ADD CONSTRAINT company_preferences_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: company_preferences company_preferences_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_preferences
+    ADD CONSTRAINT company_preferences_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: company_preferences company_preferences_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_preferences
+    ADD CONSTRAINT company_preferences_updated_by_fkey FOREIGN KEY (updated_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: company_rate_card_items company_rate_card_items_rate_card_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_rate_card_items
+    ADD CONSTRAINT company_rate_card_items_rate_card_id_fkey FOREIGN KEY (rate_card_id) REFERENCES public.company_rate_cards(id) ON DELETE CASCADE;
+
+
+--
+-- Name: company_rate_cards company_rate_cards_approved_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_rate_cards
+    ADD CONSTRAINT company_rate_cards_approved_by_fkey FOREIGN KEY (approved_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: company_rate_cards company_rate_cards_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_rate_cards
+    ADD CONSTRAINT company_rate_cards_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: company_rate_cards company_rate_cards_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_rate_cards
+    ADD CONSTRAINT company_rate_cards_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: company_rate_cards company_rate_cards_msp_program_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_rate_cards
+    ADD CONSTRAINT company_rate_cards_msp_program_id_fkey FOREIGN KEY (msp_program_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: company_rate_cards company_rate_cards_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_rate_cards
+    ADD CONSTRAINT company_rate_cards_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: company_relationships company_relationships_company_a_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_relationships
+    ADD CONSTRAINT company_relationships_company_a_id_fkey FOREIGN KEY (company_a_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: company_relationships company_relationships_company_b_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_relationships
+    ADD CONSTRAINT company_relationships_company_b_id_fkey FOREIGN KEY (company_b_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: company_relationships company_relationships_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_relationships
+    ADD CONSTRAINT company_relationships_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: company_relationships company_relationships_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_relationships
+    ADD CONSTRAINT company_relationships_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: company_revenue company_revenue_billing_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_revenue
+    ADD CONSTRAINT company_revenue_billing_company_id_fkey FOREIGN KEY (billing_company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: company_revenue company_revenue_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_revenue
+    ADD CONSTRAINT company_revenue_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: company_revenue company_revenue_end_client_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_revenue
+    ADD CONSTRAINT company_revenue_end_client_company_id_fkey FOREIGN KEY (end_client_company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: company_revenue company_revenue_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_revenue
+    ADD CONSTRAINT company_revenue_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: company_tags company_tags_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_tags
+    ADD CONSTRAINT company_tags_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: company_tags company_tags_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_tags
+    ADD CONSTRAINT company_tags_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: company_tags company_tags_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_tags
+    ADD CONSTRAINT company_tags_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: company_team company_team_assigned_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_team
+    ADD CONSTRAINT company_team_assigned_by_fkey FOREIGN KEY (assigned_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: company_team company_team_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_team
+    ADD CONSTRAINT company_team_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: company_team company_team_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_team
+    ADD CONSTRAINT company_team_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: company_team company_team_removed_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_team
+    ADD CONSTRAINT company_team_removed_by_fkey FOREIGN KEY (removed_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: company_team company_team_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_team
+    ADD CONSTRAINT company_team_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: company_vendor_details company_vendor_details_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_vendor_details
+    ADD CONSTRAINT company_vendor_details_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: company_vendor_details company_vendor_details_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_vendor_details
+    ADD CONSTRAINT company_vendor_details_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: company_vendor_details company_vendor_details_vendor_manager_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.company_vendor_details
+    ADD CONSTRAINT company_vendor_details_vendor_manager_id_fkey FOREIGN KEY (vendor_manager_id) REFERENCES public.user_profiles(id);
+
+
+--
 -- Name: compliance_requirements compliance_requirements_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -39129,6 +43241,110 @@ ALTER TABLE ONLY public.consultant_work_authorization
 
 
 --
+-- Name: contact_agreements contact_agreements_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_agreements
+    ADD CONSTRAINT contact_agreements_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_agreements contact_agreements_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_agreements
+    ADD CONSTRAINT contact_agreements_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_agreements contact_agreements_our_signer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_agreements
+    ADD CONSTRAINT contact_agreements_our_signer_id_fkey FOREIGN KEY (our_signer_id) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: contact_certifications contact_certifications_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_certifications
+    ADD CONSTRAINT contact_certifications_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_certifications contact_certifications_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_certifications
+    ADD CONSTRAINT contact_certifications_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_communication_preferences contact_communication_preferences_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_communication_preferences
+    ADD CONSTRAINT contact_communication_preferences_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_communication_preferences contact_communication_preferences_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_communication_preferences
+    ADD CONSTRAINT contact_communication_preferences_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_compliance contact_compliance_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_compliance
+    ADD CONSTRAINT contact_compliance_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_compliance contact_compliance_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_compliance
+    ADD CONSTRAINT contact_compliance_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_compliance contact_compliance_verified_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_compliance
+    ADD CONSTRAINT contact_compliance_verified_by_fkey FOREIGN KEY (verified_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: contact_education contact_education_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_education
+    ADD CONSTRAINT contact_education_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_education contact_education_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_education
+    ADD CONSTRAINT contact_education_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_education contact_education_verified_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_education
+    ADD CONSTRAINT contact_education_verified_by_fkey FOREIGN KEY (verified_by) REFERENCES public.user_profiles(id);
+
+
+--
 -- Name: contact_lead_data contact_lead_data_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -39153,6 +43369,278 @@ ALTER TABLE ONLY public.contact_lead_data
 
 
 --
+-- Name: contact_merge_history contact_merge_history_merged_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_merge_history
+    ADD CONSTRAINT contact_merge_history_merged_by_fkey FOREIGN KEY (merged_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: contact_merge_history contact_merge_history_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_merge_history
+    ADD CONSTRAINT contact_merge_history_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_merge_history contact_merge_history_survivor_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_merge_history
+    ADD CONSTRAINT contact_merge_history_survivor_contact_id_fkey FOREIGN KEY (survivor_contact_id) REFERENCES public.contacts(id);
+
+
+--
+-- Name: contact_rate_cards contact_rate_cards_approved_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_rate_cards
+    ADD CONSTRAINT contact_rate_cards_approved_by_fkey FOREIGN KEY (approved_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: contact_rate_cards contact_rate_cards_client_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_rate_cards
+    ADD CONSTRAINT contact_rate_cards_client_id_fkey FOREIGN KEY (client_id) REFERENCES public.contacts(id);
+
+
+--
+-- Name: contact_rate_cards contact_rate_cards_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_rate_cards
+    ADD CONSTRAINT contact_rate_cards_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_rate_cards contact_rate_cards_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_rate_cards
+    ADD CONSTRAINT contact_rate_cards_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_rate_cards contact_rate_cards_skill_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_rate_cards
+    ADD CONSTRAINT contact_rate_cards_skill_id_fkey FOREIGN KEY (skill_id) REFERENCES public.skills(id);
+
+
+--
+-- Name: contact_relationships contact_relationships_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_relationships
+    ADD CONSTRAINT contact_relationships_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: contact_relationships contact_relationships_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_relationships
+    ADD CONSTRAINT contact_relationships_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_relationships contact_relationships_source_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_relationships
+    ADD CONSTRAINT contact_relationships_source_contact_id_fkey FOREIGN KEY (source_contact_id) REFERENCES public.contacts(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_relationships contact_relationships_target_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_relationships
+    ADD CONSTRAINT contact_relationships_target_contact_id_fkey FOREIGN KEY (target_contact_id) REFERENCES public.contacts(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_relationships contact_relationships_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_relationships
+    ADD CONSTRAINT contact_relationships_updated_by_fkey FOREIGN KEY (updated_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: contact_roles contact_roles_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_roles
+    ADD CONSTRAINT contact_roles_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_roles contact_roles_context_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_roles
+    ADD CONSTRAINT contact_roles_context_company_id_fkey FOREIGN KEY (context_company_id) REFERENCES public.contacts(id);
+
+
+--
+-- Name: contact_roles contact_roles_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_roles
+    ADD CONSTRAINT contact_roles_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: contact_roles contact_roles_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_roles
+    ADD CONSTRAINT contact_roles_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_skills contact_skills_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_skills
+    ADD CONSTRAINT contact_skills_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_skills contact_skills_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_skills
+    ADD CONSTRAINT contact_skills_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_skills contact_skills_skill_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_skills
+    ADD CONSTRAINT contact_skills_skill_id_fkey FOREIGN KEY (skill_id) REFERENCES public.skills(id);
+
+
+--
+-- Name: contact_skills contact_skills_verified_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_skills
+    ADD CONSTRAINT contact_skills_verified_by_fkey FOREIGN KEY (verified_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: contact_work_history contact_work_history_company_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_work_history
+    ADD CONSTRAINT contact_work_history_company_contact_id_fkey FOREIGN KEY (company_contact_id) REFERENCES public.contacts(id);
+
+
+--
+-- Name: contact_work_history contact_work_history_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_work_history
+    ADD CONSTRAINT contact_work_history_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_work_history contact_work_history_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_work_history
+    ADD CONSTRAINT contact_work_history_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contact_work_history contact_work_history_verified_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contact_work_history
+    ADD CONSTRAINT contact_work_history_verified_by_fkey FOREIGN KEY (verified_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: contacts contacts_account_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_account_id_fkey FOREIGN KEY (account_id) REFERENCES public.accounts(id);
+
+
+--
+-- Name: contacts contacts_alumni_former_employee_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_alumni_former_employee_id_fkey FOREIGN KEY (alumni_former_employee_id) REFERENCES public.employees(id);
+
+
+--
+-- Name: contacts contacts_bench_vendor_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_bench_vendor_contact_id_fkey FOREIGN KEY (bench_vendor_contact_id) REFERENCES public.contacts(id);
+
+
+--
+-- Name: contacts contacts_bench_vendor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_bench_vendor_id_fkey FOREIGN KEY (bench_vendor_id) REFERENCES public.vendors(id);
+
+
+--
+-- Name: contacts contacts_candidate_hotlist_added_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_candidate_hotlist_added_by_fkey FOREIGN KEY (candidate_hotlist_added_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: contacts contacts_client_contact_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_client_contact_company_id_fkey FOREIGN KEY (client_contact_company_id) REFERENCES public.accounts(id);
+
+
+--
+-- Name: contacts contacts_client_contact_relationship_owner_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_client_contact_relationship_owner_id_fkey FOREIGN KEY (client_contact_relationship_owner_id) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: contacts contacts_client_msp_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_client_msp_id_fkey FOREIGN KEY (client_msp_id) REFERENCES public.contacts(id);
+
+
+--
+-- Name: contacts contacts_client_team_lead_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_client_team_lead_id_fkey FOREIGN KEY (client_team_lead_id) REFERENCES public.user_profiles(id);
+
+
+--
 -- Name: contacts contacts_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -39166,6 +43654,54 @@ ALTER TABLE ONLY public.contacts
 
 ALTER TABLE ONLY public.contacts
     ADD CONSTRAINT contacts_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: contacts contacts_current_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_current_company_id_fkey FOREIGN KEY (current_company_id) REFERENCES public.contacts(id);
+
+
+--
+-- Name: contacts contacts_employee_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.employees(id);
+
+
+--
+-- Name: contacts contacts_employer_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_employer_company_id_fkey FOREIGN KEY (employer_company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: contacts contacts_lead_converted_to_account_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_lead_converted_to_account_id_fkey FOREIGN KEY (lead_converted_to_account_id) REFERENCES public.accounts(id);
+
+
+--
+-- Name: contacts contacts_lead_converted_to_deal_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_lead_converted_to_deal_id_fkey FOREIGN KEY (lead_converted_to_deal_id) REFERENCES public.deals(id);
+
+
+--
+-- Name: contacts contacts_linked_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_linked_company_id_fkey FOREIGN KEY (linked_company_id) REFERENCES public.companies(id);
 
 
 --
@@ -39185,6 +43721,54 @@ ALTER TABLE ONLY public.contacts
 
 
 --
+-- Name: contacts contacts_parent_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_parent_company_id_fkey FOREIGN KEY (parent_company_id) REFERENCES public.contacts(id);
+
+
+--
+-- Name: contacts contacts_placed_client_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_placed_client_id_fkey FOREIGN KEY (placed_client_id) REFERENCES public.accounts(id);
+
+
+--
+-- Name: contacts contacts_primary_address_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_primary_address_id_fkey FOREIGN KEY (primary_address_id) REFERENCES public.addresses(id);
+
+
+--
+-- Name: contacts contacts_prospect_primary_campaign_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_prospect_primary_campaign_id_fkey FOREIGN KEY (prospect_primary_campaign_id) REFERENCES public.campaigns(id);
+
+
+--
+-- Name: contacts contacts_source_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_source_company_id_fkey FOREIGN KEY (source_company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: contacts contacts_ultimate_parent_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_ultimate_parent_id_fkey FOREIGN KEY (ultimate_parent_id) REFERENCES public.contacts(id);
+
+
+--
 -- Name: contacts contacts_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -39198,6 +43782,30 @@ ALTER TABLE ONLY public.contacts
 
 ALTER TABLE ONLY public.contacts
     ADD CONSTRAINT contacts_user_profile_id_fkey FOREIGN KEY (user_profile_id) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: contacts contacts_vendor_approved_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_vendor_approved_by_fkey FOREIGN KEY (vendor_approved_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: contacts contacts_vendor_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_vendor_company_id_fkey FOREIGN KEY (vendor_company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: contacts contacts_vendor_contact_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_vendor_contact_company_id_fkey FOREIGN KEY (vendor_contact_company_id) REFERENCES public.vendors(id);
 
 
 --
@@ -39318,6 +43926,14 @@ ALTER TABLE ONLY public.deal_stakeholders
 
 ALTER TABLE ONLY public.deals
     ADD CONSTRAINT deals_account_id_fkey FOREIGN KEY (account_id) REFERENCES public.accounts(id);
+
+
+--
+-- Name: deals deals_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.deals
+    ADD CONSTRAINT deals_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id);
 
 
 --
@@ -39910,6 +44526,14 @@ ALTER TABLE ONLY public.export_jobs
 
 ALTER TABLE ONLY public.export_jobs
     ADD CONSTRAINT export_jobs_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: external_job_orders external_job_orders_vendor_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.external_job_orders
+    ADD CONSTRAINT external_job_orders_vendor_company_id_fkey FOREIGN KEY (vendor_company_id) REFERENCES public.companies(id);
 
 
 --
@@ -40513,6 +45137,14 @@ ALTER TABLE ONLY public.interviews
 
 
 --
+-- Name: interviews interviews_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.interviews
+    ADD CONSTRAINT interviews_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
+
+
+--
 -- Name: interviews interviews_job_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -40798,6 +45430,14 @@ ALTER TABLE ONLY public.jobs
 
 ALTER TABLE ONLY public.jobs
     ADD CONSTRAINT jobs_closed_by_fkey FOREIGN KEY (closed_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: jobs jobs_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.jobs
+    ADD CONSTRAINT jobs_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id);
 
 
 --
@@ -41105,6 +45745,14 @@ ALTER TABLE ONLY public.leads
 
 
 --
+-- Name: leads leads_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.leads
+    ADD CONSTRAINT leads_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id);
+
+
+--
 -- Name: leads leads_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -41118,6 +45766,14 @@ ALTER TABLE ONLY public.leads
 
 ALTER TABLE ONLY public.leads
     ADD CONSTRAINT leads_converted_to_account_id_fkey FOREIGN KEY (converted_to_account_id) REFERENCES public.accounts(id);
+
+
+--
+-- Name: leads leads_converted_to_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.leads
+    ADD CONSTRAINT leads_converted_to_company_id_fkey FOREIGN KEY (converted_to_company_id) REFERENCES public.companies(id);
 
 
 --
@@ -41881,6 +46537,14 @@ ALTER TABLE ONLY public.placements
 
 
 --
+-- Name: placements placements_billing_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.placements
+    ADD CONSTRAINT placements_billing_company_id_fkey FOREIGN KEY (billing_company_id) REFERENCES public.companies(id);
+
+
+--
 -- Name: placements placements_candidate_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -41889,11 +46553,35 @@ ALTER TABLE ONLY public.placements
 
 
 --
+-- Name: placements placements_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.placements
+    ADD CONSTRAINT placements_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: placements placements_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.placements
+    ADD CONSTRAINT placements_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
+
+
+--
 -- Name: placements placements_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.placements
     ADD CONSTRAINT placements_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: placements placements_end_client_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.placements
+    ADD CONSTRAINT placements_end_client_company_id_fkey FOREIGN KEY (end_client_company_id) REFERENCES public.companies(id);
 
 
 --
@@ -42662,6 +47350,22 @@ ALTER TABLE ONLY public.submissions
 
 ALTER TABLE ONLY public.submissions
     ADD CONSTRAINT submissions_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: submissions submissions_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.submissions
+    ADD CONSTRAINT submissions_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: submissions submissions_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.submissions
+    ADD CONSTRAINT submissions_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
 
 
 --
@@ -44309,12 +49013,6 @@ CREATE POLICY "Users can view workflows in their org" ON public.workflows FOR SE
 
 
 --
--- Name: account_addresses; Type: ROW SECURITY; Schema: public; Owner: -
---
-
-ALTER TABLE public.account_addresses ENABLE ROW LEVEL SECURITY;
-
---
 -- Name: account_contacts; Type: ROW SECURITY; Schema: public; Owner: -
 --
 
@@ -44489,6 +49187,13 @@ CREATE POLICY activity_stats_daily_update_policy ON public.activity_stats_daily 
 --
 
 ALTER TABLE public.addresses ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_addresses addresses_org; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY addresses_org ON public.company_addresses USING ((org_id = public.current_user_org_id()));
+
 
 --
 -- Name: addresses addresses_service_all; Type: POLICY; Schema: public; Owner: -
@@ -45379,10 +50084,218 @@ CREATE POLICY commissions_user_select ON public.commissions FOR SELECT USING (((
 
 
 --
+-- Name: companies; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.companies ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: companies companies_org_isolation; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY companies_org_isolation ON public.companies USING ((org_id = public.current_user_org_id()));
+
+
+--
+-- Name: company_addresses; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_addresses ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_client_details; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_client_details ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_client_details company_client_details_org_isolation; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY company_client_details_org_isolation ON public.company_client_details USING ((org_id = public.current_user_org_id()));
+
+
+--
+-- Name: company_compliance_requirements; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_compliance_requirements ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_contacts; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_contacts ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_contracts; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_contracts ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_health_scores; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_health_scores ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_metrics; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_metrics ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_notes; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_notes ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_partner_details; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_partner_details ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_partner_details company_partner_details_org_isolation; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY company_partner_details_org_isolation ON public.company_partner_details USING ((org_id = public.current_user_org_id()));
+
+
+--
+-- Name: company_preferences; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_preferences ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_rate_card_items; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_rate_card_items ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_rate_cards; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_rate_cards ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_relationships; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_relationships ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_revenue; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_revenue ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_tags; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_tags ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_team; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_team ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_vendor_details; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.company_vendor_details ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_vendor_details company_vendor_details_org_isolation; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY company_vendor_details_org_isolation ON public.company_vendor_details USING ((org_id = public.current_user_org_id()));
+
+
+--
+-- Name: company_compliance_requirements compliance_org; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY compliance_org ON public.company_compliance_requirements USING ((org_id = public.current_user_org_id()));
+
+
+--
 -- Name: candidate_compliance_documents compliance_service_all; Type: POLICY; Schema: public; Owner: -
 --
 
 CREATE POLICY compliance_service_all ON public.candidate_compliance_documents TO service_role USING (true) WITH CHECK (true);
+
+
+--
+-- Name: contact_agreements; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.contact_agreements ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: contact_agreements contact_agreements_org_isolation; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY contact_agreements_org_isolation ON public.contact_agreements USING ((org_id = ((auth.jwt() ->> 'org_id'::text))::uuid));
+
+
+--
+-- Name: contact_certifications; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.contact_certifications ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: contact_certifications contact_certifications_org_isolation; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY contact_certifications_org_isolation ON public.contact_certifications USING ((org_id = ((auth.jwt() ->> 'org_id'::text))::uuid));
+
+
+--
+-- Name: contact_communication_preferences contact_comm_prefs_org_isolation; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY contact_comm_prefs_org_isolation ON public.contact_communication_preferences USING ((org_id = ((auth.jwt() ->> 'org_id'::text))::uuid));
+
+
+--
+-- Name: contact_communication_preferences; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.contact_communication_preferences ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: contact_compliance; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.contact_compliance ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: contact_compliance contact_compliance_org_isolation; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY contact_compliance_org_isolation ON public.contact_compliance USING ((org_id = ((auth.jwt() ->> 'org_id'::text))::uuid));
+
+
+--
+-- Name: contact_education; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.contact_education ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: contact_education contact_education_org_isolation; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY contact_education_org_isolation ON public.contact_education USING ((org_id = ((auth.jwt() ->> 'org_id'::text))::uuid));
 
 
 --
@@ -45392,10 +50305,95 @@ CREATE POLICY compliance_service_all ON public.candidate_compliance_documents TO
 ALTER TABLE public.contact_lead_data ENABLE ROW LEVEL SECURITY;
 
 --
+-- Name: contact_merge_history; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.contact_merge_history ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: contact_merge_history contact_merge_history_org_isolation; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY contact_merge_history_org_isolation ON public.contact_merge_history USING ((org_id = ((auth.jwt() ->> 'org_id'::text))::uuid));
+
+
+--
+-- Name: contact_rate_cards; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.contact_rate_cards ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: contact_rate_cards contact_rate_cards_org_isolation; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY contact_rate_cards_org_isolation ON public.contact_rate_cards USING ((org_id = ((auth.jwt() ->> 'org_id'::text))::uuid));
+
+
+--
+-- Name: contact_relationships; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.contact_relationships ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: contact_relationships contact_relationships_org_isolation; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY contact_relationships_org_isolation ON public.contact_relationships USING ((org_id = ((auth.jwt() ->> 'org_id'::text))::uuid));
+
+
+--
+-- Name: contact_roles; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.contact_roles ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: contact_roles contact_roles_org_isolation; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY contact_roles_org_isolation ON public.contact_roles USING ((org_id = ((auth.jwt() ->> 'org_id'::text))::uuid));
+
+
+--
+-- Name: contact_skills; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.contact_skills ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: contact_skills contact_skills_org_isolation; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY contact_skills_org_isolation ON public.contact_skills USING ((org_id = ((auth.jwt() ->> 'org_id'::text))::uuid));
+
+
+--
+-- Name: contact_work_history; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.contact_work_history ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: contact_work_history contact_work_history_org_isolation; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY contact_work_history_org_isolation ON public.contact_work_history USING ((org_id = ((auth.jwt() ->> 'org_id'::text))::uuid));
+
+
+--
 -- Name: contacts; Type: ROW SECURITY; Schema: public; Owner: -
 --
 
 ALTER TABLE public.contacts ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_contacts contacts_org; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY contacts_org ON public.company_contacts USING ((org_id = public.current_user_org_id()));
+
 
 --
 -- Name: contacts contacts_org_isolation; Type: POLICY; Schema: public; Owner: -
@@ -45409,6 +50407,13 @@ CREATE POLICY contacts_org_isolation ON public.contacts USING ((org_id = ((auth.
 --
 
 ALTER TABLE public.content_assets ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: company_contracts contracts_org; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY contracts_org ON public.company_contracts USING ((org_id = public.current_user_org_id()));
+
 
 --
 -- Name: course_pricing; Type: ROW SECURITY; Schema: public; Owner: -
@@ -46020,6 +51025,13 @@ CREATE POLICY health_logs_org_access ON public.integration_health_logs USING (((
 
 
 --
+-- Name: company_health_scores health_scores_org; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY health_scores_org ON public.company_health_scores USING ((org_id = public.current_user_org_id()));
+
+
+--
 -- Name: import_jobs; Type: ROW SECURITY; Schema: public; Owner: -
 --
 
@@ -46407,6 +51419,20 @@ CREATE POLICY meeting_notes_employee_access ON public.meeting_notes USING ((publ
 --
 
 CREATE POLICY meeting_notes_org_isolation ON public.meeting_notes USING ((org_id = public.auth_org_id()));
+
+
+--
+-- Name: company_metrics metrics_org; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY metrics_org ON public.company_metrics USING ((org_id = public.current_user_org_id()));
+
+
+--
+-- Name: company_notes notes_org; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY notes_org ON public.company_notes USING ((org_id = public.current_user_org_id()));
 
 
 --
@@ -46846,6 +51872,13 @@ CREATE POLICY pods_org_isolation ON public.pods USING ((org_id = public.current_
 
 
 --
+-- Name: company_preferences preferences_org; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY preferences_org ON public.company_preferences USING ((org_id = public.current_user_org_id()));
+
+
+--
 -- Name: pricing_plans; Type: ROW SECURITY; Schema: public; Owner: -
 --
 
@@ -47016,6 +52049,22 @@ CREATE POLICY raci_change_log_org_isolation ON public.raci_change_log USING ((or
 
 
 --
+-- Name: company_rate_card_items rate_card_items_org; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY rate_card_items_org ON public.company_rate_card_items USING ((EXISTS ( SELECT 1
+   FROM public.company_rate_cards rc
+  WHERE ((rc.id = company_rate_card_items.rate_card_id) AND (rc.org_id = public.current_user_org_id())))));
+
+
+--
+-- Name: company_rate_cards rate_cards_org; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY rate_cards_org ON public.company_rate_cards USING ((org_id = public.current_user_org_id()));
+
+
+--
 -- Name: reading_progress; Type: ROW SECURITY; Schema: public; Owner: -
 --
 
@@ -47050,6 +52099,13 @@ ALTER TABLE public.regions ENABLE ROW LEVEL SECURITY;
 --
 
 CREATE POLICY regions_org_isolation ON public.regions USING ((org_id = ((auth.jwt() ->> 'org_id'::text))::uuid));
+
+
+--
+-- Name: company_relationships relationships_org; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY relationships_org ON public.company_relationships USING ((org_id = public.current_user_org_id()));
 
 
 --
@@ -47158,6 +52214,13 @@ CREATE POLICY retention_policies_org_isolation ON public.retention_policies USIN
 CREATE POLICY retry_config_org_access ON public.integration_retry_config USING (((org_id IN ( SELECT user_profiles.org_id
    FROM public.user_profiles
   WHERE (user_profiles.auth_id = auth.uid()))) OR ((auth.jwt() ->> 'role'::text) = 'service_role'::text)));
+
+
+--
+-- Name: company_revenue revenue_org; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY revenue_org ON public.company_revenue USING ((org_id = public.current_user_org_id()));
 
 
 --
@@ -47475,6 +52538,13 @@ CREATE POLICY system_roles_public_read ON public.system_roles FOR SELECT USING (
 
 
 --
+-- Name: company_tags tags_org; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY tags_org ON public.company_tags USING ((org_id = public.current_user_org_id()));
+
+
+--
 -- Name: talking_point_templates; Type: ROW SECURITY; Schema: public; Owner: -
 --
 
@@ -47526,6 +52596,13 @@ CREATE POLICY tasks_org_isolation ON public.tasks USING ((org_id = public.curren
 --
 
 CREATE POLICY tasks_update_assigned_or_admin ON public.tasks FOR UPDATE USING (((assigned_to = auth.uid()) OR (created_by = auth.uid()) OR public.auth_has_role('admin'::text)));
+
+
+--
+-- Name: company_team team_org; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY team_org ON public.company_team USING ((org_id = public.current_user_org_id()));
 
 
 --
@@ -47839,5 +52916,5 @@ ALTER TABLE public.xp_transactions ENABLE ROW LEVEL SECURITY;
 -- PostgreSQL database dump complete
 --
 
-\unrestrict Fl3rAga4VdBtAENtZcW7W7KG6EGtmFSEGvAkuFcRBH6jCccW2jr3cPSPkomtv17
+\unrestrict Lf0LsF0AiGr8ScL5bJCl6CRwmfktnvQ2W2sLKwwufzcNr86cBEz4eXm8AZLTje5
 
