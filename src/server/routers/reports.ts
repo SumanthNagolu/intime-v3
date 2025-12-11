@@ -114,7 +114,7 @@ export const reportsRouter = router({
       // Get submissions for this recruiter
       const { data: submissions } = await adminClient
         .from('submissions')
-        .select('id, status, submitted_at, job:jobs(id, title, created_at, account:accounts(id, name))')
+        .select('id, status, submitted_at, job:jobs(id, title, created_at, company:companies!company_id(id, name))')
         .eq('org_id', orgId)
         .eq('submitted_by', user?.id)
         .gte('submitted_at', startDate.toISOString())
@@ -343,23 +343,24 @@ export const reportsRouter = router({
       const { orgId, user } = ctx
       const adminClient = getAdminClient()
 
-      const { data: accounts } = await adminClient
-        .from('accounts')
+      const { data: companies } = await adminClient
+        .from('companies')
         .select(`
-          id, name, industry, status, last_contact_date, nps_score,
-          jobs(id, status, recruiter_id),
-          placements(id, billing_rate, hours_billed, start_date)
+          id, name, segment, status, last_contacted_date, nps_score,
+          jobs!company_id(id, status, recruiter_id),
+          placements!company_id(id, billing_rate, hours_billed, start_date)
         `)
         .eq('org_id', orgId)
+        .in('category', ['client', 'prospect'])
         .is('deleted_at', null)
 
-      // Filter and enrich accounts for this recruiter
-      const recruiterAccounts = accounts?.filter(a => {
-        const jobs = a.jobs as Array<{ recruiter_id: string }> | null
+      // Filter and enrich companies for this recruiter
+      const recruiterAccounts = companies?.filter(c => {
+        const jobs = c.jobs as Array<{ recruiter_id: string }> | null
         return jobs?.some(j => j.recruiter_id === user?.id)
-      }).map(account => {
-        const jobs = account.jobs as Array<{ id: string; status: string }> | null ?? []
-        const placements = account.placements as Array<{ id: string; billing_rate: number; hours_billed: number; start_date: string }> | null ?? []
+      }).map(company => {
+        const jobs = company.jobs as Array<{ id: string; status: string }> | null ?? []
+        const placements = company.placements as Array<{ id: string; billing_rate: number; hours_billed: number; start_date: string }> | null ?? []
 
         // Filter placements in date range
         const periodPlacements = placements.filter(p =>
@@ -376,16 +377,16 @@ export const reportsRouter = router({
           sum + ((p.billing_rate || 0) * (p.hours_billed || 0)), 0)
 
         return {
-          id: account.id,
-          name: account.name,
-          industry: account.industry,
-          status: account.status,
+          id: company.id,
+          name: company.name,
+          industry: company.segment,
+          status: company.status,
           activeJobs: jobs.filter(j => j.status === 'active').length,
           totalJobs: jobs.length,
           periodRevenue,
           ytdRevenue,
-          npsScore: account.nps_score,
-          lastContactDate: account.last_contact_date,
+          npsScore: company.nps_score,
+          lastContactDate: company.last_contacted_date,
         }
       }) ?? []
 

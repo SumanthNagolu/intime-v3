@@ -40,9 +40,10 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         let query = adminClient
-          .from('accounts')
+          .from('companies')
           .select('*, owner:user_profiles!owner_id(id, full_name, avatar_url)', { count: 'exact' })
           .eq('org_id', orgId)
+          .in('category', ['client', 'prospect'])
           .is('deleted_at', null)
 
         if (input.search) {
@@ -52,7 +53,7 @@ export const crmRouter = router({
           query = query.eq('status', input.status)
         }
         if (input.type) {
-          query = query.eq('company_type', input.type)
+          query = query.eq('segment', input.type)
         }
         if (input.industry) {
           query = query.eq('industry', input.industry)
@@ -77,18 +78,18 @@ export const crmRouter = router({
             name: a.name,
             industry: a.industry,
             status: a.status,
-            type: a.company_type,
-            company_type: a.company_type,
+            type: a.segment,
+            company_type: a.segment,
             website: a.website,
             phone: a.phone,
-            address: a.address,
-            city: a.city,
-            state: a.state,
-            country: a.country,
+            address: null, // Legacy field - use addresses table
+            city: a.headquarters_city,
+            state: a.headquarters_state,
+            country: a.headquarters_country,
             tier: a.tier,
             owner: a.owner,
-            lastContactDate: a.last_contact_date,
-            last_contact_date: a.last_contact_date,
+            lastContactDate: a.last_contacted_date,
+            last_contact_date: a.last_contacted_date,
             createdAt: a.created_at,
             created_at: a.created_at,
           })) ?? [],
@@ -104,18 +105,40 @@ export const crmRouter = router({
         const { orgId } = ctx
         const adminClient = getAdminClient()
 
-        const { data, error } = await adminClient
-          .from('accounts')
-          .select('*, owner:user_profiles!owner_id(id, full_name, avatar_url)')
+        const { data: account, error } = await adminClient
+          .from('companies')
+          .select('*, owner:user_profiles!owner_id(id, full_name, avatar_url), client_details:company_client_details(*)')
           .eq('id', input.id)
           .eq('org_id', orgId)
+          .in('category', ['client', 'prospect'])
           .single()
 
         if (error) {
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Account not found' })
         }
 
-        return data
+        // Fetch addresses separately
+        const { data: addresses } = await adminClient
+          .from('addresses')
+          .select('*')
+          .eq('entity_type', 'company')
+          .eq('entity_id', input.id)
+
+        // Transform addresses to match old structure for backward compatibility
+        const addressList = addresses || []
+        const headquartersAddress = addressList.find((a: { address_type: string }) => a.address_type === 'headquarters')
+        const billingAddress = addressList.find((a: { address_type: string }) => a.address_type === 'billing')
+
+        return {
+          ...account,
+          // Legacy fields for backward compatibility
+          headquarters_location: headquartersAddress?.address_line_1 || null,
+          billing_address: billingAddress?.address_line_1 || null,
+          billing_city: billingAddress?.city || null,
+          billing_state: billingAddress?.state_province || null,
+          billing_postal_code: billingAddress?.postal_code || null,
+          billing_country: billingAddress?.country_code === 'US' ? 'USA' : (billingAddress?.country_code || null),
+        }
       }),
 
     // Get account by ID - lightweight version for server layout/navigation
@@ -127,17 +150,23 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         const { data, error } = await adminClient
-          .from('accounts')
-          .select('id, name, industry, status, website, phone, city, state')
+          .from('companies')
+          .select('id, name, industry, status, website, phone, headquarters_city, headquarters_state')
           .eq('id', input.id)
           .eq('org_id', orgId)
+          .in('category', ['client', 'prospect'])
           .single()
 
         if (error) {
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Account not found' })
         }
 
-        return data
+        // Map to legacy column names for backward compatibility
+        return {
+          ...data,
+          city: data.headquarters_city,
+          state: data.headquarters_state,
+        }
       }),
 
     // Get account health scores
@@ -152,13 +181,14 @@ export const crmRouter = router({
         const ownerId = input.ownerId || user?.id
 
         const { data: accounts } = await adminClient
-          .from('accounts')
+          .from('companies')
           .select(`
-            id, name, industry, status, last_contact_date, nps_score,
-            jobs(id, status),
-            placements(id, billing_rate, hours_billed)
+            id, name, industry, status, last_contacted_date, nps_score,
+            jobs:jobs!company_id(id, status),
+            placements:placements!company_id(id, billing_rate, hours_billed)
           `)
           .eq('org_id', orgId)
+          .in('category', ['client', 'prospect'])
           .eq('owner_id', ownerId)
           .is('deleted_at', null)
           .order('name')
@@ -166,7 +196,7 @@ export const crmRouter = router({
         const now = new Date()
         const results = accounts?.map(account => {
           // Calculate health score
-          const lastContact = account.last_contact_date ? new Date(account.last_contact_date) : null
+          const lastContact = account.last_contacted_date ? new Date(account.last_contacted_date) : null
           const daysSinceContact = lastContact
             ? Math.floor((now.getTime() - lastContact.getTime()) / (1000 * 60 * 60 * 24))
             : 999
@@ -196,7 +226,7 @@ export const crmRouter = router({
             ytdRevenue,
             npsScore: account.nps_score,
             daysSinceContact,
-            lastContactDate: account.last_contact_date,
+            lastContactDate: account.last_contacted_date,
           }
         }) ?? []
 
@@ -223,15 +253,16 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         const { data, error } = await adminClient
-          .from('accounts')
+          .from('companies')
           .select(`
-            id, name, industry, status, last_contact_date, nps_score,
-            jobs(id, status)
+            id, name, industry, status, last_contacted_date, nps_score,
+            jobs:jobs!company_id(id, status)
           `)
           .eq('org_id', orgId)
+          .in('category', ['client', 'prospect'])
           .eq('owner_id', user?.id)
           .is('deleted_at', null)
-          .order('last_contact_date', { ascending: false, nullsFirst: false })
+          .order('last_contacted_date', { ascending: false, nullsFirst: false })
           .limit(input.limit)
 
         if (error) {
@@ -243,7 +274,7 @@ export const crmRouter = router({
           name: a.name,
           industry: a.industry,
           status: a.status,
-          lastContactDate: a.last_contact_date,
+          lastContactDate: a.last_contacted_date,
           npsScore: a.nps_score,
           activeJobs: (a.jobs as Array<{ status: string }> | null)?.filter(j => j.status === 'active').length ?? 0,
         })) ?? []
@@ -294,43 +325,42 @@ export const crmRouter = router({
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
 
-        // Create account
+        // Determine category based on status
+        const category = input.status === 'prospect' ? 'prospect' : 'client'
+
+        // Create company record
         const { data: account, error } = await adminClient
-          .from('accounts')
+          .from('companies')
           .insert({
             org_id: orgId,
+            category: category,
             name: input.name,
             industry: input.industry,
-            company_type: input.companyType,
-            status: input.status,
-            tier: input.tier,
+            segment: input.companyType === 'enterprise' ? 'enterprise' :
+                     input.companyType === 'mid_market' ? 'mid_market' :
+                     input.companyType === 'smb' ? 'smb' :
+                     input.companyType === 'startup' ? 'startup' : null,
+            relationship_type: input.companyType === 'implementation_partner' ? 'implementation_partner' :
+                               input.companyType === 'staffing_vendor' ? 'prime_vendor' : 'direct_client',
+            status: input.status === 'prospect' ? 'active' : input.status,
+            tier: input.tier === 'preferred' ? 'preferred' :
+                  input.tier === 'strategic' ? 'strategic' :
+                  input.tier === 'exclusive' ? 'strategic' : 'standard',
             website: input.website || null,
             phone: input.phone,
-            headquarters_location: input.headquartersLocation,
             description: input.description,
-            annual_revenue_target: input.annualRevenueTarget,
-            // Billing
-            billing_entity_name: input.billingEntityName,
-            billing_email: input.billingEmail || null,
-            billing_phone: input.billingPhone,
-            billing_address: input.billingAddress,
-            billing_city: input.billingCity,
-            billing_state: input.billingState,
-            billing_postal_code: input.billingPostalCode,
-            billing_country: input.billingCountry || 'USA',
-            billing_frequency: input.billingFrequency,
-            po_required: input.poRequired,
-            payment_terms_days: input.paymentTermsDays || 30,
+            annual_revenue: input.annualRevenueTarget,
             // Communication
             preferred_contact_method: input.preferredContactMethod,
             meeting_cadence: input.meetingCadence,
             // Company
             legal_name: input.legalName,
-            tax_id: input.taxId,
             employee_count: input.employeeCount,
-            funding_stage: input.fundingStage,
             linkedin_url: input.linkedinUrl || null,
             founded_year: input.foundedYear,
+            // Payment
+            default_payment_terms: input.paymentTermsDays ? `Net ${input.paymentTermsDays}` : 'Net 30',
+            requires_po: input.poRequired,
             // Ownership
             owner_id: user?.id,
             account_manager_id: user?.id,
@@ -342,6 +372,68 @@ export const crmRouter = router({
 
         if (error) {
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Create client_details record with billing info
+        if (input.billingEntityName || input.billingEmail || input.poRequired !== undefined) {
+          await adminClient
+            .from('company_client_details')
+            .insert({
+              company_id: account.id,
+              org_id: orgId,
+              billing_entity_name: input.billingEntityName || null,
+              billing_email: input.billingEmail || null,
+              billing_phone: input.billingPhone || null,
+              po_required: input.poRequired || false,
+              billing_address_line_1: input.billingAddress || null,
+              billing_city: input.billingCity || null,
+              billing_state: input.billingState || null,
+              billing_postal_code: input.billingPostalCode || null,
+              billing_country: input.billingCountry || 'USA',
+            })
+        }
+
+        // Create addresses if provided
+        const addressInserts = []
+
+        // Headquarters address
+        if (input.headquartersLocation) {
+          addressInserts.push({
+            org_id: orgId,
+            entity_type: 'company',
+            entity_id: account.id,
+            address_type: 'headquarters',
+            address_line_1: input.headquartersLocation,
+            is_primary: true,
+            created_by: user?.id,
+          })
+        }
+
+        // Billing address
+        if (input.billingAddress || input.billingCity || input.billingState || input.billingPostalCode) {
+          addressInserts.push({
+            org_id: orgId,
+            entity_type: 'company',
+            entity_id: account.id,
+            address_type: 'billing',
+            address_line_1: input.billingAddress || null,
+            city: input.billingCity || null,
+            state_province: input.billingState || null,
+            postal_code: input.billingPostalCode || null,
+            country_code: input.billingCountry === 'USA' ? 'US' : (input.billingCountry || 'US'),
+            is_primary: false,
+            created_by: user?.id,
+          })
+        }
+
+        if (addressInserts.length > 0) {
+          const { error: addressError } = await adminClient
+            .from('addresses')
+            .insert(addressInserts)
+
+          if (addressError) {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: `Failed to create addresses: ${addressError.message}` })
+          }
         }
 
         // Create primary contact if provided
@@ -357,7 +449,7 @@ export const crmRouter = router({
               email: input.primaryContactEmail,
               phone: input.primaryContactPhone,
               title: input.primaryContactTitle,
-              contact_type: 'client_poc',
+              subtype: 'client_poc',
               is_primary: true,
               created_by: user?.id,
             })
@@ -416,37 +508,35 @@ export const crmRouter = router({
           updated_by: user?.id,
         }
 
-        // Map input to database columns
+        // Map input to database columns (companies table)
         if (input.name !== undefined) updateData.name = input.name
         if (input.industry !== undefined) updateData.industry = input.industry
-        if (input.companyType !== undefined) updateData.company_type = input.companyType
+        if (input.companyType !== undefined) {
+          // Map old companyType to segment
+          updateData.segment = input.companyType === 'enterprise' ? 'enterprise' :
+                               input.companyType === 'mid_market' ? 'mid_market' :
+                               input.companyType === 'smb' ? 'smb' :
+                               input.companyType === 'startup' ? 'startup' : null
+        }
         if (input.status !== undefined) updateData.status = input.status
-        if (input.tier !== undefined) updateData.tier = input.tier
+        if (input.tier !== undefined) {
+          updateData.tier = input.tier === 'preferred' ? 'preferred' :
+                            input.tier === 'strategic' ? 'strategic' :
+                            input.tier === 'exclusive' ? 'strategic' : 'standard'
+        }
         if (input.website !== undefined) updateData.website = input.website || null
         if (input.phone !== undefined) updateData.phone = input.phone
-        if (input.headquartersLocation !== undefined) updateData.headquarters_location = input.headquartersLocation
         if (input.description !== undefined) updateData.description = input.description
-        if (input.annualRevenueTarget !== undefined) updateData.annual_revenue_target = input.annualRevenueTarget
-        // Billing
-        if (input.billingEntityName !== undefined) updateData.billing_entity_name = input.billingEntityName
-        if (input.billingEmail !== undefined) updateData.billing_email = input.billingEmail || null
-        if (input.billingPhone !== undefined) updateData.billing_phone = input.billingPhone
-        if (input.billingAddress !== undefined) updateData.billing_address = input.billingAddress
-        if (input.billingCity !== undefined) updateData.billing_city = input.billingCity
-        if (input.billingState !== undefined) updateData.billing_state = input.billingState
-        if (input.billingPostalCode !== undefined) updateData.billing_postal_code = input.billingPostalCode
-        if (input.billingCountry !== undefined) updateData.billing_country = input.billingCountry
-        if (input.billingFrequency !== undefined) updateData.billing_frequency = input.billingFrequency
-        if (input.poRequired !== undefined) updateData.po_required = input.poRequired
-        if (input.paymentTermsDays !== undefined) updateData.payment_terms_days = input.paymentTermsDays
+        if (input.annualRevenueTarget !== undefined) updateData.annual_revenue = input.annualRevenueTarget
+        // Payment terms
+        if (input.paymentTermsDays !== undefined) updateData.default_payment_terms = `Net ${input.paymentTermsDays}`
+        if (input.poRequired !== undefined) updateData.requires_po = input.poRequired
         // Communication
         if (input.preferredContactMethod !== undefined) updateData.preferred_contact_method = input.preferredContactMethod
         if (input.meetingCadence !== undefined) updateData.meeting_cadence = input.meetingCadence
         // Company
         if (input.legalName !== undefined) updateData.legal_name = input.legalName
-        if (input.taxId !== undefined) updateData.tax_id = input.taxId
         if (input.employeeCount !== undefined) updateData.employee_count = input.employeeCount
-        if (input.fundingStage !== undefined) updateData.funding_stage = input.fundingStage
         if (input.linkedinUrl !== undefined) updateData.linkedin_url = input.linkedinUrl || null
         if (input.foundedYear !== undefined) updateData.founded_year = input.foundedYear
         // Onboarding
@@ -459,18 +549,123 @@ export const crmRouter = router({
         }
         // Health
         if (input.npsScore !== undefined) updateData.nps_score = input.npsScore
-        if (input.relationshipHealth !== undefined) updateData.relationship_health = input.relationshipHealth
+        if (input.relationshipHealth !== undefined) updateData.health_status = input.relationshipHealth
 
         const { data, error } = await adminClient
-          .from('accounts')
+          .from('companies')
           .update(updateData)
           .eq('id', input.id)
           .eq('org_id', orgId)
+          .in('category', ['client', 'prospect'])
           .select()
           .single()
 
+        // Update client_details if billing fields provided
+        if (input.billingEntityName !== undefined || input.billingEmail !== undefined ||
+            input.billingPhone !== undefined || input.billingFrequency !== undefined) {
+          await adminClient
+            .from('company_client_details')
+            .upsert({
+              company_id: input.id,
+              org_id: orgId,
+              billing_entity_name: input.billingEntityName,
+              billing_email: input.billingEmail || null,
+              billing_phone: input.billingPhone,
+            }, { onConflict: 'company_id' })
+        }
+
         if (error) {
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Update addresses if provided
+        if (input.headquartersLocation !== undefined || 
+            input.billingAddress !== undefined || 
+            input.billingCity !== undefined || 
+            input.billingState !== undefined || 
+            input.billingPostalCode !== undefined || 
+            input.billingCountry !== undefined) {
+          
+          // Update or insert headquarters address
+          if (input.headquartersLocation !== undefined) {
+            const { data: existingHQ } = await adminClient
+              .from('addresses')
+              .select('id')
+              .eq('entity_type', 'company')
+              .eq('entity_id', input.id)
+              .eq('address_type', 'headquarters')
+              .single()
+
+            if (existingHQ) {
+              await adminClient
+                .from('addresses')
+                .update({
+                  address_line_1: input.headquartersLocation,
+                  updated_by: user?.id,
+                  updated_at: new Date().toISOString(),
+                })
+                .eq('id', existingHQ.id)
+            } else if (input.headquartersLocation) {
+              await adminClient
+                .from('addresses')
+                .insert({
+                  org_id: orgId,
+                  entity_type: 'company',
+                  entity_id: input.id,
+                  address_type: 'headquarters',
+                  address_line_1: input.headquartersLocation,
+                  is_primary: true,
+                  created_by: user?.id,
+                })
+            }
+          }
+
+          // Update or insert billing address
+          if (input.billingAddress !== undefined || 
+              input.billingCity !== undefined || 
+              input.billingState !== undefined || 
+              input.billingPostalCode !== undefined || 
+              input.billingCountry !== undefined) {
+            
+            const { data: existingBilling } = await adminClient
+              .from('addresses')
+              .select('id')
+              .eq('entity_type', 'company')
+              .eq('entity_id', input.id)
+              .eq('address_type', 'billing')
+              .single()
+
+            const billingData: Record<string, unknown> = {
+              updated_by: user?.id,
+              updated_at: new Date().toISOString(),
+            }
+            if (input.billingAddress !== undefined) billingData.address_line_1 = input.billingAddress
+            if (input.billingCity !== undefined) billingData.city = input.billingCity
+            if (input.billingState !== undefined) billingData.state_province = input.billingState
+            if (input.billingPostalCode !== undefined) billingData.postal_code = input.billingPostalCode
+            if (input.billingCountry !== undefined) {
+              billingData.country_code = input.billingCountry === 'USA' ? 'US' : (input.billingCountry || 'US')
+            }
+
+            if (existingBilling) {
+              await adminClient
+                .from('addresses')
+                .update(billingData)
+                .eq('id', existingBilling.id)
+            } else if (input.billingAddress || input.billingCity || input.billingState || input.billingPostalCode) {
+              await adminClient
+                .from('addresses')
+                .insert({
+                  org_id: orgId,
+                  entity_type: 'company',
+                  entity_id: input.id,
+                  address_type: 'billing',
+                  ...billingData,
+                  is_primary: false,
+                  created_by: user?.id,
+                })
+            }
+          }
         }
 
         return data
@@ -487,13 +682,14 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         const { data, error } = await adminClient
-          .from('accounts')
+          .from('companies')
           .update({
             status: input.status,
             updated_by: user?.id,
           })
           .eq('id', input.id)
           .eq('org_id', orgId)
+          .in('category', ['client', 'prospect'])
           .select()
           .single()
 
@@ -562,10 +758,6 @@ export const crmRouter = router({
         if (input.industry) updateData.industry = input.industry
         if (input.taxId) updateData.tax_id = input.taxId
         if (input.fundingStage) updateData.funding_stage = input.fundingStage
-        if (input.streetAddress) updateData.billing_address = input.streetAddress
-        if (input.city) updateData.billing_city = input.city
-        if (input.state) updateData.billing_state = input.state
-        if (input.zipCode) updateData.billing_postal_code = input.zipCode
         if (input.paymentTerms) {
           const terms = { net_15: 15, net_30: 30, net_45: 45, net_60: 60 }
           updateData.payment_terms_days = terms[input.paymentTerms]
@@ -599,12 +791,13 @@ export const crmRouter = router({
           updateData.onboarding_data = onboardingData
         }
 
-        // Update the account
+        // Update the company
         const { data, error } = await adminClient
-          .from('accounts')
+          .from('companies')
           .update(updateData)
           .eq('id', input.accountId)
           .eq('org_id', orgId)
+          .in('category', ['client', 'prospect'])
           .select()
           .single()
 
@@ -612,12 +805,55 @@ export const crmRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
+        // Create billing address if provided
+        if (input.streetAddress || input.city || input.state || input.zipCode) {
+          const { data: existingBilling } = await adminClient
+            .from('addresses')
+            .select('id')
+            .eq('entity_type', 'company')
+            .eq('entity_id', input.accountId)
+            .eq('address_type', 'billing')
+            .single()
+
+          const billingData = {
+            org_id: orgId,
+            entity_type: 'company' as const,
+            entity_id: input.accountId,
+            address_type: 'billing' as const,
+            address_line_1: input.streetAddress || null,
+            city: input.city || null,
+            state_province: input.state || null,
+            postal_code: input.zipCode || null,
+            country_code: 'US' as const,
+            is_primary: false,
+            created_by: user?.id,
+          }
+
+          if (existingBilling) {
+            await adminClient
+              .from('addresses')
+              .update({
+                address_line_1: input.streetAddress || null,
+                city: input.city || null,
+                state_province: input.state || null,
+                postal_code: input.zipCode || null,
+                updated_by: user?.id,
+                updated_at: new Date().toISOString(),
+              })
+              .eq('id', existingBilling.id)
+          } else {
+            await adminClient
+              .from('addresses')
+              .insert(billingData)
+          }
+        }
+
         // Create activity log for onboarding completion
         await adminClient
           .from('activities')
           .insert({
             org_id: orgId,
-            entity_type: 'account',
+            entity_type: 'company',
             entity_id: input.accountId,
             activity_type: 'status_change',
             subject: 'Onboarding Completed',
@@ -634,11 +870,12 @@ export const crmRouter = router({
         const { orgId } = ctx
         const adminClient = getAdminClient()
 
-        // Get account counts by status
+        // Get company counts by status (clients/prospects only)
         const { data: accounts, error: accountsError } = await adminClient
-          .from('accounts')
+          .from('companies')
           .select('id, status')
           .eq('org_id', orgId)
+          .in('category', ['client', 'prospect'])
           .is('deleted_at', null)
 
         if (accountsError) {
@@ -821,7 +1058,7 @@ export const crmRouter = router({
 
         const { data, error } = await adminClient
           .from('account_contracts')
-          .select('*, account:accounts(id, name)')
+          .select('*, company:companies!company_id(id, name)')
           .eq('id', input.id)
           .single()
 
@@ -900,6 +1137,10 @@ export const crmRouter = router({
   // ============================================
   // LEADS (B01/B02 - Prospect & Qualify)
   // ============================================
+  // @deprecated WAVE 2 Migration - Use unifiedContacts.leads router instead
+  // This legacy router maintains backwards compatibility but will be removed in a future release.
+  // All new code should use trpc.unifiedContacts.leads.* procedures.
+  // Migration completed: 2025-12-11
   leads: router({
     // List leads with filtering
     list: orgProtectedProcedure
@@ -1869,7 +2110,7 @@ export const crmRouter = router({
           .select(`
             *,
             owner:user_profiles!owner_id(id, full_name, avatar_url),
-            account:accounts(id, name, industry),
+            company:companies!company_id(id, name, segment),
             lead:leads!lead_id(id, company_name, first_name, last_name)
           `, { count: 'exact' })
           .eq('org_id', orgId)
@@ -1929,7 +2170,7 @@ export const crmRouter = router({
           .select(`
             *,
             owner:user_profiles!owner_id(id, full_name, avatar_url),
-            account:accounts(id, name),
+            company:companies!company_id(id, name),
             lead:leads!lead_id(id, company_name)
           `)
           .eq('org_id', orgId)
@@ -2000,9 +2241,9 @@ export const crmRouter = router({
             owner:user_profiles!owner_id(id, full_name, avatar_url, email),
             secondary_owner:user_profiles!secondary_owner_id(id, full_name),
             pod_manager:user_profiles!pod_manager_id(id, full_name),
-            account:accounts(id, name, industry, website),
+            company:companies!company_id(id, name, segment, website),
             lead:leads!lead_id(id, company_name, first_name, last_name, email, phone),
-            created_account:accounts!created_account_id(id, name)
+            created_company:companies!created_company_id(id, name)
           `)
           .eq('id', input.id)
           .eq('org_id', orgId)
@@ -2127,7 +2368,7 @@ export const crmRouter = router({
             pod_manager_id: input.podManagerId,
             created_by: user?.id,
           })
-          .select('*, owner:user_profiles!owner_id(id, full_name), account:accounts(id, name)')
+          .select('*, owner:user_profiles!owner_id(id, full_name), company:companies!company_id(id, name)')
           .single()
 
         if (error) {
@@ -2232,7 +2473,7 @@ export const crmRouter = router({
           .update(updateData)
           .eq('id', input.id)
           .eq('org_id', orgId)
-          .select('*, owner:user_profiles!owner_id(id, full_name), account:accounts(id, name)')
+          .select('*, owner:user_profiles!owner_id(id, full_name), company:companies!company_id(id, name)')
           .single()
 
         if (error) {
@@ -2290,7 +2531,7 @@ export const crmRouter = router({
           })
           .eq('id', input.id)
           .eq('org_id', orgId)
-          .select('*, owner:user_profiles!owner_id(id, full_name), account:accounts(id, name)')
+          .select('*, owner:user_profiles!owner_id(id, full_name), company:companies!company_id(id, name)')
           .single()
 
         if (error) {
@@ -2366,19 +2607,20 @@ export const crmRouter = router({
 
         let createdAccountId = deal.account_id
 
-        // Create new account if requested
+        // Create new company (client) if requested
         if (input.createAccount && !createdAccountId) {
           const accountName = input.accountName || deal.lead?.company_name || deal.name
+          const paymentTermsDays = parseInt(input.paymentTerms.replace('net_', ''))
           const { data: newAccount } = await adminClient
-            .from('accounts')
+            .from('companies')
             .insert({
               org_id: orgId,
+              category: 'client',
               name: accountName,
               industry: input.accountIndustry,
               status: 'active',
-              company_type: 'direct_client',
-              billing_frequency: input.billingFrequency,
-              payment_terms_days: parseInt(input.paymentTerms.replace('net_', '')),
+              relationship_type: 'direct_client',
+              default_payment_terms: `Net ${paymentTermsDays}`,
               owner_id: deal.owner_id || user?.id,
               account_manager_id: deal.owner_id || user?.id,
               created_by: user?.id,
@@ -2421,7 +2663,7 @@ export const crmRouter = router({
           })
           .eq('id', input.id)
           .eq('org_id', orgId)
-          .select('*, owner:user_profiles!owner_id(id, full_name), account:accounts(id, name)')
+          .select('*, owner:user_profiles!owner_id(id, full_name), company:companies!company_id(id, name)')
           .single()
 
         if (error) {
@@ -3027,7 +3269,7 @@ export const crmRouter = router({
 
         let query = adminClient
           .from('contacts')
-          .select('id, first_name, last_name, title, email, phone, account:accounts!company_id(id, name)')
+          .select('id, first_name, last_name, title, email, phone, company:companies!company_id(id, name)')
           .eq('org_id', orgId)
           .is('deleted_at', null)
           .limit(input.limit)
@@ -3066,7 +3308,7 @@ export const crmRouter = router({
         isPrimary: z.boolean().optional(),
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().default(0),
-        sortBy: z.enum(['name', 'title', 'company_id', 'contact_type', 'status', 'last_contact_date', 'owner_id', 'created_at']).default('created_at'),
+        sortBy: z.enum(['name', 'title', 'company_id', 'subtype', 'status', 'last_contact_date', 'owner_id', 'created_at']).default('created_at'),
         sortOrder: z.enum(['asc', 'desc']).default('desc'),
       }))
       .query(async ({ ctx, input }) => {
@@ -3075,7 +3317,7 @@ export const crmRouter = router({
 
         let query = adminClient
           .from('contacts')
-          .select('*, account:accounts!company_id(id, name), owner:user_profiles!owner_id(id, full_name, avatar_url)', { count: 'exact' })
+          .select('*, company:companies!company_id(id, name), owner:user_profiles!owner_id(id, full_name, avatar_url)', { count: 'exact' })
           .eq('org_id', orgId)
           .is('deleted_at', null)
 
@@ -3092,7 +3334,7 @@ export const crmRouter = router({
         }
 
         if (input.type) {
-          query = query.eq('contact_type', input.type)
+          query = query.eq('subtype', input.type)
         }
 
         if (input.isPrimary !== undefined) {
@@ -3115,7 +3357,7 @@ export const crmRouter = router({
             ...c,
             lastContactDate: c.last_contact_date,
             createdAt: c.created_at,
-            type: c.contact_type,
+            type: c.subtype,
           })) ?? [],
           total: count ?? 0,
         }
@@ -3191,7 +3433,7 @@ export const crmRouter = router({
 
         const { data, error } = await adminClient
           .from('contacts')
-          .select('*, account:accounts!company_id(id, name)')
+          .select('*, company:companies!company_id(id, name)')
           .eq('id', input.id)
           .eq('org_id', orgId)
           .single()
@@ -3254,7 +3496,7 @@ export const crmRouter = router({
             decision_authority: input.decisionAuthority,
             is_primary: input.isPrimary,
             notes: input.notes,
-            contact_type: 'client_poc',
+            subtype: 'client_poc',
             status: 'active',
             created_by: user?.id,
           })
@@ -3364,145 +3606,9 @@ export const crmRouter = router({
   }),
 
   // ============================================
-  // ACCOUNT NOTES
+  // ACCOUNT NOTES - DEPRECATED
+  // Use trpc.notes.* instead (NOTES-01 centralized notes system)
   // ============================================
-  notes: router({
-    // List notes for account
-    listByAccount: orgProtectedProcedure
-      .input(z.object({
-        accountId: z.string().uuid(),
-        limit: z.number().min(1).max(100).default(50),
-      }))
-      .query(async ({ ctx, input }) => {
-        const { orgId } = ctx
-        const adminClient = getAdminClient()
-
-        const { data, error } = await adminClient
-          .from('account_notes')
-          .select('*, author:user_profiles!created_by(id, full_name, avatar_url)')
-          .eq('org_id', orgId)
-          .eq('account_id', input.accountId)
-          .is('deleted_at', null)
-          .order('is_pinned', { ascending: false })
-          .order('created_at', { ascending: false })
-          .limit(input.limit)
-
-        if (error) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
-        }
-
-        return data ?? []
-      }),
-
-    // Get note by ID
-    getById: orgProtectedProcedure
-      .input(z.object({ id: z.string().uuid() }))
-      .query(async ({ ctx, input }) => {
-        const { orgId } = ctx
-        const adminClient = getAdminClient()
-
-        const { data, error } = await adminClient
-          .from('account_notes')
-          .select('*, author:user_profiles!created_by(id, full_name, avatar_url), account:accounts(id, name)')
-          .eq('id', input.id)
-          .eq('org_id', orgId)
-          .single()
-
-        if (error) {
-          throw new TRPCError({ code: 'NOT_FOUND', message: 'Note not found' })
-        }
-
-        return data
-      }),
-
-    // Create note
-    create: orgProtectedProcedure
-      .input(z.object({
-        accountId: z.string().uuid(),
-        title: z.string().optional(),
-        content: z.string().min(1),
-        noteType: z.enum(['general', 'internal', 'important', 'reminder']).default('general'),
-        isPinned: z.boolean().default(false),
-      }))
-      .mutation(async ({ ctx, input }) => {
-        const { orgId, user } = ctx
-        const adminClient = getAdminClient()
-
-        const { data, error } = await adminClient
-          .from('account_notes')
-          .insert({
-            org_id: orgId,
-            account_id: input.accountId,
-            title: input.title,
-            content: input.content,
-            note_type: input.noteType,
-            is_pinned: input.isPinned,
-            created_by: user?.id,
-          })
-          .select('*, author:user_profiles!created_by(id, full_name, avatar_url)')
-          .single()
-
-        if (error) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
-        }
-
-        return data
-      }),
-
-    // Update note
-    update: orgProtectedProcedure
-      .input(z.object({
-        id: z.string().uuid(),
-        title: z.string().optional(),
-        content: z.string().min(1).optional(),
-        noteType: z.enum(['general', 'internal', 'important', 'reminder']).optional(),
-        isPinned: z.boolean().optional(),
-      }))
-      .mutation(async ({ ctx, input }) => {
-        const { orgId, user } = ctx
-        const adminClient = getAdminClient()
-
-        const updateData: Record<string, unknown> = { updated_by: user?.id }
-        if (input.title !== undefined) updateData.title = input.title
-        if (input.content !== undefined) updateData.content = input.content
-        if (input.noteType !== undefined) updateData.note_type = input.noteType
-        if (input.isPinned !== undefined) updateData.is_pinned = input.isPinned
-
-        const { data, error } = await adminClient
-          .from('account_notes')
-          .update(updateData)
-          .eq('id', input.id)
-          .eq('org_id', orgId)
-          .select('*, author:user_profiles!created_by(id, full_name, avatar_url)')
-          .single()
-
-        if (error) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
-        }
-
-        return data
-      }),
-
-    // Delete note
-    delete: orgProtectedProcedure
-      .input(z.object({ id: z.string().uuid() }))
-      .mutation(async ({ ctx, input }) => {
-        const { orgId, user } = ctx
-        const adminClient = getAdminClient()
-
-        const { error } = await adminClient
-          .from('account_notes')
-          .update({ deleted_at: new Date().toISOString(), updated_by: user?.id })
-          .eq('id', input.id)
-          .eq('org_id', orgId)
-
-        if (error) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
-        }
-
-        return { success: true }
-      }),
-  }),
 
   // ============================================
   // MEETING NOTES
@@ -3550,7 +3656,7 @@ export const crmRouter = router({
 
         const { data, error } = await adminClient
           .from('meeting_notes')
-          .select('*, creator:user_profiles!created_by(id, full_name, avatar_url), account:accounts(id, name)')
+          .select('*, creator:user_profiles!created_by(id, full_name, avatar_url), company:companies!company_id(id, name)')
           .eq('id', input.id)
           .eq('org_id', orgId)
           .single()
@@ -3720,11 +3826,11 @@ export const crmRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
-        // Update account last_contact_date
+        // Update company last_contacted_date
         if (data?.account_id) {
           await adminClient
-            .from('accounts')
-            .update({ last_contact_date: now })
+            .from('companies')
+            .update({ last_contacted_date: now })
             .eq('id', data.account_id)
             .eq('org_id', orgId)
         }
@@ -3845,7 +3951,7 @@ export const crmRouter = router({
 
         let query = adminClient
           .from('escalations')
-          .select('*, account:accounts(id, name), creator:user_profiles!created_by(id, full_name), assignee:user_profiles!assigned_to(id, full_name)')
+          .select('*, company:companies!company_id(id, name), creator:user_profiles!created_by(id, full_name), assignee:user_profiles!assigned_to(id, full_name)')
           .eq('org_id', orgId)
           .or(`created_by.eq.${user?.id},assigned_to.eq.${user?.id}`)
           .is('deleted_at', null)
@@ -3876,7 +3982,7 @@ export const crmRouter = router({
           .from('escalations')
           .select(`
             *,
-            account:accounts(id, name),
+            company:companies!company_id(id, name),
             creator:user_profiles!created_by(id, full_name, avatar_url),
             assignee:user_profiles!assigned_to(id, full_name, avatar_url),
             resolver:user_profiles!resolved_by(id, full_name)
@@ -3982,9 +4088,9 @@ export const crmRouter = router({
 
         // Notify managers for high/critical escalations
         if (input.severity === 'high' || input.severity === 'critical') {
-          // Get the account to find the account manager
+          // Get the company to find the account manager
           const { data: account } = await adminClient
-            .from('accounts')
+            .from('companies')
             .select('name, account_manager_id')
             .eq('id', input.accountId)
             .single()
@@ -4035,7 +4141,7 @@ export const crmRouter = router({
 
               if (!existingNotification) {
                 const { data: account } = await adminClient
-                  .from('accounts')
+                  .from('companies')
                   .select('name')
                   .eq('id', input.accountId)
                   .single()
@@ -4251,7 +4357,7 @@ export const crmRouter = router({
           .from('activities')
           .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
           .eq('org_id', orgId)
-          .eq('entity_type', 'account')
+          .eq('entity_type', 'company')
           .eq('entity_id', input.accountId)
           .order('created_at', { ascending: false })
           .limit(input.limit)
@@ -4349,11 +4455,11 @@ export const crmRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
-        // Update account last_contact_date
-        if (input.entityType === 'account') {
+        // Update company last_contacted_date (for account/company entity types)
+        if (input.entityType === 'account' || input.entityType === 'company') {
           await adminClient
-            .from('accounts')
-            .update({ last_contact_date: new Date().toISOString() })
+            .from('companies')
+            .update({ last_contacted_date: new Date().toISOString() })
             .eq('id', input.entityId)
             .eq('org_id', orgId)
         }
@@ -5275,7 +5381,7 @@ export const crmRouter = router({
         // Process each new prospect
         for (const p of newProspects) {
           // First, find or create the contact
-          let { data: existingContact } = await adminClient
+          const { data: existingContact } = await adminClient
             .from('contacts')
             .select('id')
             .eq('email', p.email.toLowerCase())
@@ -5300,7 +5406,7 @@ export const crmRouter = router({
               .from('contacts')
               .insert({
                 org_id: orgId,
-                contact_type: 'prospect',
+                subtype: 'prospect',
                 types: ['prospect'],
                 first_name: p.firstName || null,
                 last_name: p.lastName || null,
@@ -5309,7 +5415,6 @@ export const crmRouter = router({
                 linkedin_url: p.linkedinUrl || null,
                 company_name: p.companyName || null,
                 title: p.title || null,
-                work_location: p.location || null,
                 timezone: p.timezone || null,
                 status: 'active',
               })
@@ -5402,7 +5507,6 @@ export const crmRouter = router({
         if (input.linkedinUrl !== undefined) contactUpdateData.linkedin_url = input.linkedinUrl
         if (input.companyName !== undefined) contactUpdateData.company_name = input.companyName
         if (input.title !== undefined) contactUpdateData.title = input.title
-        if (input.location !== undefined) contactUpdateData.work_location = input.location
         if (input.timezone !== undefined) contactUpdateData.timezone = input.timezone
 
         if (Object.keys(contactUpdateData).length > 0) {
@@ -5580,7 +5684,7 @@ export const crmRouter = router({
             entity_id: lead.id,
             activity_type: 'note',
             subject: 'Lead Created from Campaign',
-            description: `Lead created from campaign "${(prospect.campaign as { name: string })?.name || 'Unknown'}". Interest level: ${input.interestLevel}`,
+            description: `Lead created from campaign "${(enrollment.campaign as { name: string })?.name || 'Unknown'}". Interest level: ${input.interestLevel}`,
             created_by: user?.id,
           })
 

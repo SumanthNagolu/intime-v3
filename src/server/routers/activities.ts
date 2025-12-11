@@ -157,10 +157,10 @@ export const activitiesRouter = router({
             .update({ last_contacted_at: activityDate.toISOString() })
             .eq('id', input.entityId)
             .eq('org_id', orgId)
-        } else if (input.entityType === 'account') {
+        } else if (input.entityType === 'account' || input.entityType === 'company') {
           await supabase
-            .from('accounts')
-            .update({ last_contact_date: activityDate.toISOString() })
+            .from('companies')
+            .update({ last_contacted_date: activityDate.toISOString() })
             .eq('id', input.entityId)
             .eq('org_id', orgId)
         }
@@ -520,7 +520,7 @@ export const activitiesRouter = router({
           id, subject, description, activity_type, status, priority, due_date,
           entity_type, entity_id, created_at, completed_at,
           poc:contacts!poc_id(id, first_name, last_name),
-          account:accounts!entity_id(id, name)
+          company:companies!entity_id(id, name)
         `, { count: 'exact' })
         .eq('org_id', orgId)
         .eq('assigned_to', user?.id)
@@ -558,11 +558,11 @@ export const activitiesRouter = router({
           const tomorrow = new Date(today)
           tomorrow.setDate(tomorrow.getDate() + 1)
 
-          // Get account name - handle both direct account activities and other entity types
+          // Get company name - handle both direct company activities and other entity types
           let accountName: string | null = null
-          if (a.entity_type === 'account' && a.account) {
-            const account = a.account as { id: string; name: string } | null
-            accountName = account?.name ?? null
+          if ((a.entity_type === 'account' || a.entity_type === 'company') && a.company) {
+            const company = a.company as { id: string; name: string } | null
+            accountName = company?.name ?? null
           }
 
           return {
@@ -666,21 +666,22 @@ export const activitiesRouter = router({
         })
       }
 
-      // Search accounts
-      if (!input.entityTypes || input.entityTypes.includes('account')) {
-        const { data: accounts } = await adminClient
-          .from('accounts')
-          .select('id, name, industry')
+      // Search companies (accounts)
+      if (!input.entityTypes || input.entityTypes.includes('account') || input.entityTypes.includes('company')) {
+        const { data: companies } = await adminClient
+          .from('companies')
+          .select('id, name, segment')
           .eq('org_id', orgId)
+          .in('category', ['client', 'prospect'])
           .ilike('name', `%${input.query}%`)
           .limit(input.limit)
 
-        accounts?.forEach(a => {
+        companies?.forEach(c => {
           results.push({
-            entityType: 'account',
-            entityId: a.id,
-            label: a.name,
-            sublabel: a.industry,
+            entityType: 'company',
+            entityId: c.id,
+            label: c.name,
+            sublabel: c.segment,
           })
         })
       }
@@ -689,18 +690,18 @@ export const activitiesRouter = router({
       if (!input.entityTypes || input.entityTypes.includes('job')) {
         const { data: jobs } = await adminClient
           .from('jobs')
-          .select('id, title, account:accounts(name)')
+          .select('id, title, company:companies!company_id(name)')
           .eq('org_id', orgId)
           .ilike('title', `%${input.query}%`)
           .limit(input.limit)
 
         jobs?.forEach(j => {
-          const account = j.account as { name: string } | null
+          const company = j.company as { name: string } | null
           results.push({
             entityType: 'job',
             entityId: j.id,
             label: j.title,
-            sublabel: account?.name,
+            sublabel: company?.name,
           })
         })
       }

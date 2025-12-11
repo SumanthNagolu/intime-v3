@@ -689,7 +689,7 @@ export const dashboardRouter = router({
             id, start_date,
             submission:submissions(
               candidate:candidates(first_name, last_name),
-              job:jobs(title, account:accounts(name))
+              job:jobs(title, company:companies!company_id(name))
             )
           `)
           .eq('org_id', orgId)
@@ -700,12 +700,12 @@ export const dashboardRouter = router({
         placements?.forEach(p => {
           const sub = p.submission as {
             candidate: { first_name: string; last_name: string } | null
-            job: { title: string; account: { name: string } | null } | null
+            job: { title: string; company: { name: string } | null } | null
           } | null
           if (sub?.candidate && sub?.job) {
             wins.push({
               type: 'placement',
-              description: `Placed ${sub.candidate.first_name} ${sub.candidate.last_name} @ ${sub.job.account?.name || 'Client'}`,
+              description: `Placed ${sub.candidate.first_name} ${sub.candidate.last_name} @ ${sub.job.company?.name || 'Client'}`,
               date: p.start_date,
               entityType: 'placement',
               entityId: p.id,
@@ -720,7 +720,7 @@ export const dashboardRouter = router({
         .select(`
           id, updated_at,
           candidate:candidates(first_name, last_name),
-          job:jobs(title, account:accounts(name))
+          job:jobs(title, company:companies!company_id(name))
         `)
         .eq('org_id', orgId)
         .eq('submitted_by', user?.id)
@@ -731,10 +731,10 @@ export const dashboardRouter = router({
       offers?.forEach(o => {
         if (o.candidate && o.job) {
           const candidate = o.candidate as { first_name: string; last_name: string }
-          const job = o.job as { title: string; account: { name: string } | null }
+          const job = o.job as { title: string; company: { name: string } | null }
           wins.push({
             type: 'offer_accepted',
-            description: `Offer accepted: ${candidate.first_name} ${candidate.last_name} @ ${job.account?.name || 'Client'}`,
+            description: `Offer accepted: ${candidate.first_name} ${candidate.last_name} @ ${job.company?.name || 'Client'}`,
             date: o.updated_at,
             entityType: 'submission',
             entityId: o.id,

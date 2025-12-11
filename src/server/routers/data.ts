@@ -108,6 +108,8 @@ export const dataRouter = router({
           name: f.name,
           displayName: f.displayName,
           type: f.type,
+          importable: f.importable,
+          dbColumn: f.dbColumn,
         })),
       }))
     }),
