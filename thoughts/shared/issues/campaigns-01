@@ -1,209 +1,875 @@
-# ISSUE: Campaign Workspace - Guidewire-Inspired Architecture
+# ISSUE: Enterprise Campaign Management System
 
-**Issue ID:** CAMPAIGNS-01  
-**Created:** December 8, 2025  
-**Status:** Pending  
-**Priority:** High  
-**Epic:** 01-campaigns  
-
----
-
-## Description
-
-### Current State
-
-The Campaign Workspace currently has:
-- Basic campaign list view at `/employee/crm/campaigns`
-- Campaign detail page with limited sections (Overview, Prospects, Leads, Activities, Analytics, Notes)
-- Multiple separate API calls per screen
-- Missing sections: Sequences, Documents, History
-- Incomplete sidebar with basic metrics only
-- No campaign journey visualization
-- Inconsistent UI patterns across sections
-
-### Desired State
-
-Transform the Campaign Workspace into a **Guidewire-inspired system** where:
-
-1. **Campaign is the root object** - Everything flows from and relates back to the campaign
-2. **9 complete sections** cover the full campaign lifecycle:
-   - Dashboard, Sequences, Prospects, Leads, Activities, Documents, Notes, Analytics, History
-3. **Activity-centric logging** - No action happens without being recorded in History
-4. **Efficient queries** - One optimized query per screen with caching
-5. **Consistent UI** - Inline panels instead of modals, list views with detail worksheets
-6 **All Pages with add/edit options.
-
-### UI Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  HEADER - Main navigation                                   │
-├─────────────┬───────────────────────────────────────────────┤
-│  INFOBAR    │                                               │
-│  Campaign   │  SCREEN AREA                                  │
-│  Journey &  │  - List view with inline detail panel         │
-│  Metrics    │  - Or dashboard/analytics multi-element       │
-│             │                                               │
-├─────────────┤                                               │
-│  SECTION    │                                               │
-│  NAVIGATION │                                               │
-│  (9 tabs)   │                                               │
-└─────────────┴───────────────────────────────────────────────┘
-```
+**Issue ID:** CAMPAIGNS-01
+**Created:** 2025-12-10
+**Status:** Open
+**Priority:** Medium
+**Type:** New Feature / Migration
+**Reporter:** Architecture Review
+**Depends On:** CONTACTS-01 (unified contacts), ACCOUNTS-02 (unified companies), COMMS-01 (communication templates)
 
 ---
+
+## Summary
+
+Build a comprehensive campaign management system that supports multi-channel outbound sequences, prospect tracking, lead scoring, and conversion analytics. This integrates with the unified contacts system (CONTACTS-01), communication infrastructure (COMMS-01), and can optionally trigger automation via WORKFLOWS-01.
+
+## Location
+
+- **Current Tables**: `campaigns`, `campaign_prospects`, `campaign_activities`, `campaign_sequences`
+- **Target**: Enhanced campaign system with proper entity relationships
+- **Related Tables**: `contacts`, `leads`, `activities`, `email_templates`, `sequences`
+- **Affected Modules**: CRM, Marketing Automation, Analytics
+
+## Problem Description
+
+### Current State Issues
+
+1. **Limited Campaign Types**:
+   - Only supports email sequences
+   - No multi-channel campaign support (LinkedIn, calls, events)
+   - No ABM (Account-Based Marketing) support
+
+2. **Weak Prospect Management**:
+   - Prospects not properly linked to unified contacts
+   - Duplicate prospect records across campaigns
+   - No prospect engagement scoring
+
+3. **Sequence Limitations**:
+   - Linear sequences only
+   - No conditional branching
+   - No A/B testing support
+   - No multi-channel steps
+
+4. **Analytics Gaps**:
+   - Basic open/click tracking
+   - No funnel visualization
+   - No attribution modeling
+   - No ROI tracking
+
+5. **Integration Gaps**:
+   - Not integrated with COMMS-01 communication system
+   - Not integrated with WORKFLOWS-01 automation
+   - No CRM sync for lead conversion
+
+### Current Campaign Tables (Simplified)
+
+```sql
+-- Existing simplified structure
+campaigns:
+  id, org_id, name, description
+  type, status
+  owner_id
+  start_date, end_date
+  created_at, updated_at
+
+campaign_prospects:
+  id, campaign_id, org_id
+  email, first_name, last_name, company
+  status  -- 'pending', 'active', 'completed', 'unsubscribed'
+  enrolled_at
+```
+
+## Expected Behavior
+
+After implementation:
+1. Campaign types: email, LinkedIn, call, event, ABM, nurture
+2. Prospects linked to unified `contacts` table
+3. Multi-step, multi-channel sequences with branching
+4. A/B testing for messaging optimization (with winner selection)
+5. Engagement scoring per prospect
+6. Full funnel analytics with conversion tracking
+7. Integration with COMMS-01 for all communications
+8. Integration with WORKFLOWS-01 for automation triggers
+
+## Proposed Schema Changes
+
+### Enhanced Campaigns Table
+
+```sql
+-- Enhanced campaigns table
+ALTER TABLE campaigns
+  -- Campaign classification
+  ADD COLUMN campaign_type VARCHAR NOT NULL DEFAULT 'email',  -- 'email', 'linkedin', 'call', 'event', 'abm', 'nurture', 'multi_channel'
+  ADD COLUMN channel VARCHAR,  -- Primary channel for single-channel campaigns
+
+  -- Targeting
+  ADD COLUMN target_audience JSONB,  -- Criteria for dynamic list building
+  ADD COLUMN target_accounts UUID[],  -- For ABM campaigns, array of company IDs
+  ADD COLUMN target_personas JSONB,  -- Persona definitions
+
+  -- Goals
+  ADD COLUMN goal_type VARCHAR,  -- 'lead_generation', 'nurture', 'conversion', 'engagement', 'event_registration'
+  ADD COLUMN goal_metric VARCHAR,  -- 'leads', 'meetings', 'pipeline', 'registrations'
+  ADD COLUMN goal_target INTEGER,  -- Numeric target
+
+  -- Budget
+  ADD COLUMN budget NUMERIC(12,2),
+  ADD COLUMN budget_currency VARCHAR DEFAULT 'USD',
+  ADD COLUMN actual_spend NUMERIC(12,2) DEFAULT 0,
+
+  -- Scheduling
+  ADD COLUMN timezone VARCHAR DEFAULT 'UTC',
+  ADD COLUMN send_window_start TIME,  -- Only send between these hours
+  ADD COLUMN send_window_end TIME,
+  ADD COLUMN send_days INTEGER[],  -- Days of week (0=Sunday, 6=Saturday)
+  ADD COLUMN daily_send_limit INTEGER,  -- Max emails per day
+
+  -- A/B Testing
+  ADD COLUMN is_ab_test BOOLEAN DEFAULT false,
+  ADD COLUMN ab_test_config JSONB,  -- { variants: [...], winner_criteria: 'open_rate', sample_size: 100 }
+  ADD COLUMN winner_variant_id VARCHAR, -- ID of the winning variant
+  ADD COLUMN winner_selected_at TIMESTAMPTZ, -- When winner was selected
+
+  -- Attribution
+  ADD COLUMN utm_source VARCHAR,
+  ADD COLUMN utm_medium VARCHAR,
+  ADD COLUMN utm_campaign VARCHAR,
+
+  -- Analytics
+  ADD COLUMN total_prospects INTEGER DEFAULT 0,
+  ADD COLUMN total_sent INTEGER DEFAULT 0,
+  ADD COLUMN total_opened INTEGER DEFAULT 0,
+  ADD COLUMN total_clicked INTEGER DEFAULT 0,
+  ADD COLUMN total_replied INTEGER DEFAULT 0,
+  ADD COLUMN total_converted INTEGER DEFAULT 0,
+  ADD COLUMN total_unsubscribed INTEGER DEFAULT 0,
+  ADD COLUMN total_bounced INTEGER DEFAULT 0,
+
+  -- Calculated fields
+  ADD COLUMN open_rate NUMERIC(5,2) GENERATED ALWAYS AS (
+    CASE WHEN total_sent > 0 THEN (total_opened::NUMERIC / total_sent * 100) ELSE 0 END
+  ) STORED,
+  ADD COLUMN click_rate NUMERIC(5,2) GENERATED ALWAYS AS (
+    CASE WHEN total_opened > 0 THEN (total_clicked::NUMERIC / total_opened * 100) ELSE 0 END
+  ) STORED,
+  ADD COLUMN conversion_rate NUMERIC(5,2) GENERATED ALWAYS AS (
+    CASE WHEN total_prospects > 0 THEN (total_converted::NUMERIC / total_prospects * 100) ELSE 0 END
+  ) STORED;
+
+-- Indexes
+CREATE INDEX idx_campaigns_type ON campaigns(campaign_type) WHERE deleted_at IS NULL;
+CREATE INDEX idx_campaigns_status ON campaigns(status) WHERE deleted_at IS NULL;
+CREATE INDEX idx_campaigns_owner ON campaigns(owner_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_campaigns_dates ON campaigns(start_date, end_date) WHERE deleted_at IS NULL;
+```
+
+### Campaign Prospects (Enhanced)
+
+```sql
+-- Replace separate prospect table with unified contact linkage
+ALTER TABLE campaign_prospects
+  -- Link to unified contacts
+  ADD COLUMN contact_id UUID REFERENCES contacts(id),
+
+  -- Remove duplicated contact fields (migrate to contacts first)
+  -- DROP COLUMN email, first_name, last_name, company (after migration)
+
+  -- Enrollment details
+  ADD COLUMN enrollment_source VARCHAR,  -- 'manual', 'import', 'list', 'workflow', 'form'
+  ADD COLUMN enrollment_metadata JSONB,
+
+  -- Sequence tracking
+  ADD COLUMN sequence_id UUID REFERENCES campaign_sequences(id),
+  ADD COLUMN current_step_id UUID,
+  ADD COLUMN current_step_number INTEGER DEFAULT 0,
+  ADD COLUMN step_started_at TIMESTAMPTZ,
+  ADD COLUMN next_step_at TIMESTAMPTZ,
+
+  -- Status details
+  ADD COLUMN substatus VARCHAR,  -- More granular status
+  ADD COLUMN paused_at TIMESTAMPTZ,
+  ADD COLUMN paused_reason VARCHAR,
+  ADD COLUMN completed_at TIMESTAMPTZ,
+  ADD COLUMN removed_at TIMESTAMPTZ,
+  ADD COLUMN removed_reason VARCHAR,
+
+  -- Engagement scoring
+  ADD COLUMN engagement_score INTEGER DEFAULT 0,
+  ADD COLUMN email_opens INTEGER DEFAULT 0,
+  ADD COLUMN email_clicks INTEGER DEFAULT 0,
+  ADD COLUMN email_replies INTEGER DEFAULT 0,
+  ADD COLUMN meetings_booked INTEGER DEFAULT 0,
+  ADD COLUMN last_engagement_at TIMESTAMPTZ,
+  ADD COLUMN engagement_level VARCHAR GENERATED ALWAYS AS (
+    CASE
+      WHEN engagement_score >= 80 THEN 'hot'
+      WHEN engagement_score >= 50 THEN 'warm'
+      WHEN engagement_score >= 20 THEN 'cool'
+      ELSE 'cold'
+    END
+  ) STORED,
+
+  -- Conversion tracking
+  ADD COLUMN converted_at TIMESTAMPTZ,
+  ADD COLUMN converted_to VARCHAR,  -- 'lead', 'opportunity', 'meeting'
+  ADD COLUMN converted_entity_id UUID,
+
+  -- A/B Test tracking
+  ADD COLUMN ab_variant VARCHAR,
+
+  -- Personalization
+  ADD COLUMN personalization_data JSONB,
+
+  CONSTRAINT campaign_prospect_contact_unique UNIQUE (campaign_id, contact_id);
+
+-- Indexes
+CREATE INDEX idx_campaign_prospects_contact ON campaign_prospects(contact_id);
+CREATE INDEX idx_campaign_prospects_sequence ON campaign_prospects(sequence_id, current_step_number);
+CREATE INDEX idx_campaign_prospects_engagement ON campaign_prospects(engagement_level, engagement_score DESC);
+CREATE INDEX idx_campaign_prospects_next_step ON campaign_prospects(next_step_at) WHERE status = 'active';
+```
+
+### Campaign Sequences (Multi-Channel)
+
+```sql
+-- Enhanced sequences with branching
+CREATE TABLE campaign_sequences (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  campaign_id UUID NOT NULL REFERENCES campaigns(id) ON DELETE CASCADE,
+
+  name VARCHAR NOT NULL,
+  description TEXT,
+  is_default BOOLEAN DEFAULT false,  -- Default sequence for campaign
+
+  -- Sequence type
+  sequence_type VARCHAR DEFAULT 'linear',  -- 'linear', 'branching', 'ab_test'
+
+  -- Timing
+  timezone VARCHAR DEFAULT 'UTC',
+  respect_business_hours BOOLEAN DEFAULT true,
+
+  -- Status
+  status VARCHAR DEFAULT 'draft',  -- 'draft', 'active', 'paused', 'completed'
+
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now(),
+  created_by UUID REFERENCES user_profiles(id),
+
+  CONSTRAINT sequence_campaign_unique UNIQUE (campaign_id, name)
+);
+
+-- Sequence steps (supports branching)
+CREATE TABLE campaign_sequence_steps (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  sequence_id UUID NOT NULL REFERENCES campaign_sequences(id) ON DELETE CASCADE,
+
+  -- Step identification
+  step_number INTEGER NOT NULL,
+  step_name VARCHAR,
+
+  -- Channel and action
+  channel VARCHAR NOT NULL,  -- 'email', 'linkedin', 'call', 'sms', 'wait', 'condition'
+  action_type VARCHAR NOT NULL,  -- 'send_email', 'send_linkedin', 'create_task', 'wait', 'branch'
+
+  -- Timing
+  delay_amount INTEGER,  -- Delay before this step
+  delay_unit VARCHAR DEFAULT 'days',  -- 'minutes', 'hours', 'days', 'weeks'
+  specific_time TIME,  -- Send at specific time
+  specific_days INTEGER[],  -- Only on these days
+
+  -- Content (for send actions)
+  template_id UUID,  -- Reference to email_templates or communication templates
+  subject VARCHAR,  -- Can override template subject
+  content TEXT,  -- Can override template content
+  content_html TEXT,
+
+  -- Personalization
+  personalization_fields JSONB,  -- { fields used in this step }
+
+  -- Branching (for condition steps)
+  condition_type VARCHAR,  -- 'engagement', 'reply', 'click', 'open', 'custom'
+  condition_config JSONB,  -- { criteria for branch }
+  branch_true_step_id UUID,  -- Step to go to if condition true
+  branch_false_step_id UUID,  -- Step to go to if condition false
+
+  -- A/B Variants
+  ab_variants JSONB,  -- [{ variant: 'A', subject: '...', content: '...' }, ...]
+
+  -- Task creation (for call/linkedin steps)
+  task_type VARCHAR,
+  task_priority VARCHAR,
+  task_assigned_to UUID,
+
+  -- Exit conditions
+  exit_on_reply BOOLEAN DEFAULT true,
+  exit_on_meeting BOOLEAN DEFAULT true,
+  exit_on_unsubscribe BOOLEAN DEFAULT true,
+
+  -- Metrics
+  total_executed INTEGER DEFAULT 0,
+  total_success INTEGER DEFAULT 0,
+  total_failed INTEGER DEFAULT 0,
+
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now(),
+
+  CONSTRAINT step_sequence_number_unique UNIQUE (sequence_id, step_number)
+);
+
+CREATE INDEX idx_sequence_steps_sequence ON campaign_sequence_steps(sequence_id, step_number);
+```
+
+### Campaign Touchpoints (All Interactions)
+
+```sql
+-- Track every interaction across all channels
+CREATE TABLE campaign_touchpoints (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+
+  -- References
+  campaign_id UUID NOT NULL REFERENCES campaigns(id),
+  prospect_id UUID NOT NULL REFERENCES campaign_prospects(id),
+  contact_id UUID NOT NULL REFERENCES contacts(id),
+  sequence_step_id UUID REFERENCES campaign_sequence_steps(id),
+
+  -- Touchpoint details
+  channel VARCHAR NOT NULL,  -- 'email', 'linkedin', 'call', 'sms', 'meeting', 'event'
+  touchpoint_type VARCHAR NOT NULL,  -- 'sent', 'delivered', 'opened', 'clicked', 'replied', 'bounced', 'meeting_booked'
+
+  -- Content
+  subject VARCHAR,
+  content_preview VARCHAR(500),
+
+  -- Tracking
+  message_id VARCHAR,  -- External message ID for tracking
+  link_clicked VARCHAR,
+
+  -- Metadata
+  metadata JSONB,  -- Additional tracking data
+
+  -- Timing
+  occurred_at TIMESTAMPTZ DEFAULT now(),
+
+  -- Attribution
+  ab_variant VARCHAR,
+
+  -- Indexes
+  CONSTRAINT touchpoint_unique UNIQUE (prospect_id, touchpoint_type, occurred_at)
+);
+
+CREATE INDEX idx_touchpoints_campaign ON campaign_touchpoints(campaign_id, occurred_at DESC);
+CREATE INDEX idx_touchpoints_prospect ON campaign_touchpoints(prospect_id, occurred_at DESC);
+CREATE INDEX idx_touchpoints_contact ON campaign_touchpoints(contact_id, occurred_at DESC);
+CREATE INDEX idx_touchpoints_type ON campaign_touchpoints(touchpoint_type, occurred_at DESC);
+```
+
+### Campaign Analytics
+
+```sql
+-- Daily campaign metrics for trending
+CREATE TABLE campaign_metrics_daily (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  campaign_id UUID NOT NULL REFERENCES campaigns(id),
+
+  metric_date DATE NOT NULL,
+
+  -- Volume metrics
+  prospects_enrolled INTEGER DEFAULT 0,
+  emails_sent INTEGER DEFAULT 0,
+  emails_delivered INTEGER DEFAULT 0,
+
+  -- Engagement metrics
+  opens INTEGER DEFAULT 0,
+  unique_opens INTEGER DEFAULT 0,
+  clicks INTEGER DEFAULT 0,
+  unique_clicks INTEGER DEFAULT 0,
+  replies INTEGER DEFAULT 0,
+
+  -- Conversion metrics
+  leads_created INTEGER DEFAULT 0,
+  meetings_booked INTEGER DEFAULT 0,
+  opportunities_created INTEGER DEFAULT 0,
+
+  -- Negative metrics
+  bounces INTEGER DEFAULT 0,
+  unsubscribes INTEGER DEFAULT 0,
+  spam_complaints INTEGER DEFAULT 0,
+
+  -- Calculated rates
+  delivery_rate NUMERIC(5,2),
+  open_rate NUMERIC(5,2),
+  click_rate NUMERIC(5,2),
+  reply_rate NUMERIC(5,2),
+  conversion_rate NUMERIC(5,2),
+
+  CONSTRAINT campaign_metrics_daily_unique UNIQUE (campaign_id, metric_date)
+);
+
+CREATE INDEX idx_campaign_metrics_campaign ON campaign_metrics_daily(campaign_id, metric_date DESC);
+```
+
+### Campaign Lists (Static and Dynamic)
+
+```sql
+-- Prospect lists for targeting
+CREATE TABLE campaign_lists (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+
+  name VARCHAR NOT NULL,
+  description TEXT,
+
+  -- List type
+  list_type VARCHAR NOT NULL,  -- 'static', 'dynamic'
+
+  -- Dynamic list criteria (if dynamic)
+  criteria JSONB,  -- { filters for building list }
+
+  -- Counts
+  total_contacts INTEGER DEFAULT 0,
+  last_refresh_at TIMESTAMPTZ,
+
+  -- Status
+  status VARCHAR DEFAULT 'active',  -- 'active', 'archived'
+
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now(),
+  created_by UUID REFERENCES user_profiles(id)
+);
+
+-- Static list membership
+CREATE TABLE campaign_list_members (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  list_id UUID NOT NULL REFERENCES campaign_lists(id) ON DELETE CASCADE,
+  contact_id UUID NOT NULL REFERENCES contacts(id),
+
+  added_at TIMESTAMPTZ DEFAULT now(),
+  added_by UUID REFERENCES user_profiles(id),
+
+  CONSTRAINT list_member_unique UNIQUE (list_id, contact_id)
+);
+
+CREATE INDEX idx_list_members_list ON campaign_list_members(list_id);
+CREATE INDEX idx_list_members_contact ON campaign_list_members(contact_id);
+```
+
+## Migration Strategy
+
+### Phase 1: Schema Updates (Non-Breaking)
+- Add new columns to campaigns table
+- Add new columns to campaign_prospects
+- Create new tables (sequences, steps, touchpoints, metrics, lists)
+- Keep existing columns temporarily
+
+### Phase 2: Contact Migration
+
+```sql
+-- Step 1: Create contacts for prospects that don't exist
+INSERT INTO contacts (
+  org_id, primary_email, first_name, last_name,
+  company_name, source, source_detail, types
+)
+SELECT DISTINCT ON (cp.email)
+  cp.org_id, cp.email, cp.first_name, cp.last_name,
+  cp.company, 'campaign', c.name, ARRAY['prospect']
+FROM campaign_prospects cp
+JOIN campaigns c ON c.id = cp.campaign_id
+WHERE NOT EXISTS (
+  SELECT 1 FROM contacts ct
+  WHERE ct.org_id = cp.org_id
+  AND ct.primary_email = cp.email
+);
+
+-- Step 2: Link prospects to contacts
+UPDATE campaign_prospects cp
+SET contact_id = ct.id
+FROM contacts ct
+WHERE cp.org_id = ct.org_id
+AND cp.email = ct.primary_email
+AND cp.contact_id IS NULL;
+
+-- Step 3: Update contact types to include 'prospect'
+UPDATE contacts c
+SET types = array_append(types, 'prospect')
+WHERE EXISTS (
+  SELECT 1 FROM campaign_prospects cp
+  WHERE cp.contact_id = c.id
+)
+AND NOT 'prospect' = ANY(types);
+```
+
+### Phase 3: Sequence Migration
+
+```sql
+-- Migrate existing campaign_sequences (if any) to new structure
+INSERT INTO campaign_sequences (org_id, campaign_id, name, is_default, status)
+SELECT org_id, id, 'Default Sequence', true, 'active'
+FROM campaigns
+WHERE deleted_at IS NULL;
+
+-- Migrate sequence steps from campaign_activities
+INSERT INTO campaign_sequence_steps (
+  org_id, sequence_id, step_number, channel, action_type,
+  delay_amount, delay_unit, template_id, subject, content
+)
+SELECT
+  ca.org_id, cs.id, ca.step_order, 'email', 'send_email',
+  ca.delay_days, 'days', ca.template_id, ca.subject, ca.body
+FROM campaign_activities ca
+JOIN campaign_sequences cs ON cs.campaign_id = ca.campaign_id AND cs.is_default = true;
+```
+
+### Phase 4: Touchpoint Migration
+
+```sql
+-- Create touchpoints from existing activity tracking
+INSERT INTO campaign_touchpoints (
+  org_id, campaign_id, prospect_id, contact_id,
+  channel, touchpoint_type, occurred_at, metadata
+)
+SELECT
+  cp.org_id, cp.campaign_id, cp.id, cp.contact_id,
+  'email',
+  CASE
+    WHEN act.event_type = 'sent' THEN 'sent'
+    WHEN act.event_type = 'open' THEN 'opened'
+    WHEN act.event_type = 'click' THEN 'clicked'
+  END,
+  act.occurred_at,
+  act.metadata
+FROM prospect_activities act
+JOIN campaign_prospects cp ON cp.id = act.prospect_id
+WHERE cp.contact_id IS NOT NULL;
+```
+
+### Phase 5: UI & Router Updates
+- Update campaign list page to show enhanced metrics
+- Add sequence builder UI with drag-drop
+- Add A/B test configuration
+- Add analytics dashboard with funnel visualization
+- Update tRPC routers (crm.ts, sequences.ts)
 
 ## Acceptance Criteria
 
-### Sidebar & Navigation
-- [ ] Campaign journey visualization shows 4 stages (Setup → Active → Converting → Complete)
-- [ ] Sidebar displays 4 key metrics: Contacted, Opened, Responded, Leads
-- [ ] Progress bars show target completion percentage
-- [ ] Health indicator shows campaign status (On Track, Behind, At Risk)
-- [ ] All 9 sections visible in navigation
+### Schema Implementation
+- [ ] Enhanced campaigns table with all new fields
+- [ ] campaign_prospects linked to contacts
+- [ ] campaign_sequences table created
+- [ ] campaign_sequence_steps with branching support
+- [ ] campaign_touchpoints for all interactions
+- [ ] campaign_metrics_daily for trending
+- [ ] campaign_lists with static/dynamic support
+- [ ] All indexes created
+- [ ] RLS policies updated
 
-### Sections
-- [ ] **Dashboard** - Campaign summary, funnel visualization, key metrics
-- [ ] **Sequences** - List of channel sequences with performance stats, inline detail panel
-- [ ] **Prospects** - List with status filter, inline panel shows prospect details
-- [ ] **Leads** - Generated leads list with conversion tracking
-- [ ] **Activities** - Activity log with template-based creation
-- [ ] **Documents** - Upload/manage templates, collateral, reports
-- [ ] **Notes** - Internal notes for team reference
-- [ ] **Analytics** - Performance charts, A/B test results, ROI metrics
-- [ ] **History** - Complete timeline of all campaign events and activities
+### Data Migration
+- [ ] All prospects have contact_id
+- [ ] Contacts have 'prospect' type where applicable
+- [ ] Existing sequences migrated
+- [ ] Historical touchpoints created
+- [ ] No orphaned records
 
-### Query Efficiency
-- [ ] Campaign detail page loads with single optimized query
-- [ ] Section data lazy-loads on navigation
-- [ ] Cached data used when available
+### Integration
+- [ ] COMMS-01: Templates used for step content
+- [ ] WORKFLOWS-01: Triggers fire on campaign events
+- [ ] CONTACTS-01: Prospects are unified contacts
+- [ ] LEADS-01: Conversion creates leads properly
 
-### Activity Logging
-- [ ] Campaign creation logged
-- [ ] Status changes logged (active, paused, completed)
-- [ ] Prospect additions logged
-- [ ] Lead conversions logged
-- [ ] Every activity is logged either by loggind comleted ones or creating new future ones for planning/reminder. Following guidewre rpinciples of the work flow.
-- [ ] All events appear in History section
+### Frontend Updates
+- [ ] Campaign creation wizard updated
+- [ ] Sequence builder with branching
+- [ ] A/B test configuration UI
+- [ ] Analytics dashboard with funnel
+- [ ] Prospect list with engagement scoring
+- [ ] Multi-channel step types
 
-### UI Consistency
-- [ ] List views use table format with zebra striping
-- [ ] Clicking a row opens inline detail panel (not modal)
-- [ ] All sections have consistent padding and spacing
-- [ ] Selected rows remain highlighted
-
----
-
-## Manual Validation Steps
-
-### Test 1: Create and Launch a Campaign
-
-1. Navigate to `/employee/crm/campaigns`
-2. Click "New Campaign" button
-3. Complete the 5-step wizard:
-   - **Step 1**: Enter campaign name, select type (Lead Generation), set goal
-   - **Step 2**: Define target audience (industries, company sizes, regions)
-   - **Step 3**: Select channels (Email, LinkedIn), configure sequences
-   - **Step 4**: Set start/end dates, budget, targets
-   - **Step 5**: Review and click "Launch"
-4. **Expected**: Campaign appears in list with "Active" status
-5. **Verify**: History section shows "Campaign Created" event
-
-### Test 2: View Campaign Dashboard
-
-1. Click on a campaign from the list
-2. **Expected**: Dashboard section loads by default
-3. **Verify**: 
-   - Sidebar shows campaign journey stage
-   - Key metrics display (Contacted, Opened, Responded, Leads)
-   - Progress bars show target completion
-   - Funnel visualization appears
-
-### Test 3: Manage Prospects
-
-1. Navigate to campaign → Prospects section
-2. **Verify**: Table shows enrolled prospects with status
-3. Click on a prospect row
-4. **Expected**: Inline panel opens on right showing prospect details
-5. Use filter to show only "Responded" prospects
-6. Click "Convert to Lead" on a responded prospect
-7. **Verify**: 
-   - Lead created successfully
-   - Prospect status changes to "Converted"
-   - History shows conversion event
-
-### Test 4: View Sequences
-
-1. Navigate to campaign → Sequences section
-2. **Expected**: Table shows all configured sequences (Email, LinkedIn, etc.)
-3. **Verify** columns: Channel, Steps, Status, Sent, Open Rate, Response Rate
-4. Click on a sequence row
-5. **Expected**: Inline panel shows sequence details (steps, stop conditions, settings)
-
-### Test 5: Upload Documents
-
-1. Navigate to campaign → Documents section
-2. Click "Upload Document"
-3. Select a file and choose category (Email Template)
-4. **Expected**: Document appears in list
-5. Click on document row
-6. **Expected**: Inline panel shows document details and preview
-
-### Test 6: Log Activity
-
-1. Navigate to campaign → Activities section
-2. Click "Log Activity"
-3. Select template (e.g., "Campaign Review") or enter free-form
-4. Fill in details and save
-5. **Verify**: 
-   - Activity appears in Activities list
-   - Activity also appears in History section
-
-### Test 7: Review History
-
-1. Navigate to campaign → History section
-2. **Expected**: Timeline shows all events in chronological order (newest first)
-3. **Verify events include**:
-   - Campaign created
-   - Status changes
-   - Prospect additions
-   - Sequence sends
-   - Responses received
-   - Lead conversions
-   - Manual activities
-4. Use filter to show only "System Events"
-5. Use search to find specific events
-
-### Test 8: Pause and Resume Campaign
-
-1. From campaign detail page, click "Pause" button
-2. **Expected**: Campaign status changes to "Paused"
-3. **Verify**: History shows "Campaign Paused" event
-4. Click "Resume" button
-5. **Expected**: Campaign status returns to "Active"
-6. **Verify**: History shows "Campaign Resumed" event
-
-### Test 9: Complete Campaign
-
-1. Click "Complete" button on an active campaign
-2. Enter completion notes/outcome
-3. **Expected**: Campaign status changes to "Completed"
-4. **Verify**: 
-   - History shows "Campaign Completed" event with outcome
-   - Campaign journey shows "Complete" stage highlighted
-   - Campaign moves to "Completed" filter in list view
-
-### Test 10: Duplicate Campaign
-
-1. From campaign detail page, open actions menu
-2. Click "Duplicate"
-3. Enter new name
-4. **Expected**: New campaign created in "Draft" status
-5. **Verify**: History on new campaign shows "Campaign Duplicated from [Original Name]"
+### Testing
+- [ ] Sequence execution tested
+- [ ] Branching logic verified
+- [ ] Engagement scoring accurate
+- [ ] Metrics aggregation correct
+- [ ] A/B test winner selection works
 
 ---
 
-## Related Documentation
+## Technical Context
 
-- [Campaign Workspace System Analysis](../research/2025-12-08-campaign-workspace-system.md)
-- [Guidewire UI Architecture Research](../research/2025-12-08-guidewire-ui-architecture-current-state.md)
+### Campaign Architecture After Migration
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         CAMPAIGNS                                │
+├─────────────────────────────────────────────────────────────────┤
+│ campaign_type: email | linkedin | call | event | abm | nurture  │
+│ target_accounts → companies[] (for ABM)                         │
+│ owner_id → user_profiles                                        │
+└─────────────────────────────────────────────────────────────────┘
+         │
+         │ campaign_id FK
+         ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    campaign_prospects                            │
+│              (Enrollment in campaign)                            │
+├─────────────────────────────────────────────────────────────────┤
+│ contact_id ────────────────────► contacts (unified)             │
+│ sequence_id ───────────────────► campaign_sequences             │
+│ engagement_score, engagement_level (calculated)                 │
+│ current_step_id, next_step_at (sequence progress)               │
+└─────────────────────────────────────────────────────────────────┘
+         │
+         │ prospect_id FK
+         ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                   campaign_touchpoints                           │
+│            (Every interaction tracked)                           │
+├─────────────────────────────────────────────────────────────────┤
+│ channel: email | linkedin | call | sms | meeting                │
+│ touchpoint_type: sent | delivered | opened | clicked | replied  │
+│ ab_variant (for A/B tracking)                                   │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Sequence Flow
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    SEQUENCE BUILDER                              │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  [Start] → [Email 1] → [Wait 3d] → [Condition: Opened?]         │
+│                                           │                      │
+│                         ┌─────────────────┼─────────────────┐   │
+│                         ▼ Yes             ▼ No              │   │
+│                   [Email 2A]        [Email 2B]              │   │
+│                         │                 │                  │   │
+│                         └────────┬────────┘                 │   │
+│                                  ▼                           │   │
+│                            [Wait 5d]                         │   │
+│                                  │                           │   │
+│                                  ▼                           │   │
+│                       [Call Task Created]                    │   │
+│                                  │                           │   │
+│                                  ▼                           │   │
+│                              [End]                           │   │
+│                                                              │   │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Engagement Scoring Model
+
+```
+Engagement Score (0-100):
+├── Email Opens: +5 each (max 20)
+├── Email Clicks: +10 each (max 30)
+├── Email Reply: +25 each (max 50)
+├── Meeting Booked: +50
+├── LinkedIn Connection: +15
+├── LinkedIn Reply: +20
+├── Call Answered: +15
+└── Website Visit: +5 each (max 15)
+
+Decay: -5 points per week of inactivity
+
+Engagement Levels:
+├── Hot:  80-100 (immediate follow-up)
+├── Warm: 50-79  (nurture priority)
+├── Cool: 20-49  (standard sequence)
+└── Cold: 0-19   (re-engagement needed)
+```
+
+### A/B Test Winner Selection Algorithm
+
+```sql
+-- Winner Selection Logic (example function)
+CREATE OR REPLACE FUNCTION select_ab_test_winner(campaign_id UUID)
+RETURNS VARCHAR AS $$
+DECLARE
+  v_winner_variant VARCHAR;
+  v_metric VARCHAR;
+BEGIN
+  -- Get metric to optimize for
+  SELECT ab_test_config->>'winner_criteria' INTO v_metric
+  FROM campaigns WHERE id = campaign_id;
+
+  -- Select winner based on highest rate
+  SELECT ab_variant INTO v_winner_variant
+  FROM (
+    SELECT 
+      ab_variant,
+      CASE 
+        WHEN v_metric = 'open_rate' THEN SUM(email_opens)::numeric / COUNT(*)
+        WHEN v_metric = 'click_rate' THEN SUM(email_clicks)::numeric / SUM(email_opens)
+        WHEN v_metric = 'reply_rate' THEN SUM(email_replies)::numeric / COUNT(*)
+        ELSE SUM(email_opens)::numeric / COUNT(*) -- Default to open rate
+      END as rate
+    FROM campaign_prospects
+    WHERE campaign_id = campaign_id AND ab_variant IS NOT NULL
+    GROUP BY ab_variant
+    ORDER BY rate DESC
+    LIMIT 1
+  ) t;
+
+  RETURN v_winner_variant;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+---
+
+## Notes
+
+This campaign system is critical for **revenue generation**:
+
+1. **Multi-Channel Reach**: Meet prospects where they are
+2. **Personalization at Scale**: Data-driven messaging
+3. **Intelligent Sequencing**: Right message, right time
+4. **Engagement Intelligence**: Focus on hot prospects
+5. **Attribution**: Know what's working
+
+Integration points:
+- CONTACTS-01: Single contact record across all campaigns
+- COMMS-01: Unified templates and sending infrastructure
+- LEADS-01: Smooth conversion from prospect to lead
+- WORKFLOWS-01: Automate based on campaign events
+- DEALS-01: Track campaign-sourced pipeline
+
+---
+
+## Index Strategy
+
+```sql
+-- campaigns table indexes
+CREATE INDEX idx_campaigns_org ON campaigns(org_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_campaigns_type ON campaigns(campaign_type) WHERE deleted_at IS NULL;
+CREATE INDEX idx_campaigns_status ON campaigns(status) WHERE deleted_at IS NULL;
+CREATE INDEX idx_campaigns_owner ON campaigns(owner_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_campaigns_dates ON campaigns(start_date, end_date) WHERE deleted_at IS NULL;
+CREATE INDEX idx_campaigns_goal ON campaigns(goal_type, goal_metric) WHERE deleted_at IS NULL;
+
+-- campaign_prospects table indexes
+CREATE INDEX idx_campaign_prospects_org ON campaign_prospects(org_id);
+CREATE INDEX idx_campaign_prospects_campaign ON campaign_prospects(campaign_id);
+CREATE INDEX idx_campaign_prospects_contact ON campaign_prospects(contact_id);
+CREATE INDEX idx_campaign_prospects_sequence ON campaign_prospects(sequence_id, current_step_number);
+CREATE INDEX idx_campaign_prospects_engagement ON campaign_prospects(engagement_level, engagement_score DESC);
+CREATE INDEX idx_campaign_prospects_next_step ON campaign_prospects(next_step_at) WHERE status = 'active';
+CREATE INDEX idx_campaign_prospects_status ON campaign_prospects(status) WHERE status IN ('active', 'in_progress');
+
+-- campaign_sequences table indexes
+CREATE INDEX idx_campaign_sequences_campaign ON campaign_sequences(campaign_id);
+CREATE INDEX idx_campaign_sequences_status ON campaign_sequences(status) WHERE status = 'active';
+
+-- campaign_sequence_steps table indexes
+CREATE INDEX idx_sequence_steps_sequence ON campaign_sequence_steps(sequence_id, step_number);
+CREATE INDEX idx_sequence_steps_channel ON campaign_sequence_steps(channel);
+
+-- campaign_touchpoints table indexes
+CREATE INDEX idx_touchpoints_org ON campaign_touchpoints(org_id);
+CREATE INDEX idx_touchpoints_campaign ON campaign_touchpoints(campaign_id, occurred_at DESC);
+CREATE INDEX idx_touchpoints_prospect ON campaign_touchpoints(prospect_id, occurred_at DESC);
+CREATE INDEX idx_touchpoints_contact ON campaign_touchpoints(contact_id, occurred_at DESC);
+CREATE INDEX idx_touchpoints_type ON campaign_touchpoints(touchpoint_type, occurred_at DESC);
+
+-- campaign_metrics_daily table indexes
+CREATE INDEX idx_campaign_metrics_campaign ON campaign_metrics_daily(campaign_id, metric_date DESC);
+
+-- campaign_lists table indexes
+CREATE INDEX idx_campaign_lists_org ON campaign_lists(org_id) WHERE status = 'active';
+CREATE INDEX idx_list_members_list ON campaign_list_members(list_id);
+CREATE INDEX idx_list_members_contact ON campaign_list_members(contact_id);
+```
+
+---
+
+## RLS Policies
+
+```sql
+-- campaigns table RLS
+ALTER TABLE campaigns ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "campaigns_org_isolation" ON campaigns
+  FOR ALL USING (org_id = auth.org_id());
+
+-- campaign_prospects table RLS
+ALTER TABLE campaign_prospects ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "campaign_prospects_org_isolation" ON campaign_prospects
+  FOR ALL USING (org_id = auth.org_id());
+
+-- campaign_sequences table RLS
+ALTER TABLE campaign_sequences ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "campaign_sequences_org_isolation" ON campaign_sequences
+  FOR ALL USING (org_id = auth.org_id());
+
+-- campaign_sequence_steps table RLS
+ALTER TABLE campaign_sequence_steps ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "campaign_sequence_steps_org_isolation" ON campaign_sequence_steps
+  FOR ALL USING (org_id = auth.org_id());
+
+-- campaign_touchpoints table RLS
+ALTER TABLE campaign_touchpoints ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "campaign_touchpoints_org_isolation" ON campaign_touchpoints
+  FOR ALL USING (org_id = auth.org_id());
+
+-- campaign_metrics_daily table RLS
+ALTER TABLE campaign_metrics_daily ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "campaign_metrics_org_isolation" ON campaign_metrics_daily
+  FOR ALL USING (org_id = auth.org_id());
+
+-- campaign_lists table RLS
+ALTER TABLE campaign_lists ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "campaign_lists_org_isolation" ON campaign_lists
+  FOR ALL USING (org_id = auth.org_id());
+
+-- campaign_list_members table RLS
+ALTER TABLE campaign_list_members ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "campaign_list_members_org_isolation" ON campaign_list_members
+  FOR ALL USING (
+    EXISTS (SELECT 1 FROM campaign_lists cl WHERE cl.id = list_id AND cl.org_id = auth.org_id())
+  );
+```
+
+---
+
+## Rollback Plan
+
+### Schema Rollback
+```sql
+-- Drop in reverse order
+DROP TABLE IF EXISTS campaign_list_members;
+DROP TABLE IF EXISTS campaign_lists;
+DROP TABLE IF EXISTS campaign_metrics_daily;
+DROP TABLE IF EXISTS campaign_touchpoints;
+DROP TABLE IF EXISTS campaign_sequence_steps;
+DROP TABLE IF EXISTS campaign_sequences;
+
+-- Remove new columns from campaign_prospects
+ALTER TABLE campaign_prospects
+  DROP COLUMN IF EXISTS contact_id,
+  DROP COLUMN IF EXISTS enrollment_source,
+  DROP COLUMN IF EXISTS engagement_score,
+  DROP COLUMN IF EXISTS engagement_level,
+  DROP COLUMN IF EXISTS ab_variant;
+  -- ... other new columns
+
+-- Remove new columns from campaigns  
+ALTER TABLE campaigns
+  DROP COLUMN IF EXISTS campaign_type,
+  DROP COLUMN IF EXISTS target_audience,
+  DROP COLUMN IF EXISTS goal_type,
+  DROP COLUMN IF EXISTS budget;
+  -- ... other new columns
+```
+
+### Full Rollback Procedure
+1. Stop application deployments
+2. Verify no active campaign sequences in progress
+3. Execute schema rollback SQL
+4. Restore tRPC router to previous git commit
+5. Restore UI components (sequence builder, analytics) to previous git commit
+6. Verify basic campaign list page works
+7. Document incident and root cause

@@ -1,0 +1,512 @@
+# ISSUE: Unified Rate Cards & Billing System
+
+**Issue ID:** RATES-01
+**Created:** 2025-12-10
+**Status:** Open
+**Priority:** High
+**Type:** Feature/Enhancement (Database Schema Redesign)
+**Reporter:** User
+**Depends On:** ACCOUNTS-02 (company rate cards reference companies), SKILLS-01 (rate card items can reference skills)
+
+---
+
+## Summary
+
+Unify the fragmented rate card and billing rate system into a centralized, versioned rate management system. Currently, rates are scattered across 6+ tables with inconsistent structures, no versioning, and no historical tracking. This issue creates an enterprise-grade rate card system critical for staffing margins, client billing, and consultant pay.
+
+## Location
+
+- **Current Tables**: `job_rates`, `placement_rates`, `submission_rates`, `consultant_rates`, `company_rate_cards`, `company_rate_card_items`, `contact_rate_cards`
+- **Related Tables**: `placements` (has inline bill_rate, pay_rate)
+- **Affected Modules**: ATS, Placements, Billing, Bench Sales
+
+## Problem Description
+
+### Current State Issues
+
+1. **Fragmented Rate Tables**: 7+ separate rate tables
+   - `job_rates` - Job-level rate ranges
+   - `placement_rates` - Placement rate history
+   - `submission_rates` - Submission-specific rates
+   - `consultant_rates` - Bench consultant rates
+   - `company_rate_cards` - Client rate cards
+   - `company_rate_card_items` - Rate card line items
+   - `contact_rate_cards` - Contact-level rates
+
+2. **No Unified Versioning**: Rate changes not tracked consistently
+
+3. **Inconsistent Rate Models**:
+   - Some use hourly, some use annual salary
+   - Markup calculation varies
+   - OT/DT multipliers not standardized
+
+4. **Missing Enterprise Features**:
+   - No effective date ranges
+   - No rate card templates
+   - No approval workflows
+   - No rate negotiation history
+
+5. **Critical for Staffing**: Rates directly impact margins - errors are costly
+
+## Expected Behavior
+
+A unified rate system that:
+1. Centralized `rate_cards` master table with versioning
+2. `rate_card_items` for granular rate definitions
+3. Polymorphic entity rates for specific entities
+4. Full version history with effective dates
+5. Margin calculations (bill - pay = gross margin)
+6. OT/DT multipliers standardized
+7. Approval workflow for rate changes
+8. Rate negotiation tracking
+
+## Proposed Schema Design
+
+### Rate Cards (Master Definition)
+
+```sql
+CREATE TABLE rate_cards (
+  id UUID PRIMARY KEY,
+  org_id UUID NOT NULL,
+
+  -- Identity
+  rate_card_name VARCHAR NOT NULL,
+  rate_card_code VARCHAR,  -- For reference
+
+  -- Ownership (polymorphic)
+  entity_type VARCHAR NOT NULL,  -- 'company', 'organization', 'job'
+  entity_id UUID NOT NULL,
+
+  -- Classification
+  rate_card_type VARCHAR NOT NULL,  -- 'standard', 'msp', 'vms', 'custom'
+  currency VARCHAR DEFAULT 'USD',
+
+  -- Versioning
+  version INTEGER DEFAULT 1,
+  is_active BOOLEAN DEFAULT true,
+  is_latest_version BOOLEAN DEFAULT true,
+  previous_version_id UUID REFERENCES rate_cards(id),
+
+  -- Effective dates
+  effective_start_date DATE NOT NULL,
+  effective_end_date DATE,
+  approved_at TIMESTAMPTZ,
+  approved_by UUID REFERENCES user_profiles(id),
+
+  -- Default multipliers
+  overtime_multiplier NUMERIC(4,2) DEFAULT 1.5,
+  double_time_multiplier NUMERIC(4,2) DEFAULT 2.0,
+  holiday_multiplier NUMERIC(4,2) DEFAULT 1.5,
+
+  -- Default markup
+  default_markup_percentage NUMERIC(5,2),
+
+  -- MSP/VMS specific
+  msp_program_name VARCHAR,
+  msp_tier VARCHAR,
+  vms_platform VARCHAR,
+
+  -- Direct hire
+  direct_hire_fee_percentage NUMERIC(5,2),
+  direct_hire_fee_flat NUMERIC(10,2),
+
+  -- Applicable regions/roles
+  applicable_regions TEXT[],
+  applicable_job_categories TEXT[],
+
+  -- Notes
+  notes TEXT,
+
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  created_by UUID REFERENCES user_profiles(id),
+  deleted_at TIMESTAMPTZ
+);
+
+-- Indexes
+CREATE INDEX idx_rate_cards_entity ON rate_cards(entity_type, entity_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_rate_cards_active ON rate_cards(entity_type, entity_id, is_active) WHERE is_active = true AND deleted_at IS NULL;
+CREATE INDEX idx_rate_cards_effective ON rate_cards(effective_start_date, effective_end_date) WHERE deleted_at IS NULL;
+
+-- Only one active rate card per entity at a time
+CREATE UNIQUE INDEX idx_rate_cards_unique_active
+ON rate_cards(entity_type, entity_id)
+WHERE is_active = true AND is_latest_version = true AND deleted_at IS NULL;
+```
+
+### Rate Card Items (Line Items)
+
+```sql
+CREATE TABLE rate_card_items (
+  id UUID PRIMARY KEY,
+  org_id UUID NOT NULL,
+  rate_card_id UUID NOT NULL REFERENCES rate_cards(id),
+
+  -- Classification
+  job_category VARCHAR,  -- 'software_engineer', 'data_analyst', 'project_manager'
+  job_level VARCHAR,  -- 'junior', 'mid', 'senior', 'lead', 'principal'
+  job_family VARCHAR,  -- 'engineering', 'design', 'operations'
+  skill_id UUID REFERENCES skills(id),  -- Optional specific skill
+
+  -- Rate type
+  rate_type VARCHAR DEFAULT 'hourly',  -- 'hourly', 'daily', 'weekly', 'monthly', 'annual'
+
+  -- Pay rates (what we pay)
+  min_pay_rate NUMERIC(10,2),
+  max_pay_rate NUMERIC(10,2),
+  target_pay_rate NUMERIC(10,2),
+
+  -- Bill rates (what we charge)
+  min_bill_rate NUMERIC(10,2),
+  max_bill_rate NUMERIC(10,2),
+  standard_bill_rate NUMERIC(10,2),
+
+  -- Margins
+  target_margin_percentage NUMERIC(5,2),
+  min_margin_percentage NUMERIC(5,2),
+
+  -- Calculated fields (can be generated)
+  calculated_markup NUMERIC(5,2) GENERATED ALWAYS AS (
+    CASE WHEN target_pay_rate > 0
+    THEN ((standard_bill_rate - target_pay_rate) / target_pay_rate * 100)
+    ELSE 0 END
+  ) STORED,
+
+  -- Qualifications
+  requires_certification BOOLEAN DEFAULT false,
+  requires_clearance BOOLEAN DEFAULT false,
+  min_years_experience INTEGER,
+
+  -- Notes
+  notes TEXT,
+
+  -- Sort order
+  display_order INTEGER DEFAULT 0,
+
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+
+  -- Indexes
+  CREATE INDEX idx_rate_card_items_card ON rate_card_items(rate_card_id);
+  CREATE INDEX idx_rate_card_items_category ON rate_card_items(job_category, job_level);
+);
+```
+
+### Entity Rates (Specific Rates for Entities)
+
+```sql
+CREATE TABLE entity_rates (
+  id UUID PRIMARY KEY,
+  org_id UUID NOT NULL,
+
+  -- Who this rate applies to
+  entity_type VARCHAR NOT NULL,  -- 'contact', 'placement', 'submission'
+  entity_id UUID NOT NULL,
+
+  -- Source rate card (optional)
+  rate_card_id UUID REFERENCES rate_cards(id),
+  rate_card_item_id UUID REFERENCES rate_card_items(id),
+
+  -- Rate type
+  rate_type VARCHAR DEFAULT 'hourly',
+  currency VARCHAR DEFAULT 'USD',
+
+  -- Actual rates
+  bill_rate NUMERIC(10,2) NOT NULL,
+  pay_rate NUMERIC(10,2) NOT NULL,
+
+  -- Calculated margins
+  gross_margin NUMERIC(10,2) GENERATED ALWAYS AS (bill_rate - pay_rate) STORED,
+  margin_percentage NUMERIC(5,2) GENERATED ALWAYS AS (
+    CASE WHEN bill_rate > 0 THEN ((bill_rate - pay_rate) / bill_rate * 100) ELSE 0 END
+  ) STORED,
+  markup_percentage NUMERIC(5,2) GENERATED ALWAYS AS (
+    CASE WHEN pay_rate > 0 THEN ((bill_rate - pay_rate) / pay_rate * 100) ELSE 0 END
+  ) STORED,
+
+  -- Overtime rates
+  ot_bill_rate NUMERIC(10,2),
+  ot_pay_rate NUMERIC(10,2),
+  dt_bill_rate NUMERIC(10,2),
+  dt_pay_rate NUMERIC(10,2),
+
+  -- Effective dates
+  effective_date DATE NOT NULL,
+  end_date DATE,
+  is_current BOOLEAN DEFAULT true,
+
+  -- Negotiation tracking
+  original_bill_rate NUMERIC(10,2),  -- Before negotiation
+  negotiated_by UUID REFERENCES user_profiles(id),
+  negotiation_notes TEXT,
+
+  -- Approval
+  requires_approval BOOLEAN DEFAULT false,
+  approved_at TIMESTAMPTZ,
+  approved_by UUID REFERENCES user_profiles(id),
+  approval_notes TEXT,
+
+  -- Context
+  context_job_id UUID,  -- Job this rate applies to
+  context_client_id UUID,  -- Client company
+
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  created_by UUID REFERENCES user_profiles(id),
+  deleted_at TIMESTAMPTZ
+);
+
+-- Indexes
+CREATE INDEX idx_entity_rates_entity ON entity_rates(entity_type, entity_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_entity_rates_current ON entity_rates(entity_type, entity_id) WHERE is_current = true AND deleted_at IS NULL;
+CREATE INDEX idx_entity_rates_card ON entity_rates(rate_card_id) WHERE rate_card_id IS NOT NULL;
+```
+
+### Rate Sync Trigger (Placement Integration)
+
+```sql
+-- Sync placement rates when entity_rates changes
+CREATE OR REPLACE FUNCTION sync_placement_rates()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF TG_OP = 'INSERT' OR (TG_OP = 'UPDATE' AND NEW.is_current = true) THEN
+    IF NEW.entity_type = 'placement' THEN
+      UPDATE placements
+      SET 
+        current_bill_rate = NEW.bill_rate,
+        current_pay_rate = NEW.pay_rate,
+        current_margin = NEW.gross_margin,
+        current_margin_percentage = NEW.margin_percentage,
+        rates_last_updated_at = now()
+      WHERE id = NEW.entity_id;
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_sync_placement_rates
+AFTER INSERT OR UPDATE ON entity_rates
+FOR EACH ROW EXECUTE FUNCTION sync_placement_rates();
+```
+
+### Rate Change History
+
+```sql
+CREATE TABLE rate_change_history (
+  id UUID PRIMARY KEY,
+  entity_rate_id UUID NOT NULL REFERENCES entity_rates(id),
+
+  change_type VARCHAR NOT NULL,  -- 'created', 'updated', 'approved', 'rejected', 'expired'
+
+  old_bill_rate NUMERIC(10,2),
+  new_bill_rate NUMERIC(10,2),
+  old_pay_rate NUMERIC(10,2),
+  new_pay_rate NUMERIC(10,2),
+
+  reason TEXT,
+  changed_by UUID REFERENCES user_profiles(id),
+  changed_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE INDEX idx_rate_change_history_rate ON rate_change_history(entity_rate_id, changed_at DESC);
+```
+
+### Rate Approvals
+
+```sql
+CREATE TABLE rate_approvals (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL,
+  entity_rate_id UUID NOT NULL REFERENCES entity_rates(id),
+  
+  -- Approval type
+  approval_type VARCHAR NOT NULL, -- 'margin_exception', 'rate_change', 'new_rate'
+  
+  -- Request details
+  requested_by UUID REFERENCES user_profiles(id),
+  requested_at TIMESTAMPTZ DEFAULT now(),
+  justification TEXT,
+  
+  -- Decision
+  status VARCHAR DEFAULT 'pending', -- 'pending', 'approved', 'rejected'
+  decided_by UUID REFERENCES user_profiles(id),
+  decided_at TIMESTAMPTZ,
+  decision_reason TEXT,
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE INDEX idx_rate_approvals_pending ON rate_approvals(status) WHERE status = 'pending';
+```
+
+## Migration Strategy
+
+### Phase 1: Schema Creation
+- Create `rate_cards`, `rate_card_items`, `entity_rates`, `rate_change_history`, `rate_approvals`
+- Add indexes and RLS
+- Create sync trigger
+
+### Phase 2: Data Migration
+1. Migrate `company_rate_cards` → `rate_cards`
+2. Migrate `company_rate_card_items` → `rate_card_items`
+3. Migrate `job_rates` → `entity_rates` (entity_type='job')
+4. Migrate `placement_rates` → `entity_rates` (entity_type='placement')
+5. Migrate `submission_rates` → `entity_rates` (entity_type='submission')
+6. Migrate `consultant_rates` → `entity_rates` (entity_type='contact')
+7. Migrate `contact_rate_cards` → `entity_rates`
+8. Migrate inline rates from `placements` table
+
+### Phase 3: Router & UI Updates
+- `rates` tRPC router
+- RateCardEditor component
+- RateNegotiationDialog
+- MarginCalculator widget
+
+## Acceptance Criteria
+
+### Schema Implementation
+- [ ] Create `rate_cards` with versioning
+- [ ] Create `rate_card_items` with job categories
+- [ ] Create `entity_rates` polymorphic table
+- [ ] Create `rate_change_history`
+- [ ] Create `rate_approvals`
+- [ ] Implement `sync_placement_rates` trigger
+- [ ] Calculated margin fields working
+- [ ] RLS policies enforced
+
+### Versioning
+- [ ] Rate card versions tracked
+- [ ] Effective date ranges enforced
+- [ ] Only one active version per entity
+
+### Margin Calculations
+- [ ] Gross margin calculated correctly
+- [ ] Margin percentage calculated correctly
+- [ ] Markup percentage calculated correctly
+- [ ] OT/DT rates calculated with multipliers
+
+### Data Migration
+- [ ] All legacy rate tables migrated
+- [ ] Historical rates preserved
+- [ ] No data loss
+
+### Frontend Updates
+- [ ] RateCardManager (CRUD for rate cards)
+- [ ] RateCardItemEditor (line items)
+- [ ] EntityRateWidget (show rates on entity)
+- [ ] MarginCalculator (what-if analysis)
+
+---
+
+## Technical Context
+
+### Rate Calculation Formulas
+
+```
+Gross Margin = Bill Rate - Pay Rate
+Margin % = (Gross Margin / Bill Rate) × 100
+Markup % = (Gross Margin / Pay Rate) × 100
+
+OT Bill Rate = Bill Rate × OT Multiplier (default 1.5)
+OT Pay Rate = Pay Rate × OT Multiplier (default 1.5)
+DT Bill Rate = Bill Rate × DT Multiplier (default 2.0)
+DT Pay Rate = Pay Rate × DT Multiplier (default 2.0)
+
+Annual Salary = Hourly Rate × 2080 (standard work hours)
+```
+
+### Rate Type Hierarchy
+
+```
+Organization Default Rate Card
+    └── Client Rate Card (overrides org defaults)
+        └── Job Rate Card (overrides client defaults)
+            └── Submission Rate (overrides job defaults)
+                └── Placement Rate (final negotiated rate)
+```
+
+---
+
+## RLS Policies
+
+```sql
+-- rate_cards table RLS
+ALTER TABLE rate_cards ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "rate_cards_org_isolation" ON rate_cards
+  FOR ALL USING (org_id = auth.org_id());
+
+-- rate_card_items table RLS
+ALTER TABLE rate_card_items ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "rate_card_items_org_isolation" ON rate_card_items
+  FOR ALL USING (org_id = auth.org_id());
+
+-- entity_rates table RLS
+ALTER TABLE entity_rates ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "entity_rates_org_isolation" ON entity_rates
+  FOR ALL USING (org_id = auth.org_id());
+
+-- rate_change_history table RLS
+ALTER TABLE rate_change_history ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "rate_change_history_org_isolation" ON rate_change_history
+  FOR ALL USING (
+    EXISTS (SELECT 1 FROM entity_rates e WHERE e.id = entity_rate_id AND e.org_id = auth.org_id())
+  );
+
+-- rate_approvals table RLS
+ALTER TABLE rate_approvals ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "rate_approvals_org_isolation" ON rate_approvals
+  FOR ALL USING (org_id = auth.org_id());
+```
+
+---
+
+## Rollback Plan
+
+### Schema Rollback
+```sql
+-- Drop in reverse order
+DROP TRIGGER IF EXISTS trg_sync_placement_rates ON entity_rates;
+DROP FUNCTION IF EXISTS sync_placement_rates;
+DROP TABLE IF EXISTS rate_approvals;
+DROP TABLE IF EXISTS rate_change_history;
+DROP TABLE IF EXISTS entity_rates;
+DROP TABLE IF EXISTS rate_card_items;
+DROP TABLE IF EXISTS rate_cards;
+```
+
+### Data Rollback
+```sql
+-- Restore legacy rate tables from backup
+INSERT INTO company_rate_cards SELECT * FROM company_rate_cards_backup;
+INSERT INTO company_rate_card_items SELECT * FROM company_rate_card_items_backup;
+INSERT INTO job_rates SELECT * FROM job_rates_backup;
+INSERT INTO placement_rates SELECT * FROM placement_rates_backup;
+INSERT INTO submission_rates SELECT * FROM submission_rates_backup;
+INSERT INTO consultant_rates SELECT * FROM consultant_rates_backup;
+INSERT INTO contact_rate_cards SELECT * FROM contact_rate_cards_backup;
+
+-- Restore inline rates on placements if removed
+UPDATE placements p
+SET bill_rate = er.bill_rate, pay_rate = er.pay_rate
+FROM entity_rates er
+WHERE er.entity_type = 'placement' AND er.entity_id = p.id AND er.is_current = true;
+```
+
+### Full Rollback Procedure
+1. Stop application deployments
+2. Execute schema rollback SQL
+3. Restore legacy data from backups
+4. Restore tRPC router to previous git commit
+5. Verify margin calculations still work
+6. Document any financial discrepancies

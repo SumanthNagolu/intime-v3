@@ -324,28 +324,87 @@ CREATE INDEX activities_pending_idx ON activities(assignee_id, due_date)
 
 ## Migrations
 
+### Migration Workflow (CRITICAL)
+
+**ALWAYS follow this 4-step process when creating database migrations:**
+
+#### Step 1: Validate Prior Migrations
+
+Before running new migrations, validate that all prior migrations have been applied:
+
+```bash
+# Check migration status
+pnpm db:status
+
+# If any migrations are pending, run them first
+pnpm db:migrate
+```
+
+Ensure all existing migrations are applied before proceeding. Fix any gaps or failed migrations.
+
+#### Step 2: Run New Migration
+
+After writing your migration script, run it immediately to verify it works:
+
+```bash
+pnpm db:migrate
+```
+
+Do NOT commit or continue until the migration runs successfully.
+
+#### Step 3: Consolidate into Baseline (Database-First)
+
+**IMPORTANT**: Use `pg_dump` to dump the actual schema from the database - do NOT manually merge SQL files.
+
+```bash
+# 1. Dump the schema directly from the database (most reliable)
+PGPASSWORD=<password> pg_dump -h db.<project>.supabase.co -p 5432 -U postgres -d postgres \
+  --schema=public --schema-only --no-owner --no-privileges \
+  > supabase/migrations/00000000000000_baseline.sql
+
+# 2. Remove the \restrict line that pg_dump adds
+sed -i '' '/^\\restrict/d' supabase/migrations/00000000000000_baseline.sql
+
+# 3. Delete the individual migration files
+rm supabase/migrations/202*.sql
+```
+
+This approach guarantees the baseline matches the actual database state.
+
+#### Step 4: Sync Migration History
+
+After consolidating, sync the migration history to keep only the baseline:
+
+```bash
+# Delete individual migration records, keeping only baseline
+PGPASSWORD=<password> psql -h db.<project>.supabase.co -p 5432 -U postgres -d postgres \
+  -c "DELETE FROM supabase_migrations.schema_migrations WHERE version <> '00000000000000';"
+
+# Verify the sync was successful
+pnpm db:status
+```
+
+### Why This Workflow?
+
+| Problem | Solution |
+|---------|----------|
+| Migration drift | Single source of truth in baseline |
+| Merge conflicts | No individual migration files to conflict |
+| Schema archaeology | Full schema visible in one file |
+| Fresh database setup | Single migration to run |
+| Missing migrations | Step 1 catches gaps before new changes |
+
 ### Migration Files
 
-Location: `docs/specs/10-DATABASE/migrations/`
+Location: `supabase/migrations/`
 
-```sql
--- Migration: 025_add_job_priority.sql
-
--- Up
-ALTER TABLE jobs ADD COLUMN priority INTEGER DEFAULT 0;
-CREATE INDEX jobs_priority_idx ON jobs(org_id, priority DESC) WHERE deleted_at IS NULL;
-
--- Down
-DROP INDEX jobs_priority_idx;
-ALTER TABLE jobs DROP COLUMN priority;
-```
+The baseline file `00000000000000_baseline.sql` contains the complete schema.
 
 ### Running Migrations
 
 ```bash
 pnpm db:migrate          # Run pending migrations
 pnpm db:status           # Check migration status
-pnpm db:rollback         # Rollback last migration
 ```
 
 ---

@@ -1,0 +1,706 @@
+# ISSUE: Consultant Onboarding System
+
+**Issue ID:** ONBOARDING-01
+**Created:** 2025-12-11
+**Status:** Open
+**Priority:** High
+**Type:** New Feature
+**Reporter:** Architecture Review
+**Depends On:** PLACEMENTS-01 (placement created triggers onboarding), CONTACTS-01 (unified contacts), COMPLIANCE-01 (compliance requirements), DOCS-01 (document collection), CONTRACTS-01 (employment contracts)
+
+---
+
+## Summary
+
+Build a comprehensive consultant onboarding system that manages the critical workflow between offer acceptance and first day of work. This is a **CRITICAL GAP** in staffing operations - onboarding failures lead to placement failures, compliance violations, and lost revenue. The system tracks all required tasks including I-9 completion, direct deposit setup, background checks, drug tests, equipment provisioning, and client-specific requirements.
+
+## Location
+
+- **New Tables**: `onboarding_templates`, `onboarding_checklists`, `onboarding_tasks`, `onboarding_task_assignments`, `onboarding_documents`
+- **Related Tables**: `placements`, `contacts`, `companies`, `compliance_items`, `contracts`, `documents`
+- **Affected Modules**: ATS, HR, Operations, Consultant Portal
+
+## Problem Description
+
+### Current State
+
+No formal onboarding system exists in the current schema. This gap means:
+
+1. **No Task Tracking**: Cannot track onboarding task completion
+2. **No Template System**: Each placement onboarded manually
+3. **No Compliance Integration**: Background checks, drug tests not systematically tracked
+4. **No Client Requirements**: Client-specific requirements not formalized
+5. **No Progress Visibility**: Cannot see onboarding status across placements
+6. **No Deadline Management**: Tasks have no due dates or escalation
+
+### Business Requirements
+
+Staffing companies require:
+- Onboarding checklists triggered by placement acceptance
+- Client-specific and placement-type-specific templates
+- Task assignment to internal staff, consultant, or client
+- Deadline tracking with reminders and escalation
+- Document collection integration
+- Compliance requirement verification before start date
+- Equipment and access provisioning tracking
+- First-day readiness confirmation
+
+## Proposed Schema Design
+
+### Onboarding Templates Table
+
+```sql
+CREATE TABLE onboarding_templates (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  
+  -- Template identity
+  template_name VARCHAR NOT NULL,
+  template_code VARCHAR,  -- 'STANDARD_W2', 'CLIENT_ACME_ONBOARD'
+  description TEXT,
+  
+  -- Applicability
+  applies_to_placement_type VARCHAR,  -- 'contract', 'permanent', 'c2h', NULL = all
+  applies_to_employment_type VARCHAR,  -- 'w2', '1099', 'c2c', NULL = all
+  applies_to_client_company_id UUID REFERENCES companies(id),  -- Client-specific template
+  applies_to_job_category VARCHAR,  -- Job category specific
+  
+  -- Template configuration
+  task_definitions JSONB NOT NULL,
+  /* Example:
+  [
+    {
+      "task_code": "I9_COMPLETION",
+      "task_name": "Complete I-9 Form",
+      "description": "Complete Section 1 of I-9 form",
+      "task_category": "compliance",
+      "assignee_type": "consultant",  -- 'consultant', 'internal', 'client', 'vendor'
+      "assignee_role": null,  -- For internal: 'recruiter', 'hr', 'operations'
+      "due_days_from_offer": 3,
+      "due_days_from_start": null,  -- Alternative: days before/after start
+      "is_required": true,
+      "is_blocking": true,  -- Blocks start if not complete
+      "requires_document": true,
+      "document_type": "i9",
+      "compliance_requirement_id": null,  -- Link to COMPLIANCE-01
+      "reminder_days_before_due": [3, 1],
+      "escalate_after_overdue_days": 1,
+      "escalate_to_role": "hr_manager",
+      "dependencies": [],  -- Other task codes that must complete first
+      "display_order": 1
+    },
+    {
+      "task_code": "DIRECT_DEPOSIT",
+      "task_name": "Set Up Direct Deposit",
+      "description": "Provide bank account information for payments",
+      "task_category": "payroll",
+      "assignee_type": "consultant",
+      "due_days_from_offer": 5,
+      "is_required": true,
+      "is_blocking": false,
+      "requires_document": true,
+      "document_type": "direct_deposit_form",
+      "display_order": 2
+    },
+    {
+      "task_code": "BG_CHECK_INITIATE",
+      "task_name": "Initiate Background Check",
+      "task_category": "compliance",
+      "assignee_type": "internal",
+      "assignee_role": "hr",
+      "due_days_from_offer": 1,
+      "is_required": true,
+      "is_blocking": true,
+      "display_order": 3
+    }
+  ]
+  */
+  
+  -- Default timeline
+  default_target_days INTEGER DEFAULT 7,  -- Days from offer to ready
+  
+  -- Automation
+  auto_create_on_offer_acceptance BOOLEAN DEFAULT true,
+  auto_create_compliance_items BOOLEAN DEFAULT true,  -- Create COMPLIANCE-01 items
+  
+  -- Status
+  is_active BOOLEAN DEFAULT true,
+  is_default BOOLEAN DEFAULT false,  -- Default template when no specific match
+  
+  -- Version tracking
+  version INTEGER DEFAULT 1,
+  previous_version_id UUID REFERENCES onboarding_templates(id),
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  created_by UUID REFERENCES user_profiles(id),
+  deleted_at TIMESTAMPTZ
+);
+
+-- Indexes
+CREATE INDEX idx_onboarding_templates_client ON onboarding_templates(applies_to_client_company_id) WHERE is_active = true AND deleted_at IS NULL;
+CREATE INDEX idx_onboarding_templates_type ON onboarding_templates(applies_to_placement_type, applies_to_employment_type) WHERE is_active = true AND deleted_at IS NULL;
+CREATE INDEX idx_onboarding_templates_default ON onboarding_templates(org_id) WHERE is_default = true AND is_active = true AND deleted_at IS NULL;
+```
+
+### Onboarding Checklists Table (Per-Placement Instance)
+
+```sql
+CREATE TABLE onboarding_checklists (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  
+  -- Checklist identity
+  checklist_number VARCHAR GENERATED ALWAYS AS (
+    'ONB-' || TO_CHAR(created_at, 'YYYYMMDD') || '-' || SUBSTRING(id::TEXT, 1, 8)
+  ) STORED,
+  
+  -- References
+  placement_id UUID NOT NULL REFERENCES placements(id),
+  offer_id UUID REFERENCES offers(id), -- Optional link back to offer
+  contact_id UUID NOT NULL REFERENCES contacts(id),  -- The consultant
+  template_id UUID REFERENCES onboarding_templates(id),
+  
+  -- Client context
+  client_company_id UUID NOT NULL REFERENCES companies(id),
+  work_site_company_id UUID REFERENCES companies(id),
+  
+  -- Timeline
+  offer_accepted_at TIMESTAMPTZ, -- Populated from placement/offer data
+  target_start_date DATE NOT NULL,
+  actual_start_date DATE,
+  
+  -- Status
+  status VARCHAR NOT NULL DEFAULT 'pending',
+  /* Status values:
+     'pending' - Not yet started
+     'in_progress' - Some tasks completed
+     'blocked' - Blocked by failed/overdue tasks
+     'ready' - All required tasks complete
+     'started' - Consultant has started
+     'completed' - Onboarding fully complete
+     'cancelled' - Placement cancelled
+  */
+  
+  -- Progress tracking
+  total_tasks INTEGER DEFAULT 0,
+  completed_tasks INTEGER DEFAULT 0,
+  blocking_tasks INTEGER DEFAULT 0,
+  overdue_tasks INTEGER DEFAULT 0,
+  progress_percentage INTEGER GENERATED ALWAYS AS (
+    CASE WHEN total_tasks > 0 THEN (completed_tasks * 100 / total_tasks) ELSE 0 END
+  ) STORED,
+  
+  -- Readiness
+  is_ready_to_start BOOLEAN DEFAULT false,
+  ready_confirmed_at TIMESTAMPTZ,
+  ready_confirmed_by UUID REFERENCES user_profiles(id),
+  
+  -- First day confirmation
+  first_day_confirmed BOOLEAN DEFAULT false,
+  first_day_confirmed_at TIMESTAMPTZ,
+  first_day_notes TEXT,
+  
+  -- Escalation
+  is_escalated BOOLEAN DEFAULT false,
+  escalated_at TIMESTAMPTZ,
+  escalated_to UUID REFERENCES user_profiles(id),
+  escalation_reason TEXT,
+  
+  -- Notes
+  internal_notes TEXT,
+  consultant_notes TEXT,  -- Notes visible to consultant
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  created_by UUID REFERENCES user_profiles(id),
+  deleted_at TIMESTAMPTZ,
+  
+  -- Constraints
+  CONSTRAINT one_checklist_per_placement UNIQUE (placement_id)
+);
+
+-- Indexes
+CREATE INDEX idx_onboarding_checklists_placement ON onboarding_checklists(placement_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_onboarding_checklists_contact ON onboarding_checklists(contact_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_onboarding_checklists_client ON onboarding_checklists(client_company_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_onboarding_checklists_status ON onboarding_checklists(status) WHERE deleted_at IS NULL;
+CREATE INDEX idx_onboarding_checklists_start_date ON onboarding_checklists(target_start_date) WHERE status IN ('pending', 'in_progress', 'blocked') AND deleted_at IS NULL;
+CREATE INDEX idx_onboarding_checklists_escalated ON onboarding_checklists(is_escalated) WHERE is_escalated = true AND deleted_at IS NULL;
+```
+
+### Onboarding Tasks Table (Individual Tasks)
+
+```sql
+CREATE TABLE onboarding_tasks (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  checklist_id UUID NOT NULL REFERENCES onboarding_checklists(id) ON DELETE CASCADE,
+  
+  -- Task identity
+  task_code VARCHAR NOT NULL,
+  task_name VARCHAR NOT NULL,
+  description TEXT,
+  
+  -- Category
+  task_category VARCHAR NOT NULL,
+  /* Categories:
+     'compliance' - Background check, drug test, I-9
+     'payroll' - Direct deposit, W-4, tax forms
+     'documents' - Resume, certifications, references
+     'equipment' - Laptop, badges, access cards
+     'access' - System access, email, VPN
+     'training' - Required training completions
+     'client_specific' - Client-required items
+     'administrative' - Internal admin tasks
+  */
+  
+  -- Assignment
+  assignee_type VARCHAR NOT NULL,  -- 'consultant', 'internal', 'client', 'vendor'
+  assignee_user_id UUID REFERENCES user_profiles(id),  -- If internal
+  assignee_contact_id UUID REFERENCES contacts(id),  -- If external
+  assignee_role VARCHAR,  -- Role-based assignment
+  
+  -- Timeline
+  due_date TIMESTAMPTZ NOT NULL,
+  reminder_sent_at TIMESTAMPTZ,
+  reminder_count INTEGER DEFAULT 0,
+  
+  -- Status
+  status VARCHAR NOT NULL DEFAULT 'pending',
+  /* Status values:
+     'pending' - Not started
+     'in_progress' - Work in progress
+     'awaiting_review' - Completed, needs verification
+     'completed' - Verified complete
+     'blocked' - Blocked by dependency or issue
+     'skipped' - Skipped (with reason)
+     'failed' - Failed (e.g., background check failed)
+     'cancelled' - Cancelled
+  */
+  
+  status_reason TEXT,  -- For blocked, skipped, failed
+  
+  -- Completion tracking
+  completed_at TIMESTAMPTZ,
+  completed_by UUID,  -- user_id or contact_id
+  verified_at TIMESTAMPTZ,
+  verified_by UUID REFERENCES user_profiles(id),
+  
+  -- Requirements
+  is_required BOOLEAN DEFAULT true,
+  is_blocking BOOLEAN DEFAULT false,  -- Blocks start date if incomplete
+  
+  -- Document requirement
+  requires_document BOOLEAN DEFAULT false,
+  document_type VARCHAR,  -- Type of document required
+  document_id UUID REFERENCES documents(id),  -- Attached document
+  
+  -- Compliance linkage
+  compliance_item_id UUID,  -- REFERENCES compliance_items(id) - link to COMPLIANCE-01
+  
+  -- Dependencies
+  depends_on_task_ids UUID[],  -- Tasks that must complete first
+  
+  -- Escalation
+  escalate_after_overdue_days INTEGER DEFAULT 1,
+  escalate_to_role VARCHAR,
+  is_escalated BOOLEAN DEFAULT false,
+  escalated_at TIMESTAMPTZ,
+  escalated_to UUID REFERENCES user_profiles(id),
+  
+  -- Priority and ordering
+  priority VARCHAR DEFAULT 'normal',  -- 'urgent', 'high', 'normal', 'low'
+  display_order INTEGER DEFAULT 0,
+  
+  -- Notes
+  notes TEXT,
+  completion_notes TEXT,
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL
+);
+
+-- Indexes
+CREATE INDEX idx_onboarding_tasks_checklist ON onboarding_tasks(checklist_id, display_order);
+CREATE INDEX idx_onboarding_tasks_status ON onboarding_tasks(status, due_date);
+CREATE INDEX idx_onboarding_tasks_assignee_user ON onboarding_tasks(assignee_user_id) WHERE assignee_user_id IS NOT NULL;
+CREATE INDEX idx_onboarding_tasks_assignee_contact ON onboarding_tasks(assignee_contact_id) WHERE assignee_contact_id IS NOT NULL;
+CREATE INDEX idx_onboarding_tasks_overdue ON onboarding_tasks(due_date) WHERE status IN ('pending', 'in_progress') AND due_date < NOW();
+CREATE INDEX idx_onboarding_tasks_blocking ON onboarding_tasks(checklist_id) WHERE is_blocking = true AND status NOT IN ('completed', 'skipped');
+CREATE INDEX idx_onboarding_tasks_category ON onboarding_tasks(task_category, status);
+```
+
+### Onboarding Task History Table
+
+```sql
+CREATE TABLE onboarding_task_history (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  task_id UUID NOT NULL REFERENCES onboarding_tasks(id) ON DELETE CASCADE,
+  
+  -- Change tracking
+  action VARCHAR NOT NULL,
+  /* Actions:
+     'created', 'status_changed', 'reassigned', 'document_attached',
+     'reminder_sent', 'escalated', 'completed', 'verified', 'note_added'
+  */
+  
+  old_status VARCHAR,
+  new_status VARCHAR,
+  
+  details JSONB,
+  
+  -- Who made the change
+  performed_by UUID REFERENCES user_profiles(id),
+  performed_by_contact_id UUID REFERENCES contacts(id),
+  performed_at TIMESTAMPTZ DEFAULT now() NOT NULL
+);
+
+CREATE INDEX idx_onboarding_task_history_task ON onboarding_task_history(task_id, performed_at DESC);
+```
+
+### Client Onboarding Requirements Table
+
+```sql
+-- Client-specific onboarding requirements (template building blocks)
+CREATE TABLE client_onboarding_requirements (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  client_company_id UUID NOT NULL REFERENCES companies(id),
+  
+  -- Requirement identity
+  requirement_code VARCHAR NOT NULL,
+  requirement_name VARCHAR NOT NULL,
+  description TEXT,
+  
+  -- Category
+  requirement_category VARCHAR NOT NULL,
+  
+  -- Task definition (same structure as template task_definitions)
+  task_definition JSONB NOT NULL,
+  
+  -- Applicability
+  applies_to_placement_types VARCHAR[],  -- ['contract', 'perm']
+  applies_to_job_categories VARCHAR[],
+  applies_to_work_sites UUID[],  -- Specific work site companies
+  
+  -- Status
+  is_active BOOLEAN DEFAULT true,
+  effective_date DATE,
+  end_date DATE,
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  created_by UUID REFERENCES user_profiles(id),
+  
+  CONSTRAINT client_req_unique UNIQUE (client_company_id, requirement_code)
+);
+
+CREATE INDEX idx_client_onboarding_reqs_client ON client_onboarding_requirements(client_company_id) WHERE is_active = true;
+```
+
+## Onboarding Workflow
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    ONBOARDING WORKFLOW                           │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  [Offer Accepted] ──► [Placement Created]                       │
+│                              │                                   │
+│                              ▼                                   │
+│                    [Trigger: Placement Created]                  │
+│                              │                                   │
+│                              ▼                                   │
+│                    [Find Matching Template]                      │
+│                    (Client + Type specific)                      │
+│                              │                                   │
+│                              ▼                                   │
+│                    [Create Checklist & Tasks]                    │
+│                              │                                   │
+│              ┌───────────────┼───────────────┐                   │
+│              ▼               ▼               ▼                   │
+│       [Consultant]    [Internal Staff]  [Client]                │
+│       - I-9 Section 1  - Background check  - Badge request      │
+│       - Direct deposit - Drug test order   - Access request     │
+│       - Tax forms      - I-9 Section 2     - Orientation        │
+│       - Certifications - Equipment order   - Training           │
+│              │               │               │                   │
+│              └───────────────┴───────────────┘                   │
+│                              │                                   │
+│                              ▼                                   │
+│                    [All Blocking Tasks Complete?]                │
+│                         │              │                         │
+│                        Yes             No                        │
+│                         │              │                         │
+│                         ▼              ▼                         │
+│                  [Ready to Start]  [Blocked - Escalate]         │
+│                         │                                        │
+│                         ▼                                        │
+│                  [Start Date Confirmed]                          │
+│                         │                                        │
+│                         ▼                                        │
+│                  [First Day Check-in]                            │
+│                         │                                        │
+│                         ▼                                        │
+│                  [Onboarding Complete]                           │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+## Triggers and Automation
+
+```sql
+-- Trigger to create onboarding checklist when placement is created
+CREATE OR REPLACE FUNCTION create_onboarding_for_placement()
+RETURNS TRIGGER AS $$
+DECLARE
+  v_template_id UUID;
+  v_checklist_id UUID;
+  v_offer_id UUID;
+BEGIN
+  -- Only when placement is active or pending
+  IF NEW.status IN ('pending', 'active') THEN
+    
+    -- Find matching template (most specific first)
+    SELECT id INTO v_template_id
+    FROM onboarding_templates
+    WHERE org_id = NEW.org_id
+      AND is_active = true
+      AND deleted_at IS NULL
+      AND (applies_to_client_company_id = NEW.client_company_id 
+           OR applies_to_client_company_id IS NULL)
+      -- Assuming placements has placement_type column or similar
+      -- AND (applies_to_placement_type = NEW.placement_type 
+      --      OR applies_to_placement_type IS NULL)
+    ORDER BY 
+      applies_to_client_company_id NULLS LAST,
+      applies_to_placement_type NULLS LAST,
+      is_default DESC
+    LIMIT 1;
+    
+    IF v_template_id IS NOT NULL THEN
+      -- Try to find associated accepted offer to link (optional)
+      -- Assumes schema has links or we find it via submission
+      BEGIN
+        SELECT id INTO v_offer_id 
+        FROM offers 
+        WHERE submission_id = NEW.submission_id 
+          AND status = 'accepted'
+        LIMIT 1;
+      EXCEPTION WHEN OTHERS THEN
+        v_offer_id := NULL;
+      END;
+
+      -- Create checklist
+      INSERT INTO onboarding_checklists (
+        org_id, placement_id, offer_id, contact_id, template_id,
+        client_company_id, offer_accepted_at, target_start_date, status
+      ) VALUES (
+        NEW.org_id, NEW.id, v_offer_id, NEW.contact_id, v_template_id,
+        NEW.client_company_id, now(), NEW.start_date, 'pending'
+      ) RETURNING id INTO v_checklist_id;
+      
+      -- Tasks would be created by application code based on template
+      -- (JSON processing better handled in application layer)
+    END IF;
+  END IF;
+  
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_create_onboarding_on_placement
+AFTER INSERT ON placements
+FOR EACH ROW EXECUTE FUNCTION create_onboarding_for_placement();
+
+-- Trigger to update checklist progress when task status changes
+CREATE OR REPLACE FUNCTION update_checklist_progress()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE onboarding_checklists c
+  SET 
+    completed_tasks = (
+      SELECT COUNT(*) FROM onboarding_tasks 
+      WHERE checklist_id = c.id AND status = 'completed'
+    ),
+    blocking_tasks = (
+      SELECT COUNT(*) FROM onboarding_tasks 
+      WHERE checklist_id = c.id AND is_blocking = true AND status NOT IN ('completed', 'skipped')
+    ),
+    overdue_tasks = (
+      SELECT COUNT(*) FROM onboarding_tasks 
+      WHERE checklist_id = c.id AND status IN ('pending', 'in_progress') AND due_date < NOW()
+    ),
+    status = CASE
+      WHEN (SELECT COUNT(*) FROM onboarding_tasks WHERE checklist_id = c.id AND is_blocking = true AND status = 'failed') > 0 THEN 'blocked'
+      WHEN (SELECT COUNT(*) FROM onboarding_tasks WHERE checklist_id = c.id AND is_required = true AND status NOT IN ('completed', 'skipped')) = 0 THEN 'ready'
+      ELSE 'in_progress'
+    END,
+    is_ready_to_start = (
+      SELECT COUNT(*) FROM onboarding_tasks 
+      WHERE checklist_id = c.id AND is_blocking = true AND status NOT IN ('completed', 'skipped')
+    ) = 0,
+    updated_at = now()
+  WHERE c.id = NEW.checklist_id;
+  
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_update_checklist_progress
+AFTER INSERT OR UPDATE ON onboarding_tasks
+FOR EACH ROW EXECUTE FUNCTION update_checklist_progress();
+```
+
+## RLS Policies
+
+```sql
+-- onboarding_templates table RLS
+ALTER TABLE onboarding_templates ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "onboarding_templates_org_isolation" ON onboarding_templates
+  FOR ALL USING (org_id = auth.org_id());
+
+-- onboarding_checklists table RLS
+ALTER TABLE onboarding_checklists ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "onboarding_checklists_org_isolation" ON onboarding_checklists
+  FOR ALL USING (org_id = auth.org_id());
+
+-- onboarding_tasks table RLS
+ALTER TABLE onboarding_tasks ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "onboarding_tasks_org_isolation" ON onboarding_tasks
+  FOR ALL USING (org_id = auth.org_id());
+
+-- onboarding_task_history table RLS
+ALTER TABLE onboarding_task_history ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "onboarding_task_history_org_isolation" ON onboarding_task_history
+  FOR ALL USING (org_id = auth.org_id());
+
+-- client_onboarding_requirements table RLS
+ALTER TABLE client_onboarding_requirements ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "client_onboarding_reqs_org_isolation" ON client_onboarding_requirements
+  FOR ALL USING (org_id = auth.org_id());
+```
+
+## Migration Strategy
+
+### Phase 1: Schema Creation
+- Create `onboarding_templates` table
+- Create `onboarding_checklists` table
+- Create `onboarding_tasks` table
+- Create `onboarding_task_history` table
+- Create `client_onboarding_requirements` table
+- Create triggers and functions
+- Add indexes and RLS
+
+### Phase 2: Seed Standard Templates
+- Standard W2 onboarding template
+- Standard 1099 onboarding template
+- Standard C2C onboarding template
+- Permanent placement onboarding template
+
+### Phase 3: Integration
+- Hook into placement creation flow (via trigger)
+- Integrate with COMPLIANCE-01 for auto-creating compliance items
+- Integrate with DOCS-01 for document collection
+- Set up reminder notifications
+
+### Phase 4: Router & UI Updates
+- `onboarding` tRPC router
+- OnboardingDashboard component (all active onboardings)
+- ChecklistDetail component
+- TaskAssignment component
+- ConsultantOnboardingPortal (consultant view)
+- ClientOnboardingPortal (client task completion)
+
+## Rollback Plan
+
+### Schema Rollback
+```sql
+-- Drop in reverse order of creation
+DROP TRIGGER IF EXISTS trg_update_checklist_progress ON onboarding_tasks;
+DROP TRIGGER IF EXISTS trg_create_onboarding_on_placement ON placements;
+DROP FUNCTION IF EXISTS update_checklist_progress;
+DROP FUNCTION IF EXISTS create_onboarding_for_placement;
+DROP TABLE IF EXISTS onboarding_task_history;
+DROP TABLE IF EXISTS client_onboarding_requirements;
+DROP TABLE IF EXISTS onboarding_tasks;
+DROP TABLE IF EXISTS onboarding_checklists;
+DROP TABLE IF EXISTS onboarding_templates;
+```
+
+### Full Rollback Procedure
+1. Stop application deployments
+2. Execute schema rollback SQL
+3. Restore tRPC router to previous git commit
+4. Restore UI components to previous git commit
+5. Verify placement flow still works without onboarding
+6. Document any in-progress onboardings for manual tracking
+
+## Acceptance Criteria
+
+### Schema Implementation
+- [ ] Create `onboarding_templates` table with task_definitions JSONB
+- [ ] Create `onboarding_checklists` table with progress tracking
+- [ ] Create `onboarding_tasks` table with all status/assignment fields
+- [ ] Create `onboarding_task_history` table
+- [ ] Create `client_onboarding_requirements` table
+- [ ] Create triggers for auto-creation and progress updates
+- [ ] All indexes created
+- [ ] RLS policies enforced
+
+### Template System
+- [ ] Template matching by client, placement type, employment type
+- [ ] Default template fallback working
+- [ ] Client-specific requirements merged into templates
+- [ ] Task definitions correctly parsed
+
+### Task Management
+- [ ] Task assignment to consultant, internal, client working
+- [ ] Due date calculation from offer/start date
+- [ ] Dependency enforcement (task A must complete before B)
+- [ ] Blocking task identification
+- [ ] Status transitions working
+
+### Progress Tracking
+- [ ] Checklist progress percentage calculated
+- [ ] Blocking tasks identified
+- [ ] Overdue tasks flagged
+- [ ] Ready-to-start detection working
+
+### Notifications
+- [ ] Task assignment notifications sent
+- [ ] Reminder notifications sent before due date
+- [ ] Escalation notifications when overdue
+- [ ] Ready-to-start notification to operations
+
+### Integration
+- [ ] OFFERS-01: Checklist created on placement creation
+- [ ] COMPLIANCE-01: Compliance items auto-created
+- [ ] DOCS-01: Document collection linked
+- [ ] CONTRACTS-01: Employment contract task linked
+- [ ] NOTIFICATIONS-01: All notifications sent
+
+### Frontend Requirements
+- [ ] OnboardingDashboard (active onboardings by status)
+- [ ] ChecklistDetail (all tasks for a placement)
+- [ ] TaskDetail (single task view/edit)
+- [ ] ConsultantPortal (consultant self-service)
+- [ ] ClientPortal (client task completion)
+- [ ] TemplateBuilder (create/edit templates)
+
+### Reporting
+- [ ] Time-to-ready metrics
+- [ ] Task completion rates by category
+- [ ] Bottleneck identification (which tasks are slowest)
+- [ ] On-time start rate

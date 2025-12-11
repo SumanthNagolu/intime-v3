@@ -1,0 +1,358 @@
+# ISSUE: Centralized Notes System
+
+**Issue ID:** NOTES-01
+**Created:** 2025-12-10
+**Status:** Open
+**Priority:** Medium
+**Type:** Feature/Enhancement (Database Schema Redesign)
+**Reporter:** User
+
+---
+
+## Summary
+
+Unify the fragmented notes system into a single polymorphic `notes` table that serves all entity types. Currently, notes are scattered across 5+ entity-specific tables with inconsistent schemas. This issue creates a centralized notes table following the same polymorphic pattern established for `addresses` and `activities`.
+
+## Location
+
+- **Current Tables**: `account_notes`, `company_notes`, `submission_notes`, `external_job_order_notes`, `meeting_notes`
+- **Related Tables**: `comments` (partially implemented)
+- **Affected Modules**: CRM, ATS, Bench Sales
+
+## Problem Description
+
+### Current State Issues
+
+1. **Fragmented Note Tables**: 5+ separate note tables with different schemas
+   - `account_notes` - Legacy, to be deprecated with accounts
+   - `company_notes` - New, for unified companies
+   - `submission_notes` - Submission-specific notes
+   - `external_job_order_notes` - Vendor job order notes
+   - `meeting_notes` - Meeting-related notes
+
+2. **Schema Inconsistency**:
+   - `company_notes`: Has `note_type` enum, `is_pinned`, `visibility`
+   - `submission_notes`: Simple text with `created_by`
+   - `meeting_notes`: Linked to specific meetings
+   - `account_notes`: Legacy format
+
+3. **No Universal Note Features**:
+   - Threading/replies not supported
+   - @mentions not implemented
+   - Rich text inconsistent
+   - Tags/categories vary by table
+
+4. **Activities Overlap**: Notes are sometimes logged as activities (`activity_type='note'`), causing duplication
+
+## Expected Behavior
+
+A unified notes system that:
+1. Single `notes` table with polymorphic entity reference
+2. Consistent schema across all entity types
+3. Threading/reply support
+4. @mentions with notification integration
+5. Visibility controls (private, team, organization)
+6. Rich text support
+7. Pinning and starring
+8. Clear separation from activities (notes = static, activities = events)
+
+## Proposed Schema Design
+
+### Notes Table (Unified Polymorphic)
+
+```sql
+notes:
+  id UUID PRIMARY KEY
+  org_id UUID NOT NULL
+
+-- Polymorphic relationship
+  entity_type VARCHAR NOT NULL  -- 'contact', 'company', 'job', 'submission', 'placement', 'deal', 'campaign'
+  entity_id UUID NOT NULL
+
+-- Content
+  content TEXT NOT NULL
+  content_html TEXT  -- Rich text HTML version
+  content_plain TEXT  -- Plain text for search
+
+-- Classification
+  note_type VARCHAR DEFAULT 'general'  -- 'general', 'meeting', 'call', 'strategy', 'warning', 'opportunity', 'competitive_intel'
+
+-- Threading
+  parent_note_id UUID REFERENCES notes(id)  -- For replies
+  thread_root_id UUID REFERENCES notes(id)  -- Root of thread
+  reply_count INTEGER DEFAULT 0
+
+-- Visibility
+  visibility VARCHAR DEFAULT 'team'  -- 'private', 'team', 'organization'
+
+-- Features
+  is_pinned BOOLEAN DEFAULT false
+  is_starred BOOLEAN DEFAULT false
+  pin_order INTEGER  -- For ordering pinned notes
+
+-- Mentions
+  mentioned_user_ids UUID[]  -- Array of @mentioned users
+  mentioned_contact_ids UUID[]  -- Array of @mentioned contacts
+
+-- Tags
+  tags TEXT[]
+
+-- Attachments (count, details in separate table or file_uploads)
+  attachment_count INTEGER DEFAULT 0
+
+-- Search
+  search_vector TSVECTOR
+
+-- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL
+  created_by UUID NOT NULL REFERENCES user_profiles(id)
+  updated_by UUID REFERENCES user_profiles(id)
+  deleted_at TIMESTAMPTZ
+
+-- Indexes
+CREATE INDEX idx_notes_entity ON notes(entity_type, entity_id, created_at DESC) WHERE deleted_at IS NULL;
+CREATE INDEX idx_notes_pinned ON notes(entity_type, entity_id) WHERE is_pinned = true AND deleted_at IS NULL;
+CREATE INDEX idx_notes_thread ON notes(thread_root_id, created_at) WHERE deleted_at IS NULL;
+CREATE INDEX idx_notes_search ON notes USING gin(search_vector);
+CREATE INDEX idx_notes_mentions ON notes USING gin(mentioned_user_ids);
+```
+
+### Note Reactions (Optional Enhancement)
+
+```sql
+note_reactions:
+  id UUID PRIMARY KEY
+  note_id UUID NOT NULL REFERENCES notes(id)
+  user_id UUID NOT NULL REFERENCES user_profiles(id)
+  reaction VARCHAR NOT NULL  -- 'like', 'heart', 'thumbs_up', 'celebrate'
+  created_at TIMESTAMPTZ DEFAULT now()
+
+  UNIQUE(note_id, user_id, reaction)
+```
+
+## Migration Strategy
+
+### Phase 1: Schema Creation
+- Create unified `notes` table with polymorphic design
+- Create indexes and RLS policies
+
+### Phase 2: Data Migration
+1. Migrate `company_notes` → `notes` (entity_type='company')
+2. Migrate `account_notes` → `notes` (entity_type='company', lookup company_id)
+3. Migrate `submission_notes` → `notes` (entity_type='submission')
+4. Migrate `external_job_order_notes` → `notes` (entity_type='job_order')
+5. Migrate `meeting_notes` → `notes` (entity_type='contact' or 'company', note_type='meeting')
+
+### Phase 3: Backward Compatibility
+- Create views for legacy table names
+- Update tRPC routers
+
+### Phase 4: Router & UI Updates
+- New `notes` tRPC router with CRUD operations
+- Unified NotesList component
+- InlineNoteForm with @mentions
+- Note thread view
+
+### Phase 5: Deprecation
+- Drop legacy note tables
+
+## Acceptance Criteria
+
+### Schema Implementation
+- [ ] Create unified `notes` table with polymorphic design
+- [ ] Support all entity types (contact, company, job, submission, placement, deal, campaign)
+- [ ] Threading support (parent_note_id, thread_root_id)
+- [ ] Visibility controls working
+- [ ] @mentions stored and indexed
+- [ ] Full-text search enabled
+- [ ] RLS policies enforced
+
+### Data Migration
+- [ ] All company_notes migrated
+- [ ] All account_notes migrated
+- [ ] All submission_notes migrated
+- [ ] All external_job_order_notes migrated
+- [ ] All meeting_notes migrated
+- [ ] No data loss
+
+### Frontend Updates
+- [ ] NotesList component works for all entity types
+- [ ] InlineNoteForm with rich text
+- [ ] @mention autocomplete
+- [ ] Thread view for replies
+- [ ] Pin/unpin functionality
+- [ ] Note type badges
+
+### Separation from Activities
+- [ ] Clear documentation on when to use notes vs activities
+- [ ] Notes = persistent observations, Activities = events/actions
+- [ ] No automatic activity creation for notes (unless explicitly logged)
+
+---
+
+## RLS Policies
+
+```sql
+-- notes table RLS
+ALTER TABLE notes ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "notes_org_isolation" ON notes
+  FOR ALL USING (org_id = auth.org_id());
+
+CREATE POLICY "notes_visibility_private" ON notes
+  FOR SELECT USING (
+    visibility = 'organization'
+    OR (visibility = 'team' AND EXISTS (
+      SELECT 1 FROM user_team_members utm
+      WHERE utm.user_id = auth.uid()
+      AND utm.team_id = (SELECT team_id FROM user_profiles WHERE id = notes.created_by)
+    ))
+    OR (visibility = 'private' AND created_by = auth.uid())
+  );
+
+CREATE POLICY "notes_owner_modify" ON notes
+  FOR UPDATE USING (created_by = auth.uid() OR auth.is_admin());
+
+CREATE POLICY "notes_owner_delete" ON notes
+  FOR DELETE USING (created_by = auth.uid() OR auth.is_admin());
+
+-- note_reactions table RLS (if created)
+ALTER TABLE note_reactions ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "note_reactions_org_isolation" ON note_reactions
+  FOR ALL USING (
+    EXISTS (SELECT 1 FROM notes WHERE notes.id = note_reactions.note_id AND notes.org_id = auth.org_id())
+  );
+```
+
+---
+
+## Rollback Plan
+
+### Schema Rollback
+```sql
+-- Drop in reverse order
+DROP TABLE IF EXISTS note_reactions;
+DROP TABLE IF EXISTS notes;
+
+-- Recreate legacy note tables if needed
+-- (Legacy backup tables should exist: account_notes_backup, company_notes_backup, etc.)
+```
+
+### Full Rollback Procedure
+1. Stop application deployments
+2. Execute schema rollback SQL
+3. If data was migrated, restore from backup tables
+4. Restore tRPC router to previous git commit
+5. Restore UI components to previous git commit
+6. Verify entity workspaces show notes properly
+7. Document incident and root cause
+
+---
+
+## Technical Context
+
+### Architecture Pattern
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    NOTES (Polymorphic)                           │
+├─────────────────────────────────────────────────────────────────┤
+│ entity_type: 'contact' | 'company' | 'job' | 'submission' | ... │
+│ entity_id: UUID                                                  │
+│ • Content (plain + HTML)                                         │
+│ • Threading (parent_note_id, thread_root_id)                     │
+│ • Visibility (private/team/org)                                  │
+│ • @mentions (user + contact)                                     │
+│ • Pinning, tagging                                               │
+└──────────────────────────────────────────────────────────────────┘
+         │
+         ├──→ contact notes
+         ├──→ company notes
+         ├──→ job notes
+         ├──→ submission notes
+         ├──→ placement notes
+         ├──→ deal notes
+         └──→ campaign notes
+```
+
+### Notes vs Activities Clarification
+
+| Aspect | Notes | Activities |
+|--------|-------|------------|
+| **Purpose** | Persistent observations, internal info | Event logging, action tracking |
+| **Examples** | "Client prefers morning calls", "Warning: slow payer" | "Called client at 2pm", "Email sent" |
+| **Timing** | Timeless (still relevant) | Point-in-time (happened at X) |
+| **Threading** | Yes (discussions) | No (event stream) |
+| **Status** | N/A | scheduled, completed, etc. |
+
+---
+
+## Notes
+
+This follows the established polymorphic pattern from `addresses` and `activities`. The key insight is that notes are **persistent observations** while activities are **events** - both attach to entities but serve different purposes.
+
+Universal sections in EntityWorkspace should show both:
+- **Activities**: Timeline of events (calls, emails, meetings)
+- **Notes**: Persistent observations (pinned first, then chronological)
+
+---
+
+## RLS Policies
+
+```sql
+-- notes table RLS
+ALTER TABLE notes ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "notes_org_isolation" ON notes
+  FOR ALL USING (org_id = auth.org_id());
+
+CREATE POLICY "notes_visibility_private" ON notes
+  FOR SELECT USING (
+    visibility = 'organization' OR
+    visibility = 'team' OR
+    (visibility = 'private' AND created_by = auth.uid())
+  );
+
+CREATE POLICY "notes_owner_modify" ON notes
+  FOR UPDATE USING (created_by = auth.uid());
+
+CREATE POLICY "notes_owner_delete" ON notes
+  FOR DELETE USING (created_by = auth.uid());
+
+-- note_reactions table RLS
+ALTER TABLE note_reactions ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "note_reactions_org_isolation" ON note_reactions
+  FOR ALL USING (
+    EXISTS (SELECT 1 FROM notes n WHERE n.id = note_id AND n.org_id = auth.org_id())
+  );
+
+CREATE POLICY "note_reactions_owner" ON note_reactions
+  FOR ALL USING (user_id = auth.uid());
+```
+
+---
+
+## Rollback Plan
+
+### Schema Rollback
+```sql
+-- Drop in reverse order
+DROP TABLE IF EXISTS note_reactions;
+DROP TABLE IF EXISTS notes;
+
+-- Recreate legacy tables if needed (from backup)
+-- CREATE TABLE company_notes AS SELECT * FROM company_notes_backup;
+-- etc.
+```
+
+### Full Rollback Procedure
+1. Stop application deployments
+2. Execute schema rollback SQL
+3. Restore legacy note tables from backups
+4. Restore tRPC router to previous git commit
+5. Restore UI components to previous git commit
+6. Verify notes appear in legacy locations
+7. Document incident and root cause

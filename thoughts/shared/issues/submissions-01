@@ -1,0 +1,509 @@
+# ISSUE: Migrate Submissions to Unified Contacts System
+
+**Issue ID:** SUBMISSIONS-01
+**Created:** 2025-12-11
+**Status:** Open
+**Priority:** Critical
+**Type:** Migration/Integration
+**Reporter:** System (Architecture Review)
+**Depends On:** CONTACTS-01 (unified contacts), JOBS-01 (jobs migration)
+
+---
+
+## Summary
+
+Migrate the `submissions` table to use the unified `contacts` system established by CONTACTS-01. Currently, submissions reference legacy `candidates` table with a separate person record. This migration ensures submissions use the centralized contact model, enabling unified talent search and consistent relationship tracking. It also consolidates status tracking into a single granular pipeline stage field.
+
+## Location
+
+- **Current Table**: `submissions` (references legacy `candidate_id`)
+- **Target**: `submissions` with updated FK to `contacts`
+- **Related Tables**: `submission_status_history`, `submission_rates`, `submission_notes`, `submission_feedback`
+- **Affected Modules**: ATS, Recruiting, Pipeline
+
+## Problem Description
+
+### Current State Issues
+
+1. **Legacy Candidate Reference**:
+   - `submissions.candidate_id` references legacy `candidates` table
+   - Candidates and contacts are separate entities
+   - Same person can have multiple records across systems
+
+2. **Vendor Submissions Not Tracked**:
+   - No clear tracking of vendor-submitted candidates
+   - No `submitted_by_company_id` for vendor attribution
+   - Right-to-represent tracking incomplete
+
+3. **Status History Fragmented**:
+   - `submission_status_history` separate from unified `entity_history`
+   - Inconsistent with HISTORY-01 design
+
+4. **Rates Inline**:
+   - Submission rates stored inline instead of in `entity_rates`
+   - No connection to job rate cards
+
+5. **Feedback Scattered**:
+   - Interview feedback not consistently linked
+   - Client feedback separate from internal notes
+
+6. **Redundant Status Fields**:
+   - Confusion between high-level `status` and granular `pipeline_stage`
+
+### Submissions Table Current Structure (Key Fields)
+
+```sql
+-- Current submissions table (simplified)
+submissions:
+  id, org_id
+  job_id  -- FK to jobs
+  candidate_id  -- Legacy FK to candidates, needs to be contacts
+  recruiter_id  -- FK to user_profiles
+  status  -- submitted, interviewing, offered, placed, rejected
+  submitted_at
+  bill_rate, pay_rate  -- Inline rates
+  notes
+  created_at, updated_at, deleted_at
+```
+
+## Expected Behavior
+
+After migration:
+1. `submissions.contact_id` references unified `contacts` table
+2. `submissions.submitted_by_company_id` tracks vendor submissions
+3. `submissions.submitted_by_contact_id` tracks vendor POC
+4. Rates linked to `entity_rates` with job rate card reference
+5. Status history migrated to `entity_history`
+6. Right-to-represent tracking formalized
+7. Single `status` field with granular pipeline stages
+
+## Proposed Schema Changes
+
+### Submissions Table Updates
+
+```sql
+-- Updated submissions table
+ALTER TABLE submissions
+  -- Rename candidate reference to contact
+  RENAME COLUMN candidate_id TO contact_id;
+
+ALTER TABLE submissions
+  -- Add vendor submission tracking
+  ADD COLUMN submitted_by_company_id UUID REFERENCES companies(id),
+  ADD COLUMN submitted_by_contact_id UUID REFERENCES contacts(id),
+  ADD COLUMN is_vendor_submission BOOLEAN DEFAULT false,
+  
+  -- Right-to-represent tracking
+  ADD COLUMN rtr_obtained BOOLEAN DEFAULT false,
+  ADD COLUMN rtr_obtained_at TIMESTAMPTZ,
+  ADD COLUMN rtr_expires_at TIMESTAMPTZ,
+  ADD COLUMN rtr_document_id UUID REFERENCES documents(id),
+  
+  -- Rate tracking (linked to rate cards)
+  ADD COLUMN rate_card_id UUID REFERENCES rate_cards(id),
+  ADD COLUMN rate_card_item_id UUID REFERENCES rate_card_items(id),
+  ADD COLUMN negotiated_bill_rate NUMERIC(10,2),
+  ADD COLUMN negotiated_pay_rate NUMERIC(10,2),
+  ADD COLUMN rate_negotiation_notes TEXT,
+  
+  -- Client feedback summary
+  ADD COLUMN client_interest_level VARCHAR,  -- 'high', 'medium', 'low', 'none'
+  ADD COLUMN client_feedback_summary TEXT,
+  
+  -- Pipeline stage / Status (Consolidated)
+  -- We rename existing status or alter type to hold granular stages
+  -- Status values: 'submitted', 'screening', 'technical_interview', 'client_interview', 
+  -- 'offer_pending', 'offer_extended', 'offer_accepted', 'placed', 'rejected', 'withdrawn', 'on_hold'
+  ALTER COLUMN status TYPE VARCHAR,
+  ADD COLUMN status_entered_at TIMESTAMPTZ,
+  ADD COLUMN expected_decision_date DATE,
+  
+  -- High-level category (Computed)
+  ADD COLUMN stage_category VARCHAR GENERATED ALWAYS AS (
+    CASE 
+      WHEN status IN ('submitted', 'screening') THEN 'new'
+      WHEN status IN ('technical_interview', 'client_interview') THEN 'interviewing'
+      WHEN status IN ('offer_pending', 'offer_extended', 'offer_accepted') THEN 'offer'
+      WHEN status = 'placed' THEN 'hired'
+      WHEN status IN ('rejected', 'withdrawn') THEN 'closed'
+      ELSE 'other'
+    END
+  ) STORED,
+  
+  -- Source tracking
+  ADD COLUMN submission_source VARCHAR,  -- 'internal', 'vendor', 'referral', 'ats_import'
+  ADD COLUMN source_detail TEXT,
+  
+  -- Duplicate Detection
+  ADD COLUMN is_duplicate BOOLEAN DEFAULT false,
+  ADD COLUMN duplicate_of_submission_id UUID REFERENCES submissions(id),
+  
+  -- Interview scheduling
+  ADD COLUMN interviews_scheduled_count INTEGER DEFAULT 0,
+  ADD COLUMN interviews_completed_count INTEGER DEFAULT 0,
+  ADD COLUMN next_interview_at TIMESTAMPTZ,
+  
+  -- Scoring & Ranking (Added per Architecture Review)
+  ADD COLUMN submission_score INTEGER CHECK (submission_score BETWEEN 0 AND 100),  -- Calculated overall score
+  ADD COLUMN score_breakdown JSONB,
+  ADD COLUMN rank_among_submissions INTEGER,  -- Rank within this job's submissions (1 = best)
+  ADD COLUMN rank_updated_at TIMESTAMPTZ,
+  ADD COLUMN scoring_algorithm_version VARCHAR,  -- Track which algorithm scored it
+  ADD COLUMN manual_score_override INTEGER,  -- Recruiter can override
+  ADD COLUMN override_reason TEXT;
+
+-- Update FK constraint
+ALTER TABLE submissions
+  DROP CONSTRAINT IF EXISTS submissions_candidate_id_fkey,
+  ADD CONSTRAINT submissions_contact_id_fkey 
+    FOREIGN KEY (contact_id) REFERENCES contacts(id);
+
+-- Indexes
+CREATE INDEX idx_submissions_contact ON submissions(contact_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_submissions_vendor ON submissions(submitted_by_company_id) WHERE submitted_by_company_id IS NOT NULL;
+CREATE INDEX idx_submissions_status ON submissions(status, submitted_at DESC) WHERE deleted_at IS NULL;
+CREATE INDEX idx_submissions_job_status ON submissions(job_id, status) WHERE deleted_at IS NULL;
+CREATE INDEX idx_submissions_score ON submissions(submission_score DESC, job_id) WHERE deleted_at IS NULL;
+```
+
+### Submission Feedback Table (Unified)
+
+```sql
+-- Unified feedback table for all submission feedback
+CREATE TABLE submission_feedback (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  submission_id UUID NOT NULL REFERENCES submissions(id) ON DELETE CASCADE,
+  
+  -- Feedback source
+  feedback_type VARCHAR NOT NULL,  -- 'client', 'internal', 'interview', 'reference'
+  feedback_source VARCHAR,  -- 'hiring_manager', 'hr', 'panel', 'recruiter'
+  
+  -- Who provided feedback
+  provided_by_user_id UUID REFERENCES user_profiles(id),  -- Internal user
+  provided_by_contact_id UUID REFERENCES contacts(id),  -- External contact
+  
+  -- Content
+  overall_rating INTEGER CHECK (overall_rating BETWEEN 1 AND 5),
+  recommendation VARCHAR,  -- 'strong_yes', 'yes', 'neutral', 'no', 'strong_no'
+  feedback_text TEXT,
+  
+  -- Structured feedback (JSONB for flexibility)
+  criteria_scores JSONB,
+  
+  -- Interview context (if feedback_type = 'interview')
+  interview_id UUID,  -- REFERENCES interviews(id)
+  interview_round INTEGER,
+  
+  -- Status
+  is_visible_to_client BOOLEAN DEFAULT false,
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+  deleted_at TIMESTAMPTZ
+);
+
+CREATE INDEX idx_submission_feedback_submission ON submission_feedback(submission_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_submission_feedback_type ON submission_feedback(feedback_type) WHERE deleted_at IS NULL;
+```
+
+### Right-to-Represent Tracking
+
+```sql
+-- RTR tracking for vendor submissions
+CREATE TABLE submission_rtr (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  submission_id UUID NOT NULL REFERENCES submissions(id) ON DELETE CASCADE,
+  
+  -- Contact giving RTR
+  contact_id UUID NOT NULL REFERENCES contacts(id),
+  
+  -- RTR details
+  rtr_type VARCHAR NOT NULL,  -- 'verbal', 'email', 'signed_document'
+  obtained_at TIMESTAMPTZ NOT NULL,
+  expires_at TIMESTAMPTZ,
+  validity_hours INTEGER DEFAULT 24,
+  
+  -- Document reference
+  document_id UUID REFERENCES documents(id),
+  
+  -- Status
+  status VARCHAR DEFAULT 'active',  -- 'active', 'expired', 'revoked'
+  revoked_at TIMESTAMPTZ,
+  revoked_reason TEXT,
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now(),
+  created_by UUID REFERENCES user_profiles(id),
+  
+  CONSTRAINT submission_rtr_unique UNIQUE (submission_id, contact_id)
+);
+
+CREATE INDEX idx_submission_rtr_submission ON submission_rtr(submission_id);
+CREATE INDEX idx_submission_rtr_expiry ON submission_rtr(expires_at) WHERE status = 'active';
+```
+
+## Migration Strategy
+
+### Phase 1: Schema Updates (Non-Breaking)
+- Add new columns to submissions table
+- Create submission_feedback table
+- Create submission_rtr table
+- Keep old columns temporarily
+
+### Phase 2: Data Migration
+
+```sql
+-- Step 1: Map candidates to contacts
+UPDATE submissions s
+SET contact_id = c.id
+FROM candidates cand
+JOIN contacts c ON c.org_id = cand.org_id 
+  AND c.primary_email = cand.email
+  AND c.category = 'person'
+WHERE s.candidate_id = cand.id
+  AND s.contact_id IS NULL;
+
+-- Step 2: Migrate status to granular stages
+-- (Assuming mapping of old status to new stages)
+UPDATE submissions
+SET status = CASE status
+  WHEN 'submitted' THEN 'submitted'
+  WHEN 'interviewing' THEN 'client_interview' -- Default assumption
+  WHEN 'offered' THEN 'offer_extended'
+  WHEN 'placed' THEN 'placed'
+  WHEN 'rejected' THEN 'rejected'
+  ELSE status
+END
+WHERE status IN ('submitted', 'interviewing', 'offered', 'placed', 'rejected');
+
+-- Step 3: Migrate inline rates to entity_rates
+INSERT INTO entity_rates (
+  org_id, entity_type, entity_id,
+  rate_type, bill_rate, pay_rate,
+  effective_date, is_current,
+  context_job_id
+)
+SELECT
+  s.org_id, 'submission', s.id,
+  'hourly', s.bill_rate, s.pay_rate,
+  s.submitted_at, true,
+  s.job_id
+FROM submissions s
+WHERE (s.bill_rate IS NOT NULL OR s.pay_rate IS NOT NULL)
+  AND s.deleted_at IS NULL;
+
+-- Step 4: Migrate status history to entity_history
+INSERT INTO entity_history (
+  org_id, entity_type, entity_id,
+  change_type, field_name,
+  old_value, new_value,
+  changed_by, changed_at
+)
+SELECT
+  ssh.org_id, 'submission', ssh.submission_id,
+  'status_change', 'status',
+  ssh.old_status, ssh.new_status,
+  ssh.changed_by, ssh.changed_at
+FROM submission_status_history ssh;
+
+-- Step 5: Identify vendor submissions
+UPDATE submissions s
+SET 
+  is_vendor_submission = true,
+  submitted_by_company_id = v.company_id,
+  submission_source = 'vendor'
+FROM vendor_submissions vs
+JOIN companies v ON vs.vendor_id = v.id
+WHERE s.id = vs.submission_id;
+```
+
+### Phase 3: Backward Compatibility Views
+
+```sql
+-- View for legacy queries expecting candidate_id
+CREATE VIEW submissions_legacy_v AS
+SELECT
+  s.*,
+  s.contact_id as candidate_id  -- Alias for backward compat
+FROM submissions s
+WHERE s.deleted_at IS NULL;
+```
+
+### Phase 4: Router & UI Updates
+- Update `ats.ts` router to use new FK references
+- Update submission forms to use contact selector
+- Update pipeline views with new fields
+- Add vendor submission tracking UI
+
+### Phase 5: Cleanup
+- Remove legacy columns after validation period
+- Drop `submission_status_history` after entity_history migration
+
+## Acceptance Criteria
+
+### Schema Implementation
+- [ ] Rename `candidate_id` to `contact_id` with proper FK
+- [ ] Add `submitted_by_company_id` FK to `companies`
+- [ ] Add `submitted_by_contact_id` FK to `contacts`
+- [ ] Add RTR tracking fields
+- [ ] Add rate card linkage fields
+- [ ] Standardize status field with granular stages
+- [ ] Add `stage_category` computed column
+- [ ] Add `is_duplicate` field
+- [ ] Create `submission_feedback` table
+- [ ] Create `submission_rtr` table
+- [ ] All indexes created
+- [ ] RLS policies updated
+
+### Data Migration
+- [ ] All submissions have `contact_id` populated
+- [ ] Statuses mapped to new granular values
+- [ ] Vendor submissions identified and tracked
+- [ ] Inline rates migrated to entity_rates
+- [ ] Status history migrated to entity_history
+- [ ] Existing feedback migrated to submission_feedback
+- [ ] No orphaned references
+
+### Backward Compatibility
+- [ ] Legacy view `submissions_legacy_v` working
+- [ ] Existing tRPC procedures continue working
+- [ ] No breaking changes to frontend initially
+
+### Frontend Updates
+- [ ] Submission creation uses contact selector
+- [ ] Vendor submission source tracking visible
+- [ ] RTR tracking in submission workflow
+- [ ] Feedback collection unified
+- [ ] Pipeline stage visible and editable
+
+### Testing
+- [ ] Migration script tested on staging
+- [ ] All existing submission queries work
+- [ ] Pipeline metrics accurate
+- [ ] Performance benchmarks acceptable
+
+---
+
+## Technical Context
+
+### Entity Relationship After Migration
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                       SUBMISSIONS                                │
+├─────────────────────────────────────────────────────────────────┤
+│ job_id ─────────────────────────► jobs                          │
+│ contact_id ─────────────────────► contacts (the candidate)      │
+│ submitted_by_company_id ────────► companies (vendor)            │
+│ submitted_by_contact_id ────────► contacts (vendor POC)         │
+│ rate_card_id ───────────────────► rate_cards                    │
+│ recruiter_id ───────────────────► user_profiles                 │
+└─────────────────────────────────────────────────────────────────┘
+         │
+         │ submission_id FK
+         ▼
+┌─────────────────────┐    ┌─────────────────────┐
+│ submission_feedback │    │   submission_rtr    │
+│ • client feedback   │    │ • RTR tracking      │
+│ • interview scores  │    │ • expiration        │
+│ • recommendations   │    │ • documents         │
+└─────────────────────┘    └─────────────────────┘
+```
+
+### Pipeline Stage Flow
+
+```
+submitted → screening → technical_interview → client_interview → 
+offer_pending → offer_extended → offer_accepted → placed
+
+OR at any stage:
+→ rejected → (with rejection_reason)
+→ withdrawn → (candidate withdrew)
+→ on_hold → (client paused)
+```
+
+---
+
+## Notes
+
+This migration is **critical for unified talent management**:
+
+1. **Single Person Record**: Same candidate = same contact across all submissions
+2. **Vendor Attribution**: Know which vendors submit which candidates
+3. **RTR Compliance**: Proper right-to-represent tracking
+4. **Feedback Centralization**: All feedback in one place
+5. **Pipeline Analytics**: Consistent stage tracking for metrics
+6. **Rate Transparency**: Linked to rate cards for margin tracking
+
+---
+
+## Rollback Plan
+
+### Schema Rollback
+```sql
+-- Drop new tables in reverse order
+DROP TABLE IF EXISTS submission_rtr;
+DROP TABLE IF EXISTS submission_feedback;
+
+-- Remove new columns from submissions
+ALTER TABLE submissions
+  DROP COLUMN IF EXISTS override_reason,
+  DROP COLUMN IF EXISTS manual_score_override,
+  DROP COLUMN IF EXISTS scoring_algorithm_version,
+  DROP COLUMN IF EXISTS rank_updated_at,
+  DROP COLUMN IF EXISTS rank_among_submissions,
+  DROP COLUMN IF EXISTS score_breakdown,
+  DROP COLUMN IF EXISTS submission_score,
+  DROP COLUMN IF EXISTS next_interview_at,
+  DROP COLUMN IF EXISTS interviews_completed_count,
+  DROP COLUMN IF EXISTS interviews_scheduled_count,
+  DROP COLUMN IF EXISTS duplicate_of_submission_id,
+  DROP COLUMN IF EXISTS is_duplicate,
+  DROP COLUMN IF EXISTS source_detail,
+  DROP COLUMN IF EXISTS submission_source,
+  DROP COLUMN IF EXISTS stage_category,
+  DROP COLUMN IF EXISTS expected_decision_date,
+  DROP COLUMN IF EXISTS status_entered_at,
+  DROP COLUMN IF EXISTS client_feedback_summary,
+  DROP COLUMN IF EXISTS client_interest_level,
+  DROP COLUMN IF EXISTS rate_negotiation_notes,
+  DROP COLUMN IF EXISTS negotiated_pay_rate,
+  DROP COLUMN IF EXISTS negotiated_bill_rate,
+  DROP COLUMN IF EXISTS rate_card_item_id,
+  DROP COLUMN IF EXISTS rate_card_id,
+  DROP COLUMN IF EXISTS rtr_document_id,
+  DROP COLUMN IF EXISTS rtr_expires_at,
+  DROP COLUMN IF EXISTS rtr_obtained_at,
+  DROP COLUMN IF EXISTS rtr_obtained,
+  DROP COLUMN IF EXISTS is_vendor_submission,
+  DROP COLUMN IF EXISTS submitted_by_contact_id,
+  DROP COLUMN IF EXISTS submitted_by_company_id;
+
+-- Restore status column to old values (approximate)
+-- ...
+
+-- Rename contact_id back to candidate_id
+ALTER TABLE submissions RENAME COLUMN contact_id TO candidate_id;
+
+-- Re-add original FK constraint
+ALTER TABLE submissions
+  ADD CONSTRAINT submissions_candidate_id_fkey 
+    FOREIGN KEY (candidate_id) REFERENCES candidates(id);
+
+-- Drop legacy view
+DROP VIEW IF EXISTS submissions_legacy_v;
+```
+
+### Full Rollback Procedure
+1. Stop application deployments
+2. Verify no in-flight submission operations
+3. Execute schema rollback SQL
+4. Restore tRPC router (`ats.ts`) to previous git commit
+5. Restore submission UI components to previous git commit
+6. Verify submission list and detail pages work
+7. Verify submission creation/editing works
+8. Verify pipeline views function correctly
+9. Document incident and root cause

@@ -50,6 +50,74 @@ Plans are carefully designed, but reality can be messy. Your job is to:
 
 When things don't match the plan exactly, think about why and communicate clearly. The plan is your guide, but your judgment matters too.
 
+## Quality Standards - NO SHORTCUTS
+
+**CRITICAL**: When encountering complexity or edge cases, you MUST implement robust, clean solutions. Never take shortcuts or workarounds.
+
+### Mandatory Quality Rules
+
+1. **No Shortcuts or Workarounds**
+   - When complexity increases, invest the time to do it right
+   - Never use hacks, temporary fixes, or "we'll fix this later" solutions
+   - If a proper solution requires more effort, take that effort
+   - Do not simplify requirements to avoid implementation complexity
+
+2. **100% Robust Solutions**
+   - Handle all edge cases properly
+   - Include proper error handling and validation
+   - Follow existing codebase patterns consistently
+   - Maintain type safety throughout
+   - Write code that is maintainable and self-documenting
+
+3. **Fix All Errors Encountered**
+   - If you discover errors during implementation (even unrelated to current changes), document them
+   - At the end of each phase, fix any errors you encountered
+   - Run full type checking and linting before marking a phase complete
+   - Do not leave broken code behind, even if "it wasn't your change"
+
+4. **No Technical Debt**
+   - Do not introduce TODO comments as a substitute for implementation
+   - Do not skip tests or validation steps
+   - Do not leave console.logs, debugging code, or commented-out code
+   - Ensure all imports are used and properly organized
+
+### When Complexity Arises
+
+If you encounter unexpected complexity:
+```
+❌ WRONG: "This is getting complex, let me simplify by..."
+❌ WRONG: "As a workaround, I'll just..."
+❌ WRONG: "For now, we can skip this edge case..."
+
+✅ RIGHT: "This is complex. Let me think through the proper architecture..."
+✅ RIGHT: "The robust solution requires X additional steps..."
+✅ RIGHT: "To handle all edge cases correctly, I need to..."
+```
+
+### Error Discovery Protocol
+
+When you discover errors during implementation:
+
+1. **Log the error** in your progress report:
+   ```markdown
+   **Errors Discovered** (will fix at phase end):
+   - TypeScript error in `src/foo/bar.ts:42` - missing type
+   - Unused import in `src/components/X.tsx`
+   - [etc.]
+   ```
+
+2. **Fix before phase completion**:
+   - Run `pnpm build` or `pnpm tsc` to catch all type errors
+   - Run `pnpm lint` to catch linting issues
+   - Fix ALL errors, not just ones from your changes
+
+3. **Report fixes**:
+   ```markdown
+   **Errors Fixed** (unrelated to current phase):
+   - Fixed type error in `src/foo/bar.ts:42`
+   - Removed unused import in `src/components/X.tsx`
+   ```
+
 If you encounter a mismatch:
 - STOP and think deeply about why the plan can't be followed
 - Present the issue clearly:

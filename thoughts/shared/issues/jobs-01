@@ -1,0 +1,375 @@
+# ISSUE: Migrate Jobs to Unified Companies/Contacts System
+
+**Issue ID:** JOBS-01
+**Created:** 2025-12-11
+**Status:** Open
+**Priority:** Critical
+**Type:** Migration/Integration
+**Reporter:** System (Architecture Review)
+**Depends On:** ACCOUNTS-02 (unified companies), CONTACTS-01 (unified contacts), SKILLS-01 (for job_skills migration)
+
+---
+
+## Summary
+
+Migrate the `jobs` table to use the unified `companies` and `contacts` systems established by ACCOUNTS-02 and CONTACTS-01. Currently, jobs reference legacy `accounts` table and have inconsistent contact references. This migration ensures jobs use the centralized entity model for clients, end clients, hiring managers, and vendor sources.
+
+## Location
+
+- **Current Table**: `jobs` (references legacy `account_id`)
+- **Target**: `jobs` with updated FKs to `companies` and `contacts`
+- **Related Tables**: `job_skills`, `job_requirements`, `job_rates`, `job_status_history`
+- **Affected Modules**: ATS, Recruiting, CRM
+
+## Problem Description
+
+### Current State Issues
+
+1. **Legacy Account Reference**:
+   - `jobs.account_id` references legacy `accounts` table
+   - No distinction between billing client and end client
+   - After ACCOUNTS-02, needs to reference `companies`
+
+2. **Inconsistent Contact References**:
+   - `jobs.hiring_manager_id` may reference legacy candidates or user_profiles
+   - No standardized hiring manager contact tracking
+   - No HR contact or recruiter contact on job level
+
+3. **Skills Not Unified**:
+   - `job_skills` table separate from unified `entity_skills`
+   - Different schema than candidate/contact skills
+   - No proficiency requirements standardized
+
+4. **Vendor Jobs Not Tracked**:
+   - Jobs sourced from vendors (job orders) not clearly distinguished
+   - No `vendor_company_id` to track job source
+   - VMS/MSP job tracking incomplete
+
+5. **Rate Cards Not Linked**:
+   - Job rates inline instead of referencing `entity_rates` or `rate_cards`
+   - No version tracking for rate changes
+
+### Jobs Table Current Structure (Key Fields)
+
+```sql
+-- Current jobs table (simplified)
+jobs:
+  id, org_id
+  title, description
+  account_id  -- Legacy FK to accounts, needs to be companies
+  hiring_manager_id  -- Inconsistent reference
+  status, priority
+  job_type  -- contract, perm, c2h
+  positions_count, positions_filled
+  rate_min, rate_max, rate_type  -- Inline rates
+  location, remote_type
+  skills  -- JSONB or separate table
+  created_at, updated_at, deleted_at
+```
+
+## Expected Behavior
+
+After migration:
+1. `jobs.client_company_id` references unified `companies` table
+2. `jobs.end_client_company_id` for MSP/staffing scenarios
+3. `jobs.vendor_company_id` for vendor-sourced job orders
+4. `jobs.hiring_manager_contact_id` references unified `contacts`
+5. `job_skills` migrated to `entity_skills` (entity_type='job')
+6. Rate tracking via `entity_rates` or linked `rate_card_id`
+
+## Proposed Schema Changes
+
+### Jobs Table Updates
+
+```sql
+-- Updated jobs table
+ALTER TABLE jobs
+  -- Rename and re-point account reference
+  RENAME COLUMN account_id TO client_company_id;
+
+ALTER TABLE jobs
+  -- Add end client for MSP scenarios
+  ADD COLUMN end_client_company_id UUID REFERENCES companies(id),
+  
+  -- Add vendor source for job orders
+  ADD COLUMN vendor_company_id UUID REFERENCES companies(id),
+  ADD COLUMN vendor_job_order_id VARCHAR,  -- External reference
+  ADD COLUMN is_vendor_job BOOLEAN DEFAULT false,
+  
+  -- Standardize contact references
+  ADD COLUMN hiring_manager_contact_id UUID REFERENCES contacts(id),
+  ADD COLUMN hr_contact_id UUID REFERENCES contacts(id),
+  ADD COLUMN recruiter_contact_id UUID REFERENCES contacts(id),
+  
+  -- Rate card linkage
+  ADD COLUMN rate_card_id UUID REFERENCES rate_cards(id),
+  ADD COLUMN rate_card_item_id UUID REFERENCES rate_card_items(id),
+  
+  -- VMS/MSP tracking
+  ADD COLUMN vms_job_id VARCHAR,  -- ID in client's VMS system
+  ADD COLUMN msp_program_id UUID REFERENCES companies(id),
+  
+  -- Additional standardization
+  ADD COLUMN job_category VARCHAR,  -- For rate card matching
+  ADD COLUMN job_level VARCHAR,  -- junior, mid, senior, lead
+  
+  -- Job Posting Tracking (Added per Architecture Review)
+  ADD COLUMN is_posted BOOLEAN DEFAULT false,
+  ADD COLUMN posted_to JSONB,  -- [{ platform: 'indeed', post_id: '123', posted_at: ..., expires_at: ... }]
+  ADD COLUMN posting_expires_at TIMESTAMPTZ,
+  ADD COLUMN posting_auto_renew BOOLEAN DEFAULT false,
+  
+  -- Job Approval Workflow (Added per Architecture Review)
+  ADD COLUMN approval_status VARCHAR DEFAULT 'draft',  -- 'draft', 'pending_approval', 'approved', 'rejected', 'changes_requested'
+  ADD COLUMN approved_by UUID REFERENCES user_profiles(id),
+  ADD COLUMN approved_at TIMESTAMPTZ,
+  ADD COLUMN approval_notes TEXT,
+  ADD COLUMN requires_approval BOOLEAN DEFAULT false,  -- Based on client or rate thresholds
+  ADD COLUMN approval_requested_at TIMESTAMPTZ,
+  ADD COLUMN approval_requested_by UUID REFERENCES user_profiles(id);
+
+-- Update FK constraint
+ALTER TABLE jobs
+  DROP CONSTRAINT IF EXISTS jobs_account_id_fkey,
+  ADD CONSTRAINT jobs_client_company_id_fkey 
+    FOREIGN KEY (client_company_id) REFERENCES companies(id);
+
+-- Indexes
+CREATE INDEX idx_jobs_client_company ON jobs(client_company_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_jobs_end_client ON jobs(end_client_company_id) WHERE end_client_company_id IS NOT NULL;
+CREATE INDEX idx_jobs_vendor ON jobs(vendor_company_id) WHERE vendor_company_id IS NOT NULL;
+CREATE INDEX idx_jobs_hiring_manager ON jobs(hiring_manager_contact_id) WHERE hiring_manager_contact_id IS NOT NULL;
+CREATE INDEX idx_jobs_vms ON jobs(vms_job_id) WHERE vms_job_id IS NOT NULL;
+```
+
+### Job Skills Migration to entity_skills
+
+```sql
+-- Migrate job_skills to unified entity_skills table
+INSERT INTO entity_skills (
+  org_id,
+  entity_type,
+  entity_id,
+  skill_id,
+  proficiency_level,  -- As min required level
+  is_required,
+  min_proficiency_required,
+  source,
+  created_at
+)
+SELECT
+  js.org_id,
+  'job',
+  js.job_id,
+  js.skill_id,
+  js.proficiency_level,
+  js.is_required,
+  js.min_proficiency_level,
+  'migration',
+  js.created_at
+FROM job_skills js
+WHERE js.deleted_at IS NULL;
+
+-- After validation, drop legacy table
+-- DROP TABLE job_skills;
+```
+
+### Job Contacts Junction Table (Optional - for Multiple Contacts per Role)
+
+```sql
+-- For jobs with multiple hiring managers, HR contacts, etc.
+CREATE TABLE job_contacts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  org_id UUID NOT NULL REFERENCES organizations(id),
+  job_id UUID NOT NULL REFERENCES jobs(id) ON DELETE CASCADE,
+  contact_id UUID NOT NULL REFERENCES contacts(id),
+  
+  -- Role at job
+  role_type VARCHAR NOT NULL,  -- 'hiring_manager', 'hr_contact', 'interviewer', 'approver'
+  is_primary BOOLEAN DEFAULT false,
+  
+  -- Status
+  is_active BOOLEAN DEFAULT true,
+  
+  -- Audit
+  created_at TIMESTAMPTZ DEFAULT now(),
+  created_by UUID REFERENCES user_profiles(id),
+  
+  CONSTRAINT job_contacts_unique UNIQUE (job_id, contact_id, role_type)
+);
+
+CREATE INDEX idx_job_contacts_job ON job_contacts(job_id) WHERE is_active = true;
+CREATE INDEX idx_job_contacts_contact ON job_contacts(contact_id) WHERE is_active = true;
+```
+
+## Migration Strategy
+
+### Phase 1: Schema Updates (Non-Breaking)
+- Add new columns to jobs table
+- Create job_contacts junction table
+- Keep old columns temporarily
+
+### Phase 2: Data Migration
+
+```sql
+-- Step 1: Map accounts to companies
+UPDATE jobs j
+SET client_company_id = c.id
+FROM accounts a
+JOIN companies c ON c.org_id = a.org_id 
+  AND c.name = a.name 
+  AND c.category = 'client'
+WHERE j.account_id = a.id
+  AND j.client_company_id IS NULL;
+
+-- Step 2: Migrate hiring managers to contacts
+-- (Depends on how hiring_manager_id is currently stored)
+UPDATE jobs j
+SET hiring_manager_contact_id = c.id
+FROM contacts c
+WHERE j.hiring_manager_id = c.id  -- If already referencing contacts
+  AND j.hiring_manager_contact_id IS NULL;
+
+-- Step 3: Migrate job_skills to entity_skills
+INSERT INTO entity_skills (...)
+SELECT ... FROM job_skills;
+
+-- Step 4: Migrate inline rates to entity_rates (if applicable)
+INSERT INTO entity_rates (
+  org_id, entity_type, entity_id,
+  rate_type, bill_rate, pay_rate,
+  effective_date, is_current
+)
+SELECT
+  j.org_id, 'job', j.id,
+  j.rate_type, j.rate_max, j.rate_min,  -- Assuming rate_max = bill, rate_min = pay
+  j.created_at, true
+FROM jobs j
+WHERE j.rate_max IS NOT NULL OR j.rate_min IS NOT NULL;
+```
+
+### Phase 3: Backward Compatibility Views
+
+```sql
+-- View for legacy queries expecting account_id
+CREATE VIEW jobs_legacy_v AS
+SELECT
+  j.*,
+  j.client_company_id as account_id  -- Alias for backward compat
+FROM jobs j
+WHERE j.deleted_at IS NULL;
+```
+
+### Phase 4: Router & UI Updates
+- Update `ats.ts` router to use new FK references
+- Update job forms to use company/contact selectors
+- Update job list views with new fields
+
+### Phase 5: Cleanup
+- Remove legacy columns after validation period
+- Drop `job_skills` table after entity_skills migration verified
+
+## Acceptance Criteria
+
+### Schema Implementation
+- [ ] Add `client_company_id` FK to `companies`
+- [ ] Add `end_client_company_id` FK to `companies`
+- [ ] Add `vendor_company_id` FK to `companies`
+- [ ] Add `hiring_manager_contact_id` FK to `contacts`
+- [ ] Add `hr_contact_id` FK to `contacts`
+- [ ] Add `rate_card_id` FK to `rate_cards`
+- [ ] Add VMS/MSP tracking fields
+- [ ] Create `job_contacts` junction table
+- [ ] All indexes created
+- [ ] RLS policies updated
+
+### Data Migration
+- [ ] All jobs have `client_company_id` populated
+- [ ] End client relationships preserved for MSP jobs
+- [ ] Hiring managers migrated to contacts
+- [ ] job_skills migrated to entity_skills
+- [ ] Inline rates migrated to entity_rates
+- [ ] No orphaned references
+
+### Backward Compatibility
+- [ ] Legacy view `jobs_legacy_v` working
+- [ ] Existing tRPC procedures continue working
+- [ ] No breaking changes to frontend initially
+
+### Frontend Updates
+- [ ] Job creation uses company selector (not account)
+- [ ] End client field visible for MSP scenarios
+- [ ] Hiring manager uses contact selector
+- [ ] Skills use unified skill picker
+- [ ] Rate card integration in job form
+
+### Testing
+- [ ] Migration script tested on staging
+- [ ] All existing job queries work
+- [ ] New FK constraints validated
+- [ ] Performance benchmarks acceptable
+
+---
+
+## Technical Context
+
+### Entity Relationship After Migration
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                           JOBS                                   │
+├─────────────────────────────────────────────────────────────────┤
+│ client_company_id ──────────────► companies (client)            │
+│ end_client_company_id ──────────► companies (end_client)        │
+│ vendor_company_id ──────────────► companies (vendor)            │
+│ hiring_manager_contact_id ──────► contacts (person)             │
+│ hr_contact_id ──────────────────► contacts (person)             │
+│ rate_card_id ───────────────────► rate_cards                    │
+│ msp_program_id ─────────────────► companies (msp)               │
+└─────────────────────────────────────────────────────────────────┘
+         │
+         │ job_id FK
+         ▼
+┌─────────────────────┐    ┌─────────────────────┐
+│   job_contacts      │    │   entity_skills     │
+│   (junction)        │    │   (polymorphic)     │
+│ • hiring_managers   │    │ • entity_type='job' │
+│ • hr_contacts       │    │ • required skills   │
+│ • interviewers      │    │ • nice-to-have      │
+└─────────────────────┘    └─────────────────────┘
+```
+
+### MSP/VMS Job Scenario
+
+```
+Direct Client Job:
+  client_company_id = "Acme Corp"
+  end_client_company_id = NULL
+  vendor_company_id = NULL
+
+MSP Client Job (we are vendor):
+  client_company_id = "Magnit MSP"  -- Who pays us
+  end_client_company_id = "Acme Corp"  -- Where work happens
+  vendor_company_id = NULL
+  msp_program_id = "Magnit MSP"
+
+Vendor Job Order (we receive from vendor):
+  client_company_id = "Apex Systems"  -- Prime vendor
+  end_client_company_id = "Google"  -- End client
+  vendor_company_id = "Apex Systems"  -- Source of job
+  is_vendor_job = true
+  vendor_job_order_id = "APX-2024-12345"
+```
+
+---
+
+## Notes
+
+This migration is **critical for data integrity** as jobs are central to the ATS workflow:
+
+1. **Client Clarity**: Clear distinction between billing client and work location
+2. **Vendor Tracking**: Know which jobs came from vendors vs. direct
+3. **Contact Consistency**: Hiring managers as unified contacts enables relationship tracking
+4. **Rate Transparency**: Link to rate cards for proper margin tracking
+5. **VMS Integration**: Track VMS job IDs for system integration
+6. **Skills Unification**: Same skill matching for jobs and candidates
