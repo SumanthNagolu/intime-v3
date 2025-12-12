@@ -57,7 +57,7 @@ const cancelSchema = z.object({
     'other',
   ]),
   additionalNotes: z.string().max(500).optional(),
-  sendNotifications: z.boolean().default(true),
+  sendNotifications: z.boolean(),
 })
 
 type CancelFormData = z.infer<typeof cancelSchema>
@@ -132,14 +132,11 @@ export function CancelInterviewDialog({
   }
 
   const confirmCancel = () => {
-    const data = {
-      reason: reason,
-      additionalNotes: watch('additionalNotes') || undefined,
-      sendNotifications: watch('sendNotifications'),
-    }
     cancelMutation.mutate({
       interviewId,
-      ...data,
+      reason: reason,
+      notes: watch('additionalNotes') || undefined,
+      notifyParticipants: watch('sendNotifications'),
     })
   }
 
