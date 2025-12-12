@@ -511,7 +511,7 @@ export const timesheetsRouter = router({
       const { orgId } = ctx
       const adminClient = getAdminClient()
 
-      let query = adminClient
+      const query = adminClient
         .from('placements')
         .select(`
           id,
@@ -1897,7 +1897,7 @@ export const timesheetsRouter = router({
             reason: input.reason,
             hours_delta: input.hoursDelta ?? null,
             amount_delta: input.amountDelta ?? null,
-            requested_by: user?.id!,
+            requested_by: user!.id,
             status: 'pending',
           })
           .select()
