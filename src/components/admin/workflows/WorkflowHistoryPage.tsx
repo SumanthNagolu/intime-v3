@@ -69,7 +69,7 @@ export function WorkflowHistoryPage({ workflowId }: WorkflowHistoryPageProps) {
 
   // Queries
   const workflowQuery = trpc.workflows.getById.useQuery({ id: workflowId })
-  const historyQuery = trpc.workflows.getExecutionHistory.useQuery({
+  const historyQuery = trpc.workflows.getExecutionHistoryWithApprovals.useQuery({
     workflowId,
     page,
     limit: 20,

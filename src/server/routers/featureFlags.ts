@@ -315,15 +315,17 @@ export const featureFlagsRouter = router({
 
       // Log usage if enabled
       if (flag.log_usage && input.logUsage) {
-        await adminClient.from('feature_flag_usage').insert({
-          org_id: orgId,
-          feature_flag_id: flag.id,
-          user_id: userId,
-          was_enabled: enabled,
-          context: { strategy: flag.rollout_strategy },
-        }).catch(() => {
+        try {
+          await adminClient.from('feature_flag_usage').insert({
+            org_id: orgId,
+            feature_flag_id: flag.id,
+            user_id: userId,
+            was_enabled: enabled,
+            context: { strategy: flag.rollout_strategy },
+          })
+        } catch {
           // Don't fail the request if logging fails
-        })
+        }
       }
 
       return {
@@ -394,15 +396,17 @@ export const featureFlagsRouter = router({
       }
 
       // Audit log
-      await adminClient.from('audit_logs').insert({
-        org_id: orgId,
-        user_id: userId,
-        user_email: ctx.user?.email,
-        action: 'create',
-        table_name: 'feature_flags',
-        record_id: data.id,
-        new_values: data,
-      }).catch(() => {})
+      try {
+        await adminClient.from('audit_logs').insert({
+          org_id: orgId,
+          user_id: userId,
+          user_email: ctx.user?.email,
+          action: 'create',
+          table_name: 'feature_flags',
+          record_id: data.id,
+          new_values: data,
+        })
+      } catch { /* ignore audit log failures */ }
 
       return data
     }),
@@ -465,16 +469,18 @@ export const featureFlagsRouter = router({
       }
 
       // Audit log
-      await adminClient.from('audit_logs').insert({
-        org_id: orgId,
-        user_id: userId,
-        user_email: ctx.user?.email,
-        action: 'update',
-        table_name: 'feature_flags',
-        record_id: id,
-        old_values: current,
-        new_values: data,
-      }).catch(() => {})
+      try {
+        await adminClient.from('audit_logs').insert({
+          org_id: orgId,
+          user_id: userId,
+          user_email: ctx.user?.email,
+          action: 'update',
+          table_name: 'feature_flags',
+          record_id: id,
+          old_values: current,
+          new_values: data,
+        })
+      } catch { /* ignore audit log failures */ }
 
       return data
     }),
@@ -519,16 +525,18 @@ export const featureFlagsRouter = router({
       }
 
       // Audit log
-      await adminClient.from('audit_logs').insert({
-        org_id: orgId,
-        user_id: userId,
-        user_email: ctx.user?.email,
-        action: 'update',
-        table_name: 'feature_flags',
-        record_id: input.id,
-        old_values: current,
-        new_values: data,
-      }).catch(() => {})
+      try {
+        await adminClient.from('audit_logs').insert({
+          org_id: orgId,
+          user_id: userId,
+          user_email: ctx.user?.email,
+          action: 'update',
+          table_name: 'feature_flags',
+          record_id: input.id,
+          old_values: current,
+          new_values: data,
+        })
+      } catch { /* ignore audit log failures */ }
 
       return data
     }),
@@ -560,14 +568,16 @@ export const featureFlagsRouter = router({
       }
 
       // Audit log
-      await adminClient.from('audit_logs').insert({
-        org_id: orgId,
-        user_id: userId,
-        user_email: ctx.user?.email,
-        action: 'delete',
-        table_name: 'feature_flags',
-        record_id: input.id,
-      }).catch(() => {})
+      try {
+        await adminClient.from('audit_logs').insert({
+          org_id: orgId,
+          user_id: userId,
+          user_email: ctx.user?.email,
+          action: 'delete',
+          table_name: 'feature_flags',
+          record_id: input.id,
+        })
+      } catch { /* ignore audit log failures */ }
 
       return { success: true }
     }),

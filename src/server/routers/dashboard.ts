@@ -522,7 +522,8 @@ export const dashboardRouter = router({
       // Calculate time-to-submit (avg hours from job creation to submission)
       const timeToSubmitHours: number[] = []
       submissions?.forEach(s => {
-        const job = s.job as { created_at: string } | null
+        const jobArray = s.job as Array<{ id: string; created_at: string }> | null
+        const job = jobArray?.[0]
         if (job?.created_at && s.submitted_at) {
           const hours = (new Date(s.submitted_at).getTime() - new Date(job.created_at).getTime()) / (1000 * 60 * 60)
           if (hours > 0 && hours < 720) { // Cap at 30 days
@@ -563,9 +564,11 @@ export const dashboardRouter = router({
       // Time to fill (avg days from job creation to placement)
       const timeToFillDays: number[] = []
       placements?.forEach(p => {
-        const sub = p.submission as { job: { created_at: string } | null } | null
-        if (sub?.job?.created_at && p.start_date) {
-          const days = (new Date(p.start_date).getTime() - new Date(sub.job.created_at).getTime()) / (1000 * 60 * 60 * 24)
+        const subArray = p.submission as Array<{ job: Array<{ created_at: string }> | null }> | null
+        const sub = subArray?.[0]
+        const job = sub?.job?.[0]
+        if (job?.created_at && p.start_date) {
+          const days = (new Date(p.start_date).getTime() - new Date(job.created_at).getTime()) / (1000 * 60 * 60 * 24)
           if (days > 0 && days < 180) { // Cap at 6 months
             timeToFillDays.push(days)
           }
@@ -698,14 +701,18 @@ export const dashboardRouter = router({
           .limit(3)
 
         placements?.forEach(p => {
-          const sub = p.submission as {
-            candidate: { first_name: string; last_name: string } | null
-            job: { title: string; company: { name: string } | null } | null
-          } | null
-          if (sub?.candidate && sub?.job) {
+          const subArray = p.submission as Array<{
+            candidate: Array<{ first_name: string; last_name: string }> | null
+            job: Array<{ title: string; company: Array<{ name: string }> | null }> | null
+          }> | null
+          const sub = subArray?.[0]
+          const candidate = sub?.candidate?.[0]
+          const job = sub?.job?.[0]
+          const company = job?.company?.[0]
+          if (candidate && job) {
             wins.push({
               type: 'placement',
-              description: `Placed ${sub.candidate.first_name} ${sub.candidate.last_name} @ ${sub.job.company?.name || 'Client'}`,
+              description: `Placed ${candidate.first_name} ${candidate.last_name} @ ${company?.name || 'Client'}`,
               date: p.start_date,
               entityType: 'placement',
               entityId: p.id,
@@ -729,12 +736,15 @@ export const dashboardRouter = router({
         .limit(3)
 
       offers?.forEach(o => {
-        if (o.candidate && o.job) {
-          const candidate = o.candidate as { first_name: string; last_name: string }
-          const job = o.job as { title: string; company: { name: string } | null }
+        const candidateArray = o.candidate as Array<{ first_name: string; last_name: string }> | null
+        const candidate = candidateArray?.[0]
+        const jobArray = o.job as Array<{ title: string; company: Array<{ name: string }> | null }> | null
+        const job = jobArray?.[0]
+        const company = job?.company?.[0]
+        if (candidate && job) {
           wins.push({
             type: 'offer_accepted',
-            description: `Offer accepted: ${candidate.first_name} ${candidate.last_name} @ ${job.company?.name || 'Client'}`,
+            description: `Offer accepted: ${candidate.first_name} ${candidate.last_name} @ ${company?.name || 'Client'}`,
             date: o.updated_at,
             entityType: 'submission',
             entityId: o.id,
