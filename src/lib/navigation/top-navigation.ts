@@ -3,7 +3,8 @@ import {
   Search, Clock, Plus, Gauge, Settings, Bell, ListTodo,
   Calendar, CheckCircle, Package, TrendingUp, DollarSign,
   UserCheck, Send, Megaphone, Shield, Activity, UserCircle, Star,
-  ClipboardList, UserPlus, Network, FileText
+  ClipboardList, UserPlus, Network, FileText, Receipt, Wallet,
+  CreditCard, FileSpreadsheet
 } from 'lucide-react'
 import { EntityNavTab } from './entity-navigation.types'
 
@@ -129,6 +130,24 @@ export const topNavigationTabs: EntityNavTab[] = [
     ],
   },
   {
+    id: 'finance',
+    label: 'Finance',
+    entityType: 'invoice',
+    icon: Wallet,
+    defaultHref: '/employee/finance/invoices',
+    dropdown: [
+      { id: 'invoices', label: 'Invoices', icon: Receipt, href: '/employee/finance/invoices', type: 'link' },
+      { id: 'payroll', label: 'Payroll', icon: CreditCard, href: '/employee/finance/payroll', type: 'link' },
+      { id: 'timesheets-finance', label: 'Timesheets', icon: FileSpreadsheet, href: '/employee/recruiting/timesheets', type: 'link' },
+      { id: 'divider-1', label: '', type: 'divider' },
+      { id: 'ar-aging', label: 'AR Aging', icon: Clock, href: '/employee/finance/invoices?status=overdue', type: 'link' },
+      { id: 'payment-history', label: 'Payment History', icon: DollarSign, href: '/employee/finance/payments', type: 'link' },
+      { id: 'divider-2', label: '', type: 'divider' },
+      { id: 'new-invoice', label: 'Create Invoice', icon: Plus, href: '/employee/finance/invoices/new', type: 'link' },
+      { id: 'new-payroll', label: 'New Pay Run', icon: Plus, href: '/employee/finance/payroll/new', type: 'link' },
+    ],
+  },
+  {
     id: 'hr',
     label: 'HR',
     entityType: 'contact', // HR works with employees (contacts)
@@ -179,7 +198,9 @@ export function getActiveTabFromPath(pathname: string): string | null {
       pathname.includes('/employee/recruiting/interviews') ||
       pathname.includes('/employee/recruiting/offers') ||
       pathname.includes('/employee/recruiting/placements') ||
-      pathname.includes('/employee/recruiting/commissions')) return 'pipeline'
+      pathname.includes('/employee/recruiting/commissions') ||
+      pathname.includes('/employee/recruiting/timesheets')) return 'pipeline'
+  if (pathname.includes('/employee/finance')) return 'finance'
   if (pathname.includes('/employee/crm')) return 'crm'
   if (pathname.includes('/employee/workspace')) return 'workspace'
   if (pathname.includes('/employee/hr')) return 'hr'

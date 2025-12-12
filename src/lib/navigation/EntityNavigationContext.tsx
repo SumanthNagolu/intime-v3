@@ -27,6 +27,9 @@ const initialRecentEntities: Record<EntityType, RecentEntity[]> = {
   lead: [],
   deal: [],
   campaign: [],
+  invoice: [],
+  pay_run: [],
+  timesheet: [],
 }
 
 export function EntityNavigationProvider({ children }: { children: ReactNode }) {

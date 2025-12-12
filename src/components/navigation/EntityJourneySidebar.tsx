@@ -41,6 +41,9 @@ const backLinkText: Record<EntityType, string> = {
   deal: 'All Deals',
   lead: 'All Leads',
   campaign: 'All Campaigns',
+  invoice: 'All Invoices',
+  pay_run: 'All Pay Runs',
+  timesheet: 'All Timesheets',
 }
 
 export function EntityJourneySidebar({
