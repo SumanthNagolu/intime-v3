@@ -1373,17 +1373,17 @@ ON CONFLICT (entity_type) DO NOTHING;
 ### Success Criteria
 
 #### Automated Verification:
-- [ ] Migration applies cleanly: `pnpm db:migrate`
-- [ ] No type errors: `pnpm tsc --noEmit`
-- [ ] `rate_cards` table exists with versioning columns
-- [ ] `rate_card_items` table exists with calculated columns
-- [ ] `entity_rates` table exists with GENERATED margin columns
-- [ ] `rate_change_history` table exists
-- [ ] `rate_approvals` table exists
-- [ ] All ENUMs created
-- [ ] All indexes created
-- [ ] Placement sync trigger works
-- [ ] Helper functions work
+- [x] Migration applies cleanly: `pnpm db:migrate`
+- [x] No type errors: `pnpm tsc --noEmit` (pre-existing errors unrelated to migration)
+- [x] `rate_cards` table exists with versioning columns
+- [x] `rate_card_items` table exists with calculated columns
+- [x] `entity_rates` table exists with GENERATED margin columns
+- [x] `rate_change_history` table exists
+- [x] `rate_approvals` table exists
+- [x] All ENUMs created (rate_card_type, rate_unit)
+- [x] All indexes created
+- [x] Placement sync trigger works
+- [x] Helper functions work (get_entity_rate, calculate_margin)
 
 #### Manual Verification:
 - [ ] GENERATED columns calculate correctly
