@@ -56,6 +56,8 @@ import { skillsRouter } from '../routers/skills'
 import { entitySkillsRouter } from '../routers/entity-skills'
 // Unified history & audit trail system (HISTORY-01)
 import { historyRouter } from '../routers/history'
+// Unified compliance system (COMPLIANCE-01)
+import { complianceRouter } from '../routers/compliance'
 
 export const appRouter = router({
   admin: adminRouter,
@@ -115,6 +117,8 @@ export const appRouter = router({
   entitySkills: entitySkillsRouter,
   // Unified history & audit trail system (HISTORY-01)
   history: historyRouter,
+  // Unified compliance system (COMPLIANCE-01)
+  compliance: complianceRouter,
 })
 
 export type AppRouter = typeof appRouter
