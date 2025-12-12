@@ -64,6 +64,10 @@ import { contractsRouter } from '../routers/contracts'
 import { ratesRouter } from '../routers/rates'
 // Timesheet management system (TIMESHEETS-01)
 import { timesheetsRouter } from '../routers/timesheets'
+// Invoice management system (INVOICES-01)
+import { invoicesRouter } from '../routers/invoices'
+// Payroll management system (PAYROLL-01)
+import { payrollRouter } from '../routers/payroll'
 
 export const appRouter = router({
   admin: adminRouter,
@@ -131,6 +135,10 @@ export const appRouter = router({
   rates: ratesRouter,
   // Timesheet management system (TIMESHEETS-01)
   timesheets: timesheetsRouter,
+  // Invoice management system (INVOICES-01)
+  invoices: invoicesRouter,
+  // Payroll management system (PAYROLL-01)
+  payroll: payrollRouter,
 })
 
 export type AppRouter = typeof appRouter

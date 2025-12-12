@@ -16,6 +16,9 @@ export type EntityType =
   | 'lead'
   | 'deal'
   | 'campaign'
+  | 'invoice'
+  | 'pay_run'
+  | 'timesheet'
 
 // Navigation style for entity types
 // - 'journey': Sequential workflow steps (jobs, submissions)
@@ -33,6 +36,9 @@ export const ENTITY_NAVIGATION_STYLES: Record<EntityType, NavigationStyle> = {
   deal: 'sections',
   lead: 'sections',
   campaign: 'sections',
+  invoice: 'sections',
+  pay_run: 'journey',
+  timesheet: 'sections',
 }
 
 // Entity journey step definition
@@ -128,6 +134,9 @@ export const ENTITY_BASE_PATHS: Record<EntityType, string> = {
   lead: '/employee/crm/leads',
   deal: '/employee/crm/deals',
   campaign: '/employee/crm/campaigns',
+  invoice: '/employee/finance/invoices',
+  pay_run: '/employee/finance/payroll',
+  timesheet: '/employee/recruiting/timesheets',
 }
 
 // Helper to get entity URL
