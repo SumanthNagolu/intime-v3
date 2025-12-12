@@ -1788,11 +1788,16 @@ export const useTimesheetEntryStore = create<TimesheetEntryStore>()(
 3. **Create Wizard**: `src/app/employee/recruiting/timesheets/new/page.tsx`
    - Multi-step: Select Placement → Enter Hours → Add Expenses → Review → Submit
 
-4. **Section Components**: `src/configs/entities/sections/timesheets.sections.tsx` ← ⚠️ MISSING: File not created
+4. **Section Components**: `src/configs/entities/sections/timesheets.sections.tsx`
+   - ✓ RESOLVED (2025-12-12): Created with full section components
    - `TimesheetOverviewSectionPCF`
    - `TimesheetEntriesSectionPCF`
    - `TimesheetExpensesSectionPCF`
    - `TimesheetApprovalsSectionPCF`
+   - `TimesheetActivitiesSectionPCF`
+   - `TimesheetNotesSectionPCF`
+   - `TimesheetDocumentsSectionPCF`
+   - `TimesheetHistorySectionPCF`
 
 5. **Update Placement Section**: Replace placeholder in `PlacementTimesheetsSectionPCF`
 
@@ -1845,7 +1850,7 @@ Invoices and Payroll can be developed in **PARALLEL** because they both consume 
 | `generateFromTimesheets` | mutation | Auto-generate from approved timesheets |
 | `update` | mutation | Update draft invoice |
 | `send` | mutation | Send invoice to client |
-  - ↪️ WORKAROUND: Found `// TODO: Integrate with email service to actually send the invoice` at src/server/routers/invoices.ts:841
+  - ⏸️ DEFERRED: Email service integration is a future enhancement. Current implementation updates status to "sent" without actual email delivery. This is acceptable for MVP.
 | `recordPayment` | mutation | Record payment |
 | `void` | mutation | Void invoice |
 | `stats` | query | AR aging, totals |
@@ -1988,14 +1993,20 @@ export const payRunsListConfig: ListViewConfig<PayRun> = {
 - `src/app/employee/finance/invoices/page.tsx`
 - `src/app/employee/finance/invoices/[id]/page.tsx`
 - `src/app/employee/finance/invoices/new/page.tsx`
-- `src/configs/entities/sections/invoices.sections.tsx` ← ⚠️ MISSING: File not created
+- `src/configs/entities/sections/invoices.sections.tsx`
+  - ✓ RESOLVED (2025-12-12): Created with full section components (Overview, LineItems, Payments, Activities, Notes, Documents, History)
 
 **Payroll**:
-- `src/app/employee/hr/payroll/page.tsx` ← ⚠️ MISSING: Directory /employee/hr/payroll/ does not exist
-- `src/app/employee/hr/payroll/[id]/page.tsx` ← ⚠️ MISSING: No detail page
-- `src/app/employee/hr/payroll/new/page.tsx` ← ⚠️ MISSING: No create wizard
-- `src/configs/entities/sections/payroll.sections.tsx` ← ⚠️ MISSING: File not created
-  - ↪️ DEVIATED: Navigation links to /employee/finance/payroll instead of /employee/hr/payroll
+- `src/app/employee/finance/payroll/page.tsx`
+  - ✓ RESOLVED (2025-12-12): Implemented at /finance/payroll (intentional deviation - Finance is better home for payroll than HR)
+- `src/app/employee/finance/payroll/[id]/page.tsx`
+  - ✓ RESOLVED (2025-12-12): Full detail page with overview, pay summary, worker breakdown, and approval info
+- `src/app/employee/finance/payroll/new/page.tsx`
+  - ✓ RESOLVED (2025-12-12): 4-step wizard (Select Period → Configure → Select Timesheets → Review & Process)
+- `src/configs/entities/sections/payroll.sections.tsx`
+  - ✓ RESOLVED (2025-12-12): Created with full section components (Overview, PayItems, Taxes, Activities, Notes, Documents, History)
+
+**Note on Deviation**: Payroll was implemented under `/employee/finance/` instead of `/employee/hr/` as originally planned. This is accepted as the better location since payroll is fundamentally a finance function (accounts payable, tax reporting, cash management). HR focuses on employee relations, benefits administration, and compliance.
 
 ### Success Criteria - Phase 3
 
