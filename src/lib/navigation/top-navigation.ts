@@ -2,7 +2,8 @@ import {
   Briefcase, Building2, Users, Target, Handshake, LayoutDashboard,
   Search, Clock, Plus, Gauge, Settings, Bell, ListTodo,
   Calendar, CheckCircle, Package, TrendingUp, DollarSign,
-  UserCheck, Send, Megaphone, Shield, Activity, UserCircle, Star
+  UserCheck, Send, Megaphone, Shield, Activity, UserCircle, Star,
+  ClipboardList, UserPlus, Network, FileText
 } from 'lucide-react'
 import { EntityNavTab } from './entity-navigation.types'
 
@@ -126,6 +127,20 @@ export const topNavigationTabs: EntityNavTab[] = [
     ],
   },
   {
+    id: 'hr',
+    label: 'HR',
+    entityType: 'contact', // HR works with employees (contacts)
+    icon: UserPlus,
+    defaultHref: '/employee/hr/onboarding',
+    dropdown: [
+      { id: 'onboarding', label: 'Onboarding', icon: ClipboardList, href: '/employee/hr/onboarding', type: 'link' },
+      { id: 'templates', label: 'Onboarding Templates', icon: FileText, href: '/employee/hr/onboarding/templates', type: 'link' },
+      { id: 'divider-1', label: '', type: 'divider' },
+      { id: 'employees', label: 'Employees', icon: Users, href: '/employee/hr/employees', type: 'link' },
+      { id: 'pods', label: 'Pods & Teams', icon: Network, href: '/employee/hr/pods', type: 'link' },
+    ],
+  },
+  {
     id: 'admin',
     label: 'Administration',
     entityType: 'job', // Not entity-specific
@@ -165,6 +180,7 @@ export function getActiveTabFromPath(pathname: string): string | null {
       pathname.includes('/employee/recruiting/commissions')) return 'pipeline'
   if (pathname.includes('/employee/crm')) return 'crm'
   if (pathname.includes('/employee/workspace')) return 'workspace'
+  if (pathname.includes('/employee/hr')) return 'hr'
   if (pathname.includes('/employee/admin')) return 'admin'
   return null
 }
