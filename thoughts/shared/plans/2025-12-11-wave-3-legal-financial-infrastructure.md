@@ -1815,6 +1815,24 @@ Similar structure to Phase 2A. Create `src/server/routers/rates.ts` with:
 - `approvals.list`, `approvals.approve`, `approvals.reject`
 - `calculateMargin` (utility)
 
+### Automated Verification
+
+- [x] No type errors: `pnpm tsc --noEmit` ✅ 2025-12-11 (pre-existing errors only, unrelated)
+- [x] Router registered in root.ts ✅ 2025-12-11
+- [x] All procedures implemented: rateCards CRUD + versioning, items CRUD, entityRates CRUD + getCurrentRate + requestApproval, approvals CRUD, calculateMargin utility ✅ 2025-12-11
+- [x] Unit tests pass: `pnpm test --run` ✅ 2025-12-11 (103 tests passed)
+
+### Manual Testing Steps (Pause for Human Verification)
+
+- [ ] Can list rate cards
+- [ ] Can create rate card for company
+- [ ] Can create rate card items
+- [ ] Can create entity rate for placement/submission
+- [ ] Can request rate approval
+- [ ] Can approve/reject rate
+- [ ] `calculateMargin` returns correct values
+- [ ] Rate change history tracks changes
+
 ---
 
 ## Phase 3: UI Components
