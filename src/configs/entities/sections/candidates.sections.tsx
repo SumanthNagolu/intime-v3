@@ -108,16 +108,20 @@ export function CandidateOverviewSectionPCF({ entityId, entity }: PCFSectionProp
           <CardContent>
             {skills.length > 0 ? (
               <div className="flex flex-wrap gap-2">
-                {skills.map((skill) => (
-                  <Badge key={skill.skill_name} variant="secondary">
-                    {skill.skill_name}
-                    {skill.years_experience && (
-                      <span className="ml-1 text-xs text-charcoal-400">
-                        ({skill.years_experience}y)
-                      </span>
-                    )}
-                  </Badge>
-                ))}
+                {skills.map((skill) => {
+                  const skillName = typeof skill === 'string' ? skill : skill.skill_name
+                  const yearsExp = typeof skill === 'string' ? undefined : skill.years_experience
+                  return (
+                    <Badge key={skillName} variant="secondary">
+                      {skillName}
+                      {yearsExp && (
+                        <span className="ml-1 text-xs text-charcoal-400">
+                          ({yearsExp}y)
+                        </span>
+                      )}
+                    </Badge>
+                  )
+                })}
               </div>
             ) : (
               <p className="text-charcoal-500 italic">No skills listed</p>

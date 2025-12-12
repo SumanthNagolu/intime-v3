@@ -57,7 +57,7 @@ export function DashboardView({
             actions={config.actions}
             dateRangeFilter={config.dateRangeFilter}
             dateRange={dateRange}
-            onDateRangeChange={setDateRange}
+            onDateRangeChange={(range) => setDateRange(range as typeof dateRange)}
             onRefresh={handleRefresh}
             isRefreshing={isRefreshing}
           />

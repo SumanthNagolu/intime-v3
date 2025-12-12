@@ -284,7 +284,7 @@ export function BreakGlassPage() {
                             <div className="mt-2">
                               <span className="text-xs font-medium text-charcoal-600">Actions taken:</span>
                               <ul className="list-disc list-inside text-xs text-charcoal-500 mt-1">
-                                {access.actions_taken.map((action, i) => (
+                                {access.actions_taken.map((action: string, i: number) => (
                                   <li key={i}>{action}</li>
                                 ))}
                               </ul>

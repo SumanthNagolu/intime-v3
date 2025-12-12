@@ -2,10 +2,10 @@
 export * from './interviews'
 
 // Jobs
-export * from './jobs'
+export { UpdateStatusDialog, PipelineView, PIPELINE_STAGES as JOB_PIPELINE_STAGES, type PipelineStage, CloseJobWizard, AddToPipelineDialog } from './jobs'
 
 // Submissions
-export * from './submissions'
+export { SubmitToClientDialog, RecordFeedbackDialog, SubmissionPipeline, PIPELINE_STAGES as SUBMISSION_PIPELINE_STAGES, ScreeningChecklistDialog, FollowUpDialog } from './submissions'
 
 // Offers
 export * from './offers'

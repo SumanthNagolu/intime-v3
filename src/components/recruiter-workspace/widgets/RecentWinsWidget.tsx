@@ -57,11 +57,8 @@ interface RecentWinsWidgetProps {
   initialData?: RecentWin[]
 }
 
-export function RecentWinsWidget({ className, initialData }: RecentWinsWidgetProps) {
-  const { data, isLoading } = trpc.dashboard.getRecentWins.useQuery({ limit: 5 }, {
-    initialData,
-    enabled: !initialData,
-  })
+export function RecentWinsWidget({ className }: RecentWinsWidgetProps) {
+  const { data, isLoading } = trpc.dashboard.getRecentWins.useQuery({ limit: 5 })
 
   if (isLoading) {
     return (

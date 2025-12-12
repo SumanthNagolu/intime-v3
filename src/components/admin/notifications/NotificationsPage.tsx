@@ -37,10 +37,10 @@ const NOTIFICATION_CATEGORIES = [
 ]
 
 const CHANNELS = [
-  { id: 'email', name: 'Email', icon: Mail },
-  { id: 'in_app', name: 'In-App', icon: Bell },
-  { id: 'push', name: 'Push', icon: Smartphone },
-  { id: 'sms', name: 'SMS', icon: MessageSquare },
+  { id: 'email' as const, name: 'Email', icon: Mail },
+  { id: 'in_app' as const, name: 'In-App', icon: Bell },
+  { id: 'push' as const, name: 'Push', icon: Smartphone },
+  { id: 'sms' as const, name: 'SMS', icon: MessageSquare },
 ]
 
 type Notification = {
@@ -153,7 +153,7 @@ export function NotificationsPage() {
     return pref?.enabled ?? true
   }
 
-  const togglePreference = (category: string, channel: string, enabled: boolean) => {
+  const togglePreference = (category: string, channel: "email" | "push" | "sms" | "in_app", enabled: boolean) => {
     updatePreferenceMutation.mutate({ category, channel, enabled })
   }
 

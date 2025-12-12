@@ -55,11 +55,8 @@ interface PipelineHealthWidgetProps {
   initialData?: PipelineHealthData
 }
 
-export function PipelineHealthWidget({ className, initialData }: PipelineHealthWidgetProps) {
-  const { data, isLoading } = trpc.dashboard.getPipelineHealth.useQuery(undefined, {
-    initialData,
-    enabled: !initialData,
-  })
+export function PipelineHealthWidget({ className }: PipelineHealthWidgetProps) {
+  const { data, isLoading } = trpc.dashboard.getPipelineHealth.useQuery()
 
   if (isLoading) {
     return (

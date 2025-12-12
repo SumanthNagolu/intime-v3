@@ -305,20 +305,20 @@ export function CreateCampaignActivityDialog({
                   <SelectValue placeholder="Select team member..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {assignees?.owner && (
-                    <SelectItem value={assignees.owner.id}>
+                  {assignees?.owner?.[0] && (
+                    <SelectItem value={assignees.owner[0].id}>
                       <div className="flex items-center gap-2">
                         <Avatar className="h-5 w-5">
-                          <AvatarImage src={assignees.owner.avatar_url} />
-                          <AvatarFallback>{assignees.owner.full_name?.charAt(0)}</AvatarFallback>
+                          <AvatarImage src={assignees.owner[0].avatar_url} />
+                          <AvatarFallback>{assignees.owner[0].full_name?.charAt(0)}</AvatarFallback>
                         </Avatar>
-                        <span>{assignees.owner.full_name}</span>
+                        <span>{assignees.owner[0].full_name}</span>
                         <Badge variant="secondary" className="text-xs ml-1">Owner</Badge>
                       </div>
                     </SelectItem>
                   )}
                   {assignees?.teamMembers
-                    ?.filter((m) => m.id !== assignees.owner?.id)
+                    ?.filter((m) => m.id !== assignees.owner?.[0]?.id)
                     .map((member) => (
                       <SelectItem key={member.id} value={member.id}>
                         <div className="flex items-center gap-2">
@@ -443,20 +443,20 @@ export function CreateCampaignActivityDialog({
                       <SelectValue placeholder="Select team member..." />
                     </SelectTrigger>
                     <SelectContent>
-                      {assignees?.owner && (
-                        <SelectItem value={assignees.owner.id}>
+                      {assignees?.owner?.[0] && (
+                        <SelectItem value={assignees.owner[0].id}>
                           <div className="flex items-center gap-2">
                             <Avatar className="h-5 w-5">
-                              <AvatarImage src={assignees.owner.avatar_url} />
-                              <AvatarFallback>{assignees.owner.full_name?.charAt(0)}</AvatarFallback>
+                              <AvatarImage src={assignees.owner[0].avatar_url} />
+                              <AvatarFallback>{assignees.owner[0].full_name?.charAt(0)}</AvatarFallback>
                             </Avatar>
-                            <span>{assignees.owner.full_name}</span>
+                            <span>{assignees.owner[0].full_name}</span>
                             <Badge variant="secondary" className="text-xs ml-1">Owner</Badge>
                           </div>
                         </SelectItem>
                       )}
                       {assignees?.teamMembers
-                        ?.filter((m) => m.id !== assignees.owner?.id)
+                        ?.filter((m) => m.id !== assignees.owner?.[0]?.id)
                         .map((member) => (
                           <SelectItem key={member.id} value={member.id}>
                             <div className="flex items-center gap-2">

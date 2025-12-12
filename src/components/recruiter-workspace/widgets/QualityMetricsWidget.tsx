@@ -106,42 +106,42 @@ export function QualityMetricsWidget({ className, initialData }: QualityMetricsW
           value={data.timeToSubmit.value}
           target={data.timeToSubmit.target}
           unit={data.timeToSubmit.unit}
-          status={data.timeToSubmit.status}
+          status={data.timeToSubmit.status as 'good' | 'warning' | 'poor'}
         />
         <MetricRow
           label="Time-to-Fill"
           value={data.timeToFill.value}
           target={data.timeToFill.target}
           unit={data.timeToFill.unit}
-          status={data.timeToFill.status}
+          status={data.timeToFill.status as 'good' | 'warning' | 'poor'}
         />
         <MetricRow
           label="Submission Quality"
           value={data.submissionQuality.value}
           target={data.submissionQuality.target}
           unit={data.submissionQuality.unit}
-          status={data.submissionQuality.status}
+          status={data.submissionQuality.status as 'good' | 'warning' | 'poor'}
         />
         <MetricRow
           label="Interview-to-Offer"
           value={data.interviewToOffer.value}
           target={data.interviewToOffer.target}
           unit={data.interviewToOffer.unit}
-          status={data.interviewToOffer.status}
+          status={data.interviewToOffer.status as 'good' | 'warning' | 'poor'}
         />
         <MetricRow
           label="Offer Acceptance"
           value={data.offerAcceptance.value}
           target={data.offerAcceptance.target}
           unit={data.offerAcceptance.unit}
-          status={data.offerAcceptance.status}
+          status={data.offerAcceptance.status as 'good' | 'warning' | 'poor'}
         />
         <MetricRow
           label="30-Day Retention"
           value={data.retention.value}
           target={data.retention.target}
           unit={data.retention.unit}
-          status={data.retention.status}
+          status={data.retention.status as 'good' | 'warning' | 'poor'}
         />
 
         {/* Overall Score */}

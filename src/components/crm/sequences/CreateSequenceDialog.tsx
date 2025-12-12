@@ -49,8 +49,8 @@ const sequenceSchema = z.object({
   description: z.string().max(1000).optional(),
   channel: z.enum(['email', 'linkedin', 'phone', 'sms']),
   steps: z.array(sequenceStepSchema).min(1, 'At least one step is required'),
-  stopOnReply: z.boolean().default(true),
-  stopOnMeeting: z.boolean().default(true),
+  stopOnReply: z.boolean(),
+  stopOnMeeting: z.boolean(),
   dailyLimit: z.number().int().min(1).max(500).optional(),
 })
 

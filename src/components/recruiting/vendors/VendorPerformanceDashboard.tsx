@@ -44,8 +44,8 @@ export function VendorPerformanceDashboard({ vendorId, vendorName }: VendorPerfo
     )
   }
 
-  // Default/mock data if not available
-  const metrics = performance || {
+  // Default/mock data if not available - ensure we have the expected shape
+  const defaultMetrics = {
     totalJobOrders: 0,
     activeJobOrders: 0,
     totalSubmissions: 0,
@@ -57,8 +57,11 @@ export function VendorPerformanceDashboard({ vendorId, vendorName }: VendorPerfo
     averageMargin: 0,
     totalRevenue: 0,
     rating: 0,
-    lastActivityDate: null,
+    lastActivityDate: null as string | null,
   }
+
+  // Ensure metrics is an object, not an array
+  const metrics = (performance && !Array.isArray(performance)) ? performance : defaultMetrics
 
   // Calculate trends (mock - in reality would compare to previous period)
   const getTrendIcon = (value: number) => {

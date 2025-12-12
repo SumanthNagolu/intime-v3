@@ -265,7 +265,7 @@ export function AddToPipelineDialog({
                               )}
                               {candidate.skills && (
                                 <div className="flex flex-wrap gap-1 mt-2">
-                                  {candidate.skills.split(',').slice(0, 3).map((skill) => (
+                                  {candidate.skills.split(',').slice(0, 3).map((skill: string) => (
                                     <Badge key={skill.trim()} variant="secondary" className="text-xs">
                                       {skill.trim()}
                                     </Badge>

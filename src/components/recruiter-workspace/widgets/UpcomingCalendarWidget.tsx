@@ -63,11 +63,8 @@ interface UpcomingCalendarWidgetProps {
   initialData?: UpcomingInterview[]
 }
 
-export function UpcomingCalendarWidget({ className, initialData }: UpcomingCalendarWidgetProps) {
-  const { data, isLoading } = trpc.ats.interviews.getUpcoming.useQuery({ days: 7 }, {
-    initialData,
-    enabled: !initialData,
-  })
+export function UpcomingCalendarWidget({ className }: UpcomingCalendarWidgetProps) {
+  const { data, isLoading } = trpc.ats.interviews.getUpcoming.useQuery({ days: 7 })
 
   if (isLoading) {
     return (
@@ -114,10 +111,14 @@ export function UpcomingCalendarWidget({ className, initialData }: UpcomingCalen
         )}
 
         {data?.slice(0, 5).map(interview => {
-          const submission = interview.submission as {
-            job: { title: string; account: { name: string } | null } | null
-            candidate: { first_name: string; last_name: string } | null
-          } | null
+          // Supabase joins return arrays, so we get the first element
+          const submissionArray = interview.submission as Array<{
+            job: Array<{ title: string; account: { name: string } | null }> | null
+            candidate: Array<{ first_name: string; last_name: string }> | null
+          }> | null
+          const submission = submissionArray?.[0]
+          const job = Array.isArray(submission?.job) ? submission?.job[0] : submission?.job
+          const candidate = Array.isArray(submission?.candidate) ? submission?.candidate[0] : submission?.candidate
 
           return (
             <InterviewItem
@@ -125,9 +126,9 @@ export function UpcomingCalendarWidget({ className, initialData }: UpcomingCalen
               id={interview.id}
               scheduledAt={interview.scheduledAt}
               interviewType={interview.interviewType}
-              candidateName={submission?.candidate ? `${submission.candidate.first_name} ${submission.candidate.last_name}` : 'Unknown'}
-              jobTitle={submission?.job?.title ?? 'Unknown Job'}
-              accountName={submission?.job?.account?.name ?? 'Unknown Client'}
+              candidateName={candidate ? `${candidate.first_name} ${candidate.last_name}` : 'Unknown'}
+              jobTitle={job?.title ?? 'Unknown Job'}
+              accountName={(job?.account as { name?: string } | null)?.name ?? 'Unknown Client'}
             />
           )
         })}

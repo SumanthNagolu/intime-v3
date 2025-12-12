@@ -15,15 +15,15 @@ export interface ParseError {
 }
 
 export const parseCSV = async (file: File | string): Promise<ParsedData> => {
-  return new Promise((resolve, reject) => {
-    const config: Papa.ParseConfig = {
+  return new Promise((resolve) => {
+    const config: Papa.ParseConfig<Record<string, unknown>> = {
       header: true,
       skipEmptyLines: true,
-      transformHeader: (header) => header.trim().toLowerCase().replace(/\s+/g, '_'),
-      complete: (results) => {
+      transformHeader: (header: string) => header.trim().toLowerCase().replace(/\s+/g, '_'),
+      complete: (results: Papa.ParseResult<Record<string, unknown>>) => {
         resolve({
           headers: results.meta.fields || [],
-          rows: results.data as Record<string, unknown>[],
+          rows: results.data,
           totalRows: results.data.length,
           errors: results.errors.map(e => ({
             row: e.row,
@@ -32,15 +32,13 @@ export const parseCSV = async (file: File | string): Promise<ParsedData> => {
           })),
         })
       },
-      error: (error) => {
-        reject(new Error(`CSV parsing failed: ${error.message}`))
-      },
     }
 
     if (typeof file === 'string') {
       Papa.parse(file, config)
     } else {
-      Papa.parse(file, config)
+      // Papa.parse accepts File directly
+      Papa.parse(file as unknown as File, config as Papa.ParseLocalConfig<Record<string, unknown>>)
     }
   })
 }

@@ -129,7 +129,7 @@ export function WorkflowBuilderPage({ workflowId }: WorkflowBuilderPageProps) {
 
       // Convert steps
       if (wf.steps) {
-        setSteps(wf.steps.map(s => ({
+        setSteps(wf.steps.map((s: { id: string; step_name: string; step_order: number; approver_type: string; approver_config: Record<string, unknown>; timeout_hours?: number | null; timeout_unit: string; timeout_action?: string | null; reminder_enabled: boolean; reminder_percent?: number | null }) => ({
           id: s.id,
           stepName: s.step_name,
           stepOrder: s.step_order,
@@ -145,7 +145,7 @@ export function WorkflowBuilderPage({ workflowId }: WorkflowBuilderPageProps) {
 
       // Convert actions
       if (wf.actions) {
-        setActions(wf.actions.map(a => ({
+        setActions(wf.actions.map((a: { id: string; action_trigger: string; action_order: number; action_type: string; action_config: Record<string, unknown> }) => ({
           id: a.id,
           actionTrigger: a.action_trigger,
           actionOrder: a.action_order,

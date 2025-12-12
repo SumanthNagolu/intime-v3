@@ -185,7 +185,7 @@ export function useFeatureFlag(
     { key: featureKey, logUsage },
     {
       staleTime: 5 * 60 * 1000, // 5 minutes
-      cacheTime: 10 * 60 * 1000, // 10 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes (gcTime replaces cacheTime in v5)
     }
   )
 

@@ -280,7 +280,7 @@ export function WorkflowHistoryPage({ workflowId }: WorkflowHistoryPageProps) {
                           <div>
                             <h4 className="text-sm font-medium mb-2">Approval History</h4>
                             <div className="space-y-2">
-                              {execution.approvals.map((approval) => {
+                              {execution.approvals.map((approval: { id: string; status: string; step_order: number; approver?: { full_name?: string }; approved_at?: string; comments?: string }) => {
                                 const approvalStatusConfig = APPROVAL_STATUS_CONFIG[approval.status as ApprovalStatus]
                                 return (
                                   <div
@@ -297,7 +297,7 @@ export function WorkflowHistoryPage({ workflowId }: WorkflowHistoryPageProps) {
                                         </p>
                                         <div className="flex items-center gap-2 text-xs text-charcoal-500">
                                           <User className="w-3 h-3" />
-                                          <span>Approver: {approval.approver_id.substring(0, 8)}...</span>
+                                          <span>Approver: {approval.approver?.full_name || 'Unknown'}</span>
                                         </div>
                                       </div>
                                     </div>
@@ -306,8 +306,8 @@ export function WorkflowHistoryPage({ workflowId }: WorkflowHistoryPageProps) {
                                         {approvalStatusConfig.label}
                                       </Badge>
                                       <p className="text-xs text-charcoal-500 mt-1">
-                                        {approval.responded_at
-                                          ? new Date(approval.responded_at).toLocaleString()
+                                        {approval.approved_at
+                                          ? new Date(approval.approved_at).toLocaleString()
                                           : 'Awaiting response'}
                                       </p>
                                     </div>

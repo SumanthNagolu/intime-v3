@@ -224,10 +224,10 @@ export function DrillsListPage() {
                               Completed: {format(new Date(drill.completed_at), 'MMM d, HH:mm')}
                             </span>
                           )}
-                          {drill.creator && (
+                          {drill.creator?.[0] && (
                             <span className="flex items-center gap-1">
                               <User className="w-3 h-3" />
-                              {drill.creator.full_name}
+                              {drill.creator[0].full_name}
                             </span>
                           )}
                         </div>

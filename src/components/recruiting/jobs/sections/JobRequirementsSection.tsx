@@ -76,7 +76,7 @@ export function JobRequirementsSection({ jobId }: JobRequirementsSectionProps) {
 
   const handleSaveRequiredSkills = async () => {
     await updateJobMutation.mutateAsync({
-      id: jobId,
+      jobId,
       requiredSkills: editedRequiredSkills,
     })
     setIsEditingRequired(false)
@@ -84,7 +84,7 @@ export function JobRequirementsSection({ jobId }: JobRequirementsSectionProps) {
 
   const handleSaveNiceToHaveSkills = async () => {
     await updateJobMutation.mutateAsync({
-      id: jobId,
+      jobId,
       niceToHaveSkills: editedNiceToHaveSkills,
     })
     setIsEditingNiceToHave(false)
@@ -92,7 +92,7 @@ export function JobRequirementsSection({ jobId }: JobRequirementsSectionProps) {
 
   const handleSaveExperience = async () => {
     await updateJobMutation.mutateAsync({
-      id: jobId,
+      jobId,
       minExperienceYears: editedMinExp ? parseInt(editedMinExp) : undefined,
       maxExperienceYears: editedMaxExp ? parseInt(editedMaxExp) : undefined,
     })
@@ -101,7 +101,7 @@ export function JobRequirementsSection({ jobId }: JobRequirementsSectionProps) {
 
   const handleSaveVisaRequirements = async () => {
     await updateJobMutation.mutateAsync({
-      id: jobId,
+      jobId,
       visaRequirements: editedVisaReqs,
     })
     setIsEditingVisa(false)
@@ -238,7 +238,7 @@ export function JobRequirementsSection({ jobId }: JobRequirementsSectionProps) {
           ) : (
             <div className="flex flex-wrap gap-2">
               {requiredSkills.length > 0 ? (
-                requiredSkills.map((skill) => (
+                requiredSkills.map((skill: string) => (
                   <Badge key={skill} variant="secondary">
                     {skill}
                   </Badge>
@@ -306,7 +306,7 @@ export function JobRequirementsSection({ jobId }: JobRequirementsSectionProps) {
           ) : (
             <div className="flex flex-wrap gap-2">
               {niceToHaveSkills.length > 0 ? (
-                niceToHaveSkills.map((skill) => (
+                niceToHaveSkills.map((skill: string) => (
                   <Badge key={skill} variant="outline">
                     {skill}
                   </Badge>
@@ -436,7 +436,7 @@ export function JobRequirementsSection({ jobId }: JobRequirementsSectionProps) {
           ) : (
             <div className="flex flex-wrap gap-2">
               {visaRequirements.length > 0 ? (
-                visaRequirements.map((visa) => (
+                visaRequirements.map((visa: string) => (
                   <Badge key={visa} variant="outline">
                     {visa.replace(/_/g, ' ')}
                   </Badge>

@@ -64,7 +64,9 @@ export function ActivityShortcutProvider({ children }: ActivityShortcutProviderP
           if (!open) closeLogActivity()
           else setIsOpen(true)
         }}
-        prefilledEntity={prefilledEntity}
+        entityType={prefilledEntity?.type}
+        entityId={prefilledEntity?.id}
+        entityName={prefilledEntity?.name}
       />
     </ActivityShortcutContext.Provider>
   )

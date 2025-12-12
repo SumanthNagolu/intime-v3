@@ -395,7 +395,7 @@ export function SlaHubPage() {
                   onToggle={() => toggleSection('active')}
                   icon={<CheckCircle className="w-4 h-4 text-green-600" />}
                 >
-                  {groupedRules.active.map((rule) => (
+                  {groupedRules.active.map((rule: SlaRuleItem) => (
                     <RuleCard
                       key={rule.id}
                       rule={rule}
@@ -424,7 +424,7 @@ export function SlaHubPage() {
                   onToggle={() => toggleSection('draft')}
                   icon={<Clock className="w-4 h-4 text-amber-600" />}
                 >
-                  {groupedRules.draft.map((rule) => (
+                  {groupedRules.draft.map((rule: SlaRuleItem) => (
                     <RuleCard
                       key={rule.id}
                       rule={rule}
@@ -453,7 +453,7 @@ export function SlaHubPage() {
                   onToggle={() => toggleSection('disabled')}
                   icon={<PowerOff className="w-4 h-4 text-charcoal-400" />}
                 >
-                  {groupedRules.disabled.map((rule) => (
+                  {groupedRules.disabled.map((rule: SlaRuleItem) => (
                     <RuleCard
                       key={rule.id}
                       rule={rule}

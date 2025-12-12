@@ -48,13 +48,17 @@ export interface DealIntakeFormData {
 }
 
 // Validation schemas per step
-export const dealStep1Schema = z.object({
+// Base schema without refinement (for merging)
+const dealStep1BaseSchema = z.object({
   sourceType: z.enum(['account', 'lead', 'new']),
   accountId: z.string().uuid().optional(),
   leadId: z.string().uuid().optional(),
   newAccountName: z.string().min(2).optional(),
   newAccountIndustry: z.string().optional(),
-}).refine((data) => {
+})
+
+// Schema with refinement (for step validation)
+export const dealStep1Schema = dealStep1BaseSchema.refine((data) => {
   if (data.sourceType === 'account' && !data.accountId) {
     return false
   }
@@ -98,8 +102,8 @@ export const dealStep4Schema = z.object({
   notes: z.string().max(1000).optional(),
 })
 
-// Full validation schema
-export const dealIntakeSchema = dealStep1Schema
+// Full validation schema (uses base schema for merging)
+export const dealIntakeSchema = dealStep1BaseSchema
   .merge(dealStep2Schema)
   .merge(dealStep3Schema)
   .merge(dealStep4Schema)

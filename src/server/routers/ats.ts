@@ -2021,7 +2021,7 @@ export const atsRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: updateError.message })
         }
 
-        // Record status history
+        // Record status history (ignore errors if table doesn't exist)
         await adminClient
           .from('submission_status_history')
           .insert({
@@ -2032,9 +2032,6 @@ export const atsRouter = router({
             changed_by: user.id,
             changed_at: new Date().toISOString(),
             reason: input.reason,
-          })
-          .catch(() => {
-            // Status history table may not exist, continue silently
           })
 
         // Log activity
@@ -2164,7 +2161,7 @@ export const atsRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: updateError.message })
         }
 
-        // Record status history
+        // Record status history (ignore errors if table doesn't exist)
         await adminClient
           .from('submission_status_history')
           .insert({
@@ -2175,9 +2172,6 @@ export const atsRouter = router({
             changed_by: user.id,
             changed_at: new Date().toISOString(),
             notes: `Submitted via ${input.submissionMethod}`,
-          })
-          .catch(() => {
-            // Status history table may not exist, continue silently
           })
 
         // Log activity
@@ -2223,9 +2217,6 @@ export const atsRouter = router({
               status: 'pending',
               created_by: user.id,
               created_at: new Date().toISOString(),
-            })
-            .catch(() => {
-              // Tasks table may not exist, continue silently
             })
         }
 
@@ -7060,8 +7051,8 @@ export const atsRouter = router({
           query = query.eq('lead_source', input.source)
         }
 
-        // Sorting
-        const sortColumn = {
+        // Sorting - map frontend keys to database columns
+        const sortColumnMap: Record<string, string> = {
           match_score: 'created_at', // Placeholder
           experience: 'years_experience',
           rate: 'desired_rate',
@@ -7069,14 +7060,18 @@ export const atsRouter = router({
           last_updated: 'updated_at',
           created_at: 'created_at',
           name: 'first_name',
+          first_name: 'first_name',
           title: 'title',
           location: 'city',
           status: 'status',
           source: 'lead_source',
-          skills: 'created_at', // Skills sorting not directly supported
-          submissions: 'created_at', // Related count, placeholder
-          lastActivity: 'updated_at',
-        }[input.sortBy] || 'updated_at'
+          lead_source: 'lead_source',
+          years_experience: 'years_experience',
+          submissions_count: 'created_at', // Related count, placeholder
+          owner_id: 'sourced_by',
+          last_activity_date: 'updated_at',
+        }
+        const sortColumn = sortColumnMap[input.sortBy] || 'updated_at'
 
         query = query.order(sortColumn, { ascending: input.sortOrder === 'asc' })
 

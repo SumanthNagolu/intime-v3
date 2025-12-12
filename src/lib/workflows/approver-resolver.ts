@@ -173,7 +173,8 @@ async function resolveOwnersManager(
   }
 
   // Fall back to pod manager
-  const podData = employee.pods as { manager_id: string } | null
+  const podsArray = employee.pods as Array<{ manager_id: string }> | null
+  const podData = podsArray?.[0]
   if (podData?.manager_id) {
     const podManager = await resolveUserById(podData.manager_id, context.orgId, 'owners_manager')
     if (podManager) {
@@ -225,7 +226,13 @@ async function resolveRoleBased(
     return null
   }
 
-  const userData = userRoles[0].users as { id: string; email: string; full_name: string | null }
+  const usersArray = userRoles[0].users as Array<{ id: string; email: string; full_name: string | null }>
+  const userData = usersArray?.[0]
+
+  if (!userData) {
+    console.error('User data not found for role:', config.role_name)
+    return null
+  }
 
   return {
     userId: userData.id,
@@ -263,13 +270,14 @@ async function resolvePodManager(
     return null
   }
 
-  const podData = employee.pods as { manager_id: string } | null
-  if (!podData?.manager_id) {
+  const podsArray2 = employee.pods as Array<{ manager_id: string }> | null
+  const podData2 = podsArray2?.[0]
+  if (!podData2?.manager_id) {
     console.error('No pod manager found for user:', owner.userId)
     return null
   }
 
-  return resolveUserById(podData.manager_id, context.orgId, 'pod_manager')
+  return resolveUserById(podData2.manager_id, context.orgId, 'pod_manager')
 }
 
 /**

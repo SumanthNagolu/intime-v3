@@ -212,7 +212,7 @@ export function WebhookDebugPage({ paramsPromise }: WebhookDebugPageProps) {
           {/* Delivery History */}
           <DashboardSection
             title="Delivery History"
-            actions={
+            action={
               <Button
                 variant="outline"
                 size="sm"

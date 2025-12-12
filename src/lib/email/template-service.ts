@@ -23,7 +23,7 @@ export interface TemplateContext {
   last_name?: string
   full_name?: string
   email?: string
-  job_title?: string
+  user_title?: string
   department?: string
   pod_name?: string
 
