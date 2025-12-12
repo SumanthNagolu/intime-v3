@@ -242,19 +242,87 @@ export function PlacementOverviewSectionPCF({ entityId, entity }: PCFSectionProp
  * Timesheets Section
  */
 export function PlacementTimesheetsSectionPCF({ entityId }: PCFSectionProps) {
+  const timesheetsQuery = trpc.timesheets.getByPlacement.useQuery({
+    placementId: entityId,
+    limit: 10,
+  })
+
+  const timesheets = timesheetsQuery.data ?? []
+
+  const statusColors: Record<string, string> = {
+    draft: 'bg-charcoal-100 text-charcoal-700',
+    submitted: 'bg-blue-100 text-blue-700',
+    pending_client_approval: 'bg-yellow-100 text-yellow-700',
+    client_approved: 'bg-green-100 text-green-700',
+    client_rejected: 'bg-red-100 text-red-700',
+    approved: 'bg-green-100 text-green-700',
+    processed: 'bg-purple-100 text-purple-700',
+    void: 'bg-charcoal-100 text-charcoal-500',
+  }
+
   return (
     <Card className="bg-white">
-      <CardHeader>
+      <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="flex items-center gap-2">
           <Calendar className="w-5 h-5" />
           Timesheets
         </CardTitle>
+        <Link href={`/employee/recruiting/timesheets/new?placementId=${entityId}`}>
+          <Button variant="outline" size="sm">
+            <Plus className="w-4 h-4 mr-2" />
+            New Timesheet
+          </Button>
+        </Link>
       </CardHeader>
       <CardContent>
-        <div className="text-center py-8 text-charcoal-500">
-          <Calendar className="w-12 h-12 mx-auto text-charcoal-300 mb-4" />
-          <p>No timesheets submitted yet</p>
-        </div>
+        {timesheetsQuery.isLoading ? (
+          <div className="text-center py-4 text-charcoal-500">Loading timesheets...</div>
+        ) : timesheets.length === 0 ? (
+          <div className="text-center py-8 text-charcoal-500">
+            <Calendar className="w-12 h-12 mx-auto text-charcoal-300 mb-4" />
+            <p>No timesheets submitted yet</p>
+            <Link href={`/employee/recruiting/timesheets/new?placementId=${entityId}`}>
+              <Button variant="outline" size="sm" className="mt-4">
+                Create First Timesheet
+              </Button>
+            </Link>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {timesheets.map((ts) => (
+              <Link
+                key={ts.id}
+                href={`/employee/recruiting/timesheets/${ts.id}`}
+                className="block p-4 border rounded-lg hover:bg-charcoal-50 transition-colors"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-medium text-charcoal-900">
+                      {format(new Date(ts.periodStart), 'MMM d')} - {format(new Date(ts.periodEnd), 'MMM d, yyyy')}
+                    </div>
+                    <div className="text-sm text-charcoal-500 mt-1">
+                      {ts.totalRegularHours + ts.totalOvertimeHours + ts.totalDoubleTimeHours} hrs
+                      {ts.totalBillableAmount > 0 && (
+                        <span className="ml-2">• ${ts.totalBillableAmount.toLocaleString()}</span>
+                      )}
+                    </div>
+                  </div>
+                  <Badge className={statusColors[ts.status] || 'bg-charcoal-100'}>
+                    {ts.status.replace(/_/g, ' ')}
+                  </Badge>
+                </div>
+              </Link>
+            ))}
+            {timesheets.length >= 10 && (
+              <Link
+                href={`/employee/recruiting/timesheets?placementId=${entityId}`}
+                className="block text-center text-sm text-hublot-600 hover:underline pt-2"
+              >
+                View all timesheets
+              </Link>
+            )}
+          </div>
+        )}
       </CardContent>
     </Card>
   )
