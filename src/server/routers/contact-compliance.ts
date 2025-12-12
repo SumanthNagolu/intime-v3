@@ -1,8 +1,35 @@
+/**
+ * @deprecated LEGACY ROUTER - DO NOT USE FOR NEW DEVELOPMENT
+ *
+ * This router is deprecated and will be removed in a future version.
+ * Use the unified compliance router instead: `src/server/routers/compliance.ts`
+ *
+ * Migration guide:
+ * - contactCompliance.list      -> compliance.listItems (with entity_type='contact')
+ * - contactCompliance.getById   -> compliance.getItem
+ * - contactCompliance.getByContact -> compliance.listItems (with entityId filter)
+ * - contactCompliance.create    -> compliance.createItem (with entity_type='contact')
+ * - contactCompliance.update    -> compliance.updateItem
+ * - contactCompliance.delete    -> compliance.deleteItem
+ * - contactCompliance.verify    -> compliance.verifyItem
+ * - contactCompliance.reject    -> compliance.rejectItem
+ * - contactCompliance.stats     -> compliance.getStats
+ *
+ * Database migration: Legacy views are available at contact_compliance_legacy
+ * that map to the new compliance_items table.
+ *
+ * @see src/server/routers/compliance.ts
+ */
+
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
 import { createClient } from '@supabase/supabase-js'
+
+// ============================================
+// @deprecated - Use compliance.ts instead
+// ============================================
 
 // ============================================
 // INPUT SCHEMAS

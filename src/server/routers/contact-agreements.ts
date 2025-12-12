@@ -1,8 +1,36 @@
+/**
+ * @deprecated LEGACY ROUTER - DO NOT USE FOR NEW DEVELOPMENT
+ *
+ * This router is deprecated and will be removed in a future version.
+ * Use the unified contracts router instead: `src/server/routers/contracts.ts`
+ *
+ * Migration guide:
+ * - contactAgreements.list        -> contracts.list (with entity_type='contact')
+ * - contactAgreements.getById     -> contracts.getById
+ * - contactAgreements.getByContact -> contracts.list (with entityId filter)
+ * - contactAgreements.getActiveMsa -> contracts.getActiveByType (with contractType='msa')
+ * - contactAgreements.create      -> contracts.create (with entity_type='contact')
+ * - contactAgreements.update      -> contracts.update
+ * - contactAgreements.delete      -> contracts.delete
+ * - contactAgreements.activate    -> contracts.activate
+ * - contactAgreements.terminate   -> contracts.terminate
+ * - contactAgreements.stats       -> contracts.getStats
+ *
+ * Database migration: Legacy views are available at contact_agreements_legacy
+ * that map to the new contracts table.
+ *
+ * @see src/server/routers/contracts.ts
+ */
+
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
 import { createClient } from '@supabase/supabase-js'
+
+// ============================================
+// @deprecated - Use contracts.ts instead
+// ============================================
 
 // ============================================
 // INPUT SCHEMAS
