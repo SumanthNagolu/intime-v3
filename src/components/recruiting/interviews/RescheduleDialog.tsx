@@ -25,7 +25,7 @@ import { format, addDays } from 'date-fns'
 
 const rescheduleSchema = z.object({
   reason: z.string().min(10, 'Please provide a reason (min 10 characters)').max(500),
-  sendNotifications: z.boolean().default(true),
+  sendNotifications: z.boolean(),
 })
 
 type RescheduleFormData = z.infer<typeof rescheduleSchema>
@@ -124,11 +124,10 @@ export function RescheduleDialog({
     rescheduleMutation.mutate({
       interviewId,
       reason: data.reason,
-      proposedTimes: timeSlots.map((slot) => ({
+      newProposedTimes: timeSlots.map((slot) => ({
         date: slot.date,
         time: slot.time,
       })),
-      sendNotifications: data.sendNotifications,
     })
   }
 

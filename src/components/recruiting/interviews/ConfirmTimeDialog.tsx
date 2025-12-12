@@ -69,15 +69,18 @@ export function ConfirmTimeDialog({
     },
   })
 
+  const pendingTimes = proposedTimes.filter((t) => t.status === 'pending')
+
   const handleConfirm = () => {
     if (!selectedTimeId) return
+    const selectedTime = pendingTimes.find((t) => t.id === selectedTimeId)
+    if (!selectedTime) return
     confirmMutation.mutate({
       interviewId,
-      proposedTimeId: selectedTimeId,
+      confirmedDate: selectedTime.proposedDate,
+      confirmedTime: selectedTime.proposedTime,
     })
   }
-
-  const pendingTimes = proposedTimes.filter((t) => t.status === 'pending')
 
   const formatTimeSlot = (time: ProposedTime) => {
     try {

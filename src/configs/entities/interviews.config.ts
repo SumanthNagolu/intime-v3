@@ -457,18 +457,6 @@ export const interviewsListConfig: ListViewConfig<Interview> = {
 
   pageSize: 50,
 
-  // Sort field mapping for backend
-  sortFieldMap: {
-    candidate: 'submission.candidate.last_name',
-    job: 'submission.job.title',
-    account: 'submission.job.account.name',
-    interview_type: 'interview_type',
-    status: 'status',
-    scheduled_at: 'scheduled_at',
-    duration_minutes: 'duration_minutes',
-    created_at: 'created_at',
-  },
-
   emptyState: {
     icon: Calendar,
     title: 'No interviews found',
