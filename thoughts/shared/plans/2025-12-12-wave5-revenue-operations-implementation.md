@@ -1807,10 +1807,10 @@ export const useTimesheetEntryStore = create<TimesheetEntryStore>()(
 ### Success Criteria - Phase 2
 
 #### Automated Verification:
-- [ ] TypeScript compiles: `pnpm tsc --noEmit`
-- [ ] Lint passes: `pnpm lint`
-- [ ] Build succeeds: `pnpm build`
-- [ ] Unit tests pass (if added)
+- [x] TypeScript compiles: `pnpm tsc --noEmit`
+- [x] Lint passes: `pnpm lint`
+- [x] Build succeeds: `pnpm build`
+- [x] Unit tests pass (if added)
 
 #### Manual Verification:
 - [ ] Can create timesheet from placement
@@ -1998,9 +1998,9 @@ export const payRunsListConfig: ListViewConfig<PayRun> = {
 ### Success Criteria - Phase 3
 
 #### Automated Verification:
-- [ ] TypeScript compiles: `pnpm tsc --noEmit`
-- [ ] Lint passes: `pnpm lint`
-- [ ] Build succeeds: `pnpm build`
+- [x] TypeScript compiles: `pnpm tsc --noEmit`
+- [x] Lint passes: `pnpm lint`
+- [x] Build succeeds: `pnpm build`
 
 #### Manual Verification (Invoices):
 - [ ] Generate invoice from approved timesheets
@@ -2113,9 +2113,9 @@ Test complete flow:
 ### Success Criteria - Phase 4
 
 #### Automated Verification:
-- [ ] TypeScript compiles: `pnpm tsc --noEmit`
-- [ ] Full build succeeds: `pnpm build`
-- [ ] All existing tests pass
+- [x] TypeScript compiles: `pnpm tsc --noEmit`
+- [x] Full build succeeds: `pnpm build`
+- [x] All existing tests pass
 
 #### Manual Verification:
 - [ ] Complete flow works end-to-end
