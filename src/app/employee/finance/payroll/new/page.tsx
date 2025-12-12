@@ -14,7 +14,7 @@ import { usePayRunProcessStore, PAY_RUN_TYPES, PAY_RUN_WIZARD_STEPS, formatCurre
 import { cn } from '@/lib/utils'
 import { trpc } from '@/lib/trpc/client'
 import { toast } from 'sonner'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 export default function NewPayRunPage() {
   const router = useRouter()
@@ -26,12 +26,9 @@ export default function NewPayRunPage() {
     setFormData,
     setCurrentStep,
     resetForm,
-    setTimesheetSelections,
     toggleTimesheetSelection,
     toggleSelectAll,
     getSelectedTimesheetIds,
-    setCalculatedTotals,
-    setCalculationState,
   } = usePayRunProcessStore()
 
   const [isSubmitting, setIsSubmitting] = useState(false)

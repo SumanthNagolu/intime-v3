@@ -146,7 +146,7 @@ const defaultFormData: InvoiceCreateFormData = {
   sourceTimesheetIds: [],
 }
 
-function calculateLineItemTotal(item: InvoiceLineItemDraft): number {
+function _calculateLineItemTotal(item: InvoiceLineItemDraft): number {
   const subtotal = item.quantity * item.unitRate
   const afterDiscount = subtotal - item.discountAmount
   const tax = afterDiscount * (item.taxRate / 100)
@@ -202,7 +202,7 @@ function calculateTotals(formData: InvoiceCreateFormData): {
 
 export const useInvoiceCreateStore = create<InvoiceCreateStore>()(
   persist(
-    (set, get) => ({
+    (set, _get) => ({
       formData: defaultFormData,
       currentStep: 1,
       isDirty: false,

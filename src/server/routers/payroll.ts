@@ -26,7 +26,7 @@ const workerTypeEnum = z.enum([
   'employee', 'consultant', 'contractor'
 ])
 
-const payTypeEnum = z.enum([
+const _payTypeEnum = z.enum([
   'hourly', 'salary', 'commission', 'bonus', 'reimbursement'
 ])
 
@@ -540,7 +540,7 @@ const payRunsRouter = router({
       for (const [workerId, workerTs] of Object.entries(workerTimesheets)) {
         const firstTs = workerTs[0]
         const placement = firstTs.placement as Record<string, unknown>
-        const candidate = placement?.candidate as Record<string, unknown>
+        const _candidate = placement?.candidate as Record<string, unknown>
 
         // Aggregate hours from all timesheets
         let regularHours = 0
@@ -873,9 +873,9 @@ const payRunsRouter = router({
       currentMonthGross: 0,
     }
 
-    const now = new Date()
-    const startOfYear = new Date(now.getFullYear(), 0, 1)
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+    const _now = new Date()
+    const _startOfYear = new Date(_now.getFullYear(), 0, 1)
+    const _startOfMonth = new Date(_now.getFullYear(), _now.getMonth(), 1)
 
     for (const run of runs || []) {
       stats.total++

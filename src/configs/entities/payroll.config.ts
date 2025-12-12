@@ -1,4 +1,4 @@
-import { DollarSign, Clock, CheckCircle, AlertCircle, Send, XCircle, Pencil, Trash2, Users, Calculator, Play, Ban, FileText, CreditCard } from 'lucide-react'
+import { DollarSign, Clock, CheckCircle, Send, Pencil, Trash2, Users, Calculator, Play, Ban, FileText } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig, StatCardConfig, FilterConfig, ColumnConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
 
