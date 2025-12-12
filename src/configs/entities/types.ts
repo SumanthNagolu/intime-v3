@@ -125,6 +125,7 @@ export interface FilterConfig {
   placeholder?: string
   options?: SelectOption[]
   width?: string     // Tailwind width class
+  dynamic?: boolean  // Options populated dynamically at runtime
 }
 
 export interface ColumnConfig<T = unknown> {
@@ -210,6 +211,9 @@ export interface ListViewConfig<T = unknown> {
 
   // Pagination
   pageSize?: number
+
+  // Sort field mapping (frontend key -> backend column)
+  sortFieldMap?: Record<string, string>
 
   /**
    * Data Hooks Pattern (G4: Hydration Safety)

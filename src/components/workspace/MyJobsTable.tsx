@@ -190,7 +190,7 @@ export function MyJobsTable({ className }: MyJobsTableProps) {
                   <TableCell>
                     <div className="flex items-center gap-1 text-charcoal-600">
                       <Users className="w-3 h-3" />
-                      {job.submissionCount || 0}
+                      {job.submissions_count || 0}
                     </div>
                   </TableCell>
                   <TableCell>
