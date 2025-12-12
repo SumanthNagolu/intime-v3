@@ -75,6 +75,38 @@ export interface Job extends Record<string, unknown> {
   updated_at?: string
   created_by?: string
   owner_id?: string
+  // JOBS-01: Unified company/contact references
+  client_company_id?: string
+  client_company?: {
+    id: string
+    name: string
+  }
+  end_client_company_id?: string
+  end_client_company?: {
+    id: string
+    name: string
+  }
+  vendor_company_id?: string
+  vendor_company?: {
+    id: string
+    name: string
+  }
+  hiring_manager_contact_id?: string
+  hiring_manager_contact?: {
+    id: string
+    full_name: string
+  }
+  hr_contact_id?: string
+  hr_contact?: {
+    id: string
+    full_name: string
+  }
+  external_job_id?: string
+  priority_rank?: number
+  sla_days?: number
+  fee_type?: string
+  fee_percentage?: number
+  fee_flat_amount?: number
 }
 
 // Job status configuration
@@ -188,6 +220,42 @@ export const JOB_TYPE_CONFIG: Record<string, StatusConfig> = {
   },
 }
 
+// JOBS-01: Priority rank configuration (numeric ranking)
+export const JOB_PRIORITY_RANK_CONFIG: Record<number, StatusConfig> = {
+  1: {
+    label: 'Critical',
+    color: 'bg-red-100 text-red-800',
+    bgColor: 'bg-red-100',
+    textColor: 'text-red-800',
+    icon: AlertCircle,
+  },
+  2: {
+    label: 'High',
+    color: 'bg-amber-100 text-amber-700',
+    bgColor: 'bg-amber-100',
+    textColor: 'text-amber-700',
+    icon: AlertCircle,
+  },
+  3: {
+    label: 'Normal',
+    color: 'bg-blue-100 text-blue-700',
+    bgColor: 'bg-blue-100',
+    textColor: 'text-blue-700',
+  },
+  4: {
+    label: 'Low',
+    color: 'bg-charcoal-100 text-charcoal-600',
+    bgColor: 'bg-charcoal-100',
+    textColor: 'text-charcoal-600',
+  },
+  0: {
+    label: 'Unset',
+    color: 'bg-charcoal-50 text-charcoal-500',
+    bgColor: 'bg-charcoal-50',
+    textColor: 'text-charcoal-500',
+  },
+}
+
 // Jobs List View Configuration
 export const jobsListConfig: ListViewConfig<Job> = {
   entityType: 'job',
@@ -281,6 +349,18 @@ export const jobsListConfig: ListViewConfig<Job> = {
         })),
       ],
     },
+    {
+      key: 'priorityRank',
+      type: 'select',
+      label: 'Priority Rank',
+      options: [
+        { value: 'all', label: 'All Ranks' },
+        { value: '1', label: 'Critical' },
+        { value: '2', label: 'High' },
+        { value: '3', label: 'Normal' },
+        { value: '4', label: 'Low' },
+      ],
+    },
   ],
 
   columns: [
@@ -328,6 +408,39 @@ export const jobsListConfig: ListViewConfig<Job> = {
       sortable: true,
       width: 'w-[100px]',
       format: 'status' as const,
+    },
+    {
+      key: 'priorityRank',
+      header: 'Priority',
+      label: 'Priority',
+      sortable: true,
+      width: 'w-[90px]',
+      render: (value, entity) => {
+        const job = entity as Job
+        const rank = job.priority_rank ?? 0
+        const config = JOB_PRIORITY_RANK_CONFIG[rank] || JOB_PRIORITY_RANK_CONFIG[0]
+        return config.label
+      },
+    },
+    {
+      key: 'slaDays',
+      header: 'SLA',
+      label: 'SLA Days',
+      sortable: true,
+      width: 'w-[80px]',
+      align: 'right' as const,
+      render: (value, entity) => {
+        const job = entity as Job
+        const slaDays = job.sla_days || 30
+        const daysOpen = job.created_at
+          ? Math.floor((new Date().getTime() - new Date(job.created_at).getTime()) / (1000 * 60 * 60 * 24))
+          : 0
+        const remaining = slaDays - daysOpen
+        if (remaining < 0) {
+          return `${Math.abs(remaining)}d over`
+        }
+        return `${remaining}d left`
+      },
     },
     {
       key: 'salaryRange',
@@ -442,6 +555,7 @@ export const jobsListConfig: ListViewConfig<Job> = {
     const statusValue = filters.status as string | undefined
     const typeValue = filters.type as string | undefined
     const priorityValue = filters.priority as string | undefined
+    const priorityRankValue = filters.priorityRank as string | undefined
     const sortByValue = filters.sortBy as string | undefined
     const sortOrderValue = filters.sortOrder as string | undefined
 
@@ -459,6 +573,8 @@ export const jobsListConfig: ListViewConfig<Job> = {
       'owner_id',
       'due_date',
       'created_at',
+      'priority_rank',
+      'sla_days',
     ] as const
 
     type JobStatus = (typeof validStatuses)[number]
@@ -478,6 +594,8 @@ export const jobsListConfig: ListViewConfig<Job> = {
       owner: 'owner_id',
       dueDate: 'due_date',
       createdAt: 'created_at',
+      priorityRank: 'priority_rank',
+      slaDays: 'sla_days',
     }
 
     const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
@@ -491,6 +609,7 @@ export const jobsListConfig: ListViewConfig<Job> = {
         ? typeValue as JobType
         : undefined,
       priority: priorityValue !== 'all' ? priorityValue : undefined,
+      priorityRank: priorityRankValue && priorityRankValue !== 'all' ? parseInt(priorityRankValue, 10) : undefined,
       limit: (filters.limit as number) || 20,
       offset: (filters.offset as number) || 0,
       sortBy: mappedSortBy,
