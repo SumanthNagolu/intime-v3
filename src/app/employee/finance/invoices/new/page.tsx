@@ -1,5 +1,6 @@
 'use client'
 
+import { Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { SidebarLayout } from '@/components/layouts/SidebarLayout'
 import { Card } from '@/components/ui/card'
@@ -8,14 +9,31 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { ChevronLeft, ChevronRight, Save, Send, FileText, Building2, Calendar, DollarSign, Check } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Save, Send, FileText, Building2, Calendar, DollarSign, Check, Loader2 } from 'lucide-react'
 import { useInvoiceCreateStore, INVOICE_TYPES, INVOICE_WIZARD_STEPS, formatCurrency, createEmptyLineItem } from '@/stores/invoice-create-store'
 import { cn } from '@/lib/utils'
 import { trpc } from '@/lib/trpc/client'
 import { toast } from 'sonner'
-import { useState } from 'react'
+
+function NewInvoiceLoading() {
+  return (
+    <SidebarLayout sectionId="invoices">
+      <div className="flex items-center justify-center py-12">
+        <Loader2 className="h-8 w-8 animate-spin text-charcoal-400" />
+      </div>
+    </SidebarLayout>
+  )
+}
 
 export default function NewInvoicePage() {
+  return (
+    <Suspense fallback={<NewInvoiceLoading />}>
+      <NewInvoiceContent />
+    </Suspense>
+  )
+}
+
+function NewInvoiceContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const step = parseInt(searchParams.get('step') || '1')

@@ -1,8 +1,18 @@
 'use client'
 
+import { Suspense } from 'react'
 import { EntityListView } from '@/components/pcf/list-view/EntityListView'
-import { timesheetsListConfig, Timesheet } from '@/configs/entities/timesheets.config'
+import { EntityListViewSkeleton } from '@/components/pcf/shared'
+import { timesheetsListConfig, type Timesheet } from '@/configs/entities/timesheets.config'
+
+function TimesheetsListContent() {
+  return <EntityListView<Timesheet> config={timesheetsListConfig} />
+}
 
 export default function TimesheetsPage() {
-  return <EntityListView<Timesheet> config={timesheetsListConfig} />
+  return (
+    <Suspense fallback={<EntityListViewSkeleton />}>
+      <TimesheetsListContent />
+    </Suspense>
+  )
 }

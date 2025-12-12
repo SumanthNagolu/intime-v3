@@ -437,9 +437,13 @@ export const appRouter = router({
 
 #### Manual Verification:
 - [ ] `contactWorkHistory.list` returns data for contact with work history
+  - ↪️ PARTIAL: Router exists (11 procedures), runtime testing not performed
 - [ ] `contactEducation.create` successfully adds education record
+  - ↪️ PARTIAL: Router exists (10 procedures), runtime testing not performed
 - [ ] `contactCertifications.getExpiringCertifications` returns certs expiring soon
+  - ↪️ PARTIAL: Router exists (12 procedures), runtime testing not performed
 - [ ] `contactMergeHistory.create` captures full contact snapshot
+  - ↪️ PARTIAL: Router exists (7 procedures), runtime testing not performed
 - [x] All procedures handle org_id scoping correctly (verified in code)
 - [x] Soft delete works on all mutable routers (verified in code)
 
@@ -679,15 +683,23 @@ interface Lead {
 - [x] Type checking passes: `pnpm tsc --noEmit`
 - [x] Application builds: `pnpm build`
 - [ ] E2E tests pass (if they exist for leads)
+  - ✓ RESOLVED (2025-12-12): N/A - No E2E tests exist for leads in codebase
 
 #### Manual Verification:
 - [ ] Leads list page shows same data as before migration
+  - ↪️ PARTIAL: UI components updated to use unifiedContacts.leads.*, runtime testing not performed
 - [ ] Lead detail panel shows all lead-specific fields
+  - ↪️ PARTIAL: getById procedure exists, runtime testing not performed
 - [ ] Create new lead creates contact with correct subtype
+  - ↪️ PARTIAL: create procedure exists with subtype logic, runtime testing not performed
 - [ ] Qualify lead updates lead fields correctly
+  - ↪️ PARTIAL: qualify procedure exists, runtime testing not performed
 - [ ] Convert lead to deal creates deal and updates lead status
+  - ↪️ PARTIAL: convertToDeal procedure exists, runtime testing not performed
 - [ ] BANT scoring works correctly
+  - ↪️ PARTIAL: BANT fields exist in contacts table, runtime testing not performed
 - [ ] Lead activities preserved and visible
+  - ↪️ PARTIAL: Activities use polymorphic pattern (entity_type='contact'), testing not performed
 
 **Implementation Note (2025-12-11)**: Phase 3 complete. UI components updated to use `unifiedContacts.leads.*` router. Added `getById`, `create`, and `update` procedures to leads sub-router. All 42 existing leads were already migrated to contacts table. Keeping standalone `leads` table for rollback capability.
 
@@ -1005,12 +1017,19 @@ list: orgProtectedProcedure.query(async ({ ctx, input }) => {
 
 #### Manual Verification:
 - [ ] Bench consultants visible via new `contactBench.list` procedure
+  - ↪️ PARTIAL: list procedure exists, runtime testing not performed (no legacy data to test)
 - [ ] Bench data accessible via `contactBench.getByContact`
+  - ↪️ PARTIAL: getBenchData procedure exists, runtime testing not performed
 - [ ] Converting candidate to bench works correctly
+  - ↪️ PARTIAL: convertToBench procedure exists, runtime testing not performed
 - [ ] Expiring visas query returns correct results
+  - ↪️ PARTIAL: getExpiringVisas procedure exists, runtime testing not performed
 - [ ] Marketing status updates work
+  - ↪️ PARTIAL: updateMarketingStatus procedure exists, runtime testing not performed
 - [ ] Stats procedure returns accurate metrics
+  - ↪️ PARTIAL: stats procedure exists, runtime testing not performed
 - [ ] Existing bench workflows (job submissions) still work
+  - ↪️ PARTIAL: Legacy bench.ts router unchanged, compatibility not verified
 
 **Implementation Note (2025-12-11)**: Phase 4 complete. Created `contact_bench_data` table with migration, `contact-bench.ts` router with 12 procedures, and migration script. No legacy bench_consultants data existed to migrate. Keeping `bench_consultants` table for rollback capability.
 
@@ -1078,17 +1097,25 @@ The following cleanup should be deferred until all code is confirmed working:
 
 #### Automated Verification:
 - [ ] All automated tests pass: `pnpm test` (skipped - no tests for new routers yet)
+  - ↪️ PARTIAL: No unit tests exist for new routers (contact-work-history, contact-education, contact-certifications, contact-merge-history, contact-bench)
 - [x] Type checking passes: `pnpm tsc --noEmit` (pre-existing admin component errors, new routers clean)
 - [x] Application builds successfully: `pnpm build`
 - [ ] No console errors on application startup (requires dev server test)
+  - ↪️ PARTIAL: Runtime verification not performed
 - [ ] All data integrity checks pass (counts match) (requires running migration scripts)
+  - ↪️ PARTIAL: Migration scripts exist but verification queries not run against database
 
 #### Manual Verification:
 - [ ] All entity list pages load correctly
+  - ↪️ PARTIAL: Runtime verification not performed
 - [ ] All entity detail pages load correctly
+  - ↪️ PARTIAL: Runtime verification not performed
 - [ ] Create/Update/Delete operations work for all entities
+  - ↪️ PARTIAL: Runtime verification not performed
 - [ ] No 500 errors in server logs
+  - ↪️ PARTIAL: Runtime verification not performed
 - [ ] Performance acceptable (<500ms page loads)
+  - ↪️ PARTIAL: Runtime verification not performed
 
 **Implementation Note (2025-12-11):** Phase 5 validation complete. Build passes after adding missing loading.tsx files for Suspense boundaries. New routers (unified-contacts with leads and bench sub-routers, contact-work-history, contact-education, contact-certifications, contact-merge-history) all compile successfully. Pre-existing TypeScript errors in admin components are unrelated to WAVE 0 migration work.
 
@@ -1127,19 +1154,29 @@ If bench migration fails:
 
 ### Unit Tests
 - [ ] Router procedures have Zod input validation tests
+  - ⚠️ MISSING: No unit tests created for new WAVE 0 routers
 - [ ] Transform functions tested for field mapping
+  - ⚠️ MISSING: No transform function tests
 - [ ] Edge cases tested (null handling, empty arrays)
+  - ⚠️ MISSING: No edge case tests
 
 ### Integration Tests
 - [ ] Migration scripts tested on copy of production data
+  - ⚠️ MISSING: Migration scripts not tested against production-like data
 - [ ] Router procedures tested end-to-end
+  - ⚠️ MISSING: No end-to-end router tests
 - [ ] Cross-router interactions tested (e.g., lead → deal conversion)
+  - ⚠️ MISSING: No cross-router interaction tests
 
 ### Manual Testing
 - [ ] Entity list pages with all filter combinations
+  - ⚠️ MISSING: Manual testing not performed
 - [ ] Entity detail pages with all sections
+  - ⚠️ MISSING: Manual testing not performed
 - [ ] Create/Update/Delete for each entity type
+  - ⚠️ MISSING: Manual testing not performed
 - [ ] Migration verification queries
+  - ⚠️ MISSING: Verification queries not run against database
 
 ---
 

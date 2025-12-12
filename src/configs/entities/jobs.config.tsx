@@ -21,6 +21,8 @@ import {
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
+import { PriorityBadge } from '@/components/recruiting/jobs/PriorityBadge'
+import { SLAIndicator } from '@/components/recruiting/jobs/SLAIndicator'
 // PCF Section Adapters - import from separate file to avoid circular dependencies
 import {
   JobOverviewSectionPCF,
@@ -417,9 +419,7 @@ export const jobsListConfig: ListViewConfig<Job> = {
       width: 'w-[90px]',
       render: (value, entity) => {
         const job = entity as Job
-        const rank = job.priority_rank ?? 0
-        const config = JOB_PRIORITY_RANK_CONFIG[rank] || JOB_PRIORITY_RANK_CONFIG[0]
-        return config.label
+        return <PriorityBadge rank={job.priority_rank} size="sm" />
       },
     },
     {
@@ -427,19 +427,17 @@ export const jobsListConfig: ListViewConfig<Job> = {
       header: 'SLA',
       label: 'SLA Days',
       sortable: true,
-      width: 'w-[80px]',
-      align: 'right' as const,
+      width: 'w-[120px]',
       render: (value, entity) => {
         const job = entity as Job
-        const slaDays = job.sla_days || 30
-        const daysOpen = job.created_at
-          ? Math.floor((new Date().getTime() - new Date(job.created_at).getTime()) / (1000 * 60 * 60 * 24))
-          : 0
-        const remaining = slaDays - daysOpen
-        if (remaining < 0) {
-          return `${Math.abs(remaining)}d over`
-        }
-        return `${remaining}d left`
+        return (
+          <SLAIndicator
+            slaDays={job.sla_days}
+            createdAt={job.created_at}
+            status={job.status}
+            size="sm"
+          />
+        )
       },
     },
     {

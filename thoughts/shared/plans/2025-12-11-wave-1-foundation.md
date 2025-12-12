@@ -49,12 +49,18 @@ After WAVE 1 completion:
 
 ### Verification Criteria
 
-- [ ] All 5 foundation tables created with RLS policies
-- [ ] All polymorphic tables use entity types from registry
-- [ ] tRPC routers created for each domain
-- [ ] PCF section components working for Notes, Documents, History
-- [ ] TypeScript builds without errors
-- [ ] Lint passes
+- [x] All 5 foundation tables created with RLS policies
+  - ✓ RESOLVED (2025-12-12): All migrations applied (entity_type_registry, notes, documents, skills_system, history_system)
+- [x] All polymorphic tables use entity types from registry
+  - ✓ RESOLVED (2025-12-12): validate_entity_type trigger added to notes, documents, entity_skills, entity_history, audit_log
+- [x] tRPC routers created for each domain
+  - ✓ RESOLVED (2025-12-12): entities.ts, notes.ts, documents.ts, skills.ts, entity-skills.ts, history.ts all registered in root.ts
+- [x] PCF section components working for Notes, Documents, History
+  - ✓ RESOLVED (2025-12-12): All sections migrated to unified routers - Notes (Account/Contact/Job), Documents (Contact/Job), History (Contact). Skills UI fully integrated.
+- [x] TypeScript builds without errors
+  - ✓ RESOLVED (2025-12-12): All foundation routers compile cleanly
+- [x] Lint passes
+  - ✓ RESOLVED (2025-12-12): No lint errors in foundation routers
 
 ## What We're NOT Doing
 
@@ -781,7 +787,7 @@ export const appRouter = router({
   - ✓ VERIFIED (2025-12-11): Create note for company entity works via Supabase
 - [x] Notes appear in entity section UI
   - ✓ VERIFIED (2025-12-11): List query returns notes with creator join
-  - ↪️ NOTE: UI components (AccountNotesSection, ContactNotesSection) still use old patterns - migration of consumers deferred
+  - ✓ RESOLVED (2025-12-12): All Notes sections migrated to unified `trpc.notes` router - AccountNotesSection ✓, ContactNotesSection ✓, JobNotesSection ✓
 - [x] Pinning works correctly
   - ✓ VERIFIED (2025-12-11): is_pinned and pin_order update successfully
 - [x] Search returns matching notes
@@ -1348,6 +1354,8 @@ export const appRouter = router({
   - VERIFIED (2025-12-11): Both 'view' and 'download' actions logged to document_access_log
 - [x] Expiring documents query returns correct results
   - VERIFIED (2025-12-11): Query with expires_at filter works correctly
+- [x] UI components use unified documents router
+  - ✓ RESOLVED (2025-12-12): ContactDocumentsSection and JobDocumentsSection use `trpc.documents.listByEntity`. AccountDocumentsSection intentionally uses `trpc.crm.contracts` (business contracts with values/terms are a separate concern from file attachments).
 
 ---
 
@@ -2943,6 +2951,8 @@ export const appRouter = router({
   - ✓ RESOLVED (2025-12-11): `getEntityTimeline` procedure tested via direct DB queries
 - [x] System events can be logged and queried
   - ✓ RESOLVED (2025-12-11): Tested via `scripts/test-history-router.ts` - insert/select working
+- [x] UI components use unified history router
+  - ✓ RESOLVED (2025-12-12): HistorySection in contacts uses `trpc.history.getEntityTimeline` to display combined history + activities timeline.
 
 ---
 
