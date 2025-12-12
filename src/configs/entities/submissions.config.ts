@@ -532,7 +532,7 @@ export const submissionsDetailConfig: DetailViewConfig<Submission> = {
       iconColor: 'text-green-600',
       getValue: (entity: unknown) => {
         const submission = entity as Submission
-        return submission.rate || 0
+        return submission.bill_rate || submission.submission_rate || 0
       },
       format: (value) => `$${Number(value)}/hr`,
       tooltip: 'Proposed bill rate',

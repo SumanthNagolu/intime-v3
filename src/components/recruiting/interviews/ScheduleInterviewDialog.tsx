@@ -96,6 +96,7 @@ interface ScheduleInterviewDialogProps {
   onOpenChange: (open: boolean) => void
   submissionId: string
   candidateName: string
+  candidateEmail?: string
   jobTitle: string
   accountName: string
   currentRound?: number

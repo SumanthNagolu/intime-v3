@@ -215,7 +215,7 @@ export function SubmissionPipeline({
     } else {
       updateStatusMutation.mutate({
         id: draggedSubmission,
-        status: stageToStatus[targetStage],
+        status: stageToStatus[targetStage] as 'sourced' | 'screening' | 'submission_ready' | 'submitted_to_client' | 'client_review' | 'client_interview' | 'offer_stage' | 'placed' | 'rejected' | 'withdrawn',
       })
     }
 
@@ -403,7 +403,7 @@ export function SubmissionPipeline({
               : 'Unknown'
           }
           jobTitle={job.title}
-          accountName={job.company?.name || 'Client'}
+          accountName={job.account?.name || 'Client'}
           jobRateMin={job.rate_min}
           jobRateMax={job.rate_max}
           onSuccess={() => {
@@ -425,7 +425,7 @@ export function SubmissionPipeline({
               : 'Unknown'
           }
           jobTitle={job.title}
-          accountName={job.company?.name || 'Client'}
+          accountName={job.account?.name || 'Client'}
           currentStatus={selectedSubmission.status}
           daysPending={
             selectedSubmission.submitted_at
@@ -455,7 +455,7 @@ export function SubmissionPipeline({
           }
           candidateEmail={selectedSubmission.candidate?.email}
           jobTitle={job.title}
-          accountName={job.company?.name || 'Client'}
+          accountName={job.account?.name || 'Client'}
           onSuccess={() => {
             onRefresh?.()
             utils.ats.submissions.list.invalidate()
