@@ -336,10 +336,10 @@ export const crmRouter = router({
             category: category,
             name: input.name,
             industry: input.industry,
-            segment: input.companyType === 'enterprise' ? 'enterprise' :
-                     input.companyType === 'mid_market' ? 'mid_market' :
-                     input.companyType === 'smb' ? 'smb' :
-                     input.companyType === 'startup' ? 'startup' : null,
+            segment: (input.companyType as string) === 'enterprise' ? 'enterprise' :
+                     (input.companyType as string) === 'mid_market' ? 'mid_market' :
+                     (input.companyType as string) === 'smb' ? 'smb' :
+                     (input.companyType as string) === 'startup' ? 'startup' : null,
             relationship_type: input.companyType === 'implementation_partner' ? 'implementation_partner' :
                                input.companyType === 'staffing_vendor' ? 'prime_vendor' : 'direct_client',
             status: input.status === 'prospect' ? 'active' : input.status,
@@ -513,10 +513,10 @@ export const crmRouter = router({
         if (input.industry !== undefined) updateData.industry = input.industry
         if (input.companyType !== undefined) {
           // Map old companyType to segment
-          updateData.segment = input.companyType === 'enterprise' ? 'enterprise' :
-                               input.companyType === 'mid_market' ? 'mid_market' :
-                               input.companyType === 'smb' ? 'smb' :
-                               input.companyType === 'startup' ? 'startup' : null
+          updateData.segment = (input.companyType as string) === 'enterprise' ? 'enterprise' :
+                               (input.companyType as string) === 'mid_market' ? 'mid_market' :
+                               (input.companyType as string) === 'smb' ? 'smb' :
+                               (input.companyType as string) === 'startup' ? 'startup' : null
         }
         if (input.status !== undefined) updateData.status = input.status
         if (input.tier !== undefined) {
@@ -3182,7 +3182,8 @@ export const crmRouter = router({
           .eq('id', input.stakeholderId)
           .single()
 
-        if (!stakeholder || (stakeholder.deal as { org_id: string }).org_id !== orgId) {
+        const dealArray = stakeholder?.deal as Array<{ org_id: string }> | null
+        if (!stakeholder || dealArray?.[0]?.org_id !== orgId) {
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Stakeholder not found' })
         }
 
@@ -3294,7 +3295,7 @@ export const crmRouter = router({
           title: c.title,
           email: c.email,
           phone: c.phone,
-          account: c.account,
+          account: (c.company as Array<{ id: string; name: string }> | null)?.[0] ?? null,
         })) ?? []
       }),
 
@@ -5363,7 +5364,10 @@ export const crmRouter = router({
 
         const existingEmails = new Set(
           (existingEnrollments ?? [])
-            .map(e => (e.contact as { email: string } | null)?.email?.toLowerCase())
+            .map(e => {
+              const contactArray = e.contact as Array<{ email: string }> | null
+              return contactArray?.[0]?.email?.toLowerCase()
+            })
             .filter(Boolean)
         )
 
@@ -7242,10 +7246,12 @@ export const crmRouter = router({
 
         credits?.forEach(c => {
           const userId = c.sourced_by
+          const userArray = c.user as Array<{ id: string; full_name: string; avatar_url: string | null }> | null
+          const user = userArray?.[0]
           const existing = leaderboard.get(userId) || {
             userId,
-            name: (c.user as { full_name: string })?.full_name || 'Unknown',
-            avatarUrl: (c.user as { avatar_url: string | null })?.avatar_url || null,
+            name: user?.full_name || 'Unknown',
+            avatarUrl: user?.avatar_url || null,
             totalLeads: 0,
             totalPoints: 0,
             converted: 0,

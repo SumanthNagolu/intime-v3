@@ -955,20 +955,28 @@ export const permissionsRouter = router({
       })
 
       // Build feature comparison
-      type FlagWithFeature = { enabled: boolean; feature_flags: { code: string; name: string } | null }
+      type FlagWithFeature = { enabled: boolean; feature_flags: Array<{ code: string; name: string }> | null }
+      const getFlagCode = (f: unknown) => {
+        const flag = f as FlagWithFeature
+        return flag.feature_flags?.[0]?.code
+      }
+      const getFlagName = (f: unknown) => {
+        const flag = f as FlagWithFeature
+        return flag.feature_flags?.[0]?.name
+      }
       const allFeatureCodes = [
         ...new Set([
-          ...(flags1?.map((f) => (f as FlagWithFeature).feature_flags?.code).filter(Boolean) ?? []),
-          ...(flags2?.map((f) => (f as FlagWithFeature).feature_flags?.code).filter(Boolean) ?? []),
+          ...(flags1?.map((f) => getFlagCode(f)).filter(Boolean) ?? []),
+          ...(flags2?.map((f) => getFlagCode(f)).filter(Boolean) ?? []),
         ]),
       ]
 
       const featureComparison = allFeatureCodes.map((code) => {
-        const f1 = flags1?.find((f) => (f as FlagWithFeature).feature_flags?.code === code) as FlagWithFeature | undefined
-        const f2 = flags2?.find((f) => (f as FlagWithFeature).feature_flags?.code === code) as FlagWithFeature | undefined
+        const f1 = flags1?.find((f) => getFlagCode(f) === code) as FlagWithFeature | undefined
+        const f2 = flags2?.find((f) => getFlagCode(f) === code) as FlagWithFeature | undefined
         return {
           featureCode: code,
-          featureName: f1?.feature_flags?.name ?? f2?.feature_flags?.name ?? code,
+          featureName: getFlagName(f1) ?? getFlagName(f2) ?? code,
           role1Enabled: f1?.enabled ?? false,
           role2Enabled: f2?.enabled ?? false,
           different: (f1?.enabled ?? false) !== (f2?.enabled ?? false),

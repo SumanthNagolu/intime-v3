@@ -561,7 +561,8 @@ export const activitiesRouter = router({
           // Get company name - handle both direct company activities and other entity types
           let accountName: string | null = null
           if ((a.entity_type === 'account' || a.entity_type === 'company') && a.company) {
-            const company = a.company as { id: string; name: string } | null
+            const companyArray = a.company as Array<{ id: string; name: string }> | null
+            const company = companyArray?.[0]
             accountName = company?.name ?? null
           }
 
@@ -576,10 +577,14 @@ export const activitiesRouter = router({
             entityType: a.entity_type,
             entityId: a.entity_id,
             accountName,
-            contact: a.poc ? {
-              id: (a.poc as { id: string; first_name: string; last_name: string }).id,
-              name: `${(a.poc as { id: string; first_name: string; last_name: string }).first_name} ${(a.poc as { id: string; first_name: string; last_name: string }).last_name}`,
-            } : null,
+            contact: (() => {
+              const pocArray = a.poc as Array<{ id: string; first_name: string; last_name: string }> | null
+              const poc = pocArray?.[0]
+              return poc ? {
+                id: poc.id,
+                name: `${poc.first_name} ${poc.last_name}`,
+              } : null
+            })(),
             isOverdue: dueDate ? dueDate < today : false,
             isDueToday: dueDate ? dueDate >= today && dueDate < tomorrow : false,
             createdAt: a.created_at,
@@ -696,7 +701,8 @@ export const activitiesRouter = router({
           .limit(input.limit)
 
         jobs?.forEach(j => {
-          const company = j.company as { name: string } | null
+          const companyArray = j.company as Array<{ name: string }> | null
+          const company = companyArray?.[0]
           results.push({
             entityType: 'job',
             entityId: j.id,

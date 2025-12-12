@@ -2035,8 +2035,10 @@ export const atsRouter = router({
           })
 
         // Log activity
-        const job = submission.job as { id: string; title: string } | null
-        const candidate = submission.candidate as { id: string; first_name: string; last_name: string } | null
+        const jobArray = submission.job as Array<{ id: string; title: string }> | null
+        const job = jobArray?.[0] ?? null
+        const candidateArray = submission.candidate as Array<{ id: string; first_name: string; last_name: string }> | null
+        const candidate = candidateArray?.[0] ?? null
 
         await adminClient
           .from('activities')
@@ -2113,20 +2115,22 @@ export const atsRouter = router({
           })
         }
 
-        const job = submission.job as {
+        const jobArray = submission.job as Array<{
           id: string;
           title: string;
           account_id: string;
           rate_min?: number;
           rate_max?: number;
-          company: { id: string; name: string } | null;
-        } | null
-        const candidate = submission.candidate as {
+          company: Array<{ id: string; name: string }> | null;
+        }> | null
+        const job = jobArray?.[0] ?? null
+        const candidateArray = submission.candidate as Array<{
           id: string;
           first_name: string;
           last_name: string;
           email: string;
-        } | null
+        }> | null
+        const candidate = candidateArray?.[0] ?? null
 
         // Calculate margin
         const marginAmount = input.billRate - input.payRate
@@ -2182,7 +2186,7 @@ export const atsRouter = router({
             entity_type: 'submission',
             entity_id: input.id,
             activity_type: 'submitted_to_client',
-            description: `${candidate?.first_name} ${candidate?.last_name} submitted to ${job?.company?.name} for ${job?.title}`,
+            description: `${candidate?.first_name} ${candidate?.last_name} submitted to ${job?.company?.[0]?.name} for ${job?.title}`,
             created_by: user.id,
             created_at: new Date().toISOString(),
             metadata: {
@@ -2190,7 +2194,7 @@ export const atsRouter = router({
               job_title: job?.title,
               candidate_id: candidate?.id,
               candidate_name: candidate ? `${candidate.first_name} ${candidate.last_name}` : null,
-              company_name: job?.company?.name,
+              company_name: job?.company?.[0]?.name,
               bill_rate: input.billRate,
               pay_rate: input.payRate,
               margin_percent: marginPercent,
@@ -2207,7 +2211,7 @@ export const atsRouter = router({
             .from('tasks')
             .insert({
               org_id: orgId,
-              title: `Confirm external submission: ${candidate?.first_name} ${candidate?.last_name} to ${job?.company?.name}`,
+              title: `Confirm external submission: ${candidate?.first_name} ${candidate?.last_name} to ${job?.company?.[0]?.name}`,
               description: 'Please confirm you have submitted this candidate externally and update the submission status.',
               entity_type: 'submission',
               entity_id: input.id,
@@ -2226,7 +2230,7 @@ export const atsRouter = router({
           submittedAt: updated.submitted_at,
           method: input.submissionMethod,
           candidate: candidate ? { id: candidate.id, name: `${candidate.first_name} ${candidate.last_name}` } : null,
-          job: job ? { id: job.id, title: job.title, account: job.company?.name } : null,
+          job: job ? { id: job.id, title: job.title, account: job.company?.[0]?.name } : null,
         }
       }),
 
@@ -2307,8 +2311,10 @@ export const atsRouter = router({
         }
 
         // Log activity
-        const job = submission.job as { id: string; title: string } | null
-        const candidate = submission.candidate as { id: string; first_name: string; last_name: string } | null
+        const jobArray2 = submission.job as Array<{ id: string; title: string }> | null
+        const job = jobArray2?.[0] ?? null
+        const candidateArray2 = submission.candidate as Array<{ id: string; first_name: string; last_name: string }> | null
+        const candidate = candidateArray2?.[0] ?? null
 
         await adminClient
           .from('activities')
@@ -2779,7 +2785,8 @@ export const atsRouter = router({
 
         // Filter for this recruiter's submissions
         const filteredData = data?.filter(i => {
-          const submission = i.submission as { submitted_by: string } | null
+          const submissionArray = i.submission as Array<{ submitted_by: string }> | null
+          const submission = submissionArray?.[0]
           return submission?.submitted_by === user?.id
         }) ?? []
 
@@ -3048,8 +3055,10 @@ export const atsRouter = router({
         }
 
         // Log activity
-        const job = submission.job as { id: string; title: string } | null
-        const candidate = submission.candidate as { id: string; first_name: string; last_name: string } | null
+        const jobArray3 = submission.job as Array<{ id: string; title: string; company?: Array<{ id: string; name: string }> }> | null
+        const job = jobArray3?.[0] ?? null
+        const candidateArray3 = submission.candidate as Array<{ id: string; first_name: string; last_name: string; email?: string }> | null
+        const candidate = candidateArray3?.[0] ?? null
 
         await adminClient
           .from('activities')
@@ -3406,11 +3415,13 @@ export const atsRouter = router({
         }
 
         // Update submission status based on next steps
-        const submission = interview.submission as {
+        const submissionArray = interview.submission as Array<{
           id: string;
           status: string;
-          candidate: { first_name: string; last_name: string } | null;
-        } | null
+          candidate_id: string;
+          candidate: Array<{ first_name: string; last_name: string }> | null;
+        }> | null
+        const submission = submissionArray?.[0] ?? null
 
         if (input.nextSteps && submission) {
           let newStatus = submission.status
@@ -3433,7 +3444,7 @@ export const atsRouter = router({
         }
 
         // Log activity
-        const candidate = submission?.candidate
+        const candidate = submission?.candidate?.[0]
         await adminClient
           .from('activities')
           .insert({
@@ -3496,7 +3507,8 @@ export const atsRouter = router({
 
         // Filter for this recruiter's submissions
         const filteredData = data?.filter(i => {
-          const submission = i.submission as { submitted_by: string } | null
+          const submissionArray = i.submission as Array<{ submitted_by: string }> | null
+          const submission = submissionArray?.[0]
           return submission?.submitted_by === user?.id
         }) ?? []
 
@@ -3573,11 +3585,12 @@ export const atsRouter = router({
         }
 
         // Log activity
-        const submission = interview.submission as {
+        const submissionArray2 = interview.submission as Array<{
           id: string
-          candidate: { first_name: string; last_name: string; email: string } | null
-        } | null
-        const candidate = submission?.candidate
+          candidate: Array<{ first_name: string; last_name: string; email: string }> | null
+        }> | null
+        const submission = submissionArray2?.[0] ?? null
+        const candidate = submission?.candidate?.[0]
 
         await adminClient
           .from('activities')
@@ -4352,8 +4365,10 @@ export const atsRouter = router({
         }
 
         // Log activity
-        const candidate = submission.candidate as { first_name: string; last_name: string } | null
-        const job = submission.job as { title: string } | null
+        const candidateArray4 = submission.candidate as Array<{ id: string; first_name: string; last_name: string; email?: string }> | null
+        const candidate = candidateArray4?.[0] ?? null
+        const jobArray4 = submission.job as Array<{ id: string; title: string; account_id?: string }> | null
+        const job = jobArray4?.[0] ?? null
         await adminClient.from('activities').insert({
           org_id: orgId,
           entity_type: 'offer',
@@ -4858,7 +4873,8 @@ export const atsRouter = router({
         let filteredData = data ?? []
         if (input.recruiterId) {
           filteredData = filteredData.filter(p => {
-            const submission = p.submission as { submitted_by: string } | null
+            const submissionArray3 = p.submission as Array<{ id: string; submitted_by: string }> | null
+            const submission = submissionArray3?.[0]
             return submission?.submitted_by === input.recruiterId
           })
         }

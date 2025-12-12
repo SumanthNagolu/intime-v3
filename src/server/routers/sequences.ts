@@ -171,7 +171,8 @@ export const sequencesRouter = router({
   create: orgProtectedProcedure
     .input(CreateSequenceInput)
     .mutation(async ({ ctx, input }) => {
-      const { orgId, userId, supabase } = ctx
+      const { orgId, user } = ctx
+      const userId = user?.id
       const adminClient = getAdminClient()
 
       const { data, error } = await adminClient
@@ -220,7 +221,8 @@ export const sequencesRouter = router({
   update: orgProtectedProcedure
     .input(UpdateSequenceInput)
     .mutation(async ({ ctx, input }) => {
-      const { orgId, userId } = ctx
+      const { orgId, user } = ctx
+      const userId = user?.id
       const adminClient = getAdminClient()
 
       const { id, ...updates } = input
@@ -274,7 +276,8 @@ export const sequencesRouter = router({
   delete: orgProtectedProcedure
     .input(z.object({ id: z.string().uuid() }))
     .mutation(async ({ ctx, input }) => {
-      const { orgId, userId } = ctx
+      const { orgId, user } = ctx
+      const userId = user?.id
       const adminClient = getAdminClient()
 
       // Get template info for logging
@@ -329,7 +332,8 @@ export const sequencesRouter = router({
       newName: z.string().min(1).max(255),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { orgId, userId } = ctx
+      const { orgId, user } = ctx
+      const userId = user?.id
       const adminClient = getAdminClient()
 
       // Get original template

@@ -16,29 +16,36 @@ export interface ParseError {
 
 export const parseCSV = async (file: File | string): Promise<ParsedData> => {
   return new Promise((resolve) => {
-    const config: Papa.ParseConfig<Record<string, unknown>> = {
+    const handleComplete = (results: Papa.ParseResult<Record<string, unknown>>) => {
+      resolve({
+        headers: results.meta.fields || [],
+        rows: results.data,
+        totalRows: results.data.length,
+        errors: results.errors.map(e => ({
+          row: e.row,
+          message: e.message,
+          code: e.code,
+        })),
+      })
+    }
+
+    const baseConfig = {
       header: true,
       skipEmptyLines: true,
       transformHeader: (header: string) => header.trim().toLowerCase().replace(/\s+/g, '_'),
-      complete: (results: Papa.ParseResult<Record<string, unknown>>) => {
-        resolve({
-          headers: results.meta.fields || [],
-          rows: results.data,
-          totalRows: results.data.length,
-          errors: results.errors.map(e => ({
-            row: e.row,
-            message: e.message,
-            code: e.code,
-          })),
-        })
-      },
     }
 
     if (typeof file === 'string') {
-      Papa.parse(file, config)
+      Papa.parse<Record<string, unknown>>(file, {
+        ...baseConfig,
+        complete: handleComplete,
+      })
     } else {
-      // Papa.parse accepts File directly
-      Papa.parse(file as unknown as File, config as Papa.ParseLocalConfig<Record<string, unknown>>)
+      // Papa.parse accepts File directly with LocalFile config
+      Papa.parse<Record<string, unknown>, File>(file, {
+        ...baseConfig,
+        complete: handleComplete,
+      })
     }
   })
 }

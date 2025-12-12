@@ -1877,7 +1877,7 @@ export const workflowsRouter = router({
   // ============================================
   // GET EXECUTION HISTORY (Enhanced with approvals)
   // ============================================
-  getExecutionHistory: orgProtectedProcedure
+  getExecutionHistoryWithApprovals: orgProtectedProcedure
     .input(z.object({
       workflowId: z.string().uuid(),
       status: z.enum(['pending', 'in_progress', 'approved', 'rejected', 'escalated', 'cancelled', 'expired', 'completed', 'failed']).optional(),
