@@ -1,8 +1,37 @@
+/**
+ * @deprecated LEGACY ROUTER - DO NOT USE FOR NEW DEVELOPMENT
+ *
+ * This router is deprecated and will be removed in a future version.
+ * Use the unified rates router instead: `src/server/routers/rates.ts`
+ *
+ * Migration guide:
+ * - contactRateCards.list           -> rates.listEntityRates (with entity_type='contact')
+ * - contactRateCards.getById        -> rates.getEntityRate
+ * - contactRateCards.getByContact   -> rates.listEntityRates (with entityId filter)
+ * - contactRateCards.getDefaultRate -> rates.getCurrentRate
+ * - contactRateCards.getByClient    -> rates.listEntityRates (with contextClientId filter)
+ * - contactRateCards.create         -> rates.createEntityRate (with entity_type='contact')
+ * - contactRateCards.update         -> rates.updateEntityRate
+ * - contactRateCards.delete         -> rates.deleteEntityRate
+ * - contactRateCards.deactivate     -> rates.updateEntityRate (with is_current=false)
+ * - contactRateCards.setDefault     -> rates.updateEntityRate (with is_current=true)
+ * - contactRateCards.stats          -> rates.getStats
+ *
+ * Database migration: Legacy views are available at contact_rate_cards_legacy
+ * that map to the new entity_rates table.
+ *
+ * @see src/server/routers/rates.ts
+ */
+
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
 import { createClient } from '@supabase/supabase-js'
+
+// ============================================
+// @deprecated - Use rates.ts instead
+// ============================================
 
 // ============================================
 // INPUT SCHEMAS
