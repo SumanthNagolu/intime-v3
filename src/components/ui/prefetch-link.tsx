@@ -65,7 +65,7 @@ export function PrefetchLink({
           await utils.crm.deals.getById.prefetch({ id: entityId })
           break
         case 'placement':
-          await utils.ats.placements.getById.prefetch({ id: entityId })
+          await utils.ats.placements.getById.prefetch({ placementId: entityId })
           break
       }
     } catch {
@@ -139,7 +139,7 @@ export function usePrefetchEntity() {
             await utils.crm.deals.getById.prefetch({ id: entityId })
             break
           case 'placement':
-            await utils.ats.placements.getById.prefetch({ id: entityId })
+            await utils.ats.placements.getById.prefetch({ placementId: entityId })
             break
         }
       } catch {

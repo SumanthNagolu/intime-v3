@@ -99,10 +99,11 @@ export const placementStep4Schema = z.object({
 })
 
 // Full validation schema
+// Note: Using .and() since placementStep2Schema is ZodEffects (has .refine())
 export const placementSetupSchema = placementStep1Schema
-  .merge(placementStep2Schema)
   .merge(placementStep3Schema)
   .merge(placementStep4Schema)
+  .and(placementStep2Schema)
 
 // Step 1: Offer Selection Fields
 const step1Fields: FieldDefinition[] = [
