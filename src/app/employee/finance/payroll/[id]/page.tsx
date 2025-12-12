@@ -6,7 +6,7 @@ import { DetailHeader } from '@/components/pcf/detail-view/DetailHeader'
 import { PAY_RUN_STATUS_CONFIG, formatCurrency, formatPeriod } from '@/configs/entities/payroll.config'
 import { trpc } from '@/lib/trpc/client'
 import { Card } from '@/components/ui/card'
-import { FileText, DollarSign, Users, Calendar, Clock, Calculator, CreditCard } from 'lucide-react'
+import { FileText, DollarSign, Users, Calendar, Calculator, CreditCard } from 'lucide-react'
 
 export default function PayRunDetailPage() {
   const params = useParams()
