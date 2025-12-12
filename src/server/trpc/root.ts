@@ -58,6 +58,8 @@ import { entitySkillsRouter } from '../routers/entity-skills'
 import { historyRouter } from '../routers/history'
 // Unified compliance system (COMPLIANCE-01)
 import { complianceRouter } from '../routers/compliance'
+// Unified contracts system (CONTRACTS-01)
+import { contractsRouter } from '../routers/contracts'
 
 export const appRouter = router({
   admin: adminRouter,
@@ -119,6 +121,8 @@ export const appRouter = router({
   history: historyRouter,
   // Unified compliance system (COMPLIANCE-01)
   compliance: complianceRouter,
+  // Unified contracts system (CONTRACTS-01)
+  contracts: contractsRouter,
 })
 
 export type AppRouter = typeof appRouter
