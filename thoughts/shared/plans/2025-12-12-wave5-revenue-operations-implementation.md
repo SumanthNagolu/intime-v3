@@ -1788,7 +1788,7 @@ export const useTimesheetEntryStore = create<TimesheetEntryStore>()(
 3. **Create Wizard**: `src/app/employee/recruiting/timesheets/new/page.tsx`
    - Multi-step: Select Placement → Enter Hours → Add Expenses → Review → Submit
 
-4. **Section Components**: `src/configs/entities/sections/timesheets.sections.tsx`
+4. **Section Components**: `src/configs/entities/sections/timesheets.sections.tsx` ← ⚠️ MISSING: File not created
    - `TimesheetOverviewSectionPCF`
    - `TimesheetEntriesSectionPCF`
    - `TimesheetExpensesSectionPCF`
@@ -1845,6 +1845,7 @@ Invoices and Payroll can be developed in **PARALLEL** because they both consume 
 | `generateFromTimesheets` | mutation | Auto-generate from approved timesheets |
 | `update` | mutation | Update draft invoice |
 | `send` | mutation | Send invoice to client |
+  - ↪️ WORKAROUND: Found `// TODO: Integrate with email service to actually send the invoice` at src/server/routers/invoices.ts:841
 | `recordPayment` | mutation | Record payment |
 | `void` | mutation | Void invoice |
 | `stats` | query | AR aging, totals |
@@ -1987,13 +1988,14 @@ export const payRunsListConfig: ListViewConfig<PayRun> = {
 - `src/app/employee/finance/invoices/page.tsx`
 - `src/app/employee/finance/invoices/[id]/page.tsx`
 - `src/app/employee/finance/invoices/new/page.tsx`
-- `src/configs/entities/sections/invoices.sections.tsx`
+- `src/configs/entities/sections/invoices.sections.tsx` ← ⚠️ MISSING: File not created
 
 **Payroll**:
-- `src/app/employee/hr/payroll/page.tsx`
-- `src/app/employee/hr/payroll/[id]/page.tsx`
-- `src/app/employee/hr/payroll/new/page.tsx`
-- `src/configs/entities/sections/payroll.sections.tsx`
+- `src/app/employee/hr/payroll/page.tsx` ← ⚠️ MISSING: Directory /employee/hr/payroll/ does not exist
+- `src/app/employee/hr/payroll/[id]/page.tsx` ← ⚠️ MISSING: No detail page
+- `src/app/employee/hr/payroll/new/page.tsx` ← ⚠️ MISSING: No create wizard
+- `src/configs/entities/sections/payroll.sections.tsx` ← ⚠️ MISSING: File not created
+  - ↪️ DEVIATED: Navigation links to /employee/finance/payroll instead of /employee/hr/payroll
 
 ### Success Criteria - Phase 3
 
