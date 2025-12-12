@@ -5600,7 +5600,7 @@ export const atsRouter = router({
         // Fetch current placement values
         const { data: placement, error: fetchError } = await adminClient
           .from('placements')
-          .select('id, end_date, bill_rate, pay_rate, expected_hours_per_week')
+          .select('id, end_date, bill_rate, pay_rate, expected_hours_per_week, change_order_count')
           .eq('id', input.placementId)
           .eq('org_id', orgId)
           .single()
@@ -5643,13 +5643,12 @@ export const atsRouter = router({
         }
 
         // Update placement to track change orders
+        const currentCount = placement.change_order_count ?? 0
         await adminClient
           .from('placements')
           .update({
             has_change_orders: true,
-            change_order_count: (placement as { change_order_count?: number }).change_order_count
-              ? ((placement as { change_order_count: number }).change_order_count + 1)
-              : 1,
+            change_order_count: currentCount + 1,
             active_change_order_id: changeOrder.id,
             updated_at: now,
           })
@@ -6125,6 +6124,7 @@ export const atsRouter = router({
     updateVendor: orgProtectedProcedure
       .input(z.object({
         vendorId: z.string().uuid(),
+        positionInChain: z.number().int().min(1).max(10).optional(),
         billRate: z.number().positive().optional(),
         payRate: z.number().positive().optional(),
         markupPercentage: z.number().min(0).max(100).optional(),
@@ -6147,6 +6147,7 @@ export const atsRouter = router({
           updated_at: now,
         }
 
+        if (input.positionInChain !== undefined) updateData.position_in_chain = input.positionInChain
         if (input.billRate !== undefined) updateData.bill_rate = input.billRate
         if (input.payRate !== undefined) updateData.pay_rate = input.payRate
         if (input.markupPercentage !== undefined) updateData.markup_percentage = input.markupPercentage
