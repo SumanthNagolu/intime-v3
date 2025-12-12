@@ -425,7 +425,8 @@ export class RateResolver {
 
     for (const day of sorted) {
       // Start with daily classification
-      let { regularHours, overtimeHours, doubleTimeHours } = day
+      let { regularHours, overtimeHours } = day
+      const { doubleTimeHours } = day
 
       // Apply weekly OT threshold
       const potentialCumulative = cumulativeRegularHours + regularHours
