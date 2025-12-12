@@ -101,12 +101,11 @@ export function JobOverviewSection({ job, jobId }: JobOverviewSectionProps) {
   // Handler for saving job details
   const handleSaveJobDetails = async (data: Record<string, unknown>) => {
     await updateJobMutation.mutateAsync({
-      id: jobId,
+      jobId,
       title: data.title as string,
       location: data.location as string,
-      jobType: data.job_type as 'full_time' | 'part_time' | 'contract' | 'contract_to_hire',
       positionsCount: data.positions_count as number,
-      priority: data.priority as 'low' | 'normal' | 'high' | 'urgent',
+      priority: data.priority as 'low' | 'normal' | 'high' | 'urgent' | 'critical',
       description: data.description as string,
     })
   }
@@ -114,17 +113,17 @@ export function JobOverviewSection({ job, jobId }: JobOverviewSectionProps) {
   // Handler for saving rate info
   const handleSaveRates = async (data: Record<string, unknown>) => {
     await updateJobMutation.mutateAsync({
-      id: jobId,
+      jobId,
       rateMin: data.rate_min as number,
       rateMax: data.rate_max as number,
-      rateType: data.rate_type as string,
+      rateType: data.rate_type as 'hourly' | 'daily' | 'weekly' | 'monthly' | 'annual' | undefined,
     })
   }
 
   // Handler for saving dates
   const handleSaveDates = async (data: Record<string, unknown>) => {
     await updateJobMutation.mutateAsync({
-      id: jobId,
+      jobId,
       targetFillDate: data.target_fill_date as string,
       targetStartDate: data.target_start_date as string,
     })
@@ -140,13 +139,13 @@ export function JobOverviewSection({ job, jobId }: JobOverviewSectionProps) {
       <div className="col-span-2 space-y-6">
         {/* Job Quick Info Bar */}
         <div className="flex flex-wrap items-center gap-4 text-sm text-charcoal-500 bg-white p-4 rounded-lg">
-          {job.company && (
+          {job.account && (
             <Link
-              href={`/employee/recruiting/accounts/${job.company.id}`}
+              href={`/employee/recruiting/accounts/${job.account.id}`}
               className="flex items-center gap-1 hover:text-hublot-600"
             >
               <Building2 className="w-4 h-4" />
-              {job.company.name}
+              {job.account.name}
             </Link>
           )}
           {job.location && (

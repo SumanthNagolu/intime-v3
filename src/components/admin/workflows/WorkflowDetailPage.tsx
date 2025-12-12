@@ -368,7 +368,7 @@ export function WorkflowDetailPage({ workflowId }: WorkflowDetailPageProps) {
               <div>
                 <h4 className="text-sm font-medium mb-2">Filter Conditions ({workflow.trigger_conditions.logic.toUpperCase()})</h4>
                 <div className="space-y-2">
-                  {workflow.trigger_conditions.conditions.map((cond, i) => (
+                  {workflow.trigger_conditions.conditions.map((cond: { field: string; operator: string; value: unknown }, i: number) => (
                     <div key={i} className="flex items-center gap-2 p-3 bg-charcoal-50 rounded-lg text-sm">
                       <span className="font-medium">{cond.field}</span>
                       <span className="text-charcoal-400">{cond.operator}</span>
@@ -403,8 +403,8 @@ export function WorkflowDetailPage({ workflowId }: WorkflowDetailPageProps) {
           <DashboardSection title="Approval Steps">
             <div className="space-y-3">
               {workflow.steps
-                .sort((a, b) => a.step_order - b.step_order)
-                .map((step, i) => (
+                .sort((a: { step_order: number }, b: { step_order: number }) => a.step_order - b.step_order)
+                .map((step: { id: string; step_name: string; step_order: number; approver_type: string; approver_config?: Record<string, unknown>; timeout_hours?: number; timeout_unit?: string; timeout_action?: string; reminder_enabled?: boolean; reminder_percent?: number }, i: number) => (
                   <div key={step.id} className="flex items-start gap-4">
                     <div className="flex flex-col items-center">
                       <div className="w-8 h-8 rounded-full bg-hublot-900 text-white flex items-center justify-center text-sm font-medium">
@@ -448,8 +448,8 @@ export function WorkflowDetailPage({ workflowId }: WorkflowDetailPageProps) {
           <DashboardSection title="Actions">
             <div className="space-y-3">
               {workflow.actions
-                .sort((a, b) => a.action_order - b.action_order)
-                .map((action) => (
+                .sort((a: { action_order: number }, b: { action_order: number }) => a.action_order - b.action_order)
+                .map((action: { id: string; action_type: string; action_trigger: string; action_order: number; action_config: Record<string, unknown> }) => (
                   <div key={action.id} className="p-4 bg-charcoal-50 rounded-lg">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">

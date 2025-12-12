@@ -53,7 +53,7 @@ export function EmailTemplateFormPage() {
   const router = useRouter()
   const params = useParams()
   const templateId = params?.id as string
-  const isEdit = templateId && templateId !== 'new'
+  const isEdit = Boolean(templateId && templateId !== 'new')
 
   const utils = trpc.useUtils()
 

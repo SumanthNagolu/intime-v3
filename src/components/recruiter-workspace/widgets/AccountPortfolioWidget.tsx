@@ -83,11 +83,8 @@ interface AccountPortfolioWidgetProps {
   initialData?: AccountHealthData
 }
 
-export function AccountPortfolioWidget({ className, initialData }: AccountPortfolioWidgetProps) {
-  const { data, isLoading } = trpc.crm.accounts.getHealth.useQuery({}, {
-    initialData,
-    enabled: !initialData,
-  })
+export function AccountPortfolioWidget({ className }: AccountPortfolioWidgetProps) {
+  const { data, isLoading } = trpc.crm.accounts.getHealth.useQuery({})
 
   if (isLoading) {
     return (
@@ -124,7 +121,7 @@ export function AccountPortfolioWidget({ className, initialData }: AccountPortfo
             key={account.id}
             id={account.id}
             name={account.name}
-            healthStatus={account.healthStatus}
+            healthStatus={account.healthStatus as 'healthy' | 'attention' | 'at_risk'}
             activeJobs={account.activeJobs}
             ytdRevenue={account.ytdRevenue}
             npsScore={account.npsScore}

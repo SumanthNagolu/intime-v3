@@ -191,7 +191,7 @@ export function DuplicatesManager() {
                         {getConfidenceBadge(dup.confidence_score)}
                       </div>
                       <div className="flex flex-wrap gap-1">
-                        {dup.match_fields.map((field) => (
+                        {dup.match_fields.map((field: string) => (
                           <Badge key={field} variant="outline" className="text-xs">
                             {field}
                           </Badge>
@@ -240,7 +240,7 @@ export function DuplicatesManager() {
                       </tr>
                     </thead>
                     <tbody className="divide-y">
-                      {duplicateDetails.entityConfig.fields.slice(0, 10).map((field) => {
+                      {duplicateDetails.entityConfig.fields.slice(0, 10).map((field: { name: string; dbColumn: string; displayName: string }) => {
                         const val1 = duplicateDetails.records[0]?.[field.dbColumn]
                         const val2 = duplicateDetails.records[1]?.[field.dbColumn]
                         const isDifferent = String(val1 || '') !== String(val2 || '')

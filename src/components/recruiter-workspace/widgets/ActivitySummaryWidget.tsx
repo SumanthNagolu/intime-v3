@@ -73,11 +73,8 @@ interface ActivitySummaryWidgetProps {
   initialData?: ActivitySummaryData
 }
 
-export function ActivitySummaryWidget({ className, initialData }: ActivitySummaryWidgetProps) {
-  const { data, isLoading } = trpc.dashboard.getActivitySummary.useQuery({ days: 7 }, {
-    initialData,
-    enabled: !initialData,
-  })
+export function ActivitySummaryWidget({ className }: ActivitySummaryWidgetProps) {
+  const { data, isLoading } = trpc.dashboard.getActivitySummary.useQuery({ days: 7 })
 
   if (isLoading) {
     return (

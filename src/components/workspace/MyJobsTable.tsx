@@ -161,18 +161,18 @@ export function MyJobsTable({ className }: MyJobsTableProps) {
                       </span>
                       <div className="text-sm text-charcoal-500">
                         {job.location || 'Remote'}
-                        {job.jobType && ` • ${job.jobType.replace('_', ' ')}`}
+                        {job.job_type && ` • ${job.job_type.replace('_', ' ')}`}
                       </div>
                     </Link>
                   </TableCell>
                   <TableCell>
-                    {job.company ? (
+                    {job.account ? (
                       <Link
-                        href={`/employee/recruiting/accounts/${job.company.id}`}
+                        href={`/employee/recruiting/accounts/${job.account.id}`}
                         className="flex items-center gap-1 text-charcoal-600 hover:text-hublot-700"
                       >
                         <Building2 className="w-3 h-3" />
-                        {job.company.name}
+                        {job.account.name}
                       </Link>
                     ) : (
                       <span className="text-charcoal-400">-</span>

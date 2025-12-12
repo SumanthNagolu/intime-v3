@@ -21,8 +21,8 @@ export {
 export {
   accountOnboardingWizardConfig,
   accountOnboardingSteps,
-  type AccountOnboardingFormData,
 } from './account-onboarding.config'
+export { type AccountOnboardingFormData } from '@/stores/account-onboarding-store'
 
 // Candidate Intake Wizard
 export {

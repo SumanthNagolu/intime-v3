@@ -83,7 +83,7 @@ export function DlqManagerPage() {
   const handleClearAll = () => {
     if (confirm('Are you sure you want to clear all items from the DLQ? This cannot be undone.')) {
       setIsClearingAll(true)
-      clearAllMutation.mutate({})
+      clearAllMutation.mutate()
     }
   }
 

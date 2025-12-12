@@ -129,7 +129,7 @@ export function WorkspaceView({
         {/* Table Content */}
         {activeTabConfig && (
           <WorkspaceTable
-            data={items}
+            data={items as Record<string, unknown>[]}
             columns={activeTabConfig.columns}
             rowActions={activeTabConfig.rowActions}
             onRowClick={activeTabConfig.onRowClick}

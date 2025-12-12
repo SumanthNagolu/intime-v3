@@ -304,7 +304,7 @@ async function executeTriggerWebhook(
   }
 
   try {
-    const response = await fetch(config.webhook_url, {
+    const response = await fetch(config.webhook_url as string, {
       method,
       headers,
       body: JSON.stringify(payload),
@@ -654,7 +654,7 @@ export function validateActionConfig(
         errors.push('Webhook URL is required')
       } else {
         try {
-          new URL(config.webhook_url)
+          new URL(config.webhook_url as string)
         } catch {
           errors.push('Invalid webhook URL')
         }

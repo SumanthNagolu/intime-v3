@@ -124,7 +124,7 @@ export function EmailSettingsPage() {
                 onChange={(e) => updateField('email_from_address', e.target.value)}
                 placeholder="noreply@example.com"
                 leftIcon={<Mail className="h-4 w-4" />}
-                error={errors.email_from_address}
+                error={!!errors.email_from_address}
               />
               <p className="text-xs text-charcoal-500">
                 The email address shown as the sender
@@ -138,7 +138,7 @@ export function EmailSettingsPage() {
                 value={formState.email_from_name}
                 onChange={(e) => updateField('email_from_name', e.target.value)}
                 placeholder="Company Name"
-                error={errors.email_from_name}
+                error={!!errors.email_from_name}
               />
               <p className="text-xs text-charcoal-500">
                 The name shown alongside the email address
@@ -154,7 +154,7 @@ export function EmailSettingsPage() {
                 onChange={(e) => updateField('email_reply_to', e.target.value)}
                 placeholder="support@example.com"
                 leftIcon={<Reply className="h-4 w-4" />}
-                error={errors.email_reply_to}
+                error={!!errors.email_reply_to}
               />
               <p className="text-xs text-charcoal-500">
                 Where replies to automated emails should go

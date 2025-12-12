@@ -196,10 +196,10 @@ export function EmergencyDashboard() {
                       </div>
                       <div className="text-right text-xs text-charcoal-500">
                         <p>{formatDistanceToNow(new Date(incident.started_at), { addSuffix: true })}</p>
-                        {incident.commander && (
+                        {incident.commander?.[0] && (
                           <p className="flex items-center justify-end gap-1 mt-1">
                             <User className="w-3 h-3" />
-                            {incident.commander.full_name}
+                            {incident.commander[0].full_name}
                           </p>
                         )}
                       </div>
@@ -237,7 +237,7 @@ export function EmergencyDashboard() {
                         <div className="flex-1 min-w-0">
                           <p className="text-sm text-charcoal-700 truncate">{event.description}</p>
                           <div className="flex items-center gap-2 mt-0.5 text-xs text-charcoal-500">
-                            <span>{(event.incident as { incident_number: string })?.incident_number}</span>
+                            <span>{(event.incident as { incident_number: string; }[] | null)?.[0]?.incident_number}</span>
                             <span>•</span>
                             <span>{formatDistanceToNow(new Date(event.created_at), { addSuffix: true })}</span>
                           </div>

@@ -87,11 +87,8 @@ interface TodaysPrioritiesWidgetProps {
   initialData?: TodaysPrioritiesData
 }
 
-export function TodaysPrioritiesWidget({ className, initialData }: TodaysPrioritiesWidgetProps) {
-  const { data, isLoading } = trpc.dashboard.getTodaysPriorities.useQuery({}, {
-    initialData,
-    enabled: !initialData,
-  })
+export function TodaysPrioritiesWidget({ className }: TodaysPrioritiesWidgetProps) {
+  const { data, isLoading } = trpc.dashboard.getTodaysPriorities.useQuery({})
 
   if (isLoading) {
     return (

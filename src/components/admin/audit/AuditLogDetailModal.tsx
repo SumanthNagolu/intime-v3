@@ -277,7 +277,7 @@ export function AuditLogDetailModal({ logId, open, onClose }: AuditLogDetailModa
                 <div>
                   <Label className="text-xs text-charcoal-500 uppercase tracking-wider mb-2 block">Related Events</Label>
                   <div className="border rounded-lg divide-y">
-                    {log.relatedEvents.map((event) => (
+                    {log.relatedEvents.map((event: { id: string; event_id: string | number; action: string; table_name: string; created_at: string }) => (
                       <div key={event.id} className="p-3 flex items-center justify-between hover:bg-charcoal-50">
                         <div className="flex items-center gap-3">
                           <div className={`w-2 h-2 rounded-full ${event.id === log.id ? 'bg-gold-500' : 'bg-charcoal-300'}`} />

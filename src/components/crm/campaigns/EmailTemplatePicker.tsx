@@ -96,7 +96,7 @@ export function EmailTemplatePicker({
     search: search || undefined,
     category: categoryFilter === 'all' ? undefined : categoryFilter as 'marketing' | 'candidate' | 'client',
     status: 'active',
-    limit: 50,
+    pageSize: 50,
   })
 
   const templates = templatesData?.items || []

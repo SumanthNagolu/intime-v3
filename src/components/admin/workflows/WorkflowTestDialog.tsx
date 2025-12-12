@@ -130,7 +130,7 @@ export function WorkflowTestDialog({
       let allPassed = true
       let anyPassed = false
 
-      conditions.forEach(cond => {
+      conditions.forEach((cond: { field: string; operator: string; value: unknown }) => {
         const actual = testData[cond.field]
         let passed = false
 
@@ -182,7 +182,7 @@ export function WorkflowTestDialog({
       const conditionsPassed = conditions.length === 0 || (logic === 'and' ? allPassed : anyPassed)
 
       // Build steps preview
-      const stepsPreview = workflow.steps?.map((step, i) => ({
+      const stepsPreview = workflow.steps?.map((step: { step_name: string; approver_type: string; approver_config: Record<string, unknown> }, i: number) => ({
         stepNumber: i + 1,
         stepName: step.step_name,
         approverType: step.approver_type,
@@ -190,7 +190,7 @@ export function WorkflowTestDialog({
       }))
 
       // Build actions preview
-      const actionsPreview = workflow.actions?.map(action => ({
+      const actionsPreview = workflow.actions?.map((action: { action_type: string; action_trigger: string; action_config: Record<string, unknown> }) => ({
         actionType: action.action_type,
         trigger: action.action_trigger,
         config: action.action_config,

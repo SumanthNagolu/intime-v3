@@ -69,8 +69,8 @@ export function ConfigureFeatureFlagDialog({
   const podsQuery = trpc.pods.list.useQuery({})
 
   const roles = rolesQuery.data || []
-  const users = usersQuery.data?.users || []
-  const pods = podsQuery.data?.pods || []
+  const users = usersQuery.data?.items || []
+  const pods = podsQuery.data?.items || []
   const categories = categoriesQuery.data || []
 
   // Mutation
@@ -329,7 +329,7 @@ export function ConfigureFeatureFlagDialog({
                     />
                     {userSearch && users.length > 0 && (
                       <div className="absolute z-10 w-full mt-1 bg-white border rounded-lg shadow-lg max-h-40 overflow-y-auto">
-                        {users.map((user) => (
+                        {users.map((user: { id: string; full_name?: string; email?: string }) => (
                           <button
                             key={user.id}
                             type="button"
@@ -344,7 +344,7 @@ export function ConfigureFeatureFlagDialog({
                   </div>
                   <div className="space-y-2 max-h-32 overflow-y-auto">
                     {selectedUsers.map((userId) => {
-                      const user = users.find((u) => u.id === userId)
+                      const user = users.find((u: { id: string; full_name?: string; email?: string }) => u.id === userId)
                       return (
                         <div
                           key={userId}
@@ -396,7 +396,7 @@ export function ConfigureFeatureFlagDialog({
                 <div className="mt-4 border rounded-lg p-4">
                   <Label className="mb-3 block">Select Pods</Label>
                   <div className="space-y-2 max-h-48 overflow-y-auto">
-                    {pods.map((pod) => (
+                    {pods.map((pod: { id: string; name: string }) => (
                       <label
                         key={pod.id}
                         className="flex items-center gap-2 cursor-pointer"

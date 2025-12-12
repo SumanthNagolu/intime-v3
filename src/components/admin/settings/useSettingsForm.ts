@@ -7,11 +7,14 @@ import { trpc } from '@/lib/trpc/client'
 // Type for setting value
 type SettingValue = string | number | boolean | string[] | null
 
+// Valid categories
+type SettingCategory = 'general' | 'security' | 'email' | 'files' | 'api' | 'branding' | 'localization' | 'business' | 'compliance'
+
 // Type for a setting key-value pair with category
 interface SettingItem {
   key: string
-  value: SettingValue
-  category?: 'general' | 'branding' | 'localization' | 'business' | 'compliance'
+  value?: SettingValue
+  category: SettingCategory
 }
 
 // Type for field definitions
@@ -45,16 +48,16 @@ export function parseSettingsToMap(
  * Hook for managing system settings form state
  */
 export function useSystemSettingsForm<T extends Record<string, SettingValue>>(
-  category: 'general' | 'security' | 'email' | 'files' | 'api',
-  fieldDefinitions: FieldDefinition<SettingValue>[],
+  category: SettingCategory,
+  fieldDefinitions: readonly FieldDefinition<SettingValue>[],
   options?: {
     successMessage?: string
   }
 ) {
   const utils = trpc.useUtils()
 
-  // Fetch system settings
-  const { data: systemSettings, isLoading } = trpc.settings.getSystemSettings.useQuery({ category })
+  // Fetch system settings - category types may differ between query and SettingCategory
+  const { data: systemSettings, isLoading } = trpc.settings.getSystemSettings.useQuery({ category: category as 'general' | 'security' | 'email' | 'files' | 'api' })
 
   // Initialize state from field definitions
   const initialState = React.useMemo(() => {
@@ -190,10 +193,10 @@ export function useOrgSettingsForm<T extends Record<string, SettingValue>>(
 
   // Save handler
   const save = React.useCallback(() => {
-    const settings: SettingItem[] = fieldDefinitions.map(field => ({
+    const settings = fieldDefinitions.map(field => ({
       key: field.key,
       value: formState[field.key as keyof T],
-      category,
+      category: category as 'general' | 'branding' | 'localization' | 'business' | 'compliance',
     }))
     updateSettings.mutate({ settings })
   }, [formState, fieldDefinitions, category, updateSettings])

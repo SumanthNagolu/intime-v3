@@ -40,7 +40,7 @@ type ApiToken = {
   usage_count: number
   created_at: string
   revoked_at: string | null
-  creator: { full_name: string } | null
+  creator: { full_name: string }[] | null
 }
 
 type GeneratedToken = {
@@ -232,7 +232,7 @@ export function ApiTokensPage() {
                     <td className="px-4 py-3">
                       <div className="font-medium text-charcoal-900">{token.name}</div>
                       <div className="text-xs text-charcoal-500">
-                        by {token.creator?.full_name || 'Unknown'}
+                        by {token.creator?.[0]?.full_name || 'Unknown'}
                       </div>
                     </td>
                     <td className="px-4 py-3">

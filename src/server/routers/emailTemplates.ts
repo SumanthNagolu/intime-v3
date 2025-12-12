@@ -588,7 +588,7 @@ export const emailTemplatesRouter = router({
         last_name: 'Chen',
         full_name: 'Sarah Chen',
         email: 'sarah.chen@example.com',
-        job_title: 'Senior Recruiter',
+        user_title: 'Senior Recruiter',
         department: 'Recruiting',
         pod_name: 'Alpha Pod',
         company_name: 'InTime Staffing',

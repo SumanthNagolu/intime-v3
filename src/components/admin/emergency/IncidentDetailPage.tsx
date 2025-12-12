@@ -313,7 +313,7 @@ export function IncidentDetailPage({ incidentId }: IncidentDetailPageProps) {
                   <div className="relative">
                     <div className="absolute left-4 top-0 bottom-0 w-px bg-charcoal-200" />
                     <div className="space-y-4">
-                      {incident.timeline?.map((event, index) => {
+                      {incident.timeline?.map((event: { id: string; event_type: string; description: string; created_at: string; performer?: { full_name: string } | null }, _index: number) => {
                         const Icon = EVENT_ICONS[event.event_type as keyof typeof EVENT_ICONS] || Activity
                         return (
                           <div key={event.id} className="relative pl-10">
@@ -398,7 +398,7 @@ export function IncidentDetailPage({ incidentId }: IncidentDetailPageProps) {
                 <CardContent>
                   {incident.notifications && incident.notifications.length > 0 ? (
                     <div className="space-y-2">
-                      {incident.notifications.map((notif) => (
+                      {incident.notifications.map((notif: { id: string; status: string; recipient: string; notification_type: string; sent_at?: string }) => (
                         <div key={notif.id} className="flex items-center justify-between p-3 border rounded-lg">
                           <div className="flex items-center gap-3">
                             {notif.status === 'sent' || notif.status === 'delivered' ? (
@@ -416,7 +416,7 @@ export function IncidentDetailPage({ incidentId }: IncidentDetailPageProps) {
                             </div>
                           </div>
                           <span className="text-xs text-charcoal-500">
-                            {format(new Date(notif.created_at), 'MMM d, HH:mm')}
+                            {notif.sent_at ? format(new Date(notif.sent_at), 'MMM d, HH:mm') : 'Pending'}
                           </span>
                         </div>
                       ))}

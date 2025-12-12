@@ -49,8 +49,8 @@ type PermissionComparison = {
 }
 
 type FeatureComparison = {
-  featureCode: string
-  featureName: string
+  featureCode: string | undefined
+  featureName: string | undefined
   role1Enabled: boolean
   role2Enabled: boolean
   different: boolean

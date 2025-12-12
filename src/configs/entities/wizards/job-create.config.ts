@@ -47,13 +47,17 @@ export const jobCreateStep1Schema = z.object({
   hybridDays: z.number().min(1).max(5).optional(),
 })
 
-export const jobCreateStep2Schema = z.object({
+// Base schema without refinement (for merging)
+const jobCreateStep2BaseSchema = z.object({
   requiredSkills: z.array(z.string()).min(1, 'At least one required skill is needed'),
   niceToHaveSkills: z.array(z.string()).optional(),
   minExperience: z.string().optional(),
   maxExperience: z.string().optional(),
   description: z.string().optional(),
-}).refine((data) => {
+})
+
+// Schema with refinement (for step validation)
+export const jobCreateStep2Schema = jobCreateStep2BaseSchema.refine((data) => {
   if (data.minExperience && data.maxExperience) {
     return parseInt(data.maxExperience) >= parseInt(data.minExperience)
   }
@@ -73,9 +77,9 @@ export const jobCreateStep3Schema = z.object({
   targetStartDate: z.string().optional(),
 })
 
-// Full validation schema
+// Full validation schema (uses base schema for merging)
 export const jobCreateSchema = jobCreateStep1Schema
-  .merge(jobCreateStep2Schema)
+  .merge(jobCreateStep2BaseSchema)
   .merge(jobCreateStep3Schema)
 
 // Step 1: Basic Info Fields

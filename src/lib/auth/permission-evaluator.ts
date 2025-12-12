@@ -139,11 +139,12 @@ export async function evaluatePermission(
     .maybeSingle()
 
   if (!rolePermission || !rolePermission.granted) {
-    const systemRole = user.system_roles as { name: string; display_name: string }
+    const systemRoles = user.system_roles as Array<{ name: string; display_name: string }>
+    const systemRole = systemRoles?.[0]
     chain.push({
       step: 'Role permission',
       result: 'fail',
-      detail: `Role "${systemRole.display_name}" does not have this permission`,
+      detail: `Role "${systemRole?.display_name || 'Unknown'}" does not have this permission`,
     })
     return {
       allowed: false,
@@ -159,9 +160,10 @@ export async function evaluatePermission(
 
   // Step 5: Check data scope (if entity specified)
   const scopeCondition = rolePermission.scope_condition as PermissionScope
-  const permissionInfo = rolePermission.permissions as { object_type: string; action: string }
+  const permissionsArray = rolePermission.permissions as Array<{ object_type: string; action: string }>
+  const permissionInfo = permissionsArray?.[0]
 
-  if (entityId && scopeCondition !== 'org') {
+  if (entityId && scopeCondition !== 'org' && permissionInfo) {
     const scopeCheck = await checkDataScope(
       supabase,
       userId,
@@ -470,12 +472,13 @@ export async function getUserContext(
     return null
   }
 
-  const systemRole = user.system_roles as {
+  const systemRoles = user.system_roles as Array<{
     id: string
     name: string
     code: string
     display_name: string
-  }
+  }>
+  const systemRole = systemRoles?.[0]
   const activePod = (user.pod_memberships as Array<{ pod_id: string; is_active: boolean }>)?.find(
     (pm) => pm.is_active
   )
@@ -483,8 +486,8 @@ export async function getUserContext(
   return {
     id: user.id,
     roleId: user.role_id,
-    roleName: systemRole.display_name,
-    roleCode: systemRole.code,
+    roleName: systemRole?.display_name || '',
+    roleCode: systemRole?.code || '',
     orgId: user.org_id,
     podId: activePod?.pod_id,
     status: user.status,
