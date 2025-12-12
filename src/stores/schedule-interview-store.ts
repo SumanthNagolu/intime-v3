@@ -14,6 +14,20 @@ export interface Interviewer {
   title?: string
 }
 
+// New multi-participant support
+export type ParticipantRole = 'lead_interviewer' | 'interviewer' | 'shadow' | 'observer' | 'note_taker' | 'hiring_manager'
+
+export interface InterviewParticipant {
+  id?: string // temp id for UI
+  userId?: string
+  contactId?: string
+  name: string
+  email: string
+  title?: string
+  role: ParticipantRole
+  isRequired: boolean
+}
+
 export interface ScheduleInterviewFormData {
   // Context
   submissionId: string
@@ -30,8 +44,15 @@ export interface ScheduleInterviewFormData {
   // Times
   proposedTimes: ProposedTime[]
 
-  // People
+  // People (legacy)
   interviewers: Interviewer[]
+
+  // Multi-participant support (new)
+  participants: InterviewParticipant[]
+  isPanel: boolean
+  scorecardTemplateId?: string
+  primaryInterviewerContactId?: string
+  coordinatorContactId?: string
 
   // Meeting Details
   meetingLink: string
@@ -55,6 +76,11 @@ interface ScheduleInterviewStore {
   addInterviewer: () => void
   removeInterviewer: (index: number) => void
   updateInterviewer: (index: number, interviewer: Interviewer) => void
+  // New participant management actions
+  addParticipant: (participant?: Partial<InterviewParticipant>) => void
+  removeParticipant: (index: number) => void
+  updateParticipant: (index: number, participant: Partial<InterviewParticipant>) => void
+  setScorecardTemplate: (templateId: string | undefined) => void
   resetForm: () => void
   initializeFromSubmission: (
     submissionId: string,
@@ -76,6 +102,12 @@ const defaultFormData: ScheduleInterviewFormData = {
   timezone: 'America/New_York',
   proposedTimes: [{ date: format(addDays(new Date(), 1), 'yyyy-MM-dd'), time: '10:00' }],
   interviewers: [{ name: '', email: '', title: '' }],
+  // New multi-participant fields
+  participants: [],
+  isPanel: false,
+  scorecardTemplateId: undefined,
+  primaryInterviewerContactId: undefined,
+  coordinatorContactId: undefined,
   meetingLink: '',
   meetingLocation: '',
   description: '',
@@ -153,6 +185,66 @@ export const useScheduleInterviewStore = create<ScheduleInterviewStore>()(
           isDirty: true,
         })),
 
+      // Participant management actions
+      addParticipant: (participant) =>
+        set((state) => {
+          const newParticipant: InterviewParticipant = {
+            id: `temp-${Date.now()}`,
+            name: '',
+            email: '',
+            role: 'interviewer',
+            isRequired: true,
+            ...participant,
+          }
+          const newParticipants = [...state.formData.participants, newParticipant]
+          return {
+            formData: {
+              ...state.formData,
+              participants: newParticipants,
+              // Auto-mark as panel if more than 1 participant
+              isPanel: newParticipants.length > 1,
+            },
+            isDirty: true,
+            lastSaved: new Date(),
+          }
+        }),
+
+      removeParticipant: (index) =>
+        set((state) => {
+          const newParticipants = state.formData.participants.filter((_, i) => i !== index)
+          return {
+            formData: {
+              ...state.formData,
+              participants: newParticipants,
+              // Update panel flag
+              isPanel: newParticipants.length > 1,
+            },
+            isDirty: true,
+          }
+        }),
+
+      updateParticipant: (index, participant) =>
+        set((state) => ({
+          formData: {
+            ...state.formData,
+            participants: state.formData.participants.map((p, i) =>
+              i === index ? { ...p, ...participant } : p
+            ),
+          },
+          isDirty: true,
+          lastSaved: new Date(),
+        })),
+
+      setScorecardTemplate: (templateId) =>
+        set((state) => ({
+          formData: {
+            ...state.formData,
+            scorecardTemplateId: templateId,
+          },
+          isDirty: true,
+          lastSaved: new Date(),
+        })),
+
       resetForm: () =>
         set({
           formData: defaultFormData,
@@ -205,3 +297,13 @@ export const TIMEZONES = [
 
 export const DURATION_OPTIONS = [15, 30, 45, 60, 90, 120, 180, 240] as const
 export const ROUND_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const
+
+// Participant role options for multi-interviewer support
+export const PARTICIPANT_ROLES = [
+  { value: 'lead_interviewer', label: 'Lead Interviewer', description: 'Primary interviewer responsible for the session' },
+  { value: 'interviewer', label: 'Interviewer', description: 'Standard interviewer participant' },
+  { value: 'hiring_manager', label: 'Hiring Manager', description: 'Hiring manager for the role' },
+  { value: 'shadow', label: 'Shadow', description: 'Observing to learn interviewing' },
+  { value: 'observer', label: 'Observer', description: 'Silent observer for calibration' },
+  { value: 'note_taker', label: 'Note Taker', description: 'Focused on documenting responses' },
+] as const
