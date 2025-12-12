@@ -123,6 +123,8 @@ export const topNavigationTabs: EntityNavTab[] = [
       { id: 'offers', label: 'Offers', icon: DollarSign, href: '/employee/recruiting/offers', type: 'link' },
       { id: 'divider-1', label: '', type: 'divider' },
       { id: 'placements', label: 'Placements', icon: CheckCircle, href: '/employee/recruiting/placements', type: 'link' },
+      { id: 'timesheets', label: 'Timesheets', icon: Clock, href: '/employee/recruiting/timesheets', type: 'link' },
+      { id: 'divider-2', label: '', type: 'divider' },
       { id: 'commissions', label: 'My Commissions', icon: DollarSign, href: '/employee/recruiting/commissions', type: 'link' },
     ],
   },

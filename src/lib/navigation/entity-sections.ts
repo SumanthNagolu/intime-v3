@@ -280,8 +280,26 @@ export const placementSections: SectionDefinition[] = [
   // Main sections
   { id: 'overview', label: 'Overview', icon: Award },
   { id: 'timesheets', label: 'Timesheets', icon: Clock, showCount: true },
+  { id: 'location', label: 'Location', icon: MapPin },
   // Tools section
   { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true },
+  { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },
+  { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true },
+  { id: 'history', label: 'History', icon: History, isToolSection: true },
+]
+
+/**
+ * Timesheet sections - Guidewire-style with main sections + tools
+ * Main: Overview, Entries, Expenses, Approvals
+ * Tools: Notes, Documents, History
+ */
+export const timesheetSections: SectionDefinition[] = [
+  // Main sections
+  { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+  { id: 'entries', label: 'Entries', icon: Clock, showCount: true },
+  { id: 'expenses', label: 'Expenses', icon: FileText, showCount: true },
+  { id: 'approvals', label: 'Approvals', icon: ListChecks },
+  // Tools section
   { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },
   { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true },
   { id: 'history', label: 'History', icon: History, isToolSection: true },
@@ -310,6 +328,8 @@ export function getSectionsForEntity(entityType: string): SectionDefinition[] {
       return candidateSections
     case 'placement':
       return placementSections
+    case 'timesheet':
+      return timesheetSections
     default:
       return []
   }

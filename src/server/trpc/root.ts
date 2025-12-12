@@ -62,6 +62,8 @@ import { complianceRouter } from '../routers/compliance'
 import { contractsRouter } from '../routers/contracts'
 // Unified rates system (RATES-01)
 import { ratesRouter } from '../routers/rates'
+// Timesheet management system (TIMESHEETS-01)
+import { timesheetsRouter } from '../routers/timesheets'
 
 export const appRouter = router({
   admin: adminRouter,
@@ -127,6 +129,8 @@ export const appRouter = router({
   contracts: contractsRouter,
   // Unified rates system (RATES-01)
   rates: ratesRouter,
+  // Timesheet management system (TIMESHEETS-01)
+  timesheets: timesheetsRouter,
 })
 
 export type AppRouter = typeof appRouter
