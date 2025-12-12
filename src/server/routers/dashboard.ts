@@ -818,4 +818,310 @@ export const dashboardRouter = router({
 
       return { success: true }
     }),
+
+  // ============================================
+  // REVENUE OPERATIONS WIDGETS (WAVE 5)
+  // ============================================
+
+  // Timesheets Summary Widget
+  getTimesheetsStats: orgProtectedProcedure.query(async ({ ctx }) => {
+    const adminClient = getAdminClient()
+    const { orgId } = ctx
+
+    const now = new Date()
+    const startOfWeek = new Date(now)
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay())
+    startOfWeek.setHours(0, 0, 0, 0)
+
+    const endOfWeek = new Date(startOfWeek)
+    endOfWeek.setDate(endOfWeek.getDate() + 7)
+
+    // Get timesheets pending approval
+    const { count: pendingApproval } = await adminClient
+      .from('timesheets')
+      .select('*', { count: 'exact', head: true })
+      .eq('org_id', orgId)
+      .eq('status', 'submitted')
+      .is('deleted_at', null)
+
+    // Get timesheets that are drafts (need to be submitted)
+    const { count: drafts } = await adminClient
+      .from('timesheets')
+      .select('*', { count: 'exact', head: true })
+      .eq('org_id', orgId)
+      .eq('status', 'draft')
+      .is('deleted_at', null)
+
+    // Get approved timesheets ready for invoicing
+    const { count: readyToInvoice } = await adminClient
+      .from('timesheets')
+      .select('*', { count: 'exact', head: true })
+      .eq('org_id', orgId)
+      .eq('status', 'approved')
+      .is('invoice_id', null)
+      .is('deleted_at', null)
+
+    // Get approved timesheets ready for payroll
+    const { count: readyForPayroll } = await adminClient
+      .from('timesheets')
+      .select('*', { count: 'exact', head: true })
+      .eq('org_id', orgId)
+      .eq('status', 'approved')
+      .is('payroll_run_id', null)
+      .is('deleted_at', null)
+
+    // Get total hours this week
+    const { data: weekTimesheets } = await adminClient
+      .from('timesheets')
+      .select('total_regular_hours, total_overtime_hours, total_double_time_hours')
+      .eq('org_id', orgId)
+      .gte('period_start', startOfWeek.toISOString().split('T')[0])
+      .lte('period_end', endOfWeek.toISOString().split('T')[0])
+      .is('deleted_at', null)
+
+    let hoursThisWeek = 0
+    let overtimeHoursThisWeek = 0
+    weekTimesheets?.forEach(ts => {
+      hoursThisWeek += Number(ts.total_regular_hours || 0) +
+        Number(ts.total_overtime_hours || 0) +
+        Number(ts.total_double_time_hours || 0)
+      overtimeHoursThisWeek += Number(ts.total_overtime_hours || 0) +
+        Number(ts.total_double_time_hours || 0)
+    })
+
+    // Get billable and payable amounts ready
+    const { data: readyTs } = await adminClient
+      .from('timesheets')
+      .select('total_billable_amount, total_payable_amount')
+      .eq('org_id', orgId)
+      .eq('status', 'approved')
+      .is('deleted_at', null)
+
+    let pendingBillableAmount = 0
+    let pendingPayableAmount = 0
+    readyTs?.forEach(ts => {
+      pendingBillableAmount += Number(ts.total_billable_amount || 0)
+      pendingPayableAmount += Number(ts.total_payable_amount || 0)
+    })
+
+    return {
+      pendingApproval: pendingApproval ?? 0,
+      drafts: drafts ?? 0,
+      readyToInvoice: readyToInvoice ?? 0,
+      readyForPayroll: readyForPayroll ?? 0,
+      hoursThisWeek: Math.round(hoursThisWeek * 10) / 10,
+      overtimeHoursThisWeek: Math.round(overtimeHoursThisWeek * 10) / 10,
+      pendingBillableAmount,
+      pendingPayableAmount,
+    }
+  }),
+
+  // Invoices Summary Widget
+  getInvoicesStats: orgProtectedProcedure.query(async ({ ctx }) => {
+    const adminClient = getAdminClient()
+    const { orgId } = ctx
+    const today = new Date().toISOString().split('T')[0]
+
+    // Get invoice counts by status
+    const { data: invoices } = await adminClient
+      .from('invoices')
+      .select('status, balance_due, due_date, total_amount')
+      .eq('org_id', orgId)
+      .is('deleted_at', null)
+
+    let draftCount = 0
+    let pendingCount = 0
+    let sentCount = 0
+    let overdueCount = 0
+    let paidCount = 0
+    let outstandingBalance = 0
+    let overdueAmount = 0
+    let paidThisMonth = 0
+
+    const startOfMonth = new Date()
+    startOfMonth.setDate(1)
+    startOfMonth.setHours(0, 0, 0, 0)
+
+    invoices?.forEach(inv => {
+      const balance = Number(inv.balance_due || 0)
+
+      switch (inv.status) {
+        case 'draft':
+          draftCount++
+          break
+        case 'pending':
+          pendingCount++
+          outstandingBalance += balance
+          break
+        case 'sent':
+          sentCount++
+          outstandingBalance += balance
+          if (inv.due_date && inv.due_date < today) {
+            overdueCount++
+            overdueAmount += balance
+          }
+          break
+        case 'paid':
+          paidCount++
+          paidThisMonth += Number(inv.total_amount || 0)
+          break
+      }
+    })
+
+    // Get total revenue (paid invoices) this year
+    const startOfYear = `${new Date().getFullYear()}-01-01`
+    const { data: paidInvoices } = await adminClient
+      .from('invoices')
+      .select('total_amount, paid_date')
+      .eq('org_id', orgId)
+      .eq('status', 'paid')
+      .gte('paid_date', startOfYear)
+      .is('deleted_at', null)
+
+    const ytdRevenue = paidInvoices?.reduce(
+      (sum, inv) => sum + Number(inv.total_amount || 0),
+      0
+    ) ?? 0
+
+    // Average days to pay
+    const { data: recentPaid } = await adminClient
+      .from('invoices')
+      .select('invoice_date, paid_date')
+      .eq('org_id', orgId)
+      .eq('status', 'paid')
+      .not('paid_date', 'is', null)
+      .order('paid_date', { ascending: false })
+      .limit(20)
+
+    let avgDaysToPay = 0
+    if (recentPaid && recentPaid.length > 0) {
+      const daysToPay = recentPaid.map(inv => {
+        const invoiceDate = new Date(inv.invoice_date)
+        const paidDate = new Date(inv.paid_date!)
+        return Math.max(0, Math.floor((paidDate.getTime() - invoiceDate.getTime()) / (1000 * 60 * 60 * 24)))
+      })
+      avgDaysToPay = Math.round(daysToPay.reduce((a, b) => a + b, 0) / daysToPay.length)
+    }
+
+    return {
+      draftCount,
+      pendingCount,
+      sentCount,
+      overdueCount,
+      paidCount,
+      outstandingBalance,
+      overdueAmount,
+      paidThisMonth,
+      ytdRevenue,
+      avgDaysToPay,
+    }
+  }),
+
+  // Payroll Summary Widget
+  getPayrollStats: orgProtectedProcedure.query(async ({ ctx }) => {
+    const adminClient = getAdminClient()
+    const { orgId } = ctx
+    const today = new Date().toISOString().split('T')[0]
+
+    // Get pay run counts by status
+    const { data: payRuns } = await adminClient
+      .from('pay_runs')
+      .select('status, total_gross, total_net, check_date')
+      .eq('org_id', orgId)
+      .is('deleted_at', null)
+
+    let draftCount = 0
+    let pendingApprovalCount = 0
+    let approvedCount = 0
+    let completedCount = 0
+    let pendingAmount = 0
+
+    payRuns?.forEach(run => {
+      switch (run.status) {
+        case 'draft':
+        case 'calculating':
+          draftCount++
+          pendingAmount += Number(run.total_gross || 0)
+          break
+        case 'pending_approval':
+          pendingApprovalCount++
+          pendingAmount += Number(run.total_gross || 0)
+          break
+        case 'approved':
+          approvedCount++
+          pendingAmount += Number(run.total_gross || 0)
+          break
+        case 'completed':
+          completedCount++
+          break
+      }
+    })
+
+    // Get current pay period
+    const { data: currentPeriod } = await adminClient
+      .from('pay_periods')
+      .select('id, period_start, period_end, pay_date, period_type')
+      .eq('org_id', orgId)
+      .lte('period_start', today)
+      .gte('period_end', today)
+      .single()
+
+    // Get next pay date
+    const { data: nextPeriod } = await adminClient
+      .from('pay_periods')
+      .select('pay_date')
+      .eq('org_id', orgId)
+      .gt('pay_date', today)
+      .order('pay_date', { ascending: true })
+      .limit(1)
+      .single()
+
+    // Get YTD totals
+    const startOfYear = `${new Date().getFullYear()}-01-01`
+    const { data: completedRuns } = await adminClient
+      .from('pay_runs')
+      .select('total_gross, total_net, total_employee_taxes, total_employer_taxes')
+      .eq('org_id', orgId)
+      .eq('status', 'completed')
+      .gte('check_date', startOfYear)
+      .is('deleted_at', null)
+
+    let ytdGross = 0
+    let ytdNet = 0
+    let ytdTaxes = 0
+    completedRuns?.forEach(run => {
+      ytdGross += Number(run.total_gross || 0)
+      ytdNet += Number(run.total_net || 0)
+      ytdTaxes += Number(run.total_employee_taxes || 0) + Number(run.total_employer_taxes || 0)
+    })
+
+    // Get timesheets ready for payroll
+    const { count: timesheetsReady } = await adminClient
+      .from('timesheets')
+      .select('*', { count: 'exact', head: true })
+      .eq('org_id', orgId)
+      .eq('status', 'approved')
+      .is('payroll_run_id', null)
+      .is('deleted_at', null)
+
+    return {
+      draftCount,
+      pendingApprovalCount,
+      approvedCount,
+      completedCount,
+      pendingAmount,
+      currentPeriod: currentPeriod ? {
+        id: currentPeriod.id,
+        periodStart: currentPeriod.period_start,
+        periodEnd: currentPeriod.period_end,
+        payDate: currentPeriod.pay_date,
+        periodType: currentPeriod.period_type,
+      } : null,
+      nextPayDate: nextPeriod?.pay_date || null,
+      ytdGross,
+      ytdNet,
+      ytdTaxes,
+      timesheetsReady: timesheetsReady ?? 0,
+    }
+  }),
 })

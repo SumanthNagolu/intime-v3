@@ -1,8 +1,18 @@
 'use client'
 
+import { Suspense } from 'react'
 import { EntityListView } from '@/components/pcf/list-view/EntityListView'
-import { payrollListConfig, PayRun } from '@/configs/entities/payroll.config'
+import { EntityListViewSkeleton } from '@/components/pcf/shared'
+import { payrollListConfig, type PayRun } from '@/configs/entities/payroll.config'
+
+function PayrollListContent() {
+  return <EntityListView<PayRun> config={payrollListConfig} />
+}
 
 export default function PayrollPage() {
-  return <EntityListView<PayRun> config={payrollListConfig} />
+  return (
+    <Suspense fallback={<EntityListViewSkeleton />}>
+      <PayrollListContent />
+    </Suspense>
+  )
 }

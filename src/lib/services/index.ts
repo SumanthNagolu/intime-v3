@@ -22,3 +22,23 @@ export type {
   PayPeriodConfig,
   PayPeriod,
 } from './pay-period-service'
+
+// Timesheet → Invoice Automation Service
+export { TimesheetInvoicer, timesheetInvoicer } from './timesheet-invoicer'
+export type {
+  TimesheetForInvoice,
+  InvoiceGenerationOptions,
+  GeneratedInvoice,
+  InvoiceLineItemData,
+  EligibleTimesheetsResult,
+} from './timesheet-invoicer'
+
+// Timesheet → Payroll Automation Service
+export { TimesheetPayroll, timesheetPayroll } from './timesheet-payroll'
+export type {
+  TimesheetForPayroll,
+  PayItemData,
+  PayrollCalculationOptions,
+  CalculatedPayRun,
+  EligibleTimesheetsResult as PayrollEligibleTimesheetsResult,
+} from './timesheet-payroll'

@@ -46,20 +46,19 @@ export function JobNotesSection({ jobId }: JobNotesSectionProps) {
   const [noteType, setNoteType] = useState('general')
   const [isPinned, setIsPinned] = useState(false)
 
-  // Query notes (activities of type 'note') for this job
-  const notesQuery = trpc.activities.listByEntity.useQuery({
+  // Query notes using the unified notes router
+  const notesQuery = trpc.notes.listByEntity.useQuery({
     entityType: 'job',
     entityId: jobId,
-    activityTypes: ['note'],
     limit: 100,
   })
   const notes = notesQuery.data?.items || []
 
-  // Create note mutation
-  const logNoteMutation = trpc.activities.log.useMutation({
+  // Create note mutation using the unified notes router
+  const createNoteMutation = trpc.notes.create.useMutation({
     onSuccess: () => {
       toast({ title: 'Note added' })
-      utils.activities.listByEntity.invalidate({ entityType: 'job', entityId: jobId })
+      utils.notes.listByEntity.invalidate({ entityType: 'job', entityId: jobId })
       resetForm()
       setIsFormExpanded(false)
     },
@@ -83,12 +82,12 @@ export function JobNotesSection({ jobId }: JobNotesSectionProps) {
       return
     }
 
-    logNoteMutation.mutate({
+    createNoteMutation.mutate({
       entityType: 'job',
       entityId: jobId,
-      activityType: 'note',
-      subject: title.trim() || `${noteType.charAt(0).toUpperCase() + noteType.slice(1)} Note`,
-      body: content.trim(),
+      title: title.trim() || undefined,
+      content: content.trim(),
+      noteType: noteType as 'general' | 'internal' | 'important' | 'reminder',
     })
   }
 
@@ -101,13 +100,11 @@ export function JobNotesSection({ jobId }: JobNotesSectionProps) {
     setSelectedNoteId(selectedNoteId === noteId ? null : noteId)
   }
 
-  // Sort notes - pinned first
-  const sortedNotes = [...notes].sort((a: any, b: any) => {
-    const aIsPinned = a.metadata?.isPinned || false
-    const bIsPinned = b.metadata?.isPinned || false
-    if (aIsPinned && !bIsPinned) return -1
-    if (!aIsPinned && bIsPinned) return 1
-    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  // Sort notes - pinned first (notes router already sorts by is_pinned, but we ensure consistency)
+  const sortedNotes = [...notes].sort((a, b) => {
+    if (a.isPinned && !b.isPinned) return -1
+    if (!a.isPinned && b.isPinned) return 1
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   })
 
   return (
@@ -208,12 +205,12 @@ export function JobNotesSection({ jobId }: JobNotesSectionProps) {
                     variant="ghost"
                     size="sm"
                     onClick={handleCancel}
-                    disabled={logNoteMutation.isPending}
+                    disabled={createNoteMutation.isPending}
                   >
                     Cancel
                   </Button>
-                  <Button type="submit" size="sm" disabled={logNoteMutation.isPending}>
-                    {logNoteMutation.isPending && (
+                  <Button type="submit" size="sm" disabled={createNoteMutation.isPending}>
+                    {createNoteMutation.isPending && (
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                     )}
                     Add Note
@@ -239,9 +236,9 @@ export function JobNotesSection({ jobId }: JobNotesSectionProps) {
           </div>
         ) : (
           <div className="space-y-3">
-            {sortedNotes.map((note: any) => {
-              const isNoteImportant = note.metadata?.noteType === 'important'
-              const isNotePinned = note.metadata?.isPinned
+            {sortedNotes.map((note) => {
+              const isNoteImportant = note.noteType === 'important'
+              const isNotePinned = note.isPinned
 
               return (
                 <div
@@ -258,11 +255,11 @@ export function JobNotesSection({ jobId }: JobNotesSectionProps) {
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1 min-w-0">
-                      {note.subject && (
-                        <p className="font-medium truncate">{note.subject}</p>
+                      {note.title && (
+                        <p className="font-medium truncate">{note.title}</p>
                       )}
                       <p className="text-sm text-charcoal-600 line-clamp-2 mt-1">
-                        {note.description}
+                        {note.content}
                       </p>
                     </div>
                     {isNotePinned && (
@@ -270,23 +267,23 @@ export function JobNotesSection({ jobId }: JobNotesSectionProps) {
                     )}
                   </div>
                   <div className="flex items-center gap-2 mt-2 text-xs text-charcoal-500">
-                    {note.metadata?.noteType && (
+                    {note.noteType && (
                       <Badge variant="outline" className="capitalize text-xs">
-                        {note.metadata.noteType}
+                        {note.noteType}
                       </Badge>
                     )}
-                    {note.performed_by?.full_name && (
-                      <span>{note.performed_by.full_name}</span>
+                    {note.creator?.full_name && (
+                      <span>{note.creator.full_name}</span>
                     )}
                     <span>&bull;</span>
-                    <span>{formatDistanceToNow(new Date(note.created_at), { addSuffix: true })}</span>
+                    <span>{formatDistanceToNow(new Date(note.createdAt), { addSuffix: true })}</span>
                   </div>
 
                   {/* Expanded details */}
                   {selectedNoteId === note.id && (
                     <div className="mt-4 pt-4 border-t">
                       <Label className="text-xs text-charcoal-500">Full Note</Label>
-                      <p className="text-sm mt-1 whitespace-pre-wrap">{note.description}</p>
+                      <p className="text-sm mt-1 whitespace-pre-wrap">{note.content}</p>
                     </div>
                   )}
                 </div>

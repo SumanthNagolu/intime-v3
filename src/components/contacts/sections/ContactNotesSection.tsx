@@ -22,21 +22,20 @@ export function ContactNotesSection({ contactId }: ContactNotesSectionProps) {
   const [newNote, setNewNote] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  // Fetch notes as activities with type='note'
-  const notesQuery = trpc.activities.listByEntity.useQuery({
+  // Fetch notes using the unified notes router
+  const notesQuery = trpc.notes.listByEntity.useQuery({
     entityType: 'contact',
     entityId: contactId,
-    activityTypes: ['note'],
     limit: 50,
   })
 
   const notes = notesQuery.data?.items || []
 
-  // Log activity mutation for creating notes
-  const logActivityMutation = trpc.activities.log.useMutation({
+  // Create note mutation using the unified notes router
+  const createNoteMutation = trpc.notes.create.useMutation({
     onSuccess: () => {
       toast({ title: 'Note added' })
-      utils.activities.listByEntity.invalidate({
+      utils.notes.listByEntity.invalidate({
         entityType: 'contact',
         entityId: contactId,
       })
@@ -52,12 +51,11 @@ export function ContactNotesSection({ contactId }: ContactNotesSectionProps) {
     if (!newNote.trim()) return
     setIsSubmitting(true)
     try {
-      await logActivityMutation.mutateAsync({
+      await createNoteMutation.mutateAsync({
         entityType: 'contact',
         entityId: contactId,
-        activityType: 'note',
-        subject: 'Note',
-        body: newNote.trim(),
+        content: newNote.trim(),
+        noteType: 'general',
       })
     } finally {
       setIsSubmitting(false)
@@ -143,8 +141,11 @@ export function ContactNotesSection({ contactId }: ContactNotesSectionProps) {
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
+                    {note.title && (
+                      <p className="font-medium text-charcoal-900 mb-1">{note.title}</p>
+                    )}
                     <p className="text-sm text-charcoal-700 whitespace-pre-wrap">
-                      {note.description || note.subject}
+                      {note.content}
                     </p>
                     <div className="flex items-center gap-4 mt-2 text-xs text-charcoal-400">
                       <span>
@@ -152,11 +153,14 @@ export function ContactNotesSection({ contactId }: ContactNotesSectionProps) {
                           ? formatDistanceToNow(new Date(note.createdAt), { addSuffix: true })
                           : '—'}
                       </span>
-                      {note.performedBy && (
-                        <span>by {note.performedBy}</span>
+                      {note.creator?.full_name && (
+                        <span>by {note.creator.full_name}</span>
                       )}
                     </div>
                   </div>
+                  {note.isPinned && (
+                    <Pin className="w-4 h-4 text-gold-500 flex-shrink-0" />
+                  )}
                 </div>
               </CardContent>
             </Card>

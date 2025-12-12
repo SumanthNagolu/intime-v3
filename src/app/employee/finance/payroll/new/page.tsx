@@ -1,5 +1,6 @@
 'use client'
 
+import { Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { SidebarLayout } from '@/components/layouts/SidebarLayout'
 import { Card } from '@/components/ui/card'
@@ -9,14 +10,32 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
-import { ChevronLeft, ChevronRight, Calculator, Play, DollarSign, Calendar, Users, FileText, Check } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Calculator, Play, DollarSign, Calendar, Users, FileText, Check, Loader2 } from 'lucide-react'
 import { usePayRunProcessStore, PAY_RUN_TYPES, PAY_RUN_WIZARD_STEPS, formatCurrency, formatPeriod, calculateSelectedTotals } from '@/stores/pay-run-process-store'
 import { cn } from '@/lib/utils'
 import { trpc } from '@/lib/trpc/client'
 import { toast } from 'sonner'
 import { useState } from 'react'
 
+function NewPayRunLoading() {
+  return (
+    <SidebarLayout sectionId="payroll">
+      <div className="flex items-center justify-center py-12">
+        <Loader2 className="h-8 w-8 animate-spin text-charcoal-400" />
+      </div>
+    </SidebarLayout>
+  )
+}
+
 export default function NewPayRunPage() {
+  return (
+    <Suspense fallback={<NewPayRunLoading />}>
+      <NewPayRunContent />
+    </Suspense>
+  )
+}
+
+function NewPayRunContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const step = parseInt(searchParams.get('step') || '1')
