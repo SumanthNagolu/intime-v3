@@ -28,6 +28,19 @@ export interface JobIntakeFormData {
   priority: string
   targetStartDate: string
 
+  // JOBS-01: Unified company/contact references
+  clientCompanyId: string | null
+  endClientCompanyId: string | null
+  vendorCompanyId: string | null
+  hiringManagerContactId: string | null
+  hrContactId: string | null
+  externalJobId: string
+  priorityRank: number
+  slaDays: number
+  feeType: 'percentage' | 'flat' | 'hourly_spread'
+  feePercentage: number | null
+  feeFlatAmount: number | null
+
   // Step 2: Technical Requirements
   minExperience: string
   preferredExperience: string
@@ -106,6 +119,19 @@ const defaultFormData: JobIntakeFormData = {
   jobType: 'contract',
   priority: 'normal',
   targetStartDate: '',
+
+  // JOBS-01: Unified company/contact references
+  clientCompanyId: null,
+  endClientCompanyId: null,
+  vendorCompanyId: null,
+  hiringManagerContactId: null,
+  hrContactId: null,
+  externalJobId: '',
+  priorityRank: 0,
+  slaDays: 30,
+  feeType: 'percentage',
+  feePercentage: null,
+  feeFlatAmount: null,
 
   // Step 2
   minExperience: '5',

@@ -54,6 +54,18 @@ const createJobInput = z.object({
   targetFillDate: z.string().optional(),
   targetStartDate: z.string().optional(),
   clientSubmissionInstructions: z.string().optional(),
+  // JOBS-01: Unified company/contact references
+  clientCompanyId: z.string().uuid().optional(),
+  endClientCompanyId: z.string().uuid().optional(),
+  vendorCompanyId: z.string().uuid().optional(),
+  hiringManagerContactId: z.string().uuid().optional(),
+  hrContactId: z.string().uuid().optional(),
+  externalJobId: z.string().max(100).optional(),
+  priorityRank: z.number().int().min(0).max(10).optional(),
+  slaDays: z.number().int().min(1).max(365).default(30),
+  feeType: z.enum(['percentage', 'flat', 'hourly_spread']).default('percentage'),
+  feePercentage: z.number().min(0).max(100).optional(),
+  feeFlatAmount: z.number().min(0).optional(),
   clientInterviewProcess: z.string().optional(),
   // Extended intake data from Job Intake Wizard (C07)
   intakeData: z.object({
@@ -477,11 +489,13 @@ export const atsRouter = router({
         status: z.enum(['draft', 'open', 'active', 'on_hold', 'filled', 'cancelled', 'closed', 'all']).default('all'),
         type: z.enum(['full_time', 'contract', 'contract_to_hire', 'part_time']).optional(),
         priority: z.string().optional(),
+        // JOBS-01: Priority rank filter (numeric ranking)
+        priorityRank: z.number().int().min(0).max(4).optional(),
         accountId: z.string().uuid().optional(),
         recruiterId: z.string().uuid().optional(),
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        sortBy: z.enum(['title', 'account_id', 'location', 'job_type', 'status', 'positions_available', 'submissions_count', 'interviews_count', 'owner_id', 'due_date', 'created_at']).default('created_at'),
+        sortBy: z.enum(['title', 'account_id', 'location', 'job_type', 'status', 'positions_available', 'submissions_count', 'interviews_count', 'owner_id', 'due_date', 'created_at', 'priority_rank', 'sla_days']).default('created_at'),
         sortOrder: z.enum(['asc', 'desc']).default('desc'),
       }))
       .query(async ({ ctx, input }) => {
@@ -511,6 +525,10 @@ export const atsRouter = router({
         }
         if (input.priority) {
           query = query.eq('priority', input.priority)
+        }
+        // JOBS-01: Priority rank filter
+        if (input.priorityRank !== undefined) {
+          query = query.eq('priority_rank', input.priorityRank)
         }
         if (input.accountId) {
           query = query.eq('account_id', input.accountId)
@@ -548,6 +566,18 @@ export const atsRouter = router({
             due_date: j.due_date,
             dueDate: j.due_date,
             priority: j.priority,
+            // JOBS-01: New unified reference fields
+            priority_rank: j.priority_rank,
+            sla_days: j.sla_days,
+            client_company_id: j.client_company_id,
+            end_client_company_id: j.end_client_company_id,
+            vendor_company_id: j.vendor_company_id,
+            hiring_manager_contact_id: j.hiring_manager_contact_id,
+            hr_contact_id: j.hr_contact_id,
+            external_job_id: j.external_job_id,
+            fee_type: j.fee_type,
+            fee_percentage: j.fee_percentage,
+            fee_flat_amount: j.fee_flat_amount,
             account: j.account,
             owner: j.owner,
             submissions_count: (j.submissions as Array<{ status: string }> | null)?.length ?? 0,
@@ -571,6 +601,12 @@ export const atsRouter = router({
           .select(`
             *,
             company:companies!company_id(id, name, industry),
+            clientCompany:companies!client_company_id(id, name, industry),
+            endClientCompany:companies!end_client_company_id(id, name, industry),
+            vendorCompany:companies!vendor_company_id(id, name),
+            hiringManagerContact:contacts!hiring_manager_contact_id(id, full_name, primary_email, phone),
+            hrContact:contacts!hr_contact_id(id, full_name, primary_email, phone),
+            intakeCompletedBy:user_profiles!intake_completed_by(id, full_name),
             owner:user_profiles!owner_id(id, full_name, avatar_url),
             submissions(id, status, candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name))
           `)
@@ -582,7 +618,71 @@ export const atsRouter = router({
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Job not found' })
         }
 
-        return data
+        // Calculate SLA progress
+        let slaProgress = null
+        if (data.sla_days && data.created_at) {
+          const createdDate = new Date(data.created_at)
+          const today = new Date()
+          const daysSinceCreated = Math.floor((today.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24))
+          slaProgress = {
+            daysElapsed: daysSinceCreated,
+            slaDays: data.sla_days,
+            percentUsed: Math.round((daysSinceCreated / data.sla_days) * 100),
+            isOverdue: daysSinceCreated > data.sla_days,
+            daysRemaining: Math.max(0, data.sla_days - daysSinceCreated),
+          }
+        }
+
+        return {
+          ...data,
+          slaProgress,
+        }
+      }),
+
+    // Get jobs by company ID
+    getByCompany: orgProtectedProcedure
+      .input(z.object({
+        companyId: z.string().uuid(),
+        status: z.enum(['open', 'active', 'closed', 'on_hold', 'all']).default('open'),
+        limit: z.number().min(1).max(100).default(20),
+        offset: z.number().min(0).default(0),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        let query = adminClient
+          .from('jobs')
+          .select(`
+            id, title, status, job_type, location, priority, priority_rank,
+            rate_min, rate_max, sla_days, positions_count, positions_filled,
+            created_at, owner:user_profiles!owner_id(id, full_name)
+          `, { count: 'exact' })
+          .eq('org_id', orgId)
+          .or(`client_company_id.eq.${input.companyId},company_id.eq.${input.companyId}`)
+          .is('deleted_at', null)
+          .order('created_at', { ascending: false })
+
+        if (input.status !== 'all') {
+          if (input.status === 'open') {
+            query = query.in('status', ['open', 'active'])
+          } else {
+            query = query.eq('status', input.status)
+          }
+        }
+
+        query = query.range(input.offset, input.offset + input.limit - 1)
+
+        const { data, error, count } = await query
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return {
+          items: data ?? [],
+          total: count ?? 0,
+        }
       }),
 
     // Get job pipeline stats
@@ -777,6 +877,17 @@ export const atsRouter = router({
           throw new TRPCError({ code: 'BAD_REQUEST', message: 'Max experience must be greater than or equal to min experience' })
         }
 
+        // Calculate priority_rank from priority if not provided
+        const priorityRank = input.priorityRank ?? (() => {
+          switch (input.priority) {
+            case 'urgent': case 'critical': return 1
+            case 'high': return 2
+            case 'normal': return 3
+            case 'low': return 4
+            default: return 0
+          }
+        })()
+
         // Create job record
         const { data: job, error: jobError } = await adminClient
           .from('jobs')
@@ -811,6 +922,19 @@ export const atsRouter = router({
             created_by: user.id,
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString(),
+            // JOBS-01: Unified company/contact references
+            company_id: input.accountId, // Keep company_id sync'd with account_id
+            client_company_id: input.clientCompanyId || input.accountId,
+            end_client_company_id: input.endClientCompanyId,
+            vendor_company_id: input.vendorCompanyId,
+            hiring_manager_contact_id: input.hiringManagerContactId,
+            hr_contact_id: input.hrContactId,
+            external_job_id: input.externalJobId,
+            priority_rank: priorityRank,
+            sla_days: input.slaDays,
+            fee_type: input.feeType,
+            fee_percentage: input.feePercentage,
+            fee_flat_amount: input.feeFlatAmount,
           })
           .select('id, title, status, created_at')
           .single()
@@ -2222,6 +2346,331 @@ export const atsRouter = router({
           statusChanged: newStatus !== oldStatus,
         }
       }),
+
+    // ============================================
+    // SUBMISSIONS-01: UNIFIED FEEDBACK
+    // ============================================
+
+    // Get feedback for a submission
+    getFeedback: orgProtectedProcedure
+      .input(z.object({ submissionId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { data, error } = await adminClient
+          .from('submission_feedback')
+          .select(`
+            *,
+            providedByUser:user_profiles!provided_by_user_id(id, full_name, avatar_url),
+            providedByContact:contacts!provided_by_contact_id(id, full_name),
+            interview:interviews!interview_id(id, interview_type, scheduled_start)
+          `)
+          .eq('org_id', orgId)
+          .eq('submission_id', input.submissionId)
+          .is('deleted_at', null)
+          .order('created_at', { ascending: false })
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data ?? []
+      }),
+
+    // Add feedback to a submission
+    addFeedback: orgProtectedProcedure
+      .input(z.object({
+        submissionId: z.string().uuid(),
+        feedbackType: z.enum(['screening', 'technical', 'client', 'reference', 'final']),
+        feedbackSource: z.enum(['internal', 'client', 'vendor', 'reference']),
+        providedByContactId: z.string().uuid().optional(),
+        overallRating: z.number().int().min(1).max(5).optional(),
+        recommendation: z.enum(['strong_hire', 'hire', 'neutral', 'no_hire', 'strong_no_hire']).optional(),
+        feedbackText: z.string().max(5000).optional(),
+        criteriaScores: z.record(z.number().min(1).max(5)).optional(),
+        interviewId: z.string().uuid().optional(),
+        interviewRound: z.number().int().optional(),
+        isVisibleToClient: z.boolean().default(false),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const now = new Date().toISOString()
+
+        const { data: feedback, error } = await adminClient
+          .from('submission_feedback')
+          .insert({
+            org_id: orgId,
+            submission_id: input.submissionId,
+            feedback_type: input.feedbackType,
+            feedback_source: input.feedbackSource,
+            provided_by_user_id: user.id,
+            provided_by_contact_id: input.providedByContactId,
+            overall_rating: input.overallRating,
+            recommendation: input.recommendation,
+            feedback_text: input.feedbackText,
+            criteria_scores: input.criteriaScores,
+            interview_id: input.interviewId,
+            interview_round: input.interviewRound,
+            is_visible_to_client: input.isVisibleToClient,
+            created_at: now,
+            updated_at: now,
+          })
+          .select('id, feedback_type, recommendation, overall_rating')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Log activity
+        await adminClient.from('activities').insert({
+          org_id: orgId,
+          entity_type: 'submission',
+          entity_id: input.submissionId,
+          activity_type: 'feedback_added',
+          subject: `${input.feedbackType} feedback added`,
+          description: input.recommendation ? `Recommendation: ${input.recommendation.replace('_', ' ')}` : 'Feedback recorded',
+          outcome: input.recommendation?.includes('hire') && !input.recommendation.includes('no_hire') ? 'positive' : input.recommendation?.includes('no_hire') ? 'negative' : 'neutral',
+          created_by: user.id,
+          created_at: now,
+          metadata: {
+            feedback_id: feedback.id,
+            feedback_type: input.feedbackType,
+            feedback_source: input.feedbackSource,
+            overall_rating: input.overallRating,
+            recommendation: input.recommendation,
+          },
+        })
+
+        return feedback
+      }),
+
+    // ============================================
+    // SUBMISSIONS-01: RTR (Right to Represent) TRACKING
+    // ============================================
+
+    // Get RTR history for a submission
+    getRtr: orgProtectedProcedure
+      .input(z.object({ submissionId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { data, error } = await adminClient
+          .from('submission_rtr')
+          .select(`
+            *,
+            contact:contacts!contact_id(id, full_name, primary_email),
+            document:documents!document_id(id, file_name, file_url),
+            createdBy:user_profiles!created_by(id, full_name)
+          `)
+          .eq('org_id', orgId)
+          .eq('submission_id', input.submissionId)
+          .order('created_at', { ascending: false })
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data ?? []
+      }),
+
+    // Obtain RTR for a submission
+    obtainRtr: orgProtectedProcedure
+      .input(z.object({
+        submissionId: z.string().uuid(),
+        contactId: z.string().uuid(),
+        rtrType: z.enum(['standard', 'exclusive', 'non_exclusive', 'verbal', 'written']).default('standard'),
+        validityHours: z.number().int().min(1).max(720).default(72),
+        documentId: z.string().uuid().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const now = new Date()
+        const expiresAt = new Date(now.getTime() + input.validityHours * 60 * 60 * 1000)
+
+        // Create RTR record
+        const { data: rtr, error: rtrError } = await adminClient
+          .from('submission_rtr')
+          .insert({
+            org_id: orgId,
+            submission_id: input.submissionId,
+            contact_id: input.contactId,
+            rtr_type: input.rtrType,
+            obtained_at: now.toISOString(),
+            expires_at: expiresAt.toISOString(),
+            validity_hours: input.validityHours,
+            document_id: input.documentId,
+            status: 'active',
+            created_at: now.toISOString(),
+            created_by: user.id,
+          })
+          .select('id, rtr_type, expires_at')
+          .single()
+
+        if (rtrError) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: rtrError.message })
+        }
+
+        // Update submission with RTR info
+        await adminClient
+          .from('submissions')
+          .update({
+            rtr_obtained: true,
+            rtr_obtained_at: now.toISOString(),
+            rtr_expires_at: expiresAt.toISOString(),
+            rtr_document_id: input.documentId,
+            updated_at: now.toISOString(),
+          })
+          .eq('id', input.submissionId)
+
+        // Log activity
+        await adminClient.from('activities').insert({
+          org_id: orgId,
+          entity_type: 'submission',
+          entity_id: input.submissionId,
+          activity_type: 'rtr_obtained',
+          subject: 'RTR obtained',
+          description: `${input.rtrType.replace('_', ' ')} RTR obtained, valid for ${input.validityHours} hours`,
+          outcome: 'positive',
+          created_by: user.id,
+          created_at: now.toISOString(),
+          metadata: {
+            rtr_id: rtr.id,
+            rtr_type: input.rtrType,
+            expires_at: expiresAt.toISOString(),
+            validity_hours: input.validityHours,
+          },
+        })
+
+        return {
+          rtrId: rtr.id,
+          rtrType: rtr.rtr_type,
+          expiresAt: rtr.expires_at,
+        }
+      }),
+
+    // Revoke RTR
+    revokeRtr: orgProtectedProcedure
+      .input(z.object({
+        rtrId: z.string().uuid(),
+        reason: z.string().max(500),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const now = new Date().toISOString()
+
+        // Fetch RTR first
+        const { data: rtr, error: fetchError } = await adminClient
+          .from('submission_rtr')
+          .select('id, submission_id')
+          .eq('id', input.rtrId)
+          .eq('org_id', orgId)
+          .single()
+
+        if (fetchError || !rtr) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'RTR record not found' })
+        }
+
+        // Update RTR status
+        const { error: updateError } = await adminClient
+          .from('submission_rtr')
+          .update({
+            status: 'revoked',
+            revoked_at: now,
+            revoked_reason: input.reason,
+          })
+          .eq('id', input.rtrId)
+
+        if (updateError) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: updateError.message })
+        }
+
+        // Update submission
+        await adminClient
+          .from('submissions')
+          .update({
+            rtr_obtained: false,
+            updated_at: now,
+          })
+          .eq('id', rtr.submission_id)
+
+        // Log activity
+        await adminClient.from('activities').insert({
+          org_id: orgId,
+          entity_type: 'submission',
+          entity_id: rtr.submission_id,
+          activity_type: 'rtr_revoked',
+          subject: 'RTR revoked',
+          description: input.reason,
+          outcome: 'negative',
+          created_by: user.id,
+          created_at: now,
+        })
+
+        return { success: true }
+      }),
+
+    // Get by contact ID (replacing getByCandidate)
+    getByContact: orgProtectedProcedure
+      .input(z.object({
+        contactId: z.string().uuid(),
+        status: z.string().optional(),
+        limit: z.number().min(1).max(100).default(50),
+        offset: z.number().min(0).default(0),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        let query = adminClient
+          .from('submissions')
+          .select(`
+            id, status, submitted_at, submission_score, rtr_obtained,
+            job:jobs(id, title, status, company:companies!company_id(id, name)),
+            submittedBy:user_profiles!submitted_by(id, full_name)
+          `, { count: 'exact' })
+          .eq('org_id', orgId)
+          .or(`contact_id.eq.${input.contactId},candidate_id.eq.${input.contactId}`)
+          .is('deleted_at', null)
+          .order('submitted_at', { ascending: false })
+
+        if (input.status) {
+          query = query.eq('status', input.status)
+        }
+
+        query = query.range(input.offset, input.offset + input.limit - 1)
+
+        const { data, error, count } = await query
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return {
+          items: data ?? [],
+          total: count ?? 0,
+        }
+      }),
   }),
 
   // ============================================
@@ -3162,6 +3611,431 @@ export const atsRouter = router({
           prepCompletedAt: updated.prep_completed_at,
           materialsSent: input.sendMaterials,
         }
+      }),
+
+    // ============================================
+    // INTERVIEWS-01: PARTICIPANT MANAGEMENT
+    // ============================================
+
+    // Get participants for an interview
+    getParticipants: orgProtectedProcedure
+      .input(z.object({ interviewId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { data, error } = await adminClient
+          .from('interview_participants')
+          .select(`
+            *,
+            user:user_profiles!user_id(id, full_name, email, avatar_url),
+            contact:contacts!contact_id(id, full_name, primary_email, phone)
+          `)
+          .eq('org_id', orgId)
+          .eq('interview_id', input.interviewId)
+          .order('created_at', { ascending: true })
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data ?? []
+      }),
+
+    // Add participant to an interview
+    addParticipant: orgProtectedProcedure
+      .input(z.object({
+        interviewId: z.string().uuid(),
+        userId: z.string().uuid().optional(),
+        contactId: z.string().uuid().optional(),
+        role: z.enum(['lead_interviewer', 'interviewer', 'shadow', 'observer', 'note_taker', 'hiring_manager']).default('interviewer'),
+        isRequired: z.boolean().default(true),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        if (!input.userId && !input.contactId) {
+          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Either userId or contactId is required' })
+        }
+
+        const now = new Date().toISOString()
+
+        const { data: participant, error } = await adminClient
+          .from('interview_participants')
+          .insert({
+            org_id: orgId,
+            interview_id: input.interviewId,
+            user_id: input.userId,
+            contact_id: input.contactId,
+            role: input.role,
+            is_required: input.isRequired,
+            created_at: now,
+            updated_at: now,
+          })
+          .select('id, role, is_required')
+          .single()
+
+        if (error) {
+          if (error.code === '23505') { // unique constraint violation
+            throw new TRPCError({ code: 'CONFLICT', message: 'Participant already added to this interview' })
+          }
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Update interview to mark as panel if multiple participants
+        const { count } = await adminClient
+          .from('interview_participants')
+          .select('id', { count: 'exact' })
+          .eq('interview_id', input.interviewId)
+
+        if (count && count > 1) {
+          await adminClient
+            .from('interviews')
+            .update({ is_panel: true, updated_at: now })
+            .eq('id', input.interviewId)
+        }
+
+        return participant
+      }),
+
+    // Remove participant from an interview
+    removeParticipant: orgProtectedProcedure
+      .input(z.object({ participantId: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const { error } = await adminClient
+          .from('interview_participants')
+          .delete()
+          .eq('id', input.participantId)
+          .eq('org_id', orgId)
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return { success: true }
+      }),
+
+    // Confirm participant attendance
+    confirmParticipant: orgProtectedProcedure
+      .input(z.object({ participantId: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const now = new Date().toISOString()
+
+        const { data, error } = await adminClient
+          .from('interview_participants')
+          .update({
+            is_confirmed: true,
+            confirmed_at: now,
+            updated_at: now,
+          })
+          .eq('id', input.participantId)
+          .eq('org_id', orgId)
+          .select('id, is_confirmed')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
+      }),
+
+    // ============================================
+    // INTERVIEWS-01: SCORECARD MANAGEMENT
+    // ============================================
+
+    // Get scorecards for an interview
+    getScorecards: orgProtectedProcedure
+      .input(z.object({ interviewId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { data, error } = await adminClient
+          .from('interview_scorecards')
+          .select(`
+            *,
+            submittedBy:user_profiles!submitted_by(id, full_name, avatar_url),
+            participant:interview_participants!participant_id(id, role, user_id, contact_id)
+          `)
+          .eq('org_id', orgId)
+          .eq('interview_id', input.interviewId)
+          .is('deleted_at', null)
+          .order('created_at', { ascending: false })
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data ?? []
+      }),
+
+    // Submit a scorecard
+    submitScorecard: orgProtectedProcedure
+      .input(z.object({
+        interviewId: z.string().uuid(),
+        participantId: z.string().uuid().optional(),
+        overallRating: z.number().int().min(1).max(5),
+        recommendation: z.enum(['strong_hire', 'hire', 'neutral', 'no_hire', 'strong_no_hire']),
+        criteriaScores: z.record(z.number().min(1).max(5)).default({}),
+        strengths: z.array(z.string().max(500)).max(10).optional(),
+        concerns: z.array(z.string().max(500)).max(10).optional(),
+        additionalNotes: z.string().max(5000).optional(),
+        questionsAsked: z.array(z.object({
+          question: z.string(),
+          answerQuality: z.number().int().min(1).max(5).optional(),
+          notes: z.string().optional(),
+        })).optional(),
+        wouldWorkWith: z.boolean().optional(),
+        wouldRecommendForDifferentRole: z.boolean().default(false),
+        alternativeRoleNotes: z.string().max(500).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const now = new Date().toISOString()
+
+        const { data: scorecard, error } = await adminClient
+          .from('interview_scorecards')
+          .insert({
+            org_id: orgId,
+            interview_id: input.interviewId,
+            participant_id: input.participantId,
+            submitted_by: user.id,
+            overall_rating: input.overallRating,
+            recommendation: input.recommendation,
+            criteria_scores: input.criteriaScores,
+            strengths: input.strengths,
+            concerns: input.concerns,
+            additional_notes: input.additionalNotes,
+            questions_asked: input.questionsAsked,
+            would_work_with: input.wouldWorkWith,
+            would_recommend_for_different_role: input.wouldRecommendForDifferentRole,
+            alternative_role_notes: input.alternativeRoleNotes,
+            is_submitted: true,
+            submitted_at: now,
+            created_at: now,
+            updated_at: now,
+          })
+          .select('id, recommendation, overall_rating')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Update participant feedback status if participant_id provided
+        if (input.participantId) {
+          await adminClient
+            .from('interview_participants')
+            .update({
+              feedback_submitted: true,
+              feedback_submitted_at: now,
+              overall_rating: input.overallRating,
+              recommendation: input.recommendation,
+              updated_at: now,
+            })
+            .eq('id', input.participantId)
+        }
+
+        // Log activity
+        await adminClient.from('activities').insert({
+          org_id: orgId,
+          entity_type: 'interview',
+          entity_id: input.interviewId,
+          activity_type: 'scorecard_submitted',
+          subject: 'Scorecard submitted',
+          description: `Recommendation: ${input.recommendation.replace('_', ' ')}, Rating: ${input.overallRating}/5`,
+          outcome: input.recommendation.includes('hire') && !input.recommendation.includes('no_hire') ? 'positive' : input.recommendation.includes('no_hire') ? 'negative' : 'neutral',
+          created_by: user.id,
+          created_at: now,
+          metadata: {
+            scorecard_id: scorecard.id,
+            recommendation: input.recommendation,
+            overall_rating: input.overallRating,
+          },
+        })
+
+        return scorecard
+      }),
+
+    // Record hiring decision
+    recordHiringDecision: orgProtectedProcedure
+      .input(z.object({
+        interviewId: z.string().uuid(),
+        decision: z.enum(['strong_hire', 'hire', 'neutral', 'no_hire', 'strong_no_hire']),
+        notes: z.string().max(2000).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const now = new Date().toISOString()
+
+        const { data, error } = await adminClient
+          .from('interviews')
+          .update({
+            hiring_decision: input.decision,
+            decision_notes: input.notes,
+            scorecard_completed: true,
+            scorecard_completed_at: now,
+            updated_at: now,
+          })
+          .eq('id', input.interviewId)
+          .eq('org_id', orgId)
+          .select('id, hiring_decision')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Log activity
+        await adminClient.from('activities').insert({
+          org_id: orgId,
+          entity_type: 'interview',
+          entity_id: input.interviewId,
+          activity_type: 'hiring_decision',
+          subject: `Hiring decision: ${input.decision.replace('_', ' ')}`,
+          description: input.notes || `Decision recorded: ${input.decision.replace('_', ' ')}`,
+          outcome: input.decision.includes('hire') && !input.decision.includes('no_hire') ? 'positive' : input.decision.includes('no_hire') ? 'negative' : 'neutral',
+          created_by: user.id,
+          created_at: now,
+        })
+
+        return data
+      }),
+
+    // ============================================
+    // INTERVIEWS-01: SCORECARD TEMPLATES
+    // ============================================
+
+    // List scorecard templates
+    listScorecardTemplates: orgProtectedProcedure
+      .input(z.object({
+        interviewType: z.string().optional(),
+        isActive: z.boolean().default(true),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        let query = adminClient
+          .from('scorecard_templates')
+          .select('*')
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .eq('is_active', input.isActive)
+          .order('created_at', { ascending: false })
+
+        if (input.interviewType) {
+          query = query.eq('interview_type', input.interviewType)
+        }
+
+        const { data, error } = await query
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data ?? []
+      }),
+
+    // Create scorecard template
+    createScorecardTemplate: orgProtectedProcedure
+      .input(z.object({
+        name: z.string().min(1).max(255),
+        description: z.string().max(1000).optional(),
+        interviewType: z.string().max(50).optional(),
+        jobCategory: z.string().max(100).optional(),
+        criteria: z.array(z.object({
+          key: z.string(),
+          name: z.string(),
+          description: z.string().optional(),
+          weight: z.number().int().min(1).max(5).default(1),
+        })).min(1),
+        ratingScale: z.enum(['3', '4', '5', '10']).default('5'),
+        ratingLabels: z.record(z.string()).optional(),
+        requiredQuestions: z.array(z.object({
+          question: z.string(),
+          category: z.string().optional(),
+        })).optional(),
+        isDefault: z.boolean().default(false),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const now = new Date().toISOString()
+
+        // If setting as default, unset other defaults for same interview type
+        if (input.isDefault && input.interviewType) {
+          await adminClient
+            .from('scorecard_templates')
+            .update({ is_default: false, updated_at: now })
+            .eq('org_id', orgId)
+            .eq('interview_type', input.interviewType)
+            .eq('is_default', true)
+        }
+
+        const { data: template, error } = await adminClient
+          .from('scorecard_templates')
+          .insert({
+            org_id: orgId,
+            name: input.name,
+            description: input.description,
+            interview_type: input.interviewType,
+            job_category: input.jobCategory,
+            criteria: input.criteria,
+            rating_scale: parseInt(input.ratingScale),
+            rating_labels: input.ratingLabels,
+            required_questions: input.requiredQuestions,
+            is_default: input.isDefault,
+            is_active: true,
+            created_by: user.id,
+            created_at: now,
+            updated_at: now,
+          })
+          .select('id, name')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return template
       }),
   }),
 
@@ -4668,6 +5542,729 @@ export const atsRouter = router({
           success: true,
           lastDay: input.lastDay,
           offerReplacement: input.offerReplacement,
+        }
+      }),
+
+    // ============================================
+    // PLACEMENTS-01: CHANGE ORDER MANAGEMENT
+    // ============================================
+
+    // Get change orders for a placement
+    getChangeOrders: orgProtectedProcedure
+      .input(z.object({ placementId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { data, error } = await adminClient
+          .from('placement_change_orders')
+          .select(`
+            *,
+            requestedBy:user_profiles!requested_by(id, full_name),
+            approvedBy:user_profiles!approved_by(id, full_name),
+            document:documents!document_id(id, file_name, file_url)
+          `)
+          .eq('org_id', orgId)
+          .eq('placement_id', input.placementId)
+          .order('created_at', { ascending: false })
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data ?? []
+      }),
+
+    // Create change order
+    createChangeOrder: orgProtectedProcedure
+      .input(z.object({
+        placementId: z.string().uuid(),
+        changeType: z.enum(['extension', 'rate_change', 'hours_change', 'role_change', 'location_change', 'other']),
+        newEndDate: z.string().optional(),
+        newBillRate: z.number().positive().optional(),
+        newPayRate: z.number().positive().optional(),
+        newHoursPerWeek: z.number().positive().max(60).optional(),
+        effectiveDate: z.string(),
+        reason: z.string().max(1000),
+        notes: z.string().max(2000).optional(),
+        documentId: z.string().uuid().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        // Fetch current placement values
+        const { data: placement, error: fetchError } = await adminClient
+          .from('placements')
+          .select('id, end_date, bill_rate, pay_rate, expected_hours_per_week')
+          .eq('id', input.placementId)
+          .eq('org_id', orgId)
+          .single()
+
+        if (fetchError || !placement) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Placement not found' })
+        }
+
+        const now = new Date().toISOString()
+
+        const { data: changeOrder, error } = await adminClient
+          .from('placement_change_orders')
+          .insert({
+            org_id: orgId,
+            placement_id: input.placementId,
+            change_type: input.changeType,
+            original_end_date: placement.end_date,
+            original_bill_rate: placement.bill_rate,
+            original_pay_rate: placement.pay_rate,
+            original_hours_per_week: placement.expected_hours_per_week,
+            new_end_date: input.newEndDate,
+            new_bill_rate: input.newBillRate,
+            new_pay_rate: input.newPayRate,
+            new_hours_per_week: input.newHoursPerWeek,
+            effective_date: input.effectiveDate,
+            reason: input.reason,
+            notes: input.notes,
+            document_id: input.documentId,
+            status: 'pending',
+            requested_by: user.id,
+            requested_at: now,
+            created_at: now,
+            updated_at: now,
+          })
+          .select('id, change_type, status')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Update placement to track change orders
+        await adminClient
+          .from('placements')
+          .update({
+            has_change_orders: true,
+            change_order_count: (placement as { change_order_count?: number }).change_order_count
+              ? ((placement as { change_order_count: number }).change_order_count + 1)
+              : 1,
+            active_change_order_id: changeOrder.id,
+            updated_at: now,
+          })
+          .eq('id', input.placementId)
+
+        // Log activity
+        await adminClient.from('activities').insert({
+          org_id: orgId,
+          entity_type: 'placement',
+          entity_id: input.placementId,
+          activity_type: 'change_order_created',
+          subject: `Change order: ${input.changeType.replace('_', ' ')}`,
+          description: input.reason,
+          outcome: 'neutral',
+          created_by: user.id,
+          created_at: now,
+          metadata: {
+            change_order_id: changeOrder.id,
+            change_type: input.changeType,
+            effective_date: input.effectiveDate,
+          },
+        })
+
+        return changeOrder
+      }),
+
+    // Approve change order
+    approveChangeOrder: orgProtectedProcedure
+      .input(z.object({
+        changeOrderId: z.string().uuid(),
+        applyImmediately: z.boolean().default(false),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const now = new Date().toISOString()
+
+        // Fetch change order
+        const { data: changeOrder, error: fetchError } = await adminClient
+          .from('placement_change_orders')
+          .select('*')
+          .eq('id', input.changeOrderId)
+          .eq('org_id', orgId)
+          .single()
+
+        if (fetchError || !changeOrder) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Change order not found' })
+        }
+
+        if (changeOrder.status !== 'pending') {
+          throw new TRPCError({ code: 'BAD_REQUEST', message: `Cannot approve change order in ${changeOrder.status} status` })
+        }
+
+        // Update change order
+        const updateData: Record<string, unknown> = {
+          status: input.applyImmediately ? 'applied' : 'approved',
+          approved_by: user.id,
+          approved_at: now,
+          updated_at: now,
+        }
+
+        if (input.applyImmediately) {
+          updateData.applied_at = now
+        }
+
+        await adminClient
+          .from('placement_change_orders')
+          .update(updateData)
+          .eq('id', input.changeOrderId)
+
+        // Apply changes to placement if requested
+        if (input.applyImmediately) {
+          const placementUpdate: Record<string, unknown> = {
+            updated_at: now,
+            active_change_order_id: null,
+          }
+
+          if (changeOrder.new_end_date) {
+            placementUpdate.end_date = changeOrder.new_end_date
+          }
+          if (changeOrder.new_bill_rate) {
+            placementUpdate.bill_rate = changeOrder.new_bill_rate
+          }
+          if (changeOrder.new_pay_rate) {
+            placementUpdate.pay_rate = changeOrder.new_pay_rate
+          }
+          if (changeOrder.new_hours_per_week) {
+            placementUpdate.expected_hours_per_week = changeOrder.new_hours_per_week
+          }
+
+          await adminClient
+            .from('placements')
+            .update(placementUpdate)
+            .eq('id', changeOrder.placement_id)
+        }
+
+        return { success: true, applied: input.applyImmediately }
+      }),
+
+    // ============================================
+    // PLACEMENTS-01: ENHANCED CHECKIN MANAGEMENT
+    // ============================================
+
+    // Get checkins for a placement
+    getCheckins: orgProtectedProcedure
+      .input(z.object({
+        placementId: z.string().uuid(),
+        completed: z.boolean().optional(),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        let query = adminClient
+          .from('placement_checkins')
+          .select(`
+            *,
+            completedBy:user_profiles!completed_by(id, full_name)
+          `)
+          .eq('org_id', orgId)
+          .eq('placement_id', input.placementId)
+          .order('scheduled_date', { ascending: true })
+
+        if (input.completed !== undefined) {
+          if (input.completed) {
+            query = query.not('completed_at', 'is', null)
+          } else {
+            query = query.is('completed_at', null)
+          }
+        }
+
+        const { data, error } = await query
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data ?? []
+      }),
+
+    // Schedule checkin
+    scheduleCheckin: orgProtectedProcedure
+      .input(z.object({
+        placementId: z.string().uuid(),
+        checkinType: z.enum(['7_day', '30_day', '60_day', '90_day', 'quarterly', 'issue_followup', 'exit']),
+        scheduledDate: z.string(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const now = new Date().toISOString()
+
+        const { data: checkin, error } = await adminClient
+          .from('placement_checkins')
+          .insert({
+            org_id: orgId,
+            placement_id: input.placementId,
+            checkin_type: input.checkinType,
+            scheduled_date: input.scheduledDate,
+            created_at: now,
+            updated_at: now,
+          })
+          .select('id, checkin_type, scheduled_date')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Update placement next checkin date
+        await adminClient
+          .from('placements')
+          .update({
+            next_check_in_date: input.scheduledDate,
+            updated_at: now,
+          })
+          .eq('id', input.placementId)
+
+        return checkin
+      }),
+
+    // Complete checkin
+    completeCheckin: orgProtectedProcedure
+      .input(z.object({
+        checkinId: z.string().uuid(),
+        consultantSatisfaction: z.number().int().min(1).max(5).optional(),
+        consultantFeedback: z.string().max(2000).optional(),
+        consultantConcerns: z.array(z.string()).optional(),
+        clientSatisfaction: z.number().int().min(1).max(5).optional(),
+        clientFeedback: z.string().max(2000).optional(),
+        clientConcerns: z.array(z.string()).optional(),
+        actionItems: z.array(z.object({
+          description: z.string(),
+          assignee: z.string().optional(),
+          dueDate: z.string().optional(),
+        })).optional(),
+        followUpRequired: z.boolean().default(false),
+        followUpDate: z.string().optional(),
+        healthScore: z.number().int().min(0).max(100).optional(),
+        healthAssessment: z.enum(['healthy', 'minor_concerns', 'at_risk', 'critical']).optional(),
+        notes: z.string().max(5000).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const now = new Date().toISOString()
+
+        // Fetch checkin to get placement_id
+        const { data: existingCheckin, error: fetchError } = await adminClient
+          .from('placement_checkins')
+          .select('id, placement_id')
+          .eq('id', input.checkinId)
+          .eq('org_id', orgId)
+          .single()
+
+        if (fetchError || !existingCheckin) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Checkin not found' })
+        }
+
+        const { data: checkin, error } = await adminClient
+          .from('placement_checkins')
+          .update({
+            completed_at: now,
+            completed_by: user.id,
+            consultant_satisfaction: input.consultantSatisfaction,
+            consultant_feedback: input.consultantFeedback,
+            consultant_concerns: input.consultantConcerns,
+            client_satisfaction: input.clientSatisfaction,
+            client_feedback: input.clientFeedback,
+            client_concerns: input.clientConcerns,
+            action_items: input.actionItems,
+            follow_up_required: input.followUpRequired,
+            follow_up_date: input.followUpDate,
+            health_score: input.healthScore,
+            health_assessment: input.healthAssessment,
+            notes: input.notes,
+            updated_at: now,
+          })
+          .eq('id', input.checkinId)
+          .select('id, health_assessment')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Update placement health status
+        if (input.healthAssessment) {
+          const healthStatusMap: Record<string, string> = {
+            healthy: 'healthy',
+            minor_concerns: 'healthy',
+            at_risk: 'at_risk',
+            critical: 'critical',
+          }
+
+          await adminClient
+            .from('placements')
+            .update({
+              health_status: healthStatusMap[input.healthAssessment],
+              last_check_in_date: now,
+              updated_at: now,
+            })
+            .eq('id', existingCheckin.placement_id)
+        }
+
+        // Log activity
+        await adminClient.from('activities').insert({
+          org_id: orgId,
+          entity_type: 'placement',
+          entity_id: existingCheckin.placement_id,
+          activity_type: 'checkin_completed',
+          subject: 'Checkin completed',
+          description: input.healthAssessment ? `Health: ${input.healthAssessment.replace('_', ' ')}` : 'Checkin recorded',
+          outcome: input.healthAssessment === 'healthy' || input.healthAssessment === 'minor_concerns' ? 'positive' : input.healthAssessment ? 'negative' : 'neutral',
+          created_by: user.id,
+          created_at: now,
+          metadata: {
+            checkin_id: checkin.id,
+            health_assessment: input.healthAssessment,
+            consultant_satisfaction: input.consultantSatisfaction,
+            client_satisfaction: input.clientSatisfaction,
+            follow_up_required: input.followUpRequired,
+          },
+        })
+
+        return checkin
+      }),
+
+    // Get by contact ID
+    getByContact: orgProtectedProcedure
+      .input(z.object({
+        contactId: z.string().uuid(),
+        status: z.enum(['active', 'completed', 'terminated', 'all']).default('all'),
+        limit: z.number().min(1).max(100).default(20),
+        offset: z.number().min(0).default(0),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        let query = adminClient
+          .from('placements')
+          .select(`
+            id, status, start_date, end_date, pay_rate, bill_rate, health_status,
+            job:jobs!placements_job_id_fkey(id, title),
+            company:companies!client_company_id(id, name)
+          `, { count: 'exact' })
+          .eq('org_id', orgId)
+          .or(`contact_id.eq.${input.contactId},candidate_id.eq.${input.contactId}`)
+          .is('deleted_at', null)
+          .order('start_date', { ascending: false })
+
+        if (input.status !== 'all') {
+          query = query.eq('status', input.status)
+        }
+
+        query = query.range(input.offset, input.offset + input.limit - 1)
+
+        const { data, error, count } = await query
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return {
+          items: data ?? [],
+          total: count ?? 0,
+        }
+      }),
+
+    // ============================================
+    // PLACEMENTS-01: VENDOR CHAIN MANAGEMENT
+    // ============================================
+
+    // Get vendor chain for a placement
+    getVendors: orgProtectedProcedure
+      .input(z.object({ placementId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { data, error } = await adminClient
+          .from('placement_vendors')
+          .select(`
+            *,
+            vendorCompany:companies!vendor_company_id(id, name, category),
+            vendorContact:contacts!vendor_contact_id(id, first_name, last_name, email, phone),
+            vendorContract:contracts!vendor_contract_id(id, name, status)
+          `)
+          .eq('org_id', orgId)
+          .eq('placement_id', input.placementId)
+          .eq('is_active', true)
+          .order('position_in_chain', { ascending: true })
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Calculate margins for the chain
+        const vendorChain = (data ?? []).map((vendor, index, arr) => {
+          const nextVendor = arr[index + 1]
+          const margin = vendor.bill_rate && vendor.pay_rate
+            ? Number(vendor.bill_rate) - Number(vendor.pay_rate)
+            : null
+          const marginPercent = vendor.bill_rate && vendor.pay_rate && Number(vendor.bill_rate) > 0
+            ? ((Number(vendor.bill_rate) - Number(vendor.pay_rate)) / Number(vendor.bill_rate)) * 100
+            : null
+
+          return {
+            ...vendor,
+            calculatedMargin: margin,
+            calculatedMarginPercent: marginPercent ? Math.round(marginPercent * 100) / 100 : null,
+            paysTo: nextVendor?.vendorCompany?.name || 'Consultant',
+          }
+        })
+
+        return vendorChain
+      }),
+
+    // Add vendor to chain
+    addVendor: orgProtectedProcedure
+      .input(z.object({
+        placementId: z.string().uuid(),
+        vendorCompanyId: z.string().uuid(),
+        vendorType: z.enum(['primary', 'sub_vendor', 'end_client', 'implementation_partner']),
+        positionInChain: z.number().int().min(1).max(10),
+        billRate: z.number().positive().optional(),
+        payRate: z.number().positive().optional(),
+        markupPercentage: z.number().min(0).max(100).optional(),
+        vendorContactId: z.string().uuid().optional(),
+        vendorContractId: z.string().uuid().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const now = new Date().toISOString()
+
+        // Calculate margin if both rates provided
+        const marginAmount = input.billRate && input.payRate
+          ? input.billRate - input.payRate
+          : null
+
+        const { data: vendor, error } = await adminClient
+          .from('placement_vendors')
+          .insert({
+            org_id: orgId,
+            placement_id: input.placementId,
+            vendor_company_id: input.vendorCompanyId,
+            vendor_type: input.vendorType,
+            position_in_chain: input.positionInChain,
+            bill_rate: input.billRate,
+            pay_rate: input.payRate,
+            markup_percentage: input.markupPercentage,
+            margin_amount: marginAmount,
+            vendor_contact_id: input.vendorContactId,
+            vendor_contract_id: input.vendorContractId,
+            is_active: true,
+            created_at: now,
+            updated_at: now,
+          })
+          .select('id, vendor_type, position_in_chain')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Log activity
+        await adminClient.from('activities').insert({
+          org_id: orgId,
+          entity_type: 'placement',
+          entity_id: input.placementId,
+          activity_type: 'vendor_added',
+          subject: `Vendor added to chain`,
+          description: `Added ${input.vendorType} vendor at position ${input.positionInChain}`,
+          outcome: 'neutral',
+          created_by: user.id,
+          created_at: now,
+          metadata: {
+            vendor_id: vendor.id,
+            vendor_company_id: input.vendorCompanyId,
+            vendor_type: input.vendorType,
+            position_in_chain: input.positionInChain,
+            bill_rate: input.billRate,
+            pay_rate: input.payRate,
+          },
+        })
+
+        return vendor
+      }),
+
+    // Update vendor in chain
+    updateVendor: orgProtectedProcedure
+      .input(z.object({
+        vendorId: z.string().uuid(),
+        billRate: z.number().positive().optional(),
+        payRate: z.number().positive().optional(),
+        markupPercentage: z.number().min(0).max(100).optional(),
+        vendorContactId: z.string().uuid().optional().nullable(),
+        vendorContractId: z.string().uuid().optional().nullable(),
+        isActive: z.boolean().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const now = new Date().toISOString()
+
+        // Build update data
+        const updateData: Record<string, unknown> = {
+          updated_at: now,
+        }
+
+        if (input.billRate !== undefined) updateData.bill_rate = input.billRate
+        if (input.payRate !== undefined) updateData.pay_rate = input.payRate
+        if (input.markupPercentage !== undefined) updateData.markup_percentage = input.markupPercentage
+        if (input.vendorContactId !== undefined) updateData.vendor_contact_id = input.vendorContactId
+        if (input.vendorContractId !== undefined) updateData.vendor_contract_id = input.vendorContractId
+        if (input.isActive !== undefined) updateData.is_active = input.isActive
+
+        // Calculate margin if rates updated
+        if (input.billRate !== undefined && input.payRate !== undefined) {
+          updateData.margin_amount = input.billRate - input.payRate
+        }
+
+        const { data: vendor, error } = await adminClient
+          .from('placement_vendors')
+          .update(updateData)
+          .eq('id', input.vendorId)
+          .eq('org_id', orgId)
+          .select('id, placement_id')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return { success: true, vendorId: vendor.id }
+      }),
+
+    // Remove vendor from chain (soft delete)
+    removeVendor: orgProtectedProcedure
+      .input(z.object({ vendorId: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const now = new Date().toISOString()
+
+        const { data: vendor, error } = await adminClient
+          .from('placement_vendors')
+          .update({
+            is_active: false,
+            updated_at: now,
+          })
+          .eq('id', input.vendorId)
+          .eq('org_id', orgId)
+          .select('id, placement_id')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Log activity
+        await adminClient.from('activities').insert({
+          org_id: orgId,
+          entity_type: 'placement',
+          entity_id: vendor.placement_id,
+          activity_type: 'vendor_removed',
+          subject: 'Vendor removed from chain',
+          description: 'Vendor deactivated from vendor chain',
+          outcome: 'neutral',
+          created_by: user.id,
+          created_at: now,
+          metadata: { vendor_id: input.vendorId },
+        })
+
+        return { success: true }
+      }),
+
+    // Calculate total margin for vendor chain
+    getVendorChainMargin: orgProtectedProcedure
+      .input(z.object({ placementId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { data: vendors, error } = await adminClient
+          .from('placement_vendors')
+          .select('bill_rate, pay_rate, margin_amount, position_in_chain')
+          .eq('org_id', orgId)
+          .eq('placement_id', input.placementId)
+          .eq('is_active', true)
+          .order('position_in_chain', { ascending: true })
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        if (!vendors || vendors.length === 0) {
+          return {
+            totalMargin: 0,
+            totalMarginPercent: 0,
+            topBillRate: 0,
+            bottomPayRate: 0,
+            vendorCount: 0,
+          }
+        }
+
+        // Top of chain bills client, bottom pays consultant
+        const topVendor = vendors[0]
+        const bottomVendor = vendors[vendors.length - 1]
+
+        const topBillRate = Number(topVendor.bill_rate) || 0
+        const bottomPayRate = Number(bottomVendor.pay_rate) || 0
+        const totalMargin = topBillRate - bottomPayRate
+        const totalMarginPercent = topBillRate > 0
+          ? (totalMargin / topBillRate) * 100
+          : 0
+
+        return {
+          totalMargin: Math.round(totalMargin * 100) / 100,
+          totalMarginPercent: Math.round(totalMarginPercent * 100) / 100,
+          topBillRate,
+          bottomPayRate,
+          vendorCount: vendors.length,
         }
       }),
   }),
