@@ -231,8 +231,7 @@ export function ConfirmPlacementWizard({
   const onSubmit = (data: ConfirmPlacementFormData) => {
     createPlacementMutation.mutate({
       offerId: offer.id,
-      billRate: data.billRate,
-      payRate: data.payRate,
+      // Note: billRate and payRate come from the offer, not from user input
       confirmedStartDate: data.confirmedStartDate,
       confirmedEndDate: data.confirmedEndDate || undefined,
       workSchedule: data.workSchedule || undefined,

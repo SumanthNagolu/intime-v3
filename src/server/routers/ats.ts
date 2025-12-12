@@ -3759,6 +3759,42 @@ export const atsRouter = router({
         return data
       }),
 
+    // Decline participant attendance
+    declineParticipant: orgProtectedProcedure
+      .input(z.object({
+        participantId: z.string().uuid(),
+        reason: z.string().max(500).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const now = new Date().toISOString()
+
+        const { data, error } = await adminClient
+          .from('interview_participants')
+          .update({
+            is_confirmed: false,
+            declined_at: now,
+            decline_reason: input.reason,
+            updated_at: now,
+          })
+          .eq('id', input.participantId)
+          .eq('org_id', orgId)
+          .select('id, is_confirmed, declined_at')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
+      }),
+
     // ============================================
     // INTERVIEWS-01: SCORECARD MANAGEMENT
     // ============================================
@@ -4036,6 +4072,73 @@ export const atsRouter = router({
         }
 
         return template
+      }),
+
+    // Get applicable scorecard template for an interview
+    getApplicableScorecard: orgProtectedProcedure
+      .input(z.object({ interviewId: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Get interview details with job
+        const { data: interview, error: interviewError } = await adminClient
+          .from('interviews')
+          .select(`
+            id,
+            interview_type,
+            submission:submissions!inner(
+              id,
+              job:jobs!inner(id, job_category)
+            )
+          `)
+          .eq('id', input.interviewId)
+          .eq('org_id', orgId)
+          .single()
+
+        if (interviewError || !interview) {
+          return null
+        }
+
+        // Get all active templates
+        const { data: templates, error: templateError } = await adminClient
+          .from('scorecard_templates')
+          .select('*')
+          .eq('org_id', orgId)
+          .eq('is_active', true)
+          .is('deleted_at', null)
+          .order('is_default', { ascending: false })
+          .order('created_at', { ascending: false })
+
+        if (templateError || !templates || templates.length === 0) {
+          return null
+        }
+
+        // Priority matching: interview_type > job_category > is_default > any
+        const byType = templates.find((t) =>
+          t.interview_type === interview.interview_type
+        )
+        if (byType) return byType
+
+        // Supabase returns nested relations as arrays
+        const submission = Array.isArray(interview.submission)
+          ? interview.submission[0]
+          : interview.submission
+        const job = submission?.job
+          ? (Array.isArray(submission.job) ? submission.job[0] : submission.job)
+          : null
+        const jobCategory = job?.job_category
+        if (jobCategory) {
+          const byCategory = templates.find((t) =>
+            t.job_category === jobCategory
+          )
+          if (byCategory) return byCategory
+        }
+
+        const defaultTemplate = templates.find((t) => t.is_default)
+        if (defaultTemplate) return defaultTemplate
+
+        return templates[0]
       }),
   }),
 
@@ -6332,17 +6435,19 @@ export const atsRouter = router({
           end_date: string | null
           bill_rate: number | null
           pay_rate: number | null
-          candidate: { first_name: string | null; last_name: string | null } | null
-          account: { name: string | null } | null
+          candidate: { first_name: string | null; last_name: string | null }[] | null
+          company: { name: string | null }[] | null
         }
 
         const commissionsByPlacement = (placements as PlacementItem[] || []).map((p) => {
           const grossBilling = (p.bill_rate || 0) * HOURS_PER_MONTH
           const commission = grossBilling * COMMISSION_RATE
+          const candidateData = Array.isArray(p.candidate) ? p.candidate[0] : p.candidate
+          const companyData = Array.isArray(p.company) ? p.company[0] : p.company
           return {
             placementId: p.id,
-            candidateName: `${p.candidate?.first_name || ''} ${p.candidate?.last_name || ''}`.trim() || 'Unknown',
-            accountName: p.account?.name || 'Unknown',
+            candidateName: `${candidateData?.first_name || ''} ${candidateData?.last_name || ''}`.trim() || 'Unknown',
+            accountName: companyData?.name || 'Unknown',
             billRate: p.bill_rate || 0,
             grossBilling,
             commission,
