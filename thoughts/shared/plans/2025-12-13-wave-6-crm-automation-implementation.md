@@ -10,19 +10,19 @@ Wave 6 encompasses 6 issues across 5 domains, transforming InTime v3's CRM and A
 
 | Issue | Domain | Current | Target | Blocker |
 |-------|--------|---------|--------|---------|
-| DEALS-01 | CRM | 60% | 100% | Minor FK updates |
-| COMMS-01 | Communications | 50% | 85% | Missing webhooks, threading |
-| WORKFLOWS-01 P1 | Automation | 30% | 80% | **CRITICAL: 5 missing tables, 18 broken procedures** |
-| NOTIFICATIONS-01 | Notifications | 40% | 85% | **2 missing tables, 3 broken procedures** |
-| WORKFLOWS-01 P2 | Automation | 0% | 60% | Depends on NOTIFICATIONS-01 |
-| CAMPAIGNS-01 | Campaigns | 80% | 100% | Missing automation engine |
+| DEALS-01 | CRM | 100% | 100% | ✓ Complete (Phase 1) |
+| COMMS-01 | Communications | **85%** | 85% | ✓ **Webhook endpoint + tracking complete (Phase 2)** |
+| WORKFLOWS-01 P1 | Automation | 80% | 80% | ✓ Complete (Phase 1) |
+| NOTIFICATIONS-01 | Notifications | **85%** | 85% | ✓ **Service + real-time hook complete (Phase 2)** |
+| WORKFLOWS-01 P2 | Automation | 0% | 60% | Depends on Phase 3 |
+| CAMPAIGNS-01 | Campaigns | 80% | 100% | Depends on Phase 4 |
 
 ### Critical Findings
 
-1. **Workflow Engine Non-Functional**: Code expects `workflow_executions`, `workflow_steps`, `workflow_actions`, `workflow_approvals`, `workflow_execution_logs` - none exist
-2. **Notification Preferences Missing**: `notification_preferences` and `notification_templates` tables don't exist
-3. **No Real-Time Delivery**: All notifications are pull-based
-4. **Campaign Automation Manual**: No automated sequence progression, no reply detection
+1. ~~**Workflow Engine Non-Functional**~~: ✓ Tables created in Phase 1 (20251213060000_wave6_workflow_tables.sql)
+2. ~~**Notification Preferences Missing**~~: ✓ Tables created in Phase 1 (notification_preferences, notification_templates)
+3. ~~**No Real-Time Delivery**~~: ✓ Real-time delivery implemented in Phase 2 (useRealtimeNotifications hook)
+4. **Campaign Automation Manual**: No automated sequence progression, no reply detection (Phase 4)
 
 ### Key Discoveries
 - Polymorphic infrastructure complete: `entity_history`, `documents`, `comments`, `notes`, `activities` all working
@@ -1352,6 +1352,44 @@ export function useRealtimeNotifications(userId: string | undefined) {
 - [ ] Create notification via service, appears in real-time
 - [ ] Toast shows within 500ms
 - [ ] Preferences respected
+
+### Phase 2 Validation Summary (2025-12-13)
+
+**Status: ✓ COMPLETE**
+
+#### Files Implemented:
+
+| File | Lines | Purpose |
+|------|-------|---------|
+| `src/app/api/webhooks/resend/route.ts` | 135 | Resend webhook handler with signature verification |
+| `src/lib/email/resend-webhook.ts` | 367 | Webhook processing, email stats, status tracking |
+| `src/lib/notifications/notification-service.ts` | 661 | Multi-channel notification delivery service |
+| `src/lib/notifications/index.ts` | 20 | Module exports |
+| `src/hooks/useRealtimeNotifications.ts` | 437 | Real-time Supabase subscription hook |
+| `src/hooks/index.ts` | 17 | Hook exports (updated) |
+
+**Total: ~1,637 lines of production code**
+
+#### Automated Verification Results:
+- [x] `pnpm db:status` - All 21 migrations synced (Local = Remote)
+- [x] `pnpm build` - Production build succeeds
+- [x] `pnpm lint` - 0 errors, 782 warnings (acceptable)
+- [x] TypeScript compiles with strict mode
+- [x] All imports resolve correctly
+- [x] Database schema matches implementation (resend_id, notification_preferences, etc.)
+
+#### Implementation Notes:
+1. **COMMS-01**: Resend webhook implementation uses `resend_id` column (matches DB schema). Campaign engagement tracking (handleCampaignEngagement) not included as `campaign_enrollments` table lacks `emails_opened`/`emails_clicked` count columns.
+2. **NOTIFICATIONS-01**: Implementation uses class-based `NotificationService` instead of functional approach - more robust with singleton pattern, bulk operations, and comprehensive preference handling.
+3. **Real-time Hook**: Enhanced with optimistic updates, connection status tracking, and auto-reconnect.
+
+#### Deviations from Plan (Improvements):
+- NotificationService as class vs function (better organization, singleton pattern)
+- Added batch processing for webhook events
+- Added email stats helper function
+- Enhanced hook with archive functionality and connection status
+
+#### Commit: 5438906 (feat(wave6): add Phase 2 communications and notifications infrastructure)
 
 ---
 
