@@ -967,10 +967,13 @@ export async function verifyResendWebhook(
 - [x] Route exists and responds to POST
 - [x] TypeScript compiles: `pnpm build`
 - [ ] Test webhook with curl mock
+  - ⏸️ DEFERRED: Manual testing step - webhook endpoint implemented, needs runtime verification
 
 ##### Manual Verification:
 - [ ] Send test email, verify status updates
+  - ⏸️ DEFERRED: Manual testing step - requires running system with Resend integration
 - [ ] Open email, verify open tracking works
+  - ⏸️ DEFERRED: Manual testing step - requires running system with Resend integration
 
 ---
 
@@ -1350,8 +1353,11 @@ export function useRealtimeNotifications(userId: string | undefined) {
 
 ##### Manual Verification:
 - [ ] Create notification via service, appears in real-time
+  - ⏸️ DEFERRED: Requires running app with Supabase Realtime connection
 - [ ] Toast shows within 500ms
+  - ⏸️ DEFERRED: Requires E2E testing with browser
 - [ ] Preferences respected
+  - ⏸️ DEFERRED: Requires E2E testing with user preferences
 
 ### Phase 2 Validation Summary (2025-12-13)
 
@@ -1994,8 +2000,11 @@ export function createWorkflowEngine(orgId: string, userId: string) {
 
 ##### Manual Verification:
 - [ ] Create workflow with email action
+  - ⏸️ DEFERRED: Requires running app with workflow creation UI
 - [ ] Trigger workflow, verify email sent
+  - ⏸️ DEFERRED: Requires E2E test with email provider
 - [ ] Check execution logs
+  - ⏸️ DEFERRED: Requires running workflow execution
 
 #### Validation Notes (2025-12-13):
 
