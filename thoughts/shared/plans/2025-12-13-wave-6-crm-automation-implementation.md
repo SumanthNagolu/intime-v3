@@ -964,8 +964,8 @@ export async function verifyResendWebhook(
 #### Success Criteria:
 
 ##### Automated Verification:
-- [ ] Route exists and responds to POST
-- [ ] TypeScript compiles: `pnpm build`
+- [x] Route exists and responds to POST
+- [x] TypeScript compiles: `pnpm build`
 - [ ] Test webhook with curl mock
 
 ##### Manual Verification:
@@ -1344,9 +1344,9 @@ export function useRealtimeNotifications(userId: string | undefined) {
 #### Success Criteria:
 
 ##### Automated Verification:
-- [ ] TypeScript compiles: `pnpm build`
-- [ ] Service exports correctly
-- [ ] Hook can be imported
+- [x] TypeScript compiles: `pnpm build`
+- [x] Service exports correctly
+- [x] Hook can be imported
 
 ##### Manual Verification:
 - [ ] Create notification via service, appears in real-time
