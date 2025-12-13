@@ -238,6 +238,20 @@ export async function processResendWebhookEvent(
       console.log('email_logs update skipped (no matching record or error):', logError.message)
     }
 
+    // ========================================
+    // CAMPAIGN ENGAGEMENT TRACKING
+    // ========================================
+    // If this email is linked to a campaign enrollment, update engagement metrics
+    const { data: emailSendRecord } = await db
+      .from('email_sends')
+      .select('entity_type, entity_id')
+      .eq('resend_id', emailId)
+      .single()
+
+    if (emailSendRecord?.entity_type === 'campaign_enrollment' && emailSendRecord.entity_id) {
+      await handleCampaignEngagement(db, emailSendRecord.entity_id, eventType, data)
+    }
+
     return {
       success: true,
       event_type: eventType,
@@ -363,4 +377,104 @@ export async function getEmailStats(
   })
 
   return counts
+}
+
+// ============================================
+// CAMPAIGN ENGAGEMENT TRACKING
+// ============================================
+
+/**
+ * Handle campaign enrollment engagement updates based on email events
+ * Updates opened_at, clicked_at, engagement_score, and status
+ */
+async function handleCampaignEngagement(
+  db: ReturnType<typeof getAdminClient>,
+  enrollmentId: string,
+  eventType: ResendWebhookEventType,
+  _eventData: ResendWebhookEventData | ResendBounceData | ResendClickData | ResendOpenData
+): Promise<void> {
+  const now = new Date().toISOString()
+
+  try {
+    // First, get current enrollment state
+    const { data: enrollment, error: fetchError } = await db
+      .from('campaign_enrollments')
+      .select('opened_at, clicked_at, engagement_score, status')
+      .eq('id', enrollmentId)
+      .single()
+
+    if (fetchError || !enrollment) {
+      console.log(`Campaign enrollment ${enrollmentId} not found, skipping engagement update`)
+      return
+    }
+
+    const updates: Record<string, unknown> = {
+      updated_at: now,
+    }
+
+    switch (eventType) {
+      case 'email.opened':
+        // Set opened_at on first open only
+        if (!enrollment.opened_at) {
+          updates.opened_at = now
+        }
+        // Increment engagement score (+10 for open, cap at 100)
+        const openScore = Math.min((enrollment.engagement_score || 0) + 10, 100)
+        updates.engagement_score = openScore
+        // Update status to 'engaged' if currently 'enrolled' or 'contacted'
+        if (enrollment.status === 'enrolled' || enrollment.status === 'contacted') {
+          updates.status = 'engaged'
+        }
+        break
+
+      case 'email.clicked':
+        // Set clicked_at on first click only
+        if (!enrollment.clicked_at) {
+          updates.clicked_at = now
+        }
+        // Also set opened_at if not already set (click implies open)
+        if (!enrollment.opened_at) {
+          updates.opened_at = now
+        }
+        // Increment engagement score (+25 for click, cap at 100)
+        const clickScore = Math.min((enrollment.engagement_score || 0) + 25, 100)
+        updates.engagement_score = clickScore
+        // Update status to 'engaged' if not already further along
+        if (enrollment.status === 'enrolled' || enrollment.status === 'contacted') {
+          updates.status = 'engaged'
+        }
+        break
+
+      case 'email.bounced':
+        // Set status to 'bounced'
+        updates.status = 'bounced'
+        updates.stop_reason = 'Email bounced'
+        break
+
+      case 'email.complained':
+        // Set status to 'unsubscribed' (spam complaint = effective unsubscribe)
+        updates.status = 'unsubscribed'
+        updates.stop_reason = 'Spam complaint received'
+        break
+
+      default:
+        // No campaign updates for other event types
+        return
+    }
+
+    // Apply updates
+    const { error: updateError } = await db
+      .from('campaign_enrollments')
+      .update(updates)
+      .eq('id', enrollmentId)
+
+    if (updateError) {
+      console.error(`Failed to update campaign enrollment ${enrollmentId}:`, updateError)
+    } else {
+      console.log(`Updated campaign enrollment ${enrollmentId} for ${eventType} event`)
+    }
+  } catch (err) {
+    console.error(`Error handling campaign engagement for ${enrollmentId}:`, err)
+    // Non-critical - don't throw, just log
+  }
 }
