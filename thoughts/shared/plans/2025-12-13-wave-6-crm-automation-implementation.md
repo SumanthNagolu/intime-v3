@@ -1988,9 +1988,9 @@ export function createWorkflowEngine(orgId: string, userId: string) {
 #### Success Criteria:
 
 ##### Automated Verification:
-- [ ] TypeScript compiles: `pnpm build`
-- [ ] Engine can be instantiated
-- [ ] Unit tests for trigger matching
+- [x] TypeScript compiles: `pnpm build`
+- [x] Engine can be instantiated
+- [x] Unit tests for trigger matching
 
 ##### Manual Verification:
 - [ ] Create workflow with email action
