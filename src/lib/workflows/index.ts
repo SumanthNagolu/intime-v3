@@ -34,7 +34,7 @@ export {
   type ActionResult,
 } from './action-executor'
 
-// Workflow Engine
+// Workflow Engine (V1)
 export {
   triggerWorkflows,
   processApprovalResponse,
@@ -43,3 +43,11 @@ export {
   type TriggerContext,
   type ExecutionResult,
 } from './workflow-engine'
+
+// Workflow Engine V2 (Enhanced)
+export {
+  WorkflowEngineV2,
+  createWorkflowEngine,
+  triggerWorkflowsForEvent,
+  triggerWorkflowManually,
+} from './workflow-engine-v2'
