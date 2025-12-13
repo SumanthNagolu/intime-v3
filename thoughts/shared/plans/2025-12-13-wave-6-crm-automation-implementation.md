@@ -1379,17 +1379,26 @@ export function useRealtimeNotifications(userId: string | undefined) {
 - [x] Database schema matches implementation (resend_id, notification_preferences, etc.)
 
 #### Implementation Notes:
-1. **COMMS-01**: Resend webhook implementation uses `resend_id` column (matches DB schema). Campaign engagement tracking (handleCampaignEngagement) not included as `campaign_enrollments` table lacks `emails_opened`/`emails_clicked` count columns.
+1. **COMMS-01**: Resend webhook implementation uses `resend_id` column (matches DB schema). Campaign engagement tracking implemented using existing schema columns.
 2. **NOTIFICATIONS-01**: Implementation uses class-based `NotificationService` instead of functional approach - more robust with singleton pattern, bulk operations, and comprehensive preference handling.
 3. **Real-time Hook**: Enhanced with optimistic updates, connection status tracking, and auto-reconnect.
+
+#### Campaign Engagement Tracking (handleCampaignEngagement):
+- `opened_at` - Set on first email open
+- `clicked_at` - Set on first email click
+- `engagement_score` - +10 per open, +25 per click (capped at 100)
+- `status` - Updated to 'engaged' on interaction, 'bounced' on bounce
 
 #### Deviations from Plan (Improvements):
 - NotificationService as class vs function (better organization, singleton pattern)
 - Added batch processing for webhook events
 - Added email stats helper function
 - Enhanced hook with archive functionality and connection status
+- Campaign engagement adapted to use existing schema columns (not plan's count-based approach)
 
-#### Commit: 5438906 (feat(wave6): add Phase 2 communications and notifications infrastructure)
+#### Commits:
+- 5438906 - feat(wave6): add Phase 2 communications and notifications infrastructure
+- 64b75a1 - fix(wave6): add campaign engagement tracking to Resend webhook
 
 ---
 
