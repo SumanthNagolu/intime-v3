@@ -90,7 +90,8 @@ export function EntityListView<T extends Record<string, unknown>>({
     setFilterValues((prev) => ({ ...prev, [key]: value }))
   }, [router, searchParams])
 
-  // Data fetching via config hook
+  // Data fetching via config hook (ONE database call pattern)
+  // Stats are now included in the listQuery response
   const listQuery = config.useListQuery({
     ...filterValues,
     limit: effectivePageSize,
@@ -99,7 +100,10 @@ export function EntityListView<T extends Record<string, unknown>>({
     sortOrder,
   })
 
+  // Use stats from combined query, fallback to separate statsQuery for backwards compatibility
   const statsQuery = config.useStatsQuery?.()
+  const statsData = listQuery.data?.stats ?? statsQuery?.data
+  const statsLoading = statsQuery ? statsQuery.isLoading : listQuery.isLoading
 
   // Calculate pagination
   const items = listQuery.data?.items || initialData?.items || []
@@ -136,8 +140,8 @@ export function EntityListView<T extends Record<string, unknown>>({
       {showStats && (
         <ListStats
           stats={config.statsCards!}
-          data={statsQuery?.data}
-          isLoading={statsQuery?.isLoading}
+          data={statsData}
+          isLoading={statsLoading}
           gridCols={config.statsCards!.length <= 4 ? 4 : 5}
         />
       )}

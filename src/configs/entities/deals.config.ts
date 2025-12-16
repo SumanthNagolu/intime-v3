@@ -4,7 +4,6 @@ import {
   Building2,
   DollarSign,
   Calendar,
-  User,
   Target,
   TrendingUp,
   AlertCircle,
@@ -29,7 +28,12 @@ import {
   DealRolesSectionPCF,
   DealHistorySectionPCF,
   DealTasksSectionPCF,
+  // Universal sections
+  DealActivitiesSectionPCF,
+  DealNotesSectionPCF,
+  DealAuditHistorySectionPCF,
 } from './sections/deals.sections'
+import { StickyNote } from 'lucide-react'
 
 // Type definition for Deal entity
 export interface Deal extends Record<string, unknown> {
@@ -428,10 +432,10 @@ export const dealsListConfig: ListViewConfig<Deal> = {
     const sortOrderValue = filters.sortOrder as string | undefined
 
     const validHealth = ['on_track', 'slow', 'stale', 'urgent', 'at_risk', 'all'] as const
-    const validSortFields = ['created_at', 'expected_close_date', 'value', 'last_activity_at', 'name', 'stage', 'probability'] as const
+    const _validSortFields = ['created_at', 'expected_close_date', 'value', 'last_activity_at', 'name', 'stage', 'probability'] as const
 
     type HealthStatus = (typeof validHealth)[number]
-    type SortField = (typeof validSortFields)[number]
+    type SortField = (typeof _validSortFields)[number]
 
     // Map frontend column keys to database columns
     const sortFieldMap: Record<string, SortField> = {
@@ -584,12 +588,6 @@ export const dealsDetailConfig: DetailViewConfig<Deal> = {
       component: DealOverviewSectionPCF,
     },
     {
-      id: 'activity',
-      label: 'Activity',
-      icon: Activity,
-      component: DealActivitySectionPCF,
-    },
-    {
       id: 'roles',
       label: 'Roles',
       icon: Briefcase,
@@ -601,11 +599,30 @@ export const dealsDetailConfig: DetailViewConfig<Deal> = {
       icon: ClipboardList,
       component: DealTasksSectionPCF,
     },
+    // ===========================================
+    // UNIVERSAL SECTIONS (Activities, Notes, History)
+    // These appear on ALL entity detail pages
+    // ===========================================
+    {
+      id: 'activities',
+      label: 'Activities',
+      icon: Activity,
+      component: DealActivitiesSectionPCF,
+      description: 'Track calls, emails, meetings and tasks',
+    },
+    {
+      id: 'notes',
+      label: 'Notes',
+      icon: StickyNote,
+      component: DealNotesSectionPCF,
+      description: 'Add reference notes and comments',
+    },
     {
       id: 'history',
-      label: 'Stage History',
+      label: 'History',
       icon: History,
-      component: DealHistorySectionPCF,
+      component: DealAuditHistorySectionPCF,
+      description: 'Complete audit trail and changelog',
     },
   ],
 

@@ -2,16 +2,8 @@ import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
-import { createClient } from '@supabase/supabase-js'
+import { getAdminClient } from '@/lib/supabase/admin'
 
-// Admin client for bypassing RLS
-function getAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { autoRefreshToken: false, persistSession: false } }
-  )
-}
 
 // ============================================
 // VENDORS SUB-ROUTER
@@ -416,7 +408,7 @@ const vendorsRouter = router({
       contractExpiry: z.string().optional(),
       msaOnFile: z.boolean().optional(),
     }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { data, error } = await adminClient
@@ -449,7 +441,7 @@ const vendorsRouter = router({
       periodStart: z.string().optional(),
       periodEnd: z.string().optional(),
     }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       const adminClient = getAdminClient()
 
       let query = adminClient
@@ -481,7 +473,7 @@ const vendorsRouter = router({
       status: z.enum(['new', 'working', 'filled', 'closed', 'on_hold', 'all']).default('all'),
       limit: z.number().min(1).max(100).default(50),
     }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       const adminClient = getAdminClient()
 
       let query = adminClient
@@ -837,7 +829,7 @@ const talentRouter = router({
       certificationName: z.string().optional(),
       certificationExpiry: z.string().optional(),
     }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const updateData: Record<string, unknown> = {}
@@ -866,7 +858,7 @@ const talentRouter = router({
   // Remove skill
   removeSkill: orgProtectedProcedure
     .input(z.object({ skillId: z.string().uuid() }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { error } = await adminClient
@@ -1194,7 +1186,7 @@ const jobOrdersRouter = router({
       type: z.string().optional(),
       priority: z.enum(['must_have', 'nice_to_have']).default('must_have'),
     }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { data, error } = await adminClient
@@ -1218,7 +1210,7 @@ const jobOrdersRouter = router({
   // Delete requirement
   deleteRequirement: orgProtectedProcedure
     .input(z.object({ requirementId: z.string().uuid() }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { error } = await adminClient
@@ -1241,7 +1233,7 @@ const jobOrdersRouter = router({
       yearsRequired: z.number().min(0).optional(),
       proficiencyRequired: z.number().min(1).max(5).optional(),
     }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { data, error } = await adminClient
@@ -1265,7 +1257,7 @@ const jobOrdersRouter = router({
   // Delete skill requirement
   deleteSkillRequirement: orgProtectedProcedure
     .input(z.object({ skillId: z.string().uuid() }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { error } = await adminClient
@@ -1363,7 +1355,7 @@ const submissionsRouter = router({
       status: z.enum(['submitted', 'shortlisted', 'interview_requested', 'interviewing', 'rejected', 'offered', 'accepted', 'placed']),
       notes: z.string().optional(),
     }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const updateData: Record<string, unknown> = {
@@ -1427,7 +1419,7 @@ const submissionsRouter = router({
   // Get submission by ID
   getById: orgProtectedProcedure
     .input(z.object({ id: z.string().uuid() }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { data, error } = await adminClient
@@ -1453,7 +1445,7 @@ const submissionsRouter = router({
   // List submissions by job order
   listByJobOrder: orgProtectedProcedure
     .input(z.object({ jobOrderId: z.string().uuid() }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { data, error } = await adminClient
@@ -1478,7 +1470,7 @@ const submissionsRouter = router({
   // List submissions by consultant
   listByConsultant: orgProtectedProcedure
     .input(z.object({ consultantId: z.string().uuid() }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { data, error } = await adminClient
@@ -1500,7 +1492,7 @@ const submissionsRouter = router({
   // Withdraw submission
   withdraw: orgProtectedProcedure
     .input(z.object({ submissionId: z.string().uuid() }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { error } = await adminClient
@@ -1818,7 +1810,7 @@ const hotlistsRouter = router({
       hotlistId: z.string().uuid(),
       consultantId: z.string().uuid(),
     }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { error } = await adminClient
@@ -1840,7 +1832,7 @@ const hotlistsRouter = router({
       hotlistId: z.string().uuid(),
       consultantIds: z.array(z.string().uuid()),
     }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       const adminClient = getAdminClient()
 
       // Update positions based on array order
@@ -1866,7 +1858,7 @@ const marketingRouter = router({
   // Get marketing profile for consultant
   getProfile: orgProtectedProcedure
     .input(z.object({ consultantId: z.string().uuid() }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { data, error } = await adminClient
@@ -1992,7 +1984,7 @@ const immigrationRouter = router({
   // List immigration cases for a consultant
   listCases: orgProtectedProcedure
     .input(z.object({ consultantId: z.string().uuid() }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { data, error } = await adminClient
@@ -2016,7 +2008,7 @@ const immigrationRouter = router({
   // Get single immigration case
   getCase: orgProtectedProcedure
     .input(z.object({ caseId: z.string().uuid() }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { data, error } = await adminClient

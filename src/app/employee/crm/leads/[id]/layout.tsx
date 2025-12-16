@@ -14,15 +14,16 @@ export default async function LeadDetailLayout({ children, params }: LeadLayoutP
   const { id: leadId } = await params
   const caller = await getServerCaller()
 
-  const lead = await caller.crm.leads.getById({ id: leadId }).catch(() => null)
+  // Use unifiedContacts.leads.getById which queries the contacts table (not the old leads table)
+  const lead = await caller.unifiedContacts.leads.getById({ id: leadId }).catch(() => null)
 
   if (!lead) {
     notFound()
   }
 
-  // Build display name and subtitle
+  // Build display name and subtitle - use contact table field names
   const displayName = lead.company_name || `${lead.first_name || ''} ${lead.last_name || ''}`.trim() || 'Unknown'
-  const subtitle = lead.industry || lead.source?.replace(/_/g, ' ')
+  const subtitle = lead.industry || lead.lead_source?.replace(/_/g, ' ')
 
   return (
     <EntityContextProvider
@@ -30,7 +31,7 @@ export default async function LeadDetailLayout({ children, params }: LeadLayoutP
       entityId={leadId}
       entityName={displayName}
       entitySubtitle={subtitle}
-      entityStatus={lead.status}
+      entityStatus={lead.lead_status || 'new'}
       initialData={lead}
     >
       {children}

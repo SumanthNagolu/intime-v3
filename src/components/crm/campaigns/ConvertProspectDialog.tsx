@@ -39,8 +39,8 @@ import { cn } from '@/lib/utils'
 const convertFormSchema = z.object({
   leadScore: z.number().min(0).max(100).optional(),
   interestLevel: z.enum(['hot', 'warm', 'cold']),
-  // BANT
-  budgetStatus: z.enum(['unknown', 'limited', 'defined', 'approved']).optional(),
+  // BANT - values match DB constraints
+  budgetStatus: z.enum(['confirmed', 'likely', 'unclear', 'no_budget']).optional(),
   budgetNotes: z.string().optional(),
   authorityStatus: z.enum(['unknown', 'influencer', 'decision_maker', 'champion']).optional(),
   authorityNotes: z.string().optional(),
@@ -50,7 +50,8 @@ const convertFormSchema = z.object({
   timelineNotes: z.string().optional(),
   // Details
   hiringNeeds: z.string().optional(),
-  urgency: z.enum(['low', 'normal', 'high', 'urgent']),
+  // DB constraint: immediate, high, medium, low
+  urgency: z.enum(['immediate', 'high', 'medium', 'low']),
   painPoints: z.string().optional(),
   // Next steps
   nextAction: z.string().optional(),
@@ -85,7 +86,7 @@ export function ConvertProspectDialog({
     resolver: zodResolver(convertFormSchema),
     defaultValues: {
       interestLevel: 'warm',
-      urgency: 'normal',
+      urgency: 'medium',
       notifyPodManager: false,
     },
   })
@@ -207,9 +208,9 @@ export function ConvertProspectDialog({
                       </FormControl>
                       <SelectContent>
                         <SelectItem value="low">Low - 2 weeks+</SelectItem>
-                        <SelectItem value="normal">Normal - 1 week</SelectItem>
+                        <SelectItem value="medium">Medium - 1 week</SelectItem>
                         <SelectItem value="high">High - 2-3 days</SelectItem>
-                        <SelectItem value="urgent">Urgent - 24 hours</SelectItem>
+                        <SelectItem value="immediate">Immediate - 24 hours</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -255,10 +256,10 @@ export function ConvertProspectDialog({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="unknown">Unknown</SelectItem>
-                          <SelectItem value="limited">Limited</SelectItem>
-                          <SelectItem value="defined">Defined</SelectItem>
-                          <SelectItem value="approved">Approved</SelectItem>
+                          <SelectItem value="unclear">Unclear</SelectItem>
+                          <SelectItem value="no_budget">No Budget</SelectItem>
+                          <SelectItem value="likely">Likely</SelectItem>
+                          <SelectItem value="confirmed">Confirmed</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormItem>

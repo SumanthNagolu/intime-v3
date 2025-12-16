@@ -7,7 +7,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { format, formatDistanceToNow } from 'date-fns'
 import {
   DollarSign,
@@ -31,9 +30,7 @@ import {
   PAY_RUN_STATUS_CONFIG,
   PAY_RUN_TYPE_CONFIG,
   WORKER_TYPE_CONFIG,
-  PERIOD_TYPE_CONFIG,
   formatCurrency,
-  formatPeriod,
   calculateTotalWorkers,
 } from '../payroll.config'
 
@@ -46,7 +43,7 @@ interface PCFSectionProps {
 // OVERVIEW SECTION
 // ============================================
 
-export function PayrollOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
+export function PayrollOverviewSectionPCF({ entityId: _entityId, entity }: PCFSectionProps) {
   const payRun = entity as PayRun | undefined
 
   if (!payRun) return null

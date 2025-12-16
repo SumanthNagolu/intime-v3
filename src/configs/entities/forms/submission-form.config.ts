@@ -2,10 +2,6 @@
 
 import { z } from 'zod'
 import {
-  Send,
-  User,
-  Briefcase,
-  DollarSign,
   FileText,
   Target,
 } from 'lucide-react'

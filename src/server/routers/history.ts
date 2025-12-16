@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
-import { createClient } from '@supabase/supabase-js'
+import { getAdminClient } from '@/lib/supabase/admin'
 
 /**
  * HISTORY-01: Unified Audit Trail System
@@ -21,14 +21,6 @@ const ChangeTypeEnum = z.enum([
 
 const EventCategoryEnum = z.enum(['security', 'data', 'system', 'integration', 'workflow'])
 const SeverityEnum = z.enum(['debug', 'info', 'warning', 'error', 'critical'])
-
-function getAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { autoRefreshToken: false, persistSession: false } }
-  )
-}
 
 export const historyRouter = router({
   // ============================================

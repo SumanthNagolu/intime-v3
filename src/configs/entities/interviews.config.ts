@@ -15,7 +15,6 @@ import {
   ThumbsUp,
   ThumbsDown,
   Target,
-  TrendingUp,
   Users,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'

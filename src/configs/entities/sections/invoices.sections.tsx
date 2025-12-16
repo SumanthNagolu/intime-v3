@@ -15,10 +15,8 @@ import {
   Clock,
   CheckCircle,
   Building2,
-  User,
   CreditCard,
   Activity,
-  Calendar,
   AlertCircle,
   Send,
   Eye,
@@ -34,7 +32,6 @@ import {
   PAYMENT_METHOD_CONFIG,
   AGING_BUCKET_CONFIG,
   formatCurrency,
-  formatDate,
   isInvoiceOverdue,
 } from '../invoices.config'
 
@@ -47,7 +44,7 @@ interface PCFSectionProps {
 // OVERVIEW SECTION
 // ============================================
 
-export function InvoiceOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
+export function InvoiceOverviewSectionPCF({ entityId: _entityId, entity }: PCFSectionProps) {
   const invoice = entity as Invoice | undefined
 
   if (!invoice) return null

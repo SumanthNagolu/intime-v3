@@ -17,11 +17,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { trpc } from '@/lib/trpc/client'
 import {
-  User,
   Star,
-  GraduationCap,
-  MapPin,
-  DollarSign,
   Clock,
   FileText,
   Send,

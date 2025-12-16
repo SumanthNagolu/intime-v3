@@ -2,16 +2,8 @@ import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
-import { createClient } from '@supabase/supabase-js'
+import { getAdminClient } from '@/lib/supabase/admin'
 
-// Admin client for bypassing RLS
-function getAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { autoRefreshToken: false, persistSession: false } }
-  )
-}
 
 // ============================================
 // DASHBOARD ROUTER - Recruiter Dashboard Data
@@ -1016,6 +1008,450 @@ export const dashboardRouter = router({
       avgDaysToPay,
     }
   }),
+
+  // ============================================
+  // DESKTOP DATA - CONSOLIDATED (ONE DB CALL)
+  // ============================================
+  getDesktopData: orgProtectedProcedure
+    .input(z.object({
+      activityFilters: z.object({
+        activityType: z.enum(['email', 'call', 'meeting', 'note', 'linkedin_message', 'task', 'follow_up']).optional(),
+        status: z.enum(['scheduled', 'open', 'in_progress', 'completed', 'skipped', 'canceled']).optional(),
+        filterOverdue: z.boolean().optional(),
+        filterDueToday: z.boolean().optional(),
+      }).optional(),
+      accountFilters: z.object({
+        search: z.string().optional(),
+        status: z.enum(['active', 'inactive', 'prospect', 'all']).optional(),
+      }).optional(),
+      jobFilters: z.object({
+        search: z.string().optional(),
+        status: z.enum(['draft', 'open', 'active', 'on_hold', 'filled', 'cancelled', 'all']).optional(),
+      }).optional(),
+      submissionFilters: z.object({
+        search: z.string().optional(),
+        status: z.enum(['active', 'all', 'submitted', 'reviewing', 'interviewing', 'offered', 'placed', 'rejected']).optional(),
+      }).optional(),
+    }).optional())
+    .query(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+      const userId = user?.id
+
+      const now = new Date()
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+      const tomorrow = new Date(today)
+      tomorrow.setDate(tomorrow.getDate() + 1)
+      const startOfWeek = new Date(now)
+      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay())
+      const endOfWeek = new Date(startOfWeek)
+      endOfWeek.setDate(endOfWeek.getDate() + 7)
+
+      // Build activity query with filters
+      let activitiesQuery = adminClient
+        .from('activities')
+        .select(`
+          id, subject, description, activity_type, status, priority, due_date,
+          entity_type, entity_id, created_at, completed_at,
+          poc:contacts!poc_id(id, first_name, last_name),
+          company:companies!entity_id(id, name)
+        `, { count: 'exact' })
+        .eq('org_id', orgId)
+        .eq('assigned_to', userId)
+        .order('due_date', { ascending: true, nullsFirst: false })
+        .order('priority', { ascending: false })
+        .limit(50)
+
+      // Apply activity filters
+      if (input?.activityFilters?.activityType) {
+        activitiesQuery = activitiesQuery.eq('activity_type', input.activityFilters.activityType)
+      }
+      if (input?.activityFilters?.status) {
+        activitiesQuery = activitiesQuery.eq('status', input.activityFilters.status)
+      } else {
+        activitiesQuery = activitiesQuery.in('status', ['scheduled', 'open', 'in_progress'])
+      }
+      if (input?.activityFilters?.filterOverdue) {
+        activitiesQuery = activitiesQuery.lt('due_date', today.toISOString())
+      }
+      if (input?.activityFilters?.filterDueToday) {
+        activitiesQuery = activitiesQuery.gte('due_date', today.toISOString()).lt('due_date', tomorrow.toISOString())
+      }
+
+      // Build accounts query with filters
+      let accountsQuery = adminClient
+        .from('companies')
+        .select('id, name, industry, segment, status, city, state, last_contacted_date', { count: 'exact' })
+        .eq('org_id', orgId)
+        .in('category', ['client', 'prospect'])
+        .eq('owner_id', userId)
+        .is('deleted_at', null)
+        .order('updated_at', { ascending: false })
+        .limit(50)
+
+      if (input?.accountFilters?.search) {
+        accountsQuery = accountsQuery.ilike('name', `%${input.accountFilters.search}%`)
+      }
+      if (input?.accountFilters?.status && input.accountFilters.status !== 'all') {
+        accountsQuery = accountsQuery.eq('status', input.accountFilters.status)
+      }
+
+      // Build jobs query with filters
+      let jobsQuery = adminClient
+        .from('jobs')
+        .select(`
+          id, title, location, job_type, status, created_at,
+          company:companies!company_id(id, name),
+          submissions:submissions(id)
+        `, { count: 'exact' })
+        .eq('org_id', orgId)
+        .eq('recruiter_id', userId)
+        .is('deleted_at', null)
+        .order('updated_at', { ascending: false })
+        .limit(50)
+
+      if (input?.jobFilters?.search) {
+        jobsQuery = jobsQuery.ilike('title', `%${input.jobFilters.search}%`)
+      }
+      if (input?.jobFilters?.status && input.jobFilters.status !== 'all') {
+        jobsQuery = jobsQuery.eq('status', input.jobFilters.status)
+      } else {
+        jobsQuery = jobsQuery.eq('status', 'active')
+      }
+
+      // Build submissions query with filters
+      const activeStatuses = ['submitted', 'reviewing', 'shortlisted', 'interviewing', 'offered']
+      let submissionsQuery = adminClient
+        .from('submissions')
+        .select(`
+          id, status, submitted_at, updated_at,
+          candidate:candidates!candidate_id(id, first_name, last_name, title),
+          job:jobs!job_id(id, title, company:companies!company_id(id, name))
+        `, { count: 'exact' })
+        .eq('org_id', orgId)
+        .eq('submitted_by', userId)
+        .is('deleted_at', null)
+        .order('updated_at', { ascending: false })
+        .limit(100)
+
+      if (input?.submissionFilters?.status === 'active') {
+        submissionsQuery = submissionsQuery.in('status', activeStatuses)
+      } else if (input?.submissionFilters?.status && input.submissionFilters.status !== 'all') {
+        submissionsQuery = submissionsQuery.eq('status', input.submissionFilters.status)
+      }
+
+      // Execute all queries in parallel (this is ONE database call via Promise.all)
+      const [
+        prioritiesResult,
+        pipelineResult,
+        activitiesResult,
+        accountsResult,
+        accountHealthResult,
+        jobsResult,
+        submissionsResult,
+      ] = await Promise.all([
+        // Today's priorities (for MySummary)
+        adminClient
+          .from('activities')
+          .select('id, subject, activity_type, status, priority, due_date, entity_type, entity_id')
+          .eq('org_id', orgId)
+          .eq('assigned_to', userId)
+          .in('status', ['scheduled', 'open', 'in_progress'])
+          .order('due_date', { ascending: true })
+          .limit(100),
+
+        // Pipeline health (for MySummary)
+        (async () => {
+          const [activeJobsResult, urgentJobsResult, pendingSubsResult, interviewsResult, offersResult, placementsResult] = await Promise.all([
+            adminClient.from('jobs').select('id', { count: 'exact', head: true }).eq('org_id', orgId).eq('recruiter_id', userId).eq('status', 'active'),
+            adminClient.from('jobs').select('id', { count: 'exact', head: true }).eq('org_id', orgId).eq('recruiter_id', userId).eq('status', 'active').in('priority', ['urgent', 'high']),
+            adminClient.from('submissions').select('id', { count: 'exact', head: true }).eq('org_id', orgId).eq('submitted_by', userId).eq('status', 'submitted'),
+            adminClient.from('interviews').select('id, submission:submissions!submission_id(submitted_by)', { count: 'exact' }).eq('org_id', orgId).gte('scheduled_at', startOfWeek.toISOString()).lt('scheduled_at', endOfWeek.toISOString()),
+            adminClient.from('submissions').select('id', { count: 'exact', head: true }).eq('org_id', orgId).eq('submitted_by', userId).eq('status', 'offered'),
+            adminClient.from('placements').select('id, submission:submissions!submission_id(submitted_by)', { count: 'exact' }).eq('org_id', orgId).eq('status', 'active'),
+          ])
+
+          // Filter interviews and placements by user
+          const userInterviews = interviewsResult.data?.filter(i => {
+            const sub = i.submission as Array<{ submitted_by: string }> | null
+            return sub?.[0]?.submitted_by === userId
+          }).length ?? 0
+
+          return {
+            activeJobs: activeJobsResult.count ?? 0,
+            urgentJobs: urgentJobsResult.count ?? 0,
+            pendingSubmissions: pendingSubsResult.count ?? 0,
+            interviewsThisWeek: userInterviews,
+            outstandingOffers: offersResult.count ?? 0,
+            activePlacements: placementsResult.count ?? 0,
+          }
+        })(),
+
+        // Activities table data
+        activitiesQuery,
+
+        // Accounts table data
+        accountsQuery,
+
+        // Account health data
+        adminClient
+          .from('companies')
+          .select('id, status, last_contacted_date')
+          .eq('org_id', orgId)
+          .in('category', ['client', 'prospect'])
+          .eq('owner_id', userId)
+          .is('deleted_at', null),
+
+        // Jobs table data
+        jobsQuery,
+
+        // Submissions table data
+        submissionsQuery,
+      ])
+
+      // Process priorities for MySummary
+      const overdue: typeof prioritiesResult.data = []
+      const dueToday: typeof prioritiesResult.data = []
+
+      prioritiesResult.data?.forEach(task => {
+        const dueDate = task.due_date ? new Date(task.due_date) : null
+        if (dueDate && dueDate < today) {
+          overdue.push(task)
+        } else if (dueDate && dueDate >= today && dueDate < tomorrow) {
+          dueToday.push(task)
+        }
+      })
+
+      // Calculate account health scores
+      const accountHealthMap = new Map<string, { healthStatus: string; healthScore: number; activeJobs: number }>()
+      accountHealthResult.data?.forEach(acc => {
+        const daysSinceContact = acc.last_contacted_date
+          ? Math.floor((now.getTime() - new Date(acc.last_contacted_date).getTime()) / (1000 * 60 * 60 * 24))
+          : 999
+
+        let healthStatus = 'healthy'
+        let healthScore = 100
+        if (daysSinceContact > 30) {
+          healthStatus = 'at_risk'
+          healthScore = Math.max(0, 100 - Math.min(50, daysSinceContact - 30))
+        } else if (daysSinceContact > 14) {
+          healthStatus = 'attention'
+          healthScore = 80
+        }
+
+        accountHealthMap.set(acc.id, { healthStatus, healthScore, activeJobs: 0 })
+      })
+
+      // Count active jobs per account
+      jobsResult.data?.forEach(job => {
+        const company = job.company as Array<{ id: string }> | null
+        const companyId = company?.[0]?.id
+        if (companyId && accountHealthMap.has(companyId)) {
+          const health = accountHealthMap.get(companyId)!
+          health.activeJobs++
+        }
+      })
+
+      // Transform activities for the table
+      const activitiesData = activitiesResult.data?.map(a => {
+        const dueDate = a.due_date ? new Date(a.due_date) : null
+        let accountName: string | null = null
+        if ((a.entity_type === 'account' || a.entity_type === 'company') && a.company) {
+          const companyArray = a.company as Array<{ id: string; name: string }> | null
+          accountName = companyArray?.[0]?.name ?? null
+        }
+
+        return {
+          id: a.id,
+          subject: a.subject,
+          description: a.description,
+          activityType: a.activity_type,
+          status: a.status,
+          priority: a.priority,
+          dueDate: a.due_date,
+          entityType: a.entity_type,
+          entityId: a.entity_id,
+          accountName,
+          contact: (() => {
+            const pocArray = a.poc as Array<{ id: string; first_name: string; last_name: string }> | null
+            const poc = pocArray?.[0]
+            return poc ? { id: poc.id, name: `${poc.first_name} ${poc.last_name}` } : null
+          })(),
+          isOverdue: dueDate ? dueDate < today : false,
+          isDueToday: dueDate ? dueDate >= today && dueDate < tomorrow : false,
+          createdAt: a.created_at,
+          completedAt: a.completed_at,
+        }
+      }) ?? []
+
+      // Transform accounts for the table
+      const accountsData = accountsResult.data?.map(acc => ({
+        id: acc.id,
+        name: acc.name,
+        industry: acc.industry,
+        status: acc.status || 'prospect',
+        city: acc.city,
+        state: acc.state,
+        lastContactDate: acc.last_contacted_date,
+        health: accountHealthMap.get(acc.id),
+      })) ?? []
+
+      // Transform jobs for the table
+      const jobsData = jobsResult.data?.map(job => {
+        const company = job.company as Array<{ id: string; name: string }> | null
+        const submissions = job.submissions as Array<{ id: string }> | null
+        return {
+          id: job.id,
+          title: job.title,
+          location: job.location,
+          job_type: job.job_type,
+          status: job.status,
+          createdAt: job.created_at,
+          account: company?.[0] ? { id: company[0].id, name: company[0].name } : null,
+          submissions_count: submissions?.length ?? 0,
+        }
+      }) ?? []
+
+      // Transform submissions for the table
+      const submissionsData = submissionsResult.data?.map(sub => {
+        const candidate = sub.candidate as Array<{ id: string; first_name: string; last_name: string; title: string | null }> | null
+        const job = sub.job as Array<{ id: string; title: string; company: Array<{ id: string; name: string }> | null }> | null
+        return {
+          id: sub.id,
+          status: sub.status,
+          submitted_at: sub.submitted_at,
+          updated_at: sub.updated_at,
+          candidate: candidate?.[0] ? {
+            id: candidate[0].id,
+            first_name: candidate[0].first_name,
+            last_name: candidate[0].last_name,
+            title: candidate[0].title,
+          } : null,
+          job: job?.[0] ? {
+            id: job[0].id,
+            title: job[0].title,
+            company: job[0].company?.[0] ?? null,
+          } : null,
+        }
+      }) ?? []
+
+      return {
+        summary: {
+          priorities: {
+            counts: {
+              overdue: overdue.length,
+              dueToday: dueToday.length,
+              total: prioritiesResult.data?.length ?? 0,
+            },
+          },
+          pipeline: pipelineResult,
+        },
+        tables: {
+          activities: {
+            items: activitiesData,
+            total: activitiesResult.count ?? 0,
+          },
+          accounts: {
+            items: accountsData,
+            total: accountsResult.count ?? 0,
+          },
+          jobs: {
+            items: jobsData,
+            total: jobsResult.count ?? 0,
+          },
+          submissions: {
+            items: submissionsData,
+            total: submissionsResult.count ?? 0,
+          },
+        },
+      }
+    }),
+
+  // ============================================
+  // TODAY DATA - CONSOLIDATED (ONE DB CALL)
+  // Returns all tasks with counts, client filters locally
+  // ============================================
+  getTodayData: orgProtectedProcedure
+    .query(async ({ ctx }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+      const userId = user?.id
+
+      const now = new Date()
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+      const tomorrow = new Date(today)
+      tomorrow.setDate(tomorrow.getDate() + 1)
+      const endOfWeek = new Date(today)
+      endOfWeek.setDate(endOfWeek.getDate() + (7 - endOfWeek.getDay()))
+
+      // Fetch all tasks and count queries in parallel
+      const [allResult, overdueCount, todayCount, weekCount] = await Promise.all([
+        // Get all pending tasks (with all data for client-side filtering)
+        adminClient
+          .from('activities')
+          .select('id, subject, description, activity_type, status, priority, due_date, entity_type, entity_id', { count: 'exact' })
+          .eq('org_id', orgId)
+          .eq('assigned_to', userId)
+          .in('status', ['scheduled', 'open', 'in_progress'])
+          .order('due_date', { ascending: true })
+          .order('priority', { ascending: false })
+          .limit(200),
+
+        // Count overdue tasks
+        adminClient
+          .from('activities')
+          .select('id', { count: 'exact', head: true })
+          .eq('org_id', orgId)
+          .eq('assigned_to', userId)
+          .in('status', ['scheduled', 'open', 'in_progress'])
+          .lt('due_date', today.toISOString()),
+
+        // Count today's tasks
+        adminClient
+          .from('activities')
+          .select('id', { count: 'exact', head: true })
+          .eq('org_id', orgId)
+          .eq('assigned_to', userId)
+          .in('status', ['scheduled', 'open', 'in_progress'])
+          .gte('due_date', today.toISOString())
+          .lt('due_date', tomorrow.toISOString()),
+
+        // Count this week's tasks
+        adminClient
+          .from('activities')
+          .select('id', { count: 'exact', head: true })
+          .eq('org_id', orgId)
+          .eq('assigned_to', userId)
+          .in('status', ['scheduled', 'open', 'in_progress'])
+          .gte('due_date', today.toISOString())
+          .lt('due_date', endOfWeek.toISOString()),
+      ])
+
+      // Transform tasks with computed flags for client-side filtering
+      const tasks = allResult.data?.map(task => ({
+        id: task.id,
+        subject: task.subject,
+        activityType: task.activity_type,
+        entityType: task.entity_type,
+        entityId: task.entity_id,
+        status: task.status,
+        priority: task.priority,
+        dueDate: task.due_date,
+        isOverdue: task.due_date ? new Date(task.due_date) < today : false,
+        isDueToday: task.due_date ? new Date(task.due_date) >= today && new Date(task.due_date) < tomorrow : false,
+        isThisWeek: task.due_date ? new Date(task.due_date) >= today && new Date(task.due_date) < endOfWeek : false,
+      })) ?? []
+
+      return {
+        counts: {
+          overdue: overdueCount.count ?? 0,
+          today: todayCount.count ?? 0,
+          thisWeek: weekCount.count ?? 0,
+          all: allResult.count ?? 0,
+        },
+        tasks,
+      }
+    }),
 
   // Payroll Summary Widget
   getPayrollStats: orgProtectedProcedure.query(async ({ ctx }) => {

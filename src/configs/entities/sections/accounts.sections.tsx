@@ -56,7 +56,7 @@ export function AccountOverviewSectionPCF({ entityId, entity }: PCFSectionProps)
 
   return (
     <AccountOverviewSection
-      account={account as any}
+      account={account as Record<string, unknown>}
       accountId={entityId}
       onStartOnboarding={() => {
         router.push(`/employee/recruiting/accounts/${entityId}/onboarding`)

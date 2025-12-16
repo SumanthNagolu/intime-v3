@@ -133,6 +133,17 @@ export async function signUp(
 }
 
 /**
+ * Set org cookie after login (avoids DB lookup on every request)
+ */
+export async function setOrgCookie(): Promise<void> {
+  try {
+    await fetch('/api/auth/set-org-cookie', { method: 'POST' })
+  } catch {
+    // Ignore errors - cookie will be set on next request as fallback
+  }
+}
+
+/**
  * Sign in with Google OAuth
  */
 export async function signInWithGoogle(

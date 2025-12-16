@@ -1,16 +1,7 @@
 import { z } from 'zod'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
-import { createClient } from '@supabase/supabase-js'
-
-// Admin client for bypassing RLS
-function getAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { autoRefreshToken: false, persistSession: false } }
-  )
-}
+import { getAdminClient } from '@/lib/supabase/admin'
 
 export const academyRouter = router({
   // ============================================

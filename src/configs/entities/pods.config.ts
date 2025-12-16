@@ -5,7 +5,6 @@ import {
   Pause,
   Briefcase,
   Target,
-  Trophy,
   UserCheck,
 } from 'lucide-react'
 import { ListViewConfig, StatusConfig } from './types'

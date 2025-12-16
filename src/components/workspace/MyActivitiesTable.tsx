@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { trpc } from '@/lib/trpc/client'
 import { Button } from '@/components/ui/button'
@@ -43,7 +43,7 @@ import {
   Building2,
   User,
 } from 'lucide-react'
-import { formatDistanceToNow, format, isToday, isPast } from 'date-fns'
+import { formatDistanceToNow } from 'date-fns'
 import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 
@@ -83,7 +83,8 @@ const priorityColors: Record<string, string> = {
   urgent: 'text-red-600',
 }
 
-interface Activity {
+// Activity type from the consolidated query
+export interface ActivityItem {
   id: string
   subject: string | null
   description: string | null
@@ -101,14 +102,23 @@ interface Activity {
   completedAt: string | null
 }
 
+export interface ActivitiesData {
+  items: ActivityItem[]
+  total: number
+}
+
 interface MyActivitiesTableProps {
   filterOverdue?: boolean
   filterDueToday?: boolean
+  data?: ActivitiesData
+  isLoading?: boolean
 }
 
 export function MyActivitiesTable({
   filterOverdue,
   filterDueToday,
+  data,
+  isLoading = false,
 }: MyActivitiesTableProps) {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const [typeFilter, setTypeFilter] = useState<string>('all')
@@ -116,25 +126,10 @@ export function MyActivitiesTable({
 
   const utils = trpc.useUtils()
 
-  // Calculate date filters based on props
-  const now = new Date()
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-  const tomorrow = new Date(today)
-  tomorrow.setDate(tomorrow.getDate() + 1)
-
-  const activitiesQuery = trpc.activities.getMyActivities.useQuery({
-    activityType: typeFilter !== 'all' ? typeFilter as 'call' | 'email' | 'meeting' | 'note' | 'linkedin_message' | 'task' | 'follow_up' : undefined,
-    status: statusFilter !== 'pending' ? statusFilter as 'scheduled' | 'open' | 'in_progress' | 'completed' | 'skipped' | 'canceled' : undefined,
-    dueBefore: filterOverdue ? today : undefined,
-    dueAfter: filterDueToday ? today : undefined,
-    limit: 50,
-  })
-
   const completeMutation = trpc.activities.complete.useMutation({
     onSuccess: () => {
       toast.success('Activity completed')
-      utils.activities.getMyActivities.invalidate()
-      utils.dashboard.getTodaysPriorities.invalidate()
+      utils.dashboard.getDesktopData.invalidate()
     },
     onError: (error) => {
       toast.error(`Failed to complete activity: ${error.message}`)
@@ -144,17 +139,43 @@ export function MyActivitiesTable({
   const skipMutation = trpc.activities.skip.useMutation({
     onSuccess: () => {
       toast.success('Activity skipped')
-      utils.activities.getMyActivities.invalidate()
-      utils.dashboard.getTodaysPriorities.invalidate()
+      utils.dashboard.getDesktopData.invalidate()
     },
     onError: (error) => {
       toast.error(`Failed to skip activity: ${error.message}`)
     },
   })
 
-  const activities = activitiesQuery.data?.items ?? []
-  const total = activitiesQuery.data?.total ?? 0
-  const isLoading = activitiesQuery.isLoading
+  // Filter activities client-side based on props and filter state
+  const activities = useMemo(() => {
+    let items = data?.items ?? []
+
+    // Apply type filter
+    if (typeFilter !== 'all') {
+      items = items.filter((a) => a.activityType === typeFilter)
+    }
+
+    // Apply status filter
+    if (statusFilter === 'pending') {
+      items = items.filter((a) => ['scheduled', 'open', 'in_progress'].includes(a.status))
+    } else if (statusFilter !== 'all') {
+      items = items.filter((a) => a.status === statusFilter)
+    }
+
+    // Apply overdue filter
+    if (filterOverdue) {
+      items = items.filter((a) => a.isOverdue)
+    }
+
+    // Apply due today filter
+    if (filterDueToday) {
+      items = items.filter((a) => a.isDueToday)
+    }
+
+    return items
+  }, [data?.items, typeFilter, statusFilter, filterOverdue, filterDueToday])
+
+  const total = activities.length
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
@@ -188,9 +209,10 @@ export function MyActivitiesTable({
     setSelectedIds(new Set())
   }
 
-  const getEntityLink = (activity: Activity) => {
+  const getEntityLink = (activity: ActivityItem) => {
     switch (activity.entityType) {
       case 'account':
+      case 'company':
         return `/employee/recruiting/accounts/${activity.entityId}`
       case 'job':
         return `/employee/recruiting/jobs/${activity.entityId}`
@@ -235,6 +257,7 @@ export function MyActivitiesTable({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="pending">Pending</SelectItem>
+                <SelectItem value="all">All Status</SelectItem>
                 <SelectItem value="scheduled">Scheduled</SelectItem>
                 <SelectItem value="open">Open</SelectItem>
                 <SelectItem value="in_progress">In Progress</SelectItem>

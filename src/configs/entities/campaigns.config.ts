@@ -4,7 +4,6 @@ import {
   Users,
   Target,
   Calendar,
-  DollarSign,
   Activity,
   FileText,
   CheckCircle,
@@ -401,7 +400,8 @@ export const campaignsListConfig: ListViewConfig<Campaign> = {
     },
   },
 
-  // tRPC hooks for data fetching
+  // tRPC hooks for data fetching (ONE database call pattern)
+  // Uses listWithStats which returns items, total, AND stats in a single query
   useListQuery: (filters) => {
     const statusValue = filters.status as string | undefined
     const typeValue = filters.type as string | undefined
@@ -417,11 +417,11 @@ export const campaignsListConfig: ListViewConfig<Campaign> = {
       'candidate_sourcing',
       'all',
     ] as const
-    const validSortFields = ['created_at', 'start_date', 'end_date', 'name', 'leads_generated', 'audience_size', 'prospects_contacted', 'budget_spent', 'status', 'campaign_type'] as const
+    const _validSortFields = ['created_at', 'start_date', 'end_date', 'name', 'leads_generated', 'audience_size', 'prospects_contacted', 'budget_spent', 'status', 'campaign_type'] as const
 
     type CampaignStatus = (typeof validStatuses)[number]
     type CampaignType = (typeof validTypes)[number]
-    type SortField = (typeof validSortFields)[number]
+    type SortField = (typeof _validSortFields)[number]
 
     // Map frontend column keys to database columns
     const sortFieldMap: Record<string, SortField> = {
@@ -441,7 +441,7 @@ export const campaignsListConfig: ListViewConfig<Campaign> = {
       ? sortFieldMap[sortByValue]
       : 'created_at'
 
-    return trpc.crm.campaigns.list.useQuery({
+    return trpc.crm.campaigns.listWithStats.useQuery({
       search: filters.search as string | undefined,
       status: (statusValue && validStatuses.includes(statusValue as CampaignStatus)
         ? statusValue
@@ -456,10 +456,8 @@ export const campaignsListConfig: ListViewConfig<Campaign> = {
     })
   },
 
-  // Stats query for metrics cards
-  useStatsQuery: () => {
-    return trpc.crm.campaigns.stats.useQuery()
-  },
+  // Stats are now included in useListQuery response (ONE database call pattern)
+  // useStatsQuery is no longer needed
 }
 
 // Campaigns Detail View Configuration
@@ -509,10 +507,11 @@ export const campaignsDetailConfig: DetailViewConfig<Campaign> = {
       iconBg: 'bg-blue-100',
       iconColor: 'text-blue-600',
       getValue: (entity: unknown) => {
-        const campaign = entity as Campaign
-        return campaign.audienceSize || campaign.audience_size || 0
+        const campaign = entity as Campaign & { sections?: { prospects?: { total?: number } } }
+        // Use actual prospect count from sections (excludes converted), fall back to audienceSize
+        return campaign.sections?.prospects?.total ?? campaign.audienceSize ?? campaign.audience_size ?? 0
       },
-      tooltip: 'Total prospects in campaign',
+      tooltip: 'Active prospects in campaign (excludes converted)',
     },
     {
       key: 'contacted',
@@ -533,14 +532,15 @@ export const campaignsDetailConfig: DetailViewConfig<Campaign> = {
       iconBg: 'bg-green-100',
       iconColor: 'text-green-600',
       getValue: (entity: unknown) => {
-        const campaign = entity as Campaign
-        return campaign.leadsGenerated || campaign.leads_generated || 0
+        const campaign = entity as Campaign & { sections?: { leads?: { total?: number } } }
+        // Use actual leads count from sections, fall back to leadsGenerated
+        return campaign.sections?.leads?.total ?? campaign.leadsGenerated ?? campaign.leads_generated ?? 0
       },
       getTotal: (entity: unknown) => {
         const campaign = entity as Campaign
         return campaign.targetLeads || campaign.target_leads || undefined
       },
-      tooltip: 'Leads generated',
+      tooltip: 'Leads generated from this campaign',
     },
     {
       key: 'meetings',
@@ -860,5 +860,20 @@ export const campaignsDetailConfig: DetailViewConfig<Campaign> = {
 
   eventNamespace: 'campaign',
 
-  useEntityQuery: (entityId) => trpc.crm.campaigns.getByIdWithCounts.useQuery({ id: entityId }),
+  /**
+   * ONE database call pattern: Use getFullEntity which returns
+   * entity data + ALL section data in a single query.
+   *
+   * This eliminates N+1 queries when users navigate between sections.
+   * Section components receive their data via the sectionData prop.
+   */
+  useEntityQuery: (entityId, options) => trpc.crm.campaigns.getFullEntity.useQuery(
+    { id: entityId },
+    {
+      staleTime: 60_000, // Data considered fresh for 60 seconds
+      refetchOnWindowFocus: false, // Don't refetch when tab regains focus
+      // ONE DATABASE CALL PATTERN: Skip query when entity data already provided from server
+      enabled: options?.enabled ?? true,
+    }
+  ),
 }

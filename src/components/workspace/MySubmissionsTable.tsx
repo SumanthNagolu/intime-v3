@@ -1,8 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
-import { trpc } from '@/lib/trpc/client'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -48,46 +47,74 @@ const statusColors: Record<string, string> = {
   withdrawn: 'bg-charcoal-100 text-charcoal-600',
 }
 
-interface MySubmissionsTableProps {
-  className?: string
+// Submission item from the consolidated query
+export interface SubmissionItem {
+  id: string
+  status: string
+  submitted_at: string | null
+  updated_at: string | null
+  candidate: {
+    id: string
+    first_name: string
+    last_name: string
+    title: string | null
+  } | null
+  job: {
+    id: string
+    title: string
+    company: { id: string; name: string } | null
+  } | null
 }
 
-export function MySubmissionsTable({ className }: MySubmissionsTableProps) {
+export interface SubmissionsData {
+  items: SubmissionItem[]
+  total: number
+}
+
+interface MySubmissionsTableProps {
+  className?: string
+  data?: SubmissionsData
+  isLoading?: boolean
+}
+
+export function MySubmissionsTable({ className, data, isLoading = false }: MySubmissionsTableProps) {
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('active')
 
-  // Fetch user's submissions
-  const submissionsQuery = trpc.ats.submissions.list.useQuery({
-    status: statusFilter !== 'active' && statusFilter !== 'all'
-      ? statusFilter
-      : undefined,
-    limit: 100, // Fetch more for client-side filtering
-  })
+  // Filter submissions client-side based on filter state
+  const submissions = useMemo(() => {
+    let items = data?.items ?? []
 
-  const submissions = submissionsQuery.data?.items ?? []
-  const isLoading = submissionsQuery.isLoading
-
-  // Client-side filtering for active status and search
-  let filteredSubmissions = statusFilter === 'active'
-    ? submissions.filter(s => ['submitted', 'reviewing', 'shortlisted', 'interviewing', 'offered'].includes(s.status))
-    : submissions
-
-  // Apply search filter client-side
-  if (search) {
-    const searchLower = search.toLowerCase()
-    filteredSubmissions = filteredSubmissions.filter(s => {
-      const candidateName = s.candidate
-        ? `${s.candidate.first_name} ${s.candidate.last_name}`.toLowerCase()
-        : ''
-      const jobTitle = s.job?.title?.toLowerCase() ?? ''
-      const accountName = s.job?.account?.name?.toLowerCase() ?? ''
-      return (
-        candidateName.includes(searchLower) ||
-        jobTitle.includes(searchLower) ||
-        accountName.includes(searchLower)
+    // Apply status filter
+    if (statusFilter === 'active') {
+      items = items.filter((s) =>
+        ['submitted', 'reviewing', 'shortlisted', 'interviewing', 'offered'].includes(s.status)
       )
-    })
-  }
+    } else if (statusFilter !== 'all') {
+      items = items.filter((s) => s.status === statusFilter)
+    }
+
+    // Apply search filter
+    if (search) {
+      const searchLower = search.toLowerCase()
+      items = items.filter((s) => {
+        const candidateName = s.candidate
+          ? `${s.candidate.first_name} ${s.candidate.last_name}`.toLowerCase()
+          : ''
+        const jobTitle = s.job?.title?.toLowerCase() ?? ''
+        const accountName = s.job?.company?.name?.toLowerCase() ?? ''
+        return (
+          candidateName.includes(searchLower) ||
+          jobTitle.includes(searchLower) ||
+          accountName.includes(searchLower)
+        )
+      })
+    }
+
+    return items
+  }, [data?.items, search, statusFilter])
+
+  const total = submissions.length
 
   return (
     <Card className={className}>
@@ -95,9 +122,9 @@ export function MySubmissionsTable({ className }: MySubmissionsTableProps) {
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg font-medium">
             My Submissions
-            {filteredSubmissions.length > 0 && (
+            {total > 0 && (
               <span className="ml-2 text-sm font-normal text-charcoal-500">
-                ({filteredSubmissions.length})
+                ({total})
               </span>
             )}
           </CardTitle>
@@ -142,7 +169,7 @@ export function MySubmissionsTable({ className }: MySubmissionsTableProps) {
               </div>
             ))}
           </div>
-        ) : filteredSubmissions.length === 0 ? (
+        ) : submissions.length === 0 ? (
           <div className="text-center py-8">
             <Send className="w-12 h-12 text-charcoal-300 mx-auto mb-3" />
             <p className="text-charcoal-500">No submissions found</p>
@@ -166,7 +193,7 @@ export function MySubmissionsTable({ className }: MySubmissionsTableProps) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredSubmissions.map((submission) => (
+              {submissions.map((submission) => (
                 <TableRow key={submission.id} className="group">
                   <TableCell>
                     <Link

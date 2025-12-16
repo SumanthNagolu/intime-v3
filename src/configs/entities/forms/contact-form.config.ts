@@ -2,10 +2,8 @@
 
 import { z } from 'zod'
 import {
-  User,
   Mail,
   Phone,
-  Building2,
   Linkedin,
   MessageSquare,
 } from 'lucide-react'

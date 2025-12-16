@@ -36,7 +36,7 @@ interface PCFSectionProps {
 /**
  * Overview Section
  */
-export function VendorOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
+export function VendorOverviewSectionPCF({ entityId: _entityId, entity }: PCFSectionProps) {
   const vendor = entity as Vendor | undefined
 
   if (!vendor) return null
@@ -202,7 +202,7 @@ export function VendorOverviewSectionPCF({ entityId, entity }: PCFSectionProps) 
 /**
  * Consultants Section
  */
-export function VendorConsultantsSectionPCF({ entityId }: PCFSectionProps) {
+export function VendorConsultantsSectionPCF({ entityId: _entityId }: PCFSectionProps) {
   return (
     <Card className="bg-white">
       <CardHeader>
@@ -224,7 +224,7 @@ export function VendorConsultantsSectionPCF({ entityId }: PCFSectionProps) {
 /**
  * Activities Section
  */
-export function VendorActivitiesSectionPCF({ entityId }: PCFSectionProps) {
+export function VendorActivitiesSectionPCF({ entityId: _entityId }: PCFSectionProps) {
   return (
     <Card className="bg-white">
       <CardHeader>
@@ -246,7 +246,7 @@ export function VendorActivitiesSectionPCF({ entityId }: PCFSectionProps) {
 /**
  * Documents Section
  */
-export function VendorDocumentsSectionPCF({ entityId }: PCFSectionProps) {
+export function VendorDocumentsSectionPCF({ entityId: _entityId }: PCFSectionProps) {
   return (
     <Card className="bg-white">
       <CardHeader>
@@ -264,6 +264,8 @@ export function VendorDocumentsSectionPCF({ entityId }: PCFSectionProps) {
     </Card>
   )
 }
+
+
 
 
 

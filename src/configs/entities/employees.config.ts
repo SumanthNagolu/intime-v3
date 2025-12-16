@@ -320,7 +320,7 @@ export const employeesListConfig: ListViewConfig<Employee> = {
 
     const validStatuses = ['onboarding', 'active', 'on_leave', 'terminated', 'all'] as const
     const validEmploymentTypes = ['fte', 'contractor', 'intern', 'part_time', 'all'] as const
-    const validSortFields = [
+    const _validSortFields = [
       'created_at',
       'hire_date',
       'employee_number',
@@ -332,7 +332,7 @@ export const employeesListConfig: ListViewConfig<Employee> = {
 
     type EmployeeStatus = (typeof validStatuses)[number]
     type EmploymentType = (typeof validEmploymentTypes)[number]
-    type SortField = (typeof validSortFields)[number]
+    type SortField = (typeof _validSortFields)[number]
 
     // Map frontend column keys to database columns
     const sortFieldMap: Record<string, SortField> = {

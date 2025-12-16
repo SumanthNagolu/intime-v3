@@ -607,8 +607,28 @@ List pages are **configuration-driven** - minimal page code, all behavior in con
 
 ## Important Guidelines
 
+### NON-NEGOTIABLE: One Database Call Per Page
+
+**Every detail page MUST make exactly ONE database call.** See `.claude/rules/one-db-call-pattern.md` for full details.
+
+```
+Layout (Server) → getFullEntity() → EntityContextProvider(initialData)
+                                            ↓
+Page (Client) → useEntityData() → EntityDetailView(entity={data})
+                                            ↓
+Sidebar → useEntityNavigation().currentEntityData → NO separate query
+```
+
+**Implementation**:
+1. Layout calls `getFullEntity({ id })` once
+2. Pass `initialData` to `EntityContextProvider`
+3. Page uses `useEntityData()` hook, passes `entity` prop to `EntityDetailView`
+4. Sidebar uses `useEntityNavigation().currentEntityData`, NO independent queries
+5. Config's `useEntityQuery` has `enabled: options?.enabled ?? true`
+
 ### DO
 
+- **Follow ONE database call pattern for detail pages** (see above)
 - Use cream background (`bg-cream`) for pages
 - Use `hublot-900` (black) for primary actions
 - Use `gold-500` (warm gold) for premium/accent actions
@@ -624,6 +644,8 @@ List pages are **configuration-driven** - minimal page code, all behavior in con
 
 ### DON'T
 
+- **Make multiple API calls for same entity data** (use ONE getFullEntity call)
+- **Have client components query entity data independently** (use context)
 - Use `bg-gray-50` (use `bg-cream` instead)
 - Use `rounded-xl` or larger for cards/buttons
 - Use transitions faster than 250ms

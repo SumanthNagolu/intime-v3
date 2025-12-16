@@ -68,6 +68,8 @@ import { timesheetsRouter } from '../routers/timesheets'
 import { invoicesRouter } from '../routers/invoices'
 // Payroll management system (PAYROLL-01)
 import { payrollRouter } from '../routers/payroll'
+// Reference data for wizards (PERF-01)
+import { referenceRouter } from '../routers/reference'
 
 export const appRouter = router({
   admin: adminRouter,
@@ -139,6 +141,8 @@ export const appRouter = router({
   invoices: invoicesRouter,
   // Payroll management system (PAYROLL-01)
   payroll: payrollRouter,
+  // Reference data for wizards (PERF-01)
+  reference: referenceRouter,
 })
 
 export type AppRouter = typeof appRouter

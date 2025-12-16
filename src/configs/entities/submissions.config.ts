@@ -16,7 +16,6 @@ import {
   ThumbsDown,
   Timer,
   Target,
-  DollarSign,
   MessageSquare,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'

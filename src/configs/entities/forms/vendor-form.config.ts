@@ -3,14 +3,10 @@
 import { z } from 'zod'
 import {
   Building2,
-  Globe,
   Star,
   Package,
   Target,
   Settings,
-  User,
-  Mail,
-  Phone,
 } from 'lucide-react'
 import { FormConfig, FieldDefinition } from '../types'
 

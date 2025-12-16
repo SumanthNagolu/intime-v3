@@ -90,6 +90,96 @@ export const COUNTRIES = [
   { value: 'AU', label: 'Australia' },
 ] as const
 
+// Operating countries (limited set for business operations)
+export const OPERATING_COUNTRIES = [
+  { value: 'US', label: 'United States' },
+  { value: 'CA', label: 'Canada' },
+  { value: 'IN', label: 'India' },
+] as const
+
+// Canadian Provinces and Territories
+export const CANADIAN_PROVINCES = [
+  { value: 'AB', label: 'Alberta' },
+  { value: 'BC', label: 'British Columbia' },
+  { value: 'MB', label: 'Manitoba' },
+  { value: 'NB', label: 'New Brunswick' },
+  { value: 'NL', label: 'Newfoundland and Labrador' },
+  { value: 'NS', label: 'Nova Scotia' },
+  { value: 'NT', label: 'Northwest Territories' },
+  { value: 'NU', label: 'Nunavut' },
+  { value: 'ON', label: 'Ontario' },
+  { value: 'PE', label: 'Prince Edward Island' },
+  { value: 'QC', label: 'Quebec' },
+  { value: 'SK', label: 'Saskatchewan' },
+  { value: 'YT', label: 'Yukon' },
+] as const
+
+// Indian States and Union Territories
+export const INDIAN_STATES = [
+  { value: 'AN', label: 'Andaman and Nicobar Islands' },
+  { value: 'AP', label: 'Andhra Pradesh' },
+  { value: 'AR', label: 'Arunachal Pradesh' },
+  { value: 'AS', label: 'Assam' },
+  { value: 'BR', label: 'Bihar' },
+  { value: 'CH', label: 'Chandigarh' },
+  { value: 'CT', label: 'Chhattisgarh' },
+  { value: 'DN', label: 'Dadra and Nagar Haveli and Daman and Diu' },
+  { value: 'DL', label: 'Delhi' },
+  { value: 'GA', label: 'Goa' },
+  { value: 'GJ', label: 'Gujarat' },
+  { value: 'HR', label: 'Haryana' },
+  { value: 'HP', label: 'Himachal Pradesh' },
+  { value: 'JK', label: 'Jammu and Kashmir' },
+  { value: 'JH', label: 'Jharkhand' },
+  { value: 'KA', label: 'Karnataka' },
+  { value: 'KL', label: 'Kerala' },
+  { value: 'LA', label: 'Ladakh' },
+  { value: 'LD', label: 'Lakshadweep' },
+  { value: 'MP', label: 'Madhya Pradesh' },
+  { value: 'MH', label: 'Maharashtra' },
+  { value: 'MN', label: 'Manipur' },
+  { value: 'ML', label: 'Meghalaya' },
+  { value: 'MZ', label: 'Mizoram' },
+  { value: 'NL', label: 'Nagaland' },
+  { value: 'OR', label: 'Odisha' },
+  { value: 'PY', label: 'Puducherry' },
+  { value: 'PB', label: 'Punjab' },
+  { value: 'RJ', label: 'Rajasthan' },
+  { value: 'SK', label: 'Sikkim' },
+  { value: 'TN', label: 'Tamil Nadu' },
+  { value: 'TG', label: 'Telangana' },
+  { value: 'TR', label: 'Tripura' },
+  { value: 'UP', label: 'Uttar Pradesh' },
+  { value: 'UK', label: 'Uttarakhand' },
+  { value: 'WB', label: 'West Bengal' },
+] as const
+
+// Helper to get states/provinces by country code
+export function getStatesByCountry(countryCode: string) {
+  switch (countryCode) {
+    case 'US':
+      return [...US_STATES]
+    case 'CA':
+      return [...CANADIAN_PROVINCES]
+    case 'IN':
+      return [...INDIAN_STATES]
+    default:
+      return []
+  }
+}
+
+// Helper to get country label from code
+export function getCountryLabel(countryCode: string) {
+  const country = OPERATING_COUNTRIES.find(c => c.value === countryCode)
+  return country?.label || countryCode
+}
+
+// Helper to get country code from label
+export function getCountryCode(countryLabel: string) {
+  const country = OPERATING_COUNTRIES.find(c => c.label === countryLabel)
+  return country?.value || 'US'
+}
+
 // Types
 export interface AddressData {
   addressLine1?: string | null

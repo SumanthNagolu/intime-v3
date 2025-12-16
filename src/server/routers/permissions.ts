@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
-import { createClient } from '@supabase/supabase-js'
+import { getAdminClient } from '@/lib/supabase/admin'
 import { evaluatePermission } from '@/lib/auth/permission-evaluator'
 import crypto from 'crypto'
 
@@ -11,20 +11,6 @@ import crypto from 'crypto'
 // =============================================================================
 
 const scopeSchema = z.enum(['own', 'own_raci', 'own_ra', 'team', 'region', 'org', 'draft_only'])
-
-// =============================================================================
-// HELPERS
-// =============================================================================
-
-function getAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    {
-      auth: { autoRefreshToken: false, persistSession: false },
-    }
-  )
-}
 
 // =============================================================================
 // ROUTER

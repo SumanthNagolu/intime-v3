@@ -16,8 +16,6 @@ import {
   Edit,
   Trash2,
   UserPlus,
-  MapPin,
-  Timer,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'

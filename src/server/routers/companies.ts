@@ -1,17 +1,9 @@
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
-import { createClient } from '@supabase/supabase-js'
+import { getAdminClient } from '@/lib/supabase/admin'
 import { orgProtectedProcedure } from '../trpc/middleware'
 import { router } from '../trpc/init'
 
-// Admin client for bypassing RLS
-function getAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { autoRefreshToken: false, persistSession: false } }
-  )
-}
 
 // ============================================
 // SCHEMA DEFINITIONS
@@ -1098,7 +1090,7 @@ export const companiesRouter = router({
       teamMemberId: z.string().uuid(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user } = ctx
+      const { user } = ctx
       const adminClient = getAdminClient()
 
       const { error } = await adminClient
@@ -1120,7 +1112,7 @@ export const companiesRouter = router({
   // Get team members for a company
   getTeam: orgProtectedProcedure
     .input(z.object({ companyId: z.string().uuid() }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { data, error } = await adminClient
@@ -1198,7 +1190,7 @@ export const companiesRouter = router({
       limit: z.number().min(1).max(100).default(50),
       offset: z.number().min(0).default(0),
     }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       const adminClient = getAdminClient()
 
       let query = adminClient
@@ -1326,7 +1318,7 @@ export const companiesRouter = router({
       companyId: z.string().uuid(),
       contactId: z.string().uuid(),
     }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { error } = await adminClient
@@ -1348,7 +1340,7 @@ export const companiesRouter = router({
       companyId: z.string().uuid(),
       includeInactive: z.boolean().optional(),
     }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       const adminClient = getAdminClient()
 
       let query = adminClient

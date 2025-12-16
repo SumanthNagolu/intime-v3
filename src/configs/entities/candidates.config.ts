@@ -501,7 +501,7 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
   // Falls back to legacy ATS router if unified router unavailable
   useListQuery: (filters) => {
     const statusValue = filters.status as string | undefined
-    const sourceValue = filters.source as string | undefined
+    const _sourceValue = filters.source as string | undefined
     const experienceRangeValue = filters.experienceRange as string | undefined
     const sortByValue = filters.sortBy as string | undefined
     const sortOrderValue = filters.sortOrder as string | undefined

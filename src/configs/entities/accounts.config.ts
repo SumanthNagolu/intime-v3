@@ -429,7 +429,7 @@ export const accountsListConfig: ListViewConfig<Account> = {
 
     const validStatuses = ['active', 'inactive', 'prospect', 'on_hold', 'all'] as const
     const validTypes = ['enterprise', 'mid_market', 'smb', 'startup'] as const
-    const validSortFields = [
+    const _validSortFields = [
       'name',
       'industry',
       'type',
@@ -443,7 +443,7 @@ export const accountsListConfig: ListViewConfig<Account> = {
 
     type AccountStatus = (typeof validStatuses)[number]
     type AccountType = (typeof validTypes)[number]
-    type SortField = (typeof validSortFields)[number]
+    type SortField = (typeof _validSortFields)[number]
 
     // Map frontend column keys to database columns
     const sortFieldMap: Record<string, SortField> = {

@@ -10,9 +10,26 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useAccountOnboardingStore, INDUSTRIES, COMPANY_SIZES } from '@/stores/account-onboarding-store'
+import { OPERATING_COUNTRIES, getStatesByCountry, getCountryCode } from '@/components/addresses'
 
 export function OnboardingStep1Profile() {
   const { formData, setFormData } = useAccountOnboardingStore()
+
+  // Get country code - handle both code ('US') and label ('United States') formats
+  const countryCode = formData.country?.length === 2
+    ? formData.country
+    : getCountryCode(formData.country || 'United States')
+
+  // Get state options based on selected country
+  const stateOptions = getStatesByCountry(countryCode)
+
+  // Handle country change - reset state when country changes
+  const handleCountryChange = (newCountryCode: string) => {
+    setFormData({
+      country: newCountryCode,
+      state: '', // Reset state when country changes
+    })
+  }
 
   return (
     <div className="space-y-6">
@@ -130,12 +147,22 @@ export function OnboardingStep1Profile() {
             />
           </div>
           <div className="space-y-2">
-            <Label>State</Label>
-            <Input
+            <Label>State/Province</Label>
+            <Select
               value={formData.state}
-              onChange={(e) => setFormData({ state: e.target.value })}
-              placeholder="CA"
-            />
+              onValueChange={(v) => setFormData({ state: v })}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select state" />
+              </SelectTrigger>
+              <SelectContent>
+                {stateOptions.map((state) => (
+                  <SelectItem key={state.value} value={state.value}>
+                    {state.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="space-y-2">
             <Label>Postal Code</Label>
@@ -147,10 +174,21 @@ export function OnboardingStep1Profile() {
           </div>
           <div className="space-y-2">
             <Label>Country</Label>
-            <Input
-              value={formData.country}
-              onChange={(e) => setFormData({ country: e.target.value })}
-            />
+            <Select
+              value={countryCode}
+              onValueChange={handleCountryChange}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select country" />
+              </SelectTrigger>
+              <SelectContent>
+                {OPERATING_COUNTRIES.map((country) => (
+                  <SelectItem key={country.value} value={country.value}>
+                    {country.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </div>

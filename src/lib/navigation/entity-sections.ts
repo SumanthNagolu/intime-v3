@@ -25,6 +25,7 @@ import {
   Workflow,
   BarChart3,
   MapPin,
+  ClipboardList,
 } from 'lucide-react'
 
 /**
@@ -225,12 +226,14 @@ export const submissionSections: SectionDefinition[] = [
 
 /**
  * Lead sections - Guidewire-style with main sections + tools
- * Main: Overview
+ * Main: Overview, BANT Scoring, Tasks
  * Tools: Activities, Notes, Documents, History
  */
 export const leadSections: SectionDefinition[] = [
   // Main sections
   { id: 'overview', label: 'Overview', icon: Target },
+  { id: 'bant', label: 'BANT Scoring', icon: ListChecks },
+  { id: 'tasks', label: 'Tasks', icon: ClipboardList, showCount: true },
   // Tools section
   { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true },
   { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },

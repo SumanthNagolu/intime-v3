@@ -56,7 +56,7 @@ export function EntityContextProvider({
   entityStatus,
   initialData,
 }: EntityContextProviderProps) {
-  const { setCurrentEntity, addRecentEntity, clearCurrentEntity } = useEntityNavigation()
+  const { setCurrentEntity, setCurrentEntityData, addRecentEntity, clearCurrentEntity } = useEntityNavigation()
 
   // Set current entity in context and add to recent
   useEffect(() => {
@@ -68,6 +68,11 @@ export function EntityContextProvider({
       subtitle: entitySubtitle,
     })
 
+    // ONE DB CALL pattern: Store full entity data for sidebar access
+    if (initialData) {
+      setCurrentEntityData(initialData)
+    }
+
     addRecentEntity(entityType, {
       id: entityId,
       name: entityName,
@@ -78,7 +83,7 @@ export function EntityContextProvider({
     return () => {
       clearCurrentEntity()
     }
-  }, [entityType, entityId, entityName, entityStatus, entitySubtitle, setCurrentEntity, addRecentEntity, clearCurrentEntity])
+  }, [entityType, entityId, entityName, entityStatus, entitySubtitle, initialData, setCurrentEntity, setCurrentEntityData, addRecentEntity, clearCurrentEntity])
 
   return (
     <EntityDataContext.Provider

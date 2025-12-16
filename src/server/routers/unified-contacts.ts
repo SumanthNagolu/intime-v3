@@ -2,16 +2,8 @@ import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
-import { createClient } from '@supabase/supabase-js'
+import { getAdminClient } from '@/lib/supabase/admin'
 
-// Admin client for bypassing RLS
-function getAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { autoRefreshToken: false, persistSession: false } }
-  )
-}
 
 // ============================================
 // CONTACT CATEGORIES
@@ -164,11 +156,12 @@ export const unifiedContactsRouter = router({
       const { orgId } = ctx
       const adminClient = getAdminClient()
 
+      // Note: company_name is stored directly on contacts, no separate join needed
+      // contacts.company_id references accounts table (legacy), not companies
       let query = adminClient
         .from('contacts')
         .select(`
           *,
-          company:companies!company_id(id, name),
           owner:user_profiles!owner_id(id, full_name, avatar_url)
         `, { count: 'exact' })
         .eq('org_id', orgId)
@@ -288,11 +281,12 @@ export const unifiedContactsRouter = router({
       const { orgId } = ctx
       const adminClient = getAdminClient()
 
+      // Note: company_name is stored directly on contacts
+      // contacts.company_id references accounts table (legacy), not companies
       const { data, error } = await adminClient
         .from('contacts')
         .select(`
           *,
-          company:companies!company_id(id, name, segment, status),
           owner:user_profiles!owner_id(id, full_name, avatar_url)
         `)
         .eq('id', input.id)
@@ -1071,11 +1065,12 @@ export const unifiedContactsRouter = router({
         const { orgId } = ctx
         const adminClient = getAdminClient()
 
+        // Note: company_name is stored directly on contacts, no join needed
+        // The company_id FK references accounts table, not companies
         let query = adminClient
           .from('contacts')
           .select(`
             *,
-            company:companies!company_id(id, name),
             owner:user_profiles!owner_id(id, full_name, avatar_url)
           `, { count: 'exact' })
           .eq('org_id', orgId)
@@ -1174,7 +1169,7 @@ export const unifiedContactsRouter = router({
 
         const { data: leads, error } = await adminClient
           .from('contacts')
-          .select('id, lead_status, lead_score, lead_estimated_value')
+          .select('id, lead_status, lead_score, lead_estimated_value, created_at')
           .eq('org_id', orgId)
           .eq('subtype', 'person_lead')
           .is('deleted_at', null)
@@ -1183,14 +1178,28 @@ export const unifiedContactsRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
+        const total = leads?.length ?? 0
         const totalValue = leads?.reduce((sum, l) => sum + (l.lead_estimated_value ?? 0), 0) ?? 0
+        const converted = leads?.filter(l => l.lead_status === 'converted').length ?? 0
+        const qualified = leads?.filter(l => l.lead_status === 'qualified').length ?? 0
+
+        // Calculate new this week (created in last 7 days)
+        const oneWeekAgo = new Date()
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
+        const newThisWeek = leads?.filter(l =>
+          l.created_at && new Date(l.created_at) >= oneWeekAgo
+        ).length ?? 0
+
+        // Calculate conversion rate (converted / total that could convert)
+        const conversionRate = total > 0 ? (converted / total) * 100 : 0
 
         return {
-          total: leads?.length ?? 0,
-          new: leads?.filter(l => l.lead_status === 'new').length ?? 0,
+          total,
+          new: newThisWeek, // Now means "new this week" for UI display
           contacted: leads?.filter(l => l.lead_status === 'contacted').length ?? 0,
-          qualified: leads?.filter(l => l.lead_status === 'qualified').length ?? 0,
-          converted: leads?.filter(l => l.lead_status === 'converted').length ?? 0,
+          qualified,
+          converted,
+          conversionRate,
           hot: leads?.filter(l => (l.lead_score ?? 0) >= 70).length ?? 0,
           warm: leads?.filter(l => (l.lead_score ?? 0) >= 40 && (l.lead_score ?? 0) < 70).length ?? 0,
           cold: leads?.filter(l => (l.lead_score ?? 0) < 40).length ?? 0,
@@ -1531,12 +1540,13 @@ export const unifiedContactsRouter = router({
         const { orgId } = ctx
         const adminClient = getAdminClient()
 
+        // Note: company_name is stored directly on contacts
+        // contacts.company_id references accounts table (legacy), not companies
         const { data, error } = await adminClient
           .from('contacts')
           .select(`
             *,
-            owner:user_profiles!owner_id(id, full_name, avatar_url, email),
-            company:companies!company_id(id, name)
+            owner:user_profiles!owner_id(id, full_name, avatar_url, email)
           `)
           .eq('id', input.id)
           .eq('org_id', orgId)
@@ -2048,5 +2058,7 @@ export const unifiedContactsRouter = router({
       return { success: true }
     }),
 })
+
+
 
 

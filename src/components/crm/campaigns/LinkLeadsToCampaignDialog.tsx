@@ -52,6 +52,7 @@ export function LinkLeadsToCampaignDialog({
       utils.unifiedContacts.leads.listByCampaign.invalidate({ campaignId })
       utils.unifiedContacts.leads.listAvailableForCampaign.invalidate()
       utils.crm.campaigns.getByIdWithCounts.invalidate({ id: campaignId })
+      utils.crm.campaigns.getFullEntity.invalidate({ id: campaignId })
       onOpenChange(false)
       onSuccess?.()
     },
@@ -229,6 +230,8 @@ export function LinkLeadsToCampaignDialog({
     </Dialog>
   )
 }
+
+
 
 
 

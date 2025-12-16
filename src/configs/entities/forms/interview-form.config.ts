@@ -6,11 +6,8 @@ import {
   Video,
   Phone,
   MapPin,
-  Clock,
   User,
-  Mail,
   FileText,
-  Link,
 } from 'lucide-react'
 import { FormConfig, FieldDefinition } from '../types'
 

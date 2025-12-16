@@ -190,7 +190,7 @@ export async function sendTemplatedEmail(
       replyTo: template.reply_to ? renderTemplate(template.reply_to, fullContext) : undefined,
     })
 
-    // Log to email_sends
+    // Log to email_sends (legacy)
     const { data: sendLog } = await db
       .from('email_sends')
       .insert({
@@ -213,6 +213,38 @@ export async function sendTemplatedEmail(
       })
       .select('id')
       .single()
+
+    // Log to unified communications table (fire-and-forget)
+    void db.from('communications').insert({
+      org_id: orgId,
+      channel: 'email',
+      direction: 'outbound',
+      from_address: actualFromAddress,
+      from_name: actualFromName,
+      to_address: to,
+      to_name: toName,
+      subject,
+      body_html: html,
+      preview: html.replace(/<[^>]*>/g, '').substring(0, 200),
+      entity_type: entityType,
+      entity_id: entityId,
+      provider: 'resend',
+      provider_message_id: resendData?.id,
+      status: resendError ? 'failed' : 'sent',
+      sent_at: resendError ? null : new Date().toISOString(),
+      failed_at: resendError ? new Date().toISOString() : null,
+      error_message: resendError?.message,
+      template_id: template.id,
+      template_name: template.name,
+      template_variables: fullContext,
+      created_by: userId,
+    }).then(({ error }) => {
+      if (error) {
+        console.error('[Communications] Failed to log email:', error)
+      } else {
+        console.log('[Communications] Email logged to unified table')
+      }
+    })
 
     if (resendError) {
       console.error('Failed to send email:', resendError)

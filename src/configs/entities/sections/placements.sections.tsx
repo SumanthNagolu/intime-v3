@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { format, formatDistanceToNow } from 'date-fns'
-import { User, Briefcase, Building2, DollarSign, Calendar, FileText, Activity, Clock, CheckCircle, MapPin, Plus } from 'lucide-react'
+import { User, Building2, DollarSign, Calendar, FileText, Activity, Clock, CheckCircle, MapPin, Plus } from 'lucide-react'
 import Link from 'next/link'
 import { trpc } from '@/lib/trpc/client'
 import { AddressDisplay } from '@/components/addresses'
@@ -53,7 +53,7 @@ interface PCFSectionProps {
 /**
  * Overview Section
  */
-export function PlacementOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
+export function PlacementOverviewSectionPCF({ entityId: _entityId, entity }: PCFSectionProps) {
   const placement = entity as Placement | undefined
 
   if (!placement) return null
@@ -331,7 +331,7 @@ export function PlacementTimesheetsSectionPCF({ entityId }: PCFSectionProps) {
 /**
  * Activities Section
  */
-export function PlacementActivitiesSectionPCF({ entityId }: PCFSectionProps) {
+export function PlacementActivitiesSectionPCF({ entityId: _entityId }: PCFSectionProps) {
   return (
     <Card className="bg-white">
       <CardHeader>
@@ -353,7 +353,7 @@ export function PlacementActivitiesSectionPCF({ entityId }: PCFSectionProps) {
 /**
  * Documents Section
  */
-export function PlacementDocumentsSectionPCF({ entityId }: PCFSectionProps) {
+export function PlacementDocumentsSectionPCF({ entityId: _entityId }: PCFSectionProps) {
   return (
     <Card className="bg-white">
       <CardHeader>
@@ -423,3 +423,5 @@ export function PlacementLocationSectionPCF({ entityId }: PCFSectionProps) {
     </Card>
   )
 }
+
+

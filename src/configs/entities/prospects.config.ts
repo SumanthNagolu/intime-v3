@@ -17,6 +17,7 @@ import {
   Calendar,
   Send,
   Link,
+  UserPlus,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
@@ -563,6 +564,23 @@ export const prospectsDetailConfig: DetailViewConfig<Prospect> = {
       isVisible: (entity) => {
         const prospect = entity as Prospect
         return !!prospect.linkedin_url
+      },
+    },
+    { separator: true, label: '' },
+    {
+      label: 'Convert to Lead',
+      icon: UserPlus,
+      onClick: (entity) => {
+        window.dispatchEvent(
+          new CustomEvent('openCampaignDialog', {
+            detail: { dialogId: 'convertProspect', prospectId: entity.id, campaignId: entity.campaign_id },
+          })
+        )
+      },
+      isVisible: (entity) => {
+        const prospect = entity as Prospect
+        // Show if not already converted
+        return !prospect.converted_lead_id
       },
     },
     { separator: true, label: '' },

@@ -10,10 +10,8 @@ import { orgProtectedProcedure } from '../trpc/middleware'
 const employmentStatusSchema = z.enum(['onboarding', 'active', 'on_leave', 'terminated', 'all'])
 const employmentTypeSchema = z.enum(['fte', 'contractor', 'intern', 'part_time', 'all'])
 
-// Onboarding schemas
-const onboardingStatusSchema = z.enum(['not_started', 'in_progress', 'completed', 'cancelled'])
+// Onboarding schemas - used in input validation
 const taskCategorySchema = z.enum(['paperwork', 'it_setup', 'training', 'orientation', 'other'])
-const taskStatusSchema = z.enum(['pending', 'completed', 'skipped'])
 const sortFieldSchema = z.enum([
   'created_at',
   'hire_date',
@@ -59,7 +57,7 @@ export const hrRouter = router({
           employmentType,
           department,
           managerId,
-          podId,
+          podId: _podId,
           limit,
           offset,
           sortBy,

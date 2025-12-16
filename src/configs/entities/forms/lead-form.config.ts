@@ -8,9 +8,7 @@ import {
   Phone,
   Globe,
   Linkedin,
-  DollarSign,
   Target,
-  Briefcase,
 } from 'lucide-react'
 import { FormConfig, FieldDefinition } from '../types'
 

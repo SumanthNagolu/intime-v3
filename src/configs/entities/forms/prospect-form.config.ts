@@ -2,14 +2,9 @@
 
 import { z } from 'zod'
 import {
-  User,
   Mail,
-  Building2,
   Phone,
   Linkedin,
-  MessageSquare,
-  Target,
-  Link,
 } from 'lucide-react'
 import { FormConfig, FieldDefinition } from '../types'
 

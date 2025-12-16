@@ -9,9 +9,12 @@ const MAX_RECENT_ENTITIES = 10
 
 interface EntityNavigationContextValue extends EntityNavigationState {
   setCurrentEntity: (entity: EntityNavigationState['currentEntity']) => void
+  setCurrentEntityData: (data: unknown) => void
   addRecentEntity: (type: EntityType, entity: Omit<RecentEntity, 'viewedAt'>) => void
   clearCurrentEntity: () => void
   getRecentEntities: (type: EntityType) => RecentEntity[]
+  /** Full entity data for sidebar access (ONE DB CALL pattern) */
+  currentEntityData: unknown
 }
 
 const EntityNavigationContext = createContext<EntityNavigationContextValue | null>(null)
@@ -38,6 +41,8 @@ export function EntityNavigationProvider({ children }: { children: ReactNode }) 
     currentStep: null,
     recentEntities: initialRecentEntities,
   })
+  // Full entity data for sidebar access (ONE DB CALL pattern)
+  const [currentEntityData, setCurrentEntityDataState] = useState<unknown>(null)
 
   // Load recent entities from localStorage on mount
   useEffect(() => {
@@ -99,6 +104,12 @@ export function EntityNavigationProvider({ children }: { children: ReactNode }) 
       currentEntity: null,
       currentStep: null,
     }))
+    setCurrentEntityDataState(null)
+  }, [])
+
+  // ONE DB CALL pattern: Store full entity data for sidebar access
+  const setCurrentEntityData = useCallback((data: unknown) => {
+    setCurrentEntityDataState(data)
   }, [])
 
   const addRecentEntity = useCallback((type: EntityType, entity: Omit<RecentEntity, 'viewedAt'>) => {
@@ -131,9 +142,11 @@ export function EntityNavigationProvider({ children }: { children: ReactNode }) 
       value={{
         ...state,
         setCurrentEntity,
+        setCurrentEntityData,
         addRecentEntity,
         clearCurrentEntity,
         getRecentEntities,
+        currentEntityData,
       }}
     >
       {children}
