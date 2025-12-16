@@ -559,7 +559,7 @@ export const jobsListConfig: ListViewConfig<Job> = {
 
     const validStatuses = ['draft', 'open', 'active', 'on_hold', 'filled', 'cancelled', 'closed', 'all'] as const
     const validTypes = ['full_time', 'contract', 'contract_to_hire', 'part_time'] as const
-    const validSortFields = [
+    const _validSortFields = [
       'title',
       'account_id',
       'location',
@@ -577,7 +577,7 @@ export const jobsListConfig: ListViewConfig<Job> = {
 
     type JobStatus = (typeof validStatuses)[number]
     type JobType = (typeof validTypes)[number]
-    type SortField = (typeof validSortFields)[number]
+    type SortField = (typeof _validSortFields)[number]
 
     // Map frontend column keys to database columns
     const sortFieldMap: Record<string, SortField> = {

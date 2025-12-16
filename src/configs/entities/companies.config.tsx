@@ -17,7 +17,6 @@ import {
   AlertTriangle,
   MessageSquare,
   Target,
-  UserCheck,
   Settings,
   Package,
   AlertCircle,
@@ -596,7 +595,7 @@ export const companiesListConfig: ListViewConfig<Company> = {
     const validCategories = ['client', 'vendor', 'partner', 'prospect'] as const
     const validStatuses = ['active', 'inactive', 'on_hold', 'churned', 'do_not_use', 'pending_approval'] as const
     const validTiers = ['strategic', 'preferred', 'standard', 'transactional'] as const
-    const validSortFields = [
+    const _validSortFields = [
       'name', 'category', 'industry', 'status', 'tier', 'segment',
       'health_score', 'last_contacted_date', 'revenue_ytd', 'created_at'
     ] as const
@@ -604,7 +603,7 @@ export const companiesListConfig: ListViewConfig<Company> = {
     type Category = (typeof validCategories)[number]
     type Status = (typeof validStatuses)[number]
     type Tier = (typeof validTiers)[number]
-    type SortField = (typeof validSortFields)[number]
+    type SortField = (typeof _validSortFields)[number]
 
     // Map frontend column keys to backend fields
     const sortFieldMap: Record<string, SortField> = {
@@ -879,7 +878,7 @@ export const clientsListConfig: ListViewConfig<Company> = {
     const validStatuses = ['active', 'inactive', 'on_hold', 'churned', 'do_not_use', 'pending_approval'] as const
     const validTiers = ['strategic', 'preferred', 'standard', 'transactional'] as const
     const validSegments = ['enterprise', 'mid_market', 'smb', 'startup'] as const
-    const validSortFields = [
+    const _validSortFields = [
       'name', 'category', 'industry', 'status', 'tier', 'segment',
       'health_score', 'last_contacted_date', 'revenue_ytd', 'created_at'
     ] as const
@@ -887,7 +886,7 @@ export const clientsListConfig: ListViewConfig<Company> = {
     type Status = (typeof validStatuses)[number]
     type Tier = (typeof validTiers)[number]
     type Segment = (typeof validSegments)[number]
-    type SortField = (typeof validSortFields)[number]
+    type SortField = (typeof _validSortFields)[number]
 
     const sortFieldMap: Record<string, SortField> = {
       name: 'name',
@@ -1133,14 +1132,14 @@ export const vendorsListConfig: ListViewConfig<Company> = {
 
     const validStatuses = ['active', 'inactive', 'on_hold', 'do_not_use'] as const
     const validTiers = ['strategic', 'preferred', 'standard', 'transactional'] as const
-    const validSortFields = [
+    const _validSortFields = [
       'name', 'category', 'industry', 'status', 'tier', 'segment',
       'health_score', 'last_contacted_date', 'revenue_ytd', 'created_at'
     ] as const
 
     type Status = (typeof validStatuses)[number]
     type Tier = (typeof validTiers)[number]
-    type SortField = (typeof validSortFields)[number]
+    type SortField = (typeof _validSortFields)[number]
 
     const sortFieldMap: Record<string, SortField> = {
       name: 'name',

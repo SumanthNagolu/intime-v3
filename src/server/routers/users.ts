@@ -2,21 +2,10 @@ import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
-import { createClient } from '@supabase/supabase-js'
+import { getAdminClient } from '@/lib/supabase/admin'
 
 // Input schemas
 const userStatusSchema = z.enum(['pending', 'active', 'suspended', 'deactivated'])
-
-// Supabase Admin client for user management
-function getAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    {
-      auth: { autoRefreshToken: false, persistSession: false }
-    }
-  )
-}
 
 export const usersRouter = router({
   // ============================================
@@ -808,5 +797,273 @@ export const usersRouter = router({
       }
 
       return pods ?? []
+    }),
+
+  // ============================================
+  // LIST WITH FILTER OPTIONS (Consolidated for single DB call)
+  // ============================================
+  listWithFilterOptions: orgProtectedProcedure
+    .input(z.object({
+      search: z.string().optional(),
+      roleId: z.string().uuid().optional(),
+      podId: z.string().uuid().optional(),
+      status: userStatusSchema.optional(),
+      page: z.number().default(1),
+      pageSize: z.number().default(20),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { orgId, supabase } = ctx
+      const { search, roleId, podId, status, page, pageSize } = input
+      const adminClient = getAdminClient()
+
+      // Execute all queries in parallel
+      const [usersResult, rolesResult, podsResult, podMembersResult] = await Promise.all([
+        // Users list query (will apply pod filter below if needed)
+        (async () => {
+          let userIdsInPod: string[] | null = null
+          if (podId) {
+            const { data: podMembers } = await adminClient
+              .from('pod_members')
+              .select('user_id')
+              .eq('pod_id', podId)
+              .eq('is_active', true)
+              .eq('org_id', orgId)
+            userIdsInPod = podMembers?.map((pm) => pm.user_id) ?? []
+            if (userIdsInPod.length === 0) {
+              return { data: [], count: 0, error: null }
+            }
+          }
+
+          let query = adminClient
+            .from('user_profiles')
+            .select(`
+              id,
+              full_name,
+              email,
+              phone,
+              avatar_url,
+              status,
+              is_active,
+              role_id,
+              manager_id,
+              start_date,
+              last_login_at,
+              created_at,
+              role:system_roles(id, name, display_name, code, category, color_code),
+              pod_memberships:pod_members(
+                id,
+                pod_id,
+                role,
+                is_active,
+                pod:pods(id, name, pod_type)
+              )
+            `, { count: 'exact' })
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+
+          if (search) {
+            query = query.or(`full_name.ilike.%${search}%,email.ilike.%${search}%`)
+          }
+          if (roleId) {
+            query = query.eq('role_id', roleId)
+          }
+          if (podId && userIdsInPod) {
+            query = query.in('id', userIdsInPod)
+          }
+          if (status) {
+            query = query.eq('status', status)
+          }
+
+          const offset = (page - 1) * pageSize
+          query = query
+            .range(offset, offset + pageSize - 1)
+            .order('created_at', { ascending: false })
+
+          return query
+        })(),
+
+        // Roles for filter dropdown
+        supabase
+          .from('system_roles')
+          .select('id, code, name, display_name, description, category, hierarchy_level, pod_type, color_code')
+          .eq('is_active', true)
+          .order('hierarchy_level'),
+
+        // Pods for filter dropdown
+        supabase
+          .from('pods')
+          .select('id, name, pod_type, status')
+          .eq('org_id', orgId)
+          .eq('status', 'active')
+          .is('deleted_at', null)
+          .order('name'),
+
+        // Stats: count by status
+        adminClient
+          .from('user_profiles')
+          .select('status')
+          .eq('org_id', orgId)
+          .is('deleted_at', null),
+      ])
+
+      if (usersResult.error) {
+        console.error('Failed to fetch users:', usersResult.error)
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to fetch users',
+        })
+      }
+
+      const filteredData = usersResult.data ?? []
+
+      // Transform data
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const transformedItems = filteredData.map((user: any) => ({
+        ...user,
+        role: Array.isArray(user.role) ? user.role[0] : user.role,
+        pod_memberships: user.pod_memberships?.map((pm: { pod?: unknown[] | unknown; [key: string]: unknown }) => ({
+          ...pm,
+          pod: Array.isArray(pm.pod) ? pm.pod[0] : pm.pod,
+        })),
+      }))
+
+      // Calculate stats
+      const statusCounts = (podMembersResult.data ?? []).reduce((acc, user) => {
+        const s = user.status as string
+        acc[s] = (acc[s] || 0) + 1
+        return acc
+      }, {} as Record<string, number>)
+
+      return {
+        items: transformedItems,
+        pagination: {
+          total: usersResult.count ?? 0,
+          page,
+          pageSize,
+          totalPages: Math.ceil((usersResult.count ?? 0) / pageSize),
+        },
+        filterOptions: {
+          roles: rolesResult.data ?? [],
+          pods: podsResult.data ?? [],
+        },
+        stats: {
+          total: podMembersResult.data?.length ?? 0,
+          active: statusCounts['active'] ?? 0,
+          pending: statusCounts['pending'] ?? 0,
+          suspended: statusCounts['suspended'] ?? 0,
+          deactivated: statusCounts['deactivated'] ?? 0,
+        },
+      }
+    }),
+
+  // ============================================
+  // GET FULL USER (Consolidated for single DB call)
+  // ============================================
+  getFullUser: orgProtectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .query(async ({ ctx, input }) => {
+      const { orgId, supabase } = ctx
+      const adminClient = getAdminClient()
+
+      // Execute all queries in parallel
+      const [userResult, activityResult, loginHistoryResult, managerResult] = await Promise.all([
+        // Main user data
+        adminClient
+          .from('user_profiles')
+          .select(`
+            id,
+            full_name,
+            first_name,
+            last_name,
+            email,
+            phone,
+            avatar_url,
+            status,
+            is_active,
+            role_id,
+            manager_id,
+            start_date,
+            last_login_at,
+            two_factor_enabled,
+            password_changed_at,
+            created_at,
+            updated_at,
+            role:system_roles(id, name, display_name, code, category, color_code, description),
+            pod_memberships:pod_members(
+              id,
+              pod_id,
+              role,
+              is_active,
+              joined_at,
+              pod:pods(id, name, pod_type, status)
+            )
+          `)
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .single(),
+
+        // Activity history
+        supabase
+          .from('audit_logs')
+          .select('*')
+          .eq('org_id', orgId)
+          .eq('user_id', input.id)
+          .order('created_at', { ascending: false })
+          .limit(50),
+
+        // Login history
+        supabase
+          .from('login_history')
+          .select('*')
+          .eq('org_id', orgId)
+          .eq('user_id', input.id)
+          .order('created_at', { ascending: false })
+          .limit(50),
+
+        // Get manager info separately for reliable join
+        adminClient
+          .from('user_profiles')
+          .select('id, full_name, email, avatar_url')
+          .eq('org_id', orgId)
+          .is('deleted_at', null),
+      ])
+
+      if (userResult.error || !userResult.data) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'User not found',
+        })
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const userData = userResult.data as any
+      const manager = userData.manager_id
+        ? managerResult.data?.find((m) => m.id === userData.manager_id)
+        : null
+
+      const transformedUser = {
+        ...userData,
+        role: Array.isArray(userData.role) ? userData.role[0] : userData.role,
+        manager: manager ?? null,
+        pod_memberships: userData.pod_memberships?.map((pm: { pod?: unknown[] | unknown; [key: string]: unknown }) => ({
+          ...pm,
+          pod: Array.isArray(pm.pod) ? pm.pod[0] : pm.pod,
+        })),
+      }
+
+      return {
+        ...transformedUser,
+        sections: {
+          activity: {
+            items: activityResult.data ?? [],
+            total: activityResult.data?.length ?? 0,
+          },
+          loginHistory: {
+            items: loginHistoryResult.data ?? [],
+            total: loginHistoryResult.data?.length ?? 0,
+          },
+        },
+      }
     }),
 })

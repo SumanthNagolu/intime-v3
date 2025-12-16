@@ -132,7 +132,7 @@ function formatNumber(value: number | null | undefined): string {
 // OVERVIEW SECTION
 // ============================================
 
-export function CompanyOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
+export function CompanyOverviewSectionPCF({ entityId: _entityId, entity }: PCFSectionProps) {
   const company = entity as Company | undefined
 
   if (!company) return null
@@ -565,7 +565,7 @@ export function CompanyOverviewSectionPCF({ entityId, entity }: PCFSectionProps)
 // CONTACTS SECTION
 // ============================================
 
-export function CompanyContactsSectionPCF({ entityId }: PCFSectionProps) {
+export function CompanyContactsSectionPCF({ entityId: _entityId }: PCFSectionProps) {
   return (
     <Card className="bg-white">
       <CardHeader>
@@ -589,7 +589,7 @@ export function CompanyContactsSectionPCF({ entityId }: PCFSectionProps) {
 // JOBS SECTION
 // ============================================
 
-export function CompanyJobsSectionPCF({ entityId }: PCFSectionProps) {
+export function CompanyJobsSectionPCF({ entityId: _entityId }: PCFSectionProps) {
   return (
     <Card className="bg-white">
       <CardHeader>
@@ -613,7 +613,7 @@ export function CompanyJobsSectionPCF({ entityId }: PCFSectionProps) {
 // PLACEMENTS SECTION
 // ============================================
 
-export function CompanyPlacementsSectionPCF({ entityId }: PCFSectionProps) {
+export function CompanyPlacementsSectionPCF({ entityId: _entityId }: PCFSectionProps) {
   return (
     <Card className="bg-white">
       <CardHeader>

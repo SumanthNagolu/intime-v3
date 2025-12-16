@@ -1108,7 +1108,7 @@ export const dataRouter = router({
       }
 
       // Restore to original table
-      const { deleted_at, ...restoreData } = archived.original_data as Record<string, unknown>
+      const { deleted_at: _deleted_at, ...restoreData } = archived.original_data as Record<string, unknown>
       await supabase
         .from(entityConfig.table)
         .upsert({

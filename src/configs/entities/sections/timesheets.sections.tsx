@@ -16,8 +16,6 @@ import {
   CheckCircle,
   XCircle,
   User,
-  Briefcase,
-  Building2,
   FileText,
   Activity,
   Receipt,
@@ -44,7 +42,7 @@ interface PCFSectionProps {
 // OVERVIEW SECTION
 // ============================================
 
-export function TimesheetOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
+export function TimesheetOverviewSectionPCF({ entityId: _entityId, entity }: PCFSectionProps) {
   const timesheet = entity as Timesheet | undefined
 
   if (!timesheet) return null
@@ -556,7 +554,7 @@ export function TimesheetExpensesSectionPCF({ entityId }: PCFSectionProps) {
 // APPROVALS SECTION
 // ============================================
 
-export function TimesheetApprovalsSectionPCF({ entityId, entity }: PCFSectionProps) {
+export function TimesheetApprovalsSectionPCF({ entityId: _entityId, entity }: PCFSectionProps) {
   const timesheet = entity as Timesheet | undefined
 
   if (!timesheet) return null
@@ -669,7 +667,7 @@ export function TimesheetApprovalsSectionPCF({ entityId, entity }: PCFSectionPro
 // ACTIVITIES SECTION
 // ============================================
 
-export function TimesheetActivitiesSectionPCF({ entityId }: PCFSectionProps) {
+export function TimesheetActivitiesSectionPCF({ entityId: _entityId }: PCFSectionProps) {
   return (
     <Card className="bg-white">
       <CardHeader>

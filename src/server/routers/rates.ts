@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
-import { createClient } from '@supabase/supabase-js'
+import { getAdminClient } from '@/lib/supabase/admin'
 
 // ============================================
 // RATES-01: Unified Rate Cards & Billing Router
@@ -28,22 +28,6 @@ const approvalTypeEnum = z.enum([
 const approvalStatusEnum = z.enum([
   'pending', 'approved', 'rejected', 'expired'
 ])
-
-const changeTypeEnum = z.enum([
-  'created', 'updated', 'approved', 'rejected', 'expired', 'negotiated'
-])
-
-// ============================================
-// ADMIN CLIENT
-// ============================================
-
-function getAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { autoRefreshToken: false, persistSession: false } }
-  )
-}
 
 // ============================================
 // HELPER FUNCTIONS

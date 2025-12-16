@@ -239,6 +239,72 @@ export async function processResendWebhookEvent(
     }
 
     // ========================================
+    // UNIFIED COMMUNICATIONS TABLE UPDATE
+    // ========================================
+    // Also update the new unified communications table
+    const commUpdateData: Record<string, unknown> = {
+      status: newStatus,
+    }
+
+    switch (eventType) {
+      case 'email.sent':
+        commUpdateData.sent_at = now
+        break
+      case 'email.delivered':
+        commUpdateData.delivered_at = now
+        break
+      case 'email.opened':
+        commUpdateData.opened_at = now
+        // open_count will be incremented by database trigger
+        break
+      case 'email.clicked':
+        commUpdateData.clicked_at = now
+        // click_count will be incremented by database trigger
+        const clickData = data as ResendClickData
+        if (clickData.click?.link) {
+          commUpdateData.clicked_links = [{ url: clickData.click.link, clicked_at: now, count: 1 }]
+        }
+        break
+      case 'email.bounced':
+        commUpdateData.failed_at = now
+        const commBounceData = data as ResendBounceData
+        if (commBounceData.bounce) {
+          commUpdateData.error_code = commBounceData.bounce.type
+          commUpdateData.error_message = commBounceData.bounce.message
+        }
+        break
+      case 'email.complained':
+        commUpdateData.error_code = 'spam'
+        commUpdateData.error_message = 'Email marked as spam by recipient'
+        break
+    }
+
+    const { error: commError } = await db
+      .from('communications')
+      .update(commUpdateData)
+      .eq('provider_message_id', emailId)
+
+    if (!commError) {
+      // Get communication ID for event logging
+      const { data: commRecord } = await db
+        .from('communications')
+        .select('id')
+        .eq('provider_message_id', emailId)
+        .single()
+
+      if (commRecord) {
+        // Log the event to communication_events
+        await db.from('communication_events').insert({
+          communication_id: commRecord.id,
+          event_type: eventType.replace('email.', ''),
+          event_data: data,
+          provider_event_id: emailId,
+          occurred_at: now,
+        })
+      }
+    }
+
+    // ========================================
     // CAMPAIGN ENGAGEMENT TRACKING
     // ========================================
     // If this email is linked to a campaign enrollment, update engagement metrics

@@ -2,16 +2,8 @@ import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
-import { createClient } from '@supabase/supabase-js'
+import { getAdminClient } from '@/lib/supabase/admin'
 
-// Admin client for bypassing RLS
-function getAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { autoRefreshToken: false, persistSession: false } }
-  )
-}
 
 // ============================================
 // JOB LIFECYCLE ZOD SCHEMAS
@@ -270,7 +262,6 @@ const requestApprovalInput = z.object({
 // ============================================
 
 const placementHealthEnum = z.enum(['healthy', 'at_risk', 'critical'])
-const placementStatusEnum = z.enum(['pending_start', 'active', 'extended', 'ended', 'cancelled'])
 
 const createPlacementInput = z.object({
   offerId: z.string().uuid(),
@@ -495,7 +486,7 @@ export const atsRouter = router({
         recruiterId: z.string().uuid().optional(),
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
-        sortBy: z.enum(['title', 'account_id', 'location', 'job_type', 'status', 'positions_available', 'submissions_count', 'interviews_count', 'owner_id', 'due_date', 'created_at', 'priority_rank', 'sla_days']).default('created_at'),
+        sortBy: z.enum(['title', 'client_id', 'location', 'job_type', 'status', 'positions_available', 'submissions_count', 'interviews_count', 'owner_id', 'due_date', 'created_at', 'priority_rank', 'sla_days']).default('created_at'),
         sortOrder: z.enum(['asc', 'desc']).default('desc'),
       }))
       .query(async ({ ctx, input }) => {
@@ -506,10 +497,10 @@ export const atsRouter = router({
           .from('jobs')
           .select(`
             *,
-            company:companies!company_id(id, name),
-            owner:user_profiles!owner_id(id, full_name, avatar_url),
-            submissions(id, status),
-            interviews(id, status)
+            company:companies!jobs_company_id_fkey(id, name),
+            owner:user_profiles!jobs_owner_id_fkey(id, full_name, avatar_url),
+            submissions!submissions_job_id_fkey(id, status),
+            interviews!interviews_job_id_fkey(id, status)
           `, { count: 'exact' })
           .eq('org_id', orgId)
           .is('deleted_at', null)
@@ -531,7 +522,10 @@ export const atsRouter = router({
           query = query.eq('priority_rank', input.priorityRank)
         }
         if (input.accountId) {
-          query = query.eq('account_id', input.accountId)
+          // TODO: jobs table no longer has account_id or client_id column
+          // Need to filter via company_id -> companies -> legacy_account_id
+          // For now, filter by company_id directly (assuming accountId is actually companyId)
+          query = query.eq('company_id', input.accountId)
         }
         if (input.recruiterId) {
           query = query.eq('owner_id', input.recruiterId)
@@ -544,6 +538,7 @@ export const atsRouter = router({
         const { data, error, count } = await query
 
         if (error) {
+          console.error('[jobs.list] Error:', error.message, error.code, error.details, error.hint)
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
@@ -578,7 +573,7 @@ export const atsRouter = router({
             fee_type: j.fee_type,
             fee_percentage: j.fee_percentage,
             fee_flat_amount: j.fee_flat_amount,
-            account: j.account,
+            company: j.company,
             owner: j.owner,
             submissions_count: (j.submissions as Array<{ status: string }> | null)?.length ?? 0,
             interviews_count: (j.interviews as Array<{ status: string }> | null)?.length ?? 0,
@@ -604,8 +599,8 @@ export const atsRouter = router({
             clientCompany:companies!client_company_id(id, name, industry),
             endClientCompany:companies!end_client_company_id(id, name, industry),
             vendorCompany:companies!vendor_company_id(id, name),
-            hiringManagerContact:contacts!hiring_manager_contact_id(id, full_name, primary_email, phone),
-            hrContact:contacts!hr_contact_id(id, full_name, primary_email, phone),
+            hiringManagerContact:contacts!hiring_manager_contact_id(id, first_name, last_name, email, phone),
+            hrContact:contacts!hr_contact_id(id, first_name, last_name, email, phone),
             intakeCompletedBy:user_profiles!intake_completed_by(id, full_name),
             owner:user_profiles!owner_id(id, full_name, avatar_url),
             submissions(id, status, candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name))
@@ -615,7 +610,12 @@ export const atsRouter = router({
           .single()
 
         if (error) {
-          throw new TRPCError({ code: 'NOT_FOUND', message: 'Job not found' })
+          console.error('[getById] Error fetching job:', error.message, error.code, error.details)
+          if (error.code === 'PGRST116') {
+            // No rows returned - job doesn't exist or wrong org
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Job not found' })
+          }
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
         // Calculate SLA progress
@@ -691,10 +691,11 @@ export const atsRouter = router({
         recruiterId: z.string().uuid().optional(),
       }))
       .query(async ({ ctx, input }) => {
-        const { orgId, user } = ctx
+        const { orgId } = ctx
         const adminClient = getAdminClient()
 
-        const ownerId = input.recruiterId || user?.id
+        // recruiterId can be used to filter by owner in the future
+        const _ownerId = input.recruiterId
 
         // Count jobs by status
         const { data: jobs } = await adminClient
@@ -893,7 +894,7 @@ export const atsRouter = router({
           .from('jobs')
           .insert({
             org_id: orgId,
-            account_id: input.accountId,
+            client_id: input.accountId, // client_id references accounts table
             deal_id: input.dealId,
             title: input.title,
             description: input.description,
@@ -1119,7 +1120,7 @@ export const atsRouter = router({
         const validationErrors: string[] = []
         if (!job.title || job.title.length < 3) validationErrors.push('Job title is required')
         if (!job.required_skills || job.required_skills.length === 0) validationErrors.push('At least one required skill is needed')
-        if (!job.account_id) validationErrors.push('Client account is required')
+        if (!job.client_id) validationErrors.push('Client account is required')
 
         if (validationErrors.length > 0) {
           throw new TRPCError({ code: 'BAD_REQUEST', message: validationErrors.join(', ') })
@@ -1500,7 +1501,7 @@ export const atsRouter = router({
         // Get current job to find similar ones
         const { data: currentJob, error: currentError } = await adminClient
           .from('jobs')
-          .select('id, title, account_id, required_skills')
+          .select('id, title, client_id, required_skills')
           .eq('id', input.jobId)
           .eq('org_id', orgId)
           .single()
@@ -1591,7 +1592,7 @@ export const atsRouter = router({
         offset: z.number().min(0).default(0),
       }))
       .query(async ({ ctx, input }) => {
-        const { orgId, user } = ctx
+        const { orgId } = ctx
         const adminClient = getAdminClient()
 
         let query = adminClient
@@ -1801,7 +1802,7 @@ export const atsRouter = router({
         // Verify job exists and is open
         const { data: job, error: jobError } = await adminClient
           .from('jobs')
-          .select('id, title, status, account_id')
+          .select('id, title, status, client_id')
           .eq('id', input.jobId)
           .eq('org_id', orgId)
           .single()
@@ -2086,7 +2087,7 @@ export const atsRouter = router({
           .from('submissions')
           .select(`
             id, status, job_id, candidate_id,
-            job:jobs(id, title, account_id, rate_min, rate_max,
+            job:jobs(id, title, client_id, rate_min, rate_max,
               company:companies!company_id(id, name)
             ),
             candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, email)
@@ -2118,7 +2119,7 @@ export const atsRouter = router({
         const jobArray = submission.job as Array<{
           id: string;
           title: string;
-          account_id: string;
+          client_id: string;
           rate_min?: number;
           rate_max?: number;
           company: Array<{ id: string; name: string }> | null;
@@ -4163,7 +4164,7 @@ export const atsRouter = router({
             *,
             submission:submissions!offers_submission_id_fkey(
               id, status,
-              job:jobs!submissions_job_id_fkey(id, title, account_id,
+              job:jobs!submissions_job_id_fkey(id, title, client_id,
                 company:companies!company_id(id, name)
               ),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, email, phone)
@@ -4252,7 +4253,7 @@ export const atsRouter = router({
           .from('submissions')
           .select(`
             id, status, job_id, candidate_id,
-            job:jobs!submissions_job_id_fkey(id, title, account_id),
+            job:jobs!submissions_job_id_fkey(id, title, client_id),
             candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, email)
           `)
           .eq('id', input.submissionId)
@@ -4367,7 +4368,7 @@ export const atsRouter = router({
         // Log activity
         const candidateArray4 = submission.candidate as Array<{ id: string; first_name: string; last_name: string; email?: string }> | null
         const candidate = candidateArray4?.[0] ?? null
-        const jobArray4 = submission.job as Array<{ id: string; title: string; account_id?: string }> | null
+        const jobArray4 = submission.job as Array<{ id: string; title: string; client_id?: string }> | null
         const job = jobArray4?.[0] ?? null
         await adminClient.from('activities').insert({
           org_id: orgId,
@@ -4415,7 +4416,7 @@ export const atsRouter = router({
             *,
             submission:submissions!offers_submission_id_fkey(
               id, status,
-              job:jobs!submissions_job_id_fkey(id, title, account_id,
+              job:jobs!submissions_job_id_fkey(id, title, client_id,
                 company:companies!company_id(id, name)
               ),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, email)
@@ -4847,7 +4848,8 @@ export const atsRouter = router({
         }
 
         if (input.accountId) {
-          query = query.eq('account_id', input.accountId)
+          // placements.company_id references companies (account_id column was removed)
+          query = query.eq('company_id', input.accountId)
         }
 
         // Filter for placements ending within 30 days
@@ -5069,7 +5071,7 @@ export const atsRouter = router({
           .select(`
             *,
             submission:submissions!offers_submission_id_fkey(id, status, job_id, candidate_id),
-            job:jobs!offers_job_id_fkey(id, title, account_id, positions_count, positions_filled)
+            job:jobs!offers_job_id_fkey(id, title, company_id, positions_count, positions_filled)
           `)
           .eq('id', input.offerId)
           .eq('org_id', orgId)
@@ -5112,8 +5114,8 @@ export const atsRouter = router({
         const day60 = new Date(start.getTime() + 60 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
         const day90 = new Date(start.getTime() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
 
-        // Get account_id from job
-        const job = offer.job as { account_id: string; positions_count: number; positions_filled: number } | null
+        // Get company_id from job
+        const job = offer.job as { company_id: string; positions_count: number; positions_filled: number } | null
 
         // Create placement
         const { data: placement, error: placementError } = await adminClient
@@ -5124,7 +5126,7 @@ export const atsRouter = router({
             submission_id: offer.submission_id,
             job_id: offer.job_id,
             candidate_id: offer.candidate_id,
-            account_id: job?.account_id,
+            company_id: job?.company_id,
             recruiter_id: user.id,
             status: 'pending_start',
             health_status: 'healthy',
@@ -5549,7 +5551,7 @@ export const atsRouter = router({
         // Fetch placement
         const { data: placement, error: fetchError } = await adminClient
           .from('placements')
-          .select('*, job:jobs!placements_job_id_fkey(id, title, account_id)')
+          .select('*, job:jobs!placements_job_id_fkey(id, title, client_id)')
           .eq('id', input.placementId)
           .eq('org_id', orgId)
           .single()
@@ -6620,7 +6622,7 @@ export const atsRouter = router({
         period: z.enum(['week', 'month', 'sprint']).optional(),
       }).optional())
       .query(async ({ ctx, input }) => {
-        const { orgId, user } = ctx
+        const { orgId } = ctx
         const adminClient = getAdminClient()
 
         const now = new Date()

@@ -1,4 +1,4 @@
-import { Clock, FileText, Calendar, DollarSign, CheckCircle, AlertCircle, Send, Eye, XCircle, Pencil, Trash2, MoreVertical } from 'lucide-react'
+import { Clock, FileText, Calendar, DollarSign, CheckCircle, AlertCircle, Send, Eye, XCircle, Pencil, Trash2 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig, StatCardConfig, FilterConfig, ColumnConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
 

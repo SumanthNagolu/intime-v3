@@ -2,7 +2,6 @@
 
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { trpc } from '@/lib/trpc/client'
 import {
   Clock,
   AlertCircle,
@@ -12,9 +11,30 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+// Data shape from the consolidated query
+export interface SummaryData {
+  priorities: {
+    counts: {
+      overdue: number
+      dueToday: number
+      total: number
+    }
+  }
+  pipeline: {
+    activeJobs: number
+    urgentJobs: number
+    pendingSubmissions: number
+    interviewsThisWeek: number
+    outstandingOffers: number
+    activePlacements: number
+  }
+}
+
 interface MySummaryProps {
   onMetricClick?: (metricType: string) => void
   activeMetric?: string | null
+  data?: SummaryData
+  isLoading?: boolean
 }
 
 interface MetricCardProps {
@@ -87,19 +107,10 @@ function MetricCard({
   )
 }
 
-export function MySummary({ onMetricClick, activeMetric }: MySummaryProps) {
-  // Fetch today's priorities for activity counts
-  const prioritiesQuery = trpc.dashboard.getTodaysPriorities.useQuery({
-    limit: 50,
-  })
-
-  // Fetch pipeline health for job/submission counts
-  const pipelineQuery = trpc.dashboard.getPipelineHealth.useQuery()
-
-  const priorities = prioritiesQuery.data
-  const pipeline = pipelineQuery.data
-
-  const isLoading = prioritiesQuery.isLoading || pipelineQuery.isLoading
+export function MySummary({ onMetricClick, activeMetric, data, isLoading = false }: MySummaryProps) {
+  // Use props data - no more client-side fetching
+  const priorities = data?.priorities
+  const pipeline = data?.pipeline
 
   // Calculate metrics
   const activitiesDueToday = priorities?.counts.dueToday ?? 0

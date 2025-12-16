@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { format, formatDistanceToNow } from 'date-fns'
-import { User, Briefcase, Building2, Calendar, Clock, Video, MapPin, FileText, ThumbsUp, ThumbsDown, Activity, Users, Plus } from 'lucide-react'
+import { User, Building2, Calendar, Clock, Video, MapPin, FileText, ThumbsUp, Activity, Users, Plus } from 'lucide-react'
 import Link from 'next/link'
 import { trpc } from '@/lib/trpc/client'
 import { AddressDisplay } from '@/components/addresses'
@@ -22,7 +22,7 @@ interface PCFSectionProps {
 /**
  * Overview Section
  */
-export function InterviewOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
+export function InterviewOverviewSectionPCF({ entityId: _entityId, entity }: PCFSectionProps) {
   const interview = entity as Interview | undefined
 
   if (!interview) return null
@@ -355,3 +355,5 @@ export function InterviewLocationSectionPCF({ entityId }: PCFSectionProps) {
     </Card>
   )
 }
+
+

@@ -1,21 +1,13 @@
 import { z } from 'zod'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
-import { createClient } from '@supabase/supabase-js'
+import { getAdminClient } from '@/lib/supabase/admin'
 
 // ============================================
 // ENTITIES-01: Entity Resolution Service
 // Central registry and resolution for polymorphic entity types
 // ============================================
 
-// Admin client for bypassing RLS
-function getAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { autoRefreshToken: false, persistSession: false } }
-  )
-}
 
 // Transform database row to camelCase response
 function transformEntityType(row: Record<string, unknown>) {

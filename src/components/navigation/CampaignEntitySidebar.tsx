@@ -21,7 +21,7 @@ import {
 } from 'lucide-react'
 import { getCampaignSectionsByGroup, SectionDefinition } from '@/lib/navigation/entity-sections'
 import { getEntityJourney, getCurrentStepIndex } from '@/lib/navigation/entity-journeys'
-import { trpc } from '@/lib/trpc/client'
+import { useEntityNavigation } from '@/lib/navigation/EntityNavigationContext'
 
 type NavigationMode = 'journey' | 'sections'
 
@@ -60,11 +60,20 @@ export function CampaignEntitySidebar({
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  // Fetch campaign data - lightweight query for sidebar
-  const { data: campaign, isLoading } = trpc.crm.campaigns.getById.useQuery(
-    { id: campaignId },
-    { enabled: !!campaignId }
-  )
+  // ONE DB CALL pattern: Get full entity data from navigation context
+  // Data is set by EntityContextProvider from server-side fetch - NO client query needed
+  const { currentEntityData } = useEntityNavigation()
+  const campaign = currentEntityData as { sections?: { prospects?: { total: number }, leads?: { total: number }, activities?: { total: number }, notes?: { total: number }, documents?: { total: number } } } | null
+  const isLoading = !campaign
+
+  // Extract counts from the full entity's sections data
+  const sectionCounts = {
+    prospects: counts.prospects ?? campaign?.sections?.prospects?.total,
+    leads: counts.leads ?? campaign?.sections?.leads?.total,
+    activities: counts.activities ?? campaign?.sections?.activities?.total,
+    notes: counts.notes ?? campaign?.sections?.notes?.total,
+    documents: counts.documents ?? campaign?.sections?.documents?.total,
+  }
 
   // Navigation mode from URL or default to sections
   const urlMode = searchParams.get('mode') as NavigationMode | null
@@ -140,19 +149,19 @@ export function CampaignEntitySidebar({
     )
   }
 
-  // Get count for a section
+  // Get count for a section from server-fetched data
   const getSectionCount = (sectionId: string): number | undefined => {
     switch (sectionId) {
       case 'prospects':
-        return counts.prospects
+        return sectionCounts.prospects
       case 'leads':
-        return counts.leads
+        return sectionCounts.leads
       case 'activities':
-        return counts.activities
+        return sectionCounts.activities
       case 'notes':
-        return counts.notes
+        return sectionCounts.notes
       case 'documents':
-        return counts.documents
+        return sectionCounts.documents
       default:
         return undefined
     }

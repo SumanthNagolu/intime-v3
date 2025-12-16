@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
-import { createClient } from '@supabase/supabase-js'
+import { getAdminClient } from '@/lib/supabase/admin'
 
 // ============================================
 // CONTRACTS-01: Unified Contract Management Router
@@ -23,10 +23,6 @@ const contractTypeEnum = z.enum([
   'sla', 'vendor_agreement', 'employment', 'contractor', 'subcontractor', 'other'
 ])
 
-const signatoryStatusEnum = z.enum([
-  'pending', 'viewed', 'signed', 'declined', 'expired'
-])
-
 const versionTypeEnum = z.enum([
   'original', 'amendment', 'renewal', 'addendum'
 ])
@@ -43,18 +39,6 @@ const clauseCategoryEnum = z.enum([
   'liability', 'termination', 'confidentiality', 'ip', 'payment',
   'indemnification', 'warranty', 'dispute', 'general', 'other'
 ])
-
-// ============================================
-// ADMIN CLIENT
-// ============================================
-
-function getAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { autoRefreshToken: false, persistSession: false } }
-  )
-}
 
 // ============================================
 // HELPER FUNCTIONS
@@ -801,7 +785,7 @@ export const contractsRouter = router({
   // Check signatures status
   checkSignatures: orgProtectedProcedure
     .input(z.object({ contractId: z.string().uuid() }))
-    .query(async ({ ctx, input }) => {
+    .query(async ({ input }) => {
       const adminClient = getAdminClient()
 
       const { data, error } = await adminClient

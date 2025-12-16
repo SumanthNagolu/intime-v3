@@ -1,17 +1,6 @@
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
-import { createClient } from '@supabase/supabase-js'
-
-// Admin client to bypass RLS for dashboard counts
-function getAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    {
-      auth: { autoRefreshToken: false, persistSession: false }
-    }
-  )
-}
+import { getAdminClient } from '@/lib/supabase/admin'
 
 export const adminRouter = router({
   getSystemHealth: orgProtectedProcedure

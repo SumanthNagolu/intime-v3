@@ -12,7 +12,6 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { format, formatDistanceToNow } from 'date-fns'
 import { Lead, LEAD_SOURCE_CONFIG } from '../leads.config'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -20,7 +19,6 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { Textarea } from '@/components/ui/textarea'
-import { Skeleton } from '@/components/ui/skeleton'
 import {
   Select,
   SelectContent,
@@ -49,7 +47,6 @@ import {
   PhoneCall,
   Send,
   MessageSquare,
-  CheckCircle2,
   Briefcase,
 } from 'lucide-react'
 

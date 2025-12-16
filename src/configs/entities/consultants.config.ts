@@ -11,7 +11,6 @@ import {
   Play,
   Pause,
   UserCheck,
-  MapPin,
   FileText,
   Activity,
 } from 'lucide-react'
@@ -483,7 +482,7 @@ export const consultantsListConfig: ListViewConfig<Consultant> = {
   // tRPC hooks for data fetching - uses contactBench router
   useListQuery: (filters) => {
     const statusValue = filters.status as string | undefined
-    const visaTypeValue = filters.visaType as string | undefined
+    const _visaTypeValue = filters.visaType as string | undefined
     const marketingStatusValue = filters.marketingStatus as string | undefined
     const sortByValue = filters.sortBy as string | undefined
     const sortOrderValue = filters.sortOrder as string | undefined

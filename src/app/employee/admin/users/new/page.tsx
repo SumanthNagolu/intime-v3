@@ -1,7 +1,27 @@
-export const dynamic = 'force-dynamic'
+import { getServerCaller } from '@/server/trpc/server-caller'
+import { UserFormClient } from '@/components/admin/users/UserFormClient'
 
-import { UserFormPage } from '@/components/admin/users/UserFormPage'
+/**
+ * New User Page (Server Component)
+ *
+ * Fetches all reference data needed for user creation in a single
+ * database call, then passes it to the client component.
+ *
+ * Performance: ONE database call per page load.
+ */
+export default async function NewUserPage() {
+  // ONE database call - fetches all reference data for user creation
+  const caller = await getServerCaller()
+  const referenceData = await caller.reference.getUserCreateWizardData()
 
-export default function NewUserPage() {
-  return <UserFormPage mode="create" />
+  return (
+    <UserFormClient
+      mode="create"
+      initialData={{
+        roles: referenceData.roles ?? [],
+        pods: referenceData.pods ?? [],
+        managers: referenceData.managers ?? [],
+      }}
+    />
+  )
 }

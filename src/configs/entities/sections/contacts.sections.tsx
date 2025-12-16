@@ -10,9 +10,8 @@
  * The detail page listens for these events and manages dialog state.
  */
 
-import { useState } from 'react'
 import Link from 'next/link'
-import { format, formatDistanceToNow } from 'date-fns'
+import { formatDistanceToNow } from 'date-fns'
 import { Contact, CONTACT_STATUS_CONFIG } from '../contacts.config'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'

@@ -11,14 +11,28 @@ import { AddProspectDialog } from '@/components/crm/campaigns/AddProspectDialog'
 import { ProspectImportDialog } from '@/components/crm/campaigns/ProspectImportDialog'
 import { LinkLeadsToCampaignDialog } from '@/components/crm/campaigns/LinkLeadsToCampaignDialog'
 import { UploadDocumentDialog } from '@/components/crm/campaigns/UploadDocumentDialog'
+import { AddSequenceStepDialog } from '@/components/crm/campaigns/AddSequenceStepDialog'
+import { EditSequenceStepDialog } from '@/components/crm/campaigns/EditSequenceStepDialog'
 import { LogActivityModal } from '@/components/recruiter-workspace/LogActivityModal'
+import { useEntityData } from '@/components/layouts/EntityContextProvider'
 import { trpc } from '@/lib/trpc/client'
 import { toast } from 'sonner'
 
 // Custom event handler types
 declare global {
   interface WindowEventMap {
-    openCampaignDialog: CustomEvent<{ dialogId: string; campaignId?: string }>
+    openCampaignDialog: CustomEvent<{
+      dialogId: string
+      campaignId?: string
+      stepData?: {
+        id: string
+        channel: string
+        stepNumber: number
+        dayOffset?: number
+        subject?: string
+        templateName?: string
+      }
+    }>
   }
 }
 
@@ -35,19 +49,31 @@ export default function CampaignPage() {
   const [importProspectsOpen, setImportProspectsOpen] = useState(false)
   const [linkLeadsOpen, setLinkLeadsOpen] = useState(false)
   const [uploadDocumentOpen, setUploadDocumentOpen] = useState(false)
+  const [addSequenceStepOpen, setAddSequenceStepOpen] = useState(false)
+  const [editSequenceStepOpen, setEditSequenceStepOpen] = useState(false)
+  const [selectedStep, setSelectedStep] = useState<{
+    id: string
+    channel: string
+    stepNumber: number
+    dayOffset?: number
+    subject?: string
+    templateName?: string
+  } | null>(null)
   const [logActivityOpen, setLogActivityOpen] = useState(false)
 
   const utils = trpc.useUtils()
 
-  // Query for campaign data
-  const campaignQuery = trpc.crm.campaigns.getByIdWithCounts.useQuery({ id: campaignId })
-  const campaign = campaignQuery.data
+  // ONE DATABASE CALL PATTERN: Get campaign data from server-side context
+  // No client-side query needed - data already fetched in layout.tsx via getFullEntity
+  const entityData = useEntityData<Campaign>()
+  const campaign = entityData?.data
 
   // Status mutations
   const updateStatus = trpc.crm.campaigns.updateStatus.useMutation({
     onSuccess: () => {
       toast.success('Campaign status updated')
-      utils.crm.campaigns.getByIdWithCounts.invalidate({ id: campaignId })
+      // Invalidate the full entity query to refresh data
+      utils.crm.campaigns.getFullEntity.invalidate({ id: campaignId })
       utils.crm.campaigns.list.invalidate()
     },
     onError: (error) => {
@@ -57,7 +83,18 @@ export default function CampaignPage() {
 
   // Listen for dialog events from sidebar quick actions and PCF components
   useEffect(() => {
-    const handleCampaignDialog = (event: CustomEvent<{ dialogId: string; campaignId?: string }>) => {
+    const handleCampaignDialog = (event: CustomEvent<{
+      dialogId: string
+      campaignId?: string
+      stepData?: {
+        id: string
+        channel: string
+        stepNumber: number
+        dayOffset?: number
+        subject?: string
+        templateName?: string
+      }
+    }>) => {
       switch (event.detail.dialogId) {
         // Campaign management dialogs
         case 'edit':
@@ -95,10 +132,22 @@ export default function CampaignPage() {
 
         // Sequence management (from Sequence section and sidebar)
         case 'addSequenceStep':
+          setAddSequenceStepOpen(true)
+          break
         case 'editSequence':
+          // Navigate to sequence section for editing
+          window.history.pushState({}, '', `/employee/crm/campaigns/${campaignId}?mode=sections&section=sequence`)
+          window.dispatchEvent(new PopStateEvent('popstate'))
+          break
         case 'viewSequenceStep':
         case 'editSequenceStep':
-          toast.info('Sequence editor coming soon')
+          // Open edit dialog with step data
+          if (event.detail.stepData) {
+            setSelectedStep(event.detail.stepData)
+            setEditSequenceStepOpen(true)
+          } else {
+            toast.error('Step data not found')
+          }
           break
         case 'toggleSequence':
           // Toggle sequence running state
@@ -155,11 +204,18 @@ export default function CampaignPage() {
     return () => window.removeEventListener('openCampaignDialog', handleCampaignDialog)
   }, [campaign, campaignId, updateStatus])
 
+  // Helper to invalidate and refresh data after mutations
+  const invalidateCampaign = () => {
+    utils.crm.campaigns.getFullEntity.invalidate({ id: campaignId })
+  }
+
   return (
     <>
+      {/* ONE DATABASE CALL PATTERN: Pass server-fetched entity to avoid client query */}
       <EntityDetailView<Campaign>
         config={campaignsDetailConfig}
         entityId={campaignId}
+        entity={campaign}
       />
 
       {/* Dialogs */}
@@ -170,7 +226,7 @@ export default function CampaignPage() {
             onOpenChange={setEditDialogOpen}
             campaignId={campaignId}
             onSuccess={() => {
-              campaignQuery.refetch()
+              invalidateCampaign()
               utils.crm.campaigns.list.invalidate()
             }}
           />
@@ -181,7 +237,7 @@ export default function CampaignPage() {
             campaignId={campaignId}
             campaignName={campaign.name}
             onSuccess={() => {
-              campaignQuery.refetch()
+              invalidateCampaign()
               utils.crm.campaigns.list.invalidate()
             }}
           />
@@ -201,33 +257,49 @@ export default function CampaignPage() {
             open={addProspectOpen}
             onOpenChange={setAddProspectOpen}
             campaignId={campaignId}
-            onSuccess={() => {
-              campaignQuery.refetch()
-            }}
+            onSuccess={invalidateCampaign}
           />
 
           <ProspectImportDialog
             open={importProspectsOpen}
             onOpenChange={setImportProspectsOpen}
             campaignId={campaignId}
-            onSuccess={() => {
-              campaignQuery.refetch()
-            }}
+            onSuccess={invalidateCampaign}
           />
 
           <LinkLeadsToCampaignDialog
             open={linkLeadsOpen}
             onOpenChange={setLinkLeadsOpen}
             campaignId={campaignId}
-            onSuccess={() => {
-              campaignQuery.refetch()
-            }}
+            onSuccess={invalidateCampaign}
           />
 
           <UploadDocumentDialog
             open={uploadDocumentOpen}
             onOpenChange={setUploadDocumentOpen}
             campaignId={campaignId}
+          />
+
+          <AddSequenceStepDialog
+            open={addSequenceStepOpen}
+            onOpenChange={setAddSequenceStepOpen}
+            campaignId={campaignId}
+            onSuccess={() => {
+              invalidateCampaign()
+            }}
+          />
+
+          <EditSequenceStepDialog
+            open={editSequenceStepOpen}
+            onOpenChange={(open) => {
+              setEditSequenceStepOpen(open)
+              if (!open) setSelectedStep(null)
+            }}
+            campaignId={campaignId}
+            step={selectedStep}
+            onSuccess={() => {
+              invalidateCampaign()
+            }}
           />
 
           <LogActivityModal

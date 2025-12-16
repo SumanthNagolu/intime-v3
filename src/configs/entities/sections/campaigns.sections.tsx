@@ -3,7 +3,15 @@
 /**
  * PCF-Compatible Section Components for Campaigns
  *
- * These components implement the PCF SectionConfig interface: { entityId: string; entity?: unknown }
+ * These components implement the PCF SectionConfig interface with ONE database call pattern support.
+ *
+ * Props:
+ * - entityId: string - The campaign ID
+ * - entity?: unknown - The campaign entity data
+ * - sectionData?: SectionData - Pre-loaded section data (ONE db call pattern)
+ *
+ * When sectionData is provided, components use it instead of making additional queries.
+ * This eliminates N+1 queries when navigating between sections.
  *
  * Callbacks are handled via the PCF event system (window events).
  * The detail page listens for these events and manages dialog state.
@@ -13,9 +21,9 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { format } from 'date-fns'
 import { Campaign } from '../campaigns.config'
+import { SectionData, PCFSectionProps } from '../types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import { trpc } from '@/lib/trpc/client'
 import {
@@ -31,12 +39,10 @@ import {
   Linkedin,
   Phone,
   Activity,
-  FileText,
   StickyNote,
   Clock,
   CheckCircle,
   Workflow,
-  Eye,
   MousePointerClick,
   MessageSquare,
   AlertCircle,
@@ -51,21 +57,19 @@ import { cn } from '@/lib/utils'
  * Dispatch a dialog open event for the Campaign entity
  * The detail page listens for this and manages dialog state
  */
-function dispatchCampaignDialog(dialogId: string, campaignId: string) {
+function dispatchCampaignDialog(dialogId: string, entityId: string, stepData?: {
+  id: string
+  channel: string
+  stepNumber: number
+  dayOffset?: number
+  subject?: string
+  templateName?: string
+}) {
   window.dispatchEvent(
     new CustomEvent('openCampaignDialog', {
-      detail: { dialogId, campaignId },
+      detail: { dialogId, campaignId: entityId, stepData },
     })
   )
-}
-
-// ==========================================
-// PCF Section Components
-// ==========================================
-
-interface PCFSectionProps {
-  entityId: string
-  entity?: unknown
 }
 
 /**
@@ -78,14 +82,28 @@ interface PCFSectionProps {
  * - Quick funnel visualization
  * - Recent activity feed
  */
-export function CampaignOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
-  const campaign = entity as Campaign | undefined
+// Extended Campaign type with batched data from getByIdWithCounts
+interface CampaignWithActivities extends Campaign {
+  recentActivities?: Array<{
+    id: string
+    activity_type: string
+    subject?: string
+    created_at: string
+    status?: string
+    creator?: {
+      id: string
+      full_name: string
+      avatar_url?: string
+    }
+  }>
+}
 
-  // Query recent activities
-  const activitiesQuery = trpc.activities.listByEntity.useQuery(
-    { entityType: 'campaign', entityId, limit: 5 },
-    { enabled: !!entityId }
-  )
+export function CampaignOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
+  const campaign = entity as CampaignWithActivities | undefined
+
+  // Use batched recentActivities from getByIdWithCounts (no separate query needed)
+  // This eliminates an extra API call per page load
+  const recentActivities = campaign?.recentActivities || []
 
   if (!campaign) {
     return (
@@ -398,20 +416,14 @@ export function CampaignOverviewSectionPCF({ entityId, entity }: PCFSectionProps
             </div>
           </CardHeader>
           <CardContent>
-            {activitiesQuery.isLoading ? (
-              <div className="space-y-3">
-                {[1, 2, 3].map((i) => (
-                  <Skeleton key={i} className="h-12 w-full" />
-                ))}
-              </div>
-            ) : (activitiesQuery.data?.items || []).length === 0 ? (
+            {recentActivities.length === 0 ? (
               <div className="py-8 text-center">
                 <Activity className="w-8 h-8 text-charcoal-300 mx-auto mb-2" />
                 <p className="text-sm text-charcoal-400">No recent activity</p>
               </div>
             ) : (
               <div className="space-y-3">
-                {(activitiesQuery.data?.items || []).slice(0, 5).map((activity: any) => (
+                {recentActivities.slice(0, 5).map((activity) => (
                   <div
                     key={activity.id}
                     className="flex items-start gap-3 p-2 rounded-lg hover:bg-charcoal-50 transition-colors"
@@ -536,19 +548,34 @@ export function CampaignOverviewSectionPCF({ entityId, entity }: PCFSectionProps
 
 /**
  * Prospects Section
+ *
+ * ONE database call pattern: When sectionData is provided, uses pre-loaded data
+ * instead of making a separate query.
  */
-export function CampaignProspectsSectionPCF({ entityId, entity }: PCFSectionProps) {
+export function CampaignProspectsSectionPCF({ entityId, entity, sectionData }: PCFSectionProps) {
   const campaign = entity as Campaign | undefined
   const router = useRouter()
 
-  // Query prospects from the campaign using existing getProspects procedure
+  // ONE database call pattern: Use pre-loaded data if available
+  const hasPreloadedData = !!sectionData?.items
+
+  // Query prospects only if sectionData not provided (legacy pattern)
   const prospectsQuery = trpc.crm.campaigns.getProspects.useQuery(
     { campaignId: entityId, limit: 100 },
-    { enabled: !!entityId }
+    {
+      enabled: !!entityId && !hasPreloadedData, // Skip if pre-loaded
+      staleTime: 30_000,
+      refetchOnWindowFocus: false,
+    }
   )
 
-  const prospects = prospectsQuery.data?.items || []
-  const total = prospectsQuery.data?.total || campaign?.audienceSize || campaign?.audience_size || 0
+  // Use pre-loaded data or fall back to query results
+  // Server already excludes converted prospects (they appear in Leads section)
+  const prospects = hasPreloadedData
+    ? (sectionData.items as any[])
+    : (prospectsQuery.data?.items || [])
+  const total = prospects.length
+  const isLoading = !hasPreloadedData && prospectsQuery.isLoading
 
   return (
     <div className="space-y-6">
@@ -579,7 +606,7 @@ export function CampaignProspectsSectionPCF({ entityId, entity }: PCFSectionProp
       {/* Prospects List */}
       <Card className="bg-white">
         <CardContent className="p-0">
-          {prospectsQuery.isLoading ? (
+          {isLoading ? (
             <div className="py-8 text-center text-charcoal-500">
               Loading prospects...
             </div>
@@ -593,40 +620,51 @@ export function CampaignProspectsSectionPCF({ entityId, entity }: PCFSectionProp
             </div>
           ) : (
             <div className="divide-y">
-              {prospects.map((prospect: any) => (
-                <Link
-                  key={prospect.id}
-                  href={`/employee/crm/campaigns/${entityId}/prospects/${prospect.id}`}
-                  className="flex items-center justify-between p-4 hover:bg-charcoal-50 transition-colors"
-                >
-                  <div>
-                    <p className="font-medium text-charcoal-900">
-                      {prospect.first_name} {prospect.last_name}
-                    </p>
-                    <p className="text-sm text-charcoal-500">
-                      {prospect.company_name || prospect.email || '—'}
-                    </p>
-                  </div>
-                  <div className="text-right text-sm">
-                    <span
-                      className={cn(
-                        'px-2 py-1 rounded-full text-xs',
-                        prospect.status === 'new'
-                          ? 'bg-blue-100 text-blue-800'
-                          : prospect.status === 'contacted'
-                            ? 'bg-purple-100 text-purple-800'
-                            : prospect.status === 'responded'
-                              ? 'bg-green-100 text-green-800'
-                              : prospect.status === 'converted'
-                                ? 'bg-gold-100 text-gold-800'
-                                : 'bg-charcoal-100 text-charcoal-600'
-                      )}
-                    >
-                      {prospect.status}
-                    </span>
-                  </div>
-                </Link>
-              ))}
+              {prospects.map((prospect: any) => {
+                // Access contact data from nested relationship
+                const contact = prospect.contact || {}
+                const firstName = contact.first_name || prospect.first_name || ''
+                const lastName = contact.last_name || prospect.last_name || ''
+                const companyName = contact.company_name || prospect.company_name
+                const email = contact.email || prospect.email
+
+                return (
+                  <Link
+                    key={prospect.id}
+                    href={`/employee/crm/campaigns/${entityId}/prospects/${prospect.id}`}
+                    className="flex items-center justify-between p-4 hover:bg-charcoal-50 transition-colors"
+                  >
+                    <div>
+                      <p className="font-medium text-charcoal-900">
+                        {firstName} {lastName}
+                      </p>
+                      <p className="text-sm text-charcoal-500">
+                        {companyName || email || '—'}
+                      </p>
+                    </div>
+                    <div className="text-right text-sm">
+                      <span
+                        className={cn(
+                          'px-2 py-1 rounded-full text-xs',
+                          prospect.status === 'enrolled'
+                            ? 'bg-blue-100 text-blue-800'
+                            : prospect.status === 'contacted'
+                              ? 'bg-purple-100 text-purple-800'
+                              : prospect.status === 'responded'
+                                ? 'bg-green-100 text-green-800'
+                                : prospect.status === 'converted'
+                                  ? 'bg-gold-100 text-gold-800'
+                                  : prospect.status === 'engaged'
+                                    ? 'bg-indigo-100 text-indigo-800'
+                                    : 'bg-charcoal-100 text-charcoal-600'
+                        )}
+                      >
+                        {prospect.status}
+                      </span>
+                    </div>
+                  </Link>
+                )
+              })}
             </div>
           )}
         </CardContent>
@@ -637,18 +675,30 @@ export function CampaignProspectsSectionPCF({ entityId, entity }: PCFSectionProp
 
 /**
  * Leads Section
+ *
+ * ONE database call pattern: When sectionData is provided, uses pre-loaded data
+ * instead of making a separate query.
  */
-export function CampaignLeadsSectionPCF({ entityId, entity }: PCFSectionProps) {
+export function CampaignLeadsSectionPCF({ entityId, entity, sectionData }: PCFSectionProps) {
   const campaign = entity as Campaign | undefined
 
-  // Query leads linked to this campaign - uses unified contacts router
-  const leadsQuery = trpc.unifiedContacts.leads.listByCampaign.useQuery({
-    campaignId: entityId,
-    limit: 100,
-  })
+  // ONE database call pattern: Use pre-loaded data if available
+  const hasPreloadedData = !!sectionData?.items
 
-  const leads = leadsQuery.data?.items || []
-  const total = leadsQuery.data?.total || 0
+  // Query leads only if sectionData not provided (legacy pattern)
+  const leadsQuery = trpc.unifiedContacts.leads.listByCampaign.useQuery(
+    { campaignId: entityId, limit: 100 },
+    { enabled: !!entityId && !hasPreloadedData }
+  )
+
+  // Use pre-loaded data or fall back to query results
+  const leads = hasPreloadedData
+    ? (sectionData.items as any[])
+    : (leadsQuery.data?.items || [])
+  const total = hasPreloadedData
+    ? sectionData.total
+    : (leadsQuery.data?.total || 0)
+  const isLoading = !hasPreloadedData && leadsQuery.isLoading
 
   return (
     <div className="space-y-6">
@@ -671,7 +721,7 @@ export function CampaignLeadsSectionPCF({ entityId, entity }: PCFSectionProps) {
       {/* Leads List */}
       <Card className="bg-white">
         <CardContent className="p-0">
-          {leadsQuery.isLoading ? (
+          {isLoading ? (
             <div className="py-8 text-center text-charcoal-500">
               Loading leads...
             </div>
@@ -911,19 +961,27 @@ export function CampaignDocumentsSectionPCF({ entityId }: PCFSectionProps) {
 /**
  * Notes Section - Shows activities with type='note' in a table format
  * Campaign notes are stored as activities with activity_type='note'
+ *
+ * ONE database call pattern: When sectionData is provided, uses pre-loaded data
+ * instead of making a separate query.
  */
-export function CampaignNotesSectionPCF({ entityId }: PCFSectionProps) {
-  // Query activities filtered to notes only
-  const notesQuery = trpc.activities.listByEntity.useQuery({
-    entityType: 'campaign',
-    entityId,
-    limit: 100,
-  })
+export function CampaignNotesSectionPCF({ entityId, sectionData }: PCFSectionProps) {
+  // ONE database call pattern: Use pre-loaded data if available
+  const hasPreloadedData = !!sectionData?.items
 
-  // Filter to only note-type activities
-  const notes = (notesQuery.data?.items || []).filter(
-    (activity: any) => activity.activity_type === 'note'
+  // Query activities only if sectionData not provided (legacy pattern)
+  const notesQuery = trpc.activities.listByEntity.useQuery(
+    { entityType: 'campaign', entityId, limit: 100 },
+    { enabled: !!entityId && !hasPreloadedData }
   )
+
+  // Use pre-loaded data or fall back to query results (filtered to notes)
+  const notes = hasPreloadedData
+    ? (sectionData.items as any[])
+    : (notesQuery.data?.items || []).filter(
+        (activity: any) => activity.activity_type === 'note'
+      )
+  const isLoading = !hasPreloadedData && notesQuery.isLoading
 
   return (
     <div className="space-y-6">
@@ -942,7 +1000,7 @@ export function CampaignNotesSectionPCF({ entityId }: PCFSectionProps) {
       {/* Notes Table */}
       <Card className="bg-white">
         <CardContent className="p-0">
-          {notesQuery.isLoading ? (
+          {isLoading ? (
             <div className="py-8 text-center text-charcoal-500">Loading notes...</div>
           ) : notes.length === 0 ? (
             <div className="py-12 text-center">
@@ -1222,17 +1280,27 @@ export function CampaignFunnelSectionPCF({ entityId, entity }: PCFSectionProps) 
  * - Channel indicators (email, LinkedIn, phone, SMS)
  * - Per-step performance metrics
  * - Sequence controls (pause/resume)
+ *
+ * ONE database call pattern: When sectionData is provided, uses pre-loaded data
+ * instead of making a separate query.
  */
-export function CampaignSequenceSectionPCF({ entityId, entity }: PCFSectionProps) {
+export function CampaignSequenceSectionPCF({ entityId, entity, sectionData }: PCFSectionProps) {
   const campaign = entity as Campaign | undefined
 
-  // Query sequence steps from the new sequence.list procedure
+  // ONE database call pattern: Use pre-loaded data if available
+  const hasPreloadedData = !!sectionData?.items
+
+  // Query sequence steps only if sectionData not provided (legacy pattern)
   const sequenceQuery = trpc.crm.campaigns.sequence.list.useQuery(
     { campaignId: entityId },
-    { enabled: !!entityId }
+    { enabled: !!entityId && !hasPreloadedData }
   )
-  const sequenceSteps = sequenceQuery.data?.steps || []
-  const isLoading = sequenceQuery.isLoading
+
+  // Use pre-loaded data or fall back to query results
+  const sequenceSteps = hasPreloadedData
+    ? (sectionData.items as any[])
+    : (sequenceQuery.data?.steps || [])
+  const isLoading = !hasPreloadedData && sequenceQuery.isLoading
 
   const isSequenceRunning = campaign?.status === 'active'
 
@@ -1323,8 +1391,22 @@ export function CampaignSequenceSectionPCF({ entityId, entity }: PCFSectionProps
               steps={steps}
               currentStep={currentStepIndex >= 0 ? currentStepIndex : undefined}
               isRunning={isSequenceRunning}
-              onStepClick={(step) => dispatchCampaignDialog('viewSequenceStep', step.id)}
-              onEditStep={(step) => dispatchCampaignDialog('editSequenceStep', step.id)}
+              onStepClick={(step) => dispatchCampaignDialog('viewSequenceStep', entityId, {
+                id: step.id,
+                channel: step.channel,
+                stepNumber: step.stepNumber,
+                dayOffset: step.delay?.value,
+                subject: step.subject,
+                templateName: step.templateName,
+              })}
+              onEditStep={(step) => dispatchCampaignDialog('editSequenceStep', entityId, {
+                id: step.id,
+                channel: step.channel,
+                stepNumber: step.stepNumber,
+                dayOffset: step.delay?.value,
+                subject: step.subject,
+                templateName: step.templateName,
+              })}
               onPauseResume={() => dispatchCampaignDialog('toggleSequence', entityId)}
             />
           )}

@@ -330,12 +330,12 @@ export const vendorsListConfig: ListViewConfig<Vendor> = {
     const validStatuses = ['active', 'inactive', 'all'] as const
     const validTypes = ['direct_client', 'prime_vendor', 'sub_vendor', 'msp', 'vms', 'all'] as const
     const validTiers = ['preferred', 'standard', 'new', 'all'] as const
-    const validSortFields = ['name', 'type', 'tier', 'status', 'created_at'] as const
+    const _validSortFields = ['name', 'type', 'tier', 'status', 'created_at'] as const
 
     type VendorStatus = (typeof validStatuses)[number]
     type VendorType = (typeof validTypes)[number]
     type VendorTier = (typeof validTiers)[number]
-    type SortField = (typeof validSortFields)[number]
+    type SortField = (typeof _validSortFields)[number]
 
     // Map frontend column keys to database columns
     const sortFieldMap: Record<string, SortField> = {

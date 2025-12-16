@@ -17,7 +17,7 @@ import {
   ArrowRight,
   ChevronLeft,
 } from 'lucide-react';
-import { signIn, signInWithGoogle, getUserRole, getEmployeeRedirectPath, type PortalType } from '@/lib/auth/client';
+import { signIn, signInWithGoogle, getUserRole, getEmployeeRedirectPath, setOrgCookie, type PortalType } from '@/lib/auth/client';
 
 const PORTALS: Array<{
   id: PortalType;
@@ -108,6 +108,9 @@ export default function LoginPage() {
       if (error) {
         setError(error.message);
       } else {
+        // Set org cookie immediately after login (avoids DB lookup on every request)
+        await setOrgCookie();
+
         // For employee portal, get user role and redirect based on it
         if (selectedPortal === 'employee') {
           const role = await getUserRole();

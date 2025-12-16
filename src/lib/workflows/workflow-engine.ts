@@ -14,6 +14,7 @@ import { createClient } from '@supabase/supabase-js'
 import { evaluateConditions, type EvaluationContext } from './condition-evaluator'
 import { resolveApprover, type ApproverResolutionContext } from './approver-resolver'
 import { executeAction, type ActionExecutionContext } from './action-executor'
+import { createNotification } from '@/lib/notifications/notification-service'
 import {
   type WorkflowRow,
   type WorkflowStepRow,
@@ -305,7 +306,20 @@ async function startApprovalProcess(
     due_at: dueAt,
   })
 
-  // TODO: Send notification to approver
+  // Send notification to approver
+  await createNotification({
+    orgId: context.orgId,
+    userId: approver.userId,
+    notificationType: 'approval_required',
+    title: `Approval Required: ${firstStep.step_name}`,
+    message: `You have a pending approval request for ${context.entityType} workflow.`,
+    entityType: context.entityType,
+    entityId: context.entityId,
+    priority: 'high',
+    actionUrl: `/employee/workflows/approvals/${execution.id}`,
+    actionLabel: 'Review & Approve',
+    channels: ['in_app', 'email'],
+  })
 }
 
 /**

@@ -3,7 +3,6 @@
 import {
   Building2,
   FileText,
-  Briefcase,
   DollarSign,
   Calendar,
   Target,

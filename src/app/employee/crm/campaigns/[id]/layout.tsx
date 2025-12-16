@@ -14,15 +14,16 @@ export default async function CampaignDetailLayout({ children, params }: Campaig
   const { id: campaignId } = await params
   const caller = await getServerCaller()
 
-  // Use optimized query with all counts
-  const campaign = await caller.crm.campaigns.getByIdWithCounts({ id: campaignId }).catch(() => null)
+  // ONE DATABASE CALL PATTERN: Fetch entity with ALL section data pre-loaded
+  // This eliminates redundant client-side queries from EntityDetailView, Sidebar, and Page
+  const campaign = await caller.crm.campaigns.getFullEntity({ id: campaignId }).catch(() => null)
 
   if (!campaign) {
     notFound()
   }
 
   // Build subtitle with campaign type
-  const subtitle = campaign.campaign_type?.replace(/_/g, ' ')
+  const subtitle = campaign.campaignType?.replace(/_/g, ' ')
 
   return (
     <EntityContextProvider

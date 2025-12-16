@@ -222,7 +222,7 @@ export interface ListViewConfig<T = unknown> {
    * Do NOT import configs at module level if hooks reference tRPC/React Query directly.
    *
    * CORRECT - Define inline:
-   *   useListQuery: (filters) => trpc.ats.jobs.list.useQuery({...})
+   *   useListQuery: (filters) => trpc.ats.jobs.listWithStats.useQuery({...})
    *
    * CORRECT - Use inside component:
    *   const config = useMemo(() => ({ ...jobsListConfig }), [])
@@ -230,7 +230,7 @@ export interface ListViewConfig<T = unknown> {
    * WRONG - Will cause hydration issues:
    *   // jobs.config.ts (module level)
    *   export const jobsListConfig = {
-   *     useListQuery: (filters) => trpc.ats.jobs.list.useQuery({...}) // Called at import!
+   *     useListQuery: (filters) => trpc.ats.jobs.listWithStats.useQuery({...}) // Called at import!
    *   }
    *   // page.tsx
    *   import { jobsListConfig } from './jobs.config' // Hydration error!
@@ -238,15 +238,23 @@ export interface ListViewConfig<T = unknown> {
    * Alternative: Use factory pattern for configs imported at module level:
    *   getListQueryOptions: (filters) => ({
    *     queryKey: ['jobs', 'list', filters],
-   *     trpcPath: 'ats.jobs.list',
+   *     trpcPath: 'ats.jobs.listWithStats',
    *     input: filters,
    *   })
+   *
+   * ONE DATABASE CALL PATTERN:
+   * useListQuery should return items, total, AND stats in a single query.
+   * This eliminates the need for a separate useStatsQuery.
    */
   useListQuery: (filters: Record<string, unknown>) => {
-    data: { items: T[]; total: number } | undefined
+    data: { items: T[]; total: number; stats?: Record<string, number | string> } | undefined
     isLoading: boolean
     error: unknown
   }
+  /**
+   * @deprecated Use useListQuery with stats included instead.
+   * Kept for backwards compatibility during migration.
+   */
   useStatsQuery?: () => {
     data: Record<string, number | string> | undefined
     isLoading: boolean
@@ -269,6 +277,39 @@ export interface MetricConfig {
   tooltip?: string | ((entity: unknown) => string)
 }
 
+/**
+ * SectionData - Pre-loaded data for a section (ONE database call pattern)
+ *
+ * When using the consolidated data fetching pattern, section data is loaded
+ * by the parent entity query and passed down to section components as props.
+ * This eliminates separate queries per section.
+ */
+export interface SectionData<T = unknown> {
+  items: T[]
+  total: number
+}
+
+/**
+ * SectionDataMap - Map of section IDs to their pre-loaded data
+ *
+ * Example: { activities: { items: [...], total: 50 }, notes: { items: [...], total: 10 } }
+ */
+export type SectionDataMap = Record<string, SectionData>
+
+/**
+ * PCF Section Props - Props interface for section components
+ *
+ * Supports both legacy (query-based) and new (props-based) patterns:
+ * - Legacy: Section component queries its own data using entityId
+ * - New: Section component receives pre-loaded data via sectionData prop
+ */
+export interface PCFSectionProps {
+  entityId: string
+  entity?: unknown
+  /** Pre-loaded section data (ONE database call pattern) */
+  sectionData?: SectionData
+}
+
 export interface SectionConfig {
   id: string
   label: string
@@ -276,7 +317,10 @@ export interface SectionConfig {
   showCount?: boolean
   getCount?: (entity: unknown) => number
   alertOnCount?: boolean
-  component?: React.ComponentType<{ entityId: string; entity?: unknown }>
+  /** Optional description for the section, shown in sidebar or tooltips */
+  description?: string
+  /** Section component receives entityId, entity, and optional sectionData */
+  component?: React.ComponentType<PCFSectionProps>
 }
 
 export interface JourneyStepConfig {
@@ -286,7 +330,7 @@ export interface JourneyStepConfig {
   completedStatuses: string[]
   activeStatuses: string[]
   /** Component to render when this journey step is active (PCF pattern) */
-  component?: React.ComponentType<{ entityId: string; entity?: unknown }>
+  component?: React.ComponentType<PCFSectionProps>
 }
 
 export interface QuickActionConfig {
@@ -362,7 +406,9 @@ export interface DetailViewConfig<T = unknown> {
   dialogHandlers?: Record<string, (entity: T, setDialogState: (open: boolean) => void) => void>
 
   // Data hooks
-  useEntityQuery: (id: string) => {
+  // ONE DATABASE CALL PATTERN: The enabled option allows skipping the query
+  // when entity data is already provided from server-side fetch
+  useEntityQuery: (id: string, options?: { enabled?: boolean }) => {
     data: T | undefined
     isLoading: boolean
     error: unknown

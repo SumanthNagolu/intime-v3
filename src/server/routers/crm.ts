@@ -2,15 +2,21 @@ import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
-import { createClient } from '@supabase/supabase-js'
+import { getAdminClient } from '@/lib/supabase/admin'
+import { createWorkflowEngine } from '@/lib/workflows'
 
-// Admin client for bypassing RLS
-function getAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { autoRefreshToken: false, persistSession: false } }
-  )
+// Type for campaign sequence step structure
+interface SequenceStep {
+  stepNumber?: number
+  subject?: string
+  templateId?: string
+  templateName?: string
+  dayOffset?: number
+}
+
+// Type for campaign channel data in sequences JSONB
+interface ChannelSequenceData {
+  steps?: SequenceStep[]
 }
 
 // ============================================
@@ -746,11 +752,10 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         // Build the update data
+        // Note: onboarding_completed_by and updated_by omitted - FK requires user_profiles.id, not auth.users.id
         const updateData: Record<string, unknown> = {
           onboarding_status: 'completed',
           onboarding_completed_at: new Date().toISOString(),
-          onboarding_completed_by: user?.id,
-          updated_by: user?.id,
         }
 
         // Map onboarding data to account fields
@@ -849,16 +854,17 @@ export const crmRouter = router({
         }
 
         // Create activity log for onboarding completion
+        // Note: created_by omitted - FK requires user_profiles.id, not auth.users.id
         await adminClient
           .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'company',
             entity_id: input.accountId,
-            activity_type: 'status_change',
+            activity_type: 'note',
+            status: 'completed',
             subject: 'Onboarding Completed',
-            description: 'Account onboarding wizard has been completed.',
-            created_by: user?.id,
+            body: 'Account onboarding wizard has been completed.',
           })
 
         return data
@@ -923,8 +929,7 @@ export const crmRouter = router({
       .input(z.object({
         accountId: z.string().uuid(),
       }))
-      .query(async ({ ctx, input }) => {
-        const { orgId } = ctx
+      .query(async ({ input }) => {
         const adminClient = getAdminClient()
 
         const { data, error } = await adminClient
@@ -956,8 +961,7 @@ export const crmRouter = router({
         documentUrl: z.string().url().optional(),
         notes: z.string().optional(),
       }))
-      .mutation(async ({ ctx, input }) => {
-        const { orgId } = ctx
+      .mutation(async ({ input }) => {
         const adminClient = getAdminClient()
 
         const { data, error } = await adminClient
@@ -1053,7 +1057,7 @@ export const crmRouter = router({
     // Get contract by ID
     getById: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
-      .query(async ({ ctx, input }) => {
+      .query(async ({ input }) => {
         const adminClient = getAdminClient()
 
         const { data, error } = await adminClient
@@ -1085,7 +1089,7 @@ export const crmRouter = router({
         documentUrl: z.string().url().optional().nullable(),
         notes: z.string().optional().nullable(),
       }))
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ input }) => {
         const adminClient = getAdminClient()
 
         const updateData: Record<string, unknown> = {}
@@ -1118,7 +1122,7 @@ export const crmRouter = router({
     // Delete contract
     delete: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ input }) => {
         const adminClient = getAdminClient()
 
         const { error } = await adminClient
@@ -1398,7 +1402,7 @@ export const crmRouter = router({
         campaignId: z.string().uuid().nullable().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
-        const { orgId, user } = ctx
+        const { orgId } = ctx
         const adminClient = getAdminClient()
 
         const updateData: Record<string, unknown> = {}
@@ -2003,7 +2007,7 @@ export const crmRouter = router({
     delete: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .mutation(async ({ ctx, input }) => {
-        const { orgId, user } = ctx
+        const { orgId } = ctx
         const adminClient = getAdminClient()
 
         const { error } = await adminClient
@@ -2398,6 +2402,15 @@ export const crmRouter = router({
             created_by: user?.id,
           })
 
+        // Trigger workflows for deal creation
+        if (user?.id) {
+          const workflowEngine = createWorkflowEngine(orgId, user.id)
+          await workflowEngine.checkTriggers('deal', data.id, {
+            type: 'created',
+            newValue: data,
+          }).catch(err => console.error('[Workflow] Deal create trigger failed:', err))
+        }
+
         return data
       }),
 
@@ -2480,6 +2493,15 @@ export const crmRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
+        // Trigger workflows for deal update
+        if (user?.id) {
+          const workflowEngine = createWorkflowEngine(orgId, user.id)
+          await workflowEngine.checkTriggers('deal', input.id, {
+            type: 'updated',
+            newValue: data,
+          }).catch(err => console.error('[Workflow] Deal update trigger failed:', err))
+        }
+
         return data
       }),
 
@@ -2550,6 +2572,17 @@ export const crmRouter = router({
             description: `Deal moved from ${currentDeal.stage} to ${input.stage}${input.notes ? `. ${input.notes}` : ''}`,
             created_by: user?.id,
           })
+
+        // Trigger workflows for deal stage change
+        if (user?.id) {
+          const workflowEngine = createWorkflowEngine(orgId, user.id)
+          await workflowEngine.checkTriggers('deal', input.id, {
+            type: 'status_change',
+            field: 'stage',
+            oldValue: currentDeal.stage,
+            newValue: input.stage,
+          }).catch(err => console.error('[Workflow] Deal stage change trigger failed:', err))
+        }
 
         return data
       }),
@@ -3100,7 +3133,7 @@ export const crmRouter = router({
         }
 
         return {
-          months: sortedMonths.map(({ deals, ...rest }) => rest),
+          months: sortedMonths.map(({ deals: _deals, ...rest }) => rest),
           totals,
         }
       }),
@@ -4687,6 +4720,124 @@ export const crmRouter = router({
         }
       }),
 
+    // Consolidated list + stats query (optimized for performance)
+    listWithStats: orgProtectedProcedure
+      .input(z.object({
+        search: z.string().optional(),
+        status: z.enum(['draft', 'scheduled', 'active', 'paused', 'completed', 'all']).default('all'),
+        type: z.enum(['lead_generation', 're_engagement', 'event_promotion', 'brand_awareness', 'candidate_sourcing', 'all']).default('all'),
+        ownerId: z.string().uuid().optional(),
+        limit: z.number().min(1).max(100).default(20),
+        offset: z.number().min(0).default(0),
+        sortBy: z.enum(['created_at', 'start_date', 'end_date', 'name', 'leads_generated', 'audience_size', 'prospects_contacted', 'budget_spent', 'status', 'campaign_type']).default('created_at'),
+        sortOrder: z.enum(['asc', 'desc']).default('desc'),
+      }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const startTotal = Date.now()
+
+        // Execute list query and stats aggregation in parallel
+        const [listResult, statsResult] = await Promise.all([
+          // List query with pagination - SELECT ONLY NEEDED COLUMNS (not *)
+          (async () => {
+            const startList = Date.now()
+            let query = adminClient
+              .from('campaigns')
+              .select(`
+                id, name, campaign_type, goal, status,
+                start_date, end_date, channels,
+                audience_size, prospects_contacted, prospects_responded,
+                leads_generated, meetings_booked,
+                target_leads, target_meetings, budget_total, budget_spent,
+                created_at,
+                owner:user_profiles!owner_id(id, full_name, avatar_url)
+              `, { count: 'estimated' })
+              .eq('org_id', orgId)
+              .is('deleted_at', null)
+
+            if (input.search) {
+              query = query.or(`name.ilike.%${input.search}%,description.ilike.%${input.search}%`)
+            }
+            if (input.status && input.status !== 'all') {
+              query = query.eq('status', input.status)
+            }
+            if (input.type && input.type !== 'all') {
+              query = query.eq('campaign_type', input.type)
+            }
+            if (input.ownerId) {
+              query = query.eq('owner_id', input.ownerId)
+            }
+
+            query = query.order(input.sortBy, { ascending: input.sortOrder === 'asc' })
+            query = query.range(input.offset, input.offset + input.limit - 1)
+
+            const result = await query
+            console.log(`[PERF] campaigns.listWithStats - list query: ${Date.now() - startList}ms`)
+            return result
+          })(),
+
+          // Stats query using SQL aggregation (single row, not all campaigns)
+          // Falls back gracefully if function doesn't exist yet
+          (async () => {
+            const startStats = Date.now()
+            try {
+              const result = await adminClient.rpc('get_campaign_stats', { p_org_id: orgId }).single()
+              console.log(`[PERF] campaigns.listWithStats - stats RPC: ${Date.now() - startStats}ms`)
+              return result
+            } catch (e) {
+              console.log(`[PERF] campaigns.listWithStats - stats RPC failed: ${Date.now() - startStats}ms`, e)
+              return { data: null, error: null }
+            }
+          })(),
+        ])
+
+        console.log(`[PERF] campaigns.listWithStats - total queries: ${Date.now() - startTotal}ms`)
+
+        const { data, error, count } = listResult
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Use SQL-aggregated stats (fallback to count from list query if RPC not available)
+        const statsData = statsResult.data as { total: number; active: number; leads_generated: number; conversion_rate: number } | null
+        const stats = statsData ?? { total: count ?? 0, active: 0, leads_generated: 0, conversion_rate: 0 }
+
+        return {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          items: (data as any[] | null)?.map(c => ({
+            id: c.id,
+            name: c.name,
+            campaignType: c.campaign_type,
+            goal: c.goal,
+            status: c.status,
+            startDate: c.start_date,
+            endDate: c.end_date,
+            channels: c.channels,
+            audienceSize: c.audience_size,
+            prospectsContacted: c.prospects_contacted,
+            prospectsResponded: c.prospects_responded,
+            leadsGenerated: c.leads_generated,
+            meetingsBooked: c.meetings_booked,
+            targetLeads: c.target_leads,
+            targetMeetings: c.target_meetings,
+            budgetTotal: c.budget_total,
+            budgetSpent: c.budget_spent,
+            owner: c.owner,
+            createdAt: c.created_at,
+          })) ?? [],
+          total: count ?? 0,
+          stats: {
+            total: stats.total ?? 0,
+            active: stats.active ?? 0,
+            leadsGenerated: stats.leads_generated ?? 0,
+            conversionRate: Math.round((stats.conversion_rate ?? 0) * 10) / 10,
+          },
+        }
+      }),
+
     // Get campaign by ID with full details
     getById: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
@@ -4759,7 +4910,7 @@ export const crmRouter = router({
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Campaign not found' })
         }
 
-        // Get all counts in parallel
+        // Get all counts AND recent data in parallel (batched for performance)
         const [
           { count: prospectsCount },
           { count: leadsCount },
@@ -4767,19 +4918,22 @@ export const crmRouter = router({
           { count: notesCount },
           { count: documentsCount },
           { data: funnel },
+          { data: recentActivities },
         ] = await Promise.all([
-          // Prospects count
+          // Prospects count (exclude converted - they appear in Leads)
           adminClient
             .from('campaign_enrollments')
             .select('*', { count: 'exact', head: true })
-            .eq('campaign_id', input.id),
+            .eq('campaign_id', input.id)
+            .neq('status', 'converted'),
 
-          // Leads count (from campaigns relation)
+          // Leads count (from leads table linked to this campaign)
           adminClient
             .from('leads')
             .select('*', { count: 'exact', head: true })
             .eq('campaign_id', input.id)
-            .eq('org_id', orgId),
+            .eq('org_id', orgId)
+            .is('deleted_at', null),
 
           // Activities count
           adminClient
@@ -4808,6 +4962,16 @@ export const crmRouter = router({
 
           // Funnel metrics via RPC
           adminClient.rpc('get_campaign_funnel', { p_campaign_id: input.id }),
+
+          // Recent activities (batched to avoid separate section call)
+          adminClient
+            .from('activities')
+            .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
+            .eq('entity_type', 'campaign')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .order('created_at', { ascending: false })
+            .limit(10),
         ])
 
         // Calculate sequences count from JSONB
@@ -4887,6 +5051,266 @@ export const crmRouter = router({
 
           // Funnel for analytics
           funnel: funnelData,
+
+          // Recent activities (batched to avoid separate API call)
+          recentActivities: recentActivities ?? [],
+        }
+      }),
+
+    /**
+     * getFullEntity - ONE database call pattern for detail pages
+     *
+     * Returns the campaign entity with ALL section data pre-loaded.
+     * This eliminates separate queries per section component.
+     *
+     * Sections included:
+     * - prospects: Campaign enrollments with contact data
+     * - leads: Leads linked to this campaign
+     * - activities: All activities for this campaign
+     * - notes: Activities with type='note'
+     * - documents: Campaign documents
+     * - sequence: Sequence steps for this campaign
+     */
+    getFullEntity: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Step 1: Main entity with immediate relations
+        const { data: campaign, error } = await adminClient
+          .from('campaigns')
+          .select(`
+            *,
+            owner:user_profiles!owner_id(id, full_name, avatar_url, email),
+            approved_by_user:user_profiles!approved_by(id, full_name)
+          `)
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .single()
+
+        if (error || !campaign) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Campaign not found' })
+        }
+
+        // Step 2: ALL section data in parallel (single round-trip)
+        const [
+          prospectsResult,
+          allEnrollmentsResult,
+          leadsResult,
+          activitiesResult,
+          notesResult,
+          documentsResult,
+          funnelResult,
+        ] = await Promise.all([
+          // Prospects (campaign enrollments with contact details)
+          // Exclude converted prospects - they appear in Leads section instead
+          adminClient
+            .from('campaign_enrollments')
+            .select(`
+              *,
+              contact:contacts!contact_id(id, first_name, last_name, email, phone, company_name, title)
+            `)
+            .eq('campaign_id', input.id)
+            .neq('status', 'converted')
+            .order('created_at', { ascending: false })
+            .limit(100),
+
+          // All enrollments count (for audience size - includes converted)
+          adminClient
+            .from('campaign_enrollments')
+            .select('id, status', { count: 'exact' })
+            .eq('campaign_id', input.id),
+
+          // Leads linked to campaign (from leads table where campaign_id matches)
+          adminClient
+            .from('leads')
+            .select('*, owner:user_profiles!owner_id(id, full_name, avatar_url), contact:contacts!contact_id(id, first_name, last_name, email, phone, company_name, title)')
+            .eq('campaign_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(100),
+
+          // Activities for this campaign (all types)
+          adminClient
+            .from('activities')
+            .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
+            .eq('entity_type', 'campaign')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .order('created_at', { ascending: false })
+            .limit(100),
+
+          // Notes (activities with type='note')
+          adminClient
+            .from('activities')
+            .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
+            .eq('entity_type', 'campaign')
+            .eq('entity_id', input.id)
+            .eq('activity_type', 'note')
+            .eq('org_id', orgId)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // Documents
+          adminClient
+            .from('campaign_documents')
+            .select('*, uploader:user_profiles!uploaded_by(id, full_name)')
+            .eq('campaign_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // Funnel metrics via RPC
+          adminClient.rpc('get_campaign_funnel', { p_campaign_id: input.id }),
+        ])
+
+        // Build funnel data
+        const funnelData = funnelResult.data?.[0] || {
+          total_prospects: 0,
+          contacted: 0,
+          opened: 0,
+          clicked: 0,
+          responded: 0,
+          leads: 0,
+          meetings: 0,
+          open_rate: 0,
+          response_rate: 0,
+          conversion_rate: 0,
+        }
+
+        // Calculate stats from actual data (more accurate than cached values)
+        const totalEnrollments = allEnrollmentsResult.count ?? allEnrollmentsResult.data?.length ?? 0
+        const totalLeads = leadsResult.data?.length ?? 0
+        // Count contacted prospects (status is 'contacted', 'engaged', 'responded', or 'converted')
+        const contactedStatuses = ['contacted', 'engaged', 'responded', 'converted']
+        const contactedCount = allEnrollmentsResult.data?.filter(
+          (e: { status: string }) => contactedStatuses.includes(e.status)
+        ).length ?? 0
+
+        return {
+          // Main entity data (camelCase transformed)
+          id: campaign.id,
+          name: campaign.name,
+          description: campaign.description,
+          status: campaign.status,
+          campaignType: campaign.campaign_type,
+          goal: campaign.goal,
+          channels: campaign.channels,
+          targetCriteria: campaign.target_criteria,
+          sequences: campaign.sequences,
+          complianceSettings: campaign.compliance_settings,
+          abTestConfig: campaign.ab_test_config,
+          startDate: campaign.start_date,
+          endDate: campaign.end_date,
+          targetLeads: campaign.target_leads,
+          targetMeetings: campaign.target_meetings,
+          targetRevenue: campaign.target_revenue,
+          budgetTotal: campaign.budget_total,
+          budgetSpent: campaign.budget_spent,
+          // Use calculated values from actual data, fall back to cached if needed
+          audienceSize: totalEnrollments || campaign.audience_size || 0,
+          prospectsContacted: contactedCount || campaign.prospects_contacted || 0,
+          emailsOpened: campaign.emails_opened,
+          linksClicked: campaign.links_clicked,
+          prospectsResponded: campaign.prospects_responded,
+          leadsGenerated: totalLeads || campaign.leads_generated || 0,
+          meetingsBooked: campaign.meetings_booked,
+          owner: campaign.owner,
+          createdAt: campaign.created_at,
+          updatedAt: campaign.updated_at,
+
+          // Section data (for ONE database call pattern)
+          sections: {
+            prospects: {
+              items: prospectsResult.data ?? [],
+              total: prospectsResult.data?.length ?? 0,
+            },
+            leads: {
+              items: leadsResult.data ?? [],
+              total: leadsResult.data?.length ?? 0,
+            },
+            activities: {
+              items: activitiesResult.data ?? [],
+              total: activitiesResult.data?.length ?? 0,
+            },
+            notes: {
+              items: notesResult.data ?? [],
+              total: notesResult.data?.length ?? 0,
+            },
+            documents: {
+              items: documentsResult.data ?? [],
+              total: documentsResult.data?.length ?? 0,
+            },
+            sequence: {
+              // Parse sequence steps from JSONB column (same as sequence.list)
+              items: (() => {
+                const sequences = campaign.sequences || {}
+                const steps: Array<{
+                  id: string
+                  stepNumber: number
+                  channel: string
+                  subject?: string
+                  templateId?: string
+                  templateName?: string
+                  dayOffset?: number
+                  status: string
+                }> = []
+                let stepNumber = 1
+                for (const [channel, channelData] of Object.entries(sequences)) {
+                  const channelSteps = (channelData as ChannelSequenceData)?.steps || []
+                  for (const step of channelSteps) {
+                    steps.push({
+                      id: `${channel}-${step.stepNumber || stepNumber}`,
+                      stepNumber: step.stepNumber || stepNumber,
+                      channel,
+                      subject: step.subject,
+                      templateId: step.templateId,
+                      templateName: step.templateName,
+                      dayOffset: step.dayOffset,
+                      status: 'pending',
+                    })
+                    stepNumber++
+                  }
+                }
+                steps.sort((a, b) => a.stepNumber - b.stepNumber)
+                return steps
+              })(),
+              total: (() => {
+                const sequences = campaign.sequences || {}
+                let count = 0
+                for (const [, channelData] of Object.entries(sequences)) {
+                  count += (channelData as ChannelSequenceData)?.steps?.length || 0
+                }
+                return count
+              })(),
+            },
+          },
+
+          // Counts for sidebar badges
+          counts: {
+            prospects: prospectsResult.data?.length ?? 0,
+            leads: leadsResult.data?.length ?? 0,
+            activities: activitiesResult.data?.length ?? 0,
+            notes: notesResult.data?.length ?? 0,
+            documents: documentsResult.data?.length ?? 0,
+            sequence: (() => {
+              const sequences = campaign.sequences || {}
+              let count = 0
+              for (const [, channelData] of Object.entries(sequences)) {
+                count += (channelData as ChannelSequenceData)?.steps?.length || 0
+              }
+              return count
+            })(),
+          },
+
+          // Funnel metrics for analytics section
+          funnel: funnelData,
+
+          // Recent activities for overview section (first 10)
+          recentActivities: (activitiesResult.data ?? []).slice(0, 10),
         }
       }),
 
@@ -5322,8 +5746,11 @@ export const crmRouter = router({
         const { data, error, count } = await query
 
         if (error) {
+          console.error('getProspects error:', error)
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
+
+        console.log('getProspects returned:', count, 'items for campaign:', input.campaignId)
 
         return {
           items: data ?? [],
@@ -5355,7 +5782,6 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         // Get existing enrollments for this campaign to avoid duplicates
-        const emails = input.prospects.map(p => p.email.toLowerCase())
         const { data: existingEnrollments } = await adminClient
           .from('campaign_enrollments')
           .select('contact:contacts!contact_id(email)')
@@ -5410,7 +5836,8 @@ export const crmRouter = router({
               .from('contacts')
               .insert({
                 org_id: orgId,
-                subtype: 'prospect',
+                category: 'person',
+                subtype: 'person_prospect',
                 types: ['prospect'],
                 first_name: p.firstName || null,
                 last_name: p.lastName || null,
@@ -5433,7 +5860,7 @@ export const crmRouter = router({
           }
 
           // Create the enrollment
-          const { error: enrollError } = await adminClient
+          const { data: enrollmentData, error: enrollError } = await adminClient
             .from('campaign_enrollments')
             .insert({
               org_id: orgId,
@@ -5442,8 +5869,13 @@ export const crmRouter = router({
               primary_channel: input.channel,
               status: 'enrolled',
             })
+            .select('id')
+            .single()
 
-          if (!enrollError) {
+          if (enrollError) {
+            console.error('Failed to create enrollment:', enrollError)
+          } else {
+            console.log('Created enrollment:', enrollmentData?.id, 'for contact:', contactId)
             addedCount++
           }
         }
@@ -5556,8 +5988,8 @@ export const crmRouter = router({
         // Lead data
         leadScore: z.number().min(0).max(100).optional(),
         interestLevel: z.enum(['hot', 'warm', 'cold']),
-        // BANT
-        budgetStatus: z.enum(['unknown', 'limited', 'defined', 'approved']).optional(),
+        // BANT - values match DB constraints
+        budgetStatus: z.enum(['confirmed', 'likely', 'unclear', 'no_budget']).optional(),
         budgetNotes: z.string().optional(),
         authorityStatus: z.enum(['unknown', 'influencer', 'decision_maker', 'champion']).optional(),
         authorityNotes: z.string().optional(),
@@ -5567,7 +5999,8 @@ export const crmRouter = router({
         timelineNotes: z.string().optional(),
         // Hiring details
         hiringNeeds: z.string().optional(),
-        urgency: z.enum(['low', 'normal', 'high', 'urgent']).default('normal'),
+        // DB constraint: immediate, high, medium, low
+        urgency: z.enum(['immediate', 'high', 'medium', 'low']).default('medium'),
         painPoints: z.string().optional(),
         // Next steps
         nextAction: z.string().optional(),
@@ -5657,14 +6090,31 @@ export const crmRouter = router({
 
         // Add 'lead' to contact types
         if (contact?.id) {
-          await adminClient
+          // Fetch current types and append 'lead' if not already present
+          const { data: currentContact } = await adminClient
             .from('contacts')
-            .update({ types: adminClient.rpc('array_append_unique', { arr: 'types', val: 'lead' }) })
+            .select('types')
             .eq('id', contact.id)
+            .single()
+
+          const currentTypes = (currentContact?.types as string[]) || []
+          if (!currentTypes.includes('lead')) {
+            await adminClient
+              .from('contacts')
+              .update({ types: [...currentTypes, 'lead'] })
+              .eq('id', contact.id)
+          }
         }
 
         // Create follow-up task if next action specified
         if (input.nextAction && input.nextActionDate) {
+          // Map urgency to lead_tasks priority (DB constraint: low, medium, high)
+          const priorityMap: Record<string, string> = {
+            immediate: 'high',
+            high: 'high',
+            medium: 'medium',
+            low: 'low',
+          }
           await adminClient
             .from('lead_tasks')
             .insert({
@@ -5673,7 +6123,7 @@ export const crmRouter = router({
               title: input.nextAction,
               description: input.notes,
               due_date: input.nextActionDate,
-              priority: input.urgency === 'urgent' ? 'critical' : input.urgency === 'high' ? 'high' : 'normal',
+              priority: priorityMap[input.urgency] || 'medium',
               assigned_to: user?.id,
               created_by: user?.id,
             })
@@ -6032,7 +6482,7 @@ export const crmRouter = router({
     // ================================================
     getSequenceStats: orgProtectedProcedure
       .input(z.object({ campaignId: z.string().uuid() }))
-      .query(async ({ ctx, input }) => {
+      .query(async ({ input }) => {
         const adminClient = getAdminClient()
 
         // Aggregate stats from campaign_sequence_logs
@@ -6111,7 +6561,7 @@ export const crmRouter = router({
           // Convert JSONB structure to flat array of steps
           let stepNumber = 1
           for (const [channel, channelData] of Object.entries(sequences)) {
-            const channelSteps = (channelData as any)?.steps || []
+            const channelSteps = (channelData as ChannelSequenceData)?.steps || []
             for (const step of channelSteps) {
               steps.push({
                 id: `${channel}-${step.stepNumber || stepNumber}`,
@@ -6226,7 +6676,7 @@ export const crmRouter = router({
           }
 
           // Find and update step
-          const stepIndex = channelData.steps.findIndex((s: any) => s.stepNumber === input.stepNumber)
+          const stepIndex = channelData.steps.findIndex((s: SequenceStep) => s.stepNumber === input.stepNumber)
           if (stepIndex === -1) {
             throw new TRPCError({ code: 'NOT_FOUND', message: 'Step not found' })
           }
@@ -6280,8 +6730,8 @@ export const crmRouter = router({
 
           // Remove step and renumber remaining
           channelData.steps = channelData.steps
-            .filter((s: any) => s.stepNumber !== input.stepNumber)
-            .map((s: any, idx: number) => ({ ...s, stepNumber: idx + 1 }))
+            .filter((s: SequenceStep) => s.stepNumber !== input.stepNumber)
+            .map((s: SequenceStep, idx: number) => ({ ...s, stepNumber: idx + 1 }))
 
           sequences[input.channel] = channelData
 
@@ -6304,7 +6754,7 @@ export const crmRouter = router({
           campaignId: z.string().uuid(),
           channel: z.enum(['email', 'linkedin', 'phone', 'sms']).optional(),
         }))
-        .query(async ({ ctx, input }) => {
+        .query(async ({ input }) => {
           const adminClient = getAdminClient()
 
           let query = adminClient
@@ -6642,7 +7092,7 @@ export const crmRouter = router({
           checklistProgress: z.record(z.boolean()).optional(),
         }))
         .mutation(async ({ ctx, input }) => {
-          const { orgId, user } = ctx
+          const { user } = ctx
           const adminClient = getAdminClient()
 
           // Use DB function to complete and trigger successors

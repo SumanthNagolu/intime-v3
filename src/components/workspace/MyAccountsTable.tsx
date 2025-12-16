@@ -1,9 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { trpc } from '@/lib/trpc/client'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -43,39 +42,60 @@ const statusColors: Record<string, string> = {
   inactive: 'bg-charcoal-100 text-charcoal-600',
 }
 
-const tierColors: Record<string, string> = {
-  enterprise: 'bg-purple-100 text-purple-800',
-  mid_market: 'bg-blue-100 text-blue-800',
-  smb: 'bg-charcoal-100 text-charcoal-600',
+// Account item from the consolidated query
+export interface AccountItem {
+  id: string
+  name: string
+  industry: string | null
+  status: string
+  city: string | null
+  state: string | null
+  lastContactDate: string | null
+  health?: {
+    healthStatus: string
+    healthScore: number
+    activeJobs: number
+  }
+}
+
+export interface AccountsData {
+  items: AccountItem[]
+  total: number
 }
 
 interface MyAccountsTableProps {
   className?: string
+  data?: AccountsData
+  isLoading?: boolean
 }
 
-export function MyAccountsTable({ className }: MyAccountsTableProps) {
+export function MyAccountsTable({ className, data, isLoading = false }: MyAccountsTableProps) {
   const router = useRouter()
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('all')
 
-  // Fetch user's accounts
-  const accountsQuery = trpc.crm.accounts.list.useQuery({
-    search: search || undefined,
-    status: statusFilter !== 'all' ? statusFilter as 'active' | 'inactive' | 'prospect' : 'all',
-    limit: 50,
-  })
+  // Filter accounts client-side based on filter state
+  const accounts = useMemo(() => {
+    let items = data?.items ?? []
 
-  // Fetch health data for the accounts
-  const healthQuery = trpc.crm.accounts.getHealth.useQuery({})
+    // Apply search filter
+    if (search) {
+      const searchLower = search.toLowerCase()
+      items = items.filter((a) =>
+        a.name.toLowerCase().includes(searchLower) ||
+        a.industry?.toLowerCase().includes(searchLower)
+      )
+    }
 
-  const accounts = accountsQuery.data?.items ?? []
-  const total = accountsQuery.data?.total ?? 0
-  const healthAccounts = healthQuery.data?.accounts ?? []
-  const isLoading = accountsQuery.isLoading
+    // Apply status filter
+    if (statusFilter !== 'all') {
+      items = items.filter((a) => a.status === statusFilter)
+    }
 
-  const getHealthData = (accountId: string) => {
-    return healthAccounts.find((h) => h.id === accountId)
-  }
+    return items
+  }, [data?.items, search, statusFilter])
+
+  const total = accounts.length
 
   const getHealthIcon = (status: string) => {
     switch (status) {
@@ -170,99 +190,96 @@ export function MyAccountsTable({ className }: MyAccountsTableProps) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {accounts.map((account) => {
-                const health = getHealthData(account.id)
-                return (
-                  <TableRow key={account.id} className="group">
-                    <TableCell>
-                      <Link
-                        href={`/employee/recruiting/accounts/${account.id}`}
-                        className="block"
-                      >
-                        <div className="font-medium text-charcoal-900 group-hover:text-hublot-700">
-                          {account.name}
+              {accounts.map((account) => (
+                <TableRow key={account.id} className="group">
+                  <TableCell>
+                    <Link
+                      href={`/employee/recruiting/accounts/${account.id}`}
+                      className="block"
+                    >
+                      <div className="font-medium text-charcoal-900 group-hover:text-hublot-700">
+                        {account.name}
+                      </div>
+                      {(account.city || account.state) && (
+                        <div className="flex items-center gap-1 text-sm text-charcoal-500">
+                          <MapPin className="w-3 h-3" />
+                          {[account.city, account.state]
+                            .filter(Boolean)
+                            .join(', ')}
                         </div>
-                        {(account.city || account.state) && (
-                          <div className="flex items-center gap-1 text-sm text-charcoal-500">
-                            <MapPin className="w-3 h-3" />
-                            {[account.city, account.state]
-                              .filter(Boolean)
-                              .join(', ')}
-                          </div>
-                        )}
-                      </Link>
-                    </TableCell>
-                    <TableCell>
-                      <span className="text-charcoal-600 capitalize">
-                        {account.industry?.replace('_', ' ') || '-'}
-                      </span>
-                    </TableCell>
-                    <TableCell>
-                      <Badge
-                        className={cn(
-                          statusColors[account.status] || statusColors.inactive
-                        )}
-                      >
-                        {account.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      {health ? (
-                        <div className="flex items-center gap-2">
-                          {getHealthIcon(health.healthStatus)}
-                          <span
-                            className={cn(
-                              'text-sm',
-                              health.healthStatus === 'healthy' &&
-                                'text-green-600',
-                              health.healthStatus === 'attention' &&
-                                'text-amber-600',
-                              health.healthStatus === 'at_risk' &&
-                                'text-red-600'
-                            )}
-                          >
-                            {health.healthScore}%
-                          </span>
-                        </div>
-                      ) : (
-                        <span className="text-charcoal-400">-</span>
                       )}
-                    </TableCell>
-                    <TableCell>
-                      {health ? (
-                        <div className="flex items-center gap-1 text-charcoal-600">
-                          <Briefcase className="w-3 h-3" />
-                          {health.activeJobs}
-                        </div>
-                      ) : (
-                        <span className="text-charcoal-400">-</span>
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <span className="text-charcoal-600 capitalize">
+                      {account.industry?.replace('_', ' ') || '-'}
+                    </span>
+                  </TableCell>
+                  <TableCell>
+                    <Badge
+                      className={cn(
+                        statusColors[account.status] || statusColors.inactive
                       )}
-                    </TableCell>
-                    <TableCell>
-                      {account.lastContactDate ? (
-                        <span className="text-charcoal-600">
-                          {formatDistanceToNow(new Date(account.lastContactDate), {
-                            addSuffix: true,
-                          })}
-                        </span>
-                      ) : (
-                        <span className="text-charcoal-400">Never</span>
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      <Link href={`/employee/recruiting/accounts/${account.id}`}>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="opacity-0 group-hover:opacity-100"
+                    >
+                      {account.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    {account.health ? (
+                      <div className="flex items-center gap-2">
+                        {getHealthIcon(account.health.healthStatus)}
+                        <span
+                          className={cn(
+                            'text-sm',
+                            account.health.healthStatus === 'healthy' &&
+                              'text-green-600',
+                            account.health.healthStatus === 'attention' &&
+                              'text-amber-600',
+                            account.health.healthStatus === 'at_risk' &&
+                              'text-red-600'
+                          )}
                         >
-                          <ExternalLink className="w-4 h-4" />
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
+                          {account.health.healthScore}%
+                        </span>
+                      </div>
+                    ) : (
+                      <span className="text-charcoal-400">-</span>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {account.health ? (
+                      <div className="flex items-center gap-1 text-charcoal-600">
+                        <Briefcase className="w-3 h-3" />
+                        {account.health.activeJobs}
+                      </div>
+                    ) : (
+                      <span className="text-charcoal-400">-</span>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {account.lastContactDate ? (
+                      <span className="text-charcoal-600">
+                        {formatDistanceToNow(new Date(account.lastContactDate), {
+                          addSuffix: true,
+                        })}
+                      </span>
+                    ) : (
+                      <span className="text-charcoal-400">Never</span>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <Link href={`/employee/recruiting/accounts/${account.id}`}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="opacity-0 group-hover:opacity-100"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </Button>
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         )}

@@ -115,7 +115,7 @@ const defaultFormData: AccountOnboardingFormData = {
   city: '',
   state: '',
   postalCode: '',
-  country: 'United States',
+  country: 'US',
   taxId: '',
   fundingStage: '',
   accountClassification: '',

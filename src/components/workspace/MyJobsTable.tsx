@@ -1,9 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { trpc } from '@/lib/trpc/client'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -32,7 +31,7 @@ import {
   Users,
   Plus,
 } from 'lucide-react'
-import { formatDistanceToNow, format } from 'date-fns'
+import { formatDistanceToNow } from 'date-fns'
 import { cn } from '@/lib/utils'
 
 const statusColors: Record<string, string> = {
@@ -44,26 +43,56 @@ const statusColors: Record<string, string> = {
   cancelled: 'bg-red-100 text-red-800',
 }
 
+// Job item from the consolidated query
+export interface JobItem {
+  id: string
+  title: string
+  location: string | null
+  job_type: string | null
+  status: string
+  createdAt: string
+  account: { id: string; name: string } | null
+  submissions_count: number
+}
+
+export interface JobsData {
+  items: JobItem[]
+  total: number
+}
 
 interface MyJobsTableProps {
   className?: string
+  data?: JobsData
+  isLoading?: boolean
 }
 
-export function MyJobsTable({ className }: MyJobsTableProps) {
+export function MyJobsTable({ className, data, isLoading = false }: MyJobsTableProps) {
   const router = useRouter()
   const [search, setSearch] = useState('')
-  const [statusFilter, setStatusFilter] = useState<string>('active')
+  const [statusFilter, setStatusFilter] = useState<string>('all')
 
-  // Fetch user's jobs
-  const jobsQuery = trpc.ats.jobs.list.useQuery({
-    search: search || undefined,
-    status: statusFilter !== 'all' ? statusFilter as 'draft' | 'open' | 'active' | 'on_hold' | 'filled' | 'cancelled' : 'all',
-    limit: 50,
-  })
+  // Filter jobs client-side based on filter state
+  const jobs = useMemo(() => {
+    let items = data?.items ?? []
 
-  const jobs = jobsQuery.data?.items ?? []
-  const total = jobsQuery.data?.total ?? 0
-  const isLoading = jobsQuery.isLoading
+    // Apply search filter
+    if (search) {
+      const searchLower = search.toLowerCase()
+      items = items.filter((j) =>
+        j.title.toLowerCase().includes(searchLower) ||
+        j.account?.name.toLowerCase().includes(searchLower)
+      )
+    }
+
+    // Apply status filter
+    if (statusFilter !== 'all') {
+      items = items.filter((j) => j.status === statusFilter)
+    }
+
+    return items
+  }, [data?.items, search, statusFilter])
+
+  const total = jobs.length
 
   return (
     <Card className={className}>

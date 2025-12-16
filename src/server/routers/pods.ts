@@ -840,4 +840,197 @@ export const podsRouter = router({
 
       return regions ?? []
     }),
+
+  // ============================================
+  // LIST WITH STATS (Consolidated for single DB call)
+  // ============================================
+  listWithStats: orgProtectedProcedure
+    .input(z.object({
+      search: z.string().optional(),
+      podType: podTypeSchema.optional(),
+      status: podStatusSchema.or(z.literal('all')).optional(),
+      page: z.number().default(1),
+      pageSize: z.number().default(20),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { supabase, orgId } = ctx
+      const { search, podType, status, page, pageSize } = input
+      const offset = (page - 1) * pageSize
+
+      // Execute all queries in parallel
+      const [podsResult, statsResult] = await Promise.all([
+        // Pods list query
+        (async () => {
+          let query = supabase
+            .from('pods')
+            .select(`
+              *,
+              manager:user_profiles!pods_manager_id_fkey(id, full_name, email, avatar_url),
+              region:regions(id, name, code),
+              members:pod_members(
+                id,
+                user:user_profiles(id, full_name, email, avatar_url),
+                role,
+                is_active
+              )
+            `, { count: 'exact' })
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+
+          if (search) {
+            query = query.ilike('name', `%${search}%`)
+          }
+          if (podType) {
+            query = query.eq('pod_type', podType)
+          }
+          if (status && status !== 'all') {
+            query = query.eq('status', status)
+          }
+
+          query = query
+            .order('created_at', { ascending: false })
+            .range(offset, offset + pageSize - 1)
+
+          return query
+        })(),
+
+        // Stats aggregation
+        supabase
+          .from('pods')
+          .select(`
+            id,
+            status,
+            pod_members(id, is_active)
+          `)
+          .eq('org_id', orgId)
+          .is('deleted_at', null),
+      ])
+
+      if (podsResult.error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to fetch pods',
+        })
+      }
+
+      // Transform data
+      type PodMember = { id: string; is_active: boolean }
+      const items = (podsResult.data ?? []).map((pod) => {
+        const activeMembers = (pod.members as PodMember[])?.filter((m) => m.is_active).length ?? 0
+        return {
+          ...pod,
+          memberCount: activeMembers,
+          podType: pod.pod_type,
+          createdAt: pod.created_at,
+          updatedAt: pod.updated_at,
+        }
+      })
+
+      // Calculate stats
+      type PodWithMembers = { id: string; status: string; pod_members: PodMember[] }
+      const total = statsResult.data?.length ?? 0
+      const active = statsResult.data?.filter((p) => p.status === 'active').length ?? 0
+
+      let totalMembers = 0
+      statsResult.data?.forEach((pod) => {
+        const activeMembers = (pod as PodWithMembers).pod_members?.filter((m) => m.is_active).length ?? 0
+        totalMembers += activeMembers
+      })
+      const avgSize = total > 0 ? Math.round((totalMembers / total) * 10) / 10 : 0
+
+      return {
+        items,
+        pagination: {
+          total: podsResult.count ?? 0,
+          page,
+          pageSize,
+          totalPages: Math.ceil((podsResult.count ?? 0) / pageSize),
+        },
+        stats: {
+          total,
+          active,
+          avgSize,
+          totalMembers,
+        },
+      }
+    }),
+
+  // ============================================
+  // GET FULL POD (Consolidated for single DB call)
+  // ============================================
+  getFullPod: orgProtectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .query(async ({ ctx, input }) => {
+      const { supabase, orgId } = ctx
+
+      // Execute all queries in parallel
+      const [podResult, metricsResult, activityResult] = await Promise.all([
+        // Main pod data with relations
+        supabase
+          .from('pods')
+          .select(`
+            *,
+            manager:user_profiles!pods_manager_id_fkey(id, full_name, email, avatar_url, role_id),
+            region:regions(id, name, code),
+            members:pod_members(
+              id,
+              user:user_profiles(id, full_name, email, avatar_url, role_id),
+              role,
+              is_active,
+              joined_at
+            ),
+            created_by_user:user_profiles!pods_created_by_fkey(id, full_name)
+          `)
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .single(),
+
+        // Sprint metrics
+        supabase
+          .from('pod_sprint_metrics')
+          .select('*')
+          .eq('pod_id', input.id)
+          .eq('org_id', orgId)
+          .eq('status', 'active')
+          .order('sprint_number', { ascending: false })
+          .limit(1)
+          .maybeSingle(),
+
+        // Audit logs for this pod
+        supabase
+          .from('audit_logs')
+          .select('*')
+          .eq('org_id', orgId)
+          .eq('table_name', 'pods')
+          .eq('record_id', input.id)
+          .order('created_at', { ascending: false })
+          .limit(50),
+      ])
+
+      if (podResult.error || !podResult.data) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Pod not found',
+        })
+      }
+
+      return {
+        ...podResult.data,
+        sections: {
+          metrics: {
+            sprintMetrics: metricsResult.data ?? null,
+            // TODO: Implement actual metrics aggregation from placements/submissions tables
+            openJobs: 0,
+            submissionsMtd: 0,
+            placementsMtd: 0,
+            revenueMtd: 0,
+          },
+          activity: {
+            items: activityResult.data ?? [],
+            total: activityResult.data?.length ?? 0,
+          },
+        },
+      }
+    }),
 })

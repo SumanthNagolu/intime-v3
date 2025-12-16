@@ -1,11 +1,9 @@
 import {
-  User,
   Plus,
   Building2,
   Phone,
   Mail,
   Linkedin,
-  MapPin,
   CheckCircle,
   Clock,
   XCircle,
@@ -13,6 +11,7 @@ import {
   FileText,
   Star,
   Calendar,
+  User,
   Users,
   Crown,
   MessageCircle,
@@ -351,7 +350,7 @@ export const contactsListConfig: ListViewConfig<Contact> = {
   // tRPC hooks for data fetching - Using unified contacts router
   useListQuery: (filters) => {
     const statusValue = filters.status as string | undefined
-    const subtypeValue = filters.type as string | undefined // Maps to subtype in unified router
+    const _subtypeValue = filters.type as string | undefined // Maps to subtype in unified router
     const sortByValue = filters.sortBy as string | undefined
     const sortOrderValue = filters.sortOrder as string | undefined
 

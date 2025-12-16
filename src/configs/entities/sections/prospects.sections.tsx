@@ -22,15 +22,10 @@ import {
   Building2,
   Link,
   Phone,
-  Calendar,
-  Clock,
   TrendingUp,
   Target,
   MessageSquare,
-  Send,
   CheckCircle2,
-  Activity,
-  FileText,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { format, formatDistanceToNow } from 'date-fns'
@@ -62,7 +57,7 @@ interface PCFSectionProps {
 /**
  * Overview Section Adapter
  */
-export function ProspectOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
+export function ProspectOverviewSectionPCF({ entityId: _entityId, entity }: PCFSectionProps) {
   const prospect = entity as Prospect | undefined
 
   if (!prospect) return null

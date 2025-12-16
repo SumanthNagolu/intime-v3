@@ -8,9 +8,8 @@ import { Submission } from '../submissions.config'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { trpc } from '@/lib/trpc/client'
 import { formatDistanceToNow, format } from 'date-fns'
-import { User, Briefcase, Building2, DollarSign, Calendar, FileText, MessageSquare, Activity, Star } from 'lucide-react'
+import { User, Briefcase, Building2, DollarSign, Calendar, FileText, MessageSquare, Activity } from 'lucide-react'
 import Link from 'next/link'
 
 interface PCFSectionProps {
@@ -21,7 +20,7 @@ interface PCFSectionProps {
 /**
  * Overview Section
  */
-export function SubmissionOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
+export function SubmissionOverviewSectionPCF({ entityId: _entityId, entity }: PCFSectionProps) {
   const submission = entity as Submission | undefined
 
   if (!submission) return null
@@ -229,6 +228,8 @@ export function SubmissionActivitiesSectionPCF({ entityId }: PCFSectionProps) {
     </Card>
   )
 }
+
+
 
 
 

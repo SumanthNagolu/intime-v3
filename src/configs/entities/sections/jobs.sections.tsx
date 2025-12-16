@@ -10,11 +10,11 @@
  * The detail page listens for these events and manages dialog state.
  */
 
+import * as React from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Job } from '../jobs.config'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { trpc } from '@/lib/trpc/client'
 import { SubmissionPipeline } from '@/components/recruiting/submissions'
@@ -35,7 +35,7 @@ import {
  * Dispatch a dialog open event for the Job entity
  * The detail page listens for this and manages dialog state
  */
-function dispatchJobDialog(dialogId: string, jobId: string) {
+function _dispatchJobDialog(dialogId: string, jobId: string) {
   window.dispatchEvent(
     new CustomEvent('openJobDialog', {
       detail: { dialogId, jobId },
@@ -62,7 +62,7 @@ export function JobOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
 
   return (
     <JobOverviewSection
-      job={job as any}
+      job={job as unknown as React.ComponentProps<typeof JobOverviewSection>['job']}
       jobId={entityId}
     />
   )
@@ -221,3 +221,5 @@ export function JobAddressesSectionPCF({ entityId }: PCFSectionProps) {
     </Card>
   )
 }
+
+

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { DetailViewConfig } from '@/configs/entities/types'
+import { DetailViewConfig, SectionDataMap } from '@/configs/entities/types'
 import { DetailHeader } from './DetailHeader'
 import { DetailMetrics } from './DetailMetrics'
 // Note: DetailSections removed - sidebar now handles all navigation (Guidewire pattern)
@@ -13,7 +13,10 @@ import { Skeleton } from '@/components/ui/skeleton'
 interface EntityDetailViewProps<T> {
   config: DetailViewConfig<T>
   entityId: string
+  /** Entity data - if provided, no client-side query is made (ONE database call pattern) */
   entity?: T
+  /** Pre-loaded section data keyed by section ID (ONE database call pattern) */
+  sectionData?: SectionDataMap
   className?: string
 }
 
@@ -21,6 +24,7 @@ export function EntityDetailView<T extends Record<string, unknown>>({
   config,
   entityId,
   entity: serverEntity,
+  sectionData,
   className,
 }: EntityDetailViewProps<T>) {
   const searchParams = useSearchParams()
@@ -34,10 +38,17 @@ export function EntityDetailView<T extends Record<string, unknown>>({
     searchParams.get('section') || config.defaultSection || config.sections?.[0]?.id || 'overview'
   const currentStep = searchParams.get('step') || config.journeySteps?.[0]?.id || 'setup'
 
-  // Use server data or fetch client-side
-  const entityQuery = config.useEntityQuery(entityId)
+  // ONE DATABASE CALL PATTERN: Skip client-side query when server entity is provided
+  // This prevents redundant fetches - data should already be in context from layout
+  const entityQuery = config.useEntityQuery(entityId, { enabled: !serverEntity })
   const entity = serverEntity || entityQuery.data
   const isLoading = !serverEntity && entityQuery.isLoading
+
+  // ONE database call pattern: Extract sectionData from entity if embedded
+  // When using getFullEntity, the response includes a `sections` property
+  // with pre-loaded data for all sections
+  const entitySections = (entity as any)?.sections as SectionDataMap | undefined
+  const effectiveSectionData = sectionData || entitySections
 
   // Sticky header scroll detection
   useEffect(() => {
@@ -78,7 +89,9 @@ export function EntityDetailView<T extends Record<string, unknown>>({
     if (!step || !step.component) return null
 
     const StepComponent = step.component
-    return <StepComponent entityId={entityId} entity={entity} />
+    // Pass sectionData for this step if available (ONE database call pattern)
+    const stepSectionData = effectiveSectionData?.[step.id]
+    return <StepComponent entityId={entityId} entity={entity} sectionData={stepSectionData} />
   }
 
   // Render current section (when in sections mode)
@@ -89,7 +102,9 @@ export function EntityDetailView<T extends Record<string, unknown>>({
     if (!section || !section.component) return null
 
     const SectionComponent = section.component
-    return <SectionComponent entityId={entityId} entity={entity} />
+    // Pass sectionData for this section if available (ONE database call pattern)
+    const currentSectionData = effectiveSectionData?.[section.id]
+    return <SectionComponent entityId={entityId} entity={entity} sectionData={currentSectionData} />
   }
 
   // Render content based on current navigation mode

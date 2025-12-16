@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { US_STATES, COUNTRIES, type AddressFormData } from './index'
+import { OPERATING_COUNTRIES, getStatesByCountry, type AddressFormData } from './index'
 
 interface AddressFormProps {
   value: Partial<AddressFormData>
@@ -45,8 +45,20 @@ export function AddressForm({
   disabled = false,
   compact = false,
 }: AddressFormProps) {
+  // Get state/province options based on selected country
+  const countryCode = value.countryCode || 'US'
+  const stateOptions = getStatesByCountry(countryCode)
+
   const handleChange = (field: keyof AddressFormData, newValue: string) => {
     onChange({ [field]: newValue })
+  }
+
+  // Handle country change - reset state when country changes
+  const handleCountryChange = (newCountryCode: string) => {
+    onChange({
+      countryCode: newCountryCode,
+      stateProvince: '', // Reset state when country changes
+    })
   }
 
   if (compact) {
@@ -67,8 +79,8 @@ export function AddressForm({
           )}
         </div>
 
-        {/* City, State, ZIP in one row */}
-        <div className="grid grid-cols-3 gap-3">
+        {/* City, State, ZIP, Country in grid */}
+        <div className="grid grid-cols-4 gap-3">
           <div>
             <Label className="text-sm">City {required && '*'}</Label>
             <Input
@@ -90,7 +102,7 @@ export function AddressForm({
                 <SelectValue placeholder="State" />
               </SelectTrigger>
               <SelectContent>
-                {US_STATES.map((state) => (
+                {stateOptions.map((state) => (
                   <SelectItem key={state.value} value={state.value}>
                     {state.value}
                   </SelectItem>
@@ -107,6 +119,25 @@ export function AddressForm({
               disabled={disabled}
               maxLength={10}
             />
+          </div>
+          <div>
+            <Label className="text-sm">Country</Label>
+            <Select
+              value={countryCode}
+              onValueChange={handleCountryChange}
+              disabled={disabled}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Country" />
+              </SelectTrigger>
+              <SelectContent>
+                {OPERATING_COUNTRIES.map((country) => (
+                  <SelectItem key={country.value} value={country.value}>
+                    {country.value}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </div>
@@ -172,7 +203,7 @@ export function AddressForm({
               <SelectValue placeholder="Select state" />
             </SelectTrigger>
             <SelectContent>
-              {US_STATES.map((state) => (
+              {stateOptions.map((state) => (
                 <SelectItem key={state.value} value={state.value}>
                   {state.label}
                 </SelectItem>
@@ -205,15 +236,15 @@ export function AddressForm({
         <div>
           <Label>Country</Label>
           <Select
-            value={value.countryCode || 'US'}
-            onValueChange={(v) => handleChange('countryCode', v)}
+            value={countryCode}
+            onValueChange={handleCountryChange}
             disabled={disabled}
           >
             <SelectTrigger>
               <SelectValue placeholder="Select country" />
             </SelectTrigger>
             <SelectContent>
-              {COUNTRIES.map((country) => (
+              {OPERATING_COUNTRIES.map((country) => (
                 <SelectItem key={country.value} value={country.value}>
                   {country.label}
                 </SelectItem>

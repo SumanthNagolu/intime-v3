@@ -1,7 +1,6 @@
 import {
   Target,
   Plus,
-  Building2,
   User,
   Phone,
   Mail,
@@ -630,13 +629,13 @@ export const leadsDetailConfig: DetailViewConfig<Lead> = {
       label: 'Log Activity',
       icon: Activity,
       variant: 'default',
-      onClick: (entity: unknown) => {
-        const lead = entity as Lead
-        window.dispatchEvent(
-          new CustomEvent('openLeadDialog', {
-            detail: { dialogId: 'logActivity', leadId: lead.id },
-          })
-        )
+      onClick: () => {
+        // Navigate to activities section where inline logging is available
+        const url = new URL(window.location.href)
+        url.searchParams.set('section', 'activities')
+        window.history.pushState({}, '', url.toString())
+        // Dispatch event to trigger section change
+        window.dispatchEvent(new Event('popstate'))
       },
     },
     {

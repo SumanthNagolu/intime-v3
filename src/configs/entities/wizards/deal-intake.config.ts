@@ -7,7 +7,6 @@ import {
   DollarSign,
   Users,
   Target,
-  Handshake,
 } from 'lucide-react'
 import { WizardConfig, WizardStepConfig, FieldDefinition } from '../types'
 
