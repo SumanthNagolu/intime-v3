@@ -322,90 +322,71 @@ CREATE INDEX activities_pending_idx ON activities(assignee_id, due_date)
 
 ---
 
-## Migrations
+## Database-First Workflow (NO MIGRATIONS)
 
-### Migration Workflow (CRITICAL)
+### Core Principle
 
-**ALWAYS follow this 4-step process when creating database migrations:**
+**The database IS the source of truth. There are NO migration files.**
 
-#### Step 1: Validate Prior Migrations
+| What | Where |
+|------|-------|
+| Schema source of truth | Supabase database |
+| Schema snapshot | `database/schema.sql` (for reference/fresh setup) |
+| TypeScript types | Generated via `drizzle-kit introspect` |
 
-Before running new migrations, validate that all prior migrations have been applied:
-
-```bash
-# Check migration status
-pnpm db:status
-
-# If any migrations are pending, run them first
-pnpm db:migrate
-```
-
-Ensure all existing migrations are applied before proceeding. Fix any gaps or failed migrations.
-
-#### Step 2: Run New Migration
-
-After writing your migration script, run it immediately to verify it works:
+### Making Schema Changes
 
 ```bash
-pnpm db:migrate
+# 1. Make changes directly in Supabase Studio (or via SQL)
+#    - Add tables, columns, indexes
+#    - Modify constraints
+#    - Create functions/triggers
+
+# 2. Sync TypeScript types from database
+pnpm db:introspect
+
+# 3. (Optional) Update schema snapshot for documentation
+pnpm db:dump-schema
 ```
 
-Do NOT commit or continue until the migration runs successfully.
+### Fresh Database Setup
 
-#### Step 3: Consolidate into Baseline (Database-First)
-
-**IMPORTANT**: Use `pg_dump` to dump the actual schema from the database - do NOT manually merge SQL files.
+For new developers or new environments:
 
 ```bash
-# 1. Dump the schema directly from the database (most reliable)
-PGPASSWORD=<password> pg_dump -h db.<project>.supabase.co -p 5432 -U postgres -d postgres \
-  --schema=public --schema-only --no-owner --no-privileges \
-  > supabase/migrations/00000000000000_baseline.sql
-
-# 2. Remove the \restrict line that pg_dump adds
-sed -i '' '/^\\restrict/d' supabase/migrations/00000000000000_baseline.sql
-
-# 3. Delete the individual migration files
-rm supabase/migrations/202*.sql
+# Apply the schema snapshot to a fresh database
+psql $DATABASE_URL < database/schema.sql
 ```
 
-This approach guarantees the baseline matches the actual database state.
+### Commands
 
-#### Step 4: Sync Migration History
+| Command | Purpose |
+|---------|---------|
+| `pnpm db:introspect` | Generate Drizzle schema from database |
+| `pnpm db:dump-schema` | Dump current schema to `database/schema.sql` |
 
-After consolidating, sync the migration history to keep only the baseline:
+### Why No Migrations?
 
-```bash
-# Delete individual migration records, keeping only baseline
-PGPASSWORD=<password> psql -h db.<project>.supabase.co -p 5432 -U postgres -d postgres \
-  -c "DELETE FROM supabase_migrations.schema_migrations WHERE version <> '00000000000000';"
+| Problem with Migrations | Database-First Solution |
+|------------------------|------------------------|
+| Agents create wrong files | No migration folder exists |
+| Consolidation not followed | Nothing to consolidate |
+| Merge conflicts | Single schema.sql, rarely changes |
+| Drift between DB and code | DB is source of truth |
+| Complex multi-step process | Simple: edit DB, run introspect |
 
-# Verify the sync was successful
-pnpm db:status
-```
+### DO NOT
 
-### Why This Workflow?
+- Create files in `supabase/migrations/` - the folder doesn't exist
+- Write SQL migration files anywhere
+- Use `supabase migration new` or similar commands
+- Manually edit Drizzle schema files (they're generated)
 
-| Problem | Solution |
-|---------|----------|
-| Migration drift | Single source of truth in baseline |
-| Merge conflicts | No individual migration files to conflict |
-| Schema archaeology | Full schema visible in one file |
-| Fresh database setup | Single migration to run |
-| Missing migrations | Step 1 catches gaps before new changes |
+### DO
 
-### Migration Files
-
-Location: `supabase/migrations/`
-
-The baseline file `00000000000000_baseline.sql` contains the complete schema.
-
-### Running Migrations
-
-```bash
-pnpm db:migrate          # Run pending migrations
-pnpm db:status           # Check migration status
-```
+- Make schema changes in Supabase Studio
+- Run `pnpm db:introspect` after changes
+- Commit the generated Drizzle schema
 
 ---
 
