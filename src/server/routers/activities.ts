@@ -686,7 +686,7 @@ export const activitiesRouter = router({
       if (!input.entityTypes || input.entityTypes.includes('job')) {
         const { data: jobs } = await adminClient
           .from('jobs')
-          .select('id, title, company:companies!company_id(name)')
+          .select('id, title, company:companies!jobs_company_id_fkey(name)')
           .eq('org_id', orgId)
           .ilike('title', `%${input.query}%`)
           .limit(input.limit)

@@ -106,7 +106,7 @@ export const reportsRouter = router({
       // Get submissions for this recruiter
       const { data: submissions } = await adminClient
         .from('submissions')
-        .select('id, status, submitted_at, job:jobs(id, title, created_at, company:companies!company_id(id, name))')
+        .select('id, status, submitted_at, job:jobs(id, title, created_at, company:companies!jobs_company_id_fkey(id, name))')
         .eq('org_id', orgId)
         .eq('submitted_by', user?.id)
         .gte('submitted_at', startDate.toISOString())

@@ -1061,7 +1061,7 @@ export const contractsRouter = router({
             *,
             user:user_profiles!user_id(id, full_name, email),
             contact:contacts!contact_id(id, first_name, last_name, email, company_name),
-            company:companies!company_id(id, legal_name)
+            company:companies!contract_parties_company_id_fkey(id, legal_name)
           `)
           .eq('org_id', orgId)
           .eq('contract_id', input.contractId)

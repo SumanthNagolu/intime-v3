@@ -595,7 +595,7 @@ export const atsRouter = router({
           .from('jobs')
           .select(`
             *,
-            company:companies!company_id(id, name, industry),
+            company:companies!jobs_company_id_fkey(id, name, industry),
             clientCompany:companies!client_company_id(id, name, industry),
             endClientCompany:companies!end_client_company_id(id, name, industry),
             vendorCompany:companies!vendor_company_id(id, name),
@@ -801,7 +801,7 @@ export const atsRouter = router({
           .from('jobs')
           .select(`
             id, title, status, job_type, location, billing_rate, created_at,
-            company:companies!company_id(id, name),
+            company:companies!jobs_company_id_fkey(id, name),
             submissions(id, status)
           `)
           .eq('org_id', orgId)
@@ -1102,7 +1102,7 @@ export const atsRouter = router({
         // Get current job
         const { data: job, error: jobError } = await adminClient
           .from('jobs')
-          .select('*, company:companies!company_id(id, name)')
+          .select('*, company:companies!jobs_company_id_fkey(id, name)')
           .eq('id', input.jobId)
           .eq('org_id', orgId)
           .single()
@@ -1513,7 +1513,7 @@ export const atsRouter = router({
         // Find similar jobs (same account or overlapping skills)
         const { data: similarJobs, error } = await adminClient
           .from('jobs')
-          .select('id, title, status, company:companies!company_id(id, name)')
+          .select('id, title, status, company:companies!jobs_company_id_fkey(id, name)')
           .eq('org_id', orgId)
           .neq('id', input.jobId)
           .in('status', ['open', 'active'])
@@ -1599,7 +1599,7 @@ export const atsRouter = router({
           .from('submissions')
           .select(`
             *,
-            job:jobs(id, title, company:companies!company_id(id, name)),
+            job:jobs(id, title, company:companies!jobs_company_id_fkey(id, name)),
             candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, email),
             submitted_by:user_profiles!submitted_by(id, full_name)
           `, { count: 'exact' })
@@ -1728,7 +1728,7 @@ export const atsRouter = router({
           .from('submissions')
           .select(`
             id, status, submitted_at, submission_rate,
-            job:jobs(id, title, company:companies!company_id(id, name)),
+            job:jobs(id, title, company:companies!jobs_company_id_fkey(id, name)),
             candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name)
           `)
           .eq('org_id', orgId)
@@ -2088,7 +2088,7 @@ export const atsRouter = router({
           .select(`
             id, status, job_id, candidate_id,
             job:jobs(id, title, client_id, rate_min, rate_max,
-              company:companies!company_id(id, name)
+              company:companies!jobs_company_id_fkey(id, name)
             ),
             candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, email)
           `)
@@ -2644,7 +2644,7 @@ export const atsRouter = router({
           .from('submissions')
           .select(`
             id, status, submitted_at, submission_score, rtr_obtained,
-            job:jobs(id, title, status, company:companies!company_id(id, name)),
+            job:jobs(id, title, status, company:companies!jobs_company_id_fkey(id, name)),
             submittedBy:user_profiles!submitted_by(id, full_name)
           `, { count: 'exact' })
           .eq('org_id', orgId)
@@ -2708,7 +2708,7 @@ export const atsRouter = router({
             submission:submissions(
               id,
               job_id,
-              job:jobs(id, title, company:companies!company_id(id, name)),
+              job:jobs(id, title, company:companies!jobs_company_id_fkey(id, name)),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name)
             )
           `, { count: 'exact' })
@@ -2769,7 +2769,7 @@ export const atsRouter = router({
             id, scheduled_at, interview_type, duration_minutes, status, location,
             submission:submissions!inner(
               id, submitted_by,
-              job:jobs(id, title, company:companies!company_id(id, name)),
+              job:jobs(id, title, company:companies!jobs_company_id_fkey(id, name)),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, phone, email)
             )
           `)
@@ -2860,7 +2860,7 @@ export const atsRouter = router({
             *,
             submission:submissions(
               id, status,
-              job:jobs(id, title, company:companies!company_id(id, name)),
+              job:jobs(id, title, company:companies!jobs_company_id_fkey(id, name)),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, email, phone)
             ),
             scheduled_by_user:user_profiles!scheduled_by(id, full_name)
@@ -2918,7 +2918,7 @@ export const atsRouter = router({
           .from('submissions')
           .select(`
             id, status, job_id, candidate_id,
-            job:jobs(id, title, company:companies!company_id(id, name)),
+            job:jobs(id, title, company:companies!jobs_company_id_fkey(id, name)),
             candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, email)
           `)
           .eq('id', input.submissionId)
@@ -3491,7 +3491,7 @@ export const atsRouter = router({
             id, scheduled_at, interview_type, round_number, status,
             submission:submissions!inner(
               id, submitted_by,
-              job:jobs(id, title, company:companies!company_id(id, name)),
+              job:jobs(id, title, company:companies!jobs_company_id_fkey(id, name)),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name)
             )
           `)
@@ -4165,7 +4165,7 @@ export const atsRouter = router({
             submission:submissions!offers_submission_id_fkey(
               id, status,
               job:jobs!submissions_job_id_fkey(id, title, client_id,
-                company:companies!company_id(id, name)
+                company:companies!jobs_company_id_fkey(id, name)
               ),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, email, phone)
             ),
@@ -4417,7 +4417,7 @@ export const atsRouter = router({
             submission:submissions!offers_submission_id_fkey(
               id, status,
               job:jobs!submissions_job_id_fkey(id, title, client_id,
-                company:companies!company_id(id, name)
+                company:companies!jobs_company_id_fkey(id, name)
               ),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, email)
             )
@@ -4833,7 +4833,7 @@ export const atsRouter = router({
             created_at,
             job:jobs!placements_job_id_fkey(id, title),
             candidate:user_profiles!placements_candidate_id_fkey(id, first_name, last_name),
-            company:companies!company_id(id, name),
+            company:companies!jobs_company_id_fkey(id, name),
             submission:submissions(id, submitted_by)
           `, { count: 'exact' })
           .eq('org_id', orgId)
@@ -4992,7 +4992,7 @@ export const atsRouter = router({
             id, start_date, last_check_in_date, status,
             submission:submissions(
               id,
-              job:jobs(id, title, company:companies!company_id(id, name)),
+              job:jobs(id, title, company:companies!jobs_company_id_fkey(id, name)),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name)
             )
           `)
@@ -5022,7 +5022,7 @@ export const atsRouter = router({
           .select(`
             *,
             job:jobs!placements_job_id_fkey(id, title, description,
-              company:companies!company_id(id, name)
+              company:companies!jobs_company_id_fkey(id, name)
             ),
             candidate:user_profiles!placements_candidate_id_fkey(id, first_name, last_name, email, phone),
             offer:offers!placements_offer_id_fkey(id, pay_rate, bill_rate, employment_type),
@@ -6424,7 +6424,7 @@ export const atsRouter = router({
             id, status, start_date, end_date,
             bill_rate, pay_rate,
             candidate:user_profiles!placements_candidate_id_fkey(first_name, last_name),
-            company:companies!company_id(name)
+            company:companies!jobs_company_id_fkey(name)
           `)
           .eq('org_id', orgId)
           .eq('recruiter_id', user.id)
@@ -7974,7 +7974,7 @@ export const atsRouter = router({
           .select(`
             *,
             candidate:candidates(id, first_name, last_name, email, headline),
-            job:jobs(id, title, company:companies!company_id(name))
+            job:jobs(id, title, company:companies!jobs_company_id_fkey(name))
           `)
           .eq('id', input.profileId)
           .eq('org_id', orgId)
@@ -8084,7 +8084,7 @@ export const atsRouter = router({
           .from('candidate_prepared_profiles')
           .select(`
             id,
-            job:jobs(id, title, company:companies!company_id(name)),
+            job:jobs(id, title, company:companies!jobs_company_id_fkey(name)),
             template_type,
             status,
             finalized_at,

@@ -684,7 +684,7 @@ export const dashboardRouter = router({
             id, start_date,
             submission:submissions(
               candidate:candidates(first_name, last_name),
-              job:jobs(title, company:companies!company_id(name))
+              job:jobs(title, company:companies!jobs_company_id_fkey(name))
             )
           `)
           .eq('org_id', orgId)
@@ -719,7 +719,7 @@ export const dashboardRouter = router({
         .select(`
           id, updated_at,
           candidate:candidates(first_name, last_name),
-          job:jobs(title, company:companies!company_id(name))
+          job:jobs(title, company:companies!jobs_company_id_fkey(name))
         `)
         .eq('org_id', orgId)
         .eq('submitted_by', user?.id)
@@ -1101,7 +1101,7 @@ export const dashboardRouter = router({
         .from('jobs')
         .select(`
           id, title, location, job_type, status, created_at,
-          company:companies!company_id(id, name),
+          company:companies!jobs_company_id_fkey(id, name),
           submissions:submissions(id)
         `, { count: 'exact' })
         .eq('org_id', orgId)
@@ -1126,7 +1126,7 @@ export const dashboardRouter = router({
         .select(`
           id, status, submitted_at, updated_at,
           candidate:candidates!candidate_id(id, first_name, last_name, title),
-          job:jobs!job_id(id, title, company:companies!company_id(id, name))
+          job:jobs!job_id(id, title, company:companies!jobs_company_id_fkey(id, name))
         `, { count: 'exact' })
         .eq('org_id', orgId)
         .eq('submitted_by', userId)

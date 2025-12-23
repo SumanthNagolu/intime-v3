@@ -51,7 +51,7 @@ export async function createContext(): Promise<Context> {
         .from('user_profiles')
         .select('org_id')
         .eq('auth_id', user.id)
-        .single()
+        .single() as { data: { org_id: string } | null }
 
       orgId = profile?.org_id ?? null
       console.log(`[PERF] context - orgId from DB: ${Date.now() - profileStart}ms`)
