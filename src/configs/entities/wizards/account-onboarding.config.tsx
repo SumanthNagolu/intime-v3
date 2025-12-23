@@ -8,8 +8,18 @@ import {
   Briefcase,
   Calendar,
 } from 'lucide-react'
-import { WizardConfig, WizardStepConfig } from '../types'
-import { AccountOnboardingFormData } from '@/stores/account-onboarding-store'
+import {
+  WizardConfig,
+  WizardStepConfig,
+} from '../types'
+import {
+  AccountOnboardingFormData,
+  INDUSTRIES,
+  COMPANY_SIZES,
+  PAYMENT_TERMS,
+  BILLING_FREQUENCIES,
+  JOB_CATEGORIES,
+} from '@/stores/account-onboarding-store'
 
 // Step wrapper components that bridge existing components to the EntityWizard interface
 import {
@@ -55,6 +65,14 @@ export const accountOnboardingSteps: WizardStepConfig<AccountOnboardingFormData>
     description: 'Enter company details and classification',
     icon: Building2,
     component: Step1Wrapper as any,
+    fields: [
+      { key: 'legalName', label: 'Company Name', type: 'text', required: true },
+      { key: 'industries', label: 'Industries', type: 'multi-select', options: INDUSTRIES },
+      { key: 'companySize', label: 'Company Size', type: 'select', options: COMPANY_SIZES },
+      { key: 'website', label: 'Website', type: 'url' },
+      { key: 'city', label: 'City', type: 'text' },
+      { key: 'state', label: 'State', type: 'text' },
+    ],
   },
   {
     id: 'contract',
@@ -63,6 +81,11 @@ export const accountOnboardingSteps: WizardStepConfig<AccountOnboardingFormData>
     description: 'Configure contract terms and conditions',
     icon: FileText,
     component: Step2Wrapper as any,
+    fields: [
+      { key: 'contractType', label: 'Contract Type', type: 'select', options: [{ value: 'msa', label: 'MSA' }, { value: 'sow', label: 'SOW' }, { value: 'staffing_agreement', label: 'Staffing Agreement' }] },
+      { key: 'contractStartDate', label: 'Start Date', type: 'date' },
+      { key: 'isEvergreen', label: 'Evergreen Contract', type: 'checkbox' },
+    ],
   },
   {
     id: 'billing',
@@ -71,6 +94,11 @@ export const accountOnboardingSteps: WizardStepConfig<AccountOnboardingFormData>
     description: 'Set up billing and payment preferences',
     icon: CreditCard,
     component: Step3Wrapper as any,
+    fields: [
+      { key: 'paymentTerms', label: 'Payment Terms', type: 'select', options: PAYMENT_TERMS },
+      { key: 'billingFrequency', label: 'Billing Frequency', type: 'select', options: BILLING_FREQUENCIES },
+      { key: 'poRequired', label: 'PO Required', type: 'checkbox' },
+    ],
   },
   {
     id: 'contacts',
@@ -79,6 +107,19 @@ export const accountOnboardingSteps: WizardStepConfig<AccountOnboardingFormData>
     description: 'Add primary contacts and communication preferences',
     icon: Users,
     component: Step4Wrapper as any,
+    fields: [
+      { key: 'preferredChannel', label: 'Preferred Channel', type: 'select', options: [{ value: 'email', label: 'Email' }, { value: 'phone', label: 'Phone' }, { value: 'slack', label: 'Slack' }, { value: 'teams', label: 'Teams' }] },
+      { key: 'meetingCadence', label: 'Meeting Cadence', type: 'select', options: [{ value: 'daily', label: 'Daily' }, { value: 'weekly', label: 'Weekly' }, { value: 'biweekly', label: 'Bi-weekly' }, { value: 'monthly', label: 'Monthly' }] },
+      {
+        key: 'additionalContacts',
+        label: 'Additional Contacts',
+        type: 'text',
+        formatValue: (val: any) => {
+          if (!Array.isArray(val) || val.length === 0) return 'None'
+          return val.map((c: any) => `${c.firstName} ${c.lastName} (${c.email})`).join(', ')
+        }
+      },
+    ],
   },
   {
     id: 'categories',
@@ -87,6 +128,10 @@ export const accountOnboardingSteps: WizardStepConfig<AccountOnboardingFormData>
     description: 'Define hiring needs and preferences',
     icon: Briefcase,
     component: Step5Wrapper as any,
+    fields: [
+      { key: 'selectedJobCategories', label: 'Job Categories', type: 'multi-select', options: JOB_CATEGORIES.flatMap(g => g.items) },
+      { key: 'experienceLevels', label: 'Experience Levels', type: 'multi-select', options: [{ value: 'associate', label: 'Associate' }, { value: 'mid', label: 'Mid-Level' }, { value: 'senior', label: 'Senior' }, { value: 'lead', label: 'Lead' }, { value: 'principal', label: 'Principal' }] },
+    ],
   },
   {
     id: 'kickoff',
@@ -95,6 +140,11 @@ export const accountOnboardingSteps: WizardStepConfig<AccountOnboardingFormData>
     description: 'Schedule kickoff and finalize onboarding',
     icon: Calendar,
     component: Step6Wrapper as any,
+    fields: [
+      { key: 'scheduleKickoff', label: 'Schedule Kickoff', type: 'checkbox' },
+      { key: 'kickoffDate', label: 'Kickoff Date', type: 'datetime' },
+      { key: 'sendWelcomeEmail', label: 'Send Welcome Email', type: 'checkbox' },
+    ],
   },
 ]
 
@@ -114,7 +164,7 @@ export const accountOnboardingWizardConfig: WizardConfig<AccountOnboardingFormDa
     sections: [
       {
         label: 'Company Profile',
-        fields: ['legalName', 'industry', 'companySize', 'city', 'state'],
+        fields: ['legalName', 'industries', 'companySize', 'city', 'state'],
         stepNumber: 1,
       },
       {
@@ -129,7 +179,7 @@ export const accountOnboardingWizardConfig: WizardConfig<AccountOnboardingFormDa
       },
       {
         label: 'Key Contacts',
-        fields: ['preferredChannel', 'meetingCadence'],
+        fields: ['preferredChannel', 'meetingCadence', 'additionalContacts'],
         stepNumber: 4,
       },
       {
@@ -153,7 +203,7 @@ export const accountOnboardingWizardConfig: WizardConfig<AccountOnboardingFormDa
   defaultFormData: {} as AccountOnboardingFormData, // Will be provided by store
 
   // These will be overridden in the page component
-  onSubmit: async () => {},
-  onSuccess: () => {},
+  onSubmit: async () => { },
+  onSuccess: () => { },
 }
 

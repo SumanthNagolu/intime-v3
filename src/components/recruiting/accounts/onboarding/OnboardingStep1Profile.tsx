@@ -11,9 +11,23 @@ import {
 } from '@/components/ui/select'
 import { useAccountOnboardingStore, INDUSTRIES, COMPANY_SIZES } from '@/stores/account-onboarding-store'
 import { OPERATING_COUNTRIES, getStatesByCountry, getCountryCode } from '@/components/addresses'
+import { PostalCodeInput, type PostalCodeCountry } from '@/components/ui/postal-code-input'
+import { cn } from '@/lib/utils'
 
 export function OnboardingStep1Profile() {
   const { formData, setFormData } = useAccountOnboardingStore()
+
+  const toggleIndustry = (industry: string) => {
+    if (formData.industries.includes(industry)) {
+      setFormData({
+        industries: formData.industries.filter((i) => i !== industry),
+      })
+    } else {
+      setFormData({
+        industries: [...formData.industries, industry],
+      })
+    }
+  }
 
   // Get country code - handle both code ('US') and label ('United States') formats
   const countryCode = formData.country?.length === 2
@@ -23,11 +37,12 @@ export function OnboardingStep1Profile() {
   // Get state options based on selected country
   const stateOptions = getStatesByCountry(countryCode)
 
-  // Handle country change - reset state when country changes
+  // Handle country change - reset state and postal code when country changes
   const handleCountryChange = (newCountryCode: string) => {
     setFormData({
       country: newCountryCode,
       state: '', // Reset state when country changes
+      postalCode: '', // Reset postal code when country changes (different formats)
     })
   }
 
@@ -58,20 +73,26 @@ export function OnboardingStep1Profile() {
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label>Industry</Label>
-            <Select value={formData.industry} onValueChange={(v) => setFormData({ industry: v })}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select industry" />
-              </SelectTrigger>
-              <SelectContent>
-                {INDUSTRIES.map((ind) => (
-                  <SelectItem key={ind.value} value={ind.value}>
-                    {ind.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <div className="space-y-2 col-span-2">
+            <Label>Industries</Label>
+            <p className="text-xs text-charcoal-500">Select all that apply</p>
+            <div className="flex flex-wrap gap-2 mt-1">
+              {INDUSTRIES.map((ind) => (
+                <button
+                  key={ind.value}
+                  type="button"
+                  onClick={() => toggleIndustry(ind.value)}
+                  className={cn(
+                    'px-3 py-1.5 rounded-full text-sm transition-colors',
+                    formData.industries.includes(ind.value)
+                      ? 'bg-hublot-700 text-white'
+                      : 'bg-charcoal-100 text-charcoal-700 hover:bg-charcoal-200'
+                  )}
+                >
+                  {ind.label}
+                </button>
+              ))}
+            </div>
           </div>
           <div className="space-y-2">
             <Label>Company Size</Label>
@@ -165,11 +186,10 @@ export function OnboardingStep1Profile() {
             </Select>
           </div>
           <div className="space-y-2">
-            <Label>Postal Code</Label>
-            <Input
+            <PostalCodeInput
               value={formData.postalCode}
-              onChange={(e) => setFormData({ postalCode: e.target.value })}
-              placeholder="94102"
+              onChange={(val) => setFormData({ postalCode: val })}
+              countryCode={countryCode as PostalCodeCountry}
             />
           </div>
           <div className="space-y-2">

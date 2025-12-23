@@ -137,9 +137,11 @@ export function OnboardingStep6Kickoff() {
               <span className="font-medium">{accountName || 'Not set'}</span>
             </div>
             <div>
-              <span className="text-charcoal-500">Industry:</span>{' '}
+              <span className="text-charcoal-500">Industries:</span>{' '}
               <span className="font-medium capitalize">
-                {formData.industry.replace(/_/g, ' ') || 'Not set'}
+                {formData.industries.length > 0
+                  ? formData.industries.map(i => i.replace(/_/g, ' ')).join(', ')
+                  : 'Not set'}
               </span>
             </div>
             <div>
