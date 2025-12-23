@@ -271,7 +271,7 @@ export const invoicesRouter = router({
         .from('invoices')
         .select(`
           *,
-          company:companies!company_id(id, legal_name),
+          company:companies!invoices_company_id_fkey(id, legal_name),
           billing_contact:contacts!billing_contact_id(id, first_name, last_name, email)
         `, { count: 'exact' })
         .eq('org_id', orgId)
@@ -322,7 +322,7 @@ export const invoicesRouter = router({
         .from('invoices')
         .select(`
           *,
-          company:companies!company_id(id, legal_name, legal_address),
+          company:companies!invoices_company_id_fkey(id, legal_name, legal_address),
           billing_contact:contacts!billing_contact_id(id, first_name, last_name, email, phone),
           payment_terms:payment_terms!payment_terms_id(id, name, days_until_due)
         `)

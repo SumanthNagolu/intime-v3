@@ -1061,8 +1061,8 @@ export const crmRouter = router({
         const adminClient = getAdminClient()
 
         const { data, error } = await adminClient
-          .from('account_contracts')
-          .select('*, company:companies!company_id(id, name)')
+          .from('company_contracts')
+          .select('*, company:companies!company_contracts_company_id_fkey(id, name)')
           .eq('id', input.id)
           .single()
 
@@ -2114,7 +2114,7 @@ export const crmRouter = router({
           .select(`
             *,
             owner:user_profiles!owner_id(id, full_name, avatar_url),
-            company:companies!company_id(id, name, segment),
+            company:companies!deals_company_id_fkey(id, name, segment),
             lead:leads!lead_id(id, company_name, first_name, last_name)
           `, { count: 'exact' })
           .eq('org_id', orgId)
@@ -2174,7 +2174,7 @@ export const crmRouter = router({
           .select(`
             *,
             owner:user_profiles!owner_id(id, full_name, avatar_url),
-            company:companies!company_id(id, name),
+            company:companies!deals_company_id_fkey(id, name),
             lead:leads!lead_id(id, company_name)
           `)
           .eq('org_id', orgId)
@@ -2245,7 +2245,7 @@ export const crmRouter = router({
             owner:user_profiles!owner_id(id, full_name, avatar_url, email),
             secondary_owner:user_profiles!secondary_owner_id(id, full_name),
             pod_manager:user_profiles!pod_manager_id(id, full_name),
-            company:companies!company_id(id, name, segment, website),
+            company:companies!deals_company_id_fkey(id, name, segment, website),
             lead:leads!lead_id(id, company_name, first_name, last_name, email, phone),
             created_company:companies!created_company_id(id, name)
           `)
@@ -2372,7 +2372,7 @@ export const crmRouter = router({
             pod_manager_id: input.podManagerId,
             created_by: user?.id,
           })
-          .select('*, owner:user_profiles!owner_id(id, full_name), company:companies!company_id(id, name)')
+          .select('*, owner:user_profiles!owner_id(id, full_name), company:companies!deals_company_id_fkey(id, name)')
           .single()
 
         if (error) {
@@ -2486,7 +2486,7 @@ export const crmRouter = router({
           .update(updateData)
           .eq('id', input.id)
           .eq('org_id', orgId)
-          .select('*, owner:user_profiles!owner_id(id, full_name), company:companies!company_id(id, name)')
+          .select('*, owner:user_profiles!owner_id(id, full_name), company:companies!deals_company_id_fkey(id, name)')
           .single()
 
         if (error) {
@@ -2553,7 +2553,7 @@ export const crmRouter = router({
           })
           .eq('id', input.id)
           .eq('org_id', orgId)
-          .select('*, owner:user_profiles!owner_id(id, full_name), company:companies!company_id(id, name)')
+          .select('*, owner:user_profiles!owner_id(id, full_name), company:companies!deals_company_id_fkey(id, name)')
           .single()
 
         if (error) {
@@ -2696,7 +2696,7 @@ export const crmRouter = router({
           })
           .eq('id', input.id)
           .eq('org_id', orgId)
-          .select('*, owner:user_profiles!owner_id(id, full_name), company:companies!company_id(id, name)')
+          .select('*, owner:user_profiles!owner_id(id, full_name), company:companies!deals_company_id_fkey(id, name)')
           .single()
 
         if (error) {
@@ -3303,7 +3303,7 @@ export const crmRouter = router({
 
         let query = adminClient
           .from('contacts')
-          .select('id, first_name, last_name, title, email, phone, company:companies!company_id(id, name)')
+          .select('id, first_name, last_name, title, email, phone, company:companies!contacts_linked_company_id_fkey(id, name)')
           .eq('org_id', orgId)
           .is('deleted_at', null)
           .limit(input.limit)
@@ -3313,7 +3313,7 @@ export const crmRouter = router({
         }
 
         if (input.accountId) {
-          query = query.eq('company_id', input.accountId)
+          query = query.eq('linked_company_id', input.accountId)
         }
 
         const { data, error } = await query
@@ -3351,7 +3351,7 @@ export const crmRouter = router({
 
         let query = adminClient
           .from('contacts')
-          .select('*, company:companies!company_id(id, name), owner:user_profiles!owner_id(id, full_name, avatar_url)', { count: 'exact' })
+          .select('*, company:companies!contacts_linked_company_id_fkey(id, name), owner:user_profiles!owner_id(id, full_name, avatar_url)', { count: 'exact' })
           .eq('org_id', orgId)
           .is('deleted_at', null)
 
@@ -3360,7 +3360,7 @@ export const crmRouter = router({
         }
 
         if (input.accountId) {
-          query = query.eq('company_id', input.accountId)
+          query = query.eq('linked_company_id', input.accountId)
         }
 
         if (input.status) {
@@ -3467,7 +3467,7 @@ export const crmRouter = router({
 
         const { data, error } = await adminClient
           .from('contacts')
-          .select('*, company:companies!company_id(id, name)')
+          .select('*, company:companies!contacts_linked_company_id_fkey(id, name)')
           .eq('id', input.id)
           .eq('org_id', orgId)
           .single()
@@ -3690,7 +3690,7 @@ export const crmRouter = router({
 
         const { data, error } = await adminClient
           .from('meeting_notes')
-          .select('*, creator:user_profiles!created_by(id, full_name, avatar_url), company:companies!company_id(id, name)')
+          .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
           .eq('id', input.id)
           .eq('org_id', orgId)
           .single()
@@ -3985,7 +3985,7 @@ export const crmRouter = router({
 
         let query = adminClient
           .from('escalations')
-          .select('*, company:companies!company_id(id, name), creator:user_profiles!created_by(id, full_name), assignee:user_profiles!assigned_to(id, full_name)')
+          .select('*, creator:user_profiles!created_by(id, full_name), assignee:user_profiles!assigned_to(id, full_name)')
           .eq('org_id', orgId)
           .or(`created_by.eq.${user?.id},assigned_to.eq.${user?.id}`)
           .is('deleted_at', null)
@@ -4016,7 +4016,6 @@ export const crmRouter = router({
           .from('escalations')
           .select(`
             *,
-            company:companies!company_id(id, name),
             creator:user_profiles!created_by(id, full_name, avatar_url),
             assignee:user_profiles!assigned_to(id, full_name, avatar_url),
             resolver:user_profiles!resolved_by(id, full_name)

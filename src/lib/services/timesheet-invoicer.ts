@@ -157,7 +157,7 @@ export class TimesheetInvoicer {
           double_time_bill_rate,
           candidate:contacts!candidate_id(id, first_name, last_name),
           job:jobs!job_id(id, title),
-          company:companies!company_id(id, legal_name)
+          company:companies!placements_company_id_fkey(id, legal_name)
         )
       `)
       .eq('org_id', orgId)
@@ -295,7 +295,7 @@ export class TimesheetInvoicer {
             double_time_bill_rate,
             candidate:contacts!candidate_id(id, first_name, last_name),
             job:jobs!job_id(id, title),
-            company:companies!company_id(id, legal_name)
+            company:companies!placements_company_id_fkey(id, legal_name)
           )
         `)
         .eq('org_id', orgId)

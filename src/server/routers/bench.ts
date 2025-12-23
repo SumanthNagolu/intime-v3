@@ -1584,7 +1584,7 @@ const submissionsRouter = router({
           location,
           work_mode,
           bill_rate,
-          company:companies!company_id(id, name)
+          company:companies!jobs_company_id_fkey(id, name)
         `)
         .eq('org_id', orgId)
         .in('status', ['open', 'sourcing', 'interviewing'])
