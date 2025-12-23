@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/client';
 import type { AuthError } from '@supabase/supabase-js';
+import { getNavigationConfig } from '@/lib/navigation/role-navigation.config';
 
 export type PortalType = 'employee' | 'client' | 'talent' | 'academy';
 
@@ -15,25 +16,19 @@ export interface UserRole {
   displayName: string;
 }
 
-// Role categories that should go to admin dashboard
-const ADMIN_ROLE_CATEGORIES = ['admin', 'executive', 'leadership'];
-
 /**
- * Get redirect path based on user role for employee portal
+ * Get redirect path based on user role for employee portal.
+ * Uses role-based navigation config to determine the default landing page.
  */
 export function getEmployeeRedirectPath(role: UserRole | null): string {
   if (!role) {
-    // Default to recruiter workspace if no role found
+    // Default to workspace dashboard if no role found
     return '/employee/workspace/dashboard';
   }
-  
-  // Admin and leadership roles go to admin dashboard
-  if (ADMIN_ROLE_CATEGORIES.includes(role.category)) {
-    return '/employee/admin/dashboard';
-  }
-  
-  // All other roles (recruiters, sales, etc.) go to workspace dashboard
-  return '/employee/workspace/dashboard';
+
+  // Use the role navigation config to get the default path for this role
+  const config = getNavigationConfig(role.code, role.category);
+  return config.defaultPath;
 }
 
 /**

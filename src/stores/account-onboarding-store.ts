@@ -15,7 +15,7 @@ export interface AccountOnboardingFormData {
   // Step 1: Company Profile
   legalName: string
   dbaName: string
-  industry: string
+  industries: string[]
   companySize: string
   yearFounded: string
   website: string
@@ -106,7 +106,7 @@ const defaultFormData: AccountOnboardingFormData = {
   // Step 1
   legalName: '',
   dbaName: '',
-  industry: '',
+  industries: [],
   companySize: '',
   yearFounded: '',
   website: '',

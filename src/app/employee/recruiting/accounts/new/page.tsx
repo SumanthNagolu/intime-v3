@@ -29,6 +29,19 @@ import {
   Check,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { LocationPicker, OPERATING_COUNTRIES, getStatesByCountry } from '@/components/addresses'
+import { PhoneInput, formatPhoneValue, type PhoneCountryCode } from '@/components/ui/phone-input'
+import { PostalCodeInput, type PostalCodeCountry } from '@/components/ui/postal-code-input'
+
+// Normalize URL - add https:// if missing protocol
+function normalizeUrl(url: string | undefined): string | undefined {
+  if (!url || url.trim() === '') return undefined
+  const trimmed = url.trim()
+  // If it already has a protocol, return as-is
+  if (/^https?:\/\//i.test(trimmed)) return trimmed
+  // Add https:// prefix
+  return `https://${trimmed}`
+}
 
 type WizardStep = 1 | 2 | 3
 
@@ -39,9 +52,19 @@ const STEPS = [
 ]
 
 const INDUSTRIES = [
-  'technology', 'healthcare', 'finance', 'manufacturing', 'retail',
-  'consulting', 'education', 'government', 'energy', 'media',
-  'real_estate', 'other'
+  { value: 'technology', label: 'Technology' },
+  { value: 'fintech', label: 'Financial Technology (FinTech)' },
+  { value: 'healthcare', label: 'Healthcare' },
+  { value: 'finance', label: 'Finance & Banking' },
+  { value: 'manufacturing', label: 'Manufacturing' },
+  { value: 'retail', label: 'Retail' },
+  { value: 'professional_services', label: 'Professional Services' },
+  { value: 'education', label: 'Education' },
+  { value: 'government', label: 'Government' },
+  { value: 'energy', label: 'Energy & Utilities' },
+  { value: 'telecommunications', label: 'Telecommunications' },
+  { value: 'media', label: 'Media & Entertainment' },
+  { value: 'other', label: 'Other' },
 ]
 
 export default function NewAccountPage() {
@@ -54,23 +77,28 @@ export default function NewAccountPage() {
   const [formData, setFormData] = useState({
     // Step 1: Company Basics
     name: '',
-    industry: '',
+    industries: [] as string[],
     companyType: 'direct_client' as 'direct_client' | 'implementation_partner' | 'staffing_vendor',
     tier: '' as '' | 'preferred' | 'strategic' | 'exclusive',
     website: '',
-    phone: '',
-    headquartersLocation: '',
+    // Phone with country code
+    phone: { countryCode: 'US' as PhoneCountryCode, number: '' },
+    // Headquarters location (separate fields for dropdowns)
+    hqCity: '',
+    hqState: '',
+    hqCountry: 'US',
     description: '',
     linkedinUrl: '',
     // Step 2: Billing & Terms
     billingEntityName: '',
     billingEmail: '',
-    billingPhone: '',
+    // Billing phone with country code
+    billingPhone: { countryCode: 'US' as PhoneCountryCode, number: '' },
     billingAddress: '',
     billingCity: '',
     billingState: '',
     billingPostalCode: '',
-    billingCountry: 'USA',
+    billingCountry: 'US',
     billingFrequency: 'monthly' as 'weekly' | 'biweekly' | 'monthly',
     paymentTermsDays: '30',
     poRequired: false,
@@ -78,7 +106,8 @@ export default function NewAccountPage() {
     primaryContactName: '',
     primaryContactEmail: '',
     primaryContactTitle: '',
-    primaryContactPhone: '',
+    // Primary contact phone with country code
+    primaryContactPhone: { countryCode: 'US' as PhoneCountryCode, number: '' },
     preferredContactMethod: 'email' as 'email' | 'phone' | 'slack' | 'teams',
     meetingCadence: 'weekly' as 'daily' | 'weekly' | 'biweekly' | 'monthly' | 'quarterly',
   })
@@ -94,8 +123,17 @@ export default function NewAccountPage() {
     },
   })
 
-  const updateField = (field: keyof typeof formData, value: string | boolean) => {
+  const updateField = (field: keyof typeof formData, value: string | boolean | string[]) => {
     setFormData(prev => ({ ...prev, [field]: value }))
+  }
+
+  const toggleIndustry = (industry: string) => {
+    setFormData(prev => ({
+      ...prev,
+      industries: prev.industries.includes(industry)
+        ? prev.industries.filter((i) => i !== industry)
+        : [...prev.industries, industry],
+    }))
   }
 
   const validateStep1 = () => {
@@ -103,8 +141,8 @@ export default function NewAccountPage() {
       toast({ title: 'Company name is required', description: 'Please enter at least 2 characters', variant: 'error' })
       return false
     }
-    if (!formData.industry) {
-      toast({ title: 'Industry is required', variant: 'error' })
+    if (formData.industries.length === 0) {
+      toast({ title: 'At least one industry is required', variant: 'error' })
       return false
     }
     return true
@@ -143,21 +181,27 @@ export default function NewAccountPage() {
   const handleSubmit = async () => {
     if (!validateStep3()) return
     setIsSubmitting(true)
-    
+
+    // Combine headquarters location fields into a single string
+    const headquartersLocation = [formData.hqCity, formData.hqState, formData.hqCountry !== 'US' ? formData.hqCountry : null]
+      .filter(Boolean)
+      .join(', ') || undefined
+
     // Prepare data for API - convert types and handle empty strings
     const apiData = {
       name: formData.name,
-      industry: formData.industry || undefined,
+      industry: formData.industries[0] || undefined,
+      industries: formData.industries.length > 0 ? formData.industries : undefined,
       companyType: formData.companyType,
       tier: formData.tier || undefined,
-      website: formData.website || undefined,
-      phone: formData.phone || undefined,
-      headquartersLocation: formData.headquartersLocation || undefined,
+      website: normalizeUrl(formData.website),
+      phone: formatPhoneValue(formData.phone) || undefined,
+      headquartersLocation,
       description: formData.description || undefined,
-      linkedinUrl: formData.linkedinUrl || undefined,
+      linkedinUrl: normalizeUrl(formData.linkedinUrl),
       billingEntityName: formData.billingEntityName || undefined,
       billingEmail: formData.billingEmail || undefined,
-      billingPhone: formData.billingPhone || undefined,
+      billingPhone: formatPhoneValue(formData.billingPhone) || undefined,
       billingAddress: formData.billingAddress || undefined,
       billingCity: formData.billingCity || undefined,
       billingState: formData.billingState || undefined,
@@ -169,11 +213,11 @@ export default function NewAccountPage() {
       primaryContactName: formData.primaryContactName || undefined,
       primaryContactEmail: formData.primaryContactEmail || undefined,
       primaryContactTitle: formData.primaryContactTitle || undefined,
-      primaryContactPhone: formData.primaryContactPhone || undefined,
+      primaryContactPhone: formatPhoneValue(formData.primaryContactPhone) || undefined,
       preferredContactMethod: formData.preferredContactMethod,
       meetingCadence: formData.meetingCadence,
     }
-    
+
     createMutation.mutate(apiData)
   }
 
@@ -268,20 +312,26 @@ export default function NewAccountPage() {
                       className="mt-1"
                     />
                   </div>
-                  <div>
-                    <Label htmlFor="industry">Industry *</Label>
-                    <Select value={formData.industry} onValueChange={(v) => updateField('industry', v)}>
-                      <SelectTrigger className="mt-1">
-                        <SelectValue placeholder="Select industry" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {INDUSTRIES.map((ind) => (
-                          <SelectItem key={ind} value={ind} className="capitalize">
-                            {ind.replace('_', ' ')}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                  <div className="col-span-2">
+                    <Label>Industries *</Label>
+                    <p className="text-xs text-charcoal-500 mt-0.5">Select all that apply</p>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {INDUSTRIES.map((ind) => (
+                        <button
+                          key={ind.value}
+                          type="button"
+                          onClick={() => toggleIndustry(ind.value)}
+                          className={cn(
+                            'px-3 py-1.5 rounded-full text-sm transition-colors',
+                            formData.industries.includes(ind.value)
+                              ? 'bg-hublot-700 text-white'
+                              : 'bg-charcoal-100 text-charcoal-700 hover:bg-charcoal-200'
+                          )}
+                        >
+                          {ind.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                   <div>
                     <Label htmlFor="companyType">Company Type</Label>
@@ -320,23 +370,29 @@ export default function NewAccountPage() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="phone">Phone</Label>
-                    <Input
-                      id="phone"
-                      placeholder="(555) 123-4567"
+                    <PhoneInput
+                      label="Phone"
                       value={formData.phone}
-                      onChange={(e) => updateField('phone', e.target.value)}
-                      className="mt-1"
+                      onChange={(phone) => setFormData(prev => ({ ...prev, phone }))}
                     />
                   </div>
-                  <div>
-                    <Label htmlFor="headquartersLocation">Headquarters Location</Label>
-                    <Input
-                      id="headquartersLocation"
-                      placeholder="e.g., San Francisco, CA"
-                      value={formData.headquartersLocation}
-                      onChange={(e) => updateField('headquartersLocation', e.target.value)}
-                      className="mt-1"
+                  <div className="col-span-2">
+                    <LocationPicker
+                      label="Headquarters Location"
+                      value={{
+                        city: formData.hqCity,
+                        stateProvince: formData.hqState,
+                        countryCode: formData.hqCountry,
+                      }}
+                      onChange={(data) => {
+                        setFormData(prev => ({
+                          ...prev,
+                          hqCity: data.city || '',
+                          hqState: data.stateProvince || '',
+                          hqCountry: data.countryCode || 'US',
+                        }))
+                      }}
+                      showCountry
                     />
                   </div>
                   <div>
@@ -393,13 +449,10 @@ export default function NewAccountPage() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="billingPhone">Billing Phone</Label>
-                    <Input
-                      id="billingPhone"
-                      placeholder="(555) 123-4567"
+                    <PhoneInput
+                      label="Billing Phone"
                       value={formData.billingPhone}
-                      onChange={(e) => updateField('billingPhone', e.target.value)}
-                      className="mt-1"
+                      onChange={(billingPhone) => setFormData(prev => ({ ...prev, billingPhone }))}
                     />
                   </div>
                   <div className="col-span-2">
@@ -416,37 +469,61 @@ export default function NewAccountPage() {
                     <Label htmlFor="billingCity">City</Label>
                     <Input
                       id="billingCity"
+                      placeholder="City"
                       value={formData.billingCity}
                       onChange={(e) => updateField('billingCity', e.target.value)}
                       className="mt-1"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="billingState">State</Label>
-                    <Input
-                      id="billingState"
+                    <Label htmlFor="billingState">State/Province</Label>
+                    <Select
                       value={formData.billingState}
-                      onChange={(e) => updateField('billingState', e.target.value)}
-                      className="mt-1"
-                    />
+                      onValueChange={(v) => updateField('billingState', v)}
+                    >
+                      <SelectTrigger className="mt-1">
+                        <SelectValue placeholder="Select state" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {getStatesByCountry(formData.billingCountry).map((state) => (
+                          <SelectItem key={state.value} value={state.value}>
+                            {state.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div>
-                    <Label htmlFor="billingPostalCode">Postal Code</Label>
-                    <Input
-                      id="billingPostalCode"
+                    <PostalCodeInput
                       value={formData.billingPostalCode}
-                      onChange={(e) => updateField('billingPostalCode', e.target.value)}
-                      className="mt-1"
+                      onChange={(val) => updateField('billingPostalCode', val)}
+                      countryCode={formData.billingCountry as PostalCodeCountry}
                     />
                   </div>
                   <div>
                     <Label htmlFor="billingCountry">Country</Label>
-                    <Input
-                      id="billingCountry"
+                    <Select
                       value={formData.billingCountry}
-                      onChange={(e) => updateField('billingCountry', e.target.value)}
-                      className="mt-1"
-                    />
+                      onValueChange={(v) => {
+                        setFormData(prev => ({
+                          ...prev,
+                          billingCountry: v,
+                          billingState: '', // Reset state when country changes
+                          billingPostalCode: '', // Reset postal code when country changes (different formats)
+                        }))
+                      }}
+                    >
+                      <SelectTrigger className="mt-1">
+                        <SelectValue placeholder="Select country" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {OPERATING_COUNTRIES.map((country) => (
+                          <SelectItem key={country.value} value={country.value}>
+                            {country.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
                 <div className="border-t pt-4">
@@ -529,13 +606,10 @@ export default function NewAccountPage() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="primaryContactPhone">Phone</Label>
-                    <Input
-                      id="primaryContactPhone"
-                      placeholder="(555) 123-4567"
+                    <PhoneInput
+                      label="Phone"
                       value={formData.primaryContactPhone}
-                      onChange={(e) => updateField('primaryContactPhone', e.target.value)}
-                      className="mt-1"
+                      onChange={(primaryContactPhone) => setFormData(prev => ({ ...prev, primaryContactPhone }))}
                     />
                   </div>
                 </div>

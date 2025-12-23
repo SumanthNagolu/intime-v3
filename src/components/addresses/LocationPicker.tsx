@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
-import { US_STATES, COUNTRIES } from './index'
+import { OPERATING_COUNTRIES, getStatesByCountry } from './index'
 
 interface LocationPickerValue {
   city?: string | null
@@ -57,6 +57,19 @@ export function LocationPicker({
   error,
   className,
 }: LocationPickerProps) {
+  // Get state/province options based on selected country
+  const countryCode = value.countryCode || 'US'
+  const stateOptions = getStatesByCountry(countryCode)
+
+  // Handle country change - reset state when country changes
+  const handleCountryChange = (newCountryCode: string) => {
+    onChange({
+      ...value,
+      countryCode: newCountryCode,
+      stateProvince: '', // Reset state when country changes
+    })
+  }
+
   return (
     <div className={cn('space-y-2', className)}>
       {label && (
@@ -79,7 +92,7 @@ export function LocationPicker({
           />
         </div>
 
-        {/* State */}
+        {/* State/Province */}
         <div>
           <Select
             value={value.stateProvince || ''}
@@ -90,7 +103,7 @@ export function LocationPicker({
               <SelectValue placeholder="State" />
             </SelectTrigger>
             <SelectContent>
-              {US_STATES.map((state) => (
+              {stateOptions.map((state) => (
                 <SelectItem key={state.value} value={state.value}>
                   {state.label}
                 </SelectItem>
@@ -99,19 +112,19 @@ export function LocationPicker({
           </Select>
         </div>
 
-        {/* Country (optional) */}
+        {/* Country */}
         {showCountry && (
           <div>
             <Select
-              value={value.countryCode || 'US'}
-              onValueChange={(v) => onChange({ ...value, countryCode: v })}
+              value={countryCode}
+              onValueChange={handleCountryChange}
               disabled={disabled}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Country" />
               </SelectTrigger>
               <SelectContent>
-                {COUNTRIES.map((country) => (
+                {OPERATING_COUNTRIES.map((country) => (
                   <SelectItem key={country.value} value={country.value}>
                     {country.label}
                   </SelectItem>

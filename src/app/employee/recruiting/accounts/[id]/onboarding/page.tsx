@@ -29,7 +29,7 @@ export default function AccountOnboardingPage() {
       // Pre-populate fields from existing account data
       store.setFormData({
         legalName: accountQuery.data.name || '',
-        industry: accountQuery.data.industry || '',
+        industries: accountQuery.data.industry ? [accountQuery.data.industry] : [],
         website: accountQuery.data.website || '',
         city: accountQuery.data.city || '',
         state: accountQuery.data.state || '',
@@ -69,7 +69,7 @@ export default function AccountOnboardingPage() {
         // Step 1: Company Profile
         legalName: formData.legalName || undefined,
         dba: formData.dbaName || undefined,
-        industry: formData.industry || undefined,
+        industry: formData.industries.length > 0 ? formData.industries[0] : undefined,
         companySize: (formData.companySize || undefined) as '1-50' | '51-200' | '201-500' | '501-1000' | '1000+' | undefined,
         streetAddress: formData.streetAddress || undefined,
         city: formData.city || undefined,
