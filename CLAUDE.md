@@ -10,9 +10,9 @@ pnpm build          # Production build
 pnpm lint           # ESLint check
 pnpm test           # Run Vitest tests
 
-# Database
-pnpm db:migrate     # Run migrations
-pnpm db:status      # Check migration status
+# Database (Database-First - NO migrations)
+pnpm db:introspect  # Sync Drizzle types from DB
+pnpm db:dump-schema # Dump schema to database/schema.sql
 pnpm seed:all       # Reset and seed database
 ```
 
@@ -67,8 +67,9 @@ pnpm seed:all       # Reset and seed database
 │   └── server/              # Server-side code
 │       ├── trpc/            # tRPC configuration
 │       └── routers/         # tRPC routers
+├── database/
+│   └── schema.sql           # Schema snapshot (from pg_dump)
 ├── supabase/
-│   ├── migrations/          # Database migrations
 │   └── functions/           # Edge functions
 ├── thoughts/shared/         # Research, plans, handoffs
 │   ├── research/            # Codebase research documents
@@ -517,7 +518,15 @@ src/server/routers/
 | ACTIVITIES | 35 | activities, patterns, workflows, queues |
 | HR | 32 | employees, pods, benefits, payroll |
 
-**Migrations**: `supabase/migrations/`
+**Schema**: Database is source of truth. Snapshot at `database/schema.sql`
+
+### Database-First Workflow
+
+1. Make schema changes in **Supabase Studio** (or via SQL)
+2. Run `pnpm db:introspect` to sync Drizzle types
+3. Commit the generated schema files
+
+**NO migration files.** See `.claude/rules/database-patterns.md` for details.
 
 ### Core Patterns
 
