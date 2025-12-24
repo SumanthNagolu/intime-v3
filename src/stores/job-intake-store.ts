@@ -48,7 +48,7 @@ export interface JobIntakeFormData {
   requiredSkills: SkillEntry[]
   preferredSkills: string[]
   education: string
-  certifications: string
+  certifications: string[]  // Changed to array for multiple certifications
   industries: string[]
 
   // Step 3: Role Details
@@ -140,7 +140,7 @@ const defaultFormData: JobIntakeFormData = {
   requiredSkills: [],
   preferredSkills: [],
   education: 'bachelors',
-  certifications: '',
+  certifications: [],  // Changed to array for multiple certifications
   industries: [],
 
   // Step 3

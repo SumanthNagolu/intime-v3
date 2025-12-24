@@ -25,8 +25,9 @@ export default function JobIntakePage() {
       utils.ats.jobs.list.invalidate()
       utils.crm.accounts.getById.invalidate({ id: store.formData.accountId })
       store.resetForm()
-      const jobData = data as unknown as { id: string }
-      router.push(`/employee/recruiting/jobs/${jobData.id}`)
+      // API returns { jobId, title, status, ... }
+      const jobData = data as unknown as { jobId: string }
+      router.push(`/employee/recruiting/jobs/${jobData.jobId}`)
     },
     onError: (error) => {
       toast({
@@ -41,6 +42,13 @@ export default function JobIntakePage() {
   const config = {
     ...jobIntakeWizardConfig,
     onSubmit: async (formData: JobIntakeFormData) => {
+      // Normalize certifications - handle legacy string format from localStorage
+      const normalizedCertifications = Array.isArray(formData.certifications)
+        ? formData.certifications
+        : typeof formData.certifications === 'string' && formData.certifications
+          ? formData.certifications.split(',').map((c) => c.trim()).filter(Boolean)
+          : []
+
       return createJobMutation.mutateAsync({
         title: formData.title.trim(),
         accountId: formData.accountId,
@@ -78,7 +86,7 @@ export default function JobIntakePage() {
           requiredSkillsDetailed: formData.requiredSkills,
           preferredSkills: formData.preferredSkills,
           education: formData.education,
-          certifications: formData.certifications || undefined,
+          certifications: normalizedCertifications.length > 0 ? normalizedCertifications : undefined,
           industries: formData.industries,
           roleOpenReason: formData.roleOpenReason,
           teamName: formData.teamName || undefined,

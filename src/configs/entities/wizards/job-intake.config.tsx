@@ -138,22 +138,22 @@ export const jobIntakeWizardConfig: WizardConfig<JobIntakeFormData> = {
       },
       {
         label: 'Technical Requirements',
-        fields: ['experienceLevel', 'minExperience', 'education'],
+        fields: ['experienceLevel', 'minExperience', 'preferredExperience', 'education', 'certifications'],
         stepNumber: 2,
       },
       {
         label: 'Role Details',
-        fields: ['roleSummary', 'teamName', 'reportsTo'],
+        fields: ['roleSummary', 'roleOpenReason', 'teamName', 'teamSize', 'reportsTo'],
         stepNumber: 3,
       },
       {
-        label: 'Compensation',
-        fields: ['workArrangement', 'billRateMin', 'billRateMax'],
+        label: 'Compensation & Location',
+        fields: ['workArrangement', 'billRateMin', 'billRateMax', 'payRateMin', 'payRateMax'],
         stepNumber: 4,
       },
       {
         label: 'Interview Process',
-        fields: ['submissionFormat', 'decisionDays'],
+        fields: ['decisionDays', 'candidatesPerWeek', 'feedbackTurnaround'],
         stepNumber: 5,
       },
     ],

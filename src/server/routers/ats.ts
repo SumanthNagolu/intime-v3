@@ -71,7 +71,7 @@ const createJobInput = z.object({
     })).optional(),
     preferredSkills: z.array(z.string()).optional(),
     education: z.string().optional(),
-    certifications: z.string().optional(),
+    certifications: z.array(z.string()).optional(), // Changed to array for multiple certifications
     industries: z.array(z.string()).optional(),
     roleOpenReason: z.string().optional(),
     teamName: z.string().optional(),
@@ -894,7 +894,7 @@ export const atsRouter = router({
           .from('jobs')
           .insert({
             org_id: orgId,
-            client_id: input.accountId, // client_id references accounts table
+            // Note: jobs table uses company_id, NOT client_id
             deal_id: input.dealId,
             title: input.title,
             description: input.description,
