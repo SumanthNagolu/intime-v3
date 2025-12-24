@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { PhoneInput } from '@/components/ui/phone-input'
 import { useAccountOnboardingStore, CONTACT_ROLES, AdditionalContact } from '@/stores/account-onboarding-store'
 import { Plus, X } from 'lucide-react'
 
@@ -20,7 +21,7 @@ export function OnboardingStep4Contacts() {
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
+    phone: { countryCode: 'US', number: '' },
     title: '',
     roles: [],
   })
@@ -34,7 +35,7 @@ export function OnboardingStep4Contacts() {
       firstName: '',
       lastName: '',
       email: '',
-      phone: '',
+      phone: { countryCode: 'US', number: '' },
       title: '',
       roles: [],
     })
@@ -154,11 +155,12 @@ export function OnboardingStep4Contacts() {
               />
             </div>
             <div className="space-y-2">
-              <Label>Phone</Label>
-              <Input
-                value={newContact.phone}
-                onChange={(e) => setNewContact({ ...newContact, phone: e.target.value })}
-                placeholder="(555) 123-4567"
+              <PhoneInput
+                label="Phone"
+                value={newContact.phone && typeof newContact.phone === 'object' && 'countryCode' in newContact.phone
+                  ? newContact.phone
+                  : { countryCode: 'US', number: '' }}
+                onChange={(phone) => setNewContact({ ...newContact, phone })}
               />
             </div>
           </div>
