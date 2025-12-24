@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   Mail,
   Lock,
@@ -68,6 +68,9 @@ const PORTALS: Array<{
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get('redirect');
+  
   const [selectedPortal, setSelectedPortal] = useState<PortalType | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
@@ -111,8 +114,11 @@ export default function LoginPage() {
         // Set org cookie immediately after login (avoids DB lookup on every request)
         await setOrgCookie();
 
-        // For employee portal, get user role and redirect based on it
-        if (selectedPortal === 'employee') {
+        // If there's a redirect URL from middleware, use it
+        if (redirectTo) {
+          router.push(redirectTo);
+        } else if (selectedPortal === 'employee') {
+          // For employee portal, get user role and redirect based on it
           const role = await getUserRole();
           const redirectPath = getEmployeeRedirectPath(role);
           router.push(redirectPath);

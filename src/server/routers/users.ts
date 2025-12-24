@@ -1,13 +1,64 @@
 import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
-import { orgProtectedProcedure } from '../trpc/middleware'
+import { orgProtectedProcedure, protectedProcedure } from '../trpc/middleware'
 import { getAdminClient } from '@/lib/supabase/admin'
 
 // Input schemas
 const userStatusSchema = z.enum(['pending', 'active', 'suspended', 'deactivated'])
 
 export const usersRouter = router({
+  // ============================================
+  // GET MY ROLE (for navigation, no orgId needed)
+  // ============================================
+  getMyRole: protectedProcedure
+    .query(async ({ ctx }) => {
+      const adminClient = getAdminClient()
+      const userId = ctx.user.id
+
+      // Get user profile with role
+      const { data: profile, error: profileError } = await adminClient
+        .from('user_profiles')
+        .select('id, role_id, employee_role')
+        .eq('auth_id', userId)
+        .single()
+
+      if (profileError || !profile) {
+        console.log('[getMyRole] No profile found for user:', userId, profileError?.message)
+        return null
+      }
+
+      // If no role_id, try employee_role as fallback
+      if (!profile.role_id) {
+        if (profile.employee_role) {
+          return {
+            code: profile.employee_role,
+            category: 'pod_ic', // Default category
+            displayName: profile.employee_role.replace(/_/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase()),
+          }
+        }
+        return null
+      }
+
+      // Get system role details
+      const { data: systemRole, error: roleError } = await adminClient
+        .from('system_roles')
+        .select('code, category, display_name')
+        .eq('id', profile.role_id)
+        .single()
+
+      if (roleError || !systemRole) {
+        console.log('[getMyRole] No system role found:', profile.role_id, roleError?.message)
+        return null
+      }
+
+      return {
+        code: systemRole.code,
+        category: systemRole.category,
+        displayName: systemRole.display_name,
+      }
+    }),
+
   // ============================================
   // LIST USERS
   // ============================================

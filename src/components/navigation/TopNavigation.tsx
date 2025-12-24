@@ -11,9 +11,13 @@ import { topNavigationTabs, getActiveTabFromPath } from '@/lib/navigation/top-na
 import { useEntityNavigationSafe } from '@/lib/navigation/EntityNavigationContext'
 import { ENTITY_BASE_PATHS, EntityType } from '@/lib/navigation/entity-navigation.types'
 import { formatDistanceToNow } from 'date-fns'
+import { type UserRole } from '@/lib/auth/client'
+import { getNavigationConfig } from '@/lib/navigation/role-navigation.config'
+import { trpc } from '@/lib/trpc/client'
 
 export function TopNavigation() {
   const [user, setUser] = useState<SupabaseUser | null>(null)
+  const [userRole, setUserRole] = useState<UserRole | null>(null)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [focusedIndex, setFocusedIndex] = useState<number>(-1)
@@ -30,18 +34,60 @@ export function TopNavigation() {
   const userMenuItemRefs = useRef<(HTMLAnchorElement | HTMLButtonElement | null)[]>([])
   const closeTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Auth state management
+  // tRPC utility for fetching role
+  const trpcUtils = trpc.useUtils()
+  
+  // Auth state management - use onAuthStateChange for reliable auth detection
   useEffect(() => {
     const supabase = createClient()
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    let isMounted = true
+    let timeoutId: NodeJS.Timeout
+    
+    // Set up auth state listener - this is the most reliable way to get auth state
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (!isMounted) return
+      
       setUser(session?.user ?? null)
-      setIsLoading(false)
+      
+      if (session?.user) {
+        try {
+          // Use tRPC to fetch role - this works reliably on client
+          const role = await trpcUtils.users.getMyRole.fetch()
+          if (isMounted && role) {
+            setUserRole(role)
+            clearTimeout(timeoutId)
+          }
+        } catch (err) {
+          console.error('[TopNavigation] Role fetch error:', err)
+        }
+      } else {
+        setUserRole(null)
+      }
+      
+      if (isMounted) {
+        setIsLoading(false)
+      }
     })
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-    })
-    return () => subscription.unsubscribe()
-  }, [])
+    
+    // Set a timeout to prevent hanging - show pod_ic defaults after 2 seconds
+    timeoutId = setTimeout(() => {
+      if (isMounted && isLoading) {
+        // Default to pod_ic tabs for employees if auth check hangs
+        setUserRole({
+          code: 'recruiter',
+          category: 'pod_ic',
+          displayName: 'Recruiter'
+        })
+        setIsLoading(false)
+      }
+    }, 2000)
+    
+    return () => {
+      isMounted = false
+      subscription.unsubscribe()
+      clearTimeout(timeoutId)
+    }
+  }, [trpcUtils.users.getMyRole])
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -169,6 +215,10 @@ export function TopNavigation() {
 
   const handleSignOut = async () => {
     const supabase = createClient()
+    
+    // Clear all cached queries to prevent stale role data
+    await trpcUtils.invalidate()
+    
     await supabase.auth.signOut()
     setUserMenuOpen(false)
     router.push('/login')
@@ -215,6 +265,17 @@ export function TopNavigation() {
 
   const activeTab = getActiveTabFromPath(pathname)
 
+  // Get visible tabs based on user role
+  const navConfig = userRole 
+    ? getNavigationConfig(userRole.code, userRole.category)
+    : null
+  
+  // Filter tabs based on role
+  // During loading (no role yet), show only 'workspace' tab to prevent flash of unauthorized content
+  const visibleTabs = navConfig 
+    ? topNavigationTabs.filter(tab => navConfig.visibleTabs.includes(tab.id as typeof navConfig.visibleTabs[number]))
+    : topNavigationTabs.filter(tab => tab.id === 'workspace')
+
   // Get recent entities from context (or empty if context not available)
   const getRecentEntities = (entityType: EntityType) => {
     if (!entityNav) return []
@@ -249,7 +310,7 @@ export function TopNavigation() {
 
           {/* Entity Navigation Tabs - Desktop */}
           <nav className="hidden lg:flex items-center gap-1 flex-1">
-            {topNavigationTabs.map((tab) => {
+            {visibleTabs.map((tab) => {
               const Icon = tab.icon
               const isActive = activeTab === tab.id
               const isOpen = activeDropdown === tab.id
@@ -488,7 +549,7 @@ export function TopNavigation() {
                     <p className="text-sm font-semibold text-charcoal-900 truncate">
                       {user.email}
                     </p>
-                    <p className="text-xs text-charcoal-500">Superuser</p>
+                    <p className="text-xs text-charcoal-500">{userRole?.displayName || 'Loading...'}</p>
                   </div>
                   <Link
                     ref={(el) => { userMenuItemRefs.current[0] = el }}
@@ -541,7 +602,7 @@ export function TopNavigation() {
         )}
       >
         <nav className="p-4 overflow-y-auto h-full">
-          {topNavigationTabs.map((tab) => {
+          {visibleTabs.map((tab) => {
             const Icon = tab.icon
             const isActive = activeTab === tab.id
 
