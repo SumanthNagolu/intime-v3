@@ -295,12 +295,16 @@ export const crmRouter = router({
       .input(z.object({
         name: z.string().min(2).max(200),
         industry: z.string().optional(),
+        industries: z.array(z.string()).optional(), // Array of industries
         companyType: z.enum(['direct_client', 'implementation_partner', 'staffing_vendor']).default('direct_client'),
         status: z.enum(['prospect', 'active', 'inactive']).default('prospect'),
         tier: z.enum(['preferred', 'strategic', 'exclusive']).optional(),
         website: z.string().url().optional().or(z.literal('')),
         phone: z.string().optional(),
-        headquartersLocation: z.string().optional(),
+        // Headquarters location - separate fields
+        headquartersLocation: z.string().optional(), // Legacy combined string
+        headquartersCity: z.string().optional(),
+        headquartersState: z.string().optional(),
         headquartersCountry: z.string().optional(),
         description: z.string().optional(),
         annualRevenueTarget: z.number().optional(),
@@ -355,6 +359,9 @@ export const crmRouter = router({
         // Determine category based on status
         const category = input.status === 'prospect' ? 'prospect' : 'client'
 
+        // Log industries array for debugging
+        console.log('[Account Create] Industries received:', input.industries)
+
         // Create company record
         const { data: account, error } = await adminClient
           .from('companies')
@@ -362,7 +369,8 @@ export const crmRouter = router({
             org_id: orgId,
             category: category,
             name: input.name,
-            industry: input.industry,
+            industry: input.industry || (input.industries?.length ? input.industries[0] : undefined),
+            industries: input.industries?.length ? input.industries : null,
             segment: (input.companyType as string) === 'enterprise' ? 'enterprise' :
                      (input.companyType as string) === 'mid_market' ? 'mid_market' :
                      (input.companyType as string) === 'smb' ? 'smb' :
@@ -377,6 +385,10 @@ export const crmRouter = router({
             phone: input.phone,
             description: input.description,
             annual_revenue: input.annualRevenueTarget,
+            // Headquarters location - stored in separate columns
+            headquarters_city: input.headquartersCity || null,
+            headquarters_state: input.headquartersState || null,
+            headquarters_country: input.headquartersCountry || 'USA',
             // Communication
             preferred_contact_method: input.preferredContactMethod,
             meeting_cadence: input.meetingCadence,
@@ -401,36 +413,41 @@ export const crmRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
-        // Create client_details record with billing info
-        if (input.billingEntityName || input.billingEmail || input.poRequired !== undefined) {
-          await adminClient
-            .from('company_client_details')
-            .insert({
-              company_id: account.id,
-              org_id: orgId,
-              billing_entity_name: input.billingEntityName || null,
-              billing_email: input.billingEmail || null,
-              billing_phone: input.billingPhone || null,
-              po_required: input.poRequired || false,
-              billing_address_line_1: input.billingAddress || null,
-              billing_city: input.billingCity || null,
-              billing_state: input.billingState || null,
-              billing_postal_code: input.billingPostalCode || null,
-              billing_country: input.billingCountry || 'USA',
-            })
+        // Always create client_details record to store billing frequency and other settings
+        const { error: clientDetailsError } = await adminClient
+          .from('company_client_details')
+          .insert({
+            company_id: account.id,
+            org_id: orgId,
+            billing_entity_name: input.billingEntityName || null,
+            billing_email: input.billingEmail || null,
+            billing_phone: input.billingPhone || null,
+            billing_frequency: input.billingFrequency || 'monthly',
+            po_required: input.poRequired || false,
+            billing_address_line_1: input.billingAddress || null,
+            billing_city: input.billingCity || null,
+            billing_state: input.billingState || null,
+            billing_postal_code: input.billingPostalCode || null,
+            billing_country: input.billingCountry || 'USA',
+          })
+
+        if (clientDetailsError) {
+          console.error('[Account Create] Failed to create client_details:', clientDetailsError)
         }
 
         // Create addresses if provided
         const addressInserts = []
 
-        // Headquarters address
-        if (input.headquartersLocation) {
+        // Headquarters address - use separate city/state/country fields
+        if (input.headquartersCity || input.headquartersState || input.headquartersLocation) {
           addressInserts.push({
             org_id: orgId,
             entity_type: 'account',
             entity_id: account.id,
             address_type: 'headquarters',
-            address_line_1: input.headquartersLocation,
+            address_line_1: input.headquartersLocation || null,
+            city: input.headquartersCity || null,
+            state_province: input.headquartersState || null,
             country_code: input.headquartersCountry === 'USA' ? 'US' : (input.headquartersCountry || 'US'),
             is_primary: true,
             created_by: user?.id,
@@ -464,23 +481,36 @@ export const crmRouter = router({
           }
         }
 
-        // Create primary contact if provided
-        if (input.primaryContactEmail && input.primaryContactName) {
-          const [firstName, ...lastNameParts] = input.primaryContactName.split(' ')
-          await adminClient
+        // Create primary contact if name OR email provided (not requiring both)
+        if (input.primaryContactEmail || input.primaryContactName) {
+          // Parse name into first/last if provided
+          let firstName = ''
+          let lastName = ''
+          if (input.primaryContactName) {
+            const nameParts = input.primaryContactName.split(' ')
+            firstName = nameParts[0] || ''
+            lastName = nameParts.slice(1).join(' ') || ''
+          }
+
+          const { error: contactError } = await adminClient
             .from('contacts')
             .insert({
               org_id: orgId,
               company_id: account.id,
-              first_name: firstName,
-              last_name: lastNameParts.join(' ') || '',
-              email: input.primaryContactEmail,
-              phone: input.primaryContactPhone,
-              title: input.primaryContactTitle,
-              subtype: 'client_poc',
+              category: 'person',  // Required field
+              subtype: 'person_client_contact',  // Must match pattern for person category
+              first_name: firstName || 'Primary',  // Default if no name provided
+              last_name: lastName || 'Contact',
+              email: input.primaryContactEmail || null,
+              phone: input.primaryContactPhone || null,
+              title: input.primaryContactTitle || null,
               is_primary: true,
               created_by: user?.id,
             })
+
+          if (contactError) {
+            console.error('[Account Create] Failed to create contact:', contactError)
+          }
         }
 
         return account
@@ -779,6 +809,15 @@ export const crmRouter = router({
         kickoffScheduled: z.boolean().optional(),
         kickoffDate: z.string().optional(),
         sendWelcomePackage: z.boolean().optional(),
+        // Additional contacts added during onboarding
+        additionalContacts: z.array(z.object({
+          firstName: z.string(),
+          lastName: z.string().optional(),
+          email: z.string(),
+          phone: z.string().optional(),
+          title: z.string().optional(),
+          roles: z.array(z.string()).optional(),
+        })).optional(),
       }))
       .mutation(async ({ ctx, input }) => {
         const { orgId, user } = ctx
@@ -913,6 +952,48 @@ export const crmRouter = router({
             subject: 'Onboarding Completed',
             body: 'Account onboarding wizard has been completed.',
           })
+
+        // Create additional contacts if provided
+        if (input.additionalContacts && input.additionalContacts.length > 0) {
+          // Get existing contact emails to avoid duplicates
+          const { data: existingContacts } = await adminClient
+            .from('contacts')
+            .select('email')
+            .eq('org_id', orgId)
+            .eq('company_id', input.accountId)
+            .is('deleted_at', null)
+
+          const existingEmails = new Set((existingContacts || []).map((c: { email: string | null }) => c.email?.toLowerCase()))
+
+          // Filter out contacts that already exist (by email)
+          const newContacts = input.additionalContacts.filter(
+            contact => contact.email && !existingEmails.has(contact.email.toLowerCase())
+          )
+
+          if (newContacts.length > 0) {
+            const contactInserts = newContacts.map(contact => ({
+              org_id: orgId,
+              company_id: input.accountId,
+              category: 'person' as const,
+              subtype: 'person_client_contact' as const,
+              first_name: contact.firstName,
+              last_name: contact.lastName || '',
+              email: contact.email,
+              phone: contact.phone || null,
+              title: contact.title || null,
+              is_primary: contact.roles?.includes('primary') || false,
+              created_by: user?.id,
+            }))
+
+            const { error: contactsError } = await adminClient
+              .from('contacts')
+              .insert(contactInserts)
+
+            if (contactsError) {
+              console.error('[CompleteOnboarding] Failed to create contacts:', contactsError)
+            }
+          }
+        }
 
         return data
       }),

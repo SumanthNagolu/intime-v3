@@ -24,6 +24,7 @@ interface AccountData {
   id: string
   name: string
   industry: string | null
+  industries: string[] | null  // Array of all industries
   status: string
   website: string | null
   phone: string | null
@@ -62,21 +63,38 @@ const onboardingStatusColors: Record<string, string> = {
   completed: 'bg-green-100 text-green-800',
 }
 
+// Industry label mapping
+const INDUSTRY_LABELS: Record<string, string> = {
+  technology: 'Technology',
+  fintech: 'FinTech',
+  healthcare: 'Healthcare',
+  finance: 'Finance & Banking',
+  manufacturing: 'Manufacturing',
+  retail: 'Retail',
+  professional_services: 'Professional Services',
+  education: 'Education',
+  government: 'Government',
+  energy: 'Energy & Utilities',
+  telecommunications: 'Telecommunications',
+  media: 'Media & Entertainment',
+  consulting: 'Consulting',
+  other: 'Other',
+}
+
 // Field definitions for editable cards
 const companyDetailsFields: FieldDefinition[] = [
   { key: 'name', label: 'Company Name', type: 'text', required: true },
-  { key: 'industry', label: 'Industry', type: 'select', options: [
-    { value: 'technology', label: 'Technology' },
-    { value: 'healthcare', label: 'Healthcare' },
-    { value: 'finance', label: 'Finance' },
-    { value: 'manufacturing', label: 'Manufacturing' },
-    { value: 'retail', label: 'Retail' },
-    { value: 'consulting', label: 'Consulting' },
-    { value: 'energy', label: 'Energy' },
-    { value: 'education', label: 'Education' },
-    { value: 'government', label: 'Government' },
-    { value: 'other', label: 'Other' },
-  ]},
+  { 
+    key: 'industries', 
+    label: 'Industry', 
+    type: 'text',
+    readOnly: true, // Industries are edited in onboarding wizard
+    formatValue: (value) => {
+      if (!value) return '—'
+      const industries = Array.isArray(value) ? value : [value]
+      return industries.map(ind => INDUSTRY_LABELS[ind] || ind.replace(/_/g, ' ')).join(', ')
+    }
+  },
   { key: 'website', label: 'Website', type: 'url' },
   { key: 'phone', label: 'Phone', type: 'phone' },
   { key: 'headquarters_location', label: 'Location', type: 'text' },
@@ -138,7 +156,7 @@ export function AccountOverviewSection({
     await updateAccountMutation.mutateAsync({
       id: accountId,
       name: data.name as string,
-      industry: data.industry as string,
+      // Note: industries are edited via the onboarding wizard, not here
       website: data.website as string || '',
       phone: data.phone as string,
       headquartersLocation: data.headquarters_location as string,
