@@ -2768,7 +2768,7 @@ export const atsRouter = router({
           .select(`
             id, scheduled_at, interview_type, duration_minutes, status, location,
             submission:submissions!inner(
-              id, submitted_by,
+              id, owner_id,
               job:jobs(id, title, company:companies!jobs_company_id_fkey(id, name)),
               candidate:user_profiles!submissions_candidate_id_fkey(id, first_name, last_name, phone, email)
             )
@@ -2786,9 +2786,9 @@ export const atsRouter = router({
 
         // Filter for this recruiter's submissions
         const filteredData = data?.filter(i => {
-          const submissionArray = i.submission as Array<{ submitted_by: string }> | null
+          const submissionArray = i.submission as Array<{ owner_id: string }> | null
           const submission = submissionArray?.[0]
-          return submission?.submitted_by === user?.id
+          return submission?.owner_id === user?.id
         }) ?? []
 
         return filteredData.map(i => ({

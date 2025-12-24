@@ -33,40 +33,65 @@ export function getEmployeeRedirectPath(role: UserRole | null): string {
 
 /**
  * Get the current user's role from their profile
+ * Uses a two-step query approach for reliability
+ * @param userId - Optional user ID. If not provided, will try to get from session.
+ * @deprecated Use tRPC users.getMyRole for reliable role fetching
  */
-export async function getUserRole(): Promise<UserRole | null> {
+export async function getUserRole(userId?: string): Promise<UserRole | null> {
   try {
     const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
     
-    if (!user) return null;
+    // Use provided userId or try to get from session
+    let authUserId = userId;
+    if (!authUserId) {
+      // Only call getSession if no userId provided
+      // Note: getSession may hang on some client setups
+      const { data: { session } } = await supabase.auth.getSession();
+      authUserId = session?.user?.id;
+    }
     
-    const { data: profile } = await supabase
+    if (!authUserId) {
+      return null;
+    }
+    
+    // Step 1: Get user profile with role_id
+    const { data: profile, error: profileError } = await supabase
       .from('user_profiles')
-      .select(`
-        role_id,
-        system_roles:role_id (
-          code,
-          category,
-          display_name
-        )
-      `)
-      .eq('auth_id', user.id)
+      .select('id, role_id, employee_role')
+      .eq('auth_id', authUserId)
       .single();
     
-    if (!profile?.system_roles) return null;
+    if (profileError || !profile) {
+      return null;
+    }
     
-    // Handle array response from Supabase
-    const role = Array.isArray(profile.system_roles) 
-      ? profile.system_roles[0] 
-      : profile.system_roles;
+    // If no role_id, try to use employee_role as fallback
+    if (!profile.role_id) {
+      if (profile.employee_role) {
+        return {
+          code: profile.employee_role,
+          category: 'pod_ic', // Default category for legacy roles
+          displayName: profile.employee_role.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+        };
+      }
+      return null;
+    }
     
-    if (!role) return null;
+    // Step 2: Get the system role details
+    const { data: systemRole, error: roleError } = await supabase
+      .from('system_roles')
+      .select('code, category, display_name')
+      .eq('id', profile.role_id)
+      .single();
+    
+    if (roleError || !systemRole) {
+      return null;
+    }
     
     return {
-      code: role.code,
-      category: role.category,
-      displayName: role.display_name,
+      code: systemRole.code,
+      category: systemRole.category,
+      displayName: systemRole.display_name,
     };
   } catch {
     return null;

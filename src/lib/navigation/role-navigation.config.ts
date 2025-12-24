@@ -58,12 +58,120 @@ export const ROLE_NAVIGATION_CONFIG: Record<RoleCategory, RoleNavigationConfig> 
   },
 }
 
-// HR-specific override (HR roles within pod_ic category need different tabs)
+// Role-specific overrides (role codes get different tabs than their category default)
 export const ROLE_CODE_OVERRIDES: Record<string, RoleNavigationConfig> = {
-  hr_manager: {
-    visibleTabs: ['workspace', 'contacts', 'hr', 'admin'],
+  // ============================================================
+  // RECRUITING ROLES - Full recruiting workflow access
+  // ============================================================
+  recruiter: {
+    visibleTabs: ['workspace', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
+  },
+  senior_recruiter: {
+    visibleTabs: ['workspace', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    defaultTab: 'workspace',
+    defaultPath: '/employee/workspace/dashboard',
+  },
+  recruiting_manager: {
+    visibleTabs: ['workspace', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    defaultTab: 'workspace',
+    defaultPath: '/employee/workspace/dashboard',
+  },
+  
+  // ============================================================
+  // BENCH SALES ROLES - Same as recruiting workflow
+  // ============================================================
+  bench_sales: {
+    visibleTabs: ['workspace', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    defaultTab: 'workspace',
+    defaultPath: '/employee/workspace/dashboard',
+  },
+  bench_sales_rep: {
+    visibleTabs: ['workspace', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    defaultTab: 'workspace',
+    defaultPath: '/employee/workspace/dashboard',
+  },
+  bench_manager: {
+    visibleTabs: ['workspace', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    defaultTab: 'workspace',
+    defaultPath: '/employee/workspace/dashboard',
+  },
+  
+  // ============================================================
+  // TA (TALENT ACQUISITION) ROLES - Same as recruiting workflow
+  // ============================================================
+  ta_specialist: {
+    visibleTabs: ['workspace', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    defaultTab: 'workspace',
+    defaultPath: '/employee/workspace/dashboard',
+  },
+  ta_manager: {
+    visibleTabs: ['workspace', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    defaultTab: 'workspace',
+    defaultPath: '/employee/workspace/dashboard',
+  },
+  
+  // ============================================================
+  // HR ROLES - HR-focused tabs (includes Finance for payroll/billing)
+  // ============================================================
+  hr_manager: {
+    visibleTabs: ['workspace', 'contacts', 'finance', 'hr'],
+    defaultTab: 'workspace',
+    defaultPath: '/employee/workspace/dashboard',
+  },
+  hr_specialist: {
+    visibleTabs: ['workspace', 'contacts', 'finance', 'hr'],
+    defaultTab: 'workspace',
+    defaultPath: '/employee/workspace/dashboard',
+  },
+  hr_admin: {
+    visibleTabs: ['workspace', 'contacts', 'finance', 'hr'],
+    defaultTab: 'workspace',
+    defaultPath: '/employee/workspace/dashboard',
+  },
+  hr: {
+    visibleTabs: ['workspace', 'contacts', 'finance', 'hr'],
+    defaultTab: 'workspace',
+    defaultPath: '/employee/workspace/dashboard',
+  },
+  
+  // ============================================================
+  // FINANCE ROLES - Finance-focused tabs
+  // ============================================================
+  finance_manager: {
+    visibleTabs: ['workspace', 'accounts', 'pipeline', 'finance'],
+    defaultTab: 'workspace',
+    defaultPath: '/employee/workspace/dashboard',
+  },
+  finance_specialist: {
+    visibleTabs: ['workspace', 'pipeline', 'finance'],
+    defaultTab: 'workspace',
+    defaultPath: '/employee/workspace/dashboard',
+  },
+  finance: {
+    visibleTabs: ['workspace', 'pipeline', 'finance'],
+    defaultTab: 'workspace',
+    defaultPath: '/employee/workspace/dashboard',
+  },
+  
+  // ============================================================
+  // ADMIN ROLES - Admin-focused tabs
+  // ============================================================
+  admin: {
+    visibleTabs: ['workspace', 'hr', 'admin'],
+    defaultTab: 'admin',
+    defaultPath: '/employee/admin/dashboard',
+  },
+  super_admin: {
+    visibleTabs: ['workspace', 'hr', 'admin'],
+    defaultTab: 'admin',
+    defaultPath: '/employee/admin/dashboard',
+  },
+  system_admin: {
+    visibleTabs: ['workspace', 'hr', 'admin'],
+    defaultTab: 'admin',
+    defaultPath: '/employee/admin/dashboard',
   },
 }
 
