@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
@@ -66,7 +66,7 @@ const PORTALS: Array<{
   },
 ];
 
-export default function LoginPage() {
+function LoginPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get('redirect');
@@ -378,5 +378,33 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+function LoginPageFallback() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-ivory via-white to-charcoal-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      <div className="w-full max-w-md">
+        <div className="text-center mb-8">
+          <h1 className="font-heading text-5xl sm:text-6xl text-forest-900 tracking-tight">
+            In<span className="text-gold-600">Time</span>
+          </h1>
+          <p className="text-charcoal-500 mt-2 text-sm">
+            Enterprise Staffing Platform
+          </p>
+        </div>
+        <div className="bg-white rounded-2xl shadow-xl shadow-charcoal-900/5 border border-charcoal-100 p-8 flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-forest-600" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<LoginPageFallback />}>
+      <LoginPageContent />
+    </Suspense>
   );
 }
