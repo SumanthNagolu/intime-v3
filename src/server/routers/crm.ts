@@ -3658,7 +3658,8 @@ export const crmRouter = router({
             decision_authority: input.decisionAuthority,
             is_primary: input.isPrimary,
             notes: input.notes,
-            subtype: 'client_poc',
+            category: 'person',
+            subtype: 'person_client_contact',
             status: 'active',
             created_by: user?.id,
           })
