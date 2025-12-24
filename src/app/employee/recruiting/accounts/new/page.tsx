@@ -184,10 +184,8 @@ export default function NewAccountPage() {
     if (!validateStep3()) return
     setIsSubmitting(true)
 
-    // Combine headquarters location fields into a single string
-    const headquartersLocation = [formData.hqCity, formData.hqState, formData.hqCountry !== 'US' ? formData.hqCountry : null]
-      .filter(Boolean)
-      .join(', ') || undefined
+    // Log industries for debugging
+    console.log('[Account Create Form] Industries selected:', formData.industries)
 
     // Prepare data for API - convert types and handle empty strings
     const apiData = {
@@ -198,7 +196,9 @@ export default function NewAccountPage() {
       tier: formData.tier || undefined,
       website: normalizeUrl(formData.website),
       phone: formatPhoneValue(formData.phone) || undefined,
-      headquartersLocation,
+      // Pass separate HQ location fields (not combined string)
+      headquartersCity: formData.hqCity || undefined,
+      headquartersState: formData.hqState || undefined,
       headquartersCountry: formData.hqCountry || 'US',
       description: formData.description || undefined,
       linkedinUrl: normalizeUrl(formData.linkedinUrl),
@@ -221,6 +221,7 @@ export default function NewAccountPage() {
       meetingCadence: formData.meetingCadence,
     }
 
+    console.log('[Account Create Form] API Data:', apiData)
     createMutation.mutate(apiData)
   }
 

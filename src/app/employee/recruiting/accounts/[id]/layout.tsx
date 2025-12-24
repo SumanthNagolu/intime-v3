@@ -20,8 +20,17 @@ export default async function AccountDetailLayout({ children, params }: AccountL
     notFound()
   }
 
-  // Build subtitle with industry
-  const subtitle = account.industry ? account.industry.replace(/_/g, ' ') : undefined
+  // Build subtitle with industries (show first industry, with count if multiple)
+  const industries = account.industries as string[] | null
+  let subtitle: string | undefined
+  if (industries && industries.length > 0) {
+    const firstIndustry = industries[0].replace(/_/g, ' ')
+    subtitle = industries.length > 1 
+      ? `${firstIndustry} +${industries.length - 1} more`
+      : firstIndustry
+  } else if (account.industry) {
+    subtitle = account.industry.replace(/_/g, ' ')
+  }
 
   return (
     <EntityContextProvider
