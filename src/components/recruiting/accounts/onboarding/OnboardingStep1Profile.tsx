@@ -223,9 +223,21 @@ export function OnboardingStep1Profile() {
             <Label>Tax ID (EIN)</Label>
             <Input
               value={formData.taxId}
-              onChange={(e) => setFormData({ taxId: e.target.value })}
+              onChange={(e) => {
+                const value = e.target.value
+                // Format as XX-XXXXXXX (2 digits, dash, 7 digits)
+                const formatted = value
+                  .replace(/\D/g, '') // Remove non-digits
+                  .replace(/^(\d{2})(\d{0,7})/, (_, p1, p2) => p2 ? `${p1}-${p2}` : p1)
+                setFormData({ taxId: formatted })
+              }}
               placeholder="XX-XXXXXXX"
+              maxLength={10}
+              pattern="[0-9]{2}-[0-9]{7}"
             />
+            {formData.taxId && formData.taxId.length > 0 && formData.taxId.length < 10 && (
+              <p className="text-xs text-charcoal-500">Format: XX-XXXXXXX</p>
+            )}
           </div>
           <div className="space-y-2">
             <Label>Funding Stage</Label>

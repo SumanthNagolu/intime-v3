@@ -7,6 +7,7 @@ import { useToast } from '@/components/ui/use-toast'
 import { EntityWizard } from '@/components/pcf/wizard/EntityWizard'
 import { accountOnboardingWizardConfig } from '@/configs/entities/wizards/account-onboarding.config'
 import { useAccountOnboardingStore, AccountOnboardingFormData } from '@/stores/account-onboarding-store'
+import { formatPhoneValue, parsePhoneValue } from '@/components/ui/phone-input'
 import { Loader2 } from 'lucide-react'
 
 export default function AccountOnboardingPage() {
@@ -27,12 +28,44 @@ export default function AccountOnboardingPage() {
     if (accountQuery.data) {
       store.initializeFromAccount(accountId, accountQuery.data.name)
       // Pre-populate fields from existing account data
+      const onboardingData = accountQuery.data.onboarding_data as Record<string, unknown> | null
+      
+      // Load headquarters address - prioritize addresses table data, fallback to legacy fields
+      const accountData = accountQuery.data as {
+        headquarters_location?: string | null
+        headquarters_city?: string | null
+        headquarters_state?: string | null
+        headquarters_postal_code?: string | null
+        headquarters_country?: string | null
+      }
+      
+      // Always set address fields (even if empty) so form displays them
+      const hqAddress: Partial<AccountOnboardingFormData> = {
+        streetAddress: accountData.headquarters_location || '',
+        city: accountData.headquarters_city || '',
+        state: accountData.headquarters_state || '',
+        postalCode: accountData.headquarters_postal_code || '',
+      }
+      
+      // Set country with proper conversion
+      const country = accountData.headquarters_country
+      hqAddress.country = country === 'USA' ? 'US' : (country && country.length === 2 ? country : (country || 'US'))
+      
+      // Load billing contact phone if available
+      const clientDetails = (accountQuery.data as { client_details?: { billing_phone?: string | null }[] | null })?.client_details
+      const billingPhone = clientDetails && clientDetails.length > 0 && clientDetails[0]?.billing_phone
+        ? parsePhoneValue(clientDetails[0].billing_phone)
+        : { countryCode: 'US' as const, number: '' }
+      
       store.setFormData({
         legalName: accountQuery.data.name || '',
-        industries: accountQuery.data.industry ? [accountQuery.data.industry] : [],
+        industries: onboardingData?.industries 
+          ? (onboardingData.industries as string[])
+          : (accountQuery.data.industry ? [accountQuery.data.industry] : []),
         website: accountQuery.data.website || '',
-        city: accountQuery.data.city || '',
-        state: accountQuery.data.state || '',
+        linkedinUrl: accountQuery.data.linkedin_url || '',
+        billingContactPhone: billingPhone,
+        ...hqAddress,
       })
     }
   }, [accountQuery.data, accountId])
@@ -70,11 +103,14 @@ export default function AccountOnboardingPage() {
         legalName: formData.legalName || undefined,
         dba: formData.dbaName || undefined,
         industry: formData.industries.length > 0 ? formData.industries[0] : undefined,
+        industries: formData.industries.length > 0 ? formData.industries : undefined,
+        linkedinUrl: formData.linkedinUrl || undefined,
         companySize: (formData.companySize || undefined) as '1-50' | '51-200' | '201-500' | '501-1000' | '1000+' | undefined,
         streetAddress: formData.streetAddress || undefined,
         city: formData.city || undefined,
         state: formData.state || undefined,
         zipCode: formData.postalCode || undefined,
+        country: formData.country || undefined,
         taxId: formData.taxId || undefined,
         fundingStage: formData.fundingStage || undefined,
         // Step 2: Contract Setup
@@ -88,6 +124,7 @@ export default function AccountOnboardingPage() {
         billingFrequency: (formData.billingFrequency || undefined) as 'weekly' | 'biweekly' | 'monthly' | undefined,
         billingContactName: formData.billingContactName || undefined,
         billingContactEmail: formData.billingContactEmail || undefined,
+        billingContactPhone: formatPhoneValue(formData.billingContactPhone) || undefined,
         poRequired: formData.poRequired,
         poFormat: formData.poNumber || undefined,
         // Step 4: Communication Preferences

@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { PhoneInput } from '@/components/ui/phone-input'
 import { useAccountOnboardingStore, PAYMENT_TERMS, BILLING_FREQUENCIES } from '@/stores/account-onboarding-store'
 
 export function OnboardingStep3Billing() {
@@ -148,11 +149,12 @@ export function OnboardingStep3Billing() {
             />
           </div>
           <div className="space-y-2">
-            <Label>Phone</Label>
-            <Input
-              value={formData.billingContactPhone}
-              onChange={(e) => setFormData({ billingContactPhone: e.target.value })}
-              placeholder="(555) 123-4567"
+            <PhoneInput
+              label="Phone"
+              value={formData.billingContactPhone && typeof formData.billingContactPhone === 'object' && 'countryCode' in formData.billingContactPhone
+                ? formData.billingContactPhone
+                : { countryCode: 'US', number: '' }}
+              onChange={(phone) => setFormData({ billingContactPhone: phone })}
             />
           </div>
         </div>

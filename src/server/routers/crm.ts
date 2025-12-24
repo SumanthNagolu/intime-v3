@@ -127,7 +127,7 @@ export const crmRouter = router({
         const { data: addresses } = await adminClient
           .from('addresses')
           .select('*')
-          .eq('entity_type', 'company')
+          .eq('entity_type', 'account')
           .eq('entity_id', input.id)
 
         // Transform addresses to match old structure for backward compatibility
@@ -139,6 +139,10 @@ export const crmRouter = router({
           ...account,
           // Legacy fields for backward compatibility
           headquarters_location: headquartersAddress?.address_line_1 || null,
+          headquarters_city: headquartersAddress?.city || account.headquarters_city || null,
+          headquarters_state: headquartersAddress?.state_province || account.headquarters_state || null,
+          headquarters_country: headquartersAddress?.country_code === 'US' ? 'USA' : (headquartersAddress?.country_code || account.headquarters_country || null),
+          headquarters_postal_code: headquartersAddress?.postal_code || null,
           billing_address: billingAddress?.address_line_1 || null,
           billing_city: billingAddress?.city || null,
           billing_state: billingAddress?.state_province || null,
@@ -297,6 +301,7 @@ export const crmRouter = router({
         website: z.string().url().optional().or(z.literal('')),
         phone: z.string().optional(),
         headquartersLocation: z.string().optional(),
+        headquartersCountry: z.string().optional(),
         description: z.string().optional(),
         annualRevenueTarget: z.number().optional(),
         // Billing info
@@ -330,6 +335,22 @@ export const crmRouter = router({
       .mutation(async ({ ctx, input }) => {
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
+
+        // Check for duplicate account name before creating
+        const { data: existingAccount } = await adminClient
+          .from('companies')
+          .select('id, name')
+          .eq('org_id', orgId)
+          .eq('name', input.name.trim())
+          .is('deleted_at', null)
+          .maybeSingle()
+
+        if (existingAccount) {
+          throw new TRPCError({ 
+            code: 'CONFLICT', 
+            message: `An account with the name "${input.name}" already exists. Please use a different name.` 
+          })
+        }
 
         // Determine category based on status
         const category = input.status === 'prospect' ? 'prospect' : 'client'
@@ -406,10 +427,11 @@ export const crmRouter = router({
         if (input.headquartersLocation) {
           addressInserts.push({
             org_id: orgId,
-            entity_type: 'company',
+            entity_type: 'account',
             entity_id: account.id,
             address_type: 'headquarters',
             address_line_1: input.headquartersLocation,
+            country_code: input.headquartersCountry === 'USA' ? 'US' : (input.headquartersCountry || 'US'),
             is_primary: true,
             created_by: user?.id,
           })
@@ -419,7 +441,7 @@ export const crmRouter = router({
         if (input.billingAddress || input.billingCity || input.billingState || input.billingPostalCode) {
           addressInserts.push({
             org_id: orgId,
-            entity_type: 'company',
+            entity_type: 'account',
             entity_id: account.id,
             address_type: 'billing',
             address_line_1: input.billingAddress || null,
@@ -476,6 +498,7 @@ export const crmRouter = router({
         website: z.string().url().optional().or(z.literal('')),
         phone: z.string().optional(),
         headquartersLocation: z.string().optional(),
+        headquartersCountry: z.string().optional(),
         description: z.string().optional(),
         annualRevenueTarget: z.number().optional(),
         // Billing
@@ -586,6 +609,7 @@ export const crmRouter = router({
 
         // Update addresses if provided
         if (input.headquartersLocation !== undefined || 
+            input.headquartersCountry !== undefined ||
             input.billingAddress !== undefined || 
             input.billingCity !== undefined || 
             input.billingState !== undefined || 
@@ -597,29 +621,34 @@ export const crmRouter = router({
             const { data: existingHQ } = await adminClient
               .from('addresses')
               .select('id')
-              .eq('entity_type', 'company')
+              .eq('entity_type', 'account')
               .eq('entity_id', input.id)
               .eq('address_type', 'headquarters')
               .single()
 
             if (existingHQ) {
+              const hqUpdateData: Record<string, unknown> = {
+                address_line_1: input.headquartersLocation,
+                updated_by: user?.id,
+                updated_at: new Date().toISOString(),
+              }
+              if (input.headquartersCountry !== undefined) {
+                hqUpdateData.country_code = input.headquartersCountry === 'USA' ? 'US' : (input.headquartersCountry || 'US')
+              }
               await adminClient
                 .from('addresses')
-                .update({
-                  address_line_1: input.headquartersLocation,
-                  updated_by: user?.id,
-                  updated_at: new Date().toISOString(),
-                })
+                .update(hqUpdateData)
                 .eq('id', existingHQ.id)
             } else if (input.headquartersLocation) {
               await adminClient
                 .from('addresses')
                 .insert({
                   org_id: orgId,
-                  entity_type: 'company',
+                  entity_type: 'account',
                   entity_id: input.id,
                   address_type: 'headquarters',
                   address_line_1: input.headquartersLocation,
+                  country_code: input.headquartersCountry === 'USA' ? 'US' : (input.headquartersCountry || 'US'),
                   is_primary: true,
                   created_by: user?.id,
                 })
@@ -636,7 +665,7 @@ export const crmRouter = router({
             const { data: existingBilling } = await adminClient
               .from('addresses')
               .select('id')
-              .eq('entity_type', 'company')
+              .eq('entity_type', 'account')
               .eq('entity_id', input.id)
               .eq('address_type', 'billing')
               .single()
@@ -663,7 +692,7 @@ export const crmRouter = router({
                 .from('addresses')
                 .insert({
                   org_id: orgId,
-                  entity_type: 'company',
+                  entity_type: 'account',
                   entity_id: input.id,
                   address_type: 'billing',
                   ...billingData,
@@ -714,11 +743,14 @@ export const crmRouter = router({
         legalName: z.string().optional(),
         dba: z.string().optional(),
         industry: z.string().optional(),
+        industries: z.array(z.string()).optional(),
+        linkedinUrl: z.string().url().optional().or(z.literal('')),
         companySize: z.enum(['1-50', '51-200', '201-500', '501-1000', '1000+']).optional(),
         streetAddress: z.string().optional(),
         city: z.string().optional(),
         state: z.string().optional(),
         zipCode: z.string().optional(),
+        country: z.string().optional(),
         taxId: z.string().optional(),
         fundingStage: z.string().optional(),
         // Step 2: Contract Setup
@@ -732,6 +764,7 @@ export const crmRouter = router({
         billingFrequency: z.enum(['weekly', 'biweekly', 'monthly']).optional(),
         billingContactName: z.string().optional(),
         billingContactEmail: z.string().email().optional().or(z.literal('')),
+        billingContactPhone: z.string().optional(),
         poRequired: z.boolean().optional(),
         poFormat: z.string().optional(),
         // Step 4: Communication Preferences
@@ -761,23 +794,22 @@ export const crmRouter = router({
         // Map onboarding data to account fields
         if (input.legalName) updateData.legal_name = input.legalName
         if (input.industry) updateData.industry = input.industry
-        if (input.taxId) updateData.tax_id = input.taxId
-        if (input.fundingStage) updateData.funding_stage = input.fundingStage
+        if (input.linkedinUrl) updateData.linkedin_url = input.linkedinUrl || null
         if (input.paymentTerms) {
-          const terms = { net_15: 15, net_30: 30, net_45: 45, net_60: 60 }
-          updateData.payment_terms_days = terms[input.paymentTerms]
+          const terms = { net_15: 'Net 15', net_30: 'Net 30', net_45: 'Net 45', net_60: 'Net 60' }
+          updateData.default_payment_terms = terms[input.paymentTerms]
         }
-        if (input.billingFrequency) updateData.billing_frequency = input.billingFrequency
-        if (input.billingContactName) updateData.billing_entity_name = input.billingContactName
-        if (input.billingContactEmail) updateData.billing_email = input.billingContactEmail || null
-        if (input.poRequired !== undefined) updateData.po_required = input.poRequired
+        if (input.poRequired !== undefined) updateData.requires_po = input.poRequired
         if (input.preferredContactMethod) updateData.preferred_contact_method = input.preferredContactMethod
         if (input.meetingCadence) updateData.meeting_cadence = input.meetingCadence
 
         // Store extended onboarding data as metadata
         const onboardingData: Record<string, unknown> = {}
         if (input.dba) onboardingData.dba = input.dba
+        if (input.industries && input.industries.length > 0) onboardingData.industries = input.industries
         if (input.companySize) onboardingData.company_size = input.companySize
+        if (input.fundingStage) onboardingData.funding_stage = input.fundingStage
+        if (input.taxId) onboardingData.tax_id = input.taxId
         if (input.contractType) onboardingData.contract_type = input.contractType
         if (input.contractStartDate) onboardingData.contract_start_date = input.contractStartDate
         if (input.contractEndDate) onboardingData.contract_end_date = input.contractEndDate
@@ -810,31 +842,45 @@ export const crmRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
-        // Create billing address if provided
+        // Update or create company_client_details with billing information
+        if (input.billingContactName || input.billingContactEmail || input.billingContactPhone || input.poRequired !== undefined) {
+          await adminClient
+            .from('company_client_details')
+            .upsert({
+              company_id: input.accountId,
+              org_id: orgId,
+              billing_entity_name: input.billingContactName || null,
+              billing_email: input.billingContactEmail || null,
+              billing_phone: input.billingContactPhone || null,
+              po_required: input.poRequired !== undefined ? input.poRequired : false,
+            }, { onConflict: 'company_id' })
+        }
+
+        // Create or update headquarters address if provided
         if (input.streetAddress || input.city || input.state || input.zipCode) {
-          const { data: existingBilling } = await adminClient
+          const { data: existingHQ } = await adminClient
             .from('addresses')
             .select('id')
-            .eq('entity_type', 'company')
+            .eq('entity_type', 'account')
             .eq('entity_id', input.accountId)
-            .eq('address_type', 'billing')
-            .single()
+            .eq('address_type', 'headquarters')
+            .maybeSingle()
 
-          const billingData = {
+          const hqAddressData = {
             org_id: orgId,
-            entity_type: 'company' as const,
+            entity_type: 'account' as const,
             entity_id: input.accountId,
-            address_type: 'billing' as const,
+            address_type: 'headquarters' as const,
             address_line_1: input.streetAddress || null,
             city: input.city || null,
             state_province: input.state || null,
             postal_code: input.zipCode || null,
-            country_code: 'US' as const,
-            is_primary: false,
+            country_code: input.country === 'USA' ? 'US' : (input.country || 'US'),
+            is_primary: true,
             created_by: user?.id,
           }
 
-          if (existingBilling) {
+          if (existingHQ) {
             await adminClient
               .from('addresses')
               .update({
@@ -842,14 +888,15 @@ export const crmRouter = router({
                 city: input.city || null,
                 state_province: input.state || null,
                 postal_code: input.zipCode || null,
+                country_code: input.country === 'USA' ? 'US' : (input.country || 'US'),
                 updated_by: user?.id,
                 updated_at: new Date().toISOString(),
               })
-              .eq('id', existingBilling.id)
+              .eq('id', existingHQ.id)
           } else {
             await adminClient
               .from('addresses')
-              .insert(billingData)
+              .insert(hqAddressData)
           }
         }
 

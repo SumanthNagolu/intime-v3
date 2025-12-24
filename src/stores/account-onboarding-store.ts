@@ -1,12 +1,13 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { type PhoneInputValue, parsePhoneValue } from '@/components/ui/phone-input'
 
 // Types
 export interface AdditionalContact {
   firstName: string
   lastName: string
   email: string
-  phone: string
+  phone: PhoneInputValue
   title: string
   roles: string[]
 }
@@ -51,7 +52,7 @@ export interface AccountOnboardingFormData {
   billingContactName: string
   billingContactTitle: string
   billingContactEmail: string
-  billingContactPhone: string
+  billingContactPhone: PhoneInputValue
   invoiceDelivery: string
   invoiceCc: string
   poRequired: boolean
@@ -142,7 +143,7 @@ const defaultFormData: AccountOnboardingFormData = {
   billingContactName: '',
   billingContactTitle: '',
   billingContactEmail: '',
-  billingContactPhone: '',
+  billingContactPhone: { countryCode: 'US', number: '' },
   invoiceDelivery: 'email',
   invoiceCc: '',
   poRequired: false,
@@ -176,6 +177,30 @@ const defaultFormData: AccountOnboardingFormData = {
   includeCompanyDeck: true,
   sharePortalAccess: true,
   internalNotes: '',
+}
+
+// Migration function to handle old string phone format
+function migrateFormData(data: any): AccountOnboardingFormData {
+  // If billingContactPhone is a string, convert it to PhoneInputValue
+  if (data.billingContactPhone && typeof data.billingContactPhone === 'string') {
+    data.billingContactPhone = parsePhoneValue(data.billingContactPhone)
+  } else if (!data.billingContactPhone || typeof data.billingContactPhone !== 'object' || !data.billingContactPhone.countryCode) {
+    data.billingContactPhone = { countryCode: 'US', number: '' }
+  }
+  
+  // Migrate phone fields in additionalContacts array
+  if (data.additionalContacts && Array.isArray(data.additionalContacts)) {
+    data.additionalContacts = data.additionalContacts.map((contact: any) => {
+      if (contact.phone && typeof contact.phone === 'string') {
+        contact.phone = parsePhoneValue(contact.phone)
+      } else if (!contact.phone || typeof contact.phone !== 'object' || !contact.phone.countryCode) {
+        contact.phone = { countryCode: 'US', number: '' }
+      }
+      return contact
+    })
+  }
+  
+  return { ...defaultFormData, ...data }
 }
 
 export const useAccountOnboardingStore = create<AccountOnboardingStore>()(
@@ -223,6 +248,12 @@ export const useAccountOnboardingStore = create<AccountOnboardingStore>()(
         currentStep: state.currentStep,
         lastSaved: state.lastSaved,
       }),
+      onRehydrateStorage: () => (state) => {
+        // Migrate old data format on rehydration
+        if (state?.formData) {
+          state.formData = migrateFormData(state.formData)
+        }
+      },
     }
   )
 )

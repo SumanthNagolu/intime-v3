@@ -114,12 +114,13 @@ export default function NewAccountPage() {
 
   const createMutation = trpc.crm.accounts.create.useMutation({
     onSuccess: (data) => {
+      setIsSubmitting(false) // Reset on success
       toast({ title: 'Account created successfully', description: `${formData.name} has been added.` })
       router.push(`/employee/recruiting/accounts/${data.id}`)
     },
     onError: (error) => {
+      setIsSubmitting(false) // Reset on error
       toast({ title: 'Error creating account', description: error.message, variant: 'error' })
-      setIsSubmitting(false)
     },
   })
 
@@ -179,6 +180,7 @@ export default function NewAccountPage() {
   }
 
   const handleSubmit = async () => {
+    if (isSubmitting) return // Early return if already submitting
     if (!validateStep3()) return
     setIsSubmitting(true)
 
@@ -197,6 +199,7 @@ export default function NewAccountPage() {
       website: normalizeUrl(formData.website),
       phone: formatPhoneValue(formData.phone) || undefined,
       headquartersLocation,
+      headquartersCountry: formData.hqCountry || 'US',
       description: formData.description || undefined,
       linkedinUrl: normalizeUrl(formData.linkedinUrl),
       billingEntityName: formData.billingEntityName || undefined,
