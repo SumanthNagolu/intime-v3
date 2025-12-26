@@ -59,7 +59,7 @@ export function JobInterviewsSection({ jobId }: JobInterviewsSectionProps) {
           Interviews
         </CardTitle>
         <CardDescription>
-          {interviews.length} total interviews, {upcomingInterviews.length} upcoming
+          {upcomingInterviews.length} upcoming, {pastInterviews.length} completed
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -70,9 +70,9 @@ export function JobInterviewsSection({ jobId }: JobInterviewsSectionProps) {
         ) : interviews.length === 0 ? (
           <div className="text-center py-8">
             <Calendar className="w-12 h-12 text-charcoal-300 mx-auto mb-4" />
-            <p className="text-charcoal-500">No interviews scheduled</p>
+            <p className="text-charcoal-500 font-medium">No interviews scheduled</p>
             <p className="text-sm text-charcoal-400 mt-1">
-              Interviews will appear here when candidates are scheduled
+              After submitting candidates to the client, schedule interviews here through the offer stage
             </p>
           </div>
         ) : (

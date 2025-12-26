@@ -3,7 +3,7 @@
  * Provides reusable components for address display and input
  */
 
-export { AddressForm } from './AddressForm'
+export { AddressForm, validatePostalCode } from './AddressForm'
 export { AddressDisplay } from './AddressDisplay'
 export { LocationPicker, LocationDisplay } from './LocationPicker'
 export { AddressAutocomplete } from './AddressAutocomplete'

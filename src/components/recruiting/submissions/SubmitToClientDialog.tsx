@@ -105,7 +105,7 @@ export function SubmitToClientDialog({
     watch,
     setValue,
     reset,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<SubmitToClientFormData>({
     resolver: zodResolver(submitToClientSchema),
     defaultValues: {
@@ -439,7 +439,16 @@ export function SubmitToClientDialog({
                   Next
                 </Button>
               ) : (
-                <Button type="submit" disabled={submitMutation.isPending || !isValid}>
+                <Button 
+                  type="submit" 
+                  disabled={
+                    submitMutation.isPending || 
+                    payRate <= 0 || 
+                    billRate <= 0 || 
+                    billRate <= payRate || 
+                    submissionNotes.length < 50
+                  }
+                >
                   {submitMutation.isPending ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />

@@ -18,6 +18,7 @@ import {
   Send,
   Kanban,
   Play,
+  History,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
@@ -35,6 +36,9 @@ import {
   JobDocumentsSectionPCF,
   JobNotesSectionPCF,
   JobAddressesSectionPCF,
+  JobHiringTeamSectionPCF,
+  JobClientDetailsSectionPCF,
+  JobHistorySectionPCF,
 } from './sections/jobs.sections'
 
 // Type definition for Job entity
@@ -732,6 +736,18 @@ export const jobsDetailConfig: DetailViewConfig<Job> = {
       component: JobAddressesSectionPCF,
     },
     {
+      id: 'team',
+      label: 'Hiring Team',
+      icon: Users,
+      component: JobHiringTeamSectionPCF,
+    },
+    {
+      id: 'client',
+      label: 'Client Details',
+      icon: Building2,
+      component: JobClientDetailsSectionPCF,
+    },
+    {
       id: 'pipeline',
       label: 'Pipeline',
       icon: Kanban,
@@ -775,6 +791,12 @@ export const jobsDetailConfig: DetailViewConfig<Job> = {
       label: 'Notes',
       icon: FileText,
       component: JobNotesSectionPCF,
+    },
+    {
+      id: 'history',
+      label: 'History',
+      icon: History,
+      component: JobHistorySectionPCF,
     },
   ],
 

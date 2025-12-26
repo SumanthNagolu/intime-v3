@@ -68,12 +68,13 @@ export const usersRouter = router({
       roleId: z.string().uuid().optional(),
       podId: z.string().uuid().optional(),
       status: userStatusSchema.optional(),
+      candidateOnly: z.boolean().optional(), // Filter for talent pool candidates only
       page: z.number().default(1),
       pageSize: z.number().default(20),
     }))
     .query(async ({ ctx, input }) => {
       const { orgId } = ctx
-      const { search, roleId, podId, status, page, pageSize } = input
+      const { search, roleId, podId, status, candidateOnly, page, pageSize } = input
       // Use admin client to bypass RLS (we've already verified org access via middleware)
       const adminClient = getAdminClient()
 
@@ -125,6 +126,11 @@ export const usersRouter = router({
           start_date,
           last_login_at,
           created_at,
+          candidate_status,
+          candidate_skills,
+          candidate_experience_years,
+          candidate_hourly_rate,
+          candidate_availability,
           role:system_roles(id, name, display_name, code, category, color_code),
           pod_memberships:pod_members(
             id,
@@ -149,6 +155,10 @@ export const usersRouter = router({
       }
       if (status) {
         query = query.eq('status', status)
+      }
+      // Filter for candidates only (talent pool) - excludes internal employees
+      if (candidateOnly) {
+        query = query.not('candidate_status', 'is', null)
       }
 
       // Pagination
@@ -1115,6 +1125,108 @@ export const usersRouter = router({
             total: loginHistoryResult.data?.length ?? 0,
           },
         },
+      }
+    }),
+
+  // ============================================
+  // CREATE CANDIDATE (Quick Add for Talent Pool)
+  // ============================================
+  createCandidate: orgProtectedProcedure
+    .input(z.object({
+      firstName: z.string().min(1).max(100),
+      lastName: z.string().min(1).max(100),
+      email: z.string().email(),
+      phone: z.string().optional(),
+      currentTitle: z.string().optional(), // Stored in metadata for now
+      skills: z.array(z.string()).optional(),
+      source: z.string().optional(),
+      experienceYears: z.number().min(0).max(50).optional(),
+      hourlyRate: z.number().positive().optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      if (!user?.id) {
+        throw new TRPCError({
+          code: 'UNAUTHORIZED',
+          message: 'User not authenticated',
+        })
+      }
+
+      // Check if email already exists
+      const { data: existingUser } = await adminClient
+        .from('user_profiles')
+        .select('id, email')
+        .eq('email', input.email)
+        .eq('org_id', orgId)
+        .is('deleted_at', null)
+        .single()
+
+      if (existingUser) {
+        throw new TRPCError({
+          code: 'CONFLICT',
+          message: 'A candidate with this email already exists',
+        })
+      }
+
+      // Create candidate in user_profiles with candidate_status
+      const { data: candidate, error: createError } = await adminClient
+        .from('user_profiles')
+        .insert({
+          org_id: orgId,
+          first_name: input.firstName,
+          last_name: input.lastName,
+          full_name: `${input.firstName} ${input.lastName}`,
+          email: input.email,
+          phone: input.phone,
+          status: 'active',
+          is_active: true,
+          // Candidate-specific fields
+          candidate_status: 'active',
+          candidate_availability: 'immediate',
+          candidate_skills: input.skills || [],
+          candidate_experience_years: input.experienceYears,
+          candidate_hourly_rate: input.hourlyRate,
+          // Audit fields
+          created_by: user.id,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        })
+        .select('id, full_name, email, candidate_status, candidate_skills')
+        .single()
+
+      if (createError || !candidate) {
+        console.error('Failed to create candidate:', createError)
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: createError?.message || 'Failed to create candidate',
+        })
+      }
+
+      // Log activity for candidate creation
+      await adminClient
+        .from('activities')
+        .insert({
+          org_id: orgId,
+          entity_type: 'candidate',
+          entity_id: candidate.id,
+          activity_type: 'created',
+          description: `Candidate ${candidate.full_name} added to talent pool`,
+          created_by: user.id,
+          created_at: new Date().toISOString(),
+          metadata: {
+            source: input.source || 'manual',
+            skills: input.skills,
+          },
+        })
+
+      return {
+        id: candidate.id,
+        fullName: candidate.full_name,
+        email: candidate.email,
+        status: candidate.candidate_status,
+        skills: candidate.candidate_skills,
       }
     }),
 })

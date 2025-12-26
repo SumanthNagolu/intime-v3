@@ -168,12 +168,14 @@ export function SubmissionOverviewSectionPCF({ entityId: _entityId, entity }: PC
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="flex justify-between text-sm">
-              <span className="text-charcoal-500">Submitted</span>
-              <span className="font-medium">
-                {format(new Date(submission.submitted_at), 'MMM d, yyyy')}
-              </span>
-            </div>
+            {(submission.submitted_at || submission.submitted_to_client_at) && (
+              <div className="flex justify-between text-sm">
+                <span className="text-charcoal-500">Submitted</span>
+                <span className="font-medium">
+                  {format(new Date(submission.submitted_to_client_at || submission.submitted_at), 'MMM d, yyyy')}
+                </span>
+              </div>
+            )}
             {submission.client_viewed_at && (
               <div className="flex justify-between text-sm">
                 <span className="text-charcoal-500">Client Viewed</span>
@@ -182,12 +184,14 @@ export function SubmissionOverviewSectionPCF({ entityId: _entityId, entity }: PC
                 </span>
               </div>
             )}
-            <div className="flex justify-between text-sm">
-              <span className="text-charcoal-500">Created</span>
-              <span className="font-medium">
-                {formatDistanceToNow(new Date(submission.created_at), { addSuffix: true })}
-              </span>
-            </div>
+            {submission.created_at && (
+              <div className="flex justify-between text-sm">
+                <span className="text-charcoal-500">Created</span>
+                <span className="font-medium">
+                  {formatDistanceToNow(new Date(submission.created_at), { addSuffix: true })}
+                </span>
+              </div>
+            )}
           </CardContent>
         </Card>
 

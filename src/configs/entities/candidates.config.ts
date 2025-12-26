@@ -497,42 +497,13 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
   },
 
   // tRPC hooks for data fetching
-  // Uses unified contacts router with subtype='candidate' (Guidewire-inspired model)
-  // Falls back to legacy ATS router if unified router unavailable
+  // Uses ATS candidates router (candidates table)
   useListQuery: (filters) => {
     const statusValue = filters.status as string | undefined
-    const _sourceValue = filters.source as string | undefined
+    const sourceValue = filters.source as string | undefined
     const experienceRangeValue = filters.experienceRange as string | undefined
     const sortByValue = filters.sortBy as string | undefined
     const sortOrderValue = filters.sortOrder as string | undefined
-
-    // Map candidate statuses for the unified model
-    const candidateStatusMap: Record<string, string> = {
-      active: 'active',
-      sourced: 'active', // Legacy status maps to active
-      screening: 'active', // Screening is an activity, not a status
-      bench: 'bench',
-      placed: 'placed',
-      inactive: 'inactive',
-      archived: 'inactive',
-    }
-
-    // Map frontend sort keys to unified contacts table columns
-    const sortFieldMap: Record<string, string> = {
-      name: 'first_name',
-      title: 'title',
-      location: 'candidate_location',
-      status: 'candidate_status',
-      experience: 'candidate_experience_years',
-      source: 'source',
-      owner: 'owner_id',
-      lastActivity: 'last_activity_date',
-      createdAt: 'created_at',
-    }
-
-    const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
-      ? sortFieldMap[sortByValue]
-      : 'created_at'
 
     // Convert experience range to min/max
     let minExperience: number | undefined
@@ -557,27 +528,23 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
       }
     }
 
-    // Map the status to candidate_status
-    const candidateStatus = statusValue && statusValue !== 'all' 
-      ? candidateStatusMap[statusValue] as 'active' | 'passive' | 'placed' | 'bench' | 'inactive' | 'blacklisted' | undefined
-      : undefined
-
-    // Use unified contacts router with candidate subtype
-    return trpc.unifiedContacts.candidates.list.useQuery({
+    // Use ATS candidates router
+    return trpc.ats.candidates.advancedSearch.useQuery({
       search: filters.search as string | undefined,
-      status: candidateStatus,
-      onHotlist: filters.isOnHotlist as boolean | undefined,
+      statuses: statusValue && statusValue !== 'all' ? [statusValue] : undefined,
+      sources: sourceValue && sourceValue !== 'all' ? [sourceValue] : undefined,
       minExperience,
       maxExperience,
+      isOnHotlist: filters.isOnHotlist as boolean | undefined,
       limit: (filters.limit as number) || 25,
       offset: (filters.offset as number) || 0,
-      sortBy: mappedSortBy as 'name' | 'candidate_status' | 'candidate_experience_years' | 'candidate_hourly_rate' | 'created_at',
+      sortBy: sortByValue || 'created_at',
       sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'desc'),
     })
   },
 
-  // Use unified contacts candidate stats
-  useStatsQuery: () => trpc.unifiedContacts.candidates.stats.useQuery(),
+  // Use ATS candidates stats
+  useStatsQuery: () => trpc.ats.candidates.stats.useQuery(),
 }
 
 // Candidates Detail View Configuration
@@ -836,6 +803,6 @@ export const candidatesDetailConfig: DetailViewConfig<Candidate> = {
 
   eventNamespace: 'candidate',
 
-  // Use unified contacts router for candidate details
-  useEntityQuery: (entityId) => trpc.unifiedContacts.getById.useQuery({ id: entityId }),
+  // Use ATS candidates router for candidate details
+  useEntityQuery: (entityId) => trpc.ats.candidates.getById.useQuery({ id: entityId }),
 }
