@@ -26,6 +26,7 @@ import {
   BarChart3,
   MapPin,
   ClipboardList,
+  ClipboardCheck,
 } from 'lucide-react'
 
 /**
@@ -169,7 +170,7 @@ export const accountSections: SectionDefinition[] = [
 
 /**
  * Job sections - Guidewire-style with main sections + tools
- * Main: Overview, Requirements, Pipeline, Submissions, Interviews, Offers (sub-object collections)
+ * Main: Overview, Requirements, Location, Hiring Team, Client Details, Pipeline, Submissions, Interviews, Offers
  * Tools: Activities, Notes, Documents, History
  */
 export const jobSections: SectionDefinition[] = [
@@ -177,6 +178,8 @@ export const jobSections: SectionDefinition[] = [
   { id: 'overview', label: 'Overview', icon: FileText },
   { id: 'requirements', label: 'Requirements', icon: ListChecks },
   { id: 'location', label: 'Location', icon: MapPin },
+  { id: 'team', label: 'Hiring Team', icon: Users },
+  { id: 'client', label: 'Client Details', icon: Building2 },
   { id: 'pipeline', label: 'Pipeline', icon: Layers, showCount: true },
   { id: 'submissions', label: 'Submissions', icon: Send, showCount: true },
   { id: 'interviews', label: 'Interviews', icon: Calendar, showCount: true },
@@ -259,14 +262,15 @@ export const dealSections: SectionDefinition[] = [
 
 /**
  * Candidate sections - Guidewire-style with main sections + tools
- * Main: Profile, Submissions, Placements
+ * Main: Overview, Screening, Profiles, Submissions
  * Tools: Activities, Notes, Documents, History
  */
 export const candidateSections: SectionDefinition[] = [
   // Main sections
-  { id: 'profile', label: 'Profile', icon: UserCircle },
+  { id: 'overview', label: 'Overview', icon: UserCircle },
+  { id: 'screening', label: 'Screening', icon: ClipboardCheck, showCount: true },
+  { id: 'profiles', label: 'Profiles', icon: FileText, showCount: true },
   { id: 'submissions', label: 'Submissions', icon: Send, showCount: true },
-  { id: 'placements', label: 'Placements', icon: Award, showCount: true },
   // Tools section
   { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true },
   { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },

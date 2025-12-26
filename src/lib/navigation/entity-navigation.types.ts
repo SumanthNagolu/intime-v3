@@ -27,8 +27,8 @@ export type NavigationStyle = 'journey' | 'sections'
 
 // Map entity types to their navigation style
 export const ENTITY_NAVIGATION_STYLES: Record<EntityType, NavigationStyle> = {
-  job: 'journey',
-  candidate: 'journey',
+  job: 'sections',
+  candidate: 'sections',
   submission: 'journey',
   placement: 'journey',
   account: 'sections',

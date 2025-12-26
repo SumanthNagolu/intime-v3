@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import {
@@ -10,6 +11,36 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { OPERATING_COUNTRIES, getStatesByCountry, type AddressFormData } from './index'
+import { cn } from '@/lib/utils'
+
+// ZIP/Postal code validation patterns by country
+const ZIP_PATTERNS: Record<string, { pattern: RegExp; format: string; example: string }> = {
+  US: { pattern: /^\d{5}(-\d{4})?$/, format: '5 digits or 5+4', example: '12345 or 12345-6789' },
+  CA: { pattern: /^[A-Z]\d[A-Z]\s?\d[A-Z]\d$/i, format: 'A1A 1A1', example: 'K1A 0B1' },
+  GB: { pattern: /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i, format: 'UK format', example: 'SW1A 1AA' },
+  IN: { pattern: /^\d{6}$/, format: '6 digits', example: '110001' },
+  AU: { pattern: /^\d{4}$/, format: '4 digits', example: '2000' },
+  DE: { pattern: /^\d{5}$/, format: '5 digits', example: '10115' },
+  FR: { pattern: /^\d{5}$/, format: '5 digits', example: '75001' },
+  MX: { pattern: /^\d{5}$/, format: '5 digits', example: '06600' },
+}
+
+// Validate ZIP/postal code based on country
+export function validatePostalCode(code: string, countryCode: string): { valid: boolean; message?: string } {
+  if (!code) return { valid: true } // Empty is valid (not required)
+  
+  const countryPattern = ZIP_PATTERNS[countryCode]
+  if (!countryPattern) return { valid: true } // No validation for unknown countries
+  
+  if (!countryPattern.pattern.test(code)) {
+    return { 
+      valid: false, 
+      message: `Invalid format. Expected: ${countryPattern.format} (e.g., ${countryPattern.example})` 
+    }
+  }
+  
+  return { valid: true }
+}
 
 interface AddressFormProps {
   value: Partial<AddressFormData>
@@ -20,6 +51,7 @@ interface AddressFormProps {
   showAddressLine2?: boolean
   disabled?: boolean
   compact?: boolean
+  validateOnBlur?: boolean
 }
 
 /**
@@ -44,13 +76,33 @@ export function AddressForm({
   showAddressLine2 = true,
   disabled = false,
   compact = false,
+  validateOnBlur = true,
 }: AddressFormProps) {
+  // Local validation state for ZIP code
+  const [zipError, setZipError] = useState<string | null>(null)
+  
   // Get state/province options based on selected country
   const countryCode = value.countryCode || 'US'
   const stateOptions = getStatesByCountry(countryCode)
 
   const handleChange = (field: keyof AddressFormData, newValue: string) => {
     onChange({ [field]: newValue })
+    
+    // Clear ZIP error when user types
+    if (field === 'postalCode') {
+      setZipError(null)
+    }
+  }
+
+  // Validate ZIP on blur
+  const handleZipBlur = () => {
+    if (!validateOnBlur) return
+    const result = validatePostalCode(value.postalCode || '', countryCode)
+    if (!result.valid) {
+      setZipError(result.message || 'Invalid postal code')
+    } else {
+      setZipError(null)
+    }
   }
 
   // Handle country change - reset state when country changes
@@ -59,7 +111,15 @@ export function AddressForm({
       countryCode: newCountryCode,
       stateProvince: '', // Reset state when country changes
     })
+    // Re-validate ZIP for new country
+    if (value.postalCode) {
+      const result = validatePostalCode(value.postalCode, newCountryCode)
+      setZipError(result.valid ? null : result.message || 'Invalid postal code')
+    }
   }
+  
+  // Combined error for ZIP (from props or local validation)
+  const postalCodeError = errors.postalCode || zipError
 
   if (compact) {
     return (
@@ -116,9 +176,14 @@ export function AddressForm({
               placeholder="ZIP"
               value={value.postalCode || ''}
               onChange={(e) => handleChange('postalCode', e.target.value)}
+              onBlur={handleZipBlur}
               disabled={disabled}
               maxLength={10}
+              className={cn(postalCodeError && 'border-red-500')}
             />
+            {postalCodeError && (
+              <p className="text-xs text-red-500 mt-1">{postalCodeError}</p>
+            )}
           </div>
           <div>
             <Label className="text-sm">Country</Label>
@@ -221,15 +286,21 @@ export function AddressForm({
         <div>
           <Label>ZIP/Postal Code</Label>
           <Input
-            placeholder="12345"
+            placeholder={ZIP_PATTERNS[countryCode]?.example || '12345'}
             value={value.postalCode || ''}
             onChange={(e) => handleChange('postalCode', e.target.value)}
+            onBlur={handleZipBlur}
             disabled={disabled}
             maxLength={10}
-            className={errors.postalCode ? 'border-red-500' : ''}
+            className={cn(postalCodeError && 'border-red-500')}
           />
-          {errors.postalCode && (
-            <p className="text-sm text-red-500 mt-1">{errors.postalCode}</p>
+          {postalCodeError && (
+            <p className="text-sm text-red-500 mt-1">{postalCodeError}</p>
+          )}
+          {!postalCodeError && ZIP_PATTERNS[countryCode] && (
+            <p className="text-xs text-charcoal-400 mt-1">
+              Format: {ZIP_PATTERNS[countryCode].format}
+            </p>
           )}
         </div>
 

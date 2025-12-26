@@ -18,7 +18,7 @@ import { cn } from '@/lib/utils'
 interface SubtitleField<T> {
   key: keyof T
   icon?: React.ComponentType<{ className?: string }>
-  format?: (value: unknown) => string
+  format?: (value: unknown, entity?: unknown) => string
 }
 
 interface DropdownAction<T> {
@@ -116,7 +116,7 @@ export function DetailHeader<T extends Record<string, unknown>>({
 
                 const Icon = field.icon
                 const displayValue = field.format
-                  ? field.format(value)
+                  ? field.format(value, entity)
                   : value instanceof Date
                     ? format(value, 'MMM d, yyyy')
                     : String(value)

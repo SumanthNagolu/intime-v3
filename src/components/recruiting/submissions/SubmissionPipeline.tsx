@@ -40,25 +40,35 @@ import { SubmitToClientDialog } from './SubmitToClientDialog'
 import { RecordFeedbackDialog } from './RecordFeedbackDialog'
 import { ScheduleInterviewDialog } from '../interviews/ScheduleInterviewDialog'
 
-// Pipeline stages as defined in the spec
+// Pipeline stages - ends at submission (client-facing stages handled in Submissions tab)
 export const PIPELINE_STAGES = [
   { id: 'sourced', label: 'Sourced', icon: Search, color: 'bg-charcoal-100', actions: ['screen', 'withdraw'] },
   { id: 'screening', label: 'Screening', icon: FileText, color: 'bg-blue-100', actions: ['submit', 'reject', 'withdraw'] },
-  { id: 'submitted_to_client', label: 'Submitted', icon: ExternalLink, color: 'bg-indigo-100', actions: ['feedback', 'withdraw'] },
-  { id: 'client_review', label: 'Client Review', icon: Eye, color: 'bg-purple-100', actions: ['feedback', 'withdraw'] },
-  { id: 'client_interview', label: 'Interview', icon: MessageSquare, color: 'bg-amber-100', actions: ['feedback', 'schedule', 'withdraw'] },
-  { id: 'offer_stage', label: 'Offer', icon: Gift, color: 'bg-green-100', actions: ['feedback', 'withdraw'] },
-  { id: 'placed', label: 'Placed', icon: CheckCircle, color: 'bg-gold-100', actions: [] },
+  { id: 'submission_ready', label: 'Ready to Submit', icon: Eye, color: 'bg-indigo-100', actions: ['submit', 'withdraw'] },
+  { id: 'submitted_to_client', label: 'Submitted', icon: ExternalLink, color: 'bg-purple-200', actions: [] },
 ] as const
 
 type PipelineStage = (typeof PIPELINE_STAGES)[number]['id']
 
 interface Candidate {
   id: string
-  first_name: string
-  last_name: string
+  first_name?: string
+  last_name?: string
+  full_name?: string
   email?: string
   phone?: string
+  avatar_url?: string
+  candidate_skills?: string[]
+}
+
+// Helper to get display name from candidate
+function getCandidateDisplayName(candidate?: Candidate): string {
+  if (!candidate) return 'Unknown'
+  if (candidate.full_name) return candidate.full_name
+  if (candidate.first_name && candidate.last_name) {
+    return `${candidate.first_name} ${candidate.last_name}`
+  }
+  return candidate.first_name || candidate.last_name || 'Unknown'
 }
 
 interface Job {
@@ -93,21 +103,22 @@ interface SubmissionPipelineProps {
   isCompact?: boolean
 }
 
-// Map various status values to pipeline stages
+// Map various status values to pipeline stages (Pipeline ends at submitted_to_client)
 function getStageFromStatus(status: string): PipelineStage {
   const statusMap: Record<string, PipelineStage> = {
     sourced: 'sourced',
     screening: 'screening',
-    submission_ready: 'submitted_to_client',
+    submission_ready: 'submission_ready',
+    // All post-submission statuses map to submitted_to_client in Pipeline view
     submitted: 'submitted_to_client',
     submitted_to_client: 'submitted_to_client',
-    client_review: 'client_review',
-    client_accepted: 'client_review',
-    client_interview: 'client_interview',
-    interviewing: 'client_interview',
-    offer_stage: 'offer_stage',
-    offered: 'offer_stage',
-    placed: 'placed',
+    client_review: 'submitted_to_client',
+    client_accepted: 'submitted_to_client',
+    client_interview: 'submitted_to_client',
+    interviewing: 'submitted_to_client',
+    offer_stage: 'submitted_to_client',
+    offered: 'submitted_to_client',
+    placed: 'submitted_to_client',
   }
   return statusMap[status] || 'sourced'
 }
@@ -148,11 +159,8 @@ export function SubmissionPipeline({
   const groupedSubmissions: Record<PipelineStage, Submission[]> = {
     sourced: [],
     screening: [],
+    submission_ready: [],
     submitted_to_client: [],
-    client_review: [],
-    client_interview: [],
-    offer_stage: [],
-    placed: [],
   }
 
   const rejectedSubmissions: Submission[] = []
@@ -201,15 +209,12 @@ export function SubmissionPipeline({
     const stageToStatus: Record<PipelineStage, string> = {
       sourced: 'sourced',
       screening: 'screening',
+      submission_ready: 'submission_ready',
       submitted_to_client: 'submitted_to_client',
-      client_review: 'client_review',
-      client_interview: 'client_interview',
-      offer_stage: 'offer_stage',
-      placed: 'placed',
     }
 
     // If dragging to submitted_to_client, open submit dialog instead
-    if (targetStage === 'submitted_to_client' && currentStage === 'screening') {
+    if (targetStage === 'submitted_to_client' && ['sourced', 'screening', 'submission_ready'].includes(currentStage)) {
       setSelectedSubmission(submission)
       setSubmitDialogOpen(true)
     } else {
@@ -257,7 +262,7 @@ export function SubmissionPipeline({
         <Users className="w-12 h-12 mx-auto text-charcoal-300 mb-4" />
         <h3 className="text-lg font-medium text-charcoal-900 mb-2">No candidates in pipeline</h3>
         <p className="text-charcoal-500 mb-4">
-          Start sourcing candidates to build your pipeline for this position.
+          Source and screen candidates here, then submit them to the client for review.
         </p>
         {onAddCandidate && (
           <Button onClick={onAddCandidate}>
@@ -272,7 +277,7 @@ export function SubmissionPipeline({
   if (isCompact) {
     // Compact view - just show stage counts
     return (
-      <div className="grid grid-cols-7 gap-2">
+      <div className="grid grid-cols-4 gap-2">
         {PIPELINE_STAGES.map((stage) => {
           const count = groupedSubmissions[stage.id].length
           const Icon = stage.icon
@@ -397,11 +402,7 @@ export function SubmissionPipeline({
           open={submitDialogOpen}
           onOpenChange={setSubmitDialogOpen}
           submissionId={selectedSubmission.id}
-          candidateName={
-            selectedSubmission.candidate
-              ? `${selectedSubmission.candidate.first_name} ${selectedSubmission.candidate.last_name}`
-              : 'Unknown'
-          }
+          candidateName={getCandidateDisplayName(selectedSubmission.candidate)}
           jobTitle={job.title}
           accountName={job.account?.name || 'Client'}
           jobRateMin={job.rate_min}
@@ -419,11 +420,7 @@ export function SubmissionPipeline({
           open={feedbackDialogOpen}
           onOpenChange={setFeedbackDialogOpen}
           submissionId={selectedSubmission.id}
-          candidateName={
-            selectedSubmission.candidate
-              ? `${selectedSubmission.candidate.first_name} ${selectedSubmission.candidate.last_name}`
-              : 'Unknown'
-          }
+          candidateName={getCandidateDisplayName(selectedSubmission.candidate)}
           jobTitle={job.title}
           accountName={job.account?.name || 'Client'}
           currentStatus={selectedSubmission.status}
@@ -448,11 +445,7 @@ export function SubmissionPipeline({
           open={scheduleDialogOpen}
           onOpenChange={setScheduleDialogOpen}
           submissionId={selectedSubmission.id}
-          candidateName={
-            selectedSubmission.candidate
-              ? `${selectedSubmission.candidate.first_name} ${selectedSubmission.candidate.last_name}`
-              : 'Unknown'
-          }
+          candidateName={getCandidateDisplayName(selectedSubmission.candidate)}
           candidateEmail={selectedSubmission.candidate?.email}
           jobTitle={job.title}
           accountName={job.account?.name || 'Client'}
@@ -522,7 +515,7 @@ function SubmissionCard({
           </div>
           <div className="flex-1 min-w-0 cursor-pointer" onClick={onClick}>
             <p className="font-medium text-charcoal-900 truncate">
-              {candidate?.first_name} {candidate?.last_name}
+              {getCandidateDisplayName(candidate)}
             </p>
           </div>
 
@@ -547,7 +540,7 @@ function SubmissionCard({
                 </DropdownMenuItem>
               )}
 
-              {stage.id === 'screening' && (
+              {['sourced', 'screening'].includes(stage.id) && (
                 <DropdownMenuItem onClick={onSubmitToClient}>
                   <Send className="w-4 h-4 mr-2" />
                   Submit to Client

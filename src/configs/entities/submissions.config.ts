@@ -30,10 +30,14 @@ import {
 export interface Submission extends Record<string, unknown> {
   id: string
   status: string
-  submitted_at: string
+  submitted_at?: string | null
+  submitted_to_client_at?: string | null
   submission_rate?: number | null
   bill_rate?: number | null
   pay_rate?: number | null
+  rate?: number | null
+  negotiated_bill_rate?: number | null
+  negotiated_pay_rate?: number | null
   match_score?: number | null
   ai_match_score?: number | null
   recruiter_match_score?: number | null
@@ -44,6 +48,10 @@ export interface Submission extends Record<string, unknown> {
   job?: {
     id: string
     title: string
+    company?: {
+      id: string
+      name: string
+    }
     account?: {
       id: string
       name: string
@@ -54,7 +62,10 @@ export interface Submission extends Record<string, unknown> {
     id: string
     first_name: string
     last_name: string
+    full_name?: string
     email?: string
+    phone?: string
+    avatar_url?: string
   } | null
   submitted_by?: string | null
   submitted_by_user?: {
@@ -62,6 +73,7 @@ export interface Submission extends Record<string, unknown> {
     full_name: string
     avatar_url?: string
   } | null
+  owner_id?: string | null
   owner?: {
     id: string
     full_name: string
@@ -492,7 +504,7 @@ export const submissionsDetailConfig: DetailViewConfig<Submission> = {
       },
     },
     {
-      key: 'job' as keyof Submission,
+      key: 'job_id' as keyof Submission,
       icon: Building2,
       format: (_value, entity) => {
         const submission = entity as unknown as Submission
@@ -500,7 +512,7 @@ export const submissionsDetailConfig: DetailViewConfig<Submission> = {
       },
     },
     {
-      key: 'submitted_at',
+      key: 'created_at',
       icon: Calendar,
       format: (value) => {
         if (!value) return ''
@@ -544,7 +556,9 @@ export const submissionsDetailConfig: DetailViewConfig<Submission> = {
       iconColor: 'text-amber-600',
       getValue: (entity: unknown) => {
         const submission = entity as Submission
-        const submitted = new Date(submission.submitted_at)
+        const dateStr = submission.submitted_to_client_at || submission.submitted_at || submission.created_at
+        if (!dateStr) return 0
+        const submitted = new Date(dateStr)
         const now = new Date()
         return Math.floor((now.getTime() - submitted.getTime()) / (1000 * 60 * 60 * 24))
       },
