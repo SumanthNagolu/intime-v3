@@ -307,72 +307,72 @@ Category tabs with counts:
 
 ---
 
-## Quick Actions Placement (CRITICAL)
+## Sidebar Actions (Per Wireframe)
 
-**Quick actions MUST only appear in the header area (top-right), NEVER in sidebars.**
+**Sidebar structure follows wireframe specs in `thoughts/shared/wireframes/`.** Entity detail pages have a collapsible Actions panel at the top of the sidebar.
 
-### The Rule
+### The Pattern
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  HEADER                              [Quick Actions] [⋮ More]   │  ← Actions HERE
+│  HEADER                              [Context Header / Status]   │
 ├───────────────┬─────────────────────────────────────────────────┤
 │               │                                                 │
 │  SIDEBAR      │           CONTENT AREA                          │
 │               │                                                 │
-│  Journey/     │                                                 │
-│  Sections     │                                                 │
-│  + Tools      │                                                 │
-│               │                                                 │
-│  NO ACTIONS   │                                                 │  ← NO actions here
+│  ▼ Actions    │                                                 │
+│    • Edit     │                                                 │
+│    • Reschedule                                                 │
+│    • Cancel   │                                                 │
+│  ────────────                                                   │
+│  SECTIONS     │                                                 │
+│  ● Summary    │                                                 │
+│  ○ Contacts   │                                                 │
+│  ────────────                                                   │
+│  TOOLS        │                                                 │
+│  ○ Activities │                                                 │
+│  ○ Notes      │                                                 │
 │               │                                                 │
 └───────────────┴─────────────────────────────────────────────────┘
 ```
 
-### Implementation
+### Sidebar Structure
 
-**Header Quick Actions** (via `DetailHeader.tsx`):
-- Primary actions as buttons (max 3 visible)
-- Overflow actions in dropdown menu (⋮)
-- Defined in entity config: `quickActions` and `dropdownActions`
-- Context-aware: actions change based on entity status
+For entity detail pages, sidebar contains (in order):
+1. **Actions Panel** (collapsible) - Quick actions based on entity type and status
+2. **Sections** - Entity-specific sections with counts
+3. **Tools** (separator) - Universal tools (Activities, Notes, Documents, History)
 
-```tsx
-// In entity config (e.g., jobs.config.ts)
-detailConfig: {
-  quickActions: [
-    { id: 'edit', label: 'Edit', icon: Edit, onClick: ... },
-    { id: 'publish', label: 'Publish', icon: Send, variant: 'default', ... },
+### Actions Configuration
+
+Actions are defined per entity type in `src/lib/navigation/entity-sections.ts`:
+
+```typescript
+// Entity-specific sidebar actions
+ENTITY_SIDEBAR_ACTIONS: {
+  interview: [
+    { id: 'edit', label: 'Edit Interview', icon: Edit, action: 'edit', isVisible: (status) => status !== 'completed' },
+    { id: 'reschedule', label: 'Reschedule', icon: Calendar, action: 'reschedule', isVisible: (status) => ['scheduled', 'confirmed'].includes(status) },
+    { id: 'cancel', label: 'Cancel', icon: XCircle, action: 'cancel', variant: 'destructive', isVisible: (status) => ['scheduled', 'confirmed'].includes(status) },
   ],
-  dropdownActions: [
-    { id: 'duplicate', label: 'Duplicate', icon: Copy, ... },
-    { id: 'archive', label: 'Archive', icon: Archive, variant: 'destructive', ... },
+  submission: [
+    { id: 'edit', label: 'Edit Submission', icon: Edit, action: 'edit' },
+    { id: 'schedule-interview', label: 'Schedule Interview', icon: Calendar, action: 'schedule-interview' },
+    { id: 'withdraw', label: 'Withdraw', icon: XCircle, action: 'withdraw', variant: 'destructive' },
   ],
+  // ... other entities
 }
 ```
 
-### Sidebar Content (NO actions)
+### Context Header Bar (Transaction Entities)
 
-Sidebars contain ONLY:
-- **Journey steps** (for workflow entities) - job, candidate, submission, placement
-- **Section links** (for info entities) - account, contact, deal, lead
-- **Tools** (collapsible) - Activities, Notes, Documents
-- **Recent entities** (list pages only)
+Transaction entities (Submission, Interview, Offer, Placement) also show a **Context Header Bar** below the top navigation with links to related entities:
 
-### Why This Pattern?
-
-1. **Consistency**: Actions always in same location across all pages
-2. **Discoverability**: Users know where to find actions
-3. **Mobile-friendly**: Header actions collapse to menu on mobile
-4. **Focus**: Sidebar is for navigation, header is for actions
-
-### DO NOT
-
-- Add quick action buttons to sidebars
-- Add "New X" buttons to sidebar bottom
-- Create action sections in sidebars
-- Use `SidebarActions` component (deleted)
-- Pass `onQuickAction` prop to sidebar components
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ 📋 Interview │ 👤 Sarah Johnson │ 💼 Sr Dev │ 🏢 Acme │ [Scheduled] │
+└─────────────────────────────────────────────────────────────────┘
+```
 
 ### Files Involved
 

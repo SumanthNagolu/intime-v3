@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
+import { getAdminClient } from '@/lib/supabase/admin'
 
 // Input schemas
 const podTypeSchema = z.enum(['recruiting', 'bench_sales', 'ta', 'hr', 'mixed'])
@@ -18,10 +19,11 @@ export const podsRouter = router({
   // GET POD STATS
   // ============================================
   stats: orgProtectedProcedure.query(async ({ ctx }) => {
-    const { supabase, orgId } = ctx
+    const { orgId } = ctx
+    const adminClient = getAdminClient()
 
-    // Get all pods with member counts
-    const { data: pods, error } = await supabase
+    // Get all pods with member counts (use admin client to bypass RLS)
+    const { data: pods, error } = await adminClient
       .from('pods')
       .select(`
         id,
@@ -78,14 +80,16 @@ export const podsRouter = router({
       pageSize: z.number().optional(),
     }))
     .query(async ({ ctx, input }) => {
-      const { supabase, orgId } = ctx
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
       const { search, podType, status, sortBy, sortOrder } = input
 
       // Support both new (limit/offset) and legacy (page/pageSize) pagination
       const limit = input.limit ?? input.pageSize ?? 20
       const offset = input.offset ?? (input.page ? (input.page - 1) * limit : 0)
 
-      let query = supabase
+      // Use admin client to bypass RLS
+      let query = adminClient
         .from('pods')
         .select(`
           *,
@@ -207,10 +211,22 @@ export const podsRouter = router({
       placementsPerSprintTarget: z.number().min(0).default(2),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { supabase, orgId, user } = ctx
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Get the user_profile.id for the current user (needed for FK constraints)
+      let userProfileId: string | null = null
+      if (user?.id) {
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+        userProfileId = profile?.id ?? null
+      }
 
       // Check for duplicate name
-      const { data: existing } = await supabase
+      const { data: existing } = await adminClient
         .from('pods')
         .select('id')
         .eq('org_id', orgId)
@@ -225,8 +241,8 @@ export const podsRouter = router({
         })
       }
 
-      // Create pod
-      const { data: pod, error: podError } = await supabase
+      // Create pod (use admin client to bypass RLS)
+      const { data: pod, error: podError } = await adminClient
         .from('pods')
         .insert({
           org_id: orgId,
@@ -240,12 +256,13 @@ export const podsRouter = router({
           status: 'active',
           is_active: true,
           formed_date: new Date().toISOString().split('T')[0],
-          created_by: user?.id,
+          created_by: userProfileId,
         })
         .select()
         .single()
 
       if (podError || !pod) {
+        console.error('Failed to create pod:', podError)
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Failed to create pod',
@@ -253,14 +270,14 @@ export const podsRouter = router({
       }
 
       // Add manager to pod_managers table
-      await supabase
+      await adminClient
         .from('pod_managers')
         .insert({
           org_id: orgId,
           pod_id: pod.id,
           user_id: input.managerId,
           is_primary: true,
-          assigned_by: user?.id,
+          assigned_by: userProfileId,
         })
 
       // Add initial members if provided
@@ -273,13 +290,13 @@ export const podsRouter = router({
           is_active: true,
         }))
 
-        await supabase.from('pod_members').insert(memberInserts)
+        await adminClient.from('pod_members').insert(memberInserts)
       }
 
       // Create audit log
-      await supabase.from('audit_logs').insert({
+      await adminClient.from('audit_logs').insert({
         org_id: orgId,
-        user_id: user?.id,
+        user_id: userProfileId,
         user_email: user?.email,
         action: 'create',
         table_name: 'pods',
@@ -853,15 +870,16 @@ export const podsRouter = router({
       pageSize: z.number().default(20),
     }))
     .query(async ({ ctx, input }) => {
-      const { supabase, orgId } = ctx
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
       const { search, podType, status, page, pageSize } = input
       const offset = (page - 1) * pageSize
 
-      // Execute all queries in parallel
+      // Execute all queries in parallel (use admin client to bypass RLS)
       const [podsResult, statsResult] = await Promise.all([
         // Pods list query
         (async () => {
-          let query = supabase
+          let query = adminClient
             .from('pods')
             .select(`
               *,
@@ -895,7 +913,7 @@ export const podsRouter = router({
         })(),
 
         // Stats aggregation
-        supabase
+        adminClient
           .from('pods')
           .select(`
             id,
@@ -1033,4 +1051,48 @@ export const podsRouter = router({
         },
       }
     }),
+
+  // ============================================
+  // LIST PODS FOR TREE (Org Tree in Admin Sidebar)
+  // ============================================
+  listForTree: orgProtectedProcedure.query(async ({ ctx }) => {
+    const { orgId } = ctx
+    const adminClient = getAdminClient()
+
+    // Get pods with hierarchy info and user counts for tree display
+    const { data: pods, error } = await adminClient
+      .from('pods')
+      .select(`
+        id,
+        name,
+        parent_id,
+        hierarchy_level,
+        pod_members(count)
+      `)
+      .eq('org_id', orgId)
+      .is('deleted_at', null)
+      .order('hierarchy_level', { ascending: true })
+      .order('name', { ascending: true })
+
+    if (error) {
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: error.message,
+      })
+    }
+
+    return {
+      pods: (pods ?? []).map(pod => ({
+        id: pod.id,
+        name: pod.name,
+        parent_id: pod.parent_id,
+        hierarchy_level: pod.hierarchy_level ?? 0,
+        _count: {
+          users: Array.isArray(pod.pod_members) && pod.pod_members[0]
+            ? (pod.pod_members[0] as { count: number }).count || 0
+            : 0
+        }
+      }))
+    }
+  }),
 })

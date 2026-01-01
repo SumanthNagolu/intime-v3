@@ -236,6 +236,17 @@ export function TopNavigation() {
 
   // Handle tab click - navigate to most recent entity or default href
   const handleTabClick = (tab: typeof topNavigationTabs[0]) => {
+    // For non-entity tabs (workspace, admin), always use defaultHref
+    const nonEntityTabs = ['workspace', 'admin']
+    if (nonEntityTabs.includes(tab.id)) {
+      if (tab.defaultHref) {
+        router.push(tab.defaultHref)
+      }
+      setActiveDropdown(null)
+      return
+    }
+
+    // For entity tabs, navigate to most recent entity or default
     const recentEntities = getRecentEntities(tab.entityType)
     if (recentEntities.length > 0) {
       // Navigate to most recent entity

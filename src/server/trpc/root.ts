@@ -1,5 +1,6 @@
 import { router } from './init'
 import { adminRouter } from '../routers/admin'
+import { groupsRouter } from '../routers/groups'
 import { podsRouter } from '../routers/pods'
 import { usersRouter } from '../routers/users'
 import { permissionsRouter } from '../routers/permissions'
@@ -16,6 +17,7 @@ import { featureFlagsRouter } from '../routers/featureFlags'
 import { notificationsRouter } from '../routers/notifications'
 // Recruiter workspace routers (H01-H04)
 import { activitiesRouter } from '../routers/activities'
+import { workqueueRouter } from '../routers/workqueue'
 import { crmRouter } from '../routers/crm'
 import { atsRouter } from '../routers/ats'
 import { dashboardRouter } from '../routers/dashboard'
@@ -73,6 +75,7 @@ import { referenceRouter } from '../routers/reference'
 
 export const appRouter = router({
   admin: adminRouter,
+  groups: groupsRouter,
   pods: podsRouter,
   users: usersRouter,
   permissions: permissionsRouter,
@@ -89,6 +92,7 @@ export const appRouter = router({
   notifications: notificationsRouter,
   // Recruiter workspace routers (H01-H04)
   activities: activitiesRouter,
+  workqueue: workqueueRouter,
   crm: crmRouter,
   ats: atsRouter,
   dashboard: dashboardRouter,

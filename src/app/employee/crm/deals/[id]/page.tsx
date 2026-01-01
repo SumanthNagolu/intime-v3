@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useParams, useRouter } from 'next/navigation'
-import { EntityDetailView } from '@/components/pcf/detail-view/EntityDetailView'
-import { dealsDetailConfig, Deal } from '@/configs/entities/deals.config'
+import { useRouter } from 'next/navigation'
+import { DealWorkspace } from '@/components/workspaces/deal/DealWorkspace'
+import { useDealWorkspace } from '@/components/workspaces/deal/DealWorkspaceProvider'
 import { CloseWonDialog, CloseLostDialog } from '@/components/crm/deals'
 import { trpc } from '@/lib/trpc/client'
 import { useToast } from '@/components/ui/use-toast'
@@ -41,11 +41,24 @@ declare global {
   }
 }
 
+// Type for deal dialog props - matches CloseWonDialogProps and CloseLostDialogProps
+interface DealDialogData {
+  id: string
+  name: string
+  value?: number
+  account?: { id: string; name: string } | null
+  lead?: { company_name?: string } | null
+  competitors?: string[] | null
+}
+
 export default function DealDetailPage() {
-  const params = useParams()
   const router = useRouter()
   const { toast } = useToast()
-  const dealId = params.id as string
+
+  // ONE DATABASE CALL PATTERN: Get deal data from workspace context (provided by layout)
+  // NO client-side query needed - data comes from server via DealWorkspaceProvider
+  const { data, refreshData } = useDealWorkspace()
+  const deal = data.deal
 
   // Dialog states
   const [closeWonOpen, setCloseWonOpen] = useState(false)
@@ -55,15 +68,12 @@ export default function DealDetailPage() {
 
   const utils = trpc.useUtils()
 
-  // Query for deal data (needed for dialogs)
-  const dealQuery = trpc.crm.deals.getById.useQuery({ id: dealId })
-  const deal = dealQuery.data
-
   // Update stage mutation
   const updateStage = trpc.crm.deals.updateStage.useMutation({
     onSuccess: () => {
       toast({ title: 'Stage updated', description: 'Deal stage has been updated' })
-      utils.crm.deals.getById.invalidate({ id: dealId })
+      // Refresh server data via router.refresh (handled by refreshData)
+      refreshData()
       utils.crm.deals.pipeline.invalidate()
       setMoveStageDialogOpen(false)
       setSelectedStage('')
@@ -76,7 +86,7 @@ export default function DealDetailPage() {
   const handleMoveStage = () => {
     if (selectedStage) {
       updateStage.mutate({
-        id: dealId,
+        id: deal.id,
         stage: selectedStage as
           | 'discovery'
           | 'qualification'
@@ -115,37 +125,50 @@ export default function DealDetailPage() {
   }, [])
 
   const handleCloseSuccess = () => {
-    dealQuery.refetch()
+    refreshData()
     utils.crm.deals.list.invalidate()
     router.push('/employee/crm/deals')
   }
 
+  // Build deal object for dialogs (transform from workspace data structure)
+  const dealForDialogs: DealDialogData = {
+    id: deal.id,
+    name: deal.title,
+    value: deal.value,
+    account: data.account ? {
+      id: data.account.id,
+      name: data.account.name,
+    } : null,
+    lead: data.lead ? {
+      company_name: data.lead.fullName,
+    } : null,
+    competitors: null, // Add if available in deal data
+  }
+
   return (
     <>
-      <EntityDetailView<Deal>
-        config={dealsDetailConfig}
-        entityId={dealId}
+      {/* Main workspace component - uses context data, NO client queries */}
+      <DealWorkspace
+        onMoveStage={() => setMoveStageDialogOpen(true)}
+        onCloseWon={() => setCloseWonOpen(true)}
+        onCloseLost={() => setCloseLostOpen(true)}
       />
 
       {/* Close Won Dialog */}
-      {deal && (
-        <CloseWonDialog
-          open={closeWonOpen}
-          onOpenChange={setCloseWonOpen}
-          deal={deal as any}
-          onSuccess={handleCloseSuccess}
-        />
-      )}
+      <CloseWonDialog
+        open={closeWonOpen}
+        onOpenChange={setCloseWonOpen}
+        deal={dealForDialogs}
+        onSuccess={handleCloseSuccess}
+      />
 
       {/* Close Lost Dialog */}
-      {deal && (
-        <CloseLostDialog
-          open={closeLostOpen}
-          onOpenChange={setCloseLostOpen}
-          deal={deal as any}
-          onSuccess={handleCloseSuccess}
-        />
-      )}
+      <CloseLostDialog
+        open={closeLostOpen}
+        onOpenChange={setCloseLostOpen}
+        deal={dealForDialogs}
+        onSuccess={handleCloseSuccess}
+      />
 
       {/* Move Stage Dialog */}
       <Dialog open={moveStageDialogOpen} onOpenChange={setMoveStageDialogOpen}>
@@ -164,12 +187,12 @@ export default function DealDetailPage() {
                   <SelectItem
                     key={stage.key}
                     value={stage.key}
-                    disabled={stage.key === deal?.stage}
+                    disabled={stage.key === deal.stage}
                   >
                     <div className="flex items-center gap-2">
                       <div className={cn('w-3 h-3 rounded-full', stage.color)} />
                       {stage.label}
-                      {stage.key === deal?.stage && ' (current)'}
+                      {stage.key === deal.stage && ' (current)'}
                     </div>
                   </SelectItem>
                 ))}

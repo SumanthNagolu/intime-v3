@@ -69,6 +69,60 @@ function dispatchDealDialog(dialogId: string, dealId: string) {
 }
 
 // ==========================================
+// Extended Deal Type for Joined Data
+// ==========================================
+
+interface DealActivity {
+  id: string
+  activity_type: string
+  subject?: string
+  description?: string
+  outcome?: string
+  created_at: string
+  creator?: { full_name: string; avatar_url?: string }
+}
+
+interface DealRole {
+  title: string
+  quantity: number
+  minRate?: number
+  maxRate?: number
+  billRate?: number
+  priority?: string
+}
+
+interface DealStageHistory {
+  id?: string
+  stage: string
+  entered_at: string
+  exited_at?: string
+  changed_by_user?: { full_name: string }
+}
+
+interface DealTask {
+  id: string
+  title: string
+  due_date?: string
+  status: string
+  priority?: string
+}
+
+/**
+ * Extended Deal type with all joined/computed properties from the API
+ */
+interface DealWithRelations extends Deal {
+  value_basis?: string
+  hiring_needs?: string
+  services_required?: string[]
+  competitors?: string[]
+  last_activity_at?: string
+  activities?: DealActivity[]
+  roles_breakdown?: DealRole[]
+  stageHistory?: DealStageHistory[]
+  tasks?: DealTask[]
+}
+
+// ==========================================
 // PCF Section Adapters
 // ==========================================
 
@@ -92,7 +146,7 @@ const activityTypes = [
  */
 export function DealOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
   const router = useRouter()
-  const deal = entity as Deal | undefined
+  const deal = entity as DealWithRelations | undefined
 
   if (!deal) return null
 
@@ -118,7 +172,7 @@ export function DealOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
                 {(deal.value || 0).toLocaleString()}
               </p>
               <p className="text-xs text-charcoal-500 mt-1">
-                {(deal as any).value_basis || 'annual'}
+                {deal.value_basis || 'annual'}
               </p>
             </CardContent>
           </Card>
@@ -213,7 +267,7 @@ export function DealOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
         </Card>
 
         {/* Hiring Needs */}
-        {(deal as any).hiring_needs && (
+        {deal.hiring_needs && (
           <Card className="bg-white">
             <CardHeader>
               <CardTitle className="text-sm uppercase tracking-wide">
@@ -221,15 +275,15 @@ export function DealOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm">{(deal as any).hiring_needs}</p>
+              <p className="text-sm">{deal.hiring_needs}</p>
             </CardContent>
           </Card>
         )}
 
         {/* Services & Competition */}
         <div className="grid grid-cols-2 gap-6">
-          {(deal as any).services_required &&
-            (deal as any).services_required.length > 0 && (
+          {deal.services_required &&
+            deal.services_required.length > 0 && (
               <Card className="bg-white">
                 <CardHeader>
                   <CardTitle className="text-sm uppercase tracking-wide">
@@ -238,7 +292,7 @@ export function DealOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-2">
-                    {(deal as any).services_required.map((service: string) => (
+                    {deal.services_required.map((service) => (
                       <Badge key={service} variant="secondary">
                         {service}
                       </Badge>
@@ -248,7 +302,7 @@ export function DealOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
               </Card>
             )}
 
-          {(deal as any).competitors && (deal as any).competitors.length > 0 && (
+          {deal.competitors && deal.competitors.length > 0 && (
             <Card className="bg-white">
               <CardHeader>
                 <CardTitle className="text-sm uppercase tracking-wide">
@@ -257,7 +311,7 @@ export function DealOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
-                  {(deal as any).competitors.map((competitor: string) => (
+                  {deal.competitors.map((competitor) => (
                     <Badge key={competitor} variant="outline">
                       {competitor}
                     </Badge>
@@ -372,11 +426,11 @@ export function DealOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
                     : '-'}
                 </span>
               </div>
-              {(deal as any).last_activity_at && (
+              {deal.last_activity_at && (
                 <div className="flex justify-between">
                   <span className="text-charcoal-500">Last Activity</span>
                   <span>
-                    {format(new Date((deal as any).last_activity_at), 'MMM d, yyyy')}
+                    {format(new Date(deal.last_activity_at), 'MMM d, yyyy')}
                   </span>
                 </div>
               )}
@@ -429,7 +483,7 @@ type ActivityFormValues = z.infer<typeof activitySchema>
  */
 export function DealActivitySectionPCF({ entityId, entity }: PCFSectionProps) {
   const { toast } = useToast()
-  const deal = entity as Deal | undefined
+  const deal = entity as DealWithRelations | undefined
   const utils = trpc.useUtils()
 
   const logActivity = trpc.crm.deals.logActivity.useMutation({
@@ -460,7 +514,7 @@ export function DealActivitySectionPCF({ entityId, entity }: PCFSectionProps) {
     })
   }
 
-  const activities = (deal as any)?.activities || []
+  const activities = deal?.activities || []
 
   return (
     <div className="space-y-6">
@@ -480,7 +534,7 @@ export function DealActivitySectionPCF({ entityId, entity }: PCFSectionProps) {
               <div className="w-40">
                 <Select
                   value={activityForm.watch('activityType')}
-                  onValueChange={(val: any) =>
+                  onValueChange={(val: ActivityFormValues['activityType']) =>
                     activityForm.setValue('activityType', val)
                   }
                 >
@@ -515,7 +569,7 @@ export function DealActivitySectionPCF({ entityId, entity }: PCFSectionProps) {
             <div className="flex items-center justify-between">
               <Select
                 value={activityForm.watch('outcome') || ''}
-                onValueChange={(val: any) =>
+                onValueChange={(val: NonNullable<ActivityFormValues['outcome']>) =>
                   activityForm.setValue('outcome', val || undefined)
                 }
               >
@@ -614,8 +668,8 @@ export function DealActivitySectionPCF({ entityId, entity }: PCFSectionProps) {
  * Shows roles breakdown for the deal
  */
 export function DealRolesSectionPCF({ entityId, entity }: PCFSectionProps) {
-  const deal = entity as Deal | undefined
-  const roles = (deal as any)?.roles_breakdown || []
+  const deal = entity as DealWithRelations | undefined
+  const roles = deal?.roles_breakdown || []
 
   return (
     <Card className="bg-white">
@@ -640,18 +694,7 @@ export function DealRolesSectionPCF({ entityId, entity }: PCFSectionProps) {
           </p>
         ) : (
           <div className="space-y-3">
-            {roles.map(
-              (
-                role: {
-                  title: string
-                  quantity: number
-                  minRate?: number
-                  maxRate?: number
-                  billRate?: number
-                  priority?: string
-                },
-                index: number
-              ) => (
+            {roles.map((role, index) => (
                 <div
                   key={index}
                   className="flex items-center justify-between p-3 bg-charcoal-50 rounded-lg"
@@ -690,8 +733,8 @@ export function DealRolesSectionPCF({ entityId, entity }: PCFSectionProps) {
  * Shows stage history
  */
 export function DealHistorySectionPCF({ entityId, entity }: PCFSectionProps) {
-  const deal = entity as Deal | undefined
-  const stageHistory = (deal as any)?.stageHistory || []
+  const deal = entity as DealWithRelations | undefined
+  const stageHistory = deal?.stageHistory || []
 
   return (
     <Card className="bg-white">
@@ -707,17 +750,7 @@ export function DealHistorySectionPCF({ entityId, entity }: PCFSectionProps) {
           </p>
         ) : (
           <div className="space-y-4">
-            {stageHistory.map(
-              (
-                history: {
-                  id?: string
-                  stage: string
-                  entered_at: string
-                  exited_at?: string
-                  changed_by_user?: { full_name: string }
-                },
-                index: number
-              ) => {
+            {stageHistory.map((history, index) => {
                 const stageInfo = DEAL_STAGE_CONFIG[history.stage]
                 return (
                   <div key={history.id || index} className="flex items-center gap-3">
@@ -761,8 +794,8 @@ export function DealHistorySectionPCF({ entityId, entity }: PCFSectionProps) {
  * Tasks Section Adapter
  */
 export function DealTasksSectionPCF({ entityId, entity }: PCFSectionProps) {
-  const deal = entity as Deal | undefined
-  const tasks = (deal as any)?.tasks || []
+  const deal = entity as DealWithRelations | undefined
+  const tasks = deal?.tasks || []
 
   return (
     <Card className="bg-white">
@@ -787,14 +820,7 @@ export function DealTasksSectionPCF({ entityId, entity }: PCFSectionProps) {
           </p>
         ) : (
           <div className="space-y-2">
-            {tasks.slice(0, 10).map(
-              (task: {
-                id: string
-                title: string
-                due_date?: string
-                status: string
-                priority?: string
-              }) => (
+            {tasks.slice(0, 10).map((task) => (
                 <div
                   key={task.id}
                   className={cn(
@@ -1097,16 +1123,17 @@ export function DealAuditHistorySectionPCF({ entityId }: PCFSectionProps) {
       isAutomated: h.isAutomated,
       changedBy: h.changedBy,
       changedAt: h.changedAt,
+      changeCount: undefined as number | undefined,
     })),
     ...auditItems.map((a) => ({
       id: a.id,
       type: 'audit' as const,
       changeType: a.operation,
-      fieldName: null,
-      oldValue: null,
-      newValue: null,
-      reason: null,
-      comment: null,
+      fieldName: null as string | null,
+      oldValue: null as string | null,
+      newValue: null as string | null,
+      reason: null as string | null,
+      comment: null as string | null,
       isAutomated: false,
       changedBy: a.performedBy,
       changedAt: a.performedAt,
@@ -1211,9 +1238,9 @@ export function DealAuditHistorySectionPCF({ entityId }: PCFSectionProps) {
                           <span className="font-medium text-charcoal-900 capitalize">
                             {entry.changeType}d
                           </span>
-                          {(entry as any).changeCount > 0 && (
+                          {entry.changeCount && entry.changeCount > 0 && (
                             <span className="text-sm text-charcoal-500 ml-2">
-                              ({(entry as any).changeCount} field{(entry as any).changeCount !== 1 ? 's' : ''} changed)
+                              ({entry.changeCount} field{entry.changeCount !== 1 ? 's' : ''} changed)
                             </span>
                           )}
                         </>

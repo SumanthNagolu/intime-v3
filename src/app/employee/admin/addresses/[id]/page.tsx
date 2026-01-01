@@ -81,7 +81,7 @@ export default function AddressDetailPage() {
   const getEntityRoute = (entityType: string, entityId: string) => {
     const routes: Record<string, string> = {
       account: `/employee/recruiting/accounts/${entityId}`,
-      contact: `/employee/recruiting/contacts/${entityId}`,
+      contact: `/employee/contacts/${entityId}`,
       job: `/employee/recruiting/jobs/${entityId}`,
       candidate: `/employee/recruiting/candidates/${entityId}`,
       employee: `/employee/hr/employees/${entityId}`,

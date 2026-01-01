@@ -12,6 +12,8 @@ export type EntityType =
   | 'account'
   | 'contact'
   | 'submission'
+  | 'interview'
+  | 'offer'
   | 'placement'
   | 'lead'
   | 'deal'
@@ -30,6 +32,8 @@ export const ENTITY_NAVIGATION_STYLES: Record<EntityType, NavigationStyle> = {
   job: 'sections',
   candidate: 'sections',
   submission: 'journey',
+  interview: 'sections',
+  offer: 'sections',
   placement: 'journey',
   account: 'sections',
   contact: 'sections',
@@ -96,7 +100,7 @@ export interface EntityNavDropdownItem {
   icon?: LucideIcon
   href?: string
   type: 'link' | 'recent' | 'divider' | 'search'
-  badge?: string | number
+  badge?: string | number | boolean
   placeholder?: string  // For search type
 }
 
@@ -130,6 +134,8 @@ export const ENTITY_BASE_PATHS: Record<EntityType, string> = {
   account: '/employee/recruiting/accounts',
   contact: '/employee/contacts',
   submission: '/employee/recruiting/submissions',
+  interview: '/employee/recruiting/interviews',
+  offer: '/employee/recruiting/offers',
   placement: '/employee/recruiting/placements',
   lead: '/employee/crm/leads',
   deal: '/employee/crm/deals',

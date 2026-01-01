@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { notFound } from 'next/navigation'
-import { getServerCaller } from '@/server/trpc/server-caller'
+import { getFullCampaign } from '@/server/actions/campaigns'
 import { EntityContextProvider } from '@/components/layouts/EntityContextProvider'
 
 export const dynamic = 'force-dynamic'
@@ -12,15 +12,16 @@ interface CampaignLayoutProps {
 
 export default async function CampaignDetailLayout({ children, params }: CampaignLayoutProps) {
   const { id: campaignId } = await params
-  const caller = await getServerCaller()
 
   // ONE DATABASE CALL PATTERN: Fetch entity with ALL section data pre-loaded
-  // This eliminates redundant client-side queries from EntityDetailView, Sidebar, and Page
-  const campaign = await caller.crm.campaigns.getFullEntity({ id: campaignId }).catch(() => null)
+  // Uses server action for optimal performance (single network round-trip)
+  const data = await getFullCampaign(campaignId)
 
-  if (!campaign) {
+  if (!data) {
     notFound()
   }
+
+  const { campaign } = data
 
   // Build subtitle with campaign type
   const subtitle = campaign.campaignType?.replace(/_/g, ' ')
@@ -32,7 +33,7 @@ export default async function CampaignDetailLayout({ children, params }: Campaig
       entityName={campaign.name}
       entitySubtitle={subtitle || undefined}
       entityStatus={campaign.status}
-      initialData={campaign}
+      initialData={data}
     >
       {children}
     </EntityContextProvider>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { trpc } from '@/lib/trpc/client'
 import { AdminPageContent, AdminPageHeader } from '@/components/admin'
@@ -14,8 +14,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Loader2, Eye, EyeOff } from 'lucide-react'
+import { Loader2, Eye, EyeOff, CheckCircle2 } from 'lucide-react'
 import { toast } from 'sonner'
+import { cn } from '@/lib/utils'
 
 type Role = {
   id: string
@@ -43,6 +44,13 @@ type Manager = {
   avatar_url?: string | null
 }
 
+type Group = {
+  id: string
+  name: string
+  code: string | null
+  group_type: string
+}
+
 type PodMembership = {
   id: string
   pod_id: string
@@ -60,6 +68,7 @@ type UserData = {
   phone?: string | null
   role_id?: string | null
   manager_id?: string | null
+  primary_group_id?: string | null
   status: string
   two_factor_enabled: boolean
   pod_memberships?: PodMembership[]
@@ -72,6 +81,7 @@ interface UserFormClientProps {
     roles: Role[]
     pods: Pod[]
     managers: Manager[]
+    groups: Group[]
     user?: UserData | null
   }
 }
@@ -87,11 +97,31 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
   const [phone, setPhone] = useState('')
   const [roleId, setRoleId] = useState<string>('')
   const [podId, setPodId] = useState<string>('')
+  const [podRole, setPodRole] = useState<'junior' | 'senior'>('junior')
+  const [primaryGroupId, setPrimaryGroupId] = useState<string>('')
   const [managerId, setManagerId] = useState<string>('')
   const [authMethod, setAuthMethod] = useState<'invitation' | 'password'>('invitation')
   const [initialPassword, setInitialPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [requireTwoFactor, setRequireTwoFactor] = useState(false)
+
+  // Touched state for validation feedback
+  const [touched, setTouched] = useState({
+    firstName: false,
+    lastName: false,
+    email: false,
+    role: false,
+    pod: false,
+    password: false,
+  })
+
+  // Success state for animation
+  const [showSuccess, setShowSuccess] = useState(false)
+
+  // Handle field blur to mark as touched
+  const handleBlur = useCallback((field: keyof typeof touched) => {
+    setTouched((prev) => ({ ...prev, [field]: true }))
+  }, [])
 
   // Load existing user data for edit mode from server data
   useEffect(() => {
@@ -109,20 +139,30 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
       setEmail(user.email)
       setPhone(user.phone ?? '')
       setRoleId(user.role_id ?? '')
+      setPrimaryGroupId(user.primary_group_id ?? 'none')
       setManagerId(user.manager_id ?? 'none')
       setRequireTwoFactor(user.two_factor_enabled ?? false)
-      // Set pod from active membership
+      // Set pod and pod role from active membership
       const activePod = user.pod_memberships?.find((pm) => pm.is_active)
       setPodId(activePod?.pod_id ?? 'none')
+      if (activePod?.role === 'senior') {
+        setPodRole('senior')
+      } else {
+        setPodRole('junior')
+      }
     }
   }, [mode, initialData.user])
 
   // Mutations
   const createMutation = trpc.users.create.useMutation({
     onSuccess: () => {
+      setShowSuccess(true)
       toast.success('User created successfully')
       utils.users.list.invalidate()
-      router.push('/employee/admin/users')
+      // Brief pause to show success animation before redirect
+      setTimeout(() => {
+        router.push('/employee/admin/users')
+      }, 600)
     },
     onError: (error) => {
       toast.error(error.message || 'Failed to create user')
@@ -131,10 +171,14 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
 
   const updateMutation = trpc.users.update.useMutation({
     onSuccess: () => {
+      setShowSuccess(true)
       toast.success('User updated successfully')
       utils.users.list.invalidate()
       utils.users.getById.invalidate({ id: userId! })
-      router.push(`/employee/admin/users/${userId}`)
+      // Brief pause to show success animation before redirect
+      setTimeout(() => {
+        router.push(`/employee/admin/users/${userId}`)
+      }, 600)
     },
     onError: (error) => {
       toast.error(error.message || 'Failed to update user')
@@ -145,31 +189,62 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
   const selectedRole = initialData.roles.find((r) => r.id === roleId)
   const requiresPod = selectedRole?.category === 'pod_ic'
 
+  // Validation errors (computed)
+  const validationErrors = useMemo(() => {
+    const errors: Record<string, string> = {}
+
+    if (!firstName.trim()) {
+      errors.firstName = 'First name is required'
+    }
+    if (!lastName.trim()) {
+      errors.lastName = 'Last name is required'
+    }
+    if (!email.trim()) {
+      errors.email = 'Email is required'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = 'Please enter a valid email address'
+    }
+    if (!roleId) {
+      errors.role = 'Please select a role'
+    }
+    if (requiresPod && (!podId || podId === 'none')) {
+      errors.pod = 'Please select a pod for this role'
+    }
+    if (mode === 'create' && authMethod === 'password' && initialPassword.length < 8) {
+      errors.password = 'Password must be at least 8 characters'
+    }
+
+    return errors
+  }, [firstName, lastName, email, roleId, requiresPod, podId, mode, authMethod, initialPassword])
+
+  // Check if form is valid
+  const isFormValid = Object.keys(validationErrors).length === 0
+
+  // Mark all fields as touched on submit attempt
+  const markAllTouched = useCallback(() => {
+    setTouched({
+      firstName: true,
+      lastName: true,
+      email: true,
+      role: true,
+      pod: true,
+      password: true,
+    })
+  }, [])
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!firstName.trim()) {
-      toast.error('First name is required')
-      return
-    }
-    if (!lastName.trim()) {
-      toast.error('Last name is required')
-      return
-    }
-    if (!email.trim()) {
-      toast.error('Email is required')
-      return
-    }
-    if (!roleId) {
-      toast.error('Please select a role')
-      return
-    }
-    if (requiresPod && (!podId || podId === 'none')) {
-      toast.error('Please select a pod for this role')
-      return
-    }
-    if (mode === 'create' && authMethod === 'password' && initialPassword.length < 8) {
-      toast.error('Password must be at least 8 characters')
+    // Mark all fields as touched to show validation errors
+    markAllTouched()
+
+    // Check validation
+    if (!isFormValid) {
+      // Show first error as toast
+      const firstError = Object.values(validationErrors)[0]
+      if (firstError) {
+        toast.error(firstError)
+      }
       return
     }
 
@@ -181,6 +256,8 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
         phone: phone.trim() || undefined,
         roleId,
         podId: podId && podId !== 'none' ? podId : undefined,
+        podRole: podId && podId !== 'none' ? podRole : undefined,
+        primaryGroupId: primaryGroupId && primaryGroupId !== 'none' ? primaryGroupId : undefined,
         managerId: managerId && managerId !== 'none' ? managerId : undefined,
         sendInvitation: authMethod === 'invitation',
         initialPassword: authMethod === 'password' ? initialPassword : undefined,
@@ -194,6 +271,8 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
         phone: phone.trim() || null,
         roleId,
         podId: podId && podId !== 'none' ? podId : null,
+        podRole: podId && podId !== 'none' ? podRole : undefined,
+        primaryGroupId: primaryGroupId && primaryGroupId !== 'none' ? primaryGroupId : null,
         managerId: managerId && managerId !== 'none' ? managerId : null,
       })
     }
@@ -214,10 +293,36 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
         description={mode === 'create' ? 'Add a new user to the organization' : 'Update user details'}
         breadcrumbs={breadcrumbs}
       />
-      <form onSubmit={handleSubmit} className="max-w-2xl">
+      <form onSubmit={handleSubmit} className="max-w-2xl relative">
+        {/* Success Overlay */}
+        {showSuccess && (
+          <div className="absolute inset-0 bg-white/90 backdrop-blur-sm rounded-xl flex items-center justify-center z-10">
+            <div className="flex flex-col items-center gap-3 animate-in fade-in zoom-in duration-300">
+              <div className="w-16 h-16 bg-success-100 rounded-full flex items-center justify-center">
+                <CheckCircle2 className="w-10 h-10 text-success-600" />
+              </div>
+              <p className="text-lg font-semibold text-charcoal-900">
+                {mode === 'create' ? 'User Created!' : 'Changes Saved!'}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Loading Overlay */}
+        {isLoading && !showSuccess && (
+          <div className="absolute inset-0 bg-white/60 backdrop-blur-sm rounded-xl flex items-center justify-center z-10">
+            <div className="flex flex-col items-center gap-3">
+              <Loader2 className="w-8 h-8 animate-spin text-hublot-600" />
+              <p className="text-sm text-charcoal-600">
+                {mode === 'create' ? 'Creating user...' : 'Saving changes...'}
+              </p>
+            </div>
+          </div>
+        )}
+
         <div className="bg-white rounded-xl border border-charcoal-100 p-6 space-y-6">
           {/* Basic Information */}
-          <div>
+          <fieldset disabled={isLoading}>
             <h3 className="text-sm font-semibold text-charcoal-900 uppercase tracking-wider mb-4">
               Basic Information
             </h3>
@@ -228,10 +333,16 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
                   id="firstName"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
+                  onBlur={() => handleBlur('firstName')}
                   placeholder="John"
                   maxLength={100}
-                  required
+                  className={cn(
+                    touched.firstName && validationErrors.firstName && 'border-error-500 focus:border-error-500 focus:ring-error-500/20'
+                  )}
                 />
+                {touched.firstName && validationErrors.firstName && (
+                  <p className="text-xs text-error-500">{validationErrors.firstName}</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="lastName">Last Name *</Label>
@@ -239,10 +350,16 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
                   id="lastName"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
+                  onBlur={() => handleBlur('lastName')}
                   placeholder="Doe"
                   maxLength={100}
-                  required
+                  className={cn(
+                    touched.lastName && validationErrors.lastName && 'border-error-500 focus:border-error-500 focus:ring-error-500/20'
+                  )}
                 />
+                {touched.lastName && validationErrors.lastName && (
+                  <p className="text-xs text-error-500">{validationErrors.lastName}</p>
+                )}
               </div>
             </div>
 
@@ -253,14 +370,19 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onBlur={() => handleBlur('email')}
                 placeholder="john.doe@company.com"
                 maxLength={255}
-                required
                 disabled={mode === 'edit'}
+                className={cn(
+                  touched.email && validationErrors.email && 'border-error-500 focus:border-error-500 focus:ring-error-500/20'
+                )}
               />
-              {mode === 'edit' && (
+              {touched.email && validationErrors.email ? (
+                <p className="text-xs text-error-500">{validationErrors.email}</p>
+              ) : mode === 'edit' ? (
                 <p className="text-xs text-charcoal-500">Email cannot be changed after creation</p>
-              )}
+              ) : null}
             </div>
 
             <div className="space-y-2 mt-4">
@@ -273,18 +395,28 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
                 placeholder="+1 (555) 123-4567"
               />
             </div>
-          </div>
+          </fieldset>
 
           {/* Access */}
-          <div className="border-t border-charcoal-100 pt-6">
+          <fieldset disabled={isLoading} className="border-t border-charcoal-100 pt-6">
             <h3 className="text-sm font-semibold text-charcoal-900 uppercase tracking-wider mb-4">
               Access
             </h3>
 
             <div className="space-y-2">
               <Label htmlFor="role">Role *</Label>
-              <Select value={roleId} onValueChange={setRoleId}>
-                <SelectTrigger>
+              <Select
+                value={roleId}
+                onValueChange={(v) => {
+                  setRoleId(v)
+                  handleBlur('role')
+                }}
+              >
+                <SelectTrigger
+                  className={cn(
+                    touched.role && validationErrors.role && 'border-error-500 focus:border-error-500'
+                  )}
+                >
                   <SelectValue placeholder="Select a role" />
                 </SelectTrigger>
                 <SelectContent>
@@ -302,17 +434,29 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
                   ))}
                 </SelectContent>
               </Select>
-              {selectedRole?.description && (
+              {touched.role && validationErrors.role ? (
+                <p className="text-xs text-error-500">{validationErrors.role}</p>
+              ) : selectedRole?.description ? (
                 <p className="text-xs text-charcoal-500">{selectedRole.description}</p>
-              )}
+              ) : null}
             </div>
 
             <div className="space-y-2 mt-4">
               <Label htmlFor="pod">
                 Pod {requiresPod ? '*' : '(optional)'}
               </Label>
-              <Select value={podId} onValueChange={setPodId}>
-                <SelectTrigger>
+              <Select
+                value={podId}
+                onValueChange={(v) => {
+                  setPodId(v)
+                  handleBlur('pod')
+                }}
+              >
+                <SelectTrigger
+                  className={cn(
+                    touched.pod && validationErrors.pod && 'border-error-500 focus:border-error-500'
+                  )}
+                >
                   <SelectValue placeholder={requiresPod ? 'Select a pod' : 'No pod (optional)'} />
                 </SelectTrigger>
                 <SelectContent>
@@ -320,6 +464,61 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
                   {initialData.pods.map((pod) => (
                     <SelectItem key={pod.id} value={pod.id}>
                       {pod.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {touched.pod && validationErrors.pod && (
+                <p className="text-xs text-error-500">{validationErrors.pod}</p>
+              )}
+            </div>
+
+            {/* Pod Role - shown when pod is selected */}
+            {podId && podId !== 'none' && (
+              <div className="space-y-2 mt-4 ml-4 pl-4 border-l-2 border-charcoal-100">
+                <Label>Pod Role</Label>
+                <div className="flex gap-6">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="podRole"
+                      checked={podRole === 'junior'}
+                      onChange={() => setPodRole('junior')}
+                      className="w-4 h-4 text-hublot-600 focus:ring-gold-500"
+                    />
+                    <span className="text-sm text-charcoal-700">Junior</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="podRole"
+                      checked={podRole === 'senior'}
+                      onChange={() => setPodRole('senior')}
+                      className="w-4 h-4 text-hublot-600 focus:ring-gold-500"
+                    />
+                    <span className="text-sm text-charcoal-700">Senior</span>
+                  </label>
+                </div>
+                <p className="text-xs text-charcoal-500">
+                  Senior members can mentor and lead within the pod
+                </p>
+              </div>
+            )}
+
+            <div className="space-y-2 mt-4">
+              <Label htmlFor="group">Group (optional)</Label>
+              <Select value={primaryGroupId} onValueChange={setPrimaryGroupId}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select group (optional)" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">No Group</SelectItem>
+                  {initialData.groups.map((group) => (
+                    <SelectItem key={group.id} value={group.id}>
+                      {group.name}
+                      {group.code && (
+                        <span className="text-charcoal-400 text-xs ml-2">({group.code})</span>
+                      )}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -342,11 +541,11 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
                 </SelectContent>
               </Select>
             </div>
-          </div>
+          </fieldset>
 
           {/* Authentication (Create mode only) */}
           {mode === 'create' && (
-            <div className="border-t border-charcoal-100 pt-6">
+            <fieldset disabled={isLoading} className="border-t border-charcoal-100 pt-6">
               <h3 className="text-sm font-semibold text-charcoal-900 uppercase tracking-wider mb-4">
                 Authentication
               </h3>
@@ -390,8 +589,12 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
                         type={showPassword ? 'text' : 'password'}
                         value={initialPassword}
                         onChange={(e) => setInitialPassword(e.target.value)}
+                        onBlur={() => handleBlur('password')}
                         placeholder="Minimum 8 characters"
                         minLength={8}
+                        className={cn(
+                          touched.password && validationErrors.password && 'border-error-500 focus:border-error-500 focus:ring-error-500/20'
+                        )}
                       />
                       <button
                         type="button"
@@ -401,6 +604,9 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
                         {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                       </button>
                     </div>
+                    {touched.password && validationErrors.password && (
+                      <p className="text-xs text-error-500 mt-1">{validationErrors.password}</p>
+                    )}
                   </div>
                 )}
 
@@ -417,7 +623,7 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
                   </div>
                 </label>
               </div>
-            </div>
+            </fieldset>
           )}
 
           {/* Actions */}
@@ -426,14 +632,14 @@ export function UserFormClient({ mode, userId, initialData }: UserFormClientProp
               type="button"
               variant="outline"
               onClick={() => router.back()}
-              disabled={isLoading}
+              disabled={isLoading || showSuccess}
             >
               Cancel
             </Button>
             <Button
               type="submit"
-              className="bg-hublot-900 hover:bg-hublot-800 text-white"
-              disabled={isLoading}
+              className="bg-hublot-900 hover:bg-hublot-800 text-white disabled:opacity-50"
+              disabled={isLoading || showSuccess}
             >
               {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
               {mode === 'create' ? 'Create User' : 'Save Changes'}

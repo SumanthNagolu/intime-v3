@@ -225,7 +225,7 @@ export function PostalCodeInput({
 
   // Handle input change with formatting
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let inputValue = e.target.value
+    const inputValue = e.target.value
 
     switch (countryCode) {
       case 'US': {

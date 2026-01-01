@@ -27,6 +27,7 @@ export interface JobIntakeFormData {
   jobType: string
   priority: string
   targetStartDate: string
+  targetEndDate: string
 
   // JOBS-01: Unified company/contact references
   clientCompanyId: string | null
@@ -67,8 +68,11 @@ export interface JobIntakeFormData {
   hybridDays: number
   locationRestrictions: string[]
   // Structured location fields (for centralized addresses)
+  locationAddressLine1: string
+  locationAddressLine2: string
   locationCity: string
   locationState: string
+  locationPostalCode: string
   locationCountry: string
   workAuthorizations: string[]
   billRateMin: string
@@ -119,6 +123,7 @@ const defaultFormData: JobIntakeFormData = {
   jobType: 'contract',
   priority: 'normal',
   targetStartDate: '',
+  targetEndDate: '',
 
   // JOBS-01: Unified company/contact references
   clientCompanyId: null,
@@ -158,8 +163,11 @@ const defaultFormData: JobIntakeFormData = {
   workArrangement: 'remote',
   hybridDays: 3,
   locationRestrictions: ['us_based'],
+  locationAddressLine1: '',
+  locationAddressLine2: '',
   locationCity: '',
   locationState: '',
+  locationPostalCode: '',
   locationCountry: 'US',
   workAuthorizations: ['us_citizen', 'green_card'],
   billRateMin: '',

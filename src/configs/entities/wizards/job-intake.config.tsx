@@ -7,7 +7,7 @@ import {
   Calendar,
   Target,
 } from 'lucide-react'
-import { WizardConfig, WizardStepConfig } from '../types'
+import { WizardConfig, WizardStepConfig, WizardStepComponentProps } from '../types'
 import { JobIntakeFormData } from '@/stores/job-intake-store'
 
 // Step wrapper components that bridge existing components to the EntityWizard interface
@@ -21,23 +21,24 @@ import {
 } from '@/components/recruiting/jobs/intake'
 
 // Create PCF-compatible wrapper components
-function Step1Wrapper() {
+// These components access the store directly and don't use wizard props
+function Step1Wrapper(_props: WizardStepComponentProps<JobIntakeFormData>) {
   return <IntakeStep1BasicInfo />
 }
 
-function Step2Wrapper() {
+function Step2Wrapper(_props: WizardStepComponentProps<JobIntakeFormData>) {
   return <IntakeStep2Requirements />
 }
 
-function Step3Wrapper() {
+function Step3Wrapper(_props: WizardStepComponentProps<JobIntakeFormData>) {
   return <IntakeStep3RoleDetails />
 }
 
-function Step4Wrapper() {
+function Step4Wrapper(_props: WizardStepComponentProps<JobIntakeFormData>) {
   return <IntakeStep4Compensation />
 }
 
-function Step5Wrapper() {
+function Step5Wrapper(_props: WizardStepComponentProps<JobIntakeFormData>) {
   return <IntakeStep5Interview />
 }
 
@@ -49,7 +50,7 @@ export const jobIntakeSteps: WizardStepConfig<JobIntakeFormData>[] = [
     label: 'Basic Information',
     description: 'Enter job title, account, and basic details',
     icon: Building2,
-    component: Step1Wrapper as any,
+    component: Step1Wrapper,
     validateFn: (formData) => {
       const errors: string[] = []
       if (!formData.accountId) errors.push('Please select an account.')
@@ -65,7 +66,7 @@ export const jobIntakeSteps: WizardStepConfig<JobIntakeFormData>[] = [
     label: 'Technical Requirements',
     description: 'Define skills, experience, and qualifications',
     icon: Target,
-    component: Step2Wrapper as any,
+    component: Step2Wrapper,
     validateFn: (formData) => {
       const errors: string[] = []
       if (!formData.requiredSkills || formData.requiredSkills.length === 0) {
@@ -80,7 +81,7 @@ export const jobIntakeSteps: WizardStepConfig<JobIntakeFormData>[] = [
     label: 'Role Details',
     description: 'Describe the role, team, and success metrics',
     icon: FileText,
-    component: Step3Wrapper as any,
+    component: Step3Wrapper,
     validateFn: (formData) => {
       const errors: string[] = []
       if (!formData.roleSummary?.trim() || (formData.roleSummary?.length || 0) < 20) {
@@ -98,7 +99,7 @@ export const jobIntakeSteps: WizardStepConfig<JobIntakeFormData>[] = [
     label: 'Logistics & Compensation',
     description: 'Set work arrangement, rates, and benefits',
     icon: DollarSign,
-    component: Step4Wrapper as any,
+    component: Step4Wrapper,
     validateFn: (formData) => {
       const errors: string[] = []
       if (!formData.billRateMin || !formData.billRateMax) {
@@ -113,7 +114,7 @@ export const jobIntakeSteps: WizardStepConfig<JobIntakeFormData>[] = [
     label: 'Interview Process',
     description: 'Configure interview rounds and submission requirements',
     icon: Calendar,
-    component: Step5Wrapper as any,
+    component: Step5Wrapper,
   },
 ]
 

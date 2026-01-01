@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useParams, useRouter } from 'next/navigation'
-import { EntityDetailView } from '@/components/pcf/detail-view/EntityDetailView'
-import { candidatesDetailConfig, Candidate } from '@/configs/entities/candidates.config'
+import { useParams } from 'next/navigation'
+import { CandidateWorkspace } from '@/components/workspaces/candidate/CandidateWorkspace'
+import { useCandidateWorkspace } from '@/components/workspaces/candidate/CandidateWorkspaceProvider'
 import { ScreeningRoom } from '@/components/recruiting/candidates/ScreeningRoom'
 import { ProfileBuilder } from '@/components/recruiting/candidates/ProfileBuilder'
 import {
@@ -25,7 +25,7 @@ import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { trpc } from '@/lib/trpc/client'
 import { toast } from 'sonner'
-import { Loader2, Play, ClipboardCheck } from 'lucide-react'
+import { Loader2, Play } from 'lucide-react'
 
 // Custom event handler types
 declare global {
@@ -36,8 +36,8 @@ declare global {
 
 export default function CandidateDetailPage() {
   const params = useParams()
-  const router = useRouter()
   const candidateId = params.id as string
+  const { data, refreshData } = useCandidateWorkspace()
 
   // Dialog/view states
   const [showStartScreeningDialog, setShowStartScreeningDialog] = useState(false)
@@ -45,39 +45,24 @@ export default function CandidateDetailPage() {
   const [activeScreeningId, setActiveScreeningId] = useState<string | null>(null)
   const [showScreeningRoom, setShowScreeningRoom] = useState(false)
   const [showProfileBuilder, setShowProfileBuilder] = useState(false)
-  const [showSubmitToJobDialog, setShowSubmitToJobDialog] = useState(false)
 
-  const utils = trpc.useUtils()
-
-  // Queries
-  const candidateQuery = trpc.ats.candidates.getById.useQuery({ id: candidateId })
-  const candidate = candidateQuery.data
-
-  // Get candidate's screenings
-  const screeningsQuery = trpc.ats.candidates.getCandidateScreenings.useQuery({ candidateId })
-
-  // Get jobs for screening selection
-  const jobsForScreeningQuery = trpc.ats.jobs.list.useQuery({
-    status: 'open',
-    limit: 100,
-  })
-
-  // Get candidate's profiles
-  const profilesQuery = trpc.ats.candidates.getCandidateProfiles.useQuery({ candidateId })
-
-  const screenings = screeningsQuery.data || []
+  // Get jobs for screening selection (only loaded when dialog opens)
+  const jobsForScreeningQuery = trpc.ats.jobs.list.useQuery(
+    { status: 'open', limit: 100 },
+    { enabled: showStartScreeningDialog }
+  )
   const jobs = jobsForScreeningQuery.data?.items || []
 
-  // Find active/in-progress screening
-  const activeScreening = screenings.find((s: { status: string }) => s.status === 'in_progress')
+  // Find active/in-progress screening from workspace data
+  const activeScreening = data.screenings.find((s) => s.status === 'in_progress')
 
   // Mutations
   const startScreeningMutation = trpc.ats.candidates.startScreening.useMutation({
-    onSuccess: (data) => {
-      setActiveScreeningId(data.screeningId)
+    onSuccess: (result) => {
+      setActiveScreeningId(result.screeningId)
       setShowStartScreeningDialog(false)
       setShowScreeningRoom(true)
-      screeningsQuery.refetch()
+      refreshData()
       toast.success('Screening started')
     },
     onError: (error) => {
@@ -85,7 +70,7 @@ export default function CandidateDetailPage() {
     },
   })
 
-  // Listen for dialog events from sidebar quick actions and PCF components
+  // Listen for dialog events from sidebar quick actions
   useEffect(() => {
     const handleCandidateDialog = (
       event: CustomEvent<{ dialogId: string; candidateId?: string }>
@@ -104,19 +89,19 @@ export default function CandidateDetailPage() {
           setShowProfileBuilder(true)
           break
         case 'submitToJob':
-          setShowSubmitToJobDialog(true)
+          // TODO: Show submit to job dialog
           break
         case 'addToHotlist':
-          // Handled via mutation
+          // TODO: Handle hotlist toggle
           break
         case 'viewResume':
-          // Show resume viewer
+          // TODO: Show resume viewer
           break
         case 'logActivity':
-          // Show activity dialog
+          // TODO: Show activity dialog
           break
         case 'markInactive':
-          // Show mark inactive dialog
+          // TODO: Show mark inactive dialog
           break
       }
     }
@@ -139,7 +124,7 @@ export default function CandidateDetailPage() {
   const handleScreeningComplete = () => {
     setShowScreeningRoom(false)
     setActiveScreeningId(null)
-    screeningsQuery.refetch()
+    refreshData()
   }
 
   // If we're showing the screening room, render it instead
@@ -147,7 +132,7 @@ export default function CandidateDetailPage() {
     return (
       <ScreeningRoom
         candidateId={candidateId}
-        candidateName={`${candidate?.first_name} ${candidate?.last_name}`}
+        candidateName={data.candidate.fullName}
         jobId={selectedJobForScreening || undefined}
         existingScreeningId={activeScreeningId || undefined}
         onComplete={handleScreeningComplete}
@@ -164,10 +149,10 @@ export default function CandidateDetailPage() {
     return (
       <ProfileBuilder
         candidateId={candidateId}
-        candidateName={`${candidate?.first_name} ${candidate?.last_name}`}
+        candidateName={data.candidate.fullName}
         onClose={() => setShowProfileBuilder(false)}
         onSave={() => {
-          profilesQuery.refetch()
+          refreshData()
         }}
       />
     )
@@ -175,10 +160,8 @@ export default function CandidateDetailPage() {
 
   return (
     <>
-      <EntityDetailView<Candidate>
-        config={candidatesDetailConfig}
-        entityId={candidateId}
-      />
+      {/* Guidewire-style Candidate Workspace */}
+      <CandidateWorkspace />
 
       {/* Start Screening Dialog */}
       <Dialog open={showStartScreeningDialog} onOpenChange={setShowStartScreeningDialog}>
@@ -186,8 +169,7 @@ export default function CandidateDetailPage() {
           <DialogHeader>
             <DialogTitle>Start Candidate Screening</DialogTitle>
             <DialogDescription>
-              Select a job to screen {candidate?.first_name} {candidate?.last_name} for, or start a
-              general screening.
+              Select a job to screen {data.candidate.fullName} for, or start a general screening.
             </DialogDescription>
           </DialogHeader>
 

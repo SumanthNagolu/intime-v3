@@ -1087,6 +1087,80 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
       },
     ],
   },
+  interview: {
+    entityType: 'interview',
+    // Interviews use section-based navigation, but we still need an entry for type safety
+    steps: [
+      {
+        id: 'scheduled',
+        label: 'Scheduled',
+        icon: Calendar,
+        description: 'Interview scheduled',
+        activeStatuses: ['proposed', 'scheduled', 'confirmed'],
+        completedStatuses: ['completed', 'cancelled', 'no_show'],
+        defaultTab: 'overview',
+      },
+      {
+        id: 'in_progress',
+        label: 'In Progress',
+        icon: Clock,
+        description: 'Interview in progress',
+        activeStatuses: ['in_progress'],
+        completedStatuses: ['completed'],
+        defaultTab: 'overview',
+      },
+      {
+        id: 'completed',
+        label: 'Completed',
+        icon: CheckCircle,
+        description: 'Interview completed',
+        activeStatuses: ['completed'],
+        completedStatuses: [],
+        defaultTab: 'feedback',
+      },
+    ],
+    quickActions: [
+      {
+        id: 'join-meeting',
+        label: 'Join Meeting',
+        icon: Play,
+        actionType: 'navigate',
+        showForStatuses: ['scheduled', 'confirmed'],
+      },
+      {
+        id: 'reschedule',
+        label: 'Reschedule',
+        icon: Calendar,
+        actionType: 'dialog',
+        dialogId: 'rescheduleInterview',
+        showForStatuses: ['scheduled', 'confirmed'],
+      },
+      {
+        id: 'submit-feedback',
+        label: 'Submit Feedback',
+        icon: MessageSquare,
+        actionType: 'dialog',
+        dialogId: 'submitFeedback',
+        showForStatuses: ['completed'],
+      },
+      {
+        id: 'cancel',
+        label: 'Cancel Interview',
+        icon: XCircle,
+        actionType: 'dialog',
+        dialogId: 'cancelInterview',
+        variant: 'destructive',
+        showForStatuses: ['scheduled', 'confirmed'],
+      },
+    ],
+  },
+
+  // Offers use section-based navigation, but we still need an entry for type safety
+  offer: {
+    entityType: 'offer',
+    steps: [],
+    quickActions: [],
+  },
 }
 
 // Helper function to get journey config for an entity type

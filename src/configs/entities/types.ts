@@ -419,6 +419,16 @@ export interface DetailViewConfig<T = unknown> {
 // WIZARD CONFIGURATION
 // ============================================
 
+/**
+ * Props for wizard step components
+ * All props are optional to support components that access state via stores
+ */
+export interface WizardStepComponentProps<T = unknown> {
+  formData?: Partial<T>
+  setFormData?: (data: Partial<T>) => void
+  errors?: Record<string, string>
+}
+
 export interface WizardStepConfig<T = unknown> {
   id: string
   number: number
@@ -429,12 +439,8 @@ export interface WizardStepConfig<T = unknown> {
   // Fields for auto-generated form
   fields?: FieldDefinition[]
 
-  // Or custom component
-  component?: React.ComponentType<{
-    formData: Partial<T>
-    setFormData: (data: Partial<T>) => void
-    errors: Record<string, string>
-  }>
+  // Or custom component - props are optional for store-based components
+  component?: React.ComponentType<WizardStepComponentProps<T>>
 
   // Validation
   validation?: z.ZodSchema

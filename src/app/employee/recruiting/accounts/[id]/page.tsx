@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { EntityDetailView } from '@/components/pcf/detail-view/EntityDetailView'
-import { accountsDetailConfig, Account } from '@/configs/entities/accounts.config'
+import { AccountWorkspace } from '@/components/workspaces/AccountWorkspace'
 import { LogActivityDialog } from '@/components/recruiting/accounts/LogActivityDialog'
 import { AddContactDialog } from '@/components/recruiting/accounts/AddContactDialog'
 import { CreateMeetingDialog } from '@/components/recruiting/accounts/CreateMeetingDialog'
@@ -12,6 +11,7 @@ import { AddNoteDialog } from '@/components/recruiting/accounts/AddNoteDialog'
 import { AddDocumentDialog } from '@/components/recruiting/accounts/AddDocumentDialog'
 import { trpc } from '@/lib/trpc/client'
 import { useToast } from '@/components/ui/use-toast'
+import { useAccountWorkspace } from '@/components/workspaces/account/AccountWorkspaceProvider'
 
 // Custom event handler types
 declare global {
@@ -26,6 +26,7 @@ export default function AccountDetailPage() {
   const router = useRouter()
   const { toast } = useToast()
   const accountId = params.id as string
+  const { refreshData } = useAccountWorkspace()
 
   // Dialog states
   const [logActivityOpen, setLogActivityOpen] = useState(false)
@@ -37,14 +38,11 @@ export default function AccountDetailPage() {
 
   const utils = trpc.useUtils()
 
-  // Query for account data (needed for status updates)
-  const accountQuery = trpc.crm.accounts.getById.useQuery({ id: accountId })
-
   // Status mutation
   const updateStatusMutation = trpc.crm.accounts.updateStatus.useMutation({
     onSuccess: () => {
-      utils.crm.accounts.getById.invalidate({ id: accountId })
       utils.crm.accounts.list.invalidate()
+      refreshData()
       toast({ title: 'Status updated successfully' })
     },
     onError: (error) => {
@@ -52,7 +50,7 @@ export default function AccountDetailPage() {
     },
   })
 
-  // Listen for dialog events from sidebar quick actions and PCF components
+  // Listen for dialog events from sidebar quick actions
   useEffect(() => {
     const handleAccountDialog = (event: CustomEvent<{ dialogId: string; accountId?: string }>) => {
       switch (event.detail.dialogId) {
@@ -75,6 +73,10 @@ export default function AccountDetailPage() {
         case 'addDocument':
           setAddDocumentOpen(true)
           break
+        case 'createJob':
+          // Navigate to job intake with account pre-selected
+          router.push(`/employee/recruiting/jobs/intake?accountId=${accountId}`)
+          break
         case 'updateStatus':
           // Handle status update if needed
           break
@@ -82,7 +84,6 @@ export default function AccountDetailPage() {
     }
 
     const handleEntityDialog = (event: CustomEvent<{ dialogId: string; entityType?: string; entityId?: string }>) => {
-      // Handle generic entity dialog events
       if (event.detail.entityType === 'account' && event.detail.entityId === accountId) {
         switch (event.detail.dialogId) {
           case 'addContact':
@@ -102,44 +103,51 @@ export default function AccountDetailPage() {
       window.removeEventListener('openAccountDialog', handleAccountDialog)
       window.removeEventListener('openEntityDialog', handleEntityDialog)
     }
-  }, [accountId])
+  }, [accountId, router])
+
+  // Refresh data after dialog closes (onOpenChange will be called with false)
+  const handleDialogChange = (open: boolean, setter: React.Dispatch<React.SetStateAction<boolean>>) => {
+    setter(open)
+    if (!open) {
+      // Refresh data when dialog closes
+      refreshData()
+    }
+  }
 
   return (
     <>
-      <EntityDetailView<Account>
-        config={accountsDetailConfig}
-        entityId={accountId}
-      />
+      {/* Guidewire-style Account Workspace */}
+      <AccountWorkspace />
 
       {/* Create/Add Dialogs */}
       <LogActivityDialog
         open={logActivityOpen}
-        onOpenChange={setLogActivityOpen}
+        onOpenChange={(open) => handleDialogChange(open, setLogActivityOpen)}
         accountId={accountId}
       />
       <AddContactDialog
         open={addContactOpen}
-        onOpenChange={setAddContactOpen}
+        onOpenChange={(open) => handleDialogChange(open, setAddContactOpen)}
         accountId={accountId}
       />
       <CreateMeetingDialog
         open={createMeetingOpen}
-        onOpenChange={setCreateMeetingOpen}
+        onOpenChange={(open) => handleDialogChange(open, setCreateMeetingOpen)}
         accountId={accountId}
       />
       <CreateEscalationDialog
         open={createEscalationOpen}
-        onOpenChange={setCreateEscalationOpen}
+        onOpenChange={(open) => handleDialogChange(open, setCreateEscalationOpen)}
         accountId={accountId}
       />
       <AddNoteDialog
         open={addNoteOpen}
-        onOpenChange={setAddNoteOpen}
+        onOpenChange={(open) => handleDialogChange(open, setAddNoteOpen)}
         accountId={accountId}
       />
       <AddDocumentDialog
         open={addDocumentOpen}
-        onOpenChange={setAddDocumentOpen}
+        onOpenChange={(open) => handleDialogChange(open, setAddDocumentOpen)}
         accountId={accountId}
       />
     </>

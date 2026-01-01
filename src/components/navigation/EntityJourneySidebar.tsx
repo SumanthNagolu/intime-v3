@@ -2,13 +2,15 @@
 
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
-import { Check, ChevronRight, ChevronDown, Wrench, ArrowLeft } from 'lucide-react'
+import { useSearchParams, useRouter } from 'next/navigation'
+import { Check, ChevronRight, ChevronDown, Wrench, ArrowLeft, Zap } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { entityJourneys } from '@/lib/navigation/entity-journeys'
+import { entityJourneys, getVisibleQuickActions } from '@/lib/navigation/entity-journeys'
 import { EntityType, ENTITY_BASE_PATHS, ENTITY_NAVIGATION_STYLES } from '@/lib/navigation/entity-navigation.types'
-import { commonToolSections, getSectionsByGroup } from '@/lib/navigation/entity-sections'
+import { commonToolSections, getSectionsByGroup, jobSectionGroups, jobToolSections } from '@/lib/navigation/entity-sections'
+import { CollapsibleSectionGroup } from './CollapsibleSectionGroup'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import {
   Collapsible,
   CollapsibleContent,
@@ -37,6 +39,8 @@ const backLinkText: Record<EntityType, string> = {
   job: 'All Jobs',
   candidate: 'All Candidates',
   submission: 'All Submissions',
+  interview: 'All Interviews',
+  offer: 'All Offers',
   placement: 'All Placements',
   account: 'All Accounts',
   contact: 'All Contacts',
@@ -61,8 +65,17 @@ export function EntityJourneySidebar({
   const navigationStyle = ENTITY_NAVIGATION_STYLES[entityType]
   const journeyConfig = entityJourneys[entityType]
   const searchParams = useSearchParams()
-  const currentSection = searchParams.get('section') || 'overview'
+  const router = useRouter()
+  // Default section varies by entity type (account uses 'summary', others use 'overview')
+  const defaultSection = entityType === 'account' ? 'summary' : 'overview'
+  const currentSection = searchParams.get('section') || defaultSection
   const [isToolsOpen, setIsToolsOpen] = useState(true)
+  const [isQuickActionsOpen, setIsQuickActionsOpen] = useState(true)
+
+  // Get visible quick actions based on entity status
+  const visibleQuickActions = useMemo(() => {
+    return getVisibleQuickActions(entityType, entityStatus)
+  }, [entityType, entityStatus])
 
   // Get sections for section-based navigation
   const { mainSections, toolSections } = useMemo(() => {
@@ -131,6 +144,42 @@ export function EntityJourneySidebar({
     }
   }
 
+  // Handle quick action click
+  const handleQuickAction = (action: typeof visibleQuickActions[0]) => {
+    switch (action.actionType) {
+      case 'navigate':
+        if (action.href) {
+          const href = action.href.replace(':id', entityId)
+          router.push(href)
+        }
+        break
+      case 'dialog':
+        // Trigger dialog via custom event
+        window.dispatchEvent(
+          new CustomEvent('openEntityDialog', {
+            detail: {
+              dialogId: action.dialogId,
+              entityType,
+              entityId,
+            },
+          })
+        )
+        break
+      case 'mutation':
+        // Trigger mutation action via custom event
+        window.dispatchEvent(
+          new CustomEvent('entityAction', {
+            detail: {
+              action: action.id,
+              entityType,
+              entityId,
+            },
+          })
+        )
+        break
+    }
+  }
+
 
   return (
     <aside className={cn('w-64 bg-white border-r border-charcoal-100 flex flex-col flex-shrink-0', className)}>
@@ -160,9 +209,190 @@ export function EntityJourneySidebar({
         </div>
       </div>
 
+      {/* Quick Actions - Collapsible */}
+      {visibleQuickActions.length > 0 && (
+        <Collapsible
+          open={isQuickActionsOpen}
+          onOpenChange={setIsQuickActionsOpen}
+          className="border-b border-charcoal-100 py-3 px-3"
+        >
+          <CollapsibleTrigger className="flex items-center gap-2 w-full px-2 py-1.5 text-xs font-medium text-charcoal-400 uppercase tracking-wider hover:text-charcoal-600 transition-colors">
+            {isQuickActionsOpen ? (
+              <ChevronDown className="w-3.5 h-3.5" />
+            ) : (
+              <ChevronRight className="w-3.5 h-3.5" />
+            )}
+            <Zap className="w-3.5 h-3.5" />
+            <span>Actions</span>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="mt-2">
+            <div className="space-y-1.5">
+              {visibleQuickActions.map((action) => {
+                const Icon = action.icon
+                return (
+                  <Button
+                    key={action.id}
+                    variant={action.variant || 'outline'}
+                    size="sm"
+                    className={cn(
+                      'w-full justify-start gap-2 h-9 text-xs font-medium',
+                      action.variant === 'destructive'
+                        ? 'hover:bg-red-50'
+                        : 'hover:bg-gold-50 hover:text-gold-700 hover:border-gold-200'
+                    )}
+                    onClick={() => handleQuickAction(action)}
+                  >
+                    <Icon className="w-3.5 h-3.5" />
+                    {action.label}
+                  </Button>
+                )
+              })}
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      )}
+
       <nav className="flex-1 overflow-y-auto">
         {/* SECTIONS MODE: Show main sections + tool sections */}
-        {navigationStyle === 'sections' && (
+        {navigationStyle === 'sections' && entityType === 'job' && (
+          <>
+            {/* Job-specific: Collapsible Section Groups */}
+            {jobSectionGroups.map((group) => {
+              const groupSections = mainSections.filter(s => group.sectionIds.includes(s.id))
+              const groupTotal = groupSections.reduce((sum, s) => {
+                const count = getSectionCount(s.id)
+                return sum + (count || 0)
+              }, 0)
+
+              return (
+                <CollapsibleSectionGroup
+                  key={group.id}
+                  id={group.id}
+                  label={group.label}
+                  count={group.sectionIds.length > 1 ? groupTotal : undefined}
+                  defaultOpen={group.defaultOpen}
+                >
+                  <ul className="space-y-0.5 px-2">
+                    {groupSections.map((section) => {
+                      const Icon = section.icon
+                      const isActive = currentSection === section.id
+                      const count = section.showCount ? getSectionCount(section.id) : undefined
+
+                      return (
+                        <li key={section.id}>
+                          <Link
+                            href={buildToolHref(section.id)}
+                            className={cn(
+                              'flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-150 group',
+                              isActive
+                                ? 'bg-gold-50 text-gold-700'
+                                : 'text-charcoal-600 hover:bg-charcoal-50 hover:text-charcoal-800'
+                            )}
+                          >
+                            <Icon
+                              className={cn(
+                                'w-4 h-4 flex-shrink-0 transition-colors',
+                                isActive ? 'text-gold-600' : 'text-charcoal-400 group-hover:text-charcoal-500'
+                              )}
+                            />
+                            <span className={cn('flex-1 text-sm', isActive && 'font-medium')}>
+                              {section.label}
+                            </span>
+                            {count !== undefined && (
+                              <Badge
+                                variant="secondary"
+                                className={cn(
+                                  'min-w-[22px] h-5 text-xs tabular-nums justify-center',
+                                  isActive
+                                    ? 'bg-gold-100 text-gold-700'
+                                    : 'bg-charcoal-100 text-charcoal-600'
+                                )}
+                              >
+                                {count}
+                              </Badge>
+                            )}
+                            {isActive && (
+                              <ChevronRight className="w-4 h-4 text-gold-400" />
+                            )}
+                          </Link>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </CollapsibleSectionGroup>
+              )
+            })}
+
+            {/* Tool Sections (Collapsible) for Jobs */}
+            <Collapsible
+              open={isToolsOpen}
+              onOpenChange={setIsToolsOpen}
+              className="border-t border-charcoal-100 pt-2 px-3 pb-3"
+            >
+              <CollapsibleTrigger className="flex items-center gap-2 w-full px-2 py-1.5 text-xs font-medium text-charcoal-400 uppercase tracking-wider hover:text-charcoal-600 transition-colors">
+                {isToolsOpen ? (
+                  <ChevronDown className="w-3.5 h-3.5" />
+                ) : (
+                  <ChevronRight className="w-3.5 h-3.5" />
+                )}
+                <Wrench className="w-3.5 h-3.5" />
+                <span>Tools</span>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="mt-1">
+                <ul className="space-y-0.5">
+                  {jobToolSections.map((section) => {
+                    const Icon = section.icon
+                    const isActive = currentSection === section.id
+                    const count = section.showCount ? getSectionCount(section.id) : undefined
+
+                    return (
+                      <li key={section.id}>
+                        <Link
+                          href={buildToolHref(section.id)}
+                          className={cn(
+                            'flex items-center gap-3 px-3 py-1.5 rounded-lg transition-all duration-150 group',
+                            isActive
+                              ? 'bg-gold-50 text-gold-700'
+                              : 'text-charcoal-600 hover:bg-charcoal-50 hover:text-charcoal-800'
+                          )}
+                        >
+                          <Icon
+                            className={cn(
+                              'w-4 h-4 flex-shrink-0 transition-colors',
+                              isActive ? 'text-gold-600' : 'text-charcoal-400 group-hover:text-charcoal-500'
+                            )}
+                          />
+                          <span className={cn('flex-1 text-sm', isActive && 'font-medium')}>
+                            {section.label}
+                          </span>
+                          {count !== undefined && (
+                            <Badge
+                              variant="secondary"
+                              className={cn(
+                                'min-w-[22px] h-5 text-xs tabular-nums justify-center',
+                                isActive
+                                  ? 'bg-gold-100 text-gold-700'
+                                  : 'bg-charcoal-100 text-charcoal-600'
+                              )}
+                            >
+                              {count}
+                            </Badge>
+                          )}
+                          {isActive && (
+                            <ChevronRight className="w-4 h-4 text-gold-400" />
+                          )}
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </CollapsibleContent>
+            </Collapsible>
+          </>
+        )}
+
+        {/* SECTIONS MODE for non-job entities: Show flat main sections + tool sections */}
+        {navigationStyle === 'sections' && entityType !== 'job' && (
           <>
             {/* Main Sections */}
             <div className="p-3">

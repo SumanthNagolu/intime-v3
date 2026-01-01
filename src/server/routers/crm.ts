@@ -130,10 +130,23 @@ export const crmRouter = router({
           .eq('entity_type', 'account')
           .eq('entity_id', input.id)
 
+        // Fetch primary contact separately
+        const { data: primaryContact } = await adminClient
+          .from('contacts')
+          .select('id, first_name, last_name, email, phone, title')
+          .eq('company_id', input.id)
+          .eq('is_primary', true)
+          .maybeSingle()
+
         // Transform addresses to match old structure for backward compatibility
         const addressList = addresses || []
         const headquartersAddress = addressList.find((a: { address_type: string }) => a.address_type === 'headquarters')
         const billingAddress = addressList.find((a: { address_type: string }) => a.address_type === 'billing')
+
+        // Extract client_details for flattening
+        const clientDetails = Array.isArray(account.client_details) 
+          ? account.client_details[0] 
+          : account.client_details
 
         return {
           ...account,
@@ -141,13 +154,27 @@ export const crmRouter = router({
           headquarters_location: headquartersAddress?.address_line_1 || null,
           headquarters_city: headquartersAddress?.city || account.headquarters_city || null,
           headquarters_state: headquartersAddress?.state_province || account.headquarters_state || null,
-          headquarters_country: headquartersAddress?.country_code === 'US' ? 'USA' : (headquartersAddress?.country_code || account.headquarters_country || null),
+          headquarters_country: headquartersAddress?.country_code || account.headquarters_country || 'US',
           headquarters_postal_code: headquartersAddress?.postal_code || null,
+          // Billing fields from addresses
           billing_address: billingAddress?.address_line_1 || null,
           billing_city: billingAddress?.city || null,
           billing_state: billingAddress?.state_province || null,
           billing_postal_code: billingAddress?.postal_code || null,
-          billing_country: billingAddress?.country_code === 'US' ? 'USA' : (billingAddress?.country_code || null),
+          billing_country: billingAddress?.country_code || 'US',
+          // Billing fields from client_details
+          billing_entity_name: clientDetails?.billing_entity_name || null,
+          billing_email: clientDetails?.billing_email || null,
+          billing_phone: clientDetails?.billing_phone || null,
+          billing_frequency: clientDetails?.billing_frequency || null,
+          po_required: clientDetails?.po_required || false,
+          payment_terms_days: clientDetails?.payment_terms_days || null,
+          // Primary contact fields
+          primary_contact_id: primaryContact?.id || null,
+          primary_contact_name: primaryContact ? `${primaryContact.first_name} ${primaryContact.last_name}`.trim() : null,
+          primary_contact_email: primaryContact?.email || null,
+          primary_contact_title: primaryContact?.title || null,
+          primary_contact_phone: primaryContact?.phone || null,
         }
       }),
 
@@ -388,7 +415,7 @@ export const crmRouter = router({
             // Headquarters location - stored in separate columns
             headquarters_city: input.headquartersCity || null,
             headquarters_state: input.headquartersState || null,
-            headquarters_country: input.headquartersCountry || 'USA',
+            headquarters_country: input.headquartersCountry || 'US',
             // Communication
             preferred_contact_method: input.preferredContactMethod,
             meeting_cadence: input.meetingCadence,
@@ -428,7 +455,7 @@ export const crmRouter = router({
             billing_city: input.billingCity || null,
             billing_state: input.billingState || null,
             billing_postal_code: input.billingPostalCode || null,
-            billing_country: input.billingCountry || 'USA',
+            billing_country: input.billingCountry || 'US',
           })
 
         if (clientDetailsError) {
@@ -522,12 +549,15 @@ export const crmRouter = router({
         id: z.string().uuid(),
         name: z.string().min(2).max(200).optional(),
         industry: z.string().optional(),
+        industries: z.array(z.string()).optional(), // Array of industries
         companyType: z.enum(['direct_client', 'implementation_partner', 'staffing_vendor']).optional(),
         status: z.enum(['prospect', 'active', 'inactive']).optional(),
         tier: z.enum(['preferred', 'strategic', 'exclusive']).nullish(),
         website: z.string().url().optional().or(z.literal('')),
         phone: z.string().optional(),
         headquartersLocation: z.string().optional(),
+        headquartersCity: z.string().optional(),
+        headquartersState: z.string().optional(),
         headquartersCountry: z.string().optional(),
         description: z.string().optional(),
         annualRevenueTarget: z.number().optional(),
@@ -546,6 +576,11 @@ export const crmRouter = router({
         // Communication
         preferredContactMethod: z.enum(['email', 'phone', 'slack', 'teams']).optional(),
         meetingCadence: z.enum(['daily', 'weekly', 'biweekly', 'monthly', 'quarterly']).optional(),
+        // Primary contact (optional)
+        primaryContactName: z.string().optional(),
+        primaryContactEmail: z.string().email().optional(),
+        primaryContactTitle: z.string().optional(),
+        primaryContactPhone: z.string().optional(),
         // Company
         legalName: z.string().optional(),
         taxId: z.string().optional(),
@@ -570,6 +605,13 @@ export const crmRouter = router({
         // Map input to database columns (companies table)
         if (input.name !== undefined) updateData.name = input.name
         if (input.industry !== undefined) updateData.industry = input.industry
+        if (input.industries !== undefined) {
+          updateData.industries = input.industries.length > 0 ? input.industries : null
+          // Also set primary industry from first item if not explicitly set
+          if (input.industry === undefined && input.industries.length > 0) {
+            updateData.industry = input.industries[0]
+          }
+        }
         if (input.companyType !== undefined) {
           // Map old companyType to segment
           updateData.segment = (input.companyType as string) === 'enterprise' ? 'enterprise' :
@@ -639,6 +681,8 @@ export const crmRouter = router({
 
         // Update addresses if provided
         if (input.headquartersLocation !== undefined || 
+            input.headquartersCity !== undefined ||
+            input.headquartersState !== undefined ||
             input.headquartersCountry !== undefined ||
             input.billingAddress !== undefined || 
             input.billingCity !== undefined || 
@@ -647,7 +691,10 @@ export const crmRouter = router({
             input.billingCountry !== undefined) {
           
           // Update or insert headquarters address
-          if (input.headquartersLocation !== undefined) {
+          if (input.headquartersLocation !== undefined || 
+              input.headquartersCity !== undefined ||
+              input.headquartersState !== undefined ||
+              input.headquartersCountry !== undefined) {
             const { data: existingHQ } = await adminClient
               .from('addresses')
               .select('id')
@@ -658,9 +705,17 @@ export const crmRouter = router({
 
             if (existingHQ) {
               const hqUpdateData: Record<string, unknown> = {
-                address_line_1: input.headquartersLocation,
                 updated_by: user?.id,
                 updated_at: new Date().toISOString(),
+              }
+              if (input.headquartersLocation !== undefined) {
+                hqUpdateData.address_line_1 = input.headquartersLocation
+              }
+              if (input.headquartersCity !== undefined) {
+                hqUpdateData.city = input.headquartersCity
+              }
+              if (input.headquartersState !== undefined) {
+                hqUpdateData.state_province = input.headquartersState
               }
               if (input.headquartersCountry !== undefined) {
                 hqUpdateData.country_code = input.headquartersCountry === 'USA' ? 'US' : (input.headquartersCountry || 'US')
@@ -669,7 +724,7 @@ export const crmRouter = router({
                 .from('addresses')
                 .update(hqUpdateData)
                 .eq('id', existingHQ.id)
-            } else if (input.headquartersLocation) {
+            } else if (input.headquartersLocation || input.headquartersCity) {
               await adminClient
                 .from('addresses')
                 .insert({
@@ -677,7 +732,9 @@ export const crmRouter = router({
                   entity_type: 'account',
                   entity_id: input.id,
                   address_type: 'headquarters',
-                  address_line_1: input.headquartersLocation,
+                  address_line_1: input.headquartersLocation || null,
+                  city: input.headquartersCity || null,
+                  state_province: input.headquartersState || null,
                   country_code: input.headquartersCountry === 'USA' ? 'US' : (input.headquartersCountry || 'US'),
                   is_primary: true,
                   created_by: user?.id,
@@ -730,6 +787,73 @@ export const crmRouter = router({
                   created_by: user?.id,
                 })
             }
+          }
+        }
+
+        // Update or create primary contact if provided
+        if (input.primaryContactName !== undefined || 
+            input.primaryContactEmail !== undefined ||
+            input.primaryContactTitle !== undefined ||
+            input.primaryContactPhone !== undefined) {
+          
+          // Find existing primary contact for this account
+          const { data: existingPrimaryContact } = await adminClient
+            .from('contacts')
+            .select('id')
+            .eq('company_id', input.id)
+            .eq('is_primary', true)
+            .maybeSingle()
+
+          // Parse name into first/last if provided
+          let firstName = ''
+          let lastName = ''
+          if (input.primaryContactName) {
+            const nameParts = input.primaryContactName.split(' ')
+            firstName = nameParts[0] || ''
+            lastName = nameParts.slice(1).join(' ') || ''
+          }
+
+          if (existingPrimaryContact) {
+            // Update existing primary contact
+            const contactUpdateData: Record<string, unknown> = {
+              updated_by: user?.id,
+              updated_at: new Date().toISOString(),
+            }
+            if (input.primaryContactName !== undefined) {
+              contactUpdateData.first_name = firstName || 'Primary'
+              contactUpdateData.last_name = lastName || 'Contact'
+            }
+            if (input.primaryContactEmail !== undefined) {
+              contactUpdateData.email = input.primaryContactEmail || null
+            }
+            if (input.primaryContactTitle !== undefined) {
+              contactUpdateData.title = input.primaryContactTitle || null
+            }
+            if (input.primaryContactPhone !== undefined) {
+              contactUpdateData.phone = input.primaryContactPhone || null
+            }
+
+            await adminClient
+              .from('contacts')
+              .update(contactUpdateData)
+              .eq('id', existingPrimaryContact.id)
+          } else if (input.primaryContactEmail || input.primaryContactName) {
+            // Create new primary contact if email or name provided
+            await adminClient
+              .from('contacts')
+              .insert({
+                org_id: orgId,
+                company_id: input.id,
+                category: 'person',
+                subtype: 'person_client_contact',
+                first_name: firstName || 'Primary',
+                last_name: lastName || 'Contact',
+                email: input.primaryContactEmail || null,
+                phone: input.primaryContactPhone || null,
+                title: input.primaryContactTitle || null,
+                is_primary: true,
+                created_by: user?.id,
+              })
           }
         }
 
@@ -2429,6 +2553,171 @@ export const crmRouter = router({
         }
       }),
 
+    /**
+     * Get full deal entity with ALL section data in ONE database round-trip
+     * This follows the ONE DATABASE CALL pattern for detail pages.
+     *
+     * Returns:
+     * - Main deal with immediate relations (owner, company, lead)
+     * - stakeholders: All deal contacts/stakeholders
+     * - stageHistory: Stage progression timeline
+     * - activities: Activity logs
+     * - tasks: Assigned tasks
+     * - notes: Reference notes
+     * - documents: Attached files
+     * - account: Full account details if linked
+     */
+    getFullEntity: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Step 1: Main entity with immediate relations
+        const { data: deal, error } = await adminClient
+          .from('deals')
+          .select(`
+            *,
+            owner:user_profiles!owner_id(id, full_name, avatar_url, email),
+            secondary_owner:user_profiles!secondary_owner_id(id, full_name),
+            pod_manager:user_profiles!pod_manager_id(id, full_name),
+            company:companies!deals_company_id_fkey(id, name, segment, website, industry, employee_count, phone, headquarters_city, headquarters_state),
+            lead:leads!lead_id(id, company_name, first_name, last_name, email, phone),
+            created_company:companies!created_company_id(id, name)
+          `)
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .single()
+
+        if (error || !deal) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Deal not found' })
+        }
+
+        // Step 2: ALL section data in parallel (single round-trip)
+        const [
+          stageHistoryResult,
+          stakeholdersResult,
+          activitiesResult,
+          tasksResult,
+          notesResult,
+          documentsResult,
+        ] = await Promise.all([
+          // Stage history timeline
+          adminClient
+            .from('deal_stages_history')
+            .select('*, changed_by_user:user_profiles!changed_by(id, full_name)')
+            .eq('deal_id', input.id)
+            .order('entered_at', { ascending: false })
+            .limit(50),
+
+          // Stakeholders (contacts for this deal)
+          adminClient
+            .from('deal_stakeholders')
+            .select('*, contact:contacts(id, first_name, last_name, email, phone, title)')
+            .eq('deal_id', input.id)
+            .eq('is_active', true)
+            .order('is_primary', { ascending: false })
+            .limit(50),
+
+          // Activities
+          adminClient
+            .from('activities')
+            .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
+            .eq('entity_type', 'deal')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .order('created_at', { ascending: false })
+            .limit(100),
+
+          // Tasks
+          adminClient
+            .from('tasks')
+            .select('*, assignee:user_profiles!assignee_id(id, full_name)')
+            .eq('entity_type', 'deal')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('due_date', { ascending: true })
+            .limit(50),
+
+          // Notes (from unified notes table)
+          adminClient
+            .from('notes')
+            .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
+            .eq('entity_type', 'deal')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('is_pinned', { ascending: false })
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // Documents (from unified documents table)
+          adminClient
+            .from('documents')
+            .select('*, uploader:user_profiles!uploaded_by(id, full_name)')
+            .eq('entity_type', 'deal')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(50),
+        ])
+
+        // Build account data for Account section (if deal has company linked)
+        const account = deal.company ? {
+          id: deal.company.id,
+          name: deal.company.name,
+          industry: deal.company.industry,
+          segment: deal.company.segment,
+          website: deal.company.website,
+          phone: deal.company.phone,
+          employeeCount: deal.company.employee_count,
+          city: deal.company.headquarters_city,
+          state: deal.company.headquarters_state,
+        } : null
+
+        // Return with section counts for sidebar badges
+        return {
+          // Main entity data
+          ...deal,
+          // Override company with enriched account data
+          account,
+          // Section data
+          sections: {
+            stakeholders: {
+              items: stakeholdersResult.data ?? [],
+              total: stakeholdersResult.data?.length ?? 0,
+            },
+            stageHistory: {
+              items: stageHistoryResult.data ?? [],
+              total: stageHistoryResult.data?.length ?? 0,
+            },
+            activities: {
+              items: activitiesResult.data ?? [],
+              total: activitiesResult.data?.length ?? 0,
+            },
+            tasks: {
+              items: tasksResult.data ?? [],
+              total: tasksResult.data?.length ?? 0,
+            },
+            notes: {
+              items: notesResult.data ?? [],
+              total: notesResult.data?.length ?? 0,
+            },
+            documents: {
+              items: documentsResult.data ?? [],
+              total: documentsResult.data?.length ?? 0,
+            },
+          },
+          // Backward compatibility - keep flat arrays for existing section components
+          stageHistory: stageHistoryResult.data ?? [],
+          stakeholders: stakeholdersResult.data ?? [],
+          activities: activitiesResult.data ?? [],
+          tasks: tasksResult.data ?? [],
+        }
+      }),
+
     // Create deal (B03)
     create: orgProtectedProcedure
       .input(z.object({
@@ -3625,6 +3914,14 @@ export const crmRouter = router({
         decisionAuthority: z.enum(['decision_maker', 'influencer', 'gatekeeper', 'end_user', 'champion']).optional(),
         isPrimary: z.boolean().default(false),
         notes: z.string().optional(),
+        // Optional address
+        address: z.object({
+          street: z.string().optional(),
+          city: z.string().optional(),
+          state: z.string().optional(),
+          zip: z.string().optional(),
+          country: z.string().optional(),
+        }).optional(),
       }))
       .mutation(async ({ ctx, input }) => {
         const { orgId, user } = ctx
@@ -3668,6 +3965,26 @@ export const crmRouter = router({
 
         if (error) {
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Create address if provided
+        if (input.address && (input.address.street || input.address.city)) {
+          await adminClient
+            .from('addresses')
+            .insert({
+              org_id: orgId,
+              entity_type: 'contact',
+              entity_id: data.id,
+              address_type: 'work',
+              address_line_1: input.address.street,
+              city: input.address.city,
+              state_province: input.address.state,
+              postal_code: input.address.zip,
+              country_code: input.address.country || 'US',
+              is_primary: true,
+              created_by: user?.id,
+              updated_by: user?.id,
+            })
         }
 
         return data
@@ -3909,6 +4226,14 @@ export const crmRouter = router({
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
 
+        // First get the meeting to know the account
+        const { data: existingMeeting } = await adminClient
+          .from('meeting_notes')
+          .select('company_id, title, action_items')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .single()
+
         const updateData: Record<string, unknown> = { updated_by: user?.id }
         if (input.meetingType !== undefined) updateData.meeting_type = input.meetingType
         if (input.title !== undefined) updateData.title = input.title
@@ -3940,6 +4265,38 @@ export const crmRouter = router({
 
         if (error) {
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Create activities for assigned action items
+        if (input.actionItems && input.actionItems.length > 0 && existingMeeting) {
+          const existingItems = existingMeeting.action_items as { description: string; assigneeId?: string }[] || []
+          
+          // Find newly assigned items (items with assigneeId that weren't assigned before)
+          for (const item of input.actionItems) {
+            if (item.assigneeId && item.description) {
+              // Check if this item was already assigned to this user
+              const wasAlreadyAssigned = existingItems.some(
+                existing => existing.description === item.description && existing.assigneeId === item.assigneeId
+              )
+              
+              if (!wasAlreadyAssigned) {
+                // Create a task activity for the assignee
+                await adminClient.from('activities').insert({
+                  org_id: orgId,
+                  entity_type: 'company',
+                  entity_id: existingMeeting.company_id,
+                  activity_type: 'task',
+                  status: item.completed ? 'completed' : 'pending',
+                  subject: item.description,
+                  description: `Action item from meeting: ${existingMeeting.title || input.title || 'Meeting'}`,
+                  due_date: item.dueDate,
+                  assigned_to: item.assigneeId,
+                  performed_by: user?.id,
+                  created_by: user?.id,
+                })
+              }
+            }
+          }
         }
 
         return data
@@ -4515,11 +4872,12 @@ export const crmRouter = router({
         const { orgId } = ctx
         const adminClient = getAdminClient()
 
+        // Query both 'account' and 'company' entity types for backward compatibility
         let query = adminClient
           .from('activities')
           .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
           .eq('org_id', orgId)
-          .eq('entity_type', 'company')
+          .in('entity_type', ['account', 'company'])
           .eq('entity_id', input.accountId)
           .order('created_at', { ascending: false })
           .limit(input.limit)
@@ -4590,11 +4948,14 @@ export const crmRouter = router({
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
 
+        // Normalize 'account' to 'company' for consistency (companies table is the source of truth)
+        const normalizedEntityType = input.entityType === 'account' ? 'company' : input.entityType
+
         const { data, error } = await adminClient
           .from('activities')
           .insert({
             org_id: orgId,
-            entity_type: input.entityType,
+            entity_type: normalizedEntityType,
             entity_id: input.entityId,
             activity_type: input.activityType,
             subject: input.subject,
@@ -4609,6 +4970,8 @@ export const crmRouter = router({
             related_contact_id: input.relatedContactId,
             status: 'completed',
             created_by: user?.id,
+            assigned_to: user?.id, // Activity assigned to creator by default (shows in My Activities)
+            performed_by: user?.id, // Who performed the activity
           })
           .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
           .single()

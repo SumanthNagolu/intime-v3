@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic'
 
-import { OrganizationSettingsPage } from '@/components/admin/settings/OrganizationSettingsPage'
+import { OrganizationSettingsPageV2 } from '@/components/admin/settings/OrganizationSettingsPageV2'
 
 export default function OrganizationPage() {
-  return <OrganizationSettingsPage />
+  return <OrganizationSettingsPageV2 />
 }

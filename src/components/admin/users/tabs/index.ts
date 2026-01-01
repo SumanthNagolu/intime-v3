@@ -1,0 +1,7 @@
+export { UserBasicsTab } from './UserBasicsTab'
+export { UserAttributesTab } from './UserAttributesTab'
+export { UserAccessTab } from './UserAccessTab'
+export { UserRolesTab } from './UserRolesTab'
+export { UserProfileTab } from './UserProfileTab'
+export { UserRegionTab } from './UserRegionTab'
+export { UserAuthorityTab } from './UserAuthorityTab'

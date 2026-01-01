@@ -16,6 +16,55 @@ type CampaignDialogEvent = CustomEvent<{
   prospectId?: string
 }>
 
+// Type for EditProspectDialog prospect prop
+interface EditProspectDialogData {
+  id: string
+  first_name?: string
+  last_name?: string
+  email?: string
+  company_name?: string
+  title?: string
+  linkedin_url?: string
+  status: string
+  response_type?: string
+  response_text?: string
+  engagement_score?: number
+}
+
+// Type for ConvertProspectDialog prospect prop
+interface ConvertProspectDialogData {
+  id: string
+  first_name?: string
+  last_name?: string
+  company_name?: string
+}
+
+// Helper to transform query result to dialog format
+function toEditDialogData(prospect: Prospect): EditProspectDialogData {
+  return {
+    id: prospect.id,
+    first_name: prospect.name?.split(' ')[0],
+    last_name: prospect.name?.split(' ').slice(1).join(' '),
+    email: prospect.email ?? undefined,
+    company_name: prospect.company ?? undefined,
+    title: prospect.title ?? undefined,
+    linkedin_url: prospect.linkedin_url ?? undefined,
+    status: prospect.status,
+    response_type: prospect.response_type ?? undefined,
+    response_text: undefined, // Not in Prospect type
+    engagement_score: prospect.engagement_score ?? undefined,
+  }
+}
+
+function toConvertDialogData(prospect: Prospect): ConvertProspectDialogData {
+  return {
+    id: prospect.id,
+    first_name: prospect.name?.split(' ')[0],
+    last_name: prospect.name?.split(' ').slice(1).join(' '),
+    company_name: prospect.company ?? undefined,
+  }
+}
+
 export default function ProspectDetailPage() {
   const params = useParams()
   const campaignId = params.id as string
@@ -103,7 +152,7 @@ export default function ProspectDetailPage() {
           <EditProspectDialog
             open={editDialogOpen}
             onOpenChange={setEditDialogOpen}
-            prospect={prospect as any}
+            prospect={toEditDialogData(prospect as Prospect)}
             campaignId={campaignId}
             onSuccess={() => {
               prospectQuery.refetch()
@@ -113,7 +162,7 @@ export default function ProspectDetailPage() {
           <ConvertProspectDialog
             open={convertDialogOpen}
             onOpenChange={setConvertDialogOpen}
-            prospect={prospect as any}
+            prospect={toConvertDialogData(prospect as Prospect)}
             onSuccess={() => {
               prospectQuery.refetch()
               toast.success('Prospect converted to lead')
@@ -124,4 +173,3 @@ export default function ProspectDetailPage() {
     </>
   )
 }
-

@@ -18,7 +18,7 @@ export default async function JobDetailLayout({ children, params }: JobLayoutPro
   // Fetch job data on server
   let job = null
   try {
-    job = await caller.ats.jobs.getById({ id: jobId })
+    job = await caller.ats.jobs.getFullJob({ id: jobId })
   } catch (error) {
     console.error('[JobDetailLayout] Error:', error)
     // Handle specific error types
@@ -46,8 +46,8 @@ export default async function JobDetailLayout({ children, params }: JobLayoutPro
     notFound()
   }
 
-  const accountName = job.account
-    ? (job.account as { name: string }).name
+  const accountName = job.company
+    ? (job.company as { name: string }).name
     : undefined
 
   return (

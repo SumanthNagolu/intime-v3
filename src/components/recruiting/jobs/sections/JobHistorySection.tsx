@@ -189,7 +189,7 @@ export function JobHistorySection({ jobId }: JobHistorySectionProps) {
                           <p className="text-sm font-medium text-charcoal-900">
                             {entry.description}
                           </p>
-                          {entry.note && (
+                          {'note' in entry && entry.note && (
                             <p className="text-sm text-charcoal-600 mt-1">{entry.note}</p>
                           )}
                           <div className="flex items-center gap-2 mt-2">

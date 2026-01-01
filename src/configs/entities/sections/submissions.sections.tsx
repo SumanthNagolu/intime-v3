@@ -172,7 +172,7 @@ export function SubmissionOverviewSectionPCF({ entityId: _entityId, entity }: PC
               <div className="flex justify-between text-sm">
                 <span className="text-charcoal-500">Submitted</span>
                 <span className="font-medium">
-                  {format(new Date(submission.submitted_to_client_at || submission.submitted_at), 'MMM d, yyyy')}
+                  {format(new Date(submission.submitted_to_client_at ?? submission.submitted_at ?? new Date()), 'MMM d, yyyy')}
                 </span>
               </div>
             )}

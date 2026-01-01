@@ -1,7 +1,8 @@
 import { ReactNode } from 'react'
 import { notFound } from 'next/navigation'
-import { getServerCaller } from '@/server/trpc/server-caller'
 import { EntityContextProvider } from '@/components/layouts/EntityContextProvider'
+import { AccountWorkspaceProvider } from '@/components/workspaces/account/AccountWorkspaceProvider'
+import { getFullAccount } from '@/server/actions/accounts'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,20 +13,22 @@ interface AccountLayoutProps {
 
 export default async function AccountDetailLayout({ children, params }: AccountLayoutProps) {
   const { id: accountId } = await params
-  const caller = await getServerCaller()
 
-  const account = await caller.crm.accounts.getById({ id: accountId }).catch(() => null)
+  // ONE DATABASE CALL: Fetch all account data in parallel
+  const data = await getFullAccount(accountId)
 
-  if (!account) {
+  if (!data) {
     notFound()
   }
 
+  const { account } = data
+
   // Build subtitle with industries (show first industry, with count if multiple)
-  const industries = account.industries as string[] | null
+  const industries = account.industries
   let subtitle: string | undefined
   if (industries && industries.length > 0) {
     const firstIndustry = industries[0].replace(/_/g, ' ')
-    subtitle = industries.length > 1 
+    subtitle = industries.length > 1
       ? `${firstIndustry} +${industries.length - 1} more`
       : firstIndustry
   } else if (account.industry) {
@@ -41,7 +44,9 @@ export default async function AccountDetailLayout({ children, params }: AccountL
       entityStatus={account.status}
       initialData={account}
     >
-      {children}
+      <AccountWorkspaceProvider initialData={data}>
+        {children}
+      </AccountWorkspaceProvider>
     </EntityContextProvider>
   )
 }

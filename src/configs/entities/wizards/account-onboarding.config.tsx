@@ -11,6 +11,7 @@ import {
 import {
   WizardConfig,
   WizardStepConfig,
+  WizardStepComponentProps,
 } from '../types'
 import {
   AccountOnboardingFormData,
@@ -32,27 +33,28 @@ import {
 } from '@/components/recruiting/accounts/onboarding'
 
 // Create PCF-compatible wrapper components
-function Step1Wrapper() {
+// These components access the store directly and don't use wizard props
+function Step1Wrapper(_props: WizardStepComponentProps<AccountOnboardingFormData>) {
   return <OnboardingStep1Profile />
 }
 
-function Step2Wrapper() {
+function Step2Wrapper(_props: WizardStepComponentProps<AccountOnboardingFormData>) {
   return <OnboardingStep2Contract />
 }
 
-function Step3Wrapper() {
+function Step3Wrapper(_props: WizardStepComponentProps<AccountOnboardingFormData>) {
   return <OnboardingStep3Billing />
 }
 
-function Step4Wrapper() {
+function Step4Wrapper(_props: WizardStepComponentProps<AccountOnboardingFormData>) {
   return <OnboardingStep4Contacts />
 }
 
-function Step5Wrapper() {
+function Step5Wrapper(_props: WizardStepComponentProps<AccountOnboardingFormData>) {
   return <OnboardingStep5Categories />
 }
 
-function Step6Wrapper() {
+function Step6Wrapper(_props: WizardStepComponentProps<AccountOnboardingFormData>) {
   return <OnboardingStep6Kickoff />
 }
 
@@ -64,7 +66,7 @@ export const accountOnboardingSteps: WizardStepConfig<AccountOnboardingFormData>
     label: 'Company Profile',
     description: 'Enter company details and classification',
     icon: Building2,
-    component: Step1Wrapper as any,
+    component: Step1Wrapper,
     fields: [
       { key: 'legalName', label: 'Company Name', type: 'text', required: true },
       { key: 'industries', label: 'Industries', type: 'multi-select', options: INDUSTRIES },
@@ -80,7 +82,7 @@ export const accountOnboardingSteps: WizardStepConfig<AccountOnboardingFormData>
     label: 'Contract Setup',
     description: 'Configure contract terms and conditions',
     icon: FileText,
-    component: Step2Wrapper as any,
+    component: Step2Wrapper,
     fields: [
       { key: 'contractType', label: 'Contract Type', type: 'select', options: [{ value: 'msa', label: 'MSA' }, { value: 'sow', label: 'SOW' }, { value: 'staffing_agreement', label: 'Staffing Agreement' }] },
       { key: 'contractStartDate', label: 'Start Date', type: 'date' },
@@ -93,7 +95,7 @@ export const accountOnboardingSteps: WizardStepConfig<AccountOnboardingFormData>
     label: 'Billing Setup',
     description: 'Set up billing and payment preferences',
     icon: CreditCard,
-    component: Step3Wrapper as any,
+    component: Step3Wrapper,
     fields: [
       { key: 'paymentTerms', label: 'Payment Terms', type: 'select', options: PAYMENT_TERMS },
       { key: 'billingFrequency', label: 'Billing Frequency', type: 'select', options: BILLING_FREQUENCIES },
@@ -106,7 +108,7 @@ export const accountOnboardingSteps: WizardStepConfig<AccountOnboardingFormData>
     label: 'Key Contacts',
     description: 'Add primary contacts and communication preferences',
     icon: Users,
-    component: Step4Wrapper as any,
+    component: Step4Wrapper,
     fields: [
       { key: 'preferredChannel', label: 'Preferred Channel', type: 'select', options: [{ value: 'email', label: 'Email' }, { value: 'phone', label: 'Phone' }, { value: 'slack', label: 'Slack' }, { value: 'teams', label: 'Teams' }] },
       { key: 'meetingCadence', label: 'Meeting Cadence', type: 'select', options: [{ value: 'daily', label: 'Daily' }, { value: 'weekly', label: 'Weekly' }, { value: 'biweekly', label: 'Bi-weekly' }, { value: 'monthly', label: 'Monthly' }] },
@@ -114,9 +116,11 @@ export const accountOnboardingSteps: WizardStepConfig<AccountOnboardingFormData>
         key: 'additionalContacts',
         label: 'Additional Contacts',
         type: 'text',
-        formatValue: (val: any) => {
+        formatValue: (val: unknown) => {
           if (!Array.isArray(val) || val.length === 0) return 'None'
-          return val.map((c: any) => `${c.firstName} ${c.lastName} (${c.email})`).join(', ')
+          return val.map((c: { firstName?: string; lastName?: string; email?: string }) =>
+            `${c.firstName ?? ''} ${c.lastName ?? ''} (${c.email ?? ''})`
+          ).join(', ')
         }
       },
     ],
@@ -127,7 +131,7 @@ export const accountOnboardingSteps: WizardStepConfig<AccountOnboardingFormData>
     label: 'Job Categories',
     description: 'Define hiring needs and preferences',
     icon: Briefcase,
-    component: Step5Wrapper as any,
+    component: Step5Wrapper,
     fields: [
       { key: 'selectedJobCategories', label: 'Job Categories', type: 'multi-select', options: JOB_CATEGORIES.flatMap(g => g.items) },
       { key: 'experienceLevels', label: 'Experience Levels', type: 'multi-select', options: [{ value: 'associate', label: 'Associate' }, { value: 'mid', label: 'Mid-Level' }, { value: 'senior', label: 'Senior' }, { value: 'lead', label: 'Lead' }, { value: 'principal', label: 'Principal' }] },
@@ -139,7 +143,7 @@ export const accountOnboardingSteps: WizardStepConfig<AccountOnboardingFormData>
     label: 'Kickoff Call',
     description: 'Schedule kickoff and finalize onboarding',
     icon: Calendar,
-    component: Step6Wrapper as any,
+    component: Step6Wrapper,
     fields: [
       { key: 'scheduleKickoff', label: 'Schedule Kickoff', type: 'checkbox' },
       { key: 'kickoffDate', label: 'Kickoff Date', type: 'datetime' },

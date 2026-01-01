@@ -1,14 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 import { trpc } from '@/lib/trpc/client'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
-  DialogHeader,
-  DialogTitle,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -21,9 +21,74 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Loader2, Video, Phone, MapPin } from 'lucide-react'
+import {
+  Loader2,
+  Video,
+  Phone,
+  MapPin,
+  Calendar,
+  Clock,
+  Rocket,
+  MessageSquare,
+  FileText,
+  Briefcase,
+  AlertTriangle,
+  MoreHorizontal,
+  Users,
+  CheckCircle2,
+  Search,
+  X,
+  Link2,
+  Building2,
+  Home,
+  Globe,
+} from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
 import { format } from 'date-fns'
+import { cn } from '@/lib/utils'
+import {
+  PhoneInput,
+  type PhoneCountryCode,
+  PHONE_COUNTRY_CODES,
+  formatPhoneValue,
+} from '@/components/ui/phone-input'
+import {
+  OPERATING_COUNTRIES,
+  getStatesByCountry,
+  validatePostalCode,
+} from '@/components/addresses'
+
+// =============================================================================
+// TYPES & SCHEMA
+// =============================================================================
+
+const scheduleMeetingSchema = z.object({
+  title: z.string().min(1, 'Title is required').max(200),
+  meetingType: z.enum(['kickoff', 'check_in', 'qbr', 'intake', 'escalation', 'other']),
+  scheduledDate: z.string().min(1, 'Date is required'),
+  scheduledTime: z.string().min(1, 'Time is required'),
+  durationMinutes: z.number().int().min(15).max(480),
+  locationType: z.enum(['video', 'phone', 'in_person']),
+  // Video call fields
+  meetingLink: z.string().url('Please enter a valid URL').optional().or(z.literal('')),
+  // Phone call fields
+  phoneCountryCode: z.string().optional(),
+  phoneNumber: z.string().optional(),
+  // In-person address fields
+  addressLine1: z.string().optional(),
+  addressLine2: z.string().optional(),
+  city: z.string().optional(),
+  stateProvince: z.string().optional(),
+  postalCode: z.string().optional(),
+  countryCode: z.string().optional(),
+  // Common fields
+  agenda: z.string().max(2000).optional(),
+  description: z.string().max(500).optional(),
+  contactIds: z.array(z.string().uuid()).optional(),
+  relatedJobId: z.string().uuid().optional().nullable(),
+})
+
+type ScheduleMeetingFormData = z.infer<typeof scheduleMeetingSchema>
 
 interface CreateMeetingDialogProps {
   open: boolean
@@ -31,20 +96,169 @@ interface CreateMeetingDialogProps {
   accountId: string
 }
 
-const meetingTypes = [
-  { value: 'kickoff', label: 'Kickoff Meeting' },
-  { value: 'check_in', label: 'Regular Check-In' },
-  { value: 'qbr', label: 'Quarterly Business Review' },
-  { value: 'intake', label: 'Job Intake' },
-  { value: 'escalation', label: 'Escalation Discussion' },
-  { value: 'other', label: 'Other' },
-]
+// =============================================================================
+// CONSTANTS
+// =============================================================================
 
-const locationTypes = [
-  { value: 'video', label: 'Video Call', icon: <Video className="w-4 h-4" /> },
-  { value: 'phone', label: 'Phone Call', icon: <Phone className="w-4 h-4" /> },
-  { value: 'in_person', label: 'In Person', icon: <MapPin className="w-4 h-4" /> },
-]
+const MEETING_TYPES = [
+  {
+    value: 'kickoff' as const,
+    label: 'Kickoff',
+    description: 'Initial project start',
+    icon: Rocket,
+    color: 'from-green-500 to-emerald-600',
+    bgColor: 'bg-green-50',
+    textColor: 'text-green-700',
+    borderColor: 'border-green-400',
+  },
+  {
+    value: 'check_in' as const,
+    label: 'Check-In',
+    description: 'Recurring touchpoint',
+    icon: MessageSquare,
+    color: 'from-blue-500 to-blue-600',
+    bgColor: 'bg-blue-50',
+    textColor: 'text-blue-700',
+    borderColor: 'border-blue-400',
+  },
+  {
+    value: 'qbr' as const,
+    label: 'QBR',
+    description: 'Quarterly review',
+    icon: FileText,
+    color: 'from-purple-500 to-purple-600',
+    bgColor: 'bg-purple-50',
+    textColor: 'text-purple-700',
+    borderColor: 'border-purple-400',
+  },
+  {
+    value: 'intake' as const,
+    label: 'Job Intake',
+    description: 'New requisition',
+    icon: Briefcase,
+    color: 'from-gold-500 to-amber-600',
+    bgColor: 'bg-gold-50',
+    textColor: 'text-gold-700',
+    borderColor: 'border-gold-400',
+  },
+  {
+    value: 'escalation' as const,
+    label: 'Escalation',
+    description: 'Issue resolution',
+    icon: AlertTriangle,
+    color: 'from-red-500 to-rose-600',
+    bgColor: 'bg-red-50',
+    textColor: 'text-red-700',
+    borderColor: 'border-red-400',
+  },
+  {
+    value: 'other' as const,
+    label: 'Other',
+    description: 'General meeting',
+    icon: MoreHorizontal,
+    color: 'from-charcoal-500 to-charcoal-600',
+    bgColor: 'bg-charcoal-50',
+    textColor: 'text-charcoal-700',
+    borderColor: 'border-charcoal-400',
+  },
+] as const
+
+const LOCATION_TYPES = [
+  {
+    value: 'video' as const,
+    label: 'Video Call',
+    description: 'Zoom, Teams, Meet',
+    icon: Video,
+  },
+  {
+    value: 'phone' as const,
+    label: 'Phone Call',
+    description: 'Direct dial',
+    icon: Phone,
+  },
+  {
+    value: 'in_person' as const,
+    label: 'In Person',
+    description: 'On-site meeting',
+    icon: MapPin,
+  },
+] as const
+
+const DURATION_OPTIONS = [
+  { value: 15, label: '15m' },
+  { value: 30, label: '30m' },
+  { value: 45, label: '45m' },
+  { value: 60, label: '1h' },
+  { value: 90, label: '1.5h' },
+  { value: 120, label: '2h' },
+] as const
+
+// =============================================================================
+// SECTION COMPONENT
+// =============================================================================
+
+function MeetingSection({
+  icon: Icon,
+  title,
+  subtitle,
+  children,
+  className,
+}: {
+  icon: React.ElementType
+  title: string
+  subtitle?: string
+  children: React.ReactNode
+  className?: string
+}) {
+  return (
+    <div className={cn('space-y-4', className)}>
+      <div className="flex items-center gap-3">
+        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-hublot-100 to-hublot-200 flex items-center justify-center shadow-sm">
+          <Icon className="w-4 h-4 text-hublot-700" />
+        </div>
+        <div>
+          <h3 className="text-xs font-bold text-charcoal-700 uppercase tracking-wider">
+            {title}
+          </h3>
+          {subtitle && (
+            <p className="text-[11px] text-charcoal-500 mt-0.5">{subtitle}</p>
+          )}
+        </div>
+      </div>
+      {children}
+    </div>
+  )
+}
+
+// =============================================================================
+// ATTENDEE AVATAR
+// =============================================================================
+
+function ContactAvatar({ name, selected }: { name: string; selected: boolean }) {
+  const initials = name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2)
+
+  return (
+    <div
+      className={cn(
+        'w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all',
+        selected
+          ? 'bg-gradient-to-br from-hublot-600 to-hublot-800 text-white ring-2 ring-hublot-300'
+          : 'bg-charcoal-100 text-charcoal-600'
+      )}
+    >
+      {initials}
+    </div>
+  )
+}
+
+// =============================================================================
+// MAIN COMPONENT
+// =============================================================================
 
 export function CreateMeetingDialog({
   open,
@@ -53,22 +267,80 @@ export function CreateMeetingDialog({
 }: CreateMeetingDialogProps) {
   const { toast } = useToast()
   const utils = trpc.useUtils()
+  const [attendeeSearch, setAttendeeSearch] = useState('')
+  const [postalCodeError, setPostalCodeError] = useState<string | null>(null)
 
-  const [title, setTitle] = useState('')
-  const [meetingType, setMeetingType] = useState('check_in')
-  const [scheduledDate, setScheduledDate] = useState('')
-  const [scheduledTime, setScheduledTime] = useState('')
-  const [duration, setDuration] = useState('30')
-  const [locationType, setLocationType] = useState('video')
-  const [locationDetails, setLocationDetails] = useState('')
-  const [agenda, setAgenda] = useState('')
-  const [selectedContactIds, setSelectedContactIds] = useState<string[]>([])
+  // Form setup with react-hook-form + Zod
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm<ScheduleMeetingFormData>({
+    resolver: zodResolver(scheduleMeetingSchema),
+    defaultValues: {
+      title: '',
+      meetingType: 'check_in',
+      scheduledDate: '',
+      scheduledTime: '',
+      durationMinutes: 30,
+      locationType: 'video',
+      meetingLink: '',
+      phoneCountryCode: 'US',
+      phoneNumber: '',
+      addressLine1: '',
+      addressLine2: '',
+      city: '',
+      stateProvince: '',
+      postalCode: '',
+      countryCode: 'US',
+      agenda: '',
+      description: '',
+      contactIds: [],
+      relatedJobId: null,
+    },
+  })
+
+  const meetingType = watch('meetingType')
+  const locationType = watch('locationType')
+  const durationMinutes = watch('durationMinutes')
+  const selectedContactIds = watch('contactIds') || []
+  const agenda = watch('agenda') || ''
+  const countryCode = watch('countryCode') || 'US'
+  const phoneCountryCode = watch('phoneCountryCode') || 'US'
+  const phoneNumber = watch('phoneNumber') || ''
+
+  // Get states for selected country
+  const stateOptions = useMemo(() => getStatesByCountry(countryCode), [countryCode])
 
   // Fetch contacts for this account
   const contactsQuery = trpc.crm.contacts.listByAccount.useQuery(
     { accountId },
     { enabled: open }
   )
+
+  // Fetch jobs for this account (company)
+  const jobsQuery = trpc.ats.jobs.getByCompany.useQuery(
+    { companyId: accountId, status: 'open' },
+    { enabled: open }
+  )
+
+  const contacts = contactsQuery.data || []
+  const jobs = jobsQuery.data?.items || []
+
+  // Filter contacts by search
+  const filteredContacts = useMemo(() => {
+    if (!attendeeSearch.trim()) return contacts
+    const q = attendeeSearch.toLowerCase()
+    return contacts.filter(
+      (c: { first_name: string; last_name?: string; title?: string }) =>
+        c.first_name?.toLowerCase().includes(q) ||
+        c.last_name?.toLowerCase().includes(q) ||
+        c.title?.toLowerCase().includes(q)
+    )
+  }, [contacts, attendeeSearch])
 
   const createMeetingMutation = trpc.crm.meetingNotes.create.useMutation({
     onSuccess: () => {
@@ -90,259 +362,706 @@ export function CreateMeetingDialog({
   })
 
   const resetForm = () => {
-    setTitle('')
-    setMeetingType('check_in')
-    setScheduledDate('')
-    setScheduledTime('')
-    setDuration('30')
-    setLocationType('video')
-    setLocationDetails('')
-    setAgenda('')
-    setSelectedContactIds([])
+    reset()
+    setAttendeeSearch('')
+    setPostalCodeError(null)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-
-    if (!title.trim()) {
-      toast({
-        title: 'Validation Error',
-        description: 'Please enter a meeting title.',
-        variant: 'error',
-      })
-      return
+  const onSubmit = (data: ScheduleMeetingFormData) => {
+    // Validate postal code if in-person location
+    if (data.locationType === 'in_person' && data.postalCode) {
+      const result = validatePostalCode(data.postalCode, data.countryCode || 'US')
+      if (!result.valid) {
+        setPostalCodeError(result.message || 'Invalid postal code')
+        toast({
+          title: 'Validation Error',
+          description: result.message || 'Please enter a valid postal code.',
+          variant: 'error',
+        })
+        return
+      }
     }
 
-    if (!scheduledDate || !scheduledTime) {
-      toast({
-        title: 'Validation Error',
-        description: 'Please select date and time for the meeting.',
-        variant: 'error',
-      })
-      return
-    }
+    const scheduledAt = new Date(`${data.scheduledDate}T${data.scheduledTime}`)
 
-    // Combine date and time
-    const scheduledAt = new Date(`${scheduledDate}T${scheduledTime}`)
+    // Build location details based on location type
+    let locationDetails = ''
+    if (data.locationType === 'video') {
+      locationDetails = data.meetingLink || ''
+    } else if (data.locationType === 'phone') {
+      const phoneConfig = PHONE_COUNTRY_CODES.find(c => c.code === data.phoneCountryCode)
+      locationDetails = phoneConfig ? `${phoneConfig.dialCode}${data.phoneNumber}` : data.phoneNumber || ''
+    } else if (data.locationType === 'in_person') {
+      const parts = [
+        data.addressLine1,
+        data.addressLine2,
+        [data.city, data.stateProvince].filter(Boolean).join(', '),
+        data.postalCode,
+        OPERATING_COUNTRIES.find(c => c.value === data.countryCode)?.label,
+      ].filter(Boolean)
+      locationDetails = parts.join('\n')
+    }
 
     createMeetingMutation.mutate({
       accountId,
-      title: title.trim(),
-      meetingType: meetingType as 'kickoff' | 'check_in' | 'qbr' | 'intake' | 'escalation' | 'other',
+      title: data.title.trim(),
+      meetingType: data.meetingType,
       scheduledAt: scheduledAt.toISOString(),
-      durationMinutes: parseInt(duration, 10),
-      locationType: locationType as 'video' | 'phone' | 'in_person',
+      durationMinutes: data.durationMinutes,
+      locationType: data.locationType,
       locationDetails: locationDetails.trim() || undefined,
-      agenda: agenda.trim() || undefined,
-      contactIds: selectedContactIds.length > 0 ? selectedContactIds : undefined,
+      agenda: data.agenda?.trim() || undefined,
+      description: data.description?.trim() || undefined,
+      contactIds: data.contactIds?.length ? data.contactIds : undefined,
     })
   }
 
-  const contacts = contactsQuery.data || []
-
-  // Generate default title based on meeting type
-  const generateDefaultTitle = (type: string) => {
-    const typeLabel = meetingTypes.find(t => t.value === type)?.label || 'Meeting'
-    return typeLabel
+  const handleMeetingTypeSelect = (type: typeof meetingType) => {
+    setValue('meetingType', type)
+    const config = MEETING_TYPES.find((t) => t.value === type)
+    if (config && !watch('title')) {
+      setValue('title', config.label)
+    }
   }
+
+  const handleContactToggle = (contactId: string) => {
+    const current = selectedContactIds || []
+    if (current.includes(contactId)) {
+      setValue(
+        'contactIds',
+        current.filter((id) => id !== contactId)
+      )
+    } else {
+      setValue('contactIds', [...current, contactId])
+    }
+  }
+
+  const handleSelectAllContacts = () => {
+    setValue(
+      'contactIds',
+      contacts.map((c: { id: string }) => c.id)
+    )
+  }
+
+  const handleClearContacts = () => {
+    setValue('contactIds', [])
+  }
+
+  const handleCountryChange = (newCountryCode: string) => {
+    setValue('countryCode', newCountryCode)
+    setValue('stateProvince', '') // Reset state when country changes
+    // Re-validate postal code
+    const postalCode = watch('postalCode')
+    if (postalCode) {
+      const result = validatePostalCode(postalCode, newCountryCode)
+      setPostalCodeError(result.valid ? null : result.message || 'Invalid postal code')
+    } else {
+      setPostalCodeError(null)
+    }
+  }
+
+  const handlePostalCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    if (value) {
+      const result = validatePostalCode(value, countryCode)
+      setPostalCodeError(result.valid ? null : result.message || 'Invalid postal code')
+    } else {
+      setPostalCodeError(null)
+    }
+  }
+
+  const handlePostalCodeBlur = () => {
+    const postalCode = watch('postalCode')
+    if (postalCode) {
+      const result = validatePostalCode(postalCode, countryCode)
+      setPostalCodeError(result.valid ? null : result.message || 'Invalid postal code')
+    } else {
+      setPostalCodeError(null)
+    }
+  }
+
+  const selectedMeetingType = MEETING_TYPES.find((t) => t.value === meetingType)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[550px]">
-        <form onSubmit={handleSubmit}>
-          <DialogHeader>
-            <DialogTitle>Schedule Meeting</DialogTitle>
-            <DialogDescription>
-              Schedule a meeting with this account's contacts.
-            </DialogDescription>
-          </DialogHeader>
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col p-0">
+        {/* Premium Header */}
+        <div className="relative px-8 py-6 bg-gradient-to-br from-charcoal-50 via-white to-hublot-50/30 border-b border-charcoal-100">
+          {/* Decorative accent */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-hublot-500 via-gold-400 to-hublot-600" />
 
-          <div className="space-y-4 py-4">
-            {/* Meeting Type */}
-            <div className="space-y-2">
-              <Label htmlFor="meetingType">Meeting Type</Label>
-              <Select
-                value={meetingType}
-                onValueChange={(value) => {
-                  setMeetingType(value)
-                  if (!title) {
-                    setTitle(generateDefaultTitle(value))
-                  }
-                }}
-              >
-                <SelectTrigger id="meetingType">
-                  <SelectValue placeholder="Select meeting type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {meetingTypes.map((type) => (
-                    <SelectItem key={type.value} value={type.value}>
-                      {type.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          <div className="flex items-start gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-hublot-600 to-hublot-800 flex items-center justify-center shadow-lg shadow-hublot-900/20">
+              <Calendar className="w-7 h-7 text-white" />
             </div>
-
-            {/* Title */}
-            <div className="space-y-2">
-              <Label htmlFor="title">Title *</Label>
-              <Input
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Meeting title"
-                required
-              />
+            <div className="flex-1">
+              <h2 className="text-xl font-bold text-charcoal-900 tracking-tight">
+                Schedule Meeting
+              </h2>
+              <p className="text-sm text-charcoal-500 mt-0.5">
+                Schedule a meeting with this account&apos;s contacts
+              </p>
             </div>
+            <button
+              onClick={() => onOpenChange(false)}
+              className="w-8 h-8 rounded-lg hover:bg-charcoal-100 flex items-center justify-center transition-colors"
+            >
+              <X className="w-5 h-5 text-charcoal-400" />
+            </button>
+          </div>
+        </div>
 
-            {/* Date and Time */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="date">Date *</Label>
-                <Input
-                  id="date"
-                  type="date"
-                  value={scheduledDate}
-                  onChange={(e) => setScheduledDate(e.target.value)}
-                  min={format(new Date(), 'yyyy-MM-dd')}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="time">Time *</Label>
-                <Input
-                  id="time"
-                  type="time"
-                  value={scheduledTime}
-                  onChange={(e) => setScheduledTime(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-
-            {/* Duration */}
-            <div className="space-y-2">
-              <Label htmlFor="duration">Duration</Label>
-              <Select value={duration} onValueChange={setDuration}>
-                <SelectTrigger id="duration">
-                  <SelectValue placeholder="Select duration" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="15">15 minutes</SelectItem>
-                  <SelectItem value="30">30 minutes</SelectItem>
-                  <SelectItem value="45">45 minutes</SelectItem>
-                  <SelectItem value="60">1 hour</SelectItem>
-                  <SelectItem value="90">1.5 hours</SelectItem>
-                  <SelectItem value="120">2 hours</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Location Type */}
-            <div className="space-y-2">
-              <Label>Location</Label>
-              <div className="grid grid-cols-3 gap-2">
-                {locationTypes.map((type) => (
-                  <button
-                    key={type.value}
-                    type="button"
-                    onClick={() => setLocationType(type.value)}
-                    className={`flex items-center justify-center gap-2 p-3 rounded-lg border-2 transition-colors ${
-                      locationType === type.value
-                        ? 'border-hublot-700 bg-hublot-50 text-hublot-900'
-                        : 'border-charcoal-200 hover:border-charcoal-300 text-charcoal-600'
-                    }`}
-                  >
-                    {type.icon}
-                    <span className="text-sm">{type.label}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Location Details */}
-            <div className="space-y-2">
-              <Label htmlFor="locationDetails">
-                {locationType === 'video' ? 'Meeting Link' :
-                 locationType === 'phone' ? 'Phone Number' :
-                 'Address'}
-              </Label>
-              <Input
-                id="locationDetails"
-                value={locationDetails}
-                onChange={(e) => setLocationDetails(e.target.value)}
-                placeholder={
-                  locationType === 'video' ? 'https://zoom.us/j/...' :
-                  locationType === 'phone' ? '(555) 123-4567' :
-                  '123 Main St, City, State'
-                }
-              />
-            </div>
-
-            {/* Attendees */}
-            {contacts.length > 0 && (
-              <div className="space-y-2">
-                <Label>Attendees</Label>
-                <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto p-2 border rounded-lg">
-                  {contacts.map((contact: { id: string; first_name: string; last_name?: string }) => (
-                    <label
-                      key={contact.id}
-                      className={`flex items-center gap-2 p-2 rounded cursor-pointer transition-colors ${
-                        selectedContactIds.includes(contact.id)
-                          ? 'bg-hublot-50'
-                          : 'hover:bg-charcoal-50'
-                      }`}
+        {/* Scrollable Content */}
+        <form onSubmit={handleSubmit(onSubmit)} className="flex-1 overflow-y-auto">
+          <div className="px-8 py-6 space-y-8">
+            {/* Meeting Type Section */}
+            <MeetingSection icon={Briefcase} title="Meeting Type" subtitle="Select the purpose of this meeting">
+              <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+                {MEETING_TYPES.map((type) => {
+                  const Icon = type.icon
+                  const isSelected = meetingType === type.value
+                  return (
+                    <button
+                      key={type.value}
+                      type="button"
+                      onClick={() => handleMeetingTypeSelect(type.value)}
+                      className={cn(
+                        'relative flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-200 group',
+                        isSelected
+                          ? `${type.borderColor} ${type.bgColor} shadow-md`
+                          : 'border-charcoal-200 hover:border-charcoal-300 hover:bg-charcoal-50/50'
+                      )}
                     >
-                      <input
-                        type="checkbox"
-                        checked={selectedContactIds.includes(contact.id)}
-                        onChange={(e) => {
-                          if (e.target.checked) {
-                            setSelectedContactIds([...selectedContactIds, contact.id])
-                          } else {
-                            setSelectedContactIds(
-                              selectedContactIds.filter((id) => id !== contact.id)
-                            )
-                          }
-                        }}
-                        className="rounded border-charcoal-300"
+                      {isSelected && (
+                        <div className="absolute -top-1.5 -right-1.5">
+                          <CheckCircle2 className={cn('w-5 h-5', type.textColor)} />
+                        </div>
+                      )}
+                      <div
+                        className={cn(
+                          'w-10 h-10 rounded-xl flex items-center justify-center transition-all',
+                          isSelected
+                            ? `bg-gradient-to-br ${type.color} text-white shadow-sm`
+                            : 'bg-charcoal-100 text-charcoal-500 group-hover:bg-charcoal-200'
+                        )}
+                      >
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <div className="text-center">
+                        <span
+                          className={cn(
+                            'text-xs font-semibold block',
+                            isSelected ? type.textColor : 'text-charcoal-800'
+                          )}
+                        >
+                          {type.label}
+                        </span>
+                        <span className="text-[10px] text-charcoal-500 hidden md:block">
+                          {type.description}
+                        </span>
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+            </MeetingSection>
+
+            {/* Two Column Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Left Column - When */}
+              <MeetingSection icon={Clock} title="When" subtitle="Date, time and duration">
+                <div className="space-y-4 p-5 bg-charcoal-50/50 rounded-2xl border border-charcoal-100">
+                  {/* Title */}
+                  <div className="space-y-2">
+                    <Label htmlFor="title" className="text-charcoal-700 font-medium text-sm">
+                      Meeting Title <span className="text-gold-500">*</span>
+                    </Label>
+                    <Input
+                      id="title"
+                      {...register('title')}
+                      placeholder="e.g., Weekly Sync with Engineering Team"
+                      className="h-11 rounded-xl border-charcoal-200 bg-white"
+                    />
+                    {errors.title && (
+                      <p className="text-xs text-red-500">{errors.title.message}</p>
+                    )}
+                  </div>
+
+                  {/* Date & Time */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2">
+                      <Label htmlFor="date" className="text-charcoal-700 font-medium text-sm">
+                        Date <span className="text-gold-500">*</span>
+                      </Label>
+                      <Input
+                        id="date"
+                        type="date"
+                        {...register('scheduledDate')}
+                        min={format(new Date(), 'yyyy-MM-dd')}
+                        className="h-11 rounded-xl border-charcoal-200 bg-white"
                       />
-                      <span className="text-sm">
-                        {contact.first_name} {contact.last_name}
-                      </span>
-                    </label>
-                  ))}
+                      {errors.scheduledDate && (
+                        <p className="text-xs text-red-500">{errors.scheduledDate.message}</p>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="time" className="text-charcoal-700 font-medium text-sm">
+                        Time <span className="text-gold-500">*</span>
+                      </Label>
+                      <Input
+                        id="time"
+                        type="time"
+                        {...register('scheduledTime')}
+                        className="h-11 rounded-xl border-charcoal-200 bg-white"
+                      />
+                      {errors.scheduledTime && (
+                        <p className="text-xs text-red-500">{errors.scheduledTime.message}</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Duration Pills */}
+                  <div className="space-y-2">
+                    <Label className="text-charcoal-700 font-medium text-sm">Duration</Label>
+                    <div className="flex flex-wrap gap-2">
+                      {DURATION_OPTIONS.map((option) => (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() => setValue('durationMinutes', option.value)}
+                          className={cn(
+                            'px-4 py-2 rounded-full text-sm font-medium transition-all duration-200',
+                            durationMinutes === option.value
+                              ? 'bg-gradient-to-r from-gold-500 to-amber-500 text-white shadow-sm shadow-gold-500/30'
+                              : 'bg-white border border-charcoal-200 text-charcoal-600 hover:border-charcoal-300 hover:bg-charcoal-50'
+                          )}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </MeetingSection>
+
+              {/* Right Column - Where */}
+              <MeetingSection icon={MapPin} title="Where" subtitle="Location and meeting details">
+                <div className="space-y-4 p-5 bg-charcoal-50/50 rounded-2xl border border-charcoal-100">
+                  {/* Location Type Cards */}
+                  <div className="grid grid-cols-3 gap-2">
+                    {LOCATION_TYPES.map((type) => {
+                      const Icon = type.icon
+                      const isSelected = locationType === type.value
+                      return (
+                        <button
+                          key={type.value}
+                          type="button"
+                          onClick={() => setValue('locationType', type.value)}
+                          className={cn(
+                            'flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 transition-all duration-200',
+                            isSelected
+                              ? 'border-hublot-500 bg-hublot-50 shadow-sm'
+                              : 'border-charcoal-200 hover:border-charcoal-300 hover:bg-white'
+                          )}
+                        >
+                          <Icon
+                            className={cn(
+                              'w-5 h-5',
+                              isSelected ? 'text-hublot-700' : 'text-charcoal-500'
+                            )}
+                          />
+                          <span
+                            className={cn(
+                              'text-xs font-semibold',
+                              isSelected ? 'text-hublot-700' : 'text-charcoal-700'
+                            )}
+                          >
+                            {type.label}
+                          </span>
+                          <span className="text-[10px] text-charcoal-500">{type.description}</span>
+                        </button>
+                      )
+                    })}
+                  </div>
+
+                  {/* Conditional Location Fields */}
+                  {locationType === 'video' && (
+                    <div className="space-y-2">
+                      <Label htmlFor="meetingLink" className="text-charcoal-700 font-medium text-sm">
+                        Meeting Link
+                      </Label>
+                      <div className="relative">
+                        <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-400" />
+                        <Input
+                          id="meetingLink"
+                          {...register('meetingLink')}
+                          placeholder="https://zoom.us/j/... or https://meet.google.com/..."
+                          className="h-11 pl-10 rounded-xl border-charcoal-200 bg-white"
+                        />
+                      </div>
+                      {errors.meetingLink && (
+                        <p className="text-xs text-red-500">{errors.meetingLink.message}</p>
+                      )}
+                    </div>
+                  )}
+
+                  {locationType === 'phone' && (
+                    <div className="space-y-2">
+                      <PhoneInput
+                        label="Phone Number"
+                        value={{
+                          countryCode: phoneCountryCode as PhoneCountryCode,
+                          number: phoneNumber,
+                        }}
+                        onChange={(value) => {
+                          setValue('phoneCountryCode', value.countryCode)
+                          setValue('phoneNumber', value.number)
+                        }}
+                        className="[&_input]:rounded-xl [&_input]:h-11 [&>div>button]:rounded-xl [&>div>button]:h-11"
+                      />
+                    </div>
+                  )}
+
+                  {locationType === 'in_person' && (
+                    <div className="space-y-4">
+                      {/* Street Address */}
+                      <div className="space-y-2">
+                        <Label htmlFor="addressLine1" className="text-charcoal-700 font-medium text-sm">
+                          Street Address
+                        </Label>
+                        <div className="relative">
+                          <Home className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-400" />
+                          <Input
+                            id="addressLine1"
+                            {...register('addressLine1')}
+                            placeholder="123 Main Street"
+                            className="h-11 pl-10 rounded-xl border-charcoal-200 bg-white"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Suite/Floor */}
+                      <div className="space-y-2">
+                        <Label htmlFor="addressLine2" className="text-charcoal-700 font-medium text-sm">
+                          Suite / Floor
+                          <span className="text-[10px] text-charcoal-400 font-normal ml-2">(Optional)</span>
+                        </Label>
+                        <Input
+                          id="addressLine2"
+                          {...register('addressLine2')}
+                          placeholder="Suite 400, Floor 5..."
+                          className="h-11 rounded-xl border-charcoal-200 bg-white"
+                        />
+                      </div>
+
+                      {/* City & State */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="space-y-2">
+                          <Label htmlFor="city" className="text-charcoal-700 font-medium text-sm">
+                            City
+                          </Label>
+                          <Input
+                            id="city"
+                            {...register('city')}
+                            placeholder="San Francisco"
+                            className="h-11 rounded-xl border-charcoal-200 bg-white"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-charcoal-700 font-medium text-sm">
+                            State / Province
+                          </Label>
+                          <Select
+                            value={watch('stateProvince') || ''}
+                            onValueChange={(v) => setValue('stateProvince', v)}
+                          >
+                            <SelectTrigger className="h-11 rounded-xl border-charcoal-200 bg-white">
+                              <SelectValue placeholder="Select state" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {stateOptions.map((state) => (
+                                <SelectItem key={state.value} value={state.value}>
+                                  {state.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+
+                      {/* Postal Code & Country */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="space-y-2">
+                          <Label htmlFor="postalCode" className="text-charcoal-700 font-medium text-sm">
+                            ZIP / Postal Code
+                          </Label>
+                          <Input
+                            id="postalCode"
+                            {...register('postalCode', {
+                              onChange: handlePostalCodeChange,
+                            })}
+                            placeholder={countryCode === 'US' ? '12345' : countryCode === 'CA' ? 'K1A 0B1' : '110001'}
+                            className={cn(
+                              'h-11 rounded-xl border-charcoal-200 bg-white',
+                              postalCodeError && 'border-red-500 focus:ring-red-500'
+                            )}
+                            onBlur={handlePostalCodeBlur}
+                            maxLength={10}
+                          />
+                          {postalCodeError && (
+                            <p className="text-xs text-red-500">{postalCodeError}</p>
+                          )}
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-charcoal-700 font-medium text-sm flex items-center gap-1.5">
+                            <Globe className="w-3.5 h-3.5" />
+                            Country
+                          </Label>
+                          <Select
+                            value={countryCode}
+                            onValueChange={handleCountryChange}
+                          >
+                            <SelectTrigger className="h-11 rounded-xl border-charcoal-200 bg-white">
+                              <SelectValue placeholder="Select country" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {OPERATING_COUNTRIES.map((country) => (
+                                <SelectItem key={country.value} value={country.value}>
+                                  {country.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Related Job Selector */}
+                  {jobs.length > 0 && (
+                    <div className="space-y-2 pt-2 border-t border-charcoal-200">
+                      <Label className="text-charcoal-700 font-medium text-sm flex items-center gap-2">
+                        <Building2 className="w-4 h-4 text-charcoal-400" />
+                        Related Job
+                        <span className="text-[10px] text-charcoal-400 font-normal">(Optional)</span>
+                      </Label>
+                      <Select
+                        value={watch('relatedJobId') || ''}
+                        onValueChange={(v) => setValue('relatedJobId', v || null)}
+                      >
+                        <SelectTrigger className="h-11 rounded-xl border-charcoal-200 bg-white">
+                          <SelectValue placeholder="Link to a job order..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="">No job selected</SelectItem>
+                          {jobs.map((job: { id: string; title: string }) => (
+                            <SelectItem key={job.id} value={job.id}>
+                              {job.title}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+                </div>
+              </MeetingSection>
+            </div>
+
+            {/* Attendees Section */}
+            <MeetingSection icon={Users} title="Attendees" subtitle="Select contacts to invite">
+              <div className="p-5 bg-charcoal-50/50 rounded-2xl border border-charcoal-100">
+                {contacts.length > 0 ? (
+                  <div className="space-y-4">
+                    {/* Search & Actions */}
+                    <div className="flex items-center gap-3">
+                      <div className="relative flex-1">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-400" />
+                        <Input
+                          placeholder="Search contacts..."
+                          value={attendeeSearch}
+                          onChange={(e) => setAttendeeSearch(e.target.value)}
+                          className="h-10 pl-10 rounded-xl border-charcoal-200 bg-white text-sm"
+                        />
+                      </div>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={handleSelectAllContacts}
+                        className="text-xs h-10 px-3 rounded-xl"
+                      >
+                        Select All
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={handleClearContacts}
+                        className="text-xs h-10 px-3 rounded-xl text-charcoal-500"
+                      >
+                        Clear
+                      </Button>
+                    </div>
+
+                    {/* Selected Count */}
+                    {selectedContactIds.length > 0 && (
+                      <div className="flex items-center gap-2 px-3 py-2 bg-hublot-50 rounded-lg">
+                        <CheckCircle2 className="w-4 h-4 text-hublot-600" />
+                        <span className="text-sm font-medium text-hublot-700">
+                          {selectedContactIds.length} attendee{selectedContactIds.length !== 1 ? 's' : ''} selected
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Contact Grid */}
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-48 overflow-y-auto">
+                      {filteredContacts.map((contact: { id: string; first_name: string; last_name?: string; title?: string }) => {
+                        const isSelected = selectedContactIds.includes(contact.id)
+                        const fullName = `${contact.first_name} ${contact.last_name || ''}`.trim()
+                        return (
+                          <button
+                            key={contact.id}
+                            type="button"
+                            onClick={() => handleContactToggle(contact.id)}
+                            className={cn(
+                              'flex items-center gap-3 p-3 rounded-xl border-2 text-left transition-all duration-200',
+                              isSelected
+                                ? 'border-hublot-400 bg-hublot-50'
+                                : 'border-transparent bg-white hover:border-charcoal-200'
+                            )}
+                          >
+                            <ContactAvatar name={fullName} selected={isSelected} />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium text-charcoal-900 truncate">
+                                {fullName}
+                              </p>
+                              {contact.title && (
+                                <p className="text-[11px] text-charcoal-500 truncate">
+                                  {contact.title}
+                                </p>
+                              )}
+                            </div>
+                            {isSelected && (
+                              <CheckCircle2 className="w-5 h-5 text-hublot-600 flex-shrink-0" />
+                            )}
+                          </button>
+                        )
+                      })}
+                    </div>
+
+                    {filteredContacts.length === 0 && (
+                      <p className="text-sm text-charcoal-500 text-center py-4">
+                        No contacts match your search
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <div className="text-center py-8">
+                    <Users className="w-10 h-10 text-charcoal-300 mx-auto mb-3" />
+                    <p className="text-sm text-charcoal-500">
+                      No contacts found for this account
+                    </p>
+                    <p className="text-xs text-charcoal-400 mt-1">
+                      Add contacts to invite them to meetings
+                    </p>
+                  </div>
+                )}
+              </div>
+            </MeetingSection>
+
+            {/* Agenda Section */}
+            <MeetingSection icon={FileText} title="Agenda" subtitle="Meeting topics and preparation">
+              <div className="p-5 bg-charcoal-50/50 rounded-2xl border border-charcoal-100 space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="agenda" className="text-charcoal-700 font-medium text-sm">
+                    Meeting Agenda
+                  </Label>
+                  <Textarea
+                    id="agenda"
+                    {...register('agenda')}
+                    placeholder={`What will you discuss in this ${selectedMeetingType?.label || 'meeting'}?\n\n• Topic 1\n• Topic 2\n• Topic 3`}
+                    rows={4}
+                    className="rounded-xl border-charcoal-200 bg-white resize-none"
+                  />
+                  <div className="flex justify-between items-center">
+                    <p className="text-[11px] text-charcoal-400">
+                      Add discussion points, questions, or objectives
+                    </p>
+                    <p className="text-[11px] text-charcoal-400">
+                      {agenda.length}/2000
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="description" className="text-charcoal-700 font-medium text-sm">
+                    Internal Notes
+                    <span className="text-[10px] text-charcoal-400 font-normal ml-2">(Not visible to attendees)</span>
+                  </Label>
+                  <Textarea
+                    id="description"
+                    {...register('description')}
+                    placeholder="Preparation notes, context, or reminders..."
+                    rows={2}
+                    className="rounded-xl border-charcoal-200 bg-white resize-none"
+                  />
                 </div>
               </div>
-            )}
-
-            {/* Agenda */}
-            <div className="space-y-2">
-              <Label htmlFor="agenda">Agenda</Label>
-              <Textarea
-                id="agenda"
-                value={agenda}
-                onChange={(e) => setAgenda(e.target.value)}
-                placeholder="Meeting agenda items..."
-                rows={3}
-              />
-            </div>
+            </MeetingSection>
           </div>
 
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
-              Cancel
-            </Button>
-            <Button type="submit" disabled={createMeetingMutation.isPending}>
-              {createMeetingMutation.isPending && (
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              )}
-              Schedule Meeting
-            </Button>
+          {/* Footer */}
+          <DialogFooter className="px-8 py-5 bg-charcoal-50/50 border-t border-charcoal-100">
+            <div className="flex items-center justify-between w-full">
+              {/* Summary */}
+              <div className="flex items-center gap-4 text-sm text-charcoal-600">
+                {selectedMeetingType && (
+                  <span className="flex items-center gap-1.5">
+                    <selectedMeetingType.icon className="w-4 h-4" />
+                    {selectedMeetingType.label}
+                  </span>
+                )}
+                <span className="flex items-center gap-1.5">
+                  <Clock className="w-4 h-4" />
+                  {DURATION_OPTIONS.find((d) => d.value === durationMinutes)?.label}
+                </span>
+                {selectedContactIds.length > 0 && (
+                  <span className="flex items-center gap-1.5">
+                    <Users className="w-4 h-4" />
+                    {selectedContactIds.length} attendee{selectedContactIds.length !== 1 ? 's' : ''}
+                  </span>
+                )}
+              </div>
+
+              {/* Actions */}
+              <div className="flex items-center gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => onOpenChange(false)}
+                  className="h-11 px-5 rounded-xl"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={createMeetingMutation.isPending}
+                  className="h-11 px-6 rounded-xl bg-gradient-to-r from-hublot-700 to-hublot-900 hover:from-hublot-800 hover:to-hublot-950 text-white shadow-lg shadow-hublot-900/20"
+                >
+                  {createMeetingMutation.isPending ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Scheduling...
+                    </>
+                  ) : (
+                    <>
+                      <Calendar className="w-4 h-4 mr-2" />
+                      Schedule Meeting
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
           </DialogFooter>
         </form>
       </DialogContent>

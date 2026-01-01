@@ -17,6 +17,9 @@ import {
   Heart,
   Pause,
   MapPin,
+  MessageSquare,
+  History,
+  ShieldCheck,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
@@ -27,6 +30,9 @@ import {
   PlacementActivitiesSectionPCF,
   PlacementDocumentsSectionPCF,
   PlacementLocationSectionPCF,
+  PlacementComplianceSectionPCF,
+  PlacementNotesSectionPCF,
+  PlacementHistorySectionPCF,
 } from './sections/placements.sections'
 
 // Type definition for Placement entity
@@ -601,16 +607,36 @@ export const placementsDetailConfig: DetailViewConfig<Placement> = {
       component: PlacementTimesheetsSectionPCF,
     },
     {
+      id: 'compliance',
+      label: 'Compliance',
+      icon: ShieldCheck,
+      showCount: true,
+      component: PlacementComplianceSectionPCF,
+    },
+    {
       id: 'activities',
       label: 'Activities',
       icon: Activity,
       component: PlacementActivitiesSectionPCF,
     },
     {
+      id: 'notes',
+      label: 'Notes',
+      icon: MessageSquare,
+      showCount: true,
+      component: PlacementNotesSectionPCF,
+    },
+    {
       id: 'documents',
       label: 'Documents',
       icon: FileText,
       component: PlacementDocumentsSectionPCF,
+    },
+    {
+      id: 'history',
+      label: 'History',
+      icon: History,
+      component: PlacementHistorySectionPCF,
     },
   ],
 
@@ -791,5 +817,8 @@ export const placementsDetailConfig: DetailViewConfig<Placement> = {
 
   eventNamespace: 'placement',
 
-  useEntityQuery: (entityId) => trpc.ats.placements.getById.useQuery({ placementId: entityId }),
+  useEntityQuery: (entityId, options) => trpc.ats.placements.getById.useQuery(
+    { placementId: entityId },
+    { enabled: options?.enabled ?? true }
+  ),
 }

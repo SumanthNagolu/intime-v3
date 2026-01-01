@@ -37,9 +37,12 @@ interface JobLocationSectionProps {
   jobId: string
 }
 
+// Address type enum matching server-side validation
+type AddressType = 'current' | 'permanent' | 'mailing' | 'work' | 'billing' | 'shipping' | 'headquarters' | 'office' | 'job_location' | 'meeting' | 'first_day'
+
 interface Address {
   id: string
-  addressType: string
+  addressType: AddressType
   addressLine1?: string | null
   addressLine2?: string | null
   city?: string | null
@@ -49,6 +52,19 @@ interface Address {
   county?: string | null
   isPrimary: boolean
   notes?: string | null
+}
+
+interface AddressFormData {
+  addressType: AddressType
+  addressLine1: string
+  addressLine2: string
+  city: string
+  stateProvince: string
+  postalCode: string
+  countryCode: string
+  county: string
+  isPrimary: boolean
+  notes: string
 }
 
 const ADDRESS_TYPE_OPTIONS = [
@@ -109,7 +125,7 @@ export function JobLocationSection({ jobId }: JobLocationSectionProps) {
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
 
   // Form state
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<AddressFormData>({
     addressType: 'job_location',
     addressLine1: '',
     addressLine2: '',
@@ -179,7 +195,7 @@ export function JobLocationSection({ jobId }: JobLocationSectionProps) {
     createMutation.mutate({
       entityType: 'job',
       entityId: jobId,
-      addressType: formData.addressType as any,
+      addressType: formData.addressType,
       addressLine1: formData.addressLine1 || undefined,
       addressLine2: formData.addressLine2 || undefined,
       city: formData.city || undefined,
@@ -197,7 +213,7 @@ export function JobLocationSection({ jobId }: JobLocationSectionProps) {
 
     updateMutation.mutate({
       id,
-      addressType: formData.addressType as any,
+      addressType: formData.addressType,
       addressLine1: formData.addressLine1 || undefined,
       addressLine2: formData.addressLine2 || undefined,
       city: formData.city || undefined,
@@ -571,4 +587,6 @@ export function JobLocationSection({ jobId }: JobLocationSectionProps) {
     </div>
   )
 }
+
+
 

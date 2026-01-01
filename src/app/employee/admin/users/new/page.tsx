@@ -20,6 +20,7 @@ export default async function NewUserPage() {
       initialData={{
         roles: referenceData.roles ?? [],
         pods: referenceData.pods ?? [],
+        groups: referenceData.groups ?? [],
         managers: referenceData.managers ?? [],
       }}
     />

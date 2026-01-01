@@ -26,6 +26,8 @@ const initialRecentEntities: Record<EntityType, RecentEntity[]> = {
   account: [],
   contact: [],
   submission: [],
+  interview: [],
+  offer: [],
   placement: [],
   lead: [],
   deal: [],

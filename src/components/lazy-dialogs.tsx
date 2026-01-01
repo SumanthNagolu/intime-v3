@@ -104,6 +104,21 @@ export const LazyCreateAccountDialog = dynamic(
   { loading: () => <DialogLoadingFallback />, ssr: false }
 )
 
+export const LazyEditMeetingDialog = dynamic(
+  () => import('./recruiting/accounts/EditMeetingDialog').then((mod) => mod.EditMeetingDialog),
+  { loading: () => <DialogLoadingFallback />, ssr: false }
+)
+
+export const LazyCreateEscalationDialog = dynamic(
+  () => import('./recruiting/accounts/CreateEscalationDialog').then((mod) => mod.CreateEscalationDialog),
+  { loading: () => <DialogLoadingFallback />, ssr: false }
+)
+
+export const LazyEditEscalationDialog = dynamic(
+  () => import('./recruiting/accounts/EditEscalationDialog').then((mod) => mod.EditEscalationDialog),
+  { loading: () => <DialogLoadingFallback />, ssr: false }
+)
+
 // ==============================================
 // PLACEMENT DIALOGS
 // ==============================================

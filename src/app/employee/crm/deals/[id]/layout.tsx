@@ -1,7 +1,8 @@
 import { ReactNode } from 'react'
 import { notFound } from 'next/navigation'
-import { getServerCaller } from '@/server/trpc/server-caller'
+import { getFullDeal } from '@/server/actions/deals'
 import { EntityContextProvider } from '@/components/layouts/EntityContextProvider'
+import { DealWorkspaceProvider } from '@/components/workspaces/deal/DealWorkspaceProvider'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,29 +13,31 @@ interface DealLayoutProps {
 
 export default async function DealDetailLayout({ children, params }: DealLayoutProps) {
   const { id: dealId } = await params
-  const caller = await getServerCaller()
 
-  const deal = await caller.crm.deals.getById({ id: dealId }).catch(() => null)
+  // ONE DATABASE CALL: Fetch deal with ALL section data
+  const data = await getFullDeal(dealId)
 
-  if (!deal) {
+  if (!data) {
     notFound()
   }
 
-  // Build subtitle with account/company name and value
-  const companyName = deal.account?.name || deal.lead?.company_name
-  const valueStr = deal.value ? `$${deal.value.toLocaleString()}` : undefined
-  const subtitle = [companyName, valueStr].filter(Boolean).join(' • ')
+  // Build subtitle with account name and value
+  const accountName = data.account?.name
+  const valueStr = data.deal.value > 0 ? `$${data.deal.value.toLocaleString()}` : undefined
+  const subtitle = [accountName, valueStr].filter(Boolean).join(' • ')
 
   return (
     <EntityContextProvider
       entityType="deal"
       entityId={dealId}
-      entityName={deal.name}
+      entityName={data.deal.title}
       entitySubtitle={subtitle || undefined}
-      entityStatus={deal.stage}
-      initialData={deal}
+      entityStatus={data.deal.stage}
+      initialData={data}
     >
-      {children}
+      <DealWorkspaceProvider initialData={data}>
+        {children}
+      </DealWorkspaceProvider>
     </EntityContextProvider>
   )
 }

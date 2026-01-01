@@ -52,6 +52,19 @@ const CANDIDATE_SOURCES = [
   { value: 'other', label: 'Other' },
 ]
 
+// Extended Job type for job details with optional rate properties
+interface JobWithRates {
+  id: string
+  title: string
+  location?: string
+  client_company?: {
+    id: string
+    name: string
+  }
+  rate_min?: number
+  rate_max?: number
+}
+
 export default function AddCandidatePage() {
   const params = useParams()
   const router = useRouter()
@@ -120,7 +133,7 @@ export default function AddCandidatePage() {
       router.push(`/employee/recruiting/jobs/${jobId}?section=pipeline`)
     },
     onError: (error) => {
-      toast({ title: 'Failed to add candidate', description: error.message, variant: 'destructive' })
+      toast({ title: 'Failed to add candidate', description: error.message, variant: 'error' })
     },
   })
 
@@ -139,14 +152,14 @@ export default function AddCandidatePage() {
       })
     },
     onError: (error) => {
-      toast({ title: 'Failed to create candidate', description: error.message, variant: 'destructive' })
+      toast({ title: 'Failed to create candidate', description: error.message, variant: 'error' })
     },
   })
 
   // Handle add existing candidate
   const handleAddCandidate = () => {
     if (!selectedCandidateId) {
-      toast({ title: 'Select a candidate', description: 'Please select a candidate to add', variant: 'destructive' })
+      toast({ title: 'Select a candidate', description: 'Please select a candidate to add', variant: 'error' })
       return
     }
 
@@ -163,10 +176,10 @@ export default function AddCandidatePage() {
   // Handle quick add new candidate
   const handleQuickAdd = () => {
     if (!quickAddData.firstName || !quickAddData.lastName || !quickAddData.email) {
-      toast({ 
-        title: 'Missing required fields', 
-        description: 'Please fill in first name, last name, and email', 
-        variant: 'destructive' 
+      toast({
+        title: 'Missing required fields',
+        description: 'Please fill in first name, last name, and email',
+        variant: 'error'
       })
       return
     }
@@ -204,6 +217,9 @@ export default function AddCandidatePage() {
   const selectedCandidate = displayCandidates.find((c) => c.id === selectedCandidateId)
   const isLoading = createSubmissionMutation.isPending || createCandidateMutation.isPending
 
+  // Cast job to extended type for accessing optional properties
+  const jobWithRates = job as JobWithRates | undefined
+
   return (
     <div className="p-6 max-w-6xl mx-auto">
       {/* Header */}
@@ -221,7 +237,7 @@ export default function AddCandidatePage() {
             </p>
           </div>
         </div>
-        
+
         {/* Action Buttons */}
         <div className="flex items-center gap-3">
           <Button
@@ -304,8 +320,8 @@ export default function AddCandidatePage() {
               </div>
               <div>
                 <Label>Source</Label>
-                <Select 
-                  value={quickAddData.source} 
+                <Select
+                  value={quickAddData.source}
                   onValueChange={(v) => setQuickAddData(prev => ({ ...prev, source: v }))}
                 >
                   <SelectTrigger>
@@ -424,8 +440,8 @@ export default function AddCandidatePage() {
                   <User className="w-12 h-12 mx-auto text-charcoal-300 mb-4" />
                   <p className="font-medium">No candidates in talent pool</p>
                   <p className="text-sm mt-1">Use Quick Add or Full Profile to add new candidates</p>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     className="mt-4"
                     onClick={() => setShowQuickAdd(true)}
                   >
@@ -528,8 +544,8 @@ export default function AddCandidatePage() {
               </CardHeader>
               <CardContent>
                 <p className="font-medium text-charcoal-900">{job.title}</p>
-                {(job as any).clientCompany && (
-                  <p className="text-sm text-charcoal-500">{(job as any).clientCompany.name}</p>
+                {jobWithRates?.client_company && (
+                  <p className="text-sm text-charcoal-500">{jobWithRates.client_company.name}</p>
                 )}
                 <div className="flex flex-wrap gap-2 mt-3">
                   {job.location && (
@@ -537,9 +553,9 @@ export default function AddCandidatePage() {
                       {job.location}
                     </Badge>
                   )}
-                  {(job as any).rate_min && (job as any).rate_max && (
+                  {jobWithRates?.rate_min && jobWithRates?.rate_max && (
                     <Badge variant="outline" className="text-xs">
-                      ${(job as any).rate_min} - ${(job as any).rate_max}/hr
+                      ${jobWithRates.rate_min} - ${jobWithRates.rate_max}/hr
                     </Badge>
                   )}
                 </div>

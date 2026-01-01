@@ -8,8 +8,10 @@ import {
   Briefcase,
   Send,
   Calendar,
+  ArrowUpRight,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 // Data shape from the consolidated query
 export interface SummaryData {
@@ -28,6 +30,7 @@ export interface SummaryData {
     outstandingOffers: number
     activePlacements: number
   }
+  escalated?: number // Escalated activities count (Guidewire pattern)
 }
 
 interface MySummaryProps {
@@ -118,9 +121,10 @@ export function MySummary({ onMetricClick, activeMetric, data, isLoading = false
   const activeJobs = pipeline?.activeJobs ?? 0
   const pendingSubmissions = pipeline?.pendingSubmissions ?? 0
   const interviewsThisWeek = pipeline?.interviewsThisWeek ?? 0
+  const escalatedActivities = data?.escalated ?? 0
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
       <MetricCard
         icon={<Clock className="w-4 h-4" />}
         label="Due Today"
@@ -139,6 +143,15 @@ export function MySummary({ onMetricClick, activeMetric, data, isLoading = false
         onClick={() => onMetricClick?.('overdue')}
         isLoading={isLoading}
       />
+      <Link href="/employee/workspace/escalated" className="block">
+        <MetricCard
+          icon={<ArrowUpRight className="w-4 h-4" />}
+          label="Escalated"
+          value={escalatedActivities}
+          variant={escalatedActivities > 0 ? 'warning' : 'default'}
+          isLoading={isLoading}
+        />
+      </Link>
       <MetricCard
         icon={<Briefcase className="w-4 h-4" />}
         label="Active Jobs"
