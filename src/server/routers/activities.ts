@@ -768,6 +768,50 @@ export const activitiesRouter = router({
     }),
 
   // ============================================
+  // REASSIGN AN ACTIVITY (TEAM WORKSPACE)
+  // ============================================
+  reassign: orgProtectedProcedure
+    .input(z.object({
+      id: z.string().uuid(),
+      assignedTo: z.string().uuid(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user, supabase } = ctx
+
+      const { data, error } = await supabase
+        .from('activities')
+        .update({
+          assigned_to: input.assignedTo,
+          updated_at: new Date().toISOString(),
+          updated_by: user?.id,
+        })
+        .eq('id', input.id)
+        .eq('org_id', orgId)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      // Audit log
+      await supabase.from('audit_logs').insert({
+        org_id: orgId,
+        user_id: user?.id,
+        user_email: user?.email,
+        action: 'activity_reassigned',
+        table_name: 'activities',
+        record_id: input.id,
+        new_values: { assigned_to: input.assignedTo },
+      })
+
+      return {
+        id: data.id,
+        assignedTo: data.assigned_to,
+      }
+    }),
+
+  // ============================================
   // GET STATS FOR ENTITY ACTIVITIES (SECTION VIEW)
   // ============================================
   statsByEntity: orgProtectedProcedure
@@ -827,6 +871,887 @@ export const activitiesRouter = router({
         overdue,
         byType,
         byStatus,
+      }
+    }),
+
+  // ============================================
+  // GET ACTIVITY DETAIL (GUIDEWIRE PATTERN)
+  // Full activity with notes, history, checklist
+  // ============================================
+  getDetail: orgProtectedProcedure
+    .input(z.object({
+      id: z.string().uuid(),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      // Get activity with related data
+      const { data: activity, error } = await adminClient
+        .from('activities')
+        .select(`
+          *,
+          assigned_to_user:user_profiles!assigned_to(id, full_name, avatar_url, email),
+          created_by_user:user_profiles!created_by(id, full_name, avatar_url),
+          performed_by_user:user_profiles!performed_by(id, full_name, avatar_url),
+          pattern:activity_patterns!pattern_id(id, code, name, description, checklist, instructions),
+          queue:work_queues!queue_id(id, name, code)
+        `)
+        .eq('id', input.id)
+        .eq('org_id', orgId)
+        .single()
+
+      if (error || !activity) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Activity not found' })
+      }
+
+      // Get notes
+      const { data: notes } = await adminClient
+        .from('activity_notes')
+        .select(`
+          id, content, is_internal, created_at,
+          created_by_user:user_profiles!created_by(id, full_name, avatar_url)
+        `)
+        .eq('activity_id', input.id)
+        .eq('org_id', orgId)
+        .order('created_at', { ascending: true })
+
+      // Get history
+      const { data: history } = await adminClient
+        .from('activity_history')
+        .select(`
+          id, action, field_changed, old_value, new_value, notes, changed_at,
+          changed_by_user:user_profiles!changed_by(id, full_name, avatar_url)
+        `)
+        .eq('activity_id', input.id)
+        .order('changed_at', { ascending: false })
+        .limit(50)
+
+      // Get escalations
+      const { data: escalations } = await adminClient
+        .from('activity_escalations')
+        .select(`
+          id, escalation_level, reason, escalation_type, created_at,
+          escalated_from:user_profiles!escalated_from_user(id, full_name),
+          escalated_to:user_profiles!escalated_to_user(id, full_name)
+        `)
+        .eq('activity_id', input.id)
+        .order('created_at', { ascending: false })
+
+      // Get entity info based on entity_type
+      let entityInfo = null
+      if (activity.entity_type === 'company' || activity.entity_type === 'account') {
+        const { data: company } = await adminClient
+          .from('companies')
+          .select('id, name, segment, industry')
+          .eq('id', activity.entity_id)
+          .single()
+        entityInfo = company ? { type: 'company', ...company } : null
+      } else if (activity.entity_type === 'candidate') {
+        const { data: candidate } = await adminClient
+          .from('candidates')
+          .select('id, first_name, last_name, email, title')
+          .eq('id', activity.entity_id)
+          .single()
+        entityInfo = candidate ? { 
+          type: 'candidate', 
+          ...candidate,
+          name: `${candidate.first_name} ${candidate.last_name}`
+        } : null
+      } else if (activity.entity_type === 'job') {
+        const { data: job } = await adminClient
+          .from('jobs')
+          .select('id, title, status, company:companies!company_id(id, name)')
+          .eq('id', activity.entity_id)
+          .single()
+        entityInfo = job ? { type: 'job', ...job } : null
+      }
+
+      return {
+        id: activity.id,
+        subject: activity.subject,
+        description: activity.description,
+        activityType: activity.activity_type,
+        status: activity.status,
+        priority: activity.priority,
+        category: activity.category,
+        dueDate: activity.due_date,
+        escalationDate: activity.escalation_date,
+        completedAt: activity.completed_at,
+        createdAt: activity.created_at,
+        updatedAt: activity.updated_at,
+        
+        // Assignment
+        assignedTo: activity.assigned_to_user,
+        createdBy: activity.created_by_user,
+        performedBy: activity.performed_by_user,
+        queue: activity.queue,
+        claimedAt: activity.claimed_at,
+        
+        // Entity
+        entityType: activity.entity_type,
+        entityId: activity.entity_id,
+        entityInfo,
+        
+        // Pattern
+        pattern: activity.pattern,
+        patternCode: activity.pattern_code,
+        
+        // Checklist
+        checklist: activity.checklist,
+        checklistProgress: activity.checklist_progress,
+        
+        // Instructions
+        instructions: activity.instructions,
+        
+        // Outcomes
+        outcome: activity.outcome,
+        outcomeNotes: activity.outcome_notes,
+        
+        // Escalation
+        escalationCount: activity.escalation_count,
+        lastEscalatedAt: activity.last_escalated_at,
+        
+        // Snooze
+        snoozedUntil: activity.snoozed_until,
+        
+        // Related data
+        notes: notes?.map(n => ({
+          id: n.id,
+          content: n.content,
+          isInternal: n.is_internal,
+          createdAt: n.created_at,
+          createdBy: n.created_by_user,
+        })) ?? [],
+        
+        history: history?.map(h => ({
+          id: h.id,
+          action: h.action,
+          fieldChanged: h.field_changed,
+          oldValue: h.old_value,
+          newValue: h.new_value,
+          notes: h.notes,
+          changedAt: h.changed_at,
+          changedBy: h.changed_by_user,
+        })) ?? [],
+        
+        escalations: escalations?.map(e => ({
+          id: e.id,
+          level: e.escalation_level,
+          reason: e.reason,
+          type: e.escalation_type,
+          createdAt: e.created_at,
+          from: e.escalated_from,
+          to: e.escalated_to,
+        })) ?? [],
+      }
+    }),
+
+  // ============================================
+  // CREATE ACTIVITY FROM PATTERN (GUIDEWIRE)
+  // ============================================
+  createFromPattern: orgProtectedProcedure
+    .input(z.object({
+      patternId: z.string().uuid(),
+      entityType: z.string(),
+      entityId: z.string().uuid(),
+      assignedTo: z.string().uuid().optional(),
+      queueId: z.string().uuid().optional(),
+      dueDate: z.coerce.date().optional(),
+      subject: z.string().max(200).optional(),
+      description: z.string().max(5000).optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user, supabase } = ctx
+      const adminClient = getAdminClient()
+
+      // Get the pattern
+      const { data: pattern, error: patternError } = await adminClient
+        .from('activity_patterns')
+        .select('*')
+        .eq('id', input.patternId)
+        .single()
+
+      if (patternError || !pattern) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Activity pattern not found' })
+      }
+
+      // Calculate due date from pattern if not provided
+      const targetDays = pattern.target_days || 1
+      const dueDate = input.dueDate || new Date(Date.now() + targetDays * 24 * 60 * 60 * 1000)
+      
+      // Calculate escalation date
+      const escalationDays = pattern.escalation_days || targetDays + 1
+      const escalationDate = new Date(Date.now() + escalationDays * 24 * 60 * 60 * 1000)
+
+      // Determine assignee
+      let assignedTo = input.assignedTo
+      if (!assignedTo && pattern.default_assignee === 'creator') {
+        assignedTo = user?.id
+      } else if (!assignedTo && pattern.assignee_user_id) {
+        assignedTo = pattern.assignee_user_id
+      }
+
+      // Create the activity
+      const { data: activity, error } = await supabase
+        .from('activities')
+        .insert({
+          org_id: orgId,
+          entity_type: input.entityType,
+          entity_id: input.entityId,
+          activity_type: 'task',
+          pattern_id: input.patternId,
+          pattern_code: pattern.code,
+          subject: input.subject || pattern.name,
+          description: input.description || pattern.description,
+          instructions: pattern.instructions,
+          checklist: pattern.checklist,
+          checklist_progress: pattern.checklist ? 
+            (pattern.checklist as Array<{id: string}>).reduce((acc: Record<string, boolean>, item: {id: string}) => {
+              acc[item.id] = false
+              return acc
+            }, {}) : null,
+          priority: pattern.priority || 'normal',
+          category: pattern.category,
+          status: 'open',
+          due_date: dueDate.toISOString(),
+          escalation_date: escalationDate.toISOString(),
+          assigned_to: assignedTo,
+          assigned_group: pattern.assignee_group_id,
+          queue_id: input.queueId,
+          created_by: user?.id,
+          auto_created: false,
+        })
+        .select()
+        .single()
+
+      if (error) {
+        console.error('Failed to create activity from pattern:', error)
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      // Log history
+      await adminClient
+        .from('activity_history')
+        .insert({
+          activity_id: activity.id,
+          action: 'created',
+          notes: `Created from pattern: ${pattern.name}`,
+          changed_by: user?.id,
+        })
+
+      return {
+        id: activity.id,
+        subject: activity.subject,
+        status: activity.status,
+        dueDate: activity.due_date,
+        patternCode: activity.pattern_code,
+      }
+    }),
+
+  // ============================================
+  // ASSIGN ACTIVITY TO QUEUE
+  // ============================================
+  assignToQueue: orgProtectedProcedure
+    .input(z.object({
+      activityId: z.string().uuid(),
+      queueId: z.string().uuid(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user, supabase } = ctx
+      const adminClient = getAdminClient()
+
+      // Verify queue exists
+      const { data: queue, error: queueError } = await adminClient
+        .from('work_queues')
+        .select('id, name')
+        .eq('id', input.queueId)
+        .eq('org_id', orgId)
+        .single()
+
+      if (queueError || !queue) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Work queue not found' })
+      }
+
+      // Get current activity for history
+      const { data: currentActivity } = await adminClient
+        .from('activities')
+        .select('queue_id')
+        .eq('id', input.activityId)
+        .single()
+
+      // Update activity
+      const { data: activity, error } = await supabase
+        .from('activities')
+        .update({
+          queue_id: input.queueId,
+          assigned_to: null, // Release from current user when assigning to queue
+          claimed_at: null,
+          claimed_by: null,
+          status: 'open',
+          updated_at: new Date().toISOString(),
+          updated_by: user?.id,
+        })
+        .eq('id', input.activityId)
+        .eq('org_id', orgId)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      // Log history
+      await adminClient
+        .from('activity_history')
+        .insert({
+          activity_id: input.activityId,
+          action: 'assigned_to_queue',
+          field_changed: 'queue_id',
+          old_value: currentActivity?.queue_id,
+          new_value: input.queueId,
+          notes: `Assigned to queue: ${queue.name}`,
+          changed_by: user?.id,
+        })
+
+      return {
+        id: activity.id,
+        queueId: activity.queue_id,
+        status: activity.status,
+      }
+    }),
+
+  // ============================================
+  // CLAIM ACTIVITY FROM QUEUE
+  // ============================================
+  claimFromQueue: orgProtectedProcedure
+    .input(z.object({
+      activityId: z.string().uuid(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user, supabase } = ctx
+      const adminClient = getAdminClient()
+
+      // Get current activity
+      const { data: currentActivity, error: fetchError } = await adminClient
+        .from('activities')
+        .select('*, queue:work_queues!queue_id(id, name)')
+        .eq('id', input.activityId)
+        .eq('org_id', orgId)
+        .single()
+
+      if (fetchError || !currentActivity) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Activity not found' })
+      }
+
+      if (currentActivity.assigned_to && currentActivity.assigned_to !== user?.id) {
+        throw new TRPCError({ code: 'CONFLICT', message: 'Activity is already assigned to another user' })
+      }
+
+      // Check if user is member of the queue (if queue assigned)
+      if (currentActivity.queue_id) {
+        const { data: membership } = await adminClient
+          .from('work_queue_members')
+          .select('id, can_claim, max_active_activities, current_load')
+          .eq('queue_id', currentActivity.queue_id)
+          .eq('user_id', user?.id)
+          .eq('is_active', true)
+          .single()
+
+        if (!membership) {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'You are not a member of this queue' })
+        }
+
+        if (!membership.can_claim) {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'You do not have permission to claim from this queue' })
+        }
+
+        if (membership.current_load >= membership.max_active_activities) {
+          throw new TRPCError({ code: 'BAD_REQUEST', message: 'You have reached your maximum activity capacity' })
+        }
+
+        // Update member load
+        await adminClient
+          .from('work_queue_members')
+          .update({ current_load: membership.current_load + 1 })
+          .eq('id', membership.id)
+      }
+
+      // Claim the activity
+      const { data: activity, error } = await supabase
+        .from('activities')
+        .update({
+          assigned_to: user?.id,
+          claimed_at: new Date().toISOString(),
+          claimed_by: user?.id,
+          status: currentActivity.status === 'open' ? 'in_progress' : currentActivity.status,
+          updated_at: new Date().toISOString(),
+          updated_by: user?.id,
+        })
+        .eq('id', input.activityId)
+        .eq('org_id', orgId)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      // Log history
+      await adminClient
+        .from('activity_history')
+        .insert({
+          activity_id: input.activityId,
+          action: 'claimed',
+          field_changed: 'assigned_to',
+          new_value: user?.id,
+          notes: currentActivity.queue ? `Claimed from queue: ${(currentActivity.queue as {name: string}).name}` : 'Claimed',
+          changed_by: user?.id,
+        })
+
+      return {
+        id: activity.id,
+        assignedTo: activity.assigned_to,
+        claimedAt: activity.claimed_at,
+        status: activity.status,
+      }
+    }),
+
+  // ============================================
+  // RELEASE ACTIVITY BACK TO QUEUE
+  // ============================================
+  releaseToQueue: orgProtectedProcedure
+    .input(z.object({
+      activityId: z.string().uuid(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user, supabase } = ctx
+      const adminClient = getAdminClient()
+
+      // Get current activity
+      const { data: currentActivity, error: fetchError } = await adminClient
+        .from('activities')
+        .select('*')
+        .eq('id', input.activityId)
+        .eq('org_id', orgId)
+        .single()
+
+      if (fetchError || !currentActivity) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Activity not found' })
+      }
+
+      if (currentActivity.assigned_to !== user?.id) {
+        throw new TRPCError({ code: 'FORBIDDEN', message: 'Only the assigned user can release the activity' })
+      }
+
+      // Update member load if from queue
+      if (currentActivity.queue_id) {
+        await adminClient
+          .from('work_queue_members')
+          .update({ current_load: adminClient.rpc('greatest', { a: 0, b: 'current_load - 1' }) })
+          .eq('queue_id', currentActivity.queue_id)
+          .eq('user_id', user?.id)
+      }
+
+      // Release the activity
+      const { data: activity, error } = await supabase
+        .from('activities')
+        .update({
+          assigned_to: null,
+          claimed_at: null,
+          claimed_by: null,
+          status: 'open',
+          updated_at: new Date().toISOString(),
+          updated_by: user?.id,
+        })
+        .eq('id', input.activityId)
+        .eq('org_id', orgId)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      // Log history
+      await adminClient
+        .from('activity_history')
+        .insert({
+          activity_id: input.activityId,
+          action: 'released',
+          field_changed: 'assigned_to',
+          old_value: user?.id,
+          notes: 'Released back to queue',
+          changed_by: user?.id,
+        })
+
+      return {
+        id: activity.id,
+        status: activity.status,
+      }
+    }),
+
+  // ============================================
+  // ADD NOTE TO ACTIVITY
+  // ============================================
+  addNote: orgProtectedProcedure
+    .input(z.object({
+      activityId: z.string().uuid(),
+      content: z.string().min(1).max(5000),
+      isInternal: z.boolean().default(false),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user, supabase } = ctx
+
+      const { data: note, error } = await supabase
+        .from('activity_notes')
+        .insert({
+          activity_id: input.activityId,
+          org_id: orgId,
+          content: input.content,
+          is_internal: input.isInternal,
+          created_by: user?.id,
+        })
+        .select(`
+          id, content, is_internal, created_at,
+          created_by_user:user_profiles!created_by(id, full_name, avatar_url)
+        `)
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      // Log history
+      await supabase
+        .from('activity_history')
+        .insert({
+          activity_id: input.activityId,
+          action: 'note_added',
+          notes: input.isInternal ? 'Internal note added' : 'Note added',
+          changed_by: user?.id,
+        })
+
+      return {
+        id: note.id,
+        content: note.content,
+        isInternal: note.is_internal,
+        createdAt: note.created_at,
+        createdBy: note.created_by_user,
+      }
+    }),
+
+  // ============================================
+  // UPDATE CHECKLIST PROGRESS
+  // ============================================
+  updateChecklist: orgProtectedProcedure
+    .input(z.object({
+      activityId: z.string().uuid(),
+      itemId: z.string(),
+      completed: z.boolean(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user, supabase } = ctx
+      const adminClient = getAdminClient()
+
+      // Get current activity
+      const { data: currentActivity, error: fetchError } = await adminClient
+        .from('activities')
+        .select('checklist, checklist_progress')
+        .eq('id', input.activityId)
+        .eq('org_id', orgId)
+        .single()
+
+      if (fetchError || !currentActivity) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Activity not found' })
+      }
+
+      // Update checklist progress
+      const newProgress = {
+        ...(currentActivity.checklist_progress as Record<string, boolean> || {}),
+        [input.itemId]: input.completed,
+      }
+
+      const { data: activity, error } = await supabase
+        .from('activities')
+        .update({
+          checklist_progress: newProgress,
+          updated_at: new Date().toISOString(),
+          updated_by: user?.id,
+        })
+        .eq('id', input.activityId)
+        .eq('org_id', orgId)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      // Calculate completion percentage
+      const checklist = currentActivity.checklist as Array<{id: string}> || []
+      const completedCount = Object.values(newProgress).filter(Boolean).length
+      const completionPercentage = checklist.length > 0 
+        ? Math.round((completedCount / checklist.length) * 100) 
+        : 0
+
+      // Log history
+      await adminClient
+        .from('activity_history')
+        .insert({
+          activity_id: input.activityId,
+          action: 'checklist_updated',
+          field_changed: 'checklist_progress',
+          new_value: `${completionPercentage}% complete`,
+          changed_by: user?.id,
+        })
+
+      return {
+        id: activity.id,
+        checklistProgress: activity.checklist_progress,
+        completionPercentage,
+      }
+    }),
+
+  // ============================================
+  // SNOOZE ACTIVITY
+  // ============================================
+  snooze: orgProtectedProcedure
+    .input(z.object({
+      activityId: z.string().uuid(),
+      snoozeUntil: z.coerce.date(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user, supabase } = ctx
+      const adminClient = getAdminClient()
+
+      const { data: activity, error } = await supabase
+        .from('activities')
+        .update({
+          snoozed_until: input.snoozeUntil.toISOString(),
+          reminder_sent_at: null, // Reset reminder
+          updated_at: new Date().toISOString(),
+          updated_by: user?.id,
+        })
+        .eq('id', input.activityId)
+        .eq('org_id', orgId)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      // Log history
+      await adminClient
+        .from('activity_history')
+        .insert({
+          activity_id: input.activityId,
+          action: 'snoozed',
+          field_changed: 'snoozed_until',
+          new_value: input.snoozeUntil.toISOString(),
+          changed_by: user?.id,
+        })
+
+      return {
+        id: activity.id,
+        snoozedUntil: activity.snoozed_until,
+      }
+    }),
+
+  // ============================================
+  // MANUALLY ESCALATE ACTIVITY
+  // ============================================
+  escalateManually: orgProtectedProcedure
+    .input(z.object({
+      activityId: z.string().uuid(),
+      reason: z.string().max(500),
+      escalateToUserId: z.string().uuid().optional(),
+      escalateToQueueId: z.string().uuid().optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user, supabase } = ctx
+      const adminClient = getAdminClient()
+
+      // Get current activity
+      const { data: currentActivity, error: fetchError } = await adminClient
+        .from('activities')
+        .select('*')
+        .eq('id', input.activityId)
+        .eq('org_id', orgId)
+        .single()
+
+      if (fetchError || !currentActivity) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Activity not found' })
+      }
+
+      const newEscalationLevel = (currentActivity.escalation_count || 0) + 1
+
+      // Update activity
+      const updateData: Record<string, unknown> = {
+        escalation_count: newEscalationLevel,
+        last_escalated_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        updated_by: user?.id,
+      }
+
+      // Escalate priority if level is high
+      if (newEscalationLevel >= 3) {
+        updateData.priority = 'urgent'
+      } else if (newEscalationLevel >= 2) {
+        updateData.priority = 'high'
+      }
+
+      // Reassign if specified
+      if (input.escalateToUserId) {
+        updateData.assigned_to = input.escalateToUserId
+      }
+      if (input.escalateToQueueId) {
+        updateData.queue_id = input.escalateToQueueId
+        updateData.assigned_to = null
+      }
+
+      const { data: activity, error } = await supabase
+        .from('activities')
+        .update(updateData)
+        .eq('id', input.activityId)
+        .eq('org_id', orgId)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      // Log escalation
+      await adminClient
+        .from('activity_escalations')
+        .insert({
+          activity_id: input.activityId,
+          org_id: orgId,
+          escalation_level: newEscalationLevel,
+          escalated_from_user: currentActivity.assigned_to,
+          escalated_to_user: input.escalateToUserId || null,
+          escalated_to_queue: input.escalateToQueueId || null,
+          reason: input.reason,
+          escalation_type: 'manual',
+        })
+
+      // Log history
+      await adminClient
+        .from('activity_history')
+        .insert({
+          activity_id: input.activityId,
+          action: 'escalated',
+          new_value: `Level ${newEscalationLevel}`,
+          notes: input.reason,
+          changed_by: user?.id,
+        })
+
+      return {
+        id: activity.id,
+        escalationCount: activity.escalation_count,
+        priority: activity.priority,
+        assignedTo: activity.assigned_to,
+      }
+    }),
+
+  // ============================================
+  // LIST ACTIVITY PATTERNS
+  // ============================================
+  listPatterns: orgProtectedProcedure
+    .input(z.object({
+      entityType: z.string().optional(),
+      category: z.string().optional(),
+      isActive: z.boolean().default(true),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      let query = adminClient
+        .from('activity_patterns')
+        .select('*')
+        .eq('is_active', input.isActive)
+        .or(`org_id.eq.${orgId},is_system.eq.true`)
+        .order('display_order', { ascending: true })
+
+      if (input.entityType) {
+        query = query.eq('entity_type', input.entityType)
+      }
+      if (input.category) {
+        query = query.eq('category', input.category)
+      }
+
+      const { data, error } = await query
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return data?.map(p => ({
+        id: p.id,
+        code: p.code,
+        name: p.name,
+        description: p.description,
+        icon: p.icon,
+        color: p.color,
+        targetDays: p.target_days,
+        escalationDays: p.escalation_days,
+        priority: p.priority,
+        category: p.category,
+        entityType: p.entity_type,
+        hasChecklist: !!p.checklist && (p.checklist as Array<unknown>).length > 0,
+        checklistCount: p.checklist ? (p.checklist as Array<unknown>).length : 0,
+        isSystem: p.is_system,
+      })) ?? []
+    }),
+
+  // ============================================
+  // GET ESCALATED ACTIVITIES
+  // ============================================
+  getEscalated: orgProtectedProcedure
+    .input(z.object({
+      minLevel: z.number().min(1).default(1),
+      limit: z.number().min(1).max(100).default(20),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      const { data, error, count } = await adminClient
+        .from('activities')
+        .select(`
+          id, subject, activity_type, status, priority, due_date,
+          entity_type, entity_id, escalation_count, last_escalated_at,
+          assigned_to_user:user_profiles!assigned_to(id, full_name, avatar_url)
+        `, { count: 'exact' })
+        .eq('org_id', orgId)
+        .gte('escalation_count', input.minLevel)
+        .in('status', ['open', 'in_progress', 'scheduled'])
+        .order('escalation_count', { ascending: false })
+        .order('due_date', { ascending: true })
+        .limit(input.limit)
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return {
+        items: data?.map(a => ({
+          id: a.id,
+          subject: a.subject,
+          activityType: a.activity_type,
+          status: a.status,
+          priority: a.priority,
+          dueDate: a.due_date,
+          entityType: a.entity_type,
+          entityId: a.entity_id,
+          escalationCount: a.escalation_count,
+          lastEscalatedAt: a.last_escalated_at,
+          assignedTo: a.assigned_to_user,
+        })) ?? [],
+        total: count ?? 0,
       }
     }),
 })

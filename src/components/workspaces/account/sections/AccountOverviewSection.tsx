@@ -1,0 +1,839 @@
+'use client'
+
+import * as React from 'react'
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { EditableInfoCard, type FieldDefinition } from '@/components/ui/editable-info-card'
+import { 
+  Activity, Users, Briefcase, ArrowRight, Phone, Mail, Star, 
+  DollarSign, TrendingUp, Heart, AlertTriangle, CheckCircle2, Clock,
+  Building2, Globe, MapPin, Award, Sparkles, Target, Zap, Calendar,
+  BarChart3, PieChart, ArrowUpRight, ExternalLink, UserPlus
+} from 'lucide-react'
+import type { AccountData, AccountActivity, AccountJob, AccountContact } from '@/types/workspace'
+import { formatDistanceToNow, isToday, isTomorrow, format } from 'date-fns'
+import { trpc } from '@/lib/trpc/client'
+import { useToast } from '@/components/ui/use-toast'
+import { useAccountWorkspace } from '../AccountWorkspaceProvider'
+import { cn } from '@/lib/utils'
+
+const INDUSTRIES = [
+  { value: 'technology', label: 'Technology' },
+  { value: 'healthcare', label: 'Healthcare' },
+  { value: 'finance', label: 'Finance' },
+  { value: 'manufacturing', label: 'Manufacturing' },
+  { value: 'retail', label: 'Retail' },
+  { value: 'consulting', label: 'Consulting' },
+  { value: 'education', label: 'Education' },
+  { value: 'government', label: 'Government' },
+  { value: 'energy', label: 'Energy' },
+  { value: 'media', label: 'Media' },
+  { value: 'real_estate', label: 'Real Estate' },
+  { value: 'other', label: 'Other' },
+]
+
+const TIERS = [
+  { value: 'standard', label: 'Standard' },
+  { value: 'preferred', label: 'Preferred' },
+  { value: 'strategic', label: 'Strategic' },
+]
+
+const STATUSES = [
+  { value: 'prospect', label: 'Prospect' },
+  { value: 'active', label: 'Active' },
+  { value: 'inactive', label: 'Inactive' },
+  { value: 'on_hold', label: 'On Hold' },
+]
+
+interface AccountOverviewSectionProps {
+  account: AccountData
+  activities: AccountActivity[]
+  jobs: AccountJob[]
+  contacts: AccountContact[]
+  onNavigate: (section: string) => void
+}
+
+/**
+ * AccountOverviewSection - Premium SaaS-level Summary view
+ * Features: Glassmorphism, rich gradients, sophisticated animations
+ */
+export function AccountOverviewSection({
+  account,
+  activities,
+  jobs,
+  contacts,
+  onNavigate,
+}: AccountOverviewSectionProps) {
+  const { toast } = useToast()
+  const { refreshData } = useAccountWorkspace()
+  const recentActivities = activities.slice(0, 5)
+  const activeJobs = jobs.filter(j => j.status === 'open' || j.status === 'active')
+  const primaryContact = contacts.find(c => c.isPrimary)
+
+  // Update mutation
+  const updateMutation = trpc.crm.accounts.update.useMutation({
+    onSuccess: () => {
+      toast({ title: 'Account updated successfully' })
+      refreshData()
+    },
+    onError: (error) => {
+      toast({ title: 'Error updating account', description: error.message, variant: 'error' })
+    },
+  })
+
+  // Company details field definitions
+  const companyFields: FieldDefinition[] = [
+    { key: 'name', label: 'Company Name', type: 'text', required: true },
+    { key: 'industry', label: 'Industry', type: 'select', options: INDUSTRIES },
+    { key: 'website', label: 'Website', type: 'url' },
+    { key: 'phone', label: 'Phone', type: 'phone' },
+    { key: 'headquarters_city', label: 'City', type: 'text' },
+    { key: 'headquarters_state', label: 'State', type: 'text' },
+    { key: 'tier', label: 'Tier', type: 'select', options: TIERS },
+    { key: 'status', label: 'Status', type: 'select', options: STATUSES },
+  ]
+
+  // Handle company details save
+  const handleSaveCompanyDetails = async (data: Record<string, unknown>) => {
+    await updateMutation.mutateAsync({
+      id: account.id,
+      name: data.name as string,
+      industry: data.industry as string || undefined,
+      website: data.website as string || undefined,
+      phone: data.phone as string || undefined,
+      status: data.status as 'prospect' | 'active' | 'inactive' || undefined,
+      tier: data.tier as 'preferred' | 'strategic' || undefined,
+    })
+  }
+
+  // Calculate metrics
+  const totalJobs = jobs.length
+  const filledJobs = jobs.filter(j => j.status === 'filled').length
+  const fillRate = totalJobs > 0 ? Math.round((filledJobs / totalJobs) * 100) : null
+
+  // Get pending/upcoming activities
+  const pendingActivities = activities.filter(a => {
+    if (a.status === 'completed' || a.status === 'cancelled') return false
+    return true
+  }).slice(0, 5)
+
+  // Health status config
+  const healthConfig = getHealthConfig(account.health_score, account.health_status)
+
+  // Animation delay helper
+  const getDelay = (index: number) => ({ animationDelay: `${index * 75}ms` })
+
+  return (
+    <div className="space-y-6">
+      {/* Premium KPI Grid */}
+      <div className="grid grid-cols-4 gap-4">
+        {/* Health Score - Premium Card */}
+        <div 
+          className="group relative overflow-hidden rounded-xl border border-charcoal-200/60 bg-gradient-to-br from-white via-white to-charcoal-50/50 p-5 shadow-elevation-sm hover:shadow-elevation-md transition-all duration-300 animate-fade-in"
+          style={getDelay(0)}
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-gold-200/20 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform duration-500" />
+          <div className="relative flex items-start justify-between">
+            <div className="space-y-2">
+              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Health Score</p>
+              <div className="flex items-baseline gap-2">
+                <span className={cn(
+                  "text-3xl font-bold tracking-tight",
+                  healthConfig.variant === 'success' && "text-success-600",
+                  healthConfig.variant === 'warning' && "text-amber-600",
+                  healthConfig.variant === 'error' && "text-error-600",
+                  !healthConfig.variant && "text-charcoal-400"
+                )}>
+                  {account.health_score ?? '—'}
+                </span>
+                {account.health_score && (
+                  <span className="text-sm text-charcoal-400">/100</span>
+                )}
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className={cn(
+                  "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium",
+                  healthConfig.variant === 'success' && "bg-success-50 text-success-700",
+                  healthConfig.variant === 'warning' && "bg-amber-50 text-amber-700",
+                  healthConfig.variant === 'error' && "bg-error-50 text-error-700",
+                  !healthConfig.variant && "bg-charcoal-100 text-charcoal-500"
+                )}>
+                  {healthConfig.label}
+                </span>
+              </div>
+            </div>
+            <div className={cn(
+              "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-105",
+              healthConfig.variant === 'success' && "bg-gradient-to-br from-success-100 to-success-50",
+              healthConfig.variant === 'warning' && "bg-gradient-to-br from-amber-100 to-amber-50",
+              healthConfig.variant === 'error' && "bg-gradient-to-br from-error-100 to-error-50",
+              !healthConfig.variant && "bg-gradient-to-br from-charcoal-100 to-charcoal-50"
+            )}>
+              <Heart className={cn(
+                "h-6 w-6",
+                healthConfig.variant === 'success' && "text-success-600",
+                healthConfig.variant === 'warning' && "text-amber-600",
+                healthConfig.variant === 'error' && "text-error-600",
+                !healthConfig.variant && "text-charcoal-400"
+              )} />
+            </div>
+          </div>
+        </div>
+
+        {/* Revenue YTD */}
+        <div 
+          className="group relative overflow-hidden rounded-xl border border-charcoal-200/60 bg-gradient-to-br from-white via-white to-forest-50/30 p-5 shadow-elevation-sm hover:shadow-elevation-md transition-all duration-300 animate-fade-in"
+          style={getDelay(1)}
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-forest-200/20 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform duration-500" />
+          <div className="relative flex items-start justify-between">
+            <div className="space-y-2">
+              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Revenue YTD</p>
+              <div className="flex items-baseline gap-2">
+                <span className="text-3xl font-bold text-forest-600 tracking-tight">
+                  {formatCurrency(account.revenue_ytd)}
+                </span>
+              </div>
+              {account.avg_margin_percentage && (
+                <div className="flex items-center gap-1.5">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-forest-50 text-forest-700">
+                    <TrendingUp className="h-3 w-3" />
+                    {account.avg_margin_percentage.toFixed(0)}% margin
+                  </span>
+                </div>
+              )}
+            </div>
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-forest-100 to-forest-50 flex items-center justify-center transition-all duration-300 group-hover:scale-105">
+              <DollarSign className="h-6 w-6 text-forest-600" />
+            </div>
+          </div>
+        </div>
+
+        {/* Active Jobs */}
+        <div 
+          className="group relative overflow-hidden rounded-xl border border-charcoal-200/60 bg-gradient-to-br from-white via-white to-blue-50/30 p-5 shadow-elevation-sm hover:shadow-elevation-md transition-all duration-300 cursor-pointer animate-fade-in"
+          style={getDelay(2)}
+          onClick={() => onNavigate('jobs')}
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-200/20 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform duration-500" />
+          <div className="relative flex items-start justify-between">
+            <div className="space-y-2">
+              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Active Jobs</p>
+              <div className="flex items-baseline gap-2">
+                <span className="text-3xl font-bold text-blue-600 tracking-tight">
+                  {activeJobs.length}
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700">
+                  <Briefcase className="h-3 w-3" />
+                  {jobs.length} total
+                </span>
+              </div>
+            </div>
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center transition-all duration-300 group-hover:scale-105">
+              <Briefcase className="h-6 w-6 text-blue-600" />
+            </div>
+          </div>
+          <ArrowRight className="absolute bottom-4 right-4 h-4 w-4 text-charcoal-300 group-hover:text-blue-500 group-hover:translate-x-1 transition-all duration-300" />
+        </div>
+
+        {/* Fill Rate */}
+        <div 
+          className="group relative overflow-hidden rounded-xl border border-charcoal-200/60 bg-gradient-to-br from-white via-white to-gold-50/30 p-5 shadow-elevation-sm hover:shadow-elevation-md transition-all duration-300 animate-fade-in"
+          style={getDelay(3)}
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-gold-200/20 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform duration-500" />
+          <div className="relative flex items-start justify-between">
+            <div className="space-y-2">
+              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Fill Rate</p>
+              <div className="flex items-baseline gap-2">
+                <span className={cn(
+                  "text-3xl font-bold tracking-tight",
+                  fillRate !== null && fillRate >= 70 ? "text-success-600" :
+                  fillRate !== null && fillRate < 50 ? "text-amber-600" :
+                  "text-gold-600"
+                )}>
+                  {fillRate !== null ? `${fillRate}%` : '—'}
+                </span>
+              </div>
+              {totalJobs > 0 && (
+                <div className="flex items-center gap-1.5">
+                  <span className={cn(
+                    "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium",
+                    fillRate !== null && fillRate >= 70 ? "bg-success-50 text-success-700" :
+                    fillRate !== null && fillRate < 50 ? "bg-amber-50 text-amber-700" :
+                    "bg-gold-50 text-gold-700"
+                  )}>
+                    <Target className="h-3 w-3" />
+                    {filledJobs}/{totalJobs} filled
+                  </span>
+                </div>
+              )}
+            </div>
+            <div className={cn(
+              "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-105",
+              fillRate !== null && fillRate >= 70 ? "bg-gradient-to-br from-success-100 to-success-50" :
+              fillRate !== null && fillRate < 50 ? "bg-gradient-to-br from-amber-100 to-amber-50" :
+              "bg-gradient-to-br from-gold-100 to-gold-50"
+            )}>
+              <BarChart3 className={cn(
+                "h-6 w-6",
+                fillRate !== null && fillRate >= 70 ? "text-success-600" :
+                fillRate !== null && fillRate < 50 ? "text-amber-600" :
+                "text-gold-600"
+              )} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-12 gap-6">
+        {/* Company Details - Left Column (8 cols) */}
+        <div className="col-span-8 space-y-6">
+          {/* Company Overview Card */}
+          <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(4)}>
+            <div className="px-6 py-4 border-b border-charcoal-100 bg-gradient-to-r from-charcoal-50/50 to-transparent">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-forest-500 to-forest-600 flex items-center justify-center shadow-sm">
+                    <Building2 className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-charcoal-900">Company Details</h3>
+                    <p className="text-xs text-charcoal-500">Core business information</p>
+                  </div>
+                </div>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="text-xs text-charcoal-500 hover:text-charcoal-700"
+                  onClick={() => onNavigate('edit')}
+                >
+                  <ExternalLink className="h-3.5 w-3.5 mr-1" />
+                  Edit
+                </Button>
+              </div>
+            </div>
+            <div className="p-6">
+              <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+                <InfoField 
+                  label="Company Name" 
+                  value={account.name}
+                  icon={Building2}
+                  isPrimary
+                />
+                <IndustriesField 
+                  industries={account.industries}
+                  fallbackIndustry={account.industry}
+                />
+                <InfoField
+                  label="Website"
+                  value={account.website}
+                  href={account.website ?? undefined}
+                  icon={Globe}
+                />
+                <InfoField 
+                  label="Phone" 
+                  value={account.phone}
+                  href={account.phone ? `tel:${account.phone}` : undefined}
+                  icon={Phone}
+                />
+                <InfoField 
+                  label="Location" 
+                  value={account.headquarters_city && account.headquarters_state 
+                    ? `${account.headquarters_city}, ${account.headquarters_state}` 
+                    : null}
+                  icon={MapPin}
+                />
+                <div className="flex gap-4">
+                  <div className="flex-1">
+                    <TierBadge tier={account.tier} />
+                  </div>
+                  <div className="flex-1">
+                    <StatusBadge status={account.status} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Items Card */}
+          <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(5)}>
+            <div className="px-6 py-4 border-b border-charcoal-100 bg-gradient-to-r from-amber-50/50 to-transparent">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shadow-sm">
+                    <Zap className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-charcoal-900">Action Items</h3>
+                    <p className="text-xs text-charcoal-500">Pending tasks and follow-ups</p>
+                  </div>
+                </div>
+                <Button variant="ghost" size="sm" onClick={() => onNavigate('activities')} className="text-xs text-charcoal-500 hover:text-charcoal-700">
+                  View All <ArrowRight className="h-3.5 w-3.5 ml-1" />
+                </Button>
+              </div>
+            </div>
+            <div className="p-4">
+              {pendingActivities.length > 0 ? (
+                <div className="space-y-2">
+                  {pendingActivities.map((activity, idx) => {
+                    const dueDate = activity.dueDate ? new Date(activity.dueDate) : null
+                    const isOverdue = dueDate && dueDate < new Date()
+                    const isDueToday = dueDate && isToday(dueDate)
+                    const isDueTomorrow = dueDate && isTomorrow(dueDate)
+                    
+                    return (
+                      <div 
+                        key={activity.id} 
+                        className={cn(
+                          "group flex items-center gap-3 p-3 rounded-lg border transition-all duration-200 hover:shadow-sm cursor-pointer",
+                          isOverdue ? "border-error-200 bg-error-50/50 hover:bg-error-50" : 
+                          isDueToday ? "border-amber-200 bg-amber-50/50 hover:bg-amber-50" : 
+                          "border-charcoal-100 bg-charcoal-50/50 hover:bg-charcoal-50"
+                        )}
+                        style={{ animationDelay: `${(idx + 1) * 50}ms` }}
+                      >
+                        <div className={cn(
+                          "w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors",
+                          isOverdue ? "bg-error-100" : 
+                          isDueToday ? "bg-amber-100" : 
+                          "bg-charcoal-100"
+                        )}>
+                          {isOverdue ? (
+                            <AlertTriangle className="h-4 w-4 text-error-600" />
+                          ) : isDueToday ? (
+                            <Clock className="h-4 w-4 text-amber-600" />
+                          ) : (
+                            <CheckCircle2 className="h-4 w-4 text-charcoal-500" />
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-charcoal-900 truncate">
+                            {activity.subject}
+                          </p>
+                          <p className="text-xs text-charcoal-500 truncate">
+                            {activity.assignedTo}
+                          </p>
+                        </div>
+                        {dueDate && (
+                          <Badge 
+                            variant="outline" 
+                            className={cn(
+                              "text-xs shrink-0 font-medium",
+                              isOverdue ? "border-error-300 text-error-700 bg-error-50" :
+                              isDueToday ? "border-amber-300 text-amber-700 bg-amber-50" :
+                              isDueTomorrow ? "border-blue-300 text-blue-700 bg-blue-50" :
+                              "border-charcoal-200 text-charcoal-600 bg-charcoal-50"
+                            )}
+                          >
+                            {isOverdue ? 'Overdue' : 
+                             isDueToday ? 'Due Today' : 
+                             isDueTomorrow ? 'Tomorrow' :
+                             format(dueDate, 'MMM d')}
+                          </Badge>
+                        )}
+                        <ArrowRight className="h-4 w-4 text-charcoal-300 group-hover:text-charcoal-500 group-hover:translate-x-0.5 transition-all shrink-0" />
+                      </div>
+                    )
+                  })}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-success-100 to-success-50 flex items-center justify-center mx-auto mb-3 shadow-sm">
+                    <CheckCircle2 className="h-7 w-7 text-success-600" />
+                  </div>
+                  <p className="text-sm font-medium text-charcoal-700">All caught up!</p>
+                  <p className="text-xs text-charcoal-500 mt-0.5">No pending tasks.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column (4 cols) */}
+        <div className="col-span-4 space-y-6">
+          {/* Primary Contact Card */}
+          <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(4)}>
+            <div className="px-5 py-4 border-b border-charcoal-100 bg-gradient-to-r from-gold-50/50 to-transparent">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-gold-500 to-gold-600 flex items-center justify-center shadow-sm">
+                    <Star className="h-4 w-4 text-white fill-white" />
+                  </div>
+                  <h3 className="font-semibold text-charcoal-900 text-sm">Primary Contact</h3>
+                </div>
+                <Button variant="ghost" size="sm" onClick={() => onNavigate('contacts')} className="text-xs text-charcoal-500 hover:text-charcoal-700 h-7 px-2">
+                  All <ArrowRight className="h-3 w-3 ml-1" />
+                </Button>
+              </div>
+            </div>
+            <div className="p-5">
+              {primaryContact ? (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center shadow-sm">
+                      <span className="text-base font-semibold text-charcoal-900">
+                        {primaryContact.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                      </span>
+                    </div>
+                    <div className="min-w-0">
+                      <p className="font-semibold text-charcoal-900 truncate">{primaryContact.name}</p>
+                      {primaryContact.title && (
+                        <p className="text-xs text-charcoal-500 truncate">{primaryContact.title}</p>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2 pt-2 border-t border-charcoal-100">
+                    {primaryContact.email && (
+                      <a 
+                        href={`mailto:${primaryContact.email}`}
+                        className="flex items-center gap-2 text-sm text-charcoal-600 hover:text-gold-700 transition-colors group"
+                      >
+                        <div className="w-7 h-7 rounded-md bg-charcoal-50 flex items-center justify-center group-hover:bg-gold-50 transition-colors">
+                          <Mail className="h-3.5 w-3.5 text-charcoal-400 group-hover:text-gold-600 transition-colors" />
+                        </div>
+                        <span className="truncate">{primaryContact.email}</span>
+                      </a>
+                    )}
+                    {primaryContact.phone && (
+                      <a 
+                        href={`tel:${primaryContact.phone}`}
+                        className="flex items-center gap-2 text-sm text-charcoal-600 hover:text-gold-700 transition-colors group"
+                      >
+                        <div className="w-7 h-7 rounded-md bg-charcoal-50 flex items-center justify-center group-hover:bg-gold-50 transition-colors">
+                          <Phone className="h-3.5 w-3.5 text-charcoal-400 group-hover:text-gold-600 transition-colors" />
+                        </div>
+                        <span>{primaryContact.phone}</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center py-6">
+                  <div className="w-12 h-12 rounded-full bg-charcoal-100 flex items-center justify-center mx-auto mb-3">
+                    <Users className="h-6 w-6 text-charcoal-400" />
+                  </div>
+                  <p className="text-sm text-charcoal-500 mb-3">No primary contact</p>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="text-xs"
+                    onClick={() => {
+                      window.dispatchEvent(new CustomEvent('openAccountDialog', { 
+                        detail: { dialogId: 'addContact', accountId: account.id } 
+                      }))
+                    }}
+                  >
+                    <UserPlus className="h-3.5 w-3.5 mr-1" />
+                    Add Contact
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Quick Stats Card */}
+          <div className="rounded-xl border border-charcoal-200/60 bg-gradient-to-br from-forest-600 via-forest-700 to-forest-800 text-white shadow-elevation-md overflow-hidden animate-slide-up" style={getDelay(5)}>
+            <div className="px-5 py-4 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-gold-400" />
+                <h3 className="font-semibold text-white/95 text-sm">Quick Stats</h3>
+              </div>
+            </div>
+            <div className="p-5 space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                    <Users className="h-4 w-4 text-white/80" />
+                  </div>
+                  <span className="text-sm text-white/80">Contacts</span>
+                </div>
+                <span className="text-lg font-semibold text-white">{contacts.length}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                    <Briefcase className="h-4 w-4 text-white/80" />
+                  </div>
+                  <span className="text-sm text-white/80">Total Jobs</span>
+                </div>
+                <span className="text-lg font-semibold text-white">{jobs.length}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                    <Activity className="h-4 w-4 text-white/80" />
+                  </div>
+                  <span className="text-sm text-white/80">Activities</span>
+                </div>
+                <span className="text-lg font-semibold text-white">{activities.length}</span>
+              </div>
+              <div className="pt-3 border-t border-white/10">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-white/60 uppercase tracking-wider">Last Activity</span>
+                  <span className="text-sm font-medium text-gold-400">
+                    {recentActivities[0] 
+                      ? formatDistanceToNow(new Date(recentActivities[0].createdAt), { addSuffix: true })
+                      : 'Never'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Recent Activity - Full Width */}
+      <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(6)}>
+        <div className="px-6 py-4 border-b border-charcoal-100 bg-gradient-to-r from-charcoal-50/50 to-transparent">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-charcoal-600 to-charcoal-700 flex items-center justify-center shadow-sm">
+                <Activity className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-charcoal-900">Recent Activity</h3>
+                <p className="text-xs text-charcoal-500">Latest interactions with this account</p>
+              </div>
+            </div>
+            <Button variant="ghost" size="sm" onClick={() => onNavigate('activities')} className="text-xs text-charcoal-500 hover:text-charcoal-700">
+              View All <ArrowRight className="h-3.5 w-3.5 ml-1" />
+            </Button>
+          </div>
+        </div>
+        <div className="divide-y divide-charcoal-100">
+          {recentActivities.length > 0 ? (
+            recentActivities.map((activity, idx) => (
+              <div 
+                key={activity.id} 
+                className="flex items-center gap-4 px-6 py-4 hover:bg-charcoal-50/50 transition-colors group cursor-pointer"
+                style={{ animationDelay: `${(idx + 1) * 50}ms` }}
+              >
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-charcoal-100 to-charcoal-50 flex items-center justify-center">
+                  <Activity className="h-5 w-5 text-charcoal-500" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-charcoal-900 truncate">
+                    {activity.subject}
+                  </p>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <Badge variant="outline" className="text-xs font-normal px-1.5 py-0 h-5 capitalize">
+                      {activity.type?.replace(/_/g, ' ')}
+                    </Badge>
+                    <span className="text-xs text-charcoal-400">•</span>
+                    <span className="text-xs text-charcoal-500">{activity.assignedTo}</span>
+                  </div>
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="text-xs text-charcoal-400">
+                    {formatDistanceToNow(new Date(activity.createdAt), { addSuffix: true })}
+                  </p>
+                </div>
+                <ArrowRight className="h-4 w-4 text-charcoal-300 group-hover:text-charcoal-500 group-hover:translate-x-0.5 transition-all shrink-0" />
+              </div>
+            ))
+          ) : (
+            <div className="text-center py-10">
+              <div className="w-14 h-14 rounded-full bg-charcoal-100 flex items-center justify-center mx-auto mb-3">
+                <Activity className="h-7 w-7 text-charcoal-400" />
+              </div>
+              <p className="text-sm text-charcoal-500">No recent activity</p>
+              <p className="text-xs text-charcoal-400 mt-0.5">Activities will appear here once logged</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Helper Components
+function InfoField({ 
+  label, 
+  value, 
+  icon: Icon, 
+  href,
+  isPrimary 
+}: { 
+  label: string
+  value: string | null | undefined
+  icon?: React.ComponentType<{ className?: string }>
+  href?: string
+  isPrimary?: boolean
+}) {
+  const content = (
+    <div className="space-y-1">
+      <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">{label}</p>
+      <div className="flex items-center gap-2">
+        {Icon && <Icon className="h-4 w-4 text-charcoal-400 shrink-0" />}
+        <span className={cn(
+          "text-sm truncate",
+          value ? "text-charcoal-900" : "text-charcoal-400 italic",
+          isPrimary && "font-semibold",
+          href && "hover:text-gold-700 transition-colors"
+        )}>
+          {value || '—'}
+        </span>
+      </div>
+    </div>
+  )
+
+  if (href && value) {
+    return (
+      <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="block">
+        {content}
+      </a>
+    )
+  }
+
+  return content
+}
+
+// Industry color mapping for premium aesthetic
+const INDUSTRY_COLORS: Record<string, { bg: string; text: string; border: string; icon: string }> = {
+  technology: { bg: 'from-blue-50 to-indigo-50', text: 'text-blue-700', border: 'border-blue-200/60', icon: '💻' },
+  fintech: { bg: 'from-emerald-50 to-teal-50', text: 'text-emerald-700', border: 'border-emerald-200/60', icon: '💳' },
+  healthcare: { bg: 'from-rose-50 to-pink-50', text: 'text-rose-700', border: 'border-rose-200/60', icon: '🏥' },
+  finance: { bg: 'from-amber-50 to-yellow-50', text: 'text-amber-700', border: 'border-amber-200/60', icon: '🏦' },
+  manufacturing: { bg: 'from-slate-50 to-zinc-50', text: 'text-slate-700', border: 'border-slate-200/60', icon: '🏭' },
+  retail: { bg: 'from-orange-50 to-amber-50', text: 'text-orange-700', border: 'border-orange-200/60', icon: '🛍️' },
+  professional_services: { bg: 'from-violet-50 to-purple-50', text: 'text-violet-700', border: 'border-violet-200/60', icon: '💼' },
+  consulting: { bg: 'from-violet-50 to-purple-50', text: 'text-violet-700', border: 'border-violet-200/60', icon: '💼' },
+  education: { bg: 'from-cyan-50 to-sky-50', text: 'text-cyan-700', border: 'border-cyan-200/60', icon: '🎓' },
+  government: { bg: 'from-stone-50 to-neutral-50', text: 'text-stone-700', border: 'border-stone-200/60', icon: '🏛️' },
+  energy: { bg: 'from-lime-50 to-green-50', text: 'text-lime-700', border: 'border-lime-200/60', icon: '⚡' },
+  telecommunications: { bg: 'from-sky-50 to-blue-50', text: 'text-sky-700', border: 'border-sky-200/60', icon: '📡' },
+  media: { bg: 'from-fuchsia-50 to-pink-50', text: 'text-fuchsia-700', border: 'border-fuchsia-200/60', icon: '🎬' },
+  real_estate: { bg: 'from-teal-50 to-emerald-50', text: 'text-teal-700', border: 'border-teal-200/60', icon: '🏢' },
+  other: { bg: 'from-gray-50 to-slate-50', text: 'text-gray-700', border: 'border-gray-200/60', icon: '📊' },
+}
+
+const DEFAULT_INDUSTRY_COLOR = { bg: 'from-charcoal-50 to-charcoal-100', text: 'text-charcoal-700', border: 'border-charcoal-200/60', icon: '🏢' }
+
+function IndustriesField({ 
+  industries, 
+  fallbackIndustry 
+}: { 
+  industries: string[] | null | undefined
+  fallbackIndustry: string | null | undefined
+}) {
+  // Use industries array if available, otherwise fall back to single industry
+  const industryList = industries && industries.length > 0 
+    ? industries 
+    : fallbackIndustry ? [fallbackIndustry] : []
+
+  if (industryList.length === 0) {
+    return (
+      <div className="space-y-1.5">
+        <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Industries</p>
+        <span className="text-sm text-charcoal-400 italic">—</span>
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-2">
+      <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Industries</p>
+      <div className="flex flex-wrap gap-2">
+        {industryList.map((industry, idx) => {
+          const colors = INDUSTRY_COLORS[industry.toLowerCase()] || DEFAULT_INDUSTRY_COLOR
+          return (
+            <div
+              key={idx}
+              className={cn(
+                "group relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg",
+                "bg-gradient-to-r border shadow-sm",
+                "hover:shadow-md hover:scale-[1.02] transition-all duration-200",
+                colors.bg,
+                colors.border,
+              )}
+            >
+              <span className="text-sm">{colors.icon}</span>
+              <span className={cn("text-xs font-semibold capitalize", colors.text)}>
+                {industry.replace(/_/g, ' ')}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+function TierBadge({ tier }: { tier: string | null | undefined }) {
+  const config = {
+    strategic: { bg: 'bg-gradient-to-r from-gold-100 to-gold-50', text: 'text-gold-800', icon: Award },
+    preferred: { bg: 'bg-gradient-to-r from-blue-100 to-blue-50', text: 'text-blue-800', icon: Star },
+    standard: { bg: 'bg-gradient-to-r from-charcoal-100 to-charcoal-50', text: 'text-charcoal-700', icon: Building2 },
+  }
+  const tierConfig = tier ? config[tier as keyof typeof config] : config.standard
+  const TierIcon = tierConfig?.icon || Building2
+  
+  return (
+    <div className="space-y-1">
+      <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Tier</p>
+      <div className={cn("inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold capitalize", tierConfig?.bg, tierConfig?.text)}>
+        <TierIcon className="h-3.5 w-3.5" />
+        {tier?.replace(/_/g, ' ') || 'Standard'}
+      </div>
+    </div>
+  )
+}
+
+function StatusBadge({ status }: { status: string | null | undefined }) {
+  const config: Record<string, { bg: string; text: string; dot: string }> = {
+    active: { bg: 'bg-success-50', text: 'text-success-700', dot: 'bg-success-500' },
+    prospect: { bg: 'bg-blue-50', text: 'text-blue-700', dot: 'bg-blue-500' },
+    inactive: { bg: 'bg-charcoal-100', text: 'text-charcoal-600', dot: 'bg-charcoal-400' },
+    on_hold: { bg: 'bg-amber-50', text: 'text-amber-700', dot: 'bg-amber-500' },
+    churned: { bg: 'bg-error-50', text: 'text-error-700', dot: 'bg-error-500' },
+  }
+  const statusConfig = status ? config[status] : config.inactive
+  
+  return (
+    <div className="space-y-1">
+      <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Status</p>
+      <div className={cn("inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold capitalize", statusConfig?.bg, statusConfig?.text)}>
+        <span className={cn("w-1.5 h-1.5 rounded-full animate-pulse", statusConfig?.dot)} />
+        {status?.replace(/_/g, ' ') || 'Unknown'}
+      </div>
+    </div>
+  )
+}
+
+// Helper function to format currency
+function formatCurrency(value: number | null | undefined): string {
+  if (value === null || value === undefined) return '$0'
+  if (value >= 1000000) {
+    return `$${(value / 1000000).toFixed(1)}M`
+  }
+  if (value >= 1000) {
+    return `$${(value / 1000).toFixed(0)}K`
+  }
+  return `$${value.toFixed(0)}`
+}
+
+// Helper function to get health status config
+function getHealthConfig(score: number | null | undefined, status: string | null | undefined): {
+  label: string
+  variant: 'success' | 'warning' | 'error' | undefined
+} {
+  if (score === null || score === undefined) {
+    return { label: 'Not rated', variant: undefined }
+  }
+  if (score >= 80 || status === 'healthy') {
+    return { label: 'Healthy', variant: 'success' }
+  }
+  if (score >= 50 || status === 'attention') {
+    return { label: 'Needs Attention', variant: 'warning' }
+  }
+  return { label: 'At Risk', variant: 'error' }
+}
+
+export default AccountOverviewSection

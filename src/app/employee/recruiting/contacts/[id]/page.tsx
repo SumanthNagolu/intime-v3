@@ -1,17 +1,23 @@
-'use client'
+import { redirect } from 'next/navigation'
 
-import { useParams } from 'next/navigation'
-import { EntityDetailView } from '@/components/pcf/detail-view/EntityDetailView'
-import { contactsDetailConfig, type Contact } from '@/configs/entities/contacts.config'
+interface ContactRedirectPageProps {
+  params: Promise<{ id: string }>
+  searchParams: Promise<Record<string, string | undefined>>
+}
 
-export default function RecruitingContactDetailPage() {
-  const params = useParams()
-  const contactId = params.id as string
+/**
+ * Redirect from old recruiting contacts route to consolidated contacts route.
+ * This maintains backwards compatibility for any existing links.
+ */
+export default async function ContactRedirectPage({ params, searchParams }: ContactRedirectPageProps) {
+  const { id } = await params
+  const search = await searchParams
 
-  return (
-    <EntityDetailView<Contact>
-      config={contactsDetailConfig}
-      entityId={contactId}
-    />
-  )
+  // Preserve any query params (like ?section=activities)
+  const queryString = new URLSearchParams(
+    Object.entries(search).filter(([, v]) => v !== undefined) as [string, string][]
+  ).toString()
+
+  const targetUrl = `/employee/contacts/${id}${queryString ? `?${queryString}` : ''}`
+  redirect(targetUrl)
 }

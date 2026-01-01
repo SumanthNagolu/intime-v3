@@ -4,28 +4,47 @@ import {
   Calendar, CheckCircle, Package, TrendingUp, DollarSign,
   UserCheck, Send, Megaphone, Shield, Activity, UserCircle, Star,
   ClipboardList, UserPlus, Network, FileText, Receipt, Wallet,
-  CreditCard, FileSpreadsheet
+  CreditCard, FileSpreadsheet, UsersRound, Inbox, AlertTriangle, Workflow
 } from 'lucide-react'
 import { EntityNavTab } from './entity-navigation.types'
 
-// Order: My Work, Accounts, Jobs, Candidates, CRM, Pipeline, Administration
+// Order: My Work, Team, Accounts, Jobs, Candidates, CRM, Pipeline, Administration
 export const topNavigationTabs: EntityNavTab[] = [
   {
     id: 'workspace',
     label: 'My Work',
     entityType: 'job', // Not entity-specific, but needed for type
     icon: LayoutDashboard,
-    defaultHref: '/employee/workspace/dashboard',
+    defaultHref: '/employee/workspace',
     dropdown: [
+      { id: 'my-workspace', label: 'My Workspace', icon: LayoutDashboard, href: '/employee/workspace', type: 'link' },
       { id: 'dashboard', label: 'Dashboard', icon: TrendingUp, href: '/employee/workspace/dashboard', type: 'link' },
       { id: 'today', label: 'Today', icon: Calendar, href: '/employee/workspace/today', type: 'link' },
       { id: 'activities', label: 'My Activities', icon: Activity, href: '/employee/workspace/desktop?tab=activities', type: 'link' },
+      { id: 'workqueue', label: 'Team Workqueue', icon: Inbox, href: '/employee/workspace/workqueue', type: 'link', badge: true },
+      { id: 'escalated', label: 'Escalated', icon: AlertTriangle, href: '/employee/workspace/escalated', type: 'link' },
       { id: 'divider-1', label: '', type: 'divider' },
       { id: 'my-accounts', label: 'My Accounts', icon: Building2, href: '/employee/recruiting/accounts?owner=me', type: 'link' },
       { id: 'my-jobs', label: 'My Jobs', icon: Briefcase, href: '/employee/recruiting/jobs?assigned=me', type: 'link' },
       { id: 'my-submissions', label: 'My Submissions', icon: Send, href: '/employee/recruiting/submissions?owner=me', type: 'link' },
       { id: 'divider-2', label: '', type: 'divider' },
       { id: 'reports', label: 'Reports', icon: ListTodo, href: '/employee/workspace/reports', type: 'link' },
+    ],
+  },
+  {
+    id: 'team',
+    label: 'Team',
+    entityType: 'job', // Not entity-specific, but needed for type
+    icon: UsersRound,
+    defaultHref: '/employee/team',
+    dropdown: [
+      { id: 'team-summary', label: 'Team Summary', icon: UsersRound, href: '/employee/team', type: 'link' },
+      { id: 'team-activities', label: 'Team Activities', icon: Activity, href: '/employee/team?section=activities', type: 'link' },
+      { id: 'team-submissions', label: 'Team Submissions', icon: Send, href: '/employee/team?section=submissions', type: 'link' },
+      { id: 'team-jobs', label: 'Team Jobs', icon: Briefcase, href: '/employee/team?section=jobs', type: 'link' },
+      { id: 'divider-1', label: '', type: 'divider' },
+      { id: 'team-queue', label: 'In Queue', icon: Clock, href: '/employee/team?section=queue', type: 'link' },
+      { id: 'team-performance', label: 'Performance', icon: TrendingUp, href: '/employee/team?section=performance', type: 'link' },
     ],
   },
   {
@@ -166,17 +185,23 @@ export const topNavigationTabs: EntityNavTab[] = [
     label: 'Administration',
     entityType: 'job', // Not entity-specific
     icon: Settings,
-    defaultHref: '/employee/admin/dashboard',
+    defaultHref: '/employee/admin/settings',
     dropdown: [
-      { id: 'dashboard', label: 'Admin Dashboard', icon: LayoutDashboard, href: '/employee/admin/dashboard', type: 'link' },
-      { id: 'divider-1', label: '', type: 'divider' },
+      // Organization
+      { id: 'settings', label: 'Company Settings', icon: Settings, href: '/employee/admin/settings', type: 'link' },
+      { id: 'groups', label: 'Groups', icon: Network, href: '/employee/admin/groups', type: 'link' },
+      { id: 'divider-org', label: '', type: 'divider' },
+      // People & Access
       { id: 'users', label: 'Users', icon: Users, href: '/employee/admin/users', type: 'link' },
       { id: 'roles', label: 'Roles & Permissions', icon: Shield, href: '/employee/admin/roles', type: 'link' },
-      { id: 'pods', label: 'Pods', icon: Package, href: '/employee/admin/pods', type: 'link' },
-      { id: 'divider-2', label: '', type: 'divider' },
-      { id: 'settings', label: 'Organization Settings', icon: Settings, href: '/employee/admin/org-settings', type: 'link' },
+      { id: 'divider-people', label: '', type: 'divider' },
+      // Automation
+      { id: 'workflows', label: 'Workflows', icon: Workflow, href: '/employee/admin/workflows', type: 'link' },
+      { id: 'activity-patterns', label: 'Activity Patterns', icon: Activity, href: '/employee/admin/activity-patterns', type: 'link' },
+      { id: 'divider-automation', label: '', type: 'divider' },
+      // Platform & Compliance
       { id: 'integrations', label: 'Integrations', icon: Package, href: '/employee/admin/integrations', type: 'link' },
-      { id: 'audit', label: 'Audit Logs', icon: Activity, href: '/employee/admin/audit', type: 'link' },
+      { id: 'audit', label: 'Audit Logs', icon: ClipboardList, href: '/employee/admin/audit', type: 'link' },
     ],
   },
 ]
@@ -202,6 +227,7 @@ export function getActiveTabFromPath(pathname: string): string | null {
       pathname.includes('/employee/recruiting/timesheets')) return 'pipeline'
   if (pathname.includes('/employee/finance')) return 'finance'
   if (pathname.includes('/employee/crm')) return 'crm'
+  if (pathname.includes('/employee/team')) return 'team'  // Team is separate tab
   if (pathname.includes('/employee/workspace')) return 'workspace'
   if (pathname.includes('/employee/hr')) return 'hr'
   if (pathname.includes('/employee/admin')) return 'admin'

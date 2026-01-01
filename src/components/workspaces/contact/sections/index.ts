@@ -1,0 +1,8 @@
+export { ContactSummarySection } from './ContactSummarySection'
+export { ContactAccountsSection } from './ContactAccountsSection'
+export { ContactSubmissionsSection } from './ContactSubmissionsSection'
+export { ContactCampaignsSection } from './ContactCampaignsSection'
+export { ContactActivitiesSection } from './ContactActivitiesSection'
+export { ContactNotesSection } from './ContactNotesSection'
+export { ContactDocumentsSection } from './ContactDocumentsSection'
+export { ContactHistorySection } from './ContactHistorySection'

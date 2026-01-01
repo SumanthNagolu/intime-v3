@@ -263,11 +263,10 @@ export const sequencesListConfig: ListViewConfig<Sequence> = {
     // TODO: Implement sequences router
     // For now, return empty data
     return {
-      data: { items: [], total: 0 },
+      data: { items: [] as Sequence[], total: 0 },
       isLoading: false,
       error: null,
-      refetch: () => Promise.resolve({ data: { items: [], total: 0 } }),
-    } as any
+    }
   },
 }
 
@@ -458,11 +457,10 @@ export const sequencesDetailConfig: DetailViewConfig<Sequence> = {
     // TODO: Implement sequences router
     // For now, return empty data
     return {
-      data: undefined,
+      data: undefined as Sequence | undefined,
       isLoading: false,
       error: null,
-      refetch: () => Promise.resolve({ data: undefined }),
-    } as any
+    }
   },
 }
 

@@ -1,5 +1,26 @@
-import { pgTable, index, foreignKey, unique, pgPolicy, uuid, integer, timestamp, text, jsonb, boolean, check, numeric, date, doublePrecision, type AnyPgColumn, vector, time, bigint, varchar, uniqueIndex, inet, char, interval, primaryKey, pgMaterializedView, pgView, pgSequence, pgEnum } from "drizzle-orm/pg-core"
+import { pgTable, index, foreignKey, unique, pgPolicy, uuid, integer, timestamp, text, jsonb, boolean, check, numeric, date, doublePrecision, type AnyPgColumn, vector, time, bigint, varchar, uniqueIndex, inet, char, interval, primaryKey, pgMaterializedView, pgView, pgSequence, pgEnum, customType } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
+
+// Custom type for PostgreSQL tsvector (full-text search)
+const tsvector = customType<{ data: string }>({
+  dataType() {
+    return 'tsvector'
+  },
+})
+
+// Custom type for PostgreSQL name (system catalog identifier)
+const pgName = customType<{ data: string }>({
+  dataType() {
+    return 'name'
+  },
+})
+
+// Custom type for PostgreSQL name[] (array of system catalog identifiers)
+const pgNameArray = customType<{ data: string[] }>({
+  dataType() {
+    return 'name[]'
+  },
+})
 
 export const activityDirection = pgEnum("activity_direction", ['inbound', 'outbound'])
 export const activityOutcome = pgEnum("activity_outcome", ['positive', 'neutral', 'negative'])
@@ -340,7 +361,7 @@ export const leads = pgTable("leads", {
 	accountId: uuid("account_id"),
 	notes: text(),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: unknown("search_vector"),
+	searchVector: tsvector("search_vector"),
 	bantBudget: integer("bant_budget").default(0),
 	bantAuthority: integer("bant_authority").default(0),
 	bantNeed: integer("bant_need").default(0),
@@ -904,7 +925,7 @@ export const projectTimeline = pgTable("project_timeline", {
 	aiGeneratedSummary: text("ai_generated_summary"),
 	keyLearnings: text("key_learnings").array(),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: unknown("search_vector"),
+	searchVector: tsvector("search_vector"),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow(),
 	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow(),
 	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
@@ -4956,7 +4977,7 @@ export const userProfiles = pgTable("user_profiles", {
 	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
 	isActive: boolean("is_active").default(true),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: unknown("search_vector"),
+	searchVector: tsvector("search_vector"),
 	orgId: uuid("org_id").notNull(),
 	leaderboardVisible: boolean("leaderboard_visible").default(true),
 	firstName: text("first_name"),
@@ -9328,7 +9349,7 @@ export const skills = pgTable("skills", {
 	deprecatedSuccessorId: uuid("deprecated_successor_id"),
 	orgId: uuid("org_id"),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: unknown("search_vector"),
+	searchVector: tsvector("search_vector"),
 	domain: varchar({ length: 50 }).default('technology'),
 }, (table) => [
 	uniqueIndex("idx_skills_canonical_unique").using("btree", sql`COALESCE(org_id, '00000000-0000-0000-0000-000000000000'::uuid)`, sql`canonical_name`).where(sql`(canonical_name IS NOT NULL)`),
@@ -11102,7 +11123,7 @@ export const contacts = pgTable("contacts", {
 	updatedBy: uuid("updated_by"),
 	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: unknown("search_vector"),
+	searchVector: tsvector("search_vector"),
 	relationshipNotes: text("relationship_notes"),
 	isPrimary: boolean("is_primary").default(false),
 	marketingEmailsOptIn: boolean("marketing_emails_opt_in").default(true),
@@ -11634,7 +11655,7 @@ export const notes = pgTable("notes", {
 	tags: text().array(),
 	attachmentCount: integer("attachment_count").default(0),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: unknown("search_vector"),
+	searchVector: tsvector("search_vector"),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	createdBy: uuid("created_by").notNull(),
@@ -13092,7 +13113,7 @@ export const companies = pgTable("companies", {
 	updatedBy: uuid("updated_by"),
 	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: unknown("search_vector"),
+	searchVector: tsvector("search_vector"),
 	description: text(),
 	industries: text().array(),
 }, (table) => [
@@ -14484,7 +14505,7 @@ export const jobs = pgTable("jobs", {
 	createdBy: uuid("created_by"),
 	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: unknown("search_vector"),
+	searchVector: tsvector("search_vector"),
 	priority: text().default('medium'),
 	targetStartDate: timestamp("target_start_date", { withTimezone: true, mode: 'string' }),
 	closedAt: timestamp("closed_at", { withTimezone: true, mode: 'string' }),
@@ -16981,7 +17002,7 @@ END`),
 	prospectsClicked: integer("prospects_clicked").default(0),
 	prospectsResponded: integer("prospects_responded").default(0),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: unknown("search_vector"),
+	searchVector: tsvector("search_vector"),
 	sequenceTemplateIds: uuid("sequence_template_ids").array().default([""]),
 	updatedBy: uuid("updated_by"),
 	sendWindowStart: time("send_window_start").default('09:00:00'),
@@ -17993,7 +18014,7 @@ export const vTimelineRecent = pgView("v_timeline_recent", {	id: uuid(),
 	aiGeneratedSummary: text("ai_generated_summary"),
 	keyLearnings: text("key_learnings"),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: unknown("search_vector"),
+	searchVector: tsvector("search_vector"),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }),
 	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }),
 	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
@@ -18084,7 +18105,7 @@ export const vActiveUsers = pgView("v_active_users", {	id: uuid(),
 	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
 	isActive: boolean("is_active"),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: unknown("search_vector"),
+	searchVector: tsvector("search_vector"),
 }).as(sql`SELECT id, auth_id, email, full_name, avatar_url, phone, timezone, locale, student_enrollment_date, student_course_id, student_current_module, student_course_progress, student_graduation_date, student_certificates, employee_hire_date, employee_department, employee_position, employee_salary, employee_status, employee_manager_id, employee_performance_rating, candidate_status, candidate_resume_url, candidate_skills, candidate_experience_years, candidate_current_visa, candidate_visa_expiry, candidate_hourly_rate, candidate_bench_start_date, candidate_availability, candidate_location, candidate_willing_to_relocate, client_company_name, client_industry, client_tier, client_contract_start_date, client_contract_end_date, client_payment_terms, client_preferred_markup_percentage, recruiter_territory, recruiter_specialization, recruiter_monthly_placement_target, recruiter_pod_id, created_at, updated_at, created_by, updated_by, deleted_at, is_active, search_vector FROM user_profiles WHERE deleted_at IS NULL AND is_active = true`);
 
 export const vStudents = pgView("v_students", {	id: uuid(),
@@ -18221,21 +18242,21 @@ export const vSubscriberPerformance = pgView("v_subscriber_performance", {	subsc
 }).as(sql`SELECT es.subscriber_name, es.event_pattern, count(edl.id) AS total_deliveries, count(*) FILTER (WHERE edl.status = 'success'::text) AS successful, count(*) FILTER (WHERE edl.status = 'failure'::text) AS failed, avg(edl.duration_ms) AS avg_duration_ms, max(edl.attempted_at) AS last_delivery_at FROM event_subscriptions es LEFT JOIN event_delivery_log edl ON es.id = edl.subscription_id WHERE edl.attempted_at > (now() - '7 days'::interval) GROUP BY es.id, es.subscriber_name, es.event_pattern ORDER BY (count(edl.id)) DESC`);
 
 export const vRlsStatus = pgView("v_rls_status", {	// TODO: failed to parse database type 'name'
-	schemaname: unknown("schemaname"),
+	schemaname: pgName("schemaname"),
 	// TODO: failed to parse database type 'name'
-	tablename: unknown("tablename"),
+	tablename: pgName("tablename"),
 	rlsEnabled: boolean("rls_enabled"),
 }).as(sql`SELECT schemaname, tablename, rowsecurity AS rls_enabled FROM pg_tables WHERE schemaname = 'public'::name AND (tablename = ANY (ARRAY['user_profiles'::name, 'roles'::name, 'permissions'::name, 'user_roles'::name, 'role_permissions'::name, 'audit_logs'::name, 'events'::name, 'event_subscriptions'::name])) ORDER BY tablename`);
 
 export const vRlsPolicies = pgView("v_rls_policies", {	// TODO: failed to parse database type 'name'
-	schemaname: unknown("schemaname"),
+	schemaname: pgName("schemaname"),
 	// TODO: failed to parse database type 'name'
-	tablename: unknown("tablename"),
+	tablename: pgName("tablename"),
 	// TODO: failed to parse database type 'name'
-	policyname: unknown("policyname"),
+	policyname: pgName("policyname"),
 	permissive: text(),
 	// TODO: failed to parse database type 'name[]'
-	roles: unknown("roles"),
+	roles: pgNameArray("roles"),
 	cmd: text(),
 	qual: text(),
 	withCheck: text("with_check"),
@@ -18385,13 +18406,13 @@ export const capstoneGradingQueue = pgView("capstone_grading_queue", {	id: uuid(
 }).as(sql`SELECT cs.id, cs.user_id, cs.enrollment_id, cs.course_id, up.full_name AS student_name, up.email AS student_email, c.title AS course_title, cs.repository_url, cs.demo_video_url, cs.description, cs.submitted_at, cs.status, cs.revision_count, cs.peer_review_count, cs.avg_peer_rating, EXTRACT(epoch FROM now() - cs.submitted_at) / 3600::numeric AS hours_waiting FROM capstone_submissions cs JOIN user_profiles up ON cs.user_id = up.id JOIN courses c ON cs.course_id = c.id WHERE cs.status = ANY (ARRAY['pending'::text, 'peer_review'::text, 'trainer_review'::text]) ORDER BY cs.submitted_at`);
 
 export const vAuthRlsStatus = pgView("v_auth_rls_status", {	// TODO: failed to parse database type 'name'
-	tableName: unknown("table_name"),
+	tableName: pgName("table_name"),
 	rlsEnabled: boolean("rls_enabled"),
 	rlsForced: boolean("rls_forced"),
 	// You can use { mode: "bigint" } if numbers are exceeding js number limitations
 	policyCount: bigint("policy_count", { mode: "number" }),
 	// TODO: failed to parse database type 'name[]'
-	policies: unknown("policies"),
+	policies: jsonb("policies"),
 }).as(sql`SELECT c.relname AS table_name, c.relrowsecurity AS rls_enabled, c.relforcerowsecurity AS rls_forced, count(p.polname) AS policy_count, array_agg(p.polname ORDER BY p.polname) AS policies FROM pg_class c LEFT JOIN pg_policy p ON p.polrelid = c.oid WHERE c.relnamespace = 'public'::regnamespace::oid AND c.relkind = 'r'::"char" AND (c.relname = ANY (ARRAY['user_profiles'::name, 'roles'::name, 'permissions'::name, 'user_roles'::name, 'role_permissions'::name, 'organizations'::name, 'audit_logs'::name])) GROUP BY c.relname, c.relrowsecurity, c.relforcerowsecurity ORDER BY c.relname`);
 
 export const capstoneStatistics = pgView("capstone_statistics", {	courseId: uuid("course_id"),

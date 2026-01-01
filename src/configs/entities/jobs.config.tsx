@@ -565,7 +565,7 @@ export const jobsListConfig: ListViewConfig<Job> = {
     const validTypes = ['full_time', 'contract', 'contract_to_hire', 'part_time'] as const
     const _validSortFields = [
       'title',
-      'client_id',
+      'company_id',
       'location',
       'job_type',
       'status',
@@ -586,7 +586,7 @@ export const jobsListConfig: ListViewConfig<Job> = {
     // Map frontend column keys to database columns
     const sortFieldMap: Record<string, SortField> = {
       title: 'title',
-      account: 'client_id',
+      account: 'company_id',
       location: 'location',
       type: 'job_type',
       status: 'status',
@@ -902,7 +902,10 @@ export const jobsDetailConfig: DetailViewConfig<Job> = {
 
   eventNamespace: 'job',
 
-  useEntityQuery: (entityId) =>
-    trpc.ats.jobs.getById.useQuery({ id: entityId }),
+  useEntityQuery: (entityId, options) =>
+    trpc.ats.jobs.getFullJob.useQuery(
+      { id: entityId },
+      { enabled: options?.enabled ?? true }
+    ),
 }
 

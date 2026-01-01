@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import { notFound } from 'next/navigation'
-import { getServerCaller } from '@/server/trpc/server-caller'
+import { getFullContact } from '@/server/actions/contacts'
+import { ContactWorkspaceProvider } from '@/components/workspaces/contact/ContactWorkspaceProvider'
 import { EntityContextProvider } from '@/components/layouts/EntityContextProvider'
 
 export const dynamic = 'force-dynamic'
@@ -10,21 +11,26 @@ interface ContactLayoutProps {
   params: Promise<{ id: string }>
 }
 
+/**
+ * Contact Detail Layout
+ *
+ * Key patterns:
+ * - ONE DATABASE CALL via getFullContact server action
+ * - Data passed to ContactWorkspaceProvider for child components
+ * - EntityContextProvider for sidebar navigation integration
+ */
 export default async function ContactDetailLayout({ children, params }: ContactLayoutProps) {
   const { id: contactId } = await params
-  const caller = await getServerCaller()
 
-  // Fetch contact data on server - Using unified contacts router
-  const contact = await caller.unifiedContacts.getById({ id: contactId }).catch(() => null)
+  // ONE DATABASE CALL - fetches ALL data for the workspace
+  const data = await getFullContact(contactId)
 
-  if (!contact) {
+  if (!data) {
     notFound()
   }
 
-  const contactName = `${contact.first_name} ${contact.last_name}`
-  const accountName = contact.account
-    ? (contact.account as { name: string }).name
-    : undefined
+  const contactName = data.contact.fullName
+  const accountName = data.contact.company?.name
 
   return (
     <EntityContextProvider
@@ -32,10 +38,12 @@ export default async function ContactDetailLayout({ children, params }: ContactL
       entityId={contactId}
       entityName={contactName}
       entitySubtitle={accountName}
-      entityStatus={contact.is_primary ? 'primary' : 'active'}
-      initialData={contact}
+      entityStatus={data.contact.status}
+      initialData={data}
     >
-      {children}
+      <ContactWorkspaceProvider initialData={data}>
+        {children}
+      </ContactWorkspaceProvider>
     </EntityContextProvider>
   )
 }

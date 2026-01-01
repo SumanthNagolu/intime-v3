@@ -17,7 +17,7 @@ import {
   EDUCATION_LEVELS,
   SkillEntry,
 } from '@/stores/job-intake-store'
-import { Plus, X, GraduationCap, Award, Target, Briefcase } from 'lucide-react'
+import { Plus, X, GraduationCap, Award, Target, Briefcase, CheckCircle2, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 // Common certifications for auto-suggest
@@ -34,11 +34,46 @@ const COMMON_CERTIFICATIONS = [
   'Terraform Associate',
 ]
 
+// Section wrapper component
+function Section({ 
+  icon: Icon, 
+  title, 
+  badge,
+  children,
+  className 
+}: { 
+  icon?: React.ElementType
+  title: string
+  badge?: string
+  children: React.ReactNode
+  className?: string
+}) {
+  return (
+    <div className={cn('space-y-5', className)}>
+      <div className="flex items-center gap-3">
+        {Icon && (
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-gold-100 to-gold-50 flex items-center justify-center">
+            <Icon className="w-4 h-4 text-gold-600" />
+          </div>
+        )}
+        <h3 className="text-sm font-semibold text-charcoal-800 uppercase tracking-wider">
+          {title}
+        </h3>
+        {badge && (
+          <span className="text-xs px-2 py-0.5 rounded-full bg-charcoal-100 text-charcoal-500 font-medium">
+            {badge}
+          </span>
+        )}
+      </div>
+      {children}
+    </div>
+  )
+}
+
 export function IntakeStep2Requirements() {
   const { formData, setFormData } = useJobIntakeStore()
 
   // Handle migration from old string to new array format for certifications
-  // This handles legacy data in localStorage
   const certifications = Array.isArray(formData.certifications)
     ? formData.certifications
     : formData.certifications
@@ -111,24 +146,19 @@ export function IntakeStep2Requirements() {
   )
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Experience Requirements Section */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2">
-          <Briefcase className="w-4 h-4 text-gold-500" />
-          <h3 className="text-sm font-semibold text-charcoal-700 uppercase tracking-wider">
-            Experience Requirements
-          </h3>
-        </div>
-
-        <div className="grid grid-cols-2 gap-6">
+      <Section icon={Briefcase} title="Experience Requirements">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="space-y-2">
-            <Label>Minimum Years *</Label>
+            <Label className="text-charcoal-700 font-medium">
+              Minimum Years <span className="text-gold-500">*</span>
+            </Label>
             <Select
               value={formData.minExperience}
               onValueChange={(value) => setFormData({ minExperience: value })}
             >
-              <SelectTrigger>
+              <SelectTrigger className="h-12 rounded-xl border-charcoal-200 bg-white">
                 <SelectValue placeholder="Select minimum years" />
               </SelectTrigger>
               <SelectContent>
@@ -141,12 +171,12 @@ export function IntakeStep2Requirements() {
             </Select>
           </div>
           <div className="space-y-2">
-            <Label>Preferred Years</Label>
+            <Label className="text-charcoal-700 font-medium">Preferred Years</Label>
             <Select
               value={formData.preferredExperience}
               onValueChange={(value) => setFormData({ preferredExperience: value })}
             >
-              <SelectTrigger>
+              <SelectTrigger className="h-12 rounded-xl border-charcoal-200 bg-white">
                 <SelectValue placeholder="Select preferred years" />
               </SelectTrigger>
               <SelectContent>
@@ -160,52 +190,69 @@ export function IntakeStep2Requirements() {
           </div>
         </div>
 
-        <div className="space-y-2">
-          <Label>Experience Level *</Label>
-          <div className="grid grid-cols-4 gap-2">
-            {EXPERIENCE_LEVELS.map((level) => (
-              <button
-                key={level.value}
-                type="button"
-                onClick={() => setFormData({ experienceLevel: level.value })}
-                className={cn(
-                  'p-3 rounded-lg border-2 text-sm transition-all duration-200',
-                  formData.experienceLevel === level.value
-                    ? 'border-gold-500 bg-gold-50 text-charcoal-900 shadow-sm'
-                    : 'border-charcoal-200 hover:border-charcoal-300 hover:bg-charcoal-50'
-                )}
-              >
-                {level.label}
-              </button>
-            ))}
+        <div className="space-y-3">
+          <Label className="text-charcoal-700 font-medium">
+            Experience Level <span className="text-gold-500">*</span>
+          </Label>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {EXPERIENCE_LEVELS.map((level) => {
+              const isSelected = formData.experienceLevel === level.value
+              return (
+                <button
+                  key={level.value}
+                  type="button"
+                  onClick={() => setFormData({ experienceLevel: level.value })}
+                  className={cn(
+                    'relative p-4 rounded-xl border-2 text-center transition-all duration-300 overflow-hidden',
+                    isSelected
+                      ? 'border-gold-400 bg-gradient-to-br from-gold-50 to-amber-50 shadow-gold-glow'
+                      : 'border-charcoal-200 hover:border-charcoal-300 hover:bg-charcoal-50/50'
+                  )}
+                >
+                  {isSelected && (
+                    <div className="absolute top-2 right-2">
+                      <CheckCircle2 className="w-4 h-4 text-gold-500" />
+                    </div>
+                  )}
+                  <span className={cn('text-sm font-semibold', isSelected ? 'text-gold-700' : 'text-charcoal-800')}>
+                    {level.label}
+                  </span>
+                </button>
+              )
+            })}
           </div>
+        </div>
+      </Section>
+
+      {/* Divider */}
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-charcoal-100"></div>
+        </div>
+        <div className="relative flex justify-center">
+          <span className="px-4 bg-white text-xs text-charcoal-400 uppercase tracking-wider">Technical Skills</span>
         </div>
       </div>
 
       {/* Required Skills Section */}
-      <div className="space-y-4 pt-6 border-t border-charcoal-100">
-        <div className="flex items-center gap-2">
-          <Target className="w-4 h-4 text-gold-500" />
-          <h3 className="text-sm font-semibold text-charcoal-700 uppercase tracking-wider">
-            Required Skills (Must-Have)
-          </h3>
-        </div>
-
-        <div className="p-4 border border-charcoal-200 rounded-lg space-y-4 bg-white">
-          <div className="grid grid-cols-12 gap-2 items-end">
-            <div className="col-span-5 space-y-1">
-              <Label className="text-xs text-charcoal-500">Skill Name</Label>
+      <Section icon={Target} title="Required Skills" badge="Must-Have">
+        <div className="p-5 bg-gradient-to-br from-charcoal-50/50 to-white border border-charcoal-100 rounded-2xl space-y-5">
+          {/* Skill Input Row */}
+          <div className="grid grid-cols-12 gap-3 items-end">
+            <div className="col-span-5 space-y-2">
+              <Label className="text-xs text-charcoal-500 font-medium">Skill Name</Label>
               <Input
                 placeholder="e.g., React, Python, AWS"
                 value={newSkillName}
                 onChange={(e) => setNewSkillName(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addRequiredSkill())}
+                className="h-11 rounded-xl border-charcoal-200 bg-white"
               />
             </div>
-            <div className="col-span-2 space-y-1">
-              <Label className="text-xs text-charcoal-500">Min. Years</Label>
+            <div className="col-span-2 space-y-2">
+              <Label className="text-xs text-charcoal-500 font-medium">Min. Years</Label>
               <Select value={newSkillYears} onValueChange={setNewSkillYears}>
-                <SelectTrigger>
+                <SelectTrigger className="h-11 rounded-xl border-charcoal-200 bg-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -217,15 +264,15 @@ export function IntakeStep2Requirements() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="col-span-4 space-y-1">
-              <Label className="text-xs text-charcoal-500">Proficiency</Label>
+            <div className="col-span-4 space-y-2">
+              <Label className="text-xs text-charcoal-500 font-medium">Proficiency</Label>
               <Select
                 value={newSkillProficiency}
                 onValueChange={(v) =>
                   setNewSkillProficiency(v as 'beginner' | 'proficient' | 'expert')
                 }
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 rounded-xl border-charcoal-200 bg-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -238,42 +285,52 @@ export function IntakeStep2Requirements() {
             <div className="col-span-1">
               <Button
                 type="button"
-                variant="default"
-                size="icon"
                 onClick={addRequiredSkill}
                 disabled={!newSkillName.trim()}
+                className="h-11 w-11 rounded-xl bg-gradient-to-br from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 shadow-gold-glow disabled:opacity-50 disabled:shadow-none"
               >
-                <Plus className="w-4 h-4" />
+                <Plus className="w-5 h-5" />
               </Button>
             </div>
           </div>
 
+          {/* Skills List */}
           {formData.requiredSkills.length > 0 && (
-            <div className="space-y-2 pt-2 border-t border-charcoal-100">
+            <div className="space-y-2 pt-4 border-t border-charcoal-100">
               {formData.requiredSkills.map((skill, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 bg-charcoal-50 rounded-lg group hover:bg-charcoal-100 transition-colors"
+                  className="flex items-center justify-between p-4 bg-white rounded-xl border border-charcoal-100 group hover:border-charcoal-200 hover:shadow-elevation-xs transition-all duration-200"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="w-8 h-8 flex items-center justify-center bg-gold-100 text-gold-700 rounded-full text-sm font-medium">
+                  <div className="flex items-center gap-4">
+                    <span className="w-9 h-9 flex items-center justify-center bg-gradient-to-br from-gold-100 to-amber-50 text-gold-700 rounded-lg text-sm font-bold">
                       {index + 1}
                     </span>
                     <div>
-                      <span className="font-medium text-charcoal-900">{skill.name}</span>
-                      <span className="text-charcoal-500 text-sm ml-2">
-                        • {skill.years}+ years • {skill.proficiency}
-                      </span>
+                      <span className="font-semibold text-charcoal-900">{skill.name}</span>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <span className="text-xs text-charcoal-500 bg-charcoal-100 px-2 py-0.5 rounded-full">
+                          {skill.years}+ years
+                        </span>
+                        <span className={cn(
+                          'text-xs px-2 py-0.5 rounded-full capitalize',
+                          skill.proficiency === 'expert' && 'bg-purple-100 text-purple-700',
+                          skill.proficiency === 'proficient' && 'bg-blue-100 text-blue-700',
+                          skill.proficiency === 'beginner' && 'bg-charcoal-100 text-charcoal-600'
+                        )}>
+                          {skill.proficiency}
+                        </span>
+                      </div>
                     </div>
                   </div>
                   <Button
                     type="button"
                     variant="ghost"
                     size="icon"
-                    className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-50 hover:text-red-500"
                     onClick={() => removeRequiredSkill(index)}
                   >
-                    <X className="w-4 h-4 text-charcoal-400 hover:text-red-500" />
+                    <X className="w-4 h-4" />
                   </Button>
                 </div>
               ))}
@@ -281,32 +338,34 @@ export function IntakeStep2Requirements() {
           )}
 
           {formData.requiredSkills.length === 0 && (
-            <p className="text-sm text-charcoal-400 text-center py-4">
-              Add at least one required skill to continue
-            </p>
+            <div className="text-center py-8">
+              <div className="w-12 h-12 rounded-full bg-charcoal-100 flex items-center justify-center mx-auto mb-3">
+                <Target className="w-6 h-6 text-charcoal-400" />
+              </div>
+              <p className="text-sm text-charcoal-500">
+                Add at least one required skill to continue
+              </p>
+            </div>
           )}
         </div>
-      </div>
+      </Section>
 
       {/* Preferred Skills Section */}
-      <div className="space-y-4 pt-6 border-t border-charcoal-100">
-        <h3 className="text-sm font-semibold text-charcoal-700 uppercase tracking-wider">
-          Preferred Skills (Nice-to-Have)
-        </h3>
-
-        <div className="flex gap-2">
+      <Section icon={Sparkles} title="Preferred Skills" badge="Nice-to-Have">
+        <div className="flex gap-3">
           <Input
             placeholder="Add preferred skill and press Enter"
             value={preferredSkillInput}
             onChange={(e) => setPreferredSkillInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addPreferredSkill())}
-            className="flex-1"
+            className="flex-1 h-11 rounded-xl border-charcoal-200 bg-white"
           />
           <Button
             type="button"
             variant="outline"
             onClick={addPreferredSkill}
             disabled={!preferredSkillInput.trim()}
+            className="h-11 px-5 rounded-xl border-charcoal-200 hover:bg-charcoal-50"
           >
             <Plus className="w-4 h-4 mr-1" /> Add
           </Button>
@@ -317,7 +376,7 @@ export function IntakeStep2Requirements() {
             {formData.preferredSkills.map((skill, index) => (
               <span
                 key={index}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-charcoal-100 hover:bg-charcoal-200 rounded-full text-sm transition-colors group"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-charcoal-50 to-slate-50 hover:from-charcoal-100 hover:to-slate-100 border border-charcoal-200 rounded-full text-sm transition-colors group"
               >
                 {skill}
                 <button
@@ -331,25 +390,28 @@ export function IntakeStep2Requirements() {
             ))}
           </div>
         )}
+      </Section>
+
+      {/* Divider */}
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-charcoal-100"></div>
+        </div>
+        <div className="relative flex justify-center">
+          <span className="px-4 bg-white text-xs text-charcoal-400 uppercase tracking-wider">Education</span>
+        </div>
       </div>
 
       {/* Education & Certifications Section */}
-      <div className="space-y-4 pt-6 border-t border-charcoal-100">
-        <div className="flex items-center gap-2">
-          <GraduationCap className="w-4 h-4 text-gold-500" />
-          <h3 className="text-sm font-semibold text-charcoal-700 uppercase tracking-wider">
-            Education & Certifications
-          </h3>
-        </div>
-
-        <div className="grid grid-cols-2 gap-6">
+      <Section icon={GraduationCap} title="Education & Certifications">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="space-y-2">
-            <Label>Minimum Education</Label>
+            <Label className="text-charcoal-700 font-medium">Minimum Education</Label>
             <Select
               value={formData.education}
               onValueChange={(value) => setFormData({ education: value })}
             >
-              <SelectTrigger>
+              <SelectTrigger className="h-12 rounded-xl border-charcoal-200 bg-white">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -363,9 +425,10 @@ export function IntakeStep2Requirements() {
           </div>
 
           <div className="space-y-2 relative">
-            <Label className="flex items-center gap-2">
-              <Award className="w-3.5 h-3.5 text-gold-500" />
-              Certifications (Optional)
+            <Label className="text-charcoal-700 font-medium flex items-center gap-2">
+              <Award className="w-4 h-4 text-gold-500" />
+              Certifications
+              <span className="text-xs text-charcoal-400 font-normal">(Optional)</span>
             </Label>
             <div className="flex gap-2">
               <div className="relative flex-1">
@@ -384,14 +447,15 @@ export function IntakeStep2Requirements() {
                       addCertification()
                     }
                   }}
+                  className="h-12 rounded-xl border-charcoal-200 bg-white"
                 />
                 {showCertSuggestions && filteredSuggestions.length > 0 && (
-                  <div className="absolute z-10 w-full mt-1 bg-white border border-charcoal-200 rounded-lg shadow-lg max-h-48 overflow-auto">
+                  <div className="absolute z-10 w-full mt-2 bg-white border border-charcoal-200 rounded-xl shadow-elevation-md max-h-48 overflow-auto">
                     {filteredSuggestions.map((cert) => (
                       <button
                         key={cert}
                         type="button"
-                        className="w-full px-3 py-2 text-left text-sm hover:bg-charcoal-50 transition-colors"
+                        className="w-full px-4 py-3 text-left text-sm hover:bg-gold-50 transition-colors first:rounded-t-xl last:rounded-b-xl"
                         onClick={() => addCertification(cert)}
                       >
                         {cert}
@@ -405,8 +469,9 @@ export function IntakeStep2Requirements() {
                 variant="outline"
                 onClick={() => addCertification()}
                 disabled={!certificationInput.trim()}
+                className="h-12 w-12 rounded-xl border-charcoal-200 hover:bg-charcoal-50"
               >
-                <Plus className="w-4 h-4" />
+                <Plus className="w-5 h-5" />
               </Button>
             </div>
           </div>
@@ -414,18 +479,18 @@ export function IntakeStep2Requirements() {
 
         {/* Certifications List */}
         {certifications.length > 0 && (
-          <div className="flex flex-wrap gap-2 pt-2">
+          <div className="flex flex-wrap gap-2 pt-3">
             {certifications.map((cert, index) => (
               <span
                 key={index}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gold-50 border border-gold-200 text-gold-800 rounded-full text-sm"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-gold-50 to-amber-50 border border-gold-200 text-gold-800 rounded-full text-sm"
               >
-                <Award className="w-3.5 h-3.5" />
+                <Award className="w-4 h-4 text-gold-500" />
                 {cert}
                 <button
                   type="button"
                   onClick={() => removeCertification(index)}
-                  className="text-gold-600 hover:text-red-500 transition-colors"
+                  className="text-gold-500 hover:text-red-500 transition-colors"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -436,15 +501,15 @@ export function IntakeStep2Requirements() {
 
         {/* Quick-add common certifications */}
         {certifications.length === 0 && (
-          <div className="space-y-2">
-            <p className="text-xs text-charcoal-500">Common certifications (click to add):</p>
-            <div className="flex flex-wrap gap-1.5">
+          <div className="p-4 bg-charcoal-50/50 rounded-xl space-y-3">
+            <p className="text-xs text-charcoal-500 font-medium">Popular certifications (click to add):</p>
+            <div className="flex flex-wrap gap-2">
               {COMMON_CERTIFICATIONS.slice(0, 6).map((cert) => (
                 <button
                   key={cert}
                   type="button"
                   onClick={() => addCertification(cert)}
-                  className="px-2.5 py-1 text-xs border border-charcoal-200 rounded-full hover:bg-charcoal-50 hover:border-charcoal-300 transition-colors"
+                  className="px-3 py-1.5 text-xs border border-charcoal-200 rounded-full hover:bg-white hover:border-gold-300 hover:text-gold-700 transition-all duration-200"
                 >
                   + {cert}
                 </button>
@@ -452,7 +517,7 @@ export function IntakeStep2Requirements() {
             </div>
           </div>
         )}
-      </div>
+      </Section>
     </div>
   )
 }

@@ -43,10 +43,11 @@ export default function JobIntakePage() {
     ...jobIntakeWizardConfig,
     onSubmit: async (formData: JobIntakeFormData) => {
       // Normalize certifications - handle legacy string format from localStorage
-      const normalizedCertifications = Array.isArray(formData.certifications)
-        ? formData.certifications
-        : typeof formData.certifications === 'string' && formData.certifications
-          ? formData.certifications.split(',').map((c) => c.trim()).filter(Boolean)
+      const rawCerts = formData.certifications as string[] | string | undefined
+      const normalizedCertifications = Array.isArray(rawCerts)
+        ? rawCerts
+        : typeof rawCerts === 'string' && rawCerts
+          ? rawCerts.split(',').map((c: string) => c.trim()).filter(Boolean)
           : []
 
       return createJobMutation.mutateAsync({
@@ -56,6 +57,7 @@ export default function JobIntakePage() {
         positionsCount: formData.positionsCount,
         priority: formData.priority as 'low' | 'normal' | 'high' | 'urgent' | 'critical',
         targetStartDate: formData.targetStartDate || undefined,
+        targetEndDate: formData.targetEndDate || undefined,
         // Location (structured for centralized addresses)
         isRemote: formData.workArrangement === 'remote',
         isHybrid: formData.workArrangement === 'hybrid',
@@ -82,6 +84,8 @@ export default function JobIntakePage() {
         intakeData: {
           intakeMethod: formData.intakeMethod,
           hiringManagerId: formData.hiringManagerId || undefined,
+          targetStartDate: formData.targetStartDate || undefined,
+          targetEndDate: formData.targetEndDate || undefined,
           experienceLevel: formData.experienceLevel,
           requiredSkillsDetailed: formData.requiredSkills,
           preferredSkills: formData.preferredSkills,
@@ -90,14 +94,21 @@ export default function JobIntakePage() {
           industries: formData.industries,
           roleOpenReason: formData.roleOpenReason,
           teamName: formData.teamName || undefined,
-          teamSize: formData.teamSize ? parseInt(formData.teamSize) : undefined,
+          teamSize: formData.teamSize || undefined,  // Store as string to preserve dropdown values like "4-6"
           reportsTo: formData.reportsTo || undefined,
-          directReports: formData.directReports ? parseInt(formData.directReports) : undefined,
+          directReports: formData.directReports || undefined,  // Store as string to preserve dropdown values like "1-2"
           keyProjects: formData.keyProjects || undefined,
           successMetrics: formData.successMetrics || undefined,
           workArrangement: formData.workArrangement,
           hybridDays: formData.workArrangement === 'hybrid' ? formData.hybridDays : undefined,
           locationRestrictions: formData.locationRestrictions,
+          // Store full address in intake_data for job location
+          locationAddressLine1: formData.locationAddressLine1 || undefined,
+          locationAddressLine2: formData.locationAddressLine2 || undefined,
+          locationCity: formData.locationCity || undefined,
+          locationState: formData.locationState || undefined,
+          locationPostalCode: formData.locationPostalCode || undefined,
+          locationCountry: formData.locationCountry || undefined,
           workAuthorizations: formData.workAuthorizations,
           payRateMin: formData.payRateMin ? parseFloat(formData.payRateMin) : undefined,
           payRateMax: formData.payRateMax ? parseFloat(formData.payRateMax) : undefined,

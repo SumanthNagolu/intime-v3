@@ -213,11 +213,10 @@ export const hotlistsListConfig: ListViewConfig<Hotlist> = {
     // TODO: Implement hotlists router
     // For now, return empty data
     return {
-      data: { items: [], total: 0 },
+      data: { items: [] as Hotlist[], total: 0 },
       isLoading: false,
       error: null,
-      refetch: () => Promise.resolve({ data: { items: [], total: 0 } }),
-    } as any
+    }
   },
 }
 
@@ -333,11 +332,10 @@ export const hotlistsDetailConfig: DetailViewConfig<Hotlist> = {
     // TODO: Implement hotlists router
     // For now, return empty data
     return {
-      data: undefined,
+      data: undefined as Hotlist | undefined,
       isLoading: false,
       error: null,
-      refetch: () => Promise.resolve({ data: undefined }),
-    } as any
+    }
   },
 }
 

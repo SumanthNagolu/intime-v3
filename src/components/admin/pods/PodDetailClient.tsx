@@ -5,28 +5,20 @@ import { useRouter } from 'next/navigation'
 import { trpc } from '@/lib/trpc/client'
 import {
   DashboardShell,
-  DashboardSection,
-  DashboardGrid,
 } from '@/components/dashboard/DashboardShell'
-import { StatsCard } from '@/components/dashboard/StatsCard'
 import { Button } from '@/components/ui/button'
 import {
   Edit,
-  UserPlus,
-  UserMinus,
   Power,
   PowerOff,
   Loader2,
-  Briefcase,
-  FileText,
-  Target,
-  DollarSign,
-  Crown,
   AlertTriangle,
+  ArrowLeft,
 } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from 'sonner'
-import { AddMembersDialog } from './AddMembersDialog'
+import { GroupDetailTabs } from '@/components/admin/groups/GroupDetailTabs'
+import type { FullGroupData } from '@/types/admin'
 
 const POD_TYPE_LABELS: Record<string, string> = {
   recruiting: 'Recruiting',
@@ -69,6 +61,8 @@ type PodData = {
   sprint_duration_weeks?: number | null
   placements_per_sprint_target?: number | null
   sprint_start_day?: string | null
+  formed_date?: string | null
+  dissolved_date?: string | null
   manager?: UserProfile | null
   region?: Region | null
   members?: PodMember[]
@@ -90,42 +84,31 @@ interface PodDetailClientProps {
   data: PodData
 }
 
+/**
+ * Pod Detail Client - Guidewire-style with tabbed layout
+ * Uses GroupDetailTabs for 6-tab navigation (Basics, Users, Producer Codes, Queues, Regions)
+ */
 export function PodDetailClient({ data: pod }: PodDetailClientProps) {
   const router = useRouter()
   const utils = trpc.useUtils()
 
-  const [showAddMembers, setShowAddMembers] = useState(false)
   const [showDeactivateDialog, setShowDeactivateDialog] = useState(false)
-  const [memberToRemove, setMemberToRemove] = useState<string | null>(null)
-
-  const removeMemberMutation = trpc.pods.removeMembers.useMutation({
-    onSuccess: () => {
-      toast.success('Member removed')
-      utils.pods.getById.invalidate({ id: pod.id })
-      utils.pods.getFullPod.invalidate({ id: pod.id })
-      setMemberToRemove(null)
-      router.refresh()
-    },
-    onError: (error) => {
-      toast.error(error.message || 'Failed to remove member')
-    },
-  })
 
   const deactivateMutation = trpc.pods.deactivate.useMutation({
     onSuccess: () => {
-      toast.success('Pod deactivated')
+      toast.success('Group deactivated')
       utils.pods.list.invalidate()
       utils.pods.listWithStats.invalidate()
       router.push('/employee/admin/pods')
     },
     onError: (error) => {
-      toast.error(error.message || 'Failed to deactivate pod')
+      toast.error(error.message || 'Failed to deactivate group')
     },
   })
 
   const reactivateMutation = trpc.pods.reactivate.useMutation({
     onSuccess: () => {
-      toast.success('Pod reactivated')
+      toast.success('Group reactivated')
       utils.pods.getById.invalidate({ id: pod.id })
       utils.pods.getFullPod.invalidate({ id: pod.id })
       utils.pods.list.invalidate()
@@ -133,26 +116,90 @@ export function PodDetailClient({ data: pod }: PodDetailClientProps) {
       router.refresh()
     },
     onError: (error) => {
-      toast.error(error.message || 'Failed to reactivate pod')
+      toast.error(error.message || 'Failed to reactivate group')
     },
   })
 
   const breadcrumbs = [
     { label: 'Admin', href: '/employee/admin' },
-    { label: 'Pods', href: '/employee/admin/pods' },
+    { label: 'Groups', href: '/employee/admin/pods' },
     { label: pod.name },
   ]
 
   const activeMembers = pod.members?.filter((m: PodMember) => m.is_active) ?? []
-  const metrics = pod.sections.metrics
+
+  // Transform PodData to FullGroupData for GroupDetailTabs
+  const groupData: FullGroupData = {
+    id: pod.id,
+    name: pod.name,
+    description: pod.description ?? undefined,
+    pod_type: pod.pod_type,
+    status: pod.status,
+    formed_date: pod.formed_date ?? undefined,
+    dissolved_date: pod.dissolved_date ?? undefined,
+    region_id: pod.region_id ?? undefined,
+    manager_id: pod.manager_id ?? undefined,
+    created_at: '',
+    updated_at: '',
+    manager: pod.manager ? {
+      id: pod.manager.id,
+      full_name: pod.manager.full_name,
+      email: pod.manager.email,
+      avatar_url: pod.manager.avatar_url ?? undefined,
+    } : null,
+    region: pod.region ? {
+      id: pod.region.id,
+      name: pod.region.name,
+      code: pod.region.code,
+    } : null,
+    members: (pod.members ?? []).map((m: PodMember) => ({
+      id: m.id,
+      user_id: m.user.id,
+      role: m.role,
+      is_active: m.is_active,
+      joined_at: m.joined_at,
+      user: {
+        id: m.user.id,
+        full_name: m.user.full_name,
+        email: m.user.email,
+        avatar_url: m.user.avatar_url ?? undefined,
+      },
+    })),
+    queues: [],
+    producerCodes: [],
+    regions: pod.region ? [{
+      id: pod.region.id,
+      name: pod.region.name,
+      code: pod.region.code,
+    }] : [],
+    sections: {
+      metrics: {
+        sprintMetrics: null,
+        openJobs: pod.sections.metrics.openJobs,
+        submissionsMtd: pod.sections.metrics.submissionsMtd,
+        placementsMtd: pod.sections.metrics.placementsMtd,
+        revenueMtd: pod.sections.metrics.revenueMtd,
+      },
+      activity: {
+        items: pod.sections.activity.items as [],
+        total: pod.sections.activity.total,
+      },
+    },
+  }
 
   return (
     <DashboardShell
       title={pod.name}
-      description={`${POD_TYPE_LABELS[pod.pod_type] ?? pod.pod_type} Pod${pod.region ? ` - ${pod.region.name}` : ''}`}
+      description={`${POD_TYPE_LABELS[pod.pod_type] ?? pod.pod_type} Group${pod.region ? ` - ${pod.region.name}` : ''}`}
       breadcrumbs={breadcrumbs}
       actions={
         <div className="flex gap-2">
+          <Link href="/employee/admin/pods">
+            <Button variant="outline">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Up to Groups
+            </Button>
+          </Link>
           {pod.status === 'active' ? (
             <>
               <Link href={`/employee/admin/pods/${pod.id}/edit`}>
@@ -189,203 +236,29 @@ export function PodDetailClient({ data: pod }: PodDetailClientProps) {
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 flex items-center gap-3">
           <AlertTriangle className="w-5 h-5 text-amber-600" />
           <p className="text-amber-800 font-medium">
-            This pod is currently inactive. Reactivate it to resume operations.
+            This group is currently inactive. Reactivate it to resume operations.
           </p>
         </div>
       )}
 
-      {/* Pod Metrics */}
-      <DashboardSection title="Pod Metrics">
-        <DashboardGrid columns={4}>
-          <StatsCard
-            title="Open Jobs"
-            value={metrics.openJobs}
-            icon={Briefcase}
-          />
-          <StatsCard
-            title="Submissions (MTD)"
-            value={metrics.submissionsMtd}
-            icon={FileText}
-          />
-          <StatsCard
-            title="Placements (MTD)"
-            value={metrics.placementsMtd}
-            icon={Target}
-            variant="success"
-          />
-          <StatsCard
-            title="Revenue (MTD)"
-            value={`$${metrics.revenueMtd.toLocaleString()}`}
-            icon={DollarSign}
-          />
-        </DashboardGrid>
-      </DashboardSection>
-
-      {/* Members Section */}
-      <DashboardSection
-        title={`Members (${activeMembers.length})`}
-        action={
-          pod.status === 'active' && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowAddMembers(true)}
-            >
-              <UserPlus className="w-4 h-4 mr-2" />
-              Add Members
-            </Button>
-          )
-        }
-      >
-        <div className="bg-white rounded-xl border border-charcoal-100 divide-y divide-charcoal-100">
-          {/* Manager */}
-          {pod.manager && (
-            <div className="p-4 flex items-center justify-between bg-gold-50/50">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gold-100 flex items-center justify-center text-gold-700 font-medium">
-                  {pod.manager.full_name?.split(' ').map((n: string) => n[0]).join('').slice(0, 2)}
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium text-charcoal-900">
-                      {pod.manager.full_name}
-                    </span>
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-gold-100 text-gold-800 rounded-full text-xs font-medium">
-                      <Crown className="w-3 h-3" />
-                      Manager
-                    </span>
-                  </div>
-                  <span className="text-sm text-charcoal-500">{pod.manager.email}</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Members */}
-          {activeMembers.length === 0 ? (
-            <div className="p-8 text-center text-charcoal-500">
-              No members assigned to this pod yet.
-            </div>
-          ) : (
-            activeMembers.map((member: PodMember) => (
-              <div key={member.id} className="p-4 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-charcoal-100 flex items-center justify-center text-charcoal-700 font-medium">
-                    {member.user.full_name?.split(' ').map((n: string) => n[0]).join('').slice(0, 2)}
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-charcoal-900">
-                        {member.user.full_name}
-                      </span>
-                      <span className="inline-flex px-2 py-0.5 bg-charcoal-100 text-charcoal-600 rounded-full text-xs font-medium">
-                        {member.role === 'senior' ? 'Senior' : 'Junior'}
-                      </span>
-                    </div>
-                    <span className="text-sm text-charcoal-500">
-                      {member.user.email}
-                      {member.joined_at && ` joined ${new Date(member.joined_at).toLocaleDateString()}`}
-                    </span>
-                  </div>
-                </div>
-                {pod.status === 'active' && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-charcoal-400 hover:text-red-600"
-                    onClick={() => setMemberToRemove(member.user.id)}
-                  >
-                    <UserMinus className="w-4 h-4" />
-                  </Button>
-                )}
-              </div>
-            ))
-          )}
-        </div>
-      </DashboardSection>
-
-      {/* Sprint Configuration Section */}
-      <DashboardSection title="Sprint Configuration">
-        <div className="bg-white rounded-xl border border-charcoal-100 p-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div>
-              <p className="text-sm text-charcoal-500">Sprint Duration</p>
-              <p className="font-semibold">{pod.sprint_duration_weeks ?? 2} weeks</p>
-            </div>
-            <div>
-              <p className="text-sm text-charcoal-500">Placements Target</p>
-              <p className="font-semibold">{pod.placements_per_sprint_target ?? 2} per sprint</p>
-            </div>
-            <div>
-              <p className="text-sm text-charcoal-500">Sprint Start Day</p>
-              <p className="font-semibold capitalize">{pod.sprint_start_day ?? 'Monday'}</p>
-            </div>
-            <div>
-              <p className="text-sm text-charcoal-500">Status</p>
-              <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                pod.status === 'active'
-                  ? 'bg-green-100 text-green-800'
-                  : 'bg-charcoal-100 text-charcoal-600'
-              }`}>
-                {pod.status}
-              </span>
-            </div>
-          </div>
-        </div>
-      </DashboardSection>
-
-      {/* Add Members Dialog */}
-      <AddMembersDialog
-        open={showAddMembers}
-        onOpenChange={setShowAddMembers}
-        podId={pod.id}
-        existingMemberIds={activeMembers.map((m: PodMember) => m.user.id)}
+      {/* Tabbed Content */}
+      <GroupDetailTabs
+        group={groupData}
+        onMembersChange={() => {
+          utils.pods.getFullPod.invalidate({ id: pod.id })
+          router.refresh()
+        }}
       />
-
-      {/* Remove Member Confirmation Dialog */}
-      {memberToRemove && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold text-charcoal-900 mb-2">Remove Member</h3>
-            <p className="text-charcoal-600 mb-6">
-              Are you sure you want to remove this member from the pod? They can be added back later.
-            </p>
-            <div className="flex justify-end gap-3">
-              <Button
-                variant="outline"
-                onClick={() => setMemberToRemove(null)}
-              >
-                Cancel
-              </Button>
-              <Button
-                className="bg-red-600 hover:bg-red-700 text-white"
-                onClick={() => {
-                  if (memberToRemove) {
-                    removeMemberMutation.mutate({
-                      podId: pod.id,
-                      userIds: [memberToRemove],
-                    })
-                  }
-                }}
-                disabled={removeMemberMutation.isPending}
-              >
-                {removeMemberMutation.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                Remove
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Deactivate Confirmation Dialog */}
       {showDeactivateDialog && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold text-charcoal-900 mb-2">Deactivate Pod</h3>
+            <h3 className="text-lg font-semibold text-charcoal-900 mb-2">Deactivate Group</h3>
             <p className="text-charcoal-600 mb-6">
               {activeMembers.length > 0
-                ? `This pod has ${activeMembers.length} active member(s). You'll need to remove them before deactivating.`
-                : 'Are you sure you want to deactivate this pod? It can be reactivated later.'}
+                ? `This group has ${activeMembers.length} active member(s). You'll need to remove them before deactivating.`
+                : 'Are you sure you want to deactivate this group? It can be reactivated later.'}
             </p>
             <div className="flex justify-end gap-3">
               <Button

@@ -71,7 +71,7 @@ export async function getUserRole(userId?: string): Promise<UserRole | null> {
         return {
           code: profile.employee_role,
           category: 'pod_ic', // Default category for legacy roles
-          displayName: profile.employee_role.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+          displayName: profile.employee_role.replace(/_/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase()),
         };
       }
       return null;

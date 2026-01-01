@@ -50,6 +50,43 @@ import {
   Briefcase,
 } from 'lucide-react'
 
+// ==========================================
+// Extended Lead Type for Joined Data
+// ==========================================
+
+interface LeadActivity {
+  id: string
+  activity_type: string
+  subject?: string
+  description?: string
+  created_at: string
+  creator?: { full_name: string }
+}
+
+interface LeadTask {
+  id: string
+  title: string
+  due_date?: string
+  status: string
+  priority?: string
+}
+
+/**
+ * Extended Lead type with all joined/computed properties from the API
+ */
+interface LeadWithRelations extends Lead {
+  website?: string
+  linkedin_url?: string
+  last_contacted_at?: string
+  bant_budget?: number
+  bant_authority?: number
+  bant_need?: number
+  bant_timeline?: number
+  qualification_notes?: string
+  activities?: LeadActivity[]
+  tasks?: LeadTask[]
+}
+
 /**
  * Dispatch a dialog open event for the Lead entity
  * The detail page listens for this and manages dialog state
@@ -76,7 +113,7 @@ interface PCFSectionProps {
  * Shows contact info, company details, and opportunity information
  */
 export function LeadOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
-  const lead = entity as Lead | undefined
+  const lead = entity as LeadWithRelations | undefined
 
   if (!lead) return null
 
@@ -144,13 +181,13 @@ export function LeadOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
                 </div>
               </div>
             )}
-            {(lead as any).website && (
+            {lead.website && (
               <div className="flex items-start gap-3">
                 <Globe className="w-4 h-4 text-charcoal-400 mt-1" />
                 <div>
                   <div className="text-xs text-charcoal-500">Website</div>
                   <a
-                    href={(lead as any).website}
+                    href={lead.website}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-600 hover:underline"
@@ -160,13 +197,13 @@ export function LeadOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
                 </div>
               </div>
             )}
-            {(lead as any).linkedin_url && (
+            {lead.linkedin_url && (
               <div className="flex items-start gap-3">
                 <Linkedin className="w-4 h-4 text-charcoal-400 mt-1" />
                 <div>
                   <div className="text-xs text-charcoal-500">LinkedIn</div>
                   <a
-                    href={(lead as any).linkedin_url}
+                    href={lead.linkedin_url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-600 hover:underline"
@@ -293,11 +330,11 @@ export function LeadOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
                 </div>
               </div>
             )}
-            {(lead as any).last_contacted_at && (
+            {lead.last_contacted_at && (
               <div>
                 <div className="text-xs text-charcoal-500 mb-1">Last Contacted</div>
                 <div className="text-sm">
-                  {formatDistanceToNow(new Date((lead as any).last_contacted_at), {
+                  {formatDistanceToNow(new Date(lead.last_contacted_at), {
                     addSuffix: true,
                   })}
                 </div>
@@ -331,12 +368,11 @@ export function LeadOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
  * Shows Budget, Authority, Need, Timeline scoring with inline editing
  */
 export function LeadBANTSectionPCF({ entityId, entity }: PCFSectionProps) {
-  const lead = entity as Lead | undefined
+  const lead = entity as LeadWithRelations | undefined
 
   if (!lead) return null
 
   const bantScore = lead.bant_total_score || 0
-  const bantData = lead as any
 
   return (
     <div className="space-y-6">
@@ -378,7 +414,7 @@ export function LeadBANTSectionPCF({ entityId, entity }: PCFSectionProps) {
             <div className="text-center p-4 bg-charcoal-50 rounded-lg">
               <DollarSign className="w-6 h-6 mx-auto text-charcoal-500 mb-2" />
               <div className="text-2xl font-bold text-charcoal-900">
-                {bantData.bant_budget || 0}
+                {lead.bant_budget || 0}
               </div>
               <div className="text-sm text-charcoal-500">Budget</div>
               <div className="text-xs text-charcoal-400 mt-1">Out of 25</div>
@@ -386,7 +422,7 @@ export function LeadBANTSectionPCF({ entityId, entity }: PCFSectionProps) {
             <div className="text-center p-4 bg-charcoal-50 rounded-lg">
               <UserCheck className="w-6 h-6 mx-auto text-charcoal-500 mb-2" />
               <div className="text-2xl font-bold text-charcoal-900">
-                {bantData.bant_authority || 0}
+                {lead.bant_authority || 0}
               </div>
               <div className="text-sm text-charcoal-500">Authority</div>
               <div className="text-xs text-charcoal-400 mt-1">Out of 25</div>
@@ -394,7 +430,7 @@ export function LeadBANTSectionPCF({ entityId, entity }: PCFSectionProps) {
             <div className="text-center p-4 bg-charcoal-50 rounded-lg">
               <Target className="w-6 h-6 mx-auto text-charcoal-500 mb-2" />
               <div className="text-2xl font-bold text-charcoal-900">
-                {bantData.bant_need || 0}
+                {lead.bant_need || 0}
               </div>
               <div className="text-sm text-charcoal-500">Need</div>
               <div className="text-xs text-charcoal-400 mt-1">Out of 25</div>
@@ -402,7 +438,7 @@ export function LeadBANTSectionPCF({ entityId, entity }: PCFSectionProps) {
             <div className="text-center p-4 bg-charcoal-50 rounded-lg">
               <Clock className="w-6 h-6 mx-auto text-charcoal-500 mb-2" />
               <div className="text-2xl font-bold text-charcoal-900">
-                {bantData.bant_timeline || 0}
+                {lead.bant_timeline || 0}
               </div>
               <div className="text-sm text-charcoal-500">Timeline</div>
               <div className="text-xs text-charcoal-400 mt-1">Out of 25</div>
@@ -412,14 +448,14 @@ export function LeadBANTSectionPCF({ entityId, entity }: PCFSectionProps) {
       </Card>
 
       {/* Qualification Notes */}
-      {bantData.qualification_notes && (
+      {lead.qualification_notes && (
         <Card className="bg-white">
           <CardHeader>
             <CardTitle className="text-lg">Qualification Notes</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-charcoal-700 whitespace-pre-wrap">
-              {bantData.qualification_notes}
+              {lead.qualification_notes}
             </p>
           </CardContent>
         </Card>
@@ -475,7 +511,7 @@ const ACTIVITY_ICONS: Record<string, React.ReactNode> = {
  * Activities Section Adapter with inline logging
  */
 export function LeadActivitiesSectionPCF({ entityId, entity }: PCFSectionProps) {
-  const lead = entity as Lead | undefined
+  const lead = entity as LeadWithRelations | undefined
   const [activityNote, setActivityNote] = useState('')
   const [activityType, setActivityType] = useState<
     'call' | 'email' | 'linkedin_message' | 'meeting' | 'note'
@@ -507,7 +543,7 @@ export function LeadActivitiesSectionPCF({ entityId, entity }: PCFSectionProps) 
     })
   }
 
-  const activities = (lead as any)?.activities || []
+  const activities = lead?.activities || []
 
   return (
     <div className="space-y-6">
@@ -521,7 +557,7 @@ export function LeadActivitiesSectionPCF({ entityId, entity }: PCFSectionProps) 
             <div className="flex gap-2">
               <Select
                 value={activityType}
-                onValueChange={(v: any) => setActivityType(v)}
+                onValueChange={(v: typeof activityType) => setActivityType(v)}
               >
                 <SelectTrigger className="w-40">
                   <SelectValue />
@@ -612,8 +648,8 @@ export function LeadActivitiesSectionPCF({ entityId, entity }: PCFSectionProps) 
  * Tasks Section Adapter
  */
 export function LeadTasksSectionPCF({ entityId, entity }: PCFSectionProps) {
-  const lead = entity as Lead | undefined
-  const tasks = (lead as any)?.tasks || []
+  const lead = entity as LeadWithRelations | undefined
+  const tasks = lead?.tasks || []
 
   return (
     <Card className="bg-white">

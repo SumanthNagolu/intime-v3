@@ -36,14 +36,14 @@ export const referenceRouter = router({
 
   /**
    * Reference data for user creation wizard.
-   * Returns roles, pods, and managers for dropdowns.
+   * Returns roles, pods, groups, and managers for dropdowns.
    */
   getUserCreateWizardData: orgProtectedProcedure
     .query(async ({ ctx }) => {
       const adminClient = getAdminClient()
       const { orgId } = ctx
 
-      const [rolesResult, podsResult, managersResult] = await Promise.all([
+      const [rolesResult, podsResult, groupsResult, managersResult] = await Promise.all([
         adminClient
           .from('system_roles')
           .select('id, code, name, display_name, description, category, hierarchy_level, pod_type, color_code')
@@ -53,6 +53,14 @@ export const referenceRouter = router({
           .select('id, name, pod_type, status')
           .eq('org_id', orgId)
           .eq('status', 'active')
+          .order('name', { ascending: true }),
+        adminClient
+          .from('groups')
+          .select('id, name, code, group_type')
+          .eq('org_id', orgId)
+          .eq('is_active', true)
+          .is('deleted_at', null)
+          .neq('group_type', 'root')
           .order('name', { ascending: true }),
         adminClient
           .from('user_profiles')
@@ -67,13 +75,14 @@ export const referenceRouter = router({
       return {
         roles: rolesResult.data ?? [],
         pods: podsResult.data ?? [],
+        groups: groupsResult.data ?? [],
         managers: managersResult.data ?? [],
       }
     }),
 
   /**
    * Reference data for user edit wizard.
-   * Returns roles, pods, managers, and the user being edited.
+   * Returns roles, pods, groups, managers, and the user being edited.
    */
   getUserEditWizardData: orgProtectedProcedure
     .input(z.object({
@@ -83,7 +92,7 @@ export const referenceRouter = router({
       const adminClient = getAdminClient()
       const { orgId } = ctx
 
-      const [rolesResult, podsResult, managersResult, userResult] = await Promise.all([
+      const [rolesResult, podsResult, groupsResult, managersResult, userResult] = await Promise.all([
         adminClient
           .from('system_roles')
           .select('id, code, name, display_name, description, category, hierarchy_level, pod_type, color_code')
@@ -93,6 +102,14 @@ export const referenceRouter = router({
           .select('id, name, pod_type, status')
           .eq('org_id', orgId)
           .eq('status', 'active')
+          .order('name', { ascending: true }),
+        adminClient
+          .from('groups')
+          .select('id, name, code, group_type')
+          .eq('org_id', orgId)
+          .eq('is_active', true)
+          .is('deleted_at', null)
+          .neq('group_type', 'root')
           .order('name', { ascending: true }),
         adminClient
           .from('user_profiles')
@@ -113,6 +130,7 @@ export const referenceRouter = router({
             phone,
             role_id,
             manager_id,
+            primary_group_id,
             status,
             two_factor_enabled,
             pod_memberships:pod_members(
@@ -131,6 +149,7 @@ export const referenceRouter = router({
       return {
         roles: rolesResult.data ?? [],
         pods: podsResult.data ?? [],
+        groups: groupsResult.data ?? [],
         managers: managersResult.data ?? [],
         user: userResult.data ?? null,
       }

@@ -5,6 +5,11 @@ export { MyAccountsTable } from './MyAccountsTable'
 export { MyJobsTable } from './MyJobsTable'
 export { MySubmissionsTable } from './MySubmissionsTable'
 
+// GW-010: My Workspace Components
+export { StatsOverview } from './StatsOverview'
+export { WorkspaceActivitiesTable } from './WorkspaceActivitiesTable'
+export { WorkspaceSubmissionsTable } from './WorkspaceSubmissionsTable'
+
 // Types
 export type { SummaryData } from './MySummary'
 export type { ActivityItem, ActivitiesData } from './MyActivitiesTable'

@@ -58,7 +58,7 @@ export const PHONE_COUNTRY_CODES = [
 
 export type PhoneCountryCode = typeof PHONE_COUNTRY_CODES[number]['code']
 
-interface PhoneInputValue {
+export interface PhoneInputValue {
   countryCode: PhoneCountryCode
   number: string
 }

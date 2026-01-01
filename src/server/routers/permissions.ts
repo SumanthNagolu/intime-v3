@@ -160,6 +160,130 @@ export const permissionsRouter = router({
     }),
 
   // ============================================
+  // GET FULL ROLE (ONE DB CALL pattern)
+  // ============================================
+  getFullRole: orgProtectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .query(async ({ input }) => {
+      const adminClient = getAdminClient()
+
+      // Fetch all data in parallel - ONE DB CALL pattern
+      const [roleResult, permissionsResult, usersResult] = await Promise.all([
+        // Get role details
+        adminClient
+          .from('system_roles')
+          .select('*')
+          .eq('id', input.id)
+          .single(),
+        // Get permissions with details
+        adminClient
+          .from('role_permissions')
+          .select(`
+            permission_id,
+            scope_condition,
+            granted,
+            permissions (
+              id,
+              code,
+              name,
+              object_type,
+              action,
+              description
+            )
+          `)
+          .eq('role_id', input.id)
+          .eq('granted', true),
+        // Get users with this role
+        adminClient
+          .from('user_roles')
+          .select(`
+            user_id,
+            user_profiles!user_roles_user_id_fkey (
+              id,
+              full_name,
+              email,
+              avatar_url,
+              status
+            )
+          `)
+          .eq('role_id', input.id)
+          .eq('is_active', true)
+          .limit(100),
+      ])
+
+      if (roleResult.error || !roleResult.data) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Role not found',
+        })
+      }
+
+      // Transform permissions to flat structure
+      type PermissionRecord = {
+        id: string
+        code: string
+        name: string
+        object_type: string
+        action: string
+        description?: string | null
+      }
+      const permissions = (permissionsResult.data ?? [])
+        .filter((rp) => rp.permissions)
+        .map((rp) => {
+          // Supabase returns single object for to-one relations
+          const perm = rp.permissions as unknown as PermissionRecord
+          return {
+            id: perm.id,
+            code: perm.code,
+            name: perm.name,
+            module: perm.object_type,
+            resource: perm.object_type,
+            action: perm.action,
+            description: perm.description ?? undefined,
+          }
+        })
+
+      // Transform users to flat structure
+      type UserRecord = {
+        id: string
+        full_name: string
+        email: string
+        avatar_url?: string | null
+        status: string
+      }
+      const users = (usersResult.data ?? [])
+        .filter((ur) => ur.user_profiles)
+        .map((ur) => {
+          // Supabase returns single object for to-one relations
+          const user = ur.user_profiles as unknown as UserRecord
+          return {
+            id: user.id,
+            full_name: user.full_name,
+            email: user.email,
+            avatar_url: user.avatar_url ?? undefined,
+            status: user.status,
+          }
+        })
+
+      return {
+        id: roleResult.data.id,
+        code: roleResult.data.code,
+        name: roleResult.data.name,
+        display_name: roleResult.data.display_name,
+        description: roleResult.data.description,
+        category: roleResult.data.category,
+        hierarchy_level: roleResult.data.hierarchy_level,
+        color_code: roleResult.data.color_code,
+        is_active: roleResult.data.is_active,
+        is_system_role: roleResult.data.is_system_role,
+        created_at: roleResult.data.created_at,
+        updated_at: roleResult.data.updated_at,
+        permissions,
+        users,
+      }
+    }),
+
+  // ============================================
   // CREATE ROLE
   // ============================================
   createRole: orgProtectedProcedure

@@ -45,6 +45,38 @@ interface JobClientDetailsSectionProps {
   jobId: string
 }
 
+// Types for joined company data from job query
+interface JobCompany {
+  id: string
+  name: string
+  industry?: string
+}
+
+// Extended job type with joined company relations
+interface JobWithCompanyRelations {
+  client_company_id?: string
+  end_client_company_id?: string
+  vendor_company_id?: string
+  clientCompany?: JobCompany
+  endClientCompany?: JobCompany
+  vendorCompany?: JobCompany
+  interview_rounds?: InterviewRound[]
+}
+
+// Interview round type for display/editing
+interface InterviewRound {
+  name?: string
+  format?: string
+  duration?: number
+  interviewer?: string
+  focus?: string
+  round_number?: number
+  interview_type?: string
+  duration_minutes?: number
+  interviewer_names?: string
+  notes?: string
+}
+
 // Special value for "None" option in Select (Radix UI doesn't handle empty strings well)
 const NONE_VALUE = '__none__'
 
@@ -114,9 +146,11 @@ export function JobClientDetailsSection({ jobId }: JobClientDetailsSectionProps)
   const [interviewProcess, setInterviewProcess] = useState('')
 
   // Get company info from API response (uses camelCase)
-  const clientCompany = (job as any)?.clientCompany
-  const endClientCompany = (job as any)?.endClientCompany
-  const vendorCompany = (job as any)?.vendorCompany
+  // Cast once here to get proper typing for joined relations
+  const jobWithRelations = job as unknown as JobWithCompanyRelations | undefined
+  const clientCompany = jobWithRelations?.clientCompany
+  const endClientCompany = jobWithRelations?.endClientCompany
+  const vendorCompany = jobWithRelations?.vendorCompany
 
   // Handlers for Client Company
   const startEditingClient = () => {
@@ -196,7 +230,7 @@ export function JobClientDetailsSection({ jobId }: JobClientDetailsSectionProps)
   const startEditingInstructions = () => {
     setSubmissionInstructions(job?.client_submission_instructions || '')
     // Handle interview_rounds JSON
-    const interviewRounds = (job as any)?.interview_rounds
+    const interviewRounds = jobWithRelations?.interview_rounds
     if (interviewRounds && Array.isArray(interviewRounds)) {
       // Convert array to readable text
       setInterviewProcess(formatInterviewRoundsForEdit(interviewRounds))
@@ -216,7 +250,7 @@ export function JobClientDetailsSection({ jobId }: JobClientDetailsSectionProps)
   }
 
   // Helper to format interview rounds for editing
-  const formatInterviewRoundsForEdit = (rounds: any[]): string => {
+  const formatInterviewRoundsForEdit = (rounds: InterviewRound[]): string => {
     return rounds.map((round, idx) => {
       return `Round ${idx + 1}: ${round.name}\n` +
         `  Format: ${round.format}\n` +
@@ -227,7 +261,7 @@ export function JobClientDetailsSection({ jobId }: JobClientDetailsSectionProps)
   }
 
   // Helper to render interview rounds nicely
-  const renderInterviewRounds = (rounds: any[]) => {
+  const renderInterviewRounds = (rounds: InterviewRound[]) => {
     if (!Array.isArray(rounds) || rounds.length === 0) return null
 
     return (
@@ -750,7 +784,7 @@ export function JobClientDetailsSection({ jobId }: JobClientDetailsSectionProps)
                 <h4 className="text-sm font-medium text-charcoal-700 mb-2">Interview Process</h4>
                 {(() => {
                   // Try to parse interview_rounds JSON first
-                  const interviewRounds = (job as any)?.interview_rounds
+                  const interviewRounds = jobWithRelations?.interview_rounds
                   if (interviewRounds && Array.isArray(interviewRounds) && interviewRounds.length > 0) {
                     return renderInterviewRounds(interviewRounds)
                   }

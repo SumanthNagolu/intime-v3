@@ -3,6 +3,7 @@ import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure, protectedProcedure } from '../trpc/middleware'
 import { getAdminClient } from '@/lib/supabase/admin'
+import { sendInvitationEmail } from '@/lib/email'
 
 // Input schemas
 const userStatusSchema = z.enum(['pending', 'active', 'suspended', 'deactivated'])
@@ -123,6 +124,7 @@ export const usersRouter = router({
           is_active,
           role_id,
           manager_id,
+          primary_group_id,
           start_date,
           last_login_at,
           created_at,
@@ -132,6 +134,7 @@ export const usersRouter = router({
           candidate_hourly_rate,
           candidate_availability,
           role:system_roles(id, name, display_name, code, category, color_code),
+          primary_group:groups!user_profiles_primary_group_id_fkey(id, name, code, group_type),
           pod_memberships:pod_members(
             id,
             pod_id,
@@ -184,6 +187,7 @@ export const usersRouter = router({
       const transformedItems = filteredData.map((user: any) => ({
         ...user,
         role: Array.isArray(user.role) ? user.role[0] : user.role,
+        primary_group: Array.isArray(user.primary_group) ? user.primary_group[0] : user.primary_group,
         pod_memberships: user.pod_memberships?.map((pm: { pod?: unknown[] | unknown; [key: string]: unknown }) => ({
           ...pm,
           pod: Array.isArray(pm.pod) ? pm.pod[0] : pm.pod,
@@ -225,6 +229,7 @@ export const usersRouter = router({
           is_active,
           role_id,
           manager_id,
+          primary_group_id,
           start_date,
           last_login_at,
           two_factor_enabled,
@@ -232,6 +237,15 @@ export const usersRouter = router({
           created_at,
           updated_at,
           role:system_roles(id, name, display_name, code, category, color_code, description),
+          primary_group:groups!user_profiles_primary_group_id_fkey(id, name, code, group_type),
+          group_memberships:group_members(
+            id,
+            group_id,
+            is_manager,
+            is_active,
+            joined_at,
+            group:groups(id, name, code, group_type)
+          ),
           pod_memberships:pod_members(
             id,
             pod_id,
@@ -259,6 +273,11 @@ export const usersRouter = router({
       const transformedUser = {
         ...userData,
         role: Array.isArray(userData.role) ? userData.role[0] : userData.role,
+        primary_group: Array.isArray(userData.primary_group) ? userData.primary_group[0] : userData.primary_group,
+        group_memberships: userData.group_memberships?.map((gm: { group?: unknown[] | unknown; [key: string]: unknown }) => ({
+          ...gm,
+          group: Array.isArray(gm.group) ? gm.group[0] : gm.group,
+        })),
         pod_memberships: userData.pod_memberships?.map((pm: { pod?: unknown[] | unknown; [key: string]: unknown }) => ({
           ...pm,
           pod: Array.isArray(pm.pod) ? pm.pod[0] : pm.pod,
@@ -279,6 +298,8 @@ export const usersRouter = router({
       phone: z.string().optional(),
       roleId: z.string().uuid(),
       podId: z.string().uuid().optional(),
+      podRole: z.enum(['junior', 'senior']).default('junior'), // Pod role assignment
+      primaryGroupId: z.string().uuid().optional(), // Guidewire-style group assignment
       managerId: z.string().uuid().optional(),
       sendInvitation: z.boolean().default(true),
       initialPassword: z.string().min(8).optional(),
@@ -339,6 +360,7 @@ export const usersRouter = router({
           phone: input.phone,
           role_id: input.roleId,
           manager_id: input.managerId,
+          primary_group_id: input.primaryGroupId, // Guidewire-style group assignment
           two_factor_enabled: input.requireTwoFactor,
           status: input.sendInvitation ? 'pending' : 'active',
           is_active: true,
@@ -357,13 +379,25 @@ export const usersRouter = router({
         })
       }
 
+      // Add to group if specified (Guidewire-style group membership)
+      if (input.primaryGroupId) {
+        await supabase.from('group_members').insert({
+          org_id: orgId,
+          group_id: input.primaryGroupId,
+          user_id: profile.id,
+          is_manager: false,
+          is_active: true,
+          created_by: currentUser?.id,
+        })
+      }
+
       // Add to pod if specified
       if (input.podId) {
         await supabase.from('pod_members').insert({
           org_id: orgId,
           pod_id: input.podId,
           user_id: profile.id,
-          role: 'junior',
+          role: input.podRole,
           is_active: true,
         })
       }
@@ -384,6 +418,25 @@ export const usersRouter = router({
           expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
           require_two_factor: input.requireTwoFactor,
         })
+
+        // Send invitation email
+        const { data: org } = await adminClient
+          .from('organizations')
+          .select('name')
+          .eq('id', orgId)
+          .single()
+
+        const inviterName = currentUser?.email || 'Your administrator'
+        const inviteUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/accept-invitation?token=${token}`
+
+        await sendInvitationEmail({
+          to: input.email,
+          firstName: input.firstName,
+          lastName: input.lastName,
+          invitedBy: inviterName,
+          inviteLink: inviteUrl,
+          orgName: org?.name,
+        })
       }
 
       // Create audit log
@@ -398,6 +451,7 @@ export const usersRouter = router({
           email: input.email,
           full_name: fullName,
           role_id: input.roleId,
+          primary_group_id: input.primaryGroupId,
           pod_id: input.podId,
           send_invitation: input.sendInvitation,
         },
@@ -417,7 +471,9 @@ export const usersRouter = router({
       phone: z.string().optional().nullable(),
       roleId: z.string().uuid().optional(),
       podId: z.string().uuid().optional().nullable(),
+      podRole: z.enum(['junior', 'senior']).optional(), // Pod role assignment
       managerId: z.string().uuid().optional().nullable(),
+      primaryGroupId: z.string().uuid().optional().nullable(), // Guidewire-style group assignment
     }))
     .mutation(async ({ ctx, input }) => {
       const { supabase, orgId, user: currentUser } = ctx
@@ -454,6 +510,7 @@ export const usersRouter = router({
       if (updateData.phone !== undefined) updates.phone = updateData.phone
       if (updateData.roleId !== undefined) updates.role_id = updateData.roleId
       if (updateData.managerId !== undefined) updates.manager_id = updateData.managerId
+      if (updateData.primaryGroupId !== undefined) updates.primary_group_id = updateData.primaryGroupId
 
       // Update profile
       const { data: profile, error: updateError } = await supabase
@@ -493,9 +550,44 @@ export const usersRouter = router({
             org_id: orgId,
             pod_id: podId,
             user_id: id,
-            role: 'junior',
+            role: input.podRole ?? 'junior',
             is_active: true,
           })
+        }
+
+        // Update existing pod membership role if only role changed (same pod)
+        if (podId && currentPodMembership && currentPodMembership.pod_id === podId && input.podRole) {
+          await supabase
+            .from('pod_members')
+            .update({ role: input.podRole })
+            .eq('id', currentPodMembership.id)
+        }
+      }
+
+      // Handle group membership sync when primaryGroupId changes
+      if (input.primaryGroupId !== undefined && input.primaryGroupId !== currentProfile.primary_group_id) {
+        const adminClient = getAdminClient()
+
+        // Deactivate old group membership if it existed
+        if (currentProfile.primary_group_id) {
+          await adminClient
+            .from('group_members')
+            .update({ is_active: false })
+            .eq('user_id', id)
+            .eq('group_id', currentProfile.primary_group_id)
+        }
+
+        // Create or activate new group membership if new group is specified
+        if (input.primaryGroupId) {
+          await adminClient
+            .from('group_members')
+            .upsert({
+              org_id: orgId,
+              group_id: input.primaryGroupId,
+              user_id: id,
+              is_manager: false,
+              is_active: true,
+            }, { onConflict: 'group_id,user_id' })
         }
       }
 

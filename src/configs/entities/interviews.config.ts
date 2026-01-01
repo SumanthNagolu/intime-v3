@@ -25,7 +25,14 @@ import {
   InterviewFeedbackSectionPCF,
   InterviewActivitiesSectionPCF,
   InterviewLocationSectionPCF,
+  // New ONE database call pattern sections
+  InterviewParticipantsSectionPCF,
+  InterviewFeedbackEnhancedSectionPCF,
+  InterviewNotesSectionPCF,
+  InterviewDocumentsSectionPCF,
+  InterviewHistorySectionPCF,
 } from './sections/interviews.sections'
+import { StickyNote, History } from 'lucide-react'
 
 // Type definition for Interview entity
 export interface Interview extends Record<string, unknown> {
@@ -571,11 +578,18 @@ export const interviewsDetailConfig: DetailViewConfig<Interview> = {
   defaultSection: 'overview',
 
   sections: [
+    // Context-specific sections
     {
       id: 'overview',
       label: 'Overview',
       icon: FileText,
       component: InterviewOverviewSectionPCF,
+    },
+    {
+      id: 'participants',
+      label: 'Participants',
+      icon: Users,
+      component: InterviewParticipantsSectionPCF,
     },
     {
       id: 'location',
@@ -587,13 +601,32 @@ export const interviewsDetailConfig: DetailViewConfig<Interview> = {
       id: 'feedback',
       label: 'Feedback',
       icon: ThumbsUp,
-      component: InterviewFeedbackSectionPCF,
+      component: InterviewFeedbackEnhancedSectionPCF,
     },
+    // Universal sections (per CLAUDE.md)
     {
       id: 'activities',
       label: 'Activities',
       icon: Activity,
       component: InterviewActivitiesSectionPCF,
+    },
+    {
+      id: 'notes',
+      label: 'Notes',
+      icon: StickyNote,
+      component: InterviewNotesSectionPCF,
+    },
+    {
+      id: 'documents',
+      label: 'Documents',
+      icon: FileText,
+      component: InterviewDocumentsSectionPCF,
+    },
+    {
+      id: 'history',
+      label: 'History',
+      icon: History,
+      component: InterviewHistorySectionPCF,
     },
   ],
 
@@ -699,5 +732,10 @@ export const interviewsDetailConfig: DetailViewConfig<Interview> = {
 
   eventNamespace: 'interview',
 
-  useEntityQuery: (entityId) => trpc.ats.interviews.getById.useQuery({ id: entityId }),
+  // ONE database call pattern: Uses getFullInterview for comprehensive data
+  // Skip query when entity already provided from server (enabled option)
+  useEntityQuery: (entityId, options) => trpc.ats.interviews.getFullInterview.useQuery(
+    { id: entityId },
+    { enabled: options?.enabled ?? true }
+  ),
 }

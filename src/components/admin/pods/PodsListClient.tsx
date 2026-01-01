@@ -7,17 +7,10 @@ import {
   DashboardSection,
 } from '@/components/dashboard/DashboardShell'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { Plus, Search, Users, MoreHorizontal, Edit, Eye } from 'lucide-react'
+import { Plus, Users, MoreHorizontal, Edit, Eye } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { GroupSearchForm } from '@/components/admin/groups/GroupSearchForm'
 
 const POD_TYPE_LABELS: Record<string, string> = {
   recruiting: 'Recruiting',
@@ -178,45 +171,21 @@ export function PodsListClient({ initialData, initialFilters }: PodsListClientPr
       }
     >
       <DashboardSection>
-        {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-6">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-400" />
-            <Input
-              placeholder="Search pods..."
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value)
-                setPage(1)
-                updateFilters({ search: e.target.value, page: 1 })
-              }}
-              className="pl-10"
-            />
-          </div>
-          <Select value={podType} onValueChange={(v) => { setPodType(v); setPage(1); updateFilters({ podType: v, page: 1 }) }}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="All Types" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Types</SelectItem>
-              <SelectItem value="recruiting">Recruiting</SelectItem>
-              <SelectItem value="bench_sales">Bench Sales</SelectItem>
-              <SelectItem value="ta">TA</SelectItem>
-              <SelectItem value="hr">HR</SelectItem>
-              <SelectItem value="mixed">Mixed</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select value={status} onValueChange={(v) => { setStatus(v); setPage(1); updateFilters({ status: v, page: 1 }) }}>
-            <SelectTrigger className="w-[150px]">
-              <SelectValue placeholder="Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="active">Active</SelectItem>
-              <SelectItem value="inactive">Inactive</SelectItem>
-              <SelectItem value="all">All</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        {/* Search Form */}
+        <GroupSearchForm
+          onSearch={(filters) => {
+            setSearch(filters.search || '')
+            setPodType(filters.podType || '')
+            setStatus(filters.status || 'active')
+            setPage(1)
+            updateFilters({
+              search: filters.search,
+              podType: filters.podType,
+              status: filters.status,
+              page: 1,
+            })
+          }}
+        />
 
         {/* Table */}
         <div className="bg-white rounded-xl border border-charcoal-100 overflow-hidden">

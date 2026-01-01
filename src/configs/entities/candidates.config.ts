@@ -531,14 +531,14 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
     // Use ATS candidates router
     return trpc.ats.candidates.advancedSearch.useQuery({
       search: filters.search as string | undefined,
-      statuses: statusValue && statusValue !== 'all' ? [statusValue] : undefined,
-      sources: sourceValue && sourceValue !== 'all' ? [sourceValue] : undefined,
+      statuses: statusValue && statusValue !== 'all' ? [statusValue] as ('active' | 'inactive' | 'placed' | 'archived' | 'sourced' | 'screening' | 'bench')[] : undefined,
+      source: sourceValue && sourceValue !== 'all' ? sourceValue : undefined,
       minExperience,
       maxExperience,
       isOnHotlist: filters.isOnHotlist as boolean | undefined,
       limit: (filters.limit as number) || 25,
       offset: (filters.offset as number) || 0,
-      sortBy: sortByValue || 'created_at',
+      sortBy: (sortByValue || 'created_at') as 'name' | 'status' | 'title' | 'created_at' | 'first_name' | 'owner_id' | 'location' | 'submissions_count' | 'rate' | 'years_experience' | 'match_score' | 'availability' | 'experience' | 'last_updated' | 'lead_source' | 'last_activity_date',
       sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'desc'),
     })
   },

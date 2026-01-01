@@ -554,7 +554,7 @@ function SubmissionCard({
                 </DropdownMenuItem>
               )}
 
-              {stage.id === 'client_interview' && (
+              {(stage.id as string) === 'client_interview' && (
                 <DropdownMenuItem onClick={onScheduleInterview}>
                   <Phone className="w-4 h-4 mr-2" />
                   Schedule Interview
@@ -563,7 +563,7 @@ function SubmissionCard({
 
               <DropdownMenuSeparator />
 
-              {stage.id !== 'placed' && (
+              {(stage.id as string) !== 'placed' && (
                 <>
                   <DropdownMenuItem onClick={onReject} className="text-red-600">
                     <ThumbsDown className="w-4 h-4 mr-2" />

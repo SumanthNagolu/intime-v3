@@ -492,8 +492,11 @@ export const addressesRouter = router({
       const adminClient = getAdminClient()
       const userId = user?.id
 
+      console.log('[addresses.upsertForEntity] Input:', JSON.stringify(input, null, 2))
+      console.log('[addresses.upsertForEntity] OrgId:', orgId, 'UserId:', userId)
+
       // Check if address of this type already exists for entity
-      const { data: existing } = await adminClient
+      const { data: existing, error: findError } = await adminClient
         .from('addresses')
         .select('id')
         .eq('org_id', orgId)
@@ -501,6 +504,8 @@ export const addressesRouter = router({
         .eq('entity_id', input.entityId)
         .eq('address_type', input.addressType)
         .maybeSingle()
+
+      console.log('[addresses.upsertForEntity] Existing address:', existing, 'FindError:', findError)
 
       if (existing) {
         // Update existing
@@ -572,10 +577,11 @@ export const addressesRouter = router({
           .single()
 
         if (error) {
-          console.error('Failed to create address:', error)
+          console.error('[addresses.upsertForEntity] Failed to create address:', error)
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
+        console.log('[addresses.upsertForEntity] Created address:', data.id)
         return { id: data.id, created: true }
       }
     }),

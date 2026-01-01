@@ -15,25 +15,22 @@ export default async function SubmissionDetailLayout({ children, params }: Submi
   const { id: submissionId } = await params
   const caller = await getServerCaller()
 
-  // Fetch submission data on server
   let submission = null
   try {
-    submission = await caller.ats.submissions.getById({ id: submissionId })
+    // ONE database call - fetch everything
+    submission = await caller.ats.submissions.getFullSubmission({ id: submissionId })
   } catch (error) {
     console.error('[SubmissionDetailLayout] Error:', error)
-    // Handle specific error types
     if (error instanceof TRPCError) {
       if (error.code === 'UNAUTHORIZED') {
         redirect(`/login?redirect=/employee/recruiting/submissions/${submissionId}`)
       }
       if (error.code === 'FORBIDDEN') {
-        console.error('[SubmissionDetailLayout] FORBIDDEN - no org context')
         redirect(`/login?redirect=/employee/recruiting/submissions/${submissionId}`)
       }
       if (error.code === 'NOT_FOUND') {
         notFound()
       }
-      console.error('[SubmissionDetailLayout] tRPC Error:', error.code, error.message)
     }
     notFound()
   }
@@ -42,15 +39,16 @@ export default async function SubmissionDetailLayout({ children, params }: Submi
     notFound()
   }
 
-  // Build title from candidate and job names
-  const candidate = submission.candidate as { first_name: string; last_name: string } | null
-  const job = submission.job as { title: string; account?: { name: string } } | null
-  
-  const candidateName = candidate 
+  // Build display names
+  const candidate = submission.candidate
+  const job = submission.job
+  const account = submission.account
+
+  const candidateName = candidate
     ? `${candidate.first_name} ${candidate.last_name}`.trim()
     : 'Unknown Candidate'
   const jobTitle = job?.title || 'Unknown Job'
-  const accountName = job?.account?.name
+  const accountName = account?.name
 
   return (
     <EntityContextProvider

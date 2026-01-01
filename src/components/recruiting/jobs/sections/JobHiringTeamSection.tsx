@@ -40,6 +40,35 @@ interface JobHiringTeamSectionProps {
   jobId: string
 }
 
+// Types for joined contact data from job query
+interface JobContact {
+  id: string
+  first_name?: string
+  last_name?: string
+  email?: string
+  phone?: string
+  title?: string
+  full_name?: string
+}
+
+// Type for user/owner from job query
+interface JobOwner {
+  id: string
+  full_name?: string
+  avatar_url?: string
+  email?: string
+}
+
+// Extended job type with joined relations
+interface JobWithRelations {
+  owner?: JobOwner
+  owner_id?: string
+  recruiter_ids?: string[]
+  client_company_id?: string
+  hiringManagerContact?: JobContact
+  hrContact?: JobContact
+}
+
 // Role definitions for internal team
 const INTERNAL_ROLES = [
   { value: 'primary_recruiter', label: 'Primary Recruiter', icon: Crown, isPrimary: true },
@@ -104,17 +133,19 @@ export function JobHiringTeamSection({ jobId }: JobHiringTeamSectionProps) {
   const [selectedHRContactId, setSelectedHRContactId] = useState<string>('')
 
   // Get current team data (API returns camelCase: hiringManagerContact, hrContact)
-  const currentOwner = job?.owner
-  const currentRecruiters = job?.recruiter_ids || []
-  const currentHiringManager = (job as any)?.hiringManagerContact
-  const currentHRContact = (job as any)?.hrContact
+  // Cast once here to get proper typing for joined relations
+  const jobWithRelations = job as unknown as JobWithRelations | undefined
+  const currentOwner = jobWithRelations?.owner
+  const currentRecruiters = jobWithRelations?.recruiter_ids || []
+  const currentHiringManager = jobWithRelations?.hiringManagerContact
+  const currentHRContact = jobWithRelations?.hrContact
 
   // Get recruiter details from IDs (filter out owner to avoid duplicates)
   const recruiterDetails = useMemo(() => {
     const ownerId = job?.owner_id
     return currentRecruiters
-      .filter(id => id !== ownerId) // Don't show owner twice
-      .map(id => users.find(u => u.id === id))
+      .filter((id: string) => id !== ownerId) // Don't show owner twice
+      .map((id: string) => users.find(u => u.id === id))
       .filter(Boolean)
   }, [currentRecruiters, users, job?.owner_id])
 
@@ -151,7 +182,7 @@ export function JobHiringTeamSection({ jobId }: JobHiringTeamSectionProps) {
   }
 
   const handleRemoveRecruiter = async (recruiterId: string) => {
-    const updatedRecruiters = currentRecruiters.filter(id => id !== recruiterId)
+    const updatedRecruiters = currentRecruiters.filter((id: string) => id !== recruiterId)
     await updateJobMutation.mutateAsync({
       jobId,
       recruiterIds: updatedRecruiters,
@@ -226,9 +257,15 @@ export function JobHiringTeamSection({ jobId }: JobHiringTeamSectionProps) {
   }
 
   // Get contact display name
-  const getContactName = (contact: any) => {
+  const getContactName = (contact: JobContact | JobOwner | null | undefined) => {
     if (!contact) return 'Unknown'
-    return contact.full_name || `${contact.first_name || ''} ${contact.last_name || ''}`.trim() || 'Unknown'
+    if ('full_name' in contact && contact.full_name) return contact.full_name
+    if ('first_name' in contact || 'last_name' in contact) {
+      const firstName = 'first_name' in contact ? contact.first_name : ''
+      const lastName = 'last_name' in contact ? contact.last_name : ''
+      return `${firstName || ''} ${lastName || ''}`.trim() || 'Unknown'
+    }
+    return 'Unknown'
   }
 
   // Count team members
@@ -393,11 +430,11 @@ export function JobHiringTeamSection({ jobId }: JobHiringTeamSectionProps) {
                         <p className="text-sm text-charcoal-500">Primary Recruiter</p>
                       </div>
                       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        {(currentOwner as any)?.email && (
+                        {currentOwner?.email && (
                           <a
-                            href={`mailto:${(currentOwner as any).email}`}
+                            href={`mailto:${currentOwner.email}`}
                             className="p-2 rounded-lg hover:bg-charcoal-100 transition-colors"
-                            title={(currentOwner as any).email}
+                            title={currentOwner.email}
                           >
                             <Mail className="w-4 h-4 text-charcoal-500" />
                           </a>
@@ -412,7 +449,7 @@ export function JobHiringTeamSection({ jobId }: JobHiringTeamSectionProps) {
               </div>
 
               {/* Additional Recruiters */}
-              {recruiterDetails.map((recruiter) => (
+              {recruiterDetails.map((recruiter: (typeof users)[number]) => (
                 <div key={recruiter!.id} className="group">
                   <div className="flex items-center gap-4 p-4 border rounded-lg hover:border-charcoal-300 transition-colors">
                     <Avatar className="w-12 h-12">
@@ -503,13 +540,13 @@ export function JobHiringTeamSection({ jobId }: JobHiringTeamSectionProps) {
                           <SelectItem value={NONE_VALUE}>
                             <span className="text-charcoal-500">None</span>
                           </SelectItem>
-                          {contacts.map((contact: any) => (
+                          {contacts.map((contact) => (
                             <SelectItem key={contact.id} value={contact.id}>
                               <div className="flex items-center gap-2">
-                                <span>{getContactName(contact)}</span>
-                                {contact.title && (
+                                <span>{getContactName(contact as JobContact)}</span>
+                                {(contact as { title?: string }).title && (
                                   <span className="text-charcoal-400 text-sm">
-                                    • {contact.title}
+                                    • {(contact as { title?: string }).title}
                                   </span>
                                 )}
                               </div>
@@ -548,33 +585,33 @@ export function JobHiringTeamSection({ jobId }: JobHiringTeamSectionProps) {
                             Hiring Manager
                           </Badge>
                         </div>
-                        {(currentHiringManager as any)?.title && (
+                        {currentHiringManager?.title && (
                           <p className="text-sm text-charcoal-500">
-                            {(currentHiringManager as any).title}
+                            {currentHiringManager.title}
                           </p>
                         )}
                       </div>
                       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        {(currentHiringManager as any)?.email && (
+                        {currentHiringManager?.email && (
                           <a
-                            href={`mailto:${(currentHiringManager as any).email}`}
+                            href={`mailto:${currentHiringManager.email}`}
                             className="p-2 rounded-lg hover:bg-charcoal-100 transition-colors"
-                            title={(currentHiringManager as any).email}
+                            title={currentHiringManager.email}
                           >
                             <Mail className="w-4 h-4 text-charcoal-500" />
                           </a>
                         )}
-                        {(currentHiringManager as any)?.phone && (
+                        {currentHiringManager?.phone && (
                           <a
-                            href={`tel:${(currentHiringManager as any).phone}`}
+                            href={`tel:${currentHiringManager.phone}`}
                             className="p-2 rounded-lg hover:bg-charcoal-100 transition-colors"
-                            title={(currentHiringManager as any).phone}
+                            title={currentHiringManager.phone}
                           >
                             <Phone className="w-4 h-4 text-charcoal-500" />
                           </a>
                         )}
                         <Link
-                          href={`/employee/contacts/${(currentHiringManager as any).id}`}
+                          href={`/employee/contacts/${currentHiringManager.id}`}
                           className="p-2 rounded-lg hover:bg-charcoal-100 transition-colors"
                           title="View contact"
                         >
@@ -633,13 +670,13 @@ export function JobHiringTeamSection({ jobId }: JobHiringTeamSectionProps) {
                           <SelectItem value={NONE_VALUE}>
                             <span className="text-charcoal-500">None</span>
                           </SelectItem>
-                          {contacts.map((contact: any) => (
+                          {contacts.map((contact) => (
                             <SelectItem key={contact.id} value={contact.id}>
                               <div className="flex items-center gap-2">
-                                <span>{getContactName(contact)}</span>
-                                {contact.title && (
+                                <span>{getContactName(contact as JobContact)}</span>
+                                {(contact as { title?: string }).title && (
                                   <span className="text-charcoal-400 text-sm">
-                                    • {contact.title}
+                                    • {(contact as { title?: string }).title}
                                   </span>
                                 )}
                               </div>
@@ -678,33 +715,33 @@ export function JobHiringTeamSection({ jobId }: JobHiringTeamSectionProps) {
                             HR Contact
                           </Badge>
                         </div>
-                        {(currentHRContact as any)?.title && (
+                        {currentHRContact?.title && (
                           <p className="text-sm text-charcoal-500">
-                            {(currentHRContact as any).title}
+                            {currentHRContact.title}
                           </p>
                         )}
                       </div>
                       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        {(currentHRContact as any)?.email && (
+                        {currentHRContact?.email && (
                           <a
-                            href={`mailto:${(currentHRContact as any).email}`}
+                            href={`mailto:${currentHRContact.email}`}
                             className="p-2 rounded-lg hover:bg-charcoal-100 transition-colors"
-                            title={(currentHRContact as any).email}
+                            title={currentHRContact.email}
                           >
                             <Mail className="w-4 h-4 text-charcoal-500" />
                           </a>
                         )}
-                        {(currentHRContact as any)?.phone && (
+                        {currentHRContact?.phone && (
                           <a
-                            href={`tel:${(currentHRContact as any).phone}`}
+                            href={`tel:${currentHRContact.phone}`}
                             className="p-2 rounded-lg hover:bg-charcoal-100 transition-colors"
-                            title={(currentHRContact as any).phone}
+                            title={currentHRContact.phone}
                           >
                             <Phone className="w-4 h-4 text-charcoal-500" />
                           </a>
                         )}
                         <Link
-                          href={`/employee/contacts/${(currentHRContact as any).id}`}
+                          href={`/employee/contacts/${currentHRContact.id}`}
                           className="p-2 rounded-lg hover:bg-charcoal-100 transition-colors"
                           title="View contact"
                         >

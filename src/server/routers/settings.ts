@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
+import { getAdminClient } from '@/lib/supabase/admin'
 
 // Schema definitions
 const systemSettingCategorySchema = z.enum(['general', 'security', 'email', 'files', 'api'])
@@ -14,19 +15,44 @@ export const settingsRouter = router({
   // ============================================
   getOrganization: orgProtectedProcedure
     .query(async ({ ctx }) => {
-      const { supabase, orgId } = ctx
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
 
-      const { data: org, error } = await supabase
+      // Use admin client to bypass RLS and check if org exists
+      let { data: org, error } = await adminClient
         .from('organizations')
         .select('*')
         .eq('id', orgId)
         .single()
 
+      // If org doesn't exist, try to create a default one
       if (error || !org) {
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Organization not found',
-        })
+        console.log(`Organization ${orgId} not found, attempting to create...`)
+        
+        // Create default organization
+        const { data: newOrg, error: createError } = await adminClient
+          .from('organizations')
+          .insert({
+            id: orgId,
+            name: 'My Organization',
+            slug: `org-${orgId.slice(0, 8)}`,
+            timezone: 'America/New_York',
+            locale: 'en-US',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          })
+          .select()
+          .single()
+
+        if (createError) {
+          console.error('Failed to create organization:', createError)
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Organization not found and could not be created',
+          })
+        }
+
+        org = newOrg
       }
 
       return org

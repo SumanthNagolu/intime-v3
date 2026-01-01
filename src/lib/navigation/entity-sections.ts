@@ -27,6 +27,8 @@ import {
   MapPin,
   ClipboardList,
   ClipboardCheck,
+  DollarSign,
+  ShieldCheck,
 } from 'lucide-react'
 
 /**
@@ -149,22 +151,22 @@ export const campaignSections: SectionDefinition[] = [
 
 /**
  * Account sections - Guidewire-style with main sections + tools
- * Main: Overview, Contacts, Jobs, Placements (sub-object collections)
+ * Main: Summary, Contacts, Jobs, Placements (sub-object collections)
  * Tools: Activities, Notes, Documents, History
  */
 export const accountSections: SectionDefinition[] = [
   // Main sections
-  { id: 'overview', label: 'Overview', icon: Building2 },
+  { id: 'summary', label: 'Summary', icon: Building2 },
   { id: 'contacts', label: 'Contacts', icon: Users, showCount: true },
   { id: 'jobs', label: 'Jobs', icon: Briefcase, showCount: true },
   { id: 'placements', label: 'Placements', icon: Award, showCount: true },
   { id: 'addresses', label: 'Addresses', icon: MapPin, showCount: true },
+  { id: 'meetings', label: 'Meetings', icon: Calendar, showCount: true },
+  { id: 'escalations', label: 'Escalations', icon: AlertTriangle, showCount: true, alertOnCount: true },
   // Tools section
   { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true },
   { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },
   { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true },
-  { id: 'meetings', label: 'Meetings', icon: Calendar, showCount: true, isToolSection: true },
-  { id: 'escalations', label: 'Escalations', icon: AlertTriangle, showCount: true, alertOnCount: true, isToolSection: true },
   { id: 'history', label: 'History', icon: History, isToolSection: true },
 ]
 
@@ -174,22 +176,63 @@ export const accountSections: SectionDefinition[] = [
  * Tools: Activities, Notes, Documents, History
  */
 export const jobSections: SectionDefinition[] = [
-  // Main sections
-  { id: 'overview', label: 'Overview', icon: FileText },
-  { id: 'requirements', label: 'Requirements', icon: ListChecks },
-  { id: 'location', label: 'Location', icon: MapPin },
-  { id: 'team', label: 'Hiring Team', icon: Users },
-  { id: 'client', label: 'Client Details', icon: Building2 },
-  { id: 'pipeline', label: 'Pipeline', icon: Layers, showCount: true },
-  { id: 'submissions', label: 'Submissions', icon: Send, showCount: true },
-  { id: 'interviews', label: 'Interviews', icon: Calendar, showCount: true },
-  { id: 'offers', label: 'Offers', icon: Gift, showCount: true },
+  // Job Details group
+  { id: 'overview', label: 'Overview', icon: FileText, group: 'main' },
+  { id: 'requirements', label: 'Requirements', icon: ListChecks, group: 'main' },
+  { id: 'client', label: 'Client Details', icon: Building2, group: 'main' },
+  { id: 'location', label: 'Location', icon: MapPin, group: 'main' },
+  // Hiring Team group
+  { id: 'team', label: 'Hiring Team', icon: Users, group: 'main', showCount: true },
+  // Pipeline group
+  { id: 'pipeline', label: 'Pipeline', icon: Layers, showCount: true, group: 'main' },
+  { id: 'submissions', label: 'Submissions', icon: Send, showCount: true, group: 'main' },
+  { id: 'interviews', label: 'Interviews', icon: Calendar, showCount: true, group: 'main' },
+  { id: 'offers', label: 'Offers', icon: Gift, showCount: true, group: 'main' },
   // Tools section
-  { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true },
-  { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },
-  { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true },
-  { id: 'history', label: 'History', icon: History, isToolSection: true },
+  { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true, group: 'tools' },
+  { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true, group: 'tools' },
+  { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true, group: 'tools' },
+  { id: 'history', label: 'History', icon: History, isToolSection: true, group: 'tools' },
 ]
+
+/**
+ * Section Group definition for collapsible sidebar navigation
+ */
+export interface SectionGroup {
+  id: string
+  label: string
+  sectionIds: string[]
+  defaultOpen?: boolean
+}
+
+/**
+ * Job section groups - organized for Guidewire-style collapsible sidebar
+ */
+export const jobSectionGroups: SectionGroup[] = [
+  {
+    id: 'job-details',
+    label: 'Job Details',
+    sectionIds: ['overview', 'requirements', 'client', 'location'],
+    defaultOpen: true,
+  },
+  {
+    id: 'hiring-team',
+    label: 'Hiring Team',
+    sectionIds: ['team'],
+    defaultOpen: true,
+  },
+  {
+    id: 'pipeline',
+    label: 'Pipeline',
+    sectionIds: ['pipeline', 'submissions', 'interviews', 'offers'],
+    defaultOpen: true,
+  },
+]
+
+/**
+ * Tool sections for jobs - remain separate and collapsible
+ */
+export const jobToolSections = jobSections.filter(s => s.isToolSection)
 
 /**
  * Contact sections - Guidewire-style with main sections + tools
@@ -228,20 +271,21 @@ export const submissionSections: SectionDefinition[] = [
 ]
 
 /**
- * Lead sections - Guidewire-style with main sections + tools
- * Main: Overview, BANT Scoring, Tasks
+ * Lead sections - Guidewire-style with main sections + tools (GW-051)
+ * Main: Summary (BANT breakdown), Contact, Engagement, Deal
  * Tools: Activities, Notes, Documents, History
  */
 export const leadSections: SectionDefinition[] = [
-  // Main sections
-  { id: 'overview', label: 'Overview', icon: Target },
-  { id: 'bant', label: 'BANT Scoring', icon: ListChecks },
-  { id: 'tasks', label: 'Tasks', icon: ClipboardList, showCount: true },
-  // Tools section
-  { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true },
-  { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },
-  { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true },
-  { id: 'history', label: 'History', icon: History, isToolSection: true },
+  // Main sections - Context-specific
+  { id: 'summary', label: 'Summary', icon: Target, group: 'main', description: 'Lead details and BANT qualification score' },
+  { id: 'contact', label: 'Contact', icon: UserCircle, group: 'main', description: 'Contact profile and company info' },
+  { id: 'engagement', label: 'Engagement', icon: BarChart3, showCount: true, group: 'main', description: 'Engagement timeline and activities' },
+  { id: 'deal', label: 'Deal', icon: DollarSign, group: 'main', description: 'Associated deal and pipeline progress' },
+  // Tools section - Universal
+  { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true, group: 'tools', description: 'Lead-related activities' },
+  { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true, group: 'tools', description: 'Internal notes' },
+  { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true, group: 'tools', description: 'Attached documents' },
+  { id: 'history', label: 'History', icon: History, isToolSection: true, group: 'tools', description: 'Audit trail' },
 ]
 
 /**
@@ -262,12 +306,12 @@ export const dealSections: SectionDefinition[] = [
 
 /**
  * Candidate sections - Guidewire-style with main sections + tools
- * Main: Overview, Screening, Profiles, Submissions
+ * Main: Summary, Screening, Profiles, Submissions
  * Tools: Activities, Notes, Documents, History
  */
 export const candidateSections: SectionDefinition[] = [
   // Main sections
-  { id: 'overview', label: 'Overview', icon: UserCircle },
+  { id: 'summary', label: 'Summary', icon: UserCircle },
   { id: 'screening', label: 'Screening', icon: ClipboardCheck, showCount: true },
   { id: 'profiles', label: 'Profiles', icon: FileText, showCount: true },
   { id: 'submissions', label: 'Submissions', icon: Send, showCount: true },
@@ -284,15 +328,16 @@ export const candidateSections: SectionDefinition[] = [
  * Tools: Activities, Notes, Documents, History
  */
 export const placementSections: SectionDefinition[] = [
-  // Main sections
-  { id: 'overview', label: 'Overview', icon: Award },
-  { id: 'timesheets', label: 'Timesheets', icon: Clock, showCount: true },
-  { id: 'location', label: 'Location', icon: MapPin },
-  // Tools section
-  { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true },
-  { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },
-  { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true },
-  { id: 'history', label: 'History', icon: History, isToolSection: true },
+  // Main sections - Context-specific
+  { id: 'overview', label: 'Overview', icon: Award, group: 'main', description: 'Placement summary and consultant info' },
+  { id: 'location', label: 'Location', icon: MapPin, group: 'main', description: 'First day and work location' },
+  { id: 'timesheets', label: 'Timesheets', icon: Clock, showCount: true, group: 'main', description: 'Weekly timesheets and hours' },
+  { id: 'compliance', label: 'Compliance', icon: ShieldCheck, showCount: true, alertOnCount: true, group: 'main', description: 'Required documents and certifications' },
+  // Tools section - Universal
+  { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true, group: 'tools', description: 'Check-ins and activities' },
+  { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true, group: 'tools', description: 'Internal notes' },
+  { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true, group: 'tools', description: 'Contracts and attachments' },
+  { id: 'history', label: 'History', icon: History, isToolSection: true, group: 'tools', description: 'Audit trail' },
 ]
 
 /**
@@ -310,6 +355,42 @@ export const timesheetSections: SectionDefinition[] = [
   { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },
   { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true },
   { id: 'history', label: 'History', icon: History, isToolSection: true },
+]
+
+/**
+ * Interview sections - Guidewire-style with main sections + tools (GW-041)
+ * Main: Overview, Participants, Location, Feedback
+ * Tools: Activities, Notes, Documents, History
+ */
+export const interviewSections: SectionDefinition[] = [
+  // Main sections - Context-specific
+  { id: 'overview', label: 'Overview', icon: FileText, group: 'main', description: 'Interview details and scheduling' },
+  { id: 'participants', label: 'Participants', icon: Users, showCount: true, group: 'main', description: 'Interviewers and attendees' },
+  { id: 'location', label: 'Location', icon: MapPin, group: 'main', description: 'Meeting location or virtual link' },
+  { id: 'feedback', label: 'Feedback', icon: MessageSquare, showCount: true, group: 'main', description: 'Interviewer feedback and scorecards' },
+  // Tools section - Universal
+  { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true, group: 'tools', description: 'Interview-related activities' },
+  { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true, group: 'tools', description: 'Internal notes' },
+  { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true, group: 'tools', description: 'Attached documents' },
+  { id: 'history', label: 'History', icon: History, isToolSection: true, group: 'tools', description: 'Audit trail' },
+]
+
+/**
+ * Offer sections - Guidewire-style with main sections + tools (GW-042)
+ * Main: Overview, Terms, Negotiation, Approvals
+ * Tools: Activities, Notes, Documents, History
+ */
+export const offerSections: SectionDefinition[] = [
+  // Main sections - Context-specific
+  { id: 'overview', label: 'Overview', icon: Gift, group: 'main', description: 'Offer summary and status' },
+  { id: 'terms', label: 'Terms', icon: DollarSign, group: 'main', description: 'Compensation and benefits' },
+  { id: 'negotiation', label: 'Negotiation', icon: MessageSquare, showCount: true, group: 'main', description: 'Counter-offers and discussions' },
+  { id: 'approvals', label: 'Approvals', icon: ClipboardCheck, showCount: true, alertOnCount: true, group: 'main', description: 'Rate and terms approvals' },
+  // Tools section - Universal
+  { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true, group: 'tools', description: 'Offer-related activities' },
+  { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true, group: 'tools', description: 'Internal notes' },
+  { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true, group: 'tools', description: 'Offer letters and attachments' },
+  { id: 'history', label: 'History', icon: History, isToolSection: true, group: 'tools', description: 'Audit trail' },
 ]
 
 /**
@@ -337,6 +418,10 @@ export function getSectionsForEntity(entityType: string): SectionDefinition[] {
       return placementSections
     case 'timesheet':
       return timesheetSections
+    case 'interview':
+      return interviewSections
+    case 'offer':
+      return offerSections
     default:
       return []
   }

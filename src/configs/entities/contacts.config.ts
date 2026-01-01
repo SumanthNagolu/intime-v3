@@ -140,7 +140,7 @@ export const CONTACT_TYPE_CONFIG: Record<string, StatusConfig> = {
 export const contactsListConfig: ListViewConfig<Contact> = {
   entityType: 'contact',
   entityName: { singular: 'Contact', plural: 'Contacts' },
-  baseRoute: '/employee/recruiting/contacts',
+  baseRoute: '/employee/contacts',
 
   title: 'Contacts',
   description: 'Manage your professional contacts',

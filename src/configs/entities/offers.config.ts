@@ -15,9 +15,17 @@ import {
   AlertCircle,
   Timer,
   TrendingUp,
+  MessageSquare,
+  ClipboardCheck,
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
+import {
+  OfferOverviewSection,
+  OfferTermsSection,
+  OfferNegotiationSection,
+  OfferApprovalsSection,
+} from './sections/offers.sections'
 
 // Type definition for Offer entity
 export interface Offer extends Record<string, unknown> {
@@ -523,17 +531,26 @@ export const offersDetailConfig: DetailViewConfig<Offer> = {
     {
       id: 'overview',
       label: 'Overview',
-      icon: FileText,
+      icon: Gift,
+      component: OfferOverviewSection,
     },
     {
-      id: 'negotiations',
-      label: 'Negotiations',
-      icon: TrendingUp,
+      id: 'terms',
+      label: 'Terms',
+      icon: DollarSign,
+      component: OfferTermsSection,
     },
     {
-      id: 'documents',
-      label: 'Documents',
-      icon: FileText,
+      id: 'negotiation',
+      label: 'Negotiation',
+      icon: MessageSquare,
+      component: OfferNegotiationSection,
+    },
+    {
+      id: 'approvals',
+      label: 'Approvals',
+      icon: ClipboardCheck,
+      component: OfferApprovalsSection,
     },
   ],
 
@@ -618,5 +635,9 @@ export const offersDetailConfig: DetailViewConfig<Offer> = {
 
   eventNamespace: 'offer',
 
-  useEntityQuery: (entityId) => trpc.ats.offers.getById.useQuery({ offerId: entityId }),
+  useEntityQuery: (entityId, options) =>
+    trpc.ats.offers.getFullOffer.useQuery(
+      { id: entityId },
+      { enabled: options?.enabled ?? true }
+    ),
 }

@@ -32,6 +32,28 @@ import { formatDistanceToNow } from 'date-fns'
 import Link from 'next/link'
 import { ActivitiesSection } from '@/components/pcf/sections/ActivitiesSection'
 
+// ==========================================
+// Extended Candidate Type for Joined Data
+// ==========================================
+
+interface CandidateSubmission {
+  id: string
+  job_id: string
+  status: string
+  created_at: string
+  job?: { title: string; account?: { name: string } }
+}
+
+/**
+ * Extended Candidate type with all joined/computed properties from the API
+ */
+interface CandidateWithRelations extends Candidate {
+  visa_status?: string
+  summary?: string
+  hotlist_notes?: string
+  submissions?: CandidateSubmission[]
+}
+
 /**
  * Dispatch a dialog open event for the Candidate entity
  * The detail page listens for this and manages dialog state
@@ -69,11 +91,11 @@ const VISA_CONFIG: Record<string, { label: string; color: string }> = {
  * Overview Section Adapter
  */
 export function CandidateOverviewSectionPCF({ entityId, entity }: PCFSectionProps) {
-  const candidate = entity as Candidate | undefined
+  const candidate = entity as CandidateWithRelations | undefined
 
   if (!candidate) return null
 
-  const visaConfig = VISA_CONFIG[(candidate as any).visa_status] || VISA_CONFIG.other
+  const visaConfig = VISA_CONFIG[candidate.visa_status || ''] || VISA_CONFIG.other
   const skills = candidate.skills || []
 
   return (
@@ -86,9 +108,9 @@ export function CandidateOverviewSectionPCF({ entityId, entity }: PCFSectionProp
             <CardTitle>Professional Summary</CardTitle>
           </CardHeader>
           <CardContent>
-            {(candidate as any).summary || candidate.professional_summary ? (
+            {candidate.summary || candidate.professional_summary ? (
               <div className="prose prose-sm max-w-none text-charcoal-700 whitespace-pre-wrap">
-                {(candidate as any).summary || candidate.professional_summary}
+                {candidate.summary || candidate.professional_summary}
               </div>
             ) : (
               <p className="text-charcoal-500 italic">No summary provided</p>
@@ -126,7 +148,7 @@ export function CandidateOverviewSectionPCF({ entityId, entity }: PCFSectionProp
         </Card>
 
         {/* Hotlist Notes */}
-        {candidate.is_on_hotlist && (candidate as any).hotlist_notes && (
+        {candidate.is_on_hotlist && candidate.hotlist_notes && (
           <Card className="bg-white border-gold-200">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -136,7 +158,7 @@ export function CandidateOverviewSectionPCF({ entityId, entity }: PCFSectionProp
             </CardHeader>
             <CardContent>
               <p className="text-charcoal-700 whitespace-pre-wrap">
-                {(candidate as any).hotlist_notes}
+                {candidate.hotlist_notes}
               </p>
             </CardContent>
           </Card>
@@ -488,8 +510,8 @@ export function CandidateProfilesSectionPCF({ entityId, entity }: PCFSectionProp
  */
 export function CandidateSubmissionsSectionPCF({ entityId, entity }: PCFSectionProps) {
   const router = useRouter()
-  const candidate = entity as Candidate | undefined
-  const submissions = (candidate as any)?.submissions || []
+  const candidate = entity as CandidateWithRelations | undefined
+  const submissions = candidate?.submissions || []
 
   return (
     <Card className="bg-white">
@@ -515,14 +537,7 @@ export function CandidateSubmissionsSectionPCF({ entityId, entity }: PCFSectionP
           </div>
         ) : (
           <div className="space-y-4">
-            {submissions.map(
-              (submission: {
-                id: string
-                job_id: string
-                status: string
-                created_at: string
-                job?: { title: string; account?: { name: string } }
-              }) => (
+            {submissions.map((submission) => (
                 <div
                   key={submission.id}
                   className="flex items-center justify-between p-4 border rounded-lg hover:bg-charcoal-50 cursor-pointer"

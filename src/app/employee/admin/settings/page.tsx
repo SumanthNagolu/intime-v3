@@ -1,7 +1,7 @@
-import { redirect } from 'next/navigation'
-
 export const dynamic = 'force-dynamic'
 
+import { OrganizationHub } from '@/components/admin/settings/OrganizationHub'
+
 export default function SettingsPage() {
-  redirect('/employee/admin/settings/organization')
+  return <OrganizationHub />
 }

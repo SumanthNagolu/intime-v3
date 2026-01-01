@@ -45,6 +45,7 @@ const createJobInput = z.object({
   urgency: urgencyEnum.default('medium'),
   targetFillDate: z.string().optional(),
   targetStartDate: z.string().optional(),
+  targetEndDate: z.string().optional(),
   clientSubmissionInstructions: z.string().optional(),
   // JOBS-01: Unified company/contact references
   clientCompanyId: z.string().uuid().optional(),
@@ -63,6 +64,8 @@ const createJobInput = z.object({
   intakeData: z.object({
     intakeMethod: z.string().optional(),
     hiringManagerId: z.string().uuid().optional(),
+    targetStartDate: z.string().optional(),
+    targetEndDate: z.string().optional(),
     experienceLevel: z.string().optional(),
     requiredSkillsDetailed: z.array(z.object({
       name: z.string(),
@@ -75,14 +78,21 @@ const createJobInput = z.object({
     industries: z.array(z.string()).optional(),
     roleOpenReason: z.string().optional(),
     teamName: z.string().optional(),
-    teamSize: z.number().optional(),
+    teamSize: z.string().optional(),  // Stored as string like "4-6" to match dropdown values
     reportsTo: z.string().optional(),
-    directReports: z.number().optional(),
+    directReports: z.string().optional(),  // Stored as string like "1-2" to match dropdown values
     keyProjects: z.string().optional(),
     successMetrics: z.string().optional(),
     workArrangement: z.string().optional(),
     hybridDays: z.number().optional(),
     locationRestrictions: z.array(z.string()).optional(),
+    // Full address for job location
+    locationAddressLine1: z.string().optional(),
+    locationAddressLine2: z.string().optional(),
+    locationCity: z.string().optional(),
+    locationState: z.string().optional(),
+    locationPostalCode: z.string().optional(),
+    locationCountry: z.string().optional(),
     workAuthorizations: z.array(z.string()).optional(),
     payRateMin: z.number().optional(),
     payRateMax: z.number().optional(),
@@ -114,8 +124,14 @@ const createJobInput = z.object({
 const updateJobInput = z.object({
   jobId: z.string().uuid(),
   title: z.string().min(3).max(200).optional(),
+  jobType: jobTypeEnum.optional(),
   location: z.string().max(200).optional(),
+  // Structured location fields
+  locationCity: z.string().max(100).optional().nullable(),
+  locationState: z.string().max(100).optional().nullable(),
+  locationCountry: z.string().max(3).optional().nullable(),
   isRemote: z.boolean().optional(),
+  isHybrid: z.boolean().optional(),
   hybridDays: z.number().int().min(1).max(5).optional().nullable(),
   requiredSkills: z.array(z.string()).min(1).max(20).optional(),
   niceToHaveSkills: z.array(z.string()).max(20).optional(),
@@ -131,6 +147,7 @@ const updateJobInput = z.object({
   urgency: urgencyEnum.optional(),
   targetFillDate: z.string().optional().nullable(),
   targetStartDate: z.string().optional().nullable(),
+  targetEndDate: z.string().optional().nullable(),
   clientSubmissionInstructions: z.string().optional(),
   clientInterviewProcess: z.string().optional(),
   // Hiring team fields
@@ -147,6 +164,76 @@ const updateJobInput = z.object({
   feeType: z.enum(['percentage', 'flat', 'hourly_spread']).optional().nullable(),
   feePercentage: z.number().min(0).max(100).optional().nullable(),
   feeFlatAmount: z.number().positive().optional().nullable(),
+  // Priority and SLA
+  priorityRank: z.number().int().min(0).max(10).optional().nullable(),
+  slaDays: z.number().int().min(1).max(365).optional().nullable(),
+  // Requirements (text fields) for collapsible sections
+  required_skills: z.string().max(2000).optional(),
+  preferred_skills: z.string().max(2000).optional(),
+  experience_level: z.string().max(1000).optional(),
+  education: z.string().max(1000).optional(),
+  certifications: z.string().max(1000).optional(),
+  // Extended intake data (for full edit from wizard)
+  intakeData: z.object({
+    intakeMethod: z.string().optional(),
+    hiringManagerId: z.string().uuid().optional(),
+    targetStartDate: z.string().optional(),
+    targetEndDate: z.string().optional(),
+    experienceLevel: z.string().optional(),
+    requiredSkillsDetailed: z.array(z.object({
+      name: z.string(),
+      years: z.string(),
+      proficiency: z.enum(['beginner', 'proficient', 'expert']),
+    })).optional(),
+    preferredSkills: z.array(z.string()).optional(),
+    education: z.string().optional(),
+    certifications: z.array(z.string()).optional(),
+    industries: z.array(z.string()).optional(),
+    roleOpenReason: z.string().optional(),
+    roleSummary: z.string().optional(),
+    responsibilities: z.string().optional(),
+    teamName: z.string().optional(),
+    teamSize: z.string().optional(),  // Stored as string like "4-6" to match dropdown values
+    reportsTo: z.string().optional(),
+    directReports: z.string().optional(),  // Stored as string like "1-2" to match dropdown values
+    keyProjects: z.string().optional(),
+    successMetrics: z.string().optional(),
+    workArrangement: z.string().optional(),
+    hybridDays: z.number().optional(),
+    locationRestrictions: z.array(z.string()).optional(),
+    // Full address for job location
+    locationAddressLine1: z.string().optional(),
+    locationAddressLine2: z.string().optional(),
+    locationCity: z.string().optional(),
+    locationState: z.string().optional(),
+    locationPostalCode: z.string().optional(),
+    locationCountry: z.string().optional(),
+    workAuthorizations: z.array(z.string()).optional(),
+    payRateMin: z.number().optional(),
+    payRateMax: z.number().optional(),
+    conversionSalaryMin: z.number().optional(),
+    conversionSalaryMax: z.number().optional(),
+    conversionFee: z.number().optional(),
+    benefits: z.array(z.string()).optional(),
+    weeklyHours: z.number().optional(),
+    overtimeExpected: z.string().optional(),
+    onCallRequired: z.boolean().optional(),
+    onCallSchedule: z.string().optional(),
+    interviewRounds: z.array(z.object({
+      name: z.string(),
+      format: z.string(),
+      duration: z.number(),
+      interviewer: z.string(),
+      focus: z.string(),
+    })).optional(),
+    decisionDays: z.string().optional(),
+    submissionRequirements: z.array(z.string()).optional(),
+    submissionFormat: z.string().optional(),
+    submissionNotes: z.string().optional(),
+    candidatesPerWeek: z.string().optional(),
+    feedbackTurnaround: z.number().optional(),
+    screeningQuestions: z.string().optional(),
+  }).optional(),
 })
 
 const publishJobInput = z.object({
@@ -653,6 +740,242 @@ export const atsRouter = router({
         }
       }),
 
+    // Get full job with all section data (ONE database call pattern)
+    getFullJob: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Parallel queries for all section data
+        const [
+          jobResult,
+          submissionsResult,
+          interviewsResult,
+          offersResult,
+          teamResult,
+          activitiesResult,
+          notesResult,
+          documentsResult,
+          historyResult,
+        ] = await Promise.all([
+          // Job with relations
+          adminClient
+            .from('jobs')
+            .select(`
+              *,
+              company:companies!jobs_company_id_fkey(id, name, industry),
+              clientCompany:companies!client_company_id(id, name, industry),
+              endClientCompany:companies!end_client_company_id(id, name, industry),
+              vendorCompany:companies!vendor_company_id(id, name),
+              hiringManagerContact:contacts!hiring_manager_contact_id(id, first_name, last_name, email, phone),
+              hrContact:contacts!hr_contact_id(id, first_name, last_name, email, phone),
+              intakeCompletedBy:user_profiles!intake_completed_by(id, full_name),
+              owner:user_profiles!owner_id(id, full_name, avatar_url),
+              requirements:job_requirements(*),
+              skills:job_skills(*, skill:skills(*))
+            `)
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .single(),
+
+          // Submissions with candidate details
+          adminClient
+            .from('submissions')
+            .select(`
+              *,
+              candidate:contacts!candidate_id(id, first_name, last_name, email, phone, avatar_url),
+              submittedBy:user_profiles!submitted_by(id, full_name, avatar_url)
+            `)
+            .eq('job_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(200),
+
+          // Interviews for this job
+          adminClient
+            .from('interviews')
+            .select(`
+              *,
+              submission:submissions!submission_id(id, candidate_id),
+              interviewer:user_profiles!interviewer_id(id, full_name, avatar_url)
+            `)
+            .eq('job_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('scheduled_at', { ascending: true })
+            .limit(100),
+
+          // Offers for this job
+          adminClient
+            .from('offers')
+            .select(`
+              *,
+              submission:submissions!submission_id(id, candidate_id),
+              candidate:contacts!candidate_id(id, first_name, last_name)
+            `)
+            .eq('job_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // Hiring team (job assignments)
+          adminClient
+            .from('job_assignments')
+            .select(`
+              *,
+              user:user_profiles!user_id(id, full_name, avatar_url, email)
+            `)
+            .eq('job_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null),
+
+          // Activities
+          adminClient
+            .from('activities')
+            .select(`
+              *,
+              creator:user_profiles!created_by(id, full_name, avatar_url)
+            `)
+            .eq('entity_type', 'job')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(100),
+
+          // Notes
+          adminClient
+            .from('notes')
+            .select(`
+              *,
+              creator:user_profiles!created_by(id, full_name, avatar_url)
+            `)
+            .eq('entity_type', 'job')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // Documents
+          adminClient
+            .from('documents')
+            .select('*')
+            .eq('entity_type', 'job')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // Status history
+          adminClient
+            .from('job_status_history')
+            .select(`
+              *,
+              changedBy:user_profiles!changed_by(id, full_name)
+            `)
+            .eq('job_id', input.id)
+            .order('changed_at', { ascending: false })
+            .limit(50),
+        ])
+
+        if (jobResult.error) {
+          if (jobResult.error.code === 'PGRST116') {
+            throw new TRPCError({ code: 'NOT_FOUND', message: 'Job not found' })
+          }
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: jobResult.error.message })
+        }
+
+        const job = jobResult.data
+        const submissions = submissionsResult.data || []
+        const interviews = interviewsResult.data || []
+        const offers = offersResult.data || []
+
+        // Calculate SLA progress
+        let slaProgress = null
+        if (job.sla_days && job.created_at) {
+          const createdDate = new Date(job.created_at)
+          const today = new Date()
+          const daysSinceCreated = Math.floor((today.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24))
+          slaProgress = {
+            daysElapsed: daysSinceCreated,
+            slaDays: job.sla_days,
+            percentUsed: Math.round((daysSinceCreated / job.sla_days) * 100),
+            isOverdue: daysSinceCreated > job.sla_days,
+            daysRemaining: Math.max(0, job.sla_days - daysSinceCreated),
+          }
+        }
+
+        // Calculate submission counts by status
+        const submissionsByStatus: Record<string, number> = {}
+        submissions.forEach((s) => {
+          submissionsByStatus[s.status] = (submissionsByStatus[s.status] || 0) + 1
+        })
+
+        // Count upcoming interviews
+        const upcomingInterviews = interviews.filter(
+          (i) => i.scheduled_at && new Date(i.scheduled_at) > new Date()
+        ).length
+
+        // Count pending offers
+        const pendingOffers = offers.filter((o) => o.status === 'pending').length
+
+        return {
+          ...job,
+          slaProgress,
+          sections: {
+            requirements: {
+              items: job.requirements || [],
+              total: job.requirements?.length || 0,
+            },
+            skills: {
+              items: job.skills || [],
+              total: job.skills?.length || 0,
+            },
+            team: {
+              items: teamResult.data || [],
+              total: teamResult.data?.length || 0,
+            },
+            submissions: {
+              items: submissions,
+              total: submissions.length,
+              byStatus: submissionsByStatus,
+            },
+            interviews: {
+              items: interviews,
+              total: interviews.length,
+              upcoming: upcomingInterviews,
+            },
+            offers: {
+              items: offers,
+              total: offers.length,
+              pending: pendingOffers,
+            },
+            activities: {
+              items: activitiesResult.data || [],
+              total: activitiesResult.data?.length || 0,
+            },
+            notes: {
+              items: notesResult.data || [],
+              total: notesResult.data?.length || 0,
+            },
+            documents: {
+              items: documentsResult.data || [],
+              total: documentsResult.data?.length || 0,
+            },
+            history: {
+              items: historyResult.data || [],
+              total: historyResult.data?.length || 0,
+            },
+          },
+        }
+      }),
+
     // Get jobs by company ID
     getByCompany: orgProtectedProcedure
       .input(z.object({
@@ -928,7 +1251,9 @@ export const atsRouter = router({
             max_experience_years: maxExp,
             visa_requirements: input.visaRequirements || input.intakeData?.workAuthorizations || [],
             urgency: input.urgency,
-            target_fill_date: input.targetFillDate || input.targetStartDate,
+            target_fill_date: input.targetFillDate,
+            target_start_date: input.targetStartDate,
+            target_end_date: input.targetEndDate,
             client_submission_instructions: input.clientSubmissionInstructions,
             client_interview_process: input.clientInterviewProcess || (input.intakeData?.interviewRounds ? JSON.stringify(input.intakeData.interviewRounds) : null),
             status: 'draft',
@@ -1046,7 +1371,10 @@ export const atsRouter = router({
         }
 
         if (input.title !== undefined) updateData.title = input.title
+        if (input.jobType !== undefined) updateData.job_type = input.jobType
         if (input.location !== undefined) updateData.location = input.location
+        // Note: location_city, location_state, location_country, is_hybrid are stored in addresses table
+        // or can be inferred from location string and hybrid_days
         if (input.isRemote !== undefined) updateData.is_remote = input.isRemote
         if (input.hybridDays !== undefined) updateData.hybrid_days = input.hybridDays
         if (input.requiredSkills !== undefined) updateData.required_skills = input.requiredSkills
@@ -1063,6 +1391,7 @@ export const atsRouter = router({
         if (input.urgency !== undefined) updateData.urgency = input.urgency
         if (input.targetFillDate !== undefined) updateData.target_fill_date = input.targetFillDate
         if (input.targetStartDate !== undefined) updateData.target_start_date = input.targetStartDate
+        if (input.targetEndDate !== undefined) updateData.target_end_date = input.targetEndDate
         if (input.clientSubmissionInstructions !== undefined) updateData.client_submission_instructions = input.clientSubmissionInstructions
         if (input.clientInterviewProcess !== undefined) updateData.client_interview_process = input.clientInterviewProcess
         // Hiring team fields
@@ -1079,6 +1408,11 @@ export const atsRouter = router({
         if (input.feeType !== undefined) updateData.fee_type = input.feeType
         if (input.feePercentage !== undefined) updateData.fee_percentage = input.feePercentage
         if (input.feeFlatAmount !== undefined) updateData.fee_flat_amount = input.feeFlatAmount
+        // Priority and SLA fields
+        if (input.priorityRank !== undefined) updateData.priority_rank = input.priorityRank
+        if (input.slaDays !== undefined) updateData.sla_days = input.slaDays
+        // Extended intake data (JSONB field for all wizard fields)
+        if (input.intakeData !== undefined) updateData.intake_data = input.intakeData
 
         // Update job record
         const { data: updatedJob, error: updateError } = await adminClient
@@ -1695,6 +2029,178 @@ export const atsRouter = router({
         return data
       }),
 
+    // Get full submission with all section data (ONE database call pattern)
+    getFullSubmission: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Parallel queries for all section data
+        const [
+          submissionResult,
+          interviewsResult,
+          feedbackResult,
+          activitiesResult,
+          notesResult,
+          documentsResult,
+          historyResult,
+        ] = await Promise.all([
+          // Submission with candidate, job, account relations
+          adminClient
+            .from('submissions')
+            .select(`
+              *,
+              candidate:user_profiles!submissions_candidate_id_fkey(
+                id, first_name, last_name, full_name, email, phone,
+                avatar_url, title, linkedin_url, location_city, location_state,
+                desired_rate, work_authorization, years_experience
+              ),
+              job:jobs!submissions_job_id_fkey(
+                id, title, status, job_type, location_type,
+                location_city, location_state, min_bill_rate, max_bill_rate,
+                min_pay_rate, max_pay_rate, start_date, end_date,
+                company:companies!jobs_company_id_fkey(id, name, industry),
+                clientCompany:companies!client_company_id(id, name, industry, website),
+                hiringManagerContact:contacts!hiring_manager_contact_id(id, first_name, last_name, email, phone),
+                owner:user_profiles!owner_id(id, full_name, avatar_url)
+              ),
+              owner:user_profiles!owner_id(id, full_name, avatar_url, email),
+              offer:offers!submissions_offer_id_fkey(id, status, offer_date, salary, bill_rate, pay_rate)
+            `)
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .single(),
+
+          // Interviews with participants
+          adminClient
+            .from('interviews')
+            .select(`
+              *,
+              interviewer:user_profiles!interviewer_id(id, full_name, email, avatar_url),
+              scheduledBy:user_profiles!scheduled_by(id, full_name)
+            `)
+            .eq('submission_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('scheduled_at', { ascending: false })
+            .limit(20),
+
+          // Submission feedback
+          adminClient
+            .from('submission_feedback')
+            .select(`
+              *,
+              createdBy:user_profiles!created_by(id, full_name, avatar_url)
+            `)
+            .eq('submission_id', input.id)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // Activities (polymorphic)
+          adminClient
+            .from('activities')
+            .select(`
+              *,
+              creator:user_profiles!created_by(id, full_name, avatar_url),
+              assignee:user_profiles!assignee_id(id, full_name, avatar_url)
+            `)
+            .eq('entity_type', 'submission')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(100),
+
+          // Notes (polymorphic)
+          adminClient
+            .from('notes')
+            .select(`
+              *,
+              creator:user_profiles!created_by(id, full_name, avatar_url)
+            `)
+            .eq('entity_type', 'submission')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // Documents (polymorphic)
+          adminClient
+            .from('documents')
+            .select('*')
+            .eq('entity_type', 'submission')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // Status history
+          adminClient
+            .from('submission_status_history')
+            .select(`
+              *,
+              changedBy:user_profiles!changed_by(id, full_name, avatar_url)
+            `)
+            .eq('submission_id', input.id)
+            .order('changed_at', { ascending: false })
+            .limit(100),
+        ])
+
+        if (submissionResult.error) {
+          console.error('[getFullSubmission] Error:', submissionResult.error)
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Submission not found',
+          })
+        }
+
+        const submission = submissionResult.data
+        if (!submission) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Submission not found',
+          })
+        }
+
+        // Extract account from job's clientCompany or company
+        const account = submission.job?.clientCompany || submission.job?.company || null
+
+        return {
+          ...submission,
+          account,
+          sections: {
+            interviews: {
+              items: interviewsResult.data || [],
+              total: interviewsResult.data?.length || 0,
+            },
+            feedback: {
+              items: feedbackResult.data || [],
+              total: feedbackResult.data?.length || 0,
+            },
+            activities: {
+              items: activitiesResult.data || [],
+              total: activitiesResult.data?.length || 0,
+            },
+            notes: {
+              items: notesResult.data || [],
+              total: notesResult.data?.length || 0,
+            },
+            documents: {
+              items: documentsResult.data || [],
+              total: documentsResult.data?.length || 0,
+            },
+            history: {
+              items: historyResult.data || [],
+              total: historyResult.data?.length || 0,
+            },
+          },
+        }
+      }),
+
     // Get submission stats
     getStats: orgProtectedProcedure
       .input(z.object({
@@ -2264,7 +2770,7 @@ export const atsRouter = router({
         return {
           id: updated.id,
           status: updated.status,
-          submittedAt: updated.submitted_at,
+          submittedAt: updated.submitted_to_client_at,
           method: input.submissionMethod,
           candidate: candidate ? { id: candidate.id, name: `${candidate.first_name} ${candidate.last_name}` } : null,
           job: job ? { id: job.id, title: job.title, account: job.company?.[0]?.name } : null,
@@ -2910,6 +3416,250 @@ export const atsRouter = router({
         }
 
         return data
+      }),
+
+    // Get full interview with all section data (ONE database call pattern)
+    getFullInterview: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Parallel queries for all section data
+        const [
+          interviewResult,
+          participantsResult,
+          scorecardsResult,
+          legacyFeedbackResult,
+          activitiesResult,
+          notesResult,
+          documentsResult,
+          historyResult,
+        ] = await Promise.all([
+          // Interview with submission, candidate, job, account relations
+          adminClient
+            .from('interviews')
+            .select(`
+              *,
+              submission:submissions!submission_id(
+                id, status, submitted_at, bill_rate, pay_rate, match_score,
+                candidate:user_profiles!submissions_candidate_id_fkey(
+                  id, first_name, last_name, full_name, email, phone,
+                  avatar_url, title, linkedin_url, location_city, location_state
+                ),
+                job:jobs!submissions_job_id_fkey(
+                  id, title, status, job_type, location_type,
+                  location_city, location_state, min_bill_rate, max_bill_rate
+                ),
+                owner:user_profiles!owner_id(id, full_name, avatar_url)
+              ),
+              job:jobs!job_id(
+                id, title, status,
+                account:companies!jobs_company_id_fkey(id, name, industry, website),
+                clientCompany:companies!client_company_id(id, name)
+              ),
+              scheduledBy:user_profiles!scheduled_by(id, full_name, avatar_url)
+            `)
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .single(),
+
+          // Participants (modern table)
+          adminClient
+            .from('interview_participants')
+            .select(`
+              *,
+              user:user_profiles!interview_participants_user_id_fkey(id, full_name, email, avatar_url)
+            `)
+            .eq('interview_id', input.id)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: true }),
+
+          // Scorecards (structured feedback)
+          adminClient
+            .from('interview_scorecards')
+            .select(`
+              *,
+              submittedBy:user_profiles!interview_scorecards_submitted_by_fkey(id, full_name, avatar_url)
+            `)
+            .eq('interview_id', input.id)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false }),
+
+          // Legacy feedback
+          adminClient
+            .from('interview_feedback')
+            .select(`
+              *,
+              interviewer:user_profiles!interview_feedback_submitted_by_fkey(id, full_name, avatar_url)
+            `)
+            .eq('interview_id', input.id)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false }),
+
+          // Activities (polymorphic)
+          adminClient
+            .from('activities')
+            .select(`
+              *,
+              creator:user_profiles!created_by(id, full_name, avatar_url),
+              assignee:user_profiles!assignee_id(id, full_name, avatar_url)
+            `)
+            .eq('entity_type', 'interview')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // Notes (polymorphic)
+          adminClient
+            .from('notes')
+            .select(`
+              *,
+              creator:user_profiles!created_by(id, full_name, avatar_url)
+            `)
+            .eq('entity_type', 'interview')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // Documents (polymorphic)
+          adminClient
+            .from('documents')
+            .select(`
+              *,
+              uploadedBy:user_profiles!uploaded_by(id, full_name, avatar_url)
+            `)
+            .eq('entity_type', 'interview')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // History (activities filtered by system type)
+          adminClient
+            .from('activities')
+            .select(`
+              *,
+              creator:user_profiles!created_by(id, full_name, avatar_url)
+            `)
+            .eq('entity_type', 'interview')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .in('activity_type', ['status_change', 'created', 'updated', 'rescheduled', 'cancelled'])
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(100),
+        ])
+
+        if (interviewResult.error || !interviewResult.data) {
+          console.error('[getFullInterview] Error:', interviewResult.error)
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Interview not found',
+          })
+        }
+
+        const interview = interviewResult.data
+
+        // Merge participants: prefer modern table, fallback to legacy arrays
+        const participants = participantsResult.data?.length
+          ? participantsResult.data.map((p: any) => ({
+              id: p.id,
+              interview_id: p.interview_id,
+              participant_type: p.participant_type || 'interviewer',
+              name: p.user?.full_name || p.external_name || 'Unknown',
+              email: p.user?.email || p.external_email || null,
+              role: p.role || p.participant_type || 'interviewer',
+              title: p.user?.title || null,
+              is_required: p.is_required ?? true,
+              response_status: p.is_confirmed ? 'accepted' : 'pending',
+              responded_at: p.confirmed_at || null,
+              avatar_url: p.user?.avatar_url || null,
+              created_at: p.created_at,
+            }))
+          : (interview.interviewer_names || []).map((name: string, i: number) => ({
+              id: `legacy-${i}`,
+              interview_id: interview.id,
+              participant_type: 'interviewer',
+              name,
+              email: interview.interviewer_emails?.[i] || null,
+              role: 'interviewer',
+              title: null,
+              is_required: true,
+              response_status: 'pending',
+              responded_at: null,
+              avatar_url: null,
+              created_at: interview.created_at,
+            }))
+
+        // Unify feedback from both sources
+        const feedback = [
+          ...(scorecardsResult.data || []).map((sc: any) => ({
+            id: sc.id,
+            source: 'scorecard' as const,
+            overall_rating: sc.overall_rating,
+            recommendation: sc.recommendation,
+            strengths: sc.strengths,
+            concerns: sc.concerns,
+            criteria_scores: sc.criteria_scores,
+            feedback: sc.additional_notes,
+            submittedBy: sc.submittedBy,
+            created_at: sc.created_at,
+          })),
+          ...(legacyFeedbackResult.data || []).map((fb: any) => ({
+            id: fb.id,
+            source: 'legacy' as const,
+            rating: fb.rating,
+            recommendation: fb.recommendation,
+            strengths: fb.strengths,
+            concerns: fb.weaknesses,
+            feedback: fb.notes,
+            interviewer: fb.interviewer,
+            created_at: fb.created_at,
+          })),
+        ].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+
+        // Extract account from job relation
+        const account = interview.job?.account || interview.job?.clientCompany || null
+
+        return {
+          ...interview,
+          account,
+          sections: {
+            participants: {
+              items: participants,
+              total: participants.length,
+            },
+            feedback: {
+              items: feedback,
+              total: feedback.length,
+              hasScorecard: (scorecardsResult.data?.length || 0) > 0,
+              hasLegacy: (legacyFeedbackResult.data?.length || 0) > 0,
+            },
+            activities: {
+              items: activitiesResult.data || [],
+              total: activitiesResult.data?.length || 0,
+            },
+            notes: {
+              items: notesResult.data || [],
+              total: notesResult.data?.length || 0,
+            },
+            documents: {
+              items: documentsResult.data || [],
+              total: documentsResult.data?.length || 0,
+            },
+            history: {
+              items: historyResult.data || [],
+              total: historyResult.data?.length || 0,
+            },
+          },
+        }
       }),
 
     // Schedule a new interview (F03)
@@ -4227,6 +4977,151 @@ export const atsRouter = router({
         }
       }),
 
+    // Get full offer with all section data (ONE database call pattern)
+    getFullOffer: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Main offer with relationships
+        const { data: offer, error } = await adminClient
+          .from('offers')
+          .select(`
+            *,
+            submission:submissions!offers_submission_id_fkey(
+              id, status, submitted_at, bill_rate, pay_rate,
+              candidate:user_profiles!submissions_candidate_id_fkey(
+                id, first_name, last_name, email, phone, avatar_url, title
+              ),
+              job:jobs!submissions_job_id_fkey(id, title, status),
+              owner:user_profiles!submissions_submitted_by_fkey(id, full_name, avatar_url)
+            ),
+            job:jobs!offers_job_id_fkey(
+              id, title, status,
+              account:companies!jobs_company_id_fkey(id, name, industry)
+            ),
+            createdByUser:user_profiles!offers_created_by_fkey(id, full_name, avatar_url)
+          `)
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .single()
+
+        if (error || !offer) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Offer not found' })
+        }
+
+        // Fetch all section data in parallel
+        const [negotiations, approvals, activities, notes, documents, history] = await Promise.all([
+          // Negotiations
+          adminClient
+            .from('offer_negotiations')
+            .select('id, initiated_by, original_terms, proposed_terms, counter_message, status, created_at, updated_at')
+            .eq('offer_id', input.id)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // Approvals with user details
+          adminClient
+            .from('offer_approvals')
+            .select(`
+              id, approval_type, status, request_notes, proposed_changes, response_notes, responded_at, created_at,
+              requester:user_profiles!offer_approvals_requested_by_fkey(id, full_name, avatar_url),
+              approver:user_profiles!offer_approvals_approver_id_fkey(id, full_name, avatar_url)
+            `)
+            .eq('offer_id', input.id)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // Activities
+          adminClient
+            .from('activities')
+            .select(`
+              id, activity_type, subject, description, status, outcome, created_at,
+              creator:user_profiles!activities_created_by_fkey(id, full_name, avatar_url)
+            `)
+            .eq('entity_type', 'offer')
+            .eq('entity_id', input.id)
+            .order('created_at', { ascending: false })
+            .limit(100),
+
+          // Notes
+          adminClient
+            .from('notes')
+            .select(`
+              id, content, is_pinned, is_private, created_at,
+              creator:user_profiles!notes_created_by_fkey(id, full_name, avatar_url)
+            `)
+            .eq('entity_type', 'offer')
+            .eq('entity_id', input.id)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // Documents
+          adminClient
+            .from('documents')
+            .select(`
+              id, name, file_type, file_url, file_size, document_type, created_at,
+              uploader:user_profiles!documents_uploaded_by_fkey(id, full_name, avatar_url)
+            `)
+            .eq('entity_type', 'offer')
+            .eq('entity_id', input.id)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // History
+          adminClient
+            .from('entity_history')
+            .select(`
+              id, action, description, changes, created_at,
+              changedBy:user_profiles!entity_history_changed_by_fkey(id, full_name, avatar_url)
+            `)
+            .eq('entity_type', 'offer')
+            .eq('entity_id', input.id)
+            .order('created_at', { ascending: false })
+            .limit(100),
+        ])
+
+        // Calculate margin
+        const marginAmount = (offer.bill_rate || 0) - (offer.pay_rate || 0)
+        const marginPercent = offer.bill_rate && offer.bill_rate > 0 ? (marginAmount / offer.bill_rate) * 100 : 0
+
+        // Calculate days until expiry
+        let daysUntilExpiry: number | null = null
+        if (offer.expires_at) {
+          const expires = new Date(offer.expires_at)
+          const now = new Date()
+          daysUntilExpiry = Math.floor((expires.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+        }
+
+        // Extract account from job relationship
+        const jobData = offer.job as { id: string; title: string; status: string; account: { id: string; name: string; industry?: string } | null } | null
+        const account = jobData?.account || null
+
+        // Check for pending approvals
+        const approvalsData = approvals.data || []
+        const hasPendingApproval = approvalsData.some((a: { status: string }) => a.status === 'pending')
+
+        return {
+          ...offer,
+          job: jobData ? { id: jobData.id, title: jobData.title, status: jobData.status } : null,
+          account,
+          marginAmount,
+          marginPercent,
+          daysUntilExpiry,
+          sections: {
+            negotiations: { items: negotiations.data || [], total: negotiations.data?.length || 0 },
+            approvals: { items: approvalsData, total: approvalsData.length, hasPending: hasPendingApproval },
+            activities: { items: activities.data || [], total: activities.data?.length || 0 },
+            notes: { items: notes.data || [], total: notes.data?.length || 0 },
+            documents: { items: documents.data || [], total: documents.data?.length || 0 },
+            history: { items: history.data || [], total: history.data?.length || 0 },
+          },
+        }
+      }),
+
     // List offers with filters
     list: orgProtectedProcedure
       .input(z.object({
@@ -4829,6 +5724,88 @@ export const atsRouter = router({
           status: 'pending',
         }
       }),
+
+    // Respond to approval request (approve/reject)
+    respondToApproval: orgProtectedProcedure
+      .input(z.object({
+        approvalId: z.string().uuid(),
+        approved: z.boolean(),
+        responseNotes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        // Fetch approval request
+        const { data: approval, error: approvalError } = await adminClient
+          .from('offer_approvals')
+          .select('id, offer_id, approver_id, status, proposed_changes')
+          .eq('id', input.approvalId)
+          .eq('org_id', orgId)
+          .single()
+
+        if (approvalError || !approval) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Approval request not found' })
+        }
+
+        if (approval.status !== 'pending') {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: `Approval request already ${approval.status}`,
+          })
+        }
+
+        // Verify user is the approver
+        if (approval.approver_id !== user.id) {
+          throw new TRPCError({
+            code: 'FORBIDDEN',
+            message: 'You are not authorized to respond to this approval request',
+          })
+        }
+
+        const now = new Date().toISOString()
+        const newStatus = input.approved ? 'approved' : 'rejected'
+
+        // Update approval
+        const { error: updateError } = await adminClient
+          .from('offer_approvals')
+          .update({
+            status: newStatus,
+            response_notes: input.responseNotes,
+            responded_at: now,
+            updated_at: now,
+          })
+          .eq('id', input.approvalId)
+
+        if (updateError) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Failed to update approval' })
+        }
+
+        // Log activity
+        await adminClient.from('activities').insert({
+          org_id: orgId,
+          entity_type: 'offer',
+          entity_id: approval.offer_id,
+          activity_type: `approval_${newStatus}`,
+          subject: `Approval ${newStatus}`,
+          description: input.responseNotes || `Approval request was ${newStatus}`,
+          outcome: input.approved ? 'positive' : 'negative',
+          created_by: user.id,
+          created_at: now,
+          metadata: {
+            approval_id: input.approvalId,
+          },
+        })
+
+        return {
+          approvalId: input.approvalId,
+          status: newStatus,
+        }
+      }),
   }),
 
   // ============================================
@@ -5087,6 +6064,225 @@ export const atsRouter = router({
           daysActive,
           marginAmount,
           marginPercent,
+        }
+      }),
+
+    // Get full placement with all section data (ONE database call pattern - GW-043)
+    getFullPlacement: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Parallel queries for all section data
+        const [
+          placementResult,
+          timesheetsResult,
+          complianceResult,
+          activitiesResult,
+          notesResult,
+          documentsResult,
+          historyResult,
+        ] = await Promise.all([
+          // Main placement with relations
+          adminClient
+            .from('placements')
+            .select(`
+              *,
+              job:jobs!placements_job_id_fkey(
+                id, title, description, status, location_type, location_city, location_state,
+                account:companies!jobs_company_id_fkey(id, name, industry, website)
+              ),
+              candidate:user_profiles!placements_candidate_id_fkey(
+                id, first_name, last_name, full_name, email, phone, avatar_url, title, linkedin_url
+              ),
+              offer:offers!placements_offer_id_fkey(id, pay_rate, bill_rate, employment_type, start_date, end_date),
+              recruiter:user_profiles!placements_recruiter_id_fkey(id, full_name, avatar_url),
+              submission:submissions!placements_submission_id_fkey(id, status, submitted_at, match_score),
+              checkins:placement_checkins(
+                id, checkin_type, checkin_date, overall_health,
+                candidate_overall_satisfaction, manager_overall_satisfaction, created_at
+              ),
+              milestones:placement_milestones(id, milestone_type, due_date, completed_date, status),
+              extensions:placement_extensions(id, original_end_date, new_end_date, extension_months, approved_at, reason)
+            `)
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .single(),
+
+          // Timesheets
+          adminClient
+            .from('timesheets')
+            .select(`
+              id, status, period_start, period_end,
+              total_regular_hours, total_overtime_hours, total_double_time_hours,
+              total_billable_amount, total_payable_amount,
+              submitted_at, approved_at, created_at
+            `)
+            .eq('placement_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('period_start', { ascending: false })
+            .limit(50),
+
+          // Compliance items (polymorphic)
+          adminClient
+            .from('compliance_items')
+            .select(`
+              id, name, status, due_date, completed_at, is_blocking, document_url, notes, created_at,
+              requirement:compliance_requirements(id, name, category, description, is_mandatory)
+            `)
+            .eq('entity_type', 'placement')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('due_date', { ascending: true, nullsFirst: false })
+            .limit(50),
+
+          // Activities (polymorphic)
+          adminClient
+            .from('activities')
+            .select(`
+              *,
+              creator:user_profiles!created_by(id, full_name, avatar_url),
+              assignee:user_profiles!assignee_id(id, full_name, avatar_url)
+            `)
+            .eq('entity_type', 'placement')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // Notes (polymorphic)
+          adminClient
+            .from('notes')
+            .select(`
+              *,
+              creator:user_profiles!created_by(id, full_name, avatar_url)
+            `)
+            .eq('entity_type', 'placement')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // Documents (polymorphic)
+          adminClient
+            .from('documents')
+            .select(`
+              *,
+              uploadedBy:user_profiles!uploaded_by(id, full_name, avatar_url)
+            `)
+            .eq('entity_type', 'placement')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(50),
+
+          // History (status changes and system activities)
+          adminClient
+            .from('activities')
+            .select(`
+              *,
+              creator:user_profiles!created_by(id, full_name, avatar_url)
+            `)
+            .eq('entity_type', 'placement')
+            .eq('entity_id', input.id)
+            .eq('org_id', orgId)
+            .in('activity_type', ['status_change', 'created', 'updated', 'extension', 'checkin'])
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false })
+            .limit(100),
+        ])
+
+        if (placementResult.error || !placementResult.data) {
+          console.error('[getFullPlacement] Error:', placementResult.error)
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Placement not found',
+          })
+        }
+
+        const placement = placementResult.data
+
+        // Extract account from job relation
+        const account = placement.job?.account || null
+
+        // Calculate derived metrics
+        const startDate = new Date(placement.start_date)
+        const today = new Date()
+        const daysActive = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24))
+
+        const marginAmount = (placement.bill_rate || 0) - (placement.pay_rate || 0)
+        const marginPercent = placement.bill_rate && placement.bill_rate > 0
+          ? (marginAmount / placement.bill_rate) * 100
+          : 0
+
+        // Transform timesheets for component compatibility
+        const timesheets = (timesheetsResult.data || []).map((ts: {
+          id: string
+          status: string
+          period_start: string
+          period_end: string
+          total_regular_hours: number | null
+          total_overtime_hours: number | null
+          total_double_time_hours: number | null
+          total_billable_amount: number | null
+          total_payable_amount: number | null
+          submitted_at: string | null
+          approved_at: string | null
+          created_at: string
+        }) => ({
+          id: ts.id,
+          status: ts.status,
+          periodStart: ts.period_start,
+          periodEnd: ts.period_end,
+          totalRegularHours: ts.total_regular_hours || 0,
+          totalOvertimeHours: ts.total_overtime_hours || 0,
+          totalDoubleTimeHours: ts.total_double_time_hours || 0,
+          totalBillableAmount: ts.total_billable_amount || 0,
+          totalPayableAmount: ts.total_payable_amount || 0,
+          submittedAt: ts.submitted_at,
+          approvedAt: ts.approved_at,
+          createdAt: ts.created_at,
+        }))
+
+        return {
+          ...placement,
+          account,
+          daysActive,
+          marginAmount,
+          marginPercent,
+          sections: {
+            timesheets: {
+              items: timesheets,
+              total: timesheets.length,
+            },
+            compliance: {
+              items: complianceResult.data || [],
+              total: complianceResult.data?.length || 0,
+            },
+            activities: {
+              items: activitiesResult.data || [],
+              total: activitiesResult.data?.length || 0,
+            },
+            notes: {
+              items: notesResult.data || [],
+              total: notesResult.data?.length || 0,
+            },
+            documents: {
+              items: documentsResult.data || [],
+              total: documentsResult.data?.length || 0,
+            },
+            history: {
+              items: historyResult.data || [],
+              total: historyResult.data?.length || 0,
+            },
+          },
         }
       }),
 
