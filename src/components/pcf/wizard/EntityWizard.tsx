@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { AlertCircle, Save, Sparkles, Clock } from 'lucide-react'
 import { WizardConfig, FieldDefinition } from '@/configs/entities/types'
-import { WizardProgress } from './WizardProgress'
+import { WizardProgressHorizontal } from './WizardProgressHorizontal'
 import { WizardStep } from './WizardStep'
 import { WizardNavigation } from './WizardNavigation'
 import { WizardReview } from './WizardReview'
@@ -261,24 +261,20 @@ export function EntityWizard<T extends object>({
         </div>
       </header>
 
+      {/* Horizontal Progress */}
+      <WizardProgressHorizontal
+        steps={config.steps}
+        currentStep={currentStep}
+        style={config.stepIndicatorStyle}
+        allowFreeNavigation={config.allowFreeNavigation}
+        onStepClick={handleStepClick}
+      />
+
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex gap-8">
-          {/* Sidebar Navigation */}
-          <aside className="hidden lg:block w-72 shrink-0">
-            <div className="sticky top-28">
-              <WizardProgress
-                steps={config.steps}
-                currentStep={currentStep}
-                style={config.stepIndicatorStyle}
-                allowFreeNavigation={config.allowFreeNavigation}
-                onStepClick={handleStepClick}
-              />
-            </div>
-          </aside>
-
+        <div className="w-full">
           {/* Main Content Area */}
-          <main className="flex-1 min-w-0">
+          <main className="w-full">
             {/* Mobile Progress */}
             <div className="lg:hidden mb-6">
               <div className="flex items-center justify-between text-sm text-charcoal-600 mb-2">
