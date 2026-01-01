@@ -7,6 +7,13 @@ import { cn } from '@/lib/utils'
 import { useEntityNavigationSafe } from '@/lib/navigation/EntityNavigationContext'
 import { EntityType, ENTITY_BASE_PATHS } from '@/lib/navigation/entity-navigation.types'
 import { formatDistanceToNow } from 'date-fns'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import { useSidebarUIContextSafe } from '@/lib/contexts/SidebarUIContext'
 
 // Section configuration for different areas of the app
 interface SectionConfig {
@@ -144,6 +151,10 @@ interface SectionSidebarProps {
 export function SectionSidebar({ sectionId, className }: SectionSidebarProps) {
   const pathname = usePathname()
   const entityNav = useEntityNavigationSafe()
+  
+  // Get collapsed state from context
+  const sidebarContext = useSidebarUIContextSafe()
+  const isCollapsed = sidebarContext?.isCollapsed ?? false
 
   // Auto-detect section from pathname if not provided
   const detectedSectionId = sectionId || detectSectionFromPath(pathname)
@@ -157,103 +168,182 @@ export function SectionSidebar({ sectionId, className }: SectionSidebarProps) {
   if (!section) {
     // Fallback: generic sidebar for unknown sections
     return (
-      <aside className={cn('w-64 bg-white border-r border-charcoal-100 flex flex-col flex-shrink-0', className)}>
-        <div className="p-4 border-b border-charcoal-100">
-          <h2 className="font-heading font-semibold text-charcoal-900">Navigation</h2>
+      <TooltipProvider delayDuration={100}>
+        <div className={cn('flex flex-col flex-1 overflow-hidden', className)}>
+          <div className="p-4 border-b border-charcoal-100">
+            {!isCollapsed && <h2 className="font-heading font-semibold text-charcoal-900">Navigation</h2>}
+          </div>
+          <nav className="flex-1 overflow-y-auto p-4">
+            {!isCollapsed && <p className="text-sm text-charcoal-500">Select a section from the top navigation.</p>}
+          </nav>
         </div>
-        <nav className="flex-1 overflow-y-auto p-4">
-          <p className="text-sm text-charcoal-500">Select a section from the top navigation.</p>
-        </nav>
-      </aside>
+      </TooltipProvider>
     )
   }
 
   const SectionIcon = section.icon
 
   return (
-    <aside className={cn('w-64 bg-white border-r border-charcoal-100 flex flex-col flex-shrink-0', className)}>
-      {/* Section Header */}
-      <div className="p-4 border-b border-charcoal-100">
-        <div className="flex items-center gap-2">
-          <SectionIcon className="w-5 h-5 text-gold-500" />
-          <h2 className="font-heading font-semibold text-charcoal-900">{section.title}</h2>
+    <TooltipProvider delayDuration={100}>
+      <div className={cn('flex flex-col flex-1 overflow-hidden', className)}>
+        {/* Section Header - with top padding for toggle button */}
+        <div className="pt-12 px-4 pb-4 border-b border-charcoal-100">
+          {isCollapsed ? (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-center justify-center">
+                  <SectionIcon className="w-5 h-5 text-gold-500" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                <p>{section.title}</p>
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <div className="flex items-center gap-2">
+              <SectionIcon className="w-5 h-5 text-gold-500" />
+              <h2 className="font-heading font-semibold text-charcoal-900">{section.title}</h2>
+            </div>
+          )}
         </div>
+
+        {/* Navigation Links */}
+        {section.navLinks && section.navLinks.length > 0 && (
+          <nav className="p-4 border-b border-charcoal-100">
+            {!isCollapsed && (
+              <h3 className="text-xs font-medium text-charcoal-500 uppercase tracking-wide mb-3">
+                Navigation
+              </h3>
+            )}
+            <ul className="space-y-1">
+              {section.navLinks.map((link) => {
+                const LinkIcon = link.icon
+                const isActive = pathname === link.href
+                
+                if (isCollapsed) {
+                  return (
+                    <li key={link.id}>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Link
+                            href={link.href}
+                            className={cn(
+                              'flex items-center justify-center w-10 h-10 mx-auto rounded-lg transition-all duration-200',
+                              isActive
+                                ? 'bg-gold-50 text-gold-700'
+                                : 'text-charcoal-600 hover:bg-charcoal-50'
+                            )}
+                          >
+                            <LinkIcon className="w-4 h-4" />
+                          </Link>
+                        </TooltipTrigger>
+                        <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                          <p>{link.label}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </li>
+                  )
+                }
+                
+                return (
+                  <li key={link.id}>
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 text-sm',
+                        isActive
+                          ? 'bg-gold-50 text-gold-700 font-medium'
+                          : 'text-charcoal-600 hover:bg-charcoal-50'
+                      )}
+                    >
+                      <LinkIcon className="w-4 h-4" />
+                      {link.label}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </nav>
+        )}
+
+        {/* Recent Entities */}
+        {section.entityType && recentEntities.length > 0 && (
+          <div className="flex-1 overflow-y-auto p-4">
+            {!isCollapsed && (
+              <h3 className="text-xs font-medium text-charcoal-500 uppercase tracking-wide mb-3">
+                Recent
+              </h3>
+            )}
+            <ul className="space-y-1">
+              {recentEntities.slice(0, 10).map((entity) => {
+                if (isCollapsed) {
+                  // Show initials in collapsed mode
+                  const initials = entity.name
+                    .split(' ')
+                    .map(word => word[0])
+                    .join('')
+                    .substring(0, 2)
+                    .toUpperCase()
+                  
+                  return (
+                    <li key={entity.id}>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Link
+                            href={`${ENTITY_BASE_PATHS[section.entityType!]}/${entity.id}`}
+                            className="flex items-center justify-center w-10 h-10 mx-auto rounded-lg text-xs font-semibold text-charcoal-700 bg-charcoal-100 hover:bg-charcoal-200 transition-colors"
+                          >
+                            {initials}
+                          </Link>
+                        </TooltipTrigger>
+                        <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                          <div>
+                            <p className="font-medium">{entity.name}</p>
+                            {entity.subtitle && <p className="text-xs text-charcoal-300">{entity.subtitle}</p>}
+                          </div>
+                        </TooltipContent>
+                      </Tooltip>
+                    </li>
+                  )
+                }
+                
+                return (
+                  <li key={entity.id}>
+                    <Link
+                      href={`${ENTITY_BASE_PATHS[section.entityType!]}/${entity.id}`}
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-charcoal-700 hover:bg-charcoal-50 transition-colors"
+                    >
+                      <Clock className="w-4 h-4 text-charcoal-400" />
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium truncate">{entity.name}</p>
+                        {entity.subtitle && (
+                          <p className="text-xs text-charcoal-500 truncate">{entity.subtitle}</p>
+                        )}
+                      </div>
+                      <span className="text-xs text-charcoal-400 flex-shrink-0">
+                        {formatDistanceToNow(new Date(entity.viewedAt), { addSuffix: false })}
+                      </span>
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        )}
+
+        {/* No recent entities - show empty state */}
+        {section.entityType && recentEntities.length === 0 && !isCollapsed && (
+          <div className="flex-1 p-4">
+            <h3 className="text-xs font-medium text-charcoal-500 uppercase tracking-wide mb-3">
+              Recent
+            </h3>
+            <p className="text-sm text-charcoal-400 px-3">
+              No recently viewed {section.title.toLowerCase()}.
+            </p>
+          </div>
+        )}
       </div>
-
-      {/* Navigation Links */}
-      {section.navLinks && section.navLinks.length > 0 && (
-        <nav className="p-4 border-b border-charcoal-100">
-          <h3 className="text-xs font-medium text-charcoal-500 uppercase tracking-wide mb-3">
-            Navigation
-          </h3>
-          <ul className="space-y-1">
-            {section.navLinks.map((link) => {
-              const LinkIcon = link.icon
-              const isActive = pathname === link.href
-              return (
-                <li key={link.id}>
-                  <Link
-                    href={link.href}
-                    className={cn(
-                      'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 text-sm',
-                      isActive
-                        ? 'bg-gold-50 text-gold-700 font-medium'
-                        : 'text-charcoal-600 hover:bg-charcoal-50'
-                    )}
-                  >
-                    <LinkIcon className="w-4 h-4" />
-                    {link.label}
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
-        </nav>
-      )}
-
-      {/* Recent Entities */}
-      {section.entityType && recentEntities.length > 0 && (
-        <div className="flex-1 overflow-y-auto p-4">
-          <h3 className="text-xs font-medium text-charcoal-500 uppercase tracking-wide mb-3">
-            Recent
-          </h3>
-          <ul className="space-y-1">
-            {recentEntities.slice(0, 10).map((entity) => (
-              <li key={entity.id}>
-                <Link
-                  href={`${ENTITY_BASE_PATHS[section.entityType!]}/${entity.id}`}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-charcoal-700 hover:bg-charcoal-50 transition-colors"
-                >
-                  <Clock className="w-4 h-4 text-charcoal-400" />
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium truncate">{entity.name}</p>
-                    {entity.subtitle && (
-                      <p className="text-xs text-charcoal-500 truncate">{entity.subtitle}</p>
-                    )}
-                  </div>
-                  <span className="text-xs text-charcoal-400 flex-shrink-0">
-                    {formatDistanceToNow(new Date(entity.viewedAt), { addSuffix: false })}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* No recent entities - show empty state */}
-      {section.entityType && recentEntities.length === 0 && (
-        <div className="flex-1 p-4">
-          <h3 className="text-xs font-medium text-charcoal-500 uppercase tracking-wide mb-3">
-            Recent
-          </h3>
-          <p className="text-sm text-charcoal-400 px-3">
-            No recently viewed {section.title.toLowerCase()}.
-          </p>
-        </div>
-      )}
-
-    </aside>
+    </TooltipProvider>
   )
 }
 

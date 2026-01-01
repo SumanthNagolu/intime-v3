@@ -22,6 +22,7 @@ import {
 import { getCampaignSectionsByGroup, SectionDefinition } from '@/lib/navigation/entity-sections'
 import { getEntityJourney, getCurrentStepIndex } from '@/lib/navigation/entity-journeys'
 import { useEntityNavigation } from '@/lib/navigation/EntityNavigationContext'
+import { useSidebarUIContextSafe } from '@/lib/contexts/SidebarUIContext'
 
 type NavigationMode = 'journey' | 'sections'
 
@@ -59,6 +60,10 @@ export function CampaignEntitySidebar({
 }: CampaignEntitySidebarProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
+  
+  // Get collapsed state from context
+  const sidebarContext = useSidebarUIContextSafe()
+  const isCollapsed = sidebarContext?.isCollapsed ?? false
 
   // ONE DB CALL pattern: Get full entity data from navigation context
   // Data is set by EntityContextProvider from server-side fetch - NO client query needed
@@ -169,47 +174,85 @@ export function CampaignEntitySidebar({
 
   return (
     <TooltipProvider>
-      <aside
-        className={cn(
-          'w-64 bg-white border-r border-charcoal-100 flex flex-col flex-shrink-0 h-full',
-          className
-        )}
-      >
-        {/* Mode Toggle Header */}
-        <div className="p-4 border-b border-charcoal-100">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="font-heading font-semibold text-charcoal-900 text-sm uppercase tracking-wide">
-              Campaign
-            </h2>
-          </div>
+      <div className={cn('flex flex-col flex-1 overflow-hidden h-full', className)}>
+        {/* Mode Toggle Header - with top padding for toggle button */}
+        <div className="pt-12 px-4 pb-4 border-b border-charcoal-100">
+          {!isCollapsed && (
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="font-heading font-semibold text-charcoal-900 text-sm uppercase tracking-wide">
+                Campaign
+              </h2>
+            </div>
+          )}
 
           {/* Mode Toggle Buttons */}
-          <div className="flex gap-1 p-1 bg-charcoal-100 rounded-lg">
-            <button
-              onClick={() => handleModeChange('journey')}
-              className={cn(
-                'flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200',
-                mode === 'journey'
-                  ? 'bg-white text-charcoal-900 shadow-sm'
-                  : 'text-charcoal-600 hover:text-charcoal-900'
-              )}
-            >
-              <Map className="w-3.5 h-3.5" />
-              Journey
-            </button>
-            <button
-              onClick={() => handleModeChange('sections')}
-              className={cn(
-                'flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200',
-                mode === 'sections'
-                  ? 'bg-white text-charcoal-900 shadow-sm'
-                  : 'text-charcoal-600 hover:text-charcoal-900'
-              )}
-            >
-              <LayoutGrid className="w-3.5 h-3.5" />
-              Sections
-            </button>
-          </div>
+          {isCollapsed ? (
+            <div className="flex flex-col gap-2">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => handleModeChange('journey')}
+                    className={cn(
+                      'w-10 h-10 flex items-center justify-center rounded-md transition-all duration-200',
+                      mode === 'journey'
+                        ? 'bg-gold-100 text-gold-700'
+                        : 'text-charcoal-600 hover:bg-charcoal-100'
+                    )}
+                  >
+                    <Map className="w-4 h-4" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                  <p>Journey Mode</p>
+                </TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => handleModeChange('sections')}
+                    className={cn(
+                      'w-10 h-10 flex items-center justify-center rounded-md transition-all duration-200',
+                      mode === 'sections'
+                        ? 'bg-gold-100 text-gold-700'
+                        : 'text-charcoal-600 hover:bg-charcoal-100'
+                    )}
+                  >
+                    <LayoutGrid className="w-4 h-4" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                  <p>Sections Mode</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          ) : (
+            <div className="flex gap-1 p-1 bg-charcoal-100 rounded-lg">
+              <button
+                onClick={() => handleModeChange('journey')}
+                className={cn(
+                  'flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200',
+                  mode === 'journey'
+                    ? 'bg-white text-charcoal-900 shadow-sm'
+                    : 'text-charcoal-600 hover:text-charcoal-900'
+                )}
+              >
+                <Map className="w-3.5 h-3.5" />
+                Journey
+              </button>
+              <button
+                onClick={() => handleModeChange('sections')}
+                className={cn(
+                  'flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200',
+                  mode === 'sections'
+                    ? 'bg-white text-charcoal-900 shadow-sm'
+                    : 'text-charcoal-600 hover:text-charcoal-900'
+                )}
+              >
+                <LayoutGrid className="w-3.5 h-3.5" />
+                Sections
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Journey Mode Navigation */}
@@ -366,7 +409,7 @@ export function CampaignEntitySidebar({
           </div>
         )}
 
-      </aside>
+      </div>
     </TooltipProvider>
   )
 }

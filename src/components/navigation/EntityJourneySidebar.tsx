@@ -16,6 +16,13 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import { useSidebarUIContextSafe } from '@/lib/contexts/SidebarUIContext'
 
 interface EntityJourneySidebarProps {
   entityType: EntityType
@@ -71,6 +78,10 @@ export function EntityJourneySidebar({
   const currentSection = searchParams.get('section') || defaultSection
   const [isToolsOpen, setIsToolsOpen] = useState(true)
   const [isQuickActionsOpen, setIsQuickActionsOpen] = useState(true)
+  
+  // Get collapsed state from context
+  const sidebarContext = useSidebarUIContextSafe()
+  const isCollapsed = sidebarContext?.isCollapsed ?? false
 
   // Get visible quick actions based on entity status
   const visibleQuickActions = useMemo(() => {
@@ -182,77 +193,141 @@ export function EntityJourneySidebar({
 
 
   return (
-    <aside className={cn('w-64 bg-white border-r border-charcoal-100 flex flex-col flex-shrink-0', className)}>
-      {/* Back Link */}
-      <div className="px-4 pt-4 pb-2">
-        <Link
-          href={ENTITY_BASE_PATHS[entityType]}
-          className="inline-flex items-center gap-1.5 text-sm text-charcoal-500 hover:text-charcoal-700 transition-colors"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          {backLinkText[entityType]}
-        </Link>
-      </div>
-
-      {/* Entity Header */}
-      <div className="px-4 pb-4 border-b border-charcoal-100">
-        <h2 className="font-heading font-semibold text-charcoal-900 truncate text-base">
-          {entityName}
-        </h2>
-        {entitySubtitle && (
-          <p className="text-sm text-charcoal-500 truncate mt-0.5">
-            {entitySubtitle}
-          </p>
-        )}
-        <div className="mt-2">
-          <StatusBadge status={entityStatus} />
+    <TooltipProvider delayDuration={100}>
+      <div className={cn('flex flex-col flex-1 overflow-hidden', className)}>
+        {/* Back Link - with top padding for toggle button */}
+        <div className="px-4 pt-12 pb-2">
+          {isCollapsed ? (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href={ENTITY_BASE_PATHS[entityType]}
+                  className="inline-flex items-center justify-center w-8 h-8 text-sm text-charcoal-500 hover:text-charcoal-700 hover:bg-charcoal-50 rounded-md transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                <p>{backLinkText[entityType]}</p>
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <Link
+              href={ENTITY_BASE_PATHS[entityType]}
+              className="inline-flex items-center gap-1.5 text-sm text-charcoal-500 hover:text-charcoal-700 transition-colors"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              {backLinkText[entityType]}
+            </Link>
+          )}
         </div>
-      </div>
 
-      {/* Quick Actions - Collapsible */}
-      {visibleQuickActions.length > 0 && (
-        <Collapsible
-          open={isQuickActionsOpen}
-          onOpenChange={setIsQuickActionsOpen}
-          className="border-b border-charcoal-100 py-3 px-3"
-        >
-          <CollapsibleTrigger className="flex items-center gap-2 w-full px-2 py-1.5 text-xs font-medium text-charcoal-400 uppercase tracking-wider hover:text-charcoal-600 transition-colors">
-            {isQuickActionsOpen ? (
-              <ChevronDown className="w-3.5 h-3.5" />
-            ) : (
-              <ChevronRight className="w-3.5 h-3.5" />
+        {/* Entity Header */}
+        <div className="px-4 pb-4 border-b border-charcoal-100">
+          {isCollapsed ? (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex flex-col items-center gap-2">
+                  <div className="w-10 h-10 rounded-full bg-gold-100 flex items-center justify-center text-gold-700 font-semibold text-sm">
+                    {entityName.substring(0, 2).toUpperCase()}
+                  </div>
+                  <StatusBadgeDot status={entityStatus} />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                <div>
+                  <p className="font-semibold">{entityName}</p>
+                  {entitySubtitle && <p className="text-xs text-charcoal-300">{entitySubtitle}</p>}
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <>
+              <h2 className="font-heading font-semibold text-charcoal-900 truncate text-base">
+                {entityName}
+              </h2>
+              {entitySubtitle && (
+                <p className="text-sm text-charcoal-500 truncate mt-0.5">
+                  {entitySubtitle}
+                </p>
+              )}
+              <div className="mt-2">
+                <StatusBadge status={entityStatus} />
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* Quick Actions - Collapsible */}
+        {visibleQuickActions.length > 0 && (
+          <Collapsible
+            open={isQuickActionsOpen}
+            onOpenChange={setIsQuickActionsOpen}
+            className="border-b border-charcoal-100 py-3 px-3"
+          >
+            {!isCollapsed && (
+              <CollapsibleTrigger className="flex items-center gap-2 w-full px-2 py-1.5 text-xs font-medium text-charcoal-400 uppercase tracking-wider hover:text-charcoal-600 transition-colors">
+                {isQuickActionsOpen ? (
+                  <ChevronDown className="w-3.5 h-3.5" />
+                ) : (
+                  <ChevronRight className="w-3.5 h-3.5" />
+                )}
+                <Zap className="w-3.5 h-3.5" />
+                <span>Actions</span>
+              </CollapsibleTrigger>
             )}
-            <Zap className="w-3.5 h-3.5" />
-            <span>Actions</span>
-          </CollapsibleTrigger>
-          <CollapsibleContent className="mt-2">
-            <div className="space-y-1.5">
-              {visibleQuickActions.map((action) => {
-                const Icon = action.icon
-                return (
-                  <Button
-                    key={action.id}
-                    variant={action.variant || 'outline'}
-                    size="sm"
-                    className={cn(
-                      'w-full justify-start gap-2 h-9 text-xs font-medium',
-                      action.variant === 'destructive'
-                        ? 'hover:bg-red-50'
-                        : 'hover:bg-gold-50 hover:text-gold-700 hover:border-gold-200'
-                    )}
-                    onClick={() => handleQuickAction(action)}
-                  >
-                    <Icon className="w-3.5 h-3.5" />
-                    {action.label}
-                  </Button>
-                )
-              })}
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-      )}
+            <CollapsibleContent className={cn(isCollapsed ? '' : 'mt-2')}>
+              <div className={cn('space-y-1.5', isCollapsed && 'flex flex-col items-center')}>
+                {visibleQuickActions.map((action) => {
+                  const Icon = action.icon
+                  if (isCollapsed) {
+                    return (
+                      <Tooltip key={action.id}>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant={action.variant || 'outline'}
+                            size="sm"
+                            className={cn(
+                              'w-9 h-9 p-0 flex items-center justify-center',
+                              action.variant === 'destructive'
+                                ? 'hover:bg-red-50'
+                                : 'hover:bg-gold-50 hover:text-gold-700 hover:border-gold-200'
+                            )}
+                            onClick={() => handleQuickAction(action)}
+                          >
+                            <Icon className="w-4 h-4" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                          <p>{action.label}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    )
+                  }
+                  return (
+                    <Button
+                      key={action.id}
+                      variant={action.variant || 'outline'}
+                      size="sm"
+                      className={cn(
+                        'w-full justify-start gap-2 h-9 text-xs font-medium',
+                        action.variant === 'destructive'
+                          ? 'hover:bg-red-50'
+                          : 'hover:bg-gold-50 hover:text-gold-700 hover:border-gold-200'
+                      )}
+                      onClick={() => handleQuickAction(action)}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                      {action.label}
+                    </Button>
+                  )
+                })}
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        )}
 
-      <nav className="flex-1 overflow-y-auto">
+        <nav className="flex-1 overflow-y-auto">
         {/* SECTIONS MODE: Show main sections + tool sections */}
         {navigationStyle === 'sections' && entityType === 'job' && (
           <>
@@ -663,9 +738,9 @@ export function EntityJourneySidebar({
             </Collapsible>
           </>
         )}
-      </nav>
-
-    </aside>
+        </nav>
+      </div>
+    </TooltipProvider>
   )
 }
 
@@ -732,4 +807,62 @@ function StatusBadge({ status }: { status: string }) {
   )
 }
 
-export { StatusBadge }
+// Simpler status badge as just a colored dot (for collapsed mode)
+function StatusBadgeDot({ status }: { status: string }) {
+  const colors: Record<string, string> = {
+    // Job statuses
+    draft: 'bg-charcoal-400',
+    open: 'bg-blue-500',
+    active: 'bg-green-500',
+    on_hold: 'bg-amber-500',
+    filled: 'bg-purple-500',
+    cancelled: 'bg-red-500',
+    // Candidate statuses
+    sourced: 'bg-amber-500',
+    new: 'bg-blue-500',
+    screening: 'bg-blue-500',
+    bench: 'bg-purple-500',
+    placed: 'bg-indigo-500',
+    inactive: 'bg-charcoal-400',
+    // Account statuses
+    prospect: 'bg-amber-500',
+    churned: 'bg-red-500',
+    // Lead statuses
+    contacted: 'bg-blue-500',
+    qualified: 'bg-green-500',
+    converted: 'bg-purple-500',
+    lost: 'bg-red-500',
+    // Deal statuses
+    discovery: 'bg-blue-500',
+    qualification: 'bg-cyan-500',
+    proposal: 'bg-amber-500',
+    negotiation: 'bg-orange-500',
+    verbal_commit: 'bg-purple-500',
+    closed_won: 'bg-green-500',
+    closed_lost: 'bg-red-500',
+    // Submission statuses
+    submission_ready: 'bg-blue-500',
+    submitted_to_client: 'bg-cyan-500',
+    client_review: 'bg-amber-500',
+    client_interview: 'bg-orange-500',
+    offer_stage: 'bg-purple-500',
+    rejected: 'bg-red-500',
+    withdrawn: 'bg-charcoal-400',
+    // Placement statuses
+    pending_start: 'bg-amber-500',
+    extended: 'bg-blue-500',
+    ended: 'bg-charcoal-400',
+    // Campaign statuses
+    scheduled: 'bg-blue-500',
+    paused: 'bg-amber-500',
+    completed: 'bg-purple-500',
+    // Default
+    default: 'bg-charcoal-400',
+  }
+
+  return (
+    <div className={cn('w-2 h-2 rounded-full', colors[status] || colors.default)} />
+  )
+}
+
+export { StatusBadge, StatusBadgeDot }
