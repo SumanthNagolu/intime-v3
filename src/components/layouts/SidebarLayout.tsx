@@ -9,6 +9,7 @@ import { TopNavigation } from "@/components/navigation/TopNavigation"
 import { useEntityNavigationSafe } from "@/lib/navigation/EntityNavigationContext"
 import { useEntityData } from "@/components/layouts/EntityContextProvider"
 import { ENTITY_NAVIGATION_STYLES } from "@/lib/navigation/entity-navigation.types"
+import { ResizableSidebarWrapper } from "@/components/navigation/ResizableSidebarWrapper"
 import { cn } from "@/lib/utils"
 
 // Keep old interface for backwards compatibility but it's no longer used
@@ -40,7 +41,7 @@ function SidebarLayoutLoading({ className }: { className?: string }) {
     <div className={cn("h-screen flex flex-col overflow-hidden", className)}>
       <div className="h-16 bg-white border-b border-charcoal-100" />
       <div className="flex flex-1 overflow-hidden">
-        <div className="w-64 bg-white border-r border-charcoal-100 animate-pulse hidden lg:block" />
+        <div className="w-64 bg-white border-r border-charcoal-100 animate-pulse hidden lg:flex flex-shrink-0" />
         <main className="flex-1 min-w-0 overflow-y-auto bg-cream p-6">
           <div className="h-8 w-64 bg-charcoal-100 animate-pulse rounded mb-4" />
           <div className="h-64 w-full bg-charcoal-100 animate-pulse rounded" />
@@ -67,35 +68,35 @@ function SidebarLayoutInner({
       <TopNavigation />
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Dynamic sidebar based on entity type */}
+        {/* Dynamic sidebar based on entity type - wrapped in ResizableSidebarWrapper */}
         {!hideSidebar && (
-          currentEntity ? (
-            // Use entity-specific sidebars where available
-            currentEntity.type === 'campaign' ? (
-              // Campaign uses specialized dual-mode sidebar (Journey + Sections)
-              // Note: CampaignEntitySidebar fetches its own data using the ID
-              <CampaignEntitySidebar
-                campaignId={currentEntity.id}
-                campaignStatus={currentEntity.status}
-                counts={toolCounts}
-                className="hidden lg:flex"
-              />
+          <ResizableSidebarWrapper>
+            {currentEntity ? (
+              // Use entity-specific sidebars where available
+              currentEntity.type === 'campaign' ? (
+                // Campaign uses specialized dual-mode sidebar (Journey + Sections)
+                // Note: CampaignEntitySidebar fetches its own data using the ID
+                <CampaignEntitySidebar
+                  campaignId={currentEntity.id}
+                  campaignStatus={currentEntity.status}
+                  counts={toolCounts}
+                />
+              ) : (
+                // All other entities use unified EntityJourneySidebar
+                // It handles both journey and section navigation based on entity type
+                <EntityJourneySidebar
+                  entityType={currentEntity.type}
+                  entityId={currentEntity.id}
+                  entityName={currentEntity.name}
+                  entitySubtitle={currentEntity.subtitle}
+                  entityStatus={currentEntity.status}
+                  toolCounts={toolCounts}
+                />
+              )
             ) : (
-              // All other entities use unified EntityJourneySidebar
-              // It handles both journey and section navigation based on entity type
-              <EntityJourneySidebar
-                entityType={currentEntity.type}
-                entityId={currentEntity.id}
-                entityName={currentEntity.name}
-                entitySubtitle={currentEntity.subtitle}
-                entityStatus={currentEntity.status}
-                toolCounts={toolCounts}
-                className="hidden lg:flex"
-              />
-            )
-          ) : (
-            <SectionSidebar sectionId={sectionId} className="hidden lg:flex" />
-          )
+              <SectionSidebar sectionId={sectionId} />
+            )}
+          </ResizableSidebarWrapper>
         )}
 
         <main className="flex-1 min-w-0 overflow-y-auto bg-cream">
