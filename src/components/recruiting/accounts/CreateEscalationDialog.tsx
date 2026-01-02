@@ -70,6 +70,8 @@ const createEscalationSchema = z.object({
   detailedDescription: z.string().min(20, 'Description must be at least 20 characters'),
   clientImpact: z.array(z.string()).optional(),
   immediateActions: z.string().optional(),
+  rootCause: z.string().optional(),
+  resolutionPlan: z.string().optional(),
   assignedTo: z.string().uuid().optional().nullable(),
   relatedJobId: z.string().uuid().optional().nullable(),
   relatedContactIds: z.array(z.string().uuid()).optional(),
@@ -420,6 +422,8 @@ export function CreateEscalationDialog({
       detailedDescription: data.detailedDescription.trim(),
       clientImpact: data.clientImpact && data.clientImpact.length > 0 ? data.clientImpact : undefined,
       immediateActions: data.immediateActions?.trim() || undefined,
+      rootCause: data.rootCause?.trim() || undefined,
+      resolutionPlan: data.resolutionPlan?.trim() || undefined,
       assignedTo: data.assignedTo || undefined,
       relatedEntities: [
         ...(data.relatedJobId ? [{ type: 'job', id: data.relatedJobId }] : []),
@@ -886,6 +890,36 @@ export function CreateEscalationDialog({
                     id="immediateActions"
                     {...register('immediateActions')}
                     placeholder="What steps have already been taken to address this issue?"
+                    rows={3}
+                    className="rounded-xl border-charcoal-200 bg-white resize-none"
+                  />
+                </div>
+
+                {/* Root Cause Analysis */}
+                <div className="space-y-2">
+                  <Label htmlFor="rootCause" className="text-charcoal-700 font-medium text-sm">
+                    Root Cause Analysis
+                    <span className="text-[10px] text-charcoal-400 font-normal ml-2">(Optional)</span>
+                  </Label>
+                  <Textarea
+                    id="rootCause"
+                    {...register('rootCause')}
+                    placeholder="What caused this issue? Identify the underlying factors..."
+                    rows={3}
+                    className="rounded-xl border-charcoal-200 bg-white resize-none"
+                  />
+                </div>
+
+                {/* Resolution Plan */}
+                <div className="space-y-2">
+                  <Label htmlFor="resolutionPlan" className="text-charcoal-700 font-medium text-sm">
+                    Resolution Plan
+                    <span className="text-[10px] text-charcoal-400 font-normal ml-2">(Optional)</span>
+                  </Label>
+                  <Textarea
+                    id="resolutionPlan"
+                    {...register('resolutionPlan')}
+                    placeholder="What is the plan to fully resolve this issue?"
                     rows={3}
                     className="rounded-xl border-charcoal-200 bg-white resize-none"
                   />
