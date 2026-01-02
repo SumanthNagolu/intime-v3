@@ -1,0 +1,408 @@
+import { useEffect, useState, useRef, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
+import { useDebouncedCallback } from 'use-debounce'
+
+/**
+ * Hook to manage entity drafts stored in main entity tables
+ *
+ * Key behaviors:
+ * 1. On fresh wizard (no ?resume): Reset form store immediately
+ * 2. On resume (?resume=entityId): Load entity, transform to form data, restore step
+ * 3. Auto-save (2s debounce): Create/update entity with status='draft'
+ * 4. On finalize: Update status from 'draft' to target status, clear wizard_state
+ *
+ * This stores drafts in the main entity tables (e.g., jobs, companies)
+ * instead of a separate entity_drafts table.
+ */
+
+// Wizard state stored in entity's wizard_state JSONB column
+export interface WizardState {
+  currentStep: number
+  totalSteps: number
+  lastSavedAt: string
+}
+
+// Store interface that wizard stores must implement
+export interface WizardStore<TFormData> {
+  formData: TFormData
+  currentStep: number
+  isDirty: boolean
+  lastSaved: Date | null
+  setFormData: (data: Partial<TFormData>) => void
+  setCurrentStep?: (step: number) => void
+  resetForm: () => void
+}
+
+// Mutation result type (simplified from tRPC)
+interface MutationResult<TData, TInput> {
+  mutateAsync: (input: TInput) => Promise<TData>
+  isPending: boolean
+}
+
+// Query result type (simplified from tRPC)
+interface QueryResult<TData> {
+  data: TData | undefined
+  isLoading: boolean
+  error: unknown
+}
+
+export interface UseEntityDraftOptions<TFormData, TEntity> {
+  // Entity configuration
+  entityType: string
+  wizardRoute: string
+  totalSteps: number
+
+  // Store integration
+  store: () => WizardStore<TFormData>
+
+  // Data transformation
+  formToEntity: (formData: TFormData) => Record<string, unknown>
+  entityToForm: (entity: TEntity) => TFormData
+  getDisplayName: (formData: TFormData) => string
+
+  // Check if form has meaningful data (for auto-save trigger)
+  hasData?: (formData: TFormData) => boolean
+
+  // tRPC mutations/queries (passed as pre-configured hooks)
+  createMutation: MutationResult<TEntity, Record<string, unknown>>
+  updateMutation: MutationResult<TEntity, Record<string, unknown>>
+  getDraftQuery: QueryResult<TEntity | null>
+
+  // Resume handling
+  resumeId?: string | null
+
+  // Search params string for URL manipulation
+  searchParamsString?: string
+
+  // Invalidation callback after save
+  onInvalidate?: () => void
+}
+
+export interface UseEntityDraftReturn<TEntity> {
+  // State
+  isReady: boolean
+  isLoading: boolean
+  isSaving: boolean
+  draftId: string | null
+  lastSavedAt: Date | null
+
+  // Actions
+  saveDraft: () => Promise<void>
+  deleteDraft: () => Promise<void>
+  finalizeDraft: (targetStatus: string) => Promise<TEntity>
+}
+
+/**
+ * Default check for whether form data has meaningful content
+ */
+function defaultHasData<T extends object>(formData: T): boolean {
+  const data = formData as Record<string, unknown>
+  const nameField = data.name || data.title || data.firstName || data.companyName
+  if (nameField && typeof nameField === 'string' && nameField.trim() !== '') {
+    return true
+  }
+  return false
+}
+
+export function useEntityDraft<TFormData extends object, TEntity extends { id: string; wizard_state?: WizardState | null }>({
+  entityType,
+  wizardRoute,
+  totalSteps,
+  store,
+  formToEntity,
+  entityToForm,
+  getDisplayName,
+  hasData = defaultHasData,
+  createMutation,
+  updateMutation,
+  getDraftQuery,
+  resumeId,
+  searchParamsString = '',
+  onInvalidate,
+}: UseEntityDraftOptions<TFormData, TEntity>): UseEntityDraftReturn<TEntity> {
+  const [isReady, setIsReady] = useState(false)
+  const [draftId, setDraftId] = useState<string | null>(null)
+  const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null)
+  const hasInitialized = useRef(false)
+  const previousFormData = useRef<string>('')
+  const router = useRouter()
+
+  const wizardStore = store()
+  const formData = wizardStore.formData
+  const currentStep = wizardStore.currentStep
+
+  // Debounced auto-save function (2 second delay)
+  const debouncedSave = useDebouncedCallback(
+    async (existingDraftId: string | null, formData: TFormData, currentStep: number) => {
+      const displayName = getDisplayName(formData) || `Untitled ${entityType}`
+
+      const wizardState: WizardState = {
+        currentStep,
+        totalSteps,
+        lastSavedAt: new Date().toISOString(),
+      }
+
+      const entityData = formToEntity(formData)
+
+      try {
+        if (existingDraftId) {
+          // Update existing draft
+          const result = await updateMutation.mutateAsync({
+            id: existingDraftId,
+            ...entityData,
+            wizard_state: wizardState,
+          })
+          setLastSavedAt(new Date())
+          onInvalidate?.()
+          return result
+        } else {
+          // Create new draft
+          const result = await createMutation.mutateAsync({
+            ...entityData,
+            status: 'draft',
+            wizard_state: wizardState,
+          })
+          setDraftId((result as TEntity).id)
+          setLastSavedAt(new Date())
+          onInvalidate?.()
+          return result
+        }
+      } catch (error) {
+        console.error('[useEntityDraft] Auto-save failed:', error)
+        throw error
+      }
+    },
+    2000
+  )
+
+  // Initialize draft management
+  useEffect(() => {
+    if (hasInitialized.current) return
+
+    const initialize = async () => {
+      try {
+        // Case 1: Resuming a specific draft from URL
+        if (resumeId && getDraftQuery.data) {
+          hasInitialized.current = true
+
+          const draft = getDraftQuery.data
+
+          // Load the draft into the store
+          const formData = entityToForm(draft)
+          wizardStore.setFormData(formData as Partial<TFormData>)
+
+          // Restore wizard step from wizard_state
+          if (draft.wizard_state?.currentStep && wizardStore.setCurrentStep) {
+            wizardStore.setCurrentStep(draft.wizard_state.currentStep)
+          }
+
+          // Track this as the active draft
+          setDraftId(draft.id)
+          if (draft.wizard_state?.lastSavedAt) {
+            setLastSavedAt(new Date(draft.wizard_state.lastSavedAt))
+          }
+          previousFormData.current = JSON.stringify(formData)
+
+          // Clean up URL (remove ?resume param, keep ?step if present)
+          const params = new URLSearchParams(searchParamsString)
+          params.delete('resume')
+          const step = params.get('step')
+          const newUrl = step ? `${wizardRoute}?step=${step}` : wizardRoute
+          router.replace(newUrl, { scroll: false })
+
+          setIsReady(true)
+          return
+        }
+
+        // Case 2: New wizard - reset form and wait for user to enter data
+        if (!resumeId) {
+          hasInitialized.current = true
+          // IMPORTANT: Reset the form to clear any stale localStorage-persisted data
+          wizardStore.resetForm()
+          previousFormData.current = ''
+          setIsReady(true)
+          return
+        }
+      } catch (error) {
+        console.error('[useEntityDraft] Initialization error:', error)
+        hasInitialized.current = true
+        setIsReady(true)
+      }
+    }
+
+    // Only initialize when we have the resumed draft data (if resuming)
+    if (resumeId) {
+      if (getDraftQuery.data || (!getDraftQuery.isLoading && !getDraftQuery.data)) {
+        initialize()
+      }
+    } else {
+      initialize()
+    }
+  }, [
+    resumeId,
+    getDraftQuery.data,
+    getDraftQuery.isLoading,
+    wizardStore,
+    router,
+    searchParamsString,
+    wizardRoute,
+    entityToForm,
+  ])
+
+  // Watch for form changes and auto-save
+  useEffect(() => {
+    if (!isReady) return
+
+    const currentFormDataStr = JSON.stringify(formData)
+
+    // Skip if no changes
+    if (currentFormDataStr === previousFormData.current) return
+    previousFormData.current = currentFormDataStr
+
+    // Check if form has meaningful data
+    const hasMeaningfulData = hasData(formData)
+    if (!hasMeaningfulData) return
+
+    // Trigger debounced save
+    debouncedSave(draftId, formData, currentStep)
+  }, [
+    isReady,
+    draftId,
+    formData,
+    currentStep,
+    hasData,
+    debouncedSave,
+  ])
+
+  // Manual save function (for "Save Draft" button)
+  const saveDraft = useCallback(async () => {
+    const hasMeaningfulData = hasData(formData)
+    if (!hasMeaningfulData) return
+
+    const displayName = getDisplayName(formData) || `Untitled ${entityType}`
+
+    const wizardState: WizardState = {
+      currentStep,
+      totalSteps,
+      lastSavedAt: new Date().toISOString(),
+    }
+
+    const entityData = formToEntity(formData)
+
+    if (draftId) {
+      // Update existing draft
+      await updateMutation.mutateAsync({
+        id: draftId,
+        ...entityData,
+        wizard_state: wizardState,
+      })
+    } else {
+      // Create new draft
+      const result = await createMutation.mutateAsync({
+        ...entityData,
+        status: 'draft',
+        wizard_state: wizardState,
+      })
+      setDraftId((result as TEntity).id)
+    }
+
+    setLastSavedAt(new Date())
+    onInvalidate?.()
+  }, [
+    draftId,
+    formData,
+    currentStep,
+    entityType,
+    totalSteps,
+    formToEntity,
+    getDisplayName,
+    hasData,
+    createMutation,
+    updateMutation,
+    onInvalidate,
+  ])
+
+  // Delete draft (soft delete by setting deleted_at)
+  const deleteDraft = useCallback(async () => {
+    if (draftId) {
+      try {
+        await updateMutation.mutateAsync({
+          id: draftId,
+          deleted_at: new Date().toISOString(),
+        })
+      } catch (error) {
+        console.error('[useEntityDraft] Failed to delete draft:', error)
+      }
+    }
+
+    // Reset store
+    wizardStore.resetForm()
+    setDraftId(null)
+    setLastSavedAt(null)
+    onInvalidate?.()
+  }, [draftId, updateMutation, wizardStore, onInvalidate])
+
+  // Finalize draft - change status from 'draft' to target status
+  const finalizeDraft = useCallback(async (targetStatus: string): Promise<TEntity> => {
+    if (!draftId) {
+      // No draft exists yet, create the entity directly with target status
+      const entityData = formToEntity(formData)
+      const result = await createMutation.mutateAsync({
+        ...entityData,
+        status: targetStatus,
+        wizard_state: null, // Clear wizard state
+      })
+
+      // Reset store after successful creation
+      wizardStore.resetForm()
+      setDraftId(null)
+      setLastSavedAt(null)
+      onInvalidate?.()
+
+      return result as TEntity
+    }
+
+    // Update existing draft to finalized status
+    const entityData = formToEntity(formData)
+    const result = await updateMutation.mutateAsync({
+      id: draftId,
+      ...entityData,
+      status: targetStatus,
+      wizard_state: null, // Clear wizard state on finalization
+    })
+
+    // Reset store after successful finalization
+    wizardStore.resetForm()
+    setDraftId(null)
+    setLastSavedAt(null)
+    onInvalidate?.()
+
+    return result as TEntity
+  }, [
+    draftId,
+    formData,
+    formToEntity,
+    createMutation,
+    updateMutation,
+    wizardStore,
+    onInvalidate,
+  ])
+
+  return {
+    isReady,
+    isLoading: getDraftQuery.isLoading,
+    isSaving: createMutation.isPending || updateMutation.isPending,
+    draftId,
+    lastSavedAt,
+    saveDraft,
+    deleteDraft,
+    finalizeDraft,
+  }
+}
+
+/**
+ * Helper to extract entity ID from search params for resume
+ */
+export function getResumeIdFromParams(searchParams: URLSearchParams | { get: (key: string) => string | null }): string | null {
+  return searchParams.get('resume')
+}
