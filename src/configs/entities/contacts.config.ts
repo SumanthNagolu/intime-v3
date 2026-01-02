@@ -38,7 +38,7 @@ export interface Contact extends Record<string, unknown> {
   subtype?: string | null
   type?: string | null // Legacy alias for subtype
   is_primary?: boolean
-  is_decision_maker?: boolean
+  decision_authority?: string | null
   company_id?: string | null
   account?: {
     id: string
@@ -134,6 +134,18 @@ export const CONTACT_TYPE_CONFIG: Record<string, StatusConfig> = {
     bgColor: 'bg-cyan-100',
     textColor: 'text-cyan-800',
   },
+}
+
+// Contact authority/decision-maker configuration
+export const CONTACT_AUTHORITY_CONFIG: Record<string, { label: string; bg: string; text: string }> = {
+  decision_maker: { label: 'Decision Maker', bg: 'bg-success-50', text: 'text-success-700' },
+  influencer: { label: 'Influencer', bg: 'bg-blue-50', text: 'text-blue-700' },
+  champion: { label: 'Champion', bg: 'bg-purple-50', text: 'text-purple-700' },
+  gatekeeper: { label: 'Gatekeeper', bg: 'bg-amber-50', text: 'text-amber-700' },
+  end_user: { label: 'End User', bg: 'bg-charcoal-50', text: 'text-charcoal-600' },
+  budget_holder: { label: 'Budget Holder', bg: 'bg-gold-50', text: 'text-gold-700' },
+  technical_evaluator: { label: 'Technical', bg: 'bg-indigo-50', text: 'text-indigo-700' },
+  procurement: { label: 'Procurement', bg: 'bg-slate-50', text: 'text-slate-700' },
 }
 
 // Contacts List View Configuration
@@ -276,13 +288,14 @@ export const contactsListConfig: ListViewConfig<Contact> = {
       format: 'status' as const,
     },
     {
-      key: 'is_decision_maker',
-      header: 'DM',
-      label: 'DM',
-      width: 'w-[50px]',
-      align: 'center' as const,
+      key: 'decision_authority',
+      header: 'Authority',
+      label: 'Authority',
+      width: 'w-[130px]',
       render: (value) => {
-        return value ? '✓' : '—'
+        if (!value) return '—'
+        const config = CONTACT_AUTHORITY_CONFIG[value as string]
+        return config?.label || String(value)
       },
     },
     {
@@ -449,15 +462,17 @@ export const contactsDetailConfig: DetailViewConfig<Contact> = {
     },
     {
       key: 'decisionMaker',
-      label: 'Decision Maker',
+      label: 'Authority',
       icon: CheckCircle,
       iconBg: 'bg-blue-100',
       iconColor: 'text-blue-600',
       getValue: (entity: unknown) => {
         const contact = entity as Contact
-        return contact.is_decision_maker ? 'Yes' : 'No'
+        if (!contact.decision_authority) return '—'
+        const config = CONTACT_AUTHORITY_CONFIG[contact.decision_authority]
+        return config?.label || contact.decision_authority
       },
-      tooltip: 'Has decision-making authority',
+      tooltip: 'Decision-making authority level',
     },
     {
       key: 'lastContact',
