@@ -4628,11 +4628,25 @@ export const crmRouter = router({
         })).optional(),
         clientImpact: z.array(z.string()).optional(),
         immediateActions: z.string().optional(),
+        rootCause: z.string().optional(),
+        resolutionPlan: z.string().optional(),
         assignedTo: z.string().uuid().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
+
+        // Look up user_profiles.id from auth_id (user.id is Supabase auth user ID)
+        // escalations.created_by and assigned_to reference user_profiles(id), not auth.users(id)
+        let userProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          userProfileId = profile?.id ?? null
+        }
 
         // Calculate SLA due dates based on severity
         const now = new Date()
@@ -4670,11 +4684,13 @@ export const crmRouter = router({
             related_entities: input.relatedEntities || [],
             client_impact: input.clientImpact,
             immediate_actions: input.immediateActions,
+            root_cause: input.rootCause,
+            resolution_plan: input.resolutionPlan,
             status: 'open',
             sla_response_due: slaResponseDue.toISOString(),
             sla_resolution_due: slaResolutionDue.toISOString(),
-            created_by: user?.id,
-            assigned_to: input.assignedTo || user?.id,
+            created_by: userProfileId,
+            assigned_to: input.assignedTo || userProfileId,
           })
           .select('*, creator:user_profiles!created_by(id, full_name), assignee:user_profiles!assigned_to(id, full_name)')
           .single()
@@ -4691,7 +4707,7 @@ export const crmRouter = router({
             update_type: 'note',
             content: 'Escalation created',
             new_status: 'open',
-            created_by: user?.id,
+            created_by: userProfileId,
           })
 
         // Notify managers for high/critical escalations
@@ -4785,10 +4801,22 @@ export const crmRouter = router({
         assignedTo: z.string().uuid().optional(),
         resolutionPlan: z.string().optional(),
         rootCause: z.string().optional(),
+        immediateActions: z.string().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
+
+        // Look up user_profiles.id from auth_id for created_by FK
+        let userProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          userProfileId = profile?.id ?? null
+        }
 
         // Get current escalation for comparison
         const { data: current } = await adminClient
@@ -4804,6 +4832,7 @@ export const crmRouter = router({
         if (input.assignedTo !== undefined) updateData.assigned_to = input.assignedTo
         if (input.resolutionPlan !== undefined) updateData.resolution_plan = input.resolutionPlan
         if (input.rootCause !== undefined) updateData.root_cause = input.rootCause
+        if (input.immediateActions !== undefined) updateData.immediate_actions = input.immediateActions
 
         const { data, error } = await adminClient
           .from('escalations')
@@ -4827,7 +4856,7 @@ export const crmRouter = router({
               content: `Status changed from ${current?.status} to ${input.status}`,
               old_status: current?.status,
               new_status: input.status,
-              created_by: user?.id,
+              created_by: userProfileId,
             })
         }
 
@@ -4840,7 +4869,7 @@ export const crmRouter = router({
               content: 'Assignee changed',
               old_assignee_id: current?.assigned_to,
               new_assignee_id: input.assignedTo,
-              created_by: user?.id,
+              created_by: userProfileId,
             })
         }
 
@@ -4859,6 +4888,17 @@ export const crmRouter = router({
         const { user } = ctx
         const adminClient = getAdminClient()
 
+        // Look up user_profiles.id from auth_id for created_by FK
+        let userProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          userProfileId = profile?.id ?? null
+        }
+
         const { data, error } = await adminClient
           .from('escalation_updates')
           .insert({
@@ -4866,7 +4906,7 @@ export const crmRouter = router({
             update_type: input.updateType,
             content: input.content,
             is_internal: input.isInternal,
-            created_by: user?.id,
+            created_by: userProfileId,
           })
           .select('*, author:user_profiles!created_by(id, full_name, avatar_url)')
           .single()
@@ -4892,6 +4932,17 @@ export const crmRouter = router({
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
 
+        // Look up user_profiles.id from auth_id for resolved_by/created_by FK
+        let userProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          userProfileId = profile?.id ?? null
+        }
+
         // Get escalation for time tracking
         const { data: escalation } = await adminClient
           .from('escalations')
@@ -4911,7 +4962,7 @@ export const crmRouter = router({
           .from('escalations')
           .update({
             status: 'resolved',
-            resolved_by: user?.id,
+            resolved_by: userProfileId,
             resolved_at: now.toISOString(),
             resolution_summary: input.resolutionSummary,
             resolution_actions: input.resolutionActions,
@@ -4939,7 +4990,7 @@ export const crmRouter = router({
             content: input.resolutionSummary,
             old_status: escalation?.status,
             new_status: 'resolved',
-            created_by: user?.id,
+            created_by: userProfileId,
           })
 
         return data
@@ -5172,7 +5223,7 @@ export const crmRouter = router({
 
         let query = adminClient
           .from('activities')
-          .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
+          .select('*, creator:user_profiles!created_by(id, full_name, avatar_url), assignee:user_profiles!assigned_to(id, full_name, avatar_url)')
           .eq('org_id', orgId)
           .eq('entity_type', input.entityType)
           .eq('entity_id', input.entityId)
@@ -5190,6 +5241,97 @@ export const crmRouter = router({
         }
 
         return data ?? []
+      }),
+
+    // Create a task/action item for any entity
+    createTask: orgProtectedProcedure
+      .input(z.object({
+        entityType: z.string(),
+        entityId: z.string().uuid(),
+        subject: z.string().min(1),
+        description: z.string().optional(),
+        assignedTo: z.string().uuid().optional(),
+        dueDate: z.string().datetime().optional(),
+        priority: z.enum(['low', 'medium', 'high', 'urgent']).default('medium'),
+        status: z.enum(['pending', 'in_progress', 'completed', 'cancelled']).default('pending'),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Look up user_profiles.id from auth_id (FK constraint requires user_profiles.id)
+        let creatorProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          creatorProfileId = profile?.id ?? null
+        }
+
+        const { data, error } = await adminClient
+          .from('activities')
+          .insert({
+            org_id: orgId,
+            entity_type: input.entityType,
+            entity_id: input.entityId,
+            activity_type: 'task',
+            subject: input.subject,
+            description: input.description,
+            assigned_to: input.assignedTo, // Already user_profiles.id from frontend
+            due_date: input.dueDate,
+            priority: input.priority,
+            status: input.status === 'pending' ? 'open' : input.status, // Map pending to open for DB
+            created_by: creatorProfileId,
+          })
+          .select('*, creator:user_profiles!created_by(id, full_name, avatar_url), assignee:user_profiles!assigned_to(id, full_name, avatar_url)')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
+      }),
+
+    // Complete a task
+    completeTask: orgProtectedProcedure
+      .input(z.object({
+        id: z.string().uuid(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Look up user_profiles.id from auth_id
+        let performerProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          performerProfileId = profile?.id ?? null
+        }
+
+        const { data, error } = await adminClient
+          .from('activities')
+          .update({
+            status: 'completed',
+            completed_at: new Date().toISOString(),
+            performed_by: performerProfileId,
+          })
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .select('*, creator:user_profiles!created_by(id, full_name, avatar_url), assignee:user_profiles!assigned_to(id, full_name, avatar_url)')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
       }),
   }),
 

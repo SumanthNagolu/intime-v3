@@ -48,6 +48,9 @@ import {
   Lightbulb,
   CheckCircle,
   Star,
+  ListTodo,
+  Calendar,
+  User,
 } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
 import { format, formatDistanceToNow, parseISO } from 'date-fns'
@@ -186,7 +189,7 @@ export function EditEscalationDialog({
 }: EditEscalationDialogProps) {
   const { toast } = useToast()
   const utils = trpc.useUtils()
-  const [activeTab, setActiveTab] = useState<'details' | 'analysis' | 'resolution' | 'updates'>('details')
+  const [activeTab, setActiveTab] = useState<'details' | 'analysis' | 'resolution' | 'updates' | 'actions'>('details')
   const [newUpdateContent, setNewUpdateContent] = useState('')
   const [showResolutionForm, setShowResolutionForm] = useState(false)
 
@@ -203,6 +206,94 @@ export function EditEscalationDialog({
   )
 
   const updates = escalationQuery.data?.updates || []
+
+  // Action Items state and queries
+  const [showActionItemForm, setShowActionItemForm] = useState(false)
+  const [newActionItem, setNewActionItem] = useState({
+    subject: '',
+    description: '',
+    assignedTo: '',
+    dueDate: '',
+    priority: 'medium' as 'low' | 'medium' | 'high' | 'urgent',
+  })
+
+  // Fetch action items (activities linked to this escalation)
+  const actionItemsQuery = trpc.crm.activities.listByEntity.useQuery(
+    { entityType: 'escalation', entityId: escalation.id },
+    { enabled: open }
+  )
+
+  const actionItems = actionItemsQuery.data || []
+
+  // Create action item mutation
+  const createActionItemMutation = trpc.crm.activities.createTask.useMutation({
+    onSuccess: () => {
+      toast({
+        title: 'Action item created',
+        description: 'The action item has been added to this escalation.',
+      })
+      setShowActionItemForm(false)
+      setNewActionItem({
+        subject: '',
+        description: '',
+        assignedTo: '',
+        dueDate: '',
+        priority: 'medium',
+      })
+      utils.crm.activities.listByEntity.invalidate({ entityType: 'escalation', entityId: escalation.id })
+    },
+    onError: (error) => {
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to create action item.',
+        variant: 'error',
+      })
+    },
+  })
+
+  const handleCreateActionItem = () => {
+    if (!newActionItem.subject.trim()) {
+      toast({
+        title: 'Subject required',
+        description: 'Please enter a subject for the action item.',
+        variant: 'error',
+      })
+      return
+    }
+    createActionItemMutation.mutate({
+      entityType: 'escalation',
+      entityId: escalation.id,
+      subject: newActionItem.subject.trim(),
+      description: newActionItem.description.trim() || undefined,
+      assignedTo: newActionItem.assignedTo || undefined,
+      dueDate: newActionItem.dueDate ? new Date(newActionItem.dueDate).toISOString() : undefined,
+      priority: newActionItem.priority,
+    })
+  }
+
+  // Complete action item mutation
+  const completeActionItemMutation = trpc.crm.activities.completeTask.useMutation({
+    onSuccess: () => {
+      toast({
+        title: 'Action item completed',
+        description: 'The action item has been marked as complete.',
+      })
+      utils.crm.activities.listByEntity.invalidate({ entityType: 'escalation', entityId: escalation.id })
+    },
+    onError: (error) => {
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to complete action item.',
+        variant: 'error',
+      })
+    },
+  })
+
+  const handleToggleComplete = (itemId: string, currentStatus: string) => {
+    if (currentStatus !== 'completed') {
+      completeActionItemMutation.mutate({ id: itemId })
+    }
+  }
 
   // Main form
   const {
@@ -342,6 +433,7 @@ export function EditEscalationDialog({
       assignedTo: data.assignedTo || undefined,
       resolutionPlan: data.resolutionPlan || undefined,
       rootCause: data.rootCause || undefined,
+      immediateActions: data.immediateActions || undefined,
     })
   }
 
@@ -429,6 +521,7 @@ export function EditEscalationDialog({
               { id: 'analysis', label: 'Analysis', icon: Target },
               { id: 'resolution', label: 'Resolution', icon: CheckCircle2 },
               { id: 'updates', label: `Updates (${updates.length})`, icon: History },
+              { id: 'actions', label: 'Action Items', icon: ListTodo },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -957,6 +1050,227 @@ export function EditEscalationDialog({
                     <p className="text-charcoal-600 font-medium">No updates yet</p>
                     <p className="text-sm text-charcoal-500 mt-1">
                       Add the first update above
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Action Items Tab */}
+            {activeTab === 'actions' && (
+              <div className="space-y-6">
+                {/* Create Action Item Form */}
+                {showActionItemForm ? (
+                  <div className="p-4 bg-charcoal-50 rounded-xl border border-charcoal-200 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <Label className="text-sm font-medium">New Action Item</Label>
+                      <button
+                        type="button"
+                        onClick={() => setShowActionItemForm(false)}
+                        className="text-charcoal-400 hover:text-charcoal-600"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                    <div className="space-y-3">
+                      <Input
+                        placeholder="Action item subject..."
+                        value={newActionItem.subject}
+                        onChange={(e) => setNewActionItem({ ...newActionItem, subject: e.target.value })}
+                        className="rounded-lg"
+                      />
+                      <Textarea
+                        placeholder="Description (optional)..."
+                        value={newActionItem.description}
+                        onChange={(e) => setNewActionItem({ ...newActionItem, description: e.target.value })}
+                        rows={2}
+                        className="rounded-lg resize-none"
+                      />
+                      <div className="grid grid-cols-3 gap-3">
+                        <div>
+                          <Label className="text-xs text-charcoal-500 mb-1 block">Assigned To</Label>
+                          <Select
+                            value={newActionItem.assignedTo}
+                            onValueChange={(value) => setNewActionItem({ ...newActionItem, assignedTo: value })}
+                          >
+                            <SelectTrigger className="rounded-lg">
+                              <SelectValue placeholder="Select..." />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {orgMembersQuery.data?.items?.map((member: { id: string; full_name: string }) => (
+                                <SelectItem key={member.id} value={member.id}>
+                                  {member.full_name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div>
+                          <Label className="text-xs text-charcoal-500 mb-1 block">Due Date</Label>
+                          <Input
+                            type="date"
+                            value={newActionItem.dueDate}
+                            onChange={(e) => setNewActionItem({ ...newActionItem, dueDate: e.target.value })}
+                            className="rounded-lg"
+                          />
+                        </div>
+                        <div>
+                          <Label className="text-xs text-charcoal-500 mb-1 block">Priority</Label>
+                          <Select
+                            value={newActionItem.priority}
+                            onValueChange={(value: 'low' | 'medium' | 'high' | 'urgent') =>
+                              setNewActionItem({ ...newActionItem, priority: value })
+                            }
+                          >
+                            <SelectTrigger className="rounded-lg">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="low">Low</SelectItem>
+                              <SelectItem value="medium">Medium</SelectItem>
+                              <SelectItem value="high">High</SelectItem>
+                              <SelectItem value="urgent">Urgent</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex justify-end gap-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setShowActionItemForm(false)}
+                        className="rounded-lg"
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        type="button"
+                        size="sm"
+                        onClick={handleCreateActionItem}
+                        disabled={createActionItemMutation.isPending}
+                        className="rounded-lg"
+                      >
+                        {createActionItemMutation.isPending ? (
+                          <Loader2 className="w-4 h-4 mr-1 animate-spin" />
+                        ) : (
+                          <Plus className="w-4 h-4 mr-1" />
+                        )}
+                        Create
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setShowActionItemForm(true)}
+                    className="w-full rounded-xl border-dashed"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Action Item
+                  </Button>
+                )}
+
+                {/* Action Items List */}
+                {actionItemsQuery.isLoading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <Loader2 className="w-6 h-6 animate-spin text-charcoal-400" />
+                  </div>
+                ) : actionItems.length > 0 ? (
+                  <div className="space-y-3">
+                    <Label className="text-sm font-medium">Action Items ({actionItems.length})</Label>
+                    {actionItems.map((item: {
+                      id: string
+                      subject: string
+                      description?: string
+                      status: string
+                      priority: string
+                      due_date?: string
+                      assignee?: { id: string; full_name: string; avatar_url?: string }
+                      created_at: string
+                    }) => (
+                      <div
+                        key={item.id}
+                        className={cn(
+                          'p-4 rounded-xl border',
+                          item.status === 'completed'
+                            ? 'bg-green-50 border-green-200'
+                            : item.priority === 'urgent'
+                            ? 'bg-red-50 border-red-200'
+                            : item.priority === 'high'
+                            ? 'bg-orange-50 border-orange-200'
+                            : 'bg-white border-charcoal-200'
+                        )}
+                      >
+                        <div className="flex items-start gap-3">
+                          <button
+                            type="button"
+                            onClick={() => handleToggleComplete(item.id, item.status)}
+                            disabled={item.status === 'completed' || completeActionItemMutation.isPending}
+                            className={cn(
+                              'w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors',
+                              item.status === 'completed'
+                                ? 'border-green-500 bg-green-500 cursor-default'
+                                : 'border-charcoal-300 hover:border-green-400 hover:bg-green-50 cursor-pointer'
+                            )}
+                          >
+                            {item.status === 'completed' && (
+                              <CheckCircle className="w-3 h-3 text-white" />
+                            )}
+                          </button>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className={cn(
+                                'text-sm font-medium',
+                                item.status === 'completed'
+                                  ? 'text-charcoal-500 line-through'
+                                  : 'text-charcoal-900'
+                              )}>
+                                {item.subject}
+                              </span>
+                              <Badge
+                                variant="outline"
+                                className={cn(
+                                  'text-[10px]',
+                                  item.priority === 'urgent' && 'bg-red-100 text-red-700 border-red-300',
+                                  item.priority === 'high' && 'bg-orange-100 text-orange-700 border-orange-300',
+                                  item.priority === 'medium' && 'bg-blue-100 text-blue-700 border-blue-300',
+                                  item.priority === 'low' && 'bg-charcoal-100 text-charcoal-600'
+                                )}
+                              >
+                                {item.priority}
+                              </Badge>
+                            </div>
+                            {item.description && (
+                              <p className="text-sm text-charcoal-600 mb-2">{item.description}</p>
+                            )}
+                            <div className="flex items-center gap-4 text-xs text-charcoal-500">
+                              {item.assignee && (
+                                <span className="flex items-center gap-1">
+                                  <User className="w-3 h-3" />
+                                  {item.assignee.full_name}
+                                </span>
+                              )}
+                              {item.due_date && (
+                                <span className="flex items-center gap-1">
+                                  <Calendar className="w-3 h-3" />
+                                  {format(parseISO(item.due_date), 'MMM d, yyyy')}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-12 bg-charcoal-50 rounded-xl">
+                    <ListTodo className="w-12 h-12 text-charcoal-300 mx-auto mb-3" />
+                    <p className="text-charcoal-600 font-medium">No action items yet</p>
+                    <p className="text-sm text-charcoal-500 mt-1">
+                      Add action items to track tasks for this escalation
                     </p>
                   </div>
                 )}
