@@ -119,6 +119,13 @@ const createJobInput = z.object({
     feedbackTurnaround: z.number().optional(),
     screeningQuestions: z.string().optional(),
   }).optional(),
+  // Draft support fields
+  status: jobStatusEnum.optional(), // Allow setting status on create (defaults to 'draft')
+  wizard_state: z.object({
+    currentStep: z.number().int().min(1),
+    totalSteps: z.number().int().min(1),
+    lastSavedAt: z.string(),
+  }).optional().nullable(),
 })
 
 const updateJobInput = z.object({
@@ -234,6 +241,12 @@ const updateJobInput = z.object({
     feedbackTurnaround: z.number().optional(),
     screeningQuestions: z.string().optional(),
   }).optional(),
+  // Draft support - wizard state for tracking progress
+  wizard_state: z.object({
+    currentStep: z.number().int().min(1),
+    totalSteps: z.number().int().min(1),
+    lastSavedAt: z.string(),
+  }).optional().nullable(),
 })
 
 const publishJobInput = z.object({
@@ -611,6 +624,9 @@ export const atsRouter = router({
         }
         if (input.status && input.status !== 'all') {
           query = query.eq('status', input.status)
+        } else {
+          // By default, exclude drafts from the main list (they're shown in DraftsSection)
+          query = query.neq('status', 'draft')
         }
         if (input.type) {
           query = query.eq('job_type', input.type)
@@ -683,6 +699,82 @@ export const atsRouter = router({
           })) ?? [],
           total: count ?? 0,
         }
+      }),
+
+    // List current user's draft jobs (for DraftsSection in list views)
+    listMyDrafts: orgProtectedProcedure
+      .query(async ({ ctx }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          return []
+        }
+
+        const { data, error } = await adminClient
+          .from('jobs')
+          .select('id, title, status, wizard_state, created_at, updated_at')
+          .eq('org_id', orgId)
+          .eq('created_by', user.id)
+          .eq('status', 'draft')
+          .is('deleted_at', null)
+          .order('updated_at', { ascending: false })
+          .limit(10)
+
+        if (error) {
+          console.error('[jobs.listMyDrafts] Error:', error.message)
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data ?? []
+      }),
+
+    // Delete a draft job (soft delete - verify ownership and draft status)
+    deleteDraft: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        // Verify draft exists and user owns it
+        const { data: job, error: fetchError } = await adminClient
+          .from('jobs')
+          .select('id, status, created_by')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .single()
+
+        if (fetchError || !job) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Draft not found' })
+        }
+
+        if (job.status !== 'draft') {
+          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Can only delete draft jobs' })
+        }
+
+        if (job.created_by !== user.id) {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'You can only delete your own drafts' })
+        }
+
+        // Soft delete
+        const { error: deleteError } = await adminClient
+          .from('jobs')
+          .update({
+            deleted_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', input.id)
+
+        if (deleteError) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: deleteError.message })
+        }
+
+        return { success: true }
       }),
 
     // Get job by ID
@@ -1256,7 +1348,8 @@ export const atsRouter = router({
             target_end_date: input.targetEndDate,
             client_submission_instructions: input.clientSubmissionInstructions,
             client_interview_process: input.clientInterviewProcess || (input.intakeData?.interviewRounds ? JSON.stringify(input.intakeData.interviewRounds) : null),
-            status: 'draft',
+            status: input.status ?? 'draft',
+            wizard_state: input.wizard_state ?? null,
             owner_id: user.id,
             recruiter_ids: [user.id],
             created_by: user.id,
@@ -1413,6 +1506,8 @@ export const atsRouter = router({
         if (input.slaDays !== undefined) updateData.sla_days = input.slaDays
         // Extended intake data (JSONB field for all wizard fields)
         if (input.intakeData !== undefined) updateData.intake_data = input.intakeData
+        // Draft support - wizard state for tracking progress
+        if (input.wizard_state !== undefined) updateData.wizard_state = input.wizard_state
 
         // Update job record
         const { data: updatedJob, error: updateError } = await adminClient
