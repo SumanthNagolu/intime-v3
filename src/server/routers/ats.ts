@@ -1282,6 +1282,20 @@ export const atsRouter = router({
           throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
         }
 
+        // Look up user_profiles.id from auth_id for FK constraints
+        // The jobs table has FK constraints (owner_id, created_by) that reference user_profiles(id), not auth.users(id)
+        const { data: userProfile, error: userProfileError } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+
+        if (userProfileError || !userProfile) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'User profile not found' })
+        }
+
+        const userProfileId = userProfile.id
+
         // Validate company exists
         const { data: company, error: companyError } = await adminClient
           .from('companies')
@@ -1335,6 +1349,9 @@ export const atsRouter = router({
             rate_max: input.rateMax,
             rate_type: input.rateType,
             currency: input.currency,
+            // Pay rate from intake wizard
+            pay_rate_min: input.intakeData?.payRateMin,
+            pay_rate_max: input.intakeData?.payRateMax,
             positions_count: input.positionsCount,
             positions_filled: 0,
             required_skills: input.requiredSkills || input.intakeData?.requiredSkillsDetailed?.map(s => s.name) || [],
@@ -1350,9 +1367,10 @@ export const atsRouter = router({
             client_interview_process: input.clientInterviewProcess || (input.intakeData?.interviewRounds ? JSON.stringify(input.intakeData.interviewRounds) : null),
             status: input.status ?? 'draft',
             wizard_state: input.wizard_state ?? null,
-            owner_id: user.id,
-            recruiter_ids: [user.id],
-            created_by: user.id,
+            intake_data: input.intakeData ?? null,
+            owner_id: userProfileId,
+            recruiter_ids: [userProfileId],
+            created_by: userProfileId,
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString(),
             // JOBS-01: Unified company/contact references
@@ -1360,7 +1378,7 @@ export const atsRouter = router({
             client_company_id: input.clientCompanyId || input.accountId,
             end_client_company_id: input.endClientCompanyId,
             vendor_company_id: input.vendorCompanyId,
-            hiring_manager_contact_id: input.hiringManagerContactId,
+            hiring_manager_contact_id: input.hiringManagerContactId || input.intakeData?.hiringManagerId,
             hr_contact_id: input.hrContactId,
             external_job_id: input.externalJobId,
             priority_rank: priorityRank,
@@ -1384,7 +1402,7 @@ export const atsRouter = router({
             job_id: job.id,
             previous_status: null,
             new_status: 'draft',
-            changed_by: user.id,
+            changed_by: userProfileId,
             changed_at: new Date().toISOString(),
             notes: 'Job created',
           })
@@ -1400,7 +1418,7 @@ export const atsRouter = router({
             subject: `Job created: ${job.title}`,
             description: `Created job "${job.title}" for ${company.name}`,
             outcome: 'positive',
-            created_by: user.id,
+            created_by: userProfileId,
             created_at: new Date().toISOString(),
           })
 
@@ -2420,6 +2438,20 @@ export const atsRouter = router({
           throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
         }
 
+        // Look up user_profiles.id from auth_id for FK constraints
+        // The submissions table has FK constraints (owner_id, created_by) that reference user_profiles(id)
+        const { data: userProfile, error: userProfileError } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+
+        if (userProfileError || !userProfile) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'User profile not found' })
+        }
+
+        const userProfileId = userProfile.id
+
         // Check for duplicate submission (same candidate to same job, not withdrawn)
         const { data: existing } = await adminClient
           .from('submissions')
@@ -2483,8 +2515,8 @@ export const atsRouter = router({
             submitted_rate: input.submittedRate,
             submitted_rate_type: input.submittedRateType,
             submission_notes: input.submissionNotes,
-            owner_id: user.id,
-            created_by: user.id,
+            owner_id: userProfileId,
+            created_by: userProfileId,
           })
           .select('id, status, created_at')
           .single()
@@ -2502,7 +2534,7 @@ export const atsRouter = router({
             entity_id: submission.id,
             activity_type: 'created',
             description: `${candidate.first_name} ${candidate.last_name} added to pipeline for ${job.title}`,
-            created_by: user.id,
+            created_by: userProfileId,
             created_at: new Date().toISOString(),
             metadata: {
               job_id: input.jobId,
