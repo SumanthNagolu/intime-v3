@@ -28,11 +28,10 @@ export async function createContext(): Promise<Context> {
   const supabase = await createClient()
   const cookieStore = await cookies()
 
-  // Use getSession() instead of getUser() - faster as it uses cached session
-  // getUser() makes a network call to verify, getSession() reads from cookie
-  const { data: { session } } = await supabase.auth.getSession()
-  const user = session?.user ?? null
-  console.log(`[PERF] context - getSession: ${Date.now() - startTime}ms`)
+  // Use getUser() to securely verify session with Supabase Auth server
+  // This prevents cookie tampering attacks (recommended by Supabase)
+  const { data: { user } } = await supabase.auth.getUser()
+  console.log(`[PERF] context - getUser: ${Date.now() - startTime}ms`)
 
   let orgId: string | null = null
   if (user) {

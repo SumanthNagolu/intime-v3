@@ -81,6 +81,156 @@ export function getCategoryFromSubtype(subtype: ContactSubtype): ContactCategory
 }
 
 // ============================================
+// STATS CALCULATION HELPERS
+// ============================================
+type ContactForStats = {
+  id: string
+  category: string | null
+  subtype: string | null
+  status: string | null
+  contact_status: string | null
+  candidate_status: string | null
+  lead_status: string | null
+  lead_score: number | null
+  candidate_is_on_hotlist: boolean | null
+  client_status: string | null
+  client_tier: string | null
+  vendor_status: string | null
+  last_contacted_at: string | null
+  decision_authority: string | null
+  // Note: is_decision_maker is derived from decision_authority, not a DB column
+}
+
+function calculateContactStats(contacts: ContactForStats[]) {
+  const total = contacts.length
+  const active = contacts.filter(c => c.status === 'active' || c.contact_status === 'active').length
+  // decision_authority = 'decision_maker' means they are a decision maker
+  const decisionMakers = contacts.filter(c => c.decision_authority === 'decision_maker').length
+
+  // Category counts
+  const byCategory = {
+    person: contacts.filter(c => c.category === 'person').length,
+    company: contacts.filter(c => c.category === 'company').length,
+  }
+
+  // Person subtype counts
+  const personSubtypes = {
+    person_prospect: contacts.filter(c => c.subtype === 'person_prospect').length,
+    person_lead: contacts.filter(c => c.subtype === 'person_lead').length,
+    person_candidate: contacts.filter(c => c.subtype === 'person_candidate').length,
+    person_bench_internal: contacts.filter(c => c.subtype === 'person_bench_internal').length,
+    person_bench_vendor: contacts.filter(c => c.subtype === 'person_bench_vendor').length,
+    person_placed: contacts.filter(c => c.subtype === 'person_placed').length,
+    person_client_contact: contacts.filter(c => c.subtype === 'person_client_contact').length,
+    person_hiring_manager: contacts.filter(c => c.subtype === 'person_hiring_manager').length,
+    person_hr_contact: contacts.filter(c => c.subtype === 'person_hr_contact').length,
+    person_vendor_contact: contacts.filter(c => c.subtype === 'person_vendor_contact').length,
+    person_employee: contacts.filter(c => c.subtype === 'person_employee').length,
+    person_referral_source: contacts.filter(c => c.subtype === 'person_referral_source').length,
+    person_alumni: contacts.filter(c => c.subtype === 'person_alumni').length,
+  }
+
+  // Company subtype counts
+  const companySubtypes = {
+    company_prospect: contacts.filter(c => c.subtype === 'company_prospect').length,
+    company_lead: contacts.filter(c => c.subtype === 'company_lead').length,
+    company_client: contacts.filter(c => c.subtype === 'company_client').length,
+    company_vendor: contacts.filter(c => c.subtype === 'company_vendor').length,
+    company_msp: contacts.filter(c => c.subtype === 'company_msp').length,
+    company_vms: contacts.filter(c => c.subtype === 'company_vms').length,
+    company_end_client: contacts.filter(c => c.subtype === 'company_end_client').length,
+    company_agency: contacts.filter(c => c.subtype === 'company_agency').length,
+    company_institution: contacts.filter(c => c.subtype === 'company_institution').length,
+  }
+
+  // Candidate-specific stats
+  const candidateContacts = contacts.filter(c => c.subtype === 'person_candidate')
+  const candidateStats = {
+    total: candidateContacts.length,
+    active: candidateContacts.filter(c => c.candidate_status === 'active').length,
+    bench: candidateContacts.filter(c => c.candidate_status === 'bench').length,
+    placed: candidateContacts.filter(c => c.candidate_status === 'placed').length,
+    onHotlist: candidateContacts.filter(c => c.candidate_is_on_hotlist).length,
+  }
+
+  // Lead-specific stats
+  const leadContacts = contacts.filter(c => c.subtype === 'person_lead' || c.subtype === 'company_lead')
+  const leadStats = {
+    total: leadContacts.length,
+    personLeads: contacts.filter(c => c.subtype === 'person_lead').length,
+    companyLeads: contacts.filter(c => c.subtype === 'company_lead').length,
+    new: leadContacts.filter(c => c.lead_status === 'new').length,
+    qualified: leadContacts.filter(c => c.lead_status === 'qualified').length,
+    converted: leadContacts.filter(c => c.lead_status === 'converted').length,
+    hot: leadContacts.filter(c => (c.lead_score ?? 0) >= 70).length,
+  }
+
+  // Client stats
+  const clientContacts = contacts.filter(c => c.subtype === 'company_client')
+  const clientStats = {
+    total: clientContacts.length,
+    active: clientContacts.filter(c => c.client_status === 'active').length,
+    dormant: clientContacts.filter(c => c.client_status === 'dormant').length,
+    enterprise: clientContacts.filter(c => c.client_tier === 'enterprise').length,
+    strategic: clientContacts.filter(c => c.client_tier === 'strategic').length,
+  }
+
+  // Vendor stats
+  const vendorContacts = contacts.filter(c => c.subtype === 'company_vendor')
+  const vendorStats = {
+    total: vendorContacts.length,
+    approved: vendorContacts.filter(c => c.vendor_status === 'approved').length,
+    preferred: vendorContacts.filter(c => c.vendor_status === 'preferred').length,
+    pending: vendorContacts.filter(c => c.vendor_status === 'pending').length,
+  }
+
+  // Recently contacted (last 30 days)
+  const thirtyDaysAgo = new Date()
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+  const recentlyContacted = contacts.filter(c =>
+    c.last_contacted_at && new Date(c.last_contacted_at) >= thirtyDaysAgo
+  ).length
+
+  return {
+    total,
+    active,
+    decisionMakers,
+    recentlyContacted,
+    byCategory,
+    personSubtypes,
+    companySubtypes,
+    candidateStats,
+    leadStats,
+    clientStats,
+    vendorStats,
+  }
+}
+
+function getEmptyStats() {
+  return {
+    total: 0,
+    active: 0,
+    decisionMakers: 0,
+    recentlyContacted: 0,
+    byCategory: { person: 0, company: 0 },
+    personSubtypes: {
+      person_prospect: 0, person_lead: 0, person_candidate: 0,
+      person_bench_internal: 0, person_bench_vendor: 0, person_placed: 0,
+      person_client_contact: 0, person_hiring_manager: 0, person_hr_contact: 0,
+      person_vendor_contact: 0, person_employee: 0, person_referral_source: 0, person_alumni: 0,
+    },
+    companySubtypes: {
+      company_prospect: 0, company_lead: 0, company_client: 0, company_vendor: 0,
+      company_msp: 0, company_vms: 0, company_end_client: 0, company_agency: 0, company_institution: 0,
+    },
+    candidateStats: { total: 0, active: 0, bench: 0, placed: 0, onHotlist: 0 },
+    leadStats: { total: 0, personLeads: 0, companyLeads: 0, new: 0, qualified: 0, converted: 0, hot: 0 },
+    clientStats: { total: 0, active: 0, dormant: 0, enterprise: 0, strategic: 0 },
+    vendorStats: { total: 0, approved: 0, preferred: 0, pending: 0 },
+  }
+}
+
+// ============================================
 // CANDIDATE STATUS
 // ============================================
 export const CandidateStatus = z.enum([
@@ -156,13 +306,15 @@ export const unifiedContactsRouter = router({
       const { orgId } = ctx
       const adminClient = getAdminClient()
 
-      // Note: company_name is stored directly on contacts, no separate join needed
-      // contacts.company_id references accounts table (legacy), not companies
+      // Note: company_name is stored directly on contacts, but we also join for account relationship
+      // linked_company_id references companies table (the primary FK for account relationship)
       let query = adminClient
         .from('contacts')
         .select(`
           *,
-          owner:user_profiles!owner_id(id, full_name, avatar_url)
+          owner:user_profiles!contacts_owner_id_fkey(id, full_name, avatar_url),
+          account:companies!contacts_linked_company_id_fkey(id, name),
+          createdByUser:user_profiles!contacts_created_by_fkey(id, full_name)
         `, { count: 'exact' })
         .eq('org_id', orgId)
         .is('deleted_at', null)
@@ -268,9 +420,51 @@ export const unifiedContactsRouter = router({
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
       }
 
+      // Transform data to match config expectations
+      const items = data?.map(c => ({
+        ...c,
+        // Map snake_case to camelCase for config compatibility
+        createdAt: c.created_at,
+        lastContactDate: c.last_contact_date,
+        type: c.subtype,
+        // Map decision_authority to is_decision_maker for display
+        is_decision_maker: c.decision_authority === 'decision_maker',
+      })) ?? []
+
+      // Calculate stats from a lightweight query (all contacts, minimal fields)
+      // This runs as part of the same API call, just a separate DB query for efficiency
+      // Note: is_decision_maker is derived from decision_authority (no column exists)
+      const statsQuery = adminClient
+        .from('contacts')
+        .select('id, category, subtype, status, contact_status, candidate_status, lead_status, lead_score, candidate_is_on_hotlist, client_status, client_tier, vendor_status, last_contacted_at, decision_authority')
+        .eq('org_id', orgId)
+        .is('deleted_at', null)
+
+      // Apply same category/subtype filters to stats
+      let filteredStatsQuery = statsQuery
+      if (input.category) {
+        filteredStatsQuery = filteredStatsQuery.eq('category', input.category)
+      }
+      if (input.subtype) {
+        filteredStatsQuery = filteredStatsQuery.eq('subtype', input.subtype)
+      }
+      if (input.subtypes && input.subtypes.length > 0) {
+        filteredStatsQuery = filteredStatsQuery.in('subtype', input.subtypes)
+      }
+
+      const { data: allContacts, error: statsError } = await filteredStatsQuery
+
+      // Calculate stats from all contacts (not just paginated)
+      const statsData = allContacts ? calculateContactStats(allContacts) : getEmptyStats()
+
+      if (statsError) {
+        console.error('[unifiedContacts.list] Stats calculation error:', statsError.message)
+      }
+
       return {
-        items: data ?? [],
+        items,
         total: count ?? 0,
+        stats: statsData,
       }
     }),
 
@@ -312,7 +506,7 @@ export const unifiedContactsRouter = router({
 
       const baseQuery = adminClient
         .from('contacts')
-        .select('id, category, subtype, status, contact_status, candidate_status, lead_status, lead_score, candidate_is_on_hotlist, client_status, client_tier, vendor_status, last_contacted_at')
+        .select('id, category, subtype, status, contact_status, candidate_status, lead_status, lead_score, candidate_is_on_hotlist, client_status, client_tier, vendor_status, last_contacted_at, decision_authority, is_decision_maker')
         .eq('org_id', orgId)
         .is('deleted_at', null)
 
@@ -332,6 +526,10 @@ export const unifiedContactsRouter = router({
 
       const total = contacts?.length ?? 0
       const active = contacts?.filter(c => c.status === 'active' || c.contact_status === 'active').length ?? 0
+      // Decision makers count (check both is_decision_maker boolean and decision_authority enum)
+      const decisionMakers = contacts?.filter(c =>
+        c.is_decision_maker === true || c.decision_authority === 'decision_maker'
+      ).length ?? 0
 
       // Category counts
       const byCategory = {
@@ -420,6 +618,7 @@ export const unifiedContactsRouter = router({
       return {
         total,
         active,
+        decisionMakers,
         recentlyContacted,
         byCategory,
         personSubtypes,

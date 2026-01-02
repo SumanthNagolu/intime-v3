@@ -11,13 +11,14 @@ import { topNavigationTabs, getActiveTabFromPath } from '@/lib/navigation/top-na
 import { useEntityNavigationSafe } from '@/lib/navigation/EntityNavigationContext'
 import { ENTITY_BASE_PATHS, EntityType } from '@/lib/navigation/entity-navigation.types'
 import { formatDistanceToNow } from 'date-fns'
-import { type UserRole } from '@/lib/auth/client'
 import { getNavigationConfig } from '@/lib/navigation/role-navigation.config'
+import { useUserRole } from '@/lib/contexts/UserRoleContext'
 import { trpc } from '@/lib/trpc/client'
 
 export function TopNavigation() {
+  // tRPC utils for cache invalidation on sign out
+  const trpcUtils = trpc.useUtils()
   const [user, setUser] = useState<SupabaseUser | null>(null)
-  const [userRole, setUserRole] = useState<UserRole | null>(null)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [focusedIndex, setFocusedIndex] = useState<number>(-1)
@@ -28,66 +29,32 @@ export function TopNavigation() {
   const router = useRouter()
   const entityNav = useEntityNavigationSafe()
 
+  // Get role from context (fetched server-side in layout) - NO API call needed
+  const userRole = useUserRole()
+
   const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const menuItemRefs = useRef<Record<string, (HTMLAnchorElement | HTMLButtonElement | null)[]>>({})
   const userMenuRef = useRef<HTMLDivElement>(null)
   const userMenuItemRefs = useRef<(HTMLAnchorElement | HTMLButtonElement | null)[]>([])
   const closeTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-  // tRPC utility for fetching role
-  const trpcUtils = trpc.useUtils()
-  
-  // Auth state management - use onAuthStateChange for reliable auth detection
+  // Auth state management - only for user info (email/avatar), role comes from context
   useEffect(() => {
     const supabase = createClient()
     let isMounted = true
-    let timeoutId: NodeJS.Timeout
-    
-    // Set up auth state listener - this is the most reliable way to get auth state
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+
+    // Set up auth state listener for user info only
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (!isMounted) return
-      
       setUser(session?.user ?? null)
-      
-      if (session?.user) {
-        try {
-          // Use tRPC to fetch role - this works reliably on client
-          const role = await trpcUtils.users.getMyRole.fetch()
-          if (isMounted && role) {
-            setUserRole(role)
-            clearTimeout(timeoutId)
-          }
-        } catch (err) {
-          console.error('[TopNavigation] Role fetch error:', err)
-        }
-      } else {
-        setUserRole(null)
-      }
-      
-      if (isMounted) {
-        setIsLoading(false)
-      }
+      setIsLoading(false)
     })
-    
-    // Set a timeout to prevent hanging - show pod_ic defaults after 2 seconds
-    timeoutId = setTimeout(() => {
-      if (isMounted && isLoading) {
-        // Default to pod_ic tabs for employees if auth check hangs
-        setUserRole({
-          code: 'recruiter',
-          category: 'pod_ic',
-          displayName: 'Recruiter'
-        })
-        setIsLoading(false)
-      }
-    }, 2000)
-    
+
     return () => {
       isMounted = false
       subscription.unsubscribe()
-      clearTimeout(timeoutId)
     }
-  }, [trpcUtils.users.getMyRole])
+  }, [])
 
   // Close dropdowns when clicking outside
   useEffect(() => {

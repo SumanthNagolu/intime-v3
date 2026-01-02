@@ -161,6 +161,49 @@ export interface EmptyStateConfig {
   }
 }
 
+// ============================================
+// DRAFTS CONFIGURATION
+// ============================================
+
+/**
+ * DraftsConfig - Configuration for showing user's drafts in list views
+ *
+ * When enabled, a "Drafts" section appears above the main list showing
+ * the current user's draft entities. Clicking a draft resumes the wizard.
+ *
+ * Drafts are stored in the main entity tables with status='draft' and
+ * wizard_state JSONB column containing progress information.
+ */
+export interface DraftsConfig<T = unknown> {
+  /** Enable drafts section in this list view */
+  enabled: boolean
+
+  /** Route to the creation wizard (e.g., '/employee/recruiting/jobs/new') */
+  wizardRoute: string
+
+  /** Field to use as draft display name (e.g., 'title', 'name') */
+  displayNameField: keyof T
+
+  /**
+   * Hook to fetch user's drafts for this entity type
+   * Should return entities with status='draft' and wizard_state populated
+   */
+  useGetMyDraftsQuery: () => {
+    data: T[] | undefined
+    isLoading: boolean
+    error: unknown
+  }
+
+  /**
+   * Optional mutation to delete a draft
+   * If not provided, delete button won't be shown
+   */
+  useDeleteDraftMutation?: () => {
+    mutateAsync: (input: { id: string }) => Promise<unknown>
+    isPending: boolean
+  }
+}
+
 export interface ListViewConfig<T = unknown> {
   // Entity info
   entityType: string
@@ -214,6 +257,9 @@ export interface ListViewConfig<T = unknown> {
 
   // Sort field mapping (frontend key -> backend column)
   sortFieldMap?: Record<string, string>
+
+  // Drafts section (shows user's draft entities at top of list)
+  drafts?: DraftsConfig<T>
 
   /**
    * Data Hooks Pattern (G4: Hydration Safety)
