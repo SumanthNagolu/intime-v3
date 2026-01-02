@@ -326,6 +326,7 @@ export const crmRouter = router({
         companyType: z.enum(['direct_client', 'implementation_partner', 'staffing_vendor']).default('direct_client'),
         status: z.enum(['prospect', 'active', 'inactive']).default('prospect'),
         tier: z.enum(['preferred', 'strategic', 'exclusive']).optional(),
+        segment: z.enum(['enterprise', 'mid_market', 'smb', 'startup']).optional(),
         website: z.string().url().optional().or(z.literal('')),
         phone: z.string().optional(),
         // Headquarters location - separate fields
@@ -410,10 +411,7 @@ export const crmRouter = router({
             name: input.name,
             industry: input.industry || (input.industries?.length ? input.industries[0] : undefined),
             industries: input.industries?.length ? input.industries : null,
-            segment: (input.companyType as string) === 'enterprise' ? 'enterprise' :
-                     (input.companyType as string) === 'mid_market' ? 'mid_market' :
-                     (input.companyType as string) === 'smb' ? 'smb' :
-                     (input.companyType as string) === 'startup' ? 'startup' : null,
+            segment: input.segment || null,
             relationship_type: input.companyType === 'implementation_partner' ? 'implementation_partner' :
                                input.companyType === 'staffing_vendor' ? 'prime_vendor' : 'direct_client',
             status: input.status === 'prospect' ? 'active' : input.status,
@@ -565,6 +563,7 @@ export const crmRouter = router({
         companyType: z.enum(['direct_client', 'implementation_partner', 'staffing_vendor']).optional(),
         status: z.enum(['prospect', 'active', 'inactive']).optional(),
         tier: z.enum(['preferred', 'strategic', 'exclusive']).nullish(),
+        segment: z.enum(['enterprise', 'mid_market', 'smb', 'startup']).nullish(),
         website: z.string().url().optional().or(z.literal('')),
         phone: z.string().optional(),
         headquartersLocation: z.string().optional(),
@@ -610,8 +609,20 @@ export const crmRouter = router({
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
 
+        // Get the user_profile.id for the current user (needed for FK constraints)
+        // The auth user.id is from auth.users, but updated_by references user_profiles.id
+        let userProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          userProfileId = profile?.id ?? null
+        }
+
         const updateData: Record<string, unknown> = {
-          updated_by: user?.id,
+          updated_by: userProfileId,
         }
 
         // Map input to database columns (companies table)
@@ -625,11 +636,12 @@ export const crmRouter = router({
           }
         }
         if (input.companyType !== undefined) {
-          // Map old companyType to segment
-          updateData.segment = (input.companyType as string) === 'enterprise' ? 'enterprise' :
-                               (input.companyType as string) === 'mid_market' ? 'mid_market' :
-                               (input.companyType as string) === 'smb' ? 'smb' :
-                               (input.companyType as string) === 'startup' ? 'startup' : null
+          // Map companyType to relationship_type (the actual DB column)
+          updateData.relationship_type = input.companyType === 'implementation_partner' ? 'implementation_partner' :
+                                         input.companyType === 'staffing_vendor' ? 'prime_vendor' : 'direct_client'
+        }
+        if (input.segment !== undefined) {
+          updateData.segment = input.segment
         }
         if (input.status !== undefined) updateData.status = input.status
         if (input.tier !== undefined) {

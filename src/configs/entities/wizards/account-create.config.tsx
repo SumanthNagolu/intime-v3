@@ -121,6 +121,7 @@ export const accountCreateWizardConfig: WizardConfig<CreateAccountFormData> = {
           'industries',
           'companyType',
           'tier',
+          'segment',
           'website',
           'hqCity',
           'hqState',
