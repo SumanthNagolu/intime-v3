@@ -46,6 +46,11 @@ export interface Job extends Record<string, unknown> {
   id: string
   title: string
   status: string
+  wizard_state?: {
+    currentStep: number
+    totalSteps: number
+    lastSavedAt: string
+  } | null
   account_id?: string
   account?: {
     id: string
@@ -620,6 +625,15 @@ export const jobsListConfig: ListViewConfig<Job> = {
   },
 
   useStatsQuery: () => trpc.ats.jobs.stats.useQuery(),
+
+  // Draft support - shows user's draft jobs at top of list view
+  drafts: {
+    enabled: true,
+    wizardRoute: '/employee/recruiting/jobs/intake',
+    displayNameField: 'title',
+    useGetMyDraftsQuery: () => trpc.ats.jobs.listMyDrafts.useQuery(),
+    useDeleteDraftMutation: () => trpc.ats.jobs.deleteDraft.useMutation(),
+  },
 }
 
 // Jobs Detail View Configuration

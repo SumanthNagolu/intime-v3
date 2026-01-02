@@ -3939,6 +3939,17 @@ export const crmRouter = router({
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
 
+        // Get the user_profile.id for the current user (needed for FK constraints)
+        let userProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          userProfileId = profile?.id ?? null
+        }
+
         // If this contact is primary, reset other primary contacts
         if (input.isPrimary) {
           await adminClient
@@ -3953,6 +3964,7 @@ export const crmRouter = router({
           .insert({
             org_id: orgId,
             company_id: input.accountId,
+            linked_company_id: input.accountId, // Also set linked_company_id for FK relationship
             first_name: input.firstName,
             last_name: input.lastName || '',
             email: input.email || null,
@@ -3970,7 +3982,7 @@ export const crmRouter = router({
             category: 'person',
             subtype: 'person_client_contact',
             status: 'active',
-            created_by: user?.id,
+            created_by: userProfileId,
           })
           .select()
           .single()
@@ -3994,8 +4006,8 @@ export const crmRouter = router({
               postal_code: input.address.zip,
               country_code: input.address.country || 'US',
               is_primary: true,
-              created_by: user?.id,
-              updated_by: user?.id,
+              created_by: userProfileId,
+              updated_by: userProfileId,
             })
         }
 
@@ -4026,6 +4038,17 @@ export const crmRouter = router({
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
 
+        // Get the user_profile.id for the current user (needed for FK constraints)
+        let userProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          userProfileId = profile?.id ?? null
+        }
+
         // Get contact to know the account
         const { data: contact } = await adminClient
           .from('contacts')
@@ -4044,7 +4067,7 @@ export const crmRouter = router({
             .neq('id', input.id)
         }
 
-        const updateData: Record<string, unknown> = { updated_by: user?.id }
+        const updateData: Record<string, unknown> = { updated_by: userProfileId }
         if (input.firstName !== undefined) updateData.first_name = input.firstName
         if (input.lastName !== undefined) updateData.last_name = input.lastName
         if (input.email !== undefined) updateData.email = input.email || null
@@ -4083,9 +4106,20 @@ export const crmRouter = router({
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
 
+        // Get the user_profile.id for the current user (needed for FK constraints)
+        let userProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          userProfileId = profile?.id ?? null
+        }
+
         const { error } = await adminClient
           .from('contacts')
-          .update({ deleted_at: new Date().toISOString(), updated_by: user?.id })
+          .update({ deleted_at: new Date().toISOString(), updated_by: userProfileId })
           .eq('id', input.id)
           .eq('org_id', orgId)
 
