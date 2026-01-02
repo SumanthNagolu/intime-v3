@@ -386,6 +386,18 @@ export const crmRouter = router({
         // Determine category based on status
         const category = input.status === 'prospect' ? 'prospect' : 'client'
 
+        // Get the user_profile.id for the current user (needed for FK constraints)
+        // The auth user.id is from auth.users, but owner_id references user_profiles.id
+        let userProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          userProfileId = profile?.id ?? null
+        }
+
         // Log industries array for debugging
         console.log('[Account Create] Industries received:', input.industries)
 
@@ -428,10 +440,10 @@ export const crmRouter = router({
             default_payment_terms: input.paymentTermsDays ? `Net ${input.paymentTermsDays}` : 'Net 30',
             requires_po: input.poRequired,
             // Ownership
-            owner_id: user?.id,
-            account_manager_id: user?.id,
+            owner_id: userProfileId,
+            account_manager_id: userProfileId,
             onboarding_status: 'pending',
-            created_by: user?.id,
+            created_by: userProfileId,
           })
           .select()
           .single()
@@ -477,7 +489,7 @@ export const crmRouter = router({
             state_province: input.headquartersState || null,
             country_code: input.headquartersCountry === 'USA' ? 'US' : (input.headquartersCountry || 'US'),
             is_primary: true,
-            created_by: user?.id,
+            created_by: userProfileId,
           })
         }
 
@@ -494,7 +506,7 @@ export const crmRouter = router({
             postal_code: input.billingPostalCode || null,
             country_code: input.billingCountry === 'USA' ? 'US' : (input.billingCountry || 'US'),
             is_primary: false,
-            created_by: user?.id,
+            created_by: userProfileId,
           })
         }
 
@@ -532,7 +544,7 @@ export const crmRouter = router({
               phone: input.primaryContactPhone || null,
               title: input.primaryContactTitle || null,
               is_primary: true,
-              created_by: user?.id,
+              created_by: userProfileId,
             })
 
           if (contactError) {
