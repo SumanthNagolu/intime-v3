@@ -421,15 +421,43 @@ export const unifiedContactsRouter = router({
       }
 
       // Transform data to match config expectations
-      const items = data?.map(c => ({
+      let items = data?.map(c => ({
         ...c,
         // Map snake_case to camelCase for config compatibility
         createdAt: c.created_at,
         lastContactDate: c.last_contact_date,
         type: c.subtype,
-        // Map decision_authority to is_decision_maker for display
-        is_decision_maker: c.decision_authority === 'decision_maker',
+        // Pass decision_authority string for display (not boolean)
+        decision_authority: c.decision_authority,
       })) ?? []
+
+      // Handle legacy data: if account is null but company_id exists, look up the company
+      const contactsNeedingAccountLookup = items.filter(c => !c.account && c.company_id)
+      if (contactsNeedingAccountLookup.length > 0) {
+        const companyIds = [...new Set(contactsNeedingAccountLookup.map(c => c.company_id))]
+        const { data: companies } = await adminClient
+          .from('companies')
+          .select('id, name')
+          .in('id', companyIds)
+
+        if (companies) {
+          const companyMap = new Map(companies.map(co => [co.id, co]))
+          items = items.map(c => {
+            if (!c.account && c.company_id && companyMap.has(c.company_id)) {
+              return { ...c, account: companyMap.get(c.company_id) }
+            }
+            return c
+          })
+        }
+      }
+
+      // Handle legacy data: if owner is null but createdByUser exists, use creator as owner fallback
+      items = items.map(c => {
+        if (!c.owner && c.createdByUser) {
+          return { ...c, owner: c.createdByUser }
+        }
+        return c
+      })
 
       // Calculate stats from a lightweight query (all contacts, minimal fields)
       // This runs as part of the same API call, just a separate DB query for efficiency
@@ -742,6 +770,18 @@ export const unifiedContactsRouter = router({
         throw new TRPCError({ code: 'BAD_REQUEST', message: 'companyName or companyNameLegal is required for company contacts' })
       }
 
+      // Get the user_profile.id for the current user (needed for FK constraints)
+      // The auth user.id is from auth.users, but owner_id references user_profiles.id
+      let userProfileId: string | null = null
+      if (user?.id && !input.ownerId) {
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+        userProfileId = profile?.id ?? null
+      }
+
       // Build insert data based on category and subtype
       const insertData: Record<string, unknown> = {
         org_id: orgId,
@@ -751,9 +791,9 @@ export const unifiedContactsRouter = router({
         phone: input.phone,
         mobile: input.mobile,
         linkedin_url: input.linkedinUrl || null,
-        account_id: input.accountId,
+        linked_company_id: input.accountId,
         vendor_id: input.vendorId,
-        owner_id: input.ownerId,
+        owner_id: input.ownerId || userProfileId,
         timezone: input.timezone || 'America/New_York',
         preferred_contact_method: input.preferredContactMethod || 'email',
         notes: input.notes,
