@@ -9,8 +9,10 @@ import { ListFilters } from './ListFilters'
 import { ListTable } from './ListTable'
 import { ListCards } from './ListCards'
 import { ListPagination } from './ListPagination'
+import { DraftsSection } from './DraftsSection'
 import { EmptyState } from '@/components/pcf/shared/EmptyState'
 import { cn } from '@/lib/utils'
+import type { WizardState } from '@/hooks/use-entity-draft'
 
 interface EntityListViewProps<T> {
   config: ListViewConfig<T>
@@ -105,6 +107,16 @@ export function EntityListView<T extends Record<string, unknown>>({
   const statsData = listQuery.data?.stats ?? statsQuery?.data
   const statsLoading = statsQuery ? statsQuery.isLoading : listQuery.isLoading
 
+  // Drafts query (if drafts are enabled in config)
+  const draftsQuery = config.drafts?.enabled ? config.drafts.useGetMyDraftsQuery() : null
+  const deleteDraftMutation = config.drafts?.useDeleteDraftMutation?.()
+
+  const handleDeleteDraft = useCallback(async (id: string) => {
+    if (deleteDraftMutation) {
+      await deleteDraftMutation.mutateAsync({ id })
+    }
+  }, [deleteDraftMutation])
+
   // Calculate pagination
   const items = listQuery.data?.items || initialData?.items || []
   const total = listQuery.data?.total || initialData?.total || 0
@@ -143,6 +155,17 @@ export function EntityListView<T extends Record<string, unknown>>({
           data={statsData}
           isLoading={statsLoading}
           gridCols={config.statsCards!.length <= 4 ? 4 : 5}
+        />
+      )}
+
+      {/* Drafts Section - shown above filters when user has drafts */}
+      {config.drafts?.enabled && draftsQuery && (
+        <DraftsSection
+          drafts={(draftsQuery.data ?? []) as Array<{ id: string; wizard_state?: WizardState | null; updated_at?: string; created_at?: string } & Record<string, unknown>>}
+          isLoading={draftsQuery.isLoading}
+          wizardRoute={config.drafts.wizardRoute}
+          getDisplayName={(draft) => String(draft[config.drafts!.displayNameField as string] || 'Untitled')}
+          onDelete={deleteDraftMutation ? handleDeleteDraft : undefined}
         />
       )}
 

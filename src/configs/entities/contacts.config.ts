@@ -398,9 +398,8 @@ export const contactsListConfig: ListViewConfig<Contact> = {
     })
   },
 
-  useStatsQuery: () => {
-    return trpc.unifiedContacts.stats.useQuery()
-  },
+  // Stats are now included in useListQuery response (ONE database call pattern)
+  // useStatsQuery is no longer needed - stats come from list.stats
 }
 
 // Contacts Detail View Configuration

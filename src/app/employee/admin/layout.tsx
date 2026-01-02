@@ -6,11 +6,11 @@ import { createClient } from '@/lib/supabase/server'
 import type { ReactNode } from 'react'
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
-  // First check if user is authenticated
+  // First check if user is authenticated using getUser() for secure verification
   const supabase = await createClient()
-  const { data: { session } } = await supabase.auth.getSession()
-  
-  if (!session) {
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+  if (authError || !user) {
     redirect('/auth')
   }
 
@@ -33,15 +33,15 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     )
   } catch (error) {
     console.error('AdminLayout error:', error)
-    
+
     // Show error state with helpful information
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
-    
+
     return (
-      <AdminErrorState 
+      <AdminErrorState
         error={errorMessage}
-        userId={session.user.id}
-        userEmail={session.user.email || 'Unknown'}
+        userId={user.id}
+        userEmail={user.email || 'Unknown'}
       />
     )
   }
