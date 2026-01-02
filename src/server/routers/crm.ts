@@ -4224,6 +4224,22 @@ export const crmRouter = router({
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
 
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        // Look up user_profiles.id from auth_id for FK constraints
+        // The meeting_notes table has FK constraints (created_by) that reference user_profiles(id), not auth.users(id)
+        const { data: userProfile, error: userProfileError } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+
+        if (userProfileError || !userProfile) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'User profile not found' })
+        }
+
         const { data, error } = await adminClient
           .from('meeting_notes')
           .insert({
@@ -4239,7 +4255,7 @@ export const crmRouter = router({
             agenda: input.agenda,
             contact_ids: input.contactIds,
             status: input.scheduledAt ? 'scheduled' : 'completed',
-            created_by: user?.id,
+            created_by: userProfile.id,
           })
           .select('*, creator:user_profiles!created_by(id, full_name, avatar_url)')
           .single()
@@ -4284,6 +4300,21 @@ export const crmRouter = router({
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
 
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        // Look up user_profiles.id from auth_id for FK constraints
+        const { data: userProfile, error: userProfileError } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+
+        if (userProfileError || !userProfile) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'User profile not found' })
+        }
+
         // First get the meeting to know the account
         const { data: existingMeeting } = await adminClient
           .from('meeting_notes')
@@ -4292,7 +4323,7 @@ export const crmRouter = router({
           .eq('org_id', orgId)
           .single()
 
-        const updateData: Record<string, unknown> = { updated_by: user?.id }
+        const updateData: Record<string, unknown> = { updated_by: userProfile.id }
         if (input.meetingType !== undefined) updateData.meeting_type = input.meetingType
         if (input.title !== undefined) updateData.title = input.title
         if (input.description !== undefined) updateData.description = input.description
