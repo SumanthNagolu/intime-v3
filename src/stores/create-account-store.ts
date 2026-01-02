@@ -11,6 +11,7 @@ export interface CreateAccountFormData {
   industries: string[]
   companyType: 'direct_client' | 'implementation_partner' | 'staffing_vendor'
   tier: '' | 'preferred' | 'strategic' | 'exclusive'
+  segment: '' | 'enterprise' | 'mid_market' | 'smb' | 'startup'
   website: string
   phone: PhoneValue
   // Headquarters location with street address
@@ -67,6 +68,7 @@ const defaultFormData: CreateAccountFormData = {
   industries: [],
   companyType: 'direct_client',
   tier: '',
+  segment: '',
   website: '',
   phone: { ...defaultPhoneValue },
   hqStreetAddress: '',
@@ -174,6 +176,13 @@ export const PARTNERSHIP_TIERS = [
   { value: 'preferred', label: 'Preferred', color: 'blue' },
   { value: 'strategic', label: 'Strategic', color: 'gold' },
   { value: 'exclusive', label: 'Exclusive', color: 'purple' },
+] as const
+
+export const COMPANY_SEGMENTS = [
+  { value: 'enterprise', label: 'Enterprise', description: 'Large corporations (1000+ employees)', icon: '🏢' },
+  { value: 'mid_market', label: 'Mid-Market', description: 'Medium companies (100-1000 employees)', icon: '🏬' },
+  { value: 'smb', label: 'SMB', description: 'Small/Medium businesses (10-100 employees)', icon: '🏪' },
+  { value: 'startup', label: 'Startup', description: 'Early-stage companies (<10 employees)', icon: '🚀' },
 ] as const
 
 export const BILLING_FREQUENCIES = [

@@ -71,6 +71,7 @@ export default function NewAccountPage() {
       industries: data.industries.length > 0 ? data.industries : undefined,
       companyType: data.companyType,
       tier: data.tier || undefined,
+      segment: data.segment || undefined,
       website: normalizeUrl(data.website),
       phone: formatPhoneValue(data.phone) || undefined,
       // HQ Location with street address

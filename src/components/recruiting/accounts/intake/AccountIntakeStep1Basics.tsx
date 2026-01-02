@@ -16,6 +16,7 @@ import {
   INDUSTRIES,
   COMPANY_TYPES,
   PARTNERSHIP_TIERS,
+  COMPANY_SEGMENTS,
 } from '@/stores/create-account-store'
 import { OPERATING_COUNTRIES, getStatesByCountry } from '@/components/addresses'
 import { cn } from '@/lib/utils'
@@ -33,6 +34,7 @@ import {
   Briefcase,
   Users,
   Building,
+  Layers,
 } from 'lucide-react'
 
 // Section wrapper component for consistent styling
@@ -266,6 +268,79 @@ function TierSelector({
   )
 }
 
+// Company segment selector
+function SegmentSelector({
+  selected,
+  onChange,
+}: {
+  selected: string
+  onChange: (value: string) => void
+}) {
+  const segmentColors = {
+    enterprise: {
+      selected: 'border-indigo-400 bg-gradient-to-br from-indigo-50 to-violet-50',
+      icon: 'bg-indigo-100 text-indigo-600',
+      text: 'text-indigo-700',
+    },
+    mid_market: {
+      selected: 'border-emerald-400 bg-gradient-to-br from-emerald-50 to-teal-50',
+      icon: 'bg-emerald-100 text-emerald-600',
+      text: 'text-emerald-700',
+    },
+    smb: {
+      selected: 'border-amber-400 bg-gradient-to-br from-amber-50 to-yellow-50',
+      icon: 'bg-amber-100 text-amber-600',
+      text: 'text-amber-700',
+    },
+    startup: {
+      selected: 'border-rose-400 bg-gradient-to-br from-rose-50 to-pink-50',
+      icon: 'bg-rose-100 text-rose-600',
+      text: 'text-rose-700',
+    },
+  }
+
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {COMPANY_SEGMENTS.map((segment) => {
+        const isSelected = selected === segment.value
+        const colors = segmentColors[segment.value as keyof typeof segmentColors]
+
+        return (
+          <button
+            key={segment.value}
+            type="button"
+            onClick={() => onChange(isSelected ? '' : segment.value)}
+            className={cn(
+              'relative p-4 rounded-xl border-2 text-center transition-all duration-300 overflow-hidden group',
+              isSelected
+                ? colors.selected + ' shadow-lg'
+                : 'border-charcoal-200 hover:border-charcoal-300 hover:bg-charcoal-50/50'
+            )}
+          >
+            {isSelected && (
+              <div className="absolute top-2 right-2">
+                <CheckCircle2 className={cn('w-4 h-4', colors.text)} />
+              </div>
+            )}
+            <div className="text-2xl mb-2">{segment.icon}</div>
+            <span
+              className={cn(
+                'text-sm font-semibold block',
+                isSelected ? colors.text : 'text-charcoal-700'
+              )}
+            >
+              {segment.label}
+            </span>
+            <span className="text-xs text-charcoal-500 block mt-1">
+              {segment.description}
+            </span>
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
 export function AccountIntakeStep1Basics() {
   const { formData, setFormData, toggleIndustry } = useCreateAccountStore()
 
@@ -350,6 +425,20 @@ export function AccountIntakeStep1Basics() {
           selected={formData.tier}
           onChange={(value) =>
             setFormData({ tier: value as typeof formData.tier })
+          }
+        />
+      </Section>
+
+      {/* Company Segment */}
+      <Section
+        icon={Layers}
+        title="Company Segment"
+        subtitle="Optional - Categorize by company size"
+      >
+        <SegmentSelector
+          selected={formData.segment}
+          onChange={(value) =>
+            setFormData({ segment: value as typeof formData.segment })
           }
         />
       </Section>
