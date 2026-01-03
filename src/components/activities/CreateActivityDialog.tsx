@@ -4,7 +4,7 @@ import * as React from 'react'
 import { trpc } from '@/lib/trpc/client'
 import { useToast } from '@/components/ui/use-toast'
 import { Button } from '@/components/ui/button'
-import { Loader2 } from 'lucide-react'
+import { Loader2, ArrowLeft, ArrowRight } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
@@ -33,6 +33,8 @@ interface CreateActivityDialogProps {
   onSuccess?: (activityId: string) => void
 }
 
+type WizardStep = 'select-path' | 'select-pattern' | 'form'
+
 export function CreateActivityDialog({
   open,
   onOpenChange,
@@ -45,11 +47,13 @@ export function CreateActivityDialog({
   const utils = trpc.useUtils()
 
   const [state, setState] = React.useState<CreateActivityFormState>(INITIAL_FORM_STATE)
+  const [step, setStep] = React.useState<WizardStep>('select-path')
 
   // Reset state when dialog closes
   React.useEffect(() => {
     if (!open) {
       setState(INITIAL_FORM_STATE)
+      setStep('select-path')
     }
   }, [open])
 
@@ -85,6 +89,12 @@ export function CreateActivityDialog({
       // Clear pattern selection when switching to manual
       selectedPattern: path === 'manual' ? null : prev.selectedPattern,
     }))
+    // Navigate to next step based on path
+    if (path === 'manual') {
+      setStep('form')
+    } else {
+      setStep('select-pattern')
+    }
   }
 
   const handlePatternSelect = (pattern: SelectedPattern | null) => {
@@ -113,6 +123,22 @@ export function CreateActivityDialog({
         ...prev,
         selectedPattern: null,
       }))
+    }
+  }
+
+  const handlePatternConfirm = () => {
+    if (state.selectedPattern) {
+      setStep('form')
+    }
+  }
+
+  const handleBack = () => {
+    if (step === 'form' && state.path === 'pattern') {
+      setStep('select-pattern')
+    } else if (step === 'form' && state.path === 'manual') {
+      setStep('select-path')
+    } else if (step === 'select-pattern') {
+      setStep('select-path')
     }
   }
 
@@ -148,69 +174,129 @@ export function CreateActivityDialog({
     })
   }
 
-  const canSubmit =
-    state.subject.trim().length > 0 &&
-    (state.path === 'manual' || state.selectedPattern !== null)
+  const canSubmit = state.subject.trim().length > 0
+
+  // Dynamic title based on step
+  const getTitle = () => {
+    switch (step) {
+      case 'select-path':
+        return 'Create Activity'
+      case 'select-pattern':
+        return 'Select Pattern'
+      case 'form':
+        return state.path === 'pattern' ? 'Configure Activity' : 'Create Activity'
+    }
+  }
+
+  const getDescription = () => {
+    switch (step) {
+      case 'select-path':
+        return 'Choose how to create your activity'
+      case 'select-pattern':
+        return 'Select a pattern to use as a template'
+      case 'form':
+        return entityName ? `For ${entityName}` : 'Fill in the activity details'
+    }
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-xl max-h-[85vh] flex flex-col overflow-hidden p-0">
+      <DialogContent className="max-w-2xl max-h-[85vh] flex flex-col overflow-hidden p-0">
         <DialogHeader className="px-6 pt-6 pb-4 border-b border-charcoal-100">
-          <DialogTitle>Create Activity</DialogTitle>
-          <DialogDescription>
-            {entityName ? `For ${entityName}` : 'Create a new activity'}
-          </DialogDescription>
+          <DialogTitle>{getTitle()}</DialogTitle>
+          <DialogDescription>{getDescription()}</DialogDescription>
         </DialogHeader>
 
-        {/* Path Selector Tabs */}
-        <PathSelector value={state.path} onChange={handlePathChange} />
+        {/* Step 1: Path Selection */}
+        {step === 'select-path' && (
+          <>
+            <div className="flex-1 min-h-0 overflow-y-auto px-6 py-6">
+              <PathSelector
+                value={state.path}
+                onChange={handlePathChange}
+                variant="cards"
+              />
+            </div>
+            <div className="px-6 py-4 border-t border-charcoal-100 bg-charcoal-50/50 flex items-center justify-end gap-3">
+              <Button variant="outline" onClick={() => onOpenChange(false)}>
+                Cancel
+              </Button>
+            </div>
+          </>
+        )}
 
-        {/* Scrollable Form Content */}
-        <div className="flex-1 min-h-0 overflow-y-auto px-6 py-4 space-y-6">
-          {/* Pattern Section (only if pattern path) */}
-          {state.path === 'pattern' && (
-            <>
+        {/* Step 2a: Pattern Selection */}
+        {step === 'select-pattern' && (
+          <>
+            <div className="flex-1 min-h-0 overflow-y-auto px-6 py-4">
               <InlinePatternPicker
                 entityType={entityType}
                 selectedPattern={state.selectedPattern}
                 onSelect={handlePatternSelect}
               />
+            </div>
+            <div className="px-6 py-4 border-t border-charcoal-100 bg-charcoal-50/50 flex items-center justify-between">
+              <Button variant="ghost" onClick={handleBack}>
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back
+              </Button>
+              <Button
+                onClick={handlePatternConfirm}
+                disabled={!state.selectedPattern}
+                className="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-charcoal-900"
+              >
+                Continue
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </Button>
+            </div>
+          </>
+        )}
 
-              {state.selectedPattern && (
+        {/* Step 2b/3: Form */}
+        {step === 'form' && (
+          <>
+            <div className="flex-1 min-h-0 overflow-y-auto px-6 py-4 space-y-6">
+              {/* Pattern Preview (only if pattern was selected) */}
+              {state.path === 'pattern' && state.selectedPattern && (
                 <PatternPreview pattern={state.selectedPattern} />
               )}
-            </>
-          )}
 
-          {/* Form Fields */}
-          <ActivityFormFields
-            state={state}
-            onChange={updateState}
-            entityType={entityType}
-            entityId={entityId}
-          />
-        </div>
+              {/* Form Fields */}
+              <ActivityFormFields
+                state={state}
+                onChange={updateState}
+                entityType={entityType}
+                entityId={entityId}
+              />
+            </div>
 
-        {/* Footer */}
-        <div className="px-6 py-4 border-t border-charcoal-100 bg-charcoal-50/50 flex items-center justify-end gap-3">
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-          <Button
-            onClick={handleSubmit}
-            disabled={!canSubmit || createMutation.isPending}
-            className="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-charcoal-900"
-          >
-            {createMutation.isPending ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                Creating...
-              </>
-            ) : (
-              'Create Activity'
-            )}
-          </Button>
-        </div>
+            <div className="px-6 py-4 border-t border-charcoal-100 bg-charcoal-50/50 flex items-center justify-between">
+              <Button variant="ghost" onClick={handleBack}>
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back
+              </Button>
+              <div className="flex items-center gap-3">
+                <Button variant="outline" onClick={() => onOpenChange(false)}>
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleSubmit}
+                  disabled={!canSubmit || createMutation.isPending}
+                  className="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-charcoal-900"
+                >
+                  {createMutation.isPending ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      Creating...
+                    </>
+                  ) : (
+                    'Create Activity'
+                  )}
+                </Button>
+              </div>
+            </div>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   )
