@@ -23,9 +23,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
@@ -103,26 +100,10 @@ export function AccountSidebar({
                 <Users className="h-4 w-4 mr-2" />
                 New Contact
               </DropdownMenuItem>
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  <Activity className="h-4 w-4 mr-2" />
-                  Log Activity
-                </DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem onClick={() => handleAction('logCall')}>
-                    Call
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => handleAction('logEmail')}>
-                    Email
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => handleAction('logMeeting')}>
-                    Meeting
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => handleAction('logTask')}>
-                    Task
-                  </DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
+              <DropdownMenuItem onClick={() => handleAction('createActivity')}>
+                <Activity className="h-4 w-4 mr-2" />
+                Create Activity
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={() => handleAction('createJob')}>
                 <Briefcase className="h-4 w-4 mr-2" />
                 Create Job

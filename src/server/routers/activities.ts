@@ -910,7 +910,7 @@ export const activitiesRouter = router({
 
   // ============================================
   // GET ACTIVITY DETAIL (GUIDEWIRE PATTERN)
-  // Full activity with notes, history, checklist
+  // Full activity with notes and history
   // ============================================
   getDetail: orgProtectedProcedure
     .input(z.object({
@@ -946,14 +946,17 @@ export const activitiesRouter = router({
           ? adminClient.from('user_profiles').select('id, full_name, avatar_url').eq('id', activity.performed_by).single()
           : Promise.resolve({ data: null }),
         activity.pattern_id
-          ? adminClient.from('activity_patterns').select('id, code, name, description, checklist, instructions').eq('id', activity.pattern_id).single()
+          ? adminClient.from('activity_patterns').select('id, code, name, description, instructions').eq('id', activity.pattern_id).single()
           : Promise.resolve({ data: null }),
         activity.queue_id
           ? adminClient.from('work_queues').select('id, name, code').eq('id', activity.queue_id).single()
           : Promise.resolve({ data: null }),
         adminClient
           .from('notes')
-          .select('id, content, visibility, created_at, created_by')
+          .select(`
+            id, content, visibility, created_at,
+            created_by_user:user_profiles!created_by(id, full_name, avatar_url)
+          `)
           .eq('entity_type', 'activity')
           .eq('entity_id', input.id)
           .eq('org_id', orgId)
@@ -1025,11 +1028,7 @@ export const activitiesRouter = router({
         // Pattern
         pattern,
         patternCode: activity.pattern_code,
-        
-        // Checklist
-        checklist: activity.checklist,
-        checklistProgress: activity.checklist_progress,
-        
+
         // Instructions
         instructions: activity.instructions,
         
@@ -1050,7 +1049,7 @@ export const activitiesRouter = router({
           content: n.content,
           isInternal: n.visibility === 'private', // Map visibility to isInternal
           createdAt: n.created_at,
-          createdBy: n.created_by, // Just the ID for now
+          createdBy: n.created_by_user, // User object with full_name
         })) ?? [],
       }
     }),
@@ -1122,12 +1121,6 @@ export const activitiesRouter = router({
           subject: input.subject || pattern.name,
           description: input.description || pattern.description,
           instructions: pattern.instructions,
-          checklist: pattern.checklist,
-          checklist_progress: pattern.checklist ?
-            (pattern.checklist as Array<{id: string}>).reduce((acc: Record<string, boolean>, item: {id: string}) => {
-              acc[item.id] = false
-              return acc
-            }, {}) : null,
           priority: pattern.priority || 'normal',
           category: pattern.category,
           status: 'open',
@@ -1372,10 +1365,20 @@ export const activitiesRouter = router({
       isInternal: z.boolean().default(false),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user, supabase } = ctx
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Look up user_profiles.id via auth_id (for FK constraints)
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id
 
       // Insert into unified notes table
-      const { data: note, error } = await supabase
+      const { data: note, error } = await adminClient
         .from('notes')
         .insert({
           entity_type: 'activity',
@@ -1383,7 +1386,7 @@ export const activitiesRouter = router({
           org_id: orgId,
           content: input.content,
           visibility: input.isInternal ? 'private' : 'team', // Map isInternal to visibility
-          created_by: user?.id,
+          created_by: userProfileId, // Use user_profiles.id, not auth.users.id
         })
         .select(`
           id, content, visibility, created_at,
@@ -1401,67 +1404,6 @@ export const activitiesRouter = router({
         isInternal: note.visibility === 'private', // Map visibility back to isInternal
         createdAt: note.created_at,
         createdBy: note.created_by_user,
-      }
-    }),
-
-  // ============================================
-  // UPDATE CHECKLIST PROGRESS
-  // ============================================
-  updateChecklist: orgProtectedProcedure
-    .input(z.object({
-      activityId: z.string().uuid(),
-      itemId: z.string(),
-      completed: z.boolean(),
-    }))
-    .mutation(async ({ ctx, input }) => {
-      const { orgId, user, supabase } = ctx
-      const adminClient = getAdminClient()
-
-      // Get current activity
-      const { data: currentActivity, error: fetchError } = await adminClient
-        .from('activities')
-        .select('checklist, checklist_progress')
-        .eq('id', input.activityId)
-        .eq('org_id', orgId)
-        .single()
-
-      if (fetchError || !currentActivity) {
-        throw new TRPCError({ code: 'NOT_FOUND', message: 'Activity not found' })
-      }
-
-      // Update checklist progress
-      const newProgress = {
-        ...(currentActivity.checklist_progress as Record<string, boolean> || {}),
-        [input.itemId]: input.completed,
-      }
-
-      const { data: activity, error } = await supabase
-        .from('activities')
-        .update({
-          checklist_progress: newProgress,
-          updated_at: new Date().toISOString(),
-          updated_by: user?.id,
-        })
-        .eq('id', input.activityId)
-        .eq('org_id', orgId)
-        .select()
-        .single()
-
-      if (error) {
-        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
-      }
-
-      // Calculate completion percentage
-      const checklist = currentActivity.checklist as Array<{id: string}> || []
-      const completedCount = Object.values(newProgress).filter(Boolean).length
-      const completionPercentage = checklist.length > 0 
-        ? Math.round((completedCount / checklist.length) * 100) 
-        : 0
-
-      return {
-        id: activity.id,
-        checklistProgress: activity.checklist_progress,
-        completionPercentage,
       }
     }),
 
@@ -1640,7 +1582,165 @@ export const activitiesRouter = router({
         hasChecklist: !!p.checklist && (p.checklist as Array<unknown>).length > 0,
         checklistCount: p.checklist ? (p.checklist as Array<unknown>).length : 0,
         isSystem: p.is_system,
+        instructions: p.instructions,
+        checklist: p.checklist,
       })) ?? []
+    }),
+
+  // ============================================
+  // LIST WORK QUEUES
+  // ============================================
+  listQueues: orgProtectedProcedure
+    .input(z.object({
+      entityType: z.string().optional(),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      let query = adminClient
+        .from('work_queues')
+        .select('id, name, description')
+        .eq('org_id', orgId)
+        .eq('is_active', true)
+        .order('name', { ascending: true })
+
+      const { data, error } = await query
+
+      if (error) {
+        console.error('Failed to list queues:', error)
+        return []
+      }
+
+      return data ?? []
+    }),
+
+  // ============================================
+  // CREATE ACTIVITY (UNIFIED - PATTERN OR MANUAL)
+  // ============================================
+  create: orgProtectedProcedure
+    .input(z.object({
+      entityType: z.string(),
+      entityId: z.string().uuid(),
+      subject: z.string().min(1).max(200),
+      patternId: z.string().uuid().optional(),
+      description: z.string().max(5000).optional(),
+      category: z.string().optional(),
+      priority: z.enum(['low', 'medium', 'high', 'urgent']).default('medium'),
+      status: z.enum(['scheduled', 'open', 'in_progress']).default('open'),
+      dueDate: z.string().datetime().optional(),
+      escalationDate: z.string().datetime().optional(),
+      assignedTo: z.string().uuid().optional(),
+      queueId: z.string().uuid().optional(),
+      relatedContactId: z.string().uuid().optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Look up user_profiles.id via auth_id (for FK constraints)
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id
+
+      // If pattern-based, get pattern details
+      let pattern = null
+      if (input.patternId) {
+        const { data: patternData, error: patternError } = await adminClient
+          .from('activity_patterns')
+          .select('*')
+          .eq('id', input.patternId)
+          .single()
+
+        if (patternError || !patternData) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Activity pattern not found' })
+        }
+        pattern = patternData
+      }
+
+      // Determine activity type
+      const activityType = pattern ? 'task' : 'manual'
+
+      // Calculate due date
+      let dueDate = input.dueDate ? new Date(input.dueDate) : null
+      if (!dueDate && pattern?.target_days) {
+        dueDate = new Date(Date.now() + pattern.target_days * 24 * 60 * 60 * 1000)
+      }
+      if (!dueDate) {
+        dueDate = new Date(Date.now() + 24 * 60 * 60 * 1000) // Default: tomorrow
+      }
+
+      // Calculate escalation date
+      let escalationDate = input.escalationDate ? new Date(input.escalationDate) : null
+      if (!escalationDate && pattern?.escalation_days) {
+        escalationDate = new Date(Date.now() + pattern.escalation_days * 24 * 60 * 60 * 1000)
+      }
+
+      // Determine assignee
+      let assignedTo = input.assignedTo
+      if (!assignedTo && pattern) {
+        if (pattern.default_assignee === 'creator') {
+          assignedTo = userProfileId
+        } else if (pattern.assignee_user_id) {
+          assignedTo = pattern.assignee_user_id
+        }
+      }
+      // Default to creator if still not assigned
+      if (!assignedTo) {
+        assignedTo = userProfileId
+      }
+
+      // Build insert data
+      const insertData: Record<string, unknown> = {
+        org_id: orgId,
+        entity_type: input.entityType,
+        entity_id: input.entityId,
+        activity_type: activityType,
+        subject: input.subject,
+        description: input.description,
+        category: input.category || pattern?.category,
+        priority: input.priority || pattern?.priority || 'medium',
+        status: input.status,
+        due_date: dueDate.toISOString(),
+        escalation_date: escalationDate?.toISOString(),
+        assigned_to: assignedTo,
+        queue_id: input.queueId,
+        related_contact_id: input.relatedContactId,
+        created_by: userProfileId,
+        auto_created: false,
+      }
+
+      // Add pattern-specific fields
+      if (pattern) {
+        insertData.pattern_id = input.patternId
+        insertData.pattern_code = pattern.code
+        insertData.instructions = pattern.instructions
+        insertData.assigned_group = pattern.assignee_group_id
+      }
+
+      // Create the activity
+      const { data: activity, error } = await adminClient
+        .from('activities')
+        .insert(insertData)
+        .select()
+        .single()
+
+      if (error) {
+        console.error('Failed to create activity:', error)
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return {
+        id: activity.id,
+        subject: activity.subject,
+        status: activity.status,
+        dueDate: activity.due_date,
+        patternCode: activity.pattern_code,
+      }
     }),
 
   // ============================================
@@ -1786,7 +1886,7 @@ export const activitiesRouter = router({
       const patternCode = `sys_watchlist_${input.entityType}`
       const { data: pattern } = await adminClient
         .from('activity_patterns')
-        .select('id, code, name, target_days, priority, instructions, checklist')
+        .select('id, code, name, target_days, priority, instructions')
         .eq('code', patternCode)
         .eq('is_active', true)
         .single()
@@ -1814,7 +1914,6 @@ export const activitiesRouter = router({
           pattern_id: pattern?.id,
           pattern_code: patternCode,
           auto_created: true,
-          checklist: pattern?.checklist,
           created_by: userProfileId,
         })
         .select('id')

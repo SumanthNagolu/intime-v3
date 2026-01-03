@@ -10,8 +10,8 @@ import {
   MessageSquare, Linkedin, AlertCircle, Bell, User,
   Plus, Search, MoreVertical, Target, Users as UsersIcon,
   ArrowRight, X, ChevronLeft, ChevronRight, Sparkles,
-  PlayCircle, SkipForward, UserPlus, AlertTriangle,
-  FileText, History, CheckCircle2, XCircle, Loader2
+  SkipForward, UserPlus, AlertTriangle,
+  FileText, CheckCircle2, Loader2
 } from 'lucide-react'
 import {
   DropdownMenu,
@@ -26,8 +26,7 @@ import { differenceInDays, format, formatDistanceToNow, isBefore, startOfDay } f
 import { trpc } from '@/lib/trpc/client'
 import { useToast } from '@/components/ui/use-toast'
 import { useAccountWorkspace } from '../AccountWorkspaceProvider'
-import { PatternPickerDialog } from '@/components/activities/PatternPickerDialog'
-import { ActivityChecklist } from '@/components/activities/ActivityChecklist'
+import { CreateActivityDialog } from '@/components/activities/CreateActivityDialog'
 import { ActivityNotesThread } from '@/components/activities/ActivityNotesThread'
 import {
   Dialog,
@@ -124,16 +123,6 @@ function getDaysOpenIndicator(daysOpen: number): { color: string; urgency: strin
   return { color: 'text-success-600', urgency: '' }
 }
 
-// Helper: Calculate checklist progress
-function getChecklistProgress(checklist: unknown, checklistProgress: unknown): number | null {
-  if (!checklist || !Array.isArray(checklist) || checklist.length === 0) return null
-  if (!checklistProgress || typeof checklistProgress !== 'object') return 0
-
-  const progress = checklistProgress as Record<string, boolean>
-  const completed = Object.values(progress).filter(Boolean).length
-  return Math.round((completed / checklist.length) * 100)
-}
-
 /**
  * AccountActivitiesSection - Premium SaaS-level activity workspace
  * Features: List view with info, bottom detail panel when selected, full activity management
@@ -146,7 +135,7 @@ export function AccountActivitiesSection({ activities, accountId }: AccountActiv
   const [searchQuery, setSearchQuery] = React.useState('')
   const [statusFilter, setStatusFilter] = React.useState<StatusFilter>('all')
   const [currentPage, setCurrentPage] = React.useState(1)
-  const [patternPickerOpen, setPatternPickerOpen] = React.useState(false)
+  const [createActivityOpen, setCreateActivityOpen] = React.useState(false)
 
   // Fetch full activity detail when selected
   const { data: activityDetail, isLoading: detailLoading } = trpc.activities.getDetail.useQuery(
@@ -286,23 +275,11 @@ export function AccountActivitiesSection({ activities, accountId }: AccountActiv
               </div>
               <Button
                 size="sm"
-                variant="outline"
-                onClick={() => setPatternPickerOpen(true)}
-              >
-                <Sparkles className="h-4 w-4 mr-1.5" />
-                From Pattern
-              </Button>
-              <Button
-                size="sm"
                 className="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-charcoal-900 shadow-sm font-medium"
-                onClick={() => {
-                  window.dispatchEvent(new CustomEvent('openAccountDialog', {
-                    detail: { dialogId: 'logActivity', accountId }
-                  }))
-                }}
+                onClick={() => setCreateActivityOpen(true)}
               >
                 <Plus className="h-4 w-4 mr-1.5" />
-                Log Activity
+                Create Activity
               </Button>
             </div>
           </div>
@@ -339,13 +316,12 @@ export function AccountActivitiesSection({ activities, accountId }: AccountActiv
         </div>
 
         {/* Table Header */}
-        <div className="grid grid-cols-[40px_1fr_110px_110px_80px_70px_80px_60px] gap-2 px-4 py-2.5 bg-charcoal-50/80 border-b border-charcoal-200/60 text-[10px] font-bold text-charcoal-400 uppercase tracking-[0.1em]">
+        <div className="grid grid-cols-[40px_1fr_110px_110px_80px_80px_60px] gap-2 px-4 py-2.5 bg-charcoal-50/80 border-b border-charcoal-200/60 text-[10px] font-bold text-charcoal-400 uppercase tracking-[0.1em]">
           <div className="text-center">#</div>
           <div>Activity</div>
           <div>Assignee</div>
           <div className="text-center">Due Date</div>
           <div className="text-center">Priority</div>
-          <div className="text-center">Progress</div>
           <div className="text-center">Age</div>
           <div className="text-right">Actions</div>
         </div>
@@ -362,7 +338,6 @@ export function AccountActivitiesSection({ activities, accountId }: AccountActiv
               const timeRemaining = getTimeRemainingIndicator(activity.dueDate, activity.status)
               const daysOpen = getDaysOpen(activity.createdAt)
               const daysOpenIndicator = getDaysOpenIndicator(daysOpen)
-              const checklistProgress = getChecklistProgress(activity.checklist, activity.checklistProgress)
               const isPending = !['completed', 'skipped', 'cancelled', 'canceled'].includes(activity.status)
 
               return (
@@ -370,7 +345,7 @@ export function AccountActivitiesSection({ activities, accountId }: AccountActiv
                   key={activity.id}
                   onClick={() => handleRowClick(activity)}
                   className={cn(
-                    'group grid grid-cols-[40px_1fr_110px_110px_80px_70px_80px_60px] gap-2 px-4 py-3 cursor-pointer transition-all duration-150 items-center',
+                    'group grid grid-cols-[40px_1fr_110px_110px_80px_80px_60px] gap-2 px-4 py-3 cursor-pointer transition-all duration-150 items-center',
                     selectedActivity?.id === activity.id
                       ? 'bg-gold-50/80 border-l-2 border-l-gold-500'
                       : 'hover:bg-charcoal-50/60 border-l-2 border-l-transparent',
@@ -470,22 +445,6 @@ export function AccountActivitiesSection({ activities, accountId }: AccountActiv
                     )}
                   </div>
 
-                  {/* Progress (Checklist) */}
-                  <div className="text-center">
-                    {checklistProgress !== null ? (
-                      <div className={cn(
-                        "text-xs font-bold tabular-nums",
-                        checklistProgress === 100 ? 'text-success-600' :
-                        checklistProgress >= 50 ? 'text-amber-600' :
-                        'text-charcoal-500'
-                      )}>
-                        {checklistProgress}%
-                      </div>
-                    ) : (
-                      <span className="text-charcoal-300 text-xs">—</span>
-                    )}
-                  </div>
-
                   {/* Age (Days Open) */}
                   <div className="text-center">
                     <div className={cn(
@@ -534,29 +493,17 @@ export function AccountActivitiesSection({ activities, accountId }: AccountActiv
               {searchQuery || statusFilter !== 'all' ? 'No activities match your filters' : 'No activities yet'}
             </p>
             <p className="text-sm text-charcoal-500 mt-1">
-              {searchQuery || statusFilter !== 'all' ? 'Try different search terms or filters' : 'Log your first activity or create one from a pattern'}
+              {searchQuery || statusFilter !== 'all' ? 'Try different search terms or filters' : 'Create your first activity to get started'}
             </p>
             {!searchQuery && statusFilter === 'all' && (
               <div className="flex items-center justify-center gap-2 mt-4">
                 <Button
                   size="sm"
-                  variant="outline"
-                  onClick={() => setPatternPickerOpen(true)}
-                >
-                  <Sparkles className="h-4 w-4 mr-1.5" />
-                  From Pattern
-                </Button>
-                <Button
-                  size="sm"
                   className="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-charcoal-900"
-                  onClick={() => {
-                    window.dispatchEvent(new CustomEvent('openAccountDialog', {
-                      detail: { dialogId: 'logActivity', accountId }
-                    }))
-                  }}
+                  onClick={() => setCreateActivityOpen(true)}
                 >
                   <Plus className="h-4 w-4 mr-1.5" />
-                  Log Activity
+                  Create Activity
                 </Button>
               </div>
             )}
@@ -609,14 +556,13 @@ export function AccountActivitiesSection({ activities, accountId }: AccountActiv
         />
       )}
 
-      {/* Pattern Picker Dialog */}
-      <PatternPickerDialog
-        open={patternPickerOpen}
-        onOpenChange={setPatternPickerOpen}
+      {/* Create Activity Dialog */}
+      <CreateActivityDialog
+        open={createActivityOpen}
+        onOpenChange={setCreateActivityOpen}
         entityType="account"
         entityId={accountId}
-        onPatternSelected={(activityId) => {
-          // Find the created activity and select it
+        onSuccess={() => {
           refreshData()
         }}
       />
@@ -651,8 +597,13 @@ function ActivityDetailBottomPanel({
   // Dialog states
   const [reassignDialogOpen, setReassignDialogOpen] = React.useState(false)
   const [escalateDialogOpen, setEscalateDialogOpen] = React.useState(false)
+  const [completeDialogOpen, setCompleteDialogOpen] = React.useState(false)
+  const [skipDialogOpen, setSkipDialogOpen] = React.useState(false)
   const [selectedUserId, setSelectedUserId] = React.useState<string>('')
   const [escalateReason, setEscalateReason] = React.useState('')
+  const [completionOutcome, setCompletionOutcome] = React.useState<string>('')
+  const [completionNotes, setCompletionNotes] = React.useState('')
+  const [skipReason, setSkipReason] = React.useState('')
 
   // Fetch team members for reassignment
   const { data: teamMembersData } = trpc.users.list.useQuery(
@@ -686,6 +637,33 @@ function ActivityDetailBottomPanel({
     },
   })
 
+  // Complete mutation (with outcome notes)
+  const completeWithNotesMutation = trpc.activities.complete.useMutation({
+    onSuccess: () => {
+      toast({ title: 'Activity completed' })
+      setCompleteDialogOpen(false)
+      setCompletionOutcome('')
+      setCompletionNotes('')
+      refreshData()
+    },
+    onError: (error) => {
+      toast({ title: 'Error', description: error.message, variant: 'error' })
+    },
+  })
+
+  // Skip mutation (with reason)
+  const skipWithReasonMutation = trpc.activities.skip.useMutation({
+    onSuccess: () => {
+      toast({ title: 'Activity skipped' })
+      setSkipDialogOpen(false)
+      setSkipReason('')
+      refreshData()
+    },
+    onError: (error) => {
+      toast({ title: 'Error', description: error.message, variant: 'error' })
+    },
+  })
+
   const handleReassign = () => {
     if (!selectedUserId) return
     reassignMutation.mutate({
@@ -701,31 +679,48 @@ function ActivityDetailBottomPanel({
       reason: escalateReason,
     })
   }
+
+  const handleCompleteWithNotes = () => {
+    completeWithNotesMutation.mutate({
+      id: activity.id,
+      outcome: (completionOutcome || undefined) as 'positive' | 'neutral' | 'negative' | undefined,
+      outcomeNotes: completionNotes.trim() || undefined,
+    })
+  }
+
+  const handleSkipWithReason = () => {
+    skipWithReasonMutation.mutate({
+      id: activity.id,
+      reason: skipReason.trim() || 'Skipped by user',
+    })
+  }
+  // Type matches what activities.getDetail returns (flat structure, not nested)
   const detail = activityDetail as {
-    activity: {
-      id: string
-      subject: string
-      description: string | null
-      instructions: string | null
-      checklist: Array<{ id: string; text: string }> | null
-      checklistProgress: Record<string, boolean> | null
-      status: string
-      priority: string | null
-      dueDate: string | null
-      escalationDate: string | null
-      completedAt: string | null
-      createdAt: string
-      patternCode: string | null
-      category: string | null
-      escalationCount: number
-      entityType: string
-      assignedTo: { id: string; firstName: string; lastName: string; avatarUrl: string | null } | null
-      createdBy: { id: string; firstName: string; lastName: string } | null
-      queue: { id: string; name: string } | null
-    }
-    notes: Array<{ id: string; content: string; isInternal: boolean; createdAt: string; createdBy: { id: string; firstName: string; lastName: string } | null }>
-    history: Array<{ id: string; action: string; notes: string | null; createdAt: string; changedBy: { id: string; firstName: string; lastName: string } | null }>
-    escalations: Array<{ id: string; level: number; reason: string; createdAt: string }>
+    id: string
+    subject: string
+    description: string | null
+    instructions: string | null
+    checklist: Array<{ id: string; text: string }> | null
+    checklistProgress: Record<string, boolean> | null
+    status: string
+    priority: string | null
+    dueDate: string | null
+    escalationDate: string | null
+    completedAt: string | null
+    skippedAt?: string | null
+    createdAt: string
+    patternCode: string | null
+    pattern: { id: string; code: string; name: string; description?: string; checklist?: unknown; instructions?: string } | null
+    category: string | null
+    escalationCount: number
+    entityType: string
+    assignedTo: { id: string; full_name: string; avatar_url: string | null; email?: string } | null
+    createdBy: { id: string; full_name: string; avatar_url?: string | null } | null
+    performedBy?: { id: string; full_name: string; avatar_url?: string | null } | null
+    queue: { id: string; name: string; code?: string } | null
+    outcome: string | null
+    outcomeNotes: string | null
+    notes: Array<{ id: string; content: string; isInternal: boolean; createdAt: string; createdBy: { id: string; full_name: string; avatar_url?: string | null } | null }>
   } | null
 
   const typeConfig = ACTIVITY_TYPE_CONFIG[activity.type] || { icon: Activity, gradient: 'from-charcoal-400 to-charcoal-500', label: activity.type }
@@ -736,10 +731,7 @@ function ActivityDetailBottomPanel({
 
   // Calculate KPIs
   const timeRemaining = getTimeRemainingIndicator(activity.dueDate, activity.status)
-  const checklistProgress = detail?.activity?.checklist
-    ? getChecklistProgress(detail.activity.checklist, detail.activity.checklistProgress)
-    : null
-  const escalationLevel = detail?.activity?.escalationCount || 0
+  const escalationLevel = detail?.escalationCount || 0
   const daysOpen = getDaysOpen(activity.createdAt)
 
   return (
@@ -841,7 +833,7 @@ function ActivityDetailBottomPanel({
           <>
             {/* KPI Cards */}
             <div
-              className="grid grid-cols-4 gap-4 mb-8"
+              className="grid grid-cols-3 gap-4 mb-8"
               style={{ animation: 'fadeInUp 0.4s ease-out 0.1s forwards', opacity: 0 }}
             >
               {/* Time Remaining */}
@@ -860,21 +852,6 @@ function ActivityDetailBottomPanel({
                   {timeRemaining.isOverdue ? 'Overdue' : activity.dueDate ? 'Days Left' : 'No Due Date'}
                 </p>
                 {timeRemaining.isOverdue && <span className="absolute top-3 right-3 w-2 h-2 rounded-full bg-error-500 animate-pulse" />}
-              </div>
-
-              {/* Checklist Progress */}
-              <div className="group relative rounded-2xl bg-white border border-charcoal-100/60 p-5 text-center overflow-hidden hover:shadow-lg hover:border-blue-200/60 transition-all duration-300">
-                <div className="absolute inset-0 bg-blue-500 opacity-[0.02]" />
-                <p className={cn(
-                  "text-3xl font-black tracking-tight relative",
-                  checklistProgress === null ? 'text-charcoal-400' :
-                  checklistProgress === 100 ? 'text-success-500' :
-                  checklistProgress >= 50 ? 'text-amber-500' :
-                  'text-blue-500'
-                )}>
-                  {checklistProgress !== null ? `${checklistProgress}%` : 'N/A'}
-                </p>
-                <p className="text-[10px] text-charcoal-400 font-semibold uppercase tracking-[0.15em] mt-2 relative">Checklist</p>
               </div>
 
               {/* Escalation Level */}
@@ -918,8 +895,8 @@ function ActivityDetailBottomPanel({
                 </div>
                 <div className="space-y-0 rounded-2xl border border-charcoal-100/50 overflow-hidden">
                   <DetailRowEnhanced label="Type" value={typeConfig.label} />
-                  <DetailRowEnhanced label="Pattern" value={detail?.activity?.patternCode} />
-                  <DetailRowEnhanced label="Category" value={detail?.activity?.category} />
+                  <DetailRowEnhanced label="Pattern" value={detail?.pattern?.name || detail?.patternCode} />
+                  <DetailRowEnhanced label="Category" value={detail?.category} />
                   <DetailRowEnhanced label="Status" value={statusConfig.label} isLast />
                 </div>
               </div>
@@ -936,16 +913,12 @@ function ActivityDetailBottomPanel({
                 <div className="space-y-0 rounded-2xl border border-charcoal-100/50 overflow-hidden">
                   <DetailRowEnhanced
                     label="Assigned To"
-                    value={detail?.activity?.assignedTo
-                      ? `${detail.activity.assignedTo.firstName} ${detail.activity.assignedTo.lastName}`
-                      : 'Unassigned'}
+                    value={detail?.assignedTo?.full_name || 'Unassigned'}
                   />
-                  <DetailRowEnhanced label="Queue" value={detail?.activity?.queue?.name} />
+                  <DetailRowEnhanced label="Queue" value={detail?.queue?.name} />
                   <DetailRowEnhanced
                     label="Created By"
-                    value={detail?.activity?.createdBy
-                      ? `${detail.activity.createdBy.firstName} ${detail.activity.createdBy.lastName}`
-                      : null}
+                    value={detail?.createdBy?.full_name}
                     isLast
                   />
                 </div>
@@ -963,14 +936,14 @@ function ActivityDetailBottomPanel({
                 <div className="space-y-0 rounded-2xl border border-charcoal-100/50 overflow-hidden">
                   <DetailRowEnhanced label="Created" value={activity.createdAt ? format(new Date(activity.createdAt), 'MMM d, yyyy') : null} />
                   <DetailRowEnhanced label="Due Date" value={activity.dueDate ? format(new Date(activity.dueDate), 'MMM d, yyyy') : null} highlight={timeRemaining.isOverdue} />
-                  <DetailRowEnhanced label="Escalation" value={detail?.activity?.escalationDate ? format(new Date(detail.activity.escalationDate), 'MMM d, yyyy') : null} />
-                  <DetailRowEnhanced label="Completed" value={detail?.activity?.completedAt ? format(new Date(detail.activity.completedAt), 'MMM d, yyyy') : null} isLast />
+                  <DetailRowEnhanced label="Escalation" value={detail?.escalationDate ? format(new Date(detail.escalationDate), 'MMM d, yyyy') : null} />
+                  <DetailRowEnhanced label="Completed" value={detail?.completedAt ? format(new Date(detail.completedAt), 'MMM d, yyyy') : null} isLast />
                 </div>
               </div>
             </div>
 
             {/* Instructions Section (if present) */}
-            {detail?.activity?.instructions && (
+            {detail?.instructions && (
               <div
                 className="mb-8"
                 style={{ animation: 'fadeInUp 0.5s ease-out 0.3s forwards', opacity: 0 }}
@@ -985,29 +958,15 @@ function ActivityDetailBottomPanel({
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-50/40 via-white to-transparent" />
                   <div className="relative p-6">
                     <p className="text-sm text-charcoal-600 whitespace-pre-wrap leading-[1.7]">
-                      {detail.activity.instructions}
+                      {detail.instructions}
                     </p>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Checklist Section (if present) */}
-            {detail?.activity?.checklist && detail.activity.checklist.length > 0 && (
-              <div
-                className="mb-8"
-                style={{ animation: 'fadeInUp 0.5s ease-out 0.35s forwards', opacity: 0 }}
-              >
-                <ActivityChecklist
-                  activityId={activity.id}
-                  checklist={detail.activity.checklist}
-                  progress={detail.activity.checklistProgress || {}}
-                />
-              </div>
-            )}
-
             {/* Description Section */}
-            {(activity.description || detail?.activity?.description) && (
+            {(activity.description || detail?.description) && (
               <div
                 className="mb-8"
                 style={{ animation: 'fadeInUp 0.5s ease-out 0.4s forwards', opacity: 0 }}
@@ -1022,32 +981,109 @@ function ActivityDetailBottomPanel({
                   <div className="absolute inset-0 bg-gradient-to-br from-charcoal-50/40 via-white to-violet-50/10" />
                   <div className="relative p-6 max-h-[150px] overflow-y-auto">
                     <p className="text-sm text-charcoal-600 whitespace-pre-wrap leading-[1.7]">
-                      {detail?.activity?.description || activity.description}
+                      {detail?.description || activity.description}
                     </p>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Notes Section */}
-            {detail?.notes && detail.notes.length > 0 && (
-              <div
-                className="mb-8"
-                style={{ animation: 'fadeInUp 0.5s ease-out 0.45s forwards', opacity: 0 }}
-              >
+            {/* Notes Section - Always visible to allow adding notes */}
+            <div
+              className="mb-8"
+              style={{ animation: 'fadeInUp 0.5s ease-out 0.45s forwards', opacity: 0 }}
+            >
+              <div className="flex items-center gap-2.5 mb-4">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-100 to-amber-50 flex items-center justify-center shadow-sm ring-1 ring-amber-200/50">
+                  <MessageSquare className="h-4 w-4 text-amber-600" />
+                </div>
+                <h4 className="text-sm font-bold text-charcoal-800 tracking-wide uppercase">Notes</h4>
+                {detail?.notes && detail.notes.length > 0 && (
+                  <span className="text-xs bg-charcoal-100 text-charcoal-600 px-2 py-0.5 rounded-full">
+                    {detail.notes.length}
+                  </span>
+                )}
+              </div>
+              <div className="relative rounded-2xl border border-charcoal-100/50 overflow-hidden">
                 <ActivityNotesThread
                   activityId={activity.id}
-                  notes={detail.notes.map(n => ({
+                  notes={(detail?.notes || []).map(n => ({
                     id: n.id,
                     content: n.content,
                     isInternal: n.isInternal,
                     createdAt: n.createdAt,
-                    createdBy: n.createdBy ? {
-                      id: n.createdBy.id,
-                      full_name: `${n.createdBy.firstName} ${n.createdBy.lastName}`,
-                    } : null,
+                    createdBy: n.createdBy,
                   }))}
                 />
+              </div>
+            </div>
+
+            {/* Resolution/Completion Summary - Shows for completed/skipped activities */}
+            {(activity.status === 'completed' || activity.status === 'skipped') && (
+              <div
+                className="mb-8"
+                style={{ animation: 'fadeInUp 0.5s ease-out 0.5s forwards', opacity: 0 }}
+              >
+                <div className="flex items-center gap-2.5 mb-4">
+                  <div className={cn(
+                    "w-8 h-8 rounded-xl bg-gradient-to-br flex items-center justify-center shadow-sm ring-1",
+                    activity.status === 'completed'
+                      ? "from-success-100 to-success-50 ring-success-200/50"
+                      : "from-charcoal-100 to-charcoal-50 ring-charcoal-200/50"
+                  )}>
+                    {activity.status === 'completed' ? (
+                      <CheckCircle2 className="h-4 w-4 text-success-600" />
+                    ) : (
+                      <SkipForward className="h-4 w-4 text-charcoal-500" />
+                    )}
+                  </div>
+                  <h4 className="text-sm font-bold text-charcoal-800 tracking-wide uppercase">
+                    {activity.status === 'completed' ? 'Completion Summary' : 'Skip Reason'}
+                  </h4>
+                </div>
+                <div className={cn(
+                  "relative rounded-2xl border overflow-hidden p-6",
+                  activity.status === 'completed'
+                    ? "border-success-100/50 bg-gradient-to-br from-success-50/40 via-white to-transparent"
+                    : "border-charcoal-100/50 bg-gradient-to-br from-charcoal-50/40 via-white to-transparent"
+                )}>
+                  {detail?.outcome && (
+                    <div className="mb-3">
+                      <span className="text-xs font-semibold text-charcoal-500 uppercase tracking-wide">Outcome</span>
+                      <p className={cn(
+                        "text-sm font-semibold capitalize mt-1",
+                        activity.status === 'completed' ? "text-success-700" : "text-charcoal-700"
+                      )}>
+                        {detail.outcome.replace(/_/g, ' ')}
+                      </p>
+                    </div>
+                  )}
+                  {detail?.outcomeNotes ? (
+                    <div>
+                      <span className="text-xs font-semibold text-charcoal-500 uppercase tracking-wide">
+                        {activity.status === 'completed' ? 'Notes' : 'Reason'}
+                      </span>
+                      <p className="text-sm text-charcoal-600 whitespace-pre-wrap leading-relaxed mt-1">
+                        {detail.outcomeNotes}
+                      </p>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-charcoal-400 italic">
+                      No {activity.status === 'completed' ? 'completion notes' : 'reason'} provided
+                    </p>
+                  )}
+                  {detail?.performedBy && (
+                    <div className="mt-4 pt-3 border-t border-charcoal-100/50">
+                      <span className="text-xs text-charcoal-400">
+                        {activity.status === 'completed' ? 'Completed' : 'Skipped'} by{' '}
+                        <span className="font-medium text-charcoal-600">{detail.performedBy.full_name}</span>
+                        {detail?.completedAt && (
+                          <> on {format(new Date(detail.completedAt), 'MMM d, yyyy \'at\' h:mm a')}</>
+                        )}
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
 
@@ -1080,7 +1116,7 @@ function ActivityDetailBottomPanel({
                 style={{ animation: 'fadeInUp 0.5s ease-out 0.6s forwards', opacity: 0 }}
               >
                 <Button
-                  onClick={() => onComplete(activity.id)}
+                  onClick={() => setCompleteDialogOpen(true)}
                   className="bg-gradient-to-r from-success-500 to-success-600 hover:from-success-600 hover:to-success-700 text-white shadow-sm font-medium"
                 >
                   <CheckCircle2 className="h-4 w-4 mr-1.5" />
@@ -1088,7 +1124,7 @@ function ActivityDetailBottomPanel({
                 </Button>
                 <Button
                   variant="outline"
-                  onClick={() => onSkip(activity.id)}
+                  onClick={() => setSkipDialogOpen(true)}
                 >
                   <SkipForward className="h-4 w-4 mr-1.5" />
                   Skip
@@ -1182,6 +1218,101 @@ function ActivityDetailBottomPanel({
               disabled={!escalateReason.trim() || escalateMutation.isPending}
             >
               {escalateMutation.isPending ? 'Escalating...' : 'Escalate'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Complete Dialog */}
+      <Dialog open={completeDialogOpen} onOpenChange={setCompleteDialogOpen}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <CheckCircle2 className="h-5 w-5 text-success-500" />
+              Complete Activity
+            </DialogTitle>
+            <DialogDescription>
+              Mark this activity as completed and optionally add a completion summary.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="outcome">Outcome</Label>
+              <Select value={completionOutcome} onValueChange={setCompletionOutcome}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select outcome (optional)" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="positive">Positive</SelectItem>
+                  <SelectItem value="neutral">Neutral</SelectItem>
+                  <SelectItem value="negative">Negative</SelectItem>
+                  <SelectItem value="connected">Connected</SelectItem>
+                  <SelectItem value="no_response">No Response</SelectItem>
+                  <SelectItem value="left_voicemail">Left Voicemail</SelectItem>
+                  <SelectItem value="busy">Busy</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="completionNotes">Completion Summary</Label>
+              <Textarea
+                id="completionNotes"
+                value={completionNotes}
+                onChange={(e) => setCompletionNotes(e.target.value)}
+                placeholder="Summarize what was accomplished, any findings, next steps, etc..."
+                className="min-h-[120px]"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setCompleteDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              onClick={handleCompleteWithNotes}
+              disabled={completeWithNotesMutation.isPending}
+              className="bg-success-600 hover:bg-success-700"
+            >
+              {completeWithNotesMutation.isPending ? 'Completing...' : 'Complete Activity'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Skip Dialog */}
+      <Dialog open={skipDialogOpen} onOpenChange={setSkipDialogOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <SkipForward className="h-5 w-5 text-charcoal-500" />
+              Skip Activity
+            </DialogTitle>
+            <DialogDescription>
+              Skip this activity and provide a reason. This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="skipReason">Reason for Skipping</Label>
+              <Textarea
+                id="skipReason"
+                value={skipReason}
+                onChange={(e) => setSkipReason(e.target.value)}
+                placeholder="Explain why this activity is being skipped..."
+                className="min-h-[100px]"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setSkipDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handleSkipWithReason}
+              disabled={skipWithReasonMutation.isPending}
+            >
+              {skipWithReasonMutation.isPending ? 'Skipping...' : 'Skip Activity'}
             </Button>
           </DialogFooter>
         </DialogContent>

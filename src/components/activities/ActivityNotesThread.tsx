@@ -21,8 +21,8 @@ interface ActivityNote {
   createdBy: {
     id: string
     full_name: string
-    avatar_url?: string
-  } | Array<{ id: string; full_name: string; avatar_url?: string }> | null
+    avatar_url?: string | null
+  } | Array<{ id: string; full_name: string; avatar_url?: string | null }> | null
 }
 
 interface ActivityNotesThreadProps {
@@ -143,7 +143,7 @@ function NoteItem({ note }: { note: ActivityNote }) {
     )}>
       <div className="flex items-start gap-3">
         <Avatar className="h-8 w-8">
-          <AvatarImage src={createdByUser?.avatar_url} />
+          <AvatarImage src={createdByUser?.avatar_url || undefined} />
           <AvatarFallback className="text-xs">
             {createdByUser?.full_name?.[0] || 'U'}
           </AvatarFallback>
