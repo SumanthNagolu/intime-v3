@@ -14,14 +14,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { Loader2, StickyNote, AlertTriangle, Bell, FileText } from 'lucide-react'
+import { Loader2, AlertTriangle, Bell, FileText, Lock, Phone, Users, Lightbulb, Target } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils'
 
@@ -31,12 +24,23 @@ interface AddNoteDialogProps {
   accountId: string
 }
 
+// Note types matching the database enum with better grouping and icons
 const noteTypes = [
-  { value: 'general', label: 'General', icon: <FileText className="w-4 h-4" /> },
-  { value: 'internal', label: 'Internal Only', icon: <StickyNote className="w-4 h-4" /> },
-  { value: 'important', label: 'Important', icon: <AlertTriangle className="w-4 h-4" /> },
-  { value: 'reminder', label: 'Reminder', icon: <Bell className="w-4 h-4" /> },
-]
+  { value: 'general', label: 'General', icon: FileText, description: 'Standard notes visible to team' },
+  { value: 'internal', label: 'Internal', icon: Lock, description: 'For internal team use only' },
+  { value: 'important', label: 'Important', icon: AlertTriangle, description: 'Critical information' },
+  { value: 'reminder', label: 'Reminder', icon: Bell, description: 'Follow-up required' },
+] as const
+
+// Additional note types available in database (can be shown in advanced mode)
+const advancedNoteTypes = [
+  { value: 'meeting', label: 'Meeting', icon: Users, description: 'Meeting notes' },
+  { value: 'call', label: 'Call', icon: Phone, description: 'Phone call notes' },
+  { value: 'strategy', label: 'Strategy', icon: Target, description: 'Strategic planning' },
+  { value: 'opportunity', label: 'Opportunity', icon: Lightbulb, description: 'Business opportunity' },
+] as const
+
+type NoteType = typeof noteTypes[number]['value'] | typeof advancedNoteTypes[number]['value']
 
 export function AddNoteDialog({
   open,
@@ -48,7 +52,8 @@ export function AddNoteDialog({
 
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-  const [noteType, setNoteType] = useState('general')
+  const [noteType, setNoteType] = useState<NoteType>('general')
+  const [showAdvanced, setShowAdvanced] = useState(false)
 
   // Using centralized notes router (NOTES-01)
   const createNoteMutation = trpc.notes.create.useMutation({
@@ -74,6 +79,7 @@ export function AddNoteDialog({
     setTitle('')
     setContent('')
     setNoteType('general')
+    setShowAdvanced(false)
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -93,101 +99,150 @@ export function AddNoteDialog({
       entityId: accountId,
       title: title.trim() || undefined,
       content: content.trim(),
-      noteType: noteType as 'general' | 'internal' | 'important' | 'reminder',
+      noteType: noteType,
     })
   }
 
+  const allNoteTypes = showAdvanced ? [...noteTypes, ...advancedNoteTypes] : noteTypes
+  const selectedType = [...noteTypes, ...advancedNoteTypes].find(t => t.value === noteType)
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
-        <form onSubmit={handleSubmit}>
-          <DialogHeader>
-            <DialogTitle>Add Note</DialogTitle>
-            <DialogDescription>
-              Add a note to this account for future reference.
-            </DialogDescription>
-          </DialogHeader>
+      <DialogContent className="sm:max-w-[560px] max-h-[90vh] flex flex-col p-0 overflow-hidden">
+        <form onSubmit={handleSubmit} className="flex flex-col h-full max-h-[90vh]">
+          {/* Fixed Header */}
+          <div className="px-6 pt-6 pb-4 border-b border-charcoal-100">
+            <DialogHeader>
+              <DialogTitle className="text-xl font-heading">Add Note</DialogTitle>
+              <DialogDescription className="text-sm text-charcoal-500 mt-1.5">
+                Add a note to this account for future reference.
+              </DialogDescription>
+            </DialogHeader>
+          </div>
 
-          <div className="space-y-4 py-4">
-            {/* Note Type Selection */}
-            <div className="space-y-2">
-              <Label>Note Type</Label>
-              <div className="grid grid-cols-4 gap-2">
-                {noteTypes.map((type) => (
+          {/* Scrollable Content */}
+          <div className="flex-1 min-h-0 overflow-y-auto px-6 py-6">
+            <div className="space-y-6">
+              {/* Note Type Section */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-semibold text-charcoal-400 uppercase tracking-wider">
+                    Note Type
+                  </h4>
                   <button
-                    key={type.value}
                     type="button"
-                    onClick={() => setNoteType(type.value)}
-                    className={cn(
-                      'flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-colors',
-                      noteType === type.value
-                        ? 'border-hublot-700 bg-hublot-50 text-hublot-900'
-                        : 'border-charcoal-200 hover:border-charcoal-300 text-charcoal-600'
-                    )}
+                    onClick={() => setShowAdvanced(!showAdvanced)}
+                    className="text-xs text-gold-600 hover:text-gold-700 font-medium"
                   >
-                    {type.icon}
-                    <span className="text-xs mt-1">{type.label}</span>
+                    {showAdvanced ? 'Show less' : 'More types'}
                   </button>
-                ))}
+                </div>
+                <div className={cn(
+                  "grid gap-2",
+                  showAdvanced ? "grid-cols-4" : "grid-cols-4"
+                )}>
+                  {allNoteTypes.map((type) => {
+                    const Icon = type.icon
+                    return (
+                      <button
+                        key={type.value}
+                        type="button"
+                        onClick={() => setNoteType(type.value)}
+                        className={cn(
+                          'flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-all duration-200',
+                          noteType === type.value
+                            ? 'border-gold-500 bg-gold-50 text-gold-900 shadow-sm'
+                            : 'border-charcoal-200 hover:border-charcoal-300 hover:bg-charcoal-50 text-charcoal-600'
+                        )}
+                      >
+                        <Icon className={cn(
+                          "w-4 h-4 mb-1.5",
+                          noteType === type.value ? "text-gold-600" : "text-charcoal-400"
+                        )} />
+                        <span className="text-xs font-medium">{type.label}</span>
+                      </button>
+                    )
+                  })}
+                </div>
               </div>
-            </div>
 
-            {/* Title */}
-            <div className="space-y-2">
-              <Label htmlFor="title">Title (Optional)</Label>
-              <Input
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Note title"
-              />
-            </div>
+              {/* Title */}
+              <div className="space-y-4">
+                <h4 className="text-xs font-semibold text-charcoal-400 uppercase tracking-wider pb-2 border-b border-charcoal-100">
+                  Note Details
+                </h4>
+                <div className="space-y-2">
+                  <Label htmlFor="title" className="text-sm font-medium">
+                    Title <span className="text-charcoal-400 font-normal">(Optional)</span>
+                  </Label>
+                  <Input
+                    id="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Brief summary of this note"
+                    className="h-9"
+                  />
+                </div>
 
-            {/* Content */}
-            <div className="space-y-2">
-              <Label htmlFor="content">Content *</Label>
-              <Textarea
-                id="content"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Enter your note here..."
-                rows={6}
-                required
-              />
-            </div>
+                {/* Content */}
+                <div className="space-y-2">
+                  <Label htmlFor="content" className="text-sm font-medium">
+                    Content <span className="text-red-500">*</span>
+                  </Label>
+                  <div className="relative">
+                    <Textarea
+                      id="content"
+                      value={content}
+                      onChange={(e) => setContent(e.target.value)}
+                      placeholder="Enter your note here..."
+                      rows={6}
+                      required
+                      className="resize-y text-sm min-h-[120px]"
+                    />
+                  </div>
+                </div>
+              </div>
 
-            {/* Note Type Hints */}
-            <div className="p-3 bg-charcoal-50 rounded-lg">
-              <h4 className="text-sm font-medium text-charcoal-900 mb-1">
-                {noteType === 'general' && 'General Note'}
-                {noteType === 'internal' && 'Internal Note'}
-                {noteType === 'important' && 'Important Note'}
-                {noteType === 'reminder' && 'Reminder Note'}
-              </h4>
-              <p className="text-xs text-charcoal-600">
-                {noteType === 'general' && 'Standard notes visible to team members.'}
-                {noteType === 'internal' && 'Notes for internal team use only, not for client-facing documentation.'}
-                {noteType === 'important' && 'Critical information that should be highlighted. Will appear with a warning indicator.'}
-                {noteType === 'reminder' && 'Notes that require follow-up or attention at a later time.'}
-              </p>
+              {/* Note Type Description */}
+              {selectedType && (
+                <div className="p-3 bg-charcoal-50 rounded-lg border border-charcoal-100">
+                  <div className="flex items-center gap-2 mb-1">
+                    <selectedType.icon className="w-4 h-4 text-charcoal-500" />
+                    <h4 className="text-sm font-medium text-charcoal-900">
+                      {selectedType.label} Note
+                    </h4>
+                  </div>
+                  <p className="text-xs text-charcoal-600">
+                    {selectedType.description}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
-              Cancel
-            </Button>
-            <Button type="submit" disabled={createNoteMutation.isPending}>
-              {createNoteMutation.isPending && (
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              )}
-              Add Note
-            </Button>
-          </DialogFooter>
+          {/* Fixed Footer */}
+          <div className="px-6 py-4 border-t border-charcoal-100 bg-charcoal-25">
+            <DialogFooter className="gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+                className="min-w-[100px] h-9 uppercase text-xs font-semibold tracking-wider"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                disabled={createNoteMutation.isPending}
+                className="min-w-[120px] h-9 uppercase text-xs font-semibold tracking-wider"
+              >
+                {createNoteMutation.isPending && (
+                  <Loader2 className="w-3.5 h-3.5 mr-2 animate-spin" />
+                )}
+                Add Note
+              </Button>
+            </DialogFooter>
+          </div>
         </form>
       </DialogContent>
     </Dialog>

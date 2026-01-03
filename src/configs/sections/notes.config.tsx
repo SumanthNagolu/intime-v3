@@ -6,6 +6,12 @@ import {
   MessageSquare,
   AlertCircle,
   Bell,
+  Phone,
+  Users,
+  Target,
+  Lightbulb,
+  AlertTriangle,
+  Lock,
 } from 'lucide-react'
 import type { ColumnConfig, StatusConfig } from '@/configs/entities/types'
 
@@ -17,6 +23,7 @@ export interface NoteItem extends Record<string, unknown> {
   id: string
   content: string
   subject?: string
+  title?: string
   note_type?: string
   noteType?: string
   is_pinned?: boolean
@@ -45,6 +52,8 @@ export interface NoteItem extends Record<string, unknown> {
 
 // ============================================
 // NOTE TYPE CONFIGURATION
+// Complete enum from database: general, meeting, call, strategy, warning,
+// opportunity, competitive_intel, internal, important, reminder
 // ============================================
 
 export const NOTE_TYPE_CONFIG: Record<string, StatusConfig> = {
@@ -60,14 +69,14 @@ export const NOTE_TYPE_CONFIG: Record<string, StatusConfig> = {
     color: 'bg-blue-100 text-blue-700',
     bgColor: 'bg-blue-100',
     textColor: 'text-blue-700',
-    icon: MessageSquare,
+    icon: Lock,
   },
   important: {
     label: 'Important',
     color: 'bg-amber-100 text-amber-700',
     bgColor: 'bg-amber-100',
     textColor: 'text-amber-700',
-    icon: AlertCircle,
+    icon: AlertTriangle,
   },
   reminder: {
     label: 'Reminder',
@@ -75,6 +84,48 @@ export const NOTE_TYPE_CONFIG: Record<string, StatusConfig> = {
     bgColor: 'bg-purple-100',
     textColor: 'text-purple-700',
     icon: Bell,
+  },
+  meeting: {
+    label: 'Meeting',
+    color: 'bg-indigo-100 text-indigo-700',
+    bgColor: 'bg-indigo-100',
+    textColor: 'text-indigo-700',
+    icon: Users,
+  },
+  call: {
+    label: 'Call',
+    color: 'bg-teal-100 text-teal-700',
+    bgColor: 'bg-teal-100',
+    textColor: 'text-teal-700',
+    icon: Phone,
+  },
+  strategy: {
+    label: 'Strategy',
+    color: 'bg-orange-100 text-orange-700',
+    bgColor: 'bg-orange-100',
+    textColor: 'text-orange-700',
+    icon: Target,
+  },
+  warning: {
+    label: 'Warning',
+    color: 'bg-red-100 text-red-700',
+    bgColor: 'bg-red-100',
+    textColor: 'text-red-700',
+    icon: AlertCircle,
+  },
+  opportunity: {
+    label: 'Opportunity',
+    color: 'bg-green-100 text-green-700',
+    bgColor: 'bg-green-100',
+    textColor: 'text-green-700',
+    icon: Lightbulb,
+  },
+  competitive_intel: {
+    label: 'Competitive Intel',
+    color: 'bg-pink-100 text-pink-700',
+    bgColor: 'bg-pink-100',
+    textColor: 'text-pink-700',
+    icon: MessageSquare,
   },
 }
 
@@ -90,7 +141,7 @@ export const NOTES_COLUMNS: ColumnConfig<NoteItem>[] = [
     sortable: true,
     width: 'min-w-[200px]',
     render: (value, item) => {
-      const subject = value as string | undefined
+      const subject = (value as string | undefined) || item.title
       const isPinned = item.is_pinned || item.isPinned
       return (
         <div className="flex items-center gap-2">

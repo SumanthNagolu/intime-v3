@@ -3,6 +3,7 @@ import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
 import { getAdminClient } from '@/lib/supabase/admin'
+import { historyService } from '@/lib/services'
 
 // ============================================
 // CONTRACTS-01: Unified Contract Management Router
@@ -431,6 +432,14 @@ export const contractsRouter = router({
           created_by: user?.id,
         })
 
+      // HISTORY: Record document/contract added to parent entity (fire-and-forget)
+      void historyService.recordRelatedObjectAdded(
+        input.entityType,
+        input.entityId,
+        { type: 'document', id: data.id, label: input.contractName },
+        { orgId, userId: user?.id ?? null }
+      ).catch(err => console.error('[History] Failed to record document added:', err))
+
       return { id: data.id }
     }),
 
@@ -508,8 +517,16 @@ export const contractsRouter = router({
   delete: orgProtectedProcedure
     .input(z.object({ id: z.string().uuid() }))
     .mutation(async ({ ctx, input }) => {
-      const { orgId } = ctx
+      const { orgId, user } = ctx
       const adminClient = getAdminClient()
+
+      // HISTORY: Fetch contract info BEFORE delete for history recording
+      const { data: contract } = await adminClient
+        .from('contracts')
+        .select('entity_type, entity_id, contract_name')
+        .eq('id', input.id)
+        .eq('org_id', orgId)
+        .single()
 
       const { error } = await adminClient
         .from('contracts')
@@ -520,6 +537,16 @@ export const contractsRouter = router({
       if (error) {
         console.error('Failed to delete contract:', error)
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      // HISTORY: Record document removed from parent entity (fire-and-forget)
+      if (contract?.entity_type && contract?.entity_id) {
+        void historyService.recordRelatedObjectRemoved(
+          contract.entity_type,
+          contract.entity_id,
+          { type: 'document', id: input.id, label: contract.contract_name ?? 'Untitled Document' },
+          { orgId, userId: user?.id ?? null }
+        ).catch(err => console.error('[History] Failed to record document removed:', err))
       }
 
       return { success: true }

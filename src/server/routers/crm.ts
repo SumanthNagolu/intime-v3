@@ -5,6 +5,7 @@ import { orgProtectedProcedure } from '../trpc/middleware'
 import { getAdminClient } from '@/lib/supabase/admin'
 import { createWorkflowEngine } from '@/lib/workflows'
 import { checkBlockingActivities, ensureOpenActivity } from '@/lib/utils/activity-system'
+import { historyService } from '@/lib/services'
 
 // Type for campaign sequence step structure
 interface SequenceStep {
@@ -551,6 +552,14 @@ export const crmRouter = router({
           }
         }
 
+        // Record history: Account created
+        void historyService.recordEntityCreated(
+          'account',
+          account.id,
+          { orgId, userId: user?.id ?? null },
+          { entityName: input.name, initialStatus: input.status }
+        ).catch(err => console.error('[History] Failed to record account creation:', err))
+
         return account
       }),
 
@@ -621,6 +630,14 @@ export const crmRouter = router({
             .single()
           userProfileId = profile?.id ?? null
         }
+
+        // HISTORY: Fetch current state BEFORE update for change detection
+        const { data: beforeSnapshot } = await adminClient
+          .from('companies')
+          .select('*')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .single()
 
         // GUIDEWIRE PATTERN: Check for blocking activities before status change to closing statuses
         if (input.status && ['inactive', 'closed', 'churned', 'lost'].includes(input.status)) {
@@ -983,6 +1000,17 @@ export const crmRouter = router({
           }
         }
 
+        // HISTORY: Record all field changes (fire-and-forget)
+        if (beforeSnapshot && data) {
+          void historyService.detectAndRecordChanges(
+            'account',
+            input.id,
+            beforeSnapshot,
+            data,
+            { orgId, userId: user?.id ?? null }
+          ).catch(err => console.error('[History] Failed to record account changes:', err))
+        }
+
         return data
       }),
 
@@ -1300,6 +1328,7 @@ export const crmRouter = router({
 
   // ============================================
   // CONTRACTS (Account Documents - MSA, SOW, NDA)
+  // Uses unified contracts table with entity_type='account'
   // ============================================
   contracts: router({
     // List contracts/documents for an account
@@ -1307,65 +1336,130 @@ export const crmRouter = router({
       .input(z.object({
         accountId: z.string().uuid(),
       }))
-      .query(async ({ input }) => {
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
         const adminClient = getAdminClient()
 
         const { data, error } = await adminClient
-          .from('account_contracts')
-          .select('*')
-          .eq('account_id', input.accountId)
+          .from('contracts')
+          .select(`
+            *,
+            owner:user_profiles!owner_id(id, full_name)
+          `)
+          .eq('org_id', orgId)
+          .eq('entity_type', 'account')
+          .eq('entity_id', input.accountId)
+          .is('deleted_at', null)
           .order('created_at', { ascending: false })
 
         if (error) {
+          console.error('Failed to list account contracts:', error)
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
-        return data || []
+        // Transform to camelCase for frontend
+        return (data || []).map(item => ({
+          id: item.id,
+          accountId: item.entity_id,
+          contractNumber: item.contract_number,
+          name: item.contract_name,
+          contractType: item.contract_type,
+          category: item.category,
+          status: item.status,
+          effectiveDate: item.effective_date,
+          expiryDate: item.expiry_date,
+          value: item.contract_value ? Number(item.contract_value) : null,
+          currency: item.currency,
+          documentUrl: item.document_url,
+          signedDocumentUrl: item.signed_document_url,
+          autoRenew: item.auto_renew,
+          renewalTermMonths: item.renewal_term_months,
+          renewalNoticeDays: item.renewal_notice_days,
+          terms: item.terms,
+          notes: item.terms?.notes || null,
+          owner: item.owner,
+          createdAt: item.created_at,
+          updatedAt: item.updated_at,
+          createdBy: item.created_by,
+        }))
       }),
 
     // Create a new contract
     create: orgProtectedProcedure
       .input(z.object({
         accountId: z.string().uuid(),
-        contractType: z.enum(['msa', 'sow', 'nda', 'amendment', 'addendum', 'other']),
+        contractType: z.enum(['msa', 'sow', 'nda', 'amendment', 'addendum', 'rate_card_agreement', 'sla', 'vendor_agreement', 'other']),
         name: z.string().min(1),
-        status: z.enum(['draft', 'pending_review', 'active', 'expired', 'terminated']).default('draft'),
-        startDate: z.string().datetime().optional(),
-        endDate: z.string().datetime().optional(),
-        signedDate: z.string().datetime().optional(),
+        contractNumber: z.string().max(50).optional(),
+        category: z.string().max(50).optional(),
+        status: z.enum(['draft', 'pending_review', 'pending_signature', 'active', 'expired', 'terminated']).default('draft'),
+        startDate: z.string().optional(),
+        endDate: z.string().optional(),
         value: z.number().optional(),
         currency: z.string().default('USD'),
         paymentTermsDays: z.number().optional(),
+        autoRenew: z.boolean().default(false),
+        renewalTermMonths: z.number().optional(),
+        renewalNoticeDays: z.number().default(30),
         documentUrl: z.string().url().optional(),
         notes: z.string().optional(),
       }))
-      .mutation(async ({ input }) => {
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
         const adminClient = getAdminClient()
 
+        // Look up user_profiles.id from auth_id (user.id is auth.users.id)
+        let userProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          userProfileId = profile?.id || null
+        }
+
         const { data, error } = await adminClient
-          .from('account_contracts')
+          .from('contracts')
           .insert({
-            account_id: input.accountId,
+            org_id: orgId,
+            entity_type: 'account',
+            entity_id: input.accountId,
+            contract_name: input.name,
+            contract_number: input.contractNumber,
             contract_type: input.contractType,
-            name: input.name,
+            category: input.category,
             status: input.status,
-            start_date: input.startDate,
-            end_date: input.endDate,
-            signed_date: input.signedDate,
-            value: input.value,
+            effective_date: input.startDate,
+            expiry_date: input.endDate,
+            contract_value: input.value,
             currency: input.currency,
-            payment_terms_days: input.paymentTermsDays,
-            document_url: input.documentUrl,
-            notes: input.notes,
+            auto_renew: input.autoRenew,
+            renewal_term_months: input.renewalTermMonths,
+            renewal_notice_days: input.renewalNoticeDays,
+            document_url: input.documentUrl || null,
+            terms: input.notes || input.paymentTermsDays ? {
+              notes: input.notes,
+              paymentTermsDays: input.paymentTermsDays,
+            } : {},
+            owner_id: userProfileId,
+            created_by: userProfileId,
           })
           .select()
           .single()
 
         if (error) {
+          console.error('Failed to create contract:', error)
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
-        return data
+        return {
+          id: data.id,
+          accountId: data.entity_id,
+          name: data.contract_name,
+          contractType: data.contract_type,
+          status: data.status,
+        }
       }),
 
     // Upload document file to Supabase Storage
@@ -1414,11 +1508,13 @@ export const crmRouter = router({
 
         // Update the contract with the document URL
         const { data, error } = await adminClient
-          .from('account_contracts')
+          .from('contracts')
           .update({
             document_url: urlData.publicUrl,
+            updated_at: new Date().toISOString(),
           })
           .eq('id', input.contractId)
+          .eq('org_id', orgId)
           .select()
           .single()
 
@@ -1427,28 +1523,55 @@ export const crmRouter = router({
         }
 
         return {
-          ...data,
-          document_url: urlData.publicUrl,
+          id: data.id,
+          documentUrl: urlData.publicUrl,
         }
       }),
 
     // Get contract by ID
     getById: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
-      .query(async ({ input }) => {
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
         const adminClient = getAdminClient()
 
         const { data, error } = await adminClient
-          .from('company_contracts')
-          .select('*, company:companies!company_contracts_company_id_fkey(id, name)')
+          .from('contracts')
+          .select(`
+            *,
+            owner:user_profiles!owner_id(id, full_name)
+          `)
           .eq('id', input.id)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
           .single()
 
-        if (error) {
+        if (error || !data) {
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Contract not found' })
         }
 
-        return data
+        return {
+          id: data.id,
+          accountId: data.entity_id,
+          contractNumber: data.contract_number,
+          name: data.contract_name,
+          contractType: data.contract_type,
+          category: data.category,
+          status: data.status,
+          effectiveDate: data.effective_date,
+          expiryDate: data.expiry_date,
+          value: data.contract_value ? Number(data.contract_value) : null,
+          currency: data.currency,
+          documentUrl: data.document_url,
+          signedDocumentUrl: data.signed_document_url,
+          autoRenew: data.auto_renew,
+          renewalTermMonths: data.renewal_term_months,
+          renewalNoticeDays: data.renewal_notice_days,
+          terms: data.terms,
+          owner: data.owner,
+          createdAt: data.created_at,
+          updatedAt: data.updated_at,
+        }
       }),
 
     // Update contract
@@ -1456,37 +1579,63 @@ export const crmRouter = router({
       .input(z.object({
         id: z.string().uuid(),
         name: z.string().min(1).optional(),
-        contractType: z.enum(['msa', 'sow', 'nda', 'amendment', 'addendum', 'other']).optional(),
-        status: z.enum(['draft', 'pending_review', 'active', 'expired', 'terminated']).optional(),
-        startDate: z.string().datetime().optional().nullable(),
-        endDate: z.string().datetime().optional().nullable(),
-        signedDate: z.string().datetime().optional().nullable(),
+        contractNumber: z.string().max(50).optional(),
+        contractType: z.enum(['msa', 'sow', 'nda', 'amendment', 'addendum', 'rate_card_agreement', 'sla', 'vendor_agreement', 'other']).optional(),
+        category: z.string().max(50).optional(),
+        status: z.enum(['draft', 'pending_review', 'pending_signature', 'active', 'expired', 'terminated']).optional(),
+        startDate: z.string().optional().nullable(),
+        endDate: z.string().optional().nullable(),
         value: z.number().optional().nullable(),
         currency: z.string().optional(),
-        paymentTermsDays: z.number().optional().nullable(),
+        autoRenew: z.boolean().optional(),
+        renewalTermMonths: z.number().optional().nullable(),
+        renewalNoticeDays: z.number().optional(),
         documentUrl: z.string().url().optional().nullable(),
         notes: z.string().optional().nullable(),
+        paymentTermsDays: z.number().optional().nullable(),
       }))
-      .mutation(async ({ input }) => {
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx
         const adminClient = getAdminClient()
 
-        const updateData: Record<string, unknown> = {}
-        if (input.name !== undefined) updateData.name = input.name
+        const updateData: Record<string, unknown> = {
+          updated_at: new Date().toISOString(),
+        }
+
+        if (input.name !== undefined) updateData.contract_name = input.name
+        if (input.contractNumber !== undefined) updateData.contract_number = input.contractNumber
         if (input.contractType !== undefined) updateData.contract_type = input.contractType
+        if (input.category !== undefined) updateData.category = input.category
         if (input.status !== undefined) updateData.status = input.status
-        if (input.startDate !== undefined) updateData.start_date = input.startDate
-        if (input.endDate !== undefined) updateData.end_date = input.endDate
-        if (input.signedDate !== undefined) updateData.signed_date = input.signedDate
-        if (input.value !== undefined) updateData.value = input.value
+        if (input.startDate !== undefined) updateData.effective_date = input.startDate
+        if (input.endDate !== undefined) updateData.expiry_date = input.endDate
+        if (input.value !== undefined) updateData.contract_value = input.value
         if (input.currency !== undefined) updateData.currency = input.currency
-        if (input.paymentTermsDays !== undefined) updateData.payment_terms_days = input.paymentTermsDays
+        if (input.autoRenew !== undefined) updateData.auto_renew = input.autoRenew
+        if (input.renewalTermMonths !== undefined) updateData.renewal_term_months = input.renewalTermMonths
+        if (input.renewalNoticeDays !== undefined) updateData.renewal_notice_days = input.renewalNoticeDays
         if (input.documentUrl !== undefined) updateData.document_url = input.documentUrl
-        if (input.notes !== undefined) updateData.notes = input.notes
+
+        // Handle terms JSON field for notes and payment terms
+        if (input.notes !== undefined || input.paymentTermsDays !== undefined) {
+          // First get current terms
+          const { data: current } = await adminClient
+            .from('contracts')
+            .select('terms')
+            .eq('id', input.id)
+            .single()
+
+          const currentTerms = (current?.terms || {}) as Record<string, unknown>
+          if (input.notes !== undefined) currentTerms.notes = input.notes
+          if (input.paymentTermsDays !== undefined) currentTerms.paymentTermsDays = input.paymentTermsDays
+          updateData.terms = currentTerms
+        }
 
         const { data, error } = await adminClient
-          .from('account_contracts')
+          .from('contracts')
           .update(updateData)
           .eq('id', input.id)
+          .eq('org_id', orgId)
           .select()
           .single()
 
@@ -1494,19 +1643,25 @@ export const crmRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
-        return data
+        return {
+          id: data.id,
+          name: data.contract_name,
+          status: data.status,
+        }
       }),
 
-    // Delete contract
+    // Delete contract (soft delete)
     delete: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
-      .mutation(async ({ input }) => {
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx
         const adminClient = getAdminClient()
 
         const { error } = await adminClient
-          .from('account_contracts')
-          .delete()
+          .from('contracts')
+          .update({ deleted_at: new Date().toISOString() })
           .eq('id', input.id)
+          .eq('org_id', orgId)
 
         if (error) {
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
