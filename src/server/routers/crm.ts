@@ -4,6 +4,7 @@ import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
 import { getAdminClient } from '@/lib/supabase/admin'
 import { createWorkflowEngine } from '@/lib/workflows'
+import { checkBlockingActivities, ensureOpenActivity } from '@/lib/utils/activity-system'
 
 // Type for campaign sequence step structure
 interface SequenceStep {
@@ -619,6 +620,107 @@ export const crmRouter = router({
             .eq('auth_id', user.id)
             .single()
           userProfileId = profile?.id ?? null
+        }
+
+        // GUIDEWIRE PATTERN: Check for blocking activities before status change to closing statuses
+        if (input.status && ['inactive', 'closed', 'churned', 'lost'].includes(input.status)) {
+          // Get current account to compare status
+          const { data: currentAccount } = await adminClient
+            .from('companies')
+            .select('status')
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+            .single()
+
+          // Only check blocking if status is actually changing
+          if (currentAccount && currentAccount.status !== input.status) {
+            // Check for blocking activities
+            const { data: blockingActivities } = await adminClient
+              .from('activities')
+              .select(`
+                id,
+                subject,
+                status,
+                priority,
+                due_date,
+                assigned_to,
+                user_profiles!activities_assigned_to_fkey (id, first_name, last_name)
+              `)
+              .eq('org_id', orgId)
+              .eq('entity_type', 'account')
+              .eq('entity_id', input.id)
+              .in('status', ['open', 'in_progress', 'scheduled'])
+              .eq('is_blocking', true)
+              .is('deleted_at', null)
+
+            if (blockingActivities && blockingActivities.length > 0) {
+              throw new TRPCError({
+                code: 'PRECONDITION_FAILED',
+                message: `Cannot change status to "${input.status}": ${blockingActivities.length} blocking activit${blockingActivities.length === 1 ? 'y' : 'ies'} must be completed first`,
+                cause: {
+                  blockingActivities: blockingActivities.map(a => ({
+                    id: a.id,
+                    subject: a.subject,
+                    status: a.status,
+                    priority: a.priority,
+                    dueDate: a.due_date,
+                    assignedTo: a.user_profiles
+                      ? {
+                          id: (a.user_profiles as { id: string; first_name: string; last_name: string }).id,
+                          firstName: (a.user_profiles as { id: string; first_name: string; last_name: string }).first_name,
+                          lastName: (a.user_profiles as { id: string; first_name: string; last_name: string }).last_name,
+                        }
+                      : null,
+                  })),
+                },
+              })
+            }
+          }
+        }
+
+        // Auto-create watchlist activity when account becomes active
+        if (input.status === 'active') {
+          const { data: currentAccount } = await adminClient
+            .from('companies')
+            .select('status, owner_id')
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+            .single()
+
+          // If transitioning to active from prospect, ensure there's an activity
+          if (currentAccount && currentAccount.status === 'prospect') {
+            // Check if there are any open activities
+            const { count } = await adminClient
+              .from('activities')
+              .select('*', { count: 'exact', head: true })
+              .eq('org_id', orgId)
+              .eq('entity_type', 'account')
+              .eq('entity_id', input.id)
+              .in('status', ['open', 'in_progress', 'scheduled'])
+              .is('deleted_at', null)
+
+            // If no activities, create a watchlist activity
+            if ((count ?? 0) === 0) {
+              const dueDate = new Date()
+              dueDate.setDate(dueDate.getDate() + 30)
+
+              await adminClient.from('activities').insert({
+                org_id: orgId,
+                entity_type: 'account',
+                entity_id: input.id,
+                activity_type: 'task',
+                subject: 'Watchlist',
+                description: 'Auto-created: This account is now active and requires attention.',
+                status: 'open',
+                priority: 'low',
+                due_date: dueDate.toISOString(),
+                assigned_to: currentAccount.owner_id || userProfileId,
+                pattern_code: 'sys_watchlist_account',
+                auto_created: true,
+                created_by: userProfileId,
+              })
+            }
+          }
         }
 
         const updateData: Record<string, unknown> = {
@@ -2971,6 +3073,25 @@ export const crmRouter = router({
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Deal not found' })
         }
 
+        // Check for blocking activities when moving to closing stages
+        const closingStages = ['closed_won', 'closed_lost', 'cancelled']
+        if (closingStages.includes(input.stage)) {
+          const blockCheck = await checkBlockingActivities({
+            entityType: 'deal',
+            entityId: input.id,
+            targetStatus: input.stage,
+            orgId,
+            supabase: adminClient,
+          })
+          if (blockCheck.blocked) {
+            throw new TRPCError({
+              code: 'PRECONDITION_FAILED',
+              message: `Cannot change to ${input.stage}: ${blockCheck.activities.length} blocking ${blockCheck.activities.length === 1 ? 'activity' : 'activities'} must be completed first`,
+              cause: { blockingActivities: blockCheck.activities },
+            })
+          }
+        }
+
         // Default probabilities by stage
         const defaultProbabilities: Record<string, number> = {
           discovery: 20,
@@ -3077,6 +3198,22 @@ export const crmRouter = router({
 
         if (!deal) {
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Deal not found' })
+        }
+
+        // Check for blocking activities before closing deal as won
+        const blockCheck = await checkBlockingActivities({
+          entityType: 'deal',
+          entityId: input.id,
+          targetStatus: 'closed_won',
+          orgId,
+          supabase: adminClient,
+        })
+        if (blockCheck.blocked) {
+          throw new TRPCError({
+            code: 'PRECONDITION_FAILED',
+            message: `Cannot close deal as won: ${blockCheck.activities.length} blocking ${blockCheck.activities.length === 1 ? 'activity' : 'activities'} must be completed first`,
+            cause: { blockingActivities: blockCheck.activities },
+          })
         }
 
         let createdAccountId = deal.account_id
@@ -3197,6 +3334,22 @@ export const crmRouter = router({
       .mutation(async ({ ctx, input }) => {
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
+
+        // Check for blocking activities before closing deal as lost
+        const blockCheck = await checkBlockingActivities({
+          entityType: 'deal',
+          entityId: input.id,
+          targetStatus: 'closed_lost',
+          orgId,
+          supabase: adminClient,
+        })
+        if (blockCheck.blocked) {
+          throw new TRPCError({
+            code: 'PRECONDITION_FAILED',
+            message: `Cannot close deal as lost: ${blockCheck.activities.length} blocking ${blockCheck.activities.length === 1 ? 'activity' : 'activities'} must be completed first`,
+            cause: { blockingActivities: blockCheck.activities },
+          })
+        }
 
         const { data, error } = await adminClient
           .from('deals')
@@ -6235,6 +6388,45 @@ export const crmRouter = router({
         const { orgId, user } = ctx
         const adminClient = getAdminClient()
 
+        // GUIDEWIRE PATTERN: Check for blocking activities before status change to closing statuses
+        if (['completed', 'cancelled', 'archived'].includes(input.status)) {
+          const { data: blockingActivities } = await adminClient
+            .from('activities')
+            .select(`
+              id, subject, status, priority, due_date, assigned_to,
+              user_profiles!activities_assigned_to_fkey (id, first_name, last_name)
+            `)
+            .eq('org_id', orgId)
+            .eq('entity_type', 'campaign')
+            .eq('entity_id', input.id)
+            .in('status', ['open', 'in_progress', 'scheduled'])
+            .eq('is_blocking', true)
+            .is('deleted_at', null)
+
+          if (blockingActivities && blockingActivities.length > 0) {
+            throw new TRPCError({
+              code: 'PRECONDITION_FAILED',
+              message: `Cannot change status to "${input.status}": ${blockingActivities.length} blocking activit${blockingActivities.length === 1 ? 'y' : 'ies'} must be completed first`,
+              cause: {
+                blockingActivities: blockingActivities.map(a => ({
+                  id: a.id,
+                  subject: a.subject,
+                  status: a.status,
+                  priority: a.priority,
+                  dueDate: a.due_date,
+                  assignedTo: a.user_profiles
+                    ? {
+                        id: (a.user_profiles as { id: string; first_name: string; last_name: string }).id,
+                        firstName: (a.user_profiles as { id: string; first_name: string; last_name: string }).first_name,
+                        lastName: (a.user_profiles as { id: string; first_name: string; last_name: string }).last_name,
+                      }
+                    : null,
+                })),
+              },
+            })
+          }
+        }
+
         const { data, error } = await adminClient
           .from('campaigns')
           .update({
@@ -7635,8 +7827,7 @@ export const crmRouter = router({
               *,
               assigned_user:user_profiles!assigned_to(id, full_name, avatar_url, email),
               created_by_user:user_profiles!created_by(id, full_name, avatar_url),
-              pattern:activity_patterns!pattern_id(id, code, name, description, category, icon, color, instructions, checklist),
-              history:activity_history(*)
+              pattern:activity_patterns!pattern_id(id, code, name, description, category, icon, color, instructions, checklist)
             `)
             .eq('id', input.id)
             .eq('org_id', orgId)
@@ -7737,16 +7928,6 @@ export const crmRouter = router({
             throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
           }
 
-          // Log history
-          await adminClient
-            .from('activity_history')
-            .insert({
-              activity_id: data.id,
-              action: 'created',
-              changed_by: user?.id,
-              notes: `Manual activity created: ${input.subject}`,
-            })
-
           return data
         }),
 
@@ -7789,18 +7970,6 @@ export const crmRouter = router({
           if (error) {
             throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
           }
-
-          // Log history
-          await supabase
-            .from('activity_history')
-            .insert({
-              activity_id: input.id,
-              action: 'status_changed',
-              field_changed: 'status',
-              old_value: 'open',
-              new_value: 'in_progress',
-              changed_by: user?.id,
-            })
 
           return data
         }),
@@ -7890,19 +8059,6 @@ export const crmRouter = router({
             throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
           }
 
-          // Log history
-          await supabase
-            .from('activity_history')
-            .insert({
-              activity_id: input.id,
-              action: 'status_changed',
-              field_changed: 'status',
-              old_value: 'open',
-              new_value: 'skipped',
-              changed_by: user?.id,
-              notes: input.reason,
-            })
-
           return data
         }),
 
@@ -7944,19 +8100,6 @@ export const crmRouter = router({
           if (error) {
             throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
           }
-
-          // Log history
-          await supabase
-            .from('activity_history')
-            .insert({
-              activity_id: input.id,
-              action: 'assigned',
-              field_changed: 'assigned_to',
-              old_value: current?.assigned_to,
-              new_value: input.assignedTo,
-              changed_by: user?.id,
-              notes: input.notes,
-            })
 
           return data
         }),
@@ -8002,16 +8145,6 @@ export const crmRouter = router({
           if (error) {
             throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
           }
-
-          // Log history
-          await supabase
-            .from('activity_history')
-            .insert({
-              activity_id: id,
-              action: 'updated',
-              changed_by: user?.id,
-              notes: `Activity updated`,
-            })
 
           return data
         }),

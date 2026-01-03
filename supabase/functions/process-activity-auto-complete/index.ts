@@ -268,15 +268,6 @@ Deno.serve(async (req: Request) => {
             continue
           }
 
-          // Log history
-          await supabase
-            .from('activity_history')
-            .insert({
-              activity_id: activity.id,
-              action: 'auto_completed',
-              notes: reason,
-            })
-
           // Check for successor activities (if pattern defines them)
           let successorCreated = false
           let successorId: string | null = null
@@ -384,5 +375,7 @@ Deno.serve(async (req: Request) => {
     )
   }
 })
+
+
 
 

@@ -3303,6 +3303,71 @@ $$;
 
 
 --
+-- Name: claim_activity_from_queue(uuid, uuid); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.claim_activity_from_queue(p_activity_id uuid, p_user_id uuid) RETURNS boolean
+    LANGUAGE plpgsql SECURITY DEFINER
+    AS $$
+DECLARE
+    v_activity activities%ROWTYPE;
+    v_member work_queue_members%ROWTYPE;
+BEGIN
+    -- Get activity
+    SELECT * INTO v_activity FROM activities WHERE id = p_activity_id;
+    
+    IF v_activity IS NULL THEN
+        RAISE EXCEPTION 'Activity not found';
+    END IF;
+    
+    -- Check if already assigned
+    IF v_activity.assigned_to IS NOT NULL AND v_activity.assigned_to != p_user_id THEN
+        RAISE EXCEPTION 'Activity is already assigned to another user';
+    END IF;
+    
+    -- Check if user is member of the queue
+    IF v_activity.queue_id IS NOT NULL THEN
+        SELECT * INTO v_member 
+        FROM work_queue_members 
+        WHERE queue_id = v_activity.queue_id 
+        AND user_id = p_user_id 
+        AND is_active = true
+        AND can_claim = true;
+        
+        IF v_member IS NULL THEN
+            RAISE EXCEPTION 'User is not authorized to claim from this queue';
+        END IF;
+        
+        -- Check load capacity
+        IF v_member.current_load >= v_member.max_active_activities THEN
+            RAISE EXCEPTION 'User has reached maximum activity capacity';
+        END IF;
+        
+        -- Update member load
+        UPDATE work_queue_members 
+        SET current_load = current_load + 1 
+        WHERE id = v_member.id;
+    END IF;
+    
+    -- Claim the activity
+    UPDATE activities SET
+        assigned_to = p_user_id,
+        claimed_at = NOW(),
+        claimed_by = p_user_id,
+        status = CASE WHEN status = 'open' THEN 'in_progress' ELSE status END,
+        updated_at = NOW()
+    WHERE id = p_activity_id;
+    
+    -- Log history
+    INSERT INTO activity_history (activity_id, action, field_changed, new_value, changed_by)
+    VALUES (p_activity_id, 'claimed', 'assigned_to', p_user_id::text, p_user_id);
+    
+    RETURN TRUE;
+END;
+$$;
+
+
+--
 -- Name: cleanup_expired_twin_events(); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -4787,6 +4852,28 @@ $$;
 
 
 --
+-- Name: create_root_group_for_org(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.create_root_group_for_org() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    INSERT INTO public.groups (org_id, name, code, group_type, description, is_active)
+    VALUES (
+        NEW.id,
+        NEW.name,
+        LOWER(REPLACE(NEW.slug, '-', '_')),
+        'root',
+        'Root organizational group for ' || NEW.name,
+        true
+    );
+    RETURN NEW;
+END;
+$$;
+
+
+--
 -- Name: create_submission_notification(uuid, text, uuid); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -5181,6 +5268,57 @@ $$;
 --
 
 COMMENT ON FUNCTION public.enroll_student(p_user_id uuid, p_course_id uuid, p_payment_id text, p_payment_amount numeric, p_payment_type text, p_starts_at timestamp with time zone, p_expires_at timestamp with time zone) IS 'Enroll a student in a course with prerequisite validation and event publishing';
+
+
+--
+-- Name: escalate_activity(uuid, text, text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.escalate_activity(p_activity_id uuid, p_reason text DEFAULT 'Overdue'::text, p_escalation_type text DEFAULT 'automatic'::text) RETURNS boolean
+    LANGUAGE plpgsql SECURITY DEFINER
+    AS $$
+DECLARE
+    v_activity activities%ROWTYPE;
+    v_new_level INTEGER;
+BEGIN
+    -- Get activity
+    SELECT * INTO v_activity FROM activities WHERE id = p_activity_id;
+    
+    IF v_activity IS NULL THEN
+        RAISE EXCEPTION 'Activity not found';
+    END IF;
+    
+    -- Calculate new escalation level
+    v_new_level := COALESCE(v_activity.escalation_count, 0) + 1;
+    
+    -- Update activity
+    UPDATE activities SET
+        escalation_count = v_new_level,
+        last_escalated_at = NOW(),
+        priority = CASE 
+            WHEN v_new_level >= 3 THEN 'urgent'
+            WHEN v_new_level >= 2 THEN 'high'
+            ELSE priority 
+        END,
+        updated_at = NOW()
+    WHERE id = p_activity_id;
+    
+    -- Log escalation
+    INSERT INTO activity_escalations (
+        activity_id, org_id, escalation_level,
+        escalated_from_user, reason, escalation_type
+    ) VALUES (
+        p_activity_id, v_activity.org_id, v_new_level,
+        v_activity.assigned_to, p_reason, p_escalation_type
+    );
+    
+    -- Log history
+    INSERT INTO activity_history (activity_id, action, new_value, notes)
+    VALUES (p_activity_id, 'escalated', v_new_level::text, p_reason);
+    
+    RETURN TRUE;
+END;
+$$;
 
 
 --
@@ -9079,6 +9217,53 @@ COMMENT ON FUNCTION public.refresh_revenue_analytics() IS 'ACAD-030: Refresh all
 
 
 --
+-- Name: release_activity_to_queue(uuid, uuid); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.release_activity_to_queue(p_activity_id uuid, p_user_id uuid) RETURNS boolean
+    LANGUAGE plpgsql SECURITY DEFINER
+    AS $$
+DECLARE
+    v_activity activities%ROWTYPE;
+BEGIN
+    -- Get activity
+    SELECT * INTO v_activity FROM activities WHERE id = p_activity_id;
+    
+    IF v_activity IS NULL THEN
+        RAISE EXCEPTION 'Activity not found';
+    END IF;
+    
+    -- Check if user is the assigned user
+    IF v_activity.assigned_to != p_user_id THEN
+        RAISE EXCEPTION 'Only the assigned user can release the activity';
+    END IF;
+    
+    -- Update member load if from queue
+    IF v_activity.queue_id IS NOT NULL THEN
+        UPDATE work_queue_members 
+        SET current_load = GREATEST(0, current_load - 1)
+        WHERE queue_id = v_activity.queue_id AND user_id = p_user_id;
+    END IF;
+    
+    -- Release the activity
+    UPDATE activities SET
+        assigned_to = NULL,
+        claimed_at = NULL,
+        claimed_by = NULL,
+        status = 'open',
+        updated_at = NOW()
+    WHERE id = p_activity_id;
+    
+    -- Log history
+    INSERT INTO activity_history (activity_id, action, field_changed, old_value, changed_by)
+    VALUES (p_activity_id, 'released', 'assigned_to', p_user_id::text, p_user_id);
+    
+    RETURN TRUE;
+END;
+$$;
+
+
+--
 -- Name: replace_content_asset(uuid, uuid); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -9730,6 +9915,30 @@ BEGIN
     NEW.canonical_name := lower(regexp_replace(NEW.name, '[^a-zA-Z0-9]+', '_', 'g'));
   END IF;
   RETURN NEW;
+END;
+$$;
+
+
+--
+-- Name: snooze_activity(uuid, timestamp with time zone, uuid); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.snooze_activity(p_activity_id uuid, p_snooze_until timestamp with time zone, p_user_id uuid) RETURNS boolean
+    LANGUAGE plpgsql SECURITY DEFINER
+    AS $$
+BEGIN
+    UPDATE activities SET
+        snoozed_until = p_snooze_until,
+        reminder_sent_at = NULL,
+        updated_at = NOW(),
+        updated_by = p_user_id
+    WHERE id = p_activity_id;
+    
+    -- Log history
+    INSERT INTO activity_history (activity_id, action, field_changed, new_value, changed_by)
+    VALUES (p_activity_id, 'snoozed', 'snoozed_until', p_snooze_until::text, p_user_id);
+    
+    RETURN TRUE;
 END;
 $$;
 
@@ -11605,6 +11814,20 @@ $$;
 
 
 --
+-- Name: update_entity_drafts_updated_at(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.update_entity_drafts_updated_at() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    NEW.updated_at = now();
+    RETURN NEW;
+END;
+$$;
+
+
+--
 -- Name: update_escalation_updated_at(); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -11662,6 +11885,42 @@ BEGIN
     setweight(to_tsvector('english', COALESCE(NEW.description, '')), 'C') ||
     setweight(to_tsvector('english', COALESCE(NEW.location, '')), 'C');
   RETURN NEW;
+END;
+$$;
+
+
+--
+-- Name: update_group_hierarchy_path(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.update_group_hierarchy_path() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    parent_path TEXT;
+    parent_level INTEGER;
+BEGIN
+    IF NEW.parent_group_id IS NULL THEN
+        -- Root group
+        NEW.hierarchy_path := '/' || NEW.id::TEXT;
+        NEW.hierarchy_level := 0;
+    ELSE
+        -- Get parent's path and level
+        SELECT hierarchy_path, hierarchy_level
+        INTO parent_path, parent_level
+        FROM public.groups
+        WHERE id = NEW.parent_group_id;
+        
+        IF parent_path IS NOT NULL THEN
+            NEW.hierarchy_path := parent_path || '/' || NEW.id::TEXT;
+            NEW.hierarchy_level := COALESCE(parent_level, 0) + 1;
+        ELSE
+            NEW.hierarchy_path := '/' || NEW.id::TEXT;
+            NEW.hierarchy_level := 0;
+        END IF;
+    END IF;
+    
+    RETURN NEW;
 END;
 $$;
 
@@ -12932,7 +13191,15 @@ CREATE TABLE public.activities (
     related_deal_id uuid,
     related_campaign_id uuid,
     next_steps text,
-    next_follow_up_date timestamp with time zone
+    next_follow_up_date timestamp with time zone,
+    queue_id uuid,
+    claimed_at timestamp with time zone,
+    claimed_by uuid,
+    snoozed_until timestamp with time zone,
+    is_blocking boolean DEFAULT false,
+    blocking_statuses text[] DEFAULT '{}'::text[],
+    escalated_to_user_id uuid,
+    original_assigned_to uuid
 );
 
 
@@ -13154,6 +13421,34 @@ COMMENT ON COLUMN public.activities.custom_fields IS 'JSONB for org-specific cus
 
 
 --
+-- Name: COLUMN activities.is_blocking; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.activities.is_blocking IS 'If true, this activity blocks entity status changes to closing statuses';
+
+
+--
+-- Name: COLUMN activities.blocking_statuses; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.activities.blocking_statuses IS 'Specific statuses this activity blocks (empty = blocks all closing statuses)';
+
+
+--
+-- Name: COLUMN activities.escalated_to_user_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.activities.escalated_to_user_id IS 'User the activity was escalated to (manager/supervisor)';
+
+
+--
+-- Name: COLUMN activities.original_assigned_to; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.activities.original_assigned_to IS 'Original assignee before escalation';
+
+
+--
 -- Name: activity_attachments; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -13287,6 +13582,32 @@ COMMENT ON TABLE public.activity_dependencies IS 'Blocking dependencies between 
 
 
 --
+-- Name: activity_escalations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.activity_escalations (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    activity_id uuid NOT NULL,
+    org_id uuid NOT NULL,
+    escalation_level integer DEFAULT 1 NOT NULL,
+    escalated_from_user uuid,
+    escalated_to_user uuid,
+    escalated_to_queue uuid,
+    reason text,
+    escalation_type text DEFAULT 'automatic'::text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT activity_escalations_escalation_type_check CHECK ((escalation_type = ANY (ARRAY['automatic'::text, 'manual'::text])))
+);
+
+
+--
+-- Name: TABLE activity_escalations; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.activity_escalations IS 'Log of activity escalations for audit trail';
+
+
+--
 -- Name: activity_field_values; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -13398,6 +13719,36 @@ COMMENT ON TABLE public.activity_metrics IS 'Aggregated activity performance met
 
 
 --
+-- Name: activity_notes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.activity_notes (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    activity_id uuid NOT NULL,
+    org_id uuid NOT NULL,
+    content text NOT NULL,
+    is_internal boolean DEFAULT false,
+    created_by uuid,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+--
+-- Name: TABLE activity_notes; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.activity_notes IS 'Notes and comments attached to activities (Guidewire-style activity notes)';
+
+
+--
+-- Name: COLUMN activity_notes.is_internal; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.activity_notes.is_internal IS 'Internal notes are only visible to team members, not shared externally';
+
+
+--
 -- Name: activity_number_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -13496,7 +13847,9 @@ CREATE TABLE public.activity_patterns (
     auto_log_integrations text[] DEFAULT '{}'::text[],
     followup_rules jsonb DEFAULT '[]'::jsonb,
     field_dependencies jsonb DEFAULT '[]'::jsonb,
-    created_by uuid
+    created_by uuid,
+    is_blocking boolean DEFAULT false,
+    blocking_statuses jsonb DEFAULT '[]'::jsonb
 );
 
 
@@ -13575,6 +13928,20 @@ COMMENT ON COLUMN public.activity_patterns.followup_rules IS 'Auto follow-up tas
 --
 
 COMMENT ON COLUMN public.activity_patterns.field_dependencies IS 'Conditional field requirements';
+
+
+--
+-- Name: COLUMN activity_patterns.is_blocking; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.activity_patterns.is_blocking IS 'If true, activities created from this pattern are blocking by default';
+
+
+--
+-- Name: COLUMN activity_patterns.blocking_statuses; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.activity_patterns.blocking_statuses IS 'Default blocking statuses for activities created from this pattern';
 
 
 --
@@ -14254,6 +14621,7 @@ CREATE TABLE public.user_profiles (
     last_login_at timestamp with time zone,
     role_id uuid,
     status text DEFAULT 'active'::text,
+    primary_group_id uuid,
     CONSTRAINT user_profiles_status_check CHECK ((status = ANY (ARRAY['pending'::text, 'active'::text, 'suspended'::text, 'deactivated'::text]))),
     CONSTRAINT valid_candidate_availability CHECK (((candidate_availability IS NULL) OR (candidate_availability = ANY (ARRAY['immediate'::text, '2_weeks'::text, '1_month'::text])))),
     CONSTRAINT valid_candidate_status CHECK (((candidate_status IS NULL) OR (candidate_status = ANY (ARRAY['active'::text, 'placed'::text, 'bench'::text, 'inactive'::text, 'blacklisted'::text])))),
@@ -14319,6 +14687,13 @@ COMMENT ON COLUMN public.user_profiles.org_id IS 'Organization this user belongs
 --
 
 COMMENT ON COLUMN public.user_profiles.leaderboard_visible IS 'Whether user wants to appear on public leaderboards (privacy setting)';
+
+
+--
+-- Name: COLUMN user_profiles.primary_group_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.user_profiles.primary_group_id IS 'Primary organizational group for this user (Guidewire-style)';
 
 
 --
@@ -17317,6 +17692,57 @@ CREATE TABLE public.candidate_work_history (
 
 
 --
+-- Name: candidates; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.candidates (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    first_name text NOT NULL,
+    last_name text NOT NULL,
+    email text NOT NULL,
+    phone text,
+    linkedin_url text,
+    avatar_url text,
+    title text,
+    professional_summary text,
+    years_experience integer DEFAULT 0,
+    visa_status text DEFAULT 'us_citizen'::text,
+    visa_expiry_date timestamp with time zone,
+    availability text DEFAULT '2_weeks'::text,
+    location text,
+    willing_to_relocate boolean DEFAULT false,
+    is_remote_ok boolean DEFAULT false,
+    minimum_rate numeric(10,2),
+    desired_rate numeric(10,2),
+    rate_type text DEFAULT 'hourly'::text,
+    lead_source text,
+    lead_source_detail text,
+    tags text[] DEFAULT '{}'::text[],
+    status text DEFAULT 'active'::text NOT NULL,
+    is_on_hotlist boolean DEFAULT false,
+    hotlist_notes text,
+    hotlist_added_at timestamp with time zone,
+    hotlist_added_by uuid,
+    sourced_by uuid,
+    owner_id uuid,
+    created_by uuid,
+    updated_by uuid,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    deleted_at timestamp with time zone,
+    contact_id uuid
+);
+
+
+--
+-- Name: TABLE candidates; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.candidates IS 'Staffing candidates with professional and work authorization details';
+
+
+--
 -- Name: capstone_submissions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -17818,6 +18244,8 @@ CREATE TABLE public.companies (
     updated_by uuid,
     deleted_at timestamp with time zone,
     search_vector tsvector,
+    description text,
+    industries text[],
     CONSTRAINT companies_account_grade_check CHECK ((account_grade = ANY (ARRAY['A'::bpchar, 'B'::bpchar, 'C'::bpchar, 'D'::bpchar]))),
     CONSTRAINT companies_account_score_check CHECK (((account_score >= 0) AND (account_score <= 100))),
     CONSTRAINT companies_churn_risk_check CHECK (((churn_risk >= 0) AND (churn_risk <= 100))),
@@ -17841,6 +18269,13 @@ COMMENT ON TABLE public.companies IS 'Unified table for all business entities (c
 --
 
 COMMENT ON COLUMN public.companies.category IS 'Primary classification: client, vendor, partner, prospect';
+
+
+--
+-- Name: COLUMN companies.industries; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.companies.industries IS 'Array of industries the company operates in (for multi-select)';
 
 
 --
@@ -17907,7 +18342,9 @@ CREATE TABLE public.company_client_details (
     executive_sponsor_id uuid,
     legacy_billing_data jsonb DEFAULT '{}'::jsonb,
     created_at timestamp with time zone DEFAULT now(),
-    updated_at timestamp with time zone DEFAULT now()
+    updated_at timestamp with time zone DEFAULT now(),
+    billing_frequency character varying(20) DEFAULT 'monthly'::character varying,
+    CONSTRAINT company_client_details_billing_frequency_check CHECK (((billing_frequency)::text = ANY ((ARRAY['weekly'::character varying, 'biweekly'::character varying, 'monthly'::character varying])::text[])))
 );
 
 
@@ -17916,6 +18353,13 @@ CREATE TABLE public.company_client_details (
 --
 
 COMMENT ON TABLE public.company_client_details IS 'Extension table for client/prospect-specific fields (class table inheritance)';
+
+
+--
+-- Name: COLUMN company_client_details.billing_frequency; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.company_client_details.billing_frequency IS 'How often invoices are generated: weekly, biweekly, or monthly';
 
 
 --
@@ -20981,6 +21425,83 @@ COMMENT ON TABLE public.entity_compliance_requirements IS 'Junction table assign
 
 
 --
+-- Name: entity_drafts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.entity_drafts (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    entity_type text NOT NULL,
+    display_name text NOT NULL,
+    form_data jsonb DEFAULT '{}'::jsonb NOT NULL,
+    current_step integer DEFAULT 1,
+    total_steps integer DEFAULT 1,
+    wizard_route text NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    deleted_at timestamp with time zone,
+    CONSTRAINT entity_drafts_entity_type_check CHECK ((entity_type = ANY (ARRAY['account'::text, 'job'::text, 'contact'::text, 'candidate'::text, 'submission'::text, 'placement'::text, 'vendor'::text, 'contract'::text])))
+);
+
+
+--
+-- Name: TABLE entity_drafts; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.entity_drafts IS 'Stores in-progress wizard form data for entity creation';
+
+
+--
+-- Name: COLUMN entity_drafts.entity_type; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.entity_drafts.entity_type IS 'Type of entity being created (account, job, contact, etc.)';
+
+
+--
+-- Name: COLUMN entity_drafts.display_name; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.entity_drafts.display_name IS 'Human-readable name for the draft (derived from form data)';
+
+
+--
+-- Name: COLUMN entity_drafts.form_data; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.entity_drafts.form_data IS 'Complete wizard form state as JSONB';
+
+
+--
+-- Name: COLUMN entity_drafts.current_step; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.entity_drafts.current_step IS 'Current wizard step (1-based)';
+
+
+--
+-- Name: COLUMN entity_drafts.total_steps; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.entity_drafts.total_steps IS 'Total number of steps in the wizard';
+
+
+--
+-- Name: COLUMN entity_drafts.wizard_route; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.entity_drafts.wizard_route IS 'Route to the wizard page for resuming';
+
+
+--
+-- Name: COLUMN entity_drafts.deleted_at; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.entity_drafts.deleted_at IS 'Soft delete timestamp - drafts are not hard deleted';
+
+
+--
 -- Name: entity_history; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -22091,6 +22612,176 @@ CREATE TABLE public.graduate_candidates (
 --
 
 COMMENT ON TABLE public.graduate_candidates IS 'Cross-pillar link between Academy graduates and Recruiting pipeline';
+
+
+--
+-- Name: group_members; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.group_members (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    group_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    is_manager boolean DEFAULT false,
+    is_active boolean DEFAULT true,
+    load_factor integer DEFAULT 100,
+    load_permission text DEFAULT 'normal'::text,
+    vacation_status text DEFAULT 'available'::text,
+    backup_user_id uuid,
+    joined_at timestamp with time zone DEFAULT now() NOT NULL,
+    left_at timestamp with time zone,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by uuid,
+    CONSTRAINT group_members_load_permission_check CHECK ((load_permission = ANY (ARRAY['normal'::text, 'reduced'::text, 'exempt'::text]))),
+    CONSTRAINT group_members_vacation_check CHECK ((vacation_status = ANY (ARRAY['available'::text, 'vacation'::text, 'sick'::text, 'leave'::text])))
+);
+
+
+--
+-- Name: TABLE group_members; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.group_members IS 'User membership in organizational groups (Guidewire-style)';
+
+
+--
+-- Name: COLUMN group_members.is_manager; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.group_members.is_manager IS 'User has manager privileges in this group';
+
+
+--
+-- Name: COLUMN group_members.load_factor; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.group_members.load_factor IS 'Individual work assignment load factor (100 = full load)';
+
+
+--
+-- Name: COLUMN group_members.load_permission; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.group_members.load_permission IS 'Load assignment permission level';
+
+
+--
+-- Name: COLUMN group_members.vacation_status; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.group_members.vacation_status IS 'Current availability status for work assignment';
+
+
+--
+-- Name: COLUMN group_members.backup_user_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.group_members.backup_user_id IS 'User who handles work when this member is unavailable';
+
+
+--
+-- Name: group_regions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.group_regions (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    group_id uuid NOT NULL,
+    region_id uuid NOT NULL,
+    is_primary boolean DEFAULT false,
+    is_active boolean DEFAULT true,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by uuid
+);
+
+
+--
+-- Name: TABLE group_regions; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.group_regions IS 'Many-to-many relationship between groups and regions they service';
+
+
+--
+-- Name: COLUMN group_regions.is_primary; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.group_regions.is_primary IS 'Primary region for this group';
+
+
+--
+-- Name: groups; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.groups (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    name text NOT NULL,
+    code text,
+    description text,
+    group_type text DEFAULT 'team'::text NOT NULL,
+    parent_group_id uuid,
+    hierarchy_level integer DEFAULT 0,
+    hierarchy_path text,
+    supervisor_id uuid,
+    manager_id uuid,
+    security_zone text DEFAULT 'default'::text,
+    phone text,
+    fax text,
+    email text,
+    address_line1 text,
+    address_line2 text,
+    city text,
+    state text,
+    postal_code text,
+    country text DEFAULT 'USA'::text,
+    load_factor integer DEFAULT 100,
+    is_active boolean DEFAULT true,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by uuid,
+    updated_by uuid,
+    deleted_at timestamp with time zone,
+    CONSTRAINT groups_root_no_parent CHECK ((((group_type = 'root'::text) AND (parent_group_id IS NULL)) OR (group_type <> 'root'::text))),
+    CONSTRAINT groups_type_check CHECK ((group_type = ANY (ARRAY['root'::text, 'division'::text, 'branch'::text, 'team'::text, 'satellite_office'::text, 'producer'::text])))
+);
+
+
+--
+-- Name: TABLE groups; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.groups IS 'Guidewire-style hierarchical organizational groups. Each organization has a root group with child groups forming a tree structure.';
+
+
+--
+-- Name: COLUMN groups.group_type; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.groups.group_type IS 'Type of group: root (org), division, branch, team, satellite_office, producer';
+
+
+--
+-- Name: COLUMN groups.hierarchy_path; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.groups.hierarchy_path IS 'Materialized path like /root-id/division-id/team-id for efficient tree queries';
+
+
+--
+-- Name: COLUMN groups.security_zone; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.groups.security_zone IS 'Security zone for data visibility restrictions (Guidewire pattern)';
+
+
+--
+-- Name: COLUMN groups.load_factor; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.groups.load_factor IS 'Work assignment load factor (100 = full load)';
 
 
 --
@@ -23243,6 +23934,9 @@ CREATE TABLE public.jobs (
     fee_type character varying(50) DEFAULT 'percentage'::character varying,
     fee_percentage numeric(5,2),
     fee_flat_amount numeric(10,2),
+    intake_data jsonb DEFAULT '{}'::jsonb,
+    target_end_date date,
+    wizard_state jsonb,
     CONSTRAINT jobs_fee_type_check CHECK (((fee_type IS NULL) OR ((fee_type)::text = ANY ((ARRAY['percentage'::character varying, 'flat'::character varying, 'hourly_spread'::character varying])::text[]))))
 );
 
@@ -23350,6 +24044,27 @@ COMMENT ON COLUMN public.jobs.fee_percentage IS 'Fee percentage (e.g., 20.00 for
 --
 
 COMMENT ON COLUMN public.jobs.fee_flat_amount IS 'Flat fee amount if fee_type is flat';
+
+
+--
+-- Name: COLUMN jobs.intake_data; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.jobs.intake_data IS 'Extended intake wizard data (team structure, interview process, etc.)';
+
+
+--
+-- Name: COLUMN jobs.target_end_date; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.jobs.target_end_date IS 'Expected end date for the job/contract';
+
+
+--
+-- Name: COLUMN jobs.wizard_state; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.jobs.wizard_state IS 'Wizard progress state for draft jobs';
 
 
 --
@@ -26826,6 +27541,9 @@ CREATE TABLE public.pods (
     send_sprint_summary boolean DEFAULT true,
     send_midpoint_check boolean DEFAULT true,
     alert_if_below_target boolean DEFAULT true,
+    parent_id uuid,
+    hierarchy_level integer DEFAULT 0,
+    group_id uuid,
     CONSTRAINT pods_pod_type_check CHECK ((pod_type = ANY (ARRAY['recruiting'::text, 'bench_sales'::text, 'ta'::text, 'hr'::text, 'mixed'::text]))),
     CONSTRAINT pods_sprint_start_day_check CHECK ((sprint_start_day = ANY (ARRAY['monday'::text, 'tuesday'::text, 'wednesday'::text, 'thursday'::text, 'friday'::text, 'saturday'::text, 'sunday'::text])))
 );
@@ -26850,6 +27568,13 @@ COMMENT ON COLUMN public.pods.manager_id IS 'Current primary manager of the pod'
 --
 
 COMMENT ON COLUMN public.pods.sprint_start_day IS 'Day of week when sprints begin';
+
+
+--
+-- Name: COLUMN pods.group_id; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.pods.group_id IS 'Organizational group this pod belongs to';
 
 
 --
@@ -30858,6 +31583,47 @@ CREATE TABLE public.webhooks (
 
 
 --
+-- Name: work_queue_members; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.work_queue_members (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    queue_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    role text DEFAULT 'member'::text,
+    can_claim boolean DEFAULT true,
+    can_assign boolean DEFAULT false,
+    max_active_activities integer DEFAULT 10,
+    current_load integer DEFAULT 0,
+    skills text[] DEFAULT '{}'::text[],
+    is_active boolean DEFAULT true,
+    joined_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT work_queue_members_role_check CHECK ((role = ANY (ARRAY['owner'::text, 'supervisor'::text, 'member'::text])))
+);
+
+
+--
+-- Name: TABLE work_queue_members; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON TABLE public.work_queue_members IS 'Members of work queues with their roles and capacity';
+
+
+--
+-- Name: COLUMN work_queue_members.max_active_activities; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.work_queue_members.max_active_activities IS 'Maximum activities this member can have assigned at once';
+
+
+--
+-- Name: COLUMN work_queue_members.current_load; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.work_queue_members.current_load IS 'Current number of active activities assigned';
+
+
+--
 -- Name: work_queues; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -30875,7 +31641,14 @@ CREATE TABLE public.work_queues (
     sort_order text DEFAULT 'priority_desc'::text,
     is_active boolean DEFAULT true,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    owner_group_id uuid,
+    assignment_type text DEFAULT 'manual'::text,
+    escalation_threshold_hours integer DEFAULT 24,
+    reminder_threshold_hours integer DEFAULT 4,
+    is_default boolean DEFAULT false,
+    entity_types text[] DEFAULT '{}'::text[],
+    created_by uuid
 );
 
 
@@ -30883,7 +31656,35 @@ CREATE TABLE public.work_queues (
 -- Name: TABLE work_queues; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON TABLE public.work_queues IS 'Work queue definitions for activity management';
+COMMENT ON TABLE public.work_queues IS 'Work queues for team-based activity assignment (Guidewire workqueue pattern)';
+
+
+--
+-- Name: COLUMN work_queues.filter_criteria; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.work_queues.filter_criteria IS 'JSON criteria for auto-routing activities to this queue';
+
+
+--
+-- Name: COLUMN work_queues.assignment_type; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.work_queues.assignment_type IS 'How activities are assigned: manual, round_robin, load_balanced, skill_based';
+
+
+--
+-- Name: COLUMN work_queues.escalation_threshold_hours; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.work_queues.escalation_threshold_hours IS 'Hours after which unassigned activities escalate';
+
+
+--
+-- Name: COLUMN work_queues.entity_types; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.work_queues.entity_types IS 'Entity types this queue handles (e.g., account, job, candidate)';
 
 
 --
@@ -31588,6 +32389,14 @@ ALTER TABLE ONLY public.activity_dependencies
 
 
 --
+-- Name: activity_escalations activity_escalations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activity_escalations
+    ADD CONSTRAINT activity_escalations_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: activity_field_values activity_field_values_activity_id_field_id_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -31625,6 +32434,14 @@ ALTER TABLE ONLY public.activity_log
 
 ALTER TABLE ONLY public.activity_metrics
     ADD CONSTRAINT activity_metrics_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: activity_notes activity_notes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activity_notes
+    ADD CONSTRAINT activity_notes_pkey PRIMARY KEY (id);
 
 
 --
@@ -32289,6 +33106,22 @@ ALTER TABLE ONLY public.candidate_work_authorizations
 
 ALTER TABLE ONLY public.candidate_work_history
     ADD CONSTRAINT candidate_work_history_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: candidates candidates_email_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidates
+    ADD CONSTRAINT candidates_email_unique UNIQUE (org_id, email);
+
+
+--
+-- Name: candidates candidates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidates
+    ADD CONSTRAINT candidates_pkey PRIMARY KEY (id);
 
 
 --
@@ -33156,6 +33989,14 @@ ALTER TABLE ONLY public.entity_compliance_requirements
 
 
 --
+-- Name: entity_drafts entity_drafts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entity_drafts
+    ADD CONSTRAINT entity_drafts_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: entity_history entity_history_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -33385,6 +34226,62 @@ ALTER TABLE ONLY public.generated_resumes
 
 ALTER TABLE ONLY public.graduate_candidates
     ADD CONSTRAINT graduate_candidates_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: group_members group_members_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_members
+    ADD CONSTRAINT group_members_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: group_members group_members_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_members
+    ADD CONSTRAINT group_members_unique UNIQUE (group_id, user_id);
+
+
+--
+-- Name: group_regions group_regions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_regions
+    ADD CONSTRAINT group_regions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: group_regions group_regions_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_regions
+    ADD CONSTRAINT group_regions_unique UNIQUE (group_id, region_id);
+
+
+--
+-- Name: groups groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.groups
+    ADD CONSTRAINT groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: groups groups_unique_code_per_org; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.groups
+    ADD CONSTRAINT groups_unique_code_per_org UNIQUE NULLS NOT DISTINCT (org_id, code, deleted_at);
+
+
+--
+-- Name: groups groups_unique_name_per_org; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.groups
+    ADD CONSTRAINT groups_unique_name_per_org UNIQUE NULLS NOT DISTINCT (org_id, name, deleted_at);
 
 
 --
@@ -35684,6 +36581,22 @@ ALTER TABLE ONLY public.webhooks
 
 
 --
+-- Name: work_queue_members work_queue_members_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.work_queue_members
+    ADD CONSTRAINT work_queue_members_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: work_queue_members work_queue_members_queue_id_user_id_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.work_queue_members
+    ADD CONSTRAINT work_queue_members_queue_id_user_id_key UNIQUE (queue_id, user_id);
+
+
+--
 -- Name: work_queues work_queues_org_id_queue_code_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -36995,6 +37908,13 @@ CREATE INDEX idx_activities_assigned_to ON public.activities USING btree (assign
 
 
 --
+-- Name: idx_activities_blocking; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_activities_blocking ON public.activities USING btree (entity_type, entity_id, is_blocking) WHERE ((is_blocking = true) AND (status = ANY (ARRAY['open'::text, 'in_progress'::text, 'scheduled'::text])) AND (deleted_at IS NULL));
+
+
+--
 -- Name: idx_activities_due; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -37020,6 +37940,13 @@ CREATE INDEX idx_activities_entity ON public.activities USING btree (entity_type
 --
 
 CREATE INDEX idx_activities_entity_timeline ON public.activities USING btree (entity_type, entity_id, created_at DESC);
+
+
+--
+-- Name: idx_activities_escalated; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_activities_escalated ON public.activities USING btree (escalated_to_user_id) WHERE ((escalated_to_user_id IS NOT NULL) AND (status = ANY (ARRAY['open'::text, 'in_progress'::text, 'scheduled'::text])) AND (deleted_at IS NULL));
 
 
 --
@@ -37107,6 +38034,13 @@ CREATE INDEX idx_activities_parent ON public.activities USING btree (parent_acti
 
 
 --
+-- Name: idx_activities_queue_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_activities_queue_id ON public.activities USING btree (queue_id) WHERE (queue_id IS NOT NULL);
+
+
+--
 -- Name: idx_activities_related_campaign; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -37132,6 +38066,13 @@ CREATE INDEX idx_activities_related_deal ON public.activities USING btree (relat
 --
 
 CREATE INDEX idx_activities_secondary_entity ON public.activities USING btree (secondary_entity_type, secondary_entity_id);
+
+
+--
+-- Name: idx_activities_snoozed_until; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_activities_snoozed_until ON public.activities USING btree (snoozed_until) WHERE (snoozed_until IS NOT NULL);
 
 
 --
@@ -37177,6 +38118,20 @@ CREATE INDEX idx_activity_entity ON public.activity_log USING btree (entity_type
 
 
 --
+-- Name: idx_activity_escalations_activity_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_activity_escalations_activity_id ON public.activity_escalations USING btree (activity_id);
+
+
+--
+-- Name: idx_activity_escalations_org_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_activity_escalations_org_id ON public.activity_escalations USING btree (org_id);
+
+
+--
 -- Name: idx_activity_history_activity; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -37209,6 +38164,27 @@ CREATE INDEX idx_activity_log_org_id ON public.activity_log USING btree (org_id)
 --
 
 CREATE INDEX idx_activity_log_performed_by ON public.activity_log USING btree (performed_by);
+
+
+--
+-- Name: idx_activity_notes_activity_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_activity_notes_activity_id ON public.activity_notes USING btree (activity_id);
+
+
+--
+-- Name: idx_activity_notes_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_activity_notes_created_at ON public.activity_notes USING btree (created_at DESC);
+
+
+--
+-- Name: idx_activity_notes_org_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_activity_notes_org_id ON public.activity_notes USING btree (org_id);
 
 
 --
@@ -38378,6 +39354,55 @@ CREATE INDEX idx_candidate_work_authorizations_contact_id ON public.candidate_wo
 --
 
 CREATE INDEX idx_candidate_work_history_contact_id ON public.candidate_work_history USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
+-- Name: idx_candidates_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidates_contact_id ON public.candidates USING btree (contact_id) WHERE (contact_id IS NOT NULL);
+
+
+--
+-- Name: idx_candidates_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidates_created_at ON public.candidates USING btree (org_id, created_at DESC);
+
+
+--
+-- Name: idx_candidates_email; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidates_email ON public.candidates USING btree (email);
+
+
+--
+-- Name: idx_candidates_hotlist; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidates_hotlist ON public.candidates USING btree (org_id, is_on_hotlist) WHERE ((deleted_at IS NULL) AND (is_on_hotlist = true));
+
+
+--
+-- Name: idx_candidates_org_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidates_org_id ON public.candidates USING btree (org_id);
+
+
+--
+-- Name: idx_candidates_sourced_by; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidates_sourced_by ON public.candidates USING btree (sourced_by);
+
+
+--
+-- Name: idx_candidates_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidates_status ON public.candidates USING btree (org_id, status) WHERE (deleted_at IS NULL);
 
 
 --
@@ -40656,6 +41681,27 @@ CREATE INDEX idx_entity_compliance_req_entity ON public.entity_compliance_requir
 
 
 --
+-- Name: idx_entity_drafts_entity_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_entity_drafts_entity_type ON public.entity_drafts USING btree (entity_type);
+
+
+--
+-- Name: idx_entity_drafts_org; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_entity_drafts_org ON public.entity_drafts USING btree (org_id, deleted_at) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_entity_drafts_user_active; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_entity_drafts_user_active ON public.entity_drafts USING btree (user_id, deleted_at) WHERE (deleted_at IS NULL);
+
+
+--
 -- Name: idx_entity_rates_card; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -41283,6 +42329,111 @@ CREATE INDEX idx_graduate_candidates_status ON public.graduate_candidates USING 
 --
 
 CREATE INDEX idx_graduate_candidates_user ON public.graduate_candidates USING btree (user_id);
+
+
+--
+-- Name: idx_group_members_active; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_group_members_active ON public.group_members USING btree (is_active) WHERE (left_at IS NULL);
+
+
+--
+-- Name: idx_group_members_group_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_group_members_group_id ON public.group_members USING btree (group_id);
+
+
+--
+-- Name: idx_group_members_manager; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_group_members_manager ON public.group_members USING btree (group_id) WHERE (is_manager = true);
+
+
+--
+-- Name: idx_group_members_org_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_group_members_org_id ON public.group_members USING btree (org_id);
+
+
+--
+-- Name: idx_group_members_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_group_members_user_id ON public.group_members USING btree (user_id);
+
+
+--
+-- Name: idx_group_regions_group_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_group_regions_group_id ON public.group_regions USING btree (group_id);
+
+
+--
+-- Name: idx_group_regions_org_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_group_regions_org_id ON public.group_regions USING btree (org_id);
+
+
+--
+-- Name: idx_group_regions_region_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_group_regions_region_id ON public.group_regions USING btree (region_id);
+
+
+--
+-- Name: idx_groups_active; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_groups_active ON public.groups USING btree (is_active) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_groups_hierarchy_path; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_groups_hierarchy_path ON public.groups USING btree (hierarchy_path);
+
+
+--
+-- Name: idx_groups_manager; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_groups_manager ON public.groups USING btree (manager_id);
+
+
+--
+-- Name: idx_groups_org_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_groups_org_id ON public.groups USING btree (org_id);
+
+
+--
+-- Name: idx_groups_parent_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_groups_parent_id ON public.groups USING btree (parent_group_id);
+
+
+--
+-- Name: idx_groups_supervisor; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_groups_supervisor ON public.groups USING btree (supervisor_id);
+
+
+--
+-- Name: idx_groups_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_groups_type ON public.groups USING btree (group_type);
 
 
 --
@@ -42053,6 +43204,13 @@ CREATE INDEX idx_jobs_external_id ON public.jobs USING btree (org_id, external_j
 --
 
 CREATE INDEX idx_jobs_hiring_manager ON public.jobs USING btree (hiring_manager_contact_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_jobs_intake_data; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_jobs_intake_data ON public.jobs USING gin (intake_data);
 
 
 --
@@ -44023,6 +45181,13 @@ CREATE INDEX idx_pods_active ON public.pods USING btree (is_active) WHERE (is_ac
 
 
 --
+-- Name: idx_pods_group_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_pods_group_id ON public.pods USING btree (group_id);
+
+
+--
 -- Name: idx_pods_manager_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -45864,6 +47029,13 @@ CREATE INDEX idx_user_profiles_org_id_active ON public.user_profiles USING btree
 
 
 --
+-- Name: idx_user_profiles_primary_group; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_user_profiles_primary_group ON public.user_profiles USING btree (primary_group_id);
+
+
+--
 -- Name: idx_user_profiles_role; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -46099,6 +47271,41 @@ CREATE INDEX idx_work_history_candidate ON public.candidate_work_history USING b
 --
 
 CREATE INDEX idx_work_history_org ON public.candidate_work_history USING btree (org_id);
+
+
+--
+-- Name: idx_work_queue_members_queue_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_work_queue_members_queue_id ON public.work_queue_members USING btree (queue_id);
+
+
+--
+-- Name: idx_work_queue_members_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_work_queue_members_user_id ON public.work_queue_members USING btree (user_id);
+
+
+--
+-- Name: idx_work_queues_is_active; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_work_queues_is_active ON public.work_queues USING btree (is_active) WHERE (is_active = true);
+
+
+--
+-- Name: idx_work_queues_org_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_work_queues_org_id ON public.work_queues USING btree (org_id);
+
+
+--
+-- Name: idx_work_queues_owner_group_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_work_queues_owner_group_id ON public.work_queues USING btree (owner_group_id);
 
 
 --
@@ -46463,6 +47670,20 @@ CREATE INDEX idx_xp_transactions_type ON public.xp_transactions USING btree (tra
 --
 
 CREATE INDEX idx_xp_transactions_user ON public.xp_transactions USING btree (user_id);
+
+
+--
+-- Name: pods_hierarchy_level_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX pods_hierarchy_level_idx ON public.pods USING btree (hierarchy_level) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: pods_parent_id_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX pods_parent_id_idx ON public.pods USING btree (parent_id) WHERE (deleted_at IS NULL);
 
 
 --
@@ -48059,6 +49280,13 @@ CREATE TRIGGER enrollment_graduation_trigger AFTER UPDATE ON public.student_enro
 
 
 --
+-- Name: entity_drafts entity_drafts_updated_at; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER entity_drafts_updated_at BEFORE UPDATE ON public.entity_drafts FOR EACH ROW EXECUTE FUNCTION public.update_entity_drafts_updated_at();
+
+
+--
 -- Name: ai_mentor_escalations escalation_resolution_time; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -48556,6 +49784,13 @@ CREATE TRIGGER trg_contracts_validate_entity_type BEFORE INSERT OR UPDATE ON pub
 
 
 --
+-- Name: organizations trg_create_root_group; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER trg_create_root_group AFTER INSERT ON public.organizations FOR EACH ROW EXECUTE FUNCTION public.create_root_group_for_org();
+
+
+--
 -- Name: deals trg_deals_stage_history; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -48616,6 +49851,20 @@ CREATE TRIGGER trg_entity_skills_updated_at BEFORE UPDATE ON public.entity_skill
 --
 
 CREATE TRIGGER trg_entity_skills_validate_entity_type BEFORE INSERT OR UPDATE ON public.entity_skills FOR EACH ROW EXECUTE FUNCTION public.validate_entity_type();
+
+
+--
+-- Name: group_members trg_group_members_updated_at; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER trg_group_members_updated_at BEFORE UPDATE ON public.group_members FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+
+--
+-- Name: groups trg_groups_updated_at; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER trg_groups_updated_at BEFORE UPDATE ON public.groups FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 
 
 --
@@ -48693,6 +49942,13 @@ CREATE TRIGGER trg_sync_placement_rates AFTER INSERT OR UPDATE ON public.entity_
 --
 
 CREATE TRIGGER trg_update_communication_stats BEFORE UPDATE ON public.communications FOR EACH ROW EXECUTE FUNCTION public.update_communication_stats();
+
+
+--
+-- Name: groups trg_update_group_hierarchy; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER trg_update_group_hierarchy BEFORE INSERT OR UPDATE OF parent_group_id ON public.groups FOR EACH ROW EXECUTE FUNCTION public.update_group_hierarchy_path();
 
 
 --
@@ -49510,11 +50766,27 @@ ALTER TABLE ONLY public.activities
 
 
 --
+-- Name: activities activities_claimed_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activities
+    ADD CONSTRAINT activities_claimed_by_fkey FOREIGN KEY (claimed_by) REFERENCES public.user_profiles(id);
+
+
+--
 -- Name: activities activities_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.activities
     ADD CONSTRAINT activities_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: activities activities_escalated_to_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activities
+    ADD CONSTRAINT activities_escalated_to_user_id_fkey FOREIGN KEY (escalated_to_user_id) REFERENCES public.user_profiles(id);
 
 
 --
@@ -49531,6 +50803,14 @@ ALTER TABLE ONLY public.activities
 
 ALTER TABLE ONLY public.activities
     ADD CONSTRAINT activities_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: activities activities_original_assigned_to_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activities
+    ADD CONSTRAINT activities_original_assigned_to_fkey FOREIGN KEY (original_assigned_to) REFERENCES public.user_profiles(id);
 
 
 --
@@ -49563,6 +50843,14 @@ ALTER TABLE ONLY public.activities
 
 ALTER TABLE ONLY public.activities
     ADD CONSTRAINT activities_predecessor_activity_id_fkey FOREIGN KEY (predecessor_activity_id) REFERENCES public.activities(id);
+
+
+--
+-- Name: activities activities_queue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activities
+    ADD CONSTRAINT activities_queue_id_fkey FOREIGN KEY (queue_id) REFERENCES public.work_queues(id);
 
 
 --
@@ -49726,6 +51014,38 @@ ALTER TABLE ONLY public.activity_dependencies
 
 
 --
+-- Name: activity_escalations activity_escalations_activity_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activity_escalations
+    ADD CONSTRAINT activity_escalations_activity_id_fkey FOREIGN KEY (activity_id) REFERENCES public.activities(id) ON DELETE CASCADE;
+
+
+--
+-- Name: activity_escalations activity_escalations_escalated_from_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activity_escalations
+    ADD CONSTRAINT activity_escalations_escalated_from_user_fkey FOREIGN KEY (escalated_from_user) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: activity_escalations activity_escalations_escalated_to_queue_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activity_escalations
+    ADD CONSTRAINT activity_escalations_escalated_to_queue_fkey FOREIGN KEY (escalated_to_queue) REFERENCES public.work_queues(id);
+
+
+--
+-- Name: activity_escalations activity_escalations_escalated_to_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activity_escalations
+    ADD CONSTRAINT activity_escalations_escalated_to_user_fkey FOREIGN KEY (escalated_to_user) REFERENCES public.user_profiles(id);
+
+
+--
 -- Name: activity_field_values activity_field_values_activity_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -49795,6 +51115,22 @@ ALTER TABLE ONLY public.activity_metrics
 
 ALTER TABLE ONLY public.activity_metrics
     ADD CONSTRAINT activity_metrics_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: activity_notes activity_notes_activity_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activity_notes
+    ADD CONSTRAINT activity_notes_activity_id_fkey FOREIGN KEY (activity_id) REFERENCES public.activities(id) ON DELETE CASCADE;
+
+
+--
+-- Name: activity_notes activity_notes_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.activity_notes
+    ADD CONSTRAINT activity_notes_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
 
 
 --
@@ -51034,7 +52370,7 @@ ALTER TABLE ONLY public.candidate_screenings
 --
 
 ALTER TABLE ONLY public.candidate_skills
-    ADD CONSTRAINT candidate_skills_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.user_profiles(id) ON DELETE CASCADE;
+    ADD CONSTRAINT candidate_skills_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.candidates(id) ON DELETE CASCADE;
 
 
 --
@@ -51099,6 +52435,62 @@ ALTER TABLE ONLY public.candidate_work_history
 
 ALTER TABLE ONLY public.candidate_work_history
     ADD CONSTRAINT candidate_work_history_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: candidates candidates_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidates
+    ADD CONSTRAINT candidates_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
+
+
+--
+-- Name: candidates candidates_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidates
+    ADD CONSTRAINT candidates_created_by_fkey FOREIGN KEY (created_by) REFERENCES auth.users(id);
+
+
+--
+-- Name: candidates candidates_hotlist_added_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidates
+    ADD CONSTRAINT candidates_hotlist_added_by_fkey FOREIGN KEY (hotlist_added_by) REFERENCES auth.users(id);
+
+
+--
+-- Name: candidates candidates_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidates
+    ADD CONSTRAINT candidates_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: candidates candidates_owner_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidates
+    ADD CONSTRAINT candidates_owner_id_fkey FOREIGN KEY (owner_id) REFERENCES auth.users(id);
+
+
+--
+-- Name: candidates candidates_sourced_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidates
+    ADD CONSTRAINT candidates_sourced_by_fkey FOREIGN KEY (sourced_by) REFERENCES auth.users(id);
+
+
+--
+-- Name: candidates candidates_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.candidates
+    ADD CONSTRAINT candidates_updated_by_fkey FOREIGN KEY (updated_by) REFERENCES auth.users(id);
 
 
 --
@@ -53302,6 +54694,14 @@ ALTER TABLE ONLY public.entity_compliance_requirements
 
 
 --
+-- Name: entity_drafts entity_drafts_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entity_drafts
+    ADD CONSTRAINT entity_drafts_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
 -- Name: entity_history entity_history_changed_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -53787,6 +55187,126 @@ ALTER TABLE ONLY public.graduate_candidates
 
 ALTER TABLE ONLY public.graduate_candidates
     ADD CONSTRAINT graduate_candidates_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: group_members group_members_backup_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_members
+    ADD CONSTRAINT group_members_backup_user_id_fkey FOREIGN KEY (backup_user_id) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: group_members group_members_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_members
+    ADD CONSTRAINT group_members_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: group_members group_members_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_members
+    ADD CONSTRAINT group_members_group_id_fkey FOREIGN KEY (group_id) REFERENCES public.groups(id) ON DELETE CASCADE;
+
+
+--
+-- Name: group_members group_members_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_members
+    ADD CONSTRAINT group_members_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: group_members group_members_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_members
+    ADD CONSTRAINT group_members_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.user_profiles(id) ON DELETE CASCADE;
+
+
+--
+-- Name: group_regions group_regions_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_regions
+    ADD CONSTRAINT group_regions_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: group_regions group_regions_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_regions
+    ADD CONSTRAINT group_regions_group_id_fkey FOREIGN KEY (group_id) REFERENCES public.groups(id) ON DELETE CASCADE;
+
+
+--
+-- Name: group_regions group_regions_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_regions
+    ADD CONSTRAINT group_regions_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: group_regions group_regions_region_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.group_regions
+    ADD CONSTRAINT group_regions_region_id_fkey FOREIGN KEY (region_id) REFERENCES public.regions(id) ON DELETE CASCADE;
+
+
+--
+-- Name: groups groups_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.groups
+    ADD CONSTRAINT groups_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: groups groups_manager_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.groups
+    ADD CONSTRAINT groups_manager_id_fkey FOREIGN KEY (manager_id) REFERENCES public.user_profiles(id) ON DELETE SET NULL;
+
+
+--
+-- Name: groups groups_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.groups
+    ADD CONSTRAINT groups_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: groups groups_parent_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.groups
+    ADD CONSTRAINT groups_parent_group_id_fkey FOREIGN KEY (parent_group_id) REFERENCES public.groups(id) ON DELETE SET NULL;
+
+
+--
+-- Name: groups groups_supervisor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.groups
+    ADD CONSTRAINT groups_supervisor_id_fkey FOREIGN KEY (supervisor_id) REFERENCES public.user_profiles(id) ON DELETE SET NULL;
+
+
+--
+-- Name: groups groups_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.groups
+    ADD CONSTRAINT groups_updated_by_fkey FOREIGN KEY (updated_by) REFERENCES public.user_profiles(id);
 
 
 --
@@ -56334,6 +57854,14 @@ ALTER TABLE ONLY public.pods
 
 
 --
+-- Name: pods pods_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pods
+    ADD CONSTRAINT pods_group_id_fkey FOREIGN KEY (group_id) REFERENCES public.groups(id) ON DELETE SET NULL;
+
+
+--
 -- Name: pods pods_junior_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -56355,6 +57883,14 @@ ALTER TABLE ONLY public.pods
 
 ALTER TABLE ONLY public.pods
     ADD CONSTRAINT pods_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: pods pods_parent_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pods
+    ADD CONSTRAINT pods_parent_id_fkey FOREIGN KEY (parent_id) REFERENCES public.pods(id);
 
 
 --
@@ -57806,6 +59342,14 @@ ALTER TABLE ONLY public.user_profiles
 
 
 --
+-- Name: user_profiles user_profiles_primary_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.user_profiles
+    ADD CONSTRAINT user_profiles_primary_group_id_fkey FOREIGN KEY (primary_group_id) REFERENCES public.groups(id) ON DELETE SET NULL;
+
+
+--
 -- Name: user_profiles user_profiles_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -57915,6 +59459,22 @@ ALTER TABLE ONLY public.webhooks
 
 ALTER TABLE ONLY public.webhooks
     ADD CONSTRAINT webhooks_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: work_queue_members work_queue_members_queue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.work_queue_members
+    ADD CONSTRAINT work_queue_members_queue_id_fkey FOREIGN KEY (queue_id) REFERENCES public.work_queues(id) ON DELETE CASCADE;
+
+
+--
+-- Name: work_queue_members work_queue_members_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.work_queue_members
+    ADD CONSTRAINT work_queue_members_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.user_profiles(id) ON DELETE CASCADE;
 
 
 --
@@ -59247,10 +60807,80 @@ CREATE POLICY activity_employee_select ON public.activity_log FOR SELECT USING (
 
 
 --
+-- Name: activity_escalations; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.activity_escalations ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: activity_escalations activity_escalations_insert_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY activity_escalations_insert_policy ON public.activity_escalations FOR INSERT WITH CHECK ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
+-- Name: activity_escalations activity_escalations_select_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY activity_escalations_select_policy ON public.activity_escalations FOR SELECT USING ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
 -- Name: activity_log; Type: ROW SECURITY; Schema: public; Owner: -
 --
 
 ALTER TABLE public.activity_log ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: activity_notes; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.activity_notes ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: activity_notes activity_notes_delete_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY activity_notes_delete_policy ON public.activity_notes FOR DELETE USING (((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))) AND (created_by IN ( SELECT user_profiles.id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid())))));
+
+
+--
+-- Name: activity_notes activity_notes_insert_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY activity_notes_insert_policy ON public.activity_notes FOR INSERT WITH CHECK ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
+-- Name: activity_notes activity_notes_select_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY activity_notes_select_policy ON public.activity_notes FOR SELECT USING ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
+-- Name: activity_notes activity_notes_update_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY activity_notes_update_policy ON public.activity_notes FOR UPDATE USING (((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))) AND (created_by IN ( SELECT user_profiles.id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid())))));
+
 
 --
 -- Name: activity_log activity_org_isolation; Type: POLICY; Schema: public; Owner: -
@@ -60060,10 +61690,52 @@ ALTER TABLE public.candidate_work_authorizations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.candidate_work_history ENABLE ROW LEVEL SECURITY;
 
 --
+-- Name: candidates; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.candidates ENABLE ROW LEVEL SECURITY;
+
+--
 -- Name: user_profiles candidates_context_read; Type: POLICY; Schema: public; Owner: -
 --
 
 CREATE POLICY candidates_context_read ON public.user_profiles FOR SELECT USING (((id = auth.uid()) OR (public.auth_has_active_role('recruiter'::text) AND (candidate_status IS NOT NULL)) OR (public.auth_has_active_role('bench_sales'::text) AND (candidate_status = 'bench'::text)) OR (public.auth_has_active_role('ta_specialist'::text) AND (candidate_status = ANY (ARRAY['active'::text, 'sourced'::text]))) OR (public.auth_has_active_role('student'::text) AND (id = auth.uid())) OR public.auth_has_active_role('admin'::text)));
+
+
+--
+-- Name: candidates candidates_delete_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY candidates_delete_policy ON public.candidates FOR DELETE USING ((org_id IN ( SELECT candidates.org_id
+   FROM public.user_roles
+  WHERE (user_roles.user_id = auth.uid()))));
+
+
+--
+-- Name: candidates candidates_insert_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY candidates_insert_policy ON public.candidates FOR INSERT WITH CHECK ((org_id IN ( SELECT candidates.org_id
+   FROM public.user_roles
+  WHERE (user_roles.user_id = auth.uid()))));
+
+
+--
+-- Name: candidates candidates_select_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY candidates_select_policy ON public.candidates FOR SELECT USING ((org_id IN ( SELECT candidates.org_id
+   FROM public.user_roles
+  WHERE (user_roles.user_id = auth.uid()))));
+
+
+--
+-- Name: candidates candidates_update_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY candidates_update_policy ON public.candidates FOR UPDATE USING ((org_id IN ( SELECT candidates.org_id
+   FROM public.user_roles
+  WHERE (user_roles.user_id = auth.uid()))));
 
 
 --
@@ -61029,6 +62701,40 @@ CREATE POLICY entity_compliance_requirements_org_isolation ON public.entity_comp
 
 
 --
+-- Name: entity_drafts; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.entity_drafts ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: entity_drafts entity_drafts_delete_own; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY entity_drafts_delete_own ON public.entity_drafts FOR DELETE USING ((user_id = auth.uid()));
+
+
+--
+-- Name: entity_drafts entity_drafts_insert_own; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY entity_drafts_insert_own ON public.entity_drafts FOR INSERT WITH CHECK ((user_id = auth.uid()));
+
+
+--
+-- Name: entity_drafts entity_drafts_select_own; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY entity_drafts_select_own ON public.entity_drafts FOR SELECT USING ((user_id = auth.uid()));
+
+
+--
+-- Name: entity_drafts entity_drafts_update_own; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY entity_drafts_update_own ON public.entity_drafts FOR UPDATE USING ((user_id = auth.uid()));
+
+
+--
 -- Name: entity_history; Type: ROW SECURITY; Schema: public; Owner: -
 --
 
@@ -61398,6 +63104,132 @@ ALTER TABLE public.graduate_candidates ENABLE ROW LEVEL SECURITY;
 CREATE POLICY graduate_candidates_org_isolation ON public.graduate_candidates USING ((user_id IN ( SELECT user_profiles.id
    FROM public.user_profiles
   WHERE (user_profiles.org_id = ((auth.jwt() ->> 'org_id'::text))::uuid))));
+
+
+--
+-- Name: group_members; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.group_members ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: group_members group_members_delete_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY group_members_delete_policy ON public.group_members FOR DELETE USING ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
+-- Name: group_members group_members_insert_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY group_members_insert_policy ON public.group_members FOR INSERT WITH CHECK ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
+-- Name: group_members group_members_select_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY group_members_select_policy ON public.group_members FOR SELECT USING ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
+-- Name: group_members group_members_update_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY group_members_update_policy ON public.group_members FOR UPDATE USING ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
+-- Name: group_regions; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.group_regions ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: group_regions group_regions_delete_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY group_regions_delete_policy ON public.group_regions FOR DELETE USING ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
+-- Name: group_regions group_regions_insert_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY group_regions_insert_policy ON public.group_regions FOR INSERT WITH CHECK ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
+-- Name: group_regions group_regions_select_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY group_regions_select_policy ON public.group_regions FOR SELECT USING ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
+-- Name: group_regions group_regions_update_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY group_regions_update_policy ON public.group_regions FOR UPDATE USING ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
+-- Name: groups; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.groups ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: groups groups_delete_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY groups_delete_policy ON public.groups FOR DELETE USING ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
+-- Name: groups groups_insert_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY groups_insert_policy ON public.groups FOR INSERT WITH CHECK ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
+-- Name: groups groups_select_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY groups_select_policy ON public.groups FOR SELECT USING ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
+-- Name: groups groups_update_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY groups_update_policy ON public.groups FOR UPDATE USING ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
 
 
 --
@@ -63656,6 +65488,67 @@ CREATE POLICY work_history_service_all ON public.candidate_work_history TO servi
 
 
 --
+-- Name: work_queue_members; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.work_queue_members ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: work_queue_members work_queue_members_insert_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY work_queue_members_insert_policy ON public.work_queue_members FOR INSERT WITH CHECK ((queue_id IN ( SELECT work_queues.id
+   FROM public.work_queues
+  WHERE (work_queues.org_id IN ( SELECT user_profiles.org_id
+           FROM public.user_profiles
+          WHERE (user_profiles.auth_id = auth.uid()))))));
+
+
+--
+-- Name: work_queue_members work_queue_members_select_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY work_queue_members_select_policy ON public.work_queue_members FOR SELECT USING ((queue_id IN ( SELECT work_queues.id
+   FROM public.work_queues
+  WHERE (work_queues.org_id IN ( SELECT user_profiles.org_id
+           FROM public.user_profiles
+          WHERE (user_profiles.auth_id = auth.uid()))))));
+
+
+--
+-- Name: work_queues; Type: ROW SECURITY; Schema: public; Owner: -
+--
+
+ALTER TABLE public.work_queues ENABLE ROW LEVEL SECURITY;
+
+--
+-- Name: work_queues work_queues_insert_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY work_queues_insert_policy ON public.work_queues FOR INSERT WITH CHECK ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
+-- Name: work_queues work_queues_select_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY work_queues_select_policy ON public.work_queues FOR SELECT USING ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
+-- Name: work_queues work_queues_update_policy; Type: POLICY; Schema: public; Owner: -
+--
+
+CREATE POLICY work_queues_update_policy ON public.work_queues FOR UPDATE USING ((org_id IN ( SELECT user_profiles.org_id
+   FROM public.user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))));
+
+
+--
 -- Name: worker_benefits; Type: ROW SECURITY; Schema: public; Owner: -
 --
 
@@ -63790,5 +65683,5 @@ ALTER TABLE public.xp_transactions ENABLE ROW LEVEL SECURITY;
 -- PostgreSQL database dump complete
 --
 
-\unrestrict cuaFJMTtrI0W1th1lEaPa5UeA6LXOI7BaPeHjhLc8ssCUlevnDTx17wPt9BUGhT
+\unrestrict XmbdOvkzrktzWagYX7MJICU8EwdOeHBVxLYgLBYAu6ztYkdCy2i9WSgcjyWgeOS
 

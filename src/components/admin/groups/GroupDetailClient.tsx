@@ -147,3 +147,5 @@ export function GroupDetailClient({ group }: GroupDetailClientProps) {
 }
 
 
+
+

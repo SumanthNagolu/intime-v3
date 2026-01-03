@@ -10,7 +10,10 @@
 export { ActivityDetailPanel } from './ActivityDetailPanel'
 export { ActivityChecklist } from './ActivityChecklist'
 export { ActivityNotesThread } from './ActivityNotesThread'
-export { ActivityHistoryTimeline } from './ActivityHistoryTimeline'
 export { PatternPickerDialog } from './PatternPickerDialog'
+export { NoOpenActivitiesWarning } from './NoOpenActivitiesWarning'
+export { BlockingActivitiesDialog } from './BlockingActivitiesDialog'
+
+
 
 
