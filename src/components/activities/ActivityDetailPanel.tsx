@@ -35,17 +35,14 @@ import {
   MessageSquare,
   History,
   CheckSquare,
-  Bell,
   ArrowUpRight,
   Play,
-  Pause,
   RotateCcw,
 } from 'lucide-react'
 import { format, formatDistanceToNow, isToday, isBefore, startOfDay } from 'date-fns'
 import { cn } from '@/lib/utils'
 import { ActivityChecklist } from './ActivityChecklist'
 import { ActivityNotesThread } from './ActivityNotesThread'
-import { ActivityHistoryTimeline } from './ActivityHistoryTimeline'
 
 interface ActivityDetailPanelProps {
   activityId: string
@@ -120,16 +117,6 @@ export function ActivityDetailPanel({
     },
   })
 
-  const snoozeMutation = trpc.activities.snooze.useMutation({
-    onSuccess: () => {
-      toast({ title: 'Activity snoozed' })
-      utils.activities.getDetail.invalidate({ id: activityId })
-    },
-    onError: (error) => {
-      toast({ title: 'Error', description: error.message, variant: 'error' })
-    },
-  })
-
   const claimMutation = trpc.activities.claimFromQueue.useMutation({
     onSuccess: () => {
       toast({ title: 'Activity claimed' })
@@ -149,11 +136,6 @@ export function ActivityDetailPanel({
       toast({ title: 'Error', description: error.message, variant: 'error' })
     },
   })
-
-  const handleSnooze = (hours: number) => {
-    const snoozeUntil = new Date(Date.now() + hours * 60 * 60 * 1000)
-    snoozeMutation.mutate({ activityId, snoozeUntil })
-  }
 
   if (isLoading) {
     return (
@@ -190,7 +172,6 @@ export function ActivityDetailPanel({
   const isOverdue = activity.dueDate && isBefore(new Date(activity.dueDate), startOfDay(new Date()))
   const isDueToday = activity.dueDate && isToday(new Date(activity.dueDate))
   const isPending = ['open', 'in_progress', 'scheduled'].includes(activity.status)
-  const isSnoozed = activity.snoozedUntil && new Date(activity.snoozedUntil) > new Date()
 
   return (
     <Card className="h-full flex flex-col">
@@ -223,12 +204,6 @@ export function ActivityDetailPanel({
                   Due Today
                 </Badge>
               )}
-              {isSnoozed && (
-                <Badge variant="outline" className="text-blue-600 border-blue-300">
-                  <Pause className="h-3 w-3 mr-1" />
-                  Snoozed
-                </Badge>
-              )}
               {activity.escalationCount > 0 && (
                 <Badge variant="outline" className="text-red-600 border-red-300">
                   <ArrowUpRight className="h-3 w-3 mr-1" />
@@ -259,10 +234,6 @@ export function ActivityDetailPanel({
                   {activity.notes.length}
                 </span>
               )}
-            </TabsTrigger>
-            <TabsTrigger value="history" className="gap-1">
-              <History className="h-3 w-3" />
-              History
             </TabsTrigger>
             {activity.checklist && (activity.checklist as unknown[]).length > 0 && (
               <TabsTrigger value="checklist" className="gap-1">
@@ -415,14 +386,6 @@ export function ActivityDetailPanel({
               />
             </TabsContent>
 
-            {/* History Tab */}
-            <TabsContent value="history" className="m-0 p-4">
-              <ActivityHistoryTimeline
-                history={activity.history}
-                escalations={activity.escalations}
-              />
-            </TabsContent>
-
             {/* Checklist Tab */}
             {activity.checklist && (activity.checklist as unknown[]).length > 0 && (
               <TabsContent value="checklist" className="m-0 p-4">
@@ -465,29 +428,6 @@ export function ActivityDetailPanel({
               </Button>
             )}
 
-            {/* Snooze dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button size="sm" variant="outline" disabled={snoozeMutation.isPending}>
-                  <Bell className="h-4 w-4 mr-1" />
-                  Snooze
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start">
-                <DropdownMenuItem onClick={() => handleSnooze(1)}>
-                  1 hour
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSnooze(4)}>
-                  4 hours
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSnooze(24)}>
-                  Tomorrow
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSnooze(72)}>
-                  3 days
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
           </div>
 
           <div className="flex items-center gap-2">

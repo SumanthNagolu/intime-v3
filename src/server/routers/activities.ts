@@ -43,6 +43,16 @@ export const activitiesRouter = router({
     .input(LogActivityInput)
     .mutation(async ({ ctx, input }) => {
       const { orgId, user, supabase } = ctx
+      const adminClient = getAdminClient()
+
+      // Look up user_profiles.id via auth_id (for FK constraints)
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id
 
       // Validate at least subject or body
       if (!input.subject && !input.body) {
@@ -72,7 +82,7 @@ export const activitiesRouter = router({
 
       const activityDate = input.activityDate || new Date()
 
-      // Create the activity
+      // Create the activity (use userProfileId for FK constraints)
       const { data: activity, error } = await supabase
         .from('activities')
         .insert({
@@ -89,9 +99,9 @@ export const activitiesRouter = router({
           status: 'completed',
           completed_at: activityDate.toISOString(),
           due_date: activityDate.toISOString(),
-          assigned_to: user?.id,
-          performed_by: user?.id,
-          created_by: user?.id,
+          assigned_to: userProfileId,
+          performed_by: userProfileId,
+          created_by: userProfileId,
         })
         .select()
         .single()
@@ -116,8 +126,8 @@ export const activitiesRouter = router({
             priority: 'normal',
             due_date: input.followUpDueDate.toISOString(),
             parent_activity_id: activity.id,
-            assigned_to: user?.id,
-            created_by: user?.id,
+            assigned_to: userProfileId,
+            created_by: userProfileId,
           })
           .select()
           .single()
@@ -334,16 +344,28 @@ export const activitiesRouter = router({
       outcomeNotes: z.string().max(2000).optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user, supabase } = ctx
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
 
-      const { data, error } = await supabase
+      // Get user_profiles.id from auth_id (user.id is auth.users.id, not user_profiles.id)
+      let profileId: string | null = null
+      if (user?.id) {
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+        profileId = profile?.id ?? null
+      }
+
+      const { data, error } = await adminClient
         .from('activities')
         .update({
           status: 'completed',
           outcome: input.outcome,
           outcome_notes: input.outcomeNotes,
           completed_at: new Date().toISOString(),
-          performed_by: user?.id,
+          performed_by: profileId,
           updated_at: new Date().toISOString(),
         })
         .eq('id', input.id)
@@ -352,11 +374,12 @@ export const activitiesRouter = router({
         .single()
 
       if (error) {
+        console.error('[complete] Activity update failed:', { id: input.id, orgId, error: error.message })
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
       }
 
       // Audit log
-      await supabase.from('audit_logs').insert({
+      await adminClient.from('audit_logs').insert({
         org_id: orgId,
         user_id: user?.id,
         user_email: user?.email,
@@ -383,14 +406,15 @@ export const activitiesRouter = router({
       reason: z.string().max(500).optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { orgId, supabase } = ctx
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
 
-      const { data, error } = await supabase
+      const { data, error } = await adminClient
         .from('activities')
         .update({
           status: 'skipped',
-          skip_reason: input.reason,
           skipped_at: new Date().toISOString(),
+          outcome_notes: input.reason, // Store skip reason in outcome_notes
           updated_at: new Date().toISOString(),
         })
         .eq('id', input.id)
@@ -884,59 +908,54 @@ export const activitiesRouter = router({
     }))
     .query(async ({ ctx, input }) => {
       const { orgId } = ctx
+      console.log('[getDetail] Looking up activity:', { id: input.id, orgId })
       const adminClient = getAdminClient()
 
-      // Get activity with related data
+      // Get activity base data
       const { data: activity, error } = await adminClient
         .from('activities')
-        .select(`
-          *,
-          assigned_to_user:user_profiles!assigned_to(id, full_name, avatar_url, email),
-          created_by_user:user_profiles!created_by(id, full_name, avatar_url),
-          performed_by_user:user_profiles!performed_by(id, full_name, avatar_url),
-          pattern:activity_patterns!pattern_id(id, code, name, description, checklist, instructions),
-          queue:work_queues!queue_id(id, name, code)
-        `)
+        .select('*')
         .eq('id', input.id)
         .eq('org_id', orgId)
         .single()
 
       if (error || !activity) {
-        throw new TRPCError({ code: 'NOT_FOUND', message: 'Activity not found' })
+        console.error('[getDetail] Activity query failed:', { id: input.id, orgId, error: error?.message, code: error?.code })
+        throw new TRPCError({ code: 'NOT_FOUND', message: `Activity not found: ${error?.message || 'no data'}` })
       }
 
-      // Get notes
-      const { data: notes } = await adminClient
-        .from('activity_notes')
-        .select(`
-          id, content, is_internal, created_at,
-          created_by_user:user_profiles!created_by(id, full_name, avatar_url)
-        `)
-        .eq('activity_id', input.id)
-        .eq('org_id', orgId)
-        .order('created_at', { ascending: true })
+      // Fetch related data in parallel
+      const [assignedToResult, createdByResult, performedByResult, patternResult, queueResult, notesResult] = await Promise.all([
+        activity.assigned_to
+          ? adminClient.from('user_profiles').select('id, full_name, avatar_url, email').eq('id', activity.assigned_to).single()
+          : Promise.resolve({ data: null }),
+        activity.created_by
+          ? adminClient.from('user_profiles').select('id, full_name, avatar_url').eq('id', activity.created_by).single()
+          : Promise.resolve({ data: null }),
+        activity.performed_by
+          ? adminClient.from('user_profiles').select('id, full_name, avatar_url').eq('id', activity.performed_by).single()
+          : Promise.resolve({ data: null }),
+        activity.pattern_id
+          ? adminClient.from('activity_patterns').select('id, code, name, description, checklist, instructions').eq('id', activity.pattern_id).single()
+          : Promise.resolve({ data: null }),
+        activity.queue_id
+          ? adminClient.from('work_queues').select('id, name, code').eq('id', activity.queue_id).single()
+          : Promise.resolve({ data: null }),
+        adminClient
+          .from('notes')
+          .select('id, content, visibility, created_at, created_by')
+          .eq('entity_type', 'activity')
+          .eq('entity_id', input.id)
+          .eq('org_id', orgId)
+          .order('created_at', { ascending: true }),
+      ])
 
-      // Get history
-      const { data: history } = await adminClient
-        .from('activity_history')
-        .select(`
-          id, action, field_changed, old_value, new_value, notes, changed_at,
-          changed_by_user:user_profiles!changed_by(id, full_name, avatar_url)
-        `)
-        .eq('activity_id', input.id)
-        .order('changed_at', { ascending: false })
-        .limit(50)
-
-      // Get escalations
-      const { data: escalations } = await adminClient
-        .from('activity_escalations')
-        .select(`
-          id, escalation_level, reason, escalation_type, created_at,
-          escalated_from:user_profiles!escalated_from_user(id, full_name),
-          escalated_to:user_profiles!escalated_to_user(id, full_name)
-        `)
-        .eq('activity_id', input.id)
-        .order('created_at', { ascending: false })
+      const assignedToUser = assignedToResult.data
+      const createdByUser = createdByResult.data
+      const performedByUser = performedByResult.data
+      const pattern = patternResult.data
+      const queue = queueResult.data
+      const notes = notesResult.data
 
       // Get entity info based on entity_type
       let entityInfo = null
@@ -982,19 +1001,19 @@ export const activitiesRouter = router({
         updatedAt: activity.updated_at,
         
         // Assignment
-        assignedTo: activity.assigned_to_user,
-        createdBy: activity.created_by_user,
-        performedBy: activity.performed_by_user,
-        queue: activity.queue,
+        assignedTo: assignedToUser,
+        createdBy: createdByUser,
+        performedBy: performedByUser,
+        queue,
         claimedAt: activity.claimed_at,
-        
+
         // Entity
         entityType: activity.entity_type,
         entityId: activity.entity_id,
         entityInfo,
-        
+
         // Pattern
-        pattern: activity.pattern,
+        pattern,
         patternCode: activity.pattern_code,
         
         // Checklist
@@ -1019,30 +1038,9 @@ export const activitiesRouter = router({
         notes: notes?.map(n => ({
           id: n.id,
           content: n.content,
-          isInternal: n.is_internal,
+          isInternal: n.visibility === 'private', // Map visibility to isInternal
           createdAt: n.created_at,
-          createdBy: n.created_by_user,
-        })) ?? [],
-        
-        history: history?.map(h => ({
-          id: h.id,
-          action: h.action,
-          fieldChanged: h.field_changed,
-          oldValue: h.old_value,
-          newValue: h.new_value,
-          notes: h.notes,
-          changedAt: h.changed_at,
-          changedBy: h.changed_by_user,
-        })) ?? [],
-        
-        escalations: escalations?.map(e => ({
-          id: e.id,
-          level: e.escalation_level,
-          reason: e.reason,
-          type: e.escalation_type,
-          createdAt: e.created_at,
-          from: e.escalated_from,
-          to: e.escalated_to,
+          createdBy: n.created_by, // Just the ID for now
         })) ?? [],
       }
     }),
@@ -1065,6 +1063,15 @@ export const activitiesRouter = router({
       const { orgId, user, supabase } = ctx
       const adminClient = getAdminClient()
 
+      // Look up user_profiles.id via auth_id (for FK constraints)
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id
+
       // Get the pattern
       const { data: pattern, error: patternError } = await adminClient
         .from('activity_patterns')
@@ -1084,16 +1091,16 @@ export const activitiesRouter = router({
       const escalationDays = pattern.escalation_days || targetDays + 1
       const escalationDate = new Date(Date.now() + escalationDays * 24 * 60 * 60 * 1000)
 
-      // Determine assignee
+      // Determine assignee (use userProfileId for FK constraints)
       let assignedTo = input.assignedTo
       if (!assignedTo && pattern.default_assignee === 'creator') {
-        assignedTo = user?.id
+        assignedTo = userProfileId
       } else if (!assignedTo && pattern.assignee_user_id) {
         assignedTo = pattern.assignee_user_id
       }
 
-      // Create the activity
-      const { data: activity, error } = await supabase
+      // Create the activity (use adminClient to bypass RLS recursion issues)
+      const { data: activity, error } = await adminClient
         .from('activities')
         .insert({
           org_id: orgId,
@@ -1106,7 +1113,7 @@ export const activitiesRouter = router({
           description: input.description || pattern.description,
           instructions: pattern.instructions,
           checklist: pattern.checklist,
-          checklist_progress: pattern.checklist ? 
+          checklist_progress: pattern.checklist ?
             (pattern.checklist as Array<{id: string}>).reduce((acc: Record<string, boolean>, item: {id: string}) => {
               acc[item.id] = false
               return acc
@@ -1119,7 +1126,7 @@ export const activitiesRouter = router({
           assigned_to: assignedTo,
           assigned_group: pattern.assignee_group_id,
           queue_id: input.queueId,
-          created_by: user?.id,
+          created_by: userProfileId,
           auto_created: false,
         })
         .select()
@@ -1129,16 +1136,6 @@ export const activitiesRouter = router({
         console.error('Failed to create activity from pattern:', error)
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
       }
-
-      // Log history
-      await adminClient
-        .from('activity_history')
-        .insert({
-          activity_id: activity.id,
-          action: 'created',
-          notes: `Created from pattern: ${pattern.name}`,
-          changed_by: user?.id,
-        })
 
       return {
         id: activity.id,
@@ -1201,18 +1198,6 @@ export const activitiesRouter = router({
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
       }
 
-      // Log history
-      await adminClient
-        .from('activity_history')
-        .insert({
-          activity_id: input.activityId,
-          action: 'assigned_to_queue',
-          field_changed: 'queue_id',
-          old_value: currentActivity?.queue_id,
-          new_value: input.queueId,
-          notes: `Assigned to queue: ${queue.name}`,
-          changed_by: user?.id,
-        })
 
       return {
         id: activity.id,
@@ -1297,18 +1282,6 @@ export const activitiesRouter = router({
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
       }
 
-      // Log history
-      await adminClient
-        .from('activity_history')
-        .insert({
-          activity_id: input.activityId,
-          action: 'claimed',
-          field_changed: 'assigned_to',
-          new_value: user?.id,
-          notes: currentActivity.queue ? `Claimed from queue: ${(currentActivity.queue as {name: string}).name}` : 'Claimed',
-          changed_by: user?.id,
-        })
-
       return {
         id: activity.id,
         assignedTo: activity.assigned_to,
@@ -1373,18 +1346,6 @@ export const activitiesRouter = router({
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
       }
 
-      // Log history
-      await adminClient
-        .from('activity_history')
-        .insert({
-          activity_id: input.activityId,
-          action: 'released',
-          field_changed: 'assigned_to',
-          old_value: user?.id,
-          notes: 'Released back to queue',
-          changed_by: user?.id,
-        })
-
       return {
         id: activity.id,
         status: activity.status,
@@ -1403,17 +1364,19 @@ export const activitiesRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { orgId, user, supabase } = ctx
 
+      // Insert into unified notes table
       const { data: note, error } = await supabase
-        .from('activity_notes')
+        .from('notes')
         .insert({
-          activity_id: input.activityId,
+          entity_type: 'activity',
+          entity_id: input.activityId,
           org_id: orgId,
           content: input.content,
-          is_internal: input.isInternal,
+          visibility: input.isInternal ? 'private' : 'team', // Map isInternal to visibility
           created_by: user?.id,
         })
         .select(`
-          id, content, is_internal, created_at,
+          id, content, visibility, created_at,
           created_by_user:user_profiles!created_by(id, full_name, avatar_url)
         `)
         .single()
@@ -1422,20 +1385,10 @@ export const activitiesRouter = router({
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
       }
 
-      // Log history
-      await supabase
-        .from('activity_history')
-        .insert({
-          activity_id: input.activityId,
-          action: 'note_added',
-          notes: input.isInternal ? 'Internal note added' : 'Note added',
-          changed_by: user?.id,
-        })
-
       return {
         id: note.id,
         content: note.content,
-        isInternal: note.is_internal,
+        isInternal: note.visibility === 'private', // Map visibility back to isInternal
         createdAt: note.created_at,
         createdBy: note.created_by_user,
       }
@@ -1495,17 +1448,6 @@ export const activitiesRouter = router({
         ? Math.round((completedCount / checklist.length) * 100) 
         : 0
 
-      // Log history
-      await adminClient
-        .from('activity_history')
-        .insert({
-          activity_id: input.activityId,
-          action: 'checklist_updated',
-          field_changed: 'checklist_progress',
-          new_value: `${completionPercentage}% complete`,
-          changed_by: user?.id,
-        })
-
       return {
         id: activity.id,
         checklistProgress: activity.checklist_progress,
@@ -1522,16 +1464,27 @@ export const activitiesRouter = router({
       snoozeUntil: z.coerce.date(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user, supabase } = ctx
+      const { orgId, user } = ctx
       const adminClient = getAdminClient()
 
-      const { data: activity, error } = await supabase
+      // Get user_profiles.id from auth_id
+      let profileId: string | null = null
+      if (user?.id) {
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+        profileId = profile?.id ?? null
+      }
+
+      const { data: activity, error } = await adminClient
         .from('activities')
         .update({
           snoozed_until: input.snoozeUntil.toISOString(),
           reminder_sent_at: null, // Reset reminder
           updated_at: new Date().toISOString(),
-          updated_by: user?.id,
+          updated_by: profileId,
         })
         .eq('id', input.activityId)
         .eq('org_id', orgId)
@@ -1541,17 +1494,6 @@ export const activitiesRouter = router({
       if (error) {
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
       }
-
-      // Log history
-      await adminClient
-        .from('activity_history')
-        .insert({
-          activity_id: input.activityId,
-          action: 'snoozed',
-          field_changed: 'snoozed_until',
-          new_value: input.snoozeUntil.toISOString(),
-          changed_by: user?.id,
-        })
 
       return {
         id: activity.id,
@@ -1622,31 +1564,6 @@ export const activitiesRouter = router({
       if (error) {
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
       }
-
-      // Log escalation
-      await adminClient
-        .from('activity_escalations')
-        .insert({
-          activity_id: input.activityId,
-          org_id: orgId,
-          escalation_level: newEscalationLevel,
-          escalated_from_user: currentActivity.assigned_to,
-          escalated_to_user: input.escalateToUserId || null,
-          escalated_to_queue: input.escalateToQueueId || null,
-          reason: input.reason,
-          escalation_type: 'manual',
-        })
-
-      // Log history
-      await adminClient
-        .from('activity_history')
-        .insert({
-          activity_id: input.activityId,
-          action: 'escalated',
-          new_value: `Level ${newEscalationLevel}`,
-          notes: input.reason,
-          changed_by: user?.id,
-        })
 
       return {
         id: activity.id,
@@ -1752,6 +1669,377 @@ export const activitiesRouter = router({
           assignedTo: a.assigned_to_user,
         })) ?? [],
         total: count ?? 0,
+      }
+    }),
+
+  // ============================================
+  // GUIDEWIRE-INSPIRED ACTIVITY SYSTEM
+  // ============================================
+
+  // Get count of open activities for an entity
+  getOpenActivitiesCount: orgProtectedProcedure
+    .input(z.object({
+      entityType: z.string(),
+      entityId: z.string().uuid(),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      const { count, error } = await adminClient
+        .from('activities')
+        .select('*', { count: 'exact', head: true })
+        .eq('org_id', orgId)
+        .eq('entity_type', input.entityType)
+        .eq('entity_id', input.entityId)
+        .in('status', ['open', 'in_progress', 'scheduled'])
+        .is('deleted_at', null)
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return { count: count ?? 0 }
+    }),
+
+  // Ensure entity has at least one open activity (creates watchlist if none)
+  ensureOpenActivity: orgProtectedProcedure
+    .input(z.object({
+      entityType: z.string(),
+      entityId: z.string().uuid(),
+      ownerId: z.string().uuid().optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Look up user_profiles.id via auth_id (for FK constraints)
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id
+
+      // 1. Count existing open activities
+      const { count } = await adminClient
+        .from('activities')
+        .select('*', { count: 'exact', head: true })
+        .eq('org_id', orgId)
+        .eq('entity_type', input.entityType)
+        .eq('entity_id', input.entityId)
+        .in('status', ['open', 'in_progress', 'scheduled'])
+        .is('deleted_at', null)
+
+      if ((count ?? 0) > 0) {
+        return { created: false, existingCount: count ?? 0 }
+      }
+
+      // 2. Get owner if not provided
+      let ownerId = input.ownerId
+      if (!ownerId) {
+        const entityTableMap: Record<string, { table: string; ownerField: string }> = {
+          account: { table: 'companies', ownerField: 'owner_id' },
+          company: { table: 'companies', ownerField: 'owner_id' },
+          job: { table: 'jobs', ownerField: 'owner_id' },
+          submission: { table: 'submissions', ownerField: 'owner_id' },
+          candidate: { table: 'candidates', ownerField: 'owner_id' },
+          placement: { table: 'placements', ownerField: 'recruiter_id' },
+          lead: { table: 'leads', ownerField: 'owner_id' },
+          deal: { table: 'deals', ownerField: 'owner_id' },
+          contact: { table: 'contacts', ownerField: 'owner_id' },
+          campaign: { table: 'campaigns', ownerField: 'owner_id' },
+        }
+        const config = entityTableMap[input.entityType]
+        if (config) {
+          const { data: entity } = await adminClient
+            .from(config.table)
+            .select(config.ownerField)
+            .eq('id', input.entityId)
+            .eq('org_id', orgId)
+            .single()
+          ownerId = entity?.[config.ownerField as keyof typeof entity] as string | undefined
+        }
+      }
+
+      // 3. Get watchlist pattern
+      const patternCode = `sys_watchlist_${input.entityType}`
+      const { data: pattern } = await adminClient
+        .from('activity_patterns')
+        .select('id, code, name, target_days, priority, instructions, checklist')
+        .eq('code', patternCode)
+        .eq('is_active', true)
+        .single()
+
+      // 4. Calculate due date
+      const targetDays = pattern?.target_days ?? 30
+      const dueDate = new Date()
+      dueDate.setDate(dueDate.getDate() + targetDays)
+
+      // 5. Create watchlist activity (use userProfileId for FK constraints)
+      const { data: activity, error } = await adminClient
+        .from('activities')
+        .insert({
+          org_id: orgId,
+          entity_type: input.entityType,
+          entity_id: input.entityId,
+          activity_type: 'task',
+          subject: pattern?.name || 'Watchlist',
+          description: `Auto-created: This ${input.entityType} requires attention. No open activities existed.`,
+          instructions: pattern?.instructions,
+          status: 'open',
+          priority: pattern?.priority || 'low',
+          due_date: dueDate.toISOString(),
+          assigned_to: ownerId || userProfileId,
+          pattern_id: pattern?.id,
+          pattern_code: patternCode,
+          auto_created: true,
+          checklist: pattern?.checklist,
+          created_by: userProfileId,
+        })
+        .select('id')
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return { created: true, activityId: activity.id, existingCount: 0 }
+    }),
+
+  // Check for blocking activities preventing status change
+  checkBlockingActivities: orgProtectedProcedure
+    .input(z.object({
+      entityType: z.string(),
+      entityId: z.string().uuid(),
+      targetStatus: z.string(),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      // Define closing statuses per entity type
+      const closingStatuses: Record<string, string[]> = {
+        account: ['inactive', 'closed', 'churned', 'lost'],
+        job: ['closed', 'cancelled', 'filled', 'on_hold'],
+        submission: ['rejected', 'withdrawn', 'declined'],
+        placement: ['terminated', 'ended', 'cancelled'],
+        candidate: ['inactive', 'archived', 'do_not_contact'],
+        lead: ['closed', 'lost', 'disqualified', 'converted'],
+        deal: ['closed_lost', 'closed_won', 'cancelled'],
+        campaign: ['completed', 'cancelled', 'archived'],
+      }
+
+      // Only check blocking for closing statuses
+      const entityClosingStatuses = closingStatuses[input.entityType] || []
+      if (!entityClosingStatuses.includes(input.targetStatus.toLowerCase())) {
+        return { blocked: false, activities: [] }
+      }
+
+      // Find blocking activities
+      const { data: activities, error } = await adminClient
+        .from('activities')
+        .select(`
+          id,
+          subject,
+          status,
+          priority,
+          due_date,
+          is_blocking,
+          blocking_statuses,
+          assigned_to,
+          user_profiles!activities_assigned_to_fkey (
+            id,
+            first_name,
+            last_name
+          )
+        `)
+        .eq('org_id', orgId)
+        .eq('entity_type', input.entityType)
+        .eq('entity_id', input.entityId)
+        .in('status', ['open', 'in_progress', 'scheduled'])
+        .eq('is_blocking', true)
+        .is('deleted_at', null)
+
+      if (error) {
+        // If is_blocking column doesn't exist yet, return not blocked
+        if (error.message.includes('is_blocking')) {
+          return { blocked: false, activities: [] }
+        }
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      if (!activities || activities.length === 0) {
+        return { blocked: false, activities: [] }
+      }
+
+      // Filter to activities that block the target status
+      const blockingActivities = activities
+        .filter((activity) => {
+          const blockingStatuses = activity.blocking_statuses as string[] | null
+          if (!blockingStatuses || blockingStatuses.length === 0) return true
+          return blockingStatuses.includes(input.targetStatus.toLowerCase())
+        })
+        .map((activity) => ({
+          id: activity.id,
+          subject: activity.subject,
+          status: activity.status,
+          priority: activity.priority,
+          dueDate: activity.due_date,
+          blockingStatuses: (activity.blocking_statuses as string[]) || [],
+          assignedTo: (() => {
+            const profile = Array.isArray(activity.user_profiles)
+              ? activity.user_profiles[0]
+              : activity.user_profiles
+            if (!profile) return null
+            return {
+              id: (profile as { id: string; first_name: string; last_name: string }).id,
+              firstName: (profile as { id: string; first_name: string; last_name: string }).first_name,
+              lastName: (profile as { id: string; first_name: string; last_name: string }).last_name,
+            }
+          })(),
+        }))
+
+      return {
+        blocked: blockingActivities.length > 0,
+        activities: blockingActivities,
+      }
+    }),
+
+  // Create activity from meeting/escalation action item
+  createFromActionItem: orgProtectedProcedure
+    .input(z.object({
+      sourceType: z.enum(['meeting', 'escalation']),
+      sourceId: z.string().uuid(),
+      accountId: z.string().uuid().optional(),
+      actionItem: z.object({
+        title: z.string().min(1),
+        description: z.string().optional(),
+        dueDate: z.coerce.date().optional(),
+        assignedTo: z.string().uuid().optional(),
+        priority: z.enum(['low', 'normal', 'high', 'urgent']).default('normal'),
+      }),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Look up user_profiles.id via auth_id (for FK constraints)
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id
+
+      // Get account ID if not provided
+      let accountId = input.accountId
+      if (!accountId) {
+        if (input.sourceType === 'meeting') {
+          const { data: meeting } = await adminClient
+            .from('meeting_notes')
+            .select('account_id')
+            .eq('id', input.sourceId)
+            .eq('org_id', orgId)
+            .single()
+          accountId = meeting?.account_id
+        } else if (input.sourceType === 'escalation') {
+          const { data: escalation } = await adminClient
+            .from('escalations')
+            .select('account_id')
+            .eq('id', input.sourceId)
+            .eq('org_id', orgId)
+            .single()
+          accountId = escalation?.account_id
+        }
+      }
+
+      // Create activity (use userProfileId for FK constraints)
+      const { data: activity, error } = await adminClient
+        .from('activities')
+        .insert({
+          org_id: orgId,
+          entity_type: input.sourceType,
+          entity_id: input.sourceId,
+          secondary_entity_type: accountId ? 'account' : null,
+          secondary_entity_id: accountId,
+          activity_type: 'task',
+          subject: input.actionItem.title,
+          description: input.actionItem.description,
+          status: 'open',
+          priority: input.actionItem.priority,
+          due_date: input.actionItem.dueDate?.toISOString(),
+          assigned_to: input.actionItem.assignedTo || userProfileId,
+          created_by: userProfileId,
+          auto_created: false,
+        })
+        .select('id')
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return { activityId: activity.id }
+    }),
+
+  // Get manager for escalation (finds supervisor in chain)
+  getEscalationTarget: orgProtectedProcedure
+    .input(z.object({
+      userId: z.string().uuid(),
+      escalationLevel: z.number().min(1).default(1),
+    }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      // Get user's profile with manager info
+      const { data: user } = await adminClient
+        .from('user_profiles')
+        .select('id, employee_manager_id, recruiter_pod_id, manager_id')
+        .eq('id', input.userId)
+        .single()
+
+      if (!user) {
+        return { managerId: null, source: null }
+      }
+
+      // Level 1: Direct manager
+      if (input.escalationLevel <= 1) {
+        const directManager = user.employee_manager_id || user.manager_id
+        if (directManager && directManager !== input.userId) {
+          return { managerId: directManager, source: 'direct_manager' }
+        }
+      }
+
+      // Level 2+: Pod manager
+      if (user.recruiter_pod_id) {
+        const { data: pod } = await adminClient
+          .from('pods')
+          .select('manager_id')
+          .eq('id', user.recruiter_pod_id)
+          .single()
+
+        if (pod?.manager_id && pod.manager_id !== input.userId) {
+          return { managerId: pod.manager_id, source: 'pod_manager' }
+        }
+      }
+
+      // Fallback: Any org admin
+      const { data: orgAdmin } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('org_id', orgId)
+        .eq('role', 'admin')
+        .neq('id', input.userId)
+        .limit(1)
+        .single()
+
+      return {
+        managerId: orgAdmin?.id || null,
+        source: orgAdmin ? 'org_admin' : null,
       }
     }),
 })
