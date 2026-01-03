@@ -3,6 +3,7 @@ import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
 import { getAdminClient } from '@/lib/supabase/admin'
+import { historyService } from '@/lib/services'
 
 // ============================================
 // INPUT SCHEMAS
@@ -177,6 +178,14 @@ export const activitiesRouter = router({
         record_id: activity.id,
         new_values: { activity_type: input.activityType, entity_type: input.entityType },
       })
+
+      // HISTORY: Record activity logged on parent entity (fire-and-forget)
+      void historyService.recordRelatedObjectAdded(
+        input.entityType,
+        input.entityId,
+        { type: 'activity', id: activity.id, label: subject || input.activityType },
+        { orgId, userId: user?.id ?? null }
+      ).catch(err => console.error('[History] Failed to record activity logged:', err))
 
       return {
         activity: {
@@ -388,6 +397,16 @@ export const activitiesRouter = router({
         record_id: input.id,
         new_values: { outcome: input.outcome },
       })
+
+      // HISTORY: Record activity completed on parent entity (fire-and-forget)
+      if (data.entity_type && data.entity_id) {
+        void historyService.recordRelatedObjectUpdated(
+          data.entity_type,
+          data.entity_id,
+          { type: 'activity', id: data.id, label: data.subject ?? 'Activity' },
+          { orgId, userId: user?.id ?? null }
+        ).catch(err => console.error('[History] Failed to record activity completed:', err))
+      }
 
       return {
         id: data.id,

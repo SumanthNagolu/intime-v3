@@ -26,7 +26,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { Loader2, Trash2, Edit, X, Check, ExternalLink, Calendar, DollarSign, FileText } from 'lucide-react'
+import { Loader2, Trash2, Edit, X, Check, ExternalLink, Calendar, DollarSign, FileText, RefreshCw } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
 import { format, formatDistanceToNow } from 'date-fns'
 import { cn } from '@/lib/utils'
@@ -43,12 +43,16 @@ const contractTypeOptions = [
   { value: 'nda', label: 'NDA' },
   { value: 'amendment', label: 'Amendment' },
   { value: 'addendum', label: 'Addendum' },
+  { value: 'rate_card_agreement', label: 'Rate Card' },
+  { value: 'sla', label: 'SLA' },
+  { value: 'vendor_agreement', label: 'Vendor Agreement' },
   { value: 'other', label: 'Other' },
 ]
 
 const statusOptions = [
   { value: 'draft', label: 'Draft' },
   { value: 'pending_review', label: 'Pending Review' },
+  { value: 'pending_signature', label: 'Pending Signature' },
   { value: 'active', label: 'Active' },
   { value: 'expired', label: 'Expired' },
   { value: 'terminated', label: 'Terminated' },
@@ -60,12 +64,16 @@ const contractTypeConfig: Record<string, { label: string; color: string }> = {
   nda: { label: 'NDA', color: 'bg-amber-100 text-amber-700' },
   amendment: { label: 'Amendment', color: 'bg-cyan-100 text-cyan-700' },
   addendum: { label: 'Addendum', color: 'bg-teal-100 text-teal-700' },
+  rate_card_agreement: { label: 'Rate Card', color: 'bg-green-100 text-green-700' },
+  sla: { label: 'SLA', color: 'bg-indigo-100 text-indigo-700' },
+  vendor_agreement: { label: 'Vendor Agreement', color: 'bg-pink-100 text-pink-700' },
   other: { label: 'Other', color: 'bg-charcoal-100 text-charcoal-700' },
 }
 
 const statusConfig: Record<string, { label: string; color: string }> = {
   draft: { label: 'Draft', color: 'bg-charcoal-100 text-charcoal-600' },
   pending_review: { label: 'Pending Review', color: 'bg-amber-100 text-amber-700' },
+  pending_signature: { label: 'Pending Signature', color: 'bg-blue-100 text-blue-700' },
   active: { label: 'Active', color: 'bg-green-100 text-green-700' },
   expired: { label: 'Expired', color: 'bg-red-100 text-red-700' },
   terminated: { label: 'Terminated', color: 'bg-charcoal-200 text-charcoal-700' },
@@ -89,6 +97,8 @@ export function DocumentInlinePanel({
   const [currency, setCurrency] = useState('USD')
   const [paymentTermsDays, setPaymentTermsDays] = useState('')
   const [notes, setNotes] = useState('')
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
 
   // Fetch document data
   const documentQuery = trpc.crm.contracts.getById.useQuery(
@@ -101,6 +111,7 @@ export function DocumentInlinePanel({
     onSuccess: () => {
       toast({ title: 'Document updated' })
       utils.crm.contracts.listByAccount.invalidate({ accountId })
+      utils.crm.contracts.getById.invalidate({ id: documentId! })
       setIsEditing(false)
     },
     onError: (error) => {
@@ -125,12 +136,16 @@ export function DocumentInlinePanel({
     if (documentQuery.data) {
       const d = documentQuery.data
       setName(d.name || '')
-      setContractType(d.contract_type || 'other')
+      setContractType(d.contractType || 'other')
       setStatus(d.status || 'draft')
       setValue(d.value?.toString() || '')
       setCurrency(d.currency || 'USD')
-      setPaymentTermsDays(d.payment_terms_days?.toString() || '')
-      setNotes(d.notes || '')
+      // Extract paymentTermsDays and notes from terms JSON
+      const terms = d.terms as { paymentTermsDays?: number; notes?: string } | null
+      setPaymentTermsDays(terms?.paymentTermsDays?.toString() || '')
+      setNotes(terms?.notes || '')
+      setStartDate(d.effectiveDate || '')
+      setEndDate(d.expiryDate || '')
     }
   }, [documentQuery.data])
 
@@ -144,12 +159,14 @@ export function DocumentInlinePanel({
     updateMutation.mutate({
       id: documentId,
       name: name.trim(),
-      contractType: contractType as 'msa' | 'sow' | 'nda' | 'amendment' | 'addendum' | 'other',
-      status: status as 'draft' | 'pending_review' | 'active' | 'expired' | 'terminated',
+      contractType: contractType as 'msa' | 'sow' | 'nda' | 'amendment' | 'addendum' | 'rate_card_agreement' | 'sla' | 'vendor_agreement' | 'other',
+      status: status as 'draft' | 'pending_review' | 'pending_signature' | 'active' | 'expired' | 'terminated',
       value: value ? parseFloat(value) : null,
       currency,
       paymentTermsDays: paymentTermsDays ? parseInt(paymentTermsDays) : null,
       notes: notes.trim() || null,
+      startDate: startDate || null,
+      endDate: endDate || null,
     })
   }
 
@@ -168,8 +185,9 @@ export function DocumentInlinePanel({
   }
 
   const document = documentQuery.data
-  const typeConfig = document ? contractTypeConfig[document.contract_type] || contractTypeConfig.other : contractTypeConfig.other
+  const typeConfig = document ? contractTypeConfig[document.contractType] || contractTypeConfig.other : contractTypeConfig.other
   const statusCfg = document ? statusConfig[document.status] || statusConfig.draft : statusConfig.draft
+  const terms = document?.terms as { paymentTermsDays?: number; notes?: string } | null
 
   const headerActions = !isEditing && document && (
     <Button variant="outline" size="sm" onClick={() => setIsEditing(true)}>
@@ -302,6 +320,27 @@ export function DocumentInlinePanel({
               </div>
             </div>
 
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="startDate">Effective Date</Label>
+                <Input
+                  id="startDate"
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="endDate">Expiry Date</Label>
+                <Input
+                  id="endDate"
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+              </div>
+            </div>
+
             <div className="space-y-2">
               <Label htmlFor="notes">Notes</Label>
               <Textarea
@@ -316,15 +355,24 @@ export function DocumentInlinePanel({
           // View Mode
           <InlinePanelContent>
             <div>
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <Badge className={cn('text-xs', typeConfig.color)}>
                   {typeConfig.label}
                 </Badge>
                 <Badge className={cn('text-xs', statusCfg.color)}>
                   {statusCfg.label}
                 </Badge>
+                {document.autoRenew && (
+                  <Badge variant="outline" className="text-xs text-blue-600 border-blue-200">
+                    <RefreshCw className="w-3 h-3 mr-1" />
+                    Auto-renew
+                  </Badge>
+                )}
               </div>
               <h3 className="text-lg font-semibold">{document.name}</h3>
+              {document.contractNumber && (
+                <p className="text-sm text-charcoal-500">#{document.contractNumber}</p>
+              )}
             </div>
 
             <div className="grid grid-cols-2 gap-4 text-sm">
@@ -334,44 +382,44 @@ export function DocumentInlinePanel({
                   <span>{formatCurrency(document.value, document.currency)}</span>
                 </div>
               )}
-              {document.payment_terms_days && (
+              {terms?.paymentTermsDays && (
                 <div className="flex items-center gap-2">
                   <FileText className="w-4 h-4 text-charcoal-400" />
-                  <span>Net {document.payment_terms_days} days</span>
+                  <span>Net {terms.paymentTermsDays} days</span>
                 </div>
               )}
-              {document.start_date && (
+              {document.effectiveDate && (
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-charcoal-400" />
-                  <span>Starts: {format(new Date(document.start_date), 'MMM d, yyyy')}</span>
+                  <span>Effective: {format(new Date(document.effectiveDate), 'MMM d, yyyy')}</span>
                 </div>
               )}
-              {document.end_date && (
+              {document.expiryDate && (
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-charcoal-400" />
-                  <span>Ends: {format(new Date(document.end_date), 'MMM d, yyyy')}</span>
+                  <span>Expires: {format(new Date(document.expiryDate), 'MMM d, yyyy')}</span>
                 </div>
               )}
-              {document.signed_date && (
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-charcoal-400" />
-                  <span>Signed: {format(new Date(document.signed_date), 'MMM d, yyyy')}</span>
+              {document.renewalTermMonths && (
+                <div className="flex items-center gap-2 col-span-2">
+                  <RefreshCw className="w-4 h-4 text-charcoal-400" />
+                  <span>Renewal: {document.renewalTermMonths} months, {document.renewalNoticeDays || 30} days notice</span>
                 </div>
               )}
             </div>
 
-            {document.notes && (
+            {terms?.notes && (
               <InlinePanelSection title="Notes">
                 <div className="bg-charcoal-50 rounded-lg p-4">
-                  <p className="whitespace-pre-wrap text-sm">{document.notes}</p>
+                  <p className="whitespace-pre-wrap text-sm">{terms.notes}</p>
                 </div>
               </InlinePanelSection>
             )}
 
-            {document.document_url && (
+            {document.documentUrl && (
               <div>
                 <a
-                  href={document.document_url}
+                  href={document.documentUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-hublot-600 hover:text-hublot-700"
@@ -383,7 +431,7 @@ export function DocumentInlinePanel({
             )}
 
             <div className="text-xs text-charcoal-500">
-              Added {formatDistanceToNow(new Date(document.created_at), { addSuffix: true })}
+              Added {formatDistanceToNow(new Date(document.createdAt), { addSuffix: true })}
             </div>
           </InlinePanelContent>
         )

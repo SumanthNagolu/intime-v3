@@ -3,6 +3,7 @@ import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
 import { getAdminClient } from '@/lib/supabase/admin'
+import { historyService } from '@/lib/services'
 
 // ============================================
 // NOTES-01: Centralized Notes System
@@ -169,8 +170,19 @@ export const notesRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user, supabase } = ctx
+      const { orgId, user } = ctx
       const adminClient = getAdminClient()
+
+      // Look up user_profiles.id from auth.users.id (FK references user_profiles, not auth.users)
+      let userProfileId: string | null = null
+      if (user?.id) {
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+        userProfileId = profile?.id ?? null
+      }
 
       // If this is a reply, get the thread root
       let threadRootId = input.parentNoteId
@@ -184,7 +196,8 @@ export const notesRouter = router({
         threadRootId = parent?.thread_root_id || input.parentNoteId
       }
 
-      const { data, error } = await supabase
+      // Use adminClient to bypass RLS - auth already validated via orgProtectedProcedure
+      const { data, error } = await adminClient
         .from('notes')
         .insert({
           org_id: orgId,
@@ -200,7 +213,7 @@ export const notesRouter = router({
           thread_root_id: threadRootId,
           tags: input.tags,
           mentioned_user_ids: input.mentionedUserIds,
-          created_by: user?.id,
+          created_by: userProfileId,
         })
         .select()
         .single()
@@ -215,6 +228,19 @@ export const notesRouter = router({
           p_id: input.parentNoteId,
         })
       }
+
+      // HISTORY: Record note added to parent entity (fire-and-forget)
+      void historyService.recordRelatedObjectAdded(
+        input.entityType,
+        input.entityId,
+        {
+          type: 'note',
+          id: data.id,
+          label: input.title || `${input.noteType} note`,
+          metadata: { noteType: input.noteType, visibility: input.visibility },
+        },
+        { orgId, userId: user?.id ?? null }
+      ).catch(err => console.error('[History] Failed to record note addition:', err))
 
       return { id: data.id }
     }),
@@ -236,11 +262,31 @@ export const notesRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user, supabase } = ctx
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
       const { id, ...updates } = input
 
+      // Look up user_profiles.id from auth.users.id (FK references user_profiles, not auth.users)
+      let userProfileId: string | null = null
+      if (user?.id) {
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+        userProfileId = profile?.id ?? null
+      }
+
+      // Fetch note to get entity info for history
+      const { data: noteData } = await adminClient
+        .from('notes')
+        .select('entity_type, entity_id, title, note_type')
+        .eq('id', id)
+        .eq('org_id', orgId)
+        .single()
+
       const updateData: Record<string, unknown> = {
-        updated_by: user?.id,
+        updated_by: userProfileId,
         updated_at: new Date().toISOString(),
       }
 
@@ -258,13 +304,27 @@ export const notesRouter = router({
         updateData.pin_order = updates.isPinned ? 0 : null
       }
 
-      const { error } = await supabase
+      const { error } = await adminClient
         .from('notes')
         .update(updateData)
         .eq('id', id)
         .eq('org_id', orgId)
 
       if (error) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+
+      // HISTORY: Record note updated on parent entity (fire-and-forget)
+      if (noteData) {
+        void historyService.recordRelatedObjectUpdated(
+          noteData.entity_type,
+          noteData.entity_id,
+          {
+            type: 'note',
+            id: id,
+            label: updates.title ?? noteData.title ?? `${noteData.note_type} note`,
+          },
+          { orgId, userId: user?.id ?? null }
+        ).catch(err => console.error('[History] Failed to record note update:', err))
+      }
 
       return { success: true }
     }),
@@ -275,15 +335,38 @@ export const notesRouter = router({
   delete: orgProtectedProcedure
     .input(z.object({ id: z.string().uuid() }))
     .mutation(async ({ ctx, input }) => {
-      const { orgId, supabase } = ctx
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
 
-      const { error } = await supabase
+      // Fetch note to get entity info for history
+      const { data: noteData } = await adminClient
+        .from('notes')
+        .select('entity_type, entity_id, title, note_type')
+        .eq('id', input.id)
+        .eq('org_id', orgId)
+        .single()
+
+      const { error } = await adminClient
         .from('notes')
         .update({ deleted_at: new Date().toISOString() })
         .eq('id', input.id)
         .eq('org_id', orgId)
 
       if (error) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+
+      // HISTORY: Record note removed from parent entity (fire-and-forget)
+      if (noteData) {
+        void historyService.recordRelatedObjectRemoved(
+          noteData.entity_type,
+          noteData.entity_id,
+          {
+            type: 'note',
+            id: input.id,
+            label: noteData.title ?? `${noteData.note_type} note`,
+          },
+          { orgId, userId: user?.id ?? null }
+        ).catch(err => console.error('[History] Failed to record note removal:', err))
+      }
 
       return { success: true }
     }),
@@ -299,9 +382,10 @@ export const notesRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const { orgId, supabase } = ctx
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
 
-      const { error } = await supabase
+      const { error } = await adminClient
         .from('notes')
         .update({
           is_pinned: input.isPinned,
@@ -326,9 +410,10 @@ export const notesRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const { orgId, supabase } = ctx
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
 
-      const { error } = await supabase
+      const { error } = await adminClient
         .from('notes')
         .update({ is_starred: input.isStarred })
         .eq('id', input.id)
@@ -350,28 +435,40 @@ export const notesRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const { user, supabase } = ctx
+      const { user } = ctx
+      const adminClient = getAdminClient()
+
+      // Look up user_profiles.id from auth.users.id (FK references user_profiles, not auth.users)
+      let userProfileId: string | null = null
+      if (user?.id) {
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+        userProfileId = profile?.id ?? null
+      }
 
       // Check if reaction exists
-      const { data: existing } = await supabase
+      const { data: existing } = await adminClient
         .from('note_reactions')
         .select('id')
         .eq('note_id', input.noteId)
-        .eq('user_id', user?.id)
+        .eq('user_id', userProfileId)
         .eq('reaction', input.reaction)
         .single()
 
       if (existing) {
         // Remove reaction
-        const { error } = await supabase.from('note_reactions').delete().eq('id', existing.id)
+        const { error } = await adminClient.from('note_reactions').delete().eq('id', existing.id)
 
         if (error) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         return { added: false }
       } else {
         // Add reaction
-        const { error } = await supabase.from('note_reactions').insert({
+        const { error } = await adminClient.from('note_reactions').insert({
           note_id: input.noteId,
-          user_id: user?.id,
+          user_id: userProfileId,
           reaction: input.reaction,
         })
 

@@ -54,7 +54,7 @@ export const leaderboardScope = pgEnum("leaderboard_scope", ['org', 'department'
 export const leaderboardType = pgEnum("leaderboard_type", ['weekly', 'monthly', 'all_time'])
 export const marketingStatus = pgEnum("marketing_status", ['draft', 'active', 'paused', 'archived'])
 export const metricPeriodType = pgEnum("metric_period_type", ['daily', 'weekly', 'monthly', 'quarterly', 'yearly'])
-export const noteType = pgEnum("note_type", ['general', 'meeting', 'call', 'strategy', 'warning', 'opportunity', 'competitive_intel', 'internal'])
+export const noteType = pgEnum("note_type", ['general', 'meeting', 'call', 'strategy', 'warning', 'opportunity', 'competitive_intel', 'internal', 'important', 'reminder'])
 export const noteVisibility = pgEnum("note_visibility", ['private', 'team', 'organization'])
 export const onboardingStatus = pgEnum("onboarding_status", ['not_started', 'in_progress', 'completed', 'cancelled'])
 export const organizationTier = pgEnum("organization_tier", ['starter', 'growth', 'enterprise'])
@@ -9289,7 +9289,7 @@ export const activities = pgTable("activities", {
 	skippedAt: timestamp("skipped_at", { withTimezone: true, mode: 'string' }),
 	durationMinutes: integer("duration_minutes"),
 	outcome: text(),
-	assignedTo: uuid("assigned_to"),
+	assignedTo: uuid("assigned_to").notNull(),
 	performedBy: uuid("performed_by"),
 	pocId: uuid("poc_id"),
 	parentActivityId: uuid("parent_activity_id"),
@@ -11972,8 +11972,8 @@ export const activityPatterns = pgTable("activity_patterns", {
 	code: text().notNull(),
 	name: text().notNull(),
 	description: text(),
-	targetDays: integer("target_days").default(1),
-	escalationDays: integer("escalation_days"),
+	targetDays: integer("target_days").default(1).notNull(),
+	escalationDays: integer("escalation_days").default(3).notNull(),
 	defaultAssignee: text("default_assignee").default('owner'),
 	assigneeGroupId: uuid("assignee_group_id"),
 	assigneeUserId: uuid("assignee_user_id"),

@@ -6,6 +6,17 @@
  * @module lib/services
  */
 
+// History Service (Entity Biography)
+export { HistoryService, historyService } from './history-service'
+export type {
+  ChangeType,
+  HistoryContext,
+  RelatedEntity,
+  RecordChangeOptions,
+} from './history-service'
+export { ENTITY_FIELD_CONFIGS, getEntityTypeLabel } from './history-configs'
+export type { EntityFieldConfig } from './history-configs'
+
 // Rate Resolution Service
 export { RateResolver, rateResolver } from './rate-resolver'
 export type {
