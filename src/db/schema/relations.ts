@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm/relations";
-import { badges, badgeProgress, userProfiles, badgeTriggerEvents, studentEnrollments, paymentTransactions, commissions, deals, organizations, commissionPayments, productivityReports, leads, campaigns, companies, contacts, generatedResumes, requisitionEmbeddings, resumeMatches, employeeTwinInteractions, candidateEmbeddings, leadSourcingCredits, roles, twinPreferences, topicLessons, contentAssets, moduleTopics, videoProgress, projectTimeline, sessionMetadata, campaignDocuments, events, eventDeliveryLog, eventSubscriptions, onboardingChecklist, courses, courseModules, aiConversations, aiPatterns, aiCostTracking, aiPrompts, studentProgress, aiAgentInteractions, guruInteractions, resumeVersions, interviewSessions, employeeScreenshots, topicCompletions, xpTransactions, readingProgress, labTemplates, labInstances, labSubmissions, capstoneSubmissions, twinEvents, twinConversations, quizQuestions, quizSettings, peerReviews, aiMentorChats, aiPromptVariants, sequenceTemplates, aiMentorRateLimits, aiMentorSessions, permissionOverrides, permissions, campaignSequences, apiTokens, bulkUpdateHistory, rolePermissions, systemRoles, aiQuestionPatterns, featureFlags, featureFlagRoles, userBadges, systemSettings, workflows, workflowStates, workflowTransitions, workflowInstances, workflowHistory, fileUploads, documentTemplates, generatedDocuments, emailLogs, emailTemplates, backgroundJobs, discountCodes, studentInterventions, discountCodeUsage, coursePricing, organizationSettings, contactLeadData, comments, leadTasks, notifications, tasks, organizationBranding, companyContracts, companyRateCards, companyRateCardItems, companyComplianceRequirements, companyHealthScores, companyMetrics, companyRevenue, activityLog, employeeMetadata, pods, candidateSkills, skills, regions, userSessionContext, podManagers, leadStrategies, talkingPointTemplates, payrollItems, payrollRuns, timeAttendance, performanceReviews, importJobs, exportJobs, gdprRequests, duplicateRecords, duplicateRules, archivedRecords, retentionPolicies, candidateResumes, candidateBackgroundChecks, placements, submissions, candidateCertifications, candidateComplianceDocuments, objectOwners, candidateEducation, candidateReferences, candidateWorkAuthorizations, podMembers, jobs, jobSkills, jobRequirements, jobRates, jobAssignments, jobScreeningQuestions, candidateDocuments, candidateProfiles, candidatePreferences, candidateAvailability, submissionRates, submissionScreeningAnswers, submissionNotes, marketingTemplates, hotlistConsultants, benchConsultants, skillAliases, submissionStatusHistory, interviews, interviewFeedback, interviewReminders, offers, offerTerms, placementTimesheets, consultantVisaDetails, consultantWorkAuthorization, consultantAvailability, consultantRates, marketingProfiles, marketingFormats, vendorRelationships, vendorBlacklist, companyTeam, companyContacts, companyRelationships, immigrationAttorneys, immigrationDocuments, immigrationAlerts, companyAddresses, companyNotes, externalJobOrderSubmissions, externalJobOrders, companyPreferences, companyTags, benefitPlans, benefitPlanOptions, integrations, integrationHealthLogs, dealStagesHistory, dealStakeholders, leadScores, leadQualification, candidateWorkHistory, leadTouchpoints, dealCompetitors, dealProducts, employees, employeeProfiles, employeeDocuments, employeeTimeOff, employeeBenefits, benefitDependents, raciChangeLog, employeeCompliance, legacyComplianceRequirements, i9Records, performanceGoals, performanceFeedback, activityPatterns, patternChecklistItems, activityPatternSuccessors, workplanTemplates, workplanPhases, workplanInstances, workplanTemplateActivities, activities, activityParticipants, activityFieldValues, patternFields, activityChecklistItems, activityComments, activityAttachments, activityReminders, podSprintMetrics, activityTimeEntries, activityDependencies, activityAutoRules, activityHistory, workQueues, addresses, queueItems, slaInstances, slaDefinitions, bulkActivityJobs, activityMetrics, teamMetrics, learningPaths, learningPathCourses, pathEnrollments, certificates, certificateTemplates, userLevels, achievements, userAchievements, learningStreaks, leaderboards, leaderboardEntries, loginHistory, userInvitations, webhooks, webhookDeliveries, integrationRetryConfig, integrationOauthTokens, integrationFailoverConfig, externalJobOrderRequirements, externalJobOrderSkills, externalJobOrderNotes, approvalWorkflows, approvalSteps, approvalInstances, placementCredits, graduateCandidates, quizAttempts, aiMentorEscalations, trainerResponses, escalationNotifications, entitySkills, certifications, contactBenchData, submissionFeedback, submissionRtr, documents, skillEndorsements, auditLogs202511, auditLogs202512, auditLogs202601, auditLogs202602, securityAlerts, alertRules, emailSends, emailSenders, incidents, incidentTimeline, incidentNotifications, breakGlassAccess, emergencyDrills, slaEscalationLevels, slaEvents, slaNotifications, activityStatsDaily, notes, featureFlagUsage, featureFlagFeedback, featureFlagCategories, jobStatusHistory, savedSearches, candidatePreparedProfiles, candidateScreenings, contactRelationships, contactRoles, offerNegotiations, offerApprovals, contactSkills, contactWorkHistory, contactEducation, contactCertifications, placementMilestones, contactRateCards, placementExtensions, placementRates, contactAgreements, contactCompliance, contactCommunicationPreferences, contactMergeHistory, noteReactions, meetingNotes, escalations, escalationUpdates, documentAccessLog, companyClientDetails, companyVendorDetails, companyPartnerDetails, dataRetentionPolicies, complianceRequirements, complianceItems, entityComplianceRequirements, contracts, contractVersions, contractParties, contractTemplates, contractClauses, rateApprovals, entityRates, rateCards, rateCardItems, rateChangeHistory, interviewParticipants, interviewScorecards, scorecardTemplates, placementVendors, placementChangeOrders, placementCheckins, onboardingTasks, employeeOnboarding, onboardingTemplates, onboardingTemplateTasks, timesheets, timesheetEntries, timesheetApprovals, timesheetExpenses, invoices, invoiceLineItems, payItems, payRuns, payItemEarnings, payItemDeductions, payStubs, timesheetApprovalWorkflows, timesheetAdjustments, timesheetTemplates, invoicePayments, paymentTerms, invoiceBatches, invoiceTemplates, payPeriods, workerTaxSetup, workerBenefits, workerGarnishments, taxDocuments, workflowExecutions, workflowSteps, workflowActions, workflowApprovals, workflowExecutionLogs, notificationPreferences, notificationTemplates, campaignEnrollments, campaignSequenceLogs, communications, communicationEvents, ptoBalances, userRoles, systemEvents202512, systemEvents202601, systemEvents202602, systemEvents202603, auditLog202602, auditLog202603, auditLog202512, auditLog202601, entityHistory202601, entityHistory202602, entityHistory202603, entityHistory202512 } from "./schema";
+import { badges, badgeProgress, userProfiles, badgeTriggerEvents, studentEnrollments, paymentTransactions, commissions, deals, organizations, commissionPayments, productivityReports, leads, campaigns, companies, contacts, generatedResumes, requisitionEmbeddings, resumeMatches, employeeTwinInteractions, candidateEmbeddings, leadSourcingCredits, roles, twinPreferences, topicLessons, contentAssets, moduleTopics, videoProgress, projectTimeline, sessionMetadata, campaignDocuments, events, eventDeliveryLog, eventSubscriptions, onboardingChecklist, courses, courseModules, aiConversations, aiPatterns, aiCostTracking, aiPrompts, studentProgress, aiAgentInteractions, guruInteractions, resumeVersions, interviewSessions, employeeScreenshots, topicCompletions, xpTransactions, readingProgress, labTemplates, labInstances, labSubmissions, capstoneSubmissions, twinEvents, twinConversations, quizQuestions, quizSettings, peerReviews, aiMentorChats, aiPromptVariants, sequenceTemplates, aiMentorRateLimits, aiMentorSessions, permissionOverrides, permissions, campaignSequences, apiTokens, bulkUpdateHistory, rolePermissions, systemRoles, aiQuestionPatterns, featureFlags, featureFlagRoles, userBadges, systemSettings, workflows, workflowStates, workflowTransitions, workflowInstances, workflowHistory, fileUploads, documentTemplates, generatedDocuments, emailLogs, emailTemplates, backgroundJobs, discountCodes, studentInterventions, discountCodeUsage, coursePricing, organizationSettings, contactLeadData, comments, leadTasks, notifications, tasks, organizationBranding, companyContracts, companyRateCards, companyRateCardItems, companyComplianceRequirements, companyHealthScores, companyMetrics, companyRevenue, activityLog, employeeMetadata, pods, candidates, candidateSkills, skills, groups, regions, userSessionContext, podManagers, leadStrategies, talkingPointTemplates, payrollItems, payrollRuns, timeAttendance, performanceReviews, importJobs, exportJobs, gdprRequests, duplicateRecords, duplicateRules, archivedRecords, retentionPolicies, candidateResumes, candidateBackgroundChecks, placements, submissions, candidateCertifications, candidateComplianceDocuments, objectOwners, candidateEducation, candidateReferences, candidateWorkAuthorizations, podMembers, jobs, jobSkills, jobRequirements, jobRates, jobAssignments, jobScreeningQuestions, candidateDocuments, candidateProfiles, candidatePreferences, candidateAvailability, submissionRates, submissionScreeningAnswers, submissionNotes, marketingTemplates, hotlistConsultants, benchConsultants, skillAliases, submissionStatusHistory, interviews, interviewFeedback, interviewReminders, offers, offerTerms, placementTimesheets, consultantVisaDetails, consultantWorkAuthorization, consultantAvailability, consultantRates, usersInAuth, marketingProfiles, marketingFormats, vendorRelationships, vendorBlacklist, companyTeam, companyContacts, companyRelationships, immigrationAttorneys, immigrationDocuments, immigrationAlerts, companyAddresses, companyNotes, externalJobOrderSubmissions, externalJobOrders, companyPreferences, companyTags, benefitPlans, benefitPlanOptions, integrations, integrationHealthLogs, dealStagesHistory, dealStakeholders, leadScores, leadQualification, candidateWorkHistory, leadTouchpoints, dealCompetitors, dealProducts, employees, employeeProfiles, employeeDocuments, employeeTimeOff, employeeBenefits, benefitDependents, raciChangeLog, employeeCompliance, legacyComplianceRequirements, i9Records, performanceGoals, performanceFeedback, activityPatterns, patternChecklistItems, activityPatternSuccessors, workplanTemplates, workplanPhases, workplanInstances, workplanTemplateActivities, activities, activityParticipants, activityFieldValues, patternFields, activityChecklistItems, activityComments, activityAttachments, activityReminders, podSprintMetrics, activityTimeEntries, activityDependencies, activityAutoRules, activityHistory, addresses, queueItems, workQueues, slaInstances, slaDefinitions, bulkActivityJobs, activityMetrics, teamMetrics, learningPaths, learningPathCourses, pathEnrollments, certificates, certificateTemplates, userLevels, achievements, userAchievements, learningStreaks, leaderboards, leaderboardEntries, loginHistory, userInvitations, webhooks, webhookDeliveries, integrationRetryConfig, integrationOauthTokens, integrationFailoverConfig, externalJobOrderRequirements, externalJobOrderSkills, externalJobOrderNotes, approvalWorkflows, approvalSteps, approvalInstances, placementCredits, graduateCandidates, quizAttempts, aiMentorEscalations, trainerResponses, escalationNotifications, entitySkills, certifications, contactBenchData, submissionFeedback, submissionRtr, documents, skillEndorsements, auditLogs202511, auditLogs202512, auditLogs202601, auditLogs202602, securityAlerts, alertRules, emailSends, emailSenders, activityNotes, incidents, incidentTimeline, incidentNotifications, breakGlassAccess, emergencyDrills, workQueueMembers, slaEscalationLevels, slaEvents, slaNotifications, activityEscalations, activityStatsDaily, notes, featureFlagUsage, featureFlagFeedback, featureFlagCategories, jobStatusHistory, savedSearches, candidatePreparedProfiles, candidateScreenings, contactRelationships, contactRoles, offerNegotiations, offerApprovals, contactSkills, contactWorkHistory, contactEducation, contactCertifications, placementMilestones, contactRateCards, placementExtensions, placementRates, contactAgreements, contactCompliance, groupMembers, contactCommunicationPreferences, contactMergeHistory, noteReactions, groupRegions, meetingNotes, escalations, escalationUpdates, documentAccessLog, companyClientDetails, entityDrafts, companyVendorDetails, companyPartnerDetails, dataRetentionPolicies, complianceRequirements, complianceItems, entityComplianceRequirements, contracts, contractVersions, contractParties, contractTemplates, contractClauses, rateApprovals, entityRates, rateCards, rateCardItems, rateChangeHistory, interviewParticipants, interviewScorecards, scorecardTemplates, placementVendors, placementChangeOrders, placementCheckins, onboardingTasks, employeeOnboarding, onboardingTemplates, onboardingTemplateTasks, timesheets, timesheetEntries, timesheetApprovals, timesheetExpenses, invoices, invoiceLineItems, payItems, payRuns, payItemEarnings, payItemDeductions, payStubs, timesheetApprovalWorkflows, timesheetAdjustments, timesheetTemplates, invoicePayments, paymentTerms, invoiceBatches, invoiceTemplates, payPeriods, workerTaxSetup, workerBenefits, workerGarnishments, taxDocuments, workflowExecutions, workflowSteps, workflowActions, workflowApprovals, workflowExecutionLogs, notificationPreferences, notificationTemplates, campaignEnrollments, campaignSequenceLogs, communications, communicationEvents, ptoBalances, userRoles, systemEvents202512, systemEvents202601, systemEvents202602, systemEvents202603, auditLog202602, auditLog202603, auditLog202512, auditLog202601, entityHistory202601, entityHistory202602, entityHistory202603, entityHistory202512 } from "./schema";
 
 export const badgeProgressRelations = relations(badgeProgress, ({one}) => ({
 	badge: one(badges, {
@@ -180,7 +180,6 @@ export const userProfilesRelations = relations(userProfiles, ({one, many}) => ({
 	companyComplianceRequirements: many(companyComplianceRequirements),
 	activityLogs: many(activityLog),
 	employeeMetadata: many(employeeMetadata),
-	candidateSkills: many(candidateSkills),
 	pods_createdBy: many(pods, {
 		relationName: "pods_createdBy_userProfiles_id"
 	}),
@@ -258,6 +257,7 @@ export const userProfilesRelations = relations(userProfiles, ({one, many}) => ({
 	candidateResumes_uploadedBy: many(candidateResumes, {
 		relationName: "candidateResumes_uploadedBy_userProfiles_id"
 	}),
+	candidateBackgroundChecks: many(candidateBackgroundChecks),
 	userProfile: one(userProfiles, {
 		fields: [userProfiles.managerId],
 		references: [userProfiles.id],
@@ -270,11 +270,15 @@ export const userProfilesRelations = relations(userProfiles, ({one, many}) => ({
 		fields: [userProfiles.orgId],
 		references: [organizations.id]
 	}),
+	group: one(groups, {
+		fields: [userProfiles.primaryGroupId],
+		references: [groups.id],
+		relationName: "userProfiles_primaryGroupId_groups_id"
+	}),
 	systemRole: one(systemRoles, {
 		fields: [userProfiles.roleId],
 		references: [systemRoles.id]
 	}),
-	candidateBackgroundChecks: many(candidateBackgroundChecks),
 	candidateCertifications: many(candidateCertifications),
 	candidateComplianceDocuments: many(candidateComplianceDocuments),
 	objectOwners_assignedBy: many(objectOwners, {
@@ -400,11 +404,21 @@ export const userProfilesRelations = relations(userProfiles, ({one, many}) => ({
 	}),
 	webhooks: many(webhooks),
 	integrationOauthTokens: many(integrationOauthTokens),
+	externalJobOrderNotes: many(externalJobOrderNotes),
 	activities_assignedTo: many(activities, {
 		relationName: "activities_assignedTo_userProfiles_id"
 	}),
+	activities_claimedBy: many(activities, {
+		relationName: "activities_claimedBy_userProfiles_id"
+	}),
 	activities_createdBy: many(activities, {
 		relationName: "activities_createdBy_userProfiles_id"
+	}),
+	activities_escalatedToUserId: many(activities, {
+		relationName: "activities_escalatedToUserId_userProfiles_id"
+	}),
+	activities_originalAssignedTo: many(activities, {
+		relationName: "activities_originalAssignedTo_userProfiles_id"
 	}),
 	activities_performedBy: many(activities, {
 		relationName: "activities_performedBy_userProfiles_id"
@@ -412,7 +426,6 @@ export const userProfilesRelations = relations(userProfiles, ({one, many}) => ({
 	activities_updatedBy: many(activities, {
 		relationName: "activities_updatedBy_userProfiles_id"
 	}),
-	externalJobOrderNotes: many(externalJobOrderNotes),
 	benchConsultants_benchSalesRepId: many(benchConsultants, {
 		relationName: "benchConsultants_benchSalesRepId_userProfiles_id"
 	}),
@@ -503,6 +516,7 @@ export const userProfilesRelations = relations(userProfiles, ({one, many}) => ({
 	}),
 	emailSends: many(emailSends),
 	emailSenders: many(emailSenders),
+	activityNotes: many(activityNotes),
 	incidents_createdBy: many(incidents, {
 		relationName: "incidents_createdBy_userProfiles_id"
 	}),
@@ -522,7 +536,14 @@ export const userProfilesRelations = relations(userProfiles, ({one, many}) => ({
 		relationName: "emergencyDrills_updatedBy_userProfiles_id"
 	}),
 	slaDefinitions: many(slaDefinitions),
+	workQueueMembers: many(workQueueMembers),
 	slaEvents: many(slaEvents),
+	activityEscalations_escalatedFromUser: many(activityEscalations, {
+		relationName: "activityEscalations_escalatedFromUser_userProfiles_id"
+	}),
+	activityEscalations_escalatedToUser: many(activityEscalations, {
+		relationName: "activityEscalations_escalatedToUser_userProfiles_id"
+	}),
 	contacts_candidateHotlistAddedBy: many(contacts, {
 		relationName: "contacts_candidateHotlistAddedBy_userProfiles_id"
 	}),
@@ -619,9 +640,30 @@ export const userProfilesRelations = relations(userProfiles, ({one, many}) => ({
 	contactWorkHistories: many(contactWorkHistory),
 	contactEducations: many(contactEducation),
 	contactRateCards: many(contactRateCards),
+	groups_createdBy: many(groups, {
+		relationName: "groups_createdBy_userProfiles_id"
+	}),
+	groups_managerId: many(groups, {
+		relationName: "groups_managerId_userProfiles_id"
+	}),
+	groups_supervisorId: many(groups, {
+		relationName: "groups_supervisorId_userProfiles_id"
+	}),
+	groups_updatedBy: many(groups, {
+		relationName: "groups_updatedBy_userProfiles_id"
+	}),
 	placementExtensions: many(placementExtensions),
 	contactAgreements: many(contactAgreements),
 	contactCompliances: many(contactCompliance),
+	groupMembers_backupUserId: many(groupMembers, {
+		relationName: "groupMembers_backupUserId_userProfiles_id"
+	}),
+	groupMembers_createdBy: many(groupMembers, {
+		relationName: "groupMembers_createdBy_userProfiles_id"
+	}),
+	groupMembers_userId: many(groupMembers, {
+		relationName: "groupMembers_userId_userProfiles_id"
+	}),
 	contactMergeHistories: many(contactMergeHistory),
 	noteReactions: many(noteReactions),
 	companies_accountManagerId: many(companies, {
@@ -639,6 +681,7 @@ export const userProfilesRelations = relations(userProfiles, ({one, many}) => ({
 	companies_updatedBy: many(companies, {
 		relationName: "companies_updatedBy_userProfiles_id"
 	}),
+	groupRegions: many(groupRegions),
 	documents: many(documents),
 	meetingNotes_createdBy: many(meetingNotes, {
 		relationName: "meetingNotes_createdBy_userProfiles_id"
@@ -1133,8 +1176,8 @@ export const organizationsRelations = relations(organizations, ({many}) => ({
 	archivedRecords: many(archivedRecords),
 	retentionPolicies: many(retentionPolicies),
 	candidateResumes: many(candidateResumes),
-	userProfiles: many(userProfiles),
 	candidateBackgroundChecks: many(candidateBackgroundChecks),
+	userProfiles: many(userProfiles),
 	candidateCertifications: many(candidateCertifications),
 	candidateComplianceDocuments: many(candidateComplianceDocuments),
 	objectOwners: many(objectOwners),
@@ -1164,6 +1207,7 @@ export const organizationsRelations = relations(organizations, ({many}) => ({
 	interviewReminders: many(interviewReminders),
 	offerTerms: many(offerTerms),
 	placementTimesheets: many(placementTimesheets),
+	candidates: many(candidates),
 	companyTeams: many(companyTeam),
 	companyContacts: many(companyContacts),
 	companyRelationships: many(companyRelationships),
@@ -1184,7 +1228,6 @@ export const organizationsRelations = relations(organizations, ({many}) => ({
 	workplanInstances: many(workplanInstances),
 	podSprintMetrics: many(podSprintMetrics),
 	activityAutoRules: many(activityAutoRules),
-	workQueues: many(workQueues),
 	addresses: many(addresses),
 	slaInstances: many(slaInstances),
 	bulkActivityJobs: many(bulkActivityJobs),
@@ -1197,8 +1240,8 @@ export const organizationsRelations = relations(organizations, ({many}) => ({
 	integrationRetryConfigs: many(integrationRetryConfig),
 	integrationOauthTokens: many(integrationOauthTokens),
 	integrationFailoverConfigs: many(integrationFailoverConfig),
-	activities: many(activities),
 	skills: many(skills),
+	activities: many(activities),
 	benchConsultants: many(benchConsultants),
 	approvalWorkflows: many(approvalWorkflows),
 	approvalInstances: many(approvalInstances),
@@ -1218,6 +1261,7 @@ export const organizationsRelations = relations(organizations, ({many}) => ({
 	emailTemplates: many(emailTemplates),
 	emailSends: many(emailSends),
 	emailSenders: many(emailSenders),
+	workQueues: many(workQueues),
 	incidents: many(incidents),
 	incidentTimelines: many(incidentTimeline),
 	incidentNotifications: many(incidentNotifications),
@@ -1248,17 +1292,21 @@ export const organizationsRelations = relations(organizations, ({many}) => ({
 	contactCertifications: many(contactCertifications),
 	placementMilestones: many(placementMilestones),
 	contactRateCards: many(contactRateCards),
+	groups: many(groups),
 	placementExtensions: many(placementExtensions),
 	placementRates: many(placementRates),
 	contactAgreements: many(contactAgreements),
 	contactCompliances: many(contactCompliance),
+	groupMembers: many(groupMembers),
 	contactCommunicationPreferences: many(contactCommunicationPreferences),
 	contactMergeHistories: many(contactMergeHistory),
 	companies: many(companies),
+	groupRegions: many(groupRegions),
 	documents: many(documents),
 	meetingNotes: many(meetingNotes),
 	escalations: many(escalations),
 	companyClientDetails: many(companyClientDetails),
+	entityDrafts: many(entityDrafts),
 	companyVendorDetails: many(companyVendorDetails),
 	companyPartnerDetails: many(companyPartnerDetails),
 	deals: many(deals),
@@ -1610,6 +1658,7 @@ export const contactsRelations = relations(contacts, ({one, many}) => ({
 	candidateProfiles: many(candidateProfiles),
 	candidatePreferences: many(candidatePreferences),
 	candidateAvailabilities: many(candidateAvailability),
+	candidates: many(candidates),
 	dealStakeholders: many(dealStakeholders),
 	candidateWorkHistories: many(candidateWorkHistory),
 	activities: many(activities),
@@ -3073,6 +3122,10 @@ export const podsRelations = relations(pods, ({one, many}) => ({
 		references: [userProfiles.id],
 		relationName: "pods_createdBy_userProfiles_id"
 	}),
+	group: one(groups, {
+		fields: [pods.groupId],
+		references: [groups.id]
+	}),
 	userProfile_juniorMemberId: one(userProfiles, {
 		fields: [pods.juniorMemberId],
 		references: [userProfiles.id],
@@ -3087,6 +3140,14 @@ export const podsRelations = relations(pods, ({one, many}) => ({
 		fields: [pods.orgId],
 		references: [organizations.id]
 	}),
+	pod: one(pods, {
+		fields: [pods.parentId],
+		references: [pods.id],
+		relationName: "pods_parentId_pods_id"
+	}),
+	pods: many(pods, {
+		relationName: "pods_parentId_pods_id"
+	}),
 	region: one(regions, {
 		fields: [pods.regionId],
 		references: [regions.id]
@@ -3100,21 +3161,21 @@ export const podsRelations = relations(pods, ({one, many}) => ({
 	podMembers: many(podMembers),
 	podSprintMetrics: many(podSprintMetrics),
 	activityAutoRules: many(activityAutoRules),
-	workQueues: many(workQueues),
 	activityMetrics: many(activityMetrics),
 	teamMetrics: many(teamMetrics),
 	userInvitations: many(userInvitations),
 	activities: many(activities),
 	placementCredits: many(placementCredits),
+	workQueues: many(workQueues),
 	slaDefinitions: many(slaDefinitions),
 	activityPatterns: many(activityPatterns),
 	companies: many(companies),
 }));
 
 export const candidateSkillsRelations = relations(candidateSkills, ({one}) => ({
-	userProfile: one(userProfiles, {
+	candidate: one(candidates, {
 		fields: [candidateSkills.candidateId],
-		references: [userProfiles.id]
+		references: [candidates.id]
 	}),
 	contact: one(contacts, {
 		fields: [candidateSkills.contactId],
@@ -3123,6 +3184,43 @@ export const candidateSkillsRelations = relations(candidateSkills, ({one}) => ({
 	skill: one(skills, {
 		fields: [candidateSkills.skillId],
 		references: [skills.id]
+	}),
+}));
+
+export const candidatesRelations = relations(candidates, ({one, many}) => ({
+	candidateSkills: many(candidateSkills),
+	contact: one(contacts, {
+		fields: [candidates.contactId],
+		references: [contacts.id]
+	}),
+	usersInAuth_createdBy: one(usersInAuth, {
+		fields: [candidates.createdBy],
+		references: [usersInAuth.id],
+		relationName: "candidates_createdBy_usersInAuth_id"
+	}),
+	usersInAuth_hotlistAddedBy: one(usersInAuth, {
+		fields: [candidates.hotlistAddedBy],
+		references: [usersInAuth.id],
+		relationName: "candidates_hotlistAddedBy_usersInAuth_id"
+	}),
+	organization: one(organizations, {
+		fields: [candidates.orgId],
+		references: [organizations.id]
+	}),
+	usersInAuth_ownerId: one(usersInAuth, {
+		fields: [candidates.ownerId],
+		references: [usersInAuth.id],
+		relationName: "candidates_ownerId_usersInAuth_id"
+	}),
+	usersInAuth_sourcedBy: one(usersInAuth, {
+		fields: [candidates.sourcedBy],
+		references: [usersInAuth.id],
+		relationName: "candidates_sourcedBy_usersInAuth_id"
+	}),
+	usersInAuth_updatedBy: one(usersInAuth, {
+		fields: [candidates.updatedBy],
+		references: [usersInAuth.id],
+		relationName: "candidates_updatedBy_usersInAuth_id"
 	}),
 }));
 
@@ -3156,6 +3254,47 @@ export const skillsRelations = relations(skills, ({one, many}) => ({
 	contactRateCards: many(contactRateCards),
 }));
 
+export const groupsRelations = relations(groups, ({one, many}) => ({
+	pods: many(pods),
+	userProfiles: many(userProfiles, {
+		relationName: "userProfiles_primaryGroupId_groups_id"
+	}),
+	userProfile_createdBy: one(userProfiles, {
+		fields: [groups.createdBy],
+		references: [userProfiles.id],
+		relationName: "groups_createdBy_userProfiles_id"
+	}),
+	userProfile_managerId: one(userProfiles, {
+		fields: [groups.managerId],
+		references: [userProfiles.id],
+		relationName: "groups_managerId_userProfiles_id"
+	}),
+	organization: one(organizations, {
+		fields: [groups.orgId],
+		references: [organizations.id]
+	}),
+	group: one(groups, {
+		fields: [groups.parentGroupId],
+		references: [groups.id],
+		relationName: "groups_parentGroupId_groups_id"
+	}),
+	groups: many(groups, {
+		relationName: "groups_parentGroupId_groups_id"
+	}),
+	userProfile_supervisorId: one(userProfiles, {
+		fields: [groups.supervisorId],
+		references: [userProfiles.id],
+		relationName: "groups_supervisorId_userProfiles_id"
+	}),
+	userProfile_updatedBy: one(userProfiles, {
+		fields: [groups.updatedBy],
+		references: [userProfiles.id],
+		relationName: "groups_updatedBy_userProfiles_id"
+	}),
+	groupMembers: many(groupMembers),
+	groupRegions: many(groupRegions),
+}));
+
 export const regionsRelations = relations(regions, ({one, many}) => ({
 	pods: many(pods),
 	userProfile_createdBy: one(userProfiles, {
@@ -3172,6 +3311,7 @@ export const regionsRelations = relations(regions, ({one, many}) => ({
 		fields: [regions.orgId],
 		references: [organizations.id]
 	}),
+	groupRegions: many(groupRegions),
 }));
 
 export const userSessionContextRelations = relations(userSessionContext, ({one}) => ({
@@ -4323,6 +4463,24 @@ export const consultantRatesRelations = relations(consultantRates, ({one}) => ({
 	}),
 }));
 
+export const usersInAuthRelations = relations(usersInAuth, ({many}) => ({
+	candidates_createdBy: many(candidates, {
+		relationName: "candidates_createdBy_usersInAuth_id"
+	}),
+	candidates_hotlistAddedBy: many(candidates, {
+		relationName: "candidates_hotlistAddedBy_usersInAuth_id"
+	}),
+	candidates_ownerId: many(candidates, {
+		relationName: "candidates_ownerId_usersInAuth_id"
+	}),
+	candidates_sourcedBy: many(candidates, {
+		relationName: "candidates_sourcedBy_usersInAuth_id"
+	}),
+	candidates_updatedBy: many(candidates, {
+		relationName: "candidates_updatedBy_usersInAuth_id"
+	}),
+}));
+
 export const marketingProfilesRelations = relations(marketingProfiles, ({one, many}) => ({
 	benchConsultant: one(benchConsultants, {
 		fields: [marketingProfiles.consultantId],
@@ -4869,6 +5027,7 @@ export const activityPatternsRelations = relations(activityPatterns, ({one, many
 	bulkActivityJobs: many(bulkActivityJobs),
 	activities: many(activities),
 	activityStatsDailies: many(activityStatsDaily),
+	patternFields: many(patternFields),
 	pod: one(pods, {
 		fields: [activityPatterns.assigneeGroupId],
 		references: [pods.id]
@@ -4887,7 +5046,6 @@ export const activityPatternsRelations = relations(activityPatterns, ({one, many
 		fields: [activityPatterns.orgId],
 		references: [organizations.id]
 	}),
-	patternFields: many(patternFields),
 }));
 
 export const activityPatternSuccessorsRelations = relations(activityPatternSuccessors, ({one}) => ({
@@ -4989,10 +5147,20 @@ export const activitiesRelations = relations(activities, ({one, many}) => ({
 		references: [userProfiles.id],
 		relationName: "activities_assignedTo_userProfiles_id"
 	}),
+	userProfile_claimedBy: one(userProfiles, {
+		fields: [activities.claimedBy],
+		references: [userProfiles.id],
+		relationName: "activities_claimedBy_userProfiles_id"
+	}),
 	userProfile_createdBy: one(userProfiles, {
 		fields: [activities.createdBy],
 		references: [userProfiles.id],
 		relationName: "activities_createdBy_userProfiles_id"
+	}),
+	userProfile_escalatedToUserId: one(userProfiles, {
+		fields: [activities.escalatedToUserId],
+		references: [userProfiles.id],
+		relationName: "activities_escalatedToUserId_userProfiles_id"
 	}),
 	activity_followUpActivityId: one(activities, {
 		fields: [activities.followUpActivityId],
@@ -5005,6 +5173,11 @@ export const activitiesRelations = relations(activities, ({one, many}) => ({
 	organization: one(organizations, {
 		fields: [activities.orgId],
 		references: [organizations.id]
+	}),
+	userProfile_originalAssignedTo: one(userProfiles, {
+		fields: [activities.originalAssignedTo],
+		references: [userProfiles.id],
+		relationName: "activities_originalAssignedTo_userProfiles_id"
 	}),
 	activity_parentActivityId: one(activities, {
 		fields: [activities.parentActivityId],
@@ -5031,6 +5204,10 @@ export const activitiesRelations = relations(activities, ({one, many}) => ({
 	activities_predecessorActivityId: many(activities, {
 		relationName: "activities_predecessorActivityId_activities_id"
 	}),
+	workQueue: one(workQueues, {
+		fields: [activities.queueId],
+		references: [workQueues.id]
+	}),
 	campaign: one(campaigns, {
 		fields: [activities.relatedCampaignId],
 		references: [campaigns.id]
@@ -5052,6 +5229,8 @@ export const activitiesRelations = relations(activities, ({one, many}) => ({
 		fields: [activities.workplanInstanceId],
 		references: [workplanInstances.id]
 	}),
+	activityNotes: many(activityNotes),
+	activityEscalations: many(activityEscalations),
 }));
 
 export const activityFieldValuesRelations = relations(activityFieldValues, ({one}) => ({
@@ -5200,18 +5379,6 @@ export const activityHistoryRelations = relations(activityHistory, ({one}) => ({
 	}),
 }));
 
-export const workQueuesRelations = relations(workQueues, ({one, many}) => ({
-	pod: one(pods, {
-		fields: [workQueues.assignedToGroupId],
-		references: [pods.id]
-	}),
-	organization: one(organizations, {
-		fields: [workQueues.orgId],
-		references: [organizations.id]
-	}),
-	queueItems: many(queueItems),
-}));
-
 export const addressesRelations = relations(addresses, ({one, many}) => ({
 	organization: one(organizations, {
 		fields: [addresses.orgId],
@@ -5230,6 +5397,21 @@ export const queueItemsRelations = relations(queueItems, ({one}) => ({
 		fields: [queueItems.queueId],
 		references: [workQueues.id]
 	}),
+}));
+
+export const workQueuesRelations = relations(workQueues, ({one, many}) => ({
+	queueItems: many(queueItems),
+	activities: many(activities),
+	pod: one(pods, {
+		fields: [workQueues.assignedToGroupId],
+		references: [pods.id]
+	}),
+	organization: one(organizations, {
+		fields: [workQueues.orgId],
+		references: [organizations.id]
+	}),
+	workQueueMembers: many(workQueueMembers),
+	activityEscalations: many(activityEscalations),
 }));
 
 export const slaInstancesRelations = relations(slaInstances, ({one}) => ({
@@ -5953,6 +6135,17 @@ export const emailSendersRelations = relations(emailSenders, ({one}) => ({
 	}),
 }));
 
+export const activityNotesRelations = relations(activityNotes, ({one}) => ({
+	activity: one(activities, {
+		fields: [activityNotes.activityId],
+		references: [activities.id]
+	}),
+	userProfile: one(userProfiles, {
+		fields: [activityNotes.createdBy],
+		references: [userProfiles.id]
+	}),
+}));
+
 export const incidentsRelations = relations(incidents, ({one, many}) => ({
 	userProfile_createdBy: one(userProfiles, {
 		fields: [incidents.createdBy],
@@ -6040,6 +6233,17 @@ export const emergencyDrillsRelations = relations(emergencyDrills, ({one}) => ({
 	}),
 }));
 
+export const workQueueMembersRelations = relations(workQueueMembers, ({one}) => ({
+	workQueue: one(workQueues, {
+		fields: [workQueueMembers.queueId],
+		references: [workQueues.id]
+	}),
+	userProfile: one(userProfiles, {
+		fields: [workQueueMembers.userId],
+		references: [userProfiles.id]
+	}),
+}));
+
 export const slaEscalationLevelsRelations = relations(slaEscalationLevels, ({one}) => ({
 	slaDefinition: one(slaDefinitions, {
 		fields: [slaEscalationLevels.slaDefinitionId],
@@ -6067,6 +6271,27 @@ export const slaNotificationsRelations = relations(slaNotifications, ({one}) => 
 	slaEvent: one(slaEvents, {
 		fields: [slaNotifications.slaEventId],
 		references: [slaEvents.id]
+	}),
+}));
+
+export const activityEscalationsRelations = relations(activityEscalations, ({one}) => ({
+	activity: one(activities, {
+		fields: [activityEscalations.activityId],
+		references: [activities.id]
+	}),
+	userProfile_escalatedFromUser: one(userProfiles, {
+		fields: [activityEscalations.escalatedFromUser],
+		references: [userProfiles.id],
+		relationName: "activityEscalations_escalatedFromUser_userProfiles_id"
+	}),
+	workQueue: one(workQueues, {
+		fields: [activityEscalations.escalatedToQueue],
+		references: [workQueues.id]
+	}),
+	userProfile_escalatedToUser: one(userProfiles, {
+		fields: [activityEscalations.escalatedToUser],
+		references: [userProfiles.id],
+		relationName: "activityEscalations_escalatedToUser_userProfiles_id"
 	}),
 }));
 
@@ -6485,6 +6710,32 @@ export const contactComplianceRelations = relations(contactCompliance, ({one}) =
 	}),
 }));
 
+export const groupMembersRelations = relations(groupMembers, ({one}) => ({
+	userProfile_backupUserId: one(userProfiles, {
+		fields: [groupMembers.backupUserId],
+		references: [userProfiles.id],
+		relationName: "groupMembers_backupUserId_userProfiles_id"
+	}),
+	userProfile_createdBy: one(userProfiles, {
+		fields: [groupMembers.createdBy],
+		references: [userProfiles.id],
+		relationName: "groupMembers_createdBy_userProfiles_id"
+	}),
+	group: one(groups, {
+		fields: [groupMembers.groupId],
+		references: [groups.id]
+	}),
+	organization: one(organizations, {
+		fields: [groupMembers.orgId],
+		references: [organizations.id]
+	}),
+	userProfile_userId: one(userProfiles, {
+		fields: [groupMembers.userId],
+		references: [userProfiles.id],
+		relationName: "groupMembers_userId_userProfiles_id"
+	}),
+}));
+
 export const contactCommunicationPreferencesRelations = relations(contactCommunicationPreferences, ({one}) => ({
 	contact: one(contacts, {
 		fields: [contactCommunicationPreferences.contactId],
@@ -6519,6 +6770,25 @@ export const noteReactionsRelations = relations(noteReactions, ({one}) => ({
 	userProfile: one(userProfiles, {
 		fields: [noteReactions.userId],
 		references: [userProfiles.id]
+	}),
+}));
+
+export const groupRegionsRelations = relations(groupRegions, ({one}) => ({
+	userProfile: one(userProfiles, {
+		fields: [groupRegions.createdBy],
+		references: [userProfiles.id]
+	}),
+	group: one(groups, {
+		fields: [groupRegions.groupId],
+		references: [groups.id]
+	}),
+	organization: one(organizations, {
+		fields: [groupRegions.orgId],
+		references: [organizations.id]
+	}),
+	region: one(regions, {
+		fields: [groupRegions.regionId],
+		references: [regions.id]
 	}),
 }));
 
@@ -6611,6 +6881,13 @@ export const companyClientDetailsRelations = relations(companyClientDetails, ({o
 	}),
 	organization: one(organizations, {
 		fields: [companyClientDetails.orgId],
+		references: [organizations.id]
+	}),
+}));
+
+export const entityDraftsRelations = relations(entityDrafts, ({one}) => ({
+	organization: one(organizations, {
+		fields: [entityDrafts.orgId],
 		references: [organizations.id]
 	}),
 }));
