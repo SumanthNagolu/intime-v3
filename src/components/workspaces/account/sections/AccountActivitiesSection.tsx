@@ -29,6 +29,23 @@ import { useAccountWorkspace } from '../AccountWorkspaceProvider'
 import { PatternPickerDialog } from '@/components/activities/PatternPickerDialog'
 import { ActivityChecklist } from '@/components/activities/ActivityChecklist'
 import { ActivityNotesThread } from '@/components/activities/ActivityNotesThread'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 // Constants
 const ITEMS_PER_PAGE = 10
@@ -629,6 +646,60 @@ function ActivityDetailBottomPanel({
   onSkip,
   refreshData,
 }: ActivityDetailBottomPanelProps) {
+  const { toast } = useToast()
+
+  // Dialog states
+  const [reassignDialogOpen, setReassignDialogOpen] = React.useState(false)
+  const [escalateDialogOpen, setEscalateDialogOpen] = React.useState(false)
+  const [selectedUserId, setSelectedUserId] = React.useState<string>('')
+  const [escalateReason, setEscalateReason] = React.useState('')
+
+  // Fetch team members for reassignment
+  const { data: teamMembers } = trpc.team.list.useQuery(undefined, {
+    enabled: reassignDialogOpen,
+  })
+
+  // Reassign mutation
+  const reassignMutation = trpc.activities.reassign.useMutation({
+    onSuccess: () => {
+      toast({ title: 'Activity reassigned' })
+      setReassignDialogOpen(false)
+      setSelectedUserId('')
+      refreshData()
+    },
+    onError: (error) => {
+      toast({ title: 'Error', description: error.message, variant: 'error' })
+    },
+  })
+
+  // Escalate mutation
+  const escalateMutation = trpc.activities.escalateManually.useMutation({
+    onSuccess: () => {
+      toast({ title: 'Activity escalated' })
+      setEscalateDialogOpen(false)
+      setEscalateReason('')
+      refreshData()
+    },
+    onError: (error) => {
+      toast({ title: 'Error', description: error.message, variant: 'error' })
+    },
+  })
+
+  const handleReassign = () => {
+    if (!selectedUserId) return
+    reassignMutation.mutate({
+      activityId: activity.id,
+      assignedTo: selectedUserId,
+    })
+  }
+
+  const handleEscalate = () => {
+    if (!escalateReason.trim()) return
+    escalateMutation.mutate({
+      activityId: activity.id,
+      reason: escalateReason,
+    })
+  }
   const detail = activityDetail as {
     activity: {
       id: string
@@ -1021,11 +1092,15 @@ function ActivityDetailBottomPanel({
                   <SkipForward className="h-4 w-4 mr-1.5" />
                   Skip
                 </Button>
-                <Button variant="outline">
+                <Button variant="outline" onClick={() => setReassignDialogOpen(true)}>
                   <UserPlus className="h-4 w-4 mr-1.5" />
                   Reassign
                 </Button>
-                <Button variant="outline" className="text-error-600 hover:text-error-700 hover:bg-error-50">
+                <Button
+                  variant="outline"
+                  className="text-error-600 hover:text-error-700 hover:bg-error-50"
+                  onClick={() => setEscalateDialogOpen(true)}
+                >
                   <AlertTriangle className="h-4 w-4 mr-1.5" />
                   Escalate
                 </Button>
@@ -1034,6 +1109,82 @@ function ActivityDetailBottomPanel({
           </>
         )}
       </div>
+
+      {/* Reassign Dialog */}
+      <Dialog open={reassignDialogOpen} onOpenChange={setReassignDialogOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Reassign Activity</DialogTitle>
+            <DialogDescription>
+              Select a team member to reassign this activity to.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="assignee">Assign to</Label>
+              <Select value={selectedUserId} onValueChange={setSelectedUserId}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a team member" />
+                </SelectTrigger>
+                <SelectContent>
+                  {teamMembers?.map((member) => (
+                    <SelectItem key={member.id} value={member.id}>
+                      {member.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setReassignDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              onClick={handleReassign}
+              disabled={!selectedUserId || reassignMutation.isPending}
+            >
+              {reassignMutation.isPending ? 'Reassigning...' : 'Reassign'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Escalate Dialog */}
+      <Dialog open={escalateDialogOpen} onOpenChange={setEscalateDialogOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Escalate Activity</DialogTitle>
+            <DialogDescription>
+              Provide a reason for escalating this activity. The priority will be increased.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="reason">Reason for escalation</Label>
+              <Textarea
+                id="reason"
+                value={escalateReason}
+                onChange={(e) => setEscalateReason(e.target.value)}
+                placeholder="Explain why this activity needs to be escalated..."
+                className="min-h-[100px]"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEscalateDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleEscalate}
+              disabled={!escalateReason.trim() || escalateMutation.isPending}
+            >
+              {escalateMutation.isPending ? 'Escalating...' : 'Escalate'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* CSS for animations */}
       <style jsx>{`
