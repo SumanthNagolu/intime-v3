@@ -313,10 +313,21 @@ export interface AccountActivity {
 
 export interface AccountNote {
   id: string
+  title: string | null
   content: string
+  noteType: 'general' | 'meeting' | 'call' | 'strategy' | 'warning' | 'opportunity' | 'competitive_intel' | 'internal' | 'important' | 'reminder'
+  visibility: 'private' | 'team' | 'organization'
   createdAt: string
-  createdBy: string
+  updatedAt: string | null
+  creator: {
+    id: string
+    full_name: string
+    avatar_url: string | null
+  } | null
   isPinned: boolean
+  isStarred: boolean
+  replyCount: number
+  tags: string[] | null
 }
 
 export interface AccountDocument {
@@ -327,10 +338,19 @@ export interface AccountDocument {
   uploadedAt: string
   uploadedBy: string
   url: string
-  // Phase 2 enhancement: document expiration tracking
+  // Phase 2 enhancement: document/contract tracking
   category?: string
   status?: string
   expirationDate?: string | null
+  // Extended contract fields
+  contractNumber?: string
+  contractValue?: number
+  currency?: string
+  effectiveDate?: string
+  autoRenew?: boolean
+  renewalTermMonths?: number
+  renewalNoticeDays?: number
+  notes?: string
 }
 
 export interface HistoryEntry {
