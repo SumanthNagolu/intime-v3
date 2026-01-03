@@ -1,26 +1,5 @@
-import { pgTable, index, foreignKey, unique, pgPolicy, uuid, integer, timestamp, text, jsonb, boolean, check, numeric, date, doublePrecision, type AnyPgColumn, vector, time, bigint, varchar, uniqueIndex, inet, char, interval, primaryKey, pgMaterializedView, pgView, pgSequence, pgEnum, customType } from "drizzle-orm/pg-core"
+import { pgTable, index, foreignKey, unique, pgPolicy, uuid, integer, timestamp, text, jsonb, boolean, check, numeric, date, doublePrecision, type AnyPgColumn, vector, time, bigint, varchar, uniqueIndex, inet, char, interval, primaryKey, pgMaterializedView, pgView, pgSequence, pgEnum } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
-
-// Custom type for PostgreSQL tsvector (full-text search)
-const tsvector = customType<{ data: string }>({
-  dataType() {
-    return 'tsvector'
-  },
-})
-
-// Custom type for PostgreSQL name (system catalog identifier)
-const pgName = customType<{ data: string }>({
-  dataType() {
-    return 'name'
-  },
-})
-
-// Custom type for PostgreSQL name[] (array of system catalog identifiers)
-const pgNameArray = customType<{ data: string[] }>({
-  dataType() {
-    return 'name[]'
-  },
-})
 
 export const activityDirection = pgEnum("activity_direction", ['inbound', 'outbound'])
 export const activityOutcome = pgEnum("activity_outcome", ['positive', 'neutral', 'negative'])
@@ -361,7 +340,7 @@ export const leads = pgTable("leads", {
 	accountId: uuid("account_id"),
 	notes: text(),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: tsvector("search_vector"),
+	searchVector: unknown("search_vector"),
 	bantBudget: integer("bant_budget").default(0),
 	bantAuthority: integer("bant_authority").default(0),
 	bantNeed: integer("bant_need").default(0),
@@ -925,7 +904,7 @@ export const projectTimeline = pgTable("project_timeline", {
 	aiGeneratedSummary: text("ai_generated_summary"),
 	keyLearnings: text("key_learnings").array(),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: tsvector("search_vector"),
+	searchVector: unknown("search_vector"),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow(),
 	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow(),
 	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
@@ -4148,7 +4127,7 @@ export const candidateSkills = pgTable("candidate_skills", {
 	index("idx_candidate_skills_skill").using("btree", table.skillId.asc().nullsLast().op("uuid_ops")),
 	foreignKey({
 			columns: [table.candidateId],
-			foreignColumns: [userProfiles.id],
+			foreignColumns: [candidates.id],
 			name: "candidate_skills_candidate_id_fkey"
 		}).onDelete("cascade"),
 	foreignKey({
@@ -4196,18 +4175,29 @@ export const pods = pgTable("pods", {
 	sendSprintSummary: boolean("send_sprint_summary").default(true),
 	sendMidpointCheck: boolean("send_midpoint_check").default(true),
 	alertIfBelowTarget: boolean("alert_if_below_target").default(true),
+	parentId: uuid("parent_id"),
+	hierarchyLevel: integer("hierarchy_level").default(0),
+	groupId: uuid("group_id"),
 }, (table) => [
 	index("idx_pods_active").using("btree", table.isActive.asc().nullsLast().op("bool_ops")).where(sql`(is_active = true)`),
+	index("idx_pods_group_id").using("btree", table.groupId.asc().nullsLast().op("uuid_ops")),
 	index("idx_pods_manager_id").using("btree", table.managerId.asc().nullsLast().op("uuid_ops")),
 	index("idx_pods_members").using("btree", table.seniorMemberId.asc().nullsLast().op("uuid_ops"), table.juniorMemberId.asc().nullsLast().op("uuid_ops")),
 	index("idx_pods_org").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")),
 	index("idx_pods_region_id").using("btree", table.regionId.asc().nullsLast().op("uuid_ops")),
 	index("idx_pods_type").using("btree", table.podType.asc().nullsLast().op("text_ops")),
+	index("pods_hierarchy_level_idx").using("btree", table.hierarchyLevel.asc().nullsLast().op("int4_ops")).where(sql`(deleted_at IS NULL)`),
+	index("pods_parent_id_idx").using("btree", table.parentId.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
 	foreignKey({
 			columns: [table.createdBy],
 			foreignColumns: [userProfiles.id],
 			name: "pods_created_by_fkey"
 		}),
+	foreignKey({
+			columns: [table.groupId],
+			foreignColumns: [groups.id],
+			name: "pods_group_id_fkey"
+		}).onDelete("set null"),
 	foreignKey({
 			columns: [table.juniorMemberId],
 			foreignColumns: [userProfiles.id],
@@ -4223,6 +4213,11 @@ export const pods = pgTable("pods", {
 			foreignColumns: [organizations.id],
 			name: "pods_org_id_fkey"
 		}).onDelete("cascade"),
+	foreignKey({
+			columns: [table.parentId],
+			foreignColumns: [table.id],
+			name: "pods_parent_id_fkey"
+		}),
 	foreignKey({
 			columns: [table.regionId],
 			foreignColumns: [regions.id],
@@ -4926,189 +4921,6 @@ export const candidateResumes = pgTable("candidate_resumes", {
 	pgPolicy("Users can view resumes in their org", { as: "permissive", for: "select", to: ["public"] }),
 ]);
 
-export const userProfiles = pgTable("user_profiles", {
-	id: uuid().default(sql`uuid_generate_v4()`).primaryKey().notNull(),
-	authId: uuid("auth_id"),
-	email: text().notNull(),
-	fullName: text("full_name").notNull(),
-	avatarUrl: text("avatar_url"),
-	phone: text(),
-	timezone: text().default('America/New_York'),
-	locale: text().default('en-US'),
-	studentEnrollmentDate: timestamp("student_enrollment_date", { withTimezone: true, mode: 'string' }),
-	studentCourseId: uuid("student_course_id"),
-	studentCurrentModule: text("student_current_module"),
-	studentCourseProgress: jsonb("student_course_progress").default({}),
-	studentGraduationDate: timestamp("student_graduation_date", { withTimezone: true, mode: 'string' }),
-	studentCertificates: jsonb("student_certificates").default([]),
-	employeeHireDate: timestamp("employee_hire_date", { withTimezone: true, mode: 'string' }),
-	employeeDepartment: text("employee_department"),
-	employeePosition: text("employee_position"),
-	employeeSalary: numeric("employee_salary", { precision: 10, scale:  2 }),
-	employeeStatus: text("employee_status"),
-	employeeManagerId: uuid("employee_manager_id"),
-	employeePerformanceRating: numeric("employee_performance_rating", { precision: 3, scale:  2 }),
-	candidateStatus: text("candidate_status"),
-	candidateResumeUrl: text("candidate_resume_url"),
-	candidateSkills: text("candidate_skills").array(),
-	candidateExperienceYears: integer("candidate_experience_years"),
-	candidateCurrentVisa: text("candidate_current_visa"),
-	candidateVisaExpiry: timestamp("candidate_visa_expiry", { withTimezone: true, mode: 'string' }),
-	candidateHourlyRate: numeric("candidate_hourly_rate", { precision: 10, scale:  2 }),
-	candidateBenchStartDate: timestamp("candidate_bench_start_date", { withTimezone: true, mode: 'string' }),
-	candidateAvailability: text("candidate_availability"),
-	candidateLocation: text("candidate_location"),
-	candidateWillingToRelocate: boolean("candidate_willing_to_relocate").default(false),
-	clientCompanyName: text("client_company_name"),
-	clientIndustry: text("client_industry"),
-	clientTier: text("client_tier"),
-	clientContractStartDate: timestamp("client_contract_start_date", { withTimezone: true, mode: 'string' }),
-	clientContractEndDate: timestamp("client_contract_end_date", { withTimezone: true, mode: 'string' }),
-	clientPaymentTerms: integer("client_payment_terms").default(30),
-	clientPreferredMarkupPercentage: numeric("client_preferred_markup_percentage", { precision: 5, scale:  2 }),
-	recruiterTerritory: text("recruiter_territory"),
-	recruiterSpecialization: text("recruiter_specialization").array(),
-	recruiterMonthlyPlacementTarget: integer("recruiter_monthly_placement_target").default(2),
-	recruiterPodId: uuid("recruiter_pod_id"),
-	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
-	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
-	createdBy: uuid("created_by"),
-	updatedBy: uuid("updated_by"),
-	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
-	isActive: boolean("is_active").default(true),
-	// TODO: failed to parse database type 'tsvector'
-	searchVector: tsvector("search_vector"),
-	orgId: uuid("org_id").notNull(),
-	leaderboardVisible: boolean("leaderboard_visible").default(true),
-	firstName: text("first_name"),
-	lastName: text("last_name"),
-	middleName: text("middle_name"),
-	preferredName: text("preferred_name"),
-	dateOfBirth: date("date_of_birth"),
-	gender: text(),
-	nationality: text(),
-	emailSecondary: text("email_secondary"),
-	phoneHome: text("phone_home"),
-	phoneWork: text("phone_work"),
-	preferredContactMethod: text("preferred_contact_method"),
-	preferredCallTime: text("preferred_call_time"),
-	doNotContact: boolean("do_not_contact").default(false),
-	doNotEmail: boolean("do_not_email").default(false),
-	doNotText: boolean("do_not_text").default(false),
-	linkedinUrl: text("linkedin_url"),
-	githubUrl: text("github_url"),
-	portfolioUrl: text("portfolio_url"),
-	personalWebsite: text("personal_website"),
-	emergencyContactName: text("emergency_contact_name"),
-	emergencyContactRelationship: text("emergency_contact_relationship"),
-	emergencyContactPhone: text("emergency_contact_phone"),
-	emergencyContactEmail: text("emergency_contact_email"),
-	leadSource: text("lead_source"),
-	leadSourceDetail: text("lead_source_detail"),
-	marketingStatus: text("marketing_status"),
-	isOnHotlist: boolean("is_on_hotlist").default(false),
-	hotlistAddedAt: timestamp("hotlist_added_at", { withTimezone: true, mode: 'string' }),
-	hotlistAddedBy: uuid("hotlist_added_by"),
-	hotlistNotes: text("hotlist_notes"),
-	currentEmploymentStatus: text("current_employment_status"),
-	noticePeriodDays: integer("notice_period_days"),
-	earliestStartDate: date("earliest_start_date"),
-	preferredEmploymentType: text("preferred_employment_type").array(),
-	preferredLocations: text("preferred_locations").array(),
-	relocationAssistanceRequired: boolean("relocation_assistance_required").default(false),
-	relocationNotes: text("relocation_notes"),
-	desiredSalaryAnnual: numeric("desired_salary_annual", { precision: 12, scale:  2 }),
-	desiredSalaryCurrency: text("desired_salary_currency").default('USD'),
-	minimumHourlyRate: numeric("minimum_hourly_rate", { precision: 10, scale:  2 }),
-	minimumAnnualSalary: numeric("minimum_annual_salary", { precision: 12, scale:  2 }),
-	benefitsRequired: text("benefits_required").array(),
-	compensationNotes: text("compensation_notes"),
-	languages: jsonb().default([]),
-	recruiterRating: integer("recruiter_rating"),
-	recruiterRatingNotes: text("recruiter_rating_notes"),
-	profileCompletenessScore: integer("profile_completeness_score").default(0),
-	lastProfileUpdate: timestamp("last_profile_update", { withTimezone: true, mode: 'string' }),
-	lastActivityDate: timestamp("last_activity_date", { withTimezone: true, mode: 'string' }),
-	lastContactedAt: timestamp("last_contacted_at", { withTimezone: true, mode: 'string' }),
-	lastContactedBy: uuid("last_contacted_by"),
-	professionalHeadline: text("professional_headline"),
-	professionalSummary: text("professional_summary"),
-	careerObjectives: text("career_objectives"),
-	tags: text().array(),
-	categories: text().array(),
-	employeeRole: text("employee_role"),
-	stripeCustomerId: text("stripe_customer_id"),
-	title: text(),
-	totalPlacements: integer("total_placements").default(0),
-	managerId: uuid("manager_id"),
-	twoFactorEnabled: boolean("two_factor_enabled").default(false),
-	passwordChangedAt: timestamp("password_changed_at", { withTimezone: true, mode: 'string' }),
-	startDate: date("start_date"),
-	lastLoginAt: timestamp("last_login_at", { withTimezone: true, mode: 'string' }),
-	roleId: uuid("role_id"),
-	status: text().default('active'),
-}, (table) => [
-	index("idx_user_profiles_active").using("btree", table.isActive.asc().nullsLast().op("bool_ops")).where(sql`(deleted_at IS NULL)`),
-	index("idx_user_profiles_auth").using("btree", table.authId.asc().nullsLast().op("uuid_ops")),
-	index("idx_user_profiles_auth_id").using("btree", table.authId.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
-	index("idx_user_profiles_auth_lookup").using("btree", table.authId.asc().nullsLast().op("uuid_ops"), table.orgId.asc().nullsLast().op("text_ops"), table.email.asc().nullsLast().op("text_ops")).where(sql`((deleted_at IS NULL) AND (is_active = true))`),
-	index("idx_user_profiles_candidate_skills").using("gin", table.candidateSkills.asc().nullsLast().op("array_ops")).where(sql`((candidate_skills IS NOT NULL) AND (deleted_at IS NULL))`),
-	index("idx_user_profiles_candidate_status").using("btree", table.candidateStatus.asc().nullsLast().op("text_ops")).where(sql`((candidate_status IS NOT NULL) AND (deleted_at IS NULL))`),
-	index("idx_user_profiles_client_tier").using("btree", table.clientTier.asc().nullsLast().op("text_ops")).where(sql`((client_tier IS NOT NULL) AND (deleted_at IS NULL))`),
-	index("idx_user_profiles_created_at").using("btree", table.createdAt.desc().nullsFirst().op("timestamptz_ops")),
-	index("idx_user_profiles_email").using("btree", table.email.asc().nullsLast().op("text_ops")).where(sql`(deleted_at IS NULL)`),
-	index("idx_user_profiles_employee_department").using("btree", table.employeeDepartment.asc().nullsLast().op("text_ops")).where(sql`((employee_department IS NOT NULL) AND (deleted_at IS NULL))`),
-	index("idx_user_profiles_employee_role").using("btree", table.employeeRole.asc().nullsLast().op("text_ops")).where(sql`(deleted_at IS NULL)`),
-	index("idx_user_profiles_last_login").using("btree", table.lastLoginAt.desc().nullsFirst().op("timestamptz_ops")),
-	index("idx_user_profiles_leaderboard_visible").using("btree", table.leaderboardVisible.asc().nullsLast().op("bool_ops")).where(sql`(leaderboard_visible = true)`),
-	index("idx_user_profiles_manager").using("btree", table.managerId.asc().nullsLast().op("uuid_ops")),
-	index("idx_user_profiles_not_deleted").using("btree", table.id.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
-	index("idx_user_profiles_org").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")),
-	index("idx_user_profiles_org_id").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")),
-	index("idx_user_profiles_org_id_active").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
-	index("idx_user_profiles_role").using("btree", table.roleId.asc().nullsLast().op("uuid_ops")),
-	index("idx_user_profiles_search").using("gin", table.searchVector.asc().nullsLast().op("tsvector_ops")),
-	index("idx_user_profiles_status").using("btree", table.status.asc().nullsLast().op("text_ops")),
-	index("idx_user_profiles_stripe_customer").using("btree", table.stripeCustomerId.asc().nullsLast().op("text_ops")).where(sql`(stripe_customer_id IS NOT NULL)`),
-	index("idx_user_profiles_updated_at").using("btree", table.updatedAt.desc().nullsFirst().op("timestamptz_ops")),
-	foreignKey({
-			columns: [table.managerId],
-			foreignColumns: [table.id],
-			name: "user_profiles_manager_id_fkey"
-		}),
-	foreignKey({
-			columns: [table.orgId],
-			foreignColumns: [organizations.id],
-			name: "user_profiles_org_id_fkey"
-		}).onDelete("cascade"),
-	foreignKey({
-			columns: [table.roleId],
-			foreignColumns: [systemRoles.id],
-			name: "user_profiles_role_id_fkey"
-		}),
-	unique("user_profiles_auth_id_key").on(table.authId),
-	unique("user_profiles_email_key").on(table.email),
-	pgPolicy("Admins can insert profiles", { as: "permissive", for: "insert", to: ["public"], withCheck: sql`user_is_admin()`  }),
-	pgPolicy("Admins can soft delete profiles", { as: "permissive", for: "update", to: ["public"] }),
-	pgPolicy("Admins can update any profile", { as: "permissive", for: "update", to: ["public"] }),
-	pgPolicy("Admins can view all profiles", { as: "permissive", for: "select", to: ["public"] }),
-	pgPolicy("HR managers can view employees", { as: "permissive", for: "select", to: ["public"] }),
-	pgPolicy("Recruiters can view candidates", { as: "permissive", for: "select", to: ["public"] }),
-	pgPolicy("Trainers can view students", { as: "permissive", for: "select", to: ["public"] }),
-	pgPolicy("Users can update own profile", { as: "permissive", for: "update", to: ["public"] }),
-	pgPolicy("Users can view own profile", { as: "permissive", for: "select", to: ["public"] }),
-	pgPolicy("Users can view profiles in their org", { as: "permissive", for: "select", to: ["public"] }),
-	pgPolicy("candidates_context_read", { as: "permissive", for: "select", to: ["public"] }),
-	pgPolicy("user_profiles_org_isolation", { as: "permissive", for: "all", to: ["public"] }),
-	check("user_profiles_status_check", sql`status = ANY (ARRAY['pending'::text, 'active'::text, 'suspended'::text, 'deactivated'::text])`),
-	check("valid_candidate_availability", sql`(candidate_availability IS NULL) OR (candidate_availability = ANY (ARRAY['immediate'::text, '2_weeks'::text, '1_month'::text]))`),
-	check("valid_candidate_status", sql`(candidate_status IS NULL) OR (candidate_status = ANY (ARRAY['active'::text, 'placed'::text, 'bench'::text, 'inactive'::text, 'blacklisted'::text]))`),
-	check("valid_client_tier", sql`(client_tier IS NULL) OR (client_tier = ANY (ARRAY['preferred'::text, 'strategic'::text, 'exclusive'::text]))`),
-	check("valid_email", sql`email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$'::text`),
-	check("valid_employee_status", sql`(employee_status IS NULL) OR (employee_status = ANY (ARRAY['active'::text, 'on_leave'::text, 'terminated'::text]))`),
-	check("valid_phone", sql`(phone IS NULL) OR (phone ~* '^\+?[1-9]\d{1,14}$'::text)`),
-]);
-
 export const candidateBackgroundChecks = pgTable("candidate_background_checks", {
 	id: uuid().defaultRandom().primaryKey().notNull(),
 	orgId: uuid("org_id").notNull(),
@@ -5186,6 +4998,196 @@ export const candidateBackgroundChecks = pgTable("candidate_background_checks", 
 			name: "candidate_background_checks_submission_id_fkey"
 		}).onDelete("set null"),
 	pgPolicy("bgv_service_all", { as: "permissive", for: "all", to: ["service_role"], using: sql`true`, withCheck: sql`true`  }),
+]);
+
+export const userProfiles = pgTable("user_profiles", {
+	id: uuid().default(sql`uuid_generate_v4()`).primaryKey().notNull(),
+	authId: uuid("auth_id"),
+	email: text().notNull(),
+	fullName: text("full_name").notNull(),
+	avatarUrl: text("avatar_url"),
+	phone: text(),
+	timezone: text().default('America/New_York'),
+	locale: text().default('en-US'),
+	studentEnrollmentDate: timestamp("student_enrollment_date", { withTimezone: true, mode: 'string' }),
+	studentCourseId: uuid("student_course_id"),
+	studentCurrentModule: text("student_current_module"),
+	studentCourseProgress: jsonb("student_course_progress").default({}),
+	studentGraduationDate: timestamp("student_graduation_date", { withTimezone: true, mode: 'string' }),
+	studentCertificates: jsonb("student_certificates").default([]),
+	employeeHireDate: timestamp("employee_hire_date", { withTimezone: true, mode: 'string' }),
+	employeeDepartment: text("employee_department"),
+	employeePosition: text("employee_position"),
+	employeeSalary: numeric("employee_salary", { precision: 10, scale:  2 }),
+	employeeStatus: text("employee_status"),
+	employeeManagerId: uuid("employee_manager_id"),
+	employeePerformanceRating: numeric("employee_performance_rating", { precision: 3, scale:  2 }),
+	candidateStatus: text("candidate_status"),
+	candidateResumeUrl: text("candidate_resume_url"),
+	candidateSkills: text("candidate_skills").array(),
+	candidateExperienceYears: integer("candidate_experience_years"),
+	candidateCurrentVisa: text("candidate_current_visa"),
+	candidateVisaExpiry: timestamp("candidate_visa_expiry", { withTimezone: true, mode: 'string' }),
+	candidateHourlyRate: numeric("candidate_hourly_rate", { precision: 10, scale:  2 }),
+	candidateBenchStartDate: timestamp("candidate_bench_start_date", { withTimezone: true, mode: 'string' }),
+	candidateAvailability: text("candidate_availability"),
+	candidateLocation: text("candidate_location"),
+	candidateWillingToRelocate: boolean("candidate_willing_to_relocate").default(false),
+	clientCompanyName: text("client_company_name"),
+	clientIndustry: text("client_industry"),
+	clientTier: text("client_tier"),
+	clientContractStartDate: timestamp("client_contract_start_date", { withTimezone: true, mode: 'string' }),
+	clientContractEndDate: timestamp("client_contract_end_date", { withTimezone: true, mode: 'string' }),
+	clientPaymentTerms: integer("client_payment_terms").default(30),
+	clientPreferredMarkupPercentage: numeric("client_preferred_markup_percentage", { precision: 5, scale:  2 }),
+	recruiterTerritory: text("recruiter_territory"),
+	recruiterSpecialization: text("recruiter_specialization").array(),
+	recruiterMonthlyPlacementTarget: integer("recruiter_monthly_placement_target").default(2),
+	recruiterPodId: uuid("recruiter_pod_id"),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	createdBy: uuid("created_by"),
+	updatedBy: uuid("updated_by"),
+	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
+	isActive: boolean("is_active").default(true),
+	// TODO: failed to parse database type 'tsvector'
+	searchVector: unknown("search_vector"),
+	orgId: uuid("org_id").notNull(),
+	leaderboardVisible: boolean("leaderboard_visible").default(true),
+	firstName: text("first_name"),
+	lastName: text("last_name"),
+	middleName: text("middle_name"),
+	preferredName: text("preferred_name"),
+	dateOfBirth: date("date_of_birth"),
+	gender: text(),
+	nationality: text(),
+	emailSecondary: text("email_secondary"),
+	phoneHome: text("phone_home"),
+	phoneWork: text("phone_work"),
+	preferredContactMethod: text("preferred_contact_method"),
+	preferredCallTime: text("preferred_call_time"),
+	doNotContact: boolean("do_not_contact").default(false),
+	doNotEmail: boolean("do_not_email").default(false),
+	doNotText: boolean("do_not_text").default(false),
+	linkedinUrl: text("linkedin_url"),
+	githubUrl: text("github_url"),
+	portfolioUrl: text("portfolio_url"),
+	personalWebsite: text("personal_website"),
+	emergencyContactName: text("emergency_contact_name"),
+	emergencyContactRelationship: text("emergency_contact_relationship"),
+	emergencyContactPhone: text("emergency_contact_phone"),
+	emergencyContactEmail: text("emergency_contact_email"),
+	leadSource: text("lead_source"),
+	leadSourceDetail: text("lead_source_detail"),
+	marketingStatus: text("marketing_status"),
+	isOnHotlist: boolean("is_on_hotlist").default(false),
+	hotlistAddedAt: timestamp("hotlist_added_at", { withTimezone: true, mode: 'string' }),
+	hotlistAddedBy: uuid("hotlist_added_by"),
+	hotlistNotes: text("hotlist_notes"),
+	currentEmploymentStatus: text("current_employment_status"),
+	noticePeriodDays: integer("notice_period_days"),
+	earliestStartDate: date("earliest_start_date"),
+	preferredEmploymentType: text("preferred_employment_type").array(),
+	preferredLocations: text("preferred_locations").array(),
+	relocationAssistanceRequired: boolean("relocation_assistance_required").default(false),
+	relocationNotes: text("relocation_notes"),
+	desiredSalaryAnnual: numeric("desired_salary_annual", { precision: 12, scale:  2 }),
+	desiredSalaryCurrency: text("desired_salary_currency").default('USD'),
+	minimumHourlyRate: numeric("minimum_hourly_rate", { precision: 10, scale:  2 }),
+	minimumAnnualSalary: numeric("minimum_annual_salary", { precision: 12, scale:  2 }),
+	benefitsRequired: text("benefits_required").array(),
+	compensationNotes: text("compensation_notes"),
+	languages: jsonb().default([]),
+	recruiterRating: integer("recruiter_rating"),
+	recruiterRatingNotes: text("recruiter_rating_notes"),
+	profileCompletenessScore: integer("profile_completeness_score").default(0),
+	lastProfileUpdate: timestamp("last_profile_update", { withTimezone: true, mode: 'string' }),
+	lastActivityDate: timestamp("last_activity_date", { withTimezone: true, mode: 'string' }),
+	lastContactedAt: timestamp("last_contacted_at", { withTimezone: true, mode: 'string' }),
+	lastContactedBy: uuid("last_contacted_by"),
+	professionalHeadline: text("professional_headline"),
+	professionalSummary: text("professional_summary"),
+	careerObjectives: text("career_objectives"),
+	tags: text().array(),
+	categories: text().array(),
+	employeeRole: text("employee_role"),
+	stripeCustomerId: text("stripe_customer_id"),
+	title: text(),
+	totalPlacements: integer("total_placements").default(0),
+	managerId: uuid("manager_id"),
+	twoFactorEnabled: boolean("two_factor_enabled").default(false),
+	passwordChangedAt: timestamp("password_changed_at", { withTimezone: true, mode: 'string' }),
+	startDate: date("start_date"),
+	lastLoginAt: timestamp("last_login_at", { withTimezone: true, mode: 'string' }),
+	roleId: uuid("role_id"),
+	status: text().default('active'),
+	primaryGroupId: uuid("primary_group_id"),
+}, (table) => [
+	index("idx_user_profiles_active").using("btree", table.isActive.asc().nullsLast().op("bool_ops")).where(sql`(deleted_at IS NULL)`),
+	index("idx_user_profiles_auth").using("btree", table.authId.asc().nullsLast().op("uuid_ops")),
+	index("idx_user_profiles_auth_id").using("btree", table.authId.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
+	index("idx_user_profiles_auth_lookup").using("btree", table.authId.asc().nullsLast().op("uuid_ops"), table.orgId.asc().nullsLast().op("text_ops"), table.email.asc().nullsLast().op("uuid_ops")).where(sql`((deleted_at IS NULL) AND (is_active = true))`),
+	index("idx_user_profiles_candidate_skills").using("gin", table.candidateSkills.asc().nullsLast().op("array_ops")).where(sql`((candidate_skills IS NOT NULL) AND (deleted_at IS NULL))`),
+	index("idx_user_profiles_candidate_status").using("btree", table.candidateStatus.asc().nullsLast().op("text_ops")).where(sql`((candidate_status IS NOT NULL) AND (deleted_at IS NULL))`),
+	index("idx_user_profiles_client_tier").using("btree", table.clientTier.asc().nullsLast().op("text_ops")).where(sql`((client_tier IS NOT NULL) AND (deleted_at IS NULL))`),
+	index("idx_user_profiles_created_at").using("btree", table.createdAt.desc().nullsFirst().op("timestamptz_ops")),
+	index("idx_user_profiles_email").using("btree", table.email.asc().nullsLast().op("text_ops")).where(sql`(deleted_at IS NULL)`),
+	index("idx_user_profiles_employee_department").using("btree", table.employeeDepartment.asc().nullsLast().op("text_ops")).where(sql`((employee_department IS NOT NULL) AND (deleted_at IS NULL))`),
+	index("idx_user_profiles_employee_role").using("btree", table.employeeRole.asc().nullsLast().op("text_ops")).where(sql`(deleted_at IS NULL)`),
+	index("idx_user_profiles_last_login").using("btree", table.lastLoginAt.desc().nullsFirst().op("timestamptz_ops")),
+	index("idx_user_profiles_leaderboard_visible").using("btree", table.leaderboardVisible.asc().nullsLast().op("bool_ops")).where(sql`(leaderboard_visible = true)`),
+	index("idx_user_profiles_manager").using("btree", table.managerId.asc().nullsLast().op("uuid_ops")),
+	index("idx_user_profiles_not_deleted").using("btree", table.id.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
+	index("idx_user_profiles_org").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")),
+	index("idx_user_profiles_org_id").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")),
+	index("idx_user_profiles_org_id_active").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
+	index("idx_user_profiles_primary_group").using("btree", table.primaryGroupId.asc().nullsLast().op("uuid_ops")),
+	index("idx_user_profiles_role").using("btree", table.roleId.asc().nullsLast().op("uuid_ops")),
+	index("idx_user_profiles_search").using("gin", table.searchVector.asc().nullsLast().op("tsvector_ops")),
+	index("idx_user_profiles_status").using("btree", table.status.asc().nullsLast().op("text_ops")),
+	index("idx_user_profiles_stripe_customer").using("btree", table.stripeCustomerId.asc().nullsLast().op("text_ops")).where(sql`(stripe_customer_id IS NOT NULL)`),
+	index("idx_user_profiles_updated_at").using("btree", table.updatedAt.desc().nullsFirst().op("timestamptz_ops")),
+	foreignKey({
+			columns: [table.managerId],
+			foreignColumns: [table.id],
+			name: "user_profiles_manager_id_fkey"
+		}),
+	foreignKey({
+			columns: [table.orgId],
+			foreignColumns: [organizations.id],
+			name: "user_profiles_org_id_fkey"
+		}).onDelete("cascade"),
+	foreignKey({
+			columns: [table.primaryGroupId],
+			foreignColumns: [groups.id],
+			name: "user_profiles_primary_group_id_fkey"
+		}).onDelete("set null"),
+	foreignKey({
+			columns: [table.roleId],
+			foreignColumns: [systemRoles.id],
+			name: "user_profiles_role_id_fkey"
+		}),
+	unique("user_profiles_auth_id_key").on(table.authId),
+	unique("user_profiles_email_key").on(table.email),
+	pgPolicy("Admins can insert profiles", { as: "permissive", for: "insert", to: ["public"], withCheck: sql`user_is_admin()`  }),
+	pgPolicy("Admins can soft delete profiles", { as: "permissive", for: "update", to: ["public"] }),
+	pgPolicy("Admins can update any profile", { as: "permissive", for: "update", to: ["public"] }),
+	pgPolicy("Admins can view all profiles", { as: "permissive", for: "select", to: ["public"] }),
+	pgPolicy("HR managers can view employees", { as: "permissive", for: "select", to: ["public"] }),
+	pgPolicy("Recruiters can view candidates", { as: "permissive", for: "select", to: ["public"] }),
+	pgPolicy("Trainers can view students", { as: "permissive", for: "select", to: ["public"] }),
+	pgPolicy("Users can update own profile", { as: "permissive", for: "update", to: ["public"] }),
+	pgPolicy("Users can view own profile", { as: "permissive", for: "select", to: ["public"] }),
+	pgPolicy("Users can view profiles in their org", { as: "permissive", for: "select", to: ["public"] }),
+	pgPolicy("candidates_context_read", { as: "permissive", for: "select", to: ["public"] }),
+	pgPolicy("user_profiles_org_isolation", { as: "permissive", for: "all", to: ["public"] }),
+	check("user_profiles_status_check", sql`status = ANY (ARRAY['pending'::text, 'active'::text, 'suspended'::text, 'deactivated'::text])`),
+	check("valid_candidate_availability", sql`(candidate_availability IS NULL) OR (candidate_availability = ANY (ARRAY['immediate'::text, '2_weeks'::text, '1_month'::text]))`),
+	check("valid_candidate_status", sql`(candidate_status IS NULL) OR (candidate_status = ANY (ARRAY['active'::text, 'placed'::text, 'bench'::text, 'inactive'::text, 'blacklisted'::text]))`),
+	check("valid_client_tier", sql`(client_tier IS NULL) OR (client_tier = ANY (ARRAY['preferred'::text, 'strategic'::text, 'exclusive'::text]))`),
+	check("valid_email", sql`email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$'::text`),
+	check("valid_employee_status", sql`(employee_status IS NULL) OR (employee_status = ANY (ARRAY['active'::text, 'on_leave'::text, 'terminated'::text]))`),
+	check("valid_phone", sql`(phone IS NULL) OR (phone ~* '^\+?[1-9]\d{1,14}$'::text)`),
 ]);
 
 export const candidateCertifications = pgTable("candidate_certifications", {
@@ -6446,6 +6448,95 @@ export const consultantRates = pgTable("consultant_rates", {
 			foreignColumns: [userProfiles.id],
 			name: "consultant_rates_created_by_fkey"
 		}),
+]);
+
+export const candidates = pgTable("candidates", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	orgId: uuid("org_id").notNull(),
+	firstName: text("first_name").notNull(),
+	lastName: text("last_name").notNull(),
+	email: text().notNull(),
+	phone: text(),
+	linkedinUrl: text("linkedin_url"),
+	avatarUrl: text("avatar_url"),
+	title: text(),
+	professionalSummary: text("professional_summary"),
+	yearsExperience: integer("years_experience").default(0),
+	visaStatus: text("visa_status").default('us_citizen'),
+	visaExpiryDate: timestamp("visa_expiry_date", { withTimezone: true, mode: 'string' }),
+	availability: text().default('2_weeks'),
+	location: text(),
+	willingToRelocate: boolean("willing_to_relocate").default(false),
+	isRemoteOk: boolean("is_remote_ok").default(false),
+	minimumRate: numeric("minimum_rate", { precision: 10, scale:  2 }),
+	desiredRate: numeric("desired_rate", { precision: 10, scale:  2 }),
+	rateType: text("rate_type").default('hourly'),
+	leadSource: text("lead_source"),
+	leadSourceDetail: text("lead_source_detail"),
+	tags: text().array().default([""]),
+	status: text().default('active').notNull(),
+	isOnHotlist: boolean("is_on_hotlist").default(false),
+	hotlistNotes: text("hotlist_notes"),
+	hotlistAddedAt: timestamp("hotlist_added_at", { withTimezone: true, mode: 'string' }),
+	hotlistAddedBy: uuid("hotlist_added_by"),
+	sourcedBy: uuid("sourced_by"),
+	ownerId: uuid("owner_id"),
+	createdBy: uuid("created_by"),
+	updatedBy: uuid("updated_by"),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
+	contactId: uuid("contact_id"),
+}, (table) => [
+	index("idx_candidates_contact_id").using("btree", table.contactId.asc().nullsLast().op("uuid_ops")).where(sql`(contact_id IS NOT NULL)`),
+	index("idx_candidates_created_at").using("btree", table.orgId.asc().nullsLast().op("uuid_ops"), table.createdAt.desc().nullsFirst().op("timestamptz_ops")),
+	index("idx_candidates_email").using("btree", table.email.asc().nullsLast().op("text_ops")),
+	index("idx_candidates_hotlist").using("btree", table.orgId.asc().nullsLast().op("uuid_ops"), table.isOnHotlist.asc().nullsLast().op("bool_ops")).where(sql`((deleted_at IS NULL) AND (is_on_hotlist = true))`),
+	index("idx_candidates_org_id").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")),
+	index("idx_candidates_sourced_by").using("btree", table.sourcedBy.asc().nullsLast().op("uuid_ops")),
+	index("idx_candidates_status").using("btree", table.orgId.asc().nullsLast().op("uuid_ops"), table.status.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
+	foreignKey({
+			columns: [table.contactId],
+			foreignColumns: [contacts.id],
+			name: "candidates_contact_id_fkey"
+		}),
+	foreignKey({
+			columns: [table.createdBy],
+			foreignColumns: [users.id],
+			name: "candidates_created_by_fkey"
+		}),
+	foreignKey({
+			columns: [table.hotlistAddedBy],
+			foreignColumns: [users.id],
+			name: "candidates_hotlist_added_by_fkey"
+		}),
+	foreignKey({
+			columns: [table.orgId],
+			foreignColumns: [organizations.id],
+			name: "candidates_org_id_fkey"
+		}),
+	foreignKey({
+			columns: [table.ownerId],
+			foreignColumns: [users.id],
+			name: "candidates_owner_id_fkey"
+		}),
+	foreignKey({
+			columns: [table.sourcedBy],
+			foreignColumns: [users.id],
+			name: "candidates_sourced_by_fkey"
+		}),
+	foreignKey({
+			columns: [table.updatedBy],
+			foreignColumns: [users.id],
+			name: "candidates_updated_by_fkey"
+		}),
+	unique("candidates_email_unique").on(table.orgId, table.email),
+	pgPolicy("candidates_delete_policy", { as: "permissive", for: "delete", to: ["public"], using: sql`(org_id IN ( SELECT candidates.org_id
+   FROM user_roles
+  WHERE (user_roles.user_id = auth.uid())))` }),
+	pgPolicy("candidates_insert_policy", { as: "permissive", for: "insert", to: ["public"] }),
+	pgPolicy("candidates_select_policy", { as: "permissive", for: "select", to: ["public"] }),
+	pgPolicy("candidates_update_policy", { as: "permissive", for: "update", to: ["public"] }),
 ]);
 
 export const marketingProfiles = pgTable("marketing_profiles", {
@@ -8302,35 +8393,6 @@ export const activityHistory = pgTable("activity_history", {
 		}),
 ]);
 
-export const workQueues = pgTable("work_queues", {
-	id: uuid().defaultRandom().primaryKey().notNull(),
-	orgId: uuid("org_id"),
-	queueName: text("queue_name").notNull(),
-	queueCode: text("queue_code").notNull(),
-	description: text(),
-	queueType: text("queue_type").default('activity'),
-	entityType: text("entity_type"),
-	assignedToGroupId: uuid("assigned_to_group_id"),
-	assignmentStrategy: text("assignment_strategy").default('round_robin'),
-	filterCriteria: jsonb("filter_criteria"),
-	sortOrder: text("sort_order").default('priority_desc'),
-	isActive: boolean("is_active").default(true),
-	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
-	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
-}, (table) => [
-	foreignKey({
-			columns: [table.assignedToGroupId],
-			foreignColumns: [pods.id],
-			name: "work_queues_assigned_to_group_id_fkey"
-		}),
-	foreignKey({
-			columns: [table.orgId],
-			foreignColumns: [organizations.id],
-			name: "work_queues_org_id_fkey"
-		}).onDelete("cascade"),
-	unique("work_queues_org_id_queue_code_key").on(table.orgId, table.queueCode),
-]);
-
 export const addresses = pgTable("addresses", {
 	id: uuid().defaultRandom().primaryKey().notNull(),
 	orgId: uuid("org_id").notNull(),
@@ -9099,178 +9161,6 @@ export const integrationFailoverConfig = pgTable("integration_failover_config", 
   WHERE (user_profiles.auth_id = auth.uid()))) OR ((auth.jwt() ->> 'role'::text) = 'service_role'::text))` }),
 ]);
 
-export const activities = pgTable("activities", {
-	id: uuid().defaultRandom().primaryKey().notNull(),
-	orgId: uuid("org_id").notNull(),
-	entityType: text("entity_type").notNull(),
-	entityId: uuid("entity_id").notNull(),
-	activityType: text("activity_type").notNull(),
-	status: text().default('open').notNull(),
-	priority: text().default('medium').notNull(),
-	subject: text(),
-	body: text(),
-	direction: text(),
-	scheduledAt: timestamp("scheduled_at", { withTimezone: true, mode: 'string' }),
-	dueDate: timestamp("due_date", { withTimezone: true, mode: 'string' }).defaultNow(),
-	escalationDate: timestamp("escalation_date", { withTimezone: true, mode: 'string' }),
-	completedAt: timestamp("completed_at", { withTimezone: true, mode: 'string' }),
-	skippedAt: timestamp("skipped_at", { withTimezone: true, mode: 'string' }),
-	durationMinutes: integer("duration_minutes"),
-	outcome: text(),
-	assignedTo: uuid("assigned_to"),
-	performedBy: uuid("performed_by"),
-	pocId: uuid("poc_id"),
-	parentActivityId: uuid("parent_activity_id"),
-	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
-	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
-	createdBy: uuid("created_by"),
-	patternCode: text("pattern_code"),
-	patternId: uuid("pattern_id"),
-	workplanInstanceId: uuid("workplan_instance_id"),
-	description: text(),
-	category: text(),
-	instructions: text(),
-	checklist: jsonb(),
-	checklistProgress: jsonb("checklist_progress"),
-	assignedGroup: uuid("assigned_group"),
-	assignedAt: timestamp("assigned_at", { withTimezone: true, mode: 'string' }),
-	startedAt: timestamp("started_at", { withTimezone: true, mode: 'string' }),
-	scheduledFor: timestamp("scheduled_for", { withTimezone: true, mode: 'string' }),
-	outcomeNotes: text("outcome_notes"),
-	autoCreated: boolean("auto_created").default(false),
-	autoCompleted: boolean("auto_completed").default(false),
-	predecessorActivityId: uuid("predecessor_activity_id"),
-	escalationCount: integer("escalation_count").default(0),
-	lastEscalatedAt: timestamp("last_escalated_at", { withTimezone: true, mode: 'string' }),
-	reminderSentAt: timestamp("reminder_sent_at", { withTimezone: true, mode: 'string' }),
-	reminderCount: integer("reminder_count").default(0),
-	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
-	updatedBy: uuid("updated_by"),
-	activityNumber: text("activity_number"),
-	secondaryEntityType: text("secondary_entity_type"),
-	secondaryEntityId: uuid("secondary_entity_id"),
-	followUpRequired: boolean("follow_up_required").default(false),
-	followUpDate: timestamp("follow_up_date", { withTimezone: true, mode: 'string' }),
-	followUpActivityId: uuid("follow_up_activity_id"),
-	tags: text().array(),
-	customFields: jsonb("custom_fields").default({}),
-	pointsEarned: numeric("points_earned", { precision: 5, scale:  2 }).default('0'),
-	relatedContactId: uuid("related_contact_id"),
-	relatedDealId: uuid("related_deal_id"),
-	relatedCampaignId: uuid("related_campaign_id"),
-	nextSteps: text("next_steps"),
-	nextFollowUpDate: timestamp("next_follow_up_date", { withTimezone: true, mode: 'string' }),
-}, (table) => [
-	index("activities_activity_type_idx").using("btree", table.activityType.asc().nullsLast().op("text_ops")),
-	index("activities_assigned_to_idx").using("btree", table.assignedTo.asc().nullsLast().op("uuid_ops")),
-	index("activities_due_date_idx").using("btree", table.dueDate.asc().nullsLast().op("timestamptz_ops")),
-	index("activities_entity_idx").using("btree", table.entityType.asc().nullsLast().op("text_ops"), table.entityId.asc().nullsLast().op("text_ops")),
-	index("activities_pattern_idx").using("btree", table.patternId.asc().nullsLast().op("uuid_ops")),
-	index("activities_status_idx").using("btree", table.status.asc().nullsLast().op("text_ops")),
-	index("activities_workplan_instance_idx").using("btree", table.workplanInstanceId.asc().nullsLast().op("uuid_ops")),
-	index("idx_activities_activity_number").using("btree", table.activityNumber.asc().nullsLast().op("text_ops")),
-	index("idx_activities_assigned").using("btree", table.assignedTo.asc().nullsLast().op("text_ops"), table.status.asc().nullsLast().op("text_ops")).where(sql`(status = ANY (ARRAY['open'::text, 'in_progress'::text]))`),
-	index("idx_activities_assigned_to").using("btree", table.assignedTo.asc().nullsLast().op("uuid_ops")),
-	index("idx_activities_due").using("btree", table.dueDate.asc().nullsLast().op("timestamptz_ops")).where(sql`(status = ANY (ARRAY['open'::text, 'in_progress'::text]))`),
-	index("idx_activities_due_date").using("btree", table.dueDate.asc().nullsLast().op("timestamptz_ops")),
-	index("idx_activities_entity").using("btree", table.entityType.asc().nullsLast().op("text_ops"), table.entityId.asc().nullsLast().op("text_ops")),
-	index("idx_activities_entity_timeline").using("btree", table.entityType.asc().nullsLast().op("timestamptz_ops"), table.entityId.asc().nullsLast().op("text_ops"), table.createdAt.desc().nullsFirst().op("timestamptz_ops")),
-	index("idx_activities_escalation").using("btree", table.escalationDate.asc().nullsLast().op("timestamptz_ops")).where(sql`((status = 'open'::text) AND (escalation_date IS NOT NULL))`),
-	index("idx_activities_follow_up").using("btree", table.followUpRequired.asc().nullsLast().op("timestamptz_ops"), table.followUpDate.asc().nullsLast().op("bool_ops")).where(sql`((follow_up_required = true) AND (status = ANY (ARRAY['open'::text, 'in_progress'::text])))`),
-	index("idx_activities_follow_up_date").using("btree", table.followUpDate.asc().nullsLast().op("timestamptz_ops")).where(sql`(follow_up_required = true)`),
-	index("idx_activities_group").using("btree", table.assignedGroup.asc().nullsLast().op("uuid_ops"), table.status.asc().nullsLast().op("text_ops")).where(sql`(status = ANY (ARRAY['open'::text, 'in_progress'::text]))`),
-	index("idx_activities_my_tasks").using("btree", table.assignedTo.asc().nullsLast().op("uuid_ops"), table.status.asc().nullsLast().op("text_ops"), table.dueDate.asc().nullsLast().op("uuid_ops")).where(sql`(status = ANY (ARRAY['open'::text, 'in_progress'::text]))`),
-	index("idx_activities_org").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")),
-	index("idx_activities_org_entity_composite").using("btree", table.orgId.asc().nullsLast().op("text_ops"), table.entityType.asc().nullsLast().op("text_ops"), table.entityId.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
-	index("idx_activities_org_entity_recent").using("btree", table.orgId.asc().nullsLast().op("text_ops"), table.entityType.asc().nullsLast().op("uuid_ops"), table.entityId.asc().nullsLast().op("text_ops"), table.createdAt.desc().nullsFirst().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
-	index("idx_activities_org_entity_type").using("btree", table.orgId.asc().nullsLast().op("text_ops"), table.entityType.asc().nullsLast().op("text_ops"), table.entityId.asc().nullsLast().op("text_ops"), table.activityType.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
-	index("idx_activities_org_id").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")),
-	index("idx_activities_org_status").using("btree", table.orgId.asc().nullsLast().op("uuid_ops"), table.status.asc().nullsLast().op("uuid_ops")),
-	index("idx_activities_parent").using("btree", table.parentActivityId.asc().nullsLast().op("uuid_ops")),
-	index("idx_activities_related_campaign").using("btree", table.relatedCampaignId.asc().nullsLast().op("uuid_ops")).where(sql`(related_campaign_id IS NOT NULL)`),
-	index("idx_activities_related_contact").using("btree", table.relatedContactId.asc().nullsLast().op("uuid_ops")).where(sql`(related_contact_id IS NOT NULL)`),
-	index("idx_activities_related_deal").using("btree", table.relatedDealId.asc().nullsLast().op("uuid_ops")).where(sql`(related_deal_id IS NOT NULL)`),
-	index("idx_activities_secondary_entity").using("btree", table.secondaryEntityType.asc().nullsLast().op("uuid_ops"), table.secondaryEntityId.asc().nullsLast().op("uuid_ops")),
-	index("idx_activities_status").using("btree", table.status.asc().nullsLast().op("text_ops")),
-	index("idx_activities_tags").using("gin", table.tags.asc().nullsLast().op("array_ops")),
-	index("idx_activities_type").using("btree", table.activityType.asc().nullsLast().op("text_ops")),
-	index("idx_activities_workplan").using("btree", table.workplanInstanceId.asc().nullsLast().op("uuid_ops")),
-	foreignKey({
-			columns: [table.assignedGroup],
-			foreignColumns: [pods.id],
-			name: "activities_assigned_group_fkey"
-		}),
-	foreignKey({
-			columns: [table.assignedTo],
-			foreignColumns: [userProfiles.id],
-			name: "activities_assigned_to_fkey"
-		}),
-	foreignKey({
-			columns: [table.createdBy],
-			foreignColumns: [userProfiles.id],
-			name: "activities_created_by_fkey"
-		}),
-	foreignKey({
-			columns: [table.followUpActivityId],
-			foreignColumns: [table.id],
-			name: "activities_follow_up_activity_id_fkey"
-		}),
-	foreignKey({
-			columns: [table.orgId],
-			foreignColumns: [organizations.id],
-			name: "activities_org_id_fkey"
-		}).onDelete("cascade"),
-	foreignKey({
-			columns: [table.parentActivityId],
-			foreignColumns: [table.id],
-			name: "activities_parent_activity_id_fkey"
-		}),
-	foreignKey({
-			columns: [table.patternId],
-			foreignColumns: [activityPatterns.id],
-			name: "activities_pattern_id_fkey"
-		}),
-	foreignKey({
-			columns: [table.performedBy],
-			foreignColumns: [userProfiles.id],
-			name: "activities_performed_by_fkey"
-		}),
-	foreignKey({
-			columns: [table.predecessorActivityId],
-			foreignColumns: [table.id],
-			name: "activities_predecessor_activity_id_fkey"
-		}),
-	foreignKey({
-			columns: [table.relatedCampaignId],
-			foreignColumns: [campaigns.id],
-			name: "activities_related_campaign_id_fkey"
-		}),
-	foreignKey({
-			columns: [table.relatedContactId],
-			foreignColumns: [contacts.id],
-			name: "activities_related_contact_id_fkey"
-		}),
-	foreignKey({
-			columns: [table.relatedDealId],
-			foreignColumns: [deals.id],
-			name: "activities_related_deal_id_fkey"
-		}),
-	foreignKey({
-			columns: [table.updatedBy],
-			foreignColumns: [userProfiles.id],
-			name: "activities_updated_by_fkey"
-		}),
-	foreignKey({
-			columns: [table.workplanInstanceId],
-			foreignColumns: [workplanInstances.id],
-			name: "activities_workplan_instance_id_fkey"
-		}).onDelete("set null"),
-	unique("uq_activities_org_activity_number").on(table.orgId, table.activityNumber),
-	pgPolicy("activities_org_isolation", { as: "permissive", for: "all", to: ["public"], using: sql`(org_id IN ( SELECT user_profiles.org_id
-   FROM user_profiles
-  WHERE (user_profiles.auth_id = auth.uid())))` }),
-]);
-
 export const externalJobOrderRequirements = pgTable("external_job_order_requirements", {
 	id: uuid().defaultRandom().primaryKey().notNull(),
 	orderId: uuid("order_id").notNull(),
@@ -9349,7 +9239,7 @@ export const skills = pgTable("skills", {
 	deprecatedSuccessorId: uuid("deprecated_successor_id"),
 	orgId: uuid("org_id"),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: tsvector("search_vector"),
+	searchVector: unknown("search_vector"),
 	domain: varchar({ length: 50 }).default('technology'),
 }, (table) => [
 	uniqueIndex("idx_skills_canonical_unique").using("btree", sql`COALESCE(org_id, '00000000-0000-0000-0000-000000000000'::uuid)`, sql`canonical_name`).where(sql`(canonical_name IS NOT NULL)`),
@@ -9379,6 +9269,206 @@ export const skills = pgTable("skills", {
 	unique("skills_name_key").on(table.name),
 	pgPolicy("skills_admin_write", { as: "permissive", for: "all", to: ["public"], using: sql`auth_has_role('admin'::text)` }),
 	pgPolicy("skills_public_read", { as: "permissive", for: "select", to: ["public"] }),
+]);
+
+export const activities = pgTable("activities", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	orgId: uuid("org_id").notNull(),
+	entityType: text("entity_type").notNull(),
+	entityId: uuid("entity_id").notNull(),
+	activityType: text("activity_type").notNull(),
+	status: text().default('open').notNull(),
+	priority: text().default('medium').notNull(),
+	subject: text(),
+	body: text(),
+	direction: text(),
+	scheduledAt: timestamp("scheduled_at", { withTimezone: true, mode: 'string' }),
+	dueDate: timestamp("due_date", { withTimezone: true, mode: 'string' }).defaultNow(),
+	escalationDate: timestamp("escalation_date", { withTimezone: true, mode: 'string' }),
+	completedAt: timestamp("completed_at", { withTimezone: true, mode: 'string' }),
+	skippedAt: timestamp("skipped_at", { withTimezone: true, mode: 'string' }),
+	durationMinutes: integer("duration_minutes"),
+	outcome: text(),
+	assignedTo: uuid("assigned_to"),
+	performedBy: uuid("performed_by"),
+	pocId: uuid("poc_id"),
+	parentActivityId: uuid("parent_activity_id"),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	createdBy: uuid("created_by"),
+	patternCode: text("pattern_code"),
+	patternId: uuid("pattern_id"),
+	workplanInstanceId: uuid("workplan_instance_id"),
+	description: text(),
+	category: text(),
+	instructions: text(),
+	assignedGroup: uuid("assigned_group"),
+	assignedAt: timestamp("assigned_at", { withTimezone: true, mode: 'string' }),
+	startedAt: timestamp("started_at", { withTimezone: true, mode: 'string' }),
+	scheduledFor: timestamp("scheduled_for", { withTimezone: true, mode: 'string' }),
+	outcomeNotes: text("outcome_notes"),
+	autoCreated: boolean("auto_created").default(false),
+	autoCompleted: boolean("auto_completed").default(false),
+	predecessorActivityId: uuid("predecessor_activity_id"),
+	escalationCount: integer("escalation_count").default(0),
+	lastEscalatedAt: timestamp("last_escalated_at", { withTimezone: true, mode: 'string' }),
+	reminderSentAt: timestamp("reminder_sent_at", { withTimezone: true, mode: 'string' }),
+	reminderCount: integer("reminder_count").default(0),
+	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
+	updatedBy: uuid("updated_by"),
+	activityNumber: text("activity_number"),
+	secondaryEntityType: text("secondary_entity_type"),
+	secondaryEntityId: uuid("secondary_entity_id"),
+	followUpRequired: boolean("follow_up_required").default(false),
+	followUpDate: timestamp("follow_up_date", { withTimezone: true, mode: 'string' }),
+	followUpActivityId: uuid("follow_up_activity_id"),
+	tags: text().array(),
+	customFields: jsonb("custom_fields").default({}),
+	pointsEarned: numeric("points_earned", { precision: 5, scale:  2 }).default('0'),
+	relatedContactId: uuid("related_contact_id"),
+	relatedDealId: uuid("related_deal_id"),
+	relatedCampaignId: uuid("related_campaign_id"),
+	nextSteps: text("next_steps"),
+	nextFollowUpDate: timestamp("next_follow_up_date", { withTimezone: true, mode: 'string' }),
+	queueId: uuid("queue_id"),
+	claimedAt: timestamp("claimed_at", { withTimezone: true, mode: 'string' }),
+	claimedBy: uuid("claimed_by"),
+	isBlocking: boolean("is_blocking").default(false),
+	blockingStatuses: text("blocking_statuses").array().default([""]),
+	escalatedToUserId: uuid("escalated_to_user_id"),
+	originalAssignedTo: uuid("original_assigned_to"),
+}, (table) => [
+	index("activities_activity_type_idx").using("btree", table.activityType.asc().nullsLast().op("text_ops")),
+	index("activities_assigned_to_idx").using("btree", table.assignedTo.asc().nullsLast().op("uuid_ops")),
+	index("activities_due_date_idx").using("btree", table.dueDate.asc().nullsLast().op("timestamptz_ops")),
+	index("activities_entity_idx").using("btree", table.entityType.asc().nullsLast().op("text_ops"), table.entityId.asc().nullsLast().op("text_ops")),
+	index("activities_pattern_idx").using("btree", table.patternId.asc().nullsLast().op("uuid_ops")),
+	index("activities_status_idx").using("btree", table.status.asc().nullsLast().op("text_ops")),
+	index("activities_workplan_instance_idx").using("btree", table.workplanInstanceId.asc().nullsLast().op("uuid_ops")),
+	index("idx_activities_activity_number").using("btree", table.activityNumber.asc().nullsLast().op("text_ops")),
+	index("idx_activities_assigned").using("btree", table.assignedTo.asc().nullsLast().op("uuid_ops"), table.status.asc().nullsLast().op("text_ops")).where(sql`(status = ANY (ARRAY['open'::text, 'in_progress'::text]))`),
+	index("idx_activities_assigned_to").using("btree", table.assignedTo.asc().nullsLast().op("uuid_ops")),
+	index("idx_activities_blocking").using("btree", table.entityType.asc().nullsLast().op("uuid_ops"), table.entityId.asc().nullsLast().op("uuid_ops"), table.isBlocking.asc().nullsLast().op("bool_ops")).where(sql`((is_blocking = true) AND (status = ANY (ARRAY['open'::text, 'in_progress'::text, 'scheduled'::text])) AND (deleted_at IS NULL))`),
+	index("idx_activities_due").using("btree", table.dueDate.asc().nullsLast().op("timestamptz_ops")).where(sql`(status = ANY (ARRAY['open'::text, 'in_progress'::text]))`),
+	index("idx_activities_due_date").using("btree", table.dueDate.asc().nullsLast().op("timestamptz_ops")),
+	index("idx_activities_entity").using("btree", table.entityType.asc().nullsLast().op("text_ops"), table.entityId.asc().nullsLast().op("uuid_ops")),
+	index("idx_activities_entity_timeline").using("btree", table.entityType.asc().nullsLast().op("text_ops"), table.entityId.asc().nullsLast().op("timestamptz_ops"), table.createdAt.desc().nullsFirst().op("uuid_ops")),
+	index("idx_activities_escalated").using("btree", table.escalatedToUserId.asc().nullsLast().op("uuid_ops")).where(sql`((escalated_to_user_id IS NOT NULL) AND (status = ANY (ARRAY['open'::text, 'in_progress'::text, 'scheduled'::text])) AND (deleted_at IS NULL))`),
+	index("idx_activities_escalation").using("btree", table.escalationDate.asc().nullsLast().op("timestamptz_ops")).where(sql`((status = 'open'::text) AND (escalation_date IS NOT NULL))`),
+	index("idx_activities_follow_up").using("btree", table.followUpRequired.asc().nullsLast().op("bool_ops"), table.followUpDate.asc().nullsLast().op("bool_ops")).where(sql`((follow_up_required = true) AND (status = ANY (ARRAY['open'::text, 'in_progress'::text])))`),
+	index("idx_activities_follow_up_date").using("btree", table.followUpDate.asc().nullsLast().op("timestamptz_ops")).where(sql`(follow_up_required = true)`),
+	index("idx_activities_group").using("btree", table.assignedGroup.asc().nullsLast().op("uuid_ops"), table.status.asc().nullsLast().op("uuid_ops")).where(sql`(status = ANY (ARRAY['open'::text, 'in_progress'::text]))`),
+	index("idx_activities_my_tasks").using("btree", table.assignedTo.asc().nullsLast().op("uuid_ops"), table.status.asc().nullsLast().op("text_ops"), table.dueDate.asc().nullsLast().op("text_ops")).where(sql`(status = ANY (ARRAY['open'::text, 'in_progress'::text]))`),
+	index("idx_activities_org").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")),
+	index("idx_activities_org_entity_composite").using("btree", table.orgId.asc().nullsLast().op("uuid_ops"), table.entityType.asc().nullsLast().op("uuid_ops"), table.entityId.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
+	index("idx_activities_org_entity_recent").using("btree", table.orgId.asc().nullsLast().op("uuid_ops"), table.entityType.asc().nullsLast().op("text_ops"), table.entityId.asc().nullsLast().op("uuid_ops"), table.createdAt.desc().nullsFirst().op("text_ops")).where(sql`(deleted_at IS NULL)`),
+	index("idx_activities_org_entity_type").using("btree", table.orgId.asc().nullsLast().op("uuid_ops"), table.entityType.asc().nullsLast().op("text_ops"), table.entityId.asc().nullsLast().op("text_ops"), table.activityType.asc().nullsLast().op("text_ops")).where(sql`(deleted_at IS NULL)`),
+	index("idx_activities_org_id").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")),
+	index("idx_activities_org_status").using("btree", table.orgId.asc().nullsLast().op("uuid_ops"), table.status.asc().nullsLast().op("uuid_ops")),
+	index("idx_activities_parent").using("btree", table.parentActivityId.asc().nullsLast().op("uuid_ops")),
+	index("idx_activities_queue_id").using("btree", table.queueId.asc().nullsLast().op("uuid_ops")).where(sql`(queue_id IS NOT NULL)`),
+	index("idx_activities_related_campaign").using("btree", table.relatedCampaignId.asc().nullsLast().op("uuid_ops")).where(sql`(related_campaign_id IS NOT NULL)`),
+	index("idx_activities_related_contact").using("btree", table.relatedContactId.asc().nullsLast().op("uuid_ops")).where(sql`(related_contact_id IS NOT NULL)`),
+	index("idx_activities_related_deal").using("btree", table.relatedDealId.asc().nullsLast().op("uuid_ops")).where(sql`(related_deal_id IS NOT NULL)`),
+	index("idx_activities_secondary_entity").using("btree", table.secondaryEntityType.asc().nullsLast().op("uuid_ops"), table.secondaryEntityId.asc().nullsLast().op("uuid_ops")),
+	index("idx_activities_status").using("btree", table.status.asc().nullsLast().op("text_ops")),
+	index("idx_activities_tags").using("gin", table.tags.asc().nullsLast().op("array_ops")),
+	index("idx_activities_type").using("btree", table.activityType.asc().nullsLast().op("text_ops")),
+	index("idx_activities_workplan").using("btree", table.workplanInstanceId.asc().nullsLast().op("uuid_ops")),
+	foreignKey({
+			columns: [table.assignedGroup],
+			foreignColumns: [pods.id],
+			name: "activities_assigned_group_fkey"
+		}),
+	foreignKey({
+			columns: [table.assignedTo],
+			foreignColumns: [userProfiles.id],
+			name: "activities_assigned_to_fkey"
+		}),
+	foreignKey({
+			columns: [table.claimedBy],
+			foreignColumns: [userProfiles.id],
+			name: "activities_claimed_by_fkey"
+		}),
+	foreignKey({
+			columns: [table.createdBy],
+			foreignColumns: [userProfiles.id],
+			name: "activities_created_by_fkey"
+		}),
+	foreignKey({
+			columns: [table.escalatedToUserId],
+			foreignColumns: [userProfiles.id],
+			name: "activities_escalated_to_user_id_fkey"
+		}),
+	foreignKey({
+			columns: [table.followUpActivityId],
+			foreignColumns: [table.id],
+			name: "activities_follow_up_activity_id_fkey"
+		}),
+	foreignKey({
+			columns: [table.orgId],
+			foreignColumns: [organizations.id],
+			name: "activities_org_id_fkey"
+		}).onDelete("cascade"),
+	foreignKey({
+			columns: [table.originalAssignedTo],
+			foreignColumns: [userProfiles.id],
+			name: "activities_original_assigned_to_fkey"
+		}),
+	foreignKey({
+			columns: [table.parentActivityId],
+			foreignColumns: [table.id],
+			name: "activities_parent_activity_id_fkey"
+		}),
+	foreignKey({
+			columns: [table.patternId],
+			foreignColumns: [activityPatterns.id],
+			name: "activities_pattern_id_fkey"
+		}),
+	foreignKey({
+			columns: [table.performedBy],
+			foreignColumns: [userProfiles.id],
+			name: "activities_performed_by_fkey"
+		}),
+	foreignKey({
+			columns: [table.predecessorActivityId],
+			foreignColumns: [table.id],
+			name: "activities_predecessor_activity_id_fkey"
+		}),
+	foreignKey({
+			columns: [table.queueId],
+			foreignColumns: [workQueues.id],
+			name: "activities_queue_id_fkey"
+		}),
+	foreignKey({
+			columns: [table.relatedCampaignId],
+			foreignColumns: [campaigns.id],
+			name: "activities_related_campaign_id_fkey"
+		}),
+	foreignKey({
+			columns: [table.relatedContactId],
+			foreignColumns: [contacts.id],
+			name: "activities_related_contact_id_fkey"
+		}),
+	foreignKey({
+			columns: [table.relatedDealId],
+			foreignColumns: [deals.id],
+			name: "activities_related_deal_id_fkey"
+		}),
+	foreignKey({
+			columns: [table.updatedBy],
+			foreignColumns: [userProfiles.id],
+			name: "activities_updated_by_fkey"
+		}),
+	foreignKey({
+			columns: [table.workplanInstanceId],
+			foreignColumns: [workplanInstances.id],
+			name: "activities_workplan_instance_id_fkey"
+		}).onDelete("set null"),
+	unique("uq_activities_org_activity_number").on(table.orgId, table.activityNumber),
+	pgPolicy("activities_org_isolation", { as: "permissive", for: "all", to: ["public"], using: sql`(org_id IN ( SELECT user_profiles.org_id
+   FROM user_profiles
+  WHERE (user_profiles.auth_id = auth.uid())))` }),
 ]);
 
 export const benchConsultants = pgTable("bench_consultants", {
@@ -10692,6 +10782,83 @@ export const emailSenders = pgTable("email_senders", {
   WHERE (user_profiles.id = auth.uid())))` }),
 ]);
 
+export const activityNotes = pgTable("activity_notes", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	activityId: uuid("activity_id").notNull(),
+	orgId: uuid("org_id").notNull(),
+	content: text().notNull(),
+	isInternal: boolean("is_internal").default(false),
+	createdBy: uuid("created_by"),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+}, (table) => [
+	index("idx_activity_notes_activity_id").using("btree", table.activityId.asc().nullsLast().op("uuid_ops")),
+	index("idx_activity_notes_created_at").using("btree", table.createdAt.desc().nullsFirst().op("timestamptz_ops")),
+	index("idx_activity_notes_org_id").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")),
+	foreignKey({
+			columns: [table.activityId],
+			foreignColumns: [activities.id],
+			name: "activity_notes_activity_id_fkey"
+		}).onDelete("cascade"),
+	foreignKey({
+			columns: [table.createdBy],
+			foreignColumns: [userProfiles.id],
+			name: "activity_notes_created_by_fkey"
+		}),
+	pgPolicy("activity_notes_delete_policy", { as: "permissive", for: "delete", to: ["public"], using: sql`((org_id IN ( SELECT user_profiles.org_id
+   FROM user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))) AND (created_by IN ( SELECT user_profiles.id
+   FROM user_profiles
+  WHERE (user_profiles.auth_id = auth.uid()))))` }),
+	pgPolicy("activity_notes_insert_policy", { as: "permissive", for: "insert", to: ["public"] }),
+	pgPolicy("activity_notes_select_policy", { as: "permissive", for: "select", to: ["public"] }),
+	pgPolicy("activity_notes_update_policy", { as: "permissive", for: "update", to: ["public"] }),
+]);
+
+export const workQueues = pgTable("work_queues", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	orgId: uuid("org_id"),
+	queueName: text("queue_name").notNull(),
+	queueCode: text("queue_code").notNull(),
+	description: text(),
+	queueType: text("queue_type").default('activity'),
+	entityType: text("entity_type"),
+	assignedToGroupId: uuid("assigned_to_group_id"),
+	assignmentStrategy: text("assignment_strategy").default('round_robin'),
+	filterCriteria: jsonb("filter_criteria"),
+	sortOrder: text("sort_order").default('priority_desc'),
+	isActive: boolean("is_active").default(true),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	ownerGroupId: uuid("owner_group_id"),
+	assignmentType: text("assignment_type").default('manual'),
+	escalationThresholdHours: integer("escalation_threshold_hours").default(24),
+	reminderThresholdHours: integer("reminder_threshold_hours").default(4),
+	isDefault: boolean("is_default").default(false),
+	entityTypes: text("entity_types").array().default([""]),
+	createdBy: uuid("created_by"),
+}, (table) => [
+	index("idx_work_queues_is_active").using("btree", table.isActive.asc().nullsLast().op("bool_ops")).where(sql`(is_active = true)`),
+	index("idx_work_queues_org_id").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")),
+	index("idx_work_queues_owner_group_id").using("btree", table.ownerGroupId.asc().nullsLast().op("uuid_ops")),
+	foreignKey({
+			columns: [table.assignedToGroupId],
+			foreignColumns: [pods.id],
+			name: "work_queues_assigned_to_group_id_fkey"
+		}),
+	foreignKey({
+			columns: [table.orgId],
+			foreignColumns: [organizations.id],
+			name: "work_queues_org_id_fkey"
+		}).onDelete("cascade"),
+	unique("work_queues_org_id_queue_code_key").on(table.orgId, table.queueCode),
+	pgPolicy("work_queues_insert_policy", { as: "permissive", for: "insert", to: ["public"], withCheck: sql`(org_id IN ( SELECT user_profiles.org_id
+   FROM user_profiles
+  WHERE (user_profiles.auth_id = auth.uid())))`  }),
+	pgPolicy("work_queues_select_policy", { as: "permissive", for: "select", to: ["public"] }),
+	pgPolicy("work_queues_update_policy", { as: "permissive", for: "update", to: ["public"] }),
+]);
+
 export const incidents = pgTable("incidents", {
 	id: uuid().defaultRandom().primaryKey().notNull(),
 	orgId: uuid("org_id").notNull(),
@@ -10962,6 +11129,41 @@ export const slaDefinitions = pgTable("sla_definitions", {
 	check("sla_definitions_target_unit_check", sql`(target_unit IS NULL) OR (target_unit = ANY (ARRAY['minutes'::text, 'hours'::text, 'business_hours'::text, 'days'::text, 'business_days'::text, 'weeks'::text]))`),
 ]);
 
+export const workQueueMembers = pgTable("work_queue_members", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	queueId: uuid("queue_id").notNull(),
+	userId: uuid("user_id").notNull(),
+	role: text().default('member'),
+	canClaim: boolean("can_claim").default(true),
+	canAssign: boolean("can_assign").default(false),
+	maxActiveActivities: integer("max_active_activities").default(10),
+	currentLoad: integer("current_load").default(0),
+	skills: text().array().default([""]),
+	isActive: boolean("is_active").default(true),
+	joinedAt: timestamp("joined_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+}, (table) => [
+	index("idx_work_queue_members_queue_id").using("btree", table.queueId.asc().nullsLast().op("uuid_ops")),
+	index("idx_work_queue_members_user_id").using("btree", table.userId.asc().nullsLast().op("uuid_ops")),
+	foreignKey({
+			columns: [table.queueId],
+			foreignColumns: [workQueues.id],
+			name: "work_queue_members_queue_id_fkey"
+		}).onDelete("cascade"),
+	foreignKey({
+			columns: [table.userId],
+			foreignColumns: [userProfiles.id],
+			name: "work_queue_members_user_id_fkey"
+		}).onDelete("cascade"),
+	unique("work_queue_members_queue_id_user_id_key").on(table.queueId, table.userId),
+	pgPolicy("work_queue_members_insert_policy", { as: "permissive", for: "insert", to: ["public"], withCheck: sql`(queue_id IN ( SELECT work_queues.id
+   FROM work_queues
+  WHERE (work_queues.org_id IN ( SELECT user_profiles.org_id
+           FROM user_profiles
+          WHERE (user_profiles.auth_id = auth.uid())))))`  }),
+	pgPolicy("work_queue_members_select_policy", { as: "permissive", for: "select", to: ["public"] }),
+	check("work_queue_members_role_check", sql`role = ANY (ARRAY['owner'::text, 'supervisor'::text, 'member'::text])`),
+]);
+
 export const slaEscalationLevels = pgTable("sla_escalation_levels", {
 	id: uuid().defaultRandom().primaryKey().notNull(),
 	slaDefinitionId: uuid("sla_definition_id").notNull(),
@@ -11080,6 +11282,47 @@ export const slaScheduledRuns = pgTable("sla_scheduled_runs", {
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 });
 
+export const activityEscalations = pgTable("activity_escalations", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	activityId: uuid("activity_id").notNull(),
+	orgId: uuid("org_id").notNull(),
+	escalationLevel: integer("escalation_level").default(1).notNull(),
+	escalatedFromUser: uuid("escalated_from_user"),
+	escalatedToUser: uuid("escalated_to_user"),
+	escalatedToQueue: uuid("escalated_to_queue"),
+	reason: text(),
+	escalationType: text("escalation_type").default('automatic'),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+}, (table) => [
+	index("idx_activity_escalations_activity_id").using("btree", table.activityId.asc().nullsLast().op("uuid_ops")),
+	index("idx_activity_escalations_org_id").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")),
+	foreignKey({
+			columns: [table.activityId],
+			foreignColumns: [activities.id],
+			name: "activity_escalations_activity_id_fkey"
+		}).onDelete("cascade"),
+	foreignKey({
+			columns: [table.escalatedFromUser],
+			foreignColumns: [userProfiles.id],
+			name: "activity_escalations_escalated_from_user_fkey"
+		}),
+	foreignKey({
+			columns: [table.escalatedToQueue],
+			foreignColumns: [workQueues.id],
+			name: "activity_escalations_escalated_to_queue_fkey"
+		}),
+	foreignKey({
+			columns: [table.escalatedToUser],
+			foreignColumns: [userProfiles.id],
+			name: "activity_escalations_escalated_to_user_fkey"
+		}),
+	pgPolicy("activity_escalations_insert_policy", { as: "permissive", for: "insert", to: ["public"], withCheck: sql`(org_id IN ( SELECT user_profiles.org_id
+   FROM user_profiles
+  WHERE (user_profiles.auth_id = auth.uid())))`  }),
+	pgPolicy("activity_escalations_select_policy", { as: "permissive", for: "select", to: ["public"] }),
+	check("activity_escalations_escalation_type_check", sql`escalation_type = ANY (ARRAY['automatic'::text, 'manual'::text])`),
+]);
+
 export const contacts = pgTable("contacts", {
 	id: uuid().defaultRandom().primaryKey().notNull(),
 	orgId: uuid("org_id").notNull(),
@@ -11123,7 +11366,7 @@ export const contacts = pgTable("contacts", {
 	updatedBy: uuid("updated_by"),
 	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: tsvector("search_vector"),
+	searchVector: unknown("search_vector"),
 	relationshipNotes: text("relationship_notes"),
 	isPrimary: boolean("is_primary").default(false),
 	marketingEmailsOptIn: boolean("marketing_emails_opt_in").default(true),
@@ -11655,7 +11898,7 @@ export const notes = pgTable("notes", {
 	tags: text().array(),
 	attachmentCount: integer("attachment_count").default(0),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: tsvector("search_vector"),
+	searchVector: unknown("search_vector"),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
 	createdBy: uuid("created_by").notNull(),
@@ -11700,6 +11943,29 @@ export const notes = pgTable("notes", {
 	check("notes_content_not_empty", sql`(content IS NOT NULL) AND (content <> ''::text)`),
 ]);
 
+export const patternFields = pgTable("pattern_fields", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	patternId: uuid("pattern_id").notNull(),
+	fieldName: text("field_name").notNull(),
+	fieldLabel: text("field_label").notNull(),
+	fieldType: text("field_type").notNull(),
+	isRequired: boolean("is_required").default(false),
+	defaultValue: text("default_value"),
+	validationRules: jsonb("validation_rules"),
+	orderIndex: integer("order_index").default(0),
+	placeholder: text(),
+	helpText: text("help_text"),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	options: jsonb().default([]),
+}, (table) => [
+	foreignKey({
+			columns: [table.patternId],
+			foreignColumns: [activityPatterns.id],
+			name: "pattern_fields_pattern_id_fkey"
+		}).onDelete("cascade"),
+	unique("pattern_fields_pattern_id_field_name_key").on(table.patternId, table.fieldName),
+]);
+
 export const activityPatterns = pgTable("activity_patterns", {
 	id: uuid().defaultRandom().primaryKey().notNull(),
 	orgId: uuid("org_id"),
@@ -11719,7 +11985,6 @@ export const activityPatterns = pgTable("activity_patterns", {
 	category: text(),
 	entityType: text("entity_type").notNull(),
 	instructions: text(),
-	checklist: jsonb(),
 	isSystem: boolean("is_system").default(false),
 	isActive: boolean("is_active").default(true),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
@@ -11735,6 +12000,8 @@ export const activityPatterns = pgTable("activity_patterns", {
 	followupRules: jsonb("followup_rules").default([]),
 	fieldDependencies: jsonb("field_dependencies").default([]),
 	createdBy: uuid("created_by"),
+	isBlocking: boolean("is_blocking").default(false),
+	blockingStatuses: jsonb("blocking_statuses").default([]),
 }, (table) => [
 	index("activity_patterns_entity_type_idx").using("btree", table.entityType.asc().nullsLast().op("text_ops")),
 	index("idx_activity_patterns_category").using("btree", table.orgId.asc().nullsLast().op("bool_ops"), table.category.asc().nullsLast().op("text_ops"), table.isActive.asc().nullsLast().op("uuid_ops")),
@@ -11762,29 +12029,6 @@ export const activityPatterns = pgTable("activity_patterns", {
 			name: "activity_patterns_org_id_fkey"
 		}).onDelete("cascade"),
 	unique("activity_patterns_org_id_code_key").on(table.orgId, table.code),
-]);
-
-export const patternFields = pgTable("pattern_fields", {
-	id: uuid().defaultRandom().primaryKey().notNull(),
-	patternId: uuid("pattern_id").notNull(),
-	fieldName: text("field_name").notNull(),
-	fieldLabel: text("field_label").notNull(),
-	fieldType: text("field_type").notNull(),
-	isRequired: boolean("is_required").default(false),
-	defaultValue: text("default_value"),
-	validationRules: jsonb("validation_rules"),
-	orderIndex: integer("order_index").default(0),
-	placeholder: text(),
-	helpText: text("help_text"),
-	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
-	options: jsonb().default([]),
-}, (table) => [
-	foreignKey({
-			columns: [table.patternId],
-			foreignColumns: [activityPatterns.id],
-			name: "pattern_fields_pattern_id_fkey"
-		}).onDelete("cascade"),
-	unique("pattern_fields_pattern_id_field_name_key").on(table.patternId, table.fieldName),
 ]);
 
 export const featureFlagUsage = pgTable("feature_flag_usage", {
@@ -12767,6 +13011,85 @@ export const contactRateCards = pgTable("contact_rate_cards", {
 	pgPolicy("contact_rate_cards_org_isolation", { as: "permissive", for: "all", to: ["public"], using: sql`(org_id = ((auth.jwt() ->> 'org_id'::text))::uuid)` }),
 ]);
 
+export const groups = pgTable("groups", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	orgId: uuid("org_id").notNull(),
+	name: text().notNull(),
+	code: text(),
+	description: text(),
+	groupType: text("group_type").default('team').notNull(),
+	parentGroupId: uuid("parent_group_id"),
+	hierarchyLevel: integer("hierarchy_level").default(0),
+	hierarchyPath: text("hierarchy_path"),
+	supervisorId: uuid("supervisor_id"),
+	managerId: uuid("manager_id"),
+	securityZone: text("security_zone").default('default'),
+	phone: text(),
+	fax: text(),
+	email: text(),
+	addressLine1: text("address_line1"),
+	addressLine2: text("address_line2"),
+	city: text(),
+	state: text(),
+	postalCode: text("postal_code"),
+	country: text().default('USA'),
+	loadFactor: integer("load_factor").default(100),
+	isActive: boolean("is_active").default(true),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	createdBy: uuid("created_by"),
+	updatedBy: uuid("updated_by"),
+	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
+}, (table) => [
+	index("idx_groups_active").using("btree", table.isActive.asc().nullsLast().op("bool_ops")).where(sql`(deleted_at IS NULL)`),
+	index("idx_groups_hierarchy_path").using("btree", table.hierarchyPath.asc().nullsLast().op("text_ops")),
+	index("idx_groups_manager").using("btree", table.managerId.asc().nullsLast().op("uuid_ops")),
+	index("idx_groups_org_id").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")),
+	index("idx_groups_parent_id").using("btree", table.parentGroupId.asc().nullsLast().op("uuid_ops")),
+	index("idx_groups_supervisor").using("btree", table.supervisorId.asc().nullsLast().op("uuid_ops")),
+	index("idx_groups_type").using("btree", table.groupType.asc().nullsLast().op("text_ops")),
+	foreignKey({
+			columns: [table.createdBy],
+			foreignColumns: [userProfiles.id],
+			name: "groups_created_by_fkey"
+		}),
+	foreignKey({
+			columns: [table.managerId],
+			foreignColumns: [userProfiles.id],
+			name: "groups_manager_id_fkey"
+		}).onDelete("set null"),
+	foreignKey({
+			columns: [table.orgId],
+			foreignColumns: [organizations.id],
+			name: "groups_org_id_fkey"
+		}).onDelete("cascade"),
+	foreignKey({
+			columns: [table.parentGroupId],
+			foreignColumns: [table.id],
+			name: "groups_parent_group_id_fkey"
+		}).onDelete("set null"),
+	foreignKey({
+			columns: [table.supervisorId],
+			foreignColumns: [userProfiles.id],
+			name: "groups_supervisor_id_fkey"
+		}).onDelete("set null"),
+	foreignKey({
+			columns: [table.updatedBy],
+			foreignColumns: [userProfiles.id],
+			name: "groups_updated_by_fkey"
+		}),
+	unique("groups_unique_name_per_org").on(table.orgId, table.name, table.deletedAt),
+	unique("groups_unique_code_per_org").on(table.orgId, table.code, table.deletedAt),
+	pgPolicy("groups_delete_policy", { as: "permissive", for: "delete", to: ["public"], using: sql`(org_id IN ( SELECT user_profiles.org_id
+   FROM user_profiles
+  WHERE (user_profiles.auth_id = auth.uid())))` }),
+	pgPolicy("groups_insert_policy", { as: "permissive", for: "insert", to: ["public"] }),
+	pgPolicy("groups_select_policy", { as: "permissive", for: "select", to: ["public"] }),
+	pgPolicy("groups_update_policy", { as: "permissive", for: "update", to: ["public"] }),
+	check("groups_root_no_parent", sql`((group_type = 'root'::text) AND (parent_group_id IS NULL)) OR (group_type <> 'root'::text)`),
+	check("groups_type_check", sql`group_type = ANY (ARRAY['root'::text, 'division'::text, 'branch'::text, 'team'::text, 'satellite_office'::text, 'producer'::text])`),
+]);
+
 export const placementExtensions = pgTable("placement_extensions", {
 	id: uuid().defaultRandom().primaryKey().notNull(),
 	orgId: uuid("org_id").notNull(),
@@ -12919,6 +13242,64 @@ export const contactCompliance = pgTable("contact_compliance", {
 	pgPolicy("contact_compliance_org_isolation", { as: "permissive", for: "all", to: ["public"], using: sql`(org_id = ((auth.jwt() ->> 'org_id'::text))::uuid)` }),
 	check("contact_compliance_status_check", sql`status = ANY (ARRAY['pending'::text, 'received'::text, 'verified'::text, 'expiring'::text, 'expired'::text, 'rejected'::text])`),
 	check("contact_compliance_type_check", sql`compliance_type = ANY (ARRAY['general_liability'::text, 'workers_comp'::text, 'e_o'::text, 'cyber'::text, 'w9'::text, 'coi'::text, 'background_check'::text, 'drug_test'::text, 'i9'::text, 'w4'::text, 'direct_deposit'::text])`),
+]);
+
+export const groupMembers = pgTable("group_members", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	orgId: uuid("org_id").notNull(),
+	groupId: uuid("group_id").notNull(),
+	userId: uuid("user_id").notNull(),
+	isManager: boolean("is_manager").default(false),
+	isActive: boolean("is_active").default(true),
+	loadFactor: integer("load_factor").default(100),
+	loadPermission: text("load_permission").default('normal'),
+	vacationStatus: text("vacation_status").default('available'),
+	backupUserId: uuid("backup_user_id"),
+	joinedAt: timestamp("joined_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	leftAt: timestamp("left_at", { withTimezone: true, mode: 'string' }),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	createdBy: uuid("created_by"),
+}, (table) => [
+	index("idx_group_members_active").using("btree", table.isActive.asc().nullsLast().op("bool_ops")).where(sql`(left_at IS NULL)`),
+	index("idx_group_members_group_id").using("btree", table.groupId.asc().nullsLast().op("uuid_ops")),
+	index("idx_group_members_manager").using("btree", table.groupId.asc().nullsLast().op("uuid_ops")).where(sql`(is_manager = true)`),
+	index("idx_group_members_org_id").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")),
+	index("idx_group_members_user_id").using("btree", table.userId.asc().nullsLast().op("uuid_ops")),
+	foreignKey({
+			columns: [table.backupUserId],
+			foreignColumns: [userProfiles.id],
+			name: "group_members_backup_user_id_fkey"
+		}),
+	foreignKey({
+			columns: [table.createdBy],
+			foreignColumns: [userProfiles.id],
+			name: "group_members_created_by_fkey"
+		}),
+	foreignKey({
+			columns: [table.groupId],
+			foreignColumns: [groups.id],
+			name: "group_members_group_id_fkey"
+		}).onDelete("cascade"),
+	foreignKey({
+			columns: [table.orgId],
+			foreignColumns: [organizations.id],
+			name: "group_members_org_id_fkey"
+		}).onDelete("cascade"),
+	foreignKey({
+			columns: [table.userId],
+			foreignColumns: [userProfiles.id],
+			name: "group_members_user_id_fkey"
+		}).onDelete("cascade"),
+	unique("group_members_unique").on(table.groupId, table.userId),
+	pgPolicy("group_members_delete_policy", { as: "permissive", for: "delete", to: ["public"], using: sql`(org_id IN ( SELECT user_profiles.org_id
+   FROM user_profiles
+  WHERE (user_profiles.auth_id = auth.uid())))` }),
+	pgPolicy("group_members_insert_policy", { as: "permissive", for: "insert", to: ["public"] }),
+	pgPolicy("group_members_select_policy", { as: "permissive", for: "select", to: ["public"] }),
+	pgPolicy("group_members_update_policy", { as: "permissive", for: "update", to: ["public"] }),
+	check("group_members_load_permission_check", sql`load_permission = ANY (ARRAY['normal'::text, 'reduced'::text, 'exempt'::text])`),
+	check("group_members_vacation_check", sql`vacation_status = ANY (ARRAY['available'::text, 'vacation'::text, 'sick'::text, 'leave'::text])`),
 ]);
 
 export const contactCommunicationPreferences = pgTable("contact_communication_preferences", {
@@ -13113,7 +13494,7 @@ export const companies = pgTable("companies", {
 	updatedBy: uuid("updated_by"),
 	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: tsvector("search_vector"),
+	searchVector: unknown("search_vector"),
 	description: text(),
 	industries: text().array(),
 }, (table) => [
@@ -13187,6 +13568,48 @@ export const companies = pgTable("companies", {
 	check("companies_our_msp_tier_check", sql`(our_msp_tier >= 1) AND (our_msp_tier <= 5)`),
 	check("valid_hierarchy", sql`(parent_company_id IS NULL) OR (parent_company_id <> id)`),
 	check("valid_msp_reference", sql`(msp_provider_id IS NULL) OR (msp_provider_id <> id)`),
+]);
+
+export const groupRegions = pgTable("group_regions", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	orgId: uuid("org_id").notNull(),
+	groupId: uuid("group_id").notNull(),
+	regionId: uuid("region_id").notNull(),
+	isPrimary: boolean("is_primary").default(false),
+	isActive: boolean("is_active").default(true),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	createdBy: uuid("created_by"),
+}, (table) => [
+	index("idx_group_regions_group_id").using("btree", table.groupId.asc().nullsLast().op("uuid_ops")),
+	index("idx_group_regions_org_id").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")),
+	index("idx_group_regions_region_id").using("btree", table.regionId.asc().nullsLast().op("uuid_ops")),
+	foreignKey({
+			columns: [table.createdBy],
+			foreignColumns: [userProfiles.id],
+			name: "group_regions_created_by_fkey"
+		}),
+	foreignKey({
+			columns: [table.groupId],
+			foreignColumns: [groups.id],
+			name: "group_regions_group_id_fkey"
+		}).onDelete("cascade"),
+	foreignKey({
+			columns: [table.orgId],
+			foreignColumns: [organizations.id],
+			name: "group_regions_org_id_fkey"
+		}).onDelete("cascade"),
+	foreignKey({
+			columns: [table.regionId],
+			foreignColumns: [regions.id],
+			name: "group_regions_region_id_fkey"
+		}).onDelete("cascade"),
+	unique("group_regions_unique").on(table.groupId, table.regionId),
+	pgPolicy("group_regions_delete_policy", { as: "permissive", for: "delete", to: ["public"], using: sql`(org_id IN ( SELECT user_profiles.org_id
+   FROM user_profiles
+  WHERE (user_profiles.auth_id = auth.uid())))` }),
+	pgPolicy("group_regions_insert_policy", { as: "permissive", for: "insert", to: ["public"] }),
+	pgPolicy("group_regions_select_policy", { as: "permissive", for: "select", to: ["public"] }),
+	pgPolicy("group_regions_update_policy", { as: "permissive", for: "update", to: ["public"] }),
 ]);
 
 export const documents = pgTable("documents", {
@@ -13523,6 +13946,35 @@ export const companyClientDetails = pgTable("company_client_details", {
 		}),
 	pgPolicy("company_client_details_org_isolation", { as: "permissive", for: "all", to: ["public"], using: sql`(org_id = current_user_org_id())` }),
 	check("company_client_details_billing_frequency_check", sql`(billing_frequency)::text = ANY ((ARRAY['weekly'::character varying, 'biweekly'::character varying, 'monthly'::character varying])::text[])`),
+]);
+
+export const entityDrafts = pgTable("entity_drafts", {
+	id: uuid().defaultRandom().primaryKey().notNull(),
+	orgId: uuid("org_id").notNull(),
+	userId: uuid("user_id").notNull(),
+	entityType: text("entity_type").notNull(),
+	displayName: text("display_name").notNull(),
+	formData: jsonb("form_data").default({}).notNull(),
+	currentStep: integer("current_step").default(1),
+	totalSteps: integer("total_steps").default(1),
+	wizardRoute: text("wizard_route").notNull(),
+	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
+	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
+}, (table) => [
+	index("idx_entity_drafts_entity_type").using("btree", table.entityType.asc().nullsLast().op("text_ops")),
+	index("idx_entity_drafts_org").using("btree", table.orgId.asc().nullsLast().op("timestamptz_ops"), table.deletedAt.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
+	index("idx_entity_drafts_user_active").using("btree", table.userId.asc().nullsLast().op("uuid_ops"), table.deletedAt.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
+	foreignKey({
+			columns: [table.orgId],
+			foreignColumns: [organizations.id],
+			name: "entity_drafts_org_id_fkey"
+		}).onDelete("cascade"),
+	pgPolicy("entity_drafts_delete_own", { as: "permissive", for: "delete", to: ["public"], using: sql`(user_id = auth.uid())` }),
+	pgPolicy("entity_drafts_insert_own", { as: "permissive", for: "insert", to: ["public"] }),
+	pgPolicy("entity_drafts_select_own", { as: "permissive", for: "select", to: ["public"] }),
+	pgPolicy("entity_drafts_update_own", { as: "permissive", for: "update", to: ["public"] }),
+	check("entity_drafts_entity_type_check", sql`entity_type = ANY (ARRAY['account'::text, 'job'::text, 'contact'::text, 'candidate'::text, 'submission'::text, 'placement'::text, 'vendor'::text, 'contract'::text])`),
 ]);
 
 export const companyVendorDetails = pgTable("company_vendor_details", {
@@ -14505,7 +14957,7 @@ export const jobs = pgTable("jobs", {
 	createdBy: uuid("created_by"),
 	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: tsvector("search_vector"),
+	searchVector: unknown("search_vector"),
 	priority: text().default('medium'),
 	targetStartDate: timestamp("target_start_date", { withTimezone: true, mode: 'string' }),
 	closedAt: timestamp("closed_at", { withTimezone: true, mode: 'string' }),
@@ -14531,21 +14983,25 @@ export const jobs = pgTable("jobs", {
 	feeType: varchar("fee_type", { length: 50 }).default('percentage'),
 	feePercentage: numeric("fee_percentage", { precision: 5, scale:  2 }),
 	feeFlatAmount: numeric("fee_flat_amount", { precision: 10, scale:  2 }),
+	intakeData: jsonb("intake_data").default({}),
+	targetEndDate: date("target_end_date"),
+	wizardState: jsonb("wizard_state"),
 }, (table) => [
 	index("idx_jobs_client_company").using("btree", table.clientCompanyId.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
 	index("idx_jobs_company_id").using("btree", table.companyId.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
 	index("idx_jobs_company_org").using("btree", table.companyId.asc().nullsLast().op("uuid_ops"), table.orgId.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
 	index("idx_jobs_deal").using("btree", table.dealId.asc().nullsLast().op("uuid_ops")),
 	index("idx_jobs_end_client").using("btree", table.endClientCompanyId.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
-	index("idx_jobs_external_id").using("btree", table.orgId.asc().nullsLast().op("uuid_ops"), table.externalJobId.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
+	index("idx_jobs_external_id").using("btree", table.orgId.asc().nullsLast().op("text_ops"), table.externalJobId.asc().nullsLast().op("text_ops")).where(sql`(deleted_at IS NULL)`),
 	index("idx_jobs_hiring_manager").using("btree", table.hiringManagerContactId.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
+	index("idx_jobs_intake_data").using("gin", table.intakeData.asc().nullsLast().op("jsonb_ops")),
 	index("idx_jobs_org").using("btree", table.orgId.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
 	index("idx_jobs_org_status").using("btree", table.orgId.asc().nullsLast().op("uuid_ops"), table.status.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
 	index("idx_jobs_owner").using("btree", table.ownerId.asc().nullsLast().op("uuid_ops")),
 	index("idx_jobs_posted_date").using("btree", table.postedDate.desc().nullsFirst().op("date_ops")),
-	index("idx_jobs_priority_rank").using("btree", table.orgId.asc().nullsLast().op("uuid_ops"), table.priorityRank.desc().nullsFirst().op("int4_ops")).where(sql`((status = ANY (ARRAY['open'::text, 'active'::text])) AND (deleted_at IS NULL))`),
+	index("idx_jobs_priority_rank").using("btree", table.orgId.asc().nullsLast().op("uuid_ops"), table.priorityRank.desc().nullsFirst().op("uuid_ops")).where(sql`((status = ANY (ARRAY['open'::text, 'active'::text])) AND (deleted_at IS NULL))`),
 	index("idx_jobs_search").using("gin", table.searchVector.asc().nullsLast().op("tsvector_ops")),
-	index("idx_jobs_sla").using("btree", table.orgId.asc().nullsLast().op("uuid_ops"), table.slaDays.asc().nullsLast().op("uuid_ops")).where(sql`((status = ANY (ARRAY['open'::text, 'active'::text])) AND (deleted_at IS NULL))`),
+	index("idx_jobs_sla").using("btree", table.orgId.asc().nullsLast().op("int4_ops"), table.slaDays.asc().nullsLast().op("uuid_ops")).where(sql`((status = ANY (ARRAY['open'::text, 'active'::text])) AND (deleted_at IS NULL))`),
 	index("idx_jobs_status").using("btree", table.status.asc().nullsLast().op("text_ops")).where(sql`(deleted_at IS NULL)`),
 	index("idx_jobs_vendor").using("btree", table.vendorCompanyId.asc().nullsLast().op("uuid_ops")).where(sql`(deleted_at IS NULL)`),
 	foreignKey({
@@ -17002,7 +17458,7 @@ END`),
 	prospectsClicked: integer("prospects_clicked").default(0),
 	prospectsResponded: integer("prospects_responded").default(0),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: tsvector("search_vector"),
+	searchVector: unknown("search_vector"),
 	sequenceTemplateIds: uuid("sequence_template_ids").array().default([""]),
 	updatedBy: uuid("updated_by"),
 	sendWindowStart: time("send_window_start").default('09:00:00'),
@@ -18014,7 +18470,7 @@ export const vTimelineRecent = pgView("v_timeline_recent", {	id: uuid(),
 	aiGeneratedSummary: text("ai_generated_summary"),
 	keyLearnings: text("key_learnings"),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: tsvector("search_vector"),
+	searchVector: unknown("search_vector"),
 	createdAt: timestamp("created_at", { withTimezone: true, mode: 'string' }),
 	updatedAt: timestamp("updated_at", { withTimezone: true, mode: 'string' }),
 	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
@@ -18105,7 +18561,7 @@ export const vActiveUsers = pgView("v_active_users", {	id: uuid(),
 	deletedAt: timestamp("deleted_at", { withTimezone: true, mode: 'string' }),
 	isActive: boolean("is_active"),
 	// TODO: failed to parse database type 'tsvector'
-	searchVector: tsvector("search_vector"),
+	searchVector: unknown("search_vector"),
 }).as(sql`SELECT id, auth_id, email, full_name, avatar_url, phone, timezone, locale, student_enrollment_date, student_course_id, student_current_module, student_course_progress, student_graduation_date, student_certificates, employee_hire_date, employee_department, employee_position, employee_salary, employee_status, employee_manager_id, employee_performance_rating, candidate_status, candidate_resume_url, candidate_skills, candidate_experience_years, candidate_current_visa, candidate_visa_expiry, candidate_hourly_rate, candidate_bench_start_date, candidate_availability, candidate_location, candidate_willing_to_relocate, client_company_name, client_industry, client_tier, client_contract_start_date, client_contract_end_date, client_payment_terms, client_preferred_markup_percentage, recruiter_territory, recruiter_specialization, recruiter_monthly_placement_target, recruiter_pod_id, created_at, updated_at, created_by, updated_by, deleted_at, is_active, search_vector FROM user_profiles WHERE deleted_at IS NULL AND is_active = true`);
 
 export const vStudents = pgView("v_students", {	id: uuid(),
@@ -18242,21 +18698,21 @@ export const vSubscriberPerformance = pgView("v_subscriber_performance", {	subsc
 }).as(sql`SELECT es.subscriber_name, es.event_pattern, count(edl.id) AS total_deliveries, count(*) FILTER (WHERE edl.status = 'success'::text) AS successful, count(*) FILTER (WHERE edl.status = 'failure'::text) AS failed, avg(edl.duration_ms) AS avg_duration_ms, max(edl.attempted_at) AS last_delivery_at FROM event_subscriptions es LEFT JOIN event_delivery_log edl ON es.id = edl.subscription_id WHERE edl.attempted_at > (now() - '7 days'::interval) GROUP BY es.id, es.subscriber_name, es.event_pattern ORDER BY (count(edl.id)) DESC`);
 
 export const vRlsStatus = pgView("v_rls_status", {	// TODO: failed to parse database type 'name'
-	schemaname: pgName("schemaname"),
+	schemaname: unknown("schemaname"),
 	// TODO: failed to parse database type 'name'
-	tablename: pgName("tablename"),
+	tablename: unknown("tablename"),
 	rlsEnabled: boolean("rls_enabled"),
 }).as(sql`SELECT schemaname, tablename, rowsecurity AS rls_enabled FROM pg_tables WHERE schemaname = 'public'::name AND (tablename = ANY (ARRAY['user_profiles'::name, 'roles'::name, 'permissions'::name, 'user_roles'::name, 'role_permissions'::name, 'audit_logs'::name, 'events'::name, 'event_subscriptions'::name])) ORDER BY tablename`);
 
 export const vRlsPolicies = pgView("v_rls_policies", {	// TODO: failed to parse database type 'name'
-	schemaname: pgName("schemaname"),
+	schemaname: unknown("schemaname"),
 	// TODO: failed to parse database type 'name'
-	tablename: pgName("tablename"),
+	tablename: unknown("tablename"),
 	// TODO: failed to parse database type 'name'
-	policyname: pgName("policyname"),
+	policyname: unknown("policyname"),
 	permissive: text(),
 	// TODO: failed to parse database type 'name[]'
-	roles: pgNameArray("roles"),
+	roles: unknown("roles"),
 	cmd: text(),
 	qual: text(),
 	withCheck: text("with_check"),
@@ -18406,13 +18862,13 @@ export const capstoneGradingQueue = pgView("capstone_grading_queue", {	id: uuid(
 }).as(sql`SELECT cs.id, cs.user_id, cs.enrollment_id, cs.course_id, up.full_name AS student_name, up.email AS student_email, c.title AS course_title, cs.repository_url, cs.demo_video_url, cs.description, cs.submitted_at, cs.status, cs.revision_count, cs.peer_review_count, cs.avg_peer_rating, EXTRACT(epoch FROM now() - cs.submitted_at) / 3600::numeric AS hours_waiting FROM capstone_submissions cs JOIN user_profiles up ON cs.user_id = up.id JOIN courses c ON cs.course_id = c.id WHERE cs.status = ANY (ARRAY['pending'::text, 'peer_review'::text, 'trainer_review'::text]) ORDER BY cs.submitted_at`);
 
 export const vAuthRlsStatus = pgView("v_auth_rls_status", {	// TODO: failed to parse database type 'name'
-	tableName: pgName("table_name"),
+	tableName: unknown("table_name"),
 	rlsEnabled: boolean("rls_enabled"),
 	rlsForced: boolean("rls_forced"),
 	// You can use { mode: "bigint" } if numbers are exceeding js number limitations
 	policyCount: bigint("policy_count", { mode: "number" }),
 	// TODO: failed to parse database type 'name[]'
-	policies: jsonb("policies"),
+	policies: unknown("policies"),
 }).as(sql`SELECT c.relname AS table_name, c.relrowsecurity AS rls_enabled, c.relforcerowsecurity AS rls_forced, count(p.polname) AS policy_count, array_agg(p.polname ORDER BY p.polname) AS policies FROM pg_class c LEFT JOIN pg_policy p ON p.polrelid = c.oid WHERE c.relnamespace = 'public'::regnamespace::oid AND c.relkind = 'r'::"char" AND (c.relname = ANY (ARRAY['user_profiles'::name, 'roles'::name, 'permissions'::name, 'user_roles'::name, 'role_permissions'::name, 'organizations'::name, 'audit_logs'::name])) GROUP BY c.relname, c.relrowsecurity, c.relforcerowsecurity ORDER BY c.relname`);
 
 export const capstoneStatistics = pgView("capstone_statistics", {	courseId: uuid("course_id"),
