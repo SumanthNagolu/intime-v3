@@ -173,27 +173,32 @@ export async function getFullAccount(id: string): Promise<FullAccountData | null
     adminClient
       .from('notes')
       .select(`
-        id, content, is_pinned, created_at,
-        creator:user_profiles!created_by(id, full_name)
+        id, title, content, note_type, visibility, is_pinned, is_starred, reply_count, tags, created_at, updated_at,
+        creator:user_profiles!created_by(id, full_name, avatar_url)
       `)
       .eq('entity_type', 'account')
       .eq('entity_id', id)
       .is('deleted_at', null)
+      .is('parent_note_id', null)
       .order('is_pinned', { ascending: false })
       .order('created_at', { ascending: false })
       .limit(50),
 
-    // Documents (polymorphic)
+    // Documents/Contracts (from unified contracts table with entity_type='account')
     adminClient
-      .from('documents')
+      .from('contracts')
       .select(`
-        id, name, document_type, file_size, file_url, created_at,
-        uploader:user_profiles!uploaded_by(id, full_name)
+        id, contract_name, contract_type, contract_number, category, status,
+        effective_date, expiry_date, contract_value, currency, document_url,
+        auto_renew, renewal_term_months, renewal_notice_days, terms,
+        created_at, updated_at,
+        owner:user_profiles!owner_id(id, full_name),
+        creator:user_profiles!created_by(id, full_name)
       `)
+      .eq('org_id', orgId)
       .eq('entity_type', 'account')
       .eq('entity_id', id)
       .is('deleted_at', null)
-      .eq('is_latest_version', true)
       .order('created_at', { ascending: false })
       .limit(50),
 
@@ -612,28 +617,53 @@ function transformActivities(data: Record<string, unknown>[]): AccountActivity[]
 
 function transformNotes(data: Record<string, unknown>[]): AccountNote[] {
   return data.map((n) => {
-    const creator = n.creator as { full_name?: string } | null
+    const creator = n.creator as { id?: string; full_name?: string; avatar_url?: string | null } | null
     return {
       id: n.id as string,
+      title: (n.title as string) || null,
       content: (n.content as string) || '',
+      noteType: (n.note_type as AccountNote['noteType']) || 'general',
+      visibility: (n.visibility as AccountNote['visibility']) || 'team',
       createdAt: n.created_at as string,
-      createdBy: creator?.full_name || 'Unknown',
+      updatedAt: (n.updated_at as string) || null,
+      creator: creator?.id ? {
+        id: creator.id,
+        full_name: creator.full_name || 'Unknown',
+        avatar_url: creator.avatar_url || null,
+      } : null,
       isPinned: (n.is_pinned as boolean) || false,
+      isStarred: (n.is_starred as boolean) || false,
+      replyCount: (n.reply_count as number) || 0,
+      tags: (n.tags as string[]) || null,
     }
   })
 }
 
 function transformDocuments(data: Record<string, unknown>[]): AccountDocument[] {
   return data.map((d) => {
-    const uploader = d.uploader as { full_name?: string } | null
+    const creator = d.creator as { full_name?: string } | null
+    const terms = d.terms as { notes?: string } | null
     return {
       id: d.id as string,
-      name: (d.name as string) || 'Untitled',
-      type: (d.document_type as string) || 'other',
-      size: (d.file_size as number) || 0,
+      name: (d.contract_name as string) || 'Untitled',
+      type: (d.contract_type as string) || 'other',
+      size: 0, // Contracts don't store file size directly
       uploadedAt: d.created_at as string,
-      uploadedBy: uploader?.full_name || 'Unknown',
-      url: (d.file_url as string) || '',
+      uploadedBy: creator?.full_name || 'Unknown',
+      url: (d.document_url as string) || '',
+      // Extended contract fields
+      category: d.category as string | undefined,
+      status: d.status as string | undefined,
+      expirationDate: d.expiry_date as string | null,
+      // Additional contract data for enhanced display
+      contractNumber: d.contract_number as string | undefined,
+      contractValue: d.contract_value as number | undefined,
+      currency: d.currency as string | undefined,
+      effectiveDate: d.effective_date as string | undefined,
+      autoRenew: d.auto_renew as boolean | undefined,
+      renewalTermMonths: d.renewal_term_months as number | undefined,
+      renewalNoticeDays: d.renewal_notice_days as number | undefined,
+      notes: terms?.notes as string | undefined,
     }
   })
 }

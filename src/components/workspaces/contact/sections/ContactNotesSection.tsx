@@ -86,7 +86,7 @@ function NoteCard({ note }: { note: ContactNote }) {
         <div className="flex-1 min-w-0">
           <div className="text-sm text-charcoal-900 whitespace-pre-wrap">{note.content}</div>
           <div className="text-xs text-charcoal-500 mt-2">
-            {note.createdBy} \u2022 {formatDistanceToNow(new Date(note.createdAt), { addSuffix: true })}
+            {note.creator?.full_name || 'Unknown'} \u2022 {formatDistanceToNow(new Date(note.createdAt), { addSuffix: true })}
           </div>
         </div>
         <Button variant="ghost" size="sm" className="flex-shrink-0 h-6 w-6 p-0">
