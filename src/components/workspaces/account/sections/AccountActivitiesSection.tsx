@@ -655,9 +655,10 @@ function ActivityDetailBottomPanel({
   const [escalateReason, setEscalateReason] = React.useState('')
 
   // Fetch team members for reassignment
-  const { data: teamMembers } = trpc.team.list.useQuery(undefined, {
-    enabled: reassignDialogOpen,
-  })
+  const { data: teamMembersData } = trpc.users.list.useQuery(
+    { pageSize: 100 },
+    { enabled: reassignDialogOpen }
+  )
 
   // Reassign mutation
   const reassignMutation = trpc.activities.reassign.useMutation({
@@ -688,7 +689,7 @@ function ActivityDetailBottomPanel({
   const handleReassign = () => {
     if (!selectedUserId) return
     reassignMutation.mutate({
-      activityId: activity.id,
+      id: activity.id,
       assignedTo: selectedUserId,
     })
   }
@@ -1127,9 +1128,9 @@ function ActivityDetailBottomPanel({
                   <SelectValue placeholder="Select a team member" />
                 </SelectTrigger>
                 <SelectContent>
-                  {teamMembers?.map((member) => (
+                  {teamMembersData?.items?.map((member) => (
                     <SelectItem key={member.id} value={member.id}>
-                      {member.name}
+                      {member.full_name}
                     </SelectItem>
                   ))}
                 </SelectContent>

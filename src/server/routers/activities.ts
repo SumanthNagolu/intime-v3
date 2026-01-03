@@ -800,14 +800,24 @@ export const activitiesRouter = router({
       assignedTo: z.string().uuid(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user, supabase } = ctx
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
 
-      const { data, error } = await supabase
+      // Get the user_profiles ID for the current user (for updated_by FK)
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id
+
+      const { data, error } = await adminClient
         .from('activities')
         .update({
           assigned_to: input.assignedTo,
           updated_at: new Date().toISOString(),
-          updated_by: user?.id,
+          updated_by: userProfileId,
         })
         .eq('id', input.id)
         .eq('org_id', orgId)
@@ -819,7 +829,7 @@ export const activitiesRouter = router({
       }
 
       // Audit log
-      await supabase.from('audit_logs').insert({
+      await adminClient.from('audit_logs').insert({
         org_id: orgId,
         user_id: user?.id,
         user_email: user?.email,
@@ -1512,8 +1522,17 @@ export const activitiesRouter = router({
       escalateToQueueId: z.string().uuid().optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      const { orgId, user, supabase } = ctx
+      const { orgId, user } = ctx
       const adminClient = getAdminClient()
+
+      // Get the user_profiles ID for the current user (for updated_by FK)
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id
 
       // Get current activity
       const { data: currentActivity, error: fetchError } = await adminClient
@@ -1534,7 +1553,7 @@ export const activitiesRouter = router({
         escalation_count: newEscalationLevel,
         last_escalated_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
-        updated_by: user?.id,
+        updated_by: userProfileId,
       }
 
       // Escalate priority if level is high
@@ -1553,7 +1572,7 @@ export const activitiesRouter = router({
         updateData.assigned_to = null
       }
 
-      const { data: activity, error } = await supabase
+      const { data: activity, error } = await adminClient
         .from('activities')
         .update(updateData)
         .eq('id', input.activityId)
