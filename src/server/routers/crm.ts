@@ -5172,6 +5172,7 @@ export const crmRouter = router({
           .eq('org_id', orgId)
           .in('entity_type', ['account', 'company'])
           .eq('entity_id', input.accountId)
+          .is('deleted_at', null)
           .order('created_at', { ascending: false })
           .limit(input.limit)
 
@@ -5396,17 +5397,19 @@ export const crmRouter = router({
         return data ?? []
       }),
 
-    // Create a task/action item for any entity
+    // Create a task/action item for any entity (scheduled activity / to-do)
     createTask: orgProtectedProcedure
       .input(z.object({
         entityType: z.string(),
         entityId: z.string().uuid(),
+        activityType: z.enum(['call', 'email', 'meeting', 'note', 'task', 'linkedin_message', 'follow_up']).default('task'),
         subject: z.string().min(1),
         description: z.string().optional(),
         assignedTo: z.string().uuid().optional(),
         dueDate: z.string().datetime().optional(),
         priority: z.enum(['low', 'medium', 'high', 'urgent']).default('medium'),
         status: z.enum(['pending', 'in_progress', 'completed', 'cancelled']).default('pending'),
+        relatedContactId: z.string().uuid().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
         const { orgId, user } = ctx
@@ -5423,20 +5426,24 @@ export const crmRouter = router({
           creatorProfileId = profile?.id ?? null
         }
 
+        // If no assignee specified, assign to creator (self)
+        const assigneeId = input.assignedTo || creatorProfileId
+
         const { data, error } = await adminClient
           .from('activities')
           .insert({
             org_id: orgId,
             entity_type: input.entityType,
             entity_id: input.entityId,
-            activity_type: 'task',
+            activity_type: input.activityType,
             subject: input.subject,
             description: input.description,
-            assigned_to: input.assignedTo, // Already user_profiles.id from frontend
+            assigned_to: assigneeId,
             due_date: input.dueDate,
             priority: input.priority,
             status: input.status === 'pending' ? 'open' : input.status, // Map pending to open for DB
             created_by: creatorProfileId,
+            related_contact_id: input.relatedContactId,
           })
           .select('*, creator:user_profiles!created_by(id, full_name, avatar_url), assignee:user_profiles!assigned_to(id, full_name, avatar_url)')
           .single()

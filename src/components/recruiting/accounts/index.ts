@@ -1,7 +1,6 @@
 // List components have been migrated to PCF EntityListView
 
 export { CreateAccountDialog } from './CreateAccountDialog'
-export { LogActivityDialog } from './LogActivityDialog'
 export { AddContactDialog } from './AddContactDialog'
 export { CreateMeetingDialog } from './CreateMeetingDialog'
 export { EditMeetingDialog } from './EditMeetingDialog'

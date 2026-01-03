@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { AccountWorkspace } from '@/components/workspaces/AccountWorkspace'
-import { LogActivityDialog } from '@/components/recruiting/accounts/LogActivityDialog'
+import { CreateActivityDialog } from '@/components/activities/CreateActivityDialog'
 import { AddContactDialog } from '@/components/recruiting/accounts/AddContactDialog'
 import { CreateMeetingDialog } from '@/components/recruiting/accounts/CreateMeetingDialog'
 import { CreateEscalationDialog } from '@/components/recruiting/accounts/CreateEscalationDialog'
@@ -29,7 +29,7 @@ export default function AccountDetailPage() {
   const { refreshData } = useAccountWorkspace()
 
   // Dialog states
-  const [logActivityOpen, setLogActivityOpen] = useState(false)
+  const [createActivityOpen, setCreateActivityOpen] = useState(false)
   const [addContactOpen, setAddContactOpen] = useState(false)
   const [createMeetingOpen, setCreateMeetingOpen] = useState(false)
   const [createEscalationOpen, setCreateEscalationOpen] = useState(false)
@@ -54,8 +54,8 @@ export default function AccountDetailPage() {
   useEffect(() => {
     const handleAccountDialog = (event: CustomEvent<{ dialogId: string; accountId?: string }>) => {
       switch (event.detail.dialogId) {
-        case 'logActivity':
-          setLogActivityOpen(true)
+        case 'createActivity':
+          setCreateActivityOpen(true)
           break
         case 'addContact':
           setAddContactOpen(true)
@@ -89,8 +89,8 @@ export default function AccountDetailPage() {
           case 'addContact':
             setAddContactOpen(true)
             break
-          case 'logActivity':
-            setLogActivityOpen(true)
+          case 'createActivity':
+            setCreateActivityOpen(true)
             break
         }
       }
@@ -120,10 +120,11 @@ export default function AccountDetailPage() {
       <AccountWorkspace />
 
       {/* Create/Add Dialogs */}
-      <LogActivityDialog
-        open={logActivityOpen}
-        onOpenChange={(open) => handleDialogChange(open, setLogActivityOpen)}
-        accountId={accountId}
+      <CreateActivityDialog
+        open={createActivityOpen}
+        onOpenChange={(open) => handleDialogChange(open, setCreateActivityOpen)}
+        entityType="account"
+        entityId={accountId}
       />
       <AddContactDialog
         open={addContactOpen}
