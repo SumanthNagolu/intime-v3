@@ -9,6 +9,7 @@ import { DetailMetrics } from './DetailMetrics'
 import { DetailJourney } from './DetailJourney'
 import { cn } from '@/lib/utils'
 import { Skeleton } from '@/components/ui/skeleton'
+import { NoOpenActivitiesWarning } from '@/components/activities'
 
 interface EntityDetailViewProps<T> {
   config: DetailViewConfig<T>
@@ -187,6 +188,16 @@ export function EntityDetailView<T extends Record<string, unknown>>({
           />
         )}
       </div>
+
+      {/* Activity System Warning Banner (Guidewire pattern) */}
+      {config.entityType && (
+        <NoOpenActivitiesWarning
+          entityType={config.entityType}
+          entityId={entityId}
+          entityName={(entity as any)?.[config.titleField] as string | undefined}
+          className="mx-6 mt-4"
+        />
+      )}
 
       {/* Section/Step Content */}
       <div className="flex-1 px-6 py-6 bg-charcoal-50/30">

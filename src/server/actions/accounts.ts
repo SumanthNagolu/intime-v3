@@ -160,6 +160,7 @@ export async function getFullAccount(id: string): Promise<FullAccountData | null
       .from('activities')
       .select(`
         id, activity_type, subject, due_date, status, created_at,
+        priority, pattern_code, checklist, checklist_progress, description,
         assigned_to:user_profiles!assigned_to(id, full_name)
       `)
       .in('entity_type', ['account', 'company'])
@@ -600,6 +601,11 @@ function transformActivities(data: Record<string, unknown>[]): AccountActivity[]
       assignedTo: assignee?.full_name || 'Unassigned',
       status: (a.status as string) || 'pending',
       createdAt: a.created_at as string,
+      priority: a.priority as string | null,
+      patternCode: a.pattern_code as string | null,
+      checklist: a.checklist as Array<{ id: string; text: string }> | null,
+      checklistProgress: a.checklist_progress as Record<string, boolean> | null,
+      description: a.description as string | null,
     }
   })
 }

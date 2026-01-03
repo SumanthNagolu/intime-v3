@@ -304,6 +304,11 @@ export interface AccountActivity {
   assignedTo: string
   status: string
   createdAt: string
+  priority: string | null
+  patternCode: string | null
+  checklist: Array<{ id: string; text: string }> | null
+  checklistProgress: Record<string, boolean> | null
+  description: string | null
 }
 
 export interface AccountNote {

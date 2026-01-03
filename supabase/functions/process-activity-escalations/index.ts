@@ -25,8 +25,78 @@ interface ActivityToEscalate {
   escalation_date: string | null
   escalation_count: number
   assigned_to: string | null
+  original_assigned_to: string | null
   queue_id: string | null
   pattern_id: string | null
+}
+
+/**
+ * Find the manager for escalation based on escalation level.
+ *
+ * Escalation chain:
+ * - Level 1: User's direct manager (employee_manager_id)
+ * - Level 2: User's pod manager (via pod membership)
+ * - Level 3+: Chain up through managers
+ */
+async function getManagerForEscalation(
+  supabase: ReturnType<typeof createClient>,
+  userId: string,
+  orgId: string,
+  escalationLevel: number
+): Promise<string | null> {
+  // Get the user's profile with manager info
+  const { data: user, error: userError } = await supabase
+    .from('user_profiles')
+    .select('id, employee_manager_id, recruiter_pod_id, manager_id')
+    .eq('id', userId)
+    .single()
+
+  if (userError || !user) {
+    console.error('[getManagerForEscalation] User lookup error:', userError)
+    return null
+  }
+
+  // Level 1: Direct manager
+  if (escalationLevel <= 1) {
+    const directManager = user.employee_manager_id || user.manager_id
+    if (directManager && directManager !== userId) {
+      return directManager
+    }
+  }
+
+  // Level 2+: Pod manager
+  if (user.recruiter_pod_id) {
+    const { data: pod } = await supabase
+      .from('pods')
+      .select('manager_id')
+      .eq('id', user.recruiter_pod_id)
+      .single()
+
+    if (pod?.manager_id && pod.manager_id !== userId) {
+      return pod.manager_id
+    }
+  }
+
+  // Level 3+: Chain up through managers
+  if (escalationLevel >= 3 && (user.employee_manager_id || user.manager_id)) {
+    const managerId = user.employee_manager_id || user.manager_id
+    if (managerId) {
+      // Recursively get the manager's manager
+      return getManagerForEscalation(supabase, managerId, orgId, escalationLevel - 1)
+    }
+  }
+
+  // Fallback: Try to find any org admin
+  const { data: orgAdmin } = await supabase
+    .from('user_profiles')
+    .select('id')
+    .eq('org_id', orgId)
+    .eq('role', 'admin')
+    .neq('id', userId)
+    .limit(1)
+    .single()
+
+  return orgAdmin?.id || null
 }
 
 interface EscalationResult {
@@ -63,9 +133,9 @@ Deno.serve(async (req: Request) => {
     const { data: activities, error: fetchError } = await supabase
       .from('activities')
       .select(`
-        id, org_id, subject, status, priority, due_date, 
-        escalation_date, escalation_count, assigned_to, queue_id, pattern_id,
-        snoozed_until
+        id, org_id, subject, status, priority, due_date,
+        escalation_date, escalation_count, assigned_to, original_assigned_to,
+        queue_id, pattern_id, snoozed_until
       `)
       .in('status', ['open', 'in_progress', 'scheduled'])
       .lt('due_date', now.toISOString())
@@ -121,16 +191,41 @@ Deno.serve(async (req: Request) => {
         const nextEscalationHours = Math.max(4, 24 / Math.pow(2, newLevel - 1)) // 24h, 12h, 6h, 4h minimum
         const nextEscalationDate = new Date(now.getTime() + nextEscalationHours * 60 * 60 * 1000)
 
+        // Find manager for reassignment (if there's an assignee)
+        let newAssignee: string | null = null
+        if (activity.assigned_to) {
+          newAssignee = await getManagerForEscalation(
+            supabase,
+            activity.assigned_to,
+            activity.org_id,
+            newLevel
+          )
+        }
+
+        // Build update data
+        const updateData: Record<string, unknown> = {
+          escalation_count: newLevel,
+          last_escalated_at: now.toISOString(),
+          escalation_date: nextEscalationDate.toISOString(),
+          priority: newPriority,
+          updated_at: now.toISOString(),
+        }
+
+        // If we found a manager and it's different from current assignee, reassign
+        if (newAssignee && newAssignee !== activity.assigned_to) {
+          // Store original assignee if not already stored
+          if (!activity.original_assigned_to) {
+            updateData.original_assigned_to = activity.assigned_to
+          }
+          updateData.assigned_to = newAssignee
+          updateData.escalated_to_user_id = newAssignee
+          console.log(`[Escalation Processor] Reassigning activity ${activity.id} from ${activity.assigned_to} to ${newAssignee}`)
+        }
+
         // Update the activity
         const { error: updateError } = await supabase
           .from('activities')
-          .update({
-            escalation_count: newLevel,
-            last_escalated_at: now.toISOString(),
-            escalation_date: nextEscalationDate.toISOString(),
-            priority: newPriority,
-            updated_at: now.toISOString(),
-          })
+          .update(updateData)
           .eq('id', activity.id)
 
         if (updateError) {
@@ -138,32 +233,41 @@ Deno.serve(async (req: Request) => {
           continue
         }
 
-        // Log escalation record
-        await supabase
-          .from('activity_escalations')
-          .insert({
-            activity_id: activity.id,
-            org_id: activity.org_id,
-            escalation_level: newLevel,
-            escalated_from_user: activity.assigned_to,
-            reason: `Automatic escalation - overdue since ${activity.due_date}`,
-            escalation_type: 'automatic',
-          })
+        // Create notifications for escalation
+        const wasReassigned = newAssignee && newAssignee !== activity.assigned_to
 
-        // Log history
-        await supabase
-          .from('activity_history')
-          .insert({
-            activity_id: activity.id,
-            action: 'escalated',
-            field_changed: 'escalation_count',
-            old_value: activity.escalation_count?.toString(),
-            new_value: newLevel.toString(),
-            notes: `Automatic escalation to level ${newLevel}`,
-          })
+        // Notify original assignee that they've been relieved (if reassigned)
+        if (wasReassigned && activity.assigned_to) {
+          await supabase
+            .from('notifications')
+            .insert({
+              org_id: activity.org_id,
+              user_id: activity.assigned_to,
+              type: 'activity_escalated',
+              title: 'Activity Reassigned',
+              message: `"${activity.subject || 'Activity'}" has been escalated and reassigned to your supervisor`,
+              entity_type: 'activity',
+              entity_id: activity.id,
+              priority: 'normal',
+            })
+        }
 
-        // Create notification for assigned user (if any)
-        if (activity.assigned_to) {
+        // Notify new assignee (manager) about receiving the escalation
+        if (wasReassigned && newAssignee) {
+          await supabase
+            .from('notifications')
+            .insert({
+              org_id: activity.org_id,
+              user_id: newAssignee,
+              type: 'activity_escalated',
+              title: 'Escalation Received',
+              message: `"${activity.subject || 'Activity'}" has been escalated to you (level ${newLevel})`,
+              entity_type: 'activity',
+              entity_id: activity.id,
+              priority: newPriority === 'urgent' ? 'high' : 'normal',
+            })
+        } else if (activity.assigned_to) {
+          // No reassignment, just notify current assignee
           await supabase
             .from('notifications')
             .insert({
@@ -183,7 +287,7 @@ Deno.serve(async (req: Request) => {
           previousLevel: activity.escalation_count ?? 0,
           newLevel,
           newPriority,
-          reassignedTo: null,
+          reassignedTo: wasReassigned ? newAssignee : null,
         })
 
         console.log(`[Escalation Processor] Escalated activity ${activity.id} to level ${newLevel}`)
@@ -223,5 +327,7 @@ Deno.serve(async (req: Request) => {
     )
   }
 })
+
+
 
 

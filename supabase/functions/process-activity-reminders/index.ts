@@ -160,15 +160,6 @@ Deno.serve(async (req: Request) => {
             })
         }
 
-        // Log history
-        await supabase
-          .from('activity_history')
-          .insert({
-            activity_id: activity.id,
-            action: 'reminder_sent',
-            notes: `Reminder #${newReminderCount}: ${urgencyMessage}`,
-          })
-
         results.push({
           activityId: activity.id,
           assignedTo: activity.assigned_to,
@@ -213,5 +204,7 @@ Deno.serve(async (req: Request) => {
     )
   }
 })
+
+
 
 

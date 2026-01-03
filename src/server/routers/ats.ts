@@ -3,6 +3,7 @@ import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
 import { getAdminClient } from '@/lib/supabase/admin'
+import { checkBlockingActivities } from '@/lib/utils/activity-system'
 
 
 // ============================================
@@ -1684,6 +1685,25 @@ export const atsRouter = router({
         const currentStatus = job.status
         const newStatus = input.newStatus
 
+        // Check for blocking activities when moving to closing statuses
+        const closingStatuses = ['closed', 'cancelled', 'filled', 'on_hold']
+        if (closingStatuses.includes(newStatus)) {
+          const blockCheck = await checkBlockingActivities({
+            entityType: 'job',
+            entityId: input.jobId,
+            targetStatus: newStatus,
+            orgId,
+            supabase: adminClient,
+          })
+          if (blockCheck.blocked) {
+            throw new TRPCError({
+              code: 'PRECONDITION_FAILED',
+              message: `Cannot change status to ${newStatus}: ${blockCheck.activities.length} blocking ${blockCheck.activities.length === 1 ? 'activity' : 'activities'} must be completed first`,
+              cause: { blockingActivities: blockCheck.activities },
+            })
+          }
+        }
+
         // Validate transition
         const allowed = validTransitions[currentStatus] || []
         if (!allowed.includes(newStatus)) {
@@ -2647,6 +2667,25 @@ export const atsRouter = router({
         }
 
         const oldStatus = submission.status
+
+        // Check for blocking activities when moving to closing statuses
+        const closingStatuses = ['rejected', 'withdrawn', 'declined']
+        if (closingStatuses.includes(input.status)) {
+          const blockCheck = await checkBlockingActivities({
+            entityType: 'submission',
+            entityId: input.id,
+            targetStatus: input.status,
+            orgId,
+            supabase: adminClient,
+          })
+          if (blockCheck.blocked) {
+            throw new TRPCError({
+              code: 'PRECONDITION_FAILED',
+              message: `Cannot change status to ${input.status}: ${blockCheck.activities.length} blocking ${blockCheck.activities.length === 1 ? 'activity' : 'activities'} must be completed first`,
+              cause: { blockingActivities: blockCheck.activities },
+            })
+          }
+        }
 
         // Validate status transition using exported constant
         if (!isValidSubmissionTransition(oldStatus, input.status)) {
@@ -6923,6 +6962,22 @@ export const atsRouter = router({
           throw new TRPCError({
             code: 'BAD_REQUEST',
             message: `Cannot terminate placement in ${placement.status} status`,
+          })
+        }
+
+        // Check for blocking activities before terminating placement
+        const blockCheck = await checkBlockingActivities({
+          entityType: 'placement',
+          entityId: input.placementId,
+          targetStatus: 'terminated',
+          orgId,
+          supabase: adminClient,
+        })
+        if (blockCheck.blocked) {
+          throw new TRPCError({
+            code: 'PRECONDITION_FAILED',
+            message: `Cannot terminate placement: ${blockCheck.activities.length} blocking ${blockCheck.activities.length === 1 ? 'activity' : 'activities'} must be completed first`,
+            cause: { blockingActivities: blockCheck.activities },
           })
         }
 
