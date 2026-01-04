@@ -161,6 +161,17 @@ export function ContactAccountsSection({ accounts, contactId }: ContactAccountsS
                 />
               </div>
               <Button
+                variant="outline"
+                size="sm"
+                asChild
+                className="border-charcoal-200 hover:bg-charcoal-50 font-medium"
+              >
+                <Link href={`/employee/recruiting/accounts/new?linkContact=${contactId}`}>
+                  <Building2 className="h-4 w-4 mr-1.5" />
+                  Create Account
+                </Link>
+              </Button>
+              <Button
                 size="sm"
                 onClick={() => setLinkDialogOpen(true)}
                 className="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-charcoal-900 shadow-sm font-medium"
@@ -350,6 +361,17 @@ export function ContactAccountsSection({ accounts, contactId }: ContactAccountsS
             </p>
             {!searchQuery && statusFilter === 'all' && (
               <div className="flex items-center justify-center gap-2 mt-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  asChild
+                  className="border-charcoal-200 hover:bg-charcoal-50"
+                >
+                  <Link href={`/employee/recruiting/accounts/new?linkContact=${contactId}`}>
+                    <Building2 className="h-4 w-4 mr-1.5" />
+                    Create Account
+                  </Link>
+                </Button>
                 <Button
                   size="sm"
                   onClick={() => setLinkDialogOpen(true)}

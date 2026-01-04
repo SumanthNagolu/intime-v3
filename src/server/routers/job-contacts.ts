@@ -164,6 +164,17 @@ export const jobContactsRouter = router({
       const { orgId, user } = ctx
       const adminClient = getAdminClient()
 
+      // Look up user_profiles.id from auth_id (FK references user_profiles, not auth.users)
+      let userProfileId: string | null = null
+      if (user?.id) {
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+        userProfileId = profile?.id ?? null
+      }
+
       // If setting as primary, unset other primaries for this role on this job
       if (input.isPrimary) {
         await adminClient
@@ -171,7 +182,7 @@ export const jobContactsRouter = router({
           .update({
             is_primary: false,
             updated_at: new Date().toISOString(),
-            updated_by: user?.id,
+            updated_by: userProfileId,
           })
           .eq('job_id', input.jobId)
           .eq('role', input.role)
@@ -188,7 +199,7 @@ export const jobContactsRouter = router({
           role: input.role,
           is_primary: input.isPrimary,
           notes: input.notes || null,
-          created_by: user?.id,
+          created_by: userProfileId,
         })
         .select('id')
         .single()
@@ -217,11 +228,22 @@ export const jobContactsRouter = router({
       const { orgId, user } = ctx
       const adminClient = getAdminClient()
 
+      // Look up user_profiles.id from auth_id
+      let userProfileId: string | null = null
+      if (user?.id) {
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+        userProfileId = profile?.id ?? null
+      }
+
       const { error } = await adminClient
         .from('job_contacts')
         .update({
           deleted_at: new Date().toISOString(),
-          updated_by: user?.id,
+          updated_by: userProfileId,
         })
         .eq('id', input.id)
         .eq('org_id', orgId)
@@ -242,10 +264,21 @@ export const jobContactsRouter = router({
       const { orgId, user } = ctx
       const adminClient = getAdminClient()
 
+      // Look up user_profiles.id from auth_id
+      let userProfileId: string | null = null
+      if (user?.id) {
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+        userProfileId = profile?.id ?? null
+      }
+
       // Build update object
       const updateData: Record<string, unknown> = {
         updated_at: new Date().toISOString(),
-        updated_by: user?.id,
+        updated_by: userProfileId,
       }
 
       if (input.role !== undefined) updateData.role = input.role

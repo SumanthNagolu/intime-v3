@@ -69,9 +69,9 @@ export function LinkJobDialog({
   const [isPrimary, setIsPrimary] = React.useState(true)
   const [notes, setNotes] = React.useState('')
 
-  // Search jobs query
+  // Search jobs query (include drafts so we can link to jobs in progress)
   const { data: searchResults, isLoading: isSearching } = trpc.ats.jobs.list.useQuery(
-    { search: searchQuery, limit: 10 },
+    { search: searchQuery, limit: 10, includeDrafts: true },
     { enabled: searchQuery.length >= 2 }
   )
 
