@@ -16,6 +16,7 @@ import {
   History,
   Plus,
   ChevronDown,
+  UserPlus,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -38,13 +39,13 @@ interface SidebarSection {
 const SIDEBAR_SECTIONS: SidebarSection[] = [
   // Main sections
   { id: 'summary', label: 'Summary', icon: Building2, group: 'sections' },
+  { id: 'related_accounts', label: 'Related Accounts', icon: Link2, group: 'sections' },
   { id: 'contacts', label: 'Contacts', icon: Users, group: 'sections' },
   { id: 'jobs', label: 'Jobs', icon: Briefcase, group: 'sections' },
   { id: 'placements', label: 'Placements', icon: UserCheck, group: 'sections' },
   { id: 'addresses', label: 'Addresses', icon: MapPin, group: 'sections' },
   { id: 'meetings', label: 'Meetings', icon: Calendar, group: 'sections' },
   { id: 'escalations', label: 'Escalations', icon: AlertTriangle, group: 'sections' },
-  { id: 'related_accounts', label: 'Related Accounts', icon: Link2, group: 'sections' },
   // Tools
   { id: 'activities', label: 'Activities', icon: Activity, group: 'tools' },
   { id: 'notes', label: 'Notes', icon: StickyNote, group: 'tools' },
@@ -99,8 +100,12 @@ export function AccountSidebar({
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-56">
               <DropdownMenuItem onClick={() => handleAction('addContact')}>
-                <Users className="h-4 w-4 mr-2" />
-                New Contact
+                <UserPlus className="h-4 w-4 mr-2" />
+                + New Contact
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleAction('linkContact')}>
+                <Link2 className="h-4 w-4 mr-2" />
+                Link Contact
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => handleAction('createActivity')}>
                 <Activity className="h-4 w-4 mr-2" />

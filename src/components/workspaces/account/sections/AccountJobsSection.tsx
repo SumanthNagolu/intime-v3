@@ -6,21 +6,25 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { 
+import {
   Briefcase, Users, Calendar, Clock, AlertCircle,
   Plus, Search, MoreVertical, MapPin, DollarSign, Target, User,
   ArrowRight, X, ChevronLeft, ChevronRight, TrendingUp,
-  Mail, Phone, Building2, FileText, Globe, ExternalLink
+  Mail, Phone, Building2, FileText, Globe, ExternalLink, Link2, Unlink
 } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import type { AccountJob } from '@/types/workspace'
 import { cn } from '@/lib/utils'
 import { differenceInDays, format } from 'date-fns'
+import { LinkJobToAccountDialog } from '../LinkJobToAccountDialog'
+import { trpc } from '@/lib/trpc/client'
+import { useToast } from '@/components/ui/use-toast'
 
 // Constants
 const ITEMS_PER_PAGE = 10
@@ -28,6 +32,8 @@ const ITEMS_PER_PAGE = 10
 interface AccountJobsSectionProps {
   jobs: AccountJob[]
   accountId: string
+  accountName?: string
+  onRefresh?: () => void
 }
 
 type StatusFilter = 'all' | 'active' | 'on_hold' | 'filled' | 'closed'
@@ -90,13 +96,31 @@ function formatRateRange(min: number | null, max: number | null, fixed: number |
  * AccountJobsSection - Premium SaaS-level job list
  * Features: List view with info, detail panel at bottom when selected, link to full wizard
  */
-export function AccountJobsSection({ jobs, accountId }: AccountJobsSectionProps) {
+export function AccountJobsSection({ jobs, accountId, accountName, onRefresh }: AccountJobsSectionProps) {
   const router = useRouter()
-  
+  const { toast } = useToast()
+
   const [selectedJob, setSelectedJob] = React.useState<AccountJob | null>(null)
   const [searchQuery, setSearchQuery] = React.useState('')
   const [statusFilter, setStatusFilter] = React.useState<StatusFilter>('all')
   const [currentPage, setCurrentPage] = React.useState(1)
+  const [linkDialogOpen, setLinkDialogOpen] = React.useState(false)
+
+  // Unlink mutation
+  const unlinkMutation = trpc.ats.jobs.unlinkFromAccount.useMutation({
+    onSuccess: () => {
+      toast({ title: 'Job unlinked from account successfully' })
+      onRefresh?.()
+    },
+    onError: (error) => {
+      toast({ title: 'Error', description: error.message, variant: 'error' })
+    },
+  })
+
+  const handleUnlink = (jobId: string, e: React.MouseEvent) => {
+    e.stopPropagation()
+    unlinkMutation.mutate({ jobId, accountId })
+  }
 
   // Calculate status counts
   const statusCounts = React.useMemo(() => {
@@ -195,15 +219,24 @@ export function AccountJobsSection({ jobs, accountId }: AccountJobsSectionProps)
                   className="pl-9 h-9 w-64 text-sm border-charcoal-200 focus:border-gold-400 focus:ring-gold-400/20"
                 />
               </div>
-              <Button 
+              <Button
                 size="sm"
-                className="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-charcoal-900 shadow-sm font-medium"
+                variant="outline"
+                className="h-9 border-charcoal-200 hover:bg-charcoal-50"
                 onClick={() => {
                   router.push(`/employee/recruiting/jobs/intake?accountId=${accountId}`)
                 }}
               >
                 <Plus className="h-4 w-4 mr-1.5" />
                 Create Job
+              </Button>
+              <Button
+                onClick={() => setLinkDialogOpen(true)}
+                size="sm"
+                className="h-9 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-sm"
+              >
+                <Link2 className="h-4 w-4 mr-1.5" />
+                Link Job
               </Button>
             </div>
           </div>
@@ -387,6 +420,15 @@ export function AccountJobsSection({ jobs, accountId }: AccountJobsSectionProps)
                         <DropdownMenuItem onClick={(e) => { e.stopPropagation(); router.push(`/employee/recruiting/jobs/${job.id}?tab=interviews`) }}>
                           <Calendar className="h-3.5 w-3.5 mr-2 text-charcoal-500" />
                           Interviews
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          onClick={(e) => handleUnlink(job.id, e as unknown as React.MouseEvent)}
+                          className="text-error-600 focus:text-error-600"
+                          disabled={unlinkMutation.isPending}
+                        >
+                          <Unlink className="h-3.5 w-3.5 mr-2" />
+                          Unlink Job
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -823,6 +865,15 @@ export function AccountJobsSection({ jobs, accountId }: AccountJobsSectionProps)
           `}</style>
         </div>
       )}
+
+      {/* Link Job Dialog */}
+      <LinkJobToAccountDialog
+        open={linkDialogOpen}
+        onOpenChange={setLinkDialogOpen}
+        accountId={accountId}
+        accountName={accountName}
+        onSuccess={onRefresh}
+      />
     </div>
   )
 }

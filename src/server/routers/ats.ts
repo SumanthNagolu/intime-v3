@@ -2139,6 +2139,160 @@ export const atsRouter = router({
 
         return { success: true, jobId: input.jobId }
       }),
+
+    // Link job to account (update company_id)
+    linkToAccount: orgProtectedProcedure
+      .input(z.object({
+        jobId: z.string().uuid(),
+        accountId: z.string().uuid(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        // Verify job exists and belongs to org
+        const { data: job, error: jobError } = await adminClient
+          .from('jobs')
+          .select('id, title, company_id')
+          .eq('id', input.jobId)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .single()
+
+        if (jobError || !job) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Job not found' })
+        }
+
+        // Verify account exists and belongs to org
+        const { data: account, error: accountError } = await adminClient
+          .from('companies')
+          .select('id, name')
+          .eq('id', input.accountId)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .single()
+
+        if (accountError || !account) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Account not found' })
+        }
+
+        // Check if job is already linked to this account
+        if (job.company_id === input.accountId) {
+          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Job is already linked to this account' })
+        }
+
+        const now = new Date().toISOString()
+
+        // Update job with new company_id
+        const { data: updatedJob, error: updateError } = await adminClient
+          .from('jobs')
+          .update({
+            company_id: input.accountId,
+            updated_at: now,
+          })
+          .eq('id', input.jobId)
+          .eq('org_id', orgId)
+          .select('id, title')
+          .single()
+
+        if (updateError) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: updateError.message })
+        }
+
+        // Log activity
+        await adminClient
+          .from('activities')
+          .insert({
+            org_id: orgId,
+            entity_type: 'job',
+            entity_id: input.jobId,
+            activity_type: 'note',
+            subject: `Job linked to account: ${account.name}`,
+            description: `Job "${updatedJob.title}" linked to account "${account.name}"`,
+            outcome: 'neutral',
+            created_by: user.id,
+            created_at: now,
+          })
+
+        return {
+          jobId: updatedJob.id,
+          accountId: input.accountId,
+          accountName: account.name,
+        }
+      }),
+
+    // Unlink job from account (remove company_id)
+    unlinkFromAccount: orgProtectedProcedure
+      .input(z.object({
+        jobId: z.string().uuid(),
+        accountId: z.string().uuid(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        // Verify job exists, belongs to org, and is linked to the specified account
+        const { data: job, error: jobError } = await adminClient
+          .from('jobs')
+          .select('id, title, company_id, company:companies!jobs_company_id_fkey(id, name)')
+          .eq('id', input.jobId)
+          .eq('org_id', orgId)
+          .eq('company_id', input.accountId)
+          .is('deleted_at', null)
+          .single()
+
+        if (jobError || !job) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Job not found or not linked to this account' })
+        }
+
+        const company = job.company as unknown as { name: string } | null
+        const accountName = company?.name || 'Unknown'
+        const now = new Date().toISOString()
+
+        // Remove company_id from job
+        const { data: updatedJob, error: updateError } = await adminClient
+          .from('jobs')
+          .update({
+            company_id: null,
+            updated_at: now,
+          })
+          .eq('id', input.jobId)
+          .eq('org_id', orgId)
+          .select('id, title')
+          .single()
+
+        if (updateError) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: updateError.message })
+        }
+
+        // Log activity
+        await adminClient
+          .from('activities')
+          .insert({
+            org_id: orgId,
+            entity_type: 'job',
+            entity_id: input.jobId,
+            activity_type: 'note',
+            subject: `Job unlinked from account: ${accountName}`,
+            description: `Job "${updatedJob.title}" unlinked from account "${accountName}"`,
+            outcome: 'neutral',
+            created_by: user.id,
+            created_at: now,
+          })
+
+        return {
+          jobId: updatedJob.id,
+          success: true,
+        }
+      }),
   }),
 
   // ============================================

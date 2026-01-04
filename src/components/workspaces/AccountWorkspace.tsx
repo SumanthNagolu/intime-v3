@@ -55,7 +55,7 @@ type AccountSection =
  * - NOTE: Sidebar is provided by SidebarLayout via EntityJourneySidebar
  */
 export function AccountWorkspace({ onAction }: AccountWorkspaceProps = {}) {
-  const { data } = useAccountWorkspace()
+  const { data, refreshData } = useAccountWorkspace()
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -127,6 +127,8 @@ export function AccountWorkspace({ onAction }: AccountWorkspaceProps = {}) {
         <AccountJobsSection
           jobs={data.jobs}
           accountId={data.account.id}
+          accountName={data.account.name}
+          onRefresh={refreshData}
         />
       )}
       {currentSection === 'placements' && (
