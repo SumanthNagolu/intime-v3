@@ -600,6 +600,7 @@ export const atsRouter = router({
         priorityRank: z.number().int().min(0).max(4).optional(),
         accountId: z.string().uuid().optional(),
         recruiterId: z.string().uuid().optional(),
+        includeDrafts: z.boolean().optional(), // Include draft jobs in results
         limit: z.number().min(1).max(100).default(50),
         offset: z.number().min(0).default(0),
         sortBy: z.enum(['title', 'company_id', 'location', 'job_type', 'status', 'positions_available', 'submissions_count', 'interviews_count', 'owner_id', 'due_date', 'created_at', 'priority_rank', 'sla_days']).default('created_at'),
@@ -626,7 +627,7 @@ export const atsRouter = router({
         }
         if (input.status && input.status !== 'all') {
           query = query.eq('status', input.status)
-        } else {
+        } else if (!input.includeDrafts) {
           // By default, exclude drafts from the main list (they're shown in DraftsSection)
           query = query.neq('status', 'draft')
         }

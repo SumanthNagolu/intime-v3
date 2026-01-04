@@ -241,6 +241,15 @@ export function ContactJobsSection({ jobs, contactId, onNavigate, onRefresh }: C
                 />
               </div>
               <Button
+                onClick={() => router.push('/employee/recruiting/jobs/new')}
+                size="sm"
+                variant="outline"
+                className="h-9 border-charcoal-200 hover:bg-charcoal-50"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                New Job
+              </Button>
+              <Button
                 onClick={() => setLinkDialogOpen(true)}
                 size="sm"
                 className="h-9 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white shadow-sm"
