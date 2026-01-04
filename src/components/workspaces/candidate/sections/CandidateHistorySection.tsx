@@ -80,7 +80,7 @@ export function CandidateHistorySection({ history }: CandidateHistorySectionProp
                     <div className="flex items-center gap-4 mt-2 text-xs text-charcoal-500">
                       <span className="flex items-center gap-1">
                         <User className="h-3 w-3" />
-                        {entry.changedBy}
+                        {entry.changedBy?.name ?? (entry.isAutomated ? 'System' : 'Unknown')}
                       </span>
                       <span title={format(new Date(entry.changedAt), 'PPpp')}>
                         {formatDistanceToNow(new Date(entry.changedAt), { addSuffix: true })}

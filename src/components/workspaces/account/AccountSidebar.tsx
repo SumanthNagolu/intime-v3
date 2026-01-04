@@ -9,6 +9,7 @@ import {
   MapPin,
   Calendar,
   AlertTriangle,
+  Link2,
   Activity,
   StickyNote,
   FileText,
@@ -43,6 +44,7 @@ const SIDEBAR_SECTIONS: SidebarSection[] = [
   { id: 'addresses', label: 'Addresses', icon: MapPin, group: 'sections' },
   { id: 'meetings', label: 'Meetings', icon: Calendar, group: 'sections' },
   { id: 'escalations', label: 'Escalations', icon: AlertTriangle, group: 'sections' },
+  { id: 'related_accounts', label: 'Related Accounts', icon: Link2, group: 'sections' },
   // Tools
   { id: 'activities', label: 'Activities', icon: Activity, group: 'tools' },
   { id: 'notes', label: 'Notes', icon: StickyNote, group: 'tools' },

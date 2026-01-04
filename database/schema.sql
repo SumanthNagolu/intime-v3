@@ -750,7 +750,9 @@ CREATE TYPE public.note_type AS ENUM (
     'warning',
     'opportunity',
     'competitive_intel',
-    'internal'
+    'internal',
+    'important',
+    'reminder'
 );
 
 
@@ -1210,6 +1212,42 @@ BEGIN
   WHERE id = p_variant_id;
 END;
 $$;
+
+
+--
+-- Name: activities_default_assigned_to(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.activities_default_assigned_to() RETURNS trigger
+    LANGUAGE plpgsql SECURITY DEFINER
+    AS $$
+DECLARE
+  v_owner_id uuid;
+BEGIN
+  -- Only act if assigned_to is NULL
+  IF NEW.assigned_to IS NULL THEN
+    -- Try to get entity owner first
+    SELECT user_id INTO v_owner_id
+    FROM object_owners
+    WHERE entity_type = NEW.entity_type
+      AND entity_id = NEW.entity_id
+      AND is_primary = TRUE
+    LIMIT 1;
+    
+    -- Fall back to created_by if no owner found
+    NEW.assigned_to := COALESCE(v_owner_id, NEW.created_by);
+  END IF;
+  
+  RETURN NEW;
+END;
+$$;
+
+
+--
+-- Name: FUNCTION activities_default_assigned_to(); Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON FUNCTION public.activities_default_assigned_to() IS 'Auto-sets assigned_to to entity owner or created_by when not explicitly provided';
 
 
 --
@@ -12749,7 +12787,7 @@ COMMENT ON FUNCTION public.user_has_permission(p_user_id uuid, p_resource text, 
 --
 
 CREATE FUNCTION public.user_has_role(role_name text) RETURNS boolean
-    LANGUAGE sql STABLE
+    LANGUAGE sql STABLE SECURITY DEFINER
     AS $$
   SELECT EXISTS (
     SELECT 1
@@ -13149,7 +13187,7 @@ CREATE TABLE public.activities (
     skipped_at timestamp with time zone,
     duration_minutes integer,
     outcome text,
-    assigned_to uuid,
+    assigned_to uuid NOT NULL,
     performed_by uuid,
     poc_id uuid,
     parent_activity_id uuid,
@@ -13162,8 +13200,6 @@ CREATE TABLE public.activities (
     description text,
     category text,
     instructions text,
-    checklist jsonb,
-    checklist_progress jsonb,
     assigned_group uuid,
     assigned_at timestamp with time zone,
     started_at timestamp with time zone,
@@ -13195,7 +13231,6 @@ CREATE TABLE public.activities (
     queue_id uuid,
     claimed_at timestamp with time zone,
     claimed_by uuid,
-    snoozed_until timestamp with time zone,
     is_blocking boolean DEFAULT false,
     blocking_statuses text[] DEFAULT '{}'::text[],
     escalated_to_user_id uuid,
@@ -13250,20 +13285,6 @@ COMMENT ON COLUMN public.activities.category IS 'Activity category for grouping'
 --
 
 COMMENT ON COLUMN public.activities.instructions IS 'Step-by-step instructions for completing the activity';
-
-
---
--- Name: COLUMN activities.checklist; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.activities.checklist IS 'Checklist items as JSONB (legacy - use activity_checklist_items)';
-
-
---
--- Name: COLUMN activities.checklist_progress; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.activities.checklist_progress IS 'Checklist completion progress';
 
 
 --
@@ -13819,8 +13840,8 @@ CREATE TABLE public.activity_patterns (
     code text NOT NULL,
     name text NOT NULL,
     description text,
-    target_days integer DEFAULT 1,
-    escalation_days integer,
+    target_days integer DEFAULT 1 NOT NULL,
+    escalation_days integer DEFAULT 3 NOT NULL,
     default_assignee text DEFAULT 'owner'::text,
     assignee_group_id uuid,
     assignee_user_id uuid,
@@ -13832,7 +13853,6 @@ CREATE TABLE public.activity_patterns (
     category text,
     entity_type text NOT NULL,
     instructions text,
-    checklist jsonb,
     is_system boolean DEFAULT false,
     is_active boolean DEFAULT true,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
@@ -23764,6 +23784,27 @@ CREATE TABLE public.job_assignments (
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     deleted_at timestamp with time zone
+);
+
+
+--
+-- Name: job_contacts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.job_contacts (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    org_id uuid NOT NULL,
+    job_id uuid NOT NULL,
+    contact_id uuid NOT NULL,
+    role text NOT NULL,
+    is_primary boolean DEFAULT false,
+    notes text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by uuid,
+    updated_by uuid,
+    deleted_at timestamp with time zone,
+    CONSTRAINT job_contacts_role_check CHECK ((role = ANY (ARRAY['hiring_manager'::text, 'hr_contact'::text, 'technical_interviewer'::text, 'decision_maker'::text, 'recruiter_poc'::text, 'end_client_contact'::text])))
 );
 
 
@@ -34573,6 +34614,22 @@ ALTER TABLE ONLY public.job_assignments
 
 
 --
+-- Name: job_contacts job_contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.job_contacts
+    ADD CONSTRAINT job_contacts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: job_contacts job_contacts_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.job_contacts
+    ADD CONSTRAINT job_contacts_unique UNIQUE (job_id, contact_id, role);
+
+
+--
 -- Name: external_job_order_notes job_order_notes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -38066,13 +38123,6 @@ CREATE INDEX idx_activities_related_deal ON public.activities USING btree (relat
 --
 
 CREATE INDEX idx_activities_secondary_entity ON public.activities USING btree (secondary_entity_type, secondary_entity_id);
-
-
---
--- Name: idx_activities_snoozed_until; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX idx_activities_snoozed_until ON public.activities USING btree (snoozed_until) WHERE (snoozed_until IS NOT NULL);
 
 
 --
@@ -43036,6 +43086,34 @@ CREATE INDEX idx_job_assignments_job_id ON public.job_assignments USING btree (j
 --
 
 CREATE INDEX idx_job_assignments_user_id ON public.job_assignments USING btree (user_id);
+
+
+--
+-- Name: idx_job_contacts_contact; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_job_contacts_contact ON public.job_contacts USING btree (contact_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_job_contacts_job; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_job_contacts_job ON public.job_contacts USING btree (job_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_job_contacts_org; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_job_contacts_org ON public.job_contacts USING btree (org_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_job_contacts_role; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_job_contacts_role ON public.job_contacts USING btree (role) WHERE (deleted_at IS NULL);
 
 
 --
@@ -48993,6 +49071,13 @@ CREATE TRIGGER achievements_updated_at BEFORE UPDATE ON public.achievements FOR 
 
 
 --
+-- Name: activities activities_default_assigned_to_trigger; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER activities_default_assigned_to_trigger BEFORE INSERT ON public.activities FOR EACH ROW EXECUTE FUNCTION public.activities_default_assigned_to();
+
+
+--
 -- Name: activities activities_generate_number; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -49004,13 +49089,6 @@ CREATE TRIGGER activities_generate_number BEFORE INSERT ON public.activities FOR
 --
 
 CREATE TRIGGER activities_updated_at BEFORE UPDATE ON public.activities FOR EACH ROW EXECUTE FUNCTION public.update_activities_updated_at();
-
-
---
--- Name: activities activities_updated_at_trigger; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER activities_updated_at_trigger BEFORE UPDATE ON public.activities FOR EACH ROW EXECUTE FUNCTION public.update_activities_updated_at();
 
 
 --
@@ -50148,13 +50226,6 @@ CREATE TRIGGER trigger_failover_config_updated_at BEFORE UPDATE ON public.integr
 
 
 --
--- Name: activities trigger_generate_activity_number; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER trigger_generate_activity_number BEFORE INSERT ON public.activities FOR EACH ROW EXECUTE FUNCTION public.generate_activity_number();
-
-
---
 -- Name: incidents trigger_generate_incident_number; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -50509,13 +50580,6 @@ CREATE TRIGGER trigger_workflow_instances_updated_at BEFORE UPDATE ON public.wor
 --
 
 CREATE TRIGGER trigger_workflows_updated_at BEFORE UPDATE ON public.workflows FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
-
-
---
--- Name: activities update_activities_updated_at; Type: TRIGGER; Schema: public; Owner: -
---
-
-CREATE TRIGGER update_activities_updated_at BEFORE UPDATE ON public.activities FOR EACH ROW EXECUTE FUNCTION public.update_updated_at();
 
 
 --
@@ -55947,6 +56011,46 @@ ALTER TABLE ONLY public.job_assignments
 
 ALTER TABLE ONLY public.job_assignments
     ADD CONSTRAINT job_assignments_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.user_profiles(id) ON DELETE CASCADE;
+
+
+--
+-- Name: job_contacts job_contacts_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.job_contacts
+    ADD CONSTRAINT job_contacts_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id) ON DELETE CASCADE;
+
+
+--
+-- Name: job_contacts job_contacts_created_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.job_contacts
+    ADD CONSTRAINT job_contacts_created_by_fkey FOREIGN KEY (created_by) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: job_contacts job_contacts_job_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.job_contacts
+    ADD CONSTRAINT job_contacts_job_id_fkey FOREIGN KEY (job_id) REFERENCES public.jobs(id) ON DELETE CASCADE;
+
+
+--
+-- Name: job_contacts job_contacts_org_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.job_contacts
+    ADD CONSTRAINT job_contacts_org_id_fkey FOREIGN KEY (org_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: job_contacts job_contacts_updated_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.job_contacts
+    ADD CONSTRAINT job_contacts_updated_by_fkey FOREIGN KEY (updated_by) REFERENCES public.user_profiles(id);
 
 
 --
@@ -65683,5 +65787,5 @@ ALTER TABLE public.xp_transactions ENABLE ROW LEVEL SECURITY;
 -- PostgreSQL database dump complete
 --
 
-\unrestrict XmbdOvkzrktzWagYX7MJICU8EwdOeHBVxLYgLBYAu6ztYkdCy2i9WSgcjyWgeOS
+\unrestrict eFsFolVZ6Dwv6ZPViDLyaqZwcnGSjxq5diN5hQbY1QF4qRXRzNlyshkBqdaOUHI
 

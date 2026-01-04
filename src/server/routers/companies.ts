@@ -1263,6 +1263,17 @@ export const companiesRouter = router({
       const { orgId, user } = ctx
       const adminClient = getAdminClient()
 
+      // Look up user_profiles.id from auth_id
+      let userProfileId: string | null = null
+      if (user?.id) {
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+        userProfileId = profile?.id ?? null
+      }
+
       // If setting as primary, unset other primaries
       if (input.isPrimary) {
         await adminClient
@@ -1286,12 +1297,9 @@ export const companiesRouter = router({
           is_active: true,
           relationship_strength: input.relationshipStrength || null,
           preferred_contact_method: input.preferredContactMethod || null,
-          created_by: user?.id,
+          created_by: userProfileId,
         })
-        .select(`
-          *,
-          contact:contacts(id, first_name, last_name, email, phone, title)
-        `)
+        .select('*')
         .single()
 
       if (error) {

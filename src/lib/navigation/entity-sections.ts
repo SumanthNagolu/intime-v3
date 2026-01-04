@@ -29,6 +29,7 @@ import {
   ClipboardCheck,
   DollarSign,
   ShieldCheck,
+  Link2,
 } from 'lucide-react'
 
 /**
@@ -163,6 +164,7 @@ export const accountSections: SectionDefinition[] = [
   { id: 'addresses', label: 'Addresses', icon: MapPin, showCount: true },
   { id: 'meetings', label: 'Meetings', icon: Calendar, showCount: true },
   { id: 'escalations', label: 'Escalations', icon: AlertTriangle, showCount: true, alertOnCount: true },
+  { id: 'related_accounts', label: 'Related Accounts', icon: Link2, showCount: true },
   // Tools section
   { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true },
   { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },
@@ -236,20 +238,26 @@ export const jobToolSections = jobSections.filter(s => s.isToolSection)
 
 /**
  * Contact sections - Guidewire-style with main sections + tools
- * Main: Overview, Accounts, Submissions (sub-object collections)
- * Tools: Activities, Communications, Meetings, Notes, History
+ * Matches Account workspace pattern for consistency
+ * Main: Summary, Accounts, Jobs, Placements, Submissions, Addresses, Meetings, Related Contacts
+ * Tools: Activities, Notes, Documents, History
+ * Note: Escalations are not included because the escalations table only has account_id, not contact_id
  */
 export const contactSections: SectionDefinition[] = [
   // Main sections
-  { id: 'overview', label: 'Overview', icon: UserCircle },
+  { id: 'summary', label: 'Summary', icon: UserCircle },
   { id: 'accounts', label: 'Accounts', icon: Building2, showCount: true },
+  { id: 'jobs', label: 'Jobs', icon: Briefcase, showCount: true },
+  { id: 'placements', label: 'Placements', icon: Award, showCount: true },
   { id: 'submissions', label: 'Submissions', icon: Send, showCount: true },
   { id: 'addresses', label: 'Addresses', icon: MapPin, showCount: true },
+  { id: 'meetings', label: 'Meetings', icon: Calendar, showCount: true },
+  { id: 'related_contacts', label: 'Related Contacts', icon: Users, showCount: true },
   // Tools section
+  { id: 'campaigns', label: 'Campaigns', icon: Target, showCount: true, isToolSection: true },
   { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true },
-  { id: 'communications', label: 'Communications', icon: Mail, showCount: true, isToolSection: true },
-  { id: 'meetings', label: 'Meetings', icon: Calendar, showCount: true, isToolSection: true },
   { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },
+  { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true },
   { id: 'history', label: 'History', icon: History, isToolSection: true },
 ]
 

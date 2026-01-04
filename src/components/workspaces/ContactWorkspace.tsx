@@ -10,7 +10,12 @@ import { WarningsBanner } from '@/components/ui/warnings-banner'
 // Section components
 import { ContactSummarySection } from './contact/sections/ContactSummarySection'
 import { ContactAccountsSection } from './contact/sections/ContactAccountsSection'
+import { ContactJobsSection } from './contact/sections/ContactJobsSection'
+import { ContactPlacementsSection } from './contact/sections/ContactPlacementsSection'
 import { ContactSubmissionsSection } from './contact/sections/ContactSubmissionsSection'
+import { ContactAddressesSection } from './contact/sections/ContactAddressesSection'
+import { ContactMeetingsSection } from './contact/sections/ContactMeetingsSection'
+import { ContactRelatedContactsSection } from './contact/sections/ContactRelatedContactsSection'
 import { ContactCampaignsSection } from './contact/sections/ContactCampaignsSection'
 import { ContactActivitiesSection } from './contact/sections/ContactActivitiesSection'
 import { ContactNotesSection } from './contact/sections/ContactNotesSection'
@@ -24,11 +29,13 @@ export interface ContactWorkspaceProps {
 type ContactSection =
   | 'summary'
   | 'accounts'
+  | 'jobs'
+  | 'placements'
   | 'submissions'
-  | 'pipeline'
+  | 'addresses'
+  | 'meetings'
+  | 'related_contacts'
   | 'campaigns'
-  | 'qualification'
-  | 'deals'
   | 'activities'
   | 'notes'
   | 'documents'
@@ -46,7 +53,7 @@ type ContactSection =
  * - Simple, readable code (no config objects)
  * - NOTE: Sidebar is provided by SidebarLayout via EntityJourneySidebar
  */
-export function ContactWorkspace({ onAction }: ContactWorkspaceProps = {}) {
+export function ContactWorkspace({ onAction: _onAction }: ContactWorkspaceProps = {}) {
   const { data } = useContactWorkspace()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -88,6 +95,9 @@ export function ContactWorkspace({ onAction }: ContactWorkspaceProps = {}) {
           contact={data.contact}
           accounts={data.accounts}
           activities={data.activities}
+          submissions={data.submissions}
+          placements={data.placements}
+          jobs={data.jobs}
           onNavigate={handleSectionChange}
         />
       )}
@@ -97,16 +107,44 @@ export function ContactWorkspace({ onAction }: ContactWorkspaceProps = {}) {
           contactId={data.contact.id}
         />
       )}
+      {currentSection === 'jobs' && (
+        <ContactJobsSection
+          jobs={data.jobs}
+          contactId={data.contact.id}
+          onNavigate={handleSectionChange}
+        />
+      )}
+      {currentSection === 'placements' && (
+        <ContactPlacementsSection
+          placements={data.placements}
+          contactId={data.contact.id}
+          onNavigate={handleSectionChange}
+        />
+      )}
       {currentSection === 'submissions' && (
         <ContactSubmissionsSection
           submissions={data.submissions}
           contactId={data.contact.id}
         />
       )}
-      {currentSection === 'pipeline' && (
-        <ContactSubmissionsSection
-          submissions={data.submissions}
+      {currentSection === 'addresses' && (
+        <ContactAddressesSection
+          addresses={data.addresses}
           contactId={data.contact.id}
+        />
+      )}
+      {currentSection === 'meetings' && (
+        <ContactMeetingsSection
+          meetings={data.meetings}
+          contactId={data.contact.id}
+          onNavigate={handleSectionChange}
+        />
+      )}
+      {currentSection === 'related_contacts' && (
+        <ContactRelatedContactsSection
+          relatedContacts={data.relatedContacts}
+          contactId={data.contact.id}
+          onNavigate={handleSectionChange}
         />
       )}
       {currentSection === 'campaigns' && (
@@ -115,7 +153,6 @@ export function ContactWorkspace({ onAction }: ContactWorkspaceProps = {}) {
           contactId={data.contact.id}
         />
       )}
-      {/* TODO: Add qualification and deals sections for leads */}
       {currentSection === 'activities' && (
         <ContactActivitiesSection
           activities={data.activities}

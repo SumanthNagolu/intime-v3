@@ -20,6 +20,8 @@ import { activitiesRouter } from '../routers/activities'
 import { workqueueRouter } from '../routers/workqueue'
 import { crmRouter } from '../routers/crm'
 import { atsRouter } from '../routers/ats'
+// Job-Contact junction table router (many-to-many relationship)
+import { jobContactsRouter } from '../routers/job-contacts'
 import { dashboardRouter } from '../routers/dashboard'
 import { reportsRouter } from '../routers/reports'
 import { benchRouter } from '../routers/bench'
@@ -95,6 +97,7 @@ export const appRouter = router({
   workqueue: workqueueRouter,
   crm: crmRouter,
   ats: atsRouter,
+  jobContacts: jobContactsRouter,
   dashboard: dashboardRouter,
   reports: reportsRouter,
   bench: benchRouter,

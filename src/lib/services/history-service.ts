@@ -98,9 +98,12 @@ export class HistoryService {
       metadata?: Record<string, unknown>
     }
   ): Promise<void> {
-    const userProfileId = ctx.userId ? await this.getUserProfileId(ctx.userId) : null
+    console.log('[HistoryService] recordEntityCreated called:', { entityType, entityId, ctx })
 
-    await this.adminClient.from('entity_history').insert({
+    const userProfileId = ctx.userId ? await this.getUserProfileId(ctx.userId) : null
+    console.log('[HistoryService] userProfileId:', userProfileId)
+
+    const { data, error } = await this.adminClient.from('entity_history').insert({
       org_id: ctx.orgId,
       entity_type: entityType,
       entity_id: entityId,
@@ -120,7 +123,14 @@ export class HistoryService {
         initialStatus: options?.initialStatus,
         ...options?.metadata,
       },
-    })
+    }).select()
+
+    if (error) {
+      console.error('[HistoryService] Failed to insert entity_history:', error)
+      throw error
+    }
+
+    console.log('[HistoryService] Successfully recorded entity creation:', data)
   }
 
   /**
@@ -223,9 +233,11 @@ export class HistoryService {
     relatedEntity: RelatedEntity,
     ctx: HistoryContext
   ): Promise<void> {
+    console.log('[HistoryService] recordRelatedObjectAdded called:', { entityType, entityId, relatedEntity, ctx })
+
     const userProfileId = ctx.userId ? await this.getUserProfileId(ctx.userId) : null
 
-    await this.adminClient.from('entity_history').insert({
+    const { data, error } = await this.adminClient.from('entity_history').insert({
       org_id: ctx.orgId,
       entity_type: entityType,
       entity_id: entityId,
@@ -242,9 +254,22 @@ export class HistoryService {
       changed_by: userProfileId,
       metadata: {
         action: 'related_object_added',
+        relatedEntity: {
+          type: relatedEntity.type,
+          id: relatedEntity.id,
+          label: relatedEntity.label,
+          action: 'added',
+        },
         ...relatedEntity.metadata,
       },
-    })
+    }).select()
+
+    if (error) {
+      console.error('[HistoryService] Failed to record related object added:', error)
+      throw error
+    }
+
+    console.log('[HistoryService] Successfully recorded related object added:', data)
   }
 
   /**

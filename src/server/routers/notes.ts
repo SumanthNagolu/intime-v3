@@ -229,15 +229,23 @@ export const notesRouter = router({
         })
       }
 
-      // HISTORY: Record note added to parent entity (fire-and-forget)
+      // HISTORY: Record note/reply added to parent entity (fire-and-forget)
+      const isReply = !!input.parentNoteId
       void historyService.recordRelatedObjectAdded(
         input.entityType,
         input.entityId,
         {
-          type: 'note',
+          type: isReply ? 'note_reply' : 'note',
           id: data.id,
-          label: input.title || `${input.noteType} note`,
-          metadata: { noteType: input.noteType, visibility: input.visibility },
+          label: isReply
+            ? `Reply: ${input.title || input.content.slice(0, 50).replace(/<[^>]*>/g, '')}${input.content.length > 50 ? '...' : ''}`
+            : (input.title || `${input.noteType} note`),
+          metadata: {
+            noteType: input.noteType,
+            visibility: input.visibility,
+            isReply,
+            parentNoteId: input.parentNoteId,
+          },
         },
         { orgId, userId: user?.id ?? null }
       ).catch(err => console.error('[History] Failed to record note addition:', err))

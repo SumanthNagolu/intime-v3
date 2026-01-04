@@ -1324,6 +1324,148 @@ export const crmRouter = router({
           placementsYTD: placementsYTD ?? 0,
         }
       }),
+
+    // Link two accounts together with a relationship
+    linkAccount: orgProtectedProcedure
+      .input(z.object({
+        accountId: z.string().uuid(),
+        relatedAccountId: z.string().uuid(),
+        relationshipCategory: z.enum([
+          'parent_child',
+          'msp_client',
+          'prime_sub',
+          'referral_partner',
+          'competitor',
+          'affiliate',
+          'merger_acquisition',
+        ]),
+        notes: z.string().optional(),
+        startedDate: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get user profile ID for created_by
+        let userProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          userProfileId = profile?.id ?? null
+        }
+
+        // Check if relationship already exists
+        const { data: existing } = await adminClient
+          .from('company_relationships')
+          .select('id')
+          .eq('org_id', orgId)
+          .or(`and(company_a_id.eq.${input.accountId},company_b_id.eq.${input.relatedAccountId}),and(company_a_id.eq.${input.relatedAccountId},company_b_id.eq.${input.accountId})`)
+          .is('deleted_at', null)
+          .maybeSingle()
+
+        if (existing) {
+          throw new TRPCError({
+            code: 'CONFLICT',
+            message: 'A relationship between these accounts already exists',
+          })
+        }
+
+        const { data, error } = await adminClient
+          .from('company_relationships')
+          .insert({
+            org_id: orgId,
+            company_a_id: input.accountId,
+            company_b_id: input.relatedAccountId,
+            relationship_category: input.relationshipCategory,
+            relationship_direction: 'both', // Default to bidirectional
+            notes: input.notes,
+            started_date: input.startedDate,
+            is_active: true,
+            created_by: userProfileId,
+          })
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
+      }),
+
+    // Update an account relationship
+    updateAccountRelationship: orgProtectedProcedure
+      .input(z.object({
+        relationshipId: z.string().uuid(),
+        relationshipCategory: z.enum([
+          'parent_child',
+          'msp_client',
+          'prime_sub',
+          'referral_partner',
+          'competitor',
+          'affiliate',
+          'merger_acquisition',
+        ]).optional(),
+        notes: z.string().optional(),
+        isActive: z.boolean().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const updateData: Record<string, unknown> = {}
+        if (input.relationshipCategory !== undefined) {
+          updateData.relationship_category = input.relationshipCategory
+        }
+        if (input.notes !== undefined) {
+          updateData.notes = input.notes
+        }
+        if (input.isActive !== undefined) {
+          updateData.is_active = input.isActive
+        }
+        updateData.updated_at = new Date().toISOString()
+
+        const { data, error } = await adminClient
+          .from('company_relationships')
+          .update(updateData)
+          .eq('id', input.relationshipId)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
+      }),
+
+    // Remove (soft delete) an account relationship
+    unlinkAccount: orgProtectedProcedure
+      .input(z.object({
+        relationshipId: z.string().uuid(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { error } = await adminClient
+          .from('company_relationships')
+          .update({ deleted_at: new Date().toISOString() })
+          .eq('id', input.relationshipId)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return { success: true }
+      }),
   }),
 
   // ============================================
@@ -4330,6 +4472,28 @@ export const crmRouter = router({
               updated_by: userProfileId,
             })
         }
+
+        // HISTORY: Record contact creation (fire-and-forget)
+        const contactName = `${input.firstName} ${input.lastName || ''}`.trim()
+        void historyService.recordEntityCreated(
+          'contact',
+          data.id,
+          { orgId, userId: user?.id ?? null },
+          { entityName: contactName, metadata: { category: 'person' } }
+        ).catch(err => console.error('[History] Failed to record contact creation:', err))
+
+        // HISTORY: Record contact added to parent account
+        void historyService.recordRelatedObjectAdded(
+          'account',
+          input.accountId,
+          {
+            type: 'contact',
+            id: data.id,
+            label: contactName,
+            metadata: { title: input.title, isPrimary: input.isPrimary }
+          },
+          { orgId, userId: user?.id ?? null }
+        ).catch(err => console.error('[History] Failed to record contact on account:', err))
 
         return data
       }),

@@ -12,6 +12,7 @@ import type {
   ContactNote,
   ContactDocument,
   ContactJob,
+  JobContactRole,
   ContactPlacement,
   ContactAddressEntry,
   ContactMeeting,
@@ -54,8 +55,7 @@ export async function getFullContact(id: string): Promise<FullContactData | null
     documentsResult,
     historyResult,
     // New queries for Phase 3
-    jobsViaAccountResult,
-    jobsAsHiringManagerResult,
+    jobContactsResult,
     placementsResult,
     addressesResult,
     meetingsResult,
@@ -194,33 +194,22 @@ export async function getFullContact(id: string): Promise<FullContactData | null
       .order('created_at', { ascending: false })
       .limit(100),
 
-    // Jobs via linked account (if contact has a company_id)
-    contactBase.company_id ? adminClient
-      .from('jobs')
-      .select(`
-        id, title, status, job_type, bill_rate_min, bill_rate_max, positions_available, positions_filled,
-        priority, created_at,
-        owner:user_profiles!jobs_owner_id_fkey(id, first_name, last_name),
-        account:companies!jobs_company_id_fkey(id, name)
-      `)
-      .eq('company_id', contactBase.company_id as string)
-      .is('deleted_at', null)
-      .order('created_at', { ascending: false })
-      .limit(50) : Promise.resolve({ data: [], error: null }),
-
-    // Jobs where contact is the hiring manager
+    // Jobs via job_contacts junction table (many-to-many with roles)
     adminClient
-      .from('jobs')
+      .from('job_contacts')
       .select(`
-        id, title, status, job_type, bill_rate_min, bill_rate_max, positions_available, positions_filled,
-        priority, created_at,
-        owner:user_profiles!jobs_owner_id_fkey(id, first_name, last_name),
-        account:companies!jobs_company_id_fkey(id, name)
+        id, role, is_primary, created_at,
+        job:jobs!job_contacts_job_id_fkey(
+          id, title, status, job_type, bill_rate_min, bill_rate_max,
+          positions_available, positions_filled, priority, created_at,
+          owner:user_profiles!jobs_owner_id_fkey(id, first_name, last_name),
+          account:companies!jobs_company_id_fkey(id, name)
+        )
       `)
-      .eq('hiring_manager_contact_id', id)
+      .eq('contact_id', id)
       .is('deleted_at', null)
       .order('created_at', { ascending: false })
-      .limit(50),
+      .limit(100),
 
     // Placements where contact is the candidate
     adminClient
@@ -306,11 +295,8 @@ export async function getFullContact(id: string): Promise<FullContactData | null
     ),
     submissions: allSubmissions,
     campaigns: transformCampaigns(campaignsResult.data || []),
-    // New data for Phase 3 - merge jobs from account and hiring manager role, dedupe by ID
-    jobs: mergeAndDedupeJobs(
-      transformJobs(jobsViaAccountResult.data || []),
-      transformJobs(jobsAsHiringManagerResult.data || [])
-    ),
+    // Jobs via junction table with roles
+    jobs: transformJobsFromJunction(jobContactsResult.data || []),
     placements: transformPlacements(placementsResult.data || []),
     addresses: transformAddresses(addressesResult.data || []),
     meetings: transformMeetings(meetingsResult.data || []),
@@ -578,44 +564,45 @@ function transformHistory(data: Record<string, unknown>[]): HistoryEntry[] {
 
 // Phase 3 transform functions
 
-function transformJobs(data: Record<string, unknown>[]): ContactJob[] {
-  return data.map((j) => {
-    const owner = j.owner as { id: string; first_name: string; last_name: string } | null
-    const account = j.account as { id: string; name: string } | null
-
-    return {
-      id: j.id as string,
-      title: (j.title as string) || 'Untitled Job',
-      status: (j.status as string) || 'draft',
-      jobType: j.job_type as string | null,
-      rateMin: j.bill_rate_min as number | null,
-      rateMax: j.bill_rate_max as number | null,
-      positionsCount: (j.positions_available as number) || 1,
-      positionsFilled: (j.positions_filled as number) || 0,
-      priority: j.priority as string | null,
-      createdAt: j.created_at as string,
-      owner: owner ? { id: owner.id, name: [owner.first_name, owner.last_name].filter(Boolean).join(' ') } : null,
-      account: account ? { id: account.id, name: account.name } : null,
-    }
-  })
-}
-
 /**
- * Merge jobs from multiple sources and deduplicate by ID.
- * A contact may have jobs from their linked account AND be a hiring manager for those same jobs.
+ * Transform job_contacts junction table data into ContactJob array.
+ * Groups by job ID and collects all roles the contact has on each job.
  */
-function mergeAndDedupeJobs(jobsFromAccount: ContactJob[], jobsAsHiringManager: ContactJob[]): ContactJob[] {
-  const jobMap = new Map<string, ContactJob>()
+function transformJobsFromJunction(data: Record<string, unknown>[]): ContactJob[] {
+  const jobMap = new Map<string, ContactJob & { roles: JobContactRole[] }>()
 
-  // Add account jobs first
-  for (const job of jobsFromAccount) {
-    jobMap.set(job.id, job)
-  }
+  for (const row of data) {
+    const job = row.job as Record<string, unknown> | null
+    if (!job) continue
 
-  // Add hiring manager jobs (will not overwrite if already exists)
-  for (const job of jobsAsHiringManager) {
-    if (!jobMap.has(job.id)) {
-      jobMap.set(job.id, job)
+    const jobId = job.id as string
+    const role = row.role as JobContactRole
+
+    if (!jobMap.has(jobId)) {
+      const owner = job.owner as { id: string; first_name: string; last_name: string } | null
+      const account = job.account as { id: string; name: string } | null
+
+      jobMap.set(jobId, {
+        id: jobId,
+        title: (job.title as string) || 'Untitled Job',
+        status: (job.status as string) || 'draft',
+        jobType: job.job_type as string | null,
+        rateMin: job.bill_rate_min as number | null,
+        rateMax: job.bill_rate_max as number | null,
+        positionsCount: (job.positions_available as number) || 1,
+        positionsFilled: (job.positions_filled as number) || 0,
+        priority: job.priority as string | null,
+        createdAt: job.created_at as string,
+        owner: owner ? { id: owner.id, name: [owner.first_name, owner.last_name].filter(Boolean).join(' ') } : null,
+        account: account ? { id: account.id, name: account.name } : null,
+        roles: [],
+      })
+    }
+
+    // Add this role to the job's roles array (avoid duplicates)
+    const jobEntry = jobMap.get(jobId)!
+    if (!jobEntry.roles.includes(role)) {
+      jobEntry.roles.push(role)
     }
   }
 

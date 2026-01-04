@@ -4,6 +4,7 @@ import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
 import { getAdminClient } from '@/lib/supabase/admin'
 import { checkBlockingActivities } from '@/lib/utils/activity-system'
+import { historyService } from '@/lib/services'
 
 
 // ============================================
@@ -851,6 +852,7 @@ export const atsRouter = router({
           notesResult,
           documentsResult,
           historyResult,
+          jobContactsResult,
         ] = await Promise.all([
           // Job with relations
           adminClient
@@ -975,6 +977,21 @@ export const atsRouter = router({
             .eq('job_id', input.id)
             .order('changed_at', { ascending: false })
             .limit(50),
+
+          // Job contacts (many-to-many via junction table)
+          adminClient
+            .from('job_contacts')
+            .select(`
+              *,
+              contact:contacts!contact_id(
+                id, first_name, last_name, email, phone, title, avatar_url
+              )
+            `)
+            .eq('job_id', input.id)
+            .eq('org_id', orgId)
+            .is('deleted_at', null)
+            .order('is_primary', { ascending: false })
+            .order('role'),
         ])
 
         if (jobResult.error) {
@@ -1064,6 +1081,36 @@ export const atsRouter = router({
             history: {
               items: historyResult.data || [],
               total: historyResult.data?.length || 0,
+            },
+            clientContacts: {
+              items: (jobContactsResult.data || []).map((jc: Record<string, unknown>) => {
+                const contact = jc.contact as Record<string, unknown> | null
+                return {
+                  id: jc.id as string,
+                  jobId: jc.job_id as string,
+                  contactId: jc.contact_id as string,
+                  role: jc.role as string,
+                  isPrimary: (jc.is_primary as boolean) ?? false,
+                  notes: jc.notes as string | null,
+                  createdAt: jc.created_at as string,
+                  contact: contact ? {
+                    id: contact.id as string,
+                    firstName: contact.first_name as string,
+                    lastName: contact.last_name as string,
+                    fullName: [contact.first_name, contact.last_name].filter(Boolean).join(' ') || 'Unknown',
+                    email: contact.email as string | null,
+                    phone: contact.phone as string | null,
+                    title: contact.title as string | null,
+                    avatarUrl: contact.avatar_url as string | null,
+                  } : null,
+                }
+              }),
+              total: jobContactsResult.data?.length || 0,
+              byRole: (jobContactsResult.data || []).reduce((acc: Record<string, number>, jc: Record<string, unknown>) => {
+                const role = jc.role as string
+                acc[role] = (acc[role] || 0) + 1
+                return acc
+              }, {}),
             },
           },
         }
@@ -1440,6 +1487,27 @@ export const atsRouter = router({
               updated_at: new Date().toISOString(),
             })
         }
+
+        // HISTORY: Record job creation (fire-and-forget)
+        void historyService.recordEntityCreated(
+          'job',
+          job.id,
+          { orgId, userId: user?.id ?? null },
+          { entityName: job.title, initialStatus: 'draft' }
+        ).catch(err => console.error('[History] Failed to record job creation:', err))
+
+        // HISTORY: Record job added to parent account
+        void historyService.recordRelatedObjectAdded(
+          'account',
+          input.accountId,
+          {
+            type: 'job',
+            id: job.id,
+            label: job.title,
+            metadata: { status: job.status, jobType: input.jobType }
+          },
+          { orgId, userId: user?.id ?? null }
+        ).catch(err => console.error('[History] Failed to record job on account:', err))
 
         return {
           jobId: job.id,

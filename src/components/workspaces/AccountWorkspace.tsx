@@ -15,10 +15,14 @@ import { AccountPlacementsSection } from './account/sections/AccountPlacementsSe
 import { AccountAddressesSection } from './account/sections/AccountAddressesSection'
 import { AccountMeetingsSection } from './account/sections/AccountMeetingsSection'
 import { AccountEscalationsSection } from './account/sections/AccountEscalationsSection'
+import { AccountRelatedAccountsSection } from './account/sections/AccountRelatedAccountsSection'
 import { AccountActivitiesSection } from './account/sections/AccountActivitiesSection'
 import { AccountNotesSection } from './account/sections/AccountNotesSection'
 import { AccountDocumentsSection } from './account/sections/AccountDocumentsSection'
 import { AccountHistorySection } from './account/sections/AccountHistorySection'
+
+// Dialogs
+import { LinkAccountDialog } from '@/components/recruiting/accounts/LinkAccountDialog'
 
 export interface AccountWorkspaceProps {
   onAction?: (action: string) => void
@@ -32,6 +36,7 @@ type AccountSection =
   | 'addresses'
   | 'meetings'
   | 'escalations'
+  | 'related_accounts'
   | 'activities'
   | 'notes'
   | 'documents'
@@ -54,6 +59,9 @@ export function AccountWorkspace({ onAction }: AccountWorkspaceProps = {}) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
+  // Dialog state
+  const [linkAccountDialogOpen, setLinkAccountDialogOpen] = React.useState(false)
+
   // Get section from URL, default to 'summary'
   const currentSection = (searchParams.get('section') || 'summary') as AccountSection
 
@@ -71,6 +79,20 @@ export function AccountWorkspace({ onAction }: AccountWorkspaceProps = {}) {
     }
     // TODO: Focus on specific field if warning.field is set
   }, [handleSectionChange])
+
+  // Listen for openAccountDialog custom events
+  React.useEffect(() => {
+    const handleOpenDialog = (event: CustomEvent<{ dialogId: string; accountId: string }>) => {
+      if (event.detail.dialogId === 'linkAccount' && event.detail.accountId === data.account.id) {
+        setLinkAccountDialogOpen(true)
+      }
+    }
+
+    window.addEventListener('openAccountDialog', handleOpenDialog as EventListener)
+    return () => {
+      window.removeEventListener('openAccountDialog', handleOpenDialog as EventListener)
+    }
+  }, [data.account.id])
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-6 animate-fade-in">
@@ -131,6 +153,12 @@ export function AccountWorkspace({ onAction }: AccountWorkspaceProps = {}) {
           accountId={data.account.id}
         />
       )}
+      {currentSection === 'related_accounts' && (
+        <AccountRelatedAccountsSection
+          relatedAccounts={data.relatedAccounts}
+          accountId={data.account.id}
+        />
+      )}
       {currentSection === 'activities' && (
         <AccountActivitiesSection
           activities={data.activities}
@@ -154,6 +182,13 @@ export function AccountWorkspace({ onAction }: AccountWorkspaceProps = {}) {
           history={data.history}
         />
       )}
+
+      {/* Dialogs */}
+      <LinkAccountDialog
+        open={linkAccountDialogOpen}
+        onOpenChange={setLinkAccountDialogOpen}
+        accountId={data.account.id}
+      />
     </div>
   )
 }
