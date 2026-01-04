@@ -114,9 +114,9 @@ export function LinkContactToAccountDialog({
   const selectedContact = filteredResults.find(c => c.id === selectedContactId)
 
   // Get contact display name
-  const getContactName = (contact: { firstName?: string | null; lastName?: string | null; email?: string | null }) => {
-    const firstName = contact.firstName || ''
-    const lastName = contact.lastName || ''
+  const getContactName = (contact: { firstName?: string | null; lastName?: string | null; first_name?: string | null; last_name?: string | null; email?: string | null }) => {
+    const firstName = contact.firstName || contact.first_name || ''
+    const lastName = contact.lastName || contact.last_name || ''
     if (firstName || lastName) {
       return `${firstName} ${lastName}`.trim()
     }
@@ -124,9 +124,11 @@ export function LinkContactToAccountDialog({
   }
 
   // Get initials for avatar
-  const getInitials = (contact: { firstName?: string | null; lastName?: string | null }) => {
-    const first = contact.firstName?.[0] || ''
-    const last = contact.lastName?.[0] || ''
+  const getInitials = (contact: { firstName?: string | null; lastName?: string | null; first_name?: string | null; last_name?: string | null }) => {
+    const firstName = contact.firstName || contact.first_name || ''
+    const lastName = contact.lastName || contact.last_name || ''
+    const first = firstName?.[0] || ''
+    const last = lastName?.[0] || ''
     return (first + last).toUpperCase() || '?'
   }
 
