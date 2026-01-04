@@ -132,8 +132,8 @@ export const jobContactsRouter = router({
         .select(`
           *,
           job:jobs!job_id(
-            id, title, status, job_type, bill_rate_min, bill_rate_max,
-            positions_available, positions_filled, priority, created_at,
+            id, title, status, job_type, rate_min, rate_max,
+            positions_count, positions_filled, priority, created_at,
             owner:user_profiles!owner_id(id, first_name, last_name),
             account:companies!company_id(id, name)
           )

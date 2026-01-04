@@ -247,7 +247,7 @@ export function ContactJobsSection({ jobs, contactId, onNavigate, onRefresh }: C
                 className="h-9 border-charcoal-200 hover:bg-charcoal-50"
               >
                 <Plus className="h-4 w-4 mr-2" />
-                New Job
+                Create Job
               </Button>
               <Button
                 onClick={() => setLinkDialogOpen(true)}

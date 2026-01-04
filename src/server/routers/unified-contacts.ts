@@ -772,9 +772,9 @@ export const unifiedContactsRouter = router({
       }
 
       // Get the user_profile.id for the current user (needed for FK constraints)
-      // The auth user.id is from auth.users, but owner_id references user_profiles.id
+      // The auth user.id is from auth.users, but owner_id and created_by reference user_profiles.id
       let userProfileId: string | null = null
-      if (user?.id && !input.ownerId) {
+      if (user?.id) {
         const { data: profile } = await adminClient
           .from('user_profiles')
           .select('id')
@@ -801,7 +801,7 @@ export const unifiedContactsRouter = router({
         tags: input.tags,
         status: 'active',
         contact_status: input.contactStatus || 'active',
-        created_by: user?.id,
+        created_by: userProfileId,
       }
 
       // Person-specific core fields

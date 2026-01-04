@@ -247,7 +247,17 @@ export const contactRelationshipsRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { orgId, user } = ctx
       const adminClient = getAdminClient()
-      const userId = user?.id
+
+      // Look up user_profiles.id from auth_id (user.id is from auth.users)
+      let userProfileId: string | null = null
+      if (user?.id) {
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+        userProfileId = profile?.id ?? null
+      }
 
       // If this is a current works_at relationship, end any existing current employment
       if (input.relationshipType === 'works_at' && input.isCurrent) {
@@ -256,7 +266,7 @@ export const contactRelationshipsRouter = router({
           .update({
             is_current: false,
             end_date: new Date().toISOString().split('T')[0],
-            updated_by: userId
+            updated_by: userProfileId
           })
           .eq('org_id', orgId)
           .eq('source_contact_id', input.sourceContactId)
@@ -278,8 +288,8 @@ export const contactRelationshipsRouter = router({
           is_current: input.isCurrent,
           relationship_strength: input.relationshipStrength,
           notes: input.notes,
-          created_by: userId,
-          updated_by: userId,
+          created_by: userProfileId,
+          updated_by: userProfileId,
         })
         .select()
         .single()

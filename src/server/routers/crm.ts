@@ -5085,10 +5085,11 @@ export const crmRouter = router({
         return { ...escalation, updates: updates ?? [] }
       }),
 
-    // Create escalation
+    // Create escalation (supports both account and contact escalations)
     create: orgProtectedProcedure
       .input(z.object({
-        accountId: z.string().uuid(),
+        accountId: z.string().uuid().optional(),
+        contactId: z.string().uuid().optional(),
         escalationType: z.enum(['quality_concern', 'candidate_issue', 'billing_dispute', 'sla_violation', 'contract_dispute', 'communication', 'compliance', 'relationship', 'other']),
         severity: z.enum(['low', 'medium', 'high', 'critical']).default('medium'),
         issueSummary: z.string().min(10).max(500),
@@ -5103,6 +5104,8 @@ export const crmRouter = router({
         rootCause: z.string().optional(),
         resolutionPlan: z.string().optional(),
         assignedTo: z.string().uuid().optional(),
+      }).refine(data => data.accountId || data.contactId, {
+        message: 'Either accountId or contactId must be provided',
       }))
       .mutation(async ({ ctx, input }) => {
         const { orgId, user } = ctx
@@ -5148,7 +5151,8 @@ export const crmRouter = router({
           .from('escalations')
           .insert({
             org_id: orgId,
-            account_id: input.accountId,
+            account_id: input.accountId || null,
+            contact_id: input.contactId || null,
             escalation_type: input.escalationType,
             severity: input.severity,
             issue_summary: input.issueSummary,

@@ -1,5 +1,6 @@
 'use server'
 
+import { unstable_noStore } from 'next/cache'
 import { getAdminClient } from '@/lib/supabase/admin'
 import { getServerCaller } from '@/server/trpc/server-caller'
 import type {
@@ -30,6 +31,9 @@ import type {
  * so we get maximum performance with a single network round-trip.
  */
 export async function getFullContact(id: string): Promise<FullContactData | null> {
+  // Opt-out of caching to ensure fresh data on router.refresh()
+  unstable_noStore()
+
   const caller = await getServerCaller()
   const adminClient = getAdminClient()
 
@@ -237,39 +241,42 @@ export async function getFullContact(id: string): Promise<FullContactData | null
     adminClient
       .from('meeting_notes')
       .select(`
-        id, title, meeting_type, meeting_date, location_type, location_details,
+        id, title, meeting_type, scheduled_at, location_type, location_details,
         agenda, discussion_notes, key_takeaways, action_items, created_at,
         creator:user_profiles!meeting_notes_created_by_fkey(id, first_name, last_name)
       `)
       .contains('contact_ids', [id])
       .is('deleted_at', null)
-      .order('meeting_date', { ascending: false })
+      .order('scheduled_at', { ascending: false })
       .limit(50),
 
-    // Escalations related to this contact
+    // Escalations related to this contact (full fields like AccountEscalation)
     adminClient
       .from('escalations')
       .select(`
-        id, title, priority, status, category, description,
+        id, escalation_number, escalation_type, severity, status,
+        issue_summary, detailed_description, related_entities, client_impact,
+        root_cause, immediate_actions, resolution_plan,
         sla_response_due, sla_resolution_due, sla_response_met, sla_resolution_met,
-        resolved_at, resolution_summary, client_satisfaction, created_at,
-        owner:user_profiles!escalations_owner_id_fkey(id, first_name, last_name)
+        resolved_at, resolution_summary, resolution_actions, time_to_resolve,
+        client_satisfaction, lessons_learned, preventive_measures,
+        created_at, updated_at,
+        created_by:user_profiles!created_by(id, full_name, avatar_url),
+        assigned_to:user_profiles!assigned_to(id, full_name, avatar_url),
+        escalated_to:user_profiles!escalated_to(id, full_name, avatar_url),
+        resolved_by:user_profiles!resolved_by(id, full_name, avatar_url)
       `)
       .eq('contact_id', id)
       .is('deleted_at', null)
       .order('created_at', { ascending: false })
       .limit(50),
 
-    // Related contacts (other contacts at the same company)
-    contactBase.company_id ? adminClient
-      .from('contacts')
-      .select('id, first_name, last_name, title, email, phone, is_primary, decision_authority')
-      .eq('company_id', contactBase.company_id as string)
-      .neq('id', id)  // Exclude self
-      .is('deleted_at', null)
-      .order('is_primary', { ascending: false })
-      .limit(50) : Promise.resolve({ data: [], error: null }),
+    // Related contacts: placeholder - query is done after Promise.all using account IDs
+    Promise.resolve({ data: null, error: null }), // Not used, kept for array index alignment
   ])
+
+  // Unused result from placeholder
+  void relatedContactsResult
 
   // Return null if contact not found
   if (contactResult.error || !contactResult.data) {
@@ -277,6 +284,164 @@ export async function getFullContact(id: string): Promise<FullContactData | null
   }
 
   const contact = contactResult.data
+
+  // Collect all account IDs for this contact (from junction table + primary company)
+  const accountIds = new Set<string>()
+
+  // Add accounts from junction table
+  if (accountsResult.data) {
+    for (const link of accountsResult.data) {
+      const company = link.company as unknown as { id: string } | null
+      if (company?.id) {
+        accountIds.add(company.id)
+      }
+    }
+  }
+
+  // Add primary company if exists
+  if (primaryCompanyResult.data) {
+    const primaryId = (primaryCompanyResult.data as { id: string }).id
+    if (primaryId) {
+      accountIds.add(primaryId)
+    }
+  }
+
+  // Query for related contacts through shared accounts
+  // Find contacts linked via: 1) company_contacts junction table, 2) contacts.company_id
+  let relatedContactsData: ContactRelatedContact[] = []
+
+  if (accountIds.size > 0) {
+    const accountIdsArray = Array.from(accountIds)
+
+    // Build a map of account ID -> account name for lookup
+    const accountNameMap = new Map<string, string>()
+
+    // Get account names from accountsResult (junction table)
+    if (accountsResult.data) {
+      for (const link of accountsResult.data) {
+        const company = link.company as unknown as { id: string; name: string } | null
+        if (company?.id && company?.name) {
+          accountNameMap.set(company.id, company.name)
+        }
+      }
+    }
+
+    // Get account name from primaryCompanyResult
+    if (primaryCompanyResult.data) {
+      const pc = primaryCompanyResult.data as unknown as { id: string; name: string }
+      if (pc?.id && pc?.name) {
+        accountNameMap.set(pc.id, pc.name)
+      }
+    }
+
+    // Query 1: Get contacts via company_contacts junction table
+    const { data: sharedContactLinks } = await adminClient
+      .from('company_contacts')
+      .select(`
+        contact_id,
+        is_primary,
+        decision_authority,
+        contact:contacts!company_contacts_contact_id_fkey(
+          id, first_name, last_name, title, email, phone, deleted_at
+        ),
+        company:companies!company_contacts_company_id_fkey(
+          id, name
+        )
+      `)
+      .in('company_id', accountIdsArray)
+      .neq('contact_id', id) // Exclude current contact
+      .eq('is_active', true)
+      .order('is_primary', { ascending: false })
+      .limit(100)
+
+    // Query 2: Get contacts via contacts.company_id (primary company FK)
+    const { data: primaryCompanyContacts } = await adminClient
+      .from('contacts')
+      .select('id, first_name, last_name, title, email, phone, company_id, is_primary, decision_authority')
+      .in('company_id', accountIdsArray)
+      .neq('id', id) // Exclude current contact
+      .is('deleted_at', null)
+      .limit(100)
+
+    // Group by contact and aggregate shared accounts
+    const contactMap = new Map<string, {
+      contact: Record<string, unknown>
+      isPrimary: boolean
+      decisionAuthority: string | null
+      sharedAccounts: Array<{ id: string; name: string }>
+    }>()
+
+    // Process junction table results
+    for (const link of sharedContactLinks || []) {
+      const contactData = link.contact as unknown as { id: string; first_name: string | null; last_name: string | null; title: string | null; email: string | null; phone: string | null; deleted_at: string | null } | null
+      const companyData = link.company as unknown as { id: string; name: string } | null
+
+      // Skip deleted contacts
+      if (!contactData || !companyData || contactData.deleted_at) continue
+
+      const existing = contactMap.get(contactData.id)
+      if (existing) {
+        // Add this account to the shared accounts list
+        if (!existing.sharedAccounts.some(a => a.id === companyData.id)) {
+          existing.sharedAccounts.push({ id: companyData.id, name: companyData.name })
+        }
+        // Update isPrimary to true if any link is primary
+        if (link.is_primary) {
+          existing.isPrimary = true
+        }
+      } else {
+        contactMap.set(contactData.id, {
+          contact: contactData as Record<string, unknown>,
+          isPrimary: (link.is_primary as boolean) || false,
+          decisionAuthority: (link.decision_authority as string) || null,
+          sharedAccounts: [{ id: companyData.id, name: companyData.name }],
+        })
+      }
+    }
+
+    // Process primary company FK results
+    for (const contactData of primaryCompanyContacts || []) {
+      const companyId = contactData.company_id as string
+      const companyName = accountNameMap.get(companyId) || 'Unknown Account'
+
+      const existing = contactMap.get(contactData.id as string)
+      if (existing) {
+        // Add this account to the shared accounts list if not already there
+        if (!existing.sharedAccounts.some(a => a.id === companyId)) {
+          existing.sharedAccounts.push({ id: companyId, name: companyName })
+        }
+        // Update isPrimary based on contact's is_primary flag
+        if (contactData.is_primary) {
+          existing.isPrimary = true
+        }
+      } else {
+        contactMap.set(contactData.id as string, {
+          contact: contactData as Record<string, unknown>,
+          isPrimary: (contactData.is_primary as boolean) || false,
+          decisionAuthority: (contactData.decision_authority as string) || null,
+          sharedAccounts: [{ id: companyId, name: companyName }],
+        })
+      }
+    }
+
+    // Transform to ContactRelatedContact array
+    relatedContactsData = Array.from(contactMap.values()).map(({ contact, isPrimary, decisionAuthority, sharedAccounts }) => ({
+      id: contact.id as string,
+      name: [contact.first_name, contact.last_name].filter(Boolean).join(' ') || 'Unknown',
+      title: contact.title as string | null,
+      email: contact.email as string | null,
+      phone: contact.phone as string | null,
+      isPrimary,
+      decisionAuthority,
+      sharedAccounts,
+    }))
+
+    // Sort: primary contacts first, then by number of shared accounts
+    relatedContactsData.sort((a, b) => {
+      if (a.isPrimary !== b.isPrimary) return a.isPrimary ? -1 : 1
+      return b.sharedAccounts.length - a.sharedAccounts.length
+    })
+  }
 
   // Combine submissions from both queries
   const allSubmissions = [
@@ -286,7 +451,7 @@ export async function getFullContact(id: string): Promise<FullContactData | null
 
   // Transform and return data
   return {
-    contact: transformContact(contact),
+    contact: transformContact(contact, primaryCompanyResult.data as Record<string, unknown> | null),
     accounts: transformAccounts(
       accountsResult.data || [],
       primaryCompanyResult.data as Record<string, unknown> | null,
@@ -301,7 +466,7 @@ export async function getFullContact(id: string): Promise<FullContactData | null
     addresses: transformAddresses(addressesResult.data || []),
     meetings: transformMeetings(meetingsResult.data || []),
     escalations: transformEscalations(escalationsResult.data || []),
-    relatedContacts: transformRelatedContacts(relatedContactsResult.data || []),
+    relatedContacts: relatedContactsData,
     // Universal tools
     activities: transformActivities(activitiesResult.data || []),
     notes: transformNotes(notesResult.data || []),
@@ -313,7 +478,7 @@ export async function getFullContact(id: string): Promise<FullContactData | null
 
 // Transform functions
 
-function transformContact(data: Record<string, unknown>): ContactData {
+function transformContact(data: Record<string, unknown>, primaryCompany: Record<string, unknown> | null): ContactData {
   const owner = data.owner as { id: string; full_name: string; avatar_url: string | null } | null
 
   // Derive types from subtype
@@ -372,9 +537,9 @@ function transformContact(data: Record<string, unknown>): ContactData {
       fullName: owner.full_name,
       avatarUrl: owner.avatar_url,
     } : null,
-    company: data.company_name ? {
-      id: (data.company_id as string) || '',
-      name: data.company_name as string,
+    company: primaryCompany ? {
+      id: (primaryCompany.id as string) || '',
+      name: (primaryCompany.name as string) || '',
     } : null,
   }
 }
@@ -655,7 +820,7 @@ function transformMeetings(data: Record<string, unknown>[]): ContactMeeting[] {
       id: m.id as string,
       title: (m.title as string) || 'Untitled Meeting',
       meetingType: (m.meeting_type as string) || 'other',
-      meetingDate: m.meeting_date as string,
+      meetingDate: m.scheduled_at as string,  // DB column is scheduled_at
       locationType: m.location_type as string | null,
       locationDetails: m.location_details as string | null,
       agenda: m.agenda as string | null,
@@ -670,29 +835,73 @@ function transformMeetings(data: Record<string, unknown>[]): ContactMeeting[] {
 
 function transformEscalations(data: Record<string, unknown>[]): ContactEscalation[] {
   return data.map((e) => {
-    const owner = e.owner as { id: string; first_name: string; last_name: string } | null
+    const createdBy = e.created_by as { id: string; full_name: string; avatar_url: string | null } | null
+    const assignedTo = e.assigned_to as { id: string; full_name: string; avatar_url: string | null } | null
+    const escalatedTo = e.escalated_to as { id: string; full_name: string; avatar_url: string | null } | null
+    const resolvedBy = e.resolved_by as { id: string; full_name: string; avatar_url: string | null } | null
+
+    // Handle related_entities which is JSONB - could be array of IDs or objects
+    const relatedEntities = e.related_entities as unknown
+    const relatedEntityIds = Array.isArray(relatedEntities)
+      ? relatedEntities.map((r: unknown) =>
+          typeof r === 'string' ? r : (r as { id?: string })?.id
+        ).filter(Boolean) as string[]
+      : null
+
+    // Handle client_impact which is text[] in DB
+    const clientImpact = e.client_impact as string[] | null
+
+    // Severity defaults to medium if missing
+    const severity = (e.severity as string) || 'medium'
 
     return {
       id: e.id as string,
-      title: (e.title as string) || 'Untitled Escalation',
-      priority: (e.priority as string) || 'medium',
-      status: (e.status as string) || 'open',
-      category: e.category as string | null,
-      description: e.description as string | null,
+      escalationNumber: (e.escalation_number as string) || '',
+      subject: (e.issue_summary as string) || 'No Subject',
+      priority: severity as 'low' | 'medium' | 'high' | 'critical',
+      severity: severity as ContactEscalation['severity'],
+      escalationType: ((e.escalation_type as string) || 'other') as ContactEscalation['escalationType'],
+      status: ((e.status as string) || 'open') as ContactEscalation['status'],
+      createdAt: e.created_at as string,
+      createdBy: createdBy
+        ? { id: createdBy.id, name: createdBy.full_name || 'Unknown', avatarUrl: createdBy.avatar_url }
+        : { id: '', name: 'Unknown', avatarUrl: null },
+      assignedTo: assignedTo
+        ? { id: assignedTo.id, name: assignedTo.full_name || 'Unknown', avatarUrl: assignedTo.avatar_url }
+        : null,
+      escalatedTo: escalatedTo
+        ? { id: escalatedTo.id, name: escalatedTo.full_name || 'Unknown', avatarUrl: escalatedTo.avatar_url }
+        : null,
+      description: e.detailed_description as string | null,
+      issueSummary: (e.issue_summary as string) || '',
+      detailedDescription: e.detailed_description as string | null,
+      clientImpact,
+      rootCause: e.root_cause as string | null,
+      immediateActions: e.immediate_actions as string | null,
+      resolutionPlan: e.resolution_plan as string | null,
       slaResponseDue: e.sla_response_due as string | null,
       slaResolutionDue: e.sla_resolution_due as string | null,
       slaResponseMet: e.sla_response_met as boolean | null,
       slaResolutionMet: e.sla_resolution_met as boolean | null,
       resolvedAt: e.resolved_at as string | null,
+      resolvedBy: resolvedBy
+        ? { id: resolvedBy.id, name: resolvedBy.full_name || 'Unknown', avatarUrl: resolvedBy.avatar_url }
+        : null,
       resolutionSummary: e.resolution_summary as string | null,
-      clientSatisfaction: e.client_satisfaction as number | null,
-      createdAt: e.created_at as string,
-      owner: owner ? { id: owner.id, name: [owner.first_name, owner.last_name].filter(Boolean).join(' ') } : null,
+      resolutionActions: e.resolution_actions as string | null,
+      timeToResolve: e.time_to_resolve as string | null,
+      clientSatisfaction: e.client_satisfaction as ContactEscalation['clientSatisfaction'],
+      lessonsLearned: e.lessons_learned as string | null,
+      preventiveMeasures: e.preventive_measures as string | null,
+      relatedEntityIds,
+      updatedAt: e.updated_at as string | null,
     }
   })
 }
 
-function transformRelatedContacts(data: Record<string, unknown>[]): ContactRelatedContact[] {
+// Note: This function is kept for backward compatibility but is no longer used
+// Related contacts are now processed inline with shared accounts info
+function _transformRelatedContacts(data: Record<string, unknown>[]): ContactRelatedContact[] {
   return data.map((c) => ({
     id: c.id as string,
     name: [c.first_name, c.last_name].filter(Boolean).join(' ') || 'Unknown',
@@ -701,6 +910,7 @@ function transformRelatedContacts(data: Record<string, unknown>[]): ContactRelat
     phone: c.phone as string | null,
     isPrimary: (c.is_primary as boolean) || false,
     decisionAuthority: c.decision_authority as string | null,
+    sharedAccounts: [], // Legacy - no account info available
   }))
 }
 
