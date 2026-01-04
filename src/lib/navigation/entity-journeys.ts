@@ -5,7 +5,7 @@ import {
   PauseCircle, PlayCircle, Edit, XCircle, MessageSquare, Plus,
   UserCircle, Mail, Megaphone, BarChart3, Pause, Play,
   Settings, UserPlus, Rocket, Heart, Flag, Copy, Download,
-  Receipt, CreditCard, Clock, Calculator, Wallet,
+  Receipt, CreditCard, Clock, Calculator, Wallet, Link2,
 } from 'lucide-react'
 import { EntityJourneyConfig, EntityType } from './entity-navigation.types'
 
@@ -254,11 +254,25 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
         href: '/employee/recruiting/accounts/:id/edit'
       },
       {
+        id: 'new-account',
+        label: '+ New Account',
+        icon: Building2,
+        actionType: 'navigate',
+        href: '/employee/recruiting/accounts/new'
+      },
+      {
         id: 'contact',
-        label: 'Add Contact',
-        icon: Users,
+        label: '+ New Contact',
+        icon: UserPlus,
         actionType: 'dialog',
         dialogId: 'addContact'
+      },
+      {
+        id: 'link-contact',
+        label: 'Link Contact',
+        icon: Link2,
+        actionType: 'dialog',
+        dialogId: 'linkContact'
       },
       {
         id: 'job',

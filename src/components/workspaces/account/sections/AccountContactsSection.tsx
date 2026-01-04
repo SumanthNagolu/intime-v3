@@ -6,11 +6,11 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
-import { 
+import {
   Mail, Phone, Star, MoreVertical, Linkedin, Activity,
-  UserCog, Users, MapPin, Building2, 
+  UserCog, Users, MapPin, Building2,
   ArrowRight, X, Pencil, Check, Loader2, ChevronLeft, ChevronRight,
-  Search, MessageSquare, UserPlus, ExternalLink, Sparkles, Globe
+  Search, MessageSquare, UserPlus, ExternalLink, Sparkles, Globe, Link2, Plus
 } from 'lucide-react'
 import {
   DropdownMenu,
@@ -493,17 +493,30 @@ export function AccountContactsSection({ contacts, accountId }: AccountContactsS
                   className="pl-9 h-9 w-64 text-sm border-charcoal-200 focus:border-gold-400 focus:ring-gold-400/20"
                 />
               </div>
-              <Button 
+              <Button
                 size="sm"
-                className="bg-gradient-to-r from-forest-600 to-forest-700 hover:from-forest-700 hover:to-forest-800 text-white shadow-sm"
+                variant="outline"
+                className="border-forest-300 text-forest-700 hover:bg-forest-50"
                 onClick={() => {
-                  window.dispatchEvent(new CustomEvent('openAccountDialog', { 
-                    detail: { dialogId: 'addContact', accountId } 
+                  window.dispatchEvent(new CustomEvent('openAccountDialog', {
+                    detail: { dialogId: 'addContact', accountId }
                   }))
                 }}
               >
-                <UserPlus className="h-4 w-4 mr-1.5" />
-                Add Contact
+                <Plus className="h-4 w-4 mr-1.5" />
+                Create Contact
+              </Button>
+              <Button
+                size="sm"
+                className="bg-gradient-to-r from-forest-600 to-forest-700 hover:from-forest-700 hover:to-forest-800 text-white shadow-sm"
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent('openAccountDialog', {
+                    detail: { dialogId: 'linkContact', accountId }
+                  }))
+                }}
+              >
+                <Link2 className="h-4 w-4 mr-1.5" />
+                Link Contact
               </Button>
             </div>
           </div>
@@ -664,18 +677,33 @@ export function AccountContactsSection({ contacts, accountId }: AccountContactsS
               {searchQuery ? 'Try a different search term' : 'Add your first contact to get started'}
             </p>
             {!searchQuery && (
-              <Button 
-                size="sm" 
-                className="mt-4 bg-gradient-to-r from-forest-600 to-forest-700 hover:from-forest-700 hover:to-forest-800 text-white"
-                onClick={() => {
-                  window.dispatchEvent(new CustomEvent('openAccountDialog', { 
-                    detail: { dialogId: 'addContact', accountId } 
-                  }))
-                }}
-              >
-                <UserPlus className="h-4 w-4 mr-1.5" />
-                Add First Contact
-              </Button>
+              <div className="flex items-center gap-2 mt-4">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="border-forest-300 text-forest-700 hover:bg-forest-50"
+                  onClick={() => {
+                    window.dispatchEvent(new CustomEvent('openAccountDialog', {
+                      detail: { dialogId: 'addContact', accountId }
+                    }))
+                  }}
+                >
+                  <UserPlus className="h-4 w-4 mr-1.5" />
+                  Create Contact
+                </Button>
+                <Button
+                  size="sm"
+                  className="bg-gradient-to-r from-forest-600 to-forest-700 hover:from-forest-700 hover:to-forest-800 text-white"
+                  onClick={() => {
+                    window.dispatchEvent(new CustomEvent('openAccountDialog', {
+                      detail: { dialogId: 'linkContact', accountId }
+                    }))
+                  }}
+                >
+                  <Link2 className="h-4 w-4 mr-1.5" />
+                  Link Contact
+                </Button>
+              </div>
             )}
           </div>
         )}

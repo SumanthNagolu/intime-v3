@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { AccountWorkspace } from '@/components/workspaces/AccountWorkspace'
 import { CreateActivityDialog } from '@/components/activities/CreateActivityDialog'
 import { AddContactDialog } from '@/components/recruiting/accounts/AddContactDialog'
+import { LinkContactToAccountDialog } from '@/components/workspaces/account/LinkContactToAccountDialog'
 import { CreateMeetingDialog } from '@/components/recruiting/accounts/CreateMeetingDialog'
 import { CreateEscalationDialog } from '@/components/recruiting/accounts/CreateEscalationDialog'
 import { AddNoteDialog } from '@/components/recruiting/accounts/AddNoteDialog'
@@ -31,6 +32,7 @@ export default function AccountDetailPage() {
   // Dialog states
   const [createActivityOpen, setCreateActivityOpen] = useState(false)
   const [addContactOpen, setAddContactOpen] = useState(false)
+  const [linkContactOpen, setLinkContactOpen] = useState(false)
   const [createMeetingOpen, setCreateMeetingOpen] = useState(false)
   const [createEscalationOpen, setCreateEscalationOpen] = useState(false)
   const [addNoteOpen, setAddNoteOpen] = useState(false)
@@ -60,6 +62,9 @@ export default function AccountDetailPage() {
         case 'addContact':
           setAddContactOpen(true)
           break
+        case 'linkContact':
+          setLinkContactOpen(true)
+          break
         case 'createMeeting':
         case 'scheduleMeeting':
           setCreateMeetingOpen(true)
@@ -88,6 +93,9 @@ export default function AccountDetailPage() {
         switch (event.detail.dialogId) {
           case 'addContact':
             setAddContactOpen(true)
+            break
+          case 'linkContact':
+            setLinkContactOpen(true)
             break
           case 'createActivity':
             setCreateActivityOpen(true)
@@ -129,6 +137,11 @@ export default function AccountDetailPage() {
       <AddContactDialog
         open={addContactOpen}
         onOpenChange={(open) => handleDialogChange(open, setAddContactOpen)}
+        accountId={accountId}
+      />
+      <LinkContactToAccountDialog
+        open={linkContactOpen}
+        onOpenChange={(open) => handleDialogChange(open, setLinkContactOpen)}
         accountId={accountId}
       />
       <CreateMeetingDialog

@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge'
 import {
   Link2, Phone, Globe, MoreVertical, ExternalLink,
   ChevronLeft, ChevronRight, Search, X, Pencil, Check, Loader2,
-  Building2, Unlink, Calendar, FileText
+  Building2, Unlink, Calendar, FileText, Plus
 } from 'lucide-react'
 import {
   DropdownMenu,
@@ -290,6 +290,17 @@ export function AccountRelatedAccountsSection({ relatedAccounts, accountId }: Ac
                 />
               </div>
               <Button
+                variant="outline"
+                size="sm"
+                asChild
+                className="border-charcoal-200 hover:bg-charcoal-50 font-medium"
+              >
+                <Link href="/employee/recruiting/accounts/new">
+                  <Plus className="h-4 w-4 mr-1.5" />
+                  New Account
+                </Link>
+              </Button>
+              <Button
                 size="sm"
                 className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white shadow-sm"
                 onClick={() => {
@@ -439,18 +450,31 @@ export function AccountRelatedAccountsSection({ relatedAccounts, accountId }: Ac
               {searchQuery || categoryFilter !== 'all' ? 'Try adjusting your filters' : 'Link accounts to track vendor, client, or partner relationships'}
             </p>
             {!searchQuery && categoryFilter === 'all' && (
-              <Button
-                size="sm"
-                className="mt-4 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white"
-                onClick={() => {
-                  window.dispatchEvent(new CustomEvent('openAccountDialog', {
-                    detail: { dialogId: 'linkAccount', accountId }
-                  }))
-                }}
-              >
-                <Link2 className="h-4 w-4 mr-1.5" />
-                Link First Account
-              </Button>
+              <div className="flex items-center justify-center gap-2 mt-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  asChild
+                  className="border-charcoal-200 hover:bg-charcoal-50"
+                >
+                  <Link href="/employee/recruiting/accounts/new">
+                    <Plus className="h-4 w-4 mr-1.5" />
+                    New Account
+                  </Link>
+                </Button>
+                <Button
+                  size="sm"
+                  className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white"
+                  onClick={() => {
+                    window.dispatchEvent(new CustomEvent('openAccountDialog', {
+                      detail: { dialogId: 'linkAccount', accountId }
+                    }))
+                  }}
+                >
+                  <Link2 className="h-4 w-4 mr-1.5" />
+                  Link Account
+                </Button>
+              </div>
             )}
           </div>
         )}

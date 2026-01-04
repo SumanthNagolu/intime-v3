@@ -158,13 +158,13 @@ export const campaignSections: SectionDefinition[] = [
 export const accountSections: SectionDefinition[] = [
   // Main sections
   { id: 'summary', label: 'Summary', icon: Building2 },
+  { id: 'related_accounts', label: 'Related Accounts', icon: Link2, showCount: true },
   { id: 'contacts', label: 'Contacts', icon: Users, showCount: true },
   { id: 'jobs', label: 'Jobs', icon: Briefcase, showCount: true },
   { id: 'placements', label: 'Placements', icon: Award, showCount: true },
   { id: 'addresses', label: 'Addresses', icon: MapPin, showCount: true },
   { id: 'meetings', label: 'Meetings', icon: Calendar, showCount: true },
   { id: 'escalations', label: 'Escalations', icon: AlertTriangle, showCount: true, alertOnCount: true },
-  { id: 'related_accounts', label: 'Related Accounts', icon: Link2, showCount: true },
   // Tools section
   { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true },
   { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },
