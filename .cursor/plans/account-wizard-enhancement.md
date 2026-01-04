@@ -27,6 +27,8 @@
 ### UI/UX Requirements
 
 1. **Sidebar Step Navigation** (Guidewire pattern):
+   - **Integration**: Use the existing global sidebar container (`ResizableSidebarWrapper`) to display wizard steps instead of creating a nested sidebar.
+   - **Implementation**: The wizard page should be wrapped in `SidebarLayout` with a custom sidebar component passed in.
    - Left sidebar showing all wizard steps with labels
    - Step completion indicators (dots for pending, checkmarks for complete, highlight for current)
    - Submission/Account header at top of sidebar showing draft status
@@ -266,7 +268,8 @@ flowchart LR
   - Navigation and Validation logic
 
 ### Wizard Layout Component (NEW)
-- `src/components/pcf/wizard/WizardWithSidebar.tsx` - New wizard layout with sidebar navigation pattern. Uses `useEntityWizard`.
+- `src/components/pcf/wizard/WizardWithSidebar.tsx` - Wrapper component that uses the global `SidebarLayout`. It passes a new `WizardStepsSidebar` to the sidebar slot and renders the form in the main content area.
+- Update `src/components/layouts/SidebarLayout.tsx` to accept a `customSidebar` prop to override default entity/section navigation.
 
 ### Store Enhancement
 - `src/stores/create-account-store.ts` - Extend with all new fields and nested objects:
@@ -301,11 +304,12 @@ flowchart LR
 
 ## Sidebar Navigation Component Design
 
-### WizardSidebar Component
+### WizardStepsSidebar Component
+(To be passed into SidebarLayout's custom sidebar slot)
 
 ```tsx
 // Guidewire-inspired sidebar navigation
-interface WizardSidebarProps {
+interface WizardStepsSidebarProps {
   title: string                    // "New Account"
   status: string                   // "Draft"
   steps: WizardStepConfig[]
@@ -381,7 +385,8 @@ Key fields: `id`, `org_id`, `entity_type`, `entity_id`, `file_name`, `file_type`
 
 1. **Phase 1: Foundation**: 
    - Extract `useEntityWizard` hook to manage state, navigation, and **server-side draft synchronization**.
-   - Create `WizardWithSidebar` layout component.
+   - Update `SidebarLayout` to support custom sidebar injection.
+   - Create `WizardWithSidebar` layout component that leverages `SidebarLayout`.
    - Extend store with comprehensive data model.
 
 2. **Phase 2: UI Components**: 

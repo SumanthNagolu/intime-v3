@@ -70,17 +70,7 @@ export function CreateRelatedContactDialog({
   const createContactMutation = trpc.unifiedContacts.create.useMutation()
 
   // Link contact mutation
-  const linkContactMutation = trpc.companies.linkContact.useMutation({
-    onSuccess: () => {
-      toast({ title: 'Contact created and linked to company successfully' })
-      onSuccess?.()
-      resetForm()
-      onOpenChange(false)
-    },
-    onError: (error) => {
-      toast({ title: 'Error linking contact', description: error.message, variant: 'error' })
-    },
-  })
+  const linkContactMutation = trpc.companies.linkContact.useMutation()
 
   const resetForm = () => {
     setFirstName('')
@@ -132,17 +122,28 @@ export function CreateRelatedContactDialog({
         title: jobTitle.trim() || undefined,
       })
 
-      // Step 2: Link to the company
-      await linkContactMutation.mutateAsync({
-        companyId,
-        contactId: newContact.id,
-        jobTitle: jobTitle.trim() || undefined,
-        department: department.trim() || undefined,
-        decisionAuthority: decisionAuthority as 'decision_maker' | 'influencer' | 'champion' | 'gatekeeper' | 'end_user' | 'budget_holder' | 'technical_evaluator' | 'procurement' | undefined,
-        isPrimary,
-      })
+      try {
+        // Step 2: Link to the company
+        await linkContactMutation.mutateAsync({
+          companyId,
+          contactId: newContact.id,
+          jobTitle: jobTitle.trim() || undefined,
+          department: department.trim() || undefined,
+          decisionAuthority: decisionAuthority as 'decision_maker' | 'influencer' | 'champion' | 'gatekeeper' | 'end_user' | 'budget_holder' | 'technical_evaluator' | 'procurement' | undefined,
+          isPrimary,
+        })
+
+        toast({ title: 'Contact created and linked to company successfully' })
+        onSuccess?.()
+        resetForm()
+        onOpenChange(false)
+      } catch (error) {
+        if (error instanceof Error) {
+          toast({ title: 'Error linking contact', description: error.message, variant: 'error' })
+        }
+      }
     } catch (error) {
-      if (error instanceof Error && !error.message.includes('linking')) {
+      if (error instanceof Error) {
         toast({ title: 'Error creating contact', description: error.message, variant: 'error' })
       }
     }
