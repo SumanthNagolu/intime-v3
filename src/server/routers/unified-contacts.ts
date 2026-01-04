@@ -3,6 +3,7 @@ import { TRPCError } from '@trpc/server'
 import { router } from '../trpc/init'
 import { orgProtectedProcedure } from '../trpc/middleware'
 import { getAdminClient } from '@/lib/supabase/admin'
+import { historyService } from '@/lib/services'
 
 
 // ============================================
@@ -905,6 +906,20 @@ export const unifiedContactsRouter = router({
 
       if (error) {
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      // HISTORY: Record contact added to account (if linked to an account)
+      if (input.accountId && data) {
+        const contactName = category === 'person'
+          ? [input.firstName, input.lastName].filter(Boolean).join(' ')
+          : input.companyName || 'Contact'
+
+        void historyService.recordRelatedObjectAdded(
+          'account',
+          input.accountId,
+          { type: 'contact', id: data.id, label: contactName },
+          { orgId, userId: user?.id ?? null }
+        ).catch(err => console.error('[History] Failed to record contact added:', err))
       }
 
       return data

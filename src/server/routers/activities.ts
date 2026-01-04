@@ -1753,6 +1753,14 @@ export const activitiesRouter = router({
         throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
       }
 
+      // HISTORY: Record activity created on parent entity (fire-and-forget)
+      void historyService.recordRelatedObjectAdded(
+        input.entityType,
+        input.entityId,
+        { type: 'activity', id: activity.id, label: input.subject },
+        { orgId, userId: user?.id ?? null }
+      ).catch(err => console.error('[History] Failed to record activity created:', err))
+
       return {
         id: activity.id,
         subject: activity.subject,

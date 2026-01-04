@@ -30,12 +30,20 @@ export function DealHistorySection({ history, stageHistory = [] }: DealHistorySe
     // Convert stage history to history entry format
     const stageEntries: HistoryEntry[] = stageHistory.map((entry, index) => ({
       id: `stage-${entry.id}`,
+      changeType: 'stage_change',
       action: 'stage_change',
       field: 'stage',
       oldValue: index > 0 ? stageHistory[index - 1]?.stage || null : null,
       newValue: entry.stage,
+      oldValueLabel: null,
+      newValueLabel: null,
+      reason: null,
+      comment: null,
+      isAutomated: false,
+      timeInPreviousState: null,
+      metadata: null,
       changedAt: entry.enteredAt,
-      changedBy: entry.changedBy || 'System',
+      changedBy: entry.changedBy ? { id: '', name: entry.changedBy, avatarUrl: null } : null,
     }))
 
     // Combine and sort by date descending
@@ -123,7 +131,7 @@ function HistoryRow({ entry }: { entry: HistoryEntry }) {
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 text-sm">
-          <span className="font-medium text-charcoal-900">{entry.changedBy}</span>
+          <span className="font-medium text-charcoal-900">{entry.changedBy?.name ?? (entry.isAutomated ? 'System' : 'Unknown')}</span>
           <span className="text-charcoal-500">{getActionDescription(entry)}</span>
         </div>
         {isStageChange && entry.oldValue && entry.newValue ? (

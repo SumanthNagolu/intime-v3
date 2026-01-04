@@ -14,6 +14,7 @@ import type {
   AccountActivity,
   AccountNote,
   AccountDocument,
+  AccountRelatedAccount,
   HistoryEntry,
   WorkspaceWarning,
 } from '@/types/workspace'
@@ -44,6 +45,7 @@ export async function getFullAccount(id: string): Promise<FullAccountData | null
   const [
     accountResult,
     contactsResult,
+    junctionContactsResult,
     jobsResult,
     placementsResult,
     addressesResult,
@@ -53,6 +55,7 @@ export async function getFullAccount(id: string): Promise<FullAccountData | null
     notesResult,
     documentsResult,
     historyResult,
+    relatedAccountsResult,
   ] = await Promise.all([
     // Core account data
     adminClient
@@ -67,7 +70,7 @@ export async function getFullAccount(id: string): Promise<FullAccountData | null
       .is('deleted_at', null)
       .single(),
 
-    // Contacts linked to this account
+    // Contacts linked via company_id FK (legacy/primary way)
     adminClient
       .from('contacts')
       .select(`
@@ -78,6 +81,25 @@ export async function getFullAccount(id: string): Promise<FullAccountData | null
       .is('deleted_at', null)
       .order('is_primary', { ascending: false })
       .order('first_name')
+      .limit(100),
+
+    // Contacts linked via company_contacts junction table (many-to-many)
+    // Note: No FK constraint exists on contact_id, so we fetch IDs and join manually
+    adminClient
+      .from('company_contacts')
+      .select(`
+        id,
+        contact_id,
+        job_title,
+        department,
+        decision_authority,
+        is_primary,
+        is_active,
+        created_at
+      `)
+      .eq('company_id', id)
+      .eq('is_active', true)
+      .order('is_primary', { ascending: false })
       .limit(100),
 
     // Jobs for this account (expanded for premium detail panel)
@@ -202,17 +224,39 @@ export async function getFullAccount(id: string): Promise<FullAccountData | null
       .order('created_at', { ascending: false })
       .limit(50),
 
-    // History/Audit trail
+    // History/Audit trail (from entity_history - comprehensive biography)
     adminClient
-      .from('audit_logs')
+      .from('entity_history')
       .select(`
-        id, action, field_name, old_value, new_value, created_at,
-        user:user_profiles!user_id(id, full_name)
+        id, change_type, field_name, old_value, new_value,
+        old_value_label, new_value_label, reason, comment,
+        is_automated, time_in_previous_state, metadata, changed_at,
+        changed_by_user:user_profiles!changed_by(id, full_name, avatar_url)
       `)
       .eq('entity_type', 'account')
       .eq('entity_id', id)
+      .order('changed_at', { ascending: false })
+      .limit(200),
+
+    // Related accounts (via company_relationships table)
+    adminClient
+      .from('company_relationships')
+      .select(`
+        id,
+        relationship_category,
+        relationship_label_a_to_b,
+        relationship_label_b_to_a,
+        notes,
+        started_date,
+        is_active,
+        created_at,
+        company_a:companies!company_relationships_company_a_id_fkey(id, name, industry, status, website, phone, tier),
+        company_b:companies!company_relationships_company_b_id_fkey(id, name, industry, status, website, phone, tier)
+      `)
+      .or(`company_a_id.eq.${id},company_b_id.eq.${id}`)
+      .is('deleted_at', null)
       .order('created_at', { ascending: false })
-      .limit(100),
+      .limit(50),
   ])
 
   // Return null if account not found
@@ -221,11 +265,88 @@ export async function getFullAccount(id: string): Promise<FullAccountData | null
   }
 
   const account = accountResult.data
-  const contactsList = contactsResult.data || []
+
+  // Merge contacts from both sources (company_id FK and company_contacts junction table)
+  const directContacts = contactsResult.data || []
+  const junctionLinks = junctionContactsResult.data || []
+
+  console.log('[getFullAccount] Direct contacts (company_id FK):', directContacts.length)
+  console.log('[getFullAccount] Junction links (company_contacts):', junctionLinks.length)
+
+  // Build a map to deduplicate contacts by ID
+  const contactsMap = new Map<string, Record<string, unknown>>()
+  const junctionDataMap = new Map<string, Record<string, unknown>>() // Store junction table metadata
+
+  // First add contacts from direct FK (legacy/primary way)
+  for (const c of directContacts) {
+    contactsMap.set(c.id as string, c)
+  }
+
+  // Get contact IDs from junction table that aren't already in directContacts
+  const junctionContactIds = junctionLinks
+    .map((link) => link.contact_id as string)
+    .filter((cid) => cid && !contactsMap.has(cid))
+
+  // Store junction metadata for merging later
+  for (const link of junctionLinks) {
+    const contactId = link.contact_id as string
+    if (contactId) {
+      junctionDataMap.set(contactId, {
+        department: link.department,
+        decision_authority: link.decision_authority,
+        is_primary: link.is_primary,
+        job_title_from_junction: link.job_title,
+      })
+    }
+  }
+
+  // Fetch missing contacts from junction table in a separate query
+  if (junctionContactIds.length > 0) {
+    console.log('[getFullAccount] Fetching', junctionContactIds.length, 'contacts from junction table')
+    const { data: junctionContactData } = await adminClient
+      .from('contacts')
+      .select(`
+        id, first_name, last_name, title, email, phone, mobile, department,
+        linkedin_url, decision_authority, preferred_contact_method, notes, is_primary
+      `)
+      .in('id', junctionContactIds)
+      .is('deleted_at', null)
+
+    // Add fetched contacts to the map, merging with junction metadata
+    for (const c of junctionContactData || []) {
+      const contactId = c.id as string
+      const junctionMeta = junctionDataMap.get(contactId) || {}
+      contactsMap.set(contactId, {
+        ...c,
+        // Override with junction table fields if present
+        department: junctionMeta.department || c.department,
+        decision_authority: junctionMeta.decision_authority || c.decision_authority,
+        is_primary: junctionMeta.is_primary ?? c.is_primary ?? false,
+        job_title_from_junction: junctionMeta.job_title_from_junction,
+      })
+    }
+  }
+
+  // Also update existing contacts with junction metadata if they have it
+  for (const [contactId, contact] of contactsMap) {
+    const junctionMeta = junctionDataMap.get(contactId)
+    if (junctionMeta) {
+      contactsMap.set(contactId, {
+        ...contact,
+        department: junctionMeta.department || contact.department,
+        decision_authority: junctionMeta.decision_authority || contact.decision_authority,
+        is_primary: junctionMeta.is_primary ?? contact.is_primary ?? false,
+        job_title_from_junction: junctionMeta.job_title_from_junction,
+      })
+    }
+  }
+
+  const contactsList = Array.from(contactsMap.values())
+  console.log('[getFullAccount] Final merged contacts:', contactsList.length)
 
   // Get job IDs and contact IDs for additional queries
   const jobIds = (jobsResult.data || []).map((j: { id: string }) => j.id)
-  const contactIds = contactsList.map((c: { id: string }) => c.id)
+  const contactIds = contactsList.map((c) => c.id as string)
   
   const submissionCounts: Record<string, number> = {}
   const interviewCounts: Record<string, number> = {}
@@ -293,7 +414,8 @@ export async function getFullAccount(id: string): Promise<FullAccountData | null
     notes: transformNotes(notesResult.data || []),
     documents: transformDocuments(documentsResult.data || []),
     history: transformHistory(historyResult.data || []),
-    warnings: computeWarnings(account, contactsResult.data || [], documentsResult.data || []),
+    relatedAccounts: transformRelatedAccounts(relatedAccountsResult.data || [], id),
+    warnings: computeWarnings(account, contactsList, documentsResult.data || []),
   }
 }
 
@@ -668,17 +790,72 @@ function transformDocuments(data: Record<string, unknown>[]): AccountDocument[] 
   })
 }
 
+function transformRelatedAccounts(
+  data: Record<string, unknown>[],
+  currentAccountId: string
+): AccountRelatedAccount[] {
+  return data.map((r) => {
+    const companyA = r.company_a as { id: string; name: string; industry: string | null; status: string; website: string | null; phone: string | null; tier: string | null } | null
+    const companyB = r.company_b as { id: string; name: string; industry: string | null; status: string; website: string | null; phone: string | null; tier: string | null } | null
+
+    // Determine which company is the "other" one (the related account)
+    const isCurrentCompanyA = companyA?.id === currentAccountId
+    const relatedCompany = isCurrentCompanyA ? companyB : companyA
+
+    // Get the appropriate relationship label based on direction
+    const relationshipLabel = isCurrentCompanyA
+      ? (r.relationship_label_a_to_b as string | null)
+      : (r.relationship_label_b_to_a as string | null)
+
+    return {
+      relationshipId: r.id as string,
+      id: relatedCompany?.id || '',
+      name: relatedCompany?.name || 'Unknown',
+      industry: relatedCompany?.industry || null,
+      status: relatedCompany?.status || 'unknown',
+      website: relatedCompany?.website || null,
+      phone: relatedCompany?.phone || null,
+      tier: relatedCompany?.tier || null,
+      relationshipCategory: r.relationship_category as string,
+      relationshipLabel: relationshipLabel,
+      notes: r.notes as string | null,
+      startedDate: r.started_date as string | null,
+      isActive: (r.is_active as boolean) ?? true,
+      createdAt: r.created_at as string,
+    }
+  }).filter(r => r.id) // Filter out any relationships where the related company wasn't found
+}
+
 function transformHistory(data: Record<string, unknown>[]): HistoryEntry[] {
   return data.map((h) => {
-    const user = h.user as { full_name?: string } | null
+    const changedByUser = h.changed_by_user as { id?: string; full_name?: string; avatar_url?: string } | null
+    const changeType = (h.change_type as string) || 'custom'
+    const metadata = h.metadata as Record<string, unknown> | null
+
     return {
       id: h.id as string,
-      action: (h.action as string) || 'update',
+      changeType,
       field: h.field_name as string | null,
       oldValue: h.old_value as string | null,
       newValue: h.new_value as string | null,
-      changedAt: h.created_at as string,
-      changedBy: user?.full_name || 'System',
+      oldValueLabel: h.old_value_label as string | null,
+      newValueLabel: h.new_value_label as string | null,
+      reason: h.reason as string | null,
+      comment: h.comment as string | null,
+      isAutomated: (h.is_automated as boolean) || false,
+      timeInPreviousState: h.time_in_previous_state as string | null,
+      metadata,
+      changedAt: h.changed_at as string,
+      changedBy: changedByUser?.id ? {
+        id: changedByUser.id,
+        name: changedByUser.full_name || 'Unknown',
+        avatarUrl: changedByUser.avatar_url || null,
+      } : null,
+      // Legacy field for backwards compatibility
+      action: changeType === 'status_change' ? 'status_updated'
+        : changeType === 'owner_change' ? 'owner_changed'
+        : changeType === 'assignment_change' ? 'assignment_changed'
+        : (metadata?.action as string) || 'update',
     }
   })
 }

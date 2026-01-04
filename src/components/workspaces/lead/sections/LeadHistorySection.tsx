@@ -60,7 +60,7 @@ export function LeadHistorySection({ history }: LeadHistorySectionProps) {
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 text-sm">
                               <span className="font-medium text-charcoal-900">
-                                {entry.changedBy}
+                                {entry.changedBy?.name ?? (entry.isAutomated ? 'System' : 'Unknown')}
                               </span>
                               <span className="text-charcoal-500">
                                 {getActionDescription(entry)}

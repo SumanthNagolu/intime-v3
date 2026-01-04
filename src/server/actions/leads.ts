@@ -297,15 +297,32 @@ function transformDocuments(data: Record<string, unknown>[]): LeadDocument[] {
 
 function transformHistory(data: Record<string, unknown>[]): HistoryEntry[] {
   return data.map((h) => {
-    const user = h.user as { full_name?: string } | null
+    const changedByUser = h.changed_by_user as { id?: string; full_name?: string; avatar_url?: string } | null
+    const changeType = (h.change_type as string) || 'custom'
+    const metadata = h.metadata as Record<string, unknown> | null
+
     return {
       id: h.id as string,
-      action: (h.action as string) || 'update',
+      changeType,
       field: h.field_name as string | null,
       oldValue: h.old_value as string | null,
       newValue: h.new_value as string | null,
-      changedAt: h.created_at as string,
-      changedBy: user?.full_name || 'System',
+      oldValueLabel: h.old_value_label as string | null,
+      newValueLabel: h.new_value_label as string | null,
+      reason: h.reason as string | null,
+      comment: h.comment as string | null,
+      isAutomated: (h.is_automated as boolean) || false,
+      timeInPreviousState: h.time_in_previous_state as string | null,
+      metadata,
+      changedAt: h.changed_at as string,
+      changedBy: changedByUser?.id ? {
+        id: changedByUser.id,
+        name: changedByUser.full_name || 'Unknown',
+        avatarUrl: changedByUser.avatar_url || null,
+      } : null,
+      action: changeType === 'status_change' ? 'status_updated'
+        : changeType === 'owner_change' ? 'owner_changed'
+        : (metadata?.action as string) || 'update',
     }
   })
 }

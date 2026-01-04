@@ -59,6 +59,7 @@ export interface FullAccountData {
   addresses: AccountAddress[]
   meetings: AccountMeeting[]
   escalations: AccountEscalation[]
+  relatedAccounts: AccountRelatedAccount[]
   // Universal tools
   activities: AccountActivity[]
   notes: AccountNote[]
@@ -353,14 +354,47 @@ export interface AccountDocument {
   notes?: string
 }
 
+// Related account (from company_relationships table)
+export interface AccountRelatedAccount {
+  relationshipId: string
+  id: string
+  name: string
+  industry: string | null
+  status: string
+  website: string | null
+  phone: string | null
+  tier: string | null
+  relationshipCategory: string
+  relationshipLabel: string | null
+  notes: string | null
+  startedDate: string | null
+  isActive: boolean
+  createdAt: string
+}
+
 export interface HistoryEntry {
   id: string
-  action: string
+  changeType: string // status_change, stage_change, owner_change, assignment_change, custom, etc.
   field: string | null
   oldValue: string | null
   newValue: string | null
+  // Human-readable labels (from entity_history)
+  oldValueLabel: string | null
+  newValueLabel: string | null
+  // Additional context
+  reason: string | null
+  comment: string | null
+  isAutomated: boolean
+  timeInPreviousState: string | null
+  metadata: Record<string, unknown> | null
   changedAt: string
-  changedBy: string
+  changedBy: {
+    id: string
+    name: string
+    avatarUrl: string | null
+  } | null
+  // Legacy field for backwards compatibility (derived from changeType)
+  action: string
 }
 
 // Account sections for navigation
@@ -372,6 +406,7 @@ export type AccountSection =
   | 'addresses'
   | 'meetings'
   | 'escalations'
+  | 'related_accounts'
   | 'activities'
   | 'notes'
   | 'documents'
@@ -385,6 +420,7 @@ export interface AccountSectionCounts {
   addresses: number
   meetings: number
   escalations: number
+  relatedAccounts: number
   activities: number
   notes: number
   documents: number
@@ -606,6 +642,13 @@ export interface FullContactData {
   accounts: ContactAccount[]        // Linked accounts
   submissions: ContactSubmission[]  // Submissions (as candidate or POC)
   campaigns: ContactCampaign[]      // Campaign enrollments (for prospects/leads)
+  // Phase 3: Additional sections
+  jobs: ContactJob[]                 // Jobs via linked account
+  placements: ContactPlacement[]     // Placements (contact as candidate)
+  addresses: ContactAddressEntry[]   // Contact addresses
+  meetings: ContactMeeting[]         // Meetings with this contact
+  escalations: ContactEscalation[]   // Escalations related to contact
+  relatedContacts: ContactRelatedContact[] // Other contacts at same company
   // Universal tools
   activities: ContactActivity[]
   notes: ContactNote[]
@@ -695,6 +738,130 @@ export interface ContactCampaign {
   convertedAt: string | null
 }
 
+// Job-Contact relationship roles
+export type JobContactRole =
+  | 'hiring_manager'
+  | 'hr_contact'
+  | 'technical_interviewer'
+  | 'decision_maker'
+  | 'recruiter_poc'
+  | 'end_client_contact'
+
+// Job-Contact link (junction table record)
+export interface JobContactLink {
+  id: string
+  jobId: string
+  contactId: string
+  role: JobContactRole
+  isPrimary: boolean
+  notes: string | null
+  createdAt: string
+  contact?: {
+    id: string
+    firstName: string
+    lastName: string
+    fullName: string
+    email: string | null
+    phone: string | null
+    title: string | null
+    avatarUrl: string | null
+  }
+  job?: {
+    id: string
+    title: string
+    status: string
+    account: { id: string; name: string } | null
+  }
+}
+
+// Job (via job_contacts junction table)
+export interface ContactJob {
+  id: string
+  title: string
+  status: string
+  jobType: string | null
+  rateMin: number | null
+  rateMax: number | null
+  positionsCount: number
+  positionsFilled: number
+  priority: string | null
+  createdAt: string
+  owner: { id: string; name: string } | null
+  account: { id: string; name: string } | null
+  roles: JobContactRole[]  // All roles this contact has on the job
+}
+
+// Placement (where contact is candidate)
+export interface ContactPlacement {
+  id: string
+  startDate: string
+  endDate: string | null
+  status: string
+  billingRate: number | null
+  payRate: number | null
+  extensionCount: number
+  createdAt: string
+  job: { id: string; title: string; account: { id: string; name: string } | null } | null
+}
+
+// Address for Contact workspace (from polymorphic addresses table)
+export interface ContactAddressEntry {
+  id: string
+  addressType: string
+  street: string | null
+  city: string | null
+  state: string | null
+  zip: string | null
+  country: string | null
+  isPrimary: boolean
+}
+
+// Meeting (where contact is participant)
+export interface ContactMeeting {
+  id: string
+  title: string
+  meetingType: string
+  meetingDate: string
+  locationType: string | null
+  locationDetails: string | null
+  agenda: string | null
+  discussionNotes: string | null
+  keyTakeaways: string[] | null
+  actionItems: Record<string, unknown>[] | null
+  createdAt: string
+  creator: { id: string; name: string } | null
+}
+
+// Escalation (related to contact)
+export interface ContactEscalation {
+  id: string
+  title: string
+  priority: string
+  status: string
+  category: string | null
+  description: string | null
+  slaResponseDue: string | null
+  slaResolutionDue: string | null
+  slaResponseMet: boolean | null
+  slaResolutionMet: boolean | null
+  resolvedAt: string | null
+  resolutionSummary: string | null
+  clientSatisfaction: number | null
+  createdAt: string
+  owner: { id: string; name: string } | null
+}
+
+// Related contact (other contacts at same company)
+export interface ContactRelatedContact {
+  id: string
+  name: string
+  title: string | null
+  email: string | null
+  phone: string | null
+  isPrimary: boolean
+  decisionAuthority: string | null
+}
+
 // Reuse universal types from Account
 export type ContactActivity = AccountActivity
 export type ContactNote = AccountNote
@@ -704,11 +871,14 @@ export type ContactDocument = AccountDocument
 export type ContactSection =
   | 'summary'
   | 'accounts'
+  | 'jobs'
+  | 'placements'
   | 'submissions'
-  | 'pipeline'
+  | 'addresses'
+  | 'meetings'
+  | 'escalations'
+  | 'related_contacts'
   | 'campaigns'
-  | 'qualification'
-  | 'deals'
   | 'activities'
   | 'notes'
   | 'documents'
