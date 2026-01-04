@@ -200,8 +200,8 @@ export async function getFullContact(id: string): Promise<FullContactData | null
       .select(`
         id, role, is_primary, created_at,
         job:jobs!job_contacts_job_id_fkey(
-          id, title, status, job_type, bill_rate_min, bill_rate_max,
-          positions_available, positions_filled, priority, created_at,
+          id, title, status, job_type, rate_min, rate_max,
+          positions_count, positions_filled, priority, created_at,
           owner:user_profiles!jobs_owner_id_fkey(id, first_name, last_name),
           account:companies!jobs_company_id_fkey(id, name)
         )
@@ -587,9 +587,9 @@ function transformJobsFromJunction(data: Record<string, unknown>[]): ContactJob[
         title: (job.title as string) || 'Untitled Job',
         status: (job.status as string) || 'draft',
         jobType: job.job_type as string | null,
-        rateMin: job.bill_rate_min as number | null,
-        rateMax: job.bill_rate_max as number | null,
-        positionsCount: (job.positions_available as number) || 1,
+        rateMin: job.rate_min as number | null,
+        rateMax: job.rate_max as number | null,
+        positionsCount: (job.positions_count as number) || 1,
         positionsFilled: (job.positions_filled as number) || 0,
         priority: job.priority as string | null,
         createdAt: job.created_at as string,
