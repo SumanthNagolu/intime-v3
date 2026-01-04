@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge'
 import {
   Users, Phone, Mail, MoreVertical, ExternalLink,
   ChevronLeft, ChevronRight, Search, X,
-  User, Building2, Crown, Star
+  User, Building2, Crown, Star, Plus, Link2, UserPlus
 } from 'lucide-react'
 import {
   DropdownMenu,
@@ -34,6 +34,8 @@ const DECISION_AUTHORITY_CONFIG: Record<string, { label: string; icon: React.Ele
 interface ContactRelatedContactsSectionProps {
   relatedContacts: ContactRelatedContact[]
   contactId: string
+  companyId: string | null
+  companyName: string | null
   onNavigate?: (section: string) => void
 }
 
@@ -41,7 +43,7 @@ interface ContactRelatedContactsSectionProps {
  * ContactRelatedContactsSection - Premium SaaS-level related contacts list
  * Shows other contacts at the same accounts
  */
-export function ContactRelatedContactsSection({ relatedContacts, contactId, onNavigate }: ContactRelatedContactsSectionProps) {
+export function ContactRelatedContactsSection({ relatedContacts, contactId, companyId, companyName, onNavigate: _onNavigate }: ContactRelatedContactsSectionProps) {
   const router = useRouter()
 
   const [selectedContact, setSelectedContact] = React.useState<ContactRelatedContact | null>(null)
@@ -112,7 +114,7 @@ export function ContactRelatedContactsSection({ relatedContacts, contactId, onNa
               <div>
                 <h3 className="font-semibold text-charcoal-900">Related Contacts</h3>
                 <p className="text-xs text-charcoal-500">
-                  {filteredContacts.length} contact{filteredContacts.length !== 1 ? 's' : ''} at shared accounts
+                  {filteredContacts.length} contact{filteredContacts.length !== 1 ? 's' : ''} sharing accounts with this contact
                 </p>
               </div>
             </div>
@@ -126,13 +128,41 @@ export function ContactRelatedContactsSection({ relatedContacts, contactId, onNa
                   className="pl-9 h-9 w-64 text-sm border-charcoal-200 focus:border-purple-400 focus:ring-purple-400/20"
                 />
               </div>
+              {companyId && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="border-purple-300 text-purple-700 hover:bg-purple-50"
+                  onClick={() => {
+                    window.dispatchEvent(new CustomEvent('openContactDialog', {
+                      detail: { dialogId: 'createRelatedContact', contactId, companyId, companyName }
+                    }))
+                  }}
+                >
+                  <Plus className="h-4 w-4 mr-1.5" />
+                  Create Contact
+                </Button>
+              )}
+              <Button
+                size="sm"
+                className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white shadow-sm"
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent('openContactDialog', {
+                    detail: { dialogId: 'linkRelatedContact', contactId }
+                  }))
+                }}
+              >
+                <Link2 className="h-4 w-4 mr-1.5" />
+                Link Contact
+              </Button>
             </div>
           </div>
         </div>
 
         {/* Table Header */}
-        <div className="grid grid-cols-[1fr_150px_120px_100px_70px] gap-3 px-5 py-3 bg-charcoal-50/50 border-b border-charcoal-200/60 text-xs font-semibold text-charcoal-500 uppercase tracking-wider">
+        <div className="grid grid-cols-[1fr_180px_130px_120px_80px_70px] gap-3 px-5 py-3 bg-charcoal-50/50 border-b border-charcoal-200/60 text-xs font-semibold text-charcoal-500 uppercase tracking-wider">
           <div>Contact</div>
+          <div>Shared Account</div>
           <div>Title</div>
           <div>Decision Role</div>
           <div>Primary</div>
@@ -153,7 +183,7 @@ export function ContactRelatedContactsSection({ relatedContacts, contactId, onNa
                   key={contact.id}
                   onClick={() => handleRowClick(contact)}
                   className={cn(
-                    'group grid grid-cols-[1fr_150px_120px_100px_70px] gap-3 px-5 py-3.5 cursor-pointer transition-all duration-200 items-center',
+                    'group grid grid-cols-[1fr_180px_130px_120px_80px_70px] gap-3 px-5 py-3.5 cursor-pointer transition-all duration-200 items-center',
                     selectedContact?.id === contact.id
                       ? 'bg-purple-50/70 hover:bg-purple-50'
                       : 'hover:bg-charcoal-50/50'
@@ -186,6 +216,36 @@ export function ContactRelatedContactsSection({ relatedContacts, contactId, onNa
                         )}
                       </div>
                     </div>
+                  </div>
+
+                  {/* Shared Account */}
+                  <div className="min-w-0">
+                    {contact.sharedAccounts && contact.sharedAccounts.length > 0 ? (
+                      <div className="flex flex-wrap gap-1">
+                        {contact.sharedAccounts.slice(0, 2).map((account) => (
+                          <Badge
+                            key={account.id}
+                            variant="outline"
+                            className="text-[10px] font-medium px-1.5 py-0.5 bg-emerald-50 text-emerald-700 border-emerald-200 truncate max-w-[80px]"
+                            title={account.name}
+                          >
+                            <Building2 className="h-2.5 w-2.5 mr-0.5 flex-shrink-0" />
+                            <span className="truncate">{account.name}</span>
+                          </Badge>
+                        ))}
+                        {contact.sharedAccounts.length > 2 && (
+                          <Badge
+                            variant="outline"
+                            className="text-[10px] font-medium px-1.5 py-0.5 bg-charcoal-100 text-charcoal-600 border-charcoal-200"
+                            title={contact.sharedAccounts.slice(2).map(a => a.name).join(', ')}
+                          >
+                            +{contact.sharedAccounts.length - 2}
+                          </Badge>
+                        )}
+                      </div>
+                    ) : (
+                      <span className="text-charcoal-300 text-sm">—</span>
+                    )}
                   </div>
 
                   {/* Title */}
@@ -279,8 +339,41 @@ export function ContactRelatedContactsSection({ relatedContacts, contactId, onNa
             <p className="text-sm text-charcoal-500 mt-1">
               {searchQuery
                 ? 'Try adjusting your search'
-                : 'Related contacts will appear here when this contact shares accounts with others'}
+                : companyId
+                  ? 'Add contacts to this company to see them here'
+                  : 'Related contacts will appear here when this contact shares accounts with others'}
             </p>
+            {!searchQuery && (
+              <div className="flex items-center justify-center gap-2 mt-4">
+                {companyId && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="border-purple-300 text-purple-700 hover:bg-purple-50"
+                    onClick={() => {
+                      window.dispatchEvent(new CustomEvent('openContactDialog', {
+                        detail: { dialogId: 'createRelatedContact', contactId, companyId, companyName }
+                      }))
+                    }}
+                  >
+                    <UserPlus className="h-4 w-4 mr-1.5" />
+                    Create Contact
+                  </Button>
+                )}
+                <Button
+                  size="sm"
+                  className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white"
+                  onClick={() => {
+                    window.dispatchEvent(new CustomEvent('openContactDialog', {
+                      detail: { dialogId: 'linkRelatedContact', contactId }
+                    }))
+                  }}
+                >
+                  <Link2 className="h-4 w-4 mr-1.5" />
+                  Link Contact
+                </Button>
+              </div>
+            )}
           </div>
         )}
 

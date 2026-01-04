@@ -16,11 +16,18 @@ import { ContactSubmissionsSection } from './contact/sections/ContactSubmissions
 import { ContactAddressesSection } from './contact/sections/ContactAddressesSection'
 import { ContactMeetingsSection } from './contact/sections/ContactMeetingsSection'
 import { ContactRelatedContactsSection } from './contact/sections/ContactRelatedContactsSection'
+import { ContactEscalationsSection } from './contact/sections/ContactEscalationsSection'
 import { ContactCampaignsSection } from './contact/sections/ContactCampaignsSection'
 import { ContactActivitiesSection } from './contact/sections/ContactActivitiesSection'
 import { ContactNotesSection } from './contact/sections/ContactNotesSection'
 import { ContactDocumentsSection } from './contact/sections/ContactDocumentsSection'
 import { ContactHistorySection } from './contact/sections/ContactHistorySection'
+
+// Dialogs
+import { CreateContactMeetingDialog } from './contact/CreateContactMeetingDialog'
+import { CreateRelatedContactDialog } from './contact/CreateRelatedContactDialog'
+import { LinkRelatedContactDialog } from './contact/LinkRelatedContactDialog'
+import { CreateContactEscalationDialog } from './contact/CreateContactEscalationDialog'
 
 export interface ContactWorkspaceProps {
   onAction?: (action: string) => void
@@ -34,6 +41,7 @@ type ContactSection =
   | 'submissions'
   | 'addresses'
   | 'meetings'
+  | 'escalations'
   | 'related_contacts'
   | 'campaigns'
   | 'activities'
@@ -58,6 +66,15 @@ export function ContactWorkspace({ onAction: _onAction }: ContactWorkspaceProps 
   const router = useRouter()
   const searchParams = useSearchParams()
 
+  // Dialog state
+  const [scheduleMeetingDialogOpen, setScheduleMeetingDialogOpen] = React.useState(false)
+  const [createRelatedContactDialogOpen, setCreateRelatedContactDialogOpen] = React.useState(false)
+  const [linkRelatedContactDialogOpen, setLinkRelatedContactDialogOpen] = React.useState(false)
+  const [createEscalationDialogOpen, setCreateEscalationDialogOpen] = React.useState(false)
+
+  // Refresh data callback for dialogs
+  const { refreshData } = useContactWorkspace()
+
   // Get section from URL, default to 'summary'
   const currentSection = (searchParams.get('section') || 'summary') as ContactSection
 
@@ -75,6 +92,34 @@ export function ContactWorkspace({ onAction: _onAction }: ContactWorkspaceProps 
     }
     // TODO: Focus on specific field if warning.field is set
   }, [handleSectionChange])
+
+  // Listen for openContactDialog custom events
+  React.useEffect(() => {
+    const handleOpenDialog = (event: CustomEvent<{ dialogId: string; contactId: string; companyId?: string; companyName?: string }>) => {
+      // Only handle events for this contact
+      if (event.detail.contactId !== data.contact.id) return
+
+      switch (event.detail.dialogId) {
+        case 'scheduleMeeting':
+          setScheduleMeetingDialogOpen(true)
+          break
+        case 'createRelatedContact':
+          setCreateRelatedContactDialogOpen(true)
+          break
+        case 'linkRelatedContact':
+          setLinkRelatedContactDialogOpen(true)
+          break
+        case 'createEscalation':
+          setCreateEscalationDialogOpen(true)
+          break
+      }
+    }
+
+    window.addEventListener('openContactDialog', handleOpenDialog as EventListener)
+    return () => {
+      window.removeEventListener('openContactDialog', handleOpenDialog as EventListener)
+    }
+  }, [data.contact.id])
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-6">
@@ -144,7 +189,15 @@ export function ContactWorkspace({ onAction: _onAction }: ContactWorkspaceProps 
         <ContactRelatedContactsSection
           relatedContacts={data.relatedContacts}
           contactId={data.contact.id}
+          companyId={data.contact.company?.id ?? null}
+          companyName={data.contact.company?.name ?? null}
           onNavigate={handleSectionChange}
+        />
+      )}
+      {currentSection === 'escalations' && (
+        <ContactEscalationsSection
+          escalations={data.escalations}
+          contactId={data.contact.id}
         />
       )}
       {currentSection === 'campaigns' && (
@@ -176,6 +229,42 @@ export function ContactWorkspace({ onAction: _onAction }: ContactWorkspaceProps 
           history={data.history}
         />
       )}
+
+      {/* Dialogs */}
+      <CreateContactMeetingDialog
+        open={scheduleMeetingDialogOpen}
+        onOpenChange={setScheduleMeetingDialogOpen}
+        contactId={data.contact.id}
+        contactName={data.contact.fullName}
+        accountId={data.contact.company?.id ?? null}
+        accountName={data.contact.company?.name ?? null}
+        onSuccess={refreshData}
+      />
+      {data.contact.company && (
+        <CreateRelatedContactDialog
+          open={createRelatedContactDialogOpen}
+          onOpenChange={setCreateRelatedContactDialogOpen}
+          companyId={data.contact.company.id}
+          companyName={data.contact.company.name}
+          onSuccess={refreshData}
+        />
+      )}
+      {/* Link Related Contact Dialog - links contacts to contacts, not to companies */}
+      <LinkRelatedContactDialog
+        open={linkRelatedContactDialogOpen}
+        onOpenChange={setLinkRelatedContactDialogOpen}
+        contactId={data.contact.id}
+        contactName={data.contact.fullName}
+        onSuccess={refreshData}
+      />
+      {/* Create Escalation Dialog */}
+      <CreateContactEscalationDialog
+        open={createEscalationDialogOpen}
+        onOpenChange={setCreateEscalationDialogOpen}
+        contactId={data.contact.id}
+        contactName={data.contact.fullName}
+        onSuccess={refreshData}
+      />
     </div>
   )
 }

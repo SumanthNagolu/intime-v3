@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import {
   Building2, Plus, Search, MoreVertical, ExternalLink,
   Star, UserMinus, Pencil, X, ChevronLeft, ChevronRight,
-  Briefcase, Clock, TrendingUp, Building, Users, Globe
+  Briefcase, Clock, TrendingUp, Building, Users, Globe, Link2
 } from 'lucide-react'
 import {
   DropdownMenu,
@@ -168,7 +168,7 @@ export function ContactAccountsSection({ accounts, contactId }: ContactAccountsS
               >
                 <Link href={`/employee/recruiting/accounts/new?linkContact=${contactId}`}>
                   <Plus className="h-4 w-4 mr-1.5" />
-                  New Account
+                  Create Account
                 </Link>
               </Button>
               <Button
@@ -176,7 +176,7 @@ export function ContactAccountsSection({ accounts, contactId }: ContactAccountsS
                 onClick={() => setLinkDialogOpen(true)}
                 className="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-charcoal-900 shadow-sm font-medium"
               >
-                <Plus className="h-4 w-4 mr-1.5" />
+                <Link2 className="h-4 w-4 mr-1.5" />
                 Link Account
               </Button>
             </div>
@@ -377,7 +377,7 @@ export function ContactAccountsSection({ accounts, contactId }: ContactAccountsS
                   onClick={() => setLinkDialogOpen(true)}
                   className="bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-charcoal-900"
                 >
-                  <Plus className="h-4 w-4 mr-1.5" />
+                  <Link2 className="h-4 w-4 mr-1.5" />
                   Link Account
                 </Button>
               </div>

@@ -832,26 +832,63 @@ export interface ContactMeeting {
   creator: { id: string; name: string } | null
 }
 
-// Escalation (related to contact)
+// Escalation (related to contact) - matches AccountEscalation structure for component reuse
 export interface ContactEscalation {
   id: string
-  title: string
-  priority: string
-  status: string
-  category: string | null
+  escalationNumber: string
+  subject: string
+  priority: 'low' | 'medium' | 'high' | 'critical'  // Keep for backwards compat
+  severity: EscalationSeverity
+  escalationType: EscalationType
+  status: EscalationStatus
+  createdAt: string
+  createdBy: {
+    id: string
+    name: string
+    avatarUrl: string | null
+  }
+  assignedTo: {
+    id: string
+    name: string
+    avatarUrl: string | null
+  } | null
+  escalatedTo: {
+    id: string
+    name: string
+    avatarUrl: string | null
+  } | null
   description: string | null
+  // Enhanced fields
+  issueSummary: string
+  detailedDescription: string | null
+  clientImpact: string[] | null
+  rootCause: string | null
+  immediateActions: string | null
+  resolutionPlan: string | null
+  // SLA tracking
   slaResponseDue: string | null
   slaResolutionDue: string | null
   slaResponseMet: boolean | null
   slaResolutionMet: boolean | null
+  // Resolution
   resolvedAt: string | null
+  resolvedBy: {
+    id: string
+    name: string
+    avatarUrl: string | null
+  } | null
   resolutionSummary: string | null
-  clientSatisfaction: number | null
-  createdAt: string
-  owner: { id: string; name: string } | null
+  resolutionActions: string | null
+  timeToResolve: string | null  // interval as string
+  clientSatisfaction: ClientSatisfaction | null
+  lessonsLearned: string | null
+  preventiveMeasures: string | null
+  // Related entities
+  relatedEntityIds: string[] | null
+  updatedAt: string | null
 }
 
-// Related contact (other contacts at same company)
+// Related contact (other contacts at shared accounts)
 export interface ContactRelatedContact {
   id: string
   name: string
@@ -860,6 +897,8 @@ export interface ContactRelatedContact {
   phone: string | null
   isPrimary: boolean
   decisionAuthority: string | null
+  // Relationship info - which accounts are shared
+  sharedAccounts: Array<{ id: string; name: string }>
 }
 
 // Reuse universal types from Account
