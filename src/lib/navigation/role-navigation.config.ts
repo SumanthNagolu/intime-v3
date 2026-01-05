@@ -6,7 +6,7 @@ import type { RoleCategory } from '@/lib/auth/permission-types'
  */
 
 // Tab IDs from top-navigation.ts
-type TabId = 'workspace' | 'team' | 'accounts' | 'contacts' | 'jobs' | 'candidates' | 'crm' | 'pipeline' | 'finance' | 'hr' | 'admin'
+type TabId = 'workspace' | 'team' | 'accounts' | 'contacts' | 'companies' | 'jobs' | 'candidates' | 'crm' | 'pipeline' | 'finance' | 'hr' | 'admin'
 
 interface RoleNavigationConfig {
   visibleTabs: TabId[]
@@ -17,35 +17,35 @@ interface RoleNavigationConfig {
 export const ROLE_NAVIGATION_CONFIG: Record<RoleCategory, RoleNavigationConfig> = {
   // Admin - full access, default to Administration
   admin: {
-    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline', 'finance', 'hr', 'admin'],
+    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'companies', 'jobs', 'candidates', 'crm', 'pipeline', 'finance', 'hr', 'admin'],
     defaultTab: 'admin',
     defaultPath: '/employee/admin/dashboard',
   },
 
   // Executive - full access, default to My Work (dashboard focus)
   executive: {
-    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline', 'finance', 'hr', 'admin'],
+    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'companies', 'jobs', 'candidates', 'crm', 'pipeline', 'finance', 'hr', 'admin'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },
 
   // Leadership - full access except some admin settings
   leadership: {
-    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline', 'finance', 'hr', 'admin'],
+    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'companies', 'jobs', 'candidates', 'crm', 'pipeline', 'finance', 'hr', 'admin'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },
 
   // Pod Manager - same as IC (end-to-end workflow) + team visibility
   pod_manager: {
-    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'companies', 'jobs', 'candidates', 'crm', 'pipeline'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },
 
   // Pod IC (Recruiter, Bench Sales, TA) - full workflow access
   pod_ic: {
-    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'companies', 'jobs', 'candidates', 'crm', 'pipeline'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },
@@ -64,17 +64,17 @@ export const ROLE_CODE_OVERRIDES: Record<string, RoleNavigationConfig> = {
   // RECRUITING ROLES - Full recruiting workflow access
   // ============================================================
   recruiter: {
-    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'companies', 'jobs', 'candidates', 'crm', 'pipeline'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },
   senior_recruiter: {
-    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'companies', 'jobs', 'candidates', 'crm', 'pipeline'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },
   recruiting_manager: {
-    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'companies', 'jobs', 'candidates', 'crm', 'pipeline'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },
@@ -83,17 +83,17 @@ export const ROLE_CODE_OVERRIDES: Record<string, RoleNavigationConfig> = {
   // BENCH SALES ROLES - Same as recruiting workflow
   // ============================================================
   bench_sales: {
-    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'companies', 'jobs', 'candidates', 'crm', 'pipeline'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },
   bench_sales_rep: {
-    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'companies', 'jobs', 'candidates', 'crm', 'pipeline'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },
   bench_manager: {
-    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'companies', 'jobs', 'candidates', 'crm', 'pipeline'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },
@@ -102,12 +102,12 @@ export const ROLE_CODE_OVERRIDES: Record<string, RoleNavigationConfig> = {
   // TA (TALENT ACQUISITION) ROLES - Same as recruiting workflow
   // ============================================================
   ta_specialist: {
-    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'companies', 'jobs', 'candidates', 'crm', 'pipeline'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },
   ta_manager: {
-    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'jobs', 'candidates', 'crm', 'pipeline'],
+    visibleTabs: ['workspace', 'team', 'accounts', 'contacts', 'companies', 'jobs', 'candidates', 'crm', 'pipeline'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },
@@ -116,22 +116,22 @@ export const ROLE_CODE_OVERRIDES: Record<string, RoleNavigationConfig> = {
   // HR ROLES - HR-focused tabs (includes Finance for payroll/billing)
   // ============================================================
   hr_manager: {
-    visibleTabs: ['workspace', 'team', 'contacts', 'finance', 'hr'],
+    visibleTabs: ['workspace', 'team', 'contacts', 'companies', 'finance', 'hr'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },
   hr_specialist: {
-    visibleTabs: ['workspace', 'team', 'contacts', 'finance', 'hr'],
+    visibleTabs: ['workspace', 'team', 'contacts', 'companies', 'finance', 'hr'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },
   hr_admin: {
-    visibleTabs: ['workspace', 'team', 'contacts', 'finance', 'hr'],
+    visibleTabs: ['workspace', 'team', 'contacts', 'companies', 'finance', 'hr'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },
   hr: {
-    visibleTabs: ['workspace', 'team', 'contacts', 'finance', 'hr'],
+    visibleTabs: ['workspace', 'team', 'contacts', 'companies', 'finance', 'hr'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },
@@ -140,7 +140,7 @@ export const ROLE_CODE_OVERRIDES: Record<string, RoleNavigationConfig> = {
   // FINANCE ROLES - Finance-focused tabs
   // ============================================================
   finance_manager: {
-    visibleTabs: ['workspace', 'team', 'accounts', 'pipeline', 'finance'],
+    visibleTabs: ['workspace', 'team', 'accounts', 'companies', 'pipeline', 'finance'],
     defaultTab: 'workspace',
     defaultPath: '/employee/workspace/dashboard',
   },

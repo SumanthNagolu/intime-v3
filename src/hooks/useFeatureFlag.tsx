@@ -189,7 +189,7 @@ export function useFeatureFlag(
     }
   )
 
-  // Show feedback prompt on first successful check if enabled
+  // Show feedback prompt on first successful check if enabled (session-only)
   useEffect(() => {
     if (
       query.data?.enabled &&
@@ -198,22 +198,13 @@ export function useFeatureFlag(
       !hasShownFeedback &&
       context
     ) {
-      // Check localStorage to see if we've already shown feedback
-      const storageKey = `feature_feedback_shown_${featureKey}`
-      const hasShown = localStorage.getItem(storageKey)
+      // Delay slightly so user sees the feature first
+      const timer = setTimeout(() => {
+        // Mark as shown for this session
+        setHasShownFeedback(true)
+      }, 30000) // 30 seconds after first use
 
-      if (!hasShown) {
-        // Delay slightly so user sees the feature first
-        const timer = setTimeout(() => {
-          // Get the flag ID to submit feedback
-          // For now we'll skip this since we'd need another query
-          // context.showFeedback(flagId)
-          localStorage.setItem(storageKey, 'true')
-          setHasShownFeedback(true)
-        }, 30000) // 30 seconds after first use
-
-        return () => clearTimeout(timer)
-      }
+      return () => clearTimeout(timer)
     }
   }, [query.data, featureKey, showFeedbackOnFirstUse, hasShownFeedback, context])
 
