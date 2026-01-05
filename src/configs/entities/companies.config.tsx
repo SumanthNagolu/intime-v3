@@ -906,10 +906,11 @@ export const clientsListConfig: ListViewConfig<Company> = {
       ? sortFieldMap[sortByValue]
       : 'created_at'
 
-    // Preset to clients and prospects only
+    // Preset to clients and prospects only, exclude drafts (shown in separate section)
     return trpc.companies.list.useQuery({
       search: filters.search as string | undefined,
       categories: ['client', 'prospect'],
+      excludeDraft: true, // Drafts are shown in "Your Drafts" section
       status: statusValue && statusValue !== 'all' && validStatuses.includes(statusValue as Status)
         ? statusValue as Status
         : undefined,
@@ -928,7 +929,16 @@ export const clientsListConfig: ListViewConfig<Company> = {
   },
 
   useStatsQuery: () => {
-    return trpc.companies.stats.useQuery({ categories: ['client', 'prospect'] })
+    return trpc.companies.stats.useQuery({ categories: ['client', 'prospect'], excludeDraft: true })
+  },
+
+  // Draft support - shows "Your Drafts" section at top of list
+  drafts: {
+    enabled: true,
+    wizardRoute: '/employee/recruiting/accounts/new',
+    displayNameField: 'name',
+    useGetMyDraftsQuery: () => trpc.crm.accounts.listMyDrafts.useQuery(),
+    useDeleteDraftMutation: () => trpc.crm.accounts.deleteDraft.useMutation(),
   },
 }
 
