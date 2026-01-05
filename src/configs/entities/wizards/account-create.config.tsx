@@ -1,103 +1,124 @@
 'use client'
 
-import { Building2, CreditCard, Users } from 'lucide-react'
+import {
+  Building2,
+  CreditCard,
+  Users,
+  MapPin,
+  FileText,
+  ShieldCheck,
+  User
+} from 'lucide-react'
 import { WizardConfig, WizardStepConfig } from '../types'
 import { CreateAccountFormData } from '@/stores/create-account-store'
 
-// Step wrapper components that bridge to the EntityWizard interface
-import {
-  AccountIntakeStep1Basics,
-  AccountIntakeStep2Billing,
-  AccountIntakeStep3Contact,
-} from '@/components/recruiting/accounts/intake'
-
-// Create PCF-compatible wrapper components
-function Step1Wrapper() {
-  return <AccountIntakeStep1Basics />
-}
-
-function Step2Wrapper() {
-  return <AccountIntakeStep2Billing />
-}
-
-function Step3Wrapper() {
-  return <AccountIntakeStep3Contact />
-}
+// New consolidated step components with inline panels
+import { AccountIntakeStep1Combined } from '@/components/recruiting/accounts/intake/AccountIntakeStep1Combined'
+import { AccountIntakeStep2Locations } from '@/components/recruiting/accounts/intake/AccountIntakeStep2Locations'
+import { AccountIntakeStep3Billing } from '@/components/recruiting/accounts/intake/AccountIntakeStep3Billing'
+import { AccountIntakeStep4Contacts } from '@/components/recruiting/accounts/intake/AccountIntakeStep4Contacts'
+import { AccountIntakeStep5Contracts } from '@/components/recruiting/accounts/intake/AccountIntakeStep5Contracts'
+import { AccountIntakeStep6Compliance } from '@/components/recruiting/accounts/intake/AccountIntakeStep6Compliance'
+import { AccountIntakeStep8Team } from '@/components/recruiting/accounts/intake/AccountIntakeStep8Team'
 
 // Step configurations
 export const accountCreateSteps: WizardStepConfig<CreateAccountFormData>[] = [
   {
-    id: 'basics',
+    id: 'identity',
     number: 1,
-    label: 'Company Basics',
-    description: 'Company identity, industry, and location',
+    label: 'Identity & Classification',
+    description: 'Type, basic info, and categorization',
     icon: Building2,
-    component: Step1Wrapper as React.ComponentType<{
-      formData: Partial<CreateAccountFormData>
-      setFormData: (data: Partial<CreateAccountFormData>) => void
-      errors: Record<string, string>
-    }>,
+    component: AccountIntakeStep1Combined,
     validateFn: (formData) => {
       const errors: string[] = []
-      if (!formData.name || (formData.name?.length || 0) < 2) {
-        errors.push('Please enter a company name (at least 2 characters).')
+      if (!formData.name || formData.name.length < 2) {
+        errors.push('Please enter a valid name (at least 2 characters).')
       }
       if (!formData.industries || formData.industries.length === 0) {
         errors.push('Please select at least one industry.')
       }
       return errors
-    },
+    }
+  },
+  {
+    id: 'locations',
+    number: 2,
+    label: 'Locations',
+    description: 'Addresses and offices',
+    icon: MapPin,
+    component: AccountIntakeStep2Locations,
+    validateFn: () => {
+      // Optional
+      return []
+    }
   },
   {
     id: 'billing',
-    number: 2,
-    label: 'Billing & Terms',
-    description: 'Payment and contract terms',
+    number: 3,
+    label: 'Billing',
+    description: 'Payment terms and addresses',
     icon: CreditCard,
-    component: Step2Wrapper as React.ComponentType<{
-      formData: Partial<CreateAccountFormData>
-      setFormData: (data: Partial<CreateAccountFormData>) => void
-      errors: Record<string, string>
-    }>,
+    component: AccountIntakeStep3Billing,
     validateFn: (formData) => {
       const errors: string[] = []
-      // Billing info is optional, but if email is provided, validate format
-      if (
-        formData.billingEmail &&
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.billingEmail)
-      ) {
+      if (formData.billingEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.billingEmail)) {
         errors.push('Please enter a valid billing email address.')
       }
       return errors
-    },
+    }
   },
   {
-    id: 'contact',
-    number: 3,
-    label: 'Primary Contact',
-    description: 'Main point of contact',
+    id: 'contacts',
+    number: 4,
+    label: 'Contacts',
+    description: 'Key stakeholders',
     icon: Users,
-    component: Step3Wrapper as React.ComponentType<{
-      formData: Partial<CreateAccountFormData>
-      setFormData: (data: Partial<CreateAccountFormData>) => void
-      errors: Record<string, string>
-    }>,
+    component: AccountIntakeStep4Contacts,
+    validateFn: () => {
+      // Optional
+      return []
+    }
+  },
+  {
+    id: 'contracts',
+    number: 5,
+    label: 'Contracts',
+    description: 'Agreements and MSAs',
+    icon: FileText,
+    component: AccountIntakeStep5Contracts,
+    validateFn: () => {
+      // Optional
+      return []
+    }
+  },
+  {
+    id: 'compliance',
+    number: 6,
+    label: 'Compliance',
+    description: 'Requirements and certifications',
+    icon: ShieldCheck,
+    component: AccountIntakeStep6Compliance,
+    validateFn: () => {
+      // Optional
+      return []
+    }
+  },
+  {
+    id: 'team',
+    number: 7,
+    label: 'Team',
+    description: 'Internal assignment',
+    icon: User,
+    component: AccountIntakeStep8Team,
     validateFn: (formData) => {
       const errors: string[] = []
-      // Contact info is optional, but if email is provided, validate format
-      if (
-        formData.primaryContactEmail &&
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.primaryContactEmail)
-      ) {
-        errors.push('Please enter a valid contact email address.')
-      }
-      // If email is provided, name should also be provided
-      if (formData.primaryContactEmail && !formData.primaryContactName) {
-        errors.push('Please provide a name for the contact.')
+      if (!formData.team?.ownerId) {
+        errors.push('Please assign an Account Owner.')
       }
       return errors
-    },
-  },
+    }
+  }
 ]
 
 // Full wizard configuration
@@ -108,48 +129,47 @@ export const accountCreateWizardConfig: WizardConfig<CreateAccountFormData> = {
 
   steps: accountCreateSteps,
 
-  allowFreeNavigation: false,
+  allowFreeNavigation: true, // Allow jumping between steps for better UX in long wizards
   stepIndicatorStyle: 'icons',
 
   reviewStep: {
     title: 'Review & Create',
     sections: [
       {
-        label: 'Company Information',
-        fields: [
-          'name',
-          'industries',
-          'companyType',
-          'tier',
-          'segment',
-          'website',
-          'hqCity',
-          'hqState',
-        ],
-        stepNumber: 1,
+        label: 'Account Identity',
+        fields: ['name', 'legalName', 'dba', 'taxId', 'email', 'phone', 'website', 'linkedinUrl', 'description', 'industries', 'companyType', 'tier', 'segment'],
+        stepNumber: 1
       },
       {
-        label: 'Billing Details',
-        fields: [
-          'billingEntityName',
-          'billingEmail',
-          'billingFrequency',
-          'paymentTermsDays',
-          'poRequired',
-        ],
-        stepNumber: 2,
+        label: 'Locations',
+        fields: ['addresses'], 
+        stepNumber: 2
       },
       {
-        label: 'Primary Contact',
-        fields: [
-          'primaryContactName',
-          'primaryContactTitle',
-          'primaryContactEmail',
-          'preferredContactMethod',
-          'meetingCadence',
-        ],
-        stepNumber: 3,
+        label: 'Billing',
+        fields: ['billingEntityName', 'billingEmail', 'billingPhone', 'paymentTermsDays', 'billingFrequency', 'currency', 'invoiceFormat', 'poRequired', 'currentPoNumber', 'poExpirationDate'],
+        stepNumber: 3
       },
+      {
+        label: 'Contacts',
+        fields: ['contacts'],
+        stepNumber: 4
+      },
+      {
+        label: 'Contracts',
+        fields: ['contracts'],
+        stepNumber: 5
+      },
+      {
+        label: 'Compliance',
+        fields: ['compliance'],
+        stepNumber: 6
+      },
+      {
+        label: 'Team',
+        fields: ['team'],
+        stepNumber: 7
+      }
     ],
   },
 
@@ -180,7 +200,3 @@ export function createAccountCreateConfig(
     onSuccess: options?.onSuccess,
   }
 }
-
-
-
-

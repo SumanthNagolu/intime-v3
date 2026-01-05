@@ -1,130 +1,171 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { Suspense, useMemo } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { trpc } from '@/lib/trpc/client'
-import { useToast } from '@/components/ui/use-toast'
 import { useCreateAccountStore, CreateAccountFormData } from '@/stores/create-account-store'
-import { EntityWizard } from '@/components/pcf/wizard/EntityWizard'
+import { WizardWithSidebar } from '@/components/pcf/wizard/WizardWithSidebar'
 import { createAccountCreateConfig } from '@/configs/entities/wizards/account-create.config'
+import { useEntityDraft, WizardStore } from '@/hooks/use-entity-draft'
 import { formatPhoneValue } from '@/components/ui/phone-input'
 
-// Normalize URL - add https:// if missing protocol
+// Normalize URL helper
 function normalizeUrl(url: string | undefined): string | undefined {
   if (!url || url.trim() === '') return undefined
   const trimmed = url.trim()
-  // If it already has a protocol, return as-is
   if (/^https?:\/\//i.test(trimmed)) return trimmed
-  // Add https:// prefix
   return `https://${trimmed}`
 }
 
-/**
- * Create Account Page
- * 
- * Premium SaaS-level account creation wizard using the EntityWizard pattern.
- * Features:
- * - Multi-step wizard with progress tracking
- * - Auto-save with Zustand persistence
- * - Beautiful premium UI with gradient backgrounds
- * - Street address support for headquarters location
- */
-export default function NewAccountPage() {
+function NewAccountPageContent() {
   const router = useRouter()
-  const { toast } = useToast()
+  const searchParams = useSearchParams()
   const utils = trpc.useUtils()
 
   // Get store
-  const {
-    formData,
-    setFormData,
-    resetForm,
-    isDirty,
-    lastSaved,
-  } = useCreateAccountStore()
+  const store = useCreateAccountStore()
+  
+  // Get resume ID from URL
+  const resumeId = searchParams.get('resume')
 
-  // Create account mutation
-  const createMutation = trpc.crm.accounts.create.useMutation({
-    onSuccess: (data) => {
-      utils.crm.accounts.list.invalidate()
-      toast({
-        title: 'Account created successfully',
-        description: `${formData.name} has been added.`,
-      })
-      resetForm()
-      router.push(`/employee/recruiting/accounts/${data.id}`)
+  // Mutations and Queries
+  const createMutation = trpc.crm.accounts.createEnhanced.useMutation()
+  const updateMutation = trpc.crm.accounts.updateEnhanced.useMutation()
+  
+  // Fetch draft if resuming
+  const getDraftQuery = trpc.crm.accounts.getById.useQuery(
+    { id: resumeId! },
+    { enabled: !!resumeId, retry: false }
+  )
+
+  // Draft integration
+  const draftState = useEntityDraft({
+    entityType: 'Account',
+    wizardRoute: '/employee/recruiting/accounts/new',
+    totalSteps: 9, // Based on config
+    store: () => store as unknown as WizardStore<CreateAccountFormData>, // Cast to satisfy interface
+    resumeId,
+    createMutation,
+    updateMutation,
+    getDraftQuery,
+    searchParamsString: searchParams.toString(),
+    
+    // Transform Form -> Entity (for saving)
+    formToEntity: (formData) => {
+      // We store the FULL form data in wizard_state for perfect resume fidelity
+      // The individual fields are also mapped for the DB columns (searchable draft)
+      const entity = {
+        accountType: formData.accountType,
+        name: formData.name,
+        legalName: formData.legalName,
+        dba: formData.dba,
+        taxId: formData.taxId,
+        website: normalizeUrl(formData.website),
+        phone: formData.phone, // formatPhoneValue logic handled in mutation or backend? mutation schema expects any
+        email: formData.email,
+        industries: formData.industries,
+        companyType: formData.companyType,
+        tier: formData.tier || undefined,
+        segment: formData.segment || undefined,
+        description: formData.description,
+        linkedinUrl: normalizeUrl(formData.linkedinUrl),
+        
+        // Locations
+        addresses: formData.addresses,
+        
+        // Billing
+        billingEntityName: formData.billingEntityName,
+        billingEmail: formData.billingEmail,
+        billingPhone: formData.billingPhone,
+        billingAddress: formData.billingAddress,
+        billingFrequency: formData.billingFrequency,
+        paymentTermsDays: formData.paymentTermsDays,
+        poRequired: formData.poRequired,
+        currency: formData.currency,
+        invoiceFormat: formData.invoiceFormat,
+        
+        // Arrays
+        contacts: formData.contacts,
+        contracts: formData.contracts,
+        compliance: formData.compliance,
+        team: formData.team,
+        
+        // Store full state for resume
+        wizard_state: {
+          formData,
+          currentStep: store.currentStep
+        }
+      }
+      return entity
     },
-    onError: (error) => {
-      toast({
-        title: 'Error creating account',
-        description: error.message,
-        variant: 'error',
-      })
+    
+    // Transform Entity -> Form (for loading)
+    entityToForm: (entity: any) => {
+      // Prefer wizard_state data if available
+      if (entity.custom_fields?.wizard_state?.formData) {
+        return entity.custom_fields.wizard_state.formData
+      }
+      
+      // Fallback mapping if no wizard state (e.g. editing active record)
+      return {
+        name: entity.name,
+        // ... map other fields if needed, but for drafts wizard_state should exist
+        // This fallback is minimal
+      }
     },
+    
+    getDisplayName: (data) => data.name,
+    onInvalidate: () => utils.crm.accounts.list.invalidate()
   })
 
-  // Handle form submission
-  const handleSubmit = async (data: CreateAccountFormData): Promise<unknown> => {
-    // Prepare data for API - convert types and handle empty strings
-    const apiData = {
-      name: data.name,
-      industry: data.industries[0] || undefined,
-      industries: data.industries.length > 0 ? data.industries : undefined,
-      companyType: data.companyType,
-      tier: data.tier || undefined,
-      segment: data.segment || undefined,
-      website: normalizeUrl(data.website),
-      phone: formatPhoneValue(data.phone) || undefined,
-      // HQ Location with street address
-      headquartersLocation: data.hqStreetAddress || undefined,
-      headquartersCity: data.hqCity || undefined,
-      headquartersState: data.hqState || undefined,
-      headquartersCountry: data.hqCountry || 'US',
-      description: data.description || undefined,
-      linkedinUrl: normalizeUrl(data.linkedinUrl),
-      // Billing
-      billingEntityName: data.billingEntityName || undefined,
-      billingEmail: data.billingEmail || undefined,
-      billingPhone: formatPhoneValue(data.billingPhone) || undefined,
-      billingAddress: data.billingAddress || undefined,
-      billingCity: data.billingCity || undefined,
-      billingState: data.billingState || undefined,
-      billingPostalCode: data.billingPostalCode || undefined,
-      billingCountry: data.billingCountry || undefined,
-      billingFrequency: data.billingFrequency,
-      paymentTermsDays: parseInt(data.paymentTermsDays) || 30,
-      poRequired: data.poRequired,
-      // Primary Contact
-      primaryContactName: data.primaryContactName || undefined,
-      primaryContactEmail: data.primaryContactEmail || undefined,
-      primaryContactTitle: data.primaryContactTitle || undefined,
-      primaryContactPhone: formatPhoneValue(data.primaryContactPhone) || undefined,
-      preferredContactMethod: data.preferredContactMethod,
-      meetingCadence: data.meetingCadence,
+  // Handle final submission (Activate)
+  const handleSubmit = async (data: CreateAccountFormData) => {
+    try {
+      // Save/Finalize draft
+      const account = await draftState.finalizeDraft('active')
+      
+      // Redirect to the created account page
+      if (account?.id) {
+        router.push(`/employee/recruiting/accounts/${account.id}`)
+      } else {
+        router.push('/employee/recruiting/accounts')
+      }
+    } catch (error) {
+      console.error('Failed to create account:', error)
+      // Error handling is done by the mutation's onError callback
+      throw error
     }
-
-    console.log('[Account Create Form] API Data:', apiData)
-    return createMutation.mutateAsync(apiData)
   }
 
-  // Create wizard config with submit handler
-  const wizardConfig = createAccountCreateConfig(handleSubmit, {
-    onSuccess: () => {}, // Already handled in mutation
+  // Create wizard config
+  const wizardConfig = useMemo(() => createAccountCreateConfig(handleSubmit, {
     cancelRoute: '/employee/recruiting/accounts',
-  })
+  }), [])
 
-  // Store adapter for EntityWizard
-  const storeAdapter = {
-    formData: formData as unknown as CreateAccountFormData,
-    setFormData: setFormData as (data: Partial<CreateAccountFormData>) => void,
-    resetForm,
-    isDirty,
-    lastSaved,
+  // Adapt store for WizardWithSidebar
+  const wizardStoreAdapter = {
+    formData: store.formData,
+    setFormData: store.setFormData,
+    resetForm: store.resetForm,
+    isDirty: store.isDirty,
+    lastSaved: store.lastSaved,
+    currentStep: store.currentStep,
+    setCurrentStep: store.setCurrentStep,
   }
 
   return (
-    <EntityWizard
+    <WizardWithSidebar
       config={wizardConfig}
-      store={storeAdapter}
+      store={wizardStoreAdapter}
+      draftState={draftState}
     />
+  )
+}
+
+export default function NewAccountPage() {
+  return (
+    <Suspense fallback={<div>Loading wizard...</div>}>
+      <NewAccountPageContent />
+    </Suspense>
   )
 }
