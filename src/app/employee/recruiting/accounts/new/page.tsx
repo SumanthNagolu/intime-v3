@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useMemo } from 'react'
+import { Suspense, useMemo, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { trpc } from '@/lib/trpc/client'
 import { useCreateAccountStore, CreateAccountFormData } from '@/stores/create-account-store'
@@ -119,11 +119,11 @@ function NewAccountPageContent() {
   })
 
   // Handle final submission (Activate)
-  const handleSubmit = async (data: CreateAccountFormData) => {
+  const handleSubmit = useCallback(async (data: CreateAccountFormData) => {
     try {
       // Save/Finalize draft
       const account = await draftState.finalizeDraft('active')
-      
+
       // Redirect to the created account page
       if (account?.id) {
         router.push(`/employee/recruiting/accounts/${account.id}`)
@@ -135,12 +135,12 @@ function NewAccountPageContent() {
       // Error handling is done by the mutation's onError callback
       throw error
     }
-  }
+  }, [draftState, router])
 
-  // Create wizard config
+  // Create wizard config - must include handleSubmit in deps to get latest draftState
   const wizardConfig = useMemo(() => createAccountCreateConfig(handleSubmit, {
     cancelRoute: '/employee/recruiting/accounts',
-  }), [])
+  }), [handleSubmit])
 
   // Adapt store for WizardWithSidebar
   const wizardStoreAdapter = {

@@ -40,7 +40,7 @@ export interface UseEntityWizardReturn<T> {
   handleBack: () => void
   handleStepClick: (step: number) => void
   handleSaveDraft: () => Promise<void>
-  handleCancel: () => void
+  handleCancel: () => Promise<void>
   handleSubmit: () => Promise<void>
   validateStep: (step: number) => boolean
   
@@ -210,13 +210,24 @@ export function useEntityWizard<T extends object>({
     }
   }
 
-  const handleCancel = () => {
+  const handleCancel = async () => {
     if (
       store.isDirty &&
       !confirm('Are you sure you want to cancel? Your progress will be lost.')
     ) {
       return
     }
+
+    // Delete draft if it exists (user explicitly cancelled, don't save)
+    if (draftState?.draftId) {
+      try {
+        await draftState.deleteDraft()
+      } catch (error) {
+        // Silently ignore delete errors - user is cancelling anyway
+        console.warn('Failed to delete draft on cancel:', error)
+      }
+    }
+
     store.resetForm()
     if (onCancel) {
       onCancel()

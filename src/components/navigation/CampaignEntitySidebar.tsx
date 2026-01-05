@@ -175,8 +175,8 @@ export function CampaignEntitySidebar({
   return (
     <TooltipProvider>
       <div className={cn('flex flex-col flex-1 overflow-hidden h-full', className)}>
-        {/* Mode Toggle Header - with top padding for toggle button */}
-        <div className="pt-12 px-4 pb-4 border-b border-charcoal-100">
+        {/* Mode Toggle Header */}
+        <div className="pt-4 px-4 pb-4 border-b border-charcoal-100">
           {!isCollapsed && (
             <div className="flex items-center justify-between mb-3">
               <h2 className="font-heading font-semibold text-charcoal-900 text-sm uppercase tracking-wide">

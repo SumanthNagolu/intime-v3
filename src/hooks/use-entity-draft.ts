@@ -120,12 +120,33 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
   searchParamsString = '',
   onInvalidate,
 }: UseEntityDraftOptions<TFormData, TEntity>): UseEntityDraftReturn<TEntity> {
+  // Generate stable keys for sessionStorage
+  const draftIdKey = `entity-draft-id-${entityType}-${resumeId || 'new'}`
+
   const [isReady, setIsReady] = useState(false)
-  const [draftId, setDraftId] = useState<string | null>(null)
+  // Initialize draftId from sessionStorage to survive remounts
+  const [draftId, setDraftIdState] = useState<string | null>(() => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem(draftIdKey)
+    }
+    return null
+  })
   const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null)
   const hasInitialized = useRef(false)
   const previousFormData = useRef<string>('')
   const router = useRouter()
+
+  // Wrapper to persist draftId to sessionStorage
+  const setDraftId = useCallback((id: string | null) => {
+    setDraftIdState(id)
+    if (typeof window !== 'undefined') {
+      if (id) {
+        sessionStorage.setItem(draftIdKey, id)
+      } else {
+        sessionStorage.removeItem(draftIdKey)
+      }
+    }
+  }, [draftIdKey])
 
   const wizardStore = store()
   const formData = wizardStore.formData
@@ -367,13 +388,14 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
     // Clean up sessionStorage
     const initKey = `entity-draft-init-${entityType}-${draftId || 'new'}`
     sessionStorage.removeItem(initKey)
+    sessionStorage.removeItem(draftIdKey) // Also clear the draft ID key
 
     // Reset store
     wizardStore.resetForm()
     setDraftId(null)
     setLastSavedAt(null)
     onInvalidate?.()
-  }, [draftId, updateMutation, wizardStore, onInvalidate, entityType])
+  }, [draftId, updateMutation, wizardStore, onInvalidate, entityType, draftIdKey, setDraftId])
 
   // Finalize draft - change status from 'draft' to target status
   const finalizeDraft = useCallback(async (targetStatus: string): Promise<TEntity> => {
@@ -389,6 +411,7 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
       // Clean up sessionStorage
       const initKey = `entity-draft-init-${entityType}-new`
       sessionStorage.removeItem(initKey)
+      sessionStorage.removeItem(draftIdKey) // Also clear the draft ID key
 
       // Reset store after successful creation
       wizardStore.resetForm()
@@ -411,6 +434,7 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
     // Clean up sessionStorage
     const initKey = `entity-draft-init-${entityType}-${draftId}`
     sessionStorage.removeItem(initKey)
+    sessionStorage.removeItem(draftIdKey) // Also clear the draft ID key
 
     // Reset store after successful finalization
     wizardStore.resetForm()
@@ -428,6 +452,8 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
     updateMutation,
     wizardStore,
     onInvalidate,
+    draftIdKey,
+    setDraftId,
   ])
 
   return {
