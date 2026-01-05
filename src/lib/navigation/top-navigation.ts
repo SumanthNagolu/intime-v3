@@ -52,7 +52,7 @@ export const topNavigationTabs: EntityNavTab[] = [
     label: 'Accounts',
     entityType: 'account',
     icon: Building2,
-    defaultHref: '/employee/recruiting/accounts',
+    defaultHref: '/employee/recruiting/accounts?owner=me',
     dropdown: [
       { id: 'search-accounts', label: 'Search Accounts', icon: Search, type: 'search', placeholder: 'Search by name...' },
       { id: 'recent-accounts', label: 'Recent Accounts', type: 'recent' },
@@ -79,6 +79,23 @@ export const topNavigationTabs: EntityNavTab[] = [
       { id: 'recent-activity', label: 'Recent Activity', icon: Activity, href: '/employee/contacts?activity=recent', type: 'link' },
       { id: 'divider-2', label: '', type: 'divider' },
       { id: 'new-contact', label: 'Create Contact', icon: Plus, href: '/employee/contacts/new', type: 'link' },
+    ],
+  },
+  {
+    id: 'companies',
+    label: 'Companies',
+    entityType: 'company',
+    icon: Building2,
+    defaultHref: '/employee/companies',
+    dropdown: [
+      { id: 'search-companies', label: 'Search Companies', icon: Search, type: 'search', placeholder: 'Search by name...' },
+      { id: 'recent-companies', label: 'Recent Companies', type: 'recent' },
+      { id: 'divider-1', label: '', type: 'divider' },
+      { id: 'my-companies', label: 'My Companies', icon: Users, href: '/employee/companies?owner=me', type: 'link' },
+      { id: 'all-companies', label: 'All Companies', icon: Building2, href: '/employee/companies', type: 'link' },
+      { id: 'recent-activity', label: 'Recent Activity', icon: Activity, href: '/employee/companies?activity=recent', type: 'link' },
+      { id: 'divider-2', label: '', type: 'divider' },
+      { id: 'new-company', label: 'Create Company', icon: Plus, href: '/employee/companies/new', type: 'link' },
     ],
   },
   {
@@ -216,6 +233,7 @@ export function getActiveTabFromPath(pathname: string): string | null {
   if (pathname.includes('/employee/recruiting/jobs')) return 'jobs'
   if (pathname.includes('/employee/recruiting/accounts')) return 'accounts'
   if (pathname.includes('/employee/contacts')) return 'contacts'
+  if (pathname.includes('/employee/companies')) return 'companies'
   if (pathname.includes('/employee/recruiting/candidates') ||
       pathname.includes('/employee/recruiting/talent') ||
       pathname.includes('/employee/recruiting/hotlist')) return 'candidates'

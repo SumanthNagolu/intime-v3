@@ -198,8 +198,7 @@ const actionItems: CommandItem[] = [
   },
 ]
 
-// Local storage key for recent searches
-const RECENT_SEARCHES_KEY = "command-palette-recent"
+// Recent items are session-only (no localStorage persistence)
 const MAX_RECENT_ITEMS = 10
 
 export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
@@ -209,41 +208,14 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
   const [recentItems, setRecentItems] = React.useState<CommandItem[]>([])
   const inputRef = React.useRef<HTMLInputElement>(null)
 
-  // Load recent items from localStorage
-  React.useEffect(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem(RECENT_SEARCHES_KEY)
-      if (stored) {
-        try {
-          const recentIds = JSON.parse(stored) as string[]
-          const allItems = [...navigationItems, ...actionItems]
-          const recent = recentIds
-            .map((id) => allItems.find((item) => item.id === id))
-            .filter((item): item is CommandItem => !!item)
-            .map((item) => ({ ...item, type: "recent" as const }))
-          setRecentItems(recent)
-        } catch {
-          // Ignore parse errors
-        }
-      }
-    }
-  }, [open])
-
-  // Save recent item to localStorage
-  const saveRecentItem = React.useCallback((item: CommandItem) => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem(RECENT_SEARCHES_KEY)
-      let recentIds: string[] = stored ? JSON.parse(stored) : []
-
-      // Remove if already exists, add to front
-      recentIds = recentIds.filter((id) => id !== item.id)
-      recentIds.unshift(item.id)
-
-      // Keep only MAX_RECENT_ITEMS
-      recentIds = recentIds.slice(0, MAX_RECENT_ITEMS)
-
-      localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(recentIds))
-    }
+  // Add item to session-only recent list
+  const addRecentItem = React.useCallback((item: CommandItem) => {
+    setRecentItems((prev) => {
+      // Remove if already exists, add to front with "recent" type
+      const filtered = prev.filter((i) => i.id !== item.id)
+      const recentItem = { ...item, type: "recent" as const }
+      return [recentItem, ...filtered].slice(0, MAX_RECENT_ITEMS)
+    })
   }, [])
 
   // Build categories based on query
@@ -317,7 +289,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
   // Handle item selection
   const handleSelect = React.useCallback(
     (item: CommandItem) => {
-      saveRecentItem(item)
+      addRecentItem(item)
 
       if (item.href) {
         router.push(item.href)
@@ -328,7 +300,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
       onOpenChange(false)
       setQuery("")
     },
-    [router, onOpenChange, saveRecentItem]
+    [router, onOpenChange, addRecentItem]
   )
 
   // Handle keyboard navigation

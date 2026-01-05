@@ -1,10 +1,9 @@
 'use client'
 
-import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react'
+import { createContext, useContext, useState, useCallback, ReactNode } from 'react'
 import { EntityNavigationState, EntityType, RecentEntity } from './entity-navigation.types'
 import { entityJourneys, getCurrentStepIndex } from './entity-journeys'
 
-const RECENT_ENTITIES_KEY = 'intime_recent_entities'
 const MAX_RECENT_ENTITIES = 10
 
 interface EntityNavigationContextValue extends EntityNavigationState {
@@ -46,37 +45,8 @@ export function EntityNavigationProvider({ children }: { children: ReactNode }) 
   // Full entity data for sidebar access (ONE DB CALL pattern)
   const [currentEntityData, setCurrentEntityDataState] = useState<unknown>(null)
 
-  // Load recent entities from localStorage on mount
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem(RECENT_ENTITIES_KEY)
-      if (stored) {
-        const parsed = JSON.parse(stored)
-        // Convert date strings back to Date objects
-        const restored: Record<EntityType, RecentEntity[]> = { ...initialRecentEntities }
-        for (const type of Object.keys(parsed) as EntityType[]) {
-          if (Array.isArray(parsed[type])) {
-            restored[type] = parsed[type].map((e: RecentEntity & { viewedAt: string }) => ({
-              ...e,
-              viewedAt: new Date(e.viewedAt),
-            }))
-          }
-        }
-        setState(prev => ({ ...prev, recentEntities: restored }))
-      }
-    } catch (e) {
-      console.error('Failed to parse recent entities:', e)
-    }
-  }, [])
-
-  // Save recent entities to localStorage when changed
-  useEffect(() => {
-    try {
-      localStorage.setItem(RECENT_ENTITIES_KEY, JSON.stringify(state.recentEntities))
-    } catch (e) {
-      console.error('Failed to save recent entities:', e)
-    }
-  }, [state.recentEntities])
+  // Note: Recent entities are now session-only (no localStorage persistence)
+  // Database is the single source of truth for all persistent data
 
   const setCurrentEntity = useCallback((entity: EntityNavigationState['currentEntity']) => {
     if (!entity) {

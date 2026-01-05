@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import {
   Clock,
   LucideIcon,
@@ -113,8 +113,7 @@ export const sectionConfigs: Record<string, SectionConfig> = {
     views: [
       { id: 'all', label: 'All Accounts', icon: List, href: '/employee/recruiting/accounts' },
       { id: 'my-accounts', label: 'My Accounts', icon: User, href: '/employee/recruiting/accounts?owner=me' },
-      { id: 'clients', label: 'Clients', icon: Star, href: '/employee/recruiting/accounts?category=client' },
-      { id: 'prospects', label: 'Prospects', icon: Target, href: '/employee/recruiting/accounts?category=prospect' },
+      { id: 'team-accounts', label: 'My Team Accounts', icon: Users, href: '/employee/recruiting/accounts?team=me' },
     ],
   },
   leads: {
@@ -228,8 +227,14 @@ interface SectionSidebarProps {
 
 export function SectionSidebar({ sectionId, className }: SectionSidebarProps) {
   const pathname = usePathname()
+  const searchParams = useSearchParams()
   const router = useRouter()
   const entityNav = useEntityNavigationSafe()
+
+  // Build current URL with search params for active state comparison
+  const currentUrl = searchParams.toString()
+    ? `${pathname}?${searchParams.toString()}`
+    : pathname
 
   // Get collapsed state from context
   const sidebarContext = useSidebarUIContextSafe()
@@ -310,8 +315,9 @@ export function SectionSidebar({ sectionId, className }: SectionSidebarProps) {
             <ul className="space-y-0.5">
               {section.views.map((view) => {
                 const ViewIcon = view.icon
-                const isActive = pathname === view.href ||
-                  (pathname === section.basePath && view.id === 'all')
+                // Compare full URL (with search params) for active state
+                const isActive = currentUrl === view.href ||
+                  (pathname === section.basePath && !searchParams.toString() && view.id === 'all')
 
                 if (isCollapsed) {
                   return (

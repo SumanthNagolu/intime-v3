@@ -10,6 +10,7 @@ export type EntityType =
   | 'job'
   | 'candidate'
   | 'account'
+  | 'company'
   | 'contact'
   | 'submission'
   | 'interview'
@@ -36,6 +37,7 @@ export const ENTITY_NAVIGATION_STYLES: Record<EntityType, NavigationStyle> = {
   offer: 'sections',
   placement: 'journey',
   account: 'sections',
+  company: 'sections',
   contact: 'sections',
   deal: 'sections',
   lead: 'sections',
@@ -132,6 +134,7 @@ export const ENTITY_BASE_PATHS: Record<EntityType, string> = {
   job: '/employee/recruiting/jobs',
   candidate: '/employee/recruiting/candidates',
   account: '/employee/recruiting/accounts',
+  company: '/employee/companies',
   contact: '/employee/contacts',
   submission: '/employee/recruiting/submissions',
   interview: '/employee/recruiting/interviews',

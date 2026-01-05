@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 
 /**
  * Journey Checklist Item
@@ -14,25 +14,23 @@ export interface JourneyChecklistItem {
 }
 
 /**
- * Persisted checklist state
+ * Checklist state (session-only, no persistence)
  */
 interface ChecklistState {
   [itemId: string]: boolean
 }
 
 /**
- * Storage key prefix for journey checklists
- */
-const STORAGE_KEY_PREFIX = 'journey-checklist-'
-
-/**
- * Custom hook for managing journey step checklists with localStorage persistence
+ * Custom hook for managing journey step checklists
  *
  * Features:
- * - Persists manual checkbox state to localStorage
- * - Merges persisted state with auto-calculated state from entity data
+ * - Manages manual checkbox state in session
+ * - Merges session state with auto-calculated state from entity data
  * - Calculates overall progress percentage
- * - Supports manual toggle with immediate persistence
+ * - Supports manual toggle
+ *
+ * Note: Checklist state is session-only. Database is the source of truth
+ * for entity completion status via autoComplete items.
  *
  * @param key - Unique key for this checklist (e.g., 'campaign-123-setup')
  * @param initialItems - Array of checklist items with initial completion state
@@ -42,27 +40,8 @@ export function useJourneyChecklist(
   key: string,
   initialItems: JourneyChecklistItem[]
 ) {
-  // Build storage key
-  const storageKey = `${STORAGE_KEY_PREFIX}${key}`
-
-  // Load persisted state from localStorage
-  const loadPersistedState = useCallback((): ChecklistState => {
-    if (typeof window === 'undefined') return {}
-    try {
-      const stored = localStorage.getItem(storageKey)
-      return stored ? JSON.parse(stored) : {}
-    } catch {
-      return {}
-    }
-  }, [storageKey])
-
-  // State for manual overrides
-  const [manualState, setManualState] = useState<ChecklistState>(() => loadPersistedState())
-
-  // Sync with localStorage when key changes
-  useEffect(() => {
-    setManualState(loadPersistedState())
-  }, [loadPersistedState])
+  // State for manual overrides (session-only)
+  const [manualState, setManualState] = useState<ChecklistState>({})
 
   // Merge initial items with manual overrides
   const items = useMemo(() => {
@@ -98,61 +77,30 @@ export function useJourneyChecklist(
 
       setManualState((prev) => {
         const currentValue = prev[itemId] ?? item?.completed ?? false
-        const newState = {
+        return {
           ...prev,
           [itemId]: !currentValue,
         }
-
-        // Persist to localStorage
-        if (typeof window !== 'undefined') {
-          try {
-            localStorage.setItem(storageKey, JSON.stringify(newState))
-          } catch {
-            // Ignore storage errors
-          }
-        }
-
-        return newState
       })
     },
-    [initialItems, storageKey]
+    [initialItems]
   )
 
   // Set a specific item's state
   const setItemCompleted = useCallback(
     (itemId: string, completed: boolean) => {
-      setManualState((prev) => {
-        const newState = {
-          ...prev,
-          [itemId]: completed,
-        }
-
-        // Persist to localStorage
-        if (typeof window !== 'undefined') {
-          try {
-            localStorage.setItem(storageKey, JSON.stringify(newState))
-          } catch {
-            // Ignore storage errors
-          }
-        }
-
-        return newState
-      })
+      setManualState((prev) => ({
+        ...prev,
+        [itemId]: completed,
+      }))
     },
-    [storageKey]
+    []
   )
 
   // Reset all manual overrides
   const reset = useCallback(() => {
     setManualState({})
-    if (typeof window !== 'undefined') {
-      try {
-        localStorage.removeItem(storageKey)
-      } catch {
-        // Ignore storage errors
-      }
-    }
-  }, [storageKey])
+  }, [])
 
   // Check if all items are completed
   const isComplete = useMemo(() => {
@@ -170,8 +118,8 @@ export function useJourneyChecklist(
 }
 
 /**
- * Hook for syncing journey progress with backend (optional database persistence)
- * This can be used when you want to persist progress server-side
+ * Hook for syncing journey progress with backend
+ * Placeholder for future database sync implementation
  */
 export function useJourneyProgressSync(
   entityType: string,
@@ -179,17 +127,9 @@ export function useJourneyProgressSync(
   stepId: string,
   progress: number
 ) {
-  // This is a placeholder for future database sync
-  // Currently we use localStorage only
-  useEffect(() => {
-    // Debounce sync to avoid too many updates
-    const timeoutId = setTimeout(() => {
-      // Future: call tRPC mutation to sync progress
-      // trpc.journeyProgress.sync.mutate({ entityType, entityId, stepId, progress })
-    }, 1000)
-
-    return () => clearTimeout(timeoutId)
-  }, [entityType, entityId, stepId, progress])
+  // Placeholder for future database sync
+  // When implemented, this would call a tRPC mutation:
+  // trpc.journeyProgress.sync.mutate({ entityType, entityId, stepId, progress })
 }
 
 export default useJourneyChecklist
