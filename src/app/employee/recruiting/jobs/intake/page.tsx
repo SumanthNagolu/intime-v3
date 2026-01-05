@@ -42,7 +42,7 @@ export default function JobIntakePage() {
   const config = {
     ...jobIntakeWizardConfig,
     onSubmit: async (formData: JobIntakeFormData) => {
-      // Normalize certifications - handle legacy string format from localStorage
+      // Normalize certifications - handle legacy string format
       const rawCerts = formData.certifications as string[] | string | undefined
       const normalizedCertifications = Array.isArray(rawCerts)
         ? rawCerts

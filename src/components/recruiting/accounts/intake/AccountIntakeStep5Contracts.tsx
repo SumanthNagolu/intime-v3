@@ -133,14 +133,9 @@ export function AccountIntakeStep5Contracts() {
         title="Contracts & Agreements"
         subtitle="Manage legal documents and agreements"
       >
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4">
           {/* List View */}
-          <div
-            className={cn(
-              'flex-1 transition-all duration-300',
-              isPanelOpen ? 'max-w-[calc(100%-420px)]' : 'max-w-full'
-            )}
-          >
+          <div className="w-full transition-all duration-300">
             {/* Add Button */}
             <Button
               variant="outline"
@@ -266,11 +261,11 @@ export function AccountIntakeStep5Contracts() {
             )}
           </div>
 
-          {/* Inline Detail Panel */}
+          {/* Inline Detail Panel - Full Width Bottom */}
           {isPanelOpen && (
-            <div className="w-[400px] border border-charcoal-200 rounded-xl bg-white animate-in slide-in-from-right duration-300 flex flex-col max-h-[650px]">
+            <div className="w-full border border-charcoal-200 rounded-xl bg-white animate-in slide-in-from-bottom duration-300">
               {/* Panel Header */}
-              <div className="flex items-center justify-between p-4 border-b border-charcoal-200 flex-shrink-0">
+              <div className="flex items-center justify-between p-4 border-b border-charcoal-200">
                 <div>
                   <h3 className="text-lg font-semibold text-charcoal-900">
                     {isAddingNew ? 'Add Contract' : 'Edit Contract'}
@@ -290,25 +285,24 @@ export function AccountIntakeStep5Contracts() {
               </div>
 
               {/* Panel Content */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                <div className="space-y-1.5">
-                  <Label className="text-sm">
-                    Contract Name <span className="text-red-500">*</span>
-                  </Label>
-                  <Input
-                    placeholder="e.g., Master Services Agreement 2024"
-                    value={currentContract.name || ''}
-                    onChange={(e) =>
-                      setCurrentContract((prev) => ({
-                        ...prev,
-                        name: e.target.value,
-                      }))
-                    }
-                    className="h-10"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
+              <div className="p-4 space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                  <div className="space-y-1.5">
+                    <Label className="text-sm">
+                      Contract Name <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                      placeholder="e.g., Master Services Agreement 2024"
+                      value={currentContract.name || ''}
+                      onChange={(e) =>
+                        setCurrentContract((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }))
+                      }
+                      className="h-10"
+                    />
+                  </div>
                   <div className="space-y-1.5">
                     <Label className="text-sm">Contract Type</Label>
                     <Select
@@ -329,7 +323,6 @@ export function AccountIntakeStep5Contracts() {
                       </SelectContent>
                     </Select>
                   </div>
-
                   <div className="space-y-1.5">
                     <Label className="text-sm">Contract Number</Label>
                     <Input
@@ -344,9 +337,6 @@ export function AccountIntakeStep5Contracts() {
                       className="h-10"
                     />
                   </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1.5">
                     <Label className="text-sm">Status</Label>
                     <Select
@@ -367,7 +357,9 @@ export function AccountIntakeStep5Contracts() {
                       </SelectContent>
                     </Select>
                   </div>
+                </div>
 
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
                   <div className="space-y-1.5">
                     <Label className="text-sm">Contract Value</Label>
                     <Input
@@ -382,9 +374,6 @@ export function AccountIntakeStep5Contracts() {
                       className="h-10"
                     />
                   </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1.5">
                     <Label className="text-sm">Effective Date</Label>
                     <Input
@@ -405,7 +394,6 @@ export function AccountIntakeStep5Contracts() {
                       className="h-10"
                     />
                   </div>
-
                   <div className="space-y-1.5">
                     <Label className="text-sm">Expiry Date</Label>
                     <Input
@@ -426,67 +414,57 @@ export function AccountIntakeStep5Contracts() {
                       className="h-10"
                     />
                   </div>
-                </div>
-
-                <div className="pt-2">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <Checkbox
-                      checked={currentContract.autoRenew}
-                      onCheckedChange={(c) =>
-                        setCurrentContract((prev) => ({
-                          ...prev,
-                          autoRenew: !!c,
-                        }))
-                      }
-                    />
-                    <span className="text-sm font-medium text-charcoal-700">
-                      Auto-renews at expiration
-                    </span>
-                  </label>
-                </div>
-
-                <div className="space-y-1.5 pt-2 border-t border-charcoal-100">
-                  <Label className="text-sm">Document Upload</Label>
-                  <div className="border-2 border-dashed border-charcoal-200 rounded-xl p-5 flex flex-col items-center justify-center text-center hover:bg-charcoal-50 transition-colors cursor-pointer relative">
-                    <input
-                      type="file"
-                      className="absolute inset-0 opacity-0 cursor-pointer"
-                      onChange={(e) => {
-                        if (e.target.files?.[0]) {
+                  <div className="flex items-end pb-1">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <Checkbox
+                        checked={currentContract.autoRenew}
+                        onCheckedChange={(c) =>
                           setCurrentContract((prev) => ({
                             ...prev,
-                            fileUrl: e.target.files![0].name,
+                            autoRenew: !!c,
                           }))
                         }
-                      }}
-                    />
-                    {currentContract.fileUrl ? (
-                      <>
-                        <Paperclip className="w-6 h-6 text-gold-500 mb-2" />
-                        <p className="text-sm font-medium text-charcoal-700">
-                          {currentContract.fileUrl}
-                        </p>
-                        <p className="text-xs text-charcoal-400 mt-1">
-                          Click to replace
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <UploadCloud className="w-6 h-6 text-charcoal-400 mb-2" />
-                        <p className="text-sm font-medium text-charcoal-700">
-                          Click or drag to upload
-                        </p>
-                        <p className="text-xs text-charcoal-400 mt-1">
-                          PDF, DOCX up to 10MB
-                        </p>
-                      </>
-                    )}
+                      />
+                      <span className="text-sm font-medium text-charcoal-700">
+                        Auto-renew
+                      </span>
+                    </label>
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label className="text-sm">Document</Label>
+                    <div className="border-2 border-dashed border-charcoal-200 rounded-lg h-10 flex items-center justify-center text-center hover:bg-charcoal-50 transition-colors cursor-pointer relative">
+                      <input
+                        type="file"
+                        className="absolute inset-0 opacity-0 cursor-pointer"
+                        onChange={(e) => {
+                          if (e.target.files?.[0]) {
+                            setCurrentContract((prev) => ({
+                              ...prev,
+                              fileUrl: e.target.files![0].name,
+                            }))
+                          }
+                        }}
+                      />
+                      {currentContract.fileUrl ? (
+                        <div className="flex items-center gap-1.5">
+                          <Paperclip className="w-4 h-4 text-gold-500" />
+                          <span className="text-xs font-medium text-charcoal-700 truncate max-w-[100px]">
+                            {currentContract.fileUrl}
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-1.5">
+                          <UploadCloud className="w-4 h-4 text-charcoal-400" />
+                          <span className="text-xs text-charcoal-500">Upload</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Panel Footer */}
-              <div className="flex items-center justify-end gap-2 p-4 border-t border-charcoal-200 flex-shrink-0">
+              <div className="flex items-center justify-end gap-2 p-4 border-t border-charcoal-200">
                 <Button variant="outline" onClick={handleClose}>
                   Cancel
                 </Button>

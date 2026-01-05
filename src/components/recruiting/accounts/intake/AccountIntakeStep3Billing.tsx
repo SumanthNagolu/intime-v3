@@ -174,14 +174,9 @@ export function AccountIntakeStep3Billing() {
         title="Billing Addresses"
         subtitle="Addresses used for invoicing and billing"
       >
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4">
           {/* List View */}
-          <div
-            className={cn(
-              'flex-1 transition-all duration-300',
-              isPanelOpen ? 'max-w-[calc(100%-400px)]' : 'max-w-full'
-            )}
-          >
+          <div className="w-full transition-all duration-300">
             {/* Add Button */}
             <Button
               variant="outline"
@@ -286,9 +281,9 @@ export function AccountIntakeStep3Billing() {
             )}
           </div>
 
-          {/* Inline Detail Panel */}
+          {/* Inline Detail Panel - Full Width Bottom */}
           {isPanelOpen && (
-            <div className="w-[380px] border border-charcoal-200 rounded-xl bg-white animate-in slide-in-from-right duration-300 flex flex-col">
+            <div className="w-full border border-charcoal-200 rounded-xl bg-white animate-in slide-in-from-bottom duration-300">
               <div className="flex items-center justify-between p-4 border-b border-charcoal-200">
                 <div>
                   <h3 className="text-lg font-semibold text-charcoal-900">
@@ -305,26 +300,28 @@ export function AccountIntakeStep3Billing() {
                 </Button>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                <div className="space-y-2">
-                  <Label>Address Type</Label>
-                  <Select
-                    value={currentAddress.type}
-                    onValueChange={(v: AccountAddress['type']) =>
-                      setCurrentAddress((prev) => ({ ...prev, type: v }))
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {BILLING_ADDRESS_TYPES.map((t) => (
-                        <SelectItem key={t.value} value={t.value}>
-                          {t.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+              <div className="p-4 space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div className="space-y-2">
+                    <Label>Address Type</Label>
+                    <Select
+                      value={currentAddress.type}
+                      onValueChange={(v: AccountAddress['type']) =>
+                        setCurrentAddress((prev) => ({ ...prev, type: v }))
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {BILLING_ADDRESS_TYPES.map((t) => (
+                          <SelectItem key={t.value} value={t.value}>
+                            {t.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
 
                 <AddressForm

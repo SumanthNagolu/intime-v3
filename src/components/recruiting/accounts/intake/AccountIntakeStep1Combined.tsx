@@ -45,7 +45,7 @@ export function AccountIntakeStep1Combined() {
   }
 
   return (
-    <div className="space-y-10">
+    <div className="w-full space-y-10">
       {/* Account Type Selection */}
       <Section
         icon={Building2}
@@ -332,10 +332,48 @@ export function AccountIntakeStep1Combined() {
             <Input
               id="taxId"
               value={formData.taxId}
-              onChange={(e) => setFormData({ taxId: e.target.value })}
+              onChange={(e) => {
+                const value = e.target.value.replace(/\D/g, '') // Remove non-digits
+                let formatted = ''
+                if (isPerson) {
+                  // SSN format: XXX-XX-XXXX
+                  if (value.length <= 3) {
+                    formatted = value
+                  } else if (value.length <= 5) {
+                    formatted = `${value.slice(0, 3)}-${value.slice(3)}`
+                  } else {
+                    formatted = `${value.slice(0, 3)}-${value.slice(3, 5)}-${value.slice(5, 9)}`
+                  }
+                } else {
+                  // EIN format: XX-XXXXXXX
+                  if (value.length <= 2) {
+                    formatted = value
+                  } else {
+                    formatted = `${value.slice(0, 2)}-${value.slice(2, 9)}`
+                  }
+                }
+                setFormData({ taxId: formatted })
+              }}
               placeholder={isPerson ? 'XXX-XX-XXXX' : 'XX-XXXXXXX'}
-              className="h-12 rounded-xl border-charcoal-200 bg-white"
+              maxLength={isPerson ? 11 : 10}
+              className={cn(
+                'h-12 rounded-xl border-charcoal-200 bg-white',
+                formData.taxId &&
+                  ((isPerson && !/^\d{3}-\d{2}-\d{4}$/.test(formData.taxId)) ||
+                    (!isPerson && !/^\d{2}-\d{7}$/.test(formData.taxId))) &&
+                  'border-amber-400 focus:border-amber-500 focus:ring-amber-500/20'
+              )}
             />
+            {formData.taxId &&
+              ((isPerson && !/^\d{3}-\d{2}-\d{4}$/.test(formData.taxId)) ||
+                (!isPerson && !/^\d{2}-\d{7}$/.test(formData.taxId))) && (
+                <p className="text-xs text-amber-600 flex items-center gap-1.5">
+                  <AlertCircle className="w-3.5 h-3.5" />
+                  {isPerson
+                    ? 'SSN should be in format XXX-XX-XXXX (9 digits)'
+                    : 'EIN should be in format XX-XXXXXXX (9 digits)'}
+                </p>
+              )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="email" className="text-charcoal-700 font-medium">

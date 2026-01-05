@@ -114,9 +114,9 @@ export function WizardWithSidebar<T extends object>(props: WizardWithSidebarProp
           </div>
         )}
 
-        {/* Step Content */}
-        <div className="flex-1 p-8 overflow-y-auto">
-          <div className="max-w-4xl mx-auto bg-white rounded-xl border border-charcoal-100 shadow-sm p-8 min-h-[500px]">
+        {/* Step Content - Guidewire pattern: content fills available width */}
+        <div className="flex-1 w-full overflow-y-auto bg-cream">
+          <div className="w-full max-w-none px-8 py-6">
             {isReviewStep && config.reviewStep ? (
               <WizardReview
                 title={config.reviewStep.title}

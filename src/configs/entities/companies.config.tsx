@@ -875,6 +875,8 @@ export const clientsListConfig: ListViewConfig<Company> = {
     const industryValue = filters.industry as string | undefined
     const sortByValue = filters.sortBy as string | undefined
     const sortOrderValue = filters.sortOrder as string | undefined
+    const ownerValue = filters.owner as string | undefined
+    const teamValue = filters.team as string | undefined
 
     const validStatuses = ['active', 'inactive', 'on_hold', 'churned', 'do_not_use', 'pending_approval'] as const
     const validTiers = ['strategic', 'preferred', 'standard', 'transactional'] as const
@@ -912,6 +914,8 @@ export const clientsListConfig: ListViewConfig<Company> = {
       search: filters.search as string | undefined,
       categories: ['client', 'prospect'],
       excludeDraft: true, // Drafts are shown in "Your Drafts" section
+      ownerIsMe: ownerValue === 'me',
+      teamMemberIsMe: teamValue === 'me',
       status: statusValue && statusValue !== 'all' && validStatuses.includes(statusValue as Status)
         ? statusValue as Status
         : undefined,
@@ -946,6 +950,8 @@ export const clientsListConfig: ListViewConfig<Company> = {
         const industryValue = filters.industry as string | undefined
         const sortByValue = filters.sortBy as string | undefined
         const sortOrderValue = filters.sortOrder as string | undefined
+        const ownerValue = filters.owner as string | undefined
+        const teamValue = filters.team as string | undefined
 
         const validStatuses = ['active', 'inactive', 'on_hold', 'churned', 'do_not_use', 'pending_approval'] as const
         const validTiers = ['strategic', 'preferred', 'standard', 'transactional'] as const
@@ -982,6 +988,8 @@ export const clientsListConfig: ListViewConfig<Company> = {
           search: filters.search as string | undefined,
           categories: ['client', 'prospect'],
           excludeDraft: true,
+          ownerIsMe: ownerValue === 'me',
+          teamMemberIsMe: teamValue === 'me',
           status: statusValue && statusValue !== 'all' && validStatuses.includes(statusValue as Status)
             ? statusValue as Status
             : undefined,

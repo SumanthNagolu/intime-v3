@@ -263,14 +263,9 @@ export function AccountIntakeStep6Compliance() {
         title="Certifications & Clearances"
         subtitle="Specific industry requirements for all consultants"
       >
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4">
           {/* List View */}
-          <div
-            className={cn(
-              'flex-1 transition-all duration-300',
-              isPanelOpen ? 'max-w-[calc(100%-340px)]' : 'max-w-full'
-            )}
-          >
+          <div className="w-full transition-all duration-300">
             {/* Add Button */}
             <Button
               variant="outline"
@@ -365,9 +360,9 @@ export function AccountIntakeStep6Compliance() {
             )}
           </div>
 
-          {/* Inline Detail Panel */}
+          {/* Inline Detail Panel - Full Width Bottom */}
           {isPanelOpen && (
-            <div className="w-[320px] border border-charcoal-200 rounded-xl bg-white animate-in slide-in-from-right duration-300 flex flex-col">
+            <div className="w-full border border-charcoal-200 rounded-xl bg-white animate-in slide-in-from-bottom duration-300">
               {/* Panel Header */}
               <div className="flex items-center justify-between p-4 border-b border-charcoal-200 flex-shrink-0">
                 <div>

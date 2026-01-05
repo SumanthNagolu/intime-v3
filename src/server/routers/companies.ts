@@ -43,7 +43,10 @@ export const companiesRouter = router({
       tier: CompanyTier.optional(),
       segment: CompanySegment.optional(),
       ownerId: z.string().uuid().optional(),
+      ownerIsMe: z.boolean().optional(), // Filter by current user as owner
       accountManagerId: z.string().uuid().optional(),
+      teamMemberId: z.string().uuid().optional(), // Filter by team member (user on company_team)
+      teamMemberIsMe: z.boolean().optional(), // Filter by current user as team member
       search: z.string().optional(),
       industry: z.string().optional(),
       sortBy: z.enum([
@@ -55,8 +58,40 @@ export const companiesRouter = router({
       offset: z.number().min(0).default(0),
     }))
     .query(async ({ ctx, input }) => {
-      const { orgId } = ctx
+      const { orgId, user } = ctx
       const adminClient = getAdminClient()
+
+      // Look up user's profile ID if we need to filter by current user
+      let userProfileId: string | null = null
+      if ((input.ownerIsMe || input.teamMemberIsMe) && user?.id) {
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+        userProfileId = profile?.id ?? null
+      }
+
+      // Determine effective owner ID (explicit or current user)
+      const effectiveOwnerId = input.ownerId || (input.ownerIsMe && userProfileId ? userProfileId : undefined)
+
+      // If filtering by team member, first get the company IDs where user is on the team
+      let teamCompanyIds: string[] | null = null
+      const effectiveTeamMemberId = input.teamMemberId || (input.teamMemberIsMe && userProfileId ? userProfileId : undefined)
+      if (effectiveTeamMemberId) {
+        const { data: teamMemberships } = await adminClient
+          .from('company_team')
+          .select('company_id')
+          .eq('user_id', effectiveTeamMemberId)
+          .is('removed_at', null)
+
+        teamCompanyIds = teamMemberships?.map(m => m.company_id) || []
+
+        // If no team memberships found, return empty result early
+        if (teamCompanyIds.length === 0) {
+          return { items: [], total: 0 }
+        }
+      }
 
       let query = adminClient
         .from('companies')
@@ -69,6 +104,11 @@ export const companiesRouter = router({
         `, { count: 'exact' })
         .eq('org_id', orgId)
         .is('deleted_at', null)
+
+      // Filter by team company IDs if provided
+      if (teamCompanyIds) {
+        query = query.in('id', teamCompanyIds)
+      }
 
       // Category filtering
       if (input.category) {
@@ -92,7 +132,7 @@ export const companiesRouter = router({
       // Other filters
       if (input.tier) query = query.eq('tier', input.tier)
       if (input.segment) query = query.eq('segment', input.segment)
-      if (input.ownerId) query = query.eq('owner_id', input.ownerId)
+      if (effectiveOwnerId) query = query.eq('owner_id', effectiveOwnerId)
       if (input.accountManagerId) query = query.eq('account_manager_id', input.accountManagerId)
       if (input.industry) query = query.eq('industry', input.industry)
       if (input.search) {
