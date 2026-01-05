@@ -319,52 +319,380 @@ export const crmRouter = router({
         })) ?? []
       }),
 
-    // Create new account
+    // Enhanced create account with wizard support
+    createEnhanced: orgProtectedProcedure
+      .input(z.object({
+        accountType: z.enum(['company', 'person']).default('company'),
+        // Identity
+        name: z.string().min(2).max(200),
+        legalName: z.string().optional(),
+        dba: z.string().optional(),
+        taxId: z.string().optional(),
+        website: z.string().optional().or(z.literal('')),
+        linkedinUrl: z.string().optional().or(z.literal('')),
+        description: z.string().optional(),
+        phone: z.any().optional(), // PhoneValue
+        email: z.string().optional(),
+        
+        // Classification
+        industries: z.array(z.string()).optional(),
+        industry: z.string().optional(), // Legacy support
+        companyType: z.string().optional(),
+        tier: z.string().optional(),
+        segment: z.string().optional(),
+        employeeCount: z.string().optional(),
+        revenueRange: z.string().optional(),
+        foundedYear: z.any().optional(), // string or number
+        ownershipType: z.string().optional(),
+        status: z.string().default('prospect'),
+        
+        // Locations
+        addresses: z.array(z.any()).optional(), // AccountAddress[]
+        headquartersLocation: z.string().optional(), // Legacy
+        headquartersCity: z.string().optional(), // Legacy
+        headquartersState: z.string().optional(), // Legacy
+        headquartersCountry: z.string().optional(), // Legacy
+        
+        // Billing
+        billingEntityName: z.string().optional(),
+        billingEmail: z.string().optional(),
+        billingPhone: z.any().optional(),
+        billingAddress: z.string().optional(),
+        billingCity: z.string().optional(), // Legacy
+        billingState: z.string().optional(), // Legacy
+        billingPostalCode: z.string().optional(), // Legacy
+        billingCountry: z.string().optional(), // Legacy
+        billingFrequency: z.string().optional(),
+        paymentTermsDays: z.any().optional(), // string or number
+        poRequired: z.boolean().optional(),
+        currentPoNumber: z.string().optional(),
+        poExpirationDate: z.string().optional(),
+        currency: z.string().optional(),
+        invoiceFormat: z.string().optional(),
+        annualRevenueTarget: z.number().optional(), // Legacy
+        
+        // Contacts
+        contacts: z.array(z.any()).optional(), // AccountContact[]
+        primaryContactName: z.string().optional(), // Legacy
+        primaryContactEmail: z.string().optional(), // Legacy
+        primaryContactTitle: z.string().optional(), // Legacy
+        primaryContactPhone: z.string().optional(), // Legacy
+        preferredContactMethod: z.string().optional(),
+        meetingCadence: z.string().optional(),
+        
+        // Contracts
+        contracts: z.array(z.any()).optional(), // AccountContract[]
+        
+        // Compliance
+        compliance: z.any().optional(), // AccountCompliance
+        
+        // Team
+        team: z.any().optional(), // TeamAssignment
+        
+        // Draft Support
+        wizard_state: z.any().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Check for duplicate account name before creating
+        const { data: existingAccount } = await adminClient
+          .from('companies')
+          .select('id, name')
+          .eq('org_id', orgId)
+          .eq('name', input.name.trim())
+          .is('deleted_at', null)
+          .maybeSingle()
+
+        if (existingAccount) {
+          throw new TRPCError({ 
+            code: 'CONFLICT', 
+            message: `An account with the name "${input.name}" already exists. Please use a different name.` 
+          })
+        }
+
+        // Determine category based on status
+        const category = input.status === 'prospect' ? 'prospect' : 'client'
+
+        // Get the user_profile.id for the current user
+        let userProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          userProfileId = profile?.id ?? null
+        }
+
+        // Create company record
+        const { data: account, error } = await adminClient
+          .from('companies')
+          .insert({
+            org_id: orgId,
+            category: category,
+            name: input.name,
+            industry: input.industries?.[0] || input.industry,
+            industries: input.industries,
+            segment: input.segment,
+            relationship_type: input.companyType as any || 'direct_client',
+            status: input.status as any,
+            tier: input.tier as any,
+            website: input.website || null,
+            phone: typeof input.phone === 'object' ? input.phone?.number : input.phone,
+            description: input.description,
+            annual_revenue: input.revenueRange ? undefined : input.annualRevenueTarget, // Use legacy if range not set
+            revenue_range: input.revenueRange,
+            employee_range: input.employeeCount,
+            
+            // Legacy HQ fields - populate from addresses[0] if available
+            headquarters_city: input.headquartersCity || input.addresses?.[0]?.city,
+            headquarters_state: input.headquartersState || input.addresses?.[0]?.state,
+            headquarters_country: input.headquartersCountry || input.addresses?.[0]?.country || 'US',
+            
+            legal_name: input.legalName,
+            dba_name: input.dba,
+            linkedin_url: input.linkedinUrl,
+            founded_year: Number(input.foundedYear) || undefined,
+            ownership_type: input.ownershipType,
+            
+            default_payment_terms: input.paymentTermsDays ? `Net ${input.paymentTermsDays}` : 'Net 30',
+            default_currency: input.currency || 'USD',
+            requires_po: input.poRequired,
+            
+            // Team
+            owner_id: input.team?.ownerId || userProfileId,
+            account_manager_id: input.team?.accountManagerId || userProfileId,
+            
+            // Draft state
+            custom_fields: input.wizard_state ? { wizard_state: input.wizard_state } : {},
+            
+            created_by: userProfileId,
+          })
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        const companyId = account.id
+
+        // Client Details
+        await adminClient
+          .from('company_client_details')
+          .insert({
+            company_id: companyId,
+            org_id: orgId,
+            billing_entity_name: input.billingEntityName,
+            billing_email: input.billingEmail,
+            billing_phone: typeof input.billingPhone === 'object' ? input.billingPhone?.number : input.billingPhone,
+            billing_frequency: input.billingFrequency,
+            po_required: input.poRequired,
+            current_po_number: input.currentPoNumber,
+            po_expiration_date: input.poExpirationDate,
+            invoice_format: input.invoiceFormat,
+            // Map legacy billing address fields
+            billing_address_line_1: input.billingAddress,
+            billing_city: input.billingCity,
+            billing_state: input.billingState,
+            billing_postal_code: input.billingPostalCode,
+            billing_country: input.billingCountry || 'US',
+          })
+
+        // Addresses
+        if (input.addresses && input.addresses.length > 0) {
+          const addressInserts = input.addresses.map((addr: any) => ({
+            org_id: orgId,
+            entity_type: 'account',
+            entity_id: companyId,
+            address_type: addr.type || 'office',
+            address_line_1: addr.addressLine1,
+            address_line_2: addr.addressLine2,
+            city: addr.city,
+            state_province: addr.state,
+            postal_code: addr.postalCode,
+            country_code: addr.country,
+            is_primary: addr.isPrimary,
+            created_by: userProfileId,
+          }))
+          await adminClient.from('addresses').insert(addressInserts)
+        } else if (input.headquartersCity) {
+           // Fallback for legacy input
+           await adminClient.from('addresses').insert({
+            org_id: orgId,
+            entity_type: 'account',
+            entity_id: companyId,
+            address_type: 'headquarters',
+            address_line_1: input.headquartersLocation,
+            city: input.headquartersCity,
+            state_province: input.headquartersState,
+            country_code: input.headquartersCountry || 'US',
+            is_primary: true,
+            created_by: userProfileId,
+           })
+        }
+
+        // Contacts
+        if (input.contacts && input.contacts.length > 0) {
+          // Create contacts
+          for (const contact of input.contacts) {
+            const { data: newContact } = await adminClient
+              .from('contacts')
+              .insert({
+                org_id: orgId,
+                company_id: account.id,
+                category: 'person',  
+                subtype: 'person_client_contact', 
+                first_name: contact.firstName,
+                last_name: contact.lastName,
+                email: contact.email,
+                phone: typeof contact.phone === 'object' ? contact.phone?.number : contact.phone,
+                title: contact.title,
+                department: contact.department,
+                linkedin_url: contact.linkedInUrl,
+                is_primary: contact.isPrimary,
+                created_by: userProfileId,
+              })
+              .select('id')
+              .single()
+            
+            if (newContact) {
+              // Create junction
+              await adminClient.from('company_contacts').insert({
+                org_id: orgId,
+                company_id: companyId,
+                contact_id: newContact.id,
+                job_title: contact.title,
+                department: contact.department,
+                decision_authority: contact.decisionAuthority,
+                role_description: contact.role,
+                is_primary: contact.isPrimary,
+              })
+            }
+          }
+        }
+
+        // Contracts
+        if (input.contracts && input.contracts.length > 0) {
+          const contractInserts = input.contracts.map((contract: any) => ({
+            org_id: orgId,
+            entity_type: 'account',
+            entity_id: companyId,
+            contract_type: contract.type,
+            contract_name: contract.name,
+            contract_number: contract.number,
+            status: contract.status,
+            effective_date: contract.effectiveDate,
+            expiry_date: contract.expiryDate,
+            auto_renew: contract.autoRenew,
+            contract_value: contract.contractValue ? Number(contract.contractValue) : null,
+            currency: contract.currency,
+            document_url: contract.fileUrl,
+            created_by: userProfileId,
+          }))
+          await adminClient.from('contracts').insert(contractInserts)
+        }
+
+        // Compliance
+        if (input.compliance) {
+          await adminClient.from('company_compliance_requirements').insert({
+            company_id: companyId,
+            org_id: orgId,
+            general_liability_required: input.compliance.insurance?.generalLiability,
+            professional_liability_required: input.compliance.insurance?.professionalLiability,
+            workers_comp_required: input.compliance.insurance?.workersComp,
+            cyber_liability_required: input.compliance.insurance?.cyberLiability,
+            background_check_required: input.compliance.backgroundCheck?.required,
+            background_check_level: input.compliance.backgroundCheck?.level,
+            drug_test_required: input.compliance.drugTest?.required,
+          })
+        }
+
+        // Record history: Account created
+        void historyService.recordEntityCreated(
+          'account',
+          account.id,
+          { orgId, userId: user?.id ?? null },
+          { entityName: input.name, initialStatus: input.status }
+        ).catch(err => console.error('[History] Failed to record account creation:', err))
+
+        return { id: account.id, name: account.name, status: account.status }
+      }),
+
+    // Create new account (Legacy)
     create: orgProtectedProcedure
       .input(z.object({
+        accountType: z.enum(['company', 'person']).default('company'),
+        // Identity
         name: z.string().min(2).max(200),
-        industry: z.string().optional(),
-        industries: z.array(z.string()).optional(), // Array of industries
-        companyType: z.enum(['direct_client', 'implementation_partner', 'staffing_vendor']).default('direct_client'),
-        status: z.enum(['prospect', 'active', 'inactive']).default('prospect'),
-        tier: z.enum(['preferred', 'strategic', 'exclusive']).optional(),
-        segment: z.enum(['enterprise', 'mid_market', 'smb', 'startup']).optional(),
-        website: z.string().url().optional().or(z.literal('')),
-        phone: z.string().optional(),
-        // Headquarters location - separate fields
-        headquartersLocation: z.string().optional(), // Legacy combined string
-        headquartersCity: z.string().optional(),
-        headquartersState: z.string().optional(),
-        headquartersCountry: z.string().optional(),
-        description: z.string().optional(),
-        annualRevenueTarget: z.number().optional(),
-        // Billing info
-        billingEntityName: z.string().optional(),
-        billingEmail: z.string().email().optional().or(z.literal('')),
-        billingPhone: z.string().optional(),
-        billingAddress: z.string().optional(),
-        billingCity: z.string().optional(),
-        billingState: z.string().optional(),
-        billingPostalCode: z.string().optional(),
-        billingCountry: z.string().optional(),
-        billingFrequency: z.enum(['weekly', 'biweekly', 'monthly']).optional(),
-        poRequired: z.boolean().optional(),
-        paymentTermsDays: z.number().optional(),
-        // Communication
-        preferredContactMethod: z.enum(['email', 'phone', 'slack', 'teams']).optional(),
-        meetingCadence: z.enum(['daily', 'weekly', 'biweekly', 'monthly', 'quarterly']).optional(),
-        // Company details
         legalName: z.string().optional(),
+        dba: z.string().optional(),
         taxId: z.string().optional(),
-        employeeCount: z.number().optional(),
-        fundingStage: z.string().optional(),
-        linkedinUrl: z.string().url().optional().or(z.literal('')),
-        foundedYear: z.number().optional(),
-        // Primary contact (optional)
-        primaryContactName: z.string().optional(),
-        primaryContactEmail: z.string().email().optional(),
-        primaryContactTitle: z.string().optional(),
-        primaryContactPhone: z.string().optional(),
+        website: z.string().optional().or(z.literal('')),
+        linkedinUrl: z.string().optional().or(z.literal('')),
+        description: z.string().optional(),
+        phone: z.any().optional(), // PhoneValue
+        email: z.string().optional(),
+        
+        // Classification
+        industries: z.array(z.string()).optional(),
+        industry: z.string().optional(), // Legacy support
+        companyType: z.string().optional(),
+        tier: z.string().optional(),
+        segment: z.string().optional(),
+        employeeCount: z.string().optional(),
+        revenueRange: z.string().optional(),
+        foundedYear: z.any().optional(), // string or number
+        ownershipType: z.string().optional(),
+        status: z.string().default('prospect'),
+        
+        // Locations
+        addresses: z.array(z.any()).optional(), // AccountAddress[]
+        headquartersLocation: z.string().optional(), // Legacy
+        headquartersCity: z.string().optional(), // Legacy
+        headquartersState: z.string().optional(), // Legacy
+        headquartersCountry: z.string().optional(), // Legacy
+        
+        // Billing
+        billingEntityName: z.string().optional(),
+        billingEmail: z.string().optional(),
+        billingPhone: z.any().optional(),
+        billingAddress: z.string().optional(),
+        billingCity: z.string().optional(), // Legacy
+        billingState: z.string().optional(), // Legacy
+        billingPostalCode: z.string().optional(), // Legacy
+        billingCountry: z.string().optional(), // Legacy
+        billingFrequency: z.string().optional(),
+        paymentTermsDays: z.any().optional(), // string or number
+        poRequired: z.boolean().optional(),
+        currentPoNumber: z.string().optional(),
+        poExpirationDate: z.string().optional(),
+        currency: z.string().optional(),
+        invoiceFormat: z.string().optional(),
+        annualRevenueTarget: z.number().optional(), // Legacy
+        
+        // Contacts
+        contacts: z.array(z.any()).optional(), // AccountContact[]
+        primaryContactName: z.string().optional(), // Legacy
+        primaryContactEmail: z.string().optional(), // Legacy
+        primaryContactTitle: z.string().optional(), // Legacy
+        primaryContactPhone: z.string().optional(), // Legacy
+        preferredContactMethod: z.string().optional(),
+        meetingCadence: z.string().optional(),
+        
+        // Contracts
+        contracts: z.array(z.any()).optional(), // AccountContract[]
+        
+        // Compliance
+        compliance: z.any().optional(), // AccountCompliance
+        
+        // Team
+        team: z.any().optional(), // TeamAssignment
+        
+        // Draft Support
+        wizard_state: z.any().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
         const { orgId, user } = ctx
@@ -559,6 +887,290 @@ export const crmRouter = router({
           { orgId, userId: user?.id ?? null },
           { entityName: input.name, initialStatus: input.status }
         ).catch(err => console.error('[History] Failed to record account creation:', err))
+
+        return account
+      }),
+
+    // Enhanced update account with wizard support
+    updateEnhanced: orgProtectedProcedure
+      .input(z.object({
+        id: z.string().uuid(),
+        accountType: z.enum(['company', 'person']).optional(),
+        // Identity
+        name: z.string().min(2).max(200).optional(),
+        legalName: z.string().optional(),
+        dba: z.string().optional(),
+        taxId: z.string().optional(),
+        website: z.string().optional().or(z.literal('')),
+        linkedinUrl: z.string().optional().or(z.literal('')),
+        description: z.string().optional(),
+        phone: z.any().optional(), // PhoneValue
+        email: z.string().optional(),
+        
+        // Classification
+        industries: z.array(z.string()).optional(),
+        industry: z.string().optional(), // Legacy support
+        companyType: z.string().optional(),
+        tier: z.string().optional(),
+        segment: z.string().optional(),
+        employeeCount: z.string().optional(),
+        revenueRange: z.string().optional(),
+        foundedYear: z.any().optional(), // string or number
+        ownershipType: z.string().optional(),
+        status: z.string().optional(),
+        
+        // Locations
+        addresses: z.array(z.any()).optional(), // AccountAddress[]
+        headquartersLocation: z.string().optional(), // Legacy
+        headquartersCity: z.string().optional(), // Legacy
+        headquartersState: z.string().optional(), // Legacy
+        headquartersCountry: z.string().optional(), // Legacy
+        
+        // Billing
+        billingEntityName: z.string().optional(),
+        billingEmail: z.string().optional(),
+        billingPhone: z.any().optional(),
+        billingAddress: z.string().optional(),
+        billingCity: z.string().optional(), // Legacy
+        billingState: z.string().optional(), // Legacy
+        billingPostalCode: z.string().optional(), // Legacy
+        billingCountry: z.string().optional(), // Legacy
+        billingFrequency: z.string().optional(),
+        paymentTermsDays: z.any().optional(), // string or number
+        poRequired: z.boolean().optional(),
+        currentPoNumber: z.string().optional(),
+        poExpirationDate: z.string().optional(),
+        currency: z.string().optional(),
+        invoiceFormat: z.string().optional(),
+        annualRevenueTarget: z.number().optional(), // Legacy
+        
+        // Contacts
+        contacts: z.array(z.any()).optional(), // AccountContact[]
+        primaryContactName: z.string().optional(), // Legacy
+        primaryContactEmail: z.string().optional(), // Legacy
+        primaryContactTitle: z.string().optional(), // Legacy
+        primaryContactPhone: z.string().optional(), // Legacy
+        preferredContactMethod: z.string().optional(),
+        meetingCadence: z.string().optional(),
+        
+        // Contracts
+        contracts: z.array(z.any()).optional(), // AccountContract[]
+        
+        // Compliance
+        compliance: z.any().optional(), // AccountCompliance
+        
+        // Team
+        team: z.any().optional(), // TeamAssignment
+        
+        // Draft Support
+        wizard_state: z.any().optional(),
+        deleted_at: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get user profile ID
+        let userProfileId: string | null = null
+        if (user?.id) {
+          const { data: profile } = await adminClient
+            .from('user_profiles')
+            .select('id')
+            .eq('auth_id', user.id)
+            .single()
+          userProfileId = profile?.id ?? null
+        }
+
+        // Handle soft delete
+        if (input.deleted_at) {
+          await adminClient
+            .from('companies')
+            .update({ deleted_at: input.deleted_at, updated_by: userProfileId })
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+          return { id: input.id }
+        }
+
+        const updateData: any = {
+          updated_by: userProfileId,
+          updated_at: new Date().toISOString(),
+        }
+
+        if (input.name) updateData.name = input.name
+        if (input.status) updateData.status = input.status as any
+        if (input.industry || (input.industries && input.industries.length > 0)) {
+          updateData.industry = input.industry || input.industries?.[0]
+          updateData.industries = input.industries
+        }
+        if (input.segment) updateData.segment = input.segment
+        if (input.companyType) {
+           updateData.relationship_type = input.companyType === 'implementation_partner' ? 'implementation_partner' :
+                                          input.companyType === 'staffing_vendor' ? 'prime_vendor' : 'direct_client'
+        }
+        if (input.tier) updateData.tier = input.tier as any
+        if (input.website !== undefined) updateData.website = input.website
+        if (input.phone) updateData.phone = typeof input.phone === 'object' ? input.phone?.number : input.phone
+        if (input.description) updateData.description = input.description
+        if (input.revenueRange) updateData.revenue_range = input.revenueRange
+        if (input.employeeCount) updateData.employee_range = input.employeeCount
+        
+        if (input.headquartersCity) updateData.headquarters_city = input.headquartersCity
+        if (input.headquartersState) updateData.headquarters_state = input.headquartersState
+        if (input.headquartersCountry) updateData.headquarters_country = input.headquartersCountry
+        
+        if (input.legalName) updateData.legal_name = input.legalName
+        if (input.dba) updateData.dba_name = input.dba
+        if (input.linkedinUrl !== undefined) updateData.linkedin_url = input.linkedinUrl
+        if (input.foundedYear) updateData.founded_year = Number(input.foundedYear) || undefined
+        if (input.ownershipType) updateData.ownership_type = input.ownershipType
+        
+        if (input.paymentTermsDays) updateData.default_payment_terms = `Net ${input.paymentTermsDays}`
+        if (input.currency) updateData.default_currency = input.currency
+        if (input.poRequired !== undefined) updateData.requires_po = input.poRequired
+        
+        if (input.team?.ownerId) updateData.owner_id = input.team.ownerId
+        if (input.team?.accountManagerId) updateData.account_manager_id = input.team.accountManagerId
+        
+        // Draft state
+        if (input.wizard_state !== undefined) {
+          // Get existing custom_fields to merge properly
+          const { data: existing } = await adminClient
+            .from('companies')
+            .select('custom_fields')
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+            .single()
+          
+          const existingCustomFields = existing?.custom_fields || {}
+          
+          if (input.wizard_state === null) {
+            // Clear wizard_state but preserve other custom_fields
+            const { wizard_state, ...rest } = existingCustomFields
+            updateData.custom_fields = Object.keys(rest).length > 0 ? rest : null
+          } else {
+            // Merge wizard_state with existing custom_fields
+            updateData.custom_fields = { ...existingCustomFields, wizard_state: input.wizard_state }
+          }
+        }
+
+        // Update company
+        const { data: account, error } = await adminClient
+          .from('companies')
+          .update(updateData)
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Update Client Details (Upsert style)
+        await adminClient
+          .from('company_client_details')
+          .upsert({
+            company_id: input.id,
+            org_id: orgId,
+            billing_entity_name: input.billingEntityName,
+            billing_email: input.billingEmail,
+            billing_phone: typeof input.billingPhone === 'object' ? input.billingPhone?.number : input.billingPhone,
+            billing_frequency: input.billingFrequency,
+            po_required: input.poRequired,
+            current_po_number: input.currentPoNumber,
+            po_expiration_date: input.poExpirationDate,
+            invoice_format: input.invoiceFormat,
+            billing_address_line_1: input.billingAddress,
+            billing_city: input.billingCity,
+            billing_state: input.billingState,
+            billing_postal_code: input.billingPostalCode,
+            billing_country: input.billingCountry || 'US',
+          }, { onConflict: 'company_id' })
+        
+        // Addresses (Upsert)
+        if (input.addresses && input.addresses.length > 0) {
+           for (const addr of input.addresses) {
+             if (addr.id) {
+               await adminClient.from('addresses').upsert({
+                 id: addr.id, // If valid UUID provided
+                 org_id: orgId,
+                 entity_type: 'account',
+                 entity_id: input.id,
+                 address_type: addr.type,
+                 address_line_1: addr.addressLine1,
+                 address_line_2: addr.addressLine2,
+                 city: addr.city,
+                 state_province: addr.state,
+                 postal_code: addr.postalCode,
+                 country_code: addr.country,
+                 is_primary: addr.isPrimary,
+                 updated_by: userProfileId,
+               })
+             }
+           }
+        }
+
+        // Contacts (Upsert)
+        if (input.contacts && input.contacts.length > 0) {
+          for (const contact of input.contacts) {
+             if (contact.id) {
+               await adminClient.from('contacts').upsert({
+                 id: contact.id,
+                 org_id: orgId,
+                 first_name: contact.firstName,
+                 last_name: contact.lastName,
+                 email: contact.email,
+                 phone: typeof contact.phone === 'object' ? contact.phone?.number : contact.phone,
+                 title: contact.title,
+                 department: contact.department,
+                 linkedin_url: contact.linkedInUrl,
+                 is_primary: contact.isPrimary,
+                 company_id: input.id,
+                 updated_by: userProfileId,
+               })
+             }
+          }
+        }
+
+        // Contracts (Upsert)
+        if (input.contracts && input.contracts.length > 0) {
+           for (const contract of input.contracts) {
+             if (contract.id) {
+               await adminClient.from('contracts').upsert({
+                 id: contract.id,
+                 org_id: orgId,
+                 entity_type: 'account',
+                 entity_id: input.id,
+                 contract_type: contract.type,
+                 contract_name: contract.name,
+                 contract_number: contract.number,
+                 status: contract.status,
+                 effective_date: contract.effectiveDate,
+                 expiry_date: contract.expiryDate,
+                 auto_renew: contract.autoRenew,
+                 contract_value: contract.contractValue ? Number(contract.contractValue) : null,
+                 currency: contract.currency,
+                 document_url: contract.fileUrl,
+                 updated_by: userProfileId,
+               })
+             }
+           }
+        }
+
+        // Compliance (Upsert)
+        if (input.compliance) {
+          await adminClient.from('company_compliance_requirements').upsert({
+            company_id: input.id,
+            org_id: orgId,
+            general_liability_required: input.compliance.insurance?.generalLiability,
+            professional_liability_required: input.compliance.insurance?.professionalLiability,
+            workers_comp_required: input.compliance.insurance?.workersComp,
+            cyber_liability_required: input.compliance.insurance?.cyberLiability,
+            background_check_required: input.compliance.backgroundCheck?.required,
+            background_check_level: input.compliance.backgroundCheck?.level,
+            drug_test_required: input.compliance.drugTest?.required,
+          }, { onConflict: 'company_id' })
+        }
 
         return account
       }),
@@ -1461,6 +2073,101 @@ export const crmRouter = router({
           .is('deleted_at', null)
 
         if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return { success: true }
+      }),
+
+    // List user's draft accounts (for "Your Drafts" section in list view)
+    listMyDrafts: orgProtectedProcedure.query(async ({ ctx }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      if (!user?.id) {
+        return []
+      }
+
+      // Get user_profile.id from auth_id
+      const { data: profile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_id', user.id)
+        .single()
+
+      if (!profile?.id) {
+        return []
+      }
+
+      const { data, error } = await adminClient
+        .from('companies')
+        .select('id, name, status, custom_fields, created_at, updated_at')
+        .eq('org_id', orgId)
+        .eq('created_by', profile.id)
+        .eq('status', 'draft')
+        .in('category', ['client', 'prospect'])
+        .is('deleted_at', null)
+        .order('updated_at', { ascending: false })
+
+      if (error) {
+        console.error('[accounts.listMyDrafts] Error:', error.message)
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return data ?? []
+    }),
+
+    // Delete a draft account (soft delete, verify ownership and draft status)
+    deleteDraft: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        // Get user_profile.id from auth_id
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+
+        if (!profile?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User profile not found' })
+        }
+
+        // Verify ownership and draft status
+        const { data: existing } = await adminClient
+          .from('companies')
+          .select('id, status, created_by')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .single()
+
+        if (!existing) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Account not found' })
+        }
+
+        if (existing.created_by !== profile.id) {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'You can only delete your own drafts' })
+        }
+
+        if (existing.status !== 'draft') {
+          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Can only delete draft accounts' })
+        }
+
+        // Soft delete
+        const { error } = await adminClient
+          .from('companies')
+          .update({ deleted_at: new Date().toISOString() })
+          .eq('id', input.id)
+
+        if (error) {
+          console.error('[accounts.deleteDraft] Error:', error.message)
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 

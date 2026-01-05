@@ -136,13 +136,18 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
     async (existingDraftId: string | null, formData: TFormData, currentStep: number) => {
       const displayName = getDisplayName(formData) || `Untitled ${entityType}`
 
-      const wizardState: WizardState = {
+      const entityData = formToEntity(formData)
+
+      // CRITICAL: Merge wizard metadata with formData - don't overwrite!
+      // entityData.wizard_state may contain { formData, currentStep } from formToEntity
+      // We need to preserve that and add our metadata
+      const existingWizardState = (entityData as Record<string, unknown>).wizard_state as Record<string, unknown> | undefined
+      const wizardState = {
+        ...existingWizardState,
         currentStep,
         totalSteps,
         lastSavedAt: new Date().toISOString(),
       }
-
-      const entityData = formToEntity(formData)
 
       try {
         if (existingDraftId) {
@@ -150,17 +155,20 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
           const result = await updateMutation.mutateAsync({
             id: existingDraftId,
             ...entityData,
-            wizard_state: wizardState,
+            wizard_state: wizardState, // Now includes formData from entityData
           })
           setLastSavedAt(new Date())
           onInvalidate?.()
           return result
         } else {
           // Create new draft
+          // Use 'draft' for accounts so they appear in the "Your Drafts" section
+          // For other entities, don't override status - let mutation defaults handle it
+          const draftStatus = entityType === 'Account' ? 'draft' : undefined
           const result = await createMutation.mutateAsync({
             ...entityData,
-            status: 'draft',
-            wizard_state: wizardState,
+            ...(draftStatus ? { status: draftStatus } : {}),
+            wizard_state: wizardState, // Now includes formData from entityData
           })
           setDraftId((result as TEntity).id)
           setLastSavedAt(new Date())
@@ -177,17 +185,32 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
 
   // Initialize draft management
   useEffect(() => {
-    if (hasInitialized.current) return
+    // Use sessionStorage to persist initialization across remounts
+    const initKey = `entity-draft-init-${entityType}-${resumeId || 'new'}`
+    const wasInitialized = sessionStorage.getItem(initKey) === 'true'
+    
+    if (hasInitialized.current || wasInitialized) {
+      // If already initialized, just mark as ready but don't reset
+      if (!isReady) {
+        setIsReady(true)
+      }
+      return
+    }
 
     const initialize = async () => {
       try {
         // Case 1: Resuming a specific draft from URL
         if (resumeId && getDraftQuery.data) {
           hasInitialized.current = true
+          sessionStorage.setItem(initKey, 'true')
 
           const draft = getDraftQuery.data
 
-          // Load the draft into the store
+          // CRITICAL: Reset the form FIRST to clear any stale localStorage data
+          // This prevents data from other drafts bleeding into this one
+          wizardStore.resetForm()
+
+          // Load the draft into the store (now with clean slate)
           const formData = entityToForm(draft)
           wizardStore.setFormData(formData as Partial<TFormData>)
 
@@ -217,15 +240,20 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
         // Case 2: New wizard - reset form and wait for user to enter data
         if (!resumeId) {
           hasInitialized.current = true
-          // IMPORTANT: Reset the form to clear any stale localStorage-persisted data
+          sessionStorage.setItem(initKey, 'true')
+
+          // CRITICAL: Always reset for new wizard to prevent stale localStorage data
+          // from previous drafts bleeding into the new form
           wizardStore.resetForm()
           previousFormData.current = ''
+
           setIsReady(true)
           return
         }
       } catch (error) {
         console.error('[useEntityDraft] Initialization error:', error)
         hasInitialized.current = true
+        sessionStorage.setItem(initKey, 'true')
         setIsReady(true)
       }
     }
@@ -279,15 +307,16 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
     const hasMeaningfulData = hasData(formData)
     if (!hasMeaningfulData) return
 
-    const displayName = getDisplayName(formData) || `Untitled ${entityType}`
+    const entityData = formToEntity(formData)
 
-    const wizardState: WizardState = {
+    // CRITICAL: Merge wizard metadata with formData from entityData
+    const existingWizardState = (entityData as Record<string, unknown>).wizard_state as Record<string, unknown> | undefined
+    const wizardState = {
+      ...existingWizardState,
       currentStep,
       totalSteps,
       lastSavedAt: new Date().toISOString(),
     }
-
-    const entityData = formToEntity(formData)
 
     if (draftId) {
       // Update existing draft
@@ -335,12 +364,16 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
       }
     }
 
+    // Clean up sessionStorage
+    const initKey = `entity-draft-init-${entityType}-${draftId || 'new'}`
+    sessionStorage.removeItem(initKey)
+
     // Reset store
     wizardStore.resetForm()
     setDraftId(null)
     setLastSavedAt(null)
     onInvalidate?.()
-  }, [draftId, updateMutation, wizardStore, onInvalidate])
+  }, [draftId, updateMutation, wizardStore, onInvalidate, entityType])
 
   // Finalize draft - change status from 'draft' to target status
   const finalizeDraft = useCallback(async (targetStatus: string): Promise<TEntity> => {
@@ -352,6 +385,10 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
         status: targetStatus,
         wizard_state: null, // Clear wizard state
       })
+
+      // Clean up sessionStorage
+      const initKey = `entity-draft-init-${entityType}-new`
+      sessionStorage.removeItem(initKey)
 
       // Reset store after successful creation
       wizardStore.resetForm()
@@ -371,6 +408,10 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
       wizard_state: null, // Clear wizard state on finalization
     })
 
+    // Clean up sessionStorage
+    const initKey = `entity-draft-init-${entityType}-${draftId}`
+    sessionStorage.removeItem(initKey)
+
     // Reset store after successful finalization
     wizardStore.resetForm()
     setDraftId(null)
@@ -382,6 +423,7 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
     draftId,
     formData,
     formToEntity,
+    entityType,
     createMutation,
     updateMutation,
     wizardStore,
