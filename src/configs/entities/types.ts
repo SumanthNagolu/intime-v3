@@ -204,6 +204,45 @@ export interface DraftsConfig<T = unknown> {
   }
 }
 
+// ============================================
+// LIST VIEW TABS CONFIGURATION
+// ============================================
+
+/**
+ * ListTabConfig - Configuration for tabs in list views
+ *
+ * Enables splitting a list view into multiple tabs (e.g., "Drafts" and "Submitted")
+ * Each tab can have its own query, columns, and rendering options.
+ */
+export interface ListTabConfig<T = unknown> {
+  /** Unique identifier for the tab */
+  id: string
+  /** Display label for the tab */
+  label: string
+  /** Optional count to display next to the label */
+  getCount?: () => number | undefined
+  /** Query hook for this tab's data */
+  useQuery: (filters: Record<string, unknown>) => {
+    data: { items: T[]; total: number } | undefined
+    isLoading: boolean
+    error: unknown
+  }
+  /** Optional override for columns (uses parent config columns if not specified) */
+  columns?: ColumnConfig<T>[]
+  /** Optional override for card renderer */
+  cardRenderer?: (item: T, onClick: () => void) => React.ReactNode
+  /** Optional override for empty state */
+  emptyState?: EmptyStateConfig
+  /** Whether to show filters for this tab (default: true) */
+  showFilters?: boolean
+  /** Custom component to render instead of default table/cards */
+  customComponent?: React.ComponentType<{
+    items: T[]
+    isLoading: boolean
+    filters: Record<string, unknown>
+  }>
+}
+
 export interface ListViewConfig<T = unknown> {
   // Entity info
   entityType: string
@@ -260,6 +299,15 @@ export interface ListViewConfig<T = unknown> {
 
   // Drafts section (shows user's draft entities at top of list)
   drafts?: DraftsConfig<T>
+
+  /**
+   * Tabs configuration - when provided, displays content in tabs instead of single list
+   * Each tab can have its own query and rendering. Useful for separating drafts from submitted items.
+   */
+  tabs?: ListTabConfig<T>[]
+
+  /** Default tab ID when using tabs (defaults to first tab) */
+  defaultTab?: string
 
   /**
    * Data Hooks Pattern (G4: Hydration Safety)

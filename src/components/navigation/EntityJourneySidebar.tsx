@@ -195,8 +195,8 @@ export function EntityJourneySidebar({
   return (
     <TooltipProvider delayDuration={100}>
       <div className={cn('flex flex-col flex-1 overflow-hidden', className)}>
-        {/* Back Link - with top padding for toggle button */}
-        <div className="px-4 pt-12 pb-2">
+        {/* Back Link */}
+        <div className="px-4 pt-4 pb-2">
           {isCollapsed ? (
             <Tooltip>
               <TooltipTrigger asChild>

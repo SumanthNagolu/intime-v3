@@ -25,6 +25,7 @@ import {
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
+import { AccountDraftsTabContent } from '@/components/pcf/list-view/AccountDraftsTabContent'
 // PCF Section Adapters
 import {
   CompanyOverviewSectionPCF,
@@ -932,14 +933,114 @@ export const clientsListConfig: ListViewConfig<Company> = {
     return trpc.companies.stats.useQuery({ categories: ['client', 'prospect'], excludeDraft: true })
   },
 
-  // Draft support - shows "Your Drafts" section at top of list
-  drafts: {
-    enabled: true,
-    wizardRoute: '/employee/recruiting/accounts/new',
-    displayNameField: 'name',
-    useGetMyDraftsQuery: () => trpc.crm.accounts.listMyDrafts.useQuery(),
-    useDeleteDraftMutation: () => trpc.crm.accounts.deleteDraft.useMutation(),
-  },
+  // Tabs configuration - "Drafts" and "Accounts" tabs
+  tabs: [
+    {
+      id: 'accounts',
+      label: 'Accounts',
+      showFilters: true,
+      useQuery: (filters) => {
+        const statusValue = filters.status as string | undefined
+        const tierValue = filters.tier as string | undefined
+        const segmentValue = filters.segment as string | undefined
+        const industryValue = filters.industry as string | undefined
+        const sortByValue = filters.sortBy as string | undefined
+        const sortOrderValue = filters.sortOrder as string | undefined
+
+        const validStatuses = ['active', 'inactive', 'on_hold', 'churned', 'do_not_use', 'pending_approval'] as const
+        const validTiers = ['strategic', 'preferred', 'standard', 'transactional'] as const
+        const validSegments = ['enterprise', 'mid_market', 'smb', 'startup'] as const
+        const validSortFields = [
+          'name', 'category', 'industry', 'status', 'tier', 'segment',
+          'health_score', 'last_contacted_date', 'revenue_ytd', 'created_at'
+        ] as const
+
+        type Status = (typeof validStatuses)[number]
+        type Tier = (typeof validTiers)[number]
+        type Segment = (typeof validSegments)[number]
+        type SortField = (typeof validSortFields)[number]
+
+        const sortFieldMap: Record<string, SortField> = {
+          name: 'name',
+          industry: 'industry',
+          status: 'status',
+          tier: 'tier',
+          segment: 'segment',
+          health_score: 'health_score',
+          healthScore: 'health_score',
+          last_contacted_date: 'last_contacted_date',
+          lastContactDate: 'last_contacted_date',
+          created_at: 'created_at',
+          createdAt: 'created_at',
+        }
+
+        const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
+          ? sortFieldMap[sortByValue]
+          : 'created_at'
+
+        return trpc.companies.list.useQuery({
+          search: filters.search as string | undefined,
+          categories: ['client', 'prospect'],
+          excludeDraft: true,
+          status: statusValue && statusValue !== 'all' && validStatuses.includes(statusValue as Status)
+            ? statusValue as Status
+            : undefined,
+          tier: tierValue && tierValue !== 'all' && validTiers.includes(tierValue as Tier)
+            ? tierValue as Tier
+            : undefined,
+          segment: segmentValue && segmentValue !== 'all' && validSegments.includes(segmentValue as Segment)
+            ? segmentValue as Segment
+            : undefined,
+          industry: industryValue && industryValue !== 'all' ? industryValue : undefined,
+          limit: (filters.limit as number) || 50,
+          offset: (filters.offset as number) || 0,
+          sortBy: mappedSortBy,
+          sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'desc'),
+        })
+      },
+      emptyState: {
+        icon: Building2,
+        title: 'No accounts found',
+        description: (filters) =>
+          filters.search
+            ? 'Try adjusting your search or filters'
+            : 'Create your first account to start building relationships',
+        action: {
+          label: 'Create Account',
+          href: '/employee/recruiting/accounts/new',
+        },
+      },
+    },
+    {
+      id: 'drafts',
+      label: 'Drafts',
+      showFilters: false,
+      useQuery: () => {
+        const draftsQuery = trpc.crm.accounts.listMyDrafts.useQuery()
+        // Transform to expected format
+        return {
+          data: draftsQuery.data ? {
+            items: draftsQuery.data as unknown as Company[],
+            total: draftsQuery.data.length,
+          } : undefined,
+          isLoading: draftsQuery.isLoading,
+          error: draftsQuery.error,
+        }
+      },
+      // Use custom component that renders draft cards with Resume action
+      customComponent: AccountDraftsTabContent,
+      emptyState: {
+        icon: FileText,
+        title: 'No drafts',
+        description: "You don't have any accounts in progress. Start creating a new one!",
+        action: {
+          label: 'Start New Account',
+          href: '/employee/recruiting/accounts/new',
+        },
+      },
+    },
+  ],
+  defaultTab: 'accounts',
 }
 
 /**
