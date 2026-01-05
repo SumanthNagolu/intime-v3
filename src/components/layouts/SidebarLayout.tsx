@@ -33,6 +33,8 @@ interface SidebarLayoutProps {
     notes?: number
     documents?: number
   }
+  /** Optional: Custom sidebar component to override default navigation */
+  customSidebar?: React.ReactNode
 }
 
 // Loading fallback for Suspense
@@ -58,6 +60,7 @@ function SidebarLayoutInner({
   hideSidebar = false,
   sectionId,
   toolCounts,
+  customSidebar,
 }: SidebarLayoutProps) {
   const entityNav = useEntityNavigationSafe()
   const entityData = useEntityData()
@@ -71,7 +74,9 @@ function SidebarLayoutInner({
         {/* Dynamic sidebar based on entity type - wrapped in ResizableSidebarWrapper */}
         {!hideSidebar && (
           <ResizableSidebarWrapper>
-            {currentEntity ? (
+            {customSidebar ? (
+              customSidebar
+            ) : currentEntity ? (
               // Use entity-specific sidebars where available
               currentEntity.type === 'campaign' ? (
                 // Campaign uses specialized dual-mode sidebar (Journey + Sections)

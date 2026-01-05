@@ -10,7 +10,7 @@ import { router } from '../trpc/init'
 // ============================================
 
 const CompanyCategory = z.enum(['client', 'vendor', 'partner', 'prospect'])
-const CompanyStatus = z.enum(['active', 'inactive', 'on_hold', 'churned', 'do_not_use', 'pending_approval'])
+const CompanyStatus = z.enum(['draft', 'active', 'inactive', 'on_hold', 'churned', 'do_not_use', 'pending_approval'])
 const CompanyTier = z.enum(['strategic', 'preferred', 'standard', 'transactional'])
 const CompanySegment = z.enum(['enterprise', 'mid_market', 'smb', 'startup'])
 const CompanyRelationshipType = z.enum([
@@ -39,6 +39,7 @@ export const companiesRouter = router({
       categories: z.array(CompanyCategory).optional(),
       status: CompanyStatus.optional(),
       statuses: z.array(CompanyStatus).optional(),
+      excludeDraft: z.boolean().optional(), // Exclude draft status from results
       tier: CompanyTier.optional(),
       segment: CompanySegment.optional(),
       ownerId: z.string().uuid().optional(),
@@ -81,6 +82,11 @@ export const companiesRouter = router({
         query = query.eq('status', input.status)
       } else if (input.statuses && input.statuses.length > 0) {
         query = query.in('status', input.statuses)
+      }
+
+      // Exclude draft status (for main list when drafts are shown separately)
+      if (input.excludeDraft) {
+        query = query.neq('status', 'draft')
       }
 
       // Other filters
@@ -207,6 +213,7 @@ export const companiesRouter = router({
     .input(z.object({
       category: CompanyCategory.optional(),
       categories: z.array(CompanyCategory).optional(),
+      excludeDraft: z.boolean().optional(), // Exclude draft status from stats
     }))
     .query(async ({ ctx, input }) => {
       const { orgId } = ctx
@@ -223,6 +230,11 @@ export const companiesRouter = router({
         query = query.eq('category', input.category)
       } else if (input.categories && input.categories.length > 0) {
         query = query.in('category', input.categories)
+      }
+
+      // Exclude draft status from stats
+      if (input.excludeDraft) {
+        query = query.neq('status', 'draft')
       }
 
       const { data: companies, error } = await query
