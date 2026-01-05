@@ -269,7 +269,7 @@ export default function JobEditPage() {
   // Initialize form with job data on mount - only once per job
   useEffect(() => {
     if (job && initializedJobRef.current !== jobId) {
-      // Reset store first to clear any stale data from localStorage
+      // Reset store first to clear any stale data
       store.resetForm()
       // Then populate with job data
       const formData = mapJobToFormData(job)
@@ -311,7 +311,7 @@ export default function JobEditPage() {
     submitLabel: 'Save Changes',
     saveDraftLabel: undefined, // Hide draft button in edit mode
     onSubmit: async (formData: JobIntakeFormData) => {
-      // Normalize certifications - handle legacy string format from localStorage
+      // Normalize certifications - handle legacy string format
       const rawCerts = formData.certifications as string[] | string | undefined
       const normalizedCertifications = Array.isArray(rawCerts)
         ? rawCerts

@@ -227,7 +227,7 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
 
           const draft = getDraftQuery.data
 
-          // CRITICAL: Reset the form FIRST to clear any stale localStorage data
+          // CRITICAL: Reset the form FIRST to clear any stale data
           // This prevents data from other drafts bleeding into this one
           wizardStore.resetForm()
 
@@ -263,7 +263,7 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
           hasInitialized.current = true
           sessionStorage.setItem(initKey, 'true')
 
-          // CRITICAL: Always reset for new wizard to prevent stale localStorage data
+          // CRITICAL: Always reset for new wizard to prevent stale data
           // from previous drafts bleeding into the new form
           wizardStore.resetForm()
           previousFormData.current = ''

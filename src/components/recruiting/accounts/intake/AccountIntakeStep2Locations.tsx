@@ -111,14 +111,9 @@ export function AccountIntakeStep2Locations() {
         title="Locations & Addresses"
         subtitle="Manage all physical locations associated with this account"
       >
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4">
           {/* List View */}
-          <div
-            className={cn(
-              'flex-1 transition-all duration-300',
-              isPanelOpen ? 'max-w-[calc(100%-400px)]' : 'max-w-full'
-            )}
-          >
+          <div className="w-full transition-all duration-300">
             {/* Add Button */}
             <Button
               variant="outline"
@@ -236,9 +231,9 @@ export function AccountIntakeStep2Locations() {
             )}
           </div>
 
-          {/* Inline Detail Panel */}
+          {/* Inline Detail Panel - Full Width Bottom */}
           {isPanelOpen && (
-            <div className="w-[380px] border border-charcoal-200 rounded-xl bg-white animate-in slide-in-from-right duration-300 flex flex-col">
+            <div className="w-full border border-charcoal-200 rounded-xl bg-white animate-in slide-in-from-bottom duration-300">
               {/* Panel Header */}
               <div className="flex items-center justify-between p-4 border-b border-charcoal-200">
                 <div>
@@ -260,8 +255,8 @@ export function AccountIntakeStep2Locations() {
               </div>
 
               {/* Panel Content */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+              <div className="p-4 space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div className="space-y-2">
                     <Label>Address Type</Label>
                     <Select

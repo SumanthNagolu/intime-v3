@@ -14,7 +14,7 @@ import type { EntityType, DraftItem } from '@/server/routers/drafts'
  * 4. Deletes draft from database on successful form submission
  * 5. Drafts persist across sessions and devices
  * 
- * This replaces the localStorage-based useWizardDraft hook.
+ * Database is the single source of truth for all draft data.
  */
 
 interface WizardStore<T> {
@@ -167,7 +167,7 @@ export function useDatabaseDraft<T extends object>({
         // Case 2: New wizard - reset form and wait for user to enter data before creating draft
         if (!resumeDraftId) {
           hasInitialized.current = true
-          // IMPORTANT: Reset the form to clear any stale localStorage-persisted data
+          // IMPORTANT: Reset the form to clear any stale data
           // This ensures a fresh form when starting new entity creation (not resuming)
           wizardStore.resetForm()
           previousFormData.current = ''

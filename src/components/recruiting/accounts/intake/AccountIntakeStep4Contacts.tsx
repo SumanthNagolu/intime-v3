@@ -157,14 +157,9 @@ export function AccountIntakeStep4Contacts() {
         title="Key Contacts"
         subtitle="Manage stakeholders and points of contact"
       >
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4">
           {/* List View */}
-          <div
-            className={cn(
-              'flex-1 transition-all duration-300',
-              isPanelOpen ? 'max-w-[calc(100%-440px)]' : 'max-w-full'
-            )}
-          >
+          <div className="w-full transition-all duration-300">
             {/* Add Button */}
             <Button
               variant="outline"
@@ -286,11 +281,11 @@ export function AccountIntakeStep4Contacts() {
             )}
           </div>
 
-          {/* Inline Detail Panel */}
+          {/* Inline Detail Panel - Full Width Bottom */}
           {isPanelOpen && (
-            <div className="w-[420px] border border-charcoal-200 rounded-xl bg-white animate-in slide-in-from-right duration-300 flex flex-col max-h-[700px]">
+            <div className="w-full border border-charcoal-200 rounded-xl bg-white animate-in slide-in-from-bottom duration-300">
               {/* Panel Header */}
-              <div className="flex items-center justify-between p-4 border-b border-charcoal-200 flex-shrink-0">
+              <div className="flex items-center justify-between p-4 border-b border-charcoal-200">
                 <div>
                   <h3 className="text-lg font-semibold text-charcoal-900">
                     {isAddingNew ? 'Add New Contact' : 'Edit Contact'}
@@ -310,13 +305,13 @@ export function AccountIntakeStep4Contacts() {
               </div>
 
               {/* Panel Content */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-5">
+              <div className="p-4 space-y-5">
                 {/* Basic Info */}
                 <div className="space-y-4">
                   <h4 className="text-xs font-semibold text-charcoal-500 uppercase tracking-wide">
                     Basic Information
                   </h4>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                     <div className="space-y-1.5">
                       <Label className="text-sm">
                         First Name <span className="text-red-500">*</span>
@@ -347,29 +342,25 @@ export function AccountIntakeStep4Contacts() {
                         className="h-10"
                       />
                     </div>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <Label className="text-sm">
-                      Email <span className="text-red-500">*</span>
-                    </Label>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-400" />
-                      <Input
-                        type="email"
-                        className="pl-9 h-10"
-                        value={currentContact.email || ''}
-                        onChange={(e) =>
-                          setCurrentContact((prev) => ({
-                            ...prev,
-                            email: e.target.value,
-                          }))
-                        }
-                      />
+                    <div className="space-y-1.5">
+                      <Label className="text-sm">
+                        Email <span className="text-red-500">*</span>
+                      </Label>
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-400" />
+                        <Input
+                          type="email"
+                          className="pl-9 h-10"
+                          value={currentContact.email || ''}
+                          onChange={(e) =>
+                            setCurrentContact((prev) => ({
+                              ...prev,
+                              email: e.target.value,
+                            }))
+                          }
+                        />
+                      </div>
                     </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1.5">
                       <Label className="text-sm">Job Title</Label>
                       <div className="relative">
@@ -386,6 +377,8 @@ export function AccountIntakeStep4Contacts() {
                         />
                       </div>
                     </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                     <div className="space-y-1.5">
                       <Label className="text-sm">Department</Label>
                       <Input
@@ -399,28 +392,48 @@ export function AccountIntakeStep4Contacts() {
                         className="h-10"
                       />
                     </div>
+                    <PhoneInput
+                      label="Work Phone"
+                      value={currentContact.phone as PhoneValue}
+                      onChange={(phone) =>
+                        setCurrentContact((prev) => ({ ...prev, phone }))
+                      }
+                    />
+                    <PhoneInput
+                      label="Mobile Phone"
+                      value={currentContact.mobile as PhoneValue}
+                      onChange={(mobile) =>
+                        setCurrentContact((prev) => ({ ...prev, mobile }))
+                      }
+                    />
+                    <div className="flex items-end pb-1">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setCurrentContact((prev) => ({
+                            ...prev,
+                            isPrimary: !prev.isPrimary,
+                          }))
+                        }
+                        className={cn(
+                          'flex items-center gap-2 text-sm font-medium transition-colors',
+                          currentContact.isPrimary
+                            ? 'text-gold-600'
+                            : 'text-charcoal-500 hover:text-charcoal-700'
+                        )}
+                      >
+                        <CheckCircle2
+                          className={cn(
+                            'w-5 h-5',
+                            currentContact.isPrimary
+                              ? 'fill-gold-100'
+                              : 'text-charcoal-300'
+                          )}
+                        />
+                        Primary
+                      </button>
+                    </div>
                   </div>
-                </div>
-
-                {/* Contact Info */}
-                <div className="space-y-4 pt-2 border-t border-charcoal-100">
-                  <h4 className="text-xs font-semibold text-charcoal-500 uppercase tracking-wide">
-                    Phone Numbers
-                  </h4>
-                  <PhoneInput
-                    label="Work Phone"
-                    value={currentContact.phone as PhoneValue}
-                    onChange={(phone) =>
-                      setCurrentContact((prev) => ({ ...prev, phone }))
-                    }
-                  />
-                  <PhoneInput
-                    label="Mobile Phone"
-                    value={currentContact.mobile as PhoneValue}
-                    onChange={(mobile) =>
-                      setCurrentContact((prev) => ({ ...prev, mobile }))
-                    }
-                  />
                 </div>
 
                 {/* Role & Authority */}
@@ -428,7 +441,7 @@ export function AccountIntakeStep4Contacts() {
                   <h4 className="text-xs font-semibold text-charcoal-500 uppercase tracking-wide">
                     Role & Authority
                   </h4>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                     <div className="space-y-1.5">
                       <Label className="text-sm">Role</Label>
                       <Select
@@ -472,59 +485,32 @@ export function AccountIntakeStep4Contacts() {
                         </SelectContent>
                       </Select>
                     </div>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <Label className="text-sm">Influence Level (1-5)</Label>
-                    <div className="flex gap-2">
-                      {([1, 2, 3, 4, 5] as const).map((level) => (
-                        <button
-                          key={level}
-                          type="button"
-                          onClick={() =>
-                            setCurrentContact((prev) => ({
-                              ...prev,
-                              influenceLevel: level,
-                            }))
-                          }
-                          className={cn(
-                            'w-10 h-10 rounded-lg border-2 font-semibold transition-all',
-                            currentContact.influenceLevel === level
-                              ? 'border-gold-400 bg-gold-50 text-gold-700'
-                              : 'border-charcoal-200 text-charcoal-500 hover:border-charcoal-300'
-                          )}
-                        >
-                          {level}
-                        </button>
-                      ))}
+                    <div className="space-y-1.5">
+                      <Label className="text-sm">Influence Level</Label>
+                      <div className="flex gap-2">
+                        {([1, 2, 3, 4, 5] as const).map((level) => (
+                          <button
+                            key={level}
+                            type="button"
+                            onClick={() =>
+                              setCurrentContact((prev) => ({
+                                ...prev,
+                                influenceLevel: level,
+                              }))
+                            }
+                            className={cn(
+                              'w-10 h-10 rounded-lg border-2 font-semibold transition-all',
+                              currentContact.influenceLevel === level
+                                ? 'border-gold-400 bg-gold-50 text-gold-700'
+                                : 'border-charcoal-200 text-charcoal-500 hover:border-charcoal-300'
+                            )}
+                          >
+                            {level}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
-
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setCurrentContact((prev) => ({
-                        ...prev,
-                        isPrimary: !prev.isPrimary,
-                      }))
-                    }
-                    className={cn(
-                      'flex items-center gap-2 text-sm font-medium transition-colors',
-                      currentContact.isPrimary
-                        ? 'text-gold-600'
-                        : 'text-charcoal-500 hover:text-charcoal-700'
-                    )}
-                  >
-                    <CheckCircle2
-                      className={cn(
-                        'w-5 h-5',
-                        currentContact.isPrimary
-                          ? 'fill-gold-100'
-                          : 'text-charcoal-300'
-                      )}
-                    />
-                    Set as primary contact
-                  </button>
                 </div>
 
                 {/* Communication Preferences */}
@@ -532,7 +518,7 @@ export function AccountIntakeStep4Contacts() {
                   <h4 className="text-xs font-semibold text-charcoal-500 uppercase tracking-wide">
                     Communication Preferences
                   </h4>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                     <div className="space-y-1.5">
                       <Label className="text-sm flex items-center gap-1.5">
                         <MessageSquare className="w-3.5 h-3.5 text-charcoal-400" />
@@ -584,48 +570,46 @@ export function AccountIntakeStep4Contacts() {
                         </SelectContent>
                       </Select>
                     </div>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <Label className="text-sm">Best Time to Contact</Label>
-                    <Input
-                      placeholder="e.g., Mornings before 10am"
-                      value={currentContact.bestTimeToContact || ''}
-                      onChange={(e) =>
-                        setCurrentContact((prev) => ({
-                          ...prev,
-                          bestTimeToContact: e.target.value,
-                        }))
-                      }
-                      className="h-10"
-                    />
-                  </div>
-
-                  <div className="flex items-center justify-between p-3 bg-charcoal-50 rounded-lg">
-                    <div>
-                      <Label className="text-sm font-medium">Do Not Call</Label>
-                      <p className="text-xs text-charcoal-500">
-                        Contact prefers not to receive calls
-                      </p>
+                    <div className="space-y-1.5">
+                      <Label className="text-sm">Best Time to Contact</Label>
+                      <Input
+                        placeholder="e.g., Mornings before 10am"
+                        value={currentContact.bestTimeToContact || ''}
+                        onChange={(e) =>
+                          setCurrentContact((prev) => ({
+                            ...prev,
+                            bestTimeToContact: e.target.value,
+                          }))
+                        }
+                        className="h-10"
+                      />
                     </div>
-                    <Switch
-                      checked={currentContact.doNotCall || false}
-                      onCheckedChange={(checked) =>
-                        setCurrentContact((prev) => ({
-                          ...prev,
-                          doNotCall: checked,
-                        }))
-                      }
-                    />
+                    <div className="flex items-center justify-between p-3 bg-charcoal-50 rounded-lg">
+                      <div>
+                        <Label className="text-sm font-medium">Do Not Call</Label>
+                        <p className="text-xs text-charcoal-500">
+                          Prefers not to receive calls
+                        </p>
+                      </div>
+                      <Switch
+                        checked={currentContact.doNotCall || false}
+                        onCheckedChange={(checked) =>
+                          setCurrentContact((prev) => ({
+                            ...prev,
+                            doNotCall: checked,
+                          }))
+                        }
+                      />
+                    </div>
                   </div>
                 </div>
 
-                {/* Social Links */}
+                {/* Social Links & Notes */}
                 <div className="space-y-4 pt-2 border-t border-charcoal-100">
                   <h4 className="text-xs font-semibold text-charcoal-500 uppercase tracking-wide">
-                    Social Profiles
+                    Social Profiles & Notes
                   </h4>
-                  <div className="space-y-3">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="space-y-1.5">
                       <Label className="text-sm flex items-center gap-1.5">
                         <Linkedin className="w-3.5 h-3.5 text-charcoal-400" />
@@ -661,29 +645,25 @@ export function AccountIntakeStep4Contacts() {
                       />
                     </div>
                   </div>
-                </div>
-
-                {/* Notes */}
-                <div className="space-y-4 pt-2 border-t border-charcoal-100">
-                  <h4 className="text-xs font-semibold text-charcoal-500 uppercase tracking-wide">
-                    Notes
-                  </h4>
-                  <Textarea
-                    placeholder="Any additional notes about this contact..."
-                    value={currentContact.notes || ''}
-                    onChange={(e) =>
-                      setCurrentContact((prev) => ({
-                        ...prev,
-                        notes: e.target.value,
-                      }))
-                    }
-                    className="min-h-[80px] resize-none"
-                  />
+                  <div className="space-y-1.5">
+                    <Label className="text-sm">Notes</Label>
+                    <Textarea
+                      placeholder="Additional notes..."
+                      value={currentContact.notes || ''}
+                      onChange={(e) =>
+                        setCurrentContact((prev) => ({
+                          ...prev,
+                          notes: e.target.value,
+                        }))
+                      }
+                      className="min-h-[80px] resize-none"
+                    />
+                  </div>
                 </div>
               </div>
 
               {/* Panel Footer */}
-              <div className="flex items-center justify-end gap-2 p-4 border-t border-charcoal-200 flex-shrink-0">
+              <div className="flex items-center justify-end gap-2 p-4 border-t border-charcoal-200">
                 <Button variant="outline" onClick={handleClose}>
                   Cancel
                 </Button>
