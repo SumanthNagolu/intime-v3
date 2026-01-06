@@ -111,6 +111,70 @@ export interface AccountData {
   placements_ytd: number | null
   active_jobs_count: number | null
   active_placements_count: number | null
+
+  // Corporate Profile (from intake wizard)
+  legal_name: string | null
+  dba_name: string | null
+  founded_year: number | null
+  employee_range: string | null
+  revenue_range: string | null
+  ownership_type: string | null
+  linkedin_url: string | null
+  relationship_type: string | null  // direct_client, implementation_partner, staffing_vendor
+
+  // Billing & Terms
+  default_payment_terms: string | null
+  default_currency: string | null
+  default_markup_percentage: number | null
+  default_fee_percentage: number | null
+  requires_po: boolean
+  credit_limit: number | null
+  credit_status: string | null
+
+  // MSA/Contract Status
+  msa_status: string | null
+  msa_effective_date: string | null
+  msa_expiration_date: string | null
+  msa_auto_renews: boolean
+
+  // Team Assignments
+  account_manager_id: string | null
+  account_manager: {
+    id: string
+    full_name: string
+    avatar_url: string | null
+  } | null
+
+  // Engagement Preferences
+  preferred_contact_method: string | null
+  submission_method: string | null
+  invoice_delivery_method: string | null
+  meeting_cadence: string | null
+  next_scheduled_contact: string | null
+
+  // Flags
+  is_strategic: boolean
+  requires_approval_for_submission: boolean
+  allows_remote_work: boolean
+
+  // Onboarding
+  onboarding_status: string | null
+  onboarding_completed_at: string | null
+  onboarding_data: Record<string, unknown> | null
+
+  // Source tracking
+  source: string | null
+  source_detail: string | null
+
+  // Tags
+  tags: string[] | null
+
+  // First engagement
+  first_engagement_date: string | null
+  last_job_date: string | null
+  last_placement_date: string | null
+  last_activity_date: string | null
+  total_contacts_count: number | null
 }
 
 // Simplified types for embedded data

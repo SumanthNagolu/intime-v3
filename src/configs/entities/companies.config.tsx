@@ -1494,7 +1494,7 @@ export const companyDetailConfig: DetailViewConfig<Company> = {
       variant: 'outline',
       onClick: (entity: unknown) => {
         const company = entity as Company
-        window.location.href = `/employee/recruiting/jobs/intake?companyId=${company.id}`
+        window.location.href = `/employee/recruiting/jobs/new?companyId=${company.id}`
       },
       isVisible: (entity: unknown) => {
         const company = entity as Company
@@ -1611,7 +1611,7 @@ export const clientDetailConfig: DetailViewConfig<Company> = {
       variant: 'outline',
       onClick: (entity: unknown) => {
         const company = entity as Company
-        window.location.href = `/employee/recruiting/jobs/intake?accountId=${company.id}`
+        window.location.href = `/employee/recruiting/jobs/new?accountId=${company.id}`
       },
     },
   ],

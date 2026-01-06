@@ -122,7 +122,7 @@ export function ContactWorkspace({ onAction: _onAction }: ContactWorkspaceProps 
   }, [data.contact.id])
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-6">
+    <div className="w-full max-w-none px-8 py-6 space-y-6">
       {/* Header */}
       <ContactHeader contact={data.contact} />
 

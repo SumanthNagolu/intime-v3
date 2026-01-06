@@ -76,6 +76,10 @@ export interface UseEntityDraftOptions<TFormData, TEntity> {
 
   // Invalidation callback after save
   onInvalidate?: () => void
+
+  // Callback after save completes (for file uploads, etc.)
+  // Receives the saved entity ID so files can be associated
+  onAfterSave?: (entityId: string, formData: TFormData) => Promise<void>
 }
 
 export interface UseEntityDraftReturn<TEntity> {
@@ -119,6 +123,7 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
   resumeId,
   searchParamsString = '',
   onInvalidate,
+  onAfterSave,
 }: UseEntityDraftOptions<TFormData, TEntity>): UseEntityDraftReturn<TEntity> {
   // Generate stable keys for sessionStorage
   const draftIdKey = `entity-draft-id-${entityType}-${resumeId || 'new'}`
@@ -134,11 +139,16 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
   const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null)
   const hasInitialized = useRef(false)
   const previousFormData = useRef<string>('')
+  // Use ref to track draftId for debounced save to avoid race conditions
+  // State can lag behind, causing multiple creates when it should be updates
+  const draftIdRef = useRef<string | null>(draftId)
+  const isCreatingRef = useRef(false) // Prevent concurrent creates
   const router = useRouter()
 
-  // Wrapper to persist draftId to sessionStorage
+  // Wrapper to persist draftId to sessionStorage AND ref
   const setDraftId = useCallback((id: string | null) => {
     setDraftIdState(id)
+    draftIdRef.current = id // Keep ref in sync for debounced saves
     if (typeof window !== 'undefined') {
       if (id) {
         sessionStorage.setItem(draftIdKey, id)
@@ -152,10 +162,17 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
   const formData = wizardStore.formData
   const currentStep = wizardStore.currentStep
 
+  // Keep ref in sync with state (for when state is loaded from sessionStorage)
+  useEffect(() => {
+    draftIdRef.current = draftId
+  }, [draftId])
+
   // Debounced auto-save function (2 second delay)
+  // CRITICAL: Use draftIdRef.current instead of passed parameter to avoid race conditions
   const debouncedSave = useDebouncedCallback(
-    async (existingDraftId: string | null, formData: TFormData, currentStep: number) => {
-      const displayName = getDisplayName(formData) || `Untitled ${entityType}`
+    async (_unusedDraftId: string | null, formData: TFormData, currentStep: number) => {
+      // Use ref to get the CURRENT draft ID, not the stale one from when debounce was triggered
+      const existingDraftId = draftIdRef.current
 
       const entityData = formToEntity(formData)
 
@@ -180,21 +197,39 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
           })
           setLastSavedAt(new Date())
           onInvalidate?.()
+          // Call onAfterSave for file uploads, etc.
+          await onAfterSave?.(existingDraftId, formData)
           return result
         } else {
-          // Create new draft
-          // Use 'draft' for accounts so they appear in the "Your Drafts" section
-          // For other entities, don't override status - let mutation defaults handle it
-          const draftStatus = entityType === 'Account' ? 'draft' : undefined
-          const result = await createMutation.mutateAsync({
-            ...entityData,
-            ...(draftStatus ? { status: draftStatus } : {}),
-            wizard_state: wizardState, // Now includes formData from entityData
-          })
-          setDraftId((result as TEntity).id)
-          setLastSavedAt(new Date())
-          onInvalidate?.()
-          return result
+          // Prevent concurrent creates - if already creating, skip this save
+          if (isCreatingRef.current) {
+            console.log('[useEntityDraft] Skipping save - creation already in progress')
+            return
+          }
+
+          // Mark as creating to prevent race condition duplicates
+          isCreatingRef.current = true
+
+          try {
+            // Create new draft
+            // Use 'draft' for accounts so they appear in the "Your Drafts" section
+            // For other entities, don't override status - let mutation defaults handle it
+            const draftStatus = entityType === 'Account' ? 'draft' : undefined
+            const result = await createMutation.mutateAsync({
+              ...entityData,
+              ...(draftStatus ? { status: draftStatus } : {}),
+              wizard_state: wizardState, // Now includes formData from entityData
+            })
+            const newId = (result as TEntity).id
+            setDraftId(newId) // This updates both state AND ref
+            setLastSavedAt(new Date())
+            onInvalidate?.()
+            // Call onAfterSave for file uploads, etc.
+            await onAfterSave?.(newId, formData)
+            return result
+          } finally {
+            isCreatingRef.current = false
+          }
         }
       } catch (error) {
         console.error('[useEntityDraft] Auto-save failed:', error)
@@ -339,6 +374,8 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
       lastSavedAt: new Date().toISOString(),
     }
 
+    let savedId: string
+
     if (draftId) {
       // Update existing draft
       await updateMutation.mutateAsync({
@@ -346,6 +383,7 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
         ...entityData,
         wizard_state: wizardState,
       })
+      savedId = draftId
     } else {
       // Create new draft
       const result = await createMutation.mutateAsync({
@@ -353,11 +391,15 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
         status: 'draft',
         wizard_state: wizardState,
       })
-      setDraftId((result as TEntity).id)
+      savedId = (result as TEntity).id
+      setDraftId(savedId)
     }
 
     setLastSavedAt(new Date())
     onInvalidate?.()
+
+    // Call onAfterSave for file uploads, etc.
+    await onAfterSave?.(savedId, formData)
   }, [
     draftId,
     formData,
@@ -370,6 +412,8 @@ export function useEntityDraft<TFormData extends object, TEntity extends { id: s
     createMutation,
     updateMutation,
     onInvalidate,
+    onAfterSave,
+    setDraftId,
   ])
 
   // Delete draft (soft delete by setting deleted_at)

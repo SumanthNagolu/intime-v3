@@ -48,11 +48,7 @@ function WizardLoadingFallback() {
 // JOB DIALOGS
 // ==============================================
 
-// JobIntakeWizardDialog has been migrated to a dedicated page:
-// /employee/recruiting/jobs/intake
-
-// CreateJobDialog has been migrated to a dedicated page:
-// /employee/recruiting/jobs/new
+// Job creation wizard is now at: /employee/recruiting/jobs/new
 
 export const LazyCloseJobWizard = dynamic(
   () => import('./recruiting/jobs/CloseJobWizard').then((mod) => mod.CloseJobWizard),

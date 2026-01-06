@@ -24,10 +24,10 @@ import {
   Pencil,
   Trash2,
   Calendar,
-  UploadCloud,
   Paperclip,
   X,
 } from 'lucide-react'
+import { FileUpload } from '@/components/ui/file-upload'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import {
@@ -359,7 +359,7 @@ export function AccountIntakeStep5Contracts() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-6 gap-3">
                   <div className="space-y-1.5">
                     <Label className="text-sm">Contract Value</Label>
                     <Input
@@ -430,35 +430,50 @@ export function AccountIntakeStep5Contracts() {
                       </span>
                     </label>
                   </div>
-                  <div className="space-y-1.5">
+                  <div className="space-y-1.5 col-span-2">
                     <Label className="text-sm">Document</Label>
-                    <div className="border-2 border-dashed border-charcoal-200 rounded-lg h-10 flex items-center justify-center text-center hover:bg-charcoal-50 transition-colors cursor-pointer relative">
-                      <input
-                        type="file"
-                        className="absolute inset-0 opacity-0 cursor-pointer"
-                        onChange={(e) => {
-                          if (e.target.files?.[0]) {
+                    {currentContract.fileData ? (
+                      <div className="border border-charcoal-200 rounded-lg p-2 flex items-center justify-between bg-charcoal-50">
+                        <div className="flex items-center gap-2">
+                          <Paperclip className="w-4 h-4 text-gold-500" />
+                          <span className="text-xs font-medium text-charcoal-700 truncate max-w-[200px]">
+                            {currentContract.fileName}
+                          </span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() =>
                             setCurrentContract((prev) => ({
                               ...prev,
-                              fileUrl: e.target.files![0].name,
+                              fileData: undefined,
+                              fileName: undefined,
+                              fileMimeType: undefined,
+                            }))
+                          }
+                          className="text-charcoal-400 hover:text-red-500"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ) : (
+                      <FileUpload
+                        onChange={(value, file) => {
+                          if (value && file) {
+                            setCurrentContract((prev) => ({
+                              ...prev,
+                              fileData: value,
+                              fileName: file.name,
+                              fileMimeType: file.type,
                             }))
                           }
                         }}
+                        accept=".pdf,.doc,.docx,.xls,.xlsx,.txt"
+                        maxSize={10 * 1024 * 1024}
+                        placeholder="PDF, Word, Excel (max 10MB)"
+                        preview={false}
+                        className="min-h-[40px] [&>div]:min-h-[40px] [&>div]:py-2"
                       />
-                      {currentContract.fileUrl ? (
-                        <div className="flex items-center gap-1.5">
-                          <Paperclip className="w-4 h-4 text-gold-500" />
-                          <span className="text-xs font-medium text-charcoal-700 truncate max-w-[100px]">
-                            {currentContract.fileUrl}
-                          </span>
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-1.5">
-                          <UploadCloud className="w-4 h-4 text-charcoal-400" />
-                          <span className="text-xs text-charcoal-500">Upload</span>
-                        </div>
-                      )}
-                    </div>
+                    )}
                   </div>
                 </div>
               </div>

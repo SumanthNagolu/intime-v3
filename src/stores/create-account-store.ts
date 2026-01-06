@@ -52,6 +52,10 @@ export interface AccountContract {
   currency: string
   fileUrl?: string
   filePath?: string
+  // File upload data (base64 encoded)
+  fileData?: string
+  fileName?: string
+  fileMimeType?: string
 }
 
 export interface AccountCompliance {

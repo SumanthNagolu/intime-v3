@@ -80,7 +80,7 @@ export default function AccountDetailPage() {
           break
         case 'createJob':
           // Navigate to job intake with account pre-selected
-          router.push(`/employee/recruiting/jobs/intake?accountId=${accountId}`)
+          router.push(`/employee/recruiting/jobs/new?accountId=${accountId}`)
           break
         case 'updateStatus':
           // Handle status update if needed

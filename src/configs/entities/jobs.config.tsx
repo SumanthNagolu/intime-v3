@@ -40,6 +40,7 @@ import {
   JobClientDetailsSectionPCF,
   JobHistorySectionPCF,
 } from './sections/jobs.sections'
+import { JobDraftsTabContent } from '@/components/pcf/list-view/JobDraftsTabContent'
 
 // Type definition for Job entity
 export interface Job extends Record<string, unknown> {
@@ -280,7 +281,7 @@ export const jobsListConfig: ListViewConfig<Job> = {
   primaryAction: {
     label: 'New Job',
     icon: Plus,
-    href: '/employee/recruiting/jobs/intake',
+    href: '/employee/recruiting/jobs/new',
   },
 
   statsCards: [
@@ -553,87 +554,129 @@ export const jobsListConfig: ListViewConfig<Job> = {
         : 'Create your first job requisition to get started',
     action: {
       label: 'Create Job',
-      href: '/employee/recruiting/jobs/intake',
+      href: '/employee/recruiting/jobs/new',
     },
   },
 
-  // tRPC hooks for data fetching
-  useListQuery: (filters) => {
-    const statusValue = filters.status as string | undefined
-    const typeValue = filters.type as string | undefined
-    const priorityValue = filters.priority as string | undefined
-    const priorityRankValue = filters.priorityRank as string | undefined
-    const sortByValue = filters.sortBy as string | undefined
-    const sortOrderValue = filters.sortOrder as string | undefined
-
-    const validStatuses = ['draft', 'open', 'active', 'on_hold', 'filled', 'cancelled', 'closed', 'all'] as const
-    const validTypes = ['full_time', 'contract', 'contract_to_hire', 'part_time'] as const
-    const _validSortFields = [
-      'title',
-      'company_id',
-      'location',
-      'job_type',
-      'status',
-      'positions_available',
-      'submissions_count',
-      'interviews_count',
-      'owner_id',
-      'due_date',
-      'created_at',
-      'priority_rank',
-      'sla_days',
-    ] as const
-
-    type JobStatus = (typeof validStatuses)[number]
-    type JobType = (typeof validTypes)[number]
-    type SortField = (typeof _validSortFields)[number]
-
-    // Map frontend column keys to database columns
-    const sortFieldMap: Record<string, SortField> = {
-      title: 'title',
-      account: 'company_id',
-      location: 'location',
-      type: 'job_type',
-      status: 'status',
-      openings: 'positions_available',
-      submissions: 'submissions_count',
-      interviews: 'interviews_count',
-      owner: 'owner_id',
-      dueDate: 'due_date',
-      createdAt: 'created_at',
-      priorityRank: 'priority_rank',
-      slaDays: 'sla_days',
-    }
-
-    const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
-      ? sortFieldMap[sortByValue]
-      : 'created_at'
-
-    return trpc.ats.jobs.list.useQuery({
-      search: filters.search as string | undefined,
-      status: (statusValue && validStatuses.includes(statusValue as JobStatus) ? statusValue : 'all') as JobStatus,
-      type: typeValue && typeValue !== 'all' && validTypes.includes(typeValue as JobType)
-        ? typeValue as JobType
-        : undefined,
-      priority: priorityValue !== 'all' ? priorityValue : undefined,
-      priorityRank: priorityRankValue && priorityRankValue !== 'all' ? parseInt(priorityRankValue, 10) : undefined,
-      limit: (filters.limit as number) || 20,
-      offset: (filters.offset as number) || 0,
-      sortBy: mappedSortBy,
-      sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'desc'),
-    })
-  },
+  // Stub useListQuery - not used when tabs are defined (tabs have their own useQuery)
+  useListQuery: () => ({ data: undefined, isLoading: false, error: null }),
 
   useStatsQuery: () => trpc.ats.jobs.stats.useQuery(),
 
-  // Draft support - shows user's draft jobs at top of list view
-  drafts: {
-    enabled: true,
-    wizardRoute: '/employee/recruiting/jobs/intake',
-    displayNameField: 'title',
-    useGetMyDraftsQuery: () => trpc.ats.jobs.listMyDrafts.useQuery(),
-    useDeleteDraftMutation: () => trpc.ats.jobs.deleteDraft.useMutation(),
-  },
+  // Tabs configuration - "Jobs" and "Drafts" tabs
+  tabs: [
+    {
+      id: 'jobs',
+      label: 'Jobs',
+      showFilters: true,
+      useQuery: (filters) => {
+        const statusValue = filters.status as string | undefined
+        const typeValue = filters.type as string | undefined
+        const priorityValue = filters.priority as string | undefined
+        const priorityRankValue = filters.priorityRank as string | undefined
+        const sortByValue = filters.sortBy as string | undefined
+        const sortOrderValue = filters.sortOrder as string | undefined
+
+        const validStatuses = ['draft', 'open', 'active', 'on_hold', 'filled', 'cancelled', 'closed', 'all'] as const
+        const validTypes = ['full_time', 'contract', 'contract_to_hire', 'part_time'] as const
+        const _validSortFields = [
+          'title',
+          'company_id',
+          'location',
+          'job_type',
+          'status',
+          'positions_available',
+          'submissions_count',
+          'interviews_count',
+          'owner_id',
+          'due_date',
+          'created_at',
+          'priority_rank',
+          'sla_days',
+        ] as const
+
+        type JobStatus = (typeof validStatuses)[number]
+        type JobType = (typeof validTypes)[number]
+        type SortField = (typeof _validSortFields)[number]
+
+        // Map frontend column keys to database columns
+        const sortFieldMap: Record<string, SortField> = {
+          title: 'title',
+          account: 'company_id',
+          location: 'location',
+          type: 'job_type',
+          status: 'status',
+          openings: 'positions_available',
+          submissions: 'submissions_count',
+          interviews: 'interviews_count',
+          owner: 'owner_id',
+          dueDate: 'due_date',
+          createdAt: 'created_at',
+          priorityRank: 'priority_rank',
+          slaDays: 'sla_days',
+        }
+
+        const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
+          ? sortFieldMap[sortByValue]
+          : 'created_at'
+
+        return trpc.ats.jobs.list.useQuery({
+          search: filters.search as string | undefined,
+          status: (statusValue && validStatuses.includes(statusValue as JobStatus) ? statusValue : 'all') as JobStatus,
+          type: typeValue && typeValue !== 'all' && validTypes.includes(typeValue as JobType)
+            ? typeValue as JobType
+            : undefined,
+          priority: priorityValue !== 'all' ? priorityValue : undefined,
+          priorityRank: priorityRankValue && priorityRankValue !== 'all' ? parseInt(priorityRankValue, 10) : undefined,
+          limit: (filters.limit as number) || 20,
+          offset: (filters.offset as number) || 0,
+          sortBy: mappedSortBy,
+          sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'desc'),
+        })
+      },
+      emptyState: {
+        icon: Briefcase,
+        title: 'No jobs found',
+        description: (filters) =>
+          filters.search
+            ? 'Try adjusting your search or filters'
+            : 'Create your first job requisition to get started',
+        action: {
+          label: 'Create Job',
+          href: '/employee/recruiting/jobs/new',
+        },
+      },
+    },
+    {
+      id: 'drafts',
+      label: 'Drafts',
+      showFilters: false,
+      useQuery: () => {
+        const draftsQuery = trpc.ats.jobs.listMyDrafts.useQuery()
+        // Transform to expected format
+        return {
+          data: draftsQuery.data ? {
+            items: draftsQuery.data as unknown as Job[],
+            total: draftsQuery.data.length,
+          } : undefined,
+          isLoading: draftsQuery.isLoading,
+          error: draftsQuery.error,
+        }
+      },
+      // Use custom component that renders draft cards with Resume action
+      customComponent: JobDraftsTabContent,
+      emptyState: {
+        icon: FileText,
+        title: 'No drafts',
+        description: "You don't have any jobs in progress. Start creating a new one!",
+        action: {
+          label: 'Start New Job',
+          href: '/employee/recruiting/jobs/new',
+        },
+      },
+    },
+  ],
+  defaultTab: 'jobs',
 }
 
 // Jobs Detail View Configuration
