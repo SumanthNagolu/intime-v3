@@ -127,12 +127,14 @@ const createJobInput = z.object({
     currentStep: z.number().int().min(1),
     totalSteps: z.number().int().min(1),
     lastSavedAt: z.string(),
+    formData: z.unknown().optional(), // Store form data for draft restoration
   }).optional().nullable(),
 })
 
 const updateJobInput = z.object({
   jobId: z.string().uuid(),
-  title: z.string().min(3).max(200).optional(),
+  status: jobStatusEnum.optional(), // For finalizing drafts
+  title: z.string().max(200).optional(), // No min for drafts
   jobType: jobTypeEnum.optional(),
   location: z.string().max(200).optional(),
   // Structured location fields
@@ -142,7 +144,7 @@ const updateJobInput = z.object({
   isRemote: z.boolean().optional(),
   isHybrid: z.boolean().optional(),
   hybridDays: z.number().int().min(1).max(5).optional().nullable(),
-  requiredSkills: z.array(z.string()).min(1).max(20).optional(),
+  requiredSkills: z.array(z.string()).max(20).optional(), // No min for drafts
   niceToHaveSkills: z.array(z.string()).max(20).optional(),
   minExperienceYears: z.number().int().min(0).max(50).optional().nullable(),
   maxExperienceYears: z.number().int().min(0).max(50).optional().nullable(),
@@ -151,6 +153,7 @@ const updateJobInput = z.object({
   rateMin: z.number().positive().optional(),
   rateMax: z.number().positive().optional(),
   rateType: rateTypeEnum.optional(),
+  currency: z.string().optional(),
   positionsCount: z.number().int().min(1).max(100).optional(),
   priority: priorityEnum.optional(),
   urgency: urgencyEnum.optional(),
@@ -165,6 +168,7 @@ const updateJobInput = z.object({
   hiringManagerContactId: z.string().uuid().optional().nullable(),
   hrContactId: z.string().uuid().optional().nullable(),
   // Client/Company fields
+  accountId: z.string().uuid().optional().nullable(), // Primary account (company_id)
   clientCompanyId: z.string().uuid().optional().nullable(),
   endClientCompanyId: z.string().uuid().optional().nullable(),
   vendorCompanyId: z.string().uuid().optional().nullable(),
@@ -182,72 +186,14 @@ const updateJobInput = z.object({
   experience_level: z.string().max(1000).optional(),
   education: z.string().max(1000).optional(),
   certifications: z.string().max(1000).optional(),
-  // Extended intake data (for full edit from wizard)
-  intakeData: z.object({
-    intakeMethod: z.string().optional(),
-    hiringManagerId: z.string().uuid().optional(),
-    targetStartDate: z.string().optional(),
-    targetEndDate: z.string().optional(),
-    experienceLevel: z.string().optional(),
-    requiredSkillsDetailed: z.array(z.object({
-      name: z.string(),
-      years: z.string(),
-      proficiency: z.enum(['beginner', 'proficient', 'expert']),
-    })).optional(),
-    preferredSkills: z.array(z.string()).optional(),
-    education: z.string().optional(),
-    certifications: z.array(z.string()).optional(),
-    industries: z.array(z.string()).optional(),
-    roleOpenReason: z.string().optional(),
-    roleSummary: z.string().optional(),
-    responsibilities: z.string().optional(),
-    teamName: z.string().optional(),
-    teamSize: z.string().optional(),  // Stored as string like "4-6" to match dropdown values
-    reportsTo: z.string().optional(),
-    directReports: z.string().optional(),  // Stored as string like "1-2" to match dropdown values
-    keyProjects: z.string().optional(),
-    successMetrics: z.string().optional(),
-    workArrangement: z.string().optional(),
-    hybridDays: z.number().optional(),
-    locationRestrictions: z.array(z.string()).optional(),
-    // Full address for job location
-    locationAddressLine1: z.string().optional(),
-    locationAddressLine2: z.string().optional(),
-    locationCity: z.string().optional(),
-    locationState: z.string().optional(),
-    locationPostalCode: z.string().optional(),
-    locationCountry: z.string().optional(),
-    workAuthorizations: z.array(z.string()).optional(),
-    payRateMin: z.number().optional(),
-    payRateMax: z.number().optional(),
-    conversionSalaryMin: z.number().optional(),
-    conversionSalaryMax: z.number().optional(),
-    conversionFee: z.number().optional(),
-    benefits: z.array(z.string()).optional(),
-    weeklyHours: z.number().optional(),
-    overtimeExpected: z.string().optional(),
-    onCallRequired: z.boolean().optional(),
-    onCallSchedule: z.string().optional(),
-    interviewRounds: z.array(z.object({
-      name: z.string(),
-      format: z.string(),
-      duration: z.number(),
-      interviewer: z.string(),
-      focus: z.string(),
-    })).optional(),
-    decisionDays: z.string().optional(),
-    submissionRequirements: z.array(z.string()).optional(),
-    submissionFormat: z.string().optional(),
-    submissionNotes: z.string().optional(),
-    candidatesPerWeek: z.string().optional(),
-    feedbackTurnaround: z.number().optional(),
-    screeningQuestions: z.string().optional(),
-  }).optional(),
+  // Extended intake data (for full edit from wizard) - permissive for draft saving
+  intakeData: z.record(z.unknown()).optional(),
   // Draft support - wizard state for tracking progress
   wizard_state: z.object({
     currentStep: z.number().int().min(1),
     totalSteps: z.number().int().min(1),
     lastSavedAt: z.string(),
+    formData: z.unknown().optional(), // Store form data for draft restoration
   }).optional().nullable(),
 })
 
@@ -1343,6 +1289,50 @@ export const atsRouter = router({
     // JOB MUTATIONS - CREATE, UPDATE, PUBLISH, CLOSE
     // ============================================
 
+    // Create empty draft - called when "New Job" button is clicked
+    createDraft: orgProtectedProcedure
+      .mutation(async ({ ctx }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        // Get user profile ID for FK constraints
+        const { data: userProfile, error: userProfileError } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+
+        if (userProfileError || !userProfile) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'User profile not found' })
+        }
+
+        const now = new Date().toISOString()
+        const { data: draft, error: draftError } = await adminClient
+          .from('jobs')
+          .insert({
+            org_id: orgId,
+            title: 'Untitled Job',
+            status: 'draft',
+            wizard_state: { currentStep: 1, totalSteps: 8, createdAt: now },
+            owner_id: userProfile.id,
+            created_by: userProfile.id,
+            created_at: now,
+            updated_at: now,
+          })
+          .select('id')
+          .single()
+
+        if (draftError) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: draftError.message })
+        }
+
+        return { id: draft.id }
+      }),
+
     // Create a new job in draft status
     create: orgProtectedProcedure
       .input(createJobInput)
@@ -1574,6 +1564,8 @@ export const atsRouter = router({
           updated_at: new Date().toISOString(),
         }
 
+        // Status update (for finalizing drafts)
+        if (input.status !== undefined) updateData.status = input.status
         if (input.title !== undefined) updateData.title = input.title
         if (input.jobType !== undefined) updateData.job_type = input.jobType
         if (input.location !== undefined) updateData.location = input.location
@@ -1590,6 +1582,7 @@ export const atsRouter = router({
         if (input.rateMin !== undefined) updateData.rate_min = input.rateMin
         if (input.rateMax !== undefined) updateData.rate_max = input.rateMax
         if (input.rateType !== undefined) updateData.rate_type = input.rateType
+        if (input.currency !== undefined) updateData.currency = input.currency
         if (input.positionsCount !== undefined) updateData.positions_count = input.positionsCount
         if (input.priority !== undefined) updateData.priority = input.priority
         if (input.urgency !== undefined) updateData.urgency = input.urgency
@@ -1604,6 +1597,13 @@ export const atsRouter = router({
         if (input.hiringManagerContactId !== undefined) updateData.hiring_manager_contact_id = input.hiringManagerContactId
         if (input.hrContactId !== undefined) updateData.hr_contact_id = input.hrContactId
         // Client/Company fields
+        if (input.accountId !== undefined) {
+          updateData.company_id = input.accountId
+          // Also update client_company_id if not explicitly set
+          if (input.clientCompanyId === undefined) {
+            updateData.client_company_id = input.accountId
+          }
+        }
         if (input.clientCompanyId !== undefined) updateData.client_company_id = input.clientCompanyId
         if (input.endClientCompanyId !== undefined) updateData.end_client_company_id = input.endClientCompanyId
         if (input.vendorCompanyId !== undefined) updateData.vendor_company_id = input.vendorCompanyId
