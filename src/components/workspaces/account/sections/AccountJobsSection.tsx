@@ -224,7 +224,7 @@ export function AccountJobsSection({ jobs, accountId, accountName, onRefresh }: 
                 variant="outline"
                 className="h-9 border-charcoal-200 hover:bg-charcoal-50"
                 onClick={() => {
-                  router.push(`/employee/recruiting/jobs/intake?accountId=${accountId}`)
+                  router.push(`/employee/recruiting/jobs/new?accountId=${accountId}`)
                 }}
               >
                 <Plus className="h-4 w-4 mr-1.5" />
@@ -452,7 +452,7 @@ export function AccountJobsSection({ jobs, accountId, accountName, onRefresh }: 
               <Button 
                 size="sm" 
                 className="mt-4 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-charcoal-900"
-                onClick={() => router.push(`/employee/recruiting/jobs/intake?accountId=${accountId}`)}
+                onClick={() => router.push(`/employee/recruiting/jobs/new?accountId=${accountId}`)}
               >
                 <Plus className="h-4 w-4 mr-1.5" />
                 Create First Job

@@ -208,6 +208,256 @@ export const crmRouter = router({
         }
       }),
 
+    // Get account by ID for edit mode - returns ALL data needed for wizard
+    // Fetches addresses, contacts, contracts, and compliance in parallel
+    getByIdForEdit: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Fetch all data in parallel for best performance
+        const [
+          accountResult,
+          addressesResult,
+          contactsResult,
+          junctionContactsResult,
+          contractsResult,
+          complianceResult,
+        ] = await Promise.all([
+          // Main account with client_details
+          adminClient
+            .from('companies')
+            .select(`
+              *,
+              owner:user_profiles!owner_id(id, full_name, avatar_url),
+              account_manager:user_profiles!account_manager_id(id, full_name, avatar_url),
+              client_details:company_client_details(*)
+            `)
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+            .in('category', ['client', 'prospect'])
+            .single(),
+
+          // All addresses for this account
+          adminClient
+            .from('addresses')
+            .select('*')
+            .eq('entity_type', 'account')
+            .eq('entity_id', input.id)
+            .order('is_primary', { ascending: false }),
+
+          // Contacts linked via company_id FK (legacy/direct)
+          adminClient
+            .from('contacts')
+            .select(`
+              id, first_name, last_name, title, email, phone, mobile, department,
+              is_primary, linkedin_url, decision_authority, preferred_contact_method, notes
+            `)
+            .eq('company_id', input.id)
+            .is('deleted_at', null)
+            .order('is_primary', { ascending: false }),
+
+          // Contacts linked via company_contacts junction (many-to-many)
+          adminClient
+            .from('company_contacts')
+            .select(`
+              id, contact_id, job_title, department, decision_authority,
+              is_primary, is_active, role
+            `)
+            .eq('company_id', input.id)
+            .eq('is_active', true)
+            .order('is_primary', { ascending: false }),
+
+          // All contracts for this account
+          adminClient
+            .from('contracts')
+            .select(`
+              id, contract_name, contract_type, contract_number, category, status,
+              effective_date, expiry_date, contract_value, currency, document_url,
+              auto_renew, renewal_term_months, renewal_notice_days, terms, created_at
+            `)
+            .eq('org_id', orgId)
+            .eq('entity_type', 'account')
+            .eq('entity_id', input.id)
+            .is('deleted_at', null)
+            .order('created_at', { ascending: false }),
+
+          // Compliance requirements from company_compliance_requirements table
+          adminClient
+            .from('company_compliance_requirements')
+            .select('*')
+            .eq('company_id', input.id)
+            .maybeSingle(),
+        ])
+
+        if (accountResult.error || !accountResult.data) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Account not found' })
+        }
+
+        const account = accountResult.data
+
+        // Merge contacts from both sources (direct FK and junction table)
+        const directContacts = contactsResult.data || []
+        const junctionLinks = junctionContactsResult.data || []
+
+        // Build contacts map to deduplicate
+        const contactsMap = new Map<string, Record<string, unknown>>()
+        const junctionDataMap = new Map<string, Record<string, unknown>>()
+
+        // Add direct contacts first
+        for (const c of directContacts) {
+          contactsMap.set(c.id, c)
+        }
+
+        // Get contact IDs from junction that aren't in direct contacts
+        const junctionContactIds = junctionLinks
+          .map((link: { contact_id?: string }) => link.contact_id)
+          .filter((cid): cid is string => !!cid && !contactsMap.has(cid))
+
+        // Store junction metadata
+        for (const link of junctionLinks) {
+          const contactId = link.contact_id as string | undefined
+          if (contactId) {
+            junctionDataMap.set(contactId, {
+              department: link.department,
+              decision_authority: link.decision_authority,
+              is_primary: link.is_primary,
+              role: link.role,
+              job_title: link.job_title,
+            })
+          }
+        }
+
+        // Fetch missing contacts from junction table
+        if (junctionContactIds.length > 0) {
+          const { data: junctionContactData } = await adminClient
+            .from('contacts')
+            .select(`
+              id, first_name, last_name, title, email, phone, mobile, department,
+              linkedin_url, decision_authority, preferred_contact_method, notes, is_primary
+            `)
+            .in('id', junctionContactIds)
+            .is('deleted_at', null)
+
+          for (const c of junctionContactData || []) {
+            const contactId = c.id as string
+            const junctionMeta = junctionDataMap.get(contactId) || {}
+            contactsMap.set(contactId, {
+              ...c,
+              department: junctionMeta.department || c.department,
+              decision_authority: junctionMeta.decision_authority || c.decision_authority,
+              is_primary: junctionMeta.is_primary ?? c.is_primary ?? false,
+              role: junctionMeta.role || 'primary',
+            })
+          }
+        }
+
+        // Update existing contacts with junction metadata
+        for (const [contactId, contact] of contactsMap) {
+          const junctionMeta = junctionDataMap.get(contactId)
+          if (junctionMeta) {
+            contactsMap.set(contactId, {
+              ...contact,
+              department: junctionMeta.department || contact.department,
+              decision_authority: junctionMeta.decision_authority || contact.decision_authority,
+              is_primary: junctionMeta.is_primary ?? contact.is_primary ?? false,
+              role: junctionMeta.role || (contact as { role?: string }).role || 'primary',
+            })
+          }
+        }
+
+        // Extract client_details
+        const clientDetails = Array.isArray(account.client_details)
+          ? account.client_details[0]
+          : account.client_details
+
+        return {
+          ...account,
+          // Addresses array (all addresses)
+          addresses: (addressesResult.data || []).map((a: Record<string, unknown>) => ({
+            id: a.id,
+            type: a.address_type || 'office',
+            addressLine1: a.address_line_1 || '',
+            addressLine2: a.address_line_2 || '',
+            city: a.city || '',
+            state: a.state_province || '',
+            postalCode: a.postal_code || '',
+            country: a.country_code || 'US',
+            isPrimary: a.is_primary || false,
+          })),
+          // Contacts array (all contacts)
+          contacts: Array.from(contactsMap.values()).map((c) => ({
+            id: c.id,
+            firstName: c.first_name || '',
+            lastName: c.last_name || '',
+            email: c.email || '',
+            phone: c.phone || '',
+            mobile: c.mobile || '',
+            title: c.title || '',
+            department: c.department || '',
+            role: c.role || 'primary',
+            decisionAuthority: c.decision_authority || 'influencer',
+            isPrimary: c.is_primary || false,
+            linkedInUrl: c.linkedin_url || '',
+            notes: c.notes || '',
+          })),
+          // Contracts array
+          contracts: (contractsResult.data || []).map((c: Record<string, unknown>) => ({
+            id: c.id,
+            type: c.contract_type || 'msa',
+            name: c.contract_name || '',
+            number: c.contract_number || '',
+            status: c.status || 'draft',
+            effectiveDate: c.effective_date,
+            expiryDate: c.expiry_date,
+            autoRenew: c.auto_renew || false,
+            contractValue: c.contract_value,
+            currency: c.currency || 'USD',
+            fileUrl: c.document_url,
+          })),
+          // Compliance data from company_compliance_requirements table
+          compliance: complianceResult.data ? {
+            insurance: {
+              generalLiability: complianceResult.data.general_liability_required || false,
+              professionalLiability: complianceResult.data.professional_liability_required || false,
+              workersComp: complianceResult.data.workers_comp_required || false,
+              cyberLiability: complianceResult.data.cyber_liability_required || false,
+            },
+            backgroundCheck: {
+              required: complianceResult.data.background_check_required || false,
+              level: complianceResult.data.background_check_level || '',
+            },
+            drugTest: {
+              required: complianceResult.data.drug_test_required || false,
+            },
+            // Certifications are stored in custom_requirements JSONB field
+            certifications: (complianceResult.data.custom_requirements as { certifications?: string[] })?.certifications || [],
+          } : null,
+          // Billing data from client_details
+          billingEntityName: clientDetails?.billing_entity_name || '',
+          billingEmail: clientDetails?.billing_email || '',
+          billingPhone: clientDetails?.billing_phone || '',
+          billingFrequency: clientDetails?.billing_frequency || 'monthly',
+          paymentTermsDays: clientDetails?.payment_terms_days || 30,
+          poRequired: clientDetails?.po_required || false,
+          currentPoNumber: clientDetails?.current_po_number || '',
+          poExpirationDate: clientDetails?.po_expiration_date || null,
+          defaultCurrency: clientDetails?.default_currency || 'USD',
+          invoiceFormat: clientDetails?.invoice_format || 'standard',
+          // Team assignments
+          team: {
+            ownerId: account.owner_id || '',
+            accountManagerId: account.account_manager_id || '',
+            recruiterId: account.primary_recruiter_id || '',
+            salesLeadId: account.sales_lead_id || '',
+          },
+          // New identity fields
+          tax_id: account.tax_id || '',
+          email: account.email || '',
+        }
+      }),
+
     // Get account health scores
     getHealth: orgProtectedProcedure
       .input(z.object({
@@ -464,7 +714,13 @@ export const crmRouter = router({
             // Team
             owner_id: input.team?.ownerId || userProfileId,
             account_manager_id: input.team?.accountManagerId || userProfileId,
-            
+            primary_recruiter_id: input.team?.recruiterId || null,
+            sales_lead_id: input.team?.salesLeadId || null,
+
+            // Identity fields
+            tax_id: input.taxId || null,
+            email: input.email || null,
+
             // Draft state
             custom_fields: input.wizard_state ? { wizard_state: input.wizard_state } : {},
             
@@ -501,23 +757,25 @@ export const crmRouter = router({
             billing_country: input.billingCountry || 'US',
           })
 
-        // Addresses
+        // Addresses - use client-provided UUID for idempotent upserts
         if (input.addresses && input.addresses.length > 0) {
-          const addressInserts = input.addresses.map((addr: any) => ({
-            org_id: orgId,
-            entity_type: 'account',
-            entity_id: companyId,
-            address_type: addr.type || 'office',
-            address_line_1: addr.addressLine1,
-            address_line_2: addr.addressLine2,
-            city: addr.city,
-            state_province: addr.state,
-            postal_code: addr.postalCode,
-            country_code: addr.country,
-            is_primary: addr.isPrimary,
-            created_by: userProfileId,
-          }))
-          await adminClient.from('addresses').insert(addressInserts)
+          for (const addr of input.addresses) {
+            await adminClient.from('addresses').upsert({
+              ...(addr.id ? { id: addr.id } : {}),
+              org_id: orgId,
+              entity_type: 'account',
+              entity_id: companyId,
+              address_type: addr.type || 'office',
+              address_line_1: addr.addressLine1,
+              address_line_2: addr.addressLine2,
+              city: addr.city,
+              state_province: addr.state,
+              postal_code: addr.postalCode,
+              country_code: addr.country,
+              is_primary: addr.isPrimary,
+              created_by: userProfileId,
+            })
+          }
         } else if (input.headquartersCity) {
            // Fallback for legacy input
            await adminClient.from('addresses').insert({
@@ -534,17 +792,20 @@ export const crmRouter = router({
            })
         }
 
-        // Contacts
+        // Contacts - use client-provided UUID for idempotent upserts
         if (input.contacts && input.contacts.length > 0) {
-          // Create contacts
           for (const contact of input.contacts) {
+            // Use client-provided ID if available, otherwise let DB generate
+            const contactId = contact.id
+
             const { data: newContact } = await adminClient
               .from('contacts')
-              .insert({
+              .upsert({
+                ...(contactId ? { id: contactId } : {}),
                 org_id: orgId,
                 company_id: account.id,
-                category: 'person',  
-                subtype: 'person_client_contact', 
+                category: 'person',
+                subtype: 'person_client_contact',
                 first_name: contact.firstName,
                 last_name: contact.lastName,
                 email: contact.email,
@@ -557,10 +818,10 @@ export const crmRouter = router({
               })
               .select('id')
               .single()
-            
+
             if (newContact) {
-              // Create junction
-              await adminClient.from('company_contacts').insert({
+              // Upsert junction entry (idempotent)
+              await adminClient.from('company_contacts').upsert({
                 org_id: orgId,
                 company_id: companyId,
                 contact_id: newContact.id,
@@ -569,30 +830,32 @@ export const crmRouter = router({
                 decision_authority: contact.decisionAuthority,
                 role_description: contact.role,
                 is_primary: contact.isPrimary,
-              })
+              }, { onConflict: 'company_id,contact_id' })
             }
           }
         }
 
-        // Contracts
+        // Contracts - use client-provided UUID for idempotent upserts
         if (input.contracts && input.contracts.length > 0) {
-          const contractInserts = input.contracts.map((contract: any) => ({
-            org_id: orgId,
-            entity_type: 'account',
-            entity_id: companyId,
-            contract_type: contract.type,
-            contract_name: contract.name,
-            contract_number: contract.number,
-            status: contract.status,
-            effective_date: contract.effectiveDate,
-            expiry_date: contract.expiryDate,
-            auto_renew: contract.autoRenew,
-            contract_value: contract.contractValue ? Number(contract.contractValue) : null,
-            currency: contract.currency,
-            document_url: contract.fileUrl,
-            created_by: userProfileId,
-          }))
-          await adminClient.from('contracts').insert(contractInserts)
+          for (const contract of input.contracts) {
+            await adminClient.from('contracts').upsert({
+              ...(contract.id ? { id: contract.id } : {}),
+              org_id: orgId,
+              entity_type: 'account',
+              entity_id: companyId,
+              contract_type: contract.type,
+              contract_name: contract.name,
+              contract_number: contract.number,
+              status: contract.status,
+              effective_date: contract.effectiveDate,
+              expiry_date: contract.expiryDate,
+              auto_renew: contract.autoRenew,
+              contract_value: contract.contractValue ? Number(contract.contractValue) : null,
+              currency: contract.currency,
+              document_url: contract.fileUrl,
+              created_by: userProfileId,
+            })
+          }
         }
 
         // Compliance
@@ -607,6 +870,10 @@ export const crmRouter = router({
             background_check_required: input.compliance.backgroundCheck?.required,
             background_check_level: input.compliance.backgroundCheck?.level,
             drug_test_required: input.compliance.drugTest?.required,
+            // Store certifications in custom_requirements JSONB field
+            custom_requirements: input.compliance.certifications?.length > 0
+              ? { certifications: input.compliance.certifications }
+              : {},
           })
         }
 
@@ -1030,6 +1297,12 @@ export const crmRouter = router({
         
         if (input.team?.ownerId) updateData.owner_id = input.team.ownerId
         if (input.team?.accountManagerId) updateData.account_manager_id = input.team.accountManagerId
+        if (input.team?.recruiterId) updateData.primary_recruiter_id = input.team.recruiterId
+        if (input.team?.salesLeadId) updateData.sales_lead_id = input.team.salesLeadId
+
+        // Save tax_id and email (new columns)
+        if (input.taxId !== undefined) updateData.tax_id = input.taxId
+        if (input.email !== undefined) updateData.email = input.email
         
         // Draft state
         if (input.wizard_state !== undefined) {
@@ -1087,74 +1360,91 @@ export const crmRouter = router({
             billing_country: input.billingCountry || 'US',
           }, { onConflict: 'company_id' })
         
-        // Addresses (Upsert)
+        // Addresses - use client-provided UUID for idempotent upserts
         if (input.addresses && input.addresses.length > 0) {
-           for (const addr of input.addresses) {
-             if (addr.id) {
-               await adminClient.from('addresses').upsert({
-                 id: addr.id, // If valid UUID provided
-                 org_id: orgId,
-                 entity_type: 'account',
-                 entity_id: input.id,
-                 address_type: addr.type,
-                 address_line_1: addr.addressLine1,
-                 address_line_2: addr.addressLine2,
-                 city: addr.city,
-                 state_province: addr.state,
-                 postal_code: addr.postalCode,
-                 country_code: addr.country,
-                 is_primary: addr.isPrimary,
-                 updated_by: userProfileId,
-               })
-             }
-           }
-        }
-
-        // Contacts (Upsert)
-        if (input.contacts && input.contacts.length > 0) {
-          for (const contact of input.contacts) {
-             if (contact.id) {
-               await adminClient.from('contacts').upsert({
-                 id: contact.id,
-                 org_id: orgId,
-                 first_name: contact.firstName,
-                 last_name: contact.lastName,
-                 email: contact.email,
-                 phone: typeof contact.phone === 'object' ? contact.phone?.number : contact.phone,
-                 title: contact.title,
-                 department: contact.department,
-                 linkedin_url: contact.linkedInUrl,
-                 is_primary: contact.isPrimary,
-                 company_id: input.id,
-                 updated_by: userProfileId,
-               })
-             }
+          for (const addr of input.addresses) {
+            await adminClient.from('addresses').upsert({
+              ...(addr.id ? { id: addr.id } : {}),
+              org_id: orgId,
+              entity_type: 'account',
+              entity_id: input.id,
+              address_type: addr.type || 'office',
+              address_line_1: addr.addressLine1,
+              address_line_2: addr.addressLine2,
+              city: addr.city,
+              state_province: addr.state,
+              postal_code: addr.postalCode,
+              country_code: addr.country,
+              is_primary: addr.isPrimary,
+              updated_by: userProfileId,
+            })
           }
         }
 
-        // Contracts (Upsert)
+        // Contacts - use client-provided UUID for idempotent upserts
+        if (input.contacts && input.contacts.length > 0) {
+          for (const contact of input.contacts) {
+            const contactId = contact.id
+
+            // Upsert contact (works for both new and existing)
+            const { data: savedContact } = await adminClient
+              .from('contacts')
+              .upsert({
+                ...(contactId ? { id: contactId } : {}),
+                org_id: orgId,
+                company_id: input.id,
+                category: 'person',
+                subtype: 'person_client_contact',
+                first_name: contact.firstName,
+                last_name: contact.lastName,
+                email: contact.email,
+                phone: typeof contact.phone === 'object' ? contact.phone?.number : contact.phone,
+                title: contact.title,
+                department: contact.department,
+                linkedin_url: contact.linkedInUrl,
+                is_primary: contact.isPrimary,
+                updated_by: userProfileId,
+              })
+              .select('id')
+              .single()
+
+            // Upsert company_contacts junction entry
+            if (savedContact) {
+              await adminClient.from('company_contacts').upsert({
+                org_id: orgId,
+                company_id: input.id,
+                contact_id: savedContact.id,
+                job_title: contact.title,
+                department: contact.department,
+                decision_authority: contact.decisionAuthority,
+                role_description: contact.role,
+                is_primary: contact.isPrimary,
+              }, { onConflict: 'company_id,contact_id' })
+            }
+          }
+        }
+
+        // Contracts - use client-provided UUID for idempotent upserts
         if (input.contracts && input.contracts.length > 0) {
-           for (const contract of input.contracts) {
-             if (contract.id) {
-               await adminClient.from('contracts').upsert({
-                 id: contract.id,
-                 org_id: orgId,
-                 entity_type: 'account',
-                 entity_id: input.id,
-                 contract_type: contract.type,
-                 contract_name: contract.name,
-                 contract_number: contract.number,
-                 status: contract.status,
-                 effective_date: contract.effectiveDate,
-                 expiry_date: contract.expiryDate,
-                 auto_renew: contract.autoRenew,
-                 contract_value: contract.contractValue ? Number(contract.contractValue) : null,
-                 currency: contract.currency,
-                 document_url: contract.fileUrl,
-                 updated_by: userProfileId,
-               })
-             }
-           }
+          for (const contract of input.contracts) {
+            await adminClient.from('contracts').upsert({
+              ...(contract.id ? { id: contract.id } : {}),
+              org_id: orgId,
+              entity_type: 'account',
+              entity_id: input.id,
+              contract_type: contract.type,
+              contract_name: contract.name,
+              contract_number: contract.number,
+              status: contract.status,
+              effective_date: contract.effectiveDate,
+              expiry_date: contract.expiryDate,
+              auto_renew: contract.autoRenew,
+              contract_value: contract.contractValue ? Number(contract.contractValue) : null,
+              currency: contract.currency,
+              document_url: contract.fileUrl,
+              updated_by: userProfileId,
+            })
+          }
         }
 
         // Compliance (Upsert)
@@ -1169,6 +1459,10 @@ export const crmRouter = router({
             background_check_required: input.compliance.backgroundCheck?.required,
             background_check_level: input.compliance.backgroundCheck?.level,
             drug_test_required: input.compliance.drugTest?.required,
+            // Store certifications in custom_requirements JSONB field
+            custom_requirements: input.compliance.certifications?.length > 0
+              ? { certifications: input.compliance.certifications }
+              : {},
           }, { onConflict: 'company_id' })
         }
 

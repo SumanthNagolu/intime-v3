@@ -63,6 +63,7 @@ export async function getFullAccount(id: string): Promise<FullAccountData | null
       .select(`
         *,
         owner:user_profiles!owner_id(id, full_name, avatar_url),
+        account_manager:user_profiles!account_manager_id(id, full_name, avatar_url),
         client_details:company_client_details(*)
       `)
       .eq('id', id)
@@ -451,22 +452,88 @@ function transformAccount(data: Record<string, unknown>): AccountData {
     churn_risk: data.churn_risk as number | null,
     account_score: data.account_score as number | null,
     account_grade: data.account_grade as string | null,
-    lifetime_revenue: typeof data.lifetime_revenue === 'string' 
-      ? parseFloat(data.lifetime_revenue) 
+    lifetime_revenue: typeof data.lifetime_revenue === 'string'
+      ? parseFloat(data.lifetime_revenue)
       : data.lifetime_revenue as number | null,
-    revenue_ytd: typeof data.revenue_ytd === 'string' 
-      ? parseFloat(data.revenue_ytd) 
+    revenue_ytd: typeof data.revenue_ytd === 'string'
+      ? parseFloat(data.revenue_ytd)
       : data.revenue_ytd as number | null,
-    revenue_last_12m: typeof data.revenue_last_12m === 'string' 
-      ? parseFloat(data.revenue_last_12m) 
+    revenue_last_12m: typeof data.revenue_last_12m === 'string'
+      ? parseFloat(data.revenue_last_12m)
       : data.revenue_last_12m as number | null,
-    avg_margin_percentage: typeof data.avg_margin_percentage === 'string' 
-      ? parseFloat(data.avg_margin_percentage) 
+    avg_margin_percentage: typeof data.avg_margin_percentage === 'string'
+      ? parseFloat(data.avg_margin_percentage)
       : data.avg_margin_percentage as number | null,
     lifetime_placements: data.lifetime_placements as number | null,
     placements_ytd: data.placements_ytd as number | null,
     active_jobs_count: data.active_jobs_count as number | null,
     active_placements_count: data.active_placements_count as number | null,
+
+    // Corporate Profile (from intake wizard)
+    legal_name: data.legal_name as string | null,
+    dba_name: data.dba_name as string | null,
+    founded_year: data.founded_year as number | null,
+    employee_range: data.employee_range as string | null,
+    revenue_range: data.revenue_range as string | null,
+    ownership_type: data.ownership_type as string | null,
+    linkedin_url: data.linkedin_url as string | null,
+    relationship_type: data.relationship_type as string | null,
+
+    // Billing & Terms
+    default_payment_terms: data.default_payment_terms as string | null,
+    default_currency: data.default_currency as string | null,
+    default_markup_percentage: typeof data.default_markup_percentage === 'string'
+      ? parseFloat(data.default_markup_percentage)
+      : data.default_markup_percentage as number | null,
+    default_fee_percentage: typeof data.default_fee_percentage === 'string'
+      ? parseFloat(data.default_fee_percentage)
+      : data.default_fee_percentage as number | null,
+    requires_po: (data.requires_po as boolean) || false,
+    credit_limit: typeof data.credit_limit === 'string'
+      ? parseFloat(data.credit_limit)
+      : data.credit_limit as number | null,
+    credit_status: data.credit_status as string | null,
+
+    // MSA/Contract Status
+    msa_status: data.msa_status as string | null,
+    msa_effective_date: data.msa_effective_date as string | null,
+    msa_expiration_date: data.msa_expiration_date as string | null,
+    msa_auto_renews: (data.msa_auto_renews as boolean) || false,
+
+    // Team Assignments
+    account_manager_id: data.account_manager_id as string | null,
+    account_manager: data.account_manager as { id: string; full_name: string; avatar_url: string | null } | null,
+
+    // Engagement Preferences
+    preferred_contact_method: data.preferred_contact_method as string | null,
+    submission_method: data.submission_method as string | null,
+    invoice_delivery_method: data.invoice_delivery_method as string | null,
+    meeting_cadence: data.meeting_cadence as string | null,
+    next_scheduled_contact: data.next_scheduled_contact as string | null,
+
+    // Flags
+    is_strategic: (data.is_strategic as boolean) || false,
+    requires_approval_for_submission: (data.requires_approval_for_submission as boolean) || false,
+    allows_remote_work: (data.allows_remote_work as boolean) ?? true,
+
+    // Onboarding
+    onboarding_status: data.onboarding_status as string | null,
+    onboarding_completed_at: data.onboarding_completed_at as string | null,
+    onboarding_data: data.onboarding_data as Record<string, unknown> | null,
+
+    // Source tracking
+    source: data.source as string | null,
+    source_detail: data.source_detail as string | null,
+
+    // Tags
+    tags: data.tags as string[] | null,
+
+    // First engagement
+    first_engagement_date: data.first_engagement_date as string | null,
+    last_job_date: data.last_job_date as string | null,
+    last_placement_date: data.last_placement_date as string | null,
+    last_activity_date: data.last_activity_date as string | null,
+    total_contacts_count: data.total_contacts_count as number | null,
   }
 }
 

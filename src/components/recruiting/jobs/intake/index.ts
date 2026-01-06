@@ -1,5 +1,11 @@
-export { IntakeStep1BasicInfo } from './IntakeStep1BasicInfo'
-export { IntakeStep2Requirements } from './IntakeStep2Requirements'
-export { IntakeStep3RoleDetails } from './IntakeStep3RoleDetails'
-export { IntakeStep4Compensation } from './IntakeStep4Compensation'
-export { IntakeStep5Interview } from './IntakeStep5Interview'
+// New wizard components (8-step pattern matching Accounts)
+export { JobIntakeStep1BasicInfo } from './JobIntakeStep1BasicInfo'
+export { JobIntakeStep2Requirements } from './JobIntakeStep2Requirements'
+export { JobIntakeStep3RoleDetails } from './JobIntakeStep3RoleDetails'
+export { JobIntakeStep4Location } from './JobIntakeStep4Location'
+export { JobIntakeStep5Compensation } from './JobIntakeStep5Compensation'
+export { JobIntakeStep6Interview } from './JobIntakeStep6Interview'
+export { JobIntakeStep7Team } from './JobIntakeStep7Team'
+
+// Shared components
+export * from './shared'

@@ -714,11 +714,22 @@ export const atsRouter = router({
           return []
         }
 
+        // Get user_profile.id from auth_id (same pattern as accounts.listMyDrafts)
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+
+        if (!profile?.id) {
+          return []
+        }
+
         const { data, error } = await adminClient
           .from('jobs')
           .select('id, title, status, wizard_state, created_at, updated_at')
           .eq('org_id', orgId)
-          .eq('created_by', user.id)
+          .eq('created_by', profile.id)
           .eq('status', 'draft')
           .is('deleted_at', null)
           .order('updated_at', { ascending: false })
@@ -743,6 +754,17 @@ export const atsRouter = router({
           throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
         }
 
+        // Get user_profile.id from auth_id (same pattern as accounts.deleteDraft)
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+
+        if (!profile?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User profile not found' })
+        }
+
         // Verify draft exists and user owns it
         const { data: job, error: fetchError } = await adminClient
           .from('jobs')
@@ -760,7 +782,7 @@ export const atsRouter = router({
           throw new TRPCError({ code: 'BAD_REQUEST', message: 'Can only delete draft jobs' })
         }
 
-        if (job.created_by !== user.id) {
+        if (job.created_by !== profile.id) {
           throw new TRPCError({ code: 'FORBIDDEN', message: 'You can only delete your own drafts' })
         }
 
@@ -1209,7 +1231,7 @@ export const atsRouter = router({
         const { orgId } = ctx
         const adminClient = getAdminClient()
 
-        // Get all jobs with their placements and submissions
+        // Get all jobs with their placements and submissions (excluding drafts)
         const { data: jobs } = await adminClient
           .from('jobs')
           .select(`
@@ -1218,6 +1240,7 @@ export const atsRouter = router({
             placements(id, created_at)
           `)
           .eq('org_id', orgId)
+          .neq('status', 'draft')
           .is('deleted_at', null)
 
         const total = jobs?.length ?? 0

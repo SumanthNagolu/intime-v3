@@ -96,7 +96,7 @@ export function AccountHeader({ account }: AccountHeaderProps) {
   const handleAction = (action: string) => {
     switch (action) {
       case 'edit':
-        router.push(`/employee/recruiting/accounts/${account.id}/edit`)
+        router.push(`/employee/recruiting/accounts/new?edit=${account.id}`)
         break
       case 'addContact':
         window.dispatchEvent(new CustomEvent('openAccountDialog', { 
@@ -104,7 +104,7 @@ export function AccountHeader({ account }: AccountHeaderProps) {
         }))
         break
       case 'createJob':
-        router.push(`/employee/recruiting/jobs/intake?accountId=${account.id}`)
+        router.push(`/employee/recruiting/jobs/new?accountId=${account.id}`)
         break
       case 'logActivity':
         window.dispatchEvent(new CustomEvent('openAccountDialog', { 

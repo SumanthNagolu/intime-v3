@@ -251,7 +251,7 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
         label: 'Edit Account',
         icon: Edit,
         actionType: 'navigate',
-        href: '/employee/recruiting/accounts/:id/edit'
+        href: '/employee/recruiting/accounts/new?edit=:id'
       },
       {
         id: 'new-account',

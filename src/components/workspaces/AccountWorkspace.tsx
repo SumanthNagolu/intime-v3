@@ -95,7 +95,7 @@ export function AccountWorkspace({ onAction }: AccountWorkspaceProps = {}) {
   }, [data.account.id])
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-6 animate-fade-in">
+    <div className="w-full max-w-none px-8 py-6 space-y-6 animate-fade-in">
       {/* Header */}
       <AccountHeader account={data.account} />
 
