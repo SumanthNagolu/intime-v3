@@ -132,7 +132,7 @@ const createJobInput = z.object({
 })
 
 const updateJobInput = z.object({
-  jobId: z.string().uuid(),
+  id: z.string().uuid(),
   status: jobStatusEnum.optional(), // For finalizing drafts
   title: z.string().max(200).optional(), // No min for drafts
   jobType: jobTypeEnum.optional(),
@@ -1315,7 +1315,7 @@ export const atsRouter = router({
           .from('jobs')
           .insert({
             org_id: orgId,
-            title: 'Untitled Job',
+            title: '',
             status: 'draft',
             wizard_state: { currentStep: 1, totalSteps: 8, createdAt: now },
             owner_id: userProfile.id,
@@ -1546,7 +1546,7 @@ export const atsRouter = router({
         const { data: job, error: jobError } = await adminClient
           .from('jobs')
           .select('*')
-          .eq('id', input.jobId)
+          .eq('id', input.id)
           .eq('org_id', orgId)
           .single()
 
@@ -1624,7 +1624,7 @@ export const atsRouter = router({
         const { data: updatedJob, error: updateError } = await adminClient
           .from('jobs')
           .update(updateData)
-          .eq('id', input.jobId)
+          .eq('id', input.id)
           .eq('org_id', orgId)
           .select('id, title, status, updated_at')
           .single()

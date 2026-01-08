@@ -160,7 +160,7 @@ export function JobClientDetailsSection({ jobId }: JobClientDetailsSectionProps)
 
   const handleSaveClient = async () => {
     await updateJobMutation.mutateAsync({
-      jobId,
+      id: jobId,
       clientCompanyId: selectedClientId === NONE_VALUE ? null : selectedClientId || null,
     })
     setIsEditingClient(false)
@@ -174,7 +174,7 @@ export function JobClientDetailsSection({ jobId }: JobClientDetailsSectionProps)
 
   const handleSaveEndClient = async () => {
     await updateJobMutation.mutateAsync({
-      jobId,
+      id: jobId,
       endClientCompanyId: selectedEndClientId === NONE_VALUE ? null : selectedEndClientId || null,
     })
     setIsEditingEndClient(false)
@@ -188,7 +188,7 @@ export function JobClientDetailsSection({ jobId }: JobClientDetailsSectionProps)
 
   const handleSaveVendor = async () => {
     await updateJobMutation.mutateAsync({
-      jobId,
+      id: jobId,
       vendorCompanyId: selectedVendorId === NONE_VALUE ? null : selectedVendorId || null,
     })
     setIsEditingVendor(false)
@@ -202,7 +202,7 @@ export function JobClientDetailsSection({ jobId }: JobClientDetailsSectionProps)
 
   const handleSaveExternalId = async () => {
     await updateJobMutation.mutateAsync({
-      jobId,
+      id: jobId,
       externalJobId: externalJobId || null,
     })
     setIsEditingExternalId(false)
@@ -218,7 +218,7 @@ export function JobClientDetailsSection({ jobId }: JobClientDetailsSectionProps)
 
   const handleSaveFees = async () => {
     await updateJobMutation.mutateAsync({
-      jobId,
+      id: jobId,
       feeType: feeType === NONE_VALUE ? null : (feeType as 'percentage' | 'flat' | 'hourly_spread') || null,
       feePercentage: feePercentage ? parseFloat(feePercentage) : null,
       feeFlatAmount: feeFlatAmount ? parseFloat(feeFlatAmount) : null,
@@ -242,7 +242,7 @@ export function JobClientDetailsSection({ jobId }: JobClientDetailsSectionProps)
 
   const handleSaveInstructions = async () => {
     await updateJobMutation.mutateAsync({
-      jobId,
+      id: jobId,
       clientSubmissionInstructions: submissionInstructions || undefined,
       clientInterviewProcess: interviewProcess || undefined,
     })

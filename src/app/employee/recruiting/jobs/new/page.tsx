@@ -1,14 +1,15 @@
 'use client'
 
-import { Suspense, useMemo, useCallback, useEffect } from 'react'
+import { Suspense, useMemo, useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { trpc } from '@/lib/trpc/client'
 import { useCreateJobStore, CreateJobFormData, SkillEntry, InterviewRound } from '@/stores/create-job-store'
 import { WizardWithSidebar } from '@/components/pcf/wizard/WizardWithSidebar'
 import { createJobCreateConfig } from '@/configs/entities/wizards/job-create.config'
-import { useEntityDraft, WizardStore } from '@/hooks/use-entity-draft'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useToast } from '@/components/ui/use-toast'
+import { useDebouncedCallback } from 'use-debounce'
+import { Loader2 } from 'lucide-react'
 
 // Transform form data to entity data for API calls
 function formToEntityData(formData: CreateJobFormData) {
@@ -52,8 +53,8 @@ function formToEntityData(formData: CreateJobFormData) {
     // Requirements (main fields)
     requiredSkills: formData.requiredSkills.map((s) => s.name),
     niceToHaveSkills: formData.preferredSkills,
-    minExperience: formData.minExperience ? parseInt(formData.minExperience) : undefined,
-    maxExperience: formData.maxExperience ? parseInt(formData.maxExperience) : undefined,
+    minExperienceYears: formData.minExperience ? parseInt(formData.minExperience) : undefined,
+    maxExperienceYears: formData.maxExperience ? parseInt(formData.maxExperience) : undefined,
     visaRequirements: formData.visaRequirements,
 
     // Rates
@@ -136,7 +137,7 @@ function formToEntityData(formData: CreateJobFormData) {
 }
 
 // Transform entity data to form data for editing/resuming
-function entityToFormData(entity: any): Partial<CreateJobFormData> {
+function entityToFormData(entity: any): CreateJobFormData {
   const intakeData = entity.intake_data || entity.intakeData || {}
 
   // Parse skills from requiredSkillsDetailed or fallback to simple array
@@ -273,7 +274,7 @@ function entityToFormData(entity: any): Partial<CreateJobFormData> {
     recruiterIds: entity.recruiter_ids || [],
     priorityRank: entity.priority_rank || 0,
     slaDays: entity.sla_days || 30,
-  }
+  } as CreateJobFormData
 }
 
 function NewJobPageContent() {
@@ -285,97 +286,145 @@ function NewJobPageContent() {
   // Get store
   const store = useCreateJobStore()
 
-  // Check for edit mode or resume mode
+  // URL params
+  const draftId = searchParams.get('draft')
   const editId = searchParams.get('edit')
-  const resumeId = searchParams.get('resume')
+  const resumeId = searchParams.get('resume') // Legacy support for old resume links
   const isEditMode = !!editId
 
-  // Fetch existing job if in edit mode
-  const editJobQuery = trpc.ats.jobs.getById.useQuery(
-    { id: editId! },
-    { enabled: !!editId, retry: false }
-  )
-
-  // Fetch draft if resuming (only for non-edit mode)
-  const getDraftQuery = trpc.ats.jobs.getById.useQuery(
-    { id: resumeId! },
-    { enabled: !!resumeId && !editId, retry: false }
-  )
+  // Refs for preventing race conditions
+  const hasCreatedDraft = useRef(false)
+  const previousFormData = useRef<string>('')
+  const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null)
+  const [isReady, setIsReady] = useState(false)
 
   // Mutations
-  const createMutation = trpc.ats.jobs.create.useMutation()
+  const createDraftMutation = trpc.ats.jobs.createDraft.useMutation()
   const updateMutation = trpc.ats.jobs.update.useMutation()
 
-  // Draft integration (only for create/resume mode, not edit mode)
-  const draftState = useEntityDraft({
-    entityType: 'Job',
-    wizardRoute: '/employee/recruiting/jobs/new',
-    totalSteps: 8,
-    store: () => store as unknown as WizardStore<CreateJobFormData>,
-    resumeId: isEditMode ? undefined : resumeId,
-    createMutation: {
-      mutateAsync: async (data: Record<string, unknown>) => {
-        const result = await createMutation.mutateAsync(data as any)
-        return result as any
-      },
-      isPending: createMutation.isPending,
-    },
-    updateMutation: {
-      mutateAsync: async (data: Record<string, unknown>) => {
-        // Map 'id' to 'jobId' for update mutation
-        const { id, ...rest } = data
-        const result = await updateMutation.mutateAsync({ jobId: id as string, ...rest } as any)
-        return result as any
-      },
-      isPending: updateMutation.isPending,
-    },
-    getDraftQuery: {
-      data: getDraftQuery.data as any,
-      isLoading: getDraftQuery.isLoading,
-      error: getDraftQuery.error,
-    },
-    searchParamsString: searchParams.toString(),
+  // The actual draft ID to use (from URL param)
+  const activeDraftId = draftId || resumeId
 
-    // Transform Form -> Entity (for saving)
-    formToEntity: (formData) => {
-      const wizardState = isEditMode
-        ? undefined
-        : {
-            formData,
-            currentStep: store.currentStep,
-          }
+  // Query for draft/edit data (only when we have an ID)
+  const entityQuery = trpc.ats.jobs.getById.useQuery(
+    { id: (activeDraftId || editId)! },
+    { enabled: !!(activeDraftId || editId), retry: false }
+  )
 
-      const entityData = formToEntityData(formData)
-      return {
-        ...entityData,
-        wizard_state: wizardState,
-      }
-    },
-
-    // Transform Entity -> Form (for loading)
-    entityToForm: (entity: any): CreateJobFormData => {
-      // Prefer wizard_state data if available (stored in custom_fields or directly)
-      const wizardState = entity.wizard_state || entity.custom_fields?.wizard_state
-      if (wizardState?.formData) {
-        return wizardState.formData as CreateJobFormData
-      }
-
-      // Fallback mapping for drafts without wizard state
-      return entityToFormData(entity) as CreateJobFormData
-    },
-
-    getDisplayName: (data) => data.title || 'Untitled Job',
-    hasData: (data) => !!data.title && data.title.trim() !== '' && !!data.accountId,
-    onInvalidate: () => utils.ats.jobs.list.invalidate(),
-  })
-
-  // Populate form when editing an existing job
+  // Step 1: If no draft param and not edit mode, create draft IMMEDIATELY and redirect
   useEffect(() => {
-    if (isEditMode && editJobQuery.data && draftState.isReady) {
-      const formData = entityToFormData(editJobQuery.data)
+    if (isEditMode) {
+      setIsReady(true) // Edit mode doesn't need draft creation
+      return
+    }
+    if (activeDraftId) {
+      // Already have a draft ID, just need to load it
+      return
+    }
+    if (hasCreatedDraft.current) {
+      return // Already creating
+    }
+
+    hasCreatedDraft.current = true
+    store.resetForm()
+
+    createDraftMutation.mutateAsync()
+      .then((result) => {
+        // Redirect to URL with draft ID - this ensures only ONE draft is created
+        router.replace(`/employee/recruiting/jobs/new?draft=${result.id}`)
+        utils.ats.jobs.list.invalidate()
+      })
+      .catch((error) => {
+        console.error('Failed to create draft:', error)
+        hasCreatedDraft.current = false
+        toast({ title: 'Error', description: 'Failed to start job creation.', variant: 'error' })
+        router.push('/employee/recruiting/jobs')
+      })
+  }, [isEditMode, activeDraftId])
+
+  // Step 2: Load draft data when we have a draft ID and query returns data
+  useEffect(() => {
+    if (!activeDraftId) return
+    if (isEditMode) return
+    if (!entityQuery.data) return
+    if (isReady) return // Already loaded
+
+    // Load the draft data into the form
+    const draft = entityQuery.data
+    const wizardState = draft.wizard_state as { formData?: CreateJobFormData; currentStep?: number } | null
+
+    if (wizardState?.formData) {
+      store.setFormData(wizardState.formData)
+      if (wizardState.currentStep && store.setCurrentStep) {
+        store.setCurrentStep(wizardState.currentStep)
+      }
+    } else {
+      // Fallback to entity field mapping
+      const formData = entityToFormData(draft)
       store.setFormData(formData)
     }
-  }, [isEditMode, editJobQuery.data, draftState.isReady])
+
+    previousFormData.current = JSON.stringify(store.formData)
+    setIsReady(true)
+  }, [activeDraftId, entityQuery.data, isEditMode, isReady])
+
+  // Step 3: Load data for edit mode
+  useEffect(() => {
+    if (!isEditMode) return
+    if (!editId) return
+    if (!entityQuery.data) return
+
+    const formData = entityToFormData(entityQuery.data)
+    store.setFormData(formData)
+    previousFormData.current = JSON.stringify(formData)
+    setIsReady(true)
+  }, [isEditMode, editId, entityQuery.data])
+
+  // Auto-save debounced function - ONLY updates, never creates
+  const debouncedSave = useDebouncedCallback(
+    async (draftIdToUpdate: string, formData: CreateJobFormData, currentStep: number) => {
+      const entityData = formToEntityData(formData)
+      const wizardState = {
+        formData,
+        currentStep,
+        totalSteps: 8,
+        lastSavedAt: new Date().toISOString(),
+      }
+
+      try {
+        await updateMutation.mutateAsync({
+          id: draftIdToUpdate,
+          ...entityData,
+          wizard_state: wizardState,
+        } as any)
+        setLastSavedAt(new Date())
+        utils.ats.jobs.list.invalidate()
+      } catch (error) {
+        console.error('[Job Wizard] Auto-save failed:', error)
+      }
+    },
+    2000
+  )
+
+  // Watch for form changes and auto-save (ONLY updates to existing draft)
+  useEffect(() => {
+    if (!isReady) return
+    if (isEditMode) return // Don't auto-save in edit mode
+    if (!activeDraftId) return // No draft to update
+
+    const currentFormDataStr = JSON.stringify(store.formData)
+
+    // Skip if no changes
+    if (currentFormDataStr === previousFormData.current) return
+    previousFormData.current = currentFormDataStr
+
+    // Check if form has meaningful data worth saving
+    const hasData = store.formData.title?.trim() !== ''
+    if (!hasData) return
+
+    // Trigger debounced save - this ONLY updates, never creates
+    debouncedSave(activeDraftId, store.formData, store.currentStep)
+  }, [isReady, isEditMode, activeDraftId, store.formData, store.currentStep, debouncedSave])
 
   // Handle final submission
   const handleSubmit = useCallback(
@@ -385,7 +434,7 @@ function NewJobPageContent() {
           // Update existing job
           const entityData = formToEntityData(data)
           await updateMutation.mutateAsync({
-            jobId: editId,
+            id: editId,
             ...entityData,
             ownerId: data.ownerId || undefined,
             recruiterIds: data.recruiterIds.length > 0 ? data.recruiterIds : undefined,
@@ -402,21 +451,27 @@ function NewJobPageContent() {
           utils.ats.jobs.list.invalidate()
           store.resetForm()
           router.push(`/employee/recruiting/jobs/${editId}`)
-        } else {
-          // Create new job (via draft system)
-          const job = await draftState.finalizeDraft('open')
+        } else if (activeDraftId) {
+          // Finalize draft - update status from 'draft' to 'open'
+          const entityData = formToEntityData(data)
+          await updateMutation.mutateAsync({
+            id: activeDraftId,
+            ...entityData,
+            status: 'open',
+            ownerId: data.ownerId || undefined,
+            recruiterIds: data.recruiterIds.length > 0 ? data.recruiterIds : undefined,
+            wizard_state: null, // Clear wizard state on finalization
+          } as any)
 
           toast({
             title: 'Job created!',
             description: `${data.title} has been successfully created.`,
           })
 
-          // Redirect to the created job page
-          if (job?.id) {
-            router.push(`/employee/recruiting/jobs/${job.id}`)
-          } else {
-            router.push('/employee/recruiting/jobs')
-          }
+          // Invalidate and redirect
+          utils.ats.jobs.list.invalidate()
+          store.resetForm()
+          router.push(`/employee/recruiting/jobs/${activeDraftId}`)
         }
       } catch (error) {
         console.error('Failed to save job:', error)
@@ -428,8 +483,29 @@ function NewJobPageContent() {
         throw error
       }
     },
-    [isEditMode, editId, draftState, router, updateMutation, utils, store, toast]
+    [isEditMode, editId, activeDraftId, router, updateMutation, utils, store, toast]
   )
+
+  // Delete draft function (soft delete only, no navigation)
+  const deleteDraft = useCallback(async () => {
+    if (activeDraftId && !isEditMode) {
+      try {
+        await updateMutation.mutateAsync({
+          id: activeDraftId,
+          deleted_at: new Date().toISOString(),
+        } as any)
+        utils.ats.jobs.list.invalidate()
+      } catch (error) {
+        console.error('Failed to delete draft:', error)
+      }
+    }
+  }, [activeDraftId, isEditMode, updateMutation, utils])
+
+  // Handle cancel - just navigate, the useEntityWizard hook will call deleteDraft
+  const handleCancel = useCallback(() => {
+    store.resetForm()
+    router.push('/employee/recruiting/jobs')
+  }, [store, router])
 
   // Create wizard config with appropriate mode
   const wizardConfig = useMemo(() => {
@@ -456,13 +532,65 @@ function NewJobPageContent() {
     setFormData: store.setFormData,
     resetForm: store.resetForm,
     isDirty: store.isDirty,
-    lastSaved: store.lastSaved,
+    lastSaved: lastSavedAt || store.lastSaved,
     currentStep: store.currentStep,
     setCurrentStep: store.setCurrentStep,
   }
 
-  // Loading state for edit mode
-  if (isEditMode && editJobQuery.isLoading) {
+  // Draft state for WizardWithSidebar (simplified - no create, only update)
+  const draftState = isEditMode ? undefined : {
+    isReady,
+    isLoading: entityQuery.isLoading,
+    isSaving: updateMutation.isPending,
+    draftId: activeDraftId,
+    lastSavedAt,
+    saveDraft: async () => {
+      if (!activeDraftId) return
+      const entityData = formToEntityData(store.formData)
+      const wizardState = {
+        formData: store.formData,
+        currentStep: store.currentStep,
+        totalSteps: 8,
+        lastSavedAt: new Date().toISOString(),
+      }
+      await updateMutation.mutateAsync({
+        id: activeDraftId,
+        ...entityData,
+        wizard_state: wizardState,
+      } as any)
+      setLastSavedAt(new Date())
+      utils.ats.jobs.list.invalidate()
+    },
+    deleteDraft,
+    finalizeDraft: async (status: string) => {
+      if (!activeDraftId) throw new Error('No draft to finalize')
+      const entityData = formToEntityData(store.formData)
+      const result = await updateMutation.mutateAsync({
+        id: activeDraftId,
+        ...entityData,
+        status,
+        wizard_state: null,
+      } as any)
+      utils.ats.jobs.list.invalidate()
+      store.resetForm()
+      return result
+    },
+  }
+
+  // Show loading while creating initial draft or loading draft data
+  if (!isEditMode && !activeDraftId) {
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 animate-spin text-gold-500 mx-auto mb-4" />
+          <p className="text-charcoal-600">Creating new job draft...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Show loading while fetching draft/edit data
+  if ((activeDraftId || editId) && entityQuery.isLoading) {
     return (
       <div className="min-h-screen bg-cream">
         <div className="max-w-4xl mx-auto py-8 px-4">
@@ -473,20 +601,38 @@ function NewJobPageContent() {
     )
   }
 
-  // Error state for edit mode
-  if (isEditMode && !editJobQuery.data && !editJobQuery.isLoading) {
+  // Error state
+  if ((activeDraftId || editId) && !entityQuery.data && !entityQuery.isLoading) {
     return (
       <div className="min-h-screen bg-cream flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-charcoal-900 mb-2">Job not found</h2>
-          <p className="text-charcoal-500 mb-4">The job you're looking for doesn't exist.</p>
+          <h2 className="text-xl font-semibold text-charcoal-900 mb-2">
+            {isEditMode ? 'Job not found' : 'Draft not found'}
+          </h2>
+          <p className="text-charcoal-500 mb-4">
+            {isEditMode
+              ? "The job you're looking for doesn't exist."
+              : "The draft you're looking for doesn't exist or has been deleted."}
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  // Wait for ready state
+  if (!isReady) {
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 animate-spin text-gold-500 mx-auto mb-4" />
+          <p className="text-charcoal-600">Loading...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <WizardWithSidebar config={wizardConfig} store={wizardStoreAdapter} draftState={isEditMode ? undefined : draftState} />
+    <WizardWithSidebar config={wizardConfig} store={wizardStoreAdapter} draftState={draftState} onCancel={handleCancel} />
   )
 }
 

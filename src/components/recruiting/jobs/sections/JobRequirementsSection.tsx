@@ -117,7 +117,7 @@ export function JobRequirementsSection({ jobId }: JobRequirementsSectionProps) {
 
   const handleSave = () => {
     updateMutation.mutate({
-      jobId,
+      id: jobId,
       required_skills: editData.required_skills || undefined,
       preferred_skills: editData.preferred_skills || undefined,
       experience_level: editData.experience_level || undefined,
