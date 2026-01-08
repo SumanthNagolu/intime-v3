@@ -101,7 +101,7 @@ export function JobOverviewSection({ job, jobId }: JobOverviewSectionProps) {
   // Handler for saving job details
   const handleSaveJobDetails = async (data: Record<string, unknown>) => {
     await updateJobMutation.mutateAsync({
-      jobId,
+      id: jobId,
       title: data.title as string,
       location: data.location as string,
       positionsCount: data.positions_count as number,
@@ -113,7 +113,7 @@ export function JobOverviewSection({ job, jobId }: JobOverviewSectionProps) {
   // Handler for saving rate info
   const handleSaveRates = async (data: Record<string, unknown>) => {
     await updateJobMutation.mutateAsync({
-      jobId,
+      id: jobId,
       rateMin: data.rate_min as number,
       rateMax: data.rate_max as number,
       rateType: data.rate_type as 'hourly' | 'daily' | 'weekly' | 'monthly' | 'annual' | undefined,
@@ -123,7 +123,7 @@ export function JobOverviewSection({ job, jobId }: JobOverviewSectionProps) {
   // Handler for saving dates
   const handleSaveDates = async (data: Record<string, unknown>) => {
     await updateJobMutation.mutateAsync({
-      jobId,
+      id: jobId,
       targetFillDate: data.target_fill_date as string,
       targetStartDate: data.target_start_date as string,
     })

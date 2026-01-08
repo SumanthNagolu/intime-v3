@@ -158,7 +158,7 @@ export function JobHiringTeamSection({ jobId }: JobHiringTeamSectionProps) {
   const handleSaveOwner = async () => {
     if (!selectedOwnerId) return
     await updateJobMutation.mutateAsync({
-      jobId,
+      id: jobId,
       ownerId: selectedOwnerId,
     })
     setIsEditingOwner(false)
@@ -174,7 +174,7 @@ export function JobHiringTeamSection({ jobId }: JobHiringTeamSectionProps) {
     if (!newRecruiterId || currentRecruiters.includes(newRecruiterId)) return
     const updatedRecruiters = [...currentRecruiters, newRecruiterId]
     await updateJobMutation.mutateAsync({
-      jobId,
+      id: jobId,
       recruiterIds: updatedRecruiters,
     })
     setNewRecruiterId('')
@@ -184,7 +184,7 @@ export function JobHiringTeamSection({ jobId }: JobHiringTeamSectionProps) {
   const handleRemoveRecruiter = async (recruiterId: string) => {
     const updatedRecruiters = currentRecruiters.filter((id: string) => id !== recruiterId)
     await updateJobMutation.mutateAsync({
-      jobId,
+      id: jobId,
       recruiterIds: updatedRecruiters,
     })
   }
@@ -200,7 +200,7 @@ export function JobHiringTeamSection({ jobId }: JobHiringTeamSectionProps) {
 
   const handleSaveHiringManager = async () => {
     await updateJobMutation.mutateAsync({
-      jobId,
+      id: jobId,
       hiringManagerContactId: selectedHiringManagerId === NONE_VALUE ? null : selectedHiringManagerId || null,
     })
     setIsEditingHiringManager(false)
@@ -218,7 +218,7 @@ export function JobHiringTeamSection({ jobId }: JobHiringTeamSectionProps) {
 
   const handleSaveHRContact = async () => {
     await updateJobMutation.mutateAsync({
-      jobId,
+      id: jobId,
       hrContactId: selectedHRContactId === NONE_VALUE ? null : selectedHRContactId || null,
     })
     setIsEditingHRContact(false)
@@ -232,7 +232,7 @@ export function JobHiringTeamSection({ jobId }: JobHiringTeamSectionProps) {
   // Remove hiring manager
   const handleRemoveHiringManager = async () => {
     await updateJobMutation.mutateAsync({
-      jobId,
+      id: jobId,
       hiringManagerContactId: null,
     })
   }
@@ -240,7 +240,7 @@ export function JobHiringTeamSection({ jobId }: JobHiringTeamSectionProps) {
   // Remove HR contact
   const handleRemoveHRContact = async () => {
     await updateJobMutation.mutateAsync({
-      jobId,
+      id: jobId,
       hrContactId: null,
     })
   }
