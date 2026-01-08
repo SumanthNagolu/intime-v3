@@ -205,3 +205,4 @@ export const GENERAL_PATTERNS: ActivityPatternSeed[] = [
 
 
 
+
