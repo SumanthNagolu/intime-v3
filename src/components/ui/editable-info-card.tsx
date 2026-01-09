@@ -2,7 +2,6 @@
 
 import * as React from 'react'
 import { useState, useCallback } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -355,17 +354,20 @@ export function EditableInfoCard({
 
   const gridCols = {
     1: 'grid-cols-1',
-    2: 'grid-cols-1 md:grid-cols-2',
-    3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+    2: 'grid-cols-1 sm:grid-cols-2',
+    3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
   }
 
   return (
-    <Card className={className}>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+    <div className={className}>
+      {/* Header with Edit Actions */}
+      <div className="flex items-center justify-between mb-4">
         <div>
-          <CardTitle>{title}</CardTitle>
+          {title && (
+            <h4 className="text-sm font-semibold text-charcoal-700 tracking-tight">{title}</h4>
+          )}
           {description && (
-            <p className="text-sm text-charcoal-500 mt-1">{description}</p>
+            <p className="text-xs text-charcoal-500 mt-0.5">{description}</p>
           )}
         </div>
         <div className="flex items-center gap-2">
@@ -375,9 +377,9 @@ export function EditableInfoCard({
               variant="ghost"
               size="sm"
               onClick={startEditing}
-              className="text-charcoal-500 hover:text-charcoal-900"
+              className="h-8 px-3 text-charcoal-500 hover:text-charcoal-900 hover:bg-charcoal-100"
             >
-              <Pencil className="w-4 h-4 mr-1" />
+              <Pencil className="w-3.5 h-3.5 mr-1.5" />
               Edit
             </Button>
           )}
@@ -388,31 +390,38 @@ export function EditableInfoCard({
                 size="sm"
                 onClick={cancelEditing}
                 disabled={isSaving}
+                className="h-8 px-3"
               >
-                <X className="w-4 h-4 mr-1" />
+                <X className="w-3.5 h-3.5 mr-1.5" />
                 Cancel
               </Button>
               <Button
                 size="sm"
                 onClick={handleSave}
                 disabled={isSaving}
+                className="h-8 px-3"
               >
                 {isSaving ? (
-                  <Loader2 className="w-4 h-4 mr-1 animate-spin" />
+                  <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
                 ) : (
-                  <Check className="w-4 h-4 mr-1" />
+                  <Check className="w-3.5 h-3.5 mr-1.5" />
                 )}
                 Save
               </Button>
             </>
           )}
         </div>
-      </CardHeader>
-      <CardContent>
-        <div className={cn('grid gap-4', gridCols[columns])}>
-          {fields.map((field) => (
-            <div key={field.key} className="space-y-1">
-              <Label className="text-sm text-charcoal-500">
+      </div>
+
+      {/* Fields Grid */}
+      <div className={cn('grid gap-x-6 gap-y-4', gridCols[columns])}>
+        {fields.map((field) => {
+          const displayValue = formatDisplayValue(data[field.key], field)
+          const isEmpty = displayValue === '—'
+
+          return (
+            <div key={field.key} className="group">
+              <Label className="text-[11px] font-medium uppercase tracking-wider text-charcoal-500 mb-1.5 block">
                 {field.label}
                 {field.required && isEditing && (
                   <span className="text-error-500 ml-0.5">*</span>
@@ -431,14 +440,17 @@ export function EditableInfoCard({
                   )}
                 </div>
               ) : (
-                <p className="text-charcoal-900 font-medium">
-                  {formatDisplayValue(data[field.key], field)}
+                <p className={cn(
+                  'text-sm font-medium leading-relaxed',
+                  isEmpty ? 'text-charcoal-400 italic' : 'text-charcoal-900'
+                )}>
+                  {displayValue}
                 </p>
               )}
             </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+          )
+        })}
+      </div>
+    </div>
   )
 }

@@ -25,6 +25,7 @@ export type FieldType =
   | 'rich-text'
   | 'file'
   | 'location' // Structured city/state/country picker
+  | 'custom' // Custom component rendered by wizard (identified by customComponentKey)
 
 export interface SelectOption {
   value: string
@@ -60,6 +61,9 @@ export interface FieldDefinition {
   min?: number
   max?: number
   step?: number
+
+  // Custom field type
+  customComponentKey?: string // Key to identify which custom component to render
 }
 
 // ============================================

@@ -91,6 +91,9 @@ function formToEntityData(formData: CreateJobFormData) {
       education: formData.education,
       certifications: formData.certifications,
       industries: formData.industries,
+      // Role Details (Step 3)
+      roleSummary: formData.roleSummary,
+      responsibilities: formData.responsibilities,
       roleOpenReason: formData.roleOpenReason,
       teamName: formData.teamName,
       teamSize: formData.teamSize,
@@ -374,9 +377,21 @@ function NewJobPageContent() {
     if (!editId) return
     if (!entityQuery.data) return
 
-    const formData = entityToFormData(entityQuery.data)
-    store.setFormData(formData)
-    previousFormData.current = JSON.stringify(formData)
+    const entity = entityQuery.data
+    const wizardState = entity.wizard_state as { formData?: CreateJobFormData; currentStep?: number } | null
+
+    // Prefer wizard_state.formData if available (contains full form data)
+    // Otherwise fall back to entity field mapping
+    if (wizardState?.formData) {
+      store.setFormData(wizardState.formData)
+      if (wizardState.currentStep && store.setCurrentStep) {
+        store.setCurrentStep(wizardState.currentStep)
+      }
+    } else {
+      const formData = entityToFormData(entity)
+      store.setFormData(formData)
+    }
+    previousFormData.current = JSON.stringify(store.formData)
     setIsReady(true)
   }, [isEditMode, editId, entityQuery.data])
 

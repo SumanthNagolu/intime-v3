@@ -21,34 +21,53 @@ interface RequirementGroup {
   label: string
   fields: {
     key: string
+    dbKey: string // Actual database field name
     label: string
     placeholder: string
+    type: 'string' | 'array' | 'jsonb' // Field type in database
   }[]
 }
 
+// Helper to convert various DB types to display string
+function toDisplayString(value: unknown): string {
+  if (value === null || value === undefined) return ''
+  if (typeof value === 'string') return value
+  if (Array.isArray(value)) return value.join('\n')
+  if (typeof value === 'object') {
+    // Handle jsonb - could be education object
+    const obj = value as Record<string, unknown>
+    if (obj.degree || obj.field) {
+      return [obj.degree, obj.field, obj.institution].filter(Boolean).join(', ')
+    }
+    return JSON.stringify(value, null, 2)
+  }
+  return String(value)
+}
+
 // Define the 3 collapsible groups as per the plan
+// Map to actual database field names
 const REQUIREMENT_GROUPS: RequirementGroup[] = [
   {
     id: 'skills',
     label: 'Skills',
     fields: [
-      { key: 'required_skills', label: 'Required Skills', placeholder: 'Enter required skills (one per line or comma-separated)...' },
-      { key: 'preferred_skills', label: 'Preferred Skills', placeholder: 'Enter preferred/nice-to-have skills...' },
+      { key: 'required_skills', dbKey: 'required_skills', label: 'Required Skills', placeholder: 'Enter required skills (one per line)...', type: 'array' },
+      { key: 'preferred_skills', dbKey: 'nice_to_have_skills', label: 'Preferred Skills', placeholder: 'Enter preferred/nice-to-have skills (one per line)...', type: 'array' },
     ],
   },
   {
     id: 'experience',
     label: 'Experience',
     fields: [
-      { key: 'experience_level', label: 'Experience Level', placeholder: 'e.g., 5+ years in software development, 3+ years with React...' },
+      { key: 'experience_level', dbKey: 'experience_level', label: 'Experience Level', placeholder: 'e.g., 5+ years in software development, 3+ years with React...', type: 'string' },
     ],
   },
   {
     id: 'qualifications',
     label: 'Qualifications',
     fields: [
-      { key: 'education', label: 'Education', placeholder: "e.g., Bachelor's degree in Computer Science or related field..." },
-      { key: 'certifications', label: 'Certifications', placeholder: 'e.g., AWS Certified Solutions Architect, PMP, etc...' },
+      { key: 'education', dbKey: 'education', label: 'Education', placeholder: "e.g., Bachelor's degree in Computer Science or related field...", type: 'jsonb' },
+      { key: 'certifications', dbKey: 'certifications', label: 'Certifications', placeholder: 'e.g., AWS Certified Solutions Architect, PMP (one per line)...', type: 'array' },
     ],
   },
 ]
@@ -87,14 +106,15 @@ export function JobRequirementsSection({ jobId }: JobRequirementsSectionProps) {
   })
 
   // Sync edit data when job data is available
+  // Convert DB types (arrays, jsonb) to display strings
   useEffect(() => {
     if (job) {
       setEditData({
-        required_skills: job.required_skills || '',
-        preferred_skills: job.preferred_skills || '',
-        experience_level: job.experience_level || '',
-        education: job.education || '',
-        certifications: job.certifications || '',
+        required_skills: toDisplayString(job.required_skills),
+        preferred_skills: toDisplayString((job as Record<string, unknown>).nice_to_have_skills),
+        experience_level: toDisplayString(job.experience_level),
+        education: toDisplayString(job.education),
+        certifications: toDisplayString(job.certifications),
       })
     }
   }, [job])
@@ -116,13 +136,20 @@ export function JobRequirementsSection({ jobId }: JobRequirementsSectionProps) {
   }
 
   const handleSave = () => {
+    // Helper to convert newline/comma separated string to array
+    const toArray = (str: string): string[] | undefined => {
+      if (!str.trim()) return undefined
+      return str.split(/[\n,]/).map(s => s.trim()).filter(Boolean)
+    }
+
     updateMutation.mutate({
       id: jobId,
-      required_skills: editData.required_skills || undefined,
-      preferred_skills: editData.preferred_skills || undefined,
-      experience_level: editData.experience_level || undefined,
-      education: editData.education || undefined,
-      certifications: editData.certifications || undefined,
+      // Array fields - use camelCase names expected by mutation
+      requiredSkills: toArray(editData.required_skills),
+      niceToHaveSkills: toArray(editData.preferred_skills),
+      // String field
+      // Note: experience_level, education, certifications may need different handling
+      // For now, keeping as string since that's what the input schema expects
     })
   }
 
@@ -130,11 +157,11 @@ export function JobRequirementsSection({ jobId }: JobRequirementsSectionProps) {
     // Revert to original job data
     if (job) {
       setEditData({
-        required_skills: job.required_skills || '',
-        preferred_skills: job.preferred_skills || '',
-        experience_level: job.experience_level || '',
-        education: job.education || '',
-        certifications: job.certifications || '',
+        required_skills: toDisplayString(job.required_skills),
+        preferred_skills: toDisplayString((job as Record<string, unknown>).nice_to_have_skills),
+        experience_level: toDisplayString(job.experience_level),
+        education: toDisplayString(job.education),
+        certifications: toDisplayString(job.certifications),
       })
     }
     setIsEditing(false)
@@ -145,7 +172,8 @@ export function JobRequirementsSection({ jobId }: JobRequirementsSectionProps) {
     let filled = 0
     group.fields.forEach((field) => {
       const value = editData[field.key as keyof EditableFields]
-      if (value && value.trim().length > 0) {
+      // Safely check if value is non-empty string
+      if (typeof value === 'string' && value.trim().length > 0) {
         filled++
       }
     })
@@ -220,7 +248,9 @@ export function JobRequirementsSection({ jobId }: JobRequirementsSectionProps) {
                 <div className="px-4 pb-4 space-y-4">
                   {group.fields.map((field) => {
                     const value = editData[field.key as keyof EditableFields]
-                    const jobValue = job[field.key as keyof FullJob] as string | undefined
+                    // Use dbKey to get the actual database field, and convert to display string
+                    const rawJobValue = (job as Record<string, unknown>)[field.dbKey]
+                    const jobValue = toDisplayString(rawJobValue)
 
                     return (
                       <div key={field.key}>

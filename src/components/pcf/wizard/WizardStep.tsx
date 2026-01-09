@@ -9,6 +9,12 @@ interface WizardStepProps<T> {
   formData: Partial<T>
   setFormData: (data: Partial<T>) => void
   errors: Record<string, string>
+  /** Custom components for fields with type='custom' and customComponentKey */
+  customComponents?: Record<string, React.ComponentType<{
+    formData: Partial<T>
+    setFormData: (data: Partial<T>) => void
+    errors: Record<string, string>
+  }>>
 }
 
 export function WizardStep<T>({
@@ -16,6 +22,7 @@ export function WizardStep<T>({
   formData,
   setFormData,
   errors,
+  customComponents,
 }: WizardStepProps<T>) {
   // If step has a custom component, render it
   if (step.component) {
@@ -32,8 +39,29 @@ export function WizardStep<T>({
     )
   }
 
+  // Check if any field should be visible based on dependsOn conditions
+  const isFieldVisible = (field: FieldDefinition): boolean => {
+    if (!field.dependsOn) return true
+    const dependentValue = formData[field.dependsOn.field as keyof T]
+    const operator = field.dependsOn.operator || 'eq'
+
+    switch (operator) {
+      case 'eq':
+        return dependentValue === field.dependsOn.value
+      case 'neq':
+        return dependentValue !== field.dependsOn.value
+      case 'in':
+        return Array.isArray(field.dependsOn.value) && field.dependsOn.value.includes(dependentValue)
+      default:
+        return dependentValue === field.dependsOn.value
+    }
+  }
+
+  // Filter visible fields
+  const visibleFields = step.fields.filter(isFieldVisible)
+
   // Group fields by section if specified
-  const fieldsBySection = step.fields.reduce<Record<string, FieldDefinition[]>>(
+  const fieldsBySection = visibleFields.reduce<Record<string, FieldDefinition[]>>(
     (acc, field) => {
       const section = field.section || 'default'
       if (!acc[section]) acc[section] = []
@@ -44,6 +72,33 @@ export function WizardStep<T>({
   )
 
   const sections = Object.entries(fieldsBySection)
+
+  // Helper to render a field (either custom or standard)
+  const renderField = (field: FieldDefinition) => {
+    // Check if this is a custom field type with a registered component
+    if (field.type === 'custom' && field.customComponentKey && customComponents?.[field.customComponentKey]) {
+      const CustomFieldComponent = customComponents[field.customComponentKey]
+      return (
+        <CustomFieldComponent
+          formData={formData}
+          setFormData={setFormData}
+          errors={errors}
+        />
+      )
+    }
+
+    // Standard field rendering
+    return (
+      <FormFieldRenderer
+        field={field}
+        value={formData[field.key as keyof T]}
+        onChange={(value) =>
+          setFormData({ ...formData, [field.key]: value } as Partial<T>)
+        }
+        error={errors[field.key]}
+      />
+    )
+  }
 
   return (
     <div className="space-y-6">
@@ -63,7 +118,7 @@ export function WizardStep<T>({
           <div
             className={cn(
               'grid gap-4',
-              fields.some((f) => f.columns === 1)
+              fields.some((f) => f.columns === 1 || f.type === 'custom')
                 ? 'grid-cols-1'
                 : 'grid-cols-1 md:grid-cols-2'
             )}
@@ -71,16 +126,11 @@ export function WizardStep<T>({
             {fields.map((field) => (
               <div
                 key={field.key}
-                className={cn(field.columns === 1 && 'md:col-span-2')}
+                className={cn(
+                  (field.columns === 1 || field.type === 'custom') && 'md:col-span-2'
+                )}
               >
-                <FormFieldRenderer
-                  field={field}
-                  value={formData[field.key as keyof T]}
-                  onChange={(value) =>
-                    setFormData({ ...formData, [field.key]: value } as Partial<T>)
-                  }
-                  error={errors[field.key]}
-                />
+                {renderField(field)}
               </div>
             ))}
           </div>
