@@ -21,12 +21,19 @@ interface EntityWizardProps<T> {
     lastSaved: Date | null
   }
   onCancel?: () => void
+  /** Custom components for fields with type='custom' and customComponentKey */
+  customComponents?: Record<string, React.ComponentType<{
+    formData: Partial<T>
+    setFormData: (data: Partial<T>) => void
+    errors: Record<string, string>
+  }>>
 }
 
 export function EntityWizard<T extends object>({
   config,
   store,
   onCancel,
+  customComponents,
 }: EntityWizardProps<T>) {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -352,6 +359,7 @@ export function EntityWizard<T extends object>({
                     formData={store.formData}
                     setFormData={store.setFormData}
                     errors={validationErrors}
+                    customComponents={customComponents}
                   />
                 ) : null}
               </div>

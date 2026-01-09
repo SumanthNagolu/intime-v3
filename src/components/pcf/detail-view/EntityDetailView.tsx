@@ -200,7 +200,7 @@ export function EntityDetailView<T extends Record<string, unknown>>({
       )}
 
       {/* Section/Step Content */}
-      <div className="flex-1 px-6 py-6 bg-charcoal-50/30">
+      <div className="flex-1 px-6 py-6 bg-gradient-to-b from-charcoal-50/40 to-charcoal-50/20">
         {renderContent()}
       </div>
 
