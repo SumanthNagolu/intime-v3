@@ -1,97 +1,555 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { Suspense, useMemo, useCallback, useEffect, useRef, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { trpc } from '@/lib/trpc/client'
+import { useCreateCandidateStore, CreateCandidateFormData } from '@/stores/create-candidate-store'
+import { WizardWithSidebar } from '@/components/pcf/wizard/WizardWithSidebar'
+import { createCandidateCreateConfig } from '@/configs/entities/wizards/candidate-create.config'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useToast } from '@/components/ui/use-toast'
-import { useCandidateIntakeStore } from '@/stores/candidate-intake-store'
-import { EntityWizard } from '@/components/pcf/wizard/EntityWizard'
-import { createCandidateIntakeConfig, CandidateIntakeFormData } from '@/configs/entities/wizards/candidate-intake.config'
+import { useDebouncedCallback } from 'use-debounce'
+import { Loader2 } from 'lucide-react'
+import { createClient } from '@/lib/supabase/client'
 
-export default function AddCandidatePage() {
+// Transform form data to entity data for API calls
+function formToEntityData(formData: CreateCandidateFormData) {
+  return {
+    firstName: formData.firstName || undefined,
+    lastName: formData.lastName || undefined,
+    email: formData.email || undefined,
+    phone: formData.phone || undefined,
+    linkedinUrl: formData.linkedinProfile || undefined,
+    professionalHeadline: formData.professionalHeadline || undefined,
+    professionalSummary: formData.professionalSummary || undefined,
+    skills: formData.skills,
+    experienceYears: formData.experienceYears,
+    visaStatus: formData.visaStatus,
+    availability: formData.availability,
+    location: formData.location || undefined,
+    locationCity: formData.locationCity || undefined,
+    locationState: formData.locationState || undefined,
+    locationCountry: formData.locationCountry || undefined,
+    willingToRelocate: formData.willingToRelocate,
+    isRemoteOk: formData.isRemoteOk,
+    minimumHourlyRate: formData.minimumHourlyRate,
+    desiredHourlyRate: formData.desiredHourlyRate,
+    leadSource: formData.leadSource,
+    sourceDetails: formData.sourceDetails || undefined,
+    isOnHotlist: formData.isOnHotlist,
+    hotlistNotes: formData.hotlistNotes || undefined,
+  }
+}
+
+// Transform entity data to form data for editing/resuming
+function entityToFormData(entity: any): CreateCandidateFormData {
+  return {
+    sourceType: 'manual',
+    firstName: entity.first_name || '',
+    lastName: entity.last_name || '',
+    email: entity.email || '',
+    phone: entity.phone || '',
+    linkedinProfile: entity.linkedin_url || '',
+    professionalHeadline: entity.title || '',
+    professionalSummary: entity.professional_summary || '',
+    skills: entity.skills || [],
+    experienceYears: entity.years_experience || 0,
+    visaStatus: entity.visa_status || 'us_citizen',
+    availability: entity.availability || '2_weeks',
+    location: entity.location || '',
+    locationCity: entity.location_city || '',
+    locationState: entity.location_state || '',
+    locationCountry: entity.location_country || 'US',
+    willingToRelocate: entity.willing_to_relocate || false,
+    isRemoteOk: entity.is_remote_ok || false,
+    minimumHourlyRate: entity.minimum_rate || undefined,
+    desiredHourlyRate: entity.desired_rate || undefined,
+    leadSource: entity.lead_source || 'linkedin',
+    sourceDetails: entity.lead_source_detail || '',
+    isOnHotlist: entity.is_on_hotlist || false,
+    hotlistNotes: entity.hotlist_notes || '',
+  }
+}
+
+function NewCandidatePageContent() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { toast } = useToast()
   const utils = trpc.useUtils()
 
-  // Get store
-  const {
-    formData,
-    setFormData,
-    resetForm,
-    isDirty,
-    lastSaved,
-  } = useCandidateIntakeStore()
+  // Get store - includes resumeFile and resumeParsedData for upload
+  const store = useCreateCandidateStore()
 
-  // Create candidate mutation
-  const createMutation = trpc.ats.candidates.create.useMutation({
-    onSuccess: (data) => {
-      utils.ats.candidates.advancedSearch.invalidate()
-      toast({ title: 'Candidate added successfully' })
-      resetForm()
-      router.push(`/employee/recruiting/candidates/${data.candidateId}`)
-    },
-    onError: (error) => {
-      toast({
-        title: 'Error adding candidate',
-        description: error.message,
-        variant: 'error',
+  // URL params
+  const draftId = searchParams.get('draft')
+  const editId = searchParams.get('edit')
+  const resumeId = searchParams.get('resume') // Legacy support for old resume links
+  const isEditMode = !!editId
+
+  // Refs for preventing race conditions
+  const hasCreatedDraft = useRef(false)
+  const previousFormData = useRef<string>('')
+  const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null)
+  const [isReady, setIsReady] = useState(false)
+
+  // Mutations
+  const createDraftMutation = trpc.ats.candidates.createDraft.useMutation()
+  const updateMutation = trpc.ats.candidates.update.useMutation()
+  const createMutation = trpc.ats.candidates.create.useMutation()
+
+  // The actual draft ID to use (from URL param)
+  const activeDraftId = draftId || resumeId
+
+  // Query for draft/edit data (only when we have an ID)
+  const entityQuery = trpc.ats.candidates.getById.useQuery(
+    { id: (activeDraftId || editId)! },
+    { enabled: !!(activeDraftId || editId), retry: false }
+  )
+
+  // Step 1: If no draft param and not edit mode, create draft IMMEDIATELY and redirect
+  useEffect(() => {
+    if (isEditMode) {
+      setIsReady(true) // Edit mode doesn't need draft creation
+      return
+    }
+    if (activeDraftId) {
+      // Already have a draft ID, just need to load it
+      return
+    }
+    if (hasCreatedDraft.current) {
+      return // Already creating
+    }
+
+    hasCreatedDraft.current = true
+    store.resetForm()
+
+    createDraftMutation.mutateAsync()
+      .then((result) => {
+        // Redirect to URL with draft ID - this ensures only ONE draft is created
+        router.replace(`/employee/recruiting/candidates/new?draft=${result.id}`)
+        utils.ats.candidates.advancedSearch.invalidate()
       })
+      .catch((error) => {
+        console.error('Failed to create draft:', error)
+        hasCreatedDraft.current = false
+        toast({ title: 'Error', description: 'Failed to start candidate creation.', variant: 'error' })
+        router.push('/employee/recruiting/candidates')
+      })
+  }, [isEditMode, activeDraftId])
+
+  // Step 2: Load draft data when we have a draft ID and query returns data
+  useEffect(() => {
+    if (!activeDraftId) return
+    if (isEditMode) return
+    if (!entityQuery.data) return
+    if (isReady) return // Already loaded
+
+    // Load the draft data into the form
+    const draft = entityQuery.data
+    const wizardState = draft.wizard_state as { formData?: CreateCandidateFormData; currentStep?: number } | null
+
+    if (wizardState?.formData) {
+      store.setFormData(wizardState.formData)
+      if (wizardState.currentStep && store.setCurrentStep) {
+        store.setCurrentStep(wizardState.currentStep)
+      }
+    } else {
+      // Fallback to entity field mapping
+      const formData = entityToFormData(draft)
+      store.setFormData(formData)
+    }
+
+    previousFormData.current = JSON.stringify(store.formData)
+    setIsReady(true)
+  }, [activeDraftId, entityQuery.data, isEditMode, isReady])
+
+  // Step 3: Load data for edit mode
+  useEffect(() => {
+    if (!isEditMode) return
+    if (!editId) return
+    if (!entityQuery.data) return
+
+    const entity = entityQuery.data
+    const wizardState = entity.wizard_state as { formData?: CreateCandidateFormData; currentStep?: number } | null
+
+    // Prefer wizard_state.formData if available (contains full form data)
+    // Otherwise fall back to entity field mapping
+    if (wizardState?.formData) {
+      store.setFormData(wizardState.formData)
+      if (wizardState.currentStep && store.setCurrentStep) {
+        store.setCurrentStep(wizardState.currentStep)
+      }
+    } else {
+      const formData = entityToFormData(entity)
+      store.setFormData(formData)
+    }
+    previousFormData.current = JSON.stringify(store.formData)
+    setIsReady(true)
+  }, [isEditMode, editId, entityQuery.data])
+
+  // Auto-save debounced function - ONLY updates, never creates
+  const debouncedSave = useDebouncedCallback(
+    async (draftIdToUpdate: string, formData: CreateCandidateFormData, currentStep: number) => {
+      const entityData = formToEntityData(formData)
+      const wizardState = {
+        formData,
+        currentStep,
+        totalSteps: 6,
+        lastSavedAt: new Date().toISOString(),
+      }
+
+      try {
+        await updateMutation.mutateAsync({
+          candidateId: draftIdToUpdate,
+          ...entityData,
+          wizard_state: wizardState,
+        } as any)
+        setLastSavedAt(new Date())
+        utils.ats.candidates.advancedSearch.invalidate()
+      } catch (error) {
+        console.error('[Candidate Wizard] Auto-save failed:', error)
+      }
     },
-  })
+    2000
+  )
 
-  // Handle form submission
-  const handleSubmit = async (data: CandidateIntakeFormData): Promise<unknown> => {
-    // Parse structured location from display string if not set directly
-    const locationCity = data.locationCity || data.location?.split(',')[0]?.trim() || undefined
-    const locationState = data.locationState || data.location?.split(',')[1]?.trim() || undefined
-    const locationCountry = data.locationCountry || 'US'
+  // Watch for form changes and auto-save (ONLY updates to existing draft)
+  useEffect(() => {
+    if (!isReady) return
+    if (isEditMode) return // Don't auto-save in edit mode
+    if (!activeDraftId) return // No draft to update
 
-    return createMutation.mutateAsync({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      phone: data.phone || undefined,
-      linkedinUrl: data.linkedinProfile || undefined,
-      professionalHeadline: data.professionalHeadline || undefined,
-      professionalSummary: data.professionalSummary || undefined,
-      skills: data.skills,
-      experienceYears: data.experienceYears,
-      visaStatus: data.visaStatus,
-      availability: data.availability,
-      location: data.location,
-      // Structured location fields for centralized address creation
-      locationCity,
-      locationState,
-      locationCountry,
-      willingToRelocate: data.willingToRelocate,
-      isRemoteOk: data.isRemoteOk,
-      minimumHourlyRate: data.minimumHourlyRate,
-      desiredHourlyRate: data.desiredHourlyRate,
-      leadSource: data.leadSource,
-      sourceDetails: data.sourceDetails || undefined,
-      isOnHotlist: data.isOnHotlist,
-      hotlistNotes: data.hotlistNotes || undefined,
-    })
-  }
+    const currentFormDataStr = JSON.stringify(store.formData)
+
+    // Skip if no changes
+    if (currentFormDataStr === previousFormData.current) return
+    previousFormData.current = currentFormDataStr
+
+    // Check if form has meaningful data worth saving
+    const hasData = store.formData.firstName?.trim() !== '' || store.formData.email?.trim() !== ''
+    if (!hasData) return
+
+    // Trigger debounced save - this ONLY updates, never creates
+    debouncedSave(activeDraftId, store.formData, store.currentStep)
+  }, [isReady, isEditMode, activeDraftId, store.formData, store.currentStep, debouncedSave])
+
+  // Handle final submission
+  const handleSubmit = useCallback(
+    async (data: CreateCandidateFormData) => {
+      try {
+        // Parse structured location from display string if not set directly
+        const locationCity = data.locationCity || data.location?.split(',')[0]?.trim() || undefined
+        const locationState = data.locationState || data.location?.split(',')[1]?.trim() || undefined
+        const locationCountry = data.locationCountry || 'US'
+
+        // Prepare resume data if we have a parsed resume (from store)
+        let resumeData: {
+          storagePath: string
+          fileName: string
+          fileSize: number
+          mimeType: string
+          parsedContent?: string
+          parsedSkills?: string[]
+          parsedExperience?: string
+          aiSummary?: string
+          parsingConfidence?: number
+        } | undefined = undefined
+
+        // Upload resume to storage first if we have one (stored in Zustand store)
+        const { resumeFile, resumeParsedData } = store
+        if (resumeFile && resumeParsedData) {
+          try {
+            const supabase = createClient()
+            const file = resumeFile
+            const parsedResume = resumeParsedData
+            const fileExt = file.name.split('.').pop()?.toLowerCase() || 'pdf'
+            const tempId = `temp-${Date.now()}`
+            const storagePath = `${tempId}/${Date.now()}-resume.${fileExt}`
+
+            const { error: uploadError } = await supabase.storage
+              .from('resumes')
+              .upload(storagePath, file)
+
+            if (uploadError) {
+              console.error('Failed to upload resume:', uploadError.message)
+              toast({
+                title: 'Resume upload failed',
+                description: `${uploadError.message}. Candidate will be saved without resume.`,
+                variant: 'default',
+              })
+            } else {
+              resumeData = {
+                storagePath,
+                fileName: file.name,
+                fileSize: file.size,
+                mimeType: file.type || 'application/pdf',
+                parsedContent: parsedResume.rawText,
+                parsedSkills: parsedResume.skills,
+                parsedExperience: parsedResume.professionalSummary,
+                aiSummary: parsedResume.professionalSummary,
+                parsingConfidence: parsedResume.confidence.overall,
+              }
+            }
+          } catch (error) {
+            console.error('Error uploading resume:', error)
+          }
+        }
+
+        if (isEditMode && editId) {
+          // Update existing candidate
+          await updateMutation.mutateAsync({
+            candidateId: editId,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phone: data.phone || undefined,
+            linkedinUrl: data.linkedinProfile || undefined,
+            professionalHeadline: data.professionalHeadline || undefined,
+            professionalSummary: data.professionalSummary || undefined,
+            skills: data.skills,
+            experienceYears: data.experienceYears,
+            visaStatus: data.visaStatus,
+            availability: data.availability,
+            location: data.location,
+            locationCity,
+            locationState,
+            locationCountry,
+            willingToRelocate: data.willingToRelocate,
+            isRemoteOk: data.isRemoteOk,
+            minimumHourlyRate: data.minimumHourlyRate,
+            desiredHourlyRate: data.desiredHourlyRate,
+            leadSource: data.leadSource,
+            sourceDetails: data.sourceDetails || undefined,
+            isOnHotlist: data.isOnHotlist,
+            hotlistNotes: data.hotlistNotes || undefined,
+            wizard_state: null, // Clear wizard state on finalization
+          } as any)
+
+          toast({
+            title: 'Candidate updated!',
+            description: `${data.firstName} ${data.lastName} has been successfully updated.`,
+          })
+
+          utils.ats.candidates.getById.invalidate({ id: editId })
+          utils.ats.candidates.advancedSearch.invalidate()
+          store.resetForm()
+          router.push(`/employee/recruiting/candidates/${editId}`)
+        } else if (activeDraftId) {
+          // Finalize draft - create the full candidate record via create mutation
+          // First, delete the draft (soft delete)
+          await updateMutation.mutateAsync({
+            candidateId: activeDraftId,
+            profileStatus: 'active', // This will be overridden by create
+            wizard_state: null,
+          } as any)
+
+          // Now create the actual candidate with full data
+          const result = await createMutation.mutateAsync({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phone: data.phone || undefined,
+            linkedinUrl: data.linkedinProfile || undefined,
+            professionalHeadline: data.professionalHeadline || undefined,
+            professionalSummary: data.professionalSummary || undefined,
+            skills: data.skills,
+            experienceYears: data.experienceYears,
+            visaStatus: data.visaStatus,
+            availability: data.availability,
+            location: data.location,
+            locationCity,
+            locationState,
+            locationCountry,
+            willingToRelocate: data.willingToRelocate,
+            isRemoteOk: data.isRemoteOk,
+            minimumHourlyRate: data.minimumHourlyRate,
+            desiredHourlyRate: data.desiredHourlyRate,
+            leadSource: data.leadSource,
+            sourceDetails: data.sourceDetails || undefined,
+            isOnHotlist: data.isOnHotlist,
+            hotlistNotes: data.hotlistNotes || undefined,
+            resumeData,
+          })
+
+          // Soft delete the draft now that we have the real candidate
+          await updateMutation.mutateAsync({
+            candidateId: activeDraftId,
+            profileStatus: 'draft',
+          } as any).catch(() => {}) // Ignore errors
+
+          toast({
+            title: 'Candidate created!',
+            description: `${data.firstName} ${data.lastName} has been successfully added.`,
+          })
+
+          utils.ats.candidates.advancedSearch.invalidate()
+          store.resetForm()
+          router.push(`/employee/recruiting/candidates/${result.candidateId}`)
+        }
+      } catch (error) {
+        console.error('Failed to save candidate:', error)
+        toast({
+          title: 'Error',
+          description: error instanceof Error ? error.message : 'Failed to save candidate.',
+          variant: 'error',
+        })
+        throw error
+      }
+    },
+    [isEditMode, editId, activeDraftId, router, updateMutation, createMutation, utils, store, toast]
+  )
+
+  // Delete draft function (soft delete only)
+  const deleteDraft = useCallback(async () => {
+    if (activeDraftId && !isEditMode) {
+      try {
+        await updateMutation.mutateAsync({
+          candidateId: activeDraftId,
+          profileStatus: 'draft',
+        } as any)
+        utils.ats.candidates.advancedSearch.invalidate()
+      } catch (error) {
+        console.error('Failed to delete draft:', error)
+      }
+    }
+  }, [activeDraftId, isEditMode, updateMutation, utils])
+
+  // Handle cancel
+  const handleCancel = useCallback(() => {
+    store.resetForm()
+    router.push('/employee/recruiting/candidates')
+  }, [store, router])
 
   // Create wizard config
-  const wizardConfig = createCandidateIntakeConfig(handleSubmit, {
-    onSuccess: () => {}, // Already handled in mutation
-    cancelRoute: '/employee/recruiting/candidates',
-  })
+  const wizardConfig = useMemo(() => {
+    const config = createCandidateCreateConfig(handleSubmit, {
+      cancelRoute: isEditMode && editId ? `/employee/recruiting/candidates/${editId}` : '/employee/recruiting/candidates',
+    })
 
-  // Store adapter for EntityWizard
-  const storeAdapter = {
-    formData: formData as unknown as CandidateIntakeFormData,
-    setFormData: setFormData as (data: Partial<CandidateIntakeFormData>) => void,
-    resetForm,
-    isDirty,
-    lastSaved,
+    // Override title and labels for edit mode
+    if (isEditMode) {
+      return {
+        ...config,
+        title: 'Edit Candidate',
+        description: 'Update candidate information',
+        submitLabel: 'Save Changes',
+      }
+    }
+
+    return config
+  }, [handleSubmit, isEditMode, editId])
+
+  // Adapt store for WizardWithSidebar
+  const wizardStoreAdapter = {
+    formData: store.formData,
+    setFormData: store.setFormData,
+    resetForm: store.resetForm,
+    isDirty: store.isDirty,
+    lastSaved: lastSavedAt || store.lastSaved,
+    currentStep: store.currentStep,
+    setCurrentStep: store.setCurrentStep,
+  }
+
+  // Draft state for WizardWithSidebar
+  const draftState = isEditMode ? undefined : {
+    isReady,
+    isLoading: entityQuery.isLoading,
+    isSaving: updateMutation.isPending,
+    draftId: activeDraftId,
+    lastSavedAt,
+    saveDraft: async () => {
+      if (!activeDraftId) return
+      const entityData = formToEntityData(store.formData)
+      const wizardState = {
+        formData: store.formData,
+        currentStep: store.currentStep,
+        totalSteps: 6,
+        lastSavedAt: new Date().toISOString(),
+      }
+      await updateMutation.mutateAsync({
+        candidateId: activeDraftId,
+        ...entityData,
+        wizard_state: wizardState,
+      } as any)
+      setLastSavedAt(new Date())
+      utils.ats.candidates.advancedSearch.invalidate()
+    },
+    deleteDraft,
+    finalizeDraft: async (status: string) => {
+      if (!activeDraftId) throw new Error('No draft to finalize')
+      // Note: Finalization happens in handleSubmit
+      return { id: activeDraftId }
+    },
+  }
+
+  // Show loading while creating initial draft or loading draft data
+  if (!isEditMode && !activeDraftId) {
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 animate-spin text-gold-500 mx-auto mb-4" />
+          <p className="text-charcoal-600">Creating new candidate draft...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Show loading while fetching draft/edit data
+  if ((activeDraftId || editId) && entityQuery.isLoading) {
+    return (
+      <div className="min-h-screen bg-cream">
+        <div className="max-w-4xl mx-auto py-8 px-4">
+          <Skeleton className="h-8 w-64 mb-8" />
+          <Skeleton className="h-96 w-full" />
+        </div>
+      </div>
+    )
+  }
+
+  // Error state
+  if ((activeDraftId || editId) && !entityQuery.data && !entityQuery.isLoading) {
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-xl font-semibold text-charcoal-900 mb-2">
+            {isEditMode ? 'Candidate not found' : 'Draft not found'}
+          </h2>
+          <p className="text-charcoal-500 mb-4">
+            {isEditMode
+              ? "The candidate you're looking for doesn't exist."
+              : "The draft you're looking for doesn't exist or has been deleted."}
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  // Wait for ready state
+  if (!isReady) {
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 animate-spin text-gold-500 mx-auto mb-4" />
+          <p className="text-charcoal-600">Loading...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <EntityWizard
+    <WizardWithSidebar
       config={wizardConfig}
-      store={storeAdapter}
+      store={wizardStoreAdapter}
+      draftState={draftState}
+      onCancel={handleCancel}
     />
+  )
+}
+
+export default function NewCandidatePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-cream flex items-center justify-center">Loading wizard...</div>}>
+      <NewCandidatePageContent />
+    </Suspense>
   )
 }

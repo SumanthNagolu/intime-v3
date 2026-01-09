@@ -15,6 +15,8 @@ export interface CandidateIntakeFormData {
   // Step 1: Source
   sourceType: 'manual' | 'resume' | 'linkedin'
   resumeFile?: File
+  resumeStoragePath?: string // Path in Supabase storage after upload
+  resumeParsed?: boolean // Flag to indicate resume was parsed
   linkedinUrl?: string
 
   // Step 2: Basic Info
@@ -104,9 +106,17 @@ const step1Fields: FieldDefinition[] = [
     required: true,
     options: [
       { value: 'manual', label: 'Manual Entry - Enter details manually' },
-      { value: 'resume', label: 'Upload Resume - Parse from resume (coming soon)' },
+      { value: 'resume', label: 'Upload Resume - Parse from resume with AI' },
       { value: 'linkedin', label: 'LinkedIn Import - Import from URL (coming soon)' },
     ],
+  },
+  {
+    key: 'resumeUpload',
+    label: 'Upload Resume',
+    type: 'custom', // Custom component will be rendered by the wizard page
+    customComponentKey: 'resumeUploadParser',
+    dependsOn: { field: 'sourceType', value: 'resume' },
+    description: 'Upload a PDF resume to automatically extract candidate information',
   },
   {
     key: 'linkedinUrl',
