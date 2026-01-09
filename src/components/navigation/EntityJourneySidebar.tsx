@@ -9,8 +9,8 @@ import { entityJourneys, getVisibleQuickActions } from '@/lib/navigation/entity-
 import { EntityType, ENTITY_BASE_PATHS, ENTITY_NAVIGATION_STYLES } from '@/lib/navigation/entity-navigation.types'
 import { commonToolSections, getSectionsByGroup, jobSectionGroups, jobToolSections } from '@/lib/navigation/entity-sections'
 import { CollapsibleSectionGroup } from './CollapsibleSectionGroup'
+import { SidebarActionsPopover, type ActionItem } from './SidebarActionsPopover'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import {
   Collapsible,
   CollapsibleContent,
@@ -51,6 +51,7 @@ const backLinkText: Record<EntityType, string> = {
   placement: 'All Placements',
   account: 'All Accounts',
   contact: 'All Contacts',
+  company: 'All Companies',
   deal: 'All Deals',
   lead: 'All Leads',
   campaign: 'All Campaigns',
@@ -77,7 +78,6 @@ export function EntityJourneySidebar({
   const defaultSection = entityType === 'account' ? 'summary' : 'overview'
   const currentSection = searchParams.get('section') || defaultSection
   const [isToolsOpen, setIsToolsOpen] = useState(true)
-  const [isQuickActionsOpen, setIsQuickActionsOpen] = useState(true)
   
   // Get collapsed state from context
   const sidebarContext = useSidebarUIContextSafe()
@@ -258,73 +258,53 @@ export function EntityJourneySidebar({
           )}
         </div>
 
-        {/* Quick Actions - Collapsible */}
+        {/* Guidewire-style Quick Actions Popover */}
         {visibleQuickActions.length > 0 && (
-          <Collapsible
-            open={isQuickActionsOpen}
-            onOpenChange={setIsQuickActionsOpen}
-            className="border-b border-charcoal-100 py-3 px-3"
-          >
-            {!isCollapsed && (
-              <CollapsibleTrigger className="flex items-center gap-2 w-full px-2 py-1.5 text-xs font-medium text-charcoal-400 uppercase tracking-wider hover:text-charcoal-600 transition-colors">
-                {isQuickActionsOpen ? (
-                  <ChevronDown className="w-3.5 h-3.5" />
-                ) : (
-                  <ChevronRight className="w-3.5 h-3.5" />
-                )}
-                <Zap className="w-3.5 h-3.5" />
-                <span>Actions</span>
-              </CollapsibleTrigger>
-            )}
-            <CollapsibleContent className={cn(isCollapsed ? '' : 'mt-2')}>
-              <div className={cn('space-y-1.5', isCollapsed && 'flex flex-col items-center')}>
-                {visibleQuickActions.map((action) => {
+          <div className="border-b border-charcoal-100 py-3 px-3">
+            {isCollapsed ? (
+              // Collapsed mode: Show icon-only buttons with tooltips
+              <div className="flex flex-col items-center space-y-1.5">
+                {visibleQuickActions.slice(0, 3).map((action) => {
                   const Icon = action.icon
-                  if (isCollapsed) {
-                    return (
-                      <Tooltip key={action.id}>
-                        <TooltipTrigger asChild>
-                          <Button
-                            variant={action.variant || 'outline'}
-                            size="sm"
-                            className={cn(
-                              'w-9 h-9 p-0 flex items-center justify-center',
-                              action.variant === 'destructive'
-                                ? 'hover:bg-red-50'
-                                : 'hover:bg-gold-50 hover:text-gold-700 hover:border-gold-200'
-                            )}
-                            onClick={() => handleQuickAction(action)}
-                          >
-                            <Icon className="w-4 h-4" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent side="right" className="bg-charcoal-900 text-white">
-                          <p>{action.label}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    )
-                  }
                   return (
-                    <Button
-                      key={action.id}
-                      variant={action.variant || 'outline'}
-                      size="sm"
-                      className={cn(
-                        'w-full justify-start gap-2 h-9 text-xs font-medium',
-                        action.variant === 'destructive'
-                          ? 'hover:bg-red-50'
-                          : 'hover:bg-gold-50 hover:text-gold-700 hover:border-gold-200'
-                      )}
-                      onClick={() => handleQuickAction(action)}
-                    >
-                      <Icon className="w-3.5 h-3.5" />
-                      {action.label}
-                    </Button>
+                    <Tooltip key={action.id}>
+                      <TooltipTrigger asChild>
+                        <button
+                          className={cn(
+                            'w-9 h-9 rounded-lg flex items-center justify-center transition-colors',
+                            action.variant === 'destructive'
+                              ? 'text-red-600 hover:bg-red-50'
+                              : 'text-charcoal-600 hover:bg-gold-50 hover:text-gold-700'
+                          )}
+                          onClick={() => handleQuickAction(action)}
+                        >
+                          <Icon className="w-4 h-4" />
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                        <p>{action.label}</p>
+                      </TooltipContent>
+                    </Tooltip>
                   )
                 })}
               </div>
-            </CollapsibleContent>
-          </Collapsible>
+            ) : (
+              // Expanded mode: Show Guidewire-style popover
+              <SidebarActionsPopover
+                actions={visibleQuickActions.map((action) => ({
+                  id: action.id,
+                  label: action.label,
+                  icon: action.icon,
+                  variant: action.variant as ActionItem['variant'],
+                }))}
+                onAction={(actionId) => {
+                  const action = visibleQuickActions.find(a => a.id === actionId)
+                  if (action) handleQuickAction(action)
+                }}
+                isCollapsed={isCollapsed}
+              />
+            )}
+          </div>
         )}
 
         <nav className="flex-1 overflow-y-auto">

@@ -174,17 +174,15 @@ export const accountSections: SectionDefinition[] = [
 
 /**
  * Job sections - Guidewire-style with main sections + tools
- * Main: Overview, Requirements, Location, Hiring Team, Client Details, Pipeline, Submissions, Interviews, Offers
+ * Main: Overview (consolidated), Pipeline, Submissions, Interviews, Offers
  * Tools: Activities, Notes, Documents, History
+ *
+ * Note: Overview now includes Requirements, Location, Hiring Team, and Client Details
+ * as collapsible cards within the single Overview page.
  */
 export const jobSections: SectionDefinition[] = [
-  // Job Details group
-  { id: 'overview', label: 'Overview', icon: FileText, group: 'main' },
-  { id: 'requirements', label: 'Requirements', icon: ListChecks, group: 'main' },
-  { id: 'client', label: 'Client Details', icon: Building2, group: 'main' },
-  { id: 'location', label: 'Location', icon: MapPin, group: 'main' },
-  // Hiring Team group
-  { id: 'team', label: 'Hiring Team', icon: Users, group: 'main', showCount: true },
+  // Overview (consolidated from former Job Details, Requirements, Location, Hiring Team, Client Details)
+  { id: 'overview', label: 'Overview', icon: FileText, group: 'main', description: 'Job details, requirements, location, team, and client info' },
   // Pipeline group
   { id: 'pipeline', label: 'Pipeline', icon: Layers, showCount: true, group: 'main' },
   { id: 'submissions', label: 'Submissions', icon: Send, showCount: true, group: 'main' },
@@ -209,18 +207,13 @@ export interface SectionGroup {
 
 /**
  * Job section groups - organized for Guidewire-style collapsible sidebar
+ * Overview is standalone at top, Pipeline has workflow sections
  */
 export const jobSectionGroups: SectionGroup[] = [
   {
-    id: 'job-details',
-    label: 'Job Details',
-    sectionIds: ['overview', 'requirements', 'client', 'location'],
-    defaultOpen: true,
-  },
-  {
-    id: 'hiring-team',
-    label: 'Hiring Team',
-    sectionIds: ['team'],
+    id: 'overview-standalone',
+    label: '', // Empty label = no group header, just the item
+    sectionIds: ['overview'],
     defaultOpen: true,
   },
   {
