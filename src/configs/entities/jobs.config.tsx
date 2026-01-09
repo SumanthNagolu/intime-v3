@@ -27,7 +27,6 @@ import { SLAIndicator } from '@/components/recruiting/jobs/SLAIndicator'
 // PCF Section Adapters - import from separate file to avoid circular dependencies
 import {
   JobOverviewSectionPCF,
-  JobRequirementsSectionPCF,
   JobPipelineSectionPCF,
   JobSubmissionsSectionPCF,
   JobInterviewsSectionPCF,
@@ -35,9 +34,6 @@ import {
   JobActivitiesSectionPCF,
   JobDocumentsSectionPCF,
   JobNotesSectionPCF,
-  JobAddressesSectionPCF,
-  JobHiringTeamSectionPCF,
-  JobClientDetailsSectionPCF,
   JobHistorySectionPCF,
 } from './sections/jobs.sections'
 import { JobDraftsTabContent } from '@/components/pcf/list-view/JobDraftsTabContent'
@@ -781,30 +777,6 @@ export const jobsDetailConfig: DetailViewConfig<Job> = {
       component: JobOverviewSectionPCF,
     },
     {
-      id: 'requirements',
-      label: 'Requirements',
-      icon: Target,
-      component: JobRequirementsSectionPCF,
-    },
-    {
-      id: 'location',
-      label: 'Location',
-      icon: MapPin,
-      component: JobAddressesSectionPCF,
-    },
-    {
-      id: 'team',
-      label: 'Hiring Team',
-      icon: Users,
-      component: JobHiringTeamSectionPCF,
-    },
-    {
-      id: 'client',
-      label: 'Client Details',
-      icon: Building2,
-      component: JobClientDetailsSectionPCF,
-    },
-    {
       id: 'pipeline',
       label: 'Pipeline',
       icon: Kanban,
@@ -896,6 +868,22 @@ export const jobsDetailConfig: DetailViewConfig<Job> = {
   ],
 
   quickActions: [
+    // Edit button (like Account pattern)
+    {
+      id: 'edit',
+      label: 'Edit',
+      icon: FileText,
+      variant: 'outline',
+      onClick: (entity: unknown) => {
+        const job = entity as Job
+        window.location.href = `/employee/recruiting/jobs/new?edit=${job.id}`
+      },
+      isVisible: (entity: unknown) => {
+        const job = entity as Job
+        return job.status !== 'filled' && job.status !== 'cancelled'
+      },
+    },
+    // Primary action - Add Submission
     {
       id: 'add-submission',
       label: 'Add Submission',
@@ -910,26 +898,36 @@ export const jobsDetailConfig: DetailViewConfig<Job> = {
         return job.status === 'active' || job.status === 'open'
       },
     },
-    {
-      id: 'view-pipeline',
-      label: 'View Pipeline',
-      icon: Users,
-      variant: 'outline',
-      onClick: (entity: unknown) => {
-        const job = entity as Job
-        window.location.href = `/employee/recruiting/jobs/${job.id}?section=pipeline`
-      },
-    },
   ],
 
   dropdownActions: [
+    // Primary actions
     {
-      label: 'Edit Job',
-      icon: FileText,
+      label: 'Add Candidate',
+      icon: Users,
       onClick: (entity) => {
-        window.location.href = `/employee/recruiting/jobs/${entity.id}/edit`
+        window.location.href = `/employee/recruiting/jobs/${entity.id}/add-candidate`
+      },
+      isVisible: (entity) => entity.status !== 'draft' && entity.status !== 'filled' && entity.status !== 'cancelled',
+    },
+    {
+      label: 'Log Activity',
+      icon: Activity,
+      onClick: (entity) => {
+        window.dispatchEvent(new CustomEvent('openEntityDialog', {
+          detail: { dialogId: 'logActivity', entityType: 'job', entityId: entity.id }
+        }))
       },
     },
+    {
+      label: 'View Pipeline',
+      icon: Kanban,
+      onClick: (entity) => {
+        window.location.href = `/employee/recruiting/jobs/${entity.id}?section=pipeline`
+      },
+    },
+    { separator: true, label: '' },
+    // Secondary actions
     {
       label: 'Duplicate Job',
       icon: FileText,
@@ -937,23 +935,45 @@ export const jobsDetailConfig: DetailViewConfig<Job> = {
         console.log('Duplicate job:', entity.id)
       },
     },
+    {
+      label: 'Export Data',
+      icon: FileText,
+      onClick: (entity) => {
+        console.log('Export data for job:', entity.id)
+      },
+    },
     { separator: true, label: '' },
+    // Status actions
     {
       label: 'Put On Hold',
       icon: Pause,
       onClick: (entity) => {
-        console.log('Put on hold:', entity.id)
+        window.dispatchEvent(new CustomEvent('openEntityDialog', {
+          detail: { dialogId: 'updateStatus', entityType: 'job', entityId: entity.id, newStatus: 'on_hold' }
+        }))
       },
+      isVisible: (entity) => entity.status === 'open' || entity.status === 'active',
     },
     {
-      label: 'Cancel Job',
+      label: 'Resume Job',
+      icon: Play,
+      onClick: (entity) => {
+        window.dispatchEvent(new CustomEvent('openEntityDialog', {
+          detail: { dialogId: 'updateStatus', entityType: 'job', entityId: entity.id, newStatus: 'active' }
+        }))
+      },
+      isVisible: (entity) => entity.status === 'on_hold',
+    },
+    {
+      label: 'Close Job',
       icon: XCircle,
       variant: 'destructive',
       onClick: (entity) => {
-        if (confirm('Are you sure you want to cancel this job?')) {
-          console.log('Cancel job:', entity.id)
-        }
+        window.dispatchEvent(new CustomEvent('openEntityDialog', {
+          detail: { dialogId: 'closeJob', entityType: 'job', entityId: entity.id }
+        }))
       },
+      isVisible: (entity) => entity.status !== 'draft' && entity.status !== 'filled' && entity.status !== 'cancelled',
     },
   ],
 

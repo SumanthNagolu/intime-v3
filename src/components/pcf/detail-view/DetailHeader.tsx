@@ -63,17 +63,17 @@ export function DetailHeader<T extends Record<string, unknown>>({
   )
 
   return (
-    <div className="px-6 py-4">
-      <div className="flex items-start justify-between">
+    <div className="px-6 py-5 bg-white">
+      <div className="flex items-start justify-between gap-6">
         <div className="flex-1 min-w-0">
           {/* Breadcrumbs */}
           {breadcrumbs.length > 0 && (
-            <div className="flex items-center gap-2 mb-2">
+            <nav className="flex items-center gap-1.5 mb-3">
               {breadcrumbs.map((crumb, index) => (
-                <div key={crumb.href} className="flex items-center gap-2">
+                <div key={crumb.href} className="flex items-center gap-1.5">
                   <Link
                     href={crumb.href}
-                    className="text-sm text-charcoal-500 hover:text-charcoal-700 transition-colors"
+                    className="text-sm text-charcoal-500 hover:text-charcoal-800 transition-colors font-medium"
                   >
                     {crumb.label}
                   </Link>
@@ -83,21 +83,21 @@ export function DetailHeader<T extends Record<string, unknown>>({
                 </div>
               ))}
               <span className="text-charcoal-300">/</span>
-              <span className="text-sm text-charcoal-700 truncate max-w-[200px]">
+              <span className="text-sm text-charcoal-700 font-medium truncate max-w-[250px]">
                 {title}
               </span>
-            </div>
+            </nav>
           )}
 
           {/* Title + Status Badge */}
-          <div className="flex items-center gap-3 flex-wrap">
-            <h1 className="text-2xl font-heading font-semibold text-charcoal-900 tracking-tight">
+          <div className="flex items-center gap-4 flex-wrap">
+            <h1 className="text-2xl font-heading font-bold text-charcoal-900 tracking-tight leading-tight">
               {title}
             </h1>
             {statusInfo && (
               <Badge
                 className={cn(
-                  'gap-1.5 font-medium border',
+                  'gap-1.5 font-semibold text-xs px-3 py-1 rounded-full shadow-sm',
                   statusInfo.bgColor || statusInfo.color
                 )}
               >
@@ -109,7 +109,7 @@ export function DetailHeader<T extends Record<string, unknown>>({
 
           {/* Meta Info Row */}
           {subtitleFields.length > 0 && (
-            <div className="flex items-center gap-4 mt-2 text-sm text-charcoal-500 flex-wrap">
+            <div className="flex items-center gap-5 mt-3 flex-wrap">
               {subtitleFields.map((field) => {
                 const value = entity[field.key]
                 if (!value) return null
@@ -122,9 +122,16 @@ export function DetailHeader<T extends Record<string, unknown>>({
                     : String(value)
 
                 return (
-                  <span key={String(field.key)} className="flex items-center gap-1.5">
-                    {Icon && <Icon className="w-4 h-4" />}
-                    {displayValue}
+                  <span
+                    key={String(field.key)}
+                    className="flex items-center gap-2 text-sm text-charcoal-600"
+                  >
+                    {Icon && (
+                      <span className="p-1 bg-charcoal-100 rounded">
+                        <Icon className="w-3.5 h-3.5 text-charcoal-500" />
+                      </span>
+                    )}
+                    <span className="font-medium">{displayValue}</span>
                   </span>
                 )
               })}
@@ -133,10 +140,11 @@ export function DetailHeader<T extends Record<string, unknown>>({
         </div>
 
         {/* Quick Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-shrink-0">
           {visibleActions.map((action) => {
             const Icon = action.icon
             const disabled = action.isDisabled?.(entity) || isLoading
+            const isPrimary = action.variant === 'default'
 
             return (
               <Button
@@ -144,6 +152,10 @@ export function DetailHeader<T extends Record<string, unknown>>({
                 variant={action.variant || 'outline'}
                 onClick={() => action.onClick(entity)}
                 disabled={disabled}
+                className={cn(
+                  'font-medium shadow-sm',
+                  isPrimary && 'shadow-md hover:shadow-lg transition-shadow'
+                )}
               >
                 {Icon && <Icon className="w-4 h-4 mr-2" />}
                 {action.label}
@@ -155,11 +167,15 @@ export function DetailHeader<T extends Record<string, unknown>>({
           {dropdownActions.length > 0 && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="icon">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="shadow-sm hover:shadow-md transition-shadow"
+                >
                   <MoreHorizontal className="w-4 h-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuContent align="end" className="w-52 shadow-lg">
                 {dropdownActions.map((action, index) => {
                   // Filter by isVisible
                   if (action.isVisible && !action.isVisible(entity)) {
@@ -175,7 +191,10 @@ export function DetailHeader<T extends Record<string, unknown>>({
                     <DropdownMenuItem
                       key={action.label}
                       onClick={() => action.onClick?.(entity)}
-                      className={cn(action.variant === 'destructive' && 'text-red-600')}
+                      className={cn(
+                        'font-medium cursor-pointer',
+                        action.variant === 'destructive' && 'text-red-600 focus:text-red-600'
+                      )}
                     >
                       {Icon && <Icon className="w-4 h-4 mr-2" />}
                       {action.label}
