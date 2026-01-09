@@ -14,19 +14,10 @@ import {
   StickyNote,
   FileText,
   History,
-  Plus,
-  ChevronDown,
   UserPlus,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+import { SidebarActionsPopover, type ActionItem } from '@/components/navigation/SidebarActionsPopover'
 
 interface SidebarSection {
   id: string
@@ -79,63 +70,30 @@ export function AccountSidebar({
   const sections = SIDEBAR_SECTIONS.filter(s => s.group === 'sections')
   const tools = SIDEBAR_SECTIONS.filter(s => s.group === 'tools')
 
-  const handleAction = (action: string) => {
-    onAction?.(action)
+  const handleAction = (actionId: string) => {
+    onAction?.(actionId)
   }
+
+  // Define actions for the popover
+  const actions: ActionItem[] = [
+    { id: 'addContact', label: 'New Contact', icon: UserPlus, description: 'Create a new contact for this account' },
+    { id: 'linkContact', label: 'Link Contact', icon: Link2, description: 'Link an existing contact' },
+    { id: 'createActivity', label: 'Create Activity', icon: Activity, description: 'Add a new activity or task' },
+    { id: 'createJob', label: 'Create Job', icon: Briefcase, description: 'Open a new job requisition' },
+    { id: 'scheduleMeeting', label: 'Schedule Meeting', icon: Calendar, description: 'Schedule a meeting with contacts', separator: true },
+    { id: 'addNote', label: 'Add Note', icon: StickyNote, description: 'Add a note to this account' },
+    { id: 'uploadDocument', label: 'Upload Document', icon: FileText, description: 'Upload a file or document', separator: true },
+    { id: 'createEscalation', label: 'Create Escalation', icon: AlertTriangle, description: 'Flag an issue for escalation', variant: 'destructive' },
+  ]
 
   return (
     <aside className="w-64 border-r border-charcoal-200 bg-white flex-shrink-0 overflow-y-auto">
       <div className="p-4 space-y-6">
-        {/* Actions Dropdown */}
-        <div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="w-full justify-between">
-                <span className="flex items-center gap-2">
-                  <Plus className="h-4 w-4" />
-                  Actions
-                </span>
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-56">
-              <DropdownMenuItem onClick={() => handleAction('addContact')}>
-                <UserPlus className="h-4 w-4 mr-2" />
-                + New Contact
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleAction('linkContact')}>
-                <Link2 className="h-4 w-4 mr-2" />
-                Link Contact
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleAction('createActivity')}>
-                <Activity className="h-4 w-4 mr-2" />
-                Create Activity
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleAction('createJob')}>
-                <Briefcase className="h-4 w-4 mr-2" />
-                Create Job
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleAction('scheduleMeeting')}>
-                <Calendar className="h-4 w-4 mr-2" />
-                Schedule Meeting
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => handleAction('addNote')}>
-                <StickyNote className="h-4 w-4 mr-2" />
-                Add Note
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleAction('uploadDocument')}>
-                <FileText className="h-4 w-4 mr-2" />
-                Upload Document
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => handleAction('createEscalation')}>
-                <AlertTriangle className="h-4 w-4 mr-2" />
-                Create Escalation
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        {/* Guidewire-style Actions Popover */}
+        <SidebarActionsPopover
+          actions={actions}
+          onAction={handleAction}
+        />
 
         {/* Sections */}
         <div>

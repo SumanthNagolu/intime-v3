@@ -33,6 +33,16 @@ export function CollapsibleSectionGroup({
     sessionStorage.setItem(storageKey, String(isOpen))
   }, [isOpen, storageKey])
 
+  // If no label, render children directly without collapsible wrapper
+  // This allows standalone sections (like Overview) to render without a group header
+  if (!label) {
+    return (
+      <div className="py-2">
+        {children}
+      </div>
+    )
+  }
+
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="border-b border-charcoal-100">
       <CollapsibleTrigger className="flex items-center gap-2 w-full px-4 py-3 hover:bg-charcoal-50 transition-colors">

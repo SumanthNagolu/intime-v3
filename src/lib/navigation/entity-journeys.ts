@@ -69,29 +69,40 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
       },
     ],
     quickActions: [
-      {
-        id: 'publish',
-        label: 'Publish Job',
-        icon: Send,
-        actionType: 'mutation',
-        showForStatuses: ['draft'],
-      },
+      // Primary edit action
       {
         id: 'edit',
         label: 'Edit Job',
         icon: Edit,
         actionType: 'navigate',
-        href: '/employee/recruiting/jobs/:id/edit',
+        href: '/employee/recruiting/jobs/new?edit=:id',
         hideForStatuses: ['filled', 'cancelled'],
+      },
+      // Primary creation actions (like account pattern)
+      {
+        id: 'add-submission',
+        label: '+ Add Submission',
+        icon: Send,
+        actionType: 'navigate',
+        href: '/employee/recruiting/jobs/:id/submissions/new',
+        hideForStatuses: ['draft', 'filled', 'cancelled', 'on_hold'],
       },
       {
         id: 'add-candidate',
-        label: 'Add Candidate',
-        icon: Plus,
+        label: '+ Add Candidate',
+        icon: UserPlus,
         actionType: 'navigate',
         href: '/employee/recruiting/jobs/:id/add-candidate',
         hideForStatuses: ['draft', 'filled', 'cancelled'],
       },
+      {
+        id: 'activity',
+        label: 'Log Activity',
+        icon: Phone,
+        actionType: 'dialog',
+        dialogId: 'logActivity',
+      },
+      // Status actions
       {
         id: 'hold',
         label: 'Put on Hold',
