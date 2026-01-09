@@ -459,6 +459,19 @@ const createCandidateInput = z.object({
 
   // Job association
   associatedJobIds: z.array(z.string().uuid()).optional(),
+
+  // Resume parsing data (optional - populated when created from parsed resume)
+  resumeData: z.object({
+    storagePath: z.string(), // Path in Supabase storage
+    fileName: z.string(),
+    fileSize: z.number(),
+    mimeType: z.string().default('application/pdf'),
+    parsedContent: z.string().optional(), // Raw text from resume
+    parsedSkills: z.array(z.string()).optional(), // Skills extracted from resume
+    parsedExperience: z.string().optional(), // Experience summary
+    aiSummary: z.string().optional(), // AI-generated summary
+    parsingConfidence: z.number().min(0).max(100).optional(), // Parsing confidence score
+  }).optional(),
 })
 
 const updateCandidateInput = z.object({
@@ -470,12 +483,12 @@ const updateCandidateInput = z.object({
   linkedinUrl: z.string().url().optional().nullable(),
   professionalHeadline: z.string().max(200).optional().nullable(),
   professionalSummary: z.string().max(2000).optional().nullable(),
-  skills: z.array(z.string()).min(1).max(50).optional(),
+  skills: z.array(z.string()).max(50).optional(),
   experienceYears: z.number().int().min(0).max(50).optional(),
   visaStatus: visaStatusEnum.optional(),
   visaExpiryDate: z.coerce.date().optional().nullable(),
   availability: availabilityEnum.optional(),
-  location: z.string().min(2).max(200).optional(),
+  location: z.string().max(200).optional(),
   // Structured location fields for centralized addresses
   locationCity: z.string().max(100).optional().nullable(),
   locationState: z.string().max(100).optional().nullable(),
@@ -488,6 +501,10 @@ const updateCandidateInput = z.object({
   isOnHotlist: z.boolean().optional(),
   hotlistNotes: z.string().max(500).optional().nullable(),
   profileStatus: candidateStatusEnum.optional(),
+  leadSource: leadSourceEnum.optional(),
+  sourceDetails: z.string().max(500).optional().nullable(),
+  // Wizard state for draft persistence
+  wizard_state: z.any().optional().nullable(),
 })
 
 const searchCandidatesInput = z.object({
@@ -1633,13 +1650,65 @@ export const atsRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: updateError.message })
         }
 
+        // Create/update address entry when location data is provided (especially on finalization)
+        // This syncs location data from wizard intake to the addresses table
+        const intakeData = input.intakeData as Record<string, unknown> | undefined
+        if (intakeData) {
+          const hasLocationData = intakeData.locationCity || intakeData.locationState || intakeData.locationAddressLine1
+
+          if (hasLocationData && input.isRemote !== true) {
+            // Check if address already exists for this job
+            const { data: existingAddress } = await adminClient
+              .from('addresses')
+              .select('id')
+              .eq('entity_type', 'job')
+              .eq('entity_id', input.id)
+              .eq('address_type', 'job_location')
+              .eq('org_id', orgId)
+              .maybeSingle()
+
+            const addressData = {
+              org_id: orgId,
+              entity_type: 'job' as const,
+              entity_id: input.id,
+              address_type: 'job_location' as const,
+              address_line_1: (intakeData.locationAddressLine1 as string) || null,
+              address_line_2: (intakeData.locationAddressLine2 as string) || null,
+              city: (intakeData.locationCity as string) || null,
+              state_province: (intakeData.locationState as string) || null,
+              postal_code: (intakeData.locationPostalCode as string) || null,
+              country_code: (intakeData.locationCountry as string) || 'US',
+              is_primary: true,
+              updated_at: new Date().toISOString(),
+              updated_by: user.id,
+            }
+
+            if (existingAddress) {
+              // Update existing address
+              await adminClient
+                .from('addresses')
+                .update(addressData)
+                .eq('id', existingAddress.id)
+            } else {
+              // Create new address
+              await adminClient
+                .from('addresses')
+                .insert({
+                  ...addressData,
+                  created_at: new Date().toISOString(),
+                  created_by: user.id,
+                })
+            }
+          }
+        }
+
         // Log activity
         await adminClient
           .from('activities')
           .insert({
             org_id: orgId,
             entity_type: 'job',
-            entity_id: input.jobId,
+            entity_id: input.id,
             activity_type: 'note',
             subject: `Job updated: ${updatedJob.title}`,
             description: `Updated job details`,
@@ -8527,6 +8596,27 @@ export const atsRouter = router({
           await adminClient.from('submissions').insert(submissionsToInsert)
         }
 
+        // Create resume record if resume data is provided
+        if (input.resumeData) {
+          await adminClient.from('contact_resumes').insert({
+            org_id: orgId,
+            candidate_id: candidate.id,
+            file_name: input.resumeData.fileName,
+            storage_path: input.resumeData.storagePath,
+            file_size: input.resumeData.fileSize,
+            mime_type: input.resumeData.mimeType,
+            resume_type: 'master',
+            parsed_content: input.resumeData.parsedContent,
+            parsed_skills: input.resumeData.parsedSkills,
+            parsed_experience: input.resumeData.parsedExperience,
+            ai_summary: input.resumeData.aiSummary,
+            uploaded_by: user.id,
+            uploaded_at: now,
+            created_at: now,
+            updated_at: now,
+          })
+        }
+
         // Log activity
         await adminClient.from('activities').insert({
           org_id: orgId,
@@ -8534,7 +8624,7 @@ export const atsRouter = router({
           entity_id: candidate.id,
           activity_type: 'note',
           subject: `Candidate added: ${input.firstName} ${input.lastName}`,
-          description: `Sourced from ${input.leadSource}${input.sourceDetails ? ` - ${input.sourceDetails}` : ''}`,
+          description: `Sourced from ${input.leadSource}${input.sourceDetails ? ` - ${input.sourceDetails}` : ''}${input.resumeData ? ' (resume parsed)' : ''}`,
           outcome: 'positive',
           created_by: user.id,
           created_at: now,
@@ -8603,6 +8693,13 @@ export const atsRouter = router({
           }
         }
         if (input.hotlistNotes !== undefined) updateData.hotlist_notes = input.hotlistNotes
+        if (input.leadSource !== undefined) updateData.lead_source = input.leadSource
+        if (input.sourceDetails !== undefined) updateData.lead_source_detail = input.sourceDetails
+
+        // Handle wizard_state for draft persistence
+        if (input.wizard_state !== undefined) {
+          updateData.wizard_state = input.wizard_state
+        }
 
         // Update candidate
         const { error: updateError } = await adminClient
@@ -8649,6 +8746,99 @@ export const atsRouter = router({
         })
 
         return { success: true, candidateId: input.candidateId }
+      }),
+
+    // ============================================
+    // CREATE DRAFT CANDIDATE
+    // ============================================
+    createDraft: orgProtectedProcedure
+      .mutation(async ({ ctx }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const now = new Date().toISOString()
+
+        // Create minimal draft candidate record
+        const { data: draft, error: draftError } = await adminClient
+          .from('candidates')
+          .insert({
+            org_id: orgId,
+            first_name: '(Untitled)',
+            last_name: 'Candidate',
+            email: `draft-${Date.now()}@placeholder.local`, // Temporary placeholder
+            status: 'draft',
+            visa_status: 'us_citizen',
+            availability: '2_weeks',
+            location: '',
+            lead_source: 'linkedin',
+            sourced_by: user.id,
+            created_by: user.id,
+            created_at: now,
+            updated_at: now,
+          })
+          .select('id')
+          .single()
+
+        if (draftError) {
+          console.error('[candidates.createDraft] Error:', draftError)
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: draftError.message })
+        }
+
+        return { id: draft.id }
+      }),
+
+    // ============================================
+    // DELETE DRAFT CANDIDATE
+    // ============================================
+    deleteDraft: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        // Verify ownership and draft status
+        const { data: draft, error: fetchError } = await adminClient
+          .from('candidates')
+          .select('status, created_by')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .single()
+
+        if (fetchError || !draft) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Draft not found' })
+        }
+
+        if (draft.status !== 'draft') {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'Can only delete draft candidates',
+          })
+        }
+
+        // Soft delete the draft
+        const { error: deleteError } = await adminClient
+          .from('candidates')
+          .update({
+            deleted_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+
+        if (deleteError) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: deleteError.message })
+        }
+
+        return { success: true }
       }),
 
     // ============================================

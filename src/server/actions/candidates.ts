@@ -50,14 +50,10 @@ export async function getFullCandidate(id: string): Promise<FullCandidateData | 
     documentsResult,
     historyResult,
   ] = await Promise.all([
-    // Full candidate data with owner
+    // Full candidate data (owner fetched separately - no FK constraint exists)
     adminClient
       .from('candidates')
-      .select(`
-        *,
-        owner:user_profiles!owner_id(id, full_name, avatar_url),
-        company:companies!company_id(id, name)
-      `)
+      .select('*')
       .eq('id', id)
       .is('deleted_at', null)
       .single(),
