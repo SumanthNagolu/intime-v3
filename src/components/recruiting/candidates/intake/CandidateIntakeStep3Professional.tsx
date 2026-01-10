@@ -1,42 +1,47 @@
 'use client'
 
-import { useState } from 'react'
-import { Briefcase, GraduationCap, Plus, X } from 'lucide-react'
+import { Briefcase, Building2, Monitor, FileText } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { Button } from '@/components/ui/button'
-import { useCreateCandidateStore } from '@/stores/create-candidate-store'
-import { Section, FieldGroup, ValidationBanner, SkillBadge } from './shared'
+import { Checkbox } from '@/components/ui/checkbox'
+import { useCreateCandidateStore, EMPLOYMENT_TYPES, WORK_MODES } from '@/stores/create-candidate-store'
+import { Section, FieldGroup, ValidationBanner } from './shared'
 
 export function CandidateIntakeStep3Professional() {
-  const { formData, setFormData, addSkill, removeSkill } = useCreateCandidateStore()
-  const [newSkill, setNewSkill] = useState('')
+  const { formData, setFormData } = useCreateCandidateStore()
 
-  const handleAddSkill = () => {
-    if (newSkill.trim()) {
-      addSkill(newSkill.trim())
-      setNewSkill('')
-    }
+  const toggleEmploymentType = (type: typeof formData.employmentTypes[number]) => {
+    const current = formData.employmentTypes || []
+    const updated = current.includes(type)
+      ? current.filter(t => t !== type)
+      : [...current, type]
+    setFormData({ employmentTypes: updated })
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      handleAddSkill()
-    }
+  const toggleWorkMode = (mode: typeof formData.workModes[number]) => {
+    const current = formData.workModes || []
+    const updated = current.includes(mode)
+      ? current.filter(m => m !== mode)
+      : [...current, mode]
+    setFormData({ workModes: updated })
   }
 
   // Build validation items
   const validationItems: string[] = []
-  if (formData.skills.length === 0) validationItems.push('Add at least one skill')
+  if (formData.experienceYears === undefined || formData.experienceYears < 0) {
+    validationItems.push('Enter years of experience')
+  }
+  if (!formData.employmentTypes || formData.employmentTypes.length === 0) {
+    validationItems.push('Select at least one employment type')
+  }
 
   return (
     <div className="space-y-8">
       <Section
         icon={Briefcase}
         title="Professional Profile"
-        subtitle="Add professional details and skills"
+        subtitle="Add professional details and experience"
       >
         <div className="space-y-2">
           <Label htmlFor="professionalHeadline" className="text-charcoal-700 font-medium">
@@ -54,7 +59,8 @@ export function CandidateIntakeStep3Professional() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="professionalSummary" className="text-charcoal-700 font-medium">
+          <Label htmlFor="professionalSummary" className="text-charcoal-700 font-medium flex items-center gap-2">
+            <FileText className="w-4 h-4 text-charcoal-400" />
             Professional Summary
           </Label>
           <Textarea
@@ -66,57 +72,6 @@ export function CandidateIntakeStep3Professional() {
             maxLength={2000}
           />
           <p className="text-xs text-charcoal-500">{formData.professionalSummary?.length || 0}/2000 characters</p>
-        </div>
-      </Section>
-
-      <Section
-        icon={GraduationCap}
-        title="Skills & Experience"
-        subtitle="Add relevant skills and experience level"
-      >
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label className="text-charcoal-700 font-medium">
-              Skills <span className="text-gold-500">*</span>
-            </Label>
-            <div className="flex gap-2">
-              <Input
-                value={newSkill}
-                onChange={(e) => setNewSkill(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Type a skill and press Enter"
-                className="h-12 rounded-xl border-charcoal-200 bg-white flex-1"
-              />
-              <Button
-                type="button"
-                onClick={handleAddSkill}
-                variant="outline"
-                className="h-12 px-4 rounded-xl"
-                disabled={!newSkill.trim()}
-              >
-                <Plus className="w-4 h-4 mr-1" />
-                Add
-              </Button>
-            </div>
-          </div>
-
-          {formData.skills.length > 0 && (
-            <div className="flex flex-wrap gap-2 p-4 bg-charcoal-50 rounded-xl border border-charcoal-100">
-              {formData.skills.map((skill) => (
-                <SkillBadge
-                  key={skill}
-                  skill={skill}
-                  onRemove={() => removeSkill(skill)}
-                />
-              ))}
-            </div>
-          )}
-
-          {formData.skills.length === 0 && (
-            <div className="p-4 bg-charcoal-50 rounded-xl border border-charcoal-200 text-center text-sm text-charcoal-500">
-              No skills added yet. Type a skill name and press Enter or click Add.
-            </div>
-          )}
         </div>
 
         <FieldGroup cols={2}>
@@ -135,6 +90,72 @@ export function CandidateIntakeStep3Professional() {
             />
           </div>
         </FieldGroup>
+      </Section>
+
+      <Section
+        icon={Building2}
+        title="Employment Preferences"
+        subtitle="What types of employment is the candidate open to?"
+      >
+        <div className="space-y-4">
+          <Label className="text-charcoal-700 font-medium">
+            Employment Types <span className="text-gold-500">*</span>
+          </Label>
+          <div className="grid grid-cols-2 gap-3">
+            {EMPLOYMENT_TYPES.map((type) => (
+              <div
+                key={type.value}
+                className={`flex items-center space-x-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                  formData.employmentTypes?.includes(type.value as typeof formData.employmentTypes[number])
+                    ? 'border-gold-400 bg-gradient-to-br from-gold-50 to-amber-50'
+                    : 'border-charcoal-200 bg-white hover:border-charcoal-300'
+                }`}
+                onClick={() => toggleEmploymentType(type.value as typeof formData.employmentTypes[number])}
+              >
+                <Checkbox
+                  checked={formData.employmentTypes?.includes(type.value as typeof formData.employmentTypes[number]) || false}
+                  onCheckedChange={() => toggleEmploymentType(type.value as typeof formData.employmentTypes[number])}
+                  className="data-[state=checked]:bg-gold-500 data-[state=checked]:border-gold-500"
+                />
+                <Label className="cursor-pointer text-sm font-medium text-charcoal-700">
+                  {type.label}
+                </Label>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      <Section
+        icon={Monitor}
+        title="Work Mode Preferences"
+        subtitle="What work arrangements is the candidate open to?"
+      >
+        <div className="space-y-4">
+          <Label className="text-charcoal-700 font-medium">Work Modes</Label>
+          <div className="grid grid-cols-3 gap-3">
+            {WORK_MODES.map((mode) => (
+              <div
+                key={mode.value}
+                className={`flex items-center space-x-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                  formData.workModes?.includes(mode.value as typeof formData.workModes[number])
+                    ? 'border-gold-400 bg-gradient-to-br from-gold-50 to-amber-50'
+                    : 'border-charcoal-200 bg-white hover:border-charcoal-300'
+                }`}
+                onClick={() => toggleWorkMode(mode.value as typeof formData.workModes[number])}
+              >
+                <Checkbox
+                  checked={formData.workModes?.includes(mode.value as typeof formData.workModes[number]) || false}
+                  onCheckedChange={() => toggleWorkMode(mode.value as typeof formData.workModes[number])}
+                  className="data-[state=checked]:bg-gold-500 data-[state=checked]:border-gold-500"
+                />
+                <Label className="cursor-pointer text-sm font-medium text-charcoal-700">
+                  {mode.label}
+                </Label>
+              </div>
+            ))}
+          </div>
+        </div>
       </Section>
 
       {/* Validation Summary */}

@@ -11,18 +11,25 @@ import { useToast } from '@/components/ui/use-toast'
 import { useDebouncedCallback } from 'use-debounce'
 import { Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { formatPhoneValue, parsePhoneValue } from '@/components/ui/phone-input'
 
 // Transform form data to entity data for API calls
 function formToEntityData(formData: CreateCandidateFormData) {
+  // Extract skill names from SkillEntry objects for API
+  const skillNames = formData.skills?.map(s => typeof s === 'string' ? s : s.name) || []
+
+  // Convert PhoneInputValue to string for API
+  const phoneString = formData.phone ? formatPhoneValue(formData.phone) : undefined
+
   return {
     firstName: formData.firstName || undefined,
     lastName: formData.lastName || undefined,
     email: formData.email || undefined,
-    phone: formData.phone || undefined,
+    phone: phoneString || undefined,
     linkedinUrl: formData.linkedinProfile || undefined,
     professionalHeadline: formData.professionalHeadline || undefined,
     professionalSummary: formData.professionalSummary || undefined,
-    skills: formData.skills,
+    skills: skillNames,
     experienceYears: formData.experienceYears,
     visaStatus: formData.visaStatus,
     availability: formData.availability,
@@ -32,42 +39,81 @@ function formToEntityData(formData: CreateCandidateFormData) {
     locationCountry: formData.locationCountry || undefined,
     willingToRelocate: formData.willingToRelocate,
     isRemoteOk: formData.isRemoteOk,
-    minimumHourlyRate: formData.minimumHourlyRate,
-    desiredHourlyRate: formData.desiredHourlyRate,
+    minimumRate: formData.minimumRate,
+    desiredRate: formData.desiredRate,
+    rateType: formData.rateType,
     leadSource: formData.leadSource,
     sourceDetails: formData.sourceDetails || undefined,
     isOnHotlist: formData.isOnHotlist,
     hotlistNotes: formData.hotlistNotes || undefined,
+    tags: formData.tags,
   }
 }
 
-// Transform entity data to form data for editing/resuming
+// Transform entity data to form data for editing/resuming (used for edit mode)
 function entityToFormData(entity: any): CreateCandidateFormData {
+  // Convert string skills to SkillEntry format
+  const skillEntries = (entity.skills || []).map((skill: string, index: number) => ({
+    name: skill,
+    proficiency: 'intermediate' as const,
+    isPrimary: index < 5,
+    isCertified: false,
+  }))
+
   return {
+    // Step 1
     sourceType: 'manual',
+    resumeParsed: false,
+    // Step 2
     firstName: entity.first_name || '',
     lastName: entity.last_name || '',
     email: entity.email || '',
-    phone: entity.phone || '',
+    phone: parsePhoneValue(entity.phone),
     linkedinProfile: entity.linkedin_url || '',
-    professionalHeadline: entity.title || '',
-    professionalSummary: entity.professional_summary || '',
-    skills: entity.skills || [],
-    experienceYears: entity.years_experience || 0,
-    visaStatus: entity.visa_status || 'us_citizen',
-    availability: entity.availability || '2_weeks',
     location: entity.location || '',
     locationCity: entity.location_city || '',
     locationState: entity.location_state || '',
     locationCountry: entity.location_country || 'US',
+    // Step 3 - Professional
+    professionalHeadline: entity.title || '',
+    professionalSummary: entity.professional_summary || '',
+    experienceYears: entity.years_experience || 0,
+    employmentTypes: entity.employment_types || ['full_time', 'contract'],
+    workModes: entity.work_modes || ['on_site', 'remote'],
+    // Step 4 - Work History
+    workHistory: [], // TODO: Fetch from candidate_work_history table
+    // Step 5 - Education
+    education: [], // TODO: Fetch from candidate_education table
+    // Step 6 - Skills
+    skills: skillEntries,
+    primarySkills: skillEntries.filter((s: { isPrimary: boolean }) => s.isPrimary).map((s: { name: string }) => s.name),
+    certifications: [],
+    // Step 7 - Authorization
+    visaStatus: entity.visa_status || 'us_citizen',
+    visaExpiryDate: entity.visa_expiry_date || undefined,
+    requiresSponsorship: false,
+    availability: entity.availability || '2_weeks',
+    availableFrom: entity.available_from || undefined,
+    noticePeriodDays: entity.notice_period_days || undefined,
     willingToRelocate: entity.willing_to_relocate || false,
+    relocationPreferences: entity.relocation_preferences || '',
     isRemoteOk: entity.is_remote_ok || false,
-    minimumHourlyRate: entity.minimum_rate || undefined,
-    desiredHourlyRate: entity.desired_rate || undefined,
+    // Step 8 - Compensation
+    rateType: entity.rate_type || 'hourly',
+    minimumRate: entity.minimum_rate || undefined,
+    desiredRate: entity.desired_rate || undefined,
+    currency: (entity.currency as 'USD' | 'CAD' | 'EUR' | 'GBP' | 'INR') || 'USD',
+    isNegotiable: entity.is_negotiable !== false,
+    compensationNotes: entity.compensation_notes || '',
+    // Step 9 - Documents & Tracking
     leadSource: entity.lead_source || 'linkedin',
     sourceDetails: entity.lead_source_detail || '',
+    referredBy: entity.referred_by || '',
+    complianceDocuments: [], // TODO: Fetch from candidate_compliance_documents table
     isOnHotlist: entity.is_on_hotlist || false,
     hotlistNotes: entity.hotlist_notes || '',
+    tags: entity.tags || [],
+    internalNotes: '',
   }
 }
 
@@ -149,15 +195,14 @@ function NewCandidatePageContent() {
     const wizardState = draft.wizard_state as { formData?: CreateCandidateFormData; currentStep?: number } | null
 
     if (wizardState?.formData) {
+      // Resume from saved wizard state
       store.setFormData(wizardState.formData)
       if (wizardState.currentStep && store.setCurrentStep) {
         store.setCurrentStep(wizardState.currentStep)
       }
-    } else {
-      // Fallback to entity field mapping
-      const formData = entityToFormData(draft)
-      store.setFormData(formData)
     }
+    // For fresh drafts without wizard_state, do NOT load from entity
+    // The store already has clean default values - don't overwrite with placeholder data
 
     previousFormData.current = JSON.stringify(store.formData)
     setIsReady(true)
@@ -194,7 +239,7 @@ function NewCandidatePageContent() {
       const wizardState = {
         formData,
         currentStep,
-        totalSteps: 6,
+        totalSteps: 8,
         lastSavedAt: new Date().toISOString(),
       }
 
@@ -295,6 +340,12 @@ function NewCandidatePageContent() {
           }
         }
 
+        // Extract skill names from SkillEntry objects
+        const skillNames = data.skills?.map(s => typeof s === 'string' ? s : s.name) || []
+
+        // Convert phone to string for API
+        const phoneForApi = data.phone ? formatPhoneValue(data.phone) : undefined
+
         if (isEditMode && editId) {
           // Update existing candidate
           await updateMutation.mutateAsync({
@@ -302,11 +353,11 @@ function NewCandidatePageContent() {
             firstName: data.firstName,
             lastName: data.lastName,
             email: data.email,
-            phone: data.phone || undefined,
+            phone: phoneForApi,
             linkedinUrl: data.linkedinProfile || undefined,
             professionalHeadline: data.professionalHeadline || undefined,
             professionalSummary: data.professionalSummary || undefined,
-            skills: data.skills,
+            skills: skillNames,
             experienceYears: data.experienceYears,
             visaStatus: data.visaStatus,
             availability: data.availability,
@@ -316,12 +367,14 @@ function NewCandidatePageContent() {
             locationCountry,
             willingToRelocate: data.willingToRelocate,
             isRemoteOk: data.isRemoteOk,
-            minimumHourlyRate: data.minimumHourlyRate,
-            desiredHourlyRate: data.desiredHourlyRate,
+            minimumRate: data.minimumRate,
+            desiredRate: data.desiredRate,
+            rateType: data.rateType,
             leadSource: data.leadSource,
             sourceDetails: data.sourceDetails || undefined,
             isOnHotlist: data.isOnHotlist,
             hotlistNotes: data.hotlistNotes || undefined,
+            tags: data.tags,
             wizard_state: null, // Clear wizard state on finalization
           } as any)
 
@@ -344,30 +397,36 @@ function NewCandidatePageContent() {
           } as any)
 
           // Now create the actual candidate with full data
+          // Map 60_days to 30_days for API compatibility
+          const apiAvailability = data.availability === '60_days' ? '30_days' : data.availability
+          // Map newer lead sources to 'other' for API compatibility
+          const apiLeadSource = ['website', 'event'].includes(data.leadSource) ? 'other' : data.leadSource
+
           const result = await createMutation.mutateAsync({
             firstName: data.firstName,
             lastName: data.lastName,
             email: data.email,
-            phone: data.phone || undefined,
+            phone: phoneForApi,
             linkedinUrl: data.linkedinProfile || undefined,
             professionalHeadline: data.professionalHeadline || undefined,
             professionalSummary: data.professionalSummary || undefined,
-            skills: data.skills,
+            skills: skillNames,
             experienceYears: data.experienceYears,
             visaStatus: data.visaStatus,
-            availability: data.availability,
+            availability: apiAvailability as 'immediate' | '2_weeks' | '30_days' | 'not_available',
             location: data.location,
             locationCity,
             locationState,
             locationCountry,
             willingToRelocate: data.willingToRelocate,
             isRemoteOk: data.isRemoteOk,
-            minimumHourlyRate: data.minimumHourlyRate,
-            desiredHourlyRate: data.desiredHourlyRate,
-            leadSource: data.leadSource,
+            minimumHourlyRate: data.minimumRate,
+            desiredHourlyRate: data.desiredRate,
+            leadSource: apiLeadSource as 'linkedin' | 'indeed' | 'dice' | 'monster' | 'referral' | 'direct' | 'agency' | 'job_board' | 'other',
             sourceDetails: data.sourceDetails || undefined,
             isOnHotlist: data.isOnHotlist,
             hotlistNotes: data.hotlistNotes || undefined,
+            tags: data.tags,
             resumeData,
           })
 
@@ -463,7 +522,7 @@ function NewCandidatePageContent() {
       const wizardState = {
         formData: store.formData,
         currentStep: store.currentStep,
-        totalSteps: 6,
+        totalSteps: 8,
         lastSavedAt: new Date().toISOString(),
       }
       await updateMutation.mutateAsync({

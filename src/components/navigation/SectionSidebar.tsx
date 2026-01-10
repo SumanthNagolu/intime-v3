@@ -98,6 +98,7 @@ export const sectionConfigs: Record<string, SectionConfig> = {
     views: [
       { id: 'all', label: 'All Candidates', icon: List, href: '/employee/recruiting/candidates' },
       { id: 'my-candidates', label: 'My Candidates', icon: User, href: '/employee/recruiting/candidates?owner=me' },
+      { id: 'drafts', label: 'Drafts', icon: FileText, href: '/employee/recruiting/candidates?tab=drafts' },
       { id: 'available', label: 'Available', icon: UserCheck, href: '/employee/recruiting/candidates?status=available' },
       { id: 'hotlists', label: 'Hotlists', icon: Flame, href: '/employee/recruiting/hotlists' },
     ],
