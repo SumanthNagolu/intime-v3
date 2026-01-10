@@ -6,6 +6,45 @@ import { extractText } from 'unpdf'
 // ============================================
 
 /**
+ * Work history entry extracted from resume
+ */
+export interface ParsedWorkHistoryEntry {
+  companyName: string
+  jobTitle: string
+  startDate: string // YYYY-MM format
+  endDate?: string // YYYY-MM format, undefined if current
+  isCurrent: boolean
+  location?: string
+  description?: string
+  achievements?: string[]
+}
+
+/**
+ * Education entry extracted from resume
+ */
+export interface ParsedEducationEntry {
+  institutionName: string
+  degreeType?: 'high_school' | 'associate' | 'bachelor' | 'master' | 'phd' | 'other'
+  degreeName?: string
+  fieldOfStudy?: string
+  startDate?: string // YYYY-MM format
+  endDate?: string // YYYY-MM format
+  gpa?: number
+  honors?: string
+}
+
+/**
+ * Certification entry extracted from resume
+ */
+export interface ParsedCertificationEntry {
+  name: string
+  issuingOrganization?: string
+  issueDate?: string // YYYY-MM format
+  expiryDate?: string // YYYY-MM format
+  credentialId?: string
+}
+
+/**
  * Parsed resume data structure matching CandidateIntakeFormData
  */
 export interface ParsedResumeData {
@@ -31,10 +70,22 @@ export interface ParsedResumeData {
   // Work Authorization (inferred if mentioned)
   visaStatus?: 'us_citizen' | 'green_card' | 'h1b' | 'l1' | 'tn' | 'opt' | 'cpt' | 'ead' | 'other'
 
+  // Work History (NEW)
+  workHistory: ParsedWorkHistoryEntry[]
+
+  // Education (NEW)
+  education: ParsedEducationEntry[]
+
+  // Certifications (NEW)
+  certifications: ParsedCertificationEntry[]
+
   // Confidence scores for each field
   confidence: {
     overall: number
     fields: Record<string, number>
+    workHistory: number
+    education: number
+    certifications: number
   }
 
   // Raw extracted text (for reference)
@@ -77,6 +128,39 @@ Required JSON schema:
   "locationState": "string or null (use 2-letter state code for US)",
   "locationCountry": "string or null (use 2-letter country code, default 'US')",
   "visaStatus": "string or null (one of: 'us_citizen', 'green_card', 'h1b', 'l1', 'tn', 'opt', 'cpt', 'ead', 'other' - only if explicitly mentioned)",
+  "workHistory": [
+    {
+      "companyName": "string (required - company/employer name)",
+      "jobTitle": "string (required - job title/position)",
+      "startDate": "string (YYYY-MM format, e.g., '2020-01')",
+      "endDate": "string or null (YYYY-MM format, null if current position)",
+      "isCurrent": "boolean (true if this is current job)",
+      "location": "string or null (city, state of the job)",
+      "description": "string or null (job responsibilities summary, max 500 chars)",
+      "achievements": ["array of achievement/accomplishment strings"]
+    }
+  ],
+  "education": [
+    {
+      "institutionName": "string (required - school/university name)",
+      "degreeType": "string or null (one of: 'high_school', 'associate', 'bachelor', 'master', 'phd', 'other')",
+      "degreeName": "string or null (e.g., 'Bachelor of Science', 'MBA')",
+      "fieldOfStudy": "string or null (major/field)",
+      "startDate": "string or null (YYYY-MM format)",
+      "endDate": "string or null (YYYY-MM format)",
+      "gpa": "number or null (on 4.0 scale)",
+      "honors": "string or null (cum laude, dean's list, etc.)"
+    }
+  ],
+  "certifications": [
+    {
+      "name": "string (required - certification name)",
+      "issuingOrganization": "string or null (issuing body)",
+      "issueDate": "string or null (YYYY-MM format)",
+      "expiryDate": "string or null (YYYY-MM format)",
+      "credentialId": "string or null"
+    }
+  ],
   "confidence": {
     "overall": "number 0-100 (your confidence in the overall extraction)",
     "fields": {
@@ -86,7 +170,10 @@ Required JSON schema:
       "skills": "number 0-100",
       "experience": "number 0-100",
       "location": "number 0-100"
-    }
+    },
+    "workHistory": "number 0-100 (confidence in work history extraction)",
+    "education": "number 0-100 (confidence in education extraction)",
+    "certifications": "number 0-100 (confidence in certifications extraction)"
   }
 }
 
@@ -97,7 +184,20 @@ IMPORTANT RULES:
 4. For professionalSummary: Create a brief 2-3 sentence summary of their background and expertise.
 5. For location: Parse city and state separately. Use standard 2-letter state codes for US states.
 6. For visaStatus: Only include if explicitly mentioned (e.g., "US Citizen", "H1B", "Green Card holder").
-7. Confidence scores should reflect how certain you are about each extraction.
+7. For workHistory:
+   - Extract ALL jobs in chronological order (most recent first)
+   - Use YYYY-MM format for dates (e.g., "2020-01" for January 2020)
+   - Mark the current job with isCurrent: true and endDate: null
+   - Extract achievements as separate bullet points when available
+8. For education:
+   - Extract all degrees and educational credentials
+   - Map degree types: Bachelor's/BS/BA → "bachelor", Master's/MS/MA/MBA → "master", PhD/Doctorate → "phd"
+   - Convert GPA to 4.0 scale if needed
+9. For certifications:
+   - Extract professional certifications separately from education
+   - Include issuing organization (AWS, Microsoft, Google, PMI, etc.)
+   - Include credential IDs and expiry dates when mentioned
+10. Confidence scores should reflect how certain you are about each extraction.
 
 Return ONLY the JSON object, no additional text or markdown.`
 
@@ -271,6 +371,56 @@ function parseClaudeResponse(responseText: string): ParsedResumeData | null {
 
     const parsed = JSON.parse(jsonStr)
 
+    // Parse work history entries
+    const workHistory: ParsedWorkHistoryEntry[] = Array.isArray(parsed.workHistory)
+      ? parsed.workHistory
+          .filter((w: unknown) => w && typeof w === 'object')
+          .map((w: Record<string, unknown>) => ({
+            companyName: String(w.companyName || '').trim(),
+            jobTitle: String(w.jobTitle || '').trim(),
+            startDate: normalizeDate(w.startDate),
+            endDate: w.endDate ? normalizeDate(w.endDate) : undefined,
+            isCurrent: Boolean(w.isCurrent),
+            location: w.location ? String(w.location).trim() : undefined,
+            description: w.description ? String(w.description).trim().substring(0, 1000) : undefined,
+            achievements: Array.isArray(w.achievements)
+              ? w.achievements.map((a: unknown) => String(a).trim()).filter(Boolean)
+              : [],
+          }))
+          .filter((w: ParsedWorkHistoryEntry) => w.companyName && w.jobTitle)
+      : []
+
+    // Parse education entries
+    const education: ParsedEducationEntry[] = Array.isArray(parsed.education)
+      ? parsed.education
+          .filter((e: unknown) => e && typeof e === 'object')
+          .map((e: Record<string, unknown>) => ({
+            institutionName: String(e.institutionName || '').trim(),
+            degreeType: normalizeDegreeType(e.degreeType),
+            degreeName: e.degreeName ? String(e.degreeName).trim() : undefined,
+            fieldOfStudy: e.fieldOfStudy ? String(e.fieldOfStudy).trim() : undefined,
+            startDate: e.startDate ? normalizeDate(e.startDate) : undefined,
+            endDate: e.endDate ? normalizeDate(e.endDate) : undefined,
+            gpa: typeof e.gpa === 'number' ? Math.max(0, Math.min(4, e.gpa)) : undefined,
+            honors: e.honors ? String(e.honors).trim() : undefined,
+          }))
+          .filter((e: ParsedEducationEntry) => e.institutionName)
+      : []
+
+    // Parse certifications
+    const certifications: ParsedCertificationEntry[] = Array.isArray(parsed.certifications)
+      ? parsed.certifications
+          .filter((c: unknown) => c && typeof c === 'object')
+          .map((c: Record<string, unknown>) => ({
+            name: String(c.name || '').trim(),
+            issuingOrganization: c.issuingOrganization ? String(c.issuingOrganization).trim() : undefined,
+            issueDate: c.issueDate ? normalizeDate(c.issueDate) : undefined,
+            expiryDate: c.expiryDate ? normalizeDate(c.expiryDate) : undefined,
+            credentialId: c.credentialId ? String(c.credentialId).trim() : undefined,
+          }))
+          .filter((c: ParsedCertificationEntry) => c.name)
+      : []
+
     // Normalize and validate the parsed data
     return {
       firstName: String(parsed.firstName || '').trim(),
@@ -293,15 +443,103 @@ function parseClaudeResponse(responseText: string): ParsedResumeData | null {
       locationState: parsed.locationState ? String(parsed.locationState).trim().toUpperCase() : undefined,
       locationCountry: parsed.locationCountry ? String(parsed.locationCountry).trim().toUpperCase() : 'US',
       visaStatus: normalizeVisaStatus(parsed.visaStatus),
+      workHistory,
+      education,
+      certifications,
       confidence: {
         overall: typeof parsed.confidence?.overall === 'number' ? parsed.confidence.overall : 70,
         fields: parsed.confidence?.fields || {},
+        workHistory: typeof parsed.confidence?.workHistory === 'number' ? parsed.confidence.workHistory : 70,
+        education: typeof parsed.confidence?.education === 'number' ? parsed.confidence.education : 70,
+        certifications: typeof parsed.confidence?.certifications === 'number' ? parsed.confidence.certifications : 70,
       },
     }
   } catch (error) {
     console.error('[ResumeParser] JSON parse error:', error)
     return null
   }
+}
+
+/**
+ * Normalize date to YYYY-MM format
+ */
+function normalizeDate(dateValue: unknown): string {
+  if (!dateValue) return ''
+  const dateStr = String(dateValue).trim()
+
+  // Already in YYYY-MM format
+  if (/^\d{4}-\d{2}$/.test(dateStr)) {
+    return dateStr
+  }
+
+  // YYYY-MM-DD format - extract YYYY-MM
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    return dateStr.substring(0, 7)
+  }
+
+  // Try to parse various formats
+  const match = dateStr.match(/(\d{4})[-/]?(\d{1,2})?/)
+  if (match) {
+    const year = match[1]
+    const month = match[2] ? match[2].padStart(2, '0') : '01'
+    return `${year}-${month}`
+  }
+
+  return ''
+}
+
+/**
+ * Normalize degree type to valid enum value
+ */
+function normalizeDegreeType(
+  degreeType: unknown
+): ParsedEducationEntry['degreeType'] | undefined {
+  if (!degreeType) return undefined
+
+  const normalized = String(degreeType).toLowerCase().trim()
+
+  const validTypes: ParsedEducationEntry['degreeType'][] = [
+    'high_school',
+    'associate',
+    'bachelor',
+    'master',
+    'phd',
+    'other',
+  ]
+
+  if (validTypes.includes(normalized as ParsedEducationEntry['degreeType'])) {
+    return normalized as ParsedEducationEntry['degreeType']
+  }
+
+  // Common mappings
+  const mappings: Record<string, ParsedEducationEntry['degreeType']> = {
+    'bs': 'bachelor',
+    'ba': 'bachelor',
+    'bsc': 'bachelor',
+    'bachelors': 'bachelor',
+    "bachelor's": 'bachelor',
+    'undergraduate': 'bachelor',
+    'ms': 'master',
+    'ma': 'master',
+    'msc': 'master',
+    'mba': 'master',
+    'masters': 'master',
+    "master's": 'master',
+    'graduate': 'master',
+    'phd': 'phd',
+    'doctorate': 'phd',
+    'doctoral': 'phd',
+    'doctor': 'phd',
+    'high school': 'high_school',
+    'hs': 'high_school',
+    'ged': 'high_school',
+    'aa': 'associate',
+    'as': 'associate',
+    'associates': 'associate',
+    "associate's": 'associate',
+  }
+
+  return mappings[normalized] || 'other'
 }
 
 /**

@@ -411,7 +411,7 @@ const extendPlacementInput = z.object({
 // CANDIDATE ZOD SCHEMAS (E01-E05)
 // ============================================
 
-const candidateStatusEnum = z.enum(['active', 'sourced', 'screening', 'bench', 'placed', 'inactive', 'archived'])
+const candidateStatusEnum = z.enum(['draft', 'active', 'sourced', 'screening', 'bench', 'placed', 'inactive', 'archived'])
 const visaStatusEnum = z.enum(['us_citizen', 'green_card', 'h1b', 'l1', 'tn', 'opt', 'cpt', 'ead', 'other'])
 const availabilityEnum = z.enum(['immediate', '2_weeks', '30_days', 'not_available'])
 const leadSourceEnum = z.enum(['linkedin', 'indeed', 'dice', 'monster', 'referral', 'direct', 'agency', 'job_board', 'other'])
@@ -9935,6 +9935,85 @@ export const atsRouter = router({
         }
 
         return data ?? []
+      }),
+
+    // ============================================
+    // DRAFTS OPERATIONS
+    // ============================================
+
+    // List current user's draft candidates (for Drafts tab)
+    listMyDrafts: orgProtectedProcedure
+      .query(async ({ ctx }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          return []
+        }
+
+        // created_by references auth.users(id), so compare directly to user.id (auth_id)
+        const { data, error } = await adminClient
+          .from('candidates')
+          .select('id, first_name, last_name, status, wizard_state, created_at, updated_at')
+          .eq('org_id', orgId)
+          .eq('created_by', user.id)
+          .eq('status', 'draft')
+          .is('deleted_at', null)
+          .order('updated_at', { ascending: false })
+          .limit(10)
+
+        if (error) {
+          console.error('[candidates.listMyDrafts] Error:', error.message)
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data ?? []
+      }),
+
+    // Delete a draft candidate (soft delete - verify ownership and draft status)
+    deleteDraft: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        // Verify ownership and draft status before deleting
+        // created_by references auth.users(id), so compare directly to user.id (auth_id)
+        const { data: candidate, error: fetchError } = await adminClient
+          .from('candidates')
+          .select('id, status, created_by')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .single()
+
+        if (fetchError || !candidate) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Candidate not found' })
+        }
+
+        if (candidate.created_by !== user.id) {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'You can only delete your own drafts' })
+        }
+
+        if (candidate.status !== 'draft') {
+          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Only draft candidates can be deleted' })
+        }
+
+        // Soft delete
+        const { error } = await adminClient
+          .from('candidates')
+          .update({ deleted_at: new Date().toISOString() })
+          .eq('id', input.id)
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return { success: true }
       }),
   }),
 })

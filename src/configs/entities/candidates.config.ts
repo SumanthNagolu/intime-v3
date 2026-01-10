@@ -22,6 +22,7 @@ import {
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
+import { CandidateDraftsTabContent } from '@/components/pcf/list-view/CandidateDraftsTabContent'
 import {
   CandidateOverviewSectionPCF,
   CandidateScreeningSectionPCF,
@@ -98,6 +99,13 @@ export interface Candidate extends Record<string, unknown> {
 
 // Candidate status configuration
 export const CANDIDATE_STATUS_CONFIG: Record<string, StatusConfig> = {
+  draft: {
+    label: 'Draft',
+    color: 'bg-charcoal-100 text-charcoal-600',
+    bgColor: 'bg-charcoal-100',
+    textColor: 'text-charcoal-600',
+    icon: FileText,
+  },
   active: {
     label: 'Active',
     color: 'bg-green-100 text-green-800',
@@ -496,8 +504,7 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
     },
   },
 
-  // tRPC hooks for data fetching
-  // Uses ATS candidates router (candidates table)
+  // tRPC hooks for data fetching (used when not in tabs mode, required by type)
   useListQuery: (filters) => {
     const statusValue = filters.status as string | undefined
     const sourceValue = filters.source as string | undefined
@@ -528,10 +535,11 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
       }
     }
 
-    // Use ATS candidates router
     return trpc.ats.candidates.advancedSearch.useQuery({
       search: filters.search as string | undefined,
-      statuses: statusValue && statusValue !== 'all' ? [statusValue] as ('active' | 'inactive' | 'placed' | 'archived' | 'sourced' | 'screening' | 'bench')[] : undefined,
+      statuses: statusValue && statusValue !== 'all'
+        ? [statusValue] as ('draft' | 'active' | 'inactive' | 'placed' | 'archived' | 'sourced' | 'screening' | 'bench')[]
+        : ['active', 'inactive', 'placed', 'archived', 'sourced', 'screening', 'bench'],
       source: sourceValue && sourceValue !== 'all' ? sourceValue : undefined,
       minExperience,
       maxExperience,
@@ -545,6 +553,99 @@ export const candidatesListConfig: ListViewConfig<Candidate> = {
 
   // Use ATS candidates stats
   useStatsQuery: () => trpc.ats.candidates.stats.useQuery(),
+
+  // Tabs configuration - "Candidates" and "Drafts" tabs
+  tabs: [
+    {
+      id: 'candidates',
+      label: 'Candidates',
+      showFilters: true,
+      useQuery: (filters) => {
+        const statusValue = filters.status as string | undefined
+        const sourceValue = filters.source as string | undefined
+        const experienceRangeValue = filters.experienceRange as string | undefined
+        const sortByValue = filters.sortBy as string | undefined
+        const sortOrderValue = filters.sortOrder as string | undefined
+
+        // Convert experience range to min/max
+        let minExperience: number | undefined
+        let maxExperience: number | undefined
+        if (experienceRangeValue && experienceRangeValue !== 'all') {
+          switch (experienceRangeValue) {
+            case '0-2':
+              minExperience = 0
+              maxExperience = 2
+              break
+            case '2-5':
+              minExperience = 2
+              maxExperience = 5
+              break
+            case '5-10':
+              minExperience = 5
+              maxExperience = 10
+              break
+            case '10+':
+              minExperience = 10
+              break
+          }
+        }
+
+        // Use ATS candidates router - exclude drafts from main list
+        return trpc.ats.candidates.advancedSearch.useQuery({
+          search: filters.search as string | undefined,
+          statuses: statusValue && statusValue !== 'all'
+            ? [statusValue] as ('draft' | 'active' | 'inactive' | 'placed' | 'archived' | 'sourced' | 'screening' | 'bench')[]
+            : ['active', 'inactive', 'placed', 'archived', 'sourced', 'screening', 'bench'], // Exclude draft by default
+          source: sourceValue && sourceValue !== 'all' ? sourceValue : undefined,
+          minExperience,
+          maxExperience,
+          isOnHotlist: filters.isOnHotlist as boolean | undefined,
+          limit: (filters.limit as number) || 25,
+          offset: (filters.offset as number) || 0,
+          sortBy: (sortByValue || 'created_at') as 'name' | 'status' | 'title' | 'created_at' | 'first_name' | 'owner_id' | 'location' | 'submissions_count' | 'rate' | 'years_experience' | 'match_score' | 'availability' | 'experience' | 'last_updated' | 'lead_source' | 'last_activity_date',
+          sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'desc'),
+        })
+      },
+      emptyState: {
+        icon: User,
+        title: 'No candidates found',
+        description: () => 'Add your first candidate to start building your talent database',
+        action: {
+          label: 'Add Candidate',
+          href: '/employee/recruiting/candidates/new',
+        },
+      },
+    },
+    {
+      id: 'drafts',
+      label: 'Drafts',
+      showFilters: false,
+      useQuery: () => {
+        const draftsQuery = trpc.ats.candidates.listMyDrafts.useQuery()
+        // Transform to expected format
+        return {
+          data: draftsQuery.data ? {
+            items: draftsQuery.data as unknown as Candidate[],
+            total: draftsQuery.data.length,
+          } : undefined,
+          isLoading: draftsQuery.isLoading,
+          error: draftsQuery.error,
+        }
+      },
+      // Use custom component that renders draft cards with Resume action
+      customComponent: CandidateDraftsTabContent,
+      emptyState: {
+        icon: FileText,
+        title: 'No drafts',
+        description: () => "You don't have any candidates in progress. Start creating a new one!",
+        action: {
+          label: 'Start New Candidate',
+          href: '/employee/recruiting/candidates/new',
+        },
+      },
+    },
+  ],
+  defaultTab: 'candidates',
 }
 
 // Candidates Detail View Configuration

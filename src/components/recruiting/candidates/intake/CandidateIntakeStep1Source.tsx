@@ -1,18 +1,30 @@
 'use client'
 
 import { Upload, Linkedin } from 'lucide-react'
-import { useCreateCandidateStore, SOURCE_TYPES } from '@/stores/create-candidate-store'
+import { useCreateCandidateStore, SOURCE_TYPES, SkillEntry } from '@/stores/create-candidate-store'
 import { Section, RadioOptionCard, ValidationBanner } from './shared'
 import { ResumeUploadParser } from '@/components/recruiting/ResumeUploadParser'
+import { parsePhoneValue } from '@/components/ui/phone-input'
 import type { ParsedResumeData } from '@/lib/services/resume-parser'
 
 export function CandidateIntakeStep1Source() {
-  const { formData, setFormData, setResumeFile } = useCreateCandidateStore()
+  const { formData, setFormData, setResumeFile, addSkill } = useCreateCandidateStore()
 
   // Handle resume parsed - update store with all extracted data
   const handleResumeParsed = (data: ParsedResumeData, file: File) => {
     // Store the file and parsed data for upload during submission
     setResumeFile(file, data)
+
+    // Convert string skills to SkillEntry format
+    const skillEntries: SkillEntry[] = (data.skills || []).map((skillName, index) => ({
+      name: skillName,
+      proficiency: 'intermediate' as const,
+      isPrimary: index < 5, // First 5 skills are primary
+      isCertified: false,
+    }))
+
+    // Add skills via the store action
+    skillEntries.forEach(skill => addSkill(skill))
 
     // Update form with extracted data
     setFormData({
@@ -22,14 +34,15 @@ export function CandidateIntakeStep1Source() {
       firstName: data.firstName || formData.firstName,
       lastName: data.lastName || formData.lastName,
       email: data.email || formData.email,
-      phone: data.phone || formData.phone,
+      phone: data.phone ? parsePhoneValue(data.phone) : formData.phone,
       linkedinProfile: data.linkedinProfile || formData.linkedinProfile,
       // Professional (Step 3)
       professionalHeadline: data.professionalHeadline || formData.professionalHeadline,
       professionalSummary: data.professionalSummary || formData.professionalSummary,
-      skills: data.skills?.length ? data.skills : formData.skills,
       experienceYears: data.experienceYears ?? formData.experienceYears,
-      // Authorization (Step 4)
+      // Primary skills for quick reference
+      primarySkills: skillEntries.filter(s => s.isPrimary).map(s => s.name),
+      // Authorization (Step 5)
       visaStatus: data.visaStatus || formData.visaStatus,
       locationCity: data.locationCity || formData.locationCity,
       locationState: data.locationState || formData.locationState,
