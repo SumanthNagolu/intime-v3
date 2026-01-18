@@ -15,6 +15,7 @@ import { CandidateSubmissionsSection } from './sections/CandidateSubmissionsSect
 // Universal tool sections
 import { CandidateActivitiesSection } from './sections/CandidateActivitiesSection'
 import { CandidateNotesSection } from './sections/CandidateNotesSection'
+import { CandidateResumesSection } from './sections/CandidateResumesSection'
 import { CandidateDocumentsSection } from './sections/CandidateDocumentsSection'
 import { CandidateHistorySection } from './sections/CandidateHistorySection'
 
@@ -29,6 +30,7 @@ type CandidateSection =
   | 'submissions'
   | 'activities'
   | 'notes'
+  | 'resumes'
   | 'documents'
   | 'history'
 
@@ -89,6 +91,9 @@ export function CandidateWorkspace({ onAction }: CandidateWorkspaceProps = {}) {
         <CandidateSummarySection
           candidate={data.candidate}
           skills={data.skills}
+          workHistory={data.workHistory}
+          education={data.education}
+          certifications={data.certifications}
           submissions={data.submissions}
           stats={data.stats}
           onNavigate={handleSectionChange}
@@ -123,6 +128,13 @@ export function CandidateWorkspace({ onAction }: CandidateWorkspaceProps = {}) {
         <CandidateNotesSection
           notes={data.notes}
           candidateId={data.candidate.id}
+        />
+      )}
+      {currentSection === 'resumes' && (
+        <CandidateResumesSection
+          resumes={data.resumes}
+          candidateId={data.candidate.id}
+          candidateName={data.candidate.fullName}
         />
       )}
       {currentSection === 'documents' && (

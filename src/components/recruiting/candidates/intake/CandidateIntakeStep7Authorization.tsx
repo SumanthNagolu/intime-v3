@@ -18,7 +18,7 @@ import { Section, FieldGroup, ValidationBanner } from './shared'
 // Visas that typically require sponsorship
 const SPONSORSHIP_VISAS = ['h1b', 'l1', 'opt', 'cpt', 'ead', 'other']
 
-export function CandidateIntakeStep5Authorization() {
+export function CandidateIntakeStep7Authorization() {
   const { formData, setFormData } = useCreateCandidateStore()
 
   // Auto-set sponsorship requirement based on visa type

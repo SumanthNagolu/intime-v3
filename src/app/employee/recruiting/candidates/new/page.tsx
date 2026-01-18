@@ -13,51 +13,213 @@ import { Loader2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { formatPhoneValue, parsePhoneValue } from '@/components/ui/phone-input'
 
+// Helper to convert File to base64 for tRPC upload
+function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result as string)
+    reader.onerror = reject
+    reader.readAsDataURL(file)
+  })
+}
+
 // Transform form data to entity data for API calls
 function formToEntityData(formData: CreateCandidateFormData) {
-  // Extract skill names from SkillEntry objects for API
-  const skillNames = formData.skills?.map(s => typeof s === 'string' ? s : s.name) || []
+  // Transform skills to full skill entry format for API
+  const skillEntries = (formData.skills || []).map(s => {
+    if (typeof s === 'string') {
+      return { name: s, proficiency: 'intermediate' as const, isPrimary: false, isCertified: false }
+    }
+    return {
+      name: s.name,
+      proficiency: s.proficiency || 'intermediate' as const,
+      yearsOfExperience: s.yearsOfExperience,
+      isPrimary: s.isPrimary || false,
+      isCertified: s.isCertified || false,
+      lastUsed: s.lastUsed,
+    }
+  })
+
+  // Transform work history for API
+  const workHistoryEntries = (formData.workHistory || []).map(w => ({
+    companyName: w.companyName,
+    jobTitle: w.jobTitle,
+    employmentType: w.employmentType,
+    startDate: w.startDate,
+    endDate: w.endDate,
+    isCurrent: w.isCurrent || false,
+    locationCity: w.locationCity,
+    locationState: w.locationState,
+    isRemote: w.isRemote || false,
+    description: w.description,
+    achievements: w.achievements || [],
+  }))
+
+  // Transform education for API
+  const educationEntries = (formData.education || []).map(e => ({
+    institutionName: e.institutionName,
+    degreeType: e.degreeType,
+    degreeName: e.degreeName,
+    fieldOfStudy: e.fieldOfStudy,
+    startDate: e.startDate,
+    endDate: e.endDate,
+    isCurrent: e.isCurrent || false,
+    gpa: e.gpa,
+    honors: e.honors,
+  }))
+
+  // Transform certifications for API
+  const certificationEntries = (formData.certifications || []).map(c => ({
+    name: c.name,
+    acronym: c.acronym,
+    issuingOrganization: c.issuingOrganization,
+    credentialId: c.credentialId,
+    credentialUrl: c.credentialUrl,
+    issueDate: c.issueDate,
+    expiryDate: c.expiryDate,
+    isLifetime: c.isLifetime || false,
+  }))
 
   // Convert PhoneInputValue to string for API
   const phoneString = formData.phone ? formatPhoneValue(formData.phone) : undefined
 
+  // Map visa status to work authorization label for display
+  const visaStatusLabels: Record<string, string> = {
+    us_citizen: 'US Citizen',
+    green_card: 'Green Card / Permanent Resident',
+    h1b: 'H1B Visa',
+    l1: 'L1 Visa',
+    tn: 'TN Visa',
+    opt: 'OPT (F1)',
+    cpt: 'CPT (F1)',
+    ead: 'EAD Card',
+    other: 'Other',
+  }
+
   return {
+    // Personal info
     firstName: formData.firstName || undefined,
     lastName: formData.lastName || undefined,
     email: formData.email || undefined,
     phone: phoneString || undefined,
     linkedinUrl: formData.linkedinProfile || undefined,
+
+    // Professional info
     professionalHeadline: formData.professionalHeadline || undefined,
     professionalSummary: formData.professionalSummary || undefined,
-    skills: skillNames,
     experienceYears: formData.experienceYears,
+
+    // Employment preferences
+    employmentTypes: formData.employmentTypes,
+    workModes: formData.workModes,
+
+    // Skills with full metadata (objects, not just names)
+    skills: skillEntries,
+
+    // Work history
+    workHistory: workHistoryEntries,
+
+    // Education
+    education: educationEntries,
+
+    // Certifications
+    certifications: certificationEntries,
+
+    // Work authorization
     visaStatus: formData.visaStatus,
+    visaExpiryDate: formData.visaExpiryDate || undefined,
+    workAuthorization: visaStatusLabels[formData.visaStatus] || formData.visaStatus,
+    requiresSponsorship: formData.requiresSponsorship,
+    currentSponsor: formData.currentSponsor || undefined,
+    isTransferable: formData.isTransferable,
+
+    // Availability
     availability: formData.availability,
+    availableFrom: formData.availableFrom || undefined,
+    noticePeriodDays: formData.noticePeriodDays,
+
+    // Location
     location: formData.location || undefined,
     locationCity: formData.locationCity || undefined,
     locationState: formData.locationState || undefined,
     locationCountry: formData.locationCountry || undefined,
     willingToRelocate: formData.willingToRelocate,
+    relocationPreferences: formData.relocationPreferences || undefined,
     isRemoteOk: formData.isRemoteOk,
+
+    // Compensation
     minimumRate: formData.minimumRate,
     desiredRate: formData.desiredRate,
     rateType: formData.rateType,
+    currency: formData.currency,
+    isNegotiable: formData.isNegotiable,
+    compensationNotes: formData.compensationNotes || undefined,
+
+    // Source tracking
     leadSource: formData.leadSource,
     sourceDetails: formData.sourceDetails || undefined,
+    referredBy: formData.referredBy || undefined,
+    campaignId: formData.campaignId || undefined,
+
+    // Tracking
     isOnHotlist: formData.isOnHotlist,
     hotlistNotes: formData.hotlistNotes || undefined,
     tags: formData.tags,
+    internalNotes: formData.internalNotes || undefined,
   }
 }
 
 // Transform entity data to form data for editing/resuming (used for edit mode)
 function entityToFormData(entity: any): CreateCandidateFormData {
-  // Convert string skills to SkillEntry format
-  const skillEntries = (entity.skills || []).map((skill: string, index: number) => ({
-    name: skill,
-    proficiency: 'intermediate' as const,
-    isPrimary: index < 5,
-    isCertified: false,
+  // Map proficiency level from DB value (1-5) to string
+  const proficiencyMap: Record<number, 'beginner' | 'intermediate' | 'advanced' | 'expert'> = {
+    1: 'beginner',
+    2: 'beginner',
+    3: 'intermediate',
+    4: 'advanced',
+    5: 'expert',
+  }
+
+  // Convert skills from DB format to SkillEntry format
+  const skillEntries = (entity.skills || []).map((skill: any, index: number) => ({
+    name: skill.skill_name || skill.name || skill,
+    proficiency: typeof skill.proficiency_level === 'number'
+      ? proficiencyMap[skill.proficiency_level] || 'intermediate'
+      : (skill.proficiency_level === '3' ? 'intermediate' : skill.proficiency_level) || 'intermediate',
+    yearsOfExperience: skill.years_of_experience,
+    isPrimary: skill.is_primary || index < 5,
+    isCertified: skill.is_certified || false,
+    lastUsed: skill.last_used_date,
+  }))
+
+  // Convert work history from DB format
+  const workHistoryEntries = (entity.workHistory || []).map((w: any) => ({
+    id: w.id,
+    companyName: w.company_name || '',
+    jobTitle: w.job_title || '',
+    employmentType: w.employment_type || 'full_time',
+    startDate: w.start_date || '',
+    endDate: w.end_date || undefined,
+    isCurrent: w.is_current || false,
+    locationCity: w.location_city || '',
+    locationState: w.location_state || '',
+    isRemote: w.is_remote || false,
+    description: w.description || '',
+    achievements: w.achievements || [],
+  }))
+
+  // Convert education from DB format
+  const educationEntries = (entity.education || []).map((e: any) => ({
+    id: e.id,
+    institutionName: e.institution_name || '',
+    degreeType: e.degree_type || 'bachelor',
+    degreeName: e.degree_name || '',
+    fieldOfStudy: e.field_of_study || '',
+    startDate: e.start_date || '',
+    endDate: e.end_date || undefined,
+    isCurrent: e.is_current || false,
+    gpa: e.gpa,
+    honors: e.honors || '',
   }))
 
   return {
@@ -80,18 +242,18 @@ function entityToFormData(entity: any): CreateCandidateFormData {
     experienceYears: entity.years_experience || 0,
     employmentTypes: entity.employment_types || ['full_time', 'contract'],
     workModes: entity.work_modes || ['on_site', 'remote'],
-    // Step 4 - Work History
-    workHistory: [], // TODO: Fetch from candidate_work_history table
-    // Step 5 - Education
-    education: [], // TODO: Fetch from candidate_education table
-    // Step 6 - Skills
+    // Step 4 - Work History (now populated from entity.workHistory)
+    workHistory: workHistoryEntries,
+    // Step 5 - Education (now populated from entity.education)
+    education: educationEntries,
+    // Step 6 - Skills (now populated from entity.skills with full metadata)
     skills: skillEntries,
     primarySkills: skillEntries.filter((s: { isPrimary: boolean }) => s.isPrimary).map((s: { name: string }) => s.name),
     certifications: [],
     // Step 7 - Authorization
     visaStatus: entity.visa_status || 'us_citizen',
     visaExpiryDate: entity.visa_expiry_date || undefined,
-    requiresSponsorship: false,
+    requiresSponsorship: entity.requires_sponsorship || false,
     availability: entity.availability || '2_weeks',
     availableFrom: entity.available_from || undefined,
     noticePeriodDays: entity.notice_period_days || undefined,
@@ -109,7 +271,7 @@ function entityToFormData(entity: any): CreateCandidateFormData {
     leadSource: entity.lead_source || 'linkedin',
     sourceDetails: entity.lead_source_detail || '',
     referredBy: entity.referred_by || '',
-    complianceDocuments: [], // TODO: Fetch from candidate_compliance_documents table
+    complianceDocuments: [],
     isOnHotlist: entity.is_on_hotlist || false,
     hotlistNotes: entity.hotlist_notes || '',
     tags: entity.tags || [],
@@ -141,7 +303,9 @@ function NewCandidatePageContent() {
   // Mutations
   const createDraftMutation = trpc.ats.candidates.createDraft.useMutation()
   const updateMutation = trpc.ats.candidates.update.useMutation()
-  const createMutation = trpc.ats.candidates.create.useMutation()
+  const deleteDraftMutation = trpc.ats.candidates.deleteDraft.useMutation()
+  const uploadResumeMutation = trpc.resumes.upload.useMutation()
+  const uploadDocumentMutation = trpc.documents.upload.useMutation()
 
   // The actual draft ID to use (from URL param)
   const activeDraftId = draftId || resumeId
@@ -197,8 +361,18 @@ function NewCandidatePageContent() {
     if (wizardState?.formData) {
       // Resume from saved wizard state
       store.setFormData(wizardState.formData)
-      if (wizardState.currentStep && store.setCurrentStep) {
-        store.setCurrentStep(wizardState.currentStep)
+
+      // Determine which step to resume from
+      let resumeStep = wizardState.currentStep || 1
+
+      // Skip step 1 (Source) when resuming since source is already determined
+      // Only skip if sourceType is already set and we'd otherwise start at step 1
+      if (resumeStep === 1 && wizardState.formData.sourceType) {
+        resumeStep = 2 // Start at Contact Info instead
+      }
+
+      if (store.setCurrentStep) {
+        store.setCurrentStep(resumeStep)
       }
     }
     // For fresh drafts without wizard_state, do NOT load from entity
@@ -221,13 +395,17 @@ function NewCandidatePageContent() {
     // Otherwise fall back to entity field mapping
     if (wizardState?.formData) {
       store.setFormData(wizardState.formData)
-      if (wizardState.currentStep && store.setCurrentStep) {
-        store.setCurrentStep(wizardState.currentStep)
-      }
     } else {
       const formData = entityToFormData(entity)
       store.setFormData(formData)
     }
+
+    // In edit mode, always start at step 2 (Contact Info) - step 1 (Source) is irrelevant
+    // The candidate already exists, so source selection doesn't apply
+    if (store.setCurrentStep) {
+      store.setCurrentStep(2)
+    }
+
     previousFormData.current = JSON.stringify(store.formData)
     setIsReady(true)
   }, [isEditMode, editId, entityQuery.data])
@@ -300,82 +478,251 @@ function NewCandidatePageContent() {
           parsingConfidence?: number
         } | undefined = undefined
 
-        // Upload resume to storage first if we have one (stored in Zustand store)
-        const { resumeFile, resumeParsedData } = store
-        if (resumeFile && resumeParsedData) {
+        // Upload resume via tRPC (uses admin client to bypass storage RLS)
+        // Use getState() to get fresh state at submission time (not stale closure reference)
+        const currentState = useCreateCandidateStore.getState()
+        const { resumeFile, resumeParsedData } = currentState
+        const candidateIdForUpload = isEditMode ? editId : activeDraftId
+
+        if (resumeFile && candidateIdForUpload) {
           try {
-            const supabase = createClient()
             const file = resumeFile
-            const parsedResume = resumeParsedData
-            const fileExt = file.name.split('.').pop()?.toLowerCase() || 'pdf'
-            const tempId = `temp-${Date.now()}`
-            const storagePath = `${tempId}/${Date.now()}-resume.${fileExt}`
+            const parsedResume = resumeParsedData // May be null if parsing failed/skipped
 
-            const { error: uploadError } = await supabase.storage
-              .from('resumes')
-              .upload(storagePath, file)
+            // Convert file to base64 for tRPC upload
+            const fileData = await fileToBase64(file)
 
-            if (uploadError) {
-              console.error('Failed to upload resume:', uploadError.message)
-              toast({
-                title: 'Resume upload failed',
-                description: `${uploadError.message}. Candidate will be saved without resume.`,
-                variant: 'default',
-              })
-            } else {
-              resumeData = {
-                storagePath,
-                fileName: file.name,
-                fileSize: file.size,
-                mimeType: file.type || 'application/pdf',
-                parsedContent: parsedResume.rawText,
-                parsedSkills: parsedResume.skills,
-                parsedExperience: parsedResume.professionalSummary,
-                aiSummary: parsedResume.professionalSummary,
-                parsingConfidence: parsedResume.confidence.overall,
-              }
+            // Upload via tRPC (bypasses storage RLS using admin client)
+            const uploadResult = await uploadResumeMutation.mutateAsync({
+              candidateId: candidateIdForUpload,
+              fileName: file.name,
+              fileData,
+              fileSize: file.size,
+              mimeType: file.type || 'application/pdf',
+              isPrimary: true,
+              // Include parsed data if available
+              parsedContent: parsedResume?.rawText ? { rawText: parsedResume.rawText } : undefined,
+              parsedSkills: parsedResume?.skills,
+              aiSummary: parsedResume?.professionalSummary,
+            })
+
+            // Set resumeData for the candidate update (won't create duplicate - just metadata reference)
+            resumeData = {
+              storagePath: uploadResult.filePath,
+              fileName: file.name,
+              fileSize: file.size,
+              mimeType: file.type || 'application/pdf',
+              parsedContent: parsedResume?.rawText,
+              parsedSkills: parsedResume?.skills,
+              parsedExperience: parsedResume?.professionalSummary,
+              aiSummary: parsedResume?.professionalSummary,
+              parsingConfidence: parsedResume?.confidence?.overall,
             }
-          } catch (error) {
+          } catch (error: any) {
             console.error('Error uploading resume:', error)
+            toast({
+              title: 'Resume upload failed',
+              description: `${error.message || 'Unknown error'}. Candidate will be saved without resume.`,
+              variant: 'default',
+            })
           }
         }
 
-        // Extract skill names from SkillEntry objects
-        const skillNames = data.skills?.map(s => typeof s === 'string' ? s : s.name) || []
+        // Upload compliance documents via tRPC (uses admin client to bypass storage RLS)
+        const complianceDocsData: Array<{
+          documentType: string
+          fileName: string
+          fileSize: number
+          storagePath: string
+          notes?: string
+        }> = []
+
+        const { complianceDocumentFiles } = currentState
+        for (const doc of data.complianceDocuments || []) {
+          const file = complianceDocumentFiles.get(doc.id)
+          if (file && candidateIdForUpload) {
+            try {
+              // Convert file to base64 for tRPC upload
+              const fileData = await fileToBase64(file)
+
+              // Upload via tRPC (bypasses storage RLS using admin client)
+              const uploadResult = await uploadDocumentMutation.mutateAsync({
+                entityType: 'candidate',
+                entityId: candidateIdForUpload,
+                fileName: file.name,
+                fileData,
+                fileSizeBytes: file.size,
+                mimeType: file.type || 'application/pdf',
+                documentType: doc.type as any, // Type mapping
+                documentCategory: 'compliance',
+                description: doc.notes,
+              })
+
+              complianceDocsData.push({
+                documentType: doc.type,
+                fileName: file.name,
+                fileSize: file.size,
+                storagePath: uploadResult.publicUrl || '',
+                notes: doc.notes,
+              })
+              console.log(`[Candidate Wizard] Compliance doc uploaded via tRPC: ${doc.type}`)
+            } catch (error: any) {
+              console.error(`Error uploading compliance doc ${doc.type}:`, error.message)
+            }
+          }
+        }
+
+        // Transform skill entries for API (keep full metadata, not just names)
+        const skillEntries = (data.skills || []).map(s => {
+          if (typeof s === 'string') {
+            return { name: s, proficiency: 'intermediate' as const, isPrimary: false, isCertified: false }
+          }
+          return {
+            name: s.name,
+            proficiency: s.proficiency || 'intermediate' as const,
+            yearsOfExperience: s.yearsOfExperience,
+            isPrimary: s.isPrimary || false,
+            isCertified: s.isCertified || false,
+            lastUsed: s.lastUsed,
+          }
+        })
+
+        // Transform work history for API
+        const workHistoryEntries = (data.workHistory || []).map(w => ({
+          companyName: w.companyName,
+          jobTitle: w.jobTitle,
+          employmentType: w.employmentType,
+          startDate: w.startDate,
+          endDate: w.endDate,
+          isCurrent: w.isCurrent || false,
+          locationCity: w.locationCity,
+          locationState: w.locationState,
+          isRemote: w.isRemote || false,
+          description: w.description,
+          achievements: w.achievements || [],
+        }))
+
+        // Transform education for API
+        const educationEntries = (data.education || []).map(e => ({
+          institutionName: e.institutionName,
+          degreeType: e.degreeType,
+          degreeName: e.degreeName,
+          fieldOfStudy: e.fieldOfStudy,
+          startDate: e.startDate,
+          endDate: e.endDate,
+          isCurrent: e.isCurrent || false,
+          gpa: e.gpa,
+          honors: e.honors,
+        }))
+
+        // Transform certifications for API
+        const certificationEntries = (data.certifications || []).map(c => ({
+          name: c.name,
+          acronym: c.acronym,
+          issuingOrganization: c.issuingOrganization,
+          credentialId: c.credentialId,
+          credentialUrl: c.credentialUrl,
+          issueDate: c.issueDate,
+          expiryDate: c.expiryDate,
+          isLifetime: c.isLifetime || false,
+        }))
 
         // Convert phone to string for API
         const phoneForApi = data.phone ? formatPhoneValue(data.phone) : undefined
+
+        // Map visa status to work authorization label for display
+        const visaStatusLabels: Record<string, string> = {
+          us_citizen: 'US Citizen',
+          green_card: 'Green Card / Permanent Resident',
+          h1b: 'H1B Visa',
+          l1: 'L1 Visa',
+          tn: 'TN Visa',
+          opt: 'OPT (F1)',
+          cpt: 'CPT (F1)',
+          ead: 'EAD Card',
+          other: 'Other',
+        }
+
+        // Build common payload with all candidate fields
+        const candidatePayload = {
+          // Personal info
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          phone: phoneForApi,
+          linkedinUrl: data.linkedinProfile || undefined,
+
+          // Professional info
+          professionalHeadline: data.professionalHeadline || undefined,
+          professionalSummary: data.professionalSummary || undefined,
+          experienceYears: data.experienceYears,
+
+          // Employment preferences
+          employmentTypes: data.employmentTypes,
+          workModes: data.workModes,
+
+          // Skills with full metadata
+          skills: skillEntries,
+
+          // Work history
+          workHistory: workHistoryEntries,
+
+          // Education
+          education: educationEntries,
+
+          // Certifications
+          certifications: certificationEntries,
+
+          // Work authorization
+          visaStatus: data.visaStatus,
+          visaExpiryDate: data.visaExpiryDate || undefined,
+          requiresSponsorship: data.requiresSponsorship,
+          currentSponsor: data.currentSponsor || undefined,
+          isTransferable: data.isTransferable,
+
+          // Availability
+          availability: data.availability as 'immediate' | '2_weeks' | '30_days' | '60_days' | 'not_available',
+          availableFrom: data.availableFrom || undefined,
+          noticePeriodDays: data.noticePeriodDays,
+
+          // Location
+          location: data.location,
+          locationCity,
+          locationState,
+          locationCountry,
+          willingToRelocate: data.willingToRelocate,
+          relocationPreferences: data.relocationPreferences || undefined,
+          isRemoteOk: data.isRemoteOk,
+
+          // Compensation
+          rateType: data.rateType,
+          minimumRate: data.minimumRate,
+          desiredRate: data.desiredRate,
+          currency: data.currency,
+          isNegotiable: data.isNegotiable,
+          compensationNotes: data.compensationNotes || undefined,
+
+          // Source tracking
+          leadSource: data.leadSource as 'linkedin' | 'indeed' | 'dice' | 'monster' | 'referral' | 'direct' | 'agency' | 'job_board' | 'website' | 'event' | 'other',
+          sourceDetails: data.sourceDetails || undefined,
+          referredBy: data.referredBy || undefined,
+          campaignId: data.campaignId || undefined,
+
+          // Tracking
+          isOnHotlist: data.isOnHotlist,
+          hotlistNotes: data.hotlistNotes || undefined,
+          tags: data.tags,
+          internalNotes: data.internalNotes || undefined,
+
+          // Clear wizard state on finalization
+          wizard_state: null,
+        }
 
         if (isEditMode && editId) {
           // Update existing candidate
           await updateMutation.mutateAsync({
             candidateId: editId,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            phone: phoneForApi,
-            linkedinUrl: data.linkedinProfile || undefined,
-            professionalHeadline: data.professionalHeadline || undefined,
-            professionalSummary: data.professionalSummary || undefined,
-            skills: skillNames,
-            experienceYears: data.experienceYears,
-            visaStatus: data.visaStatus,
-            availability: data.availability,
-            location: data.location,
-            locationCity,
-            locationState,
-            locationCountry,
-            willingToRelocate: data.willingToRelocate,
-            isRemoteOk: data.isRemoteOk,
-            minimumRate: data.minimumRate,
-            desiredRate: data.desiredRate,
-            rateType: data.rateType,
-            leadSource: data.leadSource,
-            sourceDetails: data.sourceDetails || undefined,
-            isOnHotlist: data.isOnHotlist,
-            hotlistNotes: data.hotlistNotes || undefined,
-            tags: data.tags,
-            wizard_state: null, // Clear wizard state on finalization
+            ...candidatePayload,
           } as any)
 
           toast({
@@ -388,53 +735,16 @@ function NewCandidatePageContent() {
           store.resetForm()
           router.push(`/employee/recruiting/candidates/${editId}`)
         } else if (activeDraftId) {
-          // Finalize draft - create the full candidate record via create mutation
-          // First, delete the draft (soft delete)
-          await updateMutation.mutateAsync({
+          // Finalize draft - update status from 'draft' to 'active'
+          const finalPayload = {
             candidateId: activeDraftId,
-            profileStatus: 'active', // This will be overridden by create
-            wizard_state: null,
-          } as any)
-
-          // Now create the actual candidate with full data
-          // Map 60_days to 30_days for API compatibility
-          const apiAvailability = data.availability === '60_days' ? '30_days' : data.availability
-          // Map newer lead sources to 'other' for API compatibility
-          const apiLeadSource = ['website', 'event'].includes(data.leadSource) ? 'other' : data.leadSource
-
-          const result = await createMutation.mutateAsync({
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            phone: phoneForApi,
-            linkedinUrl: data.linkedinProfile || undefined,
-            professionalHeadline: data.professionalHeadline || undefined,
-            professionalSummary: data.professionalSummary || undefined,
-            skills: skillNames,
-            experienceYears: data.experienceYears,
-            visaStatus: data.visaStatus,
-            availability: apiAvailability as 'immediate' | '2_weeks' | '30_days' | 'not_available',
-            location: data.location,
-            locationCity,
-            locationState,
-            locationCountry,
-            willingToRelocate: data.willingToRelocate,
-            isRemoteOk: data.isRemoteOk,
-            minimumHourlyRate: data.minimumRate,
-            desiredHourlyRate: data.desiredRate,
-            leadSource: apiLeadSource as 'linkedin' | 'indeed' | 'dice' | 'monster' | 'referral' | 'direct' | 'agency' | 'job_board' | 'other',
-            sourceDetails: data.sourceDetails || undefined,
-            isOnHotlist: data.isOnHotlist,
-            hotlistNotes: data.hotlistNotes || undefined,
-            tags: data.tags,
-            resumeData,
-          })
-
-          // Soft delete the draft now that we have the real candidate
-          await updateMutation.mutateAsync({
-            candidateId: activeDraftId,
-            profileStatus: 'draft',
-          } as any).catch(() => {}) // Ignore errors
+            ...candidatePayload,
+            profileStatus: 'active', // Finalize: change status from 'draft' to 'active'
+            resumeData, // Pass resume data for contact_resumes record creation
+            complianceDocumentsData: complianceDocsData.length > 0 ? complianceDocsData : undefined,
+            internalNotes: data.internalNotes || undefined, // Pass internal notes for notes table
+          }
+          await updateMutation.mutateAsync(finalPayload as any)
 
           toast({
             title: 'Candidate created!',
@@ -443,7 +753,7 @@ function NewCandidatePageContent() {
 
           utils.ats.candidates.advancedSearch.invalidate()
           store.resetForm()
-          router.push(`/employee/recruiting/candidates/${result.candidateId}`)
+          router.push(`/employee/recruiting/candidates/${activeDraftId}`) // Use same ID (draft becomes the real record)
         }
       } catch (error) {
         console.error('Failed to save candidate:', error)
@@ -455,23 +765,21 @@ function NewCandidatePageContent() {
         throw error
       }
     },
-    [isEditMode, editId, activeDraftId, router, updateMutation, createMutation, utils, store, toast]
+    [isEditMode, editId, activeDraftId, router, updateMutation, utils, store, toast]
   )
 
-  // Delete draft function (soft delete only)
+  // Delete draft function (proper soft delete via deleted_at)
   const deleteDraft = useCallback(async () => {
     if (activeDraftId && !isEditMode) {
       try {
-        await updateMutation.mutateAsync({
-          candidateId: activeDraftId,
-          profileStatus: 'draft',
-        } as any)
+        await deleteDraftMutation.mutateAsync({ id: activeDraftId })
         utils.ats.candidates.advancedSearch.invalidate()
+        utils.ats.candidates.listMyDrafts.invalidate()
       } catch (error) {
         console.error('Failed to delete draft:', error)
       }
     }
-  }, [activeDraftId, isEditMode, updateMutation, utils])
+  }, [activeDraftId, isEditMode, deleteDraftMutation, utils])
 
   // Handle cancel
   const handleCancel = useCallback(() => {

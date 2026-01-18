@@ -7,19 +7,36 @@ import {
   GraduationCap,
   Shield,
   FileText,
+  Award,
+  DollarSign,
 } from 'lucide-react'
 import { WizardConfig, WizardStepConfig } from '../types'
 import { CreateCandidateFormData } from '@/stores/create-candidate-store'
 
-// Step components - 6 step consolidated wizard
+// Step components - 9 step consolidated wizard
 import { CandidateIntakeStep1Source } from '@/components/recruiting/candidates/intake/CandidateIntakeStep1Source'
 import { CandidateIntakeStep2BasicInfo } from '@/components/recruiting/candidates/intake/CandidateIntakeStep2BasicInfo'
-import { CandidateIntakeStep3Experience } from '@/components/recruiting/candidates/intake/CandidateIntakeStep3Experience'
-import { CandidateIntakeStep4Qualifications } from '@/components/recruiting/candidates/intake/CandidateIntakeStep4Qualifications'
-import { CandidateIntakeStep5EmploymentTerms } from '@/components/recruiting/candidates/intake/CandidateIntakeStep5EmploymentTerms'
-import { CandidateIntakeStep6Documents } from '@/components/recruiting/candidates/intake/CandidateIntakeStep6Documents'
+import { CandidateIntakeStep3Professional } from '@/components/recruiting/candidates/intake/CandidateIntakeStep3Professional'
+import { CandidateIntakeStep4WorkHistory } from '@/components/recruiting/candidates/intake/CandidateIntakeStep4WorkHistory'
+import { CandidateIntakeStep5Education } from '@/components/recruiting/candidates/intake/CandidateIntakeStep5Education'
+import { CandidateIntakeStep6Skills } from '@/components/recruiting/candidates/intake/CandidateIntakeStep6Skills'
+import { CandidateIntakeStep7Authorization } from '@/components/recruiting/candidates/intake/CandidateIntakeStep7Authorization'
+import { CandidateIntakeStep8Compensation } from '@/components/recruiting/candidates/intake/CandidateIntakeStep8Compensation'
+import { CandidateIntakeStep9Documents } from '@/components/recruiting/candidates/intake/CandidateIntakeStep9Documents'
 
-// Step configurations - 6-step consolidated Bullhorn/Ceipal-style intake wizard
+import {
+  candidateStep1Schema,
+  candidateStep2Schema,
+  candidateStep3Schema,
+  candidateStep4Schema,
+  candidateStep5Schema,
+  candidateStep6Schema,
+  candidateStep7Schema,
+  candidateStep8Schema,
+  candidateStep9Schema,
+} from './candidate-intake.config'
+
+// Step configurations - 9-step consolidated Bullhorn/Ceipal-style intake wizard
 export const candidateCreateSteps: WizardStepConfig<CreateCandidateFormData>[] = [
   {
     id: 'source',
@@ -28,130 +45,88 @@ export const candidateCreateSteps: WizardStepConfig<CreateCandidateFormData>[] =
     description: 'How are you adding this candidate?',
     icon: Upload,
     component: CandidateIntakeStep1Source,
-    validateFn: (formData) => {
-      const errors: string[] = []
-      if (!formData.sourceType) {
-        errors.push('Please select how you are adding this candidate.')
-      }
-      return errors
-    },
+    fields: [],
+    validation: candidateStep1Schema,
   },
   {
-    id: 'contact',
+    id: 'basic',
     number: 2,
-    label: 'Contact Info',
-    description: 'Identity & reachability',
+    label: 'Basic Info',
+    description: 'Contact details & location',
     icon: User,
     component: CandidateIntakeStep2BasicInfo,
-    validateFn: (formData) => {
-      const errors: string[] = []
-      if (!formData.firstName?.trim()) {
-        errors.push('First name is required.')
-      }
-      if (!formData.lastName?.trim()) {
-        errors.push('Last name is required.')
-      }
-      if (!formData.email?.trim()) {
-        errors.push('Email address is required.')
-      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-        errors.push('Please enter a valid email address.')
-      }
-      if (!formData.location?.trim()) {
-        errors.push('Location is required.')
-      }
-      return errors
-    },
+    fields: [],
+    validation: candidateStep2Schema,
   },
   {
-    id: 'experience',
+    id: 'professional',
     number: 3,
-    label: 'Experience',
-    description: 'Professional profile & work history',
+    label: 'Professional',
+    description: 'Headline, summary & experience',
     icon: Briefcase,
-    component: CandidateIntakeStep3Experience,
-    validateFn: (formData) => {
-      const errors: string[] = []
-      if (formData.experienceYears === undefined || formData.experienceYears < 0) {
-        errors.push('Please enter years of experience.')
-      }
-      if (!formData.employmentTypes || formData.employmentTypes.length === 0) {
-        errors.push('Please select at least one employment type preference.')
-      }
-      if (!formData.workHistory || formData.workHistory.length === 0) {
-        errors.push('Please add at least one work history entry.')
-      } else {
-        // Validate each entry
-        formData.workHistory.forEach((entry, index) => {
-          if (!entry.companyName?.trim()) {
-            errors.push(`Work history ${index + 1}: Company name is required.`)
-          }
-          if (!entry.jobTitle?.trim()) {
-            errors.push(`Work history ${index + 1}: Job title is required.`)
-          }
-          if (!entry.startDate) {
-            errors.push(`Work history ${index + 1}: Start date is required.`)
-          }
-          if (!entry.isCurrent && !entry.endDate) {
-            errors.push(`Work history ${index + 1}: End date is required (or mark as current).`)
-          }
-        })
-      }
-      return errors
-    },
+    component: CandidateIntakeStep3Professional,
+    fields: [],
+    validation: candidateStep3Schema,
   },
   {
-    id: 'qualifications',
+    id: 'history',
     number: 4,
-    label: 'Qualifications',
-    description: 'Education, skills & certifications',
-    icon: GraduationCap,
-    component: CandidateIntakeStep4Qualifications,
-    validateFn: (formData) => {
-      const errors: string[] = []
-      if (!formData.skills || formData.skills.length === 0) {
-        errors.push('Please add at least one skill.')
-      }
-      return errors
-    },
+    label: 'Work History',
+    description: 'Employment timeline',
+    icon: FileText,
+    component: CandidateIntakeStep4WorkHistory,
+    fields: [],
+    validation: candidateStep4Schema,
   },
   {
-    id: 'employment',
+    id: 'education',
     number: 5,
-    label: 'Employment',
-    description: 'Authorization & compensation',
+    label: 'Education',
+    description: 'Degrees & certifications',
+    icon: GraduationCap,
+    component: CandidateIntakeStep5Education,
+    fields: [],
+    validation: candidateStep5Schema,
+  },
+  {
+    id: 'skills',
+    number: 6,
+    label: 'Skills',
+    description: 'Technical skills & expertise',
+    icon: Award,
+    component: CandidateIntakeStep6Skills,
+    fields: [],
+    validation: candidateStep6Schema,
+  },
+  {
+    id: 'authorization',
+    number: 7,
+    label: 'Authorization',
+    description: 'Visa status & availability',
     icon: Shield,
-    component: CandidateIntakeStep5EmploymentTerms,
-    validateFn: (formData) => {
-      const errors: string[] = []
-      if (!formData.visaStatus) {
-        errors.push('Please select work authorization status.')
-      }
-      if (!formData.availability) {
-        errors.push('Please select availability.')
-      }
-      if (formData.minimumRate && formData.desiredRate && formData.minimumRate > formData.desiredRate) {
-        errors.push('Minimum rate cannot exceed desired rate.')
-      }
-      return errors
-    },
+    component: CandidateIntakeStep7Authorization,
+    fields: [],
+    validation: candidateStep7Schema,
+  },
+  {
+    id: 'compensation',
+    number: 8,
+    label: 'Compensation',
+    description: 'Pay rates & preferences',
+    icon: DollarSign,
+    component: CandidateIntakeStep8Compensation,
+    fields: [],
+    validation: candidateStep8Schema,
   },
   {
     id: 'documents',
-    number: 6,
+    number: 9,
     label: 'Documents',
-    description: 'Source tracking & compliance',
+    description: 'Source tracking & files',
     icon: FileText,
-    component: CandidateIntakeStep6Documents,
-    validateFn: (formData) => {
-      const errors: string[] = []
-      if (!formData.leadSource) {
-        errors.push('Please select a lead source.')
-      }
-      if (formData.leadSource === 'referral' && !formData.referredBy?.trim()) {
-        errors.push('Please enter the name of the referrer.')
-      }
-      return errors
-    },
+    component: CandidateIntakeStep9Documents,
+    fields: [],
+    validation: candidateStep9Schema,
   },
 ]
 
@@ -163,36 +138,56 @@ export const candidateCreateWizardConfig: WizardConfig<CreateCandidateFormData> 
 
   steps: candidateCreateSteps,
 
-  allowFreeNavigation: true,
+  allowFreeNavigation: false,
   stepIndicatorStyle: 'icons',
 
   reviewStep: {
     title: 'Review & Create',
     sections: [
       {
-        label: 'Contact Information',
-        fields: ['firstName', 'lastName', 'email', 'phone', 'location', 'linkedinProfile'],
+        label: 'Source',
+        fields: ['sourceType', 'resumeFileName', 'resumeFileSize'],
+        stepNumber: 1,
+      },
+      {
+        label: 'Profile Details',
+        fields: ['firstName', 'lastName', 'email', 'phone', 'linkedinProfile', 'location', 'professionalHeadline'],
         stepNumber: 2,
       },
       {
-        label: 'Experience',
-        fields: ['professionalHeadline', 'professionalSummary', 'experienceYears', 'employmentTypes', 'workModes', 'workHistory'],
+        label: 'Professional Experience',
+        fields: ['experienceYears', 'employmentTypes', 'workModes', 'professionalSummary', 'workHistory'],
         stepNumber: 3,
       },
       {
         label: 'Qualifications',
-        fields: ['education', 'skills', 'primarySkills', 'certifications'],
-        stepNumber: 4,
-      },
-      {
-        label: 'Employment Terms',
-        fields: ['visaStatus', 'visaExpiryDate', 'requiresSponsorship', 'availability', 'availableFrom', 'noticePeriodDays', 'willingToRelocate', 'relocationPreferences', 'isRemoteOk', 'rateType', 'minimumRate', 'desiredRate', 'currency', 'isNegotiable', 'compensationNotes'],
-        stepNumber: 5,
-      },
-      {
-        label: 'Documents & Tracking',
-        fields: ['leadSource', 'sourceDetails', 'referredBy', 'complianceDocuments', 'isOnHotlist', 'hotlistNotes', 'tags', 'internalNotes'],
+        fields: ['skills', 'certifications', 'education'],
         stepNumber: 6,
+      },
+      {
+        label: 'Work Authorization',
+        fields: ['visaStatus', 'visaExpiryDate', 'requiresSponsorship', 'currentSponsor', 'isTransferable'],
+        stepNumber: 7,
+      },
+      {
+        label: 'Availability & Preferences',
+        fields: ['availability', 'availableFrom', 'noticePeriodDays', 'willingToRelocate', 'relocationPreferences', 'isRemoteOk'],
+        stepNumber: 7,
+      },
+      {
+        label: 'Compensation',
+        fields: ['rateType', 'currency', 'minimumRate', 'desiredRate', 'isNegotiable', 'compensationNotes'],
+        stepNumber: 8,
+      },
+      {
+        label: 'Source & Tracking',
+        fields: ['leadSource', 'sourceDetails', 'referredBy', 'campaignId', 'isOnHotlist', 'hotlistNotes', 'tags'],
+        stepNumber: 9,
+      },
+      {
+        label: 'Documents',
+        fields: ['complianceDocuments', 'internalNotes'],
+        stepNumber: 9,
       },
     ],
   },
@@ -202,10 +197,44 @@ export const candidateCreateWizardConfig: WizardConfig<CreateCandidateFormData> 
   cancelRoute: '/employee/recruiting/candidates',
 
   storeName: 'create-candidate-form',
-  defaultFormData: {} as CreateCandidateFormData,
+  defaultFormData: {
+    sourceType: 'manual',
+    firstName: '',
+    lastName: '',
+    email: '',
+    location: '',
+    phone: { countryCode: 'US', number: '' },
+    // Professional
+    professionalHeadline: '',
+    professionalSummary: '',
+    skills: [],
+    experienceYears: 0,
+    employmentTypes: ['full_time'],
+    workModes: ['on_site'],
+    // Lists
+    workHistory: [],
+    education: [],
+    primarySkills: [],
+    certifications: [],
+    // Auth
+    visaStatus: 'us_citizen',
+    requiresSponsorship: false,
+    availability: '2_weeks',
+    willingToRelocate: false,
+    isRemoteOk: false,
+    // Compensation
+    rateType: 'hourly',
+    currency: 'USD',
+    isNegotiable: true,
+    // Docs
+    leadSource: 'linkedin',
+    isOnHotlist: false,
+    tags: [],
+    complianceDocuments: [],
+  } as CreateCandidateFormData,
 
-  onSubmit: async () => {},
-  onSuccess: () => {},
+  onSubmit: async () => { },
+  onSuccess: () => { },
 }
 
 // Factory function to create config with custom handlers

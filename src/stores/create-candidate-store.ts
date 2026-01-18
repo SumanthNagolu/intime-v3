@@ -54,6 +54,8 @@ export interface CreateCandidateFormData {
   sourceType: 'manual' | 'resume' | 'linkedin'
   resumeStoragePath?: string
   resumeParsed?: boolean
+  resumeFileName?: string // For display in review
+  resumeFileSize?: number // For display in review (bytes)
   linkedinUrl?: string
 
   // Step 2: Contact Information
@@ -150,6 +152,8 @@ interface CreateCandidateStore {
   // Resume file stored separately (not serializable to wizard_state)
   resumeFile: File | null
   resumeParsedData: import('@/lib/services/resume-parser').ParsedResumeData | null
+  // Compliance document files stored separately (File objects, not serializable)
+  complianceDocumentFiles: Map<string, File>
 
   // Actions
   setFormData: (data: Partial<CreateCandidateFormData>) => void
@@ -179,9 +183,10 @@ interface CreateCandidateStore {
   removeCertification: (index: number) => void
 
   // Compliance Documents management (NEW)
-  addComplianceDocument: (doc: Omit<ComplianceDocumentEntry, 'id'>) => void
-  updateComplianceDocument: (id: string, doc: Partial<ComplianceDocumentEntry>) => void
+  addComplianceDocument: (doc: Omit<ComplianceDocumentEntry, 'id'>, file?: File) => void
+  updateComplianceDocument: (id: string, doc: Partial<ComplianceDocumentEntry>, file?: File) => void
   removeComplianceDocument: (id: string) => void
+  setComplianceDocumentFile: (docId: string, file: File | null) => void
 
   // Tags management
   addTag: (tag: string) => void
@@ -261,6 +266,7 @@ export const useCreateCandidateStore = create<CreateCandidateStore>()((set, get)
   lastSaved: null,
   resumeFile: null,
   resumeParsedData: null,
+  complianceDocumentFiles: new Map<string, File>(),
 
   setFormData: (data) =>
     set((state) => ({
@@ -279,6 +285,7 @@ export const useCreateCandidateStore = create<CreateCandidateStore>()((set, get)
       lastSaved: null,
       resumeFile: null,
       resumeParsedData: null,
+      complianceDocumentFiles: new Map<string, File>(),
     }),
 
   // Skills management
@@ -419,10 +426,16 @@ export const useCreateCandidateStore = create<CreateCandidateStore>()((set, get)
   },
 
   setResumeFile: (file, parsedData) =>
-    set({
+    set((state) => ({
       resumeFile: file,
       resumeParsedData: parsedData,
-    }),
+      // Also store filename/size in formData for review display
+      formData: {
+        ...state.formData,
+        resumeFileName: file?.name,
+        resumeFileSize: file?.size,
+      },
+    })),
 
   // Work History management
   addWorkHistory: (entry) => {
@@ -510,39 +523,71 @@ export const useCreateCandidateStore = create<CreateCandidateStore>()((set, get)
   },
 
   // Compliance Documents management
-  addComplianceDocument: (doc) => {
-    set((state) => ({
-      formData: {
-        ...state.formData,
-        complianceDocuments: [...state.formData.complianceDocuments, { ...doc, id: generateId() }],
-      },
-      isDirty: true,
-      lastSaved: new Date(),
-    }))
+  addComplianceDocument: (doc, file) => {
+    const newId = generateId()
+    set((state) => {
+      const newFiles = new Map(state.complianceDocumentFiles)
+      if (file) {
+        newFiles.set(newId, file)
+      }
+      return {
+        formData: {
+          ...state.formData,
+          complianceDocuments: [...state.formData.complianceDocuments, { ...doc, id: newId }],
+        },
+        complianceDocumentFiles: newFiles,
+        isDirty: true,
+        lastSaved: new Date(),
+      }
+    })
   },
 
-  updateComplianceDocument: (id, doc) => {
-    set((state) => ({
-      formData: {
-        ...state.formData,
-        complianceDocuments: state.formData.complianceDocuments.map((d) =>
-          d.id === id ? { ...d, ...doc } : d
-        ),
-      },
-      isDirty: true,
-      lastSaved: new Date(),
-    }))
+  updateComplianceDocument: (id, doc, file) => {
+    set((state) => {
+      const newFiles = new Map(state.complianceDocumentFiles)
+      if (file) {
+        newFiles.set(id, file)
+      }
+      return {
+        formData: {
+          ...state.formData,
+          complianceDocuments: state.formData.complianceDocuments.map((d) =>
+            d.id === id ? { ...d, ...doc } : d
+          ),
+        },
+        complianceDocumentFiles: newFiles,
+        isDirty: true,
+        lastSaved: new Date(),
+      }
+    })
   },
 
   removeComplianceDocument: (id) => {
-    set((state) => ({
-      formData: {
-        ...state.formData,
-        complianceDocuments: state.formData.complianceDocuments.filter((d) => d.id !== id),
-      },
-      isDirty: true,
-      lastSaved: new Date(),
-    }))
+    set((state) => {
+      const newFiles = new Map(state.complianceDocumentFiles)
+      newFiles.delete(id)
+      return {
+        formData: {
+          ...state.formData,
+          complianceDocuments: state.formData.complianceDocuments.filter((d) => d.id !== id),
+        },
+        complianceDocumentFiles: newFiles,
+        isDirty: true,
+        lastSaved: new Date(),
+      }
+    })
+  },
+
+  setComplianceDocumentFile: (docId, file) => {
+    set((state) => {
+      const newFiles = new Map(state.complianceDocumentFiles)
+      if (file) {
+        newFiles.set(docId, file)
+      } else {
+        newFiles.delete(docId)
+      }
+      return { complianceDocumentFiles: newFiles }
+    })
   },
 
   // Resume pre-population helper

@@ -20,8 +20,8 @@ import { COMPLIANCE_DOCUMENT_TYPES, COMPLIANCE_DOCUMENT_STATUSES } from '@/store
 
 interface ComplianceDocumentUploadProps {
   documents: ComplianceDocumentEntry[]
-  onAdd: (doc: Omit<ComplianceDocumentEntry, 'id'>) => void
-  onUpdate: (id: string, doc: Partial<ComplianceDocumentEntry>) => void
+  onAdd: (doc: Omit<ComplianceDocumentEntry, 'id'>, file?: File) => void
+  onUpdate: (id: string, doc: Partial<ComplianceDocumentEntry>, file?: File) => void
   onRemove: (id: string) => void
 }
 
@@ -69,12 +69,11 @@ export function ComplianceDocumentUpload({
     return documents.find(d => d.type === type)
   }
 
-  // Handle file selection
+  // Handle file selection - stores file object in store for upload on submission
   const handleFileSelect = async (type: string, file: File) => {
     const existingDoc = getDocumentForType(type)
 
-    // In a real implementation, you would upload the file here
-    // For now, we'll just store the file info
+    // Store file metadata and the actual File object for later upload
     const fileInfo = {
       fileName: file.name,
       fileSize: file.size,
@@ -83,12 +82,12 @@ export function ComplianceDocumentUpload({
     }
 
     if (existingDoc) {
-      onUpdate(existingDoc.id, fileInfo)
+      onUpdate(existingDoc.id, fileInfo, file)
     } else {
       onAdd({
         type: type as ComplianceDocumentEntry['type'],
         ...fileInfo,
-      })
+      }, file)
     }
 
     setUploadingType(null)
@@ -150,10 +149,9 @@ export function ComplianceDocumentUpload({
               {/* Card Header */}
               <div
                 className={cn(
-                  'p-4 cursor-pointer transition-colors',
+                  'p-4 transition-colors',
                   hasDocument ? 'hover:bg-charcoal-50' : 'hover:bg-charcoal-100/50'
                 )}
-                onClick={() => setExpandedType(isExpanded ? null : docType.value)}
               >
                 <div className="flex items-start gap-3">
                   <div
@@ -186,6 +184,36 @@ export function ComplianceDocumentUpload({
                       <p className="text-xs text-charcoal-600 mt-1 truncate font-medium">
                         {doc.fileName}
                       </p>
+                    )}
+                  </div>
+
+                  {/* Direct upload/action button */}
+                  <div className="flex-shrink-0">
+                    {hasDocument ? (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setExpandedType(isExpanded ? null : docType.value)
+                        }}
+                        className="text-charcoal-500 hover:text-charcoal-700"
+                      >
+                        {isExpanded ? 'Hide' : 'Details'}
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          triggerUpload(docType.value)
+                        }}
+                        className="text-gold-600 border-gold-300 hover:bg-gold-50"
+                      >
+                        <Upload className="w-4 h-4 mr-1" />
+                        Upload
+                      </Button>
                     )}
                   </div>
                 </div>

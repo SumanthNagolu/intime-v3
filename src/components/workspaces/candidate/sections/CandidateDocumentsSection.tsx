@@ -26,17 +26,91 @@ interface CandidateDocumentsSectionProps {
 }
 
 const TYPE_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  // Standard document types
   resume: FileText,
   certification: FilePen,
   portfolio: FileSpreadsheet,
   cover_letter: FilePen,
+  id_document: FilePen,
+  // Compliance document types
+  rtr: FilePen,
+  nda: FilePen,
+  references: FileText,
+  reference_letter: FileText,
+  background_auth: FilePen,
+  background_check: FilePen,
+  void_check: FileSpreadsheet,
+  direct_deposit: FileSpreadsheet,
+  drug_test: FilePen,
+  i9: FilePen,
+  w4: FilePen,
+  w9: FilePen,
+  msa: FilePen,
+  sow: FilePen,
+  coi: FilePen,
+  insurance: FilePen,
+  contract: FilePen,
+  offer_letter: FilePen,
+  employment_verification: FileText,
+  other: File,
 }
 
 const TYPE_COLORS: Record<string, string> = {
+  // Standard document types
   resume: 'bg-blue-100 text-blue-700',
   certification: 'bg-green-100 text-green-700',
   portfolio: 'bg-purple-100 text-purple-700',
   cover_letter: 'bg-amber-100 text-amber-700',
+  id_document: 'bg-slate-100 text-slate-700',
+  // Compliance document types
+  rtr: 'bg-indigo-100 text-indigo-700',
+  nda: 'bg-red-100 text-red-700',
+  references: 'bg-teal-100 text-teal-700',
+  reference_letter: 'bg-teal-100 text-teal-700',
+  background_auth: 'bg-orange-100 text-orange-700',
+  background_check: 'bg-orange-100 text-orange-700',
+  void_check: 'bg-cyan-100 text-cyan-700',
+  direct_deposit: 'bg-cyan-100 text-cyan-700',
+  drug_test: 'bg-lime-100 text-lime-700',
+  i9: 'bg-violet-100 text-violet-700',
+  w4: 'bg-pink-100 text-pink-700',
+  w9: 'bg-rose-100 text-rose-700',
+  msa: 'bg-emerald-100 text-emerald-700',
+  sow: 'bg-sky-100 text-sky-700',
+  coi: 'bg-fuchsia-100 text-fuchsia-700',
+  insurance: 'bg-amber-100 text-amber-700',
+  contract: 'bg-stone-100 text-stone-700',
+  offer_letter: 'bg-green-100 text-green-700',
+  employment_verification: 'bg-blue-100 text-blue-700',
+  other: 'bg-charcoal-100 text-charcoal-700',
+}
+
+const TYPE_LABELS: Record<string, string> = {
+  resume: 'Resume',
+  certification: 'Certification',
+  portfolio: 'Portfolio',
+  cover_letter: 'Cover Letter',
+  id_document: 'ID Document',
+  rtr: 'RTR',
+  nda: 'NDA',
+  references: 'References',
+  reference_letter: 'Reference Letter',
+  background_auth: 'Background Auth',
+  background_check: 'Background Check',
+  void_check: 'Void Check',
+  direct_deposit: 'Direct Deposit',
+  drug_test: 'Drug Test',
+  i9: 'I-9',
+  w4: 'W-4',
+  w9: 'W-9',
+  msa: 'MSA',
+  sow: 'SOW',
+  coi: 'COI',
+  insurance: 'Insurance',
+  contract: 'Contract',
+  offer_letter: 'Offer Letter',
+  employment_verification: 'Employment Verification',
+  other: 'Other',
 }
 
 function formatFileSize(bytes: number): string {
@@ -80,6 +154,7 @@ export function CandidateDocumentsSection({ documents, candidateId }: CandidateD
               {documents.map((doc) => {
                 const Icon = TYPE_ICONS[doc.documentType] || File
                 const typeColor = TYPE_COLORS[doc.documentType] || 'bg-charcoal-100 text-charcoal-700'
+                const typeLabel = TYPE_LABELS[doc.documentType] || doc.documentType.replace('_', ' ')
                 return (
                   <div
                     key={doc.id}
@@ -93,8 +168,8 @@ export function CandidateDocumentsSection({ documents, candidateId }: CandidateD
                         <p className="text-sm font-medium text-charcoal-900 truncate">
                           {doc.name}
                         </p>
-                        <Badge className={cn('capitalize', typeColor)}>
-                          {doc.documentType.replace('_', ' ')}
+                        <Badge className={cn(typeColor)}>
+                          {typeLabel}
                         </Badge>
                       </div>
                       <div className="flex items-center gap-4 mt-1 text-xs text-charcoal-500">

@@ -5,7 +5,11 @@ import {
   Upload,
   User,
   Briefcase,
+  Building2,
+  GraduationCap,
+  Award,
   Shield,
+  DollarSign,
   FileText,
 } from 'lucide-react'
 import { WizardConfig, WizardStepConfig, FieldDefinition } from '../types'
@@ -15,8 +19,8 @@ export interface CandidateIntakeFormData {
   // Step 1: Source
   sourceType: 'manual' | 'resume' | 'linkedin'
   resumeFile?: File
-  resumeStoragePath?: string // Path in Supabase storage after upload
-  resumeParsed?: boolean // Flag to indicate resume was parsed
+  resumeStoragePath?: string
+  resumeParsed?: boolean
   linkedinUrl?: string
 
   // Step 2: Basic Info
@@ -26,30 +30,55 @@ export interface CandidateIntakeFormData {
   phone?: string
   linkedinProfile?: string
 
-  // Step 3: Professional
-  professionalHeadline?: string
-  professionalSummary?: string
-  skills: string[]
-  experienceYears: number
-
-  // Step 4: Work Authorization
-  visaStatus: 'us_citizen' | 'green_card' | 'h1b' | 'l1' | 'tn' | 'opt' | 'cpt' | 'ead' | 'other'
-  availability: 'immediate' | '2_weeks' | '30_days' | 'not_available'
-  location: string // Display string (e.g., "Austin, TX")
-  // Structured location fields for centralized addresses
+  // Location parts
+  location: string
   locationCity?: string
   locationState?: string
   locationCountry?: string
-  willingToRelocate: boolean
-  isRemoteOk: boolean
-  minimumHourlyRate?: number
-  desiredHourlyRate?: number
 
-  // Step 5: Source Tracking
-  leadSource: 'linkedin' | 'indeed' | 'dice' | 'monster' | 'referral' | 'direct' | 'agency' | 'job_board' | 'other'
+  // Step 3: Professional (Profile)
+  professionalHeadline?: string
+  professionalSummary?: string
+  experienceYears: number
+  employmentTypes: string[]
+  workModes: string[]
+
+  // Step 4: Work History - handled by store array
+  // workHistory: WorkHistoryEntry[] 
+
+  // Step 5: Education - handled by store array
+  // education: EducationEntry[]
+
+  // Step 6: Skills
+  skills: any[] // Store handles type, validation checks length
+
+  // Step 7: Work Authorization
+  visaStatus: 'us_citizen' | 'green_card' | 'h1b' | 'l1' | 'tn' | 'opt' | 'cpt' | 'ead' | 'other'
+  visaExpiryDate?: string
+  requiresSponsorship: boolean
+  availability: 'immediate' | '2_weeks' | '30_days' | '60_days' | 'not_available'
+  availableFrom?: string
+  noticePeriodDays?: number
+  willingToRelocate: boolean
+  relocationPreferences?: string
+  isRemoteOk: boolean
+
+  // Step 8: Compensation
+  rateType: 'hourly' | 'annual' | 'per_diem'
+  currency: string
+  minimumRate?: number
+  desiredRate?: number
+  isNegotiable: boolean
+  compensationNotes?: string
+
+  // Step 9: Source Tracking & Docs
+  leadSource: string
   sourceDetails?: string
+  referredBy?: string
   isOnHotlist: boolean
   hotlistNotes?: string
+  internalNotes?: string
+  tags: string[]
 }
 
 // Validation schemas per step
@@ -58,261 +87,60 @@ export const candidateStep1Schema = z.object({
   linkedinUrl: z.string().url().optional().or(z.literal('')),
 })
 
+// PhoneInputValue schema - matches the PhoneInput component value type
+const phoneInputValueSchema = z.object({
+  countryCode: z.string(),
+  number: z.string(),
+}).optional()
+
 export const candidateStep2Schema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
   email: z.string().email('Valid email is required'),
-  phone: z.string().optional(),
-  linkedinProfile: z.string().url().optional().or(z.literal('')),
+  phone: phoneInputValueSchema,
+  location: z.string().min(1, 'Location is required'),
 })
 
 export const candidateStep3Schema = z.object({
   professionalHeadline: z.string().max(200).optional(),
   professionalSummary: z.string().max(2000).optional(),
-  skills: z.array(z.string()).min(1, 'At least one skill is required'),
   experienceYears: z.number().min(0).max(50),
+  employmentTypes: z.array(z.string()).min(1, 'Select at least one employment type'),
+  // workModes optional
 })
 
 export const candidateStep4Schema = z.object({
-  visaStatus: z.enum(['us_citizen', 'green_card', 'h1b', 'l1', 'tn', 'opt', 'cpt', 'ead', 'other']),
-  availability: z.enum(['immediate', '2_weeks', '30_days', 'not_available']),
-  location: z.string().min(1, 'Location is required'),
-  willingToRelocate: z.boolean(),
-  isRemoteOk: z.boolean(),
-  minimumHourlyRate: z.number().min(0).optional(),
-  desiredHourlyRate: z.number().min(0).optional(),
-})
+  // specific validation handled by component/store mostly, but we can check store state if needed
+  // For wizard validation, we can just pass true if the component handles its own validation blocks
+}).passthrough()
 
 export const candidateStep5Schema = z.object({
-  leadSource: z.enum(['linkedin', 'indeed', 'dice', 'monster', 'referral', 'direct', 'agency', 'job_board', 'other']),
-  sourceDetails: z.string().max(500).optional(),
-  isOnHotlist: z.boolean(),
-  hotlistNotes: z.string().max(500).optional(),
+  // Education is optional
+}).passthrough()
+
+export const candidateStep6Schema = z.object({
+  // Skills validation handled by store check mostly, but we can enforce min length here if we sync to form data
+  // For now, relies on component validation
+}).passthrough()
+
+export const candidateStep7Schema = z.object({
+  visaStatus: z.string().min(1, 'Visa status is required'),
+  availability: z.string().min(1, 'Availability is required'),
+  // other fields optional/conditional
 })
 
-// Full validation schema
-export const candidateIntakeSchema = candidateStep1Schema
-  .merge(candidateStep2Schema)
-  .merge(candidateStep3Schema)
-  .merge(candidateStep4Schema)
-  .merge(candidateStep5Schema)
+export const candidateStep8Schema = z.object({
+  rateType: z.string(),
+  // Rates validation handled in component (min <= desired)
+})
 
-// Step 1: Source Selection Fields
-const step1Fields: FieldDefinition[] = [
-  {
-    key: 'sourceType',
-    label: 'How are you adding this candidate?',
-    type: 'radio',
-    required: true,
-    options: [
-      { value: 'manual', label: 'Manual Entry - Enter details manually' },
-      { value: 'resume', label: 'Upload Resume - Parse from resume with AI' },
-      { value: 'linkedin', label: 'LinkedIn Import - Import from URL (coming soon)' },
-    ],
-  },
-  {
-    key: 'resumeUpload',
-    label: 'Upload Resume',
-    type: 'custom', // Custom component will be rendered by the wizard page
-    customComponentKey: 'resumeUploadParser',
-    dependsOn: { field: 'sourceType', value: 'resume' },
-    description: 'Upload a PDF resume to automatically extract candidate information',
-  },
-  {
-    key: 'linkedinUrl',
-    label: 'LinkedIn URL',
-    type: 'url',
-    placeholder: 'https://linkedin.com/in/username',
-    dependsOn: { field: 'sourceType', value: 'linkedin' },
-  },
-]
+export const candidateStep9Schema = z.object({
+  leadSource: z.string().min(1, 'Lead source is required'),
+  // referredBy handled conditionally in component
+})
 
-// Step 2: Basic Info Fields
-const step2Fields: FieldDefinition[] = [
-  {
-    key: 'firstName',
-    label: 'First Name',
-    type: 'text',
-    placeholder: 'John',
-    required: true,
-  },
-  {
-    key: 'lastName',
-    label: 'Last Name',
-    type: 'text',
-    placeholder: 'Smith',
-    required: true,
-  },
-  {
-    key: 'email',
-    label: 'Email',
-    type: 'email',
-    placeholder: 'john@example.com',
-    required: true,
-  },
-  {
-    key: 'phone',
-    label: 'Phone',
-    type: 'phone',
-    placeholder: '(555) 123-4567',
-  },
-  {
-    key: 'linkedinProfile',
-    label: 'LinkedIn URL',
-    type: 'url',
-    placeholder: 'https://linkedin.com/in/username',
-    columns: 2,
-  },
-]
-
-// Step 3: Professional Fields
-const step3Fields: FieldDefinition[] = [
-  {
-    key: 'professionalHeadline',
-    label: 'Professional Headline',
-    type: 'text',
-    placeholder: 'Senior Software Engineer',
-    columns: 2,
-  },
-  {
-    key: 'professionalSummary',
-    label: 'Professional Summary',
-    type: 'textarea',
-    placeholder: 'Brief overview of experience and expertise...',
-    columns: 2,
-  },
-  {
-    key: 'skills',
-    label: 'Skills',
-    type: 'skills',
-    placeholder: 'Type a skill and press Enter',
-    required: true,
-    columns: 2,
-  },
-  {
-    key: 'experienceYears',
-    label: 'Years of Experience',
-    type: 'number',
-    min: 0,
-    max: 50,
-    required: true,
-  },
-]
-
-// Step 4: Work Authorization Fields
-const step4Fields: FieldDefinition[] = [
-  {
-    key: 'visaStatus',
-    label: 'Visa Status',
-    type: 'select',
-    placeholder: 'Select visa status...',
-    required: true,
-    options: [
-      { value: 'us_citizen', label: 'US Citizen' },
-      { value: 'green_card', label: 'Green Card' },
-      { value: 'h1b', label: 'H1B' },
-      { value: 'l1', label: 'L1' },
-      { value: 'tn', label: 'TN' },
-      { value: 'opt', label: 'OPT' },
-      { value: 'cpt', label: 'CPT' },
-      { value: 'ead', label: 'EAD' },
-      { value: 'other', label: 'Other' },
-    ],
-  },
-  {
-    key: 'availability',
-    label: 'Availability',
-    type: 'select',
-    placeholder: 'Select availability...',
-    required: true,
-    options: [
-      { value: 'immediate', label: 'Immediate' },
-      { value: '2_weeks', label: '2 Weeks Notice' },
-      { value: '30_days', label: '30 Days Notice' },
-      { value: 'not_available', label: 'Not Available' },
-    ],
-  },
-  {
-    key: 'location',
-    label: 'Location',
-    type: 'location',
-    placeholder: 'Select city and state',
-    required: true,
-    // Note: type 'location' should render LocationPicker component
-    // and sync with locationCity, locationState, locationCountry fields
-  },
-  {
-    key: 'isRemoteOk',
-    label: 'Open to Remote',
-    type: 'checkbox',
-    description: 'Willing to work remotely',
-  },
-  {
-    key: 'willingToRelocate',
-    label: 'Willing to Relocate',
-    type: 'checkbox',
-    description: 'Open to relocation for the right opportunity',
-  },
-  {
-    key: 'minimumHourlyRate',
-    label: 'Minimum Rate ($/hr)',
-    type: 'currency',
-    placeholder: '85',
-    min: 0,
-    currency: 'USD',
-  },
-  {
-    key: 'desiredHourlyRate',
-    label: 'Desired Rate ($/hr)',
-    type: 'currency',
-    placeholder: '110',
-    min: 0,
-    currency: 'USD',
-  },
-]
-
-// Step 5: Source Tracking Fields
-const step5Fields: FieldDefinition[] = [
-  {
-    key: 'leadSource',
-    label: 'Lead Source',
-    type: 'select',
-    placeholder: 'Select source...',
-    required: true,
-    options: [
-      { value: 'linkedin', label: 'LinkedIn' },
-      { value: 'indeed', label: 'Indeed' },
-      { value: 'dice', label: 'Dice' },
-      { value: 'monster', label: 'Monster' },
-      { value: 'referral', label: 'Employee Referral' },
-      { value: 'direct', label: 'Direct Application' },
-      { value: 'agency', label: 'Agency/Partner' },
-      { value: 'job_board', label: 'Other Job Board' },
-      { value: 'other', label: 'Other' },
-    ],
-  },
-  {
-    key: 'sourceDetails',
-    label: 'Source Details',
-    type: 'text',
-    placeholder: 'e.g., Found via LinkedIn Recruiter search',
-    columns: 2,
-  },
-  {
-    key: 'isOnHotlist',
-    label: 'Add to Hotlist',
-    type: 'checkbox',
-    description: 'Mark as high-priority candidate for immediate attention',
-  },
-  {
-    key: 'hotlistNotes',
-    label: 'Hotlist Notes',
-    type: 'textarea',
-    placeholder: 'Hotlist notes (visible to all recruiters)...',
-    dependsOn: { field: 'isOnHotlist', value: true },
-    columns: 2,
-  },
-]
+// Full validation schema (loose for now as steps handle specifics)
+export const candidateIntakeSchema = z.any()
 
 // Step configurations
 export const candidateIntakeSteps: WizardStepConfig<CandidateIntakeFormData>[] = [
@@ -322,44 +150,80 @@ export const candidateIntakeSteps: WizardStepConfig<CandidateIntakeFormData>[] =
     label: 'Source',
     description: 'How are you adding this candidate?',
     icon: Upload,
-    fields: step1Fields,
+    fields: [], // Fields defined in component
     validation: candidateStep1Schema,
   },
   {
     id: 'basic',
     number: 2,
     label: 'Basic Info',
-    description: 'Enter basic contact information',
+    description: 'Contact details & location',
     icon: User,
-    fields: step2Fields,
+    fields: [],
     validation: candidateStep2Schema,
   },
   {
     id: 'professional',
     number: 3,
     label: 'Professional',
-    description: 'Add professional details and skills',
-    icon: Briefcase,
-    fields: step3Fields,
+    description: 'Headline, summary & experience',
+    icon: FileText,
+    fields: [],
     validation: candidateStep3Schema,
   },
   {
-    id: 'authorization',
+    id: 'history',
     number: 4,
-    label: 'Authorization',
-    description: 'Work authorization and availability',
-    icon: Shield,
-    fields: step4Fields,
+    label: 'Work History',
+    description: 'Employment timeline',
+    icon: Briefcase,
+    fields: [],
     validation: candidateStep4Schema,
   },
   {
-    id: 'tracking',
+    id: 'education',
     number: 5,
-    label: 'Source Tracking',
-    description: 'Source information and notes',
-    icon: FileText,
-    fields: step5Fields,
+    label: 'Education',
+    description: 'Degrees & certifications',
+    icon: GraduationCap,
+    fields: [],
     validation: candidateStep5Schema,
+  },
+  {
+    id: 'skills',
+    number: 6,
+    label: 'Skills',
+    description: 'Technical skills & expertise',
+    icon: Award,
+    fields: [],
+    validation: candidateStep6Schema,
+  },
+  {
+    id: 'authorization',
+    number: 7,
+    label: 'Authorization',
+    description: 'Visa status & availability',
+    icon: Shield,
+    fields: [],
+    validation: candidateStep7Schema,
+  },
+  {
+    id: 'compensation',
+    number: 8,
+    label: 'Compensation',
+    description: 'Pay rates & preferences',
+    icon: DollarSign,
+    fields: [],
+    validation: candidateStep8Schema,
+  },
+  {
+    id: 'documents',
+    number: 9,
+    label: 'Documents',
+    description: 'Source tracking & files',
+    icon: FileText,
+    fields: [],
+    validation: candidateStep9Schema,
   },
 ]
 
@@ -386,7 +250,7 @@ export function createCandidateIntakeConfig(
       sections: [
         {
           label: 'Basic Information',
-          fields: ['firstName', 'lastName', 'email', 'phone'],
+          fields: ['firstName', 'lastName', 'email', 'phone', 'location'],
           stepNumber: 2,
         },
         {
@@ -396,13 +260,18 @@ export function createCandidateIntakeConfig(
         },
         {
           label: 'Work Authorization',
-          fields: ['visaStatus', 'availability', 'location'],
-          stepNumber: 4,
+          fields: ['visaStatus', 'availability'],
+          stepNumber: 7,
+        },
+        {
+          label: 'Compensation',
+          fields: ['rateType', 'desiredRate', 'minimumRate'],
+          stepNumber: 8,
         },
         {
           label: 'Source',
           fields: ['leadSource', 'isOnHotlist'],
-          stepNumber: 5,
+          stepNumber: 9,
         },
       ],
     },
@@ -417,15 +286,28 @@ export function createCandidateIntakeConfig(
       firstName: '',
       lastName: '',
       email: '',
+      location: '',
+      // Professional
+      professionalHeadline: '',
+      professionalSummary: '',
       skills: [],
       experienceYears: 0,
+      employmentTypes: ['full_time'],
+      workModes: ['on_site'],
+      // Auth
       visaStatus: 'us_citizen',
+      requiresSponsorship: false,
       availability: '2_weeks',
-      location: '',
       willingToRelocate: false,
       isRemoteOk: false,
+      // Compensation
+      rateType: 'hourly',
+      currency: 'USD',
+      isNegotiable: true,
+      // Docs
       leadSource: 'linkedin',
       isOnHotlist: false,
+      tags: [],
     },
 
     onSubmit,
@@ -480,15 +362,28 @@ export const candidateIntakeWizardConfig: Omit<WizardConfig<CandidateIntakeFormD
     firstName: '',
     lastName: '',
     email: '',
+    location: '',
+    // Professional
+    professionalHeadline: '',
+    professionalSummary: '',
     skills: [],
     experienceYears: 0,
+    employmentTypes: ['full_time'],
+    workModes: ['on_site'],
+    // Auth
     visaStatus: 'us_citizen',
+    requiresSponsorship: false,
     availability: '2_weeks',
-    location: '',
     willingToRelocate: false,
     isRemoteOk: false,
+    // Compensation
+    rateType: 'hourly',
+    currency: 'USD',
+    isNegotiable: true,
+    // Docs
     leadSource: 'linkedin',
     isOnHotlist: false,
+    tags: [],
   },
 }
 

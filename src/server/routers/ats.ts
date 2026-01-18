@@ -413,8 +413,65 @@ const extendPlacementInput = z.object({
 
 const candidateStatusEnum = z.enum(['draft', 'active', 'sourced', 'screening', 'bench', 'placed', 'inactive', 'archived'])
 const visaStatusEnum = z.enum(['us_citizen', 'green_card', 'h1b', 'l1', 'tn', 'opt', 'cpt', 'ead', 'other'])
-const availabilityEnum = z.enum(['immediate', '2_weeks', '30_days', 'not_available'])
-const leadSourceEnum = z.enum(['linkedin', 'indeed', 'dice', 'monster', 'referral', 'direct', 'agency', 'job_board', 'other'])
+const availabilityEnum = z.enum(['immediate', '2_weeks', '30_days', '60_days', 'not_available'])
+const leadSourceEnum = z.enum(['linkedin', 'indeed', 'dice', 'monster', 'referral', 'direct', 'agency', 'job_board', 'website', 'event', 'other'])
+const employmentTypeEnum = z.enum(['full_time', 'contract', 'contract_to_hire', 'part_time'])
+const workModeEnum = z.enum(['on_site', 'remote', 'hybrid'])
+const candidateRateTypeEnum = z.enum(['hourly', 'annual', 'per_diem'])
+const candidateCurrencyEnum = z.enum(['USD', 'CAD', 'EUR', 'GBP', 'INR'])
+const proficiencyEnum = z.enum(['beginner', 'intermediate', 'advanced', 'expert'])
+const degreeTypeEnum = z.enum(['high_school', 'associate', 'bachelor', 'master', 'phd', 'other'])
+const workHistoryEmploymentTypeEnum = z.enum(['full_time', 'contract', 'part_time', 'internship'])
+
+// Skill entry with full metadata
+const skillEntrySchema = z.object({
+  name: z.string().min(1).max(100),
+  proficiency: proficiencyEnum.default('intermediate'),
+  yearsOfExperience: z.number().min(0).max(50).optional(),
+  isPrimary: z.boolean().default(false),
+  isCertified: z.boolean().default(false),
+  lastUsed: z.string().max(20).optional(),
+})
+
+// Work history entry
+const workHistoryEntrySchema = z.object({
+  companyName: z.string().min(1).max(200),
+  jobTitle: z.string().min(1).max(200),
+  employmentType: workHistoryEmploymentTypeEnum.optional(),
+  startDate: z.string(), // YYYY-MM format
+  endDate: z.string().optional(),
+  isCurrent: z.boolean().default(false),
+  locationCity: z.string().max(100).optional(),
+  locationState: z.string().max(100).optional(),
+  isRemote: z.boolean().default(false),
+  description: z.string().max(2000).optional(),
+  achievements: z.array(z.string().max(500)).max(10).default([]),
+})
+
+// Education entry
+const educationEntrySchema = z.object({
+  institutionName: z.string().min(1).max(200),
+  degreeType: degreeTypeEnum.optional(),
+  degreeName: z.string().max(200).optional(),
+  fieldOfStudy: z.string().max(200).optional(),
+  startDate: z.string().optional(),
+  endDate: z.string().optional(),
+  isCurrent: z.boolean().default(false),
+  gpa: z.number().min(0).max(5).optional(),
+  honors: z.string().max(200).optional(),
+})
+
+// Certification entry
+const certificationEntrySchema = z.object({
+  name: z.string().min(1).max(200),
+  acronym: z.string().max(20).optional(),
+  issuingOrganization: z.string().max(200).optional(),
+  credentialId: z.string().max(100).optional(),
+  credentialUrl: z.string().url().optional(),
+  issueDate: z.string().optional(),
+  expiryDate: z.string().optional(),
+  isLifetime: z.boolean().default(false),
+})
 
 const createCandidateInput = z.object({
   // Personal
@@ -427,35 +484,63 @@ const createCandidateInput = z.object({
   // Professional
   professionalHeadline: z.string().max(200).optional(),
   professionalSummary: z.string().max(2000).optional(),
-  skills: z.array(z.string()).min(1).max(50),
   experienceYears: z.number().int().min(0).max(50),
+
+  // Employment preferences
+  employmentTypes: z.array(employmentTypeEnum).default(['full_time', 'contract']),
+  workModes: z.array(workModeEnum).default(['on_site', 'remote']),
+
+  // Skills with full metadata
+  skills: z.array(skillEntrySchema).min(1).max(50),
+
+  // Work history
+  workHistory: z.array(workHistoryEntrySchema).max(20).default([]),
+
+  // Education
+  education: z.array(educationEntrySchema).max(10).default([]),
+
+  // Certifications
+  certifications: z.array(certificationEntrySchema).max(20).default([]),
 
   // Work Authorization
   visaStatus: visaStatusEnum,
   visaExpiryDate: z.coerce.date().optional(),
+  requiresSponsorship: z.boolean().default(false),
+  currentSponsor: z.string().max(200).optional(),
+  isTransferable: z.boolean().optional(),
 
   // Availability
   availability: availabilityEnum,
+  availableFrom: z.string().optional(), // ISO date string
+  noticePeriodDays: z.number().int().min(0).max(365).optional(),
   location: z.string().min(2).max(200),
   // Structured location fields for centralized addresses
   locationCity: z.string().max(100).optional(),
   locationState: z.string().max(100).optional(),
   locationCountry: z.string().max(3).default('US').optional(),
   willingToRelocate: z.boolean().default(false),
+  relocationPreferences: z.string().max(500).optional(),
   isRemoteOk: z.boolean().default(false),
 
   // Compensation
-  minimumHourlyRate: z.number().min(0).optional(),
-  desiredHourlyRate: z.number().min(0).optional(),
+  rateType: candidateRateTypeEnum.default('hourly'),
+  minimumRate: z.number().min(0).optional(),
+  desiredRate: z.number().min(0).optional(),
+  currency: candidateCurrencyEnum.default('USD'),
+  isNegotiable: z.boolean().default(true),
+  compensationNotes: z.string().max(1000).optional(),
 
   // Source
   leadSource: leadSourceEnum,
   sourceDetails: z.string().max(500).optional(),
+  referredBy: z.string().max(200).optional(),
+  campaignId: z.string().uuid().optional(),
 
   // Optional
   tags: z.array(z.string()).max(20).optional(),
   isOnHotlist: z.boolean().default(false),
   hotlistNotes: z.string().max(500).optional(),
+  internalNotes: z.string().max(2000).optional(),
 
   // Job association
   associatedJobIds: z.array(z.string().uuid()).optional(),
@@ -480,31 +565,83 @@ const updateCandidateInput = z.object({
   lastName: z.string().min(1).max(50).optional(),
   email: z.string().email().max(100).optional(),
   phone: z.string().max(20).optional().nullable(),
+  mobile: z.string().max(20).optional().nullable(),
   linkedinUrl: z.string().url().optional().nullable(),
   professionalHeadline: z.string().max(200).optional().nullable(),
   professionalSummary: z.string().max(2000).optional().nullable(),
-  skills: z.array(z.string()).max(50).optional(),
+  currentCompany: z.string().max(200).optional().nullable(),
   experienceYears: z.number().int().min(0).max(50).optional(),
+  // Skills with full metadata (same as create)
+  skills: z.array(skillEntrySchema).max(50).optional(),
+  // Work history (same as create)
+  workHistory: z.array(workHistoryEntrySchema).max(20).optional(),
+  // Education (same as create)
+  education: z.array(educationEntrySchema).max(10).optional(),
+  // Certifications (same as create)
+  certifications: z.array(certificationEntrySchema).max(20).optional(),
+  // Employment preferences
+  employmentTypes: z.array(z.enum(['full_time', 'contract', 'contract_to_hire', 'part_time'])).optional(),
+  workModes: z.array(z.enum(['on_site', 'remote', 'hybrid'])).optional(),
+  // Work authorization
   visaStatus: visaStatusEnum.optional(),
   visaExpiryDate: z.coerce.date().optional().nullable(),
+  workAuthorization: z.string().max(100).optional().nullable(),
+  requiresSponsorship: z.boolean().optional(),
+  currentSponsor: z.string().max(200).optional().nullable(),
+  isTransferable: z.boolean().optional().nullable(),
+  clearanceLevel: z.string().max(50).optional().nullable(),
+  // Availability
   availability: availabilityEnum.optional(),
+  availableFrom: z.string().optional().nullable(), // ISO date string
+  noticePeriodDays: z.number().int().min(0).max(365).optional().nullable(),
+  // Location
   location: z.string().max(200).optional(),
-  // Structured location fields for centralized addresses
   locationCity: z.string().max(100).optional().nullable(),
   locationState: z.string().max(100).optional().nullable(),
   locationCountry: z.string().max(3).optional().nullable(),
   willingToRelocate: z.boolean().optional(),
+  relocationPreferences: z.string().max(500).optional().nullable(),
   isRemoteOk: z.boolean().optional(),
-  minimumHourlyRate: z.number().min(0).optional().nullable(),
-  desiredHourlyRate: z.number().min(0).optional().nullable(),
+  // Compensation
+  minimumRate: z.number().min(0).optional().nullable(),
+  desiredRate: z.number().min(0).optional().nullable(),
+  rateType: candidateRateTypeEnum.optional(),
+  currency: candidateCurrencyEnum.optional(),
+  isNegotiable: z.boolean().optional(),
+  compensationNotes: z.string().max(500).optional().nullable(),
+  // Tracking
   tags: z.array(z.string()).max(20).optional(),
   isOnHotlist: z.boolean().optional(),
   hotlistNotes: z.string().max(500).optional().nullable(),
   profileStatus: candidateStatusEnum.optional(),
   leadSource: leadSourceEnum.optional(),
   sourceDetails: z.string().max(500).optional().nullable(),
+  referredBy: z.string().max(200).optional().nullable(),
+  campaignId: z.string().uuid().optional().nullable(),
+  // Internal notes
+  internalNotes: z.string().max(5000).optional().nullable(),
   // Wizard state for draft persistence
   wizard_state: z.any().optional().nullable(),
+  // Resume data for draft finalization (creates contact_resumes record)
+  resumeData: z.object({
+    storagePath: z.string(),
+    fileName: z.string(),
+    fileSize: z.number(),
+    mimeType: z.string().default('application/pdf'),
+    parsedContent: z.string().optional(),
+    parsedSkills: z.array(z.string()).optional(),
+    parsedExperience: z.string().optional(),
+    aiSummary: z.string().optional(),
+    parsingConfidence: z.number().min(0).max(100).optional(),
+  }).optional(),
+  // Compliance documents data for draft finalization (creates documents records)
+  complianceDocumentsData: z.array(z.object({
+    documentType: z.string(),
+    fileName: z.string(),
+    fileSize: z.number(),
+    storagePath: z.string(),
+    notes: z.string().optional(),
+  })).optional(),
 })
 
 const searchCandidatesInput = z.object({
@@ -2764,6 +2901,8 @@ export const atsRouter = router({
         submittedRate: z.number().positive().optional(),
         submittedRateType: z.enum(['hourly', 'daily', 'annual']).optional(),
         submissionNotes: z.string().max(2000).optional(),
+        // Resume ID for tracking which version was submitted
+        clientResumeFileId: z.string().uuid().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
         const { orgId, user } = ctx
@@ -2850,6 +2989,7 @@ export const atsRouter = router({
             submitted_rate: input.submittedRate,
             submitted_rate_type: input.submittedRateType,
             submission_notes: input.submissionNotes,
+            client_resume_file_id: input.clientResumeFileId,
             owner_id: userProfileId,
             created_by: userProfileId,
           })
@@ -8320,27 +8460,49 @@ export const atsRouter = router({
         })) ?? []
       }),
 
-    // Get candidate by ID
+    // Get candidate by ID with related data (for edit mode)
     getById: orgProtectedProcedure
       .input(z.object({ id: z.string().uuid() }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx
         const adminClient = getAdminClient()
 
-        // Note: candidate_skills and submissions joins removed due to FK mismatches
-        const { data, error } = await adminClient
-          .from('candidates')
-          .select('*')
-          .eq('id', input.id)
-          .eq('org_id', orgId)
-          .single()
+        // Fetch candidate and related data in parallel
+        const [candidateResult, skillsResult, workHistoryResult, educationResult] = await Promise.all([
+          adminClient
+            .from('candidates')
+            .select('*')
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+            .single(),
+          adminClient
+            .from('candidate_skills')
+            .select('*')
+            .eq('candidate_id', input.id)
+            .order('created_at', { ascending: true }),
+          adminClient
+            .from('candidate_work_history')
+            .select('*')
+            .eq('candidate_id', input.id)
+            .order('start_date', { ascending: false }),
+          adminClient
+            .from('candidate_education')
+            .select('*')
+            .eq('candidate_id', input.id)
+            .order('start_date', { ascending: false }),
+        ])
 
-        if (error) {
-          console.error('[candidates.getById] Error:', error.message, error.code)
+        if (candidateResult.error) {
+          console.error('[candidates.getById] Error:', candidateResult.error.message, candidateResult.error.code)
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Candidate not found' })
         }
 
-        return data
+        return {
+          ...candidateResult.data,
+          skills: skillsResult.data ?? [],
+          workHistory: workHistoryResult.data ?? [],
+          education: educationResult.data ?? [],
+        }
       }),
 
     // Get sourcing stats (enhanced)
@@ -8508,7 +8670,7 @@ export const atsRouter = router({
 
         const now = new Date().toISOString()
 
-        // Create candidate record
+        // Create candidate record with all fields
         const { data: candidate, error: createError } = await adminClient
           .from('candidates')
           .insert({
@@ -8521,21 +8683,46 @@ export const atsRouter = router({
             title: input.professionalHeadline,
             professional_summary: input.professionalSummary,
             years_experience: input.experienceYears,
+            // Employment preferences
+            employment_types: input.employmentTypes,
+            work_modes: input.workModes,
+            // Work authorization
             visa_status: input.visaStatus,
             visa_expiry_date: input.visaExpiryDate?.toISOString(),
+            requires_sponsorship: input.requiresSponsorship,
+            current_sponsor: input.currentSponsor,
+            is_transferable: input.isTransferable,
+            // Availability
             availability: input.availability,
+            available_from: input.availableFrom,
+            notice_period_days: input.noticePeriodDays,
+            // Location
             location: input.location,
+            location_city: input.locationCity,
+            location_state: input.locationState,
+            location_country: input.locationCountry,
             willing_to_relocate: input.willingToRelocate,
+            relocation_preferences: input.relocationPreferences,
             is_remote_ok: input.isRemoteOk,
-            minimum_rate: input.minimumHourlyRate,
-            desired_rate: input.desiredHourlyRate,
+            // Compensation
+            rate_type: input.rateType,
+            minimum_rate: input.minimumRate,
+            desired_rate: input.desiredRate,
+            currency: input.currency,
+            is_negotiable: input.isNegotiable,
+            compensation_notes: input.compensationNotes,
+            // Source tracking
             lead_source: input.leadSource,
             lead_source_detail: input.sourceDetails,
+            referred_by: input.referredBy,
+            campaign_id: input.campaignId,
+            // Metadata
             tags: input.tags ?? [],
             is_on_hotlist: input.isOnHotlist,
             hotlist_notes: input.hotlistNotes,
             hotlist_added_at: input.isOnHotlist ? now : null,
             hotlist_added_by: input.isOnHotlist ? user.id : null,
+            internal_notes: input.internalNotes,
             status: 'active',
             sourced_by: user.id,
             created_by: user.id,
@@ -8549,16 +8736,86 @@ export const atsRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: createError.message })
         }
 
-        // Add skills
+        // Add skills with full metadata
         if (input.skills.length > 0) {
           const skillsToInsert = input.skills.map(skill => ({
             org_id: orgId,
             candidate_id: candidate.id,
-            skill_name: skill,
+            skill_name: skill.name,
+            proficiency_level: skill.proficiency,
+            years_of_experience: skill.yearsOfExperience,
+            is_primary: skill.isPrimary,
+            is_certified: skill.isCertified,
+            source: 'manual',
             created_at: now,
           }))
 
           await adminClient.from('candidate_skills').insert(skillsToInsert)
+        }
+
+        // Add work history
+        if (input.workHistory.length > 0) {
+          const workHistoryToInsert = input.workHistory.map(job => ({
+            org_id: orgId,
+            candidate_id: candidate.id,
+            company_name: job.companyName,
+            job_title: job.jobTitle,
+            employment_type: job.employmentType,
+            start_date: job.startDate,
+            end_date: job.endDate,
+            is_current: job.isCurrent,
+            location_city: job.locationCity,
+            location_state: job.locationState,
+            is_remote: job.isRemote,
+            description: job.description,
+            achievements: job.achievements,
+            created_at: now,
+            updated_at: now,
+          }))
+
+          await adminClient.from('candidate_work_history').insert(workHistoryToInsert)
+        }
+
+        // Add education
+        if (input.education.length > 0) {
+          const educationToInsert = input.education.map(edu => ({
+            org_id: orgId,
+            candidate_id: candidate.id,
+            institution_name: edu.institutionName,
+            degree_type: edu.degreeType,
+            degree_name: edu.degreeName,
+            field_of_study: edu.fieldOfStudy,
+            start_date: edu.startDate,
+            end_date: edu.endDate,
+            is_current: edu.isCurrent,
+            gpa: edu.gpa,
+            honors: edu.honors,
+            created_at: now,
+            updated_at: now,
+          }))
+
+          await adminClient.from('candidate_education').insert(educationToInsert)
+        }
+
+        // Add certifications
+        if (input.certifications.length > 0) {
+          const certificationsToInsert = input.certifications.map(cert => ({
+            org_id: orgId,
+            candidate_id: candidate.id,
+            certification_type: 'professional', // Default type
+            name: cert.name,
+            acronym: cert.acronym,
+            issuing_organization: cert.issuingOrganization,
+            credential_id: cert.credentialId,
+            credential_url: cert.credentialUrl,
+            issue_date: cert.issueDate,
+            expiry_date: cert.expiryDate,
+            is_lifetime: cert.isLifetime,
+            created_at: now,
+            updated_at: now,
+          }))
+
+          await adminClient.from('candidate_certifications').insert(certificationsToInsert)
         }
 
         // Create address record if structured location fields are provided
@@ -8630,6 +8887,14 @@ export const atsRouter = router({
           created_at: now,
         })
 
+        // HISTORY: Record candidate creation (fire-and-forget)
+        void historyService.recordEntityCreated(
+          'candidate',
+          candidate.id,
+          { orgId, userId: user.id },
+          { entityName: `${input.firstName} ${input.lastName}`, initialStatus: 'active' }
+        ).catch(err => console.error('[History] Failed to record candidate creation:', err))
+
         return { candidateId: candidate.id }
       }),
 
@@ -8646,6 +8911,19 @@ export const atsRouter = router({
           throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
         }
 
+        // Look up user_profiles.id from auth_id for FK constraints (resume/document uploads)
+        const { data: userProfile, error: userProfileError } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+
+        if (userProfileError || !userProfile) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'User profile not found' })
+        }
+
+        const userProfileId = userProfile.id
+
         // Get current candidate
         const { data: candidate, error: fetchError } = await adminClient
           .from('candidates')
@@ -8661,23 +8939,56 @@ export const atsRouter = router({
         const now = new Date().toISOString()
         const updateData: Record<string, unknown> = { updated_at: now }
 
-        // Build update object
+        // Build update object - Personal info
         if (input.firstName !== undefined) updateData.first_name = input.firstName
         if (input.lastName !== undefined) updateData.last_name = input.lastName
         if (input.email !== undefined) updateData.email = input.email.toLowerCase()
         if (input.phone !== undefined) updateData.phone = input.phone
+        if (input.mobile !== undefined) updateData.mobile = input.mobile
         if (input.linkedinUrl !== undefined) updateData.linkedin_url = input.linkedinUrl
+
+        // Professional info
         if (input.professionalHeadline !== undefined) updateData.title = input.professionalHeadline
         if (input.professionalSummary !== undefined) updateData.professional_summary = input.professionalSummary
+        if (input.currentCompany !== undefined) updateData.current_company = input.currentCompany
         if (input.experienceYears !== undefined) updateData.years_experience = input.experienceYears
+
+        // Employment preferences
+        if (input.employmentTypes !== undefined) updateData.employment_types = input.employmentTypes
+        if (input.workModes !== undefined) updateData.work_modes = input.workModes
+
+        // Work authorization
         if (input.visaStatus !== undefined) updateData.visa_status = input.visaStatus
         if (input.visaExpiryDate !== undefined) updateData.visa_expiry_date = input.visaExpiryDate?.toISOString()
+        if (input.workAuthorization !== undefined) updateData.work_authorization = input.workAuthorization
+        if (input.requiresSponsorship !== undefined) updateData.requires_sponsorship = input.requiresSponsorship
+        if (input.currentSponsor !== undefined) updateData.current_sponsor = input.currentSponsor
+        if (input.isTransferable !== undefined) updateData.is_transferable = input.isTransferable
+        if (input.clearanceLevel !== undefined) updateData.clearance_level = input.clearanceLevel
+
+        // Availability
         if (input.availability !== undefined) updateData.availability = input.availability
+        if (input.availableFrom !== undefined) updateData.available_from = input.availableFrom
+        if (input.noticePeriodDays !== undefined) updateData.notice_period_days = input.noticePeriodDays
+
+        // Location
         if (input.location !== undefined) updateData.location = input.location
+        if (input.locationCity !== undefined) updateData.location_city = input.locationCity
+        if (input.locationState !== undefined) updateData.location_state = input.locationState
+        if (input.locationCountry !== undefined) updateData.location_country = input.locationCountry
         if (input.willingToRelocate !== undefined) updateData.willing_to_relocate = input.willingToRelocate
+        if (input.relocationPreferences !== undefined) updateData.relocation_preferences = input.relocationPreferences
         if (input.isRemoteOk !== undefined) updateData.is_remote_ok = input.isRemoteOk
-        if (input.minimumHourlyRate !== undefined) updateData.minimum_rate = input.minimumHourlyRate
-        if (input.desiredHourlyRate !== undefined) updateData.desired_rate = input.desiredHourlyRate
+
+        // Compensation
+        if (input.minimumRate !== undefined) updateData.minimum_rate = input.minimumRate
+        if (input.desiredRate !== undefined) updateData.desired_rate = input.desiredRate
+        if (input.rateType !== undefined) updateData.rate_type = input.rateType
+        if (input.currency !== undefined) updateData.currency = input.currency
+        if (input.isNegotiable !== undefined) updateData.is_negotiable = input.isNegotiable
+        if (input.compensationNotes !== undefined) updateData.compensation_notes = input.compensationNotes
+
+        // Tags and status
         if (input.tags !== undefined) updateData.tags = input.tags
         if (input.profileStatus !== undefined) updateData.status = input.profileStatus
 
@@ -8693,8 +9004,12 @@ export const atsRouter = router({
           }
         }
         if (input.hotlistNotes !== undefined) updateData.hotlist_notes = input.hotlistNotes
+
+        // Source tracking
         if (input.leadSource !== undefined) updateData.lead_source = input.leadSource
         if (input.sourceDetails !== undefined) updateData.lead_source_detail = input.sourceDetails
+        if (input.referredBy !== undefined) updateData.referred_by = input.referredBy
+        if (input.campaignId !== undefined) updateData.campaign_id = input.campaignId
 
         // Handle wizard_state for draft persistence
         if (input.wizard_state !== undefined) {
@@ -8712,35 +9027,350 @@ export const atsRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: updateError.message })
         }
 
-        // Update skills if provided
+        // Update skills if provided (now accepts full skill entries with metadata)
         if (input.skills !== undefined) {
           // Delete existing skills
-          await adminClient
+          const { error: deleteSkillsError } = await adminClient
             .from('candidate_skills')
             .delete()
             .eq('candidate_id', input.candidateId)
 
-          // Insert new skills
+          if (deleteSkillsError) {
+            console.error('[Candidate Update] Failed to delete existing skills:', deleteSkillsError.message)
+          }
+
+          // Insert new skills with full metadata
           if (input.skills.length > 0) {
-            const skillsToInsert = input.skills.map(skill => ({
-              org_id: orgId,
-              candidate_id: input.candidateId,
-              skill_name: skill,
-              created_at: now,
-            }))
-            await adminClient.from('candidate_skills').insert(skillsToInsert)
+            const skillsToInsert = []
+
+            for (const skillEntry of input.skills) {
+              const skillName = skillEntry.name
+
+              // Look up skill in master skills table (case-insensitive search)
+              const { data: existingSkill } = await adminClient
+                .from('skills')
+                .select('id')
+                .ilike('name', skillName)
+                .limit(1)
+                .single()
+
+              let skillId: string
+
+              if (existingSkill) {
+                // Use existing skill ID
+                skillId = existingSkill.id
+              } else {
+                // Create new skill in master table (org-specific)
+                const { data: newSkill, error: createSkillError } = await adminClient
+                  .from('skills')
+                  .insert({
+                    name: skillName,
+                    org_id: orgId,
+                    category: 'general',
+                    is_verified: false,
+                    created_at: now,
+                    updated_at: now,
+                  })
+                  .select('id')
+                  .single()
+
+                if (createSkillError || !newSkill) {
+                  console.error(`[Candidate Update] Failed to create skill '${skillName}':`, createSkillError?.message)
+                  continue // Skip this skill
+                }
+                skillId = newSkill.id
+              }
+
+              // Map proficiency enum to number (1-5)
+              const proficiencyMap: Record<string, number> = {
+                beginner: 1,
+                basic: 2,
+                intermediate: 3,
+                advanced: 4,
+                expert: 5,
+              }
+
+              skillsToInsert.push({
+                candidate_id: input.candidateId,
+                skill_id: skillId,
+                skill_name: skillName,
+                proficiency_level: proficiencyMap[skillEntry.proficiency] || 3,
+                years_of_experience: skillEntry.yearsOfExperience || null, // Fixed: column is years_of_experience not years_experience
+                is_primary: skillEntry.isPrimary || false,
+                is_certified: skillEntry.isCertified || false,
+                last_used_date: skillEntry.lastUsed ? `${skillEntry.lastUsed}-01` : null, // Fixed: column is last_used_date (DATE type)
+                source: 'manual',
+                created_at: now,
+                updated_at: now,
+              })
+            }
+
+            if (skillsToInsert.length > 0) {
+              const { error: insertSkillsError } = await adminClient.from('candidate_skills').insert(skillsToInsert)
+              if (insertSkillsError) {
+                console.error('[Candidate Update] Failed to insert skills:', insertSkillsError.message)
+              }
+            }
           }
         }
 
-        // Log activity
+        // Update work history if provided
+        if (input.workHistory !== undefined && input.workHistory.length > 0) {
+          // Delete existing work history
+          const { error: deleteWorkHistoryError } = await adminClient
+            .from('candidate_work_history')
+            .delete()
+            .eq('candidate_id', input.candidateId)
+
+          if (deleteWorkHistoryError) {
+            console.error('[Candidate Update] Failed to delete existing work history:', deleteWorkHistoryError.message)
+          }
+
+          // Insert new work history
+          // Helper to convert YYYY-MM to YYYY-MM-01 for PostgreSQL DATE type
+          const formatDateForDb = (dateStr: string | undefined | null): string | null => {
+            if (!dateStr) return null
+            // If already in YYYY-MM-DD format, return as-is
+            if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr
+            // If in YYYY-MM format, append -01
+            if (/^\d{4}-\d{2}$/.test(dateStr)) return `${dateStr}-01`
+            return dateStr
+          }
+
+          const workHistoryToInsert = input.workHistory.map((w, index) => ({
+            org_id: orgId,
+            candidate_id: input.candidateId,
+            company_name: w.companyName,
+            job_title: w.jobTitle,
+            employment_type: w.employmentType || null,
+            start_date: formatDateForDb(w.startDate), // Fixed: convert YYYY-MM to YYYY-MM-01 for DATE type
+            end_date: formatDateForDb(w.endDate), // Fixed: convert YYYY-MM to YYYY-MM-01 for DATE type
+            is_current: w.isCurrent || false,
+            location_city: w.locationCity || null,
+            location_state: w.locationState || null,
+            is_remote: w.isRemote || false,
+            description: w.description || null,
+            achievements: w.achievements || [],
+            display_order: index,
+            created_at: now,
+            updated_at: now,
+          }))
+
+          const { error: insertWorkHistoryError } = await adminClient.from('candidate_work_history').insert(workHistoryToInsert)
+          if (insertWorkHistoryError) {
+            console.error('[Candidate Update] Failed to insert work history:', insertWorkHistoryError.message)
+          }
+        }
+
+        // Update education if provided
+        if (input.education !== undefined && input.education.length > 0) {
+          // Delete existing education
+          const { error: deleteEducationError } = await adminClient
+            .from('candidate_education')
+            .delete()
+            .eq('candidate_id', input.candidateId)
+
+          if (deleteEducationError) {
+            console.error('[Candidate Update] Failed to delete existing education:', deleteEducationError.message)
+          }
+
+          // Insert new education
+          // Helper to convert YYYY-MM to YYYY-MM-01 for PostgreSQL DATE type
+          const formatDateForEducation = (dateStr: string | undefined | null): string | null => {
+            if (!dateStr) return null
+            if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr
+            if (/^\d{4}-\d{2}$/.test(dateStr)) return `${dateStr}-01`
+            return dateStr
+          }
+
+          const educationToInsert = input.education.map((e, index) => ({
+            org_id: orgId,
+            candidate_id: input.candidateId,
+            institution_name: e.institutionName,
+            degree_type: e.degreeType || null,
+            degree_name: e.degreeName || null,
+            field_of_study: e.fieldOfStudy || null,
+            start_date: formatDateForEducation(e.startDate), // Fixed: convert YYYY-MM to YYYY-MM-01 for DATE type
+            end_date: formatDateForEducation(e.endDate), // Fixed: convert YYYY-MM to YYYY-MM-01 for DATE type
+            is_current: e.isCurrent || false,
+            gpa: e.gpa || null,
+            honors: e.honors || null,
+            display_order: index,
+            created_at: now,
+            updated_at: now,
+          }))
+
+          const { error: insertEducationError } = await adminClient.from('candidate_education').insert(educationToInsert)
+          if (insertEducationError) {
+            console.error('[Candidate Update] Failed to insert education:', insertEducationError.message)
+          }
+        }
+
+        // Update certifications if provided
+        if (input.certifications !== undefined && input.certifications.length > 0) {
+          // Delete existing certifications
+          const { error: deleteCertificationsError } = await adminClient
+            .from('candidate_certifications')
+            .delete()
+            .eq('candidate_id', input.candidateId)
+
+          if (deleteCertificationsError) {
+            console.error('[Candidate Update] Failed to delete existing certifications:', deleteCertificationsError.message)
+          }
+
+          // Insert new certifications
+          // Helper to convert dates for PostgreSQL DATE type
+          const formatDateForCert = (dateStr: string | undefined | null): string | null => {
+            if (!dateStr) return null
+            if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr
+            if (/^\d{4}-\d{2}$/.test(dateStr)) return `${dateStr}-01`
+            return dateStr
+          }
+
+          const certificationsToInsert = input.certifications.map(cert => ({
+            org_id: orgId,
+            candidate_id: input.candidateId,
+            certification_type: 'professional',
+            name: cert.name,
+            acronym: cert.acronym || null,
+            issuing_organization: cert.issuingOrganization || null,
+            credential_id: cert.credentialId || null,
+            credential_url: cert.credentialUrl || null,
+            issue_date: formatDateForCert(cert.issueDate), // Safe conversion for DATE type
+            expiry_date: formatDateForCert(cert.expiryDate), // Safe conversion for DATE type
+            is_lifetime: cert.isLifetime || false,
+            created_at: now,
+            updated_at: now,
+          }))
+
+          const { error: insertCertificationsError } = await adminClient.from('candidate_certifications').insert(certificationsToInsert)
+          if (insertCertificationsError) {
+            console.error('[Candidate Update] Failed to insert certifications:', insertCertificationsError.message)
+          }
+        }
+
+        // Create resume record if resume data is provided (draft finalization)
+        if (input.resumeData) {
+          const { data: resumeRecord, error: resumeError } = await adminClient.from('candidate_resumes').insert({
+            org_id: orgId,
+            candidate_id: input.candidateId,
+            // File info
+            bucket: 'resumes',
+            file_path: input.resumeData.storagePath,
+            file_name: input.resumeData.fileName,
+            file_size: input.resumeData.fileSize,
+            mime_type: input.resumeData.mimeType,
+            // Metadata
+            resume_type: 'master',
+            source: 'uploaded',
+            is_primary: true, // First resume is primary by default
+            is_latest: true,
+            version: 1,
+            // Parsed content from AI
+            parsed_content: input.resumeData.parsedContent,
+            parsed_skills: input.resumeData.parsedSkills,
+            parsed_experience: input.resumeData.parsedExperience,
+            ai_summary: input.resumeData.aiSummary,
+            // Audit
+            uploaded_by: userProfileId,
+            uploaded_at: now,
+            created_at: now,
+            updated_at: now,
+          }).select()
+          if (resumeError) {
+            console.error('[Candidate Update] Failed to insert resume record:', resumeError.message, resumeError)
+            // Don't throw - resume is optional during update, just log the failure
+          } else {
+            console.log('[Candidate Update] Successfully inserted resume record:', resumeRecord?.[0]?.id)
+          }
+        } else {
+          console.log('[Candidate Update] No resumeData provided, skipping resume insert')
+        }
+
+        // Create compliance document records if provided
+        if (input.complianceDocumentsData && input.complianceDocumentsData.length > 0) {
+          const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+
+          // Map document types to allowed CHECK constraint values
+          // (Most types now directly allowed after DB migration)
+          const mapDocumentType = (type: string): string => {
+            const validTypes = [
+              'resume', 'cover_letter', 'id_document', 'certification', 'reference_letter',
+              'background_check', 'drug_test', 'i9', 'w4', 'direct_deposit', 'msa', 'nda',
+              'sow', 'w9', 'coi', 'insurance', 'contract', 'job_description', 'requirements',
+              'scorecard', 'other', 'note_attachment', 'email_attachment',
+              // New compliance types
+              'rtr', 'void_check', 'references', 'background_auth', 'offer_letter', 'employment_verification'
+            ]
+            return validTypes.includes(type) ? type : 'other'
+          }
+
+          const documentsToInsert = input.complianceDocumentsData.map(doc => ({
+            org_id: orgId,
+            entity_type: 'candidate',
+            entity_id: input.candidateId,
+            // File info (correct column names per schema)
+            file_name: doc.fileName,
+            file_size_bytes: doc.fileSize,
+            storage_bucket: 'documents',
+            storage_path: doc.storagePath,
+            public_url: `${supabaseUrl}/storage/v1/object/public/documents/${doc.storagePath}`,
+            // Document metadata - map to valid CHECK constraint value
+            document_type: mapDocumentType(doc.documentType),
+            document_category: 'compliance', // Use compliance category for these
+            description: doc.notes || null, // Just use notes as description
+            // Audit
+            uploaded_by: userProfileId,
+            created_at: now,
+            updated_at: now,
+          }))
+          const { error: docsError } = await adminClient.from('documents').insert(documentsToInsert)
+          if (docsError) {
+            console.error('[Candidate Update] Failed to insert documents:', docsError.message, docsError)
+            // Don't throw - documents are optional, just log the failure
+          } else {
+            console.log('[Candidate Update] Successfully inserted', documentsToInsert.length, 'compliance documents')
+          }
+        }
+
+        // Create internal note if provided (during draft finalization)
+        if (input.internalNotes && input.internalNotes.trim()) {
+          console.log('[Candidate Update] Inserting internal note:', {
+            content: input.internalNotes.trim().substring(0, 50) + '...',
+            userProfileId,
+          })
+          const { data: noteData, error: noteError } = await adminClient.from('notes').insert({
+            org_id: orgId,
+            entity_type: 'candidate',
+            entity_id: input.candidateId,
+            content: input.internalNotes.trim(),
+            is_pinned: false,
+            created_by: userProfileId, // Use user_profile.id, NOT auth.users.id (FK constraint)
+            created_at: now,
+            updated_at: now,
+          }).select()
+          if (noteError) {
+            console.error('[Candidate Update] Failed to insert internal note:', noteError.message, noteError)
+            // Don't throw - notes are optional, just log the failure
+          } else {
+            console.log('[Candidate Update] Successfully inserted internal note:', noteData?.[0]?.id)
+          }
+        }
+
+        // Log activity - customize message for draft finalization
+        const isFinalizingDraft = input.profileStatus === 'active' && candidate.status === 'draft'
         await adminClient.from('activities').insert({
           org_id: orgId,
           entity_type: 'candidate',
           entity_id: input.candidateId,
           activity_type: 'note',
-          subject: `Candidate updated`,
-          description: 'Profile information updated',
-          outcome: 'neutral',
+          subject: isFinalizingDraft
+            ? `Candidate added: ${input.firstName || candidate.first_name} ${input.lastName || candidate.last_name}`
+            : `Candidate updated`,
+          description: isFinalizingDraft
+            ? `Sourced from ${input.leadSource || candidate.lead_source}${input.sourceDetails ? ` - ${input.sourceDetails}` : ''}${input.resumeData ? ' (resume parsed)' : ''}`
+            : 'Profile information updated',
+          outcome: isFinalizingDraft ? 'positive' : 'neutral',
           created_by: user.id,
           created_at: now,
         })
@@ -9968,52 +10598,6 @@ export const atsRouter = router({
         }
 
         return data ?? []
-      }),
-
-    // Delete a draft candidate (soft delete - verify ownership and draft status)
-    deleteDraft: orgProtectedProcedure
-      .input(z.object({ id: z.string().uuid() }))
-      .mutation(async ({ ctx, input }) => {
-        const { orgId, user } = ctx
-        const adminClient = getAdminClient()
-
-        if (!user?.id) {
-          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
-        }
-
-        // Verify ownership and draft status before deleting
-        // created_by references auth.users(id), so compare directly to user.id (auth_id)
-        const { data: candidate, error: fetchError } = await adminClient
-          .from('candidates')
-          .select('id, status, created_by')
-          .eq('id', input.id)
-          .eq('org_id', orgId)
-          .is('deleted_at', null)
-          .single()
-
-        if (fetchError || !candidate) {
-          throw new TRPCError({ code: 'NOT_FOUND', message: 'Candidate not found' })
-        }
-
-        if (candidate.created_by !== user.id) {
-          throw new TRPCError({ code: 'FORBIDDEN', message: 'You can only delete your own drafts' })
-        }
-
-        if (candidate.status !== 'draft') {
-          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Only draft candidates can be deleted' })
-        }
-
-        // Soft delete
-        const { error } = await adminClient
-          .from('candidates')
-          .update({ deleted_at: new Date().toISOString() })
-          .eq('id', input.id)
-
-        if (error) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
-        }
-
-        return { success: true }
       }),
   }),
 })

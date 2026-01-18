@@ -30,6 +30,7 @@ import {
   DollarSign,
   ShieldCheck,
   Link2,
+  Files,
 } from 'lucide-react'
 
 /**
@@ -307,12 +308,13 @@ export const dealSections: SectionDefinition[] = [
 
 /**
  * Candidate sections - Guidewire-style with main sections + tools
- * Main: Summary, Screening, Profiles, Submissions
+ * Main: Summary, Resumes, Screening, Profiles, Submissions
  * Tools: Activities, Notes, Documents, History
  */
 export const candidateSections: SectionDefinition[] = [
   // Main sections
   { id: 'summary', label: 'Summary', icon: UserCircle },
+  { id: 'resumes', label: 'Resumes', icon: Files, showCount: true },
   { id: 'screening', label: 'Screening', icon: ClipboardCheck, showCount: true },
   { id: 'profiles', label: 'Profiles', icon: FileText, showCount: true },
   { id: 'submissions', label: 'Submissions', icon: Send, showCount: true },

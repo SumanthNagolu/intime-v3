@@ -14,6 +14,9 @@ import type { WorkspaceWarning, HistoryEntry } from './workspace'
 export interface FullCandidateData {
   candidate: CandidateData
   skills: CandidateSkill[]
+  workHistory: CandidateWorkHistory[]
+  education: CandidateEducation[]
+  certifications: CandidateCertification[]
   screenings: CandidateScreening[]
   profiles: CandidateProfile[]
   submissions: CandidateSubmission[]
@@ -21,6 +24,7 @@ export interface FullCandidateData {
   activities: CandidateActivity[]
   notes: CandidateNote[]
   documents: CandidateDocument[]
+  resumes: CandidateResume[]
   history: HistoryEntry[]
   // Computed
   warnings: WorkspaceWarning[]
@@ -41,28 +45,43 @@ export interface CandidateData {
   mobile: string | null
   title: string | null
   headline: string | null
+  professionalSummary: string | null
   // Location
   city: string | null
   state: string | null
   country: string | null
   location: string | null // Computed: "City, State" or "City, Country"
   willingToRelocate: boolean
+  relocationPreferences: string | null
+  isRemoteOk: boolean
   // Professional
   currentCompany: string | null
   yearsExperience: number | null
+  // Employment Preferences
+  employmentTypes: string[] | null
+  workModes: string[] | null
   // Rate/Compensation
+  rateType: string | null
   desiredRate: number | null
+  minimumRate: number | null
   desiredSalary: number | null
   rateCurrency: string
+  isNegotiable: boolean | null
+  compensationNotes: string | null
   // Work Authorization
   workAuthorization: string | null
   visaStatus: string | null
   visaExpiryDate: string | null
+  requiresSponsorship: boolean | null
+  currentSponsor: string | null
+  isTransferable: boolean | null
   clearanceLevel: string | null
   // Availability
   availability: string | null
   availableDate: string | null
+  availableFrom: string | null
   noticePeriod: string | null
+  noticePeriodDays: number | null
   // Status
   status: string
   candidateStatus: string | null
@@ -76,6 +95,12 @@ export interface CandidateData {
   // Source
   source: string | null
   sourceDetails: string | null
+  referredBy: string | null
+  campaignId: string | null
+  // Tags & Notes
+  tags: string[] | null
+  internalNotes: string | null
+  hotlistNotes: string | null
   // Timestamps
   createdAt: string
   updatedAt: string | null
@@ -118,6 +143,85 @@ export const PROFICIENCY_LABELS: Record<number, { label: string; color: string }
   3: { label: 'Intermediate', color: 'bg-green-100 text-green-700' },
   4: { label: 'Advanced', color: 'bg-purple-100 text-purple-700' },
   5: { label: 'Expert', color: 'bg-gold-100 text-gold-700' },
+}
+
+// =============================================================================
+// CANDIDATE WORK HISTORY
+// =============================================================================
+
+export interface CandidateWorkHistory {
+  id: string
+  companyName: string
+  jobTitle: string
+  employmentType: string | null
+  employmentTypeLabel: string | null
+  startDate: string | null
+  endDate: string | null
+  isCurrent: boolean
+  location: string | null
+  locationCity: string | null
+  locationState: string | null
+  isRemote: boolean
+  description: string | null
+  achievements: string[]
+  createdAt: string
+}
+
+// Employment type labels
+export const EMPLOYMENT_TYPE_LABELS: Record<string, string> = {
+  full_time: 'Full-Time',
+  contract: 'Contract',
+  part_time: 'Part-Time',
+  internship: 'Internship',
+  contract_to_hire: 'Contract-to-Hire',
+}
+
+// =============================================================================
+// CANDIDATE EDUCATION
+// =============================================================================
+
+export interface CandidateEducation {
+  id: string
+  institutionName: string
+  degreeType: string | null
+  degreeTypeLabel: string | null
+  degreeName: string | null
+  fieldOfStudy: string | null
+  degreeDisplay: string | null // Computed: "Bachelor's in Computer Science"
+  startDate: string | null
+  endDate: string | null
+  isCurrent: boolean
+  gpa: number | null
+  honors: string | null
+  createdAt: string
+}
+
+// Degree type labels
+export const DEGREE_TYPE_LABELS: Record<string, string> = {
+  high_school: 'High School / GED',
+  associate: "Associate's Degree",
+  bachelor: "Bachelor's Degree",
+  master: "Master's Degree",
+  phd: 'Doctorate / PhD',
+  other: 'Other Credential',
+}
+
+// =============================================================================
+// CANDIDATE CERTIFICATION
+// =============================================================================
+
+export interface CandidateCertification {
+  id: string
+  name: string
+  acronym: string | null
+  issuingOrganization: string | null
+  credentialId: string | null
+  credentialUrl: string | null
+  issueDate: string | null
+  expiryDate: string | null
+  isLifetime: boolean
+  expiryStatus: 'active' | 'expiring_soon' | 'expired' | 'lifetime'
+  createdAt: string
 }
 
 // =============================================================================
@@ -280,6 +384,66 @@ export interface CandidateDocument {
 }
 
 // =============================================================================
+// CANDIDATE RESUME (Versioned Resumes)
+// =============================================================================
+
+export type ResumeSource = 'uploaded' | 'parsed' | 'manual' | 'ai_generated'
+
+export interface CandidateResume {
+  id: string
+  // Versioning
+  version: number
+  isLatest: boolean
+  previousVersionId: string | null
+  // File info
+  filePath: string
+  fileName: string
+  fileSize: number
+  mimeType: string
+  bucket: string
+  fileUrl: string // Computed from bucket/filePath
+  // Metadata
+  label: string | null // User-friendly name like "Full Stack Resume"
+  targetRole: string | null // Job type this resume is optimized for
+  source: ResumeSource
+  notes: string | null
+  isPrimary: boolean
+  // Parsed content (from AI)
+  resumeType: string // 'master' | 'tailored' | 'anonymized'
+  parsedContent: string | null
+  parsedSkills: string[] | null
+  parsedExperience: string | null
+  aiSummary: string | null
+  // Audit
+  uploadedAt: string
+  uploadedBy: {
+    id: string
+    fullName: string
+    avatarUrl?: string | null
+  } | null
+  // Archive status
+  isArchived: boolean
+  // Submission usage - computed from join
+  submissionCount: number
+  lastUsedAt: string | null
+}
+
+// Resume source options for forms
+export const RESUME_SOURCE_OPTIONS = [
+  { value: 'uploaded', label: 'Uploaded' },
+  { value: 'parsed', label: 'Parsed from Upload' },
+  { value: 'manual', label: 'Manually Created' },
+  { value: 'ai_generated', label: 'AI Generated' },
+] as const
+
+// Resume type options for forms
+export const RESUME_TYPE_OPTIONS = [
+  { value: 'master', label: 'Master Resume' },
+  { value: 'tailored', label: 'Tailored Resume' },
+  { value: 'anonymized', label: 'Anonymized Resume' },
+] as const
+
+// =============================================================================
 // STATS
 // =============================================================================
 
@@ -307,5 +471,6 @@ export type CandidateSection =
   | 'submissions'
   | 'activities'
   | 'notes'
+  | 'resumes'
   | 'documents'
   | 'history'
