@@ -6,6 +6,9 @@ import { CandidateWorkspace } from '@/components/workspaces/candidate/CandidateW
 import { useCandidateWorkspace } from '@/components/workspaces/candidate/CandidateWorkspaceProvider'
 import { ScreeningRoom } from '@/components/recruiting/candidates/ScreeningRoom'
 import { ProfileBuilder } from '@/components/recruiting/candidates/ProfileBuilder'
+import { SubmitCandidateToJobDialog } from '@/components/recruiting/submissions/SubmitCandidateToJobDialog'
+import { UploadCandidateDocumentDialog } from '@/components/recruiting/candidates/UploadCandidateDocumentDialog'
+import { UploadResumeDialog } from '@/components/workspaces/candidate/UploadResumeDialog'
 import {
   Dialog,
   DialogContent,
@@ -45,6 +48,9 @@ export default function CandidateDetailPage() {
   const [activeScreeningId, setActiveScreeningId] = useState<string | null>(null)
   const [showScreeningRoom, setShowScreeningRoom] = useState(false)
   const [showProfileBuilder, setShowProfileBuilder] = useState(false)
+  const [showSubmitToJobDialog, setShowSubmitToJobDialog] = useState(false)
+  const [showUploadDocumentDialog, setShowUploadDocumentDialog] = useState(false)
+  const [showUploadResumeDialog, setShowUploadResumeDialog] = useState(false)
 
   // Get jobs for screening selection (only loaded when dialog opens)
   const jobsForScreeningQuery = trpc.ats.jobs.list.useQuery(
@@ -89,7 +95,13 @@ export default function CandidateDetailPage() {
           setShowProfileBuilder(true)
           break
         case 'submitToJob':
-          // TODO: Show submit to job dialog
+          setShowSubmitToJobDialog(true)
+          break
+        case 'uploadDocument':
+          setShowUploadDocumentDialog(true)
+          break
+        case 'uploadResume':
+          setShowUploadResumeDialog(true)
           break
         case 'addToHotlist':
           // TODO: Handle hotlist toggle
@@ -227,6 +239,33 @@ export default function CandidateDetailPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Submit to Job Dialog */}
+      <SubmitCandidateToJobDialog
+        open={showSubmitToJobDialog}
+        onOpenChange={setShowSubmitToJobDialog}
+        candidateId={candidateId}
+        candidateName={data.candidate.fullName}
+        onSuccess={refreshData}
+      />
+
+      {/* Upload Document Dialog */}
+      <UploadCandidateDocumentDialog
+        open={showUploadDocumentDialog}
+        onOpenChange={setShowUploadDocumentDialog}
+        candidateId={candidateId}
+        candidateName={data.candidate.fullName}
+        onSuccess={refreshData}
+      />
+
+      {/* Upload Resume Dialog */}
+      <UploadResumeDialog
+        open={showUploadResumeDialog}
+        onOpenChange={setShowUploadResumeDialog}
+        candidateId={candidateId}
+        candidateName={data.candidate.fullName}
+        onSuccess={refreshData}
+      />
     </>
   )
 }

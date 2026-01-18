@@ -17,7 +17,7 @@ import { useCreateCandidateStore, PROFICIENCY_LEVELS, SkillEntry, CertificationE
 import { Section, FieldGroup, ValidationBanner } from './shared'
 import { cn } from '@/lib/utils'
 
-export function CandidateIntakeStep4Skills() {
+export function CandidateIntakeStep6Skills() {
   const {
     formData,
     addSkill,

@@ -24,7 +24,7 @@ const CURRENCIES = [
   { value: 'INR', label: 'INR (₹)', symbol: '₹' },
 ]
 
-export function CandidateIntakeStep6Compensation() {
+export function CandidateIntakeStep8Compensation() {
   const { formData, setFormData } = useCreateCandidateStore()
 
   const currencySymbol = CURRENCIES.find(c => c.value === formData.currency)?.symbol || '$'
@@ -58,15 +58,13 @@ export function CandidateIntakeStep6Compensation() {
                 key={type.value}
                 type="button"
                 onClick={() => setFormData({ rateType: type.value as typeof formData.rateType })}
-                className={`p-4 rounded-xl border-2 text-center transition-all ${
-                  formData.rateType === type.value
+                className={`p-4 rounded-xl border-2 text-center transition-all ${formData.rateType === type.value
                     ? 'border-gold-400 bg-gradient-to-br from-gold-50 to-amber-50'
                     : 'border-charcoal-200 bg-white hover:border-charcoal-300'
-                }`}
+                  }`}
               >
-                <span className={`font-medium ${
-                  formData.rateType === type.value ? 'text-gold-700' : 'text-charcoal-700'
-                }`}>
+                <span className={`font-medium ${formData.rateType === type.value ? 'text-gold-700' : 'text-charcoal-700'
+                  }`}>
                   {type.label}
                 </span>
                 {formData.rateType === type.value && (

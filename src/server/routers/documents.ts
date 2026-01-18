@@ -233,6 +233,18 @@ export const documentsRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { orgId, user, supabase } = ctx
+      const adminClient = getAdminClient()
+
+      // Look up user_profiles.id from auth_id for FK constraint
+      let userProfileId: string | null = null
+      if (user?.id) {
+        const { data: userProfile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+        userProfileId = userProfile?.id || null
+      }
 
       // Determine version number
       let version = 1
@@ -276,7 +288,7 @@ export const documentsRouter = router({
           access_level: input.accessLevel,
           tags: input.tags,
           content_hash: input.contentHash,
-          uploaded_by: user?.id,
+          uploaded_by: userProfileId,
         })
         .select()
         .single()
@@ -284,6 +296,97 @@ export const documentsRouter = router({
       if (error) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
 
       return { id: data.id, version: data.version }
+    }),
+
+  // ============================================
+  // UPLOAD DOCUMENT (with file data)
+  // ============================================
+  upload: orgProtectedProcedure
+    .input(
+      z.object({
+        entityType: z.string(),
+        entityId: z.string().uuid(),
+        fileName: z.string(),
+        fileData: z.string(), // base64 encoded
+        mimeType: z.string(),
+        fileSizeBytes: z.number(),
+        documentType: DocumentTypeEnum.default('other'),
+        documentCategory: DocumentCategoryEnum.default('general'),
+        description: z.string().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Look up user_profiles.id from auth_id for FK constraint
+      let userProfileId: string | null = null
+      if (user?.id) {
+        const { data: userProfile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+        userProfileId = userProfile?.id || null
+      }
+
+      // Decode base64 file
+      const base64Data = input.fileData.split(',')[1] || input.fileData
+      const fileBuffer = Buffer.from(base64Data, 'base64')
+
+      // Generate storage path
+      const timestamp = Date.now()
+      const fileExt = input.fileName.split('.').pop() || 'pdf'
+      const sanitizedFileName = input.fileName.replace(/[^a-zA-Z0-9.-]/g, '_')
+      const storagePath = `${orgId}/${input.entityType}/${input.entityId}/${timestamp}_${sanitizedFileName}`
+
+      // Upload to Supabase Storage using admin client to bypass RLS
+      const { error: uploadError } = await adminClient.storage
+        .from('documents')
+        .upload(storagePath, fileBuffer, {
+          contentType: input.mimeType,
+          upsert: false,
+        })
+
+      if (uploadError) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: `Failed to upload file: ${uploadError.message}`,
+        })
+      }
+
+      // Get public URL
+      const { data: urlData } = adminClient.storage.from('documents').getPublicUrl(storagePath)
+
+      // Create document record
+      const { data, error } = await adminClient
+        .from('documents')
+        .insert({
+          org_id: orgId,
+          entity_type: input.entityType,
+          entity_id: input.entityId,
+          file_name: input.fileName,
+          file_type: fileExt,
+          mime_type: input.mimeType,
+          file_size_bytes: input.fileSizeBytes,
+          storage_bucket: 'documents',
+          storage_path: storagePath,
+          public_url: urlData.publicUrl,
+          document_type: input.documentType,
+          document_category: input.documentCategory,
+          description: input.description,
+          version: 1,
+          is_latest_version: true,
+          uploaded_by: userProfileId,
+        })
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return { id: data.id, fileName: data.file_name, publicUrl: urlData.publicUrl }
     }),
 
   // ============================================

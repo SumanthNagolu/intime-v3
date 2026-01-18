@@ -74,6 +74,8 @@ import { invoicesRouter } from '../routers/invoices'
 import { payrollRouter } from '../routers/payroll'
 // Reference data for wizards (PERF-01)
 import { referenceRouter } from '../routers/reference'
+// Candidate resume versioning system (RESUMES-01)
+import { resumesRouter } from '../routers/resumes'
 
 export const appRouter = router({
   admin: adminRouter,
@@ -150,6 +152,8 @@ export const appRouter = router({
   payroll: payrollRouter,
   // Reference data for wizards (PERF-01)
   reference: referenceRouter,
+  // Candidate resume versioning system (RESUMES-01)
+  resumes: resumesRouter,
 })
 
 export type AppRouter = typeof appRouter

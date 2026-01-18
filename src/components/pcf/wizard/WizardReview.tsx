@@ -26,6 +26,7 @@ import {
   Briefcase,
   Award,
   Clock,
+  Upload,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -34,12 +35,13 @@ import type { LucideIcon } from 'lucide-react'
 
 // Field label mappings for human-readable labels
 const FIELD_LABELS: Record<string, string> = {
+  // Account/Company fields
   name: 'Company Name',
   legalName: 'Legal Name',
   dba: 'DBA (Doing Business As)',
   taxId: 'Tax ID (EIN)',
-  email: 'Primary Email',
-  phone: 'Primary Phone',
+  email: 'Email',
+  phone: 'Phone',
   website: 'Website',
   linkedinUrl: 'LinkedIn',
   description: 'Description',
@@ -63,10 +65,61 @@ const FIELD_LABELS: Record<string, string> = {
   contracts: 'Contracts',
   compliance: 'Compliance Requirements',
   team: 'Team Assignment',
+  // Candidate fields - Source
+  sourceType: 'Source Type',
+  resumeParsed: 'Resume Parsed',
+  resumeStoragePath: 'Resume',
+  resumeFileName: 'Resume File',
+  resumeFileSize: 'File Size',
+  // Candidate fields - Contact
+  firstName: 'First Name',
+  lastName: 'Last Name',
+  location: 'Location',
+  linkedinProfile: 'LinkedIn',
+  professionalHeadline: 'Professional Headline',
+  professionalSummary: 'Professional Summary',
+  experienceYears: 'Years of Experience',
+  employmentTypes: 'Employment Preferences',
+  workModes: 'Work Mode Preferences',
+  workHistory: 'Work History',
+  education: 'Education',
+  skills: 'Skills',
+  primarySkills: 'Primary Skills',
+  certifications: 'Certifications',
+  // Work Authorization
+  visaStatus: 'Work Authorization',
+  visaExpiryDate: 'Visa Expiry',
+  requiresSponsorship: 'Requires Sponsorship',
+  currentSponsor: 'Current Sponsor',
+  isTransferable: 'Visa Transferable',
+  // Availability
+  availability: 'Availability',
+  availableFrom: 'Available From',
+  noticePeriodDays: 'Notice Period',
+  willingToRelocate: 'Willing to Relocate',
+  relocationPreferences: 'Relocation Preferences',
+  isRemoteOk: 'Open to Remote',
+  // Compensation
+  rateType: 'Rate Type',
+  minimumRate: 'Minimum Rate',
+  desiredRate: 'Desired Rate',
+  isNegotiable: 'Negotiable',
+  compensationNotes: 'Compensation Notes',
+  // Source & Tracking
+  leadSource: 'Lead Source',
+  sourceDetails: 'Source Details',
+  referredBy: 'Referred By',
+  campaignId: 'Campaign',
+  complianceDocuments: 'Documents',
+  isOnHotlist: 'On Hotlist',
+  hotlistNotes: 'Hotlist Notes',
+  tags: 'Tags',
+  internalNotes: 'Internal Notes',
 }
 
 // Section icons
 const SECTION_ICONS: Record<string, LucideIcon> = {
+  // Account sections
   'Account Identity': Building2,
   'Locations': MapPin,
   'Billing': CreditCard,
@@ -74,6 +127,20 @@ const SECTION_ICONS: Record<string, LucideIcon> = {
   'Contracts': FileText,
   'Compliance': ShieldCheck,
   'Team': User,
+  // Candidate sections
+  'Source': Upload,
+  'Contact Information': User,
+  'Profile Details': User,
+  'Experience': Briefcase,
+  'Professional Experience': Briefcase,
+  'Qualifications': Award,
+  'Work Authorization': ShieldCheck,
+  'Availability & Preferences': Clock,
+  'Compensation': DollarSign,
+  'Employment Terms': DollarSign,
+  'Source & Tracking': Target,
+  'Documents & Tracking': FileText,
+  'Documents': FileText,
 }
 
 // Value formatters
@@ -95,9 +162,49 @@ const VALUE_FORMATTERS: Record<string, string> = {
   CAD: 'CAD - Canadian Dollar',
   EUR: 'EUR - Euro',
   GBP: 'GBP - British Pound',
+  INR: 'INR - Indian Rupee',
   standard: 'Standard Detailed',
   consolidated: 'Consolidated',
   summary: 'Summary Only',
+  // Candidate-specific formatters
+  us_citizen: 'US Citizen',
+  green_card: 'Green Card',
+  h1b: 'H-1B Visa',
+  l1: 'L-1 Visa',
+  tn: 'TN Visa',
+  opt: 'OPT',
+  cpt: 'CPT',
+  ead: 'EAD',
+  other: 'Other',
+  immediate: 'Immediate',
+  '2_weeks': '2 Weeks',
+  '30_days': '30 Days',
+  '60_days': '60 Days',
+  not_available: 'Not Available',
+  full_time: 'Full Time',
+  part_time: 'Part Time',
+  contract: 'Contract',
+  contract_to_hire: 'Contract to Hire',
+  on_site: 'On-site',
+  remote: 'Remote',
+  hybrid: 'Hybrid',
+  hourly: 'Hourly',
+  daily: 'Daily',
+  annual: 'Annual',
+  per_diem: 'Per Diem',
+  linkedin: 'LinkedIn',
+  indeed: 'Indeed',
+  dice: 'Dice',
+  monster: 'Monster',
+  referral: 'Referral',
+  direct: 'Direct Application',
+  agency: 'Agency',
+  job_board: 'Job Board',
+  website: 'Website',
+  event: 'Event',
+  // Source types
+  manual: 'Manual Entry',
+  resume: 'Resume Upload',
 }
 
 interface ReviewSection<T> {
@@ -206,6 +313,26 @@ function renderFieldValue(key: string, value: unknown): React.ReactNode {
     return <Badge variant="outline" className="bg-charcoal-50">Net {String(value)}</Badge>
   }
 
+  // Resume file name
+  if (key === 'resumeFileName' && value) {
+    return (
+      <div className="flex items-center gap-2 p-2 bg-success-50 rounded-lg border border-success-200">
+        <FileText className="w-4 h-4 text-success-600" />
+        <span className="text-sm font-medium text-success-700">{String(value)}</span>
+        <CheckCircle2 className="w-4 h-4 text-success-600 ml-auto" />
+      </div>
+    )
+  }
+
+  // Resume file size (format as KB/MB)
+  if (key === 'resumeFileSize' && typeof value === 'number') {
+    const sizeKB = value / 1024
+    const formatted = sizeKB >= 1024
+      ? `${(sizeKB / 1024).toFixed(1)} MB`
+      : `${sizeKB.toFixed(1)} KB`
+    return <span className="text-charcoal-600">{formatted}</span>
+  }
+
   // Industries array
   if (key === 'industries' && Array.isArray(value)) {
     if (value.length === 0) return <span className="text-charcoal-400 italic">None selected</span>
@@ -220,9 +347,370 @@ function renderFieldValue(key: string, value: unknown): React.ReactNode {
     )
   }
 
+  // String arrays (tags, employmentTypes, workModes, primarySkills)
+  if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'string') {
+    return (
+      <div className="flex flex-wrap gap-1.5">
+        {value.map((item, idx) => (
+          <Badge key={idx} variant="outline" className="bg-charcoal-50 text-charcoal-700">
+            {VALUE_FORMATTERS[item] || item.replace(/_/g, ' ')}
+          </Badge>
+        ))}
+      </div>
+    )
+  }
+
+  // Skills array (objects with name, proficiency, and isPrimary)
+  if (key === 'skills' && Array.isArray(value)) {
+    if (value.length === 0) return <span className="text-charcoal-400 italic">No skills added</span>
+
+    const proficiencyLabels: Record<string, string> = {
+      beginner: 'Beginner',
+      intermediate: 'Intermediate',
+      advanced: 'Advanced',
+      expert: 'Expert',
+    }
+    const proficiencyColors: Record<string, string> = {
+      beginner: 'bg-charcoal-100 text-charcoal-600',
+      intermediate: 'bg-blue-100 text-blue-700',
+      advanced: 'bg-purple-100 text-purple-700',
+      expert: 'bg-success-100 text-success-700',
+    }
+
+    // Separate primary and other skills
+    const primarySkills = value.filter((s) => typeof s === 'object' && s.isPrimary)
+    const otherSkills = value.filter((s) => typeof s !== 'object' || !s.isPrimary)
+
+    return (
+      <div className="space-y-3">
+        {primarySkills.length > 0 && (
+          <div>
+            <div className="text-xs font-medium text-charcoal-500 uppercase tracking-wider mb-2">Primary Skills</div>
+            <div className="flex flex-wrap gap-2">
+              {primarySkills.map((skill, idx) => {
+                const s = skill as { name: string; proficiency?: string; yearsOfExperience?: number; isCertified?: boolean }
+                return (
+                  <div key={idx} className="flex items-center gap-2 px-3 py-1.5 bg-gold-50 rounded-lg border border-gold-200">
+                    <Crown className="w-3.5 h-3.5 text-gold-500" />
+                    <span className="font-medium text-charcoal-900 text-sm">{s.name}</span>
+                    {s.proficiency && (
+                      <Badge className={cn('text-xs', proficiencyColors[s.proficiency] || proficiencyColors.intermediate)}>
+                        {proficiencyLabels[s.proficiency] || s.proficiency}
+                      </Badge>
+                    )}
+                    {s.yearsOfExperience !== undefined && (
+                      <span className="text-xs text-charcoal-500">{s.yearsOfExperience}y</span>
+                    )}
+                    {s.isCertified && (
+                      <Award className="w-3 h-3 text-amber-500" />
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
+        {otherSkills.length > 0 && (
+          <div>
+            {primarySkills.length > 0 && (
+              <div className="text-xs font-medium text-charcoal-500 uppercase tracking-wider mb-2">Other Skills</div>
+            )}
+            <div className="flex flex-wrap gap-1.5">
+              {otherSkills.map((skill, idx) => {
+                const skillName = typeof skill === 'string' ? skill : skill.name
+                const s = typeof skill === 'object' ? skill as { proficiency?: string; yearsOfExperience?: number } : null
+                return (
+                  <Badge
+                    key={idx}
+                    variant="outline"
+                    className="bg-charcoal-50 text-charcoal-700"
+                  >
+                    {skillName}
+                    {s?.proficiency && (
+                      <span className="ml-1 text-charcoal-400">• {proficiencyLabels[s.proficiency] || s.proficiency}</span>
+                    )}
+                  </Badge>
+                )
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  // Work history array
+  if (key === 'workHistory' && Array.isArray(value)) {
+    if (value.length === 0) return <span className="text-charcoal-400 italic">No work history added</span>
+
+    const employmentTypeLabels: Record<string, string> = {
+      full_time: 'Full-Time',
+      contract: 'Contract',
+      part_time: 'Part-Time',
+      internship: 'Internship',
+    }
+
+    return (
+      <div className="space-y-3">
+        {value.map((job, idx) => {
+          const j = job as {
+            companyName?: string
+            jobTitle?: string
+            employmentType?: string
+            startDate?: string
+            endDate?: string
+            isCurrent?: boolean
+            locationCity?: string
+            locationState?: string
+            isRemote?: boolean
+            description?: string
+            isFromResume?: boolean
+          }
+          return (
+            <div key={idx} className="p-3 bg-charcoal-50/50 rounded-lg border border-charcoal-100">
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="font-medium text-charcoal-900">{j.jobTitle || 'Untitled'}</div>
+                  <div className="text-sm text-charcoal-600 flex items-center gap-2">
+                    <Building2 className="w-3.5 h-3.5" />
+                    {j.companyName || 'Unknown company'}
+                    {j.employmentType && (
+                      <Badge variant="outline" className="text-xs">
+                        {employmentTypeLabels[j.employmentType] || j.employmentType}
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+                {j.isFromResume && (
+                  <Badge variant="outline" className="text-xs bg-blue-50 text-blue-600 border-blue-200">
+                    From Resume
+                  </Badge>
+                )}
+              </div>
+              <div className="flex items-center gap-4 mt-2 text-xs text-charcoal-500">
+                <span className="flex items-center gap-1">
+                  <Calendar className="w-3 h-3" />
+                  {j.startDate ? formatDate(j.startDate) : '?'} - {j.isCurrent ? (
+                    <Badge className="text-xs bg-success-50 text-success-700">Present</Badge>
+                  ) : (j.endDate ? formatDate(j.endDate) : '?')}
+                </span>
+                {(j.locationCity || j.locationState || j.isRemote) && (
+                  <span className="flex items-center gap-1">
+                    <MapPin className="w-3 h-3" />
+                    {j.isRemote ? 'Remote' : [j.locationCity, j.locationState].filter(Boolean).join(', ')}
+                  </span>
+                )}
+              </div>
+              {j.description && (
+                <p className="mt-2 text-xs text-charcoal-600 line-clamp-2">{j.description}</p>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
+  // Education array
+  if (key === 'education' && Array.isArray(value)) {
+    if (value.length === 0) return <span className="text-charcoal-400 italic">No education added</span>
+    const degreeLabels: Record<string, string> = {
+      high_school: 'High School / GED',
+      associate: "Associate's Degree",
+      bachelor: "Bachelor's Degree",
+      master: "Master's Degree",
+      phd: 'Doctorate / PhD',
+      other: 'Other Credential',
+    }
+    return (
+      <div className="space-y-2">
+        {value.map((edu, idx) => {
+          const e = edu as {
+            institutionName?: string
+            degreeType?: string
+            degreeName?: string
+            fieldOfStudy?: string
+            endDate?: string
+            gpa?: number
+            honors?: string
+          }
+          const degreeDisplay = e.degreeName || degreeLabels[e.degreeType || ''] || 'Degree'
+          return (
+            <div key={idx} className="p-3 bg-charcoal-50/50 rounded-lg border border-charcoal-100">
+              <div className="font-medium text-charcoal-900">
+                {degreeDisplay}{e.fieldOfStudy ? ` in ${e.fieldOfStudy}` : ''}
+              </div>
+              <div className="text-sm text-charcoal-600">{e.institutionName || 'Institution'}</div>
+              <div className="flex items-center gap-4 mt-1">
+                {e.endDate && (
+                  <span className="text-xs text-charcoal-500">Graduated: {formatDate(e.endDate)}</span>
+                )}
+                {e.gpa && (
+                  <span className="text-xs text-charcoal-500">GPA: {e.gpa}</span>
+                )}
+                {e.honors && (
+                  <Badge variant="outline" className="text-xs bg-gold-50 text-gold-700 border-gold-200">
+                    {e.honors}
+                  </Badge>
+                )}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
+  // Certifications array
+  if (key === 'certifications' && Array.isArray(value)) {
+    if (value.length === 0) return <span className="text-charcoal-400 italic">No certifications added</span>
+    return (
+      <div className="space-y-2">
+        {value.map((cert, idx) => {
+          const c = cert as {
+            name?: string
+            acronym?: string
+            issuingOrganization?: string
+            credentialId?: string
+            issueDate?: string
+            expiryDate?: string
+            isLifetime?: boolean
+          }
+          const certName = typeof cert === 'string' ? cert : c.name || 'Certification'
+          const displayName = c.acronym ? `${certName} (${c.acronym})` : certName
+          return (
+            <div key={idx} className="flex items-center gap-3 p-2 bg-amber-50/50 rounded-lg border border-amber-100">
+              <div className="p-1.5 bg-amber-100 rounded">
+                <Award className="w-4 h-4 text-amber-600" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-medium text-charcoal-900 text-sm">{displayName}</div>
+                {c.issuingOrganization && (
+                  <div className="text-xs text-charcoal-500">{c.issuingOrganization}</div>
+                )}
+                <div className="flex items-center gap-3 mt-0.5">
+                  {c.credentialId && (
+                    <span className="text-xs text-charcoal-400">ID: {c.credentialId}</span>
+                  )}
+                  {c.isLifetime ? (
+                    <Badge variant="outline" className="text-xs bg-success-50 text-success-700 border-success-200">
+                      Lifetime
+                    </Badge>
+                  ) : c.expiryDate ? (
+                    <span className="text-xs text-charcoal-400">Expires: {formatDate(c.expiryDate)}</span>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
+  // Compliance documents array
+  if (key === 'complianceDocuments' && Array.isArray(value)) {
+    if (value.length === 0) return <span className="text-charcoal-400 italic">No documents uploaded</span>
+
+    const docTypeLabels: Record<string, string> = {
+      rtr: 'Right to Represent (RTR)',
+      nda: 'Non-Disclosure Agreement',
+      references: 'Professional References',
+      background_auth: 'Background Check Authorization',
+      void_check: 'Voided Check / Direct Deposit',
+      i9: 'I-9 Employment Eligibility',
+      w4: 'W-4 Tax Withholding',
+      other: 'Other Document',
+    }
+
+    const statusColors: Record<string, string> = {
+      not_uploaded: 'bg-charcoal-100 text-charcoal-600',
+      pending: 'bg-amber-100 text-amber-700',
+      submitted: 'bg-blue-100 text-blue-700',
+      approved: 'bg-success-100 text-success-700',
+      rejected: 'bg-error-100 text-error-700',
+    }
+
+    const statusLabels: Record<string, string> = {
+      not_uploaded: 'Not Uploaded',
+      pending: 'Pending Review',
+      submitted: 'Submitted',
+      approved: 'Approved',
+      rejected: 'Rejected',
+    }
+
+    return (
+      <div className="space-y-2">
+        {value.map((doc, idx) => {
+          const d = doc as {
+            type?: string
+            status?: string
+            fileName?: string
+            fileSize?: number
+            uploadedAt?: string
+            notes?: string
+          }
+          const typeLabel = docTypeLabels[d.type || ''] || d.type?.replace(/_/g, ' ') || 'Document'
+          const sizeFormatted = d.fileSize
+            ? d.fileSize >= 1024 * 1024
+              ? `${(d.fileSize / (1024 * 1024)).toFixed(1)} MB`
+              : `${(d.fileSize / 1024).toFixed(1)} KB`
+            : null
+
+          return (
+            <div key={idx} className="flex items-center gap-3 p-2 bg-blue-50/50 rounded-lg border border-blue-100">
+              <div className="p-1.5 bg-blue-100 rounded">
+                <FileText className="w-4 h-4 text-blue-600" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-medium text-charcoal-900 text-sm">{typeLabel}</div>
+                {d.fileName && (
+                  <div className="text-xs text-charcoal-500 truncate">{d.fileName}</div>
+                )}
+                <div className="flex items-center gap-2 mt-0.5">
+                  <Badge className={cn('text-xs', statusColors[d.status || 'pending'])}>
+                    {statusLabels[d.status || 'pending']}
+                  </Badge>
+                  {sizeFormatted && (
+                    <span className="text-xs text-charcoal-400">{sizeFormatted}</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
+  // Empty arrays
+  if (Array.isArray(value) && value.length === 0) {
+    return <span className="text-charcoal-400 italic">None</span>
+  }
+
   // Formatted values lookup
   if (typeof value === 'string' && VALUE_FORMATTERS[value]) {
     return VALUE_FORMATTERS[value]
+  }
+
+  // Numbers (including rates)
+  if (typeof value === 'number') {
+    if (key.toLowerCase().includes('rate') || key.toLowerCase().includes('salary')) {
+      return `$${value.toLocaleString()}`
+    }
+    if (key === 'noticePeriodDays') {
+      return `${value} days`
+    }
+    if (key === 'experienceYears') {
+      return `${value} ${value === 1 ? 'year' : 'years'}`
+    }
+    if (key.toLowerCase().includes('years')) {
+      return `${value} years`
+    }
+    if (key.toLowerCase().includes('days')) {
+      return `${value} days`
+    }
+    return String(value)
   }
 
   // Default string/number
@@ -621,31 +1109,31 @@ function ReviewSection<T>({
   // Group fields logically
   const groupedFields = simpleFields.reduce((groups, field) => {
     const key = String(field)
-    // Identity group
+    // Account Identity group
     if (['name', 'legalName', 'dba'].includes(key)) {
       groups.identity = [...(groups.identity || []), field]
     }
-    // Contact info group
-    else if (['email', 'phone', 'website', 'linkedinUrl'].includes(key)) {
+    // Account Contact info group
+    else if (['email', 'phone', 'website', 'linkedinUrl'].includes(key) && !['firstName', 'lastName'].some(k => simpleFields.map(String).includes(k))) {
       groups.contact = [...(groups.contact || []), field]
     }
-    // Classification group
+    // Account Classification group
     else if (['industries', 'companyType', 'tier', 'segment'].includes(key)) {
       groups.classification = [...(groups.classification || []), field]
     }
-    // Billing entity group
+    // Account Billing entity group
     else if (['billingEntityName', 'billingEmail', 'billingPhone'].includes(key)) {
       groups.billingEntity = [...(groups.billingEntity || []), field]
     }
-    // Payment config group
-    else if (['paymentTermsDays', 'billingFrequency', 'currency', 'invoiceFormat'].includes(key)) {
+    // Account Payment config group
+    else if (['paymentTermsDays', 'billingFrequency', 'invoiceFormat'].includes(key) && !['rateType'].some(k => simpleFields.map(String).includes(k))) {
       groups.paymentConfig = [...(groups.paymentConfig || []), field]
     }
-    // PO group
+    // Account PO group
     else if (['poRequired', 'currentPoNumber', 'poExpirationDate'].includes(key)) {
       groups.po = [...(groups.po || []), field]
     }
-    // Default group
+    // Default group - keeps all candidate fields together
     else {
       groups.other = [...(groups.other || []), field]
     }
@@ -702,20 +1190,37 @@ function ReviewSection<T>({
                 {fields.map((fieldKey) => {
                   const value = (formData as Record<string, unknown>)[String(fieldKey)]
                   const label = FIELD_LABELS[String(fieldKey)] || String(fieldKey)
+                  const key = String(fieldKey)
 
-                  // Full width for description
-                  const isFullWidth = String(fieldKey) === 'description' || String(fieldKey) === 'industries'
+                  // Full width for complex/multi-line fields
+                  const fullWidthFields = [
+                    'description',
+                    'industries',
+                    'professionalSummary',
+                    'professionalHeadline',
+                    'workHistory',
+                    'education',
+                    'skills',
+                    'certifications',
+                    'complianceDocuments',
+                    'compensationNotes',
+                    'relocationPreferences',
+                    'internalNotes',
+                    'hotlistNotes',
+                    'sourceDetails',
+                  ]
+                  const isFullWidth = fullWidthFields.includes(key)
 
                   return (
                     <div
-                      key={String(fieldKey)}
+                      key={key}
                       className={cn(isFullWidth && 'col-span-2 md:col-span-3')}
                     >
                       <dt className="text-xs font-medium text-charcoal-500 uppercase tracking-wider mb-1">
                         {label}
                       </dt>
                       <dd className="text-sm text-charcoal-900">
-                        {renderFieldValue(String(fieldKey), value)}
+                        {renderFieldValue(key, value)}
                       </dd>
                     </div>
                   )
@@ -761,7 +1266,7 @@ export function WizardReview<T>({
         </div>
         <div>
           <h2 className="text-xl font-heading font-semibold text-charcoal-900">{title}</h2>
-          <p className="text-sm text-charcoal-500">Review all information before creating the account</p>
+          <p className="text-sm text-charcoal-500">Review all information before submitting</p>
         </div>
       </div>
 
