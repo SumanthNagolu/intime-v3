@@ -49,6 +49,8 @@ import { contactMergeHistoryRouter } from '../routers/contact-merge-history'
 import { contactBenchRouter } from '../routers/contact-bench'
 // Unified companies router (accounts + vendors + partners consolidated)
 import { companiesRouter } from '../routers/companies'
+// Per-section account management router (unified architecture)
+import { accountsRouter } from '../routers/accounts'
 // Entity resolution service (ENTITIES-01)
 import { entitiesRouter } from '../routers/entities'
 // Centralized notes system (NOTES-01)
@@ -127,6 +129,8 @@ export const appRouter = router({
   contactBench: contactBenchRouter,
   // Unified companies (accounts + vendors + partners consolidated)
   companies: companiesRouter,
+  // Per-section account management (unified architecture)
+  accounts: accountsRouter,
   // Entity resolution service (ENTITIES-01)
   entities: entitiesRouter,
   // Centralized notes system (NOTES-01)
