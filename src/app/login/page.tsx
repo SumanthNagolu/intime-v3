@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
@@ -18,6 +18,7 @@ import {
   ChevronLeft,
 } from 'lucide-react';
 import { signIn, signInWithGoogle, getUserRole, getEmployeeRedirectPath, setOrgCookie, type PortalType } from '@/lib/auth/client';
+import { createClient } from '@/lib/supabase/client';
 
 const PORTALS: Array<{
   id: PortalType;
@@ -70,17 +71,48 @@ function LoginPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get('redirect');
-  
+
   const [selectedPortal, setSelectedPortal] = useState<PortalType | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const portal = PORTALS.find((p) => p.id === selectedPortal);
+
+  // Check if user is already authenticated and redirect to portal
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (user) {
+          // User is already authenticated, redirect to portal
+          if (redirectTo) {
+            // Use the redirect param if provided (e.g., from middleware)
+            router.replace(redirectTo);
+          } else {
+            // Default to employee portal with role-based redirect
+            const role = await getUserRole(user.id);
+            const redirectPath = getEmployeeRedirectPath(role);
+            router.replace(redirectPath);
+          }
+        } else {
+          setIsCheckingAuth(false);
+        }
+      } catch {
+        // Auth check failed, show login form
+        setIsCheckingAuth(false);
+      }
+    };
+
+    checkAuth();
+  }, [router, redirectTo]);
 
   const handleGoogleSignIn = async () => {
     if (!selectedPortal) return;
@@ -132,6 +164,27 @@ function LoginPageContent() {
       setIsLoading(false);
     }
   };
+
+  // Show loading while checking auth
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-ivory via-white to-charcoal-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+        <div className="w-full max-w-md">
+          <div className="text-center mb-8">
+            <h1 className="font-heading text-5xl sm:text-6xl text-forest-900 tracking-tight">
+              In<span className="text-gold-600">Time</span>
+            </h1>
+            <p className="text-charcoal-500 mt-2 text-sm">
+              Enterprise Staffing Platform
+            </p>
+          </div>
+          <div className="bg-white rounded-2xl shadow-xl shadow-charcoal-900/5 border border-charcoal-100 p-8 flex items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-forest-600" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-ivory via-white to-charcoal-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">

@@ -31,6 +31,9 @@ import {
   ShieldCheck,
   Link2,
   Files,
+  CreditCard,
+  Shield,
+  UserCog,
 } from 'lucide-react'
 
 /**
@@ -44,8 +47,11 @@ export interface SectionDefinition {
   showCount?: boolean
   alertOnCount?: boolean // Show alert styling when count > 0
   isToolSection?: boolean // Marks section as part of the collapsible Tools group
-  group?: 'main' | 'automation' | 'tools' // For grouping in sidebar
+  group?: 'main' | 'automation' | 'tools' | 'related' // For grouping in sidebar
   description?: string // Tooltip/description for the section
+  number?: number // Step number for wizard-style navigation (1-based)
+  isOverview?: boolean // True for summary/overview sections (no number)
+  isRelatedData?: boolean // True for related data sections (separate group)
 }
 
 /**
@@ -152,26 +158,77 @@ export const campaignSections: SectionDefinition[] = [
 ]
 
 /**
- * Account sections - Guidewire-style with main sections + tools
- * Main: Summary, Contacts, Jobs, Placements (sub-object collections)
- * Tools: Activities, Notes, Documents, History
+ * Account sections - Wizard-matching design with numbered main sections
+ *
+ * MAIN SECTIONS (numbered 1-7, match wizard steps):
+ *   - Summary: Dashboard overview (no number)
+ *   - Identity & Classification: Company identity, registration, digital presence
+ *   - Locations: Company addresses and locations
+ *   - Billing & Terms: Billing entity, payment terms, PO configuration
+ *   - Contacts: Company contacts and POCs
+ *   - Contracts: MSA, SOW, and other agreements
+ *   - Compliance: Insurance, background checks, certifications
+ *   - Team: Account owner, manager, recruiter, sales lead
+ *
+ * RELATED DATA (unnumbered, separate group):
+ *   - Jobs, Placements, Meetings, Escalations, Related Accounts
+ *
+ * TOOLS:
+ *   - Activities, Notes, Documents, History
  */
 export const accountSections: SectionDefinition[] = [
-  // Main sections
-  { id: 'summary', label: 'Summary', icon: Building2 },
-  { id: 'related_accounts', label: 'Related Accounts', icon: Link2, showCount: true },
-  { id: 'contacts', label: 'Contacts', icon: Users, showCount: true },
-  { id: 'jobs', label: 'Jobs', icon: Briefcase, showCount: true },
-  { id: 'placements', label: 'Placements', icon: Award, showCount: true },
-  { id: 'addresses', label: 'Addresses', icon: MapPin, showCount: true },
-  { id: 'meetings', label: 'Meetings', icon: Calendar, showCount: true },
-  { id: 'escalations', label: 'Escalations', icon: AlertTriangle, showCount: true, alertOnCount: true },
+  // Summary section (overview dashboard)
+  { id: 'summary', label: 'Summary', icon: LayoutDashboard, group: 'main', isOverview: true, description: 'Account health and key metrics at a glance' },
+
+  // Main sections (numbered 1-7, match wizard steps)
+  { id: 'identity', label: 'Identity & Classification', icon: Building2, group: 'main', number: 1, description: 'Company details, registration, and industry classification' },
+  { id: 'locations', label: 'Locations', icon: MapPin, group: 'main', number: 2, showCount: true, description: 'Company addresses and work locations' },
+  { id: 'billing', label: 'Billing & Terms', icon: CreditCard, group: 'main', number: 3, description: 'Billing entity, payment terms, and PO configuration' },
+  { id: 'contacts', label: 'Contacts', icon: Users, group: 'main', number: 4, showCount: true, description: 'Company contacts and points of contact' },
+  { id: 'contracts', label: 'Contracts', icon: FileText, group: 'main', number: 5, showCount: true, description: 'MSA, SOW, and other agreements' },
+  { id: 'compliance', label: 'Compliance', icon: Shield, group: 'main', number: 6, description: 'Insurance, background checks, certifications' },
+  { id: 'team', label: 'Team', icon: UserCog, group: 'main', number: 7, description: 'Account assignments and team members' },
+
+  // Related data sections (unnumbered, separate group)
+  { id: 'jobs', label: 'Jobs', icon: Briefcase, group: 'related', showCount: true, isRelatedData: true, description: 'Open positions at this account' },
+  { id: 'placements', label: 'Placements', icon: Award, group: 'related', showCount: true, isRelatedData: true, description: 'Active and past placements' },
+  { id: 'meetings', label: 'Meetings', icon: Calendar, group: 'related', showCount: true, isRelatedData: true, description: 'Scheduled and past meetings' },
+  { id: 'escalations', label: 'Escalations', icon: AlertTriangle, group: 'related', showCount: true, alertOnCount: true, isRelatedData: true, description: 'Issues requiring attention' },
+  { id: 'related_accounts', label: 'Related Accounts', icon: Link2, group: 'related', showCount: true, isRelatedData: true, description: 'Parent, subsidiary, and partner accounts' },
+
   // Tools section
-  { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true },
-  { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },
-  { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true },
-  { id: 'history', label: 'History', icon: History, isToolSection: true },
+  { id: 'activities', label: 'Activities', icon: Activity, group: 'tools', showCount: true, isToolSection: true, description: 'All account interactions' },
+  { id: 'notes', label: 'Notes', icon: StickyNote, group: 'tools', showCount: true, isToolSection: true, description: 'Internal notes and observations' },
+  { id: 'documents', label: 'Documents', icon: FileText, group: 'tools', showCount: true, isToolSection: true, description: 'Uploaded files and attachments' },
+  { id: 'history', label: 'History', icon: History, group: 'tools', isToolSection: true, description: 'Audit trail and change history' },
 ]
+
+/**
+ * Account section groups - organized for wizard-style sidebar
+ */
+export const accountSectionGroups = {
+  main: accountSections.filter(s => s.group === 'main' && !s.isOverview),
+  overview: accountSections.filter(s => s.isOverview),
+  related: accountSections.filter(s => s.isRelatedData),
+  tools: accountSections.filter(s => s.isToolSection),
+}
+
+/**
+ * Helper to get account sections organized by group for wizard-style sidebar
+ */
+export function getAccountSectionsByGroup(): {
+  overviewSection: SectionDefinition | undefined
+  mainSections: SectionDefinition[]
+  relatedSections: SectionDefinition[]
+  toolSections: SectionDefinition[]
+} {
+  return {
+    overviewSection: accountSections.find(s => s.isOverview),
+    mainSections: accountSections.filter(s => s.group === 'main' && !s.isOverview),
+    relatedSections: accountSections.filter(s => s.isRelatedData),
+    toolSections: accountSections.filter(s => s.isToolSection),
+  }
+}
 
 /**
  * Job sections - Guidewire-style with main sections + tools

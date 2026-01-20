@@ -6,13 +6,15 @@ import type { WorkspaceWarning } from '@/types/workspace'
 import { useAccountWorkspace } from './account/AccountWorkspaceProvider'
 import { AccountHeader } from './account/AccountHeader'
 import { WarningsBanner } from '@/components/ui/warnings-banner'
+import { useToast } from '@/components/ui/use-toast'
+import { trpc } from '@/lib/trpc/client'
 
 // Section components (implemented in Phase 3)
 import { AccountOverviewSection } from './account/sections/AccountOverviewSection'
 import { AccountContactsSection } from './account/sections/AccountContactsSection'
 import { AccountJobsSection } from './account/sections/AccountJobsSection'
 import { AccountPlacementsSection } from './account/sections/AccountPlacementsSection'
-import { AccountAddressesSection } from './account/sections/AccountAddressesSection'
+// Note: AccountAddressesSection removed - now handled by AccountLocationsSectionWrapper
 import { AccountMeetingsSection } from './account/sections/AccountMeetingsSection'
 import { AccountEscalationsSection } from './account/sections/AccountEscalationsSection'
 import { AccountRelatedAccountsSection } from './account/sections/AccountRelatedAccountsSection'
@@ -20,6 +22,36 @@ import { AccountActivitiesSection } from './account/sections/AccountActivitiesSe
 import { AccountNotesSection } from './account/sections/AccountNotesSection'
 import { AccountDocumentsSection } from './account/sections/AccountDocumentsSection'
 import { AccountHistorySection } from './account/sections/AccountHistorySection'
+
+// Unified section components
+import {
+  IdentitySection,
+  LocationsSection,
+  BillingSection,
+  ContractsSection,
+  ComplianceSection,
+  TeamSection,
+} from '@/components/accounts/sections'
+
+// Section hooks
+import {
+  useIdentitySection,
+  useLocationsSection,
+  useBillingSection,
+  useContractsSection,
+  useComplianceSection,
+  useTeamSection,
+} from '@/components/accounts/hooks'
+
+// Data mappers
+import {
+  mapToIdentityData,
+  mapToLocationsData,
+  mapToBillingData,
+  mapToContractsData,
+  mapToComplianceData,
+  mapToTeamData,
+} from '@/lib/accounts/mappers'
 
 // Dialogs
 import { LinkAccountDialog } from '@/components/recruiting/accounts/LinkAccountDialog'
@@ -30,10 +62,18 @@ export interface AccountWorkspaceProps {
 
 type AccountSection =
   | 'summary'
+  // New wizard-matching sections
+  | 'identity'
+  | 'locations'
+  | 'billing'
+  | 'contracts'
+  | 'compliance'
+  | 'team'
+  // Existing sections
   | 'contacts'
   | 'jobs'
   | 'placements'
-  | 'addresses'
+  | 'addresses'  // Deprecated - use 'locations'
   | 'meetings'
   | 'escalations'
   | 'related_accounts'
@@ -54,7 +94,7 @@ type AccountSection =
  * - Simple, readable code (no config objects)
  * - NOTE: Sidebar is provided by SidebarLayout via EntityJourneySidebar
  */
-export function AccountWorkspace({ onAction }: AccountWorkspaceProps = {}) {
+export function AccountWorkspace({ onAction: _onAction }: AccountWorkspaceProps = {}) {
   const { data, refreshData } = useAccountWorkspace()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -117,6 +157,25 @@ export function AccountWorkspace({ onAction }: AccountWorkspaceProps = {}) {
           onNavigate={handleSectionChange}
         />
       )}
+      {/* Unified sections (same components used in wizard) */}
+      {currentSection === 'identity' && (
+        <AccountIdentitySectionWrapper />
+      )}
+      {(currentSection === 'locations' || currentSection === 'addresses') && (
+        <AccountLocationsSectionWrapper />
+      )}
+      {currentSection === 'billing' && (
+        <AccountBillingSectionWrapper />
+      )}
+      {currentSection === 'contracts' && (
+        <AccountContractsSectionWrapper />
+      )}
+      {currentSection === 'compliance' && (
+        <AccountComplianceSectionWrapper />
+      )}
+      {currentSection === 'team' && (
+        <AccountTeamSectionWrapper />
+      )}
       {currentSection === 'contacts' && (
         <AccountContactsSection
           contacts={data.contacts}
@@ -134,12 +193,6 @@ export function AccountWorkspace({ onAction }: AccountWorkspaceProps = {}) {
       {currentSection === 'placements' && (
         <AccountPlacementsSection
           placements={data.placements}
-          accountId={data.account.id}
-        />
-      )}
-      {currentSection === 'addresses' && (
-        <AccountAddressesSection
-          addresses={data.addresses}
           accountId={data.account.id}
         />
       )}
@@ -196,3 +249,206 @@ export function AccountWorkspace({ onAction }: AccountWorkspaceProps = {}) {
 }
 
 export default AccountWorkspace
+
+// ============ UNIFIED SECTION WRAPPERS ============
+// These wrappers bridge workspace context data to the unified section components
+// Mappers expect account object with nested relations, so we construct it from workspace data
+
+function AccountIdentitySectionWrapper() {
+  const { data, refreshData } = useAccountWorkspace()
+  const { toast } = useToast()
+
+  const section = useIdentitySection({
+    accountId: data.account.id,
+    initialData: mapToIdentityData(data.account as unknown as Record<string, unknown>),
+    mode: 'view',
+    onSaveComplete: () => {
+      toast({ title: 'Account identity updated successfully' })
+      refreshData()
+    },
+  })
+
+  return (
+    <IdentitySection
+      mode={section.isEditing ? 'edit' : 'view'}
+      data={section.data}
+      onChange={section.handleChange}
+      onToggleIndustry={section.handleToggleIndustry}
+      onEdit={section.handleEdit}
+      onSave={section.handleSave}
+      onCancel={section.handleCancel}
+      isSaving={section.isSaving}
+      errors={section.errors}
+    />
+  )
+}
+
+function AccountLocationsSectionWrapper() {
+  const { data, refreshData } = useAccountWorkspace()
+  const { toast } = useToast()
+
+  // Construct object with addresses for the mapper
+  const accountWithAddresses = {
+    ...data.account,
+    addresses: data.addresses,
+  }
+
+  const section = useLocationsSection({
+    accountId: data.account.id,
+    initialData: mapToLocationsData(accountWithAddresses as unknown as Record<string, unknown>),
+    mode: 'view',
+    onSaveComplete: () => {
+      toast({ title: 'Locations updated successfully' })
+      refreshData()
+    },
+  })
+
+  return (
+    <LocationsSection
+      mode={section.isEditing ? 'edit' : 'view'}
+      data={section.data}
+      onAddAddress={section.handleAddAddress}
+      onUpdateAddress={section.handleUpdateAddress}
+      onRemoveAddress={section.handleRemoveAddress}
+      onSave={section.handleSave}
+      onCancel={section.handleCancel}
+      isSaving={section.isSaving}
+      errors={section.errors}
+    />
+  )
+}
+
+function AccountBillingSectionWrapper() {
+  const { data, refreshData } = useAccountWorkspace()
+  const { toast } = useToast()
+
+  const section = useBillingSection({
+    accountId: data.account.id,
+    initialData: mapToBillingData(data.account as unknown as Record<string, unknown>),
+    mode: 'view',
+    onSaveComplete: () => {
+      toast({ title: 'Billing settings updated successfully' })
+      refreshData()
+    },
+  })
+
+  return (
+    <BillingSection
+      mode={section.isEditing ? 'edit' : 'view'}
+      data={section.data}
+      onChange={section.handleChange}
+      onEdit={section.handleEdit}
+      onSave={section.handleSave}
+      onCancel={section.handleCancel}
+      isSaving={section.isSaving}
+      errors={section.errors}
+    />
+  )
+}
+
+// Note: AccountContactsUnifiedWrapper removed - contacts section uses existing AccountContactsSection
+
+function AccountContractsSectionWrapper() {
+  const { data, refreshData } = useAccountWorkspace()
+  const { toast } = useToast()
+
+  // Construct object with contracts for the mapper
+  // Note: contracts are not yet in FullAccountData, so we use an empty array
+  const accountWithContracts = {
+    ...data.account,
+    contracts: [],
+  }
+
+  const section = useContractsSection({
+    accountId: data.account.id,
+    initialData: mapToContractsData(accountWithContracts as unknown as Record<string, unknown>),
+    mode: 'view',
+    onSaveComplete: () => {
+      toast({ title: 'Contracts updated successfully' })
+      refreshData()
+    },
+  })
+
+  return (
+    <ContractsSection
+      mode={section.isEditing ? 'edit' : 'view'}
+      data={section.data}
+      onAddContract={section.handleAddContract}
+      onUpdateContract={section.handleUpdateContract}
+      onRemoveContract={section.handleRemoveContract}
+      onSave={section.handleSave}
+      onCancel={section.handleCancel}
+      isSaving={section.isSaving}
+      errors={section.errors}
+    />
+  )
+}
+
+function AccountComplianceSectionWrapper() {
+  const { data, refreshData } = useAccountWorkspace()
+  const { toast } = useToast()
+
+  const section = useComplianceSection({
+    accountId: data.account.id,
+    initialData: mapToComplianceData(data.account as unknown as Record<string, unknown>),
+    mode: 'view',
+    onSaveComplete: () => {
+      toast({ title: 'Compliance settings updated successfully' })
+      refreshData()
+    },
+  })
+
+  return (
+    <ComplianceSection
+      mode={section.isEditing ? 'edit' : 'view'}
+      data={section.data}
+      onChange={section.handleChange}
+      onEdit={section.handleEdit}
+      onSave={section.handleSave}
+      onCancel={section.handleCancel}
+      isSaving={section.isSaving}
+      errors={section.errors}
+    />
+  )
+}
+
+function AccountTeamSectionWrapper() {
+  const { data, refreshData } = useAccountWorkspace()
+  const { toast } = useToast()
+
+  // Fetch team members for selection
+  const usersQuery = trpc.users.list.useQuery({})
+
+  const section = useTeamSection({
+    accountId: data.account.id,
+    initialData: mapToTeamData(data.account as unknown as Record<string, unknown>),
+    mode: 'view',
+    onSaveComplete: () => {
+      toast({ title: 'Team settings updated successfully' })
+      refreshData()
+    },
+  })
+
+  // Map users to team members format
+  const teamMembers =
+    usersQuery.data?.items?.map((user) => ({
+      id: user.id,
+      full_name: user.full_name || user.email,
+      email: user.email,
+      avatar_url: user.avatar_url,
+    })) || []
+
+  return (
+    <TeamSection
+      mode={section.isEditing ? 'edit' : 'view'}
+      data={section.data}
+      onChange={section.handleChange}
+      onEdit={section.handleEdit}
+      onSave={section.handleSave}
+      onCancel={section.handleCancel}
+      isSaving={section.isSaving}
+      errors={section.errors}
+      teamMembers={teamMembers}
+    />
+  )
+}

@@ -838,7 +838,7 @@ export const crmRouter = router({
         // Contracts - use client-provided UUID for idempotent upserts
         if (input.contracts && input.contracts.length > 0) {
           for (const contract of input.contracts) {
-            await adminClient.from('contracts').upsert({
+            const contractRow: any = {
               ...(contract.id ? { id: contract.id } : {}),
               org_id: orgId,
               entity_type: 'account',
@@ -852,9 +852,16 @@ export const crmRouter = router({
               auto_renew: contract.autoRenew,
               contract_value: contract.contractValue ? Number(contract.contractValue) : null,
               currency: contract.currency,
-              document_url: contract.fileUrl,
               created_by: userProfileId,
-            })
+            }
+
+            // IMPORTANT: Don't overwrite an existing uploaded document_url with undefined/empty.
+            // The upload step updates document_url asynchronously after the upsert.
+            if (contract.fileUrl) {
+              contractRow.document_url = contract.fileUrl
+            }
+
+            await adminClient.from('contracts').upsert(contractRow)
           }
         }
 
@@ -1427,7 +1434,7 @@ export const crmRouter = router({
         // Contracts - use client-provided UUID for idempotent upserts
         if (input.contracts && input.contracts.length > 0) {
           for (const contract of input.contracts) {
-            await adminClient.from('contracts').upsert({
+            const contractRow: any = {
               ...(contract.id ? { id: contract.id } : {}),
               org_id: orgId,
               entity_type: 'account',
@@ -1441,9 +1448,15 @@ export const crmRouter = router({
               auto_renew: contract.autoRenew,
               contract_value: contract.contractValue ? Number(contract.contractValue) : null,
               currency: contract.currency,
-              document_url: contract.fileUrl,
               updated_by: userProfileId,
-            })
+            }
+
+            // IMPORTANT: Don't overwrite an existing uploaded document_url with undefined/empty.
+            if (contract.fileUrl) {
+              contractRow.document_url = contract.fileUrl
+            }
+
+            await adminClient.from('contracts').upsert(contractRow)
           }
         }
 

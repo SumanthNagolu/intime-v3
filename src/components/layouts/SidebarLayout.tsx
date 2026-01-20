@@ -5,6 +5,7 @@ import { Suspense } from "react"
 import { SectionSidebar } from "@/components/navigation/SectionSidebar"
 import { EntityJourneySidebar } from "@/components/navigation/EntityJourneySidebar"
 import { CampaignEntitySidebar } from "@/components/navigation/CampaignEntitySidebar"
+import { AccountSectionsSidebar } from "@/components/navigation/AccountSectionsSidebar"
 import { TopNavigation } from "@/components/navigation/TopNavigation"
 import { useEntityNavigationSafe } from "@/lib/navigation/EntityNavigationContext"
 import { useEntityData } from "@/components/layouts/EntityContextProvider"
@@ -33,6 +34,10 @@ interface SidebarLayoutProps {
     notes?: number
     documents?: number
   }
+  /** Optional: Section counts for all sections (used by account sidebar) */
+  sectionCounts?: Record<string, number>
+  /** Optional: Which sections have data for completion indicators */
+  sectionHasData?: Record<string, boolean>
   /** Optional: Custom sidebar component to override default navigation */
   customSidebar?: React.ReactNode
 }
@@ -60,6 +65,8 @@ function SidebarLayoutInner({
   hideSidebar = false,
   sectionId,
   toolCounts,
+  sectionCounts,
+  sectionHasData,
   customSidebar,
 }: SidebarLayoutProps) {
   const entityNav = useEntityNavigationSafe()
@@ -85,6 +92,16 @@ function SidebarLayoutInner({
                   campaignId={currentEntity.id}
                   campaignStatus={currentEntity.status}
                   counts={toolCounts}
+                />
+              ) : currentEntity.type === 'account' ? (
+                // Account uses wizard-matching sidebar with numbered sections
+                <AccountSectionsSidebar
+                  entityId={currentEntity.id}
+                  entityName={currentEntity.name}
+                  entitySubtitle={currentEntity.subtitle}
+                  entityStatus={currentEntity.status}
+                  sectionCounts={sectionCounts}
+                  sectionHasData={sectionHasData}
                 />
               ) : (
                 // All other entities use unified EntityJourneySidebar

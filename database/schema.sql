@@ -247,6 +247,7 @@ CREATE TYPE public.company_segment AS ENUM (
 --
 
 CREATE TYPE public.company_status AS ENUM (
+    'draft',
     'active',
     'inactive',
     'on_hold',
@@ -17481,7 +17482,11 @@ CREATE TABLE public.candidate_resumes (
     archived_by uuid,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    contact_id uuid
+    contact_id uuid,
+    is_primary boolean DEFAULT false,
+    target_role text,
+    source text DEFAULT 'uploaded'::text,
+    CONSTRAINT candidate_resumes_source_check CHECK ((source = ANY (ARRAY['uploaded'::text, 'parsed'::text, 'manual'::text, 'ai_generated'::text])))
 );
 
 
@@ -17751,7 +17756,29 @@ CREATE TABLE public.candidates (
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     deleted_at timestamp with time zone,
-    contact_id uuid
+    contact_id uuid,
+    wizard_state jsonb,
+    location_city text,
+    location_state text,
+    location_country text DEFAULT 'US'::text,
+    employment_types jsonb DEFAULT '[]'::jsonb,
+    work_modes jsonb DEFAULT '[]'::jsonb,
+    available_from date,
+    notice_period_days integer,
+    relocation_preferences text,
+    currency text DEFAULT 'USD'::text,
+    is_negotiable boolean DEFAULT true,
+    compensation_notes text,
+    referred_by text,
+    campaign_id uuid,
+    work_authorization text,
+    requires_sponsorship boolean DEFAULT false,
+    clearance_level text,
+    mobile text,
+    current_company text,
+    current_sponsor text,
+    is_transferable boolean,
+    internal_notes text
 );
 
 
@@ -17760,6 +17787,118 @@ CREATE TABLE public.candidates (
 --
 
 COMMENT ON TABLE public.candidates IS 'Staffing candidates with professional and work authorization details';
+
+
+--
+-- Name: COLUMN candidates.location_city; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.candidates.location_city IS 'City for structured location';
+
+
+--
+-- Name: COLUMN candidates.location_state; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.candidates.location_state IS 'State/Province for structured location';
+
+
+--
+-- Name: COLUMN candidates.location_country; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.candidates.location_country IS 'Country code (2-3 letter) for structured location';
+
+
+--
+-- Name: COLUMN candidates.employment_types; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.candidates.employment_types IS 'Array of preferred employment types: full_time, contract, contract_to_hire, part_time';
+
+
+--
+-- Name: COLUMN candidates.work_modes; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.candidates.work_modes IS 'Array of preferred work modes: on_site, remote, hybrid';
+
+
+--
+-- Name: COLUMN candidates.notice_period_days; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.candidates.notice_period_days IS 'Notice period required in days';
+
+
+--
+-- Name: COLUMN candidates.relocation_preferences; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.candidates.relocation_preferences IS 'Notes about relocation preferences and restrictions';
+
+
+--
+-- Name: COLUMN candidates.currency; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.candidates.currency IS 'Preferred currency for compensation: USD, CAD, EUR, GBP, INR';
+
+
+--
+-- Name: COLUMN candidates.is_negotiable; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.candidates.is_negotiable IS 'Whether compensation is negotiable';
+
+
+--
+-- Name: COLUMN candidates.compensation_notes; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.candidates.compensation_notes IS 'Additional notes about compensation expectations';
+
+
+--
+-- Name: COLUMN candidates.referred_by; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.candidates.referred_by IS 'Name or ID of person who referred this candidate';
+
+
+--
+-- Name: COLUMN candidates.work_authorization; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.candidates.work_authorization IS 'Detailed work authorization type';
+
+
+--
+-- Name: COLUMN candidates.requires_sponsorship; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.candidates.requires_sponsorship IS 'Whether candidate requires visa sponsorship';
+
+
+--
+-- Name: COLUMN candidates.clearance_level; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.candidates.clearance_level IS 'Security clearance level if any';
+
+
+--
+-- Name: COLUMN candidates.mobile; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.candidates.mobile IS 'Mobile phone number';
+
+
+--
+-- Name: COLUMN candidates.current_company; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.candidates.current_company IS 'Current employer name';
 
 
 --
@@ -18266,6 +18405,10 @@ CREATE TABLE public.companies (
     search_vector tsvector,
     description text,
     industries text[],
+    tax_id character varying(50),
+    email character varying(255),
+    sales_lead_id uuid,
+    primary_recruiter_id uuid,
     CONSTRAINT companies_account_grade_check CHECK ((account_grade = ANY (ARRAY['A'::bpchar, 'B'::bpchar, 'C'::bpchar, 'D'::bpchar]))),
     CONSTRAINT companies_account_score_check CHECK (((account_score >= 0) AND (account_score <= 100))),
     CONSTRAINT companies_churn_risk_check CHECK (((churn_risk >= 0) AND (churn_risk <= 100))),
@@ -20747,7 +20890,7 @@ CREATE TABLE public.documents (
     deleted_at timestamp with time zone,
     CONSTRAINT documents_access_level_check CHECK (((access_level)::text = ANY ((ARRAY['public'::character varying, 'standard'::character varying, 'confidential'::character varying, 'restricted'::character varying])::text[]))),
     CONSTRAINT documents_document_category_check CHECK (((document_category)::text = ANY ((ARRAY['compliance'::character varying, 'legal'::character varying, 'marketing'::character varying, 'hr'::character varying, 'operational'::character varying, 'general'::character varying])::text[]))),
-    CONSTRAINT documents_document_type_check CHECK (((document_type)::text = ANY ((ARRAY['resume'::character varying, 'cover_letter'::character varying, 'id_document'::character varying, 'certification'::character varying, 'reference_letter'::character varying, 'background_check'::character varying, 'drug_test'::character varying, 'i9'::character varying, 'w4'::character varying, 'direct_deposit'::character varying, 'msa'::character varying, 'nda'::character varying, 'sow'::character varying, 'w9'::character varying, 'coi'::character varying, 'insurance'::character varying, 'contract'::character varying, 'job_description'::character varying, 'requirements'::character varying, 'scorecard'::character varying, 'other'::character varying, 'note_attachment'::character varying, 'email_attachment'::character varying])::text[]))),
+    CONSTRAINT documents_document_type_check CHECK (((document_type)::text = ANY (ARRAY[('resume'::character varying)::text, ('cover_letter'::character varying)::text, ('id_document'::character varying)::text, ('certification'::character varying)::text, ('reference_letter'::character varying)::text, ('background_check'::character varying)::text, ('drug_test'::character varying)::text, ('i9'::character varying)::text, ('w4'::character varying)::text, ('direct_deposit'::character varying)::text, ('msa'::character varying)::text, ('nda'::character varying)::text, ('sow'::character varying)::text, ('w9'::character varying)::text, ('coi'::character varying)::text, ('insurance'::character varying)::text, ('contract'::character varying)::text, ('job_description'::character varying)::text, ('requirements'::character varying)::text, ('scorecard'::character varying)::text, ('other'::character varying)::text, ('note_attachment'::character varying)::text, ('email_attachment'::character varying)::text, ('rtr'::character varying)::text, ('void_check'::character varying)::text, ('references'::character varying)::text, ('background_auth'::character varying)::text, ('offer_letter'::character varying)::text, ('employment_verification'::character varying)::text]))),
     CONSTRAINT documents_processing_status_check CHECK (((processing_status)::text = ANY ((ARRAY['pending'::character varying, 'processing'::character varying, 'completed'::character varying, 'failed'::character varying])::text[])))
 );
 
@@ -21932,7 +22075,8 @@ CREATE TABLE public.escalations (
     manager_notified_at timestamp with time zone,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    deleted_at timestamp with time zone
+    deleted_at timestamp with time zone,
+    contact_id uuid
 );
 
 
@@ -39309,6 +39453,13 @@ CREATE INDEX idx_candidate_resumes_org_id ON public.candidate_resumes USING btre
 
 
 --
+-- Name: idx_candidate_resumes_primary_unique; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_candidate_resumes_primary_unique ON public.candidate_resumes USING btree (candidate_id) WHERE ((is_primary = true) AND (is_archived = false));
+
+
+--
 -- Name: idx_candidate_resumes_resume_type; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -39428,10 +39579,31 @@ CREATE INDEX idx_candidates_email ON public.candidates USING btree (email);
 
 
 --
+-- Name: idx_candidates_employment_types; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidates_employment_types ON public.candidates USING gin (employment_types) WHERE (deleted_at IS NULL);
+
+
+--
 -- Name: idx_candidates_hotlist; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_candidates_hotlist ON public.candidates USING btree (org_id, is_on_hotlist) WHERE ((deleted_at IS NULL) AND (is_on_hotlist = true));
+
+
+--
+-- Name: idx_candidates_location_city; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidates_location_city ON public.candidates USING btree (location_city) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_candidates_location_state; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidates_location_state ON public.candidates USING btree (location_state) WHERE (deleted_at IS NULL);
 
 
 --
@@ -39453,6 +39625,20 @@ CREATE INDEX idx_candidates_sourced_by ON public.candidates USING btree (sourced
 --
 
 CREATE INDEX idx_candidates_status ON public.candidates USING btree (org_id, status) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_candidates_visa_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidates_visa_status ON public.candidates USING btree (visa_status) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_candidates_work_modes; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_candidates_work_modes ON public.candidates USING gin (work_modes) WHERE (deleted_at IS NULL);
 
 
 --
@@ -39852,6 +40038,20 @@ CREATE INDEX idx_companies_owner ON public.companies USING btree (owner_id) WHER
 --
 
 CREATE INDEX idx_companies_parent ON public.companies USING btree (parent_company_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_companies_primary_recruiter; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_companies_primary_recruiter ON public.companies USING btree (primary_recruiter_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_companies_sales_lead; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_companies_sales_lead ON public.companies USING btree (sales_lead_id) WHERE (deleted_at IS NULL);
 
 
 --
@@ -52090,7 +52290,7 @@ ALTER TABLE ONLY public.candidate_background_checks
 --
 
 ALTER TABLE ONLY public.candidate_certifications
-    ADD CONSTRAINT candidate_certifications_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.user_profiles(id) ON DELETE CASCADE;
+    ADD CONSTRAINT candidate_certifications_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.candidates(id) ON DELETE CASCADE;
 
 
 --
@@ -52178,7 +52378,7 @@ ALTER TABLE ONLY public.candidate_documents
 --
 
 ALTER TABLE ONLY public.candidate_education
-    ADD CONSTRAINT candidate_education_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.user_profiles(id) ON DELETE CASCADE;
+    ADD CONSTRAINT candidate_education_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.candidates(id) ON DELETE CASCADE;
 
 
 --
@@ -52346,7 +52546,7 @@ ALTER TABLE ONLY public.candidate_resumes
 --
 
 ALTER TABLE ONLY public.candidate_resumes
-    ADD CONSTRAINT candidate_resumes_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.user_profiles(id) ON DELETE CASCADE;
+    ADD CONSTRAINT candidate_resumes_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.candidates(id) ON DELETE CASCADE;
 
 
 --
@@ -52482,7 +52682,7 @@ ALTER TABLE ONLY public.candidate_work_authorizations
 --
 
 ALTER TABLE ONLY public.candidate_work_history
-    ADD CONSTRAINT candidate_work_history_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.user_profiles(id) ON DELETE CASCADE;
+    ADD CONSTRAINT candidate_work_history_candidate_id_fkey FOREIGN KEY (candidate_id) REFERENCES public.candidates(id) ON DELETE CASCADE;
 
 
 --
@@ -52838,11 +53038,27 @@ ALTER TABLE ONLY public.companies
 
 
 --
+-- Name: companies companies_primary_recruiter_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_primary_recruiter_id_fkey FOREIGN KEY (primary_recruiter_id) REFERENCES public.user_profiles(id);
+
+
+--
 -- Name: companies companies_referring_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.companies
     ADD CONSTRAINT companies_referring_company_id_fkey FOREIGN KEY (referring_company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: companies companies_sales_lead_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_sales_lead_id_fkey FOREIGN KEY (sales_lead_id) REFERENCES public.user_profiles(id);
 
 
 --
@@ -54907,6 +55123,14 @@ ALTER TABLE ONLY public.escalation_updates
 
 ALTER TABLE ONLY public.escalations
     ADD CONSTRAINT escalations_assigned_to_fkey FOREIGN KEY (assigned_to) REFERENCES public.user_profiles(id);
+
+
+--
+-- Name: escalations escalations_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.escalations
+    ADD CONSTRAINT escalations_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(id);
 
 
 --
@@ -65787,5 +66011,5 @@ ALTER TABLE public.xp_transactions ENABLE ROW LEVEL SECURITY;
 -- PostgreSQL database dump complete
 --
 
-\unrestrict eFsFolVZ6Dwv6ZPViDLyaqZwcnGSjxq5diN5hQbY1QF4qRXRzNlyshkBqdaOUHI
+\unrestrict Yz7jokSJHNNAzCPyjGZnrZ372JMX7N4i5yMphLGPVAoZtHXN8Fu2BPMHVGQ886k
 
