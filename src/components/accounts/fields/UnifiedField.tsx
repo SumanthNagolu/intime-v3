@@ -265,7 +265,7 @@ export function UnifiedField({
         />
       ) : type === 'phone' ? (
         <PhoneInput
-          value={value as PhoneInputValue}
+          value={(value as PhoneInputValue) || { countryCode: 'US', number: '' }}
           onChange={onChange}
         />
       ) : type === 'currency' ? (

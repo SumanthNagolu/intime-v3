@@ -4,6 +4,11 @@ export { AccountWorkspace } from './AccountWorkspace'
 // Contact Workspace
 export { ContactWorkspace } from './ContactWorkspace'
 
+// Job Workspace
+export { JobWorkspace } from './JobWorkspace'
+export { JobWorkspaceProvider, useJobWorkspace } from './job/JobWorkspaceProvider'
+export { JobHeader } from './job/JobHeader'
+
 // Candidate Workspace (GW-031)
 export { CandidateWorkspace } from './candidate/CandidateWorkspace'
 export { CandidateWorkspaceProvider, useCandidateWorkspace } from './candidate/CandidateWorkspaceProvider'

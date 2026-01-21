@@ -6,6 +6,8 @@ import {
   UserCircle, Mail, Megaphone, BarChart3, Pause, Play,
   Settings, UserPlus, Rocket, Heart, Flag, Copy, Download,
   Receipt, CreditCard, Clock, Calculator, Wallet, Link2,
+  Trophy, StickyNote, ArrowRight, UserMinus, RefreshCw, Archive,
+  Shield, UsersRound,
 } from 'lucide-react'
 import { EntityJourneyConfig, EntityType } from './entity-navigation.types'
 
@@ -168,13 +170,53 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
       },
     ],
     quickActions: [
+      // Primary actions
       {
         id: 'edit',
         label: 'Edit Candidate',
         icon: Edit,
         actionType: 'navigate',
-        href: '/employee/recruiting/candidates/:id/edit'
+        href: '/employee/recruiting/candidates/:id/edit',
       },
+      {
+        id: 'submit',
+        label: 'Submit to Job',
+        icon: Send,
+        actionType: 'dialog',
+        dialogId: 'submitToJob',
+        hideForStatuses: ['placed', 'inactive', 'archived'],
+      },
+      // Communication actions
+      {
+        id: 'note',
+        label: 'Add Note',
+        icon: FileText,
+        actionType: 'dialog',
+        dialogId: 'addNote',
+      },
+      {
+        id: 'call',
+        label: 'Schedule Call',
+        icon: Phone,
+        actionType: 'dialog',
+        dialogId: 'scheduleCall',
+      },
+      {
+        id: 'activity',
+        label: 'Log Activity',
+        icon: MessageSquare,
+        actionType: 'dialog',
+        dialogId: 'logActivity',
+      },
+      // Document actions
+      {
+        id: 'upload-resume',
+        label: 'Upload Resume',
+        icon: FileText,
+        actionType: 'dialog',
+        dialogId: 'uploadResume',
+      },
+      // Status actions
       {
         id: 'screen',
         label: 'Start Screening',
@@ -184,25 +226,28 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
         showForStatuses: ['sourced', 'new'],
       },
       {
-        id: 'submit',
-        label: 'Submit to Job',
-        icon: Send,
+        id: 'update-status',
+        label: 'Update Status',
+        icon: TrendingUp,
         actionType: 'dialog',
-        dialogId: 'submitToJob',
-        hideForStatuses: ['placed', 'inactive'],
+        dialogId: 'updateCandidateStatus',
+        hideForStatuses: ['archived'],
       },
       {
         id: 'hotlist',
         label: 'Add to Hotlist',
         icon: Star,
-        actionType: 'mutation'
+        actionType: 'mutation',
+        hideForStatuses: ['inactive', 'archived'],
       },
       {
-        id: 'activity',
-        label: 'Log Activity',
-        icon: MessageSquare,
+        id: 'mark-inactive',
+        label: 'Mark Inactive',
+        icon: XCircle,
         actionType: 'dialog',
-        dialogId: 'logActivity'
+        dialogId: 'markInactive',
+        variant: 'destructive',
+        hideForStatuses: ['inactive', 'archived', 'placed'],
       },
     ],
   },
@@ -304,6 +349,8 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
 
   contact: {
     entityType: 'contact',
+    // Contact uses section-based navigation (not journey steps)
+    // Steps array kept for backward compatibility
     steps: [
       {
         id: 'profile',
@@ -312,64 +359,88 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
         description: 'Contact information',
         activeStatuses: ['active'],
         completedStatuses: [],
-        defaultTab: 'overview',
-      },
-      {
-        id: 'accounts',
-        label: 'Accounts',
-        icon: Building2,
-        description: 'Associated accounts',
-        activeStatuses: ['active'],
-        completedStatuses: [],
-        defaultTab: 'accounts',
-      },
-      {
-        id: 'submissions',
-        label: 'Submissions',
-        icon: Send,
-        description: 'Submission history',
-        activeStatuses: ['active'],
-        completedStatuses: [],
-        defaultTab: 'submissions',
-      },
-      {
-        id: 'activities',
-        label: 'Activities',
-        icon: Phone,
-        description: 'Activity history',
-        activeStatuses: ['active'],
-        completedStatuses: [],
-        defaultTab: 'activities',
+        defaultTab: 'summary',
       },
     ],
     quickActions: [
+      // Edit action
       {
         id: 'edit',
         label: 'Edit Contact',
         icon: Edit,
         actionType: 'navigate',
-        href: '/employee/contacts/:id/edit'
+        href: '/employee/contacts/:id/edit',
+      },
+
+      // Communication actions (Person)
+      {
+        id: 'email',
+        label: 'Email Contact',
+        icon: Mail,
+        actionType: 'navigate',
+        href: 'mailto::email',
       },
       {
         id: 'call',
-        label: 'Log Call',
+        label: 'Call',
         icon: Phone,
+        actionType: 'navigate',
+        href: 'tel::phone',
+      },
+
+      // Common actions
+      {
+        id: 'add-note',
+        label: 'Add Note',
+        icon: StickyNote,
         actionType: 'dialog',
-        dialogId: 'logCall'
+        dialogId: 'addNote',
       },
       {
-        id: 'email',
-        label: 'Send Email',
-        icon: Mail,
-        actionType: 'dialog',
-        dialogId: 'sendEmail'
-      },
-      {
-        id: 'meeting',
+        id: 'schedule-meeting',
         label: 'Schedule Meeting',
         icon: Calendar,
         actionType: 'dialog',
-        dialogId: 'scheduleMeeting'
+        dialogId: 'scheduleMeeting',
+      },
+      {
+        id: 'log-activity',
+        label: 'Log Activity',
+        icon: Phone,
+        actionType: 'dialog',
+        dialogId: 'logActivity',
+      },
+
+      // Person-specific actions
+      {
+        id: 'add-to-campaign',
+        label: 'Add to Campaign',
+        icon: Target,
+        actionType: 'dialog',
+        dialogId: 'addToCampaign',
+      },
+      {
+        id: 'convert-to-candidate',
+        label: 'Convert to Candidate',
+        icon: UserPlus,
+        actionType: 'mutation',
+        // Note: This should be hidden for contacts already marked as candidates
+      },
+
+      // Company-specific actions
+      {
+        id: 'add-contact',
+        label: 'Add Contact',
+        icon: UserPlus,
+        actionType: 'dialog',
+        dialogId: 'addContact',
+      },
+      {
+        id: 'add-job',
+        label: 'Add Job',
+        icon: Briefcase,
+        actionType: 'dialog',
+        dialogId: 'addJob',
       },
     ],
   },
@@ -565,6 +636,7 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
       },
     ],
     quickActions: [
+      // Primary edit action
       {
         id: 'edit',
         label: 'Edit Lead',
@@ -572,6 +644,38 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
         actionType: 'navigate',
         href: '/employee/crm/leads/:id/edit'
       },
+      // Communication actions
+      {
+        id: 'email',
+        label: 'Send Email',
+        icon: Mail,
+        actionType: 'navigate',
+        hideForStatuses: ['converted', 'lost'],
+      },
+      {
+        id: 'call',
+        label: 'Call Lead',
+        icon: Phone,
+        actionType: 'navigate',
+        hideForStatuses: ['converted', 'lost'],
+      },
+      // Activity actions
+      {
+        id: 'add_note',
+        label: 'Add Note',
+        icon: StickyNote,
+        actionType: 'dialog',
+        dialogId: 'addNote'
+      },
+      {
+        id: 'schedule_meeting',
+        label: 'Schedule Meeting',
+        icon: Calendar,
+        actionType: 'dialog',
+        dialogId: 'scheduleMeeting',
+        hideForStatuses: ['converted', 'lost'],
+      },
+      // Qualification actions
       {
         id: 'qualify',
         label: 'Update BANT',
@@ -580,20 +684,22 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
         dialogId: 'qualifyLead',
         hideForStatuses: ['converted', 'lost'],
       },
-      {
-        id: 'activity',
-        label: 'Log Activity',
-        icon: Phone,
-        actionType: 'dialog',
-        dialogId: 'logActivity'
-      },
+      // Conversion actions
       {
         id: 'convert',
         label: 'Convert to Deal',
-        icon: Handshake,
+        icon: TrendingUp,
         actionType: 'dialog',
         dialogId: 'convertLead',
         showForStatuses: ['qualified'],
+      },
+      {
+        id: 'disqualify',
+        label: 'Disqualify',
+        icon: XCircle,
+        actionType: 'mutation',
+        variant: 'destructive',
+        hideForStatuses: ['converted', 'lost'],
       },
     ],
   },
@@ -651,34 +757,73 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
       },
     ],
     quickActions: [
+      // Primary edit action
       {
         id: 'edit',
         label: 'Edit Deal',
         icon: Edit,
         actionType: 'navigate',
-        href: '/employee/crm/deals/:id/edit'
-      },
-      {
-        id: 'moveStage',
-        label: 'Move Stage',
-        icon: TrendingUp,
-        actionType: 'dialog',
-        dialogId: 'moveStage',
+        href: '/employee/crm/deals/:id/edit',
         hideForStatuses: ['closed_won', 'closed_lost'],
       },
+      // Stage progression
+      {
+        id: 'advanceStage',
+        label: 'Advance Stage',
+        icon: ArrowRight,
+        actionType: 'dialog',
+        dialogId: 'advanceStage',
+        hideForStatuses: ['closed_won', 'closed_lost', 'verbal_commit'],
+      },
+      // Stakeholder management
+      {
+        id: 'addStakeholder',
+        label: 'Add Stakeholder',
+        icon: UserPlus,
+        actionType: 'dialog',
+        dialogId: 'addStakeholder',
+      },
+      // Meeting scheduling
+      {
+        id: 'scheduleMeeting',
+        label: 'Schedule Meeting',
+        icon: Calendar,
+        actionType: 'dialog',
+        dialogId: 'scheduleMeeting',
+        hideForStatuses: ['closed_won', 'closed_lost'],
+      },
+      // Note taking
+      {
+        id: 'addNote',
+        label: 'Add Note',
+        icon: StickyNote,
+        actionType: 'dialog',
+        dialogId: 'addNote',
+      },
+      // Activity logging
       {
         id: 'activity',
         label: 'Log Activity',
         icon: Phone,
         actionType: 'dialog',
-        dialogId: 'logDealActivity'
+        dialogId: 'logDealActivity',
+      },
+      // Close actions
+      {
+        id: 'markWon',
+        label: 'Mark as Won',
+        icon: Trophy,
+        actionType: 'dialog',
+        dialogId: 'closeDealWon',
+        showForStatuses: ['proposal', 'negotiation', 'verbal_commit'],
       },
       {
-        id: 'closeWon',
-        label: 'Close Won',
-        icon: DollarSign,
+        id: 'markLost',
+        label: 'Mark as Lost',
+        icon: XCircle,
         actionType: 'dialog',
-        dialogId: 'closeWon',
+        dialogId: 'closeDealLost',
+        variant: 'destructive',
         hideForStatuses: ['closed_won', 'closed_lost'],
       },
     ],
@@ -1185,6 +1330,80 @@ export const entityJourneys: Record<EntityType, EntityJourneyConfig> = {
     entityType: 'offer',
     steps: [],
     quickActions: [],
+  },
+
+  /**
+   * Team Journey - Section-based workspace for team management
+   *
+   * Teams use section-based navigation (not journey workflow).
+   * Quick actions support team member management and administration.
+   */
+  team: {
+    entityType: 'team',
+    steps: [], // Section-based, no journey steps
+    quickActions: [
+      // Primary edit action
+      {
+        id: 'edit',
+        label: 'Edit Team',
+        icon: Edit,
+        actionType: 'navigate',
+        href: '/employee/settings/teams/:id/edit',
+        hideForStatuses: ['archived'],
+      },
+      // Member management
+      {
+        id: 'add_member',
+        label: 'Add Member',
+        icon: UserPlus,
+        actionType: 'dialog',
+        dialogId: 'addTeamMember',
+        hideForStatuses: ['archived'],
+      },
+      {
+        id: 'remove_member',
+        label: 'Remove Member',
+        icon: UserMinus,
+        actionType: 'dialog',
+        dialogId: 'removeTeamMember',
+        hideForStatuses: ['archived'],
+      },
+      // Note taking
+      {
+        id: 'add_note',
+        label: 'Add Note',
+        icon: StickyNote,
+        actionType: 'dialog',
+        dialogId: 'addNote',
+      },
+      // Work management
+      {
+        id: 'reassign_work',
+        label: 'Reassign Work',
+        icon: RefreshCw,
+        actionType: 'dialog',
+        dialogId: 'reassignWork',
+        hideForStatuses: ['archived'],
+      },
+      // Administration
+      {
+        id: 'edit_permissions',
+        label: 'Edit Permissions',
+        icon: Shield,
+        actionType: 'navigate',
+        href: '/employee/settings/teams/:id?section=roles',
+        hideForStatuses: ['archived'],
+      },
+      // Archive action (destructive)
+      {
+        id: 'archive_team',
+        label: 'Archive Team',
+        icon: Archive,
+        actionType: 'mutation',
+        variant: 'destructive',
+        hideForStatuses: ['archived'],
+      },
+    ],
   },
 }
 

@@ -2,7 +2,9 @@ import { ReactNode } from 'react'
 import { notFound, redirect } from 'next/navigation'
 import { getServerCaller } from '@/server/trpc/server-caller'
 import { EntityContextProvider } from '@/components/layouts/EntityContextProvider'
+import { JobWorkspaceProvider } from '@/components/workspaces/job/JobWorkspaceProvider'
 import { TRPCError } from '@trpc/server'
+import type { FullJob } from '@/types/job'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,10 +17,10 @@ export default async function JobDetailLayout({ children, params }: JobLayoutPro
   const { id: jobId } = await params
   const caller = await getServerCaller()
 
-  // Fetch job data on server
-  let job = null
+  // ONE DATABASE CALL: Fetch all job data in parallel
+  let job: FullJob | null = null
   try {
-    job = await caller.ats.jobs.getFullJob({ id: jobId })
+    job = await caller.ats.jobs.getFullJob({ id: jobId }) as FullJob
   } catch (error) {
     console.error('[JobDetailLayout] Error:', error)
     // Handle specific error types
@@ -46,20 +48,21 @@ export default async function JobDetailLayout({ children, params }: JobLayoutPro
     notFound()
   }
 
-  const accountName = job.company
-    ? (job.company as { name: string }).name
-    : undefined
+  // Build subtitle from company name
+  const companyName = job.company?.name || job.clientCompany?.name
 
   return (
     <EntityContextProvider
       entityType="job"
       entityId={jobId}
       entityName={job.title}
-      entitySubtitle={accountName}
+      entitySubtitle={companyName}
       entityStatus={job.status}
       initialData={job}
     >
-      {children}
+      <JobWorkspaceProvider initialData={job}>
+        {children}
+      </JobWorkspaceProvider>
     </EntityContextProvider>
   )
 }

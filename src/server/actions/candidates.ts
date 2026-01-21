@@ -12,6 +12,8 @@ import type {
   CandidateScreening,
   CandidateProfile,
   CandidateSubmission,
+  CandidatePlacement,
+  CandidateInterviewRecord,
   CandidateActivity,
   CandidateNote,
   CandidateDocument,
@@ -53,6 +55,8 @@ export async function getFullCandidate(id: string): Promise<FullCandidateData | 
     screeningsResult,
     profilesResult,
     submissionsResult,
+    placementsResult,
+    interviewsResult,
     activitiesResult,
     notesResult,
     documentsResult,
@@ -227,6 +231,61 @@ export async function getFullCandidate(id: string): Promise<FullCandidateData | 
       .order('submitted_at', { ascending: false })
       .limit(100),
 
+    // Placements (direct relationship)
+    adminClient
+      .from('placements')
+      .select(`
+        id,
+        status,
+        placement_type,
+        start_date,
+        end_date,
+        actual_end_date,
+        bill_rate,
+        pay_rate,
+        rate_type,
+        markup_percentage,
+        health_status,
+        onboarding_status,
+        end_reason,
+        extension_count,
+        created_at,
+        updated_at,
+        job:jobs!placements_job_id_fkey(id, title),
+        account:jobs!placements_job_id_fkey(company:companies!jobs_company_id_fkey(id, name)),
+        recruiter:user_profiles!placements_recruiter_id_fkey(id, full_name, avatar_url)
+      `)
+      .eq('candidate_id', id)
+      .order('start_date', { ascending: false })
+      .limit(50),
+
+    // Interviews (direct relationship - all interviews for this candidate)
+    adminClient
+      .from('interviews')
+      .select(`
+        id,
+        round_number,
+        interview_type,
+        scheduled_at,
+        duration_minutes,
+        timezone,
+        meeting_link,
+        meeting_location,
+        interviewer_names,
+        status,
+        feedback,
+        rating,
+        recommendation,
+        feedback_submitted_at,
+        created_at,
+        confirmed_at,
+        job:jobs!interviews_job_id_fkey(id, title),
+        submission:submissions!interviews_submission_id_fkey(id, status)
+      `)
+      .eq('candidate_id', id)
+      .order('scheduled_at', { ascending: false, nullsFirst: false })
+      .limit(100),
+
     // Activities (polymorphic)
     adminClient
       .from('activities')
@@ -371,6 +430,8 @@ export async function getFullCandidate(id: string): Promise<FullCandidateData | 
   const screenings = transformScreenings(screeningsResult.data || [])
   const profiles = transformProfiles(profilesResult.data || [])
   const submissions = transformSubmissions(submissionsResult.data || [])
+  const placements = transformPlacements(placementsResult.data || [])
+  const interviews = transformInterviews(interviewsResult.data || [])
   const activities = transformActivities(activitiesResult.data || [])
   const notes = transformNotes(notesResult.data || [])
   const documents = transformDocuments(documentsResult.data || [])
@@ -378,7 +439,7 @@ export async function getFullCandidate(id: string): Promise<FullCandidateData | 
   const history = transformHistory(historyResult.data || [])
 
   // Compute stats
-  const stats = computeStats(submissions, screenings, profiles)
+  const stats = computeStats(submissions, screenings, profiles, placements, interviews)
 
   // Compute warnings
   const warnings = computeWarnings(candidate, skills, resumes)
@@ -392,6 +453,8 @@ export async function getFullCandidate(id: string): Promise<FullCandidateData | 
     screenings,
     profiles,
     submissions,
+    placements,
+    interviews,
     activities,
     notes,
     documents,
@@ -817,6 +880,69 @@ function transformSubmissions(data: Record<string, unknown>[]): CandidateSubmiss
   })
 }
 
+function transformPlacements(data: Record<string, unknown>[]): CandidatePlacement[] {
+  return data.map((p) => {
+    const job = p.job as { id: string; title: string } | null
+    const accountData = p.account as { company: { id: string; name: string } | null } | null
+    const account = accountData?.company || null
+    const recruiter = p.recruiter as { id: string; full_name: string; avatar_url: string | null } | null
+
+    return {
+      id: p.id as string,
+      status: (p.status as string) || 'active',
+      placementType: p.placement_type as string | null,
+      startDate: p.start_date as string,
+      endDate: p.end_date as string | null,
+      actualEndDate: p.actual_end_date as string | null,
+      billRate: (p.bill_rate as number) || 0,
+      payRate: (p.pay_rate as number) || 0,
+      rateType: p.rate_type as string | null,
+      markupPercentage: p.markup_percentage as number | null,
+      job: job ? { id: job.id, title: job.title } : null,
+      account: account ? { id: account.id, name: account.name } : null,
+      recruiter: recruiter ? {
+        id: recruiter.id,
+        fullName: recruiter.full_name,
+        avatarUrl: recruiter.avatar_url,
+      } : null,
+      healthStatus: p.health_status as string | null,
+      onboardingStatus: p.onboarding_status as string | null,
+      endReason: p.end_reason as string | null,
+      extensionCount: (p.extension_count as number) || 0,
+      createdAt: p.created_at as string,
+      updatedAt: p.updated_at as string | null,
+    }
+  })
+}
+
+function transformInterviews(data: Record<string, unknown>[]): CandidateInterviewRecord[] {
+  return data.map((i) => {
+    const job = i.job as { id: string; title: string } | null
+    const submission = i.submission as { id: string; status: string } | null
+
+    return {
+      id: i.id as string,
+      roundNumber: (i.round_number as number) || 1,
+      interviewType: (i.interview_type as string) || 'technical',
+      scheduledAt: i.scheduled_at as string | null,
+      durationMinutes: (i.duration_minutes as number) || 60,
+      timezone: i.timezone as string | null,
+      meetingLink: i.meeting_link as string | null,
+      meetingLocation: i.meeting_location as string | null,
+      interviewerNames: i.interviewer_names as string[] | null,
+      status: (i.status as string) || 'scheduled',
+      job: job ? { id: job.id, title: job.title } : null,
+      submission: submission ? { id: submission.id, status: submission.status } : null,
+      feedback: i.feedback as string | null,
+      rating: i.rating as number | null,
+      recommendation: i.recommendation as string | null,
+      feedbackSubmittedAt: i.feedback_submitted_at as string | null,
+      createdAt: i.created_at as string,
+      confirmedAt: i.confirmed_at as string | null,
+    }
+  })
+}
+
 function transformActivities(data: Record<string, unknown>[]): CandidateActivity[] {
   return data.map((a) => {
     const assignedTo = a.assigned_to as { id: string; full_name: string } | null
@@ -982,26 +1108,30 @@ function transformHistory(data: Record<string, unknown>[]): HistoryEntry[] {
 function computeStats(
   submissions: CandidateSubmission[],
   screenings: CandidateScreening[],
-  profiles: CandidateProfile[]
+  profiles: CandidateProfile[],
+  placements: CandidatePlacement[] = [],
+  interviews: CandidateInterviewRecord[] = []
 ): CandidateStats {
   const activeStatuses = ['sourced', 'screening', 'submission_ready', 'submitted_to_client', 'client_review', 'client_interview', 'offer_stage']
   const activeSubmissions = submissions.filter((s) => activeStatuses.includes(s.status))
-  const interviews = submissions.reduce((count, s) => count + s.interviewCount, 0)
+  // Use direct interviews count from interviews table, fallback to submission count
+  const interviewCount = interviews.length > 0 ? interviews.length : submissions.reduce((count, s) => count + s.interviewCount, 0)
   const offers = submissions.filter((s) => s.status === 'offer_stage').length
-  const placements = submissions.filter((s) => s.status === 'placed').length
+  // Use direct placements count from placements table
+  const placementCount = placements.length
   const completedScreenings = screenings.filter((s) => s.status === 'completed').length
 
-  // Calculate conversion rate
+  // Calculate conversion rate (placements / total submissions)
   const conversionRate = submissions.length > 0
-    ? (placements / submissions.length) * 100
+    ? (placementCount / submissions.length) * 100
     : null
 
   return {
     totalSubmissions: submissions.length,
     activeSubmissions: activeSubmissions.length,
-    interviews,
+    interviews: interviewCount,
     offers,
-    placements,
+    placements: placementCount,
     screeningsCompleted: completedScreenings,
     profilesCreated: profiles.length,
     conversionRate,

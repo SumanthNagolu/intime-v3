@@ -20,6 +20,9 @@ export interface FullCandidateData {
   screenings: CandidateScreening[]
   profiles: CandidateProfile[]
   submissions: CandidateSubmission[]
+  // Related data (new sections)
+  placements: CandidatePlacement[]
+  interviews: CandidateInterviewRecord[]
   // Universal tools
   activities: CandidateActivity[]
   notes: CandidateNote[]
@@ -340,6 +343,87 @@ export interface SubmissionInterview {
 }
 
 // =============================================================================
+// CANDIDATE PLACEMENT
+// =============================================================================
+
+export interface CandidatePlacement {
+  id: string
+  status: string // 'pending_start' | 'active' | 'extended' | 'ended'
+  placementType: string | null // 'contract' | 'full_time' | 'contract_to_hire'
+  // Dates
+  startDate: string
+  endDate: string | null
+  actualEndDate: string | null
+  // Rates
+  billRate: number
+  payRate: number
+  rateType: string | null // 'hourly' | 'annual'
+  markupPercentage: number | null
+  // Job info
+  job: {
+    id: string
+    title: string
+  } | null
+  // Account/Client info
+  account: {
+    id: string
+    name: string
+  } | null
+  // Recruiter
+  recruiter: {
+    id: string
+    fullName: string
+    avatarUrl: string | null
+  } | null
+  // Health
+  healthStatus: string | null // 'healthy' | 'at_risk' | 'critical'
+  // Onboarding
+  onboardingStatus: string | null
+  // End info
+  endReason: string | null
+  // Extension
+  extensionCount: number
+  // Timestamps
+  createdAt: string
+  updatedAt: string | null
+}
+
+// =============================================================================
+// CANDIDATE INTERVIEW (Direct from interviews table)
+// =============================================================================
+
+export interface CandidateInterviewRecord {
+  id: string
+  roundNumber: number
+  interviewType: string // 'technical' | 'behavioral' | 'cultural' | 'hr' | 'panel'
+  scheduledAt: string | null
+  durationMinutes: number
+  timezone: string | null
+  meetingLink: string | null
+  meetingLocation: string | null
+  interviewerNames: string[] | null
+  status: string // 'proposed' | 'scheduled' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled' | 'no_show'
+  // Job info
+  job: {
+    id: string
+    title: string
+  } | null
+  // Submission info
+  submission: {
+    id: string
+    status: string
+  } | null
+  // Feedback
+  feedback: string | null
+  rating: number | null // 1-5
+  recommendation: string | null // 'hire' | 'no_hire' | 'consider'
+  feedbackSubmittedAt: string | null
+  // Timestamps
+  createdAt: string
+  confirmedAt: string | null
+}
+
+// =============================================================================
 // UNIVERSAL TOOL TYPES
 // =============================================================================
 
@@ -464,13 +548,36 @@ export interface CandidateStats {
 // SECTION TYPE
 // =============================================================================
 
+/**
+ * Candidate sections - matches entity-sections.ts candidateSections
+ *
+ * Main numbered sections (1-6, match wizard steps):
+ *   identity, experience, skills, authorization, compensation, resume
+ *
+ * Related data (unnumbered):
+ *   submissions, placements, interviews, screening, profiles
+ *
+ * Tools (unnumbered):
+ *   activities, notes, documents, history
+ */
 export type CandidateSection =
+  // Overview
   | 'summary'
+  // Main numbered sections (match wizard steps 1-6)
+  | 'identity'
+  | 'experience'
+  | 'skills'
+  | 'authorization'
+  | 'compensation'
+  | 'resume'
+  // Related data
+  | 'submissions'
+  | 'placements'
+  | 'interviews'
   | 'screening'
   | 'profiles'
-  | 'submissions'
+  // Tools
   | 'activities'
   | 'notes'
-  | 'resumes'
   | 'documents'
   | 'history'

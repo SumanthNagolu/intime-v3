@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import { notFound } from 'next/navigation'
 import { getFullCampaign } from '@/server/actions/campaigns'
 import { EntityContextProvider } from '@/components/layouts/EntityContextProvider'
+import { CampaignWorkspaceProvider } from '@/components/workspaces/campaign/CampaignWorkspaceProvider'
 
 export const dynamic = 'force-dynamic'
 
@@ -35,7 +36,9 @@ export default async function CampaignDetailLayout({ children, params }: Campaig
       entityStatus={campaign.status}
       initialData={data}
     >
-      {children}
+      <CampaignWorkspaceProvider initialData={data}>
+        {children}
+      </CampaignWorkspaceProvider>
     </EntityContextProvider>
   )
 }

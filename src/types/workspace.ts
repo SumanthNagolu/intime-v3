@@ -986,3 +986,202 @@ export type ContactSection =
   | 'notes'
   | 'documents'
   | 'history'
+
+// =============================================================================
+// TEAM ENTITY WORKSPACE TYPES (for Team detail pages)
+// =============================================================================
+
+/**
+ * Full team data returned by getFullTeam server action
+ * Used for the Team entity detail workspace (distinct from TeamWorkspaceData dashboard)
+ */
+export interface FullTeamEntityData {
+  team: TeamEntityData
+  members: TeamEntityMember[]
+  regions?: { id: string; regionId: string; name: string; code: string | null; isPrimary: boolean }[]
+  // Related data sections (optional - may not be loaded)
+  accounts?: TeamAssignedAccount[]
+  jobs?: TeamAssignedJob[]
+  // Universal tools (no documents for teams)
+  activities: TeamEntityActivity[]
+  notes: TeamEntityNote[]
+  history: HistoryEntry[]
+  // Computed metrics for KPIs
+  metrics: TeamEntityMetrics
+  // Section counts for sidebar badges
+  sectionCounts?: TeamEntitySectionCounts
+  // Computed warnings (optional)
+  warnings?: WorkspaceWarning[]
+}
+
+/**
+ * Core team/group data (from groups table)
+ */
+export interface TeamEntityData {
+  id: string
+  name: string
+  code: string | null
+  description: string | null
+  groupType: string  // 'team' | 'division' | 'branch' | etc.
+  isActive: boolean
+  // Hierarchy
+  parentGroupId: string | null
+  parentGroup: { id: string; name: string; groupType?: string } | null
+  hierarchyLevel: number
+  hierarchyPath: string | null
+  // Leadership
+  supervisorId: string | null
+  supervisor: { id: string; fullName: string; email?: string | null; avatarUrl: string | null } | null
+  managerId: string | null
+  manager: { id: string; fullName: string; email?: string | null; avatarUrl: string | null } | null
+  // Configuration
+  securityZone: string | null
+  loadFactor: number
+  // Contact info
+  phone: string | null
+  fax: string | null
+  email: string | null
+  // Address (supports both camelCase and snake_case for compatibility)
+  addressLine1?: string | null
+  addressLine2?: string | null
+  address_line1?: string | null
+  address_line2?: string | null
+  city: string | null
+  state: string | null
+  postalCode?: string | null
+  postal_code?: string | null
+  country: string | null
+  // Timestamps
+  createdAt: string
+  updatedAt: string | null
+  createdBy: { id: string; fullName: string } | null
+}
+
+/**
+ * Team member with extended info (from group_members junction)
+ */
+export interface TeamEntityMember {
+  id: string
+  userId: string
+  fullName: string
+  email: string | null
+  avatarUrl: string | null
+  title?: string | null
+  // Role in team
+  isManager: boolean
+  loadFactor: number
+  loadPermission: 'normal' | 'reduced' | 'exempt'
+  vacationStatus: 'available' | 'vacation' | 'sick' | 'leave'
+  backupUserId: string | null
+  backupUser?: { id: string; fullName: string } | null
+  // Timeline
+  joinedAt: string | null
+  leftAt: string | null
+  isActive: boolean
+  // Computed work stats (optional - not always available)
+  openActivitiesCount?: number
+  openSubmissionsCount?: number
+  openJobsCount?: number
+}
+
+/**
+ * Account assigned to team (for Related section)
+ */
+export interface TeamAssignedAccount {
+  id: string
+  name: string
+  status: string
+  tier: string | null
+  industry: string | null
+  // Health metrics
+  healthScore: number | null
+  activeJobsCount: number
+  activePlacementsCount: number
+  // Assignment
+  assignedAt: string | null
+  owner: { id: string; name: string; avatarUrl: string | null } | null
+}
+
+/**
+ * Job assigned to team (for Related section)
+ */
+export interface TeamAssignedJob {
+  id: string
+  title: string
+  status: string
+  priority: string | null
+  accountName: string | null
+  // Pipeline stats
+  submissionCount: number
+  interviewCount: number
+  positionsAvailable: number
+  positionsFilled: number
+  // Dates
+  postedDate: string | null
+  targetStartDate: string | null
+  // Owner
+  owner: { id: string; name: string; avatarUrl: string | null } | null
+}
+
+/**
+ * Team-specific activity (reuses structure from AccountActivity)
+ */
+export type TeamEntityActivity = AccountActivity
+
+/**
+ * Team-specific note (reuses structure from AccountNote)
+ */
+export type TeamEntityNote = AccountNote
+
+/**
+ * Team-specific history entry (reuses HistoryEntry)
+ */
+export type TeamEntityHistory = HistoryEntry
+
+/**
+ * Computed metrics for Team KPI cards
+ */
+export interface TeamEntityMetrics {
+  // Team size
+  totalMembers: number
+  activeMembers: number
+  // Work stats
+  openJobs: number
+  openActivities: number
+  activeSubmissions: number
+  activePlacements: number
+  // Performance (current month)
+  placementsMTD: number
+  submissionsMTD: number
+  activitiesCompletedMTD: number
+  // Workload
+  avgLoadFactor: number
+  membersOnVacation: number
+}
+
+/**
+ * Team entity sections for navigation
+ */
+export type TeamEntitySection =
+  | 'summary'
+  | 'details'
+  | 'members'
+  | 'roles'
+  | 'workload'
+  | 'performance'
+  | 'accounts'
+  | 'jobs'
+  | 'activities'
+  | 'notes'
+  | 'history'
+
+/**
+ * Section counts for sidebar badges
+ */
+export interface TeamEntitySectionCounts {
+  members: number
+  accounts: number
+  jobs: number
+  activities: number
+  notes: number
+}

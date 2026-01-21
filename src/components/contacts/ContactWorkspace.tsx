@@ -27,12 +27,15 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { trpc } from '@/lib/trpc/client'
-import { 
-  getContactSectionsBySubtype, 
+import {
+  getContactSectionsBySubtype,
   getContactSectionsByGroup,
   type ContactSubtype,
   type SectionDefinition,
 } from '@/lib/navigation/entity-sections'
+import { useAddressesSection } from './hooks/useAddressesSection'
+import { mapToAddressesData } from '@/lib/contacts/mappers'
+import { useToast } from '@/components/ui/use-toast'
 
 // ============================================================================
 // TYPES
@@ -491,7 +494,7 @@ function SectionContent({
       return <BasicDetailsSection contact={rawContact} />
 
     case 'addresses':
-      return <AddressesSection contactId={contact.id} />
+      return <AddressesSectionWrapper contactId={contact.id} rawContact={rawContact} />
 
     case 'activities':
       return <ContactActivitiesSection contactId={contact.id} />
@@ -886,12 +889,55 @@ function ContactWorkspaceContent({
   )
 }
 
+// ============================================================================
+// UNIFIED SECTION WRAPPERS
+// ============================================================================
+
+/**
+ * AddressesSectionWrapper - Wraps the unified AddressesSection for workspace use
+ */
+function AddressesSectionWrapper({ contactId, rawContact }: { contactId: string; rawContact: ExtendedContact }) {
+  const { toast } = useToast()
+  const utils = trpc.useUtils()
+
+  const initialData = useMemo(
+    () => mapToAddressesData(rawContact as unknown as Record<string, unknown>),
+    [rawContact]
+  )
+
+  const section = useAddressesSection({
+    contactId,
+    initialData,
+    mode: 'view',
+    onSaveComplete: () => {
+      toast({ title: 'Addresses saved successfully' })
+      utils.unifiedContacts.getById.invalidate({ id: contactId })
+    },
+  })
+
+  return (
+    <AddressesSection
+      mode={section.isEditing ? 'edit' : 'view'}
+      data={section.data}
+      onChange={section.handleChange}
+      onAddAddress={section.handleAddAddress}
+      onRemoveAddress={section.handleRemoveAddress}
+      onSetPrimary={section.handleSetPrimary}
+      onEdit={section.handleEdit}
+      onSave={section.handleSave}
+      onCancel={section.handleCancel}
+      isSaving={section.isSaving}
+      errors={section.errors}
+    />
+  )
+}
+
 /**
  * Unified Contact Workspace Component
- * 
+ *
  * Renders a Guidewire-inspired workspace for any contact subtype.
  * Automatically shows relevant sections based on the contact's subtype.
- * 
+ *
  * Usage:
  * - `/contacts/:id` - Full contact workspace with all sections
  * - `/crm/campaigns/:id/prospects/:contactId` - Prospect context

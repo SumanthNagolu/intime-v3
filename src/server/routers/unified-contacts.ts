@@ -1321,6 +1321,7 @@ export const unifiedContactsRouter = router({
 
         // Note: company_name is stored directly on contacts, no join needed
         // The company_id FK references accounts table, not companies
+        // Exclude drafts (leads without first_name AND company_name)
         let query = adminClient
           .from('contacts')
           .select(`
@@ -1330,6 +1331,7 @@ export const unifiedContactsRouter = router({
           .eq('org_id', orgId)
           .eq('subtype', 'person_lead')
           .is('deleted_at', null)
+          .or('first_name.not.is.null,company_name.not.is.null')
 
         if (input.search) {
           query = query.or(`first_name.ilike.%${input.search}%,last_name.ilike.%${input.search}%,email.ilike.%${input.search}%,company_name.ilike.%${input.search}%`)
@@ -1415,7 +1417,7 @@ export const unifiedContactsRouter = router({
         return data
       }),
 
-    // Stats for leads
+    // Stats for leads (excludes drafts - leads without first_name AND company_name)
     stats: orgProtectedProcedure
       .query(async ({ ctx }) => {
         const { orgId } = ctx
@@ -1423,10 +1425,11 @@ export const unifiedContactsRouter = router({
 
         const { data: leads, error } = await adminClient
           .from('contacts')
-          .select('id, lead_status, lead_score, lead_estimated_value, created_at')
+          .select('id, lead_status, lead_score, lead_estimated_value, created_at, first_name, company_name')
           .eq('org_id', orgId)
           .eq('subtype', 'person_lead')
           .is('deleted_at', null)
+          .or('first_name.not.is.null,company_name.not.is.null')
 
         if (error) {
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
@@ -2016,6 +2019,722 @@ export const unifiedContactsRouter = router({
 
         return data
       }),
+
+    // ============================================
+    // WIZARD & PER-SECTION SAVE ENDPOINTS
+    // ============================================
+
+    // Create draft lead (for wizard)
+    // Note: Uses 'new' status since DB doesn't have 'draft' - wizard tracks completion state via URL
+    createDraft: orgProtectedProcedure
+      .mutation(async ({ ctx }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get the user profile ID (owner_id must reference user_profiles, not auth.users)
+        const { data: userProfile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_user_id', user?.id)
+          .single()
+
+        const userProfileId = userProfile?.id || null
+
+        const { data, error } = await adminClient
+          .from('contacts')
+          .insert({
+            org_id: orgId,
+            category: 'person',
+            subtype: 'person_lead',
+            lead_status: 'new',  // DB constraint doesn't allow 'draft'
+            owner_id: userProfileId,
+            created_by: userProfileId,
+          })
+          .select('id')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: `Failed to create draft: ${error.message}` })
+        }
+
+        return data
+      }),
+
+    // Get lead by ID for edit (wizard)
+    getByIdForEdit: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        const { data, error } = await adminClient
+          .from('contacts')
+          .select(`
+            *,
+            owner:user_profiles!owner_id(id, full_name, avatar_url, email)
+          `)
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .in('subtype', ['person_lead', 'company_lead'])
+          .single()
+
+        if (error || !data) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Lead not found' })
+        }
+
+        return data
+      }),
+
+    // Save Identity section
+    saveIdentity: orgProtectedProcedure
+      .input(z.object({
+        leadId: z.string().uuid(),
+        data: z.object({
+          firstName: z.string().optional(),
+          lastName: z.string().optional(),
+          email: z.string().email().optional().or(z.literal('')),
+          phone: z.object({
+            countryCode: z.string().optional(),
+            number: z.string().optional(),
+          }).optional(),
+          title: z.string().optional(),
+          companyName: z.string().optional(),
+          industry: z.string().optional(),
+          website: z.string().url().optional().or(z.literal('')),
+          linkedinUrl: z.string().url().optional().or(z.literal('')),
+          status: z.string().optional(),
+        }),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get user profile ID
+        const { data: userProfile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_user_id', user?.id)
+          .single()
+
+        const userProfileId = userProfile?.id || null
+
+        // Combine phone parts
+        const phoneNumber = input.data.phone?.number
+          ? `${input.data.phone.countryCode || '+1'} ${input.data.phone.number}`
+          : null
+
+        const updateData: Record<string, unknown> = {
+          first_name: input.data.firstName,
+          last_name: input.data.lastName,
+          email: input.data.email || null,
+          phone: phoneNumber,
+          title: input.data.title,
+          company_name: input.data.companyName,
+          industry: input.data.industry,
+          website: input.data.website || null,
+          linkedin_url: input.data.linkedinUrl || null,
+          updated_by: userProfileId,
+        }
+
+        // Only update status if provided
+        if (input.data.status) {
+          updateData.lead_status = input.data.status
+        }
+
+        const { data, error } = await adminClient
+          .from('contacts')
+          .update(updateData)
+          .eq('id', input.leadId)
+          .eq('org_id', orgId)
+          .in('subtype', ['person_lead', 'company_lead'])
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
+      }),
+
+    // Save Qualification section (BANT)
+    saveQualification: orgProtectedProcedure
+      .input(z.object({
+        leadId: z.string().uuid(),
+        data: z.object({
+          bantBudget: z.number().min(0).max(25).nullable().optional(),
+          bantAuthority: z.number().min(0).max(25).nullable().optional(),
+          bantNeed: z.number().min(0).max(25).nullable().optional(),
+          bantTimeline: z.number().min(0).max(25).nullable().optional(),
+          bantBudgetNotes: z.string().optional(),
+          bantAuthorityNotes: z.string().optional(),
+          bantNeedNotes: z.string().optional(),
+          bantTimelineNotes: z.string().optional(),
+          qualificationResult: z.string().optional(),
+          qualificationNotes: z.string().optional(),
+          estimatedValue: z.number().nullable().optional(),
+          estimatedPlacements: z.number().nullable().optional(),
+        }),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get user profile ID
+        const { data: userProfile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_user_id', user?.id)
+          .single()
+
+        const userProfileId = userProfile?.id || null
+
+        // Calculate total BANT score
+        const budget = input.data.bantBudget ?? 0
+        const authority = input.data.bantAuthority ?? 0
+        const need = input.data.bantNeed ?? 0
+        const timeline = input.data.bantTimeline ?? 0
+        const totalScore = budget + authority + need + timeline
+
+        const updateData: Record<string, unknown> = {
+          lead_bant_budget: input.data.bantBudget,
+          lead_bant_authority: input.data.bantAuthority,
+          lead_bant_need: input.data.bantNeed,
+          lead_bant_timeline: input.data.bantTimeline,
+          lead_bant_total_score: totalScore,
+          lead_bant_budget_notes: input.data.bantBudgetNotes,
+          lead_bant_authority_notes: input.data.bantAuthorityNotes,
+          lead_bant_need_notes: input.data.bantNeedNotes,
+          lead_bant_timeline_notes: input.data.bantTimelineNotes,
+          lead_qualification_result: input.data.qualificationResult,
+          lead_qualification_notes: input.data.qualificationNotes,
+          lead_estimated_value: input.data.estimatedValue,
+          lead_estimated_placements: input.data.estimatedPlacements,
+          // Calculate score (out of 100) from BANT total (out of 100)
+          lead_score: totalScore,
+          updated_by: userProfileId,
+        }
+
+        const { data, error } = await adminClient
+          .from('contacts')
+          .update(updateData)
+          .eq('id', input.leadId)
+          .eq('org_id', orgId)
+          .in('subtype', ['person_lead', 'company_lead'])
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
+      }),
+
+    // Save Source section
+    saveSource: orgProtectedProcedure
+      .input(z.object({
+        leadId: z.string().uuid(),
+        data: z.object({
+          source: z.string().optional(),
+          campaignId: z.string().uuid().nullable().optional(),
+          referredBy: z.string().optional(),
+          utmSource: z.string().optional(),
+          utmMedium: z.string().optional(),
+          utmCampaign: z.string().optional(),
+          utmContent: z.string().optional(),
+          utmTerm: z.string().optional(),
+        }),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get user profile ID
+        const { data: userProfile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_user_id', user?.id)
+          .single()
+
+        const userProfileId = userProfile?.id || null
+
+        const updateData: Record<string, unknown> = {
+          lead_source: input.data.source,
+          source_campaign_id: input.data.campaignId,
+          lead_referred_by: input.data.referredBy,
+          utm_source: input.data.utmSource,
+          utm_medium: input.data.utmMedium,
+          utm_campaign: input.data.utmCampaign,
+          utm_content: input.data.utmContent,
+          utm_term: input.data.utmTerm,
+          updated_by: userProfileId,
+        }
+
+        const { data, error } = await adminClient
+          .from('contacts')
+          .update(updateData)
+          .eq('id', input.leadId)
+          .eq('org_id', orgId)
+          .in('subtype', ['person_lead', 'company_lead'])
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
+      }),
+
+    // Save Team section
+    saveTeam: orgProtectedProcedure
+      .input(z.object({
+        leadId: z.string().uuid(),
+        data: z.object({
+          ownerId: z.string().uuid().nullable().optional(),
+          preferredContactMethod: z.string().optional(),
+          preferredContactTime: z.string().optional(),
+          doNotContact: z.boolean().optional(),
+          notes: z.string().optional(),
+        }),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get user profile ID
+        const { data: userProfile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_user_id', user?.id)
+          .single()
+
+        const userProfileId = userProfile?.id || null
+
+        const updateData: Record<string, unknown> = {
+          owner_id: input.data.ownerId,
+          preferred_contact_method: input.data.preferredContactMethod,
+          preferred_contact_time: input.data.preferredContactTime,
+          do_not_contact: input.data.doNotContact,
+          notes: input.data.notes,
+          updated_by: userProfileId,
+        }
+
+        const { data, error } = await adminClient
+          .from('contacts')
+          .update(updateData)
+          .eq('id', input.leadId)
+          .eq('org_id', orgId)
+          .in('subtype', ['person_lead', 'company_lead'])
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
+      }),
+
+    // Save Classification section
+    saveClassification: orgProtectedProcedure
+      .input(z.object({
+        leadId: z.string().uuid(),
+        data: z.object({
+          leadType: z.string().optional(),
+          leadCategory: z.string().optional(),
+          opportunityType: z.string().optional(),
+          businessModel: z.string().optional(),
+          engagementType: z.string().optional(),
+          relationshipType: z.string().optional(),
+          existingRelationship: z.boolean().optional(),
+          previousEngagementNotes: z.string().optional(),
+          priority: z.string().optional(),
+          temperature: z.string().optional(),
+        }),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get user profile ID
+        const { data: userProfile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_user_id', user?.id)
+          .single()
+
+        const userProfileId = userProfile?.id || null
+
+        const updateData: Record<string, unknown> = {
+          lead_type: input.data.leadType,
+          lead_category: input.data.leadCategory,
+          lead_opportunity_type: input.data.opportunityType,
+          lead_business_model: input.data.businessModel,
+          lead_engagement_type: input.data.engagementType,
+          relationship_type: input.data.relationshipType,
+          lead_existing_relationship: input.data.existingRelationship,
+          lead_previous_engagement_notes: input.data.previousEngagementNotes,
+          lead_priority: input.data.priority,
+          lead_temperature: input.data.temperature,
+          updated_by: userProfileId,
+        }
+
+        const { data, error } = await adminClient
+          .from('contacts')
+          .update(updateData)
+          .eq('id', input.leadId)
+          .eq('org_id', orgId)
+          .in('subtype', ['person_lead', 'company_lead'])
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
+      }),
+
+    // Save Requirements section
+    saveRequirements: orgProtectedProcedure
+      .input(z.object({
+        leadId: z.string().uuid(),
+        data: z.object({
+          contractTypes: z.array(z.string()).optional(),
+          primaryContractType: z.string().optional(),
+          billRateMin: z.number().nullable().optional(),
+          billRateMax: z.number().nullable().optional(),
+          billRateCurrency: z.string().optional(),
+          targetMarkupPercentage: z.number().nullable().optional(),
+          positionsCount: z.number().optional(),
+          positionsUrgency: z.string().optional(),
+          estimatedDuration: z.string().optional(),
+          remotePolicy: z.string().optional(),
+          primarySkills: z.array(z.string()).optional(),
+          secondarySkills: z.array(z.string()).optional(),
+          requiredCertifications: z.array(z.string()).optional(),
+          experienceLevel: z.string().optional(),
+          yearsExperienceMin: z.number().nullable().optional(),
+          yearsExperienceMax: z.number().nullable().optional(),
+          securityClearanceRequired: z.boolean().optional(),
+          securityClearanceLevel: z.string().optional(),
+          backgroundCheckRequired: z.boolean().optional(),
+          drugTestRequired: z.boolean().optional(),
+          technicalNotes: z.string().optional(),
+          hiringManagerPreferences: z.string().optional(),
+        }),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get user profile ID
+        const { data: userProfile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_user_id', user?.id)
+          .single()
+
+        const userProfileId = userProfile?.id || null
+
+        const updateData: Record<string, unknown> = {
+          lead_contract_types: input.data.contractTypes,
+          lead_primary_contract_type: input.data.primaryContractType,
+          lead_bill_rate_min: input.data.billRateMin,
+          lead_bill_rate_max: input.data.billRateMax,
+          lead_bill_rate_currency: input.data.billRateCurrency,
+          lead_target_markup: input.data.targetMarkupPercentage,
+          lead_positions_count: input.data.positionsCount,
+          lead_positions_urgency: input.data.positionsUrgency,
+          lead_estimated_duration: input.data.estimatedDuration,
+          lead_remote_policy: input.data.remotePolicy,
+          lead_primary_skills: input.data.primarySkills,
+          lead_secondary_skills: input.data.secondarySkills,
+          lead_required_certifications: input.data.requiredCertifications,
+          lead_experience_level: input.data.experienceLevel,
+          lead_years_experience_min: input.data.yearsExperienceMin,
+          lead_years_experience_max: input.data.yearsExperienceMax,
+          lead_security_clearance_required: input.data.securityClearanceRequired,
+          lead_security_clearance_level: input.data.securityClearanceLevel,
+          lead_background_check_required: input.data.backgroundCheckRequired,
+          lead_drug_test_required: input.data.drugTestRequired,
+          lead_technical_notes: input.data.technicalNotes,
+          lead_hiring_manager_preferences: input.data.hiringManagerPreferences,
+          updated_by: userProfileId,
+        }
+
+        const { data, error } = await adminClient
+          .from('contacts')
+          .update(updateData)
+          .eq('id', input.leadId)
+          .eq('org_id', orgId)
+          .in('subtype', ['person_lead', 'company_lead'])
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
+      }),
+
+    // Save Client Profile section
+    saveClientProfile: orgProtectedProcedure
+      .input(z.object({
+        leadId: z.string().uuid(),
+        data: z.object({
+          usesVms: z.boolean().optional(),
+          vmsPlatform: z.string().optional(),
+          vmsOther: z.string().optional(),
+          vmsAccessStatus: z.string().optional(),
+          hasMsp: z.boolean().optional(),
+          mspName: z.string().optional(),
+          programType: z.string().optional(),
+          msaStatus: z.string().optional(),
+          msaExpirationDate: z.string().nullable().optional(),
+          ndaRequired: z.boolean().optional(),
+          ndaStatus: z.string().optional(),
+          paymentTerms: z.string().optional(),
+          poRequired: z.boolean().optional(),
+          invoiceFormat: z.string().optional(),
+          billingCycle: z.string().optional(),
+          insuranceRequired: z.boolean().optional(),
+          insuranceTypes: z.array(z.string()).optional(),
+          minimumInsuranceCoverage: z.string().optional(),
+          accountTier: z.string().optional(),
+          industryVertical: z.string().optional(),
+          companyRevenue: z.string().optional(),
+          employeeCount: z.string().optional(),
+        }),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get user profile ID
+        const { data: userProfile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_user_id', user?.id)
+          .single()
+
+        const userProfileId = userProfile?.id || null
+
+        const updateData: Record<string, unknown> = {
+          lead_uses_vms: input.data.usesVms,
+          lead_vms_platform: input.data.vmsPlatform,
+          lead_vms_other: input.data.vmsOther,
+          lead_vms_access_status: input.data.vmsAccessStatus,
+          lead_has_msp: input.data.hasMsp,
+          lead_msp_name: input.data.mspName,
+          lead_program_type: input.data.programType,
+          lead_msa_status: input.data.msaStatus,
+          lead_msa_expiration_date: input.data.msaExpirationDate,
+          lead_nda_required: input.data.ndaRequired,
+          lead_nda_status: input.data.ndaStatus,
+          lead_payment_terms: input.data.paymentTerms,
+          lead_po_required: input.data.poRequired,
+          lead_invoice_format: input.data.invoiceFormat,
+          lead_billing_cycle: input.data.billingCycle,
+          lead_insurance_required: input.data.insuranceRequired,
+          lead_insurance_types: input.data.insuranceTypes,
+          lead_minimum_insurance_coverage: input.data.minimumInsuranceCoverage,
+          lead_account_tier: input.data.accountTier,
+          lead_industry_vertical: input.data.industryVertical,
+          lead_company_revenue: input.data.companyRevenue,
+          lead_employee_count: input.data.employeeCount,
+          updated_by: userProfileId,
+        }
+
+        const { data, error } = await adminClient
+          .from('contacts')
+          .update(updateData)
+          .eq('id', input.leadId)
+          .eq('org_id', orgId)
+          .in('subtype', ['person_lead', 'company_lead'])
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
+      }),
+
+    // Submit (finalize lead creation)
+    submit: orgProtectedProcedure
+      .input(z.object({
+        leadId: z.string().uuid(),
+        targetStatus: z.enum(['contacted', 'warm', 'hot']).default('contacted'),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get user profile ID
+        const { data: userProfile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_user_id', user?.id)
+          .single()
+
+        const userProfileId = userProfile?.id || null
+
+        // Get current lead
+        const { data: lead, error: leadError } = await adminClient
+          .from('contacts')
+          .select('*')
+          .eq('id', input.leadId)
+          .eq('org_id', orgId)
+          .in('subtype', ['person_lead', 'company_lead'])
+          .single()
+
+        if (leadError || !lead) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Lead not found' })
+        }
+
+        // Validate required fields
+        if (!lead.first_name && !lead.company_name) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'Either first name or company name is required',
+          })
+        }
+
+        // Update status to target (validates completion)
+        const { data, error } = await adminClient
+          .from('contacts')
+          .update({
+            lead_status: input.targetStatus,
+            updated_by: userProfileId,
+          })
+          .eq('id', input.leadId)
+          .eq('org_id', orgId)
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Log activity
+        await adminClient
+          .from('activities')
+          .insert({
+            org_id: orgId,
+            entity_type: 'contact',
+            entity_id: input.leadId,
+            activity_type: 'note',
+            subject: 'Lead Created',
+            description: `Lead created via wizard`,
+            created_by: userProfileId,
+          })
+
+        return data
+      }),
+
+    // List user's draft leads (status='new' created by current user)
+    listMyDrafts: orgProtectedProcedure.query(async ({ ctx }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      if (!user?.id) {
+        return []
+      }
+
+      // Get user_profile.id from auth_id
+      const { data: profile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_id', user.id)
+        .single()
+
+      if (!profile?.id) {
+        return []
+      }
+
+      const { data, error } = await adminClient
+        .from('contacts')
+        .select(`
+          id, first_name, last_name, email, company_name, lead_status, lead_score,
+          created_at, updated_at
+        `)
+        .eq('org_id', orgId)
+        .eq('subtype', 'person_lead')
+        .eq('created_by', profile.id)
+        .eq('lead_status', 'new')
+        .is('deleted_at', null)
+        .order('updated_at', { ascending: false })
+
+      if (error) {
+        console.error('[leads.listMyDrafts] Error:', error.message)
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return data ?? []
+    }),
+
+    // Delete a draft lead (soft delete, verify ownership and draft status)
+    deleteDraft: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        // Get user_profile.id from auth_id
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+
+        if (!profile?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User profile not found' })
+        }
+
+        // Verify ownership and draft status
+        const { data: existing } = await adminClient
+          .from('contacts')
+          .select('id, lead_status, created_by')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .eq('subtype', 'person_lead')
+          .is('deleted_at', null)
+          .single()
+
+        if (!existing) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Lead not found' })
+        }
+
+        if (existing.created_by !== profile.id) {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'You can only delete your own drafts' })
+        }
+
+        if (existing.lead_status !== 'new') {
+          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Can only delete draft leads (status: new)' })
+        }
+
+        // Soft delete
+        const { error } = await adminClient
+          .from('contacts')
+          .update({ deleted_at: new Date().toISOString() })
+          .eq('id', input.id)
+
+        if (error) {
+          console.error('[leads.deleteDraft] Error:', error.message)
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return { success: true }
+      }),
   }),
 
   // ============================================
@@ -2286,6 +3005,673 @@ export const unifiedContactsRouter = router({
         return data
       }),
   }),
+
+  // ============================================
+  // UNIFIED CONTACT WIZARD PROCEDURES
+  // ============================================
+
+  // Create draft contact for wizard
+  createContactDraft: orgProtectedProcedure
+    .input(z.object({
+      category: ContactCategory,
+      subtype: ContactSubtype,
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Get the user profile ID
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_user_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id || null
+
+      // Note: contacts table doesn't have a 'category' column
+      // We derive category from subtype (person_* vs company_*)
+      const { data, error } = await adminClient
+        .from('contacts')
+        .insert({
+          org_id: orgId,
+          subtype: input.subtype,
+          status: 'draft',
+          owner_id: userProfileId,
+          created_by: userProfileId,
+        })
+        .select('id, subtype')
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: `Failed to create draft: ${error.message}` })
+      }
+
+      // Return with derived category for immediate use
+      const category = input.subtype.startsWith('company_') ? 'company' : 'person'
+      return { ...data, category }
+    }),
+
+  // Get contact for editing (wizard or workspace)
+  getContactForEdit: orgProtectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .query(async ({ ctx, input }) => {
+      const { orgId } = ctx
+      const adminClient = getAdminClient()
+
+      // Get contact with available relations
+      // Note: contacts table uses company_id (not current_company_id, account_id)
+      // Addresses use polymorphic table with entity_type/entity_id
+      const { data, error } = await adminClient
+        .from('contacts')
+        .select(`
+          *,
+          owner:user_profiles!owner_id(id, full_name, avatar_url, email)
+        `)
+        .eq('id', input.id)
+        .eq('org_id', orgId)
+        .is('deleted_at', null)
+        .single()
+
+      // Fetch addresses separately using polymorphic relationship
+      let addresses: unknown[] = []
+      if (data) {
+        const { data: addressData } = await adminClient
+          .from('addresses')
+          .select('*')
+          .eq('entity_type', 'contact')
+          .eq('entity_id', input.id)
+          .order('is_primary', { ascending: false })
+
+        addresses = addressData || []
+      }
+
+      if (error || !data) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Contact not found' })
+      }
+
+      // Derive category from subtype (person_* = person, company_* = company)
+      const subtype = data.subtype || 'general'
+      const category = subtype.startsWith('company_') ? 'company' : 'person'
+
+      return {
+        ...data,
+        category,
+        contact_types: data.types || [],
+        addresses,
+      }
+    }),
+
+  // Save Basic Info section
+  saveBasicInfo: orgProtectedProcedure
+    .input(z.object({
+      contactId: z.string().uuid(),
+      data: z.object({
+        // Name fields
+        firstName: z.string().optional(),
+        lastName: z.string().optional(),
+        middleName: z.string().optional(),
+        preferredName: z.string().optional(),
+        // Company fields (for company category)
+        companyName: z.string().optional(),
+        legalName: z.string().optional(),
+        dbaName: z.string().optional(),
+        // Contact methods
+        email: z.string().email().optional().or(z.literal('')),
+        phone: z.string().optional(),
+        mobilePhone: z.string().optional(),
+        workPhone: z.string().optional(),
+        // Classification
+        category: ContactCategory.optional(),
+        contactTypes: z.array(z.string()).optional(),
+        status: z.string().optional(),
+        // Digital presence
+        linkedinUrl: z.string().url().optional().or(z.literal('')),
+        website: z.string().url().optional().or(z.literal('')),
+      }),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Get user profile ID
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_user_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id || null
+
+      const updateData: Record<string, unknown> = {
+        first_name: input.data.firstName,
+        last_name: input.data.lastName,
+        middle_name: input.data.middleName,
+        preferred_name: input.data.preferredName,
+        company_name: input.data.companyName,
+        legal_name: input.data.legalName,
+        dba_name: input.data.dbaName,
+        email: input.data.email || null,
+        phone: input.data.phone,
+        mobile: input.data.mobilePhone,
+        phone_work: input.data.workPhone,
+        types: input.data.contactTypes,
+        status: input.data.status,
+        linkedin_url: input.data.linkedinUrl || null,
+        personal_website: input.data.website || null,
+        updated_by: userProfileId,
+      }
+
+      // Note: category is derived from subtype, not stored as a column
+
+      const { data, error } = await adminClient
+        .from('contacts')
+        .update(updateData)
+        .eq('id', input.contactId)
+        .eq('org_id', orgId)
+        .is('deleted_at', null)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return data
+    }),
+
+  // Save Employment section (person only)
+  saveEmployment: orgProtectedProcedure
+    .input(z.object({
+      contactId: z.string().uuid(),
+      data: z.object({
+        title: z.string().optional(),
+        department: z.string().optional(),
+        currentCompanyId: z.string().uuid().nullable().optional(),
+        currentCompanyName: z.string().optional(),
+      }),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Get user profile ID
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_user_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id || null
+
+      const updateData: Record<string, unknown> = {
+        title: input.data.title,
+        department: input.data.department,
+        company_id: input.data.currentCompanyId,
+        company_name: input.data.currentCompanyName,
+        updated_by: userProfileId,
+      }
+
+      const { data, error } = await adminClient
+        .from('contacts')
+        .update(updateData)
+        .eq('id', input.contactId)
+        .eq('org_id', orgId)
+        .is('deleted_at', null)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return data
+    }),
+
+  // Save Communication section
+  saveCommunication: orgProtectedProcedure
+    .input(z.object({
+      contactId: z.string().uuid(),
+      data: z.object({
+        preferredContactMethod: z.string().optional(),
+        bestTimeToContact: z.string().optional(),
+        timezone: z.string().optional(),
+        language: z.string().optional(),
+        doNotCall: z.boolean().optional(),
+        doNotEmail: z.boolean().optional(),
+        doNotText: z.boolean().optional(),
+        doNotCallBefore: z.string().optional(),
+        doNotCallAfter: z.string().optional(),
+        preferredMeetingPlatform: z.string().optional(),
+        meetingDuration: z.number().optional(),
+        marketingEmailsOptIn: z.boolean().optional(),
+        newsletterOptIn: z.boolean().optional(),
+        productUpdatesOptIn: z.boolean().optional(),
+      }),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Get user profile ID
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_user_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id || null
+
+      const updateData: Record<string, unknown> = {
+        preferred_contact_method: input.data.preferredContactMethod,
+        best_time_to_contact: input.data.bestTimeToContact,
+        timezone: input.data.timezone,
+        language: input.data.language,
+        do_not_call: input.data.doNotCall,
+        do_not_email: input.data.doNotEmail,
+        do_not_text: input.data.doNotText,
+        do_not_call_before: input.data.doNotCallBefore,
+        do_not_call_after: input.data.doNotCallAfter,
+        preferred_meeting_platform: input.data.preferredMeetingPlatform,
+        meeting_duration: input.data.meetingDuration,
+        marketing_emails_opt_in: input.data.marketingEmailsOptIn,
+        newsletter_opt_in: input.data.newsletterOptIn,
+        product_updates_opt_in: input.data.productUpdatesOptIn,
+        updated_by: userProfileId,
+      }
+
+      const { data, error } = await adminClient
+        .from('contacts')
+        .update(updateData)
+        .eq('id', input.contactId)
+        .eq('org_id', orgId)
+        .is('deleted_at', null)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return data
+    }),
+
+  // Save Social section
+  saveSocial: orgProtectedProcedure
+    .input(z.object({
+      contactId: z.string().uuid(),
+      data: z.object({
+        linkedinUrl: z.string().url().optional().or(z.literal('')),
+        twitterUrl: z.string().url().optional().or(z.literal('')),
+        githubUrl: z.string().url().optional().or(z.literal('')),
+        portfolioUrl: z.string().url().optional().or(z.literal('')),
+        personalWebsite: z.string().url().optional().or(z.literal('')),
+      }),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Get user profile ID
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_user_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id || null
+
+      const updateData: Record<string, unknown> = {
+        linkedin_url: input.data.linkedinUrl || null,
+        twitter_url: input.data.twitterUrl || null,
+        github_url: input.data.githubUrl || null,
+        portfolio_url: input.data.portfolioUrl || null,
+        website: input.data.personalWebsite || null,
+        updated_by: userProfileId,
+      }
+
+      const { data, error } = await adminClient
+        .from('contacts')
+        .update(updateData)
+        .eq('id', input.contactId)
+        .eq('org_id', orgId)
+        .is('deleted_at', null)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return data
+    }),
+
+  // Save Candidate section
+  saveCandidate: orgProtectedProcedure
+    .input(z.object({
+      contactId: z.string().uuid(),
+      data: z.object({
+        candidateStatus: z.string().optional(),
+        candidateResumeUrl: z.string().url().optional().or(z.literal('')),
+        candidateExperienceYears: z.number().nullable().optional(),
+        candidateCurrentVisa: z.string().optional(),
+        candidateVisaExpiry: z.string().optional(),
+        candidateHourlyRate: z.number().nullable().optional(),
+        candidateMinimumHourlyRate: z.number().nullable().optional(),
+        candidateDesiredSalaryAnnual: z.number().nullable().optional(),
+        candidateMinimumAnnualSalary: z.number().nullable().optional(),
+        candidateCompensationNotes: z.string().optional(),
+        candidateCurrentEmploymentStatus: z.string().optional(),
+        candidateAvailability: z.string().optional(),
+        candidateNoticePeriodDays: z.number().nullable().optional(),
+        candidateEarliestStartDate: z.string().optional(),
+        candidateWillingToRelocate: z.boolean().optional(),
+        candidatePreferredEmploymentType: z.array(z.string()).optional(),
+        candidateRecruiterRating: z.number().nullable().optional(),
+        candidateRecruiterRatingNotes: z.string().optional(),
+        candidateIsOnHotlist: z.boolean().optional(),
+        candidateHotlistNotes: z.string().optional(),
+      }),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Get user profile ID
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_user_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id || null
+
+      const updateData: Record<string, unknown> = {
+        candidate_status: input.data.candidateStatus,
+        candidate_resume_url: input.data.candidateResumeUrl || null,
+        candidate_experience_years: input.data.candidateExperienceYears,
+        candidate_current_visa: input.data.candidateCurrentVisa,
+        candidate_visa_expiry: input.data.candidateVisaExpiry,
+        candidate_hourly_rate: input.data.candidateHourlyRate,
+        candidate_minimum_hourly_rate: input.data.candidateMinimumHourlyRate,
+        candidate_desired_salary_annual: input.data.candidateDesiredSalaryAnnual,
+        candidate_minimum_annual_salary: input.data.candidateMinimumAnnualSalary,
+        candidate_compensation_notes: input.data.candidateCompensationNotes,
+        candidate_current_employment_status: input.data.candidateCurrentEmploymentStatus,
+        candidate_availability: input.data.candidateAvailability,
+        candidate_notice_period_days: input.data.candidateNoticePeriodDays,
+        candidate_earliest_start_date: input.data.candidateEarliestStartDate,
+        candidate_willing_to_relocate: input.data.candidateWillingToRelocate,
+        candidate_preferred_employment_type: input.data.candidatePreferredEmploymentType,
+        candidate_recruiter_rating: input.data.candidateRecruiterRating,
+        candidate_recruiter_rating_notes: input.data.candidateRecruiterRatingNotes,
+        candidate_is_on_hotlist: input.data.candidateIsOnHotlist,
+        candidate_hotlist_notes: input.data.candidateHotlistNotes,
+        updated_by: userProfileId,
+      }
+
+      const { data, error } = await adminClient
+        .from('contacts')
+        .update(updateData)
+        .eq('id', input.contactId)
+        .eq('org_id', orgId)
+        .is('deleted_at', null)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return data
+    }),
+
+  // Save Lead section
+  saveLead: orgProtectedProcedure
+    .input(z.object({
+      contactId: z.string().uuid(),
+      data: z.object({
+        leadStatus: z.string().optional(),
+        leadScore: z.number().nullable().optional(),
+        leadSource: z.string().optional(),
+        leadEstimatedValue: z.number().nullable().optional(),
+        leadBantBudget: z.number().optional(),
+        leadBantAuthority: z.number().optional(),
+        leadBantNeed: z.number().optional(),
+        leadBantTimeline: z.number().optional(),
+        leadBudgetStatus: z.string().optional(),
+        leadEstimatedMonthlySpend: z.number().nullable().optional(),
+        leadBantBudgetNotes: z.string().optional(),
+        leadAuthorityLevel: z.string().optional(),
+        leadBantAuthorityNotes: z.string().optional(),
+        leadBusinessNeed: z.string().optional(),
+        leadUrgency: z.string().optional(),
+        leadTargetStartDate: z.string().optional(),
+        leadPositionsCount: z.number().optional(),
+        leadNextAction: z.string().optional(),
+        leadNextActionDate: z.string().optional(),
+        leadInterestLevel: z.string().optional(),
+        leadQualificationResult: z.string().optional(),
+        leadHiringNeeds: z.string().optional(),
+        leadPainPoints: z.string().optional(),
+        leadQualificationNotes: z.string().optional(),
+      }),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Get user profile ID
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_user_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id || null
+
+      const updateData: Record<string, unknown> = {
+        lead_status: input.data.leadStatus,
+        lead_score: input.data.leadScore,
+        lead_source: input.data.leadSource,
+        lead_estimated_value: input.data.leadEstimatedValue,
+        lead_bant_budget: input.data.leadBantBudget,
+        lead_bant_authority: input.data.leadBantAuthority,
+        lead_bant_need: input.data.leadBantNeed,
+        lead_bant_timeline: input.data.leadBantTimeline,
+        lead_budget_status: input.data.leadBudgetStatus,
+        lead_estimated_monthly_spend: input.data.leadEstimatedMonthlySpend,
+        lead_bant_budget_notes: input.data.leadBantBudgetNotes,
+        lead_authority_level: input.data.leadAuthorityLevel,
+        lead_bant_authority_notes: input.data.leadBantAuthorityNotes,
+        lead_business_need: input.data.leadBusinessNeed,
+        lead_urgency: input.data.leadUrgency,
+        lead_target_start_date: input.data.leadTargetStartDate,
+        lead_positions_count: input.data.leadPositionsCount,
+        lead_next_action: input.data.leadNextAction,
+        lead_next_action_date: input.data.leadNextActionDate,
+        lead_interest_level: input.data.leadInterestLevel,
+        lead_qualification_result: input.data.leadQualificationResult,
+        lead_hiring_needs: input.data.leadHiringNeeds,
+        lead_pain_points: input.data.leadPainPoints,
+        lead_qualification_notes: input.data.leadQualificationNotes,
+        updated_by: userProfileId,
+      }
+
+      const { data, error } = await adminClient
+        .from('contacts')
+        .update(updateData)
+        .eq('id', input.contactId)
+        .eq('org_id', orgId)
+        .is('deleted_at', null)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return data
+    }),
+
+  // Save Addresses section
+  saveAddresses: orgProtectedProcedure
+    .input(z.object({
+      contactId: z.string().uuid(),
+      data: z.object({
+        addresses: z.array(z.object({
+          id: z.string().uuid().optional(),
+          addressType: z.string(),
+          isPrimary: z.boolean(),
+          street1: z.string().optional(),
+          street2: z.string().optional(),
+          city: z.string().optional(),
+          state: z.string().optional(),
+          postalCode: z.string().optional(),
+          country: z.string().optional(),
+        })),
+      }),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Get user profile ID
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_user_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id || null
+
+      // Delete existing addresses for this contact (polymorphic addresses table)
+      await adminClient
+        .from('addresses')
+        .delete()
+        .eq('entity_type', 'contact')
+        .eq('entity_id', input.contactId)
+
+      // Insert new addresses using polymorphic relationship
+      if (input.data.addresses.length > 0) {
+        const addressInserts = input.data.addresses.map(addr => ({
+          entity_type: 'contact',
+          entity_id: input.contactId,
+          org_id: orgId,
+          address_type: addr.addressType,
+          is_primary: addr.isPrimary,
+          address_line_1: addr.street1,
+          address_line_2: addr.street2,
+          city: addr.city,
+          state_province: addr.state,
+          postal_code: addr.postalCode,
+          country_code: addr.country || 'US',
+          created_by: userProfileId,
+        }))
+
+        const { error: insertError } = await adminClient
+          .from('addresses')
+          .insert(addressInserts)
+
+        if (insertError) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: insertError.message })
+        }
+      }
+
+      // Update contact updated_by timestamp
+      await adminClient
+        .from('contacts')
+        .update({ updated_by: userProfileId })
+        .eq('id', input.contactId)
+        .eq('org_id', orgId)
+
+      return { success: true }
+    }),
+
+  // Submit contact (finalize creation)
+  submitContact: orgProtectedProcedure
+    .input(z.object({
+      contactId: z.string().uuid(),
+      targetStatus: z.string().default('active'),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      // Get user profile ID
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_user_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id || null
+
+      // Get current contact
+      const { data: contact, error: contactError } = await adminClient
+        .from('contacts')
+        .select('*')
+        .eq('id', input.contactId)
+        .eq('org_id', orgId)
+        .is('deleted_at', null)
+        .single()
+
+      if (contactError || !contact) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Contact not found' })
+      }
+
+      // Derive category from subtype
+      const subtype = contact.subtype || 'general'
+      const isCompany = subtype.startsWith('company_')
+
+      // Validate required fields based on derived category
+      if (isCompany) {
+        if (!contact.company_name) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'Company name is required for company contacts',
+          })
+        }
+      } else {
+        if (!contact.first_name) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'First name is required for person contacts',
+          })
+        }
+      }
+
+      // Update status to target (use 'status' not 'contact_status')
+      const { data, error } = await adminClient
+        .from('contacts')
+        .update({
+          status: input.targetStatus,
+          updated_by: userProfileId,
+        })
+        .eq('id', input.contactId)
+        .eq('org_id', orgId)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      // Log activity
+      await adminClient
+        .from('activities')
+        .insert({
+          org_id: orgId,
+          entity_type: 'contact',
+          entity_id: input.contactId,
+          activity_type: 'note',
+          subject: 'Contact Created',
+          description: `Contact created via wizard`,
+          created_by: userProfileId,
+        })
+
+      return data
+    }),
 
   // ============================================
   // SOFT DELETE

@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { EntityDetailView } from '@/components/pcf/detail-view/EntityDetailView'
-import { campaignsDetailConfig, Campaign } from '@/configs/entities/campaigns.config'
+import { CampaignWorkspace } from '@/components/workspaces/CampaignWorkspace'
 import { EditCampaignDialog } from '@/components/crm/campaigns/EditCampaignDialog'
 import { CompleteCampaignDialog } from '@/components/crm/campaigns/CompleteCampaignDialog'
 import { DuplicateCampaignDialog } from '@/components/crm/campaigns/DuplicateCampaignDialog'
@@ -14,7 +13,7 @@ import { UploadDocumentDialog } from '@/components/crm/campaigns/UploadDocumentD
 import { AddSequenceStepDialog } from '@/components/crm/campaigns/AddSequenceStepDialog'
 import { EditSequenceStepDialog } from '@/components/crm/campaigns/EditSequenceStepDialog'
 import { LogActivityModal } from '@/components/recruiter-workspace/LogActivityModal'
-import { useEntityData } from '@/components/layouts/EntityContextProvider'
+import { useCampaignWorkspace } from '@/components/workspaces/campaign/CampaignWorkspaceProvider'
 import { trpc } from '@/lib/trpc/client'
 import { toast } from 'sonner'
 
@@ -40,6 +39,8 @@ export default function CampaignPage() {
   const params = useParams()
   const router = useRouter()
   const campaignId = params.id as string
+  const { data, refreshData } = useCampaignWorkspace()
+  const campaign = data.campaign
 
   // Dialog states
   const [editDialogOpen, setEditDialogOpen] = useState(false)
@@ -63,17 +64,11 @@ export default function CampaignPage() {
 
   const utils = trpc.useUtils()
 
-  // ONE DATABASE CALL PATTERN: Get campaign data from server-side context
-  // No client-side query needed - data already fetched in layout.tsx via getFullEntity
-  const entityData = useEntityData<Campaign>()
-  const campaign = entityData?.data
-
   // Status mutations
   const updateStatus = trpc.crm.campaigns.updateStatus.useMutation({
     onSuccess: () => {
       toast.success('Campaign status updated')
-      // Invalidate the full entity query to refresh data
-      utils.crm.campaigns.getFullEntity.invalidate({ id: campaignId })
+      refreshData()
       utils.crm.campaigns.list.invalidate()
     },
     onError: (error) => {
@@ -81,7 +76,7 @@ export default function CampaignPage() {
     },
   })
 
-  // Listen for dialog events from sidebar quick actions and PCF components
+  // Listen for dialog events from sidebar quick actions and section components
   useEffect(() => {
     const handleCampaignDialog = (event: CustomEvent<{
       dialogId: string
@@ -136,8 +131,7 @@ export default function CampaignPage() {
           break
         case 'editSequence':
           // Navigate to sequence section for editing
-          window.history.pushState({}, '', `/employee/crm/campaigns/${campaignId}?mode=sections&section=sequence`)
-          window.dispatchEvent(new PopStateEvent('popstate'))
+          router.push(`/employee/crm/campaigns/${campaignId}?section=sequence`, { scroll: false })
           break
         case 'viewSequenceStep':
         case 'editSequenceStep':
@@ -180,71 +174,66 @@ export default function CampaignPage() {
           break
         case 'viewAnalytics':
           // Navigate to analytics section
-          window.history.pushState({}, '', `/employee/crm/campaigns/${campaignId}?mode=sections&section=analytics`)
-          window.dispatchEvent(new PopStateEvent('popstate'))
+          router.push(`/employee/crm/campaigns/${campaignId}?section=analytics`, { scroll: false })
           break
 
         // Quick navigation from sidebar
         case 'viewFunnel':
-          window.history.pushState({}, '', `/employee/crm/campaigns/${campaignId}?mode=sections&section=funnel`)
-          window.dispatchEvent(new PopStateEvent('popstate'))
+          router.push(`/employee/crm/campaigns/${campaignId}?section=funnel`, { scroll: false })
           break
         case 'viewProspects':
-          window.history.pushState({}, '', `/employee/crm/campaigns/${campaignId}?mode=sections&section=prospects`)
-          window.dispatchEvent(new PopStateEvent('popstate'))
+          router.push(`/employee/crm/campaigns/${campaignId}?section=prospects`, { scroll: false })
           break
         case 'viewLeads':
-          window.history.pushState({}, '', `/employee/crm/campaigns/${campaignId}?mode=sections&section=leads`)
-          window.dispatchEvent(new PopStateEvent('popstate'))
+          router.push(`/employee/crm/campaigns/${campaignId}?section=leads`, { scroll: false })
           break
       }
     }
 
     window.addEventListener('openCampaignDialog', handleCampaignDialog)
     return () => window.removeEventListener('openCampaignDialog', handleCampaignDialog)
-  }, [campaign, campaignId, updateStatus])
+  }, [campaign, campaignId, router, updateStatus])
 
-  // Helper to invalidate and refresh data after mutations
-  const invalidateCampaign = () => {
-    utils.crm.campaigns.getFullEntity.invalidate({ id: campaignId })
+  // Refresh data after dialog closes
+  const handleDialogChange = (open: boolean, setter: React.Dispatch<React.SetStateAction<boolean>>) => {
+    setter(open)
+    if (!open) {
+      refreshData()
+    }
   }
 
   return (
     <>
-      {/* ONE DATABASE CALL PATTERN: Pass server-fetched entity to avoid client query */}
-      <EntityDetailView<Campaign>
-        config={campaignsDetailConfig}
-        entityId={campaignId}
-        entity={campaign}
-      />
+      {/* Hublot-inspired Campaign Workspace */}
+      <CampaignWorkspace />
 
       {/* Dialogs */}
       {campaign && (
         <>
           <EditCampaignDialog
             open={editDialogOpen}
-            onOpenChange={setEditDialogOpen}
+            onOpenChange={(open) => handleDialogChange(open, setEditDialogOpen)}
             campaignId={campaignId}
             onSuccess={() => {
-              invalidateCampaign()
+              refreshData()
               utils.crm.campaigns.list.invalidate()
             }}
           />
 
           <CompleteCampaignDialog
             open={completeDialogOpen}
-            onOpenChange={setCompleteDialogOpen}
+            onOpenChange={(open) => handleDialogChange(open, setCompleteDialogOpen)}
             campaignId={campaignId}
             campaignName={campaign.name}
             onSuccess={() => {
-              invalidateCampaign()
+              refreshData()
               utils.crm.campaigns.list.invalidate()
             }}
           />
 
           <DuplicateCampaignDialog
             open={duplicateDialogOpen}
-            onOpenChange={setDuplicateDialogOpen}
+            onOpenChange={(open) => handleDialogChange(open, setDuplicateDialogOpen)}
             campaignId={campaignId}
             originalName={campaign.name}
             onSuccess={() => {
@@ -255,56 +244,55 @@ export default function CampaignPage() {
 
           <AddProspectDialog
             open={addProspectOpen}
-            onOpenChange={setAddProspectOpen}
+            onOpenChange={(open) => handleDialogChange(open, setAddProspectOpen)}
             campaignId={campaignId}
-            onSuccess={invalidateCampaign}
+            onSuccess={refreshData}
           />
 
           <ProspectImportDialog
             open={importProspectsOpen}
-            onOpenChange={setImportProspectsOpen}
+            onOpenChange={(open) => handleDialogChange(open, setImportProspectsOpen)}
             campaignId={campaignId}
-            onSuccess={invalidateCampaign}
+            onSuccess={refreshData}
           />
 
           <LinkLeadsToCampaignDialog
             open={linkLeadsOpen}
-            onOpenChange={setLinkLeadsOpen}
+            onOpenChange={(open) => handleDialogChange(open, setLinkLeadsOpen)}
             campaignId={campaignId}
-            onSuccess={invalidateCampaign}
+            onSuccess={refreshData}
           />
 
           <UploadDocumentDialog
             open={uploadDocumentOpen}
-            onOpenChange={setUploadDocumentOpen}
+            onOpenChange={(open) => handleDialogChange(open, setUploadDocumentOpen)}
             campaignId={campaignId}
           />
 
           <AddSequenceStepDialog
             open={addSequenceStepOpen}
-            onOpenChange={setAddSequenceStepOpen}
+            onOpenChange={(open) => handleDialogChange(open, setAddSequenceStepOpen)}
             campaignId={campaignId}
-            onSuccess={() => {
-              invalidateCampaign()
-            }}
+            onSuccess={refreshData}
           />
 
           <EditSequenceStepDialog
             open={editSequenceStepOpen}
             onOpenChange={(open) => {
               setEditSequenceStepOpen(open)
-              if (!open) setSelectedStep(null)
+              if (!open) {
+                setSelectedStep(null)
+                refreshData()
+              }
             }}
             campaignId={campaignId}
             step={selectedStep}
-            onSuccess={() => {
-              invalidateCampaign()
-            }}
+            onSuccess={refreshData}
           />
 
           <LogActivityModal
             open={logActivityOpen}
-            onOpenChange={setLogActivityOpen}
+            onOpenChange={(open) => handleDialogChange(open, setLogActivityOpen)}
             entityType="campaign"
             entityId={campaignId}
             entityName={campaign.name}

@@ -1,402 +1,286 @@
 'use client'
 
-import { useState } from 'react'
-import {
-  MapPin,
-  Plus,
-  Star,
-  MoreVertical,
-  Edit,
-  Trash2,
-  CheckCircle,
-} from 'lucide-react'
+import * as React from 'react'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog'
+import { MapPin, Plus, Trash2, Star } from 'lucide-react'
+import { SectionHeader } from '../fields/SectionHeader'
+import { UnifiedField } from '../fields/UnifiedField'
+import { ADDRESS_TYPES } from '@/lib/contacts/constants'
+import type { SectionMode, AddressesSectionData, ContactAddress } from '@/lib/contacts/types'
 import { cn } from '@/lib/utils'
-import { trpc } from '@/lib/trpc/client'
-import { useToast } from '@/components/ui/use-toast'
-import { AddressForm } from '@/components/addresses/AddressForm'
-import { AddressDisplay } from '@/components/addresses/AddressDisplay'
-import { EmptyState } from '@/components/pcf/shared/EmptyState'
-import type { AddressFormData } from '@/components/addresses'
+
+// ============ PROPS ============
 
 interface AddressesSectionProps {
-  contactId: string
+  /** Mode determines rendering style */
+  mode: SectionMode
+  /** Data to display/edit */
+  data: AddressesSectionData
+  /** Handler for field changes */
+  onChange?: (field: string, value: unknown) => void
+  /** Handler for adding a new address */
+  onAddAddress?: () => void
+  /** Handler for removing an address */
+  onRemoveAddress?: (id: string) => void
+  /** Handler for setting primary address */
+  onSetPrimary?: (id: string) => void
+  /** Handler to enter edit mode (view mode) */
+  onEdit?: () => void
+  /** Save handler (for edit mode) */
+  onSave?: () => Promise<void>
+  /** Cancel handler (for edit mode) */
+  onCancel?: () => void
+  /** Loading state for save operation */
+  isSaving?: boolean
+  /** Validation errors by field name */
+  errors?: Record<string, string>
+  /** Additional class name */
+  className?: string
 }
 
-const ADDRESS_TYPE_CONFIG: Record<string, { label: string; color: string }> = {
-  current: { label: 'Current', color: 'bg-gold-100 text-gold-700' },
-  permanent: { label: 'Permanent', color: 'bg-blue-100 text-blue-700' },
-  mailing: { label: 'Mailing', color: 'bg-cyan-100 text-cyan-700' },
-  work: { label: 'Work', color: 'bg-purple-100 text-purple-700' },
-  billing: { label: 'Billing', color: 'bg-green-100 text-green-700' },
-  shipping: { label: 'Shipping', color: 'bg-orange-100 text-orange-700' },
-  headquarters: { label: 'Headquarters', color: 'bg-charcoal-100 text-charcoal-700' },
-  office: { label: 'Office', color: 'bg-pink-100 text-pink-700' },
-  job_location: { label: 'Job Location', color: 'bg-amber-100 text-amber-700' },
-  meeting: { label: 'Meeting', color: 'bg-teal-100 text-teal-700' },
-  first_day: { label: 'First Day', color: 'bg-indigo-100 text-indigo-700' },
-}
+/**
+ * AddressesSection - Multiple addresses management
+ *
+ * Handles home, work, and mailing addresses with primary designation.
+ */
+export function AddressesSection({
+  mode,
+  data,
+  onChange,
+  onAddAddress,
+  onRemoveAddress,
+  onSetPrimary,
+  onEdit,
+  onSave,
+  onCancel,
+  isSaving = false,
+  errors = {},
+  className,
+}: AddressesSectionProps) {
+  const [isEditing, setIsEditing] = React.useState(mode === 'edit')
 
-const DEFAULT_ADDRESS: Partial<AddressFormData> = {
-  addressLine1: '',
-  addressLine2: '',
-  city: '',
-  stateProvince: '',
-  postalCode: '',
-  countryCode: 'US',
-}
+  // Reset editing state when mode changes
+  React.useEffect(() => {
+    setIsEditing(mode === 'edit')
+  }, [mode])
 
-type AddressType = 'current' | 'permanent' | 'mailing' | 'work' | 'billing' | 'shipping' | 'headquarters' | 'office' | 'job_location' | 'meeting' | 'first_day'
-
-export function AddressesSection({ contactId }: AddressesSectionProps) {
-  const { toast } = useToast()
-  const utils = trpc.useUtils()
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
-  const [editingAddressId, setEditingAddressId] = useState<string | null>(null)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [newAddressType, setNewAddressType] = useState<AddressType>('work')
-  const [formData, setFormData] = useState<Partial<AddressFormData>>(DEFAULT_ADDRESS)
-
-  // Fetch addresses
-  const addressesQuery = trpc.addresses.getByEntity.useQuery({
-    entityType: 'contact',
-    entityId: contactId,
-  })
-
-  const addresses = addressesQuery.data || []
-
-  // Mutations
-  const createAddress = trpc.addresses.create.useMutation({
-    onSuccess: () => {
-      toast({ title: 'Address added' })
-      utils.addresses.getByEntity.invalidate({ entityType: 'contact', entityId: contactId })
-      setIsAddDialogOpen(false)
-      setFormData(DEFAULT_ADDRESS)
-    },
-    onError: (error) => {
-      toast({ title: 'Failed to add address', description: error.message, variant: 'error' })
-    },
-  })
-
-  const updateAddress = trpc.addresses.update.useMutation({
-    onSuccess: () => {
-      toast({ title: 'Address updated' })
-      utils.addresses.getByEntity.invalidate({ entityType: 'contact', entityId: contactId })
-      setEditingAddressId(null)
-      setFormData(DEFAULT_ADDRESS)
-    },
-    onError: (error) => {
-      toast({ title: 'Failed to update address', description: error.message, variant: 'error' })
-    },
-  })
-
-  const deleteAddress = trpc.addresses.delete.useMutation({
-    onSuccess: () => {
-      toast({ title: 'Address deleted' })
-      utils.addresses.getByEntity.invalidate({ entityType: 'contact', entityId: contactId })
-    },
-    onError: (error) => {
-      toast({ title: 'Failed to delete address', description: error.message, variant: 'error' })
-    },
-  })
-
-  const setPrimaryAddress = trpc.addresses.setPrimary.useMutation({
-    onSuccess: () => {
-      toast({ title: 'Primary address updated' })
-      utils.addresses.getByEntity.invalidate({ entityType: 'contact', entityId: contactId })
-    },
-    onError: (error) => {
-      toast({ title: 'Failed to set primary address', description: error.message, variant: 'error' })
-    },
-  })
-
-  const handleOpenAddDialog = () => {
-    setFormData(DEFAULT_ADDRESS)
-    setNewAddressType('work')
-    setIsAddDialogOpen(true)
+  const handleSave = async () => {
+    await onSave?.()
+    setIsEditing(false)
   }
 
-  const handleCreateAddress = async () => {
-    setIsSubmitting(true)
-    try {
-      await createAddress.mutateAsync({
-        entityType: 'contact',
-        entityId: contactId,
-        addressType: newAddressType,
-        addressLine1: formData.addressLine1 || undefined,
-        addressLine2: formData.addressLine2 || undefined,
-        city: formData.city || undefined,
-        stateProvince: formData.stateProvince || undefined,
-        postalCode: formData.postalCode || undefined,
-        countryCode: formData.countryCode || 'US',
-      })
-    } finally {
-      setIsSubmitting(false)
+  const handleCancel = () => {
+    onCancel?.()
+    setIsEditing(false)
+  }
+
+  const handleEdit = () => {
+    onEdit?.()
+    setIsEditing(true)
+  }
+
+  const handleAddAddress = () => {
+    if (onAddAddress) {
+      onAddAddress()
+    } else {
+      // Default: add new address to array
+      const newAddress: ContactAddress = {
+        id: crypto.randomUUID(),
+        type: 'home',
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        state: '',
+        postalCode: '',
+        country: 'US',
+        isPrimary: data.addresses.length === 0,
+      }
+      onChange?.('addresses', [...data.addresses, newAddress])
     }
   }
 
-  const handleOpenEditDialog = (address: typeof addresses[0]) => {
-    setFormData({
-      addressLine1: address.addressLine1 || '',
-      addressLine2: address.addressLine2 || '',
-      city: address.city || '',
-      stateProvince: address.stateProvince || '',
-      postalCode: address.postalCode || '',
-      countryCode: address.countryCode || 'US',
-    })
-    setEditingAddressId(address.id)
-  }
-
-  const handleUpdateAddress = async () => {
-    if (!editingAddressId) return
-    setIsSubmitting(true)
-    try {
-      await updateAddress.mutateAsync({
-        id: editingAddressId,
-        addressLine1: formData.addressLine1 || undefined,
-        addressLine2: formData.addressLine2 || undefined,
-        city: formData.city || undefined,
-        stateProvince: formData.stateProvince || undefined,
-        postalCode: formData.postalCode || undefined,
-        countryCode: formData.countryCode || undefined,
-      })
-    } finally {
-      setIsSubmitting(false)
+  const handleRemoveAddress = (id: string) => {
+    if (onRemoveAddress) {
+      onRemoveAddress(id)
+    } else {
+      onChange?.('addresses', data.addresses.filter(a => a.id !== id))
     }
   }
 
-  const handleDelete = async (addressId: string) => {
-    await deleteAddress.mutateAsync({ id: addressId })
+  const handleSetPrimary = (id: string) => {
+    if (onSetPrimary) {
+      onSetPrimary(id)
+    } else {
+      const updated = data.addresses.map(a => ({
+        ...a,
+        isPrimary: a.id === id,
+      }))
+      onChange?.('addresses', updated)
+    }
   }
 
-  const handleSetPrimary = async (addressId: string) => {
-    await setPrimaryAddress.mutateAsync({ id: addressId })
-  }
-
-  const handleFormChange = (data: Partial<AddressFormData>) => {
-    setFormData(prev => ({ ...prev, ...data }))
-  }
-
-  if (addressesQuery.isLoading) {
-    return (
-      <div className="p-6">
-        <Card className="bg-white animate-pulse">
-          <CardContent className="py-4">
-            <div className="h-48 bg-charcoal-100 rounded" />
-          </CardContent>
-        </Card>
-      </div>
+  const handleAddressChange = (id: string, field: string, value: unknown) => {
+    const updated = data.addresses.map(a =>
+      a.id === id ? { ...a, [field]: value } : a
     )
+    onChange?.('addresses', updated)
   }
 
-  if (addresses.length === 0) {
-    return (
-      <div className="p-6">
-        <EmptyState
-          config={{
-            icon: MapPin,
-            title: 'No addresses yet',
-            description: 'Add addresses to track locations for this contact',
-            action: { label: 'Add Address', onClick: handleOpenAddDialog },
-          }}
-          variant="inline"
-        />
+  // Editable in create mode or when explicitly editing
+  const isEditable = mode === 'create' || isEditing
+  const isCreateMode = mode === 'create'
 
-        {/* Add Address Dialog */}
-        <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-          <DialogContent className="max-w-lg">
-            <DialogHeader>
-              <DialogTitle>Add Address</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm font-medium">Address Type</label>
-                <select
-                  className="w-full mt-1 px-3 py-2 border border-charcoal-200 rounded-md"
-                  value={newAddressType}
-                  onChange={(e) => setNewAddressType(e.target.value as AddressType)}
-                >
-                  {Object.entries(ADDRESS_TYPE_CONFIG).map(([value, config]) => (
-                    <option key={value} value={value}>{config.label}</option>
-                  ))}
-                </select>
-              </div>
-              <AddressForm
-                value={formData}
-                onChange={handleFormChange}
-              />
-            </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>
-                Cancel
-              </Button>
-              <Button onClick={handleCreateAddress} disabled={isSubmitting}>
-                {isSubmitting ? 'Adding...' : 'Add Address'}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </div>
-    )
-  }
+  // Suppress unused var warning
+  void errors
+
+  // Convert constants to option format
+  const typeOptions = ADDRESS_TYPES.map(t => ({ value: t.value, label: t.label }))
 
   return (
-    <div className="p-6 space-y-4">
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <h2 className="text-lg font-medium text-charcoal-900">
-          Addresses ({addresses.length})
-        </h2>
-        <Button size="sm" onClick={handleOpenAddDialog}>
-          <Plus className="w-4 h-4 mr-1" />
-          Add Address
-        </Button>
-      </div>
+    <div className={cn('space-y-6', className)}>
+      {/* Section Header - only show Edit/Save/Cancel in view/edit mode */}
+      {!isCreateMode && (
+        <SectionHeader
+          title="Addresses"
+          subtitle="Home, work, and mailing addresses"
+          mode={isEditing ? 'edit' : 'view'}
+          onEdit={handleEdit}
+          onSave={handleSave}
+          onCancel={handleCancel}
+          isSaving={isSaving}
+        />
+      )}
 
       {/* Address Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {addresses.map((address) => (
-          <Card
-            key={address.id}
-            className={cn(
-              'bg-white transition-all',
-              address.isPrimary && 'ring-2 ring-gold-200'
-            )}
-          >
-            <CardContent className="p-4">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Badge
-                      className={cn(
-                        'text-xs',
-                        ADDRESS_TYPE_CONFIG[address.addressType]?.color ||
-                          'bg-charcoal-100 text-charcoal-700'
-                      )}
-                    >
-                      {ADDRESS_TYPE_CONFIG[address.addressType]?.label || address.addressType}
-                    </Badge>
+      <div className="space-y-4">
+        {data.addresses.length === 0 ? (
+          <Card className="shadow-elevation-sm">
+            <CardContent className="py-12 text-center">
+              <MapPin className="w-10 h-10 text-charcoal-300 mx-auto mb-3" />
+              <p className="text-charcoal-500 mb-4">No addresses added yet</p>
+              {isEditable && (
+                <Button variant="outline" onClick={handleAddAddress}>
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Address
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+        ) : (
+          data.addresses.map((address, index) => (
+            <Card key={address.id} className="shadow-elevation-sm hover:shadow-elevation-md transition-shadow">
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="p-2 bg-blue-50 rounded-lg">
+                      <MapPin className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <CardTitle className="text-base font-heading">
+                      {ADDRESS_TYPES.find(t => t.value === address.type)?.label || 'Address'} {index + 1}
+                    </CardTitle>
                     {address.isPrimary && (
-                      <Badge className="text-xs bg-gold-100 text-gold-700">
-                        <Star className="w-3 h-3 mr-1" />
+                      <Badge variant="success" className="gap-1">
+                        <Star className="w-3 h-3" />
                         Primary
                       </Badge>
                     )}
-                    {address.isVerified && (
-                      <Badge className="text-xs bg-green-100 text-green-700">
-                        <CheckCircle className="w-3 h-3 mr-1" />
-                        Verified
-                      </Badge>
-                    )}
                   </div>
-
-                  <AddressDisplay address={address} variant="full" />
+                  {isEditable && (
+                    <div className="flex items-center gap-2">
+                      {!address.isPrimary && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleSetPrimary(address.id)}
+                        >
+                          <Star className="w-4 h-4 mr-1" />
+                          Set Primary
+                        </Button>
+                      )}
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-error-600 hover:text-error-700 hover:bg-error-50"
+                        onClick={() => handleRemoveAddress(address.id)}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  )}
                 </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <UnifiedField
+                    label="Address Type"
+                    type="select"
+                    options={typeOptions}
+                    value={address.type}
+                    onChange={(v) => handleAddressChange(address.id, 'type', v)}
+                    editable={isEditable}
+                  />
+                  <UnifiedField
+                    label="Country"
+                    value={address.country}
+                    onChange={(v) => handleAddressChange(address.id, 'country', v)}
+                    editable={isEditable}
+                    placeholder="US"
+                  />
+                </div>
+                <UnifiedField
+                  label="Address Line 1"
+                  value={address.addressLine1}
+                  onChange={(v) => handleAddressChange(address.id, 'addressLine1', v)}
+                  editable={isEditable}
+                  placeholder="123 Main Street"
+                />
+                <UnifiedField
+                  label="Address Line 2"
+                  value={address.addressLine2}
+                  onChange={(v) => handleAddressChange(address.id, 'addressLine2', v)}
+                  editable={isEditable}
+                  placeholder="Apt 4B"
+                />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <UnifiedField
+                    label="City"
+                    value={address.city}
+                    onChange={(v) => handleAddressChange(address.id, 'city', v)}
+                    editable={isEditable}
+                    placeholder="New York"
+                  />
+                  <UnifiedField
+                    label="State / Province"
+                    value={address.state}
+                    onChange={(v) => handleAddressChange(address.id, 'state', v)}
+                    editable={isEditable}
+                    placeholder="NY"
+                  />
+                  <UnifiedField
+                    label="Postal Code"
+                    value={address.postalCode}
+                    onChange={(v) => handleAddressChange(address.id, 'postalCode', v)}
+                    editable={isEditable}
+                    placeholder="10001"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          ))
+        )}
 
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                      <MoreVertical className="w-4 h-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => handleOpenEditDialog(address)}>
-                      <Edit className="w-4 h-4 mr-2" />
-                      Edit
-                    </DropdownMenuItem>
-                    {!address.isPrimary && (
-                      <DropdownMenuItem onClick={() => handleSetPrimary(address.id)}>
-                        <Star className="w-4 h-4 mr-2" />
-                        Set as Primary
-                      </DropdownMenuItem>
-                    )}
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                      className="text-red-600"
-                      onClick={() => handleDelete(address.id)}
-                    >
-                      <Trash2 className="w-4 h-4 mr-2" />
-                      Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+        {/* Add Address Button */}
+        {isEditable && data.addresses.length > 0 && (
+          <Button variant="outline" onClick={handleAddAddress} className="w-full">
+            <Plus className="w-4 h-4 mr-2" />
+            Add Another Address
+          </Button>
+        )}
       </div>
-
-      {/* Add Address Dialog */}
-      <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-        <DialogContent className="max-w-lg">
-          <DialogHeader>
-            <DialogTitle>Add Address</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <label className="text-sm font-medium">Address Type</label>
-              <select
-                className="w-full mt-1 px-3 py-2 border border-charcoal-200 rounded-md"
-                value={newAddressType}
-                onChange={(e) => setNewAddressType(e.target.value as AddressType)}
-              >
-                {Object.entries(ADDRESS_TYPE_CONFIG).map(([value, config]) => (
-                  <option key={value} value={value}>{config.label}</option>
-                ))}
-              </select>
-            </div>
-            <AddressForm
-              value={formData}
-              onChange={handleFormChange}
-            />
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>
-              Cancel
-            </Button>
-            <Button onClick={handleCreateAddress} disabled={isSubmitting}>
-              {isSubmitting ? 'Adding...' : 'Add Address'}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* Edit Address Dialog */}
-      <Dialog open={!!editingAddressId} onOpenChange={() => setEditingAddressId(null)}>
-        <DialogContent className="max-w-lg">
-          <DialogHeader>
-            <DialogTitle>Edit Address</DialogTitle>
-          </DialogHeader>
-          <AddressForm
-            value={formData}
-            onChange={handleFormChange}
-          />
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setEditingAddressId(null)}>
-              Cancel
-            </Button>
-            <Button onClick={handleUpdateAddress} disabled={isSubmitting}>
-              {isSubmitting ? 'Saving...' : 'Save Changes'}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   )
 }
+
+export default AddressesSection

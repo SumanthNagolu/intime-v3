@@ -26,36 +26,102 @@ export interface DealData {
   id: string
   title: string
   description: string | null
+
   // Value & Revenue
   value: number
   probability: number
   weightedValue: number
   valueBasis: string | null // 'one_time', 'annual', 'monthly'
   currency: string
+
   // Pipeline
   stage: DealStage
   expectedCloseDate: string | null
   actualCloseDate: string | null
-  // Additional value fields
+
+  // Staffing-specific value fields
   estimatedPlacements: number | null
   avgBillRate: number | null
   contractLengthMonths: number | null
+  hiringNeeds: string | null
+  rolesBreakdown: DealRoleBreakdown[] | null
+  servicesRequired: string[] | null
+
+  // Competitive intelligence
+  competitors: string[] | null
+  competitiveAdvantage: string | null
+
   // Next steps
   nextStep: string | null
   nextStepDate: string | null
+
   // Health & Status
   healthStatus: string | null // 'on_track', 'slow', 'stale', 'urgent', 'at_risk'
   daysInStage: number
+
   // Related IDs
   companyId: string | null
   leadId: string | null
   leadContactId: string | null
-  // Owner
+
+  // Owner & Team
   owner: { id: string; fullName: string; avatarUrl: string | null } | null
+  podManager: { id: string; fullName: string; avatarUrl: string | null } | null
+  secondaryOwner: { id: string; fullName: string; avatarUrl: string | null } | null
+
+  // Contract details (when closed_won)
+  contractSignedDate: string | null
+  contractStartDate: string | null
+  contractDurationMonths: number | null
+  contractType: string | null // 'msa', 'sow', 'po', 'email'
+  paymentTerms: string | null // 'net_15', 'net_30', 'net_45', 'net_60'
+  billingFrequency: string | null // 'weekly', 'biweekly', 'monthly'
+  billingContact: DealBillingContact | null
+  confirmedRoles: DealConfirmedRole[] | null
+
+  // Win/Loss details
+  winReason: string | null // 'price_value', 'expertise_speed', 'relationship_trust', etc.
+  winDetails: string | null
+  competitorsBeat: string[] | null
+  lossReason: string | null
+  lossReasonCategory: string | null // 'competitor', 'no_budget', 'project_cancelled', etc.
+  lossDetails: string | null
+  competitorWon: string | null
+  competitorPrice: number | null
+
+  // Future potential (for lost deals)
+  futurePotential: string | null // 'yes', 'maybe', 'no'
+  reengagementDate: string | null
+  lessonsLearned: string | null
+
   // Timestamps
   createdAt: string
   updatedAt: string | null
   lastActivityAt: string | null
+}
+
+// Role breakdown for proposal
+export interface DealRoleBreakdown {
+  title: string
+  count: number
+  billRate: number | null
+  startDate: string | null
+}
+
+// Confirmed roles after close
+export interface DealConfirmedRole {
+  title: string
+  count: number
+  billRate: number
+  startDate: string | null
+}
+
+// Billing contact info
+export interface DealBillingContact {
+  name: string
+  email: string
+  phone: string | null
+  address: string | null
 }
 
 export type DealStage =
@@ -148,10 +214,14 @@ export interface DealDocument {
 
 // Deal sections for navigation
 export type DealSection =
-  | 'summary'
-  | 'pipeline'
-  | 'account'
-  | 'contacts'
+  | 'overview'
+  | 'details'
+  | 'stakeholders'
+  | 'timeline'
+  | 'competitors'
+  | 'proposal'
+  | 'jobs'
+  | 'meetings'
   | 'activities'
   | 'notes'
   | 'documents'

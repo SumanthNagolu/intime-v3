@@ -113,6 +113,8 @@ export const appRouter = router({
   sequences: sequencesRouter,
   // Unified contacts (Guidewire-inspired single table inheritance)
   unifiedContacts: unifiedContactsRouter,
+  // Alias for shorter access in hooks/components
+  contacts: unifiedContactsRouter,
   // Centralized addresses
   addresses: addressesRouter,
   // Contact supporting tables (enterprise contact system)
