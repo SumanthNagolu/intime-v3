@@ -7,7 +7,8 @@ import { Check, ChevronRight, ChevronDown, ArrowLeft } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { entityJourneys, getVisibleQuickActions } from '@/lib/navigation/entity-journeys'
 import { EntityType, ENTITY_BASE_PATHS, ENTITY_NAVIGATION_STYLES } from '@/lib/navigation/entity-navigation.types'
-import { commonToolSections, getSectionsByGroup, jobSectionGroups, jobToolSections, getAccountSectionsByGroup } from '@/lib/navigation/entity-sections'
+import { commonToolSections, getSectionsByGroup, jobSectionGroups, jobToolSections, getAccountSectionsByGroup, getContactSectionsByCategory, ContactCategory } from '@/lib/navigation/entity-sections'
+import { useEntityNavigation } from '@/lib/navigation/EntityNavigationContext'
 import { CollapsibleSectionGroup } from './CollapsibleSectionGroup'
 import { SidebarActionsPopover, type ActionItem } from './SidebarActionsPopover'
 import {
@@ -57,6 +58,7 @@ const backLinkText: Record<EntityType, string> = {
   invoice: 'All Invoices',
   pay_run: 'All Pay Runs',
   timesheet: 'All Timesheets',
+  team: 'All Teams',
 }
 
 /**
@@ -112,6 +114,18 @@ export function EntityJourneySidebar({
     }
     return null
   }, [entityType])
+
+  // Get contact-specific sections based on category (person vs company)
+  const { currentEntityData } = useEntityNavigation()
+  const contactSections = useMemo(() => {
+    if (entityType === 'contact' && currentEntityData) {
+      // Extract category from full contact data
+      const contactData = currentEntityData as { contact?: { category?: ContactCategory } }
+      const category = contactData?.contact?.category || 'person'
+      return getContactSectionsByCategory(category)
+    }
+    return null
+  }, [entityType, currentEntityData])
 
   // Determine current and completed steps based on entity status (for journey navigation)
   const { currentStepIndex, steps } = useMemo(() => {
@@ -248,7 +262,6 @@ export function EntityJourneySidebar({
                 label: action.label,
                 icon: action.icon,
                 variant: action.variant as ActionItem['variant'],
-                separator: action.separator,
               }))}
               onAction={(actionId) => {
                 const action = visibleQuickActions.find((a) => a.id === actionId)
@@ -440,6 +453,159 @@ export function EntityJourneySidebar({
                   <CollapsibleContent>
                     <ul className="space-y-0.5 px-2 pb-3">
                       {accountSections.toolSections.map((section) => (
+                        <SectionNavItem
+                          key={section.id}
+                          section={section}
+                          isActive={currentSection === section.id}
+                          href={buildToolHref(section.id)}
+                          count={section.showCount ? getSectionCount(section.id) : undefined}
+                          isCollapsed={isCollapsed}
+                        />
+                      ))}
+                    </ul>
+                  </CollapsibleContent>
+                </Collapsible>
+              )}
+            </>
+          )}
+
+          {/* CONTACT SECTIONS MODE - Category-aware Hublot-inspired design */}
+          {navigationStyle === 'sections' && entityType === 'contact' && contactSections && (
+            <>
+              {/* Main Sections - Clean list without numbers */}
+              <div className="py-3">
+                {!isCollapsed && (
+                  <div className="px-4 pb-2">
+                    <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                      Sections
+                    </span>
+                  </div>
+                )}
+                <ul className="space-y-0.5 px-2">
+                  {/* Overview/Summary Section */}
+                  {contactSections.overviewSection && (
+                    <SectionNavItem
+                      section={contactSections.overviewSection}
+                      isActive={currentSection === contactSections.overviewSection.id}
+                      href={buildToolHref(contactSections.overviewSection.id)}
+                      count={getSectionCount(contactSections.overviewSection.id)}
+                      isCollapsed={isCollapsed}
+                    />
+                  )}
+                  {/* Main Sections (no numbers, just clean icons) */}
+                  {contactSections.mainSections.map((section) => (
+                    <SectionNavItem
+                      key={section.id}
+                      section={section}
+                      isActive={currentSection === section.id}
+                      href={buildToolHref(section.id)}
+                      count={section.showCount ? getSectionCount(section.id) : undefined}
+                      isCollapsed={isCollapsed}
+                    />
+                  ))}
+                </ul>
+              </div>
+
+              {/* Related Data - Collapsible */}
+              {contactSections.relatedSections.length > 0 && (
+                <Collapsible
+                  open={isRelatedOpen}
+                  onOpenChange={setIsRelatedOpen}
+                  className="border-t border-charcoal-100/80"
+                >
+                  <CollapsibleTrigger
+                    className={cn(
+                      'flex items-center gap-2 w-full px-4 py-3 text-left transition-all duration-200 hover:bg-charcoal-50/50',
+                      isCollapsed && 'justify-center px-2'
+                    )}
+                  >
+                    {!isCollapsed && (
+                      <>
+                        <ChevronRight className={cn(
+                          'w-3 h-3 text-charcoal-400 transition-transform duration-200',
+                          isRelatedOpen && 'rotate-90'
+                        )} />
+                        <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                          Related
+                        </span>
+                      </>
+                    )}
+                    {isCollapsed && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="w-9 h-9 flex items-center justify-center">
+                            <ChevronRight className={cn(
+                              'w-3.5 h-3.5 text-charcoal-400 transition-transform duration-200',
+                              isRelatedOpen && 'rotate-90'
+                            )} />
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                          <p>Related Data</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <ul className="space-y-0.5 px-2 pb-3">
+                      {contactSections.relatedSections.map((section) => (
+                        <SectionNavItem
+                          key={section.id}
+                          section={section}
+                          isActive={currentSection === section.id}
+                          href={buildToolHref(section.id)}
+                          count={section.showCount ? getSectionCount(section.id) : undefined}
+                          isCollapsed={isCollapsed}
+                        />
+                      ))}
+                    </ul>
+                  </CollapsibleContent>
+                </Collapsible>
+              )}
+
+              {/* Tools - Collapsible */}
+              {contactSections.toolSections.length > 0 && (
+                <Collapsible
+                  open={isToolsOpen}
+                  onOpenChange={setIsToolsOpen}
+                  className="border-t border-charcoal-100/80"
+                >
+                  <CollapsibleTrigger
+                    className={cn(
+                      'flex items-center gap-2 w-full px-4 py-3 text-left transition-all duration-200 hover:bg-charcoal-50/50',
+                      isCollapsed && 'justify-center px-2'
+                    )}
+                  >
+                    {!isCollapsed && (
+                      <>
+                        <ChevronRight className={cn(
+                          'w-3 h-3 text-charcoal-400 transition-transform duration-200',
+                          isToolsOpen && 'rotate-90'
+                        )} />
+                        <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                          Tools
+                        </span>
+                      </>
+                    )}
+                    {isCollapsed && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="w-9 h-9 flex items-center justify-center">
+                            <ChevronRight className={cn(
+                              'w-3.5 h-3.5 text-charcoal-400 transition-transform duration-200',
+                              isToolsOpen && 'rotate-90'
+                            )} />
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                          <p>Tools</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <ul className="space-y-0.5 px-2 pb-3">
+                      {contactSections.toolSections.map((section) => (
                         <SectionNavItem
                           key={section.id}
                           section={section}

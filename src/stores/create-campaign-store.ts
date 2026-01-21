@@ -1,51 +1,152 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { Mail, Linkedin, Phone } from 'lucide-react'
+import type {
+  CampaignType,
+  CampaignGoal,
+  AudienceSource,
+  CampaignChannel,
+  CampaignPriority,
+  SendDay,
+  WorkAuthorization,
+  ClientTier,
+  ServiceType,
+} from '@/lib/campaigns/types'
 
-// Form data matching existing dialog schema
+/**
+ * Enterprise Campaign Form Data
+ *
+ * Comprehensive form data for staffing industry campaigns supporting:
+ * - Client acquisition & engagement
+ * - Candidate sourcing & bench marketing
+ * - Multi-channel sequences
+ * - Advanced targeting (skills, visa, certifications)
+ * - Team assignment & approval workflows
+ */
 export interface CreateCampaignFormData {
+  // =========================================================================
   // Step 1: Campaign Setup
+  // =========================================================================
   name: string
-  campaignType: 'lead_generation' | 're_engagement' | 'event_promotion' | 'brand_awareness' | 'candidate_sourcing'
-  goal: 'generate_qualified_leads' | 'book_discovery_meetings' | 'drive_event_registrations' | 'build_brand_awareness' | 'expand_candidate_pool'
+  campaignType: CampaignType | ''
+  goal: CampaignGoal | ''
+  priority: CampaignPriority
   description: string
+  tags: string[]
 
+  // =========================================================================
   // Step 2: Target Audience
-  audienceSource: 'new_prospects' | 'existing_leads' | 'dormant_accounts' | 'import_list'
+  // =========================================================================
+  audienceSource: AudienceSource | ''
+  // Client Targeting
   industries: string[]
   companySizes: string[]
   regions: string[]
-  fundingStages: string[]
+  clientTiers: ClientTier[]
+  serviceTypes: ServiceType[]
+  // Candidate Targeting
   targetTitles: string[]
+  targetSkills: string[]
+  experienceLevels: string[]
+  workAuthorizations: WorkAuthorization[]
+  certifications: string[]
+  // Bench-specific
+  benchOnly: boolean
+  availableWithinDays: number | null
+  // Exclusions
   excludeExistingClients: boolean
   excludeRecentlyContacted: number
   excludeCompetitors: boolean
+  excludeDncList: boolean
 
+  // =========================================================================
   // Step 3: Channels & Sequences
-  channels: ('linkedin' | 'email' | 'phone' | 'event' | 'direct_mail')[]
+  // =========================================================================
+  channels: CampaignChannel[]
+  sequenceTemplateIds: string[]
+  // Email sequence config
   emailSteps: number
   emailDaysBetween: number
+  // LinkedIn sequence config
   linkedinSteps: number
   linkedinDaysBetween: number
+  // Phone sequence config
+  phoneSteps: number
+  phoneDaysBetween: number
+  // Automation settings
   stopOnReply: boolean
   stopOnBooking: boolean
+  stopOnApplication: boolean
   dailyLimit: number
-  sequenceTemplateIds: string[]
+  // A/B Testing
+  enableAbTesting: boolean
+  abSplitPercentage: number
 
-  // Step 4: Schedule & Budget
+  // =========================================================================
+  // Step 4: Schedule
+  // =========================================================================
   startDate: string
   endDate: string
   launchImmediately: boolean
+  // Send Window
+  sendWindowStart: string
+  sendWindowEnd: string
+  sendDays: SendDay[]
+  timezone: string
+  // Recurring
+  isRecurring: boolean
+  recurringInterval: 'daily' | 'weekly' | 'monthly' | ''
+
+  // =========================================================================
+  // Step 5: Budget & Targets
+  // =========================================================================
+  // Budget
   budgetTotal: number
+  budgetCurrency: string
+  // Standard Targets
+  targetContacts: number
+  targetResponses: number
   targetLeads: number
   targetMeetings: number
   targetRevenue: number
+  // Staffing-Specific Targets
+  targetSubmissions: number
+  targetInterviews: number
+  targetPlacements: number
+  // Expected Rates
+  expectedResponseRate: number
+  expectedConversionRate: number
 
-  // Step 5: Compliance
+  // =========================================================================
+  // Step 6: Team & Assignment
+  // =========================================================================
+  ownerId: string
+  teamId: string
+  collaboratorIds: string[]
+  // Approval
+  requiresApproval: boolean
+  approverIds: string[]
+  // Notifications
+  notifyOnResponse: boolean
+  notifyOnConversion: boolean
+  notifyOnCompletion: boolean
+
+  // =========================================================================
+  // Step 7: Compliance
+  // =========================================================================
+  // Standard Compliance
   gdpr: boolean
   canSpam: boolean
   casl: boolean
+  ccpa: boolean
+  // Email Requirements
   includeUnsubscribe: boolean
+  includePhysicalAddress: boolean
+  // DNC Handling
+  respectDncList: boolean
+  respectPreviousOptOuts: boolean
+  // Data Handling
+  collectConsent: boolean
+  dataRetentionDays: number
 }
 
 interface CreateCampaignStore {
@@ -62,48 +163,95 @@ interface CreateCampaignStore {
 }
 
 const defaultFormData: CreateCampaignFormData = {
-  // Step 1
+  // Step 1: Setup
   name: '',
-  campaignType: 'lead_generation',
-  goal: 'generate_qualified_leads',
+  campaignType: '',
+  goal: '',
+  priority: 'normal',
   description: '',
+  tags: [],
 
-  // Step 2
-  audienceSource: 'new_prospects',
+  // Step 2: Targeting
+  audienceSource: '',
   industries: [],
   companySizes: [],
   regions: [],
-  fundingStages: [],
+  clientTiers: [],
+  serviceTypes: [],
   targetTitles: [],
-  excludeExistingClients: true,
+  targetSkills: [],
+  experienceLevels: [],
+  workAuthorizations: [],
+  certifications: [],
+  benchOnly: false,
+  availableWithinDays: null,
+  excludeExistingClients: false,
   excludeRecentlyContacted: 90,
   excludeCompetitors: true,
+  excludeDncList: true,
 
-  // Step 3
+  // Step 3: Channels
   channels: ['email'],
+  sequenceTemplateIds: [],
   emailSteps: 3,
   emailDaysBetween: 3,
   linkedinSteps: 2,
   linkedinDaysBetween: 5,
+  phoneSteps: 1,
+  phoneDaysBetween: 7,
   stopOnReply: true,
   stopOnBooking: true,
+  stopOnApplication: true,
   dailyLimit: 100,
-  sequenceTemplateIds: [],
+  enableAbTesting: false,
+  abSplitPercentage: 50,
 
-  // Step 4
+  // Step 4: Schedule
   startDate: '',
   endDate: '',
-  launchImmediately: true,
+  launchImmediately: false,
+  sendWindowStart: '09:00',
+  sendWindowEnd: '17:00',
+  sendDays: ['mon', 'tue', 'wed', 'thu', 'fri'],
+  timezone: 'America/New_York',
+  isRecurring: false,
+  recurringInterval: '',
+
+  // Step 5: Budget & Targets
   budgetTotal: 0,
-  targetLeads: 50,
+  budgetCurrency: 'USD',
+  targetContacts: 500,
+  targetResponses: 50,
+  targetLeads: 25,
   targetMeetings: 10,
   targetRevenue: 0,
+  targetSubmissions: 20,
+  targetInterviews: 10,
+  targetPlacements: 5,
+  expectedResponseRate: 10,
+  expectedConversionRate: 20,
 
-  // Step 5
+  // Step 6: Team
+  ownerId: '',
+  teamId: '',
+  collaboratorIds: [],
+  requiresApproval: false,
+  approverIds: [],
+  notifyOnResponse: true,
+  notifyOnConversion: true,
+  notifyOnCompletion: true,
+
+  // Step 7: Compliance
   gdpr: true,
   canSpam: true,
   casl: true,
+  ccpa: true,
   includeUnsubscribe: true,
+  includePhysicalAddress: true,
+  respectDncList: true,
+  respectPreviousOptOuts: true,
+  collectConsent: false,
+  dataRetentionDays: 365,
 }
 
 export const useCreateCampaignStore = create<CreateCampaignStore>()(
@@ -140,7 +288,7 @@ export const useCreateCampaignStore = create<CreateCampaignStore>()(
         }),
     }),
     {
-      name: 'create-campaign-draft',
+      name: 'create-campaign-draft-v2', // Updated version for new schema
       partialize: (state) => ({
         formData: state.formData,
         currentStep: state.currentStep,
@@ -150,54 +298,23 @@ export const useCreateCampaignStore = create<CreateCampaignStore>()(
   )
 )
 
-// Export constants (matching CreateCampaignDialog)
-export const CAMPAIGN_TYPES = [
-  { value: 'lead_generation', label: 'Lead Generation', description: 'Generate new business leads' },
-  { value: 're_engagement', label: 'Re-Engagement', description: 'Reconnect with cold leads' },
-  { value: 'event_promotion', label: 'Event Promotion', description: 'Drive event registrations' },
-  { value: 'brand_awareness', label: 'Brand Awareness', description: 'Build brand recognition' },
-  { value: 'candidate_sourcing', label: 'Candidate Sourcing', description: 'Expand talent pool' },
-] as const
-
-export const GOALS = [
-  { value: 'generate_qualified_leads', label: 'Generate Qualified Leads' },
-  { value: 'book_discovery_meetings', label: 'Book Discovery Meetings' },
-  { value: 'drive_event_registrations', label: 'Drive Event Registrations' },
-  { value: 'build_brand_awareness', label: 'Build Brand Awareness' },
-  { value: 'expand_candidate_pool', label: 'Expand Candidate Pool' },
-] as const
-
-export const INDUSTRIES = [
-  'Technology', 'Finance', 'Healthcare', 'Manufacturing', 'Retail',
-  'Professional Services', 'Telecommunications', 'Energy', 'Government', 'Education',
-] as const
-
-export const COMPANY_SIZES = [
-  { value: '1-50', label: '1-50 employees' },
-  { value: '51-200', label: '51-200 employees' },
-  { value: '201-500', label: '201-500 employees' },
-  { value: '501-1000', label: '501-1000 employees' },
-  { value: '1000+', label: '1000+ employees' },
-] as const
-
-export const REGIONS = [
-  { value: 'north_america_west', label: 'North America - West' },
-  { value: 'north_america_east', label: 'North America - East' },
-  { value: 'europe', label: 'Europe' },
-  { value: 'asia_pacific', label: 'Asia Pacific' },
-  { value: 'latam', label: 'Latin America' },
-] as const
-
-export const FUNDING_STAGES = [
-  { value: 'seed', label: 'Seed' },
-  { value: 'series_a', label: 'Series A' },
-  { value: 'series_b', label: 'Series B' },
-  { value: 'series_c_plus', label: 'Series C+' },
-  { value: 'public', label: 'Public' },
-] as const
-
-export const CHANNEL_OPTIONS = [
-  { value: 'email' as const, label: 'Email', icon: Mail },
-  { value: 'linkedin' as const, label: 'LinkedIn', icon: Linkedin },
-  { value: 'phone' as const, label: 'Phone', icon: Phone },
-]
+// Re-export types and constants from types.ts for convenience
+export {
+  CAMPAIGN_TYPE_OPTIONS,
+  CAMPAIGN_GOAL_OPTIONS,
+  AUDIENCE_SOURCE_OPTIONS,
+  INDUSTRY_OPTIONS,
+  COMPANY_SIZE_OPTIONS,
+  REGION_OPTIONS,
+  CLIENT_TIER_OPTIONS,
+  SERVICE_TYPE_OPTIONS,
+  EXPERIENCE_LEVEL_OPTIONS,
+  WORK_AUTHORIZATION_OPTIONS,
+  CHANNEL_OPTIONS,
+  SEND_DAY_OPTIONS,
+  TIMEZONE_OPTIONS,
+  PRIORITY_OPTIONS,
+  CURRENCY_OPTIONS,
+  COMMON_SKILLS,
+  COMMON_CERTIFICATIONS,
+} from '@/lib/campaigns/types'

@@ -1,132 +1,112 @@
 'use client'
 
 import {
-  Upload,
-  User,
+  UserCircle,
   Briefcase,
-  GraduationCap,
-  Shield,
-  FileText,
   Award,
+  Shield,
   DollarSign,
+  FileText,
 } from 'lucide-react'
 import { WizardConfig, WizardStepConfig } from '../types'
 import { CreateCandidateFormData } from '@/stores/create-candidate-store'
 
-// Step components - 9 step consolidated wizard
-import { CandidateIntakeStep1Source } from '@/components/recruiting/candidates/intake/CandidateIntakeStep1Source'
-import { CandidateIntakeStep2BasicInfo } from '@/components/recruiting/candidates/intake/CandidateIntakeStep2BasicInfo'
-import { CandidateIntakeStep3Professional } from '@/components/recruiting/candidates/intake/CandidateIntakeStep3Professional'
-import { CandidateIntakeStep4WorkHistory } from '@/components/recruiting/candidates/intake/CandidateIntakeStep4WorkHistory'
-import { CandidateIntakeStep5Education } from '@/components/recruiting/candidates/intake/CandidateIntakeStep5Education'
-import { CandidateIntakeStep6Skills } from '@/components/recruiting/candidates/intake/CandidateIntakeStep6Skills'
-import { CandidateIntakeStep7Authorization } from '@/components/recruiting/candidates/intake/CandidateIntakeStep7Authorization'
-import { CandidateIntakeStep8Compensation } from '@/components/recruiting/candidates/intake/CandidateIntakeStep8Compensation'
-import { CandidateIntakeStep9Documents } from '@/components/recruiting/candidates/intake/CandidateIntakeStep9Documents'
+/**
+ * UNIFIED 6-STEP CANDIDATE WIZARD
+ *
+ * Step IDs match detail section IDs exactly for consistency:
+ *   1. identity    -> Identity section
+ *   2. experience  -> Experience section
+ *   3. skills      -> Skills section
+ *   4. authorization -> Authorization section
+ *   5. compensation -> Compensation section
+ *   6. resume      -> Resume section
+ *
+ * This ensures the same mental model in creation and detail views.
+ */
+
+// Wizard step wrappers that adapt section components to wizard props
+import {
+  IdentityStepWrapper,
+  ExperienceStepWrapper,
+  SkillsStepWrapper,
+  AuthorizationStepWrapper,
+  CompensationStepWrapper,
+  ResumeStepWrapper,
+} from '@/components/candidates/wizard-steps'
 
 import {
-  candidateStep1Schema,
-  candidateStep2Schema,
-  candidateStep3Schema,
-  candidateStep4Schema,
-  candidateStep5Schema,
-  candidateStep6Schema,
-  candidateStep7Schema,
-  candidateStep8Schema,
-  candidateStep9Schema,
+  candidateStep2Schema as candidateIdentitySchema,
+  candidateStep4Schema as candidateExperienceSchema,
+  candidateStep6Schema as candidateSkillsSchema,
+  candidateStep7Schema as candidateAuthorizationSchema,
+  candidateStep8Schema as candidateCompensationSchema,
+  candidateStep1Schema as candidateResumeSchema,
 } from './candidate-intake.config'
 
-// Step configurations - 9-step consolidated Bullhorn/Ceipal-style intake wizard
+// Step configurations - 6-step unified wizard (IDs match detail sections)
+// Each wrapper component bridges wizard props (formData, setFormData, errors)
+// to section props (mode, data, onChange)
 export const candidateCreateSteps: WizardStepConfig<CreateCandidateFormData>[] = [
   {
-    id: 'source',
+    id: 'identity',
     number: 1,
-    label: 'Source',
-    description: 'How are you adding this candidate?',
-    icon: Upload,
-    component: CandidateIntakeStep1Source,
+    label: 'Identity',
+    description: 'Contact info, headline & summary',
+    icon: UserCircle,
+    component: IdentityStepWrapper,
     fields: [],
-    validation: candidateStep1Schema,
+    validation: candidateIdentitySchema,
   },
   {
-    id: 'basic',
+    id: 'experience',
     number: 2,
-    label: 'Basic Info',
-    description: 'Contact details & location',
-    icon: User,
-    component: CandidateIntakeStep2BasicInfo,
-    fields: [],
-    validation: candidateStep2Schema,
-  },
-  {
-    id: 'professional',
-    number: 3,
-    label: 'Professional',
-    description: 'Headline, summary & experience',
+    label: 'Experience',
+    description: 'Work history & education',
     icon: Briefcase,
-    component: CandidateIntakeStep3Professional,
+    component: ExperienceStepWrapper,
     fields: [],
-    validation: candidateStep3Schema,
-  },
-  {
-    id: 'history',
-    number: 4,
-    label: 'Work History',
-    description: 'Employment timeline',
-    icon: FileText,
-    component: CandidateIntakeStep4WorkHistory,
-    fields: [],
-    validation: candidateStep4Schema,
-  },
-  {
-    id: 'education',
-    number: 5,
-    label: 'Education',
-    description: 'Degrees & certifications',
-    icon: GraduationCap,
-    component: CandidateIntakeStep5Education,
-    fields: [],
-    validation: candidateStep5Schema,
+    validation: candidateExperienceSchema,
   },
   {
     id: 'skills',
-    number: 6,
+    number: 3,
     label: 'Skills',
-    description: 'Technical skills & expertise',
+    description: 'Technical skills & certifications',
     icon: Award,
-    component: CandidateIntakeStep6Skills,
+    component: SkillsStepWrapper,
     fields: [],
-    validation: candidateStep6Schema,
+    validation: candidateSkillsSchema,
   },
   {
     id: 'authorization',
-    number: 7,
+    number: 4,
     label: 'Authorization',
     description: 'Visa status & availability',
     icon: Shield,
-    component: CandidateIntakeStep7Authorization,
+    component: AuthorizationStepWrapper,
     fields: [],
-    validation: candidateStep7Schema,
+    validation: candidateAuthorizationSchema,
   },
   {
     id: 'compensation',
-    number: 8,
+    number: 5,
     label: 'Compensation',
     description: 'Pay rates & preferences',
     icon: DollarSign,
-    component: CandidateIntakeStep8Compensation,
+    component: CompensationStepWrapper,
     fields: [],
-    validation: candidateStep8Schema,
+    validation: candidateCompensationSchema,
   },
   {
-    id: 'documents',
-    number: 9,
-    label: 'Documents',
-    description: 'Source tracking & files',
+    id: 'resume',
+    number: 6,
+    label: 'Resume',
+    description: 'Resume upload & source tracking',
     icon: FileText,
-    component: CandidateIntakeStep9Documents,
+    component: ResumeStepWrapper,
     fields: [],
-    validation: candidateStep9Schema,
+    validation: candidateResumeSchema,
   },
 ]
 
@@ -141,53 +121,39 @@ export const candidateCreateWizardConfig: WizardConfig<CreateCandidateFormData> 
   allowFreeNavigation: false,
   stepIndicatorStyle: 'icons',
 
+  // Review step - sections match the 6 unified steps
   reviewStep: {
     title: 'Review & Create',
     sections: [
       {
-        label: 'Source',
-        fields: ['sourceType', 'resumeFileName', 'resumeFileSize'],
+        label: 'Identity',
+        fields: ['firstName', 'lastName', 'email', 'phone', 'linkedinProfile', 'location', 'professionalHeadline', 'professionalSummary', 'experienceYears'],
         stepNumber: 1,
       },
       {
-        label: 'Profile Details',
-        fields: ['firstName', 'lastName', 'email', 'phone', 'linkedinProfile', 'location', 'professionalHeadline'],
+        label: 'Experience',
+        fields: ['workHistory', 'education'],
         stepNumber: 2,
       },
       {
-        label: 'Professional Experience',
-        fields: ['experienceYears', 'employmentTypes', 'workModes', 'professionalSummary', 'workHistory'],
+        label: 'Skills',
+        fields: ['skills', 'certifications'],
         stepNumber: 3,
       },
       {
-        label: 'Qualifications',
-        fields: ['skills', 'certifications', 'education'],
-        stepNumber: 6,
-      },
-      {
-        label: 'Work Authorization',
-        fields: ['visaStatus', 'visaExpiryDate', 'requiresSponsorship', 'currentSponsor', 'isTransferable'],
-        stepNumber: 7,
-      },
-      {
-        label: 'Availability & Preferences',
-        fields: ['availability', 'availableFrom', 'noticePeriodDays', 'willingToRelocate', 'relocationPreferences', 'isRemoteOk'],
-        stepNumber: 7,
+        label: 'Authorization',
+        fields: ['visaStatus', 'visaExpiryDate', 'requiresSponsorship', 'currentSponsor', 'isTransferable', 'availability', 'availableFrom', 'noticePeriodDays', 'willingToRelocate', 'relocationPreferences', 'isRemoteOk'],
+        stepNumber: 4,
       },
       {
         label: 'Compensation',
-        fields: ['rateType', 'currency', 'minimumRate', 'desiredRate', 'isNegotiable', 'compensationNotes'],
-        stepNumber: 8,
+        fields: ['rateType', 'currency', 'minimumRate', 'desiredRate', 'isNegotiable', 'compensationNotes', 'employmentTypes', 'workModes'],
+        stepNumber: 5,
       },
       {
-        label: 'Source & Tracking',
-        fields: ['leadSource', 'sourceDetails', 'referredBy', 'campaignId', 'isOnHotlist', 'hotlistNotes', 'tags'],
-        stepNumber: 9,
-      },
-      {
-        label: 'Documents',
-        fields: ['complianceDocuments', 'internalNotes'],
-        stepNumber: 9,
+        label: 'Resume & Source',
+        fields: ['sourceType', 'resumeFileName', 'resumeFileSize', 'leadSource', 'sourceDetails', 'referredBy', 'campaignId', 'isOnHotlist', 'hotlistNotes', 'tags', 'internalNotes'],
+        stepNumber: 6,
       },
     ],
   },

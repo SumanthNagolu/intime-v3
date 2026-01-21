@@ -34,6 +34,8 @@ import {
   CreditCard,
   Shield,
   UserCog,
+  Gauge,
+  UsersRound,
 } from 'lucide-react'
 
 /**
@@ -288,6 +290,21 @@ export const jobSectionGroups: SectionGroup[] = [
 export const jobToolSections = jobSections.filter(s => s.isToolSection)
 
 /**
+ * Helper to get job sections organized by group for sidebar rendering
+ */
+export function getJobSectionsByGroup(): {
+  overviewSection: SectionDefinition | undefined
+  mainSections: SectionDefinition[]
+  toolSections: SectionDefinition[]
+} {
+  return {
+    overviewSection: jobSections.find(s => s.id === 'overview'),
+    mainSections: jobSections.filter(s => s.group === 'main' && s.id !== 'overview'),
+    toolSections: jobSections.filter(s => s.isToolSection),
+  }
+}
+
+/**
  * Contact sections - Guidewire-style with main sections + tools
  * Matches Account workspace pattern for consistency
  * Main: Summary, Accounts, Jobs, Placements, Submissions, Addresses, Meetings, Escalations, Related Contacts
@@ -330,17 +347,49 @@ export const submissionSections: SectionDefinition[] = [
 ]
 
 /**
- * Lead sections - Guidewire-style with main sections + tools (GW-051)
- * Main: Summary (BANT breakdown), Contact, Engagement, Deal
- * Tools: Activities, Notes, Documents, History
+ * Lead sections - Enterprise-grade staffing lead workspace
+ *
+ * 7 MAIN SECTIONS (numbered 1-7, match wizard steps):
+ *   - Summary: Lead overview with KPIs (BANT Score, Engagement, Days in Pipeline, Last Contact)
+ *   - 1. Identity: Contact profile and company information
+ *   - 2. Classification: Lead type, opportunity type, business model, priority
+ *   - 3. Requirements: Staffing requirements, rates, skills, positions
+ *   - 4. Qualification: BANT scoring breakdown and staffing-specific criteria
+ *   - 5. Client Profile: VMS/MSP, payment terms, insurance, compliance
+ *   - 6. Source: Campaign, referral source, and channel tracking
+ *   - 7. Team: Lead owner and assignment
+ *
+ * ADDITIONAL MAIN (unnumbered):
+ *   - Engagement: Activity timeline and touchpoints
+ *
+ * RELATED DATA (unnumbered, collapsible):
+ *   - Deals: Linked opportunities
+ *   - Meetings: Scheduled and past meetings
+ *
+ * TOOLS (collapsible):
+ *   - Activities, Notes, Documents, History
  */
 export const leadSections: SectionDefinition[] = [
-  // Main sections - Context-specific
-  { id: 'summary', label: 'Summary', icon: Target, group: 'main', description: 'Lead details and BANT qualification score' },
-  { id: 'contact', label: 'Contact', icon: UserCircle, group: 'main', description: 'Contact profile and company info' },
-  { id: 'engagement', label: 'Engagement', icon: BarChart3, showCount: true, group: 'main', description: 'Engagement timeline and activities' },
-  { id: 'deal', label: 'Deal', icon: DollarSign, group: 'main', description: 'Associated deal and pipeline progress' },
-  // Tools section - Universal
+  // Summary section (overview dashboard) - no number
+  { id: 'summary', label: 'Summary', icon: LayoutDashboard, group: 'main', isOverview: true, description: 'Lead KPIs and quick overview' },
+
+  // Main sections (numbered 1-7, match wizard steps)
+  { id: 'contact', label: 'Identity', icon: UserCircle, group: 'main', number: 1, description: 'Contact info, company, and location' },
+  { id: 'classification', label: 'Classification', icon: Layers, group: 'main', number: 2, description: 'Lead type, opportunity, business model' },
+  { id: 'requirements', label: 'Requirements', icon: ClipboardList, group: 'main', number: 3, description: 'Staffing requirements and rates' },
+  { id: 'qualification', label: 'Qualification', icon: ClipboardCheck, group: 'main', number: 4, description: 'BANT scoring and staffing criteria' },
+  { id: 'client-profile', label: 'Client Profile', icon: CreditCard, group: 'main', number: 5, description: 'VMS/MSP, payment terms, compliance' },
+  { id: 'source', label: 'Source', icon: Target, group: 'main', number: 6, description: 'Lead source and attribution' },
+  { id: 'team', label: 'Team', icon: UserCog, group: 'main', number: 7, description: 'Lead owner and assignment' },
+
+  // Additional main sections (unnumbered)
+  { id: 'engagement', label: 'Engagement', icon: BarChart3, showCount: true, group: 'main', description: 'Activity timeline and touchpoints' },
+
+  // Related data sections (unnumbered, collapsible group)
+  { id: 'deals', label: 'Deals', icon: DollarSign, showCount: true, group: 'related', isRelatedData: true, description: 'Associated opportunities' },
+  { id: 'meetings', label: 'Meetings', icon: Calendar, showCount: true, group: 'related', isRelatedData: true, description: 'Scheduled and past meetings' },
+
+  // Tool sections (collapsible group)
   { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true, group: 'tools', description: 'Lead-related activities' },
   { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true, group: 'tools', description: 'Internal notes' },
   { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true, group: 'tools', description: 'Attached documents' },
@@ -348,39 +397,164 @@ export const leadSections: SectionDefinition[] = [
 ]
 
 /**
- * Deal sections - Guidewire-style with main sections + tools
- * Main: Overview, Contacts (stakeholders)
- * Tools: Activities, Notes, Documents, History
+ * Lead section groups - organized for Guidewire-style sidebar
+ */
+export function getLeadSectionsByGroup(): {
+  overviewSection: SectionDefinition | undefined
+  mainSections: SectionDefinition[]
+  relatedSections: SectionDefinition[]
+  toolSections: SectionDefinition[]
+} {
+  return {
+    overviewSection: leadSections.find(s => s.isOverview),
+    mainSections: leadSections.filter(s => s.group === 'main' && !s.isOverview),
+    relatedSections: leadSections.filter(s => s.isRelatedData),
+    toolSections: leadSections.filter(s => s.isToolSection),
+  }
+}
+
+/**
+ * Deal sections - Guidewire-style with main sections + related + tools
+ *
+ * MAIN: Core deal management
+ *   - Overview: Deal health dashboard with KPIs
+ *   - Details: Deal value, stage, probability
+ *   - Stakeholders: Decision makers, influencers, blockers
+ *   - Timeline: Key dates, milestones, next steps
+ *   - Competitors: Competitive landscape
+ *   - Proposal: Pricing, terms, scope
+ *
+ * RELATED DATA: Associated entities
+ *   - Jobs: Associated job requisitions
+ *   - Meetings: Scheduled meetings
+ *
+ * TOOLS: Supporting functions
+ *   - Activities, Notes, Documents, History
  */
 export const dealSections: SectionDefinition[] = [
+  // Overview section (summary dashboard)
+  { id: 'overview', label: 'Overview', icon: LayoutDashboard, group: 'main', isOverview: true, description: 'Deal health and key metrics at a glance' },
+
   // Main sections
-  { id: 'overview', label: 'Overview', icon: Briefcase },
-  { id: 'contacts', label: 'Contacts', icon: Users, showCount: true },
-  // Tools section
-  { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true },
-  { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },
-  { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true },
-  { id: 'history', label: 'History', icon: History, isToolSection: true },
+  { id: 'details', label: 'Deal Details', icon: Briefcase, group: 'main', number: 1, description: 'Value, stage, probability, and terms' },
+  { id: 'stakeholders', label: 'Stakeholders', icon: Users, group: 'main', number: 2, showCount: true, description: 'Decision makers, influencers, and key contacts' },
+  { id: 'timeline', label: 'Timeline', icon: Calendar, group: 'main', number: 3, description: 'Key dates, milestones, and next steps' },
+  { id: 'competitors', label: 'Competitors', icon: Target, group: 'main', number: 4, description: 'Competitive landscape and positioning' },
+  { id: 'proposal', label: 'Proposal', icon: FileText, group: 'main', number: 5, description: 'Pricing, terms, and scope of services' },
+
+  // Related data sections (unnumbered, separate group)
+  { id: 'jobs', label: 'Jobs', icon: Briefcase, group: 'related', showCount: true, isRelatedData: true, description: 'Associated job requisitions' },
+  { id: 'meetings', label: 'Meetings', icon: Calendar, group: 'related', showCount: true, isRelatedData: true, description: 'Scheduled and past meetings' },
+
+  // Tool sections
+  { id: 'activities', label: 'Activities', icon: Activity, group: 'tools', showCount: true, isToolSection: true, description: 'All deal interactions and touchpoints' },
+  { id: 'notes', label: 'Notes', icon: StickyNote, group: 'tools', showCount: true, isToolSection: true, description: 'Internal notes and observations' },
+  { id: 'documents', label: 'Documents', icon: FileText, group: 'tools', showCount: true, isToolSection: true, description: 'Proposals, contracts, and attachments' },
+  { id: 'history', label: 'History', icon: History, group: 'tools', isToolSection: true, description: 'Audit trail and stage history' },
 ]
 
 /**
- * Candidate sections - Guidewire-style with main sections + tools
- * Main: Summary, Resumes, Screening, Profiles, Submissions
- * Tools: Activities, Notes, Documents, History
+ * Deal section groups - organized for wizard-style sidebar
+ */
+export const dealSectionGroups = {
+  main: dealSections.filter(s => s.group === 'main' && !s.isOverview),
+  overview: dealSections.filter(s => s.isOverview),
+  related: dealSections.filter(s => s.isRelatedData),
+  tools: dealSections.filter(s => s.isToolSection),
+}
+
+/**
+ * Helper to get deal sections organized by group for wizard-style sidebar
+ */
+export function getDealSectionsByGroup(): {
+  overviewSection: SectionDefinition | undefined
+  mainSections: SectionDefinition[]
+  relatedSections: SectionDefinition[]
+  toolSections: SectionDefinition[]
+} {
+  return {
+    overviewSection: dealSections.find(s => s.isOverview),
+    mainSections: dealSections.filter(s => s.group === 'main' && !s.isOverview),
+    relatedSections: dealSections.filter(s => s.isRelatedData),
+    toolSections: dealSections.filter(s => s.isToolSection),
+  }
+}
+
+/**
+ * Candidate sections - Guidewire PCF-style unified architecture
+ *
+ * UNIFIED PATTERN: Wizard steps (1-6) map directly to detail sections (numbered 1-6)
+ * This ensures consistency between creation and editing experiences.
+ *
+ * MAIN SECTIONS (numbered, match wizard steps):
+ *   1. Identity: Contact info, headline, summary, location
+ *   2. Experience: Work history + Education
+ *   3. Skills: Technical skills + Certifications
+ *   4. Authorization: Visa, availability, relocation
+ *   5. Compensation: Rates, employment types, work modes
+ *   6. Resume: Resume upload, source tracking
+ *
+ * OVERVIEW (unnumbered):
+ *   - Summary: Dashboard with KPIs and quick info
+ *
+ * RELATED DATA (unnumbered, collapsible):
+ *   - Submissions, Placements, Interviews, Screening, Profiles
+ *
+ * TOOLS (unnumbered, collapsible):
+ *   - Activities, Notes, Documents, History
  */
 export const candidateSections: SectionDefinition[] = [
-  // Main sections
-  { id: 'summary', label: 'Summary', icon: UserCircle },
-  { id: 'resumes', label: 'Resumes', icon: Files, showCount: true },
-  { id: 'screening', label: 'Screening', icon: ClipboardCheck, showCount: true },
-  { id: 'profiles', label: 'Profiles', icon: FileText, showCount: true },
-  { id: 'submissions', label: 'Submissions', icon: Send, showCount: true },
-  // Tools section
-  { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true },
-  { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true },
-  { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true },
-  { id: 'history', label: 'History', icon: History, isToolSection: true },
+  // Summary section (overview dashboard, no number - detail only)
+  { id: 'summary', label: 'Summary', icon: LayoutDashboard, group: 'main', isOverview: true, description: 'Candidate profile and key metrics at a glance' },
+
+  // Main numbered sections (1-6, match wizard steps exactly)
+  { id: 'identity', label: 'Identity', icon: UserCircle, group: 'main', number: 1, description: 'Contact info, headline, and professional summary' },
+  { id: 'experience', label: 'Experience', icon: Briefcase, group: 'main', number: 2, description: 'Work history and education' },
+  { id: 'skills', label: 'Skills', icon: Award, group: 'main', number: 3, description: 'Technical skills and certifications' },
+  { id: 'authorization', label: 'Authorization', icon: Shield, group: 'main', number: 4, description: 'Work authorization, visa, and availability' },
+  { id: 'compensation', label: 'Compensation', icon: DollarSign, group: 'main', number: 5, description: 'Rate preferences and employment types' },
+  { id: 'resume', label: 'Resume', icon: Files, group: 'main', number: 6, showCount: true, description: 'Resume versions and source tracking' },
+
+  // Related data sections (collapsible group, unnumbered)
+  { id: 'submissions', label: 'Submissions', icon: Send, group: 'related', showCount: true, isRelatedData: true, description: 'Job submissions and pipeline' },
+  { id: 'placements', label: 'Placements', icon: Award, group: 'related', showCount: true, isRelatedData: true, description: 'Placement history' },
+  { id: 'interviews', label: 'Interviews', icon: Calendar, group: 'related', showCount: true, isRelatedData: true, description: 'Interview history' },
+  { id: 'screening', label: 'Screening', icon: ClipboardCheck, group: 'related', showCount: true, isRelatedData: true, description: 'Screening assessments' },
+  { id: 'profiles', label: 'Profiles', icon: FileText, group: 'related', showCount: true, isRelatedData: true, description: 'Marketing profiles' },
+
+  // Tools section (collapsible group, unnumbered)
+  { id: 'activities', label: 'Activities', icon: Activity, group: 'tools', showCount: true, isToolSection: true, description: 'All candidate interactions' },
+  { id: 'notes', label: 'Notes', icon: StickyNote, group: 'tools', showCount: true, isToolSection: true, description: 'Internal notes and observations' },
+  { id: 'documents', label: 'Documents', icon: FileText, group: 'tools', showCount: true, isToolSection: true, description: 'Uploaded files and attachments' },
+  { id: 'history', label: 'History', icon: History, group: 'tools', isToolSection: true, description: 'Audit trail and change history' },
 ]
+
+/**
+ * Candidate section groups for sidebar rendering
+ */
+export const candidateSectionGroups = {
+  overview: candidateSections.filter(s => s.isOverview),
+  main: candidateSections.filter(s => s.group === 'main' && !s.isOverview),
+  related: candidateSections.filter(s => s.isRelatedData),
+  tools: candidateSections.filter(s => s.isToolSection),
+}
+
+/**
+ * Helper to get candidate sections organized by group for sidebar rendering
+ */
+export function getCandidateSectionsByGroup(): {
+  overviewSection: SectionDefinition | undefined
+  mainSections: SectionDefinition[]
+  relatedSections: SectionDefinition[]
+  toolSections: SectionDefinition[]
+} {
+  return {
+    overviewSection: candidateSections.find(s => s.isOverview),
+    mainSections: candidateSections.filter(s => s.group === 'main' && !s.isOverview),
+    relatedSections: candidateSections.filter(s => s.isRelatedData),
+    toolSections: candidateSections.filter(s => s.isToolSection),
+  }
+}
 
 /**
  * Placement sections - Guidewire-style with main sections + tools
@@ -454,6 +628,62 @@ export const offerSections: SectionDefinition[] = [
 ]
 
 /**
+ * Team sections - Hublot-inspired workspace with main sections + related + tools
+ *
+ * MAIN SECTIONS (numbered 1-5):
+ *   - Summary: Team dashboard overview (no number)
+ *   - Details: Team name, description, department
+ *   - Members: Team members with roles
+ *   - Roles & Permissions: Access control configuration
+ *   - Workload: Assignment distribution and capacity
+ *   - Performance: Team metrics and KPIs
+ *
+ * RELATED DATA (unnumbered, collapsible):
+ *   - Accounts: Assigned client accounts
+ *   - Jobs: Assigned job requisitions
+ *
+ * TOOLS (collapsible, note: no documents for teams):
+ *   - Activities, Notes, History
+ */
+export const teamSections: SectionDefinition[] = [
+  // Summary section (overview dashboard) - no number
+  { id: 'summary', label: 'Summary', icon: LayoutDashboard, group: 'main', isOverview: true, description: 'Team health and key metrics at a glance' },
+
+  // Main sections (numbered 1-5)
+  { id: 'details', label: 'Team Details', icon: UsersRound, group: 'main', number: 1, description: 'Team name, description, and department' },
+  { id: 'members', label: 'Members', icon: Users, group: 'main', number: 2, showCount: true, description: 'Team members and their roles' },
+  { id: 'roles', label: 'Roles & Permissions', icon: Shield, group: 'main', number: 3, description: 'Access control and permission settings' },
+  { id: 'workload', label: 'Workload', icon: Gauge, group: 'main', number: 4, description: 'Assignment distribution and capacity' },
+  { id: 'performance', label: 'Performance', icon: BarChart3, group: 'main', number: 5, description: 'Team metrics and productivity KPIs' },
+
+  // Related data sections (unnumbered, collapsible group)
+  { id: 'accounts', label: 'Assigned Accounts', icon: Building2, group: 'related', showCount: true, isRelatedData: true, description: 'Client accounts assigned to this team' },
+  { id: 'jobs', label: 'Assigned Jobs', icon: Briefcase, group: 'related', showCount: true, isRelatedData: true, description: 'Job requisitions assigned to this team' },
+
+  // Tool sections (collapsible group - note: no documents for teams)
+  { id: 'activities', label: 'Activities', icon: Activity, group: 'tools', showCount: true, isToolSection: true, description: 'Team activities and interactions' },
+  { id: 'notes', label: 'Notes', icon: StickyNote, group: 'tools', showCount: true, isToolSection: true, description: 'Internal team notes' },
+  { id: 'history', label: 'History', icon: History, group: 'tools', isToolSection: true, description: 'Team change history and audit trail' },
+]
+
+/**
+ * Helper to get team sections organized by group for wizard-style sidebar
+ */
+export function getTeamSectionsByGroup(): {
+  overviewSection: SectionDefinition | undefined
+  mainSections: SectionDefinition[]
+  relatedSections: SectionDefinition[]
+  toolSections: SectionDefinition[]
+} {
+  return {
+    overviewSection: teamSections.find(s => s.isOverview),
+    mainSections: teamSections.filter(s => s.group === 'main' && !s.isOverview),
+    relatedSections: teamSections.filter(s => s.isRelatedData),
+    toolSections: teamSections.filter(s => s.isToolSection),
+  }
+}
+
+/**
  * Helper to get sections by entity type
  */
 export function getSectionsForEntity(entityType: string): SectionDefinition[] {
@@ -482,6 +712,8 @@ export function getSectionsForEntity(entityType: string): SectionDefinition[] {
       return interviewSections
     case 'offer':
       return offerSections
+    case 'team':
+      return teamSections
     default:
       return []
   }
@@ -530,7 +762,127 @@ export const commonToolSections: SectionDefinition[] = [
 ]
 
 // ============================================================================
-// UNIFIED CONTACT SECTIONS (Guidewire-Inspired Subtype Model)
+// HUBLOT-INSPIRED CONTACT SECTIONS (Category-Based Model)
+// ============================================================================
+// Contact sections vary by category (person or company) - Matches Account workspace patterns
+
+/**
+ * Contact category type - determines which sections are shown
+ */
+export type ContactCategory = 'person' | 'company'
+
+/**
+ * Universal tool sections - ALWAYS visible on ALL contacts
+ */
+export const universalContactToolSections: SectionDefinition[] = [
+  { id: 'activities', label: 'Activities', icon: Activity, group: 'tools', showCount: true, isToolSection: true, description: 'All interactions and touchpoints' },
+  { id: 'notes', label: 'Notes', icon: StickyNote, group: 'tools', showCount: true, isToolSection: true, description: 'Internal team notes' },
+  { id: 'documents', label: 'Documents', icon: FileText, group: 'tools', showCount: true, isToolSection: true, description: 'Attached files and documents' },
+  { id: 'history', label: 'History', icon: History, group: 'tools', isToolSection: true, description: 'Complete audit trail' },
+]
+
+// ============================================================================
+// PERSON CONTACT SECTIONS (Hublot-inspired Workspace)
+// ============================================================================
+/**
+ * Person contact sections - Matches Account workspace pattern with numbered main sections
+ *
+ * MAIN SECTIONS (numbered 1-5):
+ *   - Summary: Dashboard overview (no number)
+ *   - Profile: Personal details, photo, preferred contact method
+ *   - Employment: Current employer, title, work history
+ *   - Social: LinkedIn, GitHub, portfolio links
+ *   - Skills: Skills, certifications, languages
+ *   - Preferences: Work preferences, availability, rates
+ *
+ * RELATED DATA (unnumbered, collapsible):
+ *   - Accounts, Submissions, Placements, Meetings
+ *
+ * TOOLS (collapsible):
+ *   - Activities, Notes, Documents, History
+ */
+export const personContactSections: SectionDefinition[] = [
+  // Summary section (overview dashboard) - no number
+  { id: 'summary', label: 'Summary', icon: LayoutDashboard, group: 'main', isOverview: true, description: 'Contact profile and key metrics at a glance' },
+
+  // Main sections (numbered 1-5)
+  { id: 'profile', label: 'Profile', icon: UserCircle, group: 'main', number: 1, description: 'Personal details, photo, preferred contact method' },
+  { id: 'employment', label: 'Employment', icon: Briefcase, group: 'main', number: 2, description: 'Current employer, title, work history' },
+  { id: 'social', label: 'Social Profiles', icon: Link2, group: 'main', number: 3, description: 'LinkedIn, GitHub, portfolio links' },
+  { id: 'skills', label: 'Skills & Expertise', icon: Award, group: 'main', number: 4, showCount: true, description: 'Skills, certifications, languages' },
+  { id: 'preferences', label: 'Preferences', icon: ClipboardList, group: 'main', number: 5, description: 'Work preferences, availability, rates' },
+
+  // Related data sections (unnumbered, collapsible group)
+  { id: 'accounts', label: 'Accounts', icon: Building2, group: 'related', showCount: true, isRelatedData: true, description: 'Associated companies' },
+  { id: 'submissions', label: 'Submissions', icon: Send, group: 'related', showCount: true, isRelatedData: true, description: 'Job applications' },
+  { id: 'placements', label: 'Placements', icon: Award, group: 'related', showCount: true, isRelatedData: true, description: 'Work history' },
+  { id: 'meetings', label: 'Meetings', icon: Calendar, group: 'related', showCount: true, isRelatedData: true, description: 'Scheduled meetings' },
+
+  // Tool sections (collapsible group)
+  ...universalContactToolSections,
+]
+
+// ============================================================================
+// COMPANY CONTACT SECTIONS (Hublot-inspired Workspace)
+// ============================================================================
+/**
+ * Company contact sections - Matches Account workspace pattern
+ *
+ * MAIN SECTIONS (numbered 1-5):
+ *   - Summary: Dashboard overview (no number)
+ *   - Profile: Legal name, DBA, founded year
+ *   - Classification: Industry, segment, tier
+ *   - Locations: Office addresses
+ *   - People: Key contacts at this company
+ *   - Hierarchy: Parent company, subsidiaries
+ *
+ * RELATED DATA (unnumbered, collapsible):
+ *   - Jobs, Placements, Contracts
+ *
+ * TOOLS (collapsible):
+ *   - Activities, Notes, Documents, History
+ */
+export const companyContactSections: SectionDefinition[] = [
+  // Summary section (overview dashboard) - no number
+  { id: 'summary', label: 'Summary', icon: LayoutDashboard, group: 'main', isOverview: true, description: 'Company profile and key metrics at a glance' },
+
+  // Main sections (numbered 1-5)
+  { id: 'profile', label: 'Company Profile', icon: Building2, group: 'main', number: 1, description: 'Legal name, DBA, founded year' },
+  { id: 'classification', label: 'Classification', icon: Target, group: 'main', number: 2, description: 'Industry, segment, tier' },
+  { id: 'locations', label: 'Locations', icon: MapPin, group: 'main', number: 3, showCount: true, description: 'Office addresses' },
+  { id: 'people', label: 'Key People', icon: Users, group: 'main', number: 4, showCount: true, description: 'Contacts at this company' },
+  { id: 'hierarchy', label: 'Corporate Hierarchy', icon: Layers, group: 'main', number: 5, description: 'Parent company, subsidiaries' },
+
+  // Related data sections (unnumbered, collapsible group)
+  { id: 'jobs', label: 'Jobs', icon: Briefcase, group: 'related', showCount: true, isRelatedData: true, description: 'Open positions' },
+  { id: 'placements', label: 'Placements', icon: Award, group: 'related', showCount: true, isRelatedData: true, description: 'Active and past placements' },
+  { id: 'contracts', label: 'Contracts', icon: FileText, group: 'related', showCount: true, isRelatedData: true, description: 'MSA and agreements' },
+
+  // Tool sections (collapsible group)
+  ...universalContactToolSections,
+]
+
+/**
+ * Helper to get contact sections organized by group for Hublot-style sidebar
+ * Matches getAccountSectionsByGroup() pattern
+ */
+export function getContactSectionsByCategory(category: ContactCategory): {
+  overviewSection: SectionDefinition | undefined
+  mainSections: SectionDefinition[]
+  relatedSections: SectionDefinition[]
+  toolSections: SectionDefinition[]
+} {
+  const sections = category === 'company' ? companyContactSections : personContactSections
+  return {
+    overviewSection: sections.find(s => s.isOverview),
+    mainSections: sections.filter(s => s.group === 'main' && !s.isOverview),
+    relatedSections: sections.filter(s => s.isRelatedData),
+    toolSections: sections.filter(s => s.isToolSection),
+  }
+}
+
+// ============================================================================
+// LEGACY SUBTYPE-BASED CONTACT SECTIONS (Backward Compatibility)
 // ============================================================================
 // Contact sections vary by subtype: candidate, employee, client_poc, vendor_poc, prospect, lead
 

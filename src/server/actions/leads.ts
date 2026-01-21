@@ -9,6 +9,7 @@ import type {
   LeadEngagement,
   LeadDeal,
   LeadCampaign,
+  LeadMeeting,
   LeadActivity,
   LeadNote,
   LeadDocument,
@@ -40,6 +41,8 @@ export async function getFullLead(id: string): Promise<FullLeadData | null> {
     documentsResult,
     historyResult,
     dealResult,
+    allDealsResult,
+    meetingsResult,
     campaignsResult,
   ] = await Promise.all([
     // Activities (for both engagement timeline and activities section)
@@ -96,7 +99,7 @@ export async function getFullLead(id: string): Promise<FullLeadData | null> {
       .order('created_at', { ascending: false })
       .limit(100),
 
-    // Deal (if converted)
+    // Deal (if converted) - for singular deal reference
     leadRecord.lead_converted_to_deal_id
       ? adminClient
           .from('deals')
@@ -109,12 +112,41 @@ export async function getFullLead(id: string): Promise<FullLeadData | null> {
           .single()
       : Promise.resolve({ data: null, error: null }),
 
+    // All deals associated with this lead (via lead_contact_id)
+    adminClient
+      .from('deals')
+      .select(`
+        id, name, stage, amount, probability, expected_close_date, next_step, created_at,
+        owner:user_profiles!deals_owner_id_fkey(id, full_name)
+      `)
+      .eq('lead_contact_id', id)
+      .is('deleted_at', null)
+      .order('created_at', { ascending: false })
+      .limit(20),
+
+    // Meetings (activities with type = 'meeting')
+    adminClient
+      .from('activities')
+      .select(`
+        id, subject, activity_type, status, scheduled_at, scheduled_for, duration_minutes,
+        outcome, outcome_notes, description, created_at,
+        assigned_to:user_profiles!activities_assigned_to_fkey(id, full_name, email),
+        creator:user_profiles!activities_created_by_fkey(id, full_name, email)
+      `)
+      .eq('entity_type', 'lead')
+      .eq('entity_id', id)
+      .eq('activity_type', 'meeting')
+      .is('deleted_at', null)
+      .order('scheduled_at', { ascending: false, nullsFirst: false })
+      .order('created_at', { ascending: false })
+      .limit(50),
+
     // Campaigns (source campaign via campaign_enrollments)
     adminClient
       .from('campaign_enrollments')
       .select(`
         id, enrolled_at, converted_to_lead_at,
-        campaign:campaigns!campaign_enrollments_campaign_id_fkey(id, name, status)
+        campaign:campaigns!campaign_enrollments_campaign_id_fkey(id, name, status, type, channel)
       `)
       .eq('contact_id', id)
       .is('deleted_at', null)
@@ -127,6 +159,8 @@ export async function getFullLead(id: string): Promise<FullLeadData | null> {
     contact: transformContact(leadRecord),
     engagement: transformEngagement(activitiesResult.data || []),
     deal: dealResult.data ? transformDeal(dealResult.data as Record<string, unknown>) : null,
+    deals: transformDeals(allDealsResult.data || []),
+    meetings: transformMeetings(meetingsResult.data || []),
     campaigns: transformCampaigns(campaignsResult.data || []),
     activities: transformActivities(activitiesResult.data || []),
     notes: transformNotes(notesResult.data || []),
@@ -238,13 +272,64 @@ function transformDeal(data: Record<string, unknown>): LeadDeal {
   }
 }
 
+function transformDeals(data: Record<string, unknown>[]): LeadDeal[] {
+  return data.map((d) => transformDeal(d))
+}
+
+function transformMeetings(data: Record<string, unknown>[]): LeadMeeting[] {
+  return data.map((m) => {
+    const assignedTo = m.assigned_to as { id?: string; full_name?: string; email?: string } | null
+    const creator = m.creator as { id?: string; full_name?: string; email?: string } | null
+
+    // Build attendees list from assigned_to and creator
+    const attendees: { id: string; name: string; email: string | null }[] = []
+    if (assignedTo?.id) {
+      attendees.push({
+        id: assignedTo.id,
+        name: assignedTo.full_name || 'Unknown',
+        email: assignedTo.email || null,
+      })
+    }
+    if (creator?.id && creator.id !== assignedTo?.id) {
+      attendees.push({
+        id: creator.id,
+        name: creator.full_name || 'Unknown',
+        email: creator.email || null,
+      })
+    }
+
+    // Map activity status to meeting status
+    const activityStatus = (m.status as string) || 'open'
+    const meetingStatus = activityStatus === 'completed' ? 'completed'
+      : activityStatus === 'cancelled' ? 'cancelled'
+      : activityStatus === 'skipped' ? 'no_show'
+      : 'scheduled'
+
+    return {
+      id: m.id as string,
+      subject: (m.subject as string) || 'No Subject',
+      type: (m.activity_type as string) || 'meeting',
+      status: meetingStatus,
+      scheduledAt: (m.scheduled_at as string) || (m.scheduled_for as string) || (m.created_at as string),
+      duration: m.duration_minutes as number | null,
+      location: m.description as string | null, // Using description for location
+      attendees,
+      notes: m.outcome_notes as string | null,
+      outcome: m.outcome as string | null,
+      createdAt: m.created_at as string,
+    }
+  })
+}
+
 function transformCampaigns(data: Record<string, unknown>[]): LeadCampaign[] {
   return data.map((ce) => {
-    const campaign = ce.campaign as { id?: string; name?: string; status?: string } | null
+    const campaign = ce.campaign as { id?: string; name?: string; status?: string; type?: string; channel?: string } | null
     return {
       id: campaign?.id || (ce.id as string),
       name: campaign?.name || 'Unknown Campaign',
       status: campaign?.status || 'unknown',
+      type: campaign?.type || null,
+      channel: campaign?.channel || null,
       enrolledAt: ce.enrolled_at as string,
       convertedAt: ce.converted_to_lead_at as string | null,
     }

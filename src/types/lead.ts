@@ -11,7 +11,9 @@ export interface FullLeadData {
   contact: LeadContactInfo
   engagement: LeadEngagement[]
   deal: LeadDeal | null
+  deals: LeadDeal[]           // All associated deals (for related section)
   campaigns: LeadCampaign[]
+  meetings: LeadMeeting[]     // Scheduled and past meetings
   // Universal tools
   activities: LeadActivity[]
   notes: LeadNote[]
@@ -114,8 +116,25 @@ export interface LeadCampaign {
   id: string
   name: string
   status: string
+  type: string | null        // 'email', 'social', 'referral', etc.
+  channel: string | null     // Marketing channel
   enrolledAt: string
   convertedAt: string | null
+}
+
+// Meeting associated with the lead
+export interface LeadMeeting {
+  id: string
+  subject: string
+  type: string               // 'discovery', 'demo', 'follow_up', etc.
+  status: string             // 'scheduled', 'completed', 'cancelled', 'no_show'
+  scheduledAt: string
+  duration: number | null    // Duration in minutes
+  location: string | null    // Physical location or virtual link
+  attendees: { id: string; name: string; email: string | null }[]
+  notes: string | null
+  outcome: string | null
+  createdAt: string
 }
 
 // Reuse universal types
@@ -148,12 +167,24 @@ export interface LeadDocument {
   url: string
 }
 
-// Lead sections for navigation
+// Lead sections for navigation (7 main sections matching wizard)
 export type LeadSection =
+  // Summary section (overview dashboard)
   | 'summary'
-  | 'contact'
+  // Main sections (numbered 1-7, match wizard steps)
+  | 'contact'           // 1. Identity - contact info, company, location
+  | 'classification'    // 2. Classification - lead type, opportunity, business model
+  | 'requirements'      // 3. Requirements - staffing requirements and rates
+  | 'qualification'     // 4. Qualification - BANT scoring and staffing criteria
+  | 'client-profile'    // 5. Client Profile - VMS/MSP, payment terms, compliance
+  | 'source'            // 6. Source - lead source and attribution
+  | 'team'              // 7. Team - lead owner and assignment
+  // Additional main sections
   | 'engagement'
-  | 'deal'
+  // Related data sections
+  | 'deals'
+  | 'meetings'
+  // Tool sections
   | 'activities'
   | 'notes'
   | 'documents'

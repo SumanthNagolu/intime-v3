@@ -1,38 +1,52 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useMemo, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import Link from 'next/link'
-import { useCreateCampaignStore } from '@/stores/create-campaign-store'
+import { useCreateCampaignStore, type CreateCampaignFormData } from '@/stores/create-campaign-store'
 import { trpc } from '@/lib/trpc/client'
 import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
-import { ArrowLeft, Megaphone, Users, Mail, Calendar, Shield, X } from 'lucide-react'
+import { WizardLayout, type WizardStep } from '@/components/pcf/wizard/WizardLayout'
 import {
-  StepIndicator,
-  CampaignSetupStep,
-  TargetAudienceStep,
-  ChannelsStep,
-  ScheduleBudgetStep,
-  ComplianceStep,
-} from './steps'
+  CampaignSetupSection,
+  CampaignTargetingSection,
+  CampaignChannelsSection,
+  CampaignScheduleSection,
+  CampaignBudgetSection,
+  CampaignTeamSection,
+  CampaignComplianceSection,
+} from '@/components/campaigns/sections'
+import type {
+  CampaignSetupSectionData,
+  CampaignTargetingSectionData,
+  CampaignChannelsSectionData,
+  CampaignScheduleSectionData,
+  CampaignBudgetSectionData,
+  CampaignTeamSectionData,
+  CampaignComplianceSectionData,
+  CampaignChannel,
+  CampaignType,
+  CampaignGoal,
+  AudienceSource,
+} from '@/lib/campaigns/types'
 
-const STEPS = [
-  { id: 1, title: 'Campaign Setup', icon: Megaphone },
-  { id: 2, title: 'Target Audience', icon: Users },
-  { id: 3, title: 'Channels', icon: Mail },
-  { id: 4, title: 'Schedule & Budget', icon: Calendar },
-  { id: 5, title: 'Compliance', icon: Shield },
+// Wizard steps configuration following WizardLayout pattern
+const WIZARD_STEPS: WizardStep[] = [
+  { id: 'setup', label: 'Campaign Setup', description: 'Define campaign type and goals' },
+  { id: 'targeting', label: 'Target Audience', description: 'Configure audience criteria and filters' },
+  { id: 'channels', label: 'Channels', description: 'Select outreach channels and sequences' },
+  { id: 'schedule', label: 'Schedule', description: 'Set timeline and send window' },
+  { id: 'budget', label: 'Budget & Targets', description: 'Configure budget and performance goals' },
+  { id: 'team', label: 'Team', description: 'Assign team members and approvers' },
+  { id: 'compliance', label: 'Compliance', description: 'Configure compliance settings' },
 ]
 
-const STEP_COMPONENTS = [
-  CampaignSetupStep,
-  TargetAudienceStep,
-  ChannelsStep,
-  ScheduleBudgetStep,
-  ComplianceStep,
-]
-
+/**
+ * Campaign Creation Wizard
+ *
+ * Uses unified section components (same as workspace) with mode='create'.
+ * State is managed by Zustand store with local persistence.
+ * Uses WizardLayout for consistent UI with other entity wizards.
+ */
 export default function NewCampaignPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -75,7 +89,13 @@ export default function NewCampaignPage() {
   })
 
   const handleSubmit = () => {
-    // Build sequences based on channel config (same logic as dialog)
+    // Validate required fields before submission
+    if (!formData.campaignType || !formData.goal || !formData.audienceSource) {
+      toast.error('Please complete all required fields (Campaign Type, Goal, and Audience Source)')
+      return
+    }
+
+    // Build sequences based on channel config
     type SequenceStep = {
       stepNumber: number
       dayOffset: number
@@ -126,21 +146,31 @@ export default function NewCampaignPage() {
 
     createCampaign.mutate({
       name: formData.name,
-      campaignType: formData.campaignType,
-      goal: formData.goal,
+      campaignType: formData.campaignType as CampaignType,
+      goal: formData.goal as CampaignGoal,
       description: formData.description || undefined,
       sequenceTemplateIds: formData.sequenceTemplateIds.length > 0 ? formData.sequenceTemplateIds : undefined,
       targetCriteria: {
-        audienceSource: formData.audienceSource,
+        audienceSource: formData.audienceSource as AudienceSource,
         industries: formData.industries.length > 0 ? formData.industries : undefined,
         companySizes: formData.companySizes.length > 0 ? formData.companySizes : undefined,
         regions: formData.regions.length > 0 ? formData.regions : undefined,
-        fundingStages: formData.fundingStages.length > 0 ? formData.fundingStages : undefined,
+        clientTiers: formData.clientTiers.length > 0 ? formData.clientTiers : undefined,
+        serviceTypes: formData.serviceTypes.length > 0 ? formData.serviceTypes : undefined,
         targetTitles: formData.targetTitles.length > 0 ? formData.targetTitles : undefined,
+        candidateCriteria: {
+          skills: formData.targetSkills.length > 0 ? formData.targetSkills : undefined,
+          experienceLevels: formData.experienceLevels.length > 0 ? formData.experienceLevels : undefined,
+          workAuthorizations: formData.workAuthorizations.length > 0 ? formData.workAuthorizations : undefined,
+          certifications: formData.certifications.length > 0 ? formData.certifications : undefined,
+          benchOnly: formData.benchOnly,
+          availableWithinDays: formData.availableWithinDays,
+        },
         exclusions: {
           excludeExistingClients: formData.excludeExistingClients,
           excludeRecentlyContacted: formData.excludeRecentlyContacted,
           excludeCompetitors: formData.excludeCompetitors,
+          excludeDncList: formData.excludeDncList,
         },
       },
       channels: formData.channels,
@@ -148,99 +178,531 @@ export default function NewCampaignPage() {
       startDate: formData.startDate,
       endDate: formData.endDate,
       launchImmediately: formData.launchImmediately,
+      sendWindow: {
+        start: formData.sendWindowStart,
+        end: formData.sendWindowEnd,
+        days: formData.sendDays,
+        timezone: formData.timezone,
+      },
+      isRecurring: formData.isRecurring,
+      recurringInterval: formData.recurringInterval || undefined,
       budgetTotal: formData.budgetTotal,
-      targetLeads: formData.targetLeads,
-      targetMeetings: formData.targetMeetings,
-      targetRevenue: formData.targetRevenue,
+      budgetCurrency: formData.budgetCurrency,
+      targets: {
+        contacts: formData.targetContacts,
+        responses: formData.targetResponses,
+        leads: formData.targetLeads,
+        meetings: formData.targetMeetings,
+        revenue: formData.targetRevenue,
+        submissions: formData.targetSubmissions,
+        interviews: formData.targetInterviews,
+        placements: formData.targetPlacements,
+        expectedResponseRate: formData.expectedResponseRate,
+        expectedConversionRate: formData.expectedConversionRate,
+      },
+      teamAssignment: {
+        ownerId: formData.ownerId || undefined,
+        teamId: formData.teamId || undefined,
+        collaboratorIds: formData.collaboratorIds.length > 0 ? formData.collaboratorIds : undefined,
+      },
+      approval: {
+        required: formData.requiresApproval,
+        approverIds: formData.approverIds.length > 0 ? formData.approverIds : undefined,
+      },
+      notifications: {
+        onResponse: formData.notifyOnResponse,
+        onConversion: formData.notifyOnConversion,
+        onCompletion: formData.notifyOnCompletion,
+      },
       complianceSettings: {
         gdpr: formData.gdpr,
         canSpam: formData.canSpam,
         casl: formData.casl,
-        includeUnsubscribe: formData.includeUnsubscribe,
+        ccpa: formData.ccpa,
+        email: {
+          includeUnsubscribe: formData.includeUnsubscribe,
+          includePhysicalAddress: formData.includePhysicalAddress,
+        },
+        dnc: {
+          respectList: formData.respectDncList,
+          respectOptOuts: formData.respectPreviousOptOuts,
+        },
+        dataHandling: {
+          collectConsent: formData.collectConsent,
+          retentionDays: formData.dataRetentionDays,
+        },
       },
     })
   }
 
   const handleCancel = () => {
     if (isDirty) {
-      // Draft is preserved automatically
       toast.info('Draft saved. You can continue later.')
     }
     router.push('/employee/crm/campaigns')
   }
 
-  const handleDiscardDraft = () => {
-    resetForm()
-    toast.success('Draft discarded')
+  // Validate current step before navigation
+  const canProceed = useMemo(() => {
+    switch (currentStep) {
+      case 1:
+        return formData.name.trim().length >= 3 && formData.campaignType && formData.goal
+      case 2:
+        return true // Targeting is optional
+      case 3:
+        return formData.channels.length > 0
+      case 4:
+        return formData.startDate && formData.endDate
+      case 5:
+        return true // Budget is optional
+      case 6:
+        return true // Team is optional
+      case 7:
+        return formData.includeUnsubscribe // Required compliance
+      default:
+        return true
+    }
+  }, [currentStep, formData])
+
+  // Validation errors for current step
+  const validationErrors = useMemo(() => {
+    const errors: Record<string, string> = {}
+    switch (currentStep) {
+      case 1:
+        if (!formData.name.trim() || formData.name.trim().length < 3) {
+          errors.name = 'Campaign name must be at least 3 characters'
+        }
+        if (!formData.campaignType) {
+          errors.campaignType = 'Please select a campaign type'
+        }
+        if (!formData.goal) {
+          errors.goal = 'Please select a campaign goal'
+        }
+        break
+      case 3:
+        if (formData.channels.length === 0) {
+          errors.channels = 'Please select at least one channel'
+        }
+        break
+      case 4:
+        if (!formData.startDate) {
+          errors.startDate = 'Please select a start date'
+        }
+        if (!formData.endDate) {
+          errors.endDate = 'Please select an end date'
+        }
+        break
+      case 7:
+        if (!formData.includeUnsubscribe) {
+          errors.includeUnsubscribe = 'Unsubscribe links are required by law'
+        }
+        break
+    }
+    return errors
+  }, [currentStep, formData])
+
+  const handleNext = () => {
+    if (!canProceed) {
+      toast.error('Please complete all required fields')
+      return
+    }
+    if (currentStep < WIZARD_STEPS.length) {
+      navigateToStep(currentStep + 1)
+    }
   }
 
-  const StepComponent = STEP_COMPONENTS[currentStep - 1]
+  const handleBack = () => {
+    if (currentStep > 1) {
+      navigateToStep(currentStep - 1)
+    }
+  }
+
+  const handleStepClick = (stepNumber: number) => {
+    // Only allow going to previous steps or current
+    if (stepNumber <= currentStep) {
+      navigateToStep(stepNumber)
+    }
+  }
+
+  const isLastStep = currentStep === WIZARD_STEPS.length
 
   return (
-    <div className="min-h-screen bg-cream">
-      <div className="max-w-4xl mx-auto py-8 px-4">
-        {/* Breadcrumb Navigation */}
-        <nav className="flex items-center gap-2 text-sm text-charcoal-500 mb-4">
-          <Link href="/employee/workspace/dashboard" className="hover:text-hublot-700 transition-colors">
-            My Work
-          </Link>
-          <span>/</span>
-          <Link href="/employee/crm/campaigns" className="hover:text-hublot-700 transition-colors">
-            Campaigns
-          </Link>
-          <span>/</span>
-          <span className="text-charcoal-900 font-medium">New Campaign</span>
-        </nav>
+    <WizardLayout
+      title="Create Campaign"
+      entityName={formData.name || 'Untitled Campaign'}
+      status="Draft"
+      steps={WIZARD_STEPS}
+      currentStep={currentStep}
+      onStepClick={handleStepClick}
+      onBack={handleBack}
+      onNext={handleNext}
+      onSubmit={handleSubmit}
+      onCancel={handleCancel}
+      isLastStep={isLastStep}
+      isSubmitting={createCampaign.isPending}
+      isSaving={false}
+      lastSavedAt={lastSaved ? new Date(lastSaved) : null}
+      validationErrors={!canProceed ? validationErrors : {}}
+      submitLabel="Create Campaign"
+    >
+      {/* Step 1: Setup */}
+      {currentStep === 1 && (
+        <SetupStepWrapper formData={formData} setFormData={setFormData} />
+      )}
 
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-6">
-          <Link href="/employee/crm/campaigns">
-            <Button variant="ghost" size="icon">
-              <ArrowLeft className="w-4 h-4" />
-            </Button>
-          </Link>
-          <div className="flex-1">
-            <h1 className="text-2xl font-heading font-semibold text-charcoal-900">Create New Campaign</h1>
-            <p className="text-charcoal-500">Set up a new outreach campaign to generate leads</p>
-          </div>
-        </div>
+      {/* Step 2: Targeting */}
+      {currentStep === 2 && (
+        <TargetingStepWrapper formData={formData} setFormData={setFormData} />
+      )}
 
-        {/* Draft Recovery Banner */}
-        {lastSaved && (
-          <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-center justify-between">
-            <span className="text-sm text-blue-700">
-              Draft saved {new Date(lastSaved).toLocaleString()}
-            </span>
-            <button
-              onClick={handleDiscardDraft}
-              className="text-sm text-blue-600 hover:underline flex items-center gap-1"
-            >
-              <X className="w-3 h-3" />
-              Discard draft
-            </button>
-          </div>
-        )}
+      {/* Step 3: Channels */}
+      {currentStep === 3 && (
+        <ChannelsStepWrapper formData={formData} setFormData={setFormData} />
+      )}
 
-        {/* Step Indicator */}
-        <StepIndicator steps={STEPS} currentStep={currentStep} />
+      {/* Step 4: Schedule */}
+      {currentStep === 4 && (
+        <ScheduleStepWrapper formData={formData} setFormData={setFormData} />
+      )}
 
-        {/* Step Content */}
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          {StepComponent && (
-            <StepComponent
-              formData={formData}
-              setFormData={setFormData}
-              onNext={() => navigateToStep(currentStep + 1)}
-              onPrev={() => navigateToStep(currentStep - 1)}
-              onSubmit={handleSubmit}
-              onCancel={handleCancel}
-              isFirst={currentStep === 1}
-              isLast={currentStep === STEPS.length}
-              isSubmitting={createCampaign.isPending}
-            />
-          )}
-        </div>
-      </div>
-    </div>
+      {/* Step 5: Budget & Targets */}
+      {currentStep === 5 && (
+        <BudgetStepWrapper formData={formData} setFormData={setFormData} />
+      )}
+
+      {/* Step 6: Team */}
+      {currentStep === 6 && (
+        <TeamStepWrapper formData={formData} setFormData={setFormData} />
+      )}
+
+      {/* Step 7: Compliance */}
+      {currentStep === 7 && (
+        <ComplianceStepWrapper formData={formData} setFormData={setFormData} />
+      )}
+    </WizardLayout>
+  )
+}
+
+// ============ STEP WRAPPERS ============
+// These wrap unified sections with Zustand store integration
+
+interface StepWrapperProps {
+  formData: CreateCampaignFormData
+  setFormData: (data: Partial<CreateCampaignFormData>) => void
+}
+
+function SetupStepWrapper({ formData, setFormData }: StepWrapperProps) {
+  const sectionData = useMemo<CampaignSetupSectionData>(() => ({
+    name: formData.name,
+    campaignType: formData.campaignType as CampaignSetupSectionData['campaignType'],
+    goal: formData.goal as CampaignSetupSectionData['goal'],
+    priority: formData.priority,
+    description: formData.description,
+    tags: formData.tags,
+  }), [formData.name, formData.campaignType, formData.goal, formData.priority, formData.description, formData.tags])
+
+  const handleChange = useCallback((field: string, value: unknown) => {
+    setFormData({ [field]: value })
+  }, [setFormData])
+
+  return (
+    <CampaignSetupSection
+      mode="create"
+      data={sectionData}
+      onChange={handleChange}
+    />
+  )
+}
+
+function TargetingStepWrapper({ formData, setFormData }: StepWrapperProps) {
+  const sectionData = useMemo<CampaignTargetingSectionData>(() => ({
+    audienceSource: formData.audienceSource as CampaignTargetingSectionData['audienceSource'],
+    industries: formData.industries,
+    companySizes: formData.companySizes,
+    regions: formData.regions,
+    clientTiers: formData.clientTiers,
+    serviceTypes: formData.serviceTypes,
+    targetTitles: formData.targetTitles,
+    targetSkills: formData.targetSkills,
+    experienceLevels: formData.experienceLevels,
+    workAuthorizations: formData.workAuthorizations,
+    certifications: formData.certifications,
+    benchOnly: formData.benchOnly,
+    availableWithinDays: formData.availableWithinDays,
+    excludeExistingClients: formData.excludeExistingClients,
+    excludeRecentlyContacted: formData.excludeRecentlyContacted,
+    excludeCompetitors: formData.excludeCompetitors,
+    excludeDncList: formData.excludeDncList,
+  }), [
+    formData.audienceSource,
+    formData.industries,
+    formData.companySizes,
+    formData.regions,
+    formData.clientTiers,
+    formData.serviceTypes,
+    formData.targetTitles,
+    formData.targetSkills,
+    formData.experienceLevels,
+    formData.workAuthorizations,
+    formData.certifications,
+    formData.benchOnly,
+    formData.availableWithinDays,
+    formData.excludeExistingClients,
+    formData.excludeRecentlyContacted,
+    formData.excludeCompetitors,
+    formData.excludeDncList,
+  ])
+
+  const handleChange = useCallback((field: string, value: unknown) => {
+    setFormData({ [field]: value })
+  }, [setFormData])
+
+  const handleToggle = useCallback((field: string, value: string) => {
+    const currentArray = formData[field as keyof typeof formData] as string[]
+    const isSelected = currentArray.includes(value)
+    setFormData({
+      [field]: isSelected
+        ? currentArray.filter(v => v !== value)
+        : [...currentArray, value],
+    })
+  }, [formData, setFormData])
+
+  return (
+    <CampaignTargetingSection
+      mode="create"
+      data={sectionData}
+      onChange={handleChange}
+      onToggle={handleToggle}
+    />
+  )
+}
+
+function ChannelsStepWrapper({ formData, setFormData }: StepWrapperProps) {
+  const sectionData = useMemo<CampaignChannelsSectionData>(() => ({
+    channels: formData.channels as CampaignChannel[],
+    sequenceTemplateIds: formData.sequenceTemplateIds,
+    emailSteps: formData.emailSteps,
+    emailDaysBetween: formData.emailDaysBetween,
+    linkedinSteps: formData.linkedinSteps,
+    linkedinDaysBetween: formData.linkedinDaysBetween,
+    phoneSteps: formData.phoneSteps,
+    phoneDaysBetween: formData.phoneDaysBetween,
+    stopOnReply: formData.stopOnReply,
+    stopOnBooking: formData.stopOnBooking,
+    stopOnApplication: formData.stopOnApplication,
+    dailyLimit: formData.dailyLimit,
+    enableAbTesting: formData.enableAbTesting,
+    abSplitPercentage: formData.abSplitPercentage,
+  }), [
+    formData.channels,
+    formData.sequenceTemplateIds,
+    formData.emailSteps,
+    formData.emailDaysBetween,
+    formData.linkedinSteps,
+    formData.linkedinDaysBetween,
+    formData.phoneSteps,
+    formData.phoneDaysBetween,
+    formData.stopOnReply,
+    formData.stopOnBooking,
+    formData.stopOnApplication,
+    formData.dailyLimit,
+    formData.enableAbTesting,
+    formData.abSplitPercentage,
+  ])
+
+  const handleChange = useCallback((field: string, value: unknown) => {
+    setFormData({ [field]: value })
+  }, [setFormData])
+
+  const handleToggleChannel = useCallback((channel: CampaignChannel) => {
+    const isSelected = formData.channels.includes(channel)
+    setFormData({
+      channels: isSelected
+        ? formData.channels.filter((c: CampaignChannel) => c !== channel)
+        : [...formData.channels, channel],
+    })
+  }, [formData.channels, setFormData])
+
+  return (
+    <CampaignChannelsSection
+      mode="create"
+      data={sectionData}
+      onChange={handleChange}
+      onToggleChannel={handleToggleChannel}
+    />
+  )
+}
+
+function ScheduleStepWrapper({ formData, setFormData }: StepWrapperProps) {
+  const sectionData = useMemo<CampaignScheduleSectionData>(() => ({
+    startDate: formData.startDate,
+    endDate: formData.endDate,
+    launchImmediately: formData.launchImmediately,
+    sendWindowStart: formData.sendWindowStart,
+    sendWindowEnd: formData.sendWindowEnd,
+    sendDays: formData.sendDays,
+    timezone: formData.timezone,
+    isRecurring: formData.isRecurring,
+    recurringInterval: formData.recurringInterval,
+  }), [
+    formData.startDate,
+    formData.endDate,
+    formData.launchImmediately,
+    formData.sendWindowStart,
+    formData.sendWindowEnd,
+    formData.sendDays,
+    formData.timezone,
+    formData.isRecurring,
+    formData.recurringInterval,
+  ])
+
+  const handleChange = useCallback((field: string, value: unknown) => {
+    setFormData({ [field]: value })
+  }, [setFormData])
+
+  return (
+    <CampaignScheduleSection
+      mode="create"
+      data={sectionData}
+      onChange={handleChange}
+    />
+  )
+}
+
+function BudgetStepWrapper({ formData, setFormData }: StepWrapperProps) {
+  const sectionData = useMemo<CampaignBudgetSectionData>(() => ({
+    budgetTotal: formData.budgetTotal ? String(formData.budgetTotal) : '',
+    budgetCurrency: formData.budgetCurrency,
+    targetContacts: formData.targetContacts ? String(formData.targetContacts) : '',
+    targetResponses: formData.targetResponses ? String(formData.targetResponses) : '',
+    targetLeads: formData.targetLeads ? String(formData.targetLeads) : '',
+    targetMeetings: formData.targetMeetings ? String(formData.targetMeetings) : '',
+    targetRevenue: formData.targetRevenue ? String(formData.targetRevenue) : '',
+    targetSubmissions: formData.targetSubmissions ? String(formData.targetSubmissions) : '',
+    targetInterviews: formData.targetInterviews ? String(formData.targetInterviews) : '',
+    targetPlacements: formData.targetPlacements ? String(formData.targetPlacements) : '',
+    expectedResponseRate: formData.expectedResponseRate ? String(formData.expectedResponseRate) : '',
+    expectedConversionRate: formData.expectedConversionRate ? String(formData.expectedConversionRate) : '',
+  }), [
+    formData.budgetTotal,
+    formData.budgetCurrency,
+    formData.targetContacts,
+    formData.targetResponses,
+    formData.targetLeads,
+    formData.targetMeetings,
+    formData.targetRevenue,
+    formData.targetSubmissions,
+    formData.targetInterviews,
+    formData.targetPlacements,
+    formData.expectedResponseRate,
+    formData.expectedConversionRate,
+  ])
+
+  const handleChange = useCallback((field: string, value: unknown) => {
+    // Convert numeric strings back to numbers for the store
+    if (['budgetTotal', 'targetContacts', 'targetResponses', 'targetLeads', 'targetMeetings',
+         'targetRevenue', 'targetSubmissions', 'targetInterviews', 'targetPlacements',
+         'expectedResponseRate', 'expectedConversionRate'].includes(field)) {
+      const numValue = value ? parseFloat(String(value)) : 0
+      setFormData({ [field]: numValue })
+    } else {
+      setFormData({ [field]: value })
+    }
+  }, [setFormData])
+
+  return (
+    <CampaignBudgetSection
+      mode="create"
+      data={sectionData}
+      onChange={handleChange}
+      showStaffingTargets={true}
+    />
+  )
+}
+
+function TeamStepWrapper({ formData, setFormData }: StepWrapperProps) {
+  const sectionData = useMemo<CampaignTeamSectionData>(() => ({
+    ownerId: formData.ownerId,
+    teamId: formData.teamId,
+    collaboratorIds: formData.collaboratorIds,
+    requiresApproval: formData.requiresApproval,
+    approverIds: formData.approverIds,
+    notifyOnResponse: formData.notifyOnResponse,
+    notifyOnConversion: formData.notifyOnConversion,
+    notifyOnCompletion: formData.notifyOnCompletion,
+  }), [
+    formData.ownerId,
+    formData.teamId,
+    formData.collaboratorIds,
+    formData.requiresApproval,
+    formData.approverIds,
+    formData.notifyOnResponse,
+    formData.notifyOnConversion,
+    formData.notifyOnCompletion,
+  ])
+
+  const handleChange = useCallback((field: string, value: unknown) => {
+    setFormData({ [field]: value })
+  }, [setFormData])
+
+  // TODO: Fetch actual team members and teams from API
+  const mockTeamMembers = [
+    { id: '1', name: 'John Smith', role: 'Account Manager' },
+    { id: '2', name: 'Sarah Johnson', role: 'Recruiter' },
+    { id: '3', name: 'Mike Wilson', role: 'Team Lead' },
+  ]
+
+  const mockTeams = [
+    { id: '1', name: 'Sales Team' },
+    { id: '2', name: 'Recruiting Team' },
+    { id: '3', name: 'Marketing Team' },
+  ]
+
+  return (
+    <CampaignTeamSection
+      mode="create"
+      data={sectionData}
+      onChange={handleChange}
+      teamMembers={mockTeamMembers}
+      teams={mockTeams}
+    />
+  )
+}
+
+function ComplianceStepWrapper({ formData, setFormData }: StepWrapperProps) {
+  const sectionData = useMemo<CampaignComplianceSectionData>(() => ({
+    gdpr: formData.gdpr,
+    canSpam: formData.canSpam,
+    casl: formData.casl,
+    ccpa: formData.ccpa,
+    includeUnsubscribe: formData.includeUnsubscribe,
+    includePhysicalAddress: formData.includePhysicalAddress,
+    respectDncList: formData.respectDncList,
+    respectPreviousOptOuts: formData.respectPreviousOptOuts,
+    collectConsent: formData.collectConsent,
+    dataRetentionDays: formData.dataRetentionDays,
+  }), [
+    formData.gdpr,
+    formData.canSpam,
+    formData.casl,
+    formData.ccpa,
+    formData.includeUnsubscribe,
+    formData.includePhysicalAddress,
+    formData.respectDncList,
+    formData.respectPreviousOptOuts,
+    formData.collectConsent,
+    formData.dataRetentionDays,
+  ])
+
+  const handleChange = useCallback((field: string, value: unknown) => {
+    setFormData({ [field]: value })
+  }, [setFormData])
+
+  return (
+    <CampaignComplianceSection
+      mode="create"
+      data={sectionData}
+      onChange={handleChange}
+    />
   )
 }

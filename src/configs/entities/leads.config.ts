@@ -20,6 +20,7 @@ import {
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
+import { LeadDraftsTabContent } from '@/components/pcf/list-view/LeadDraftsTabContent'
 import {
   LeadOverviewSectionPCF,
   LeadBANTSectionPCF,
@@ -182,9 +183,7 @@ export const leadsListConfig: ListViewConfig<Lead> = {
   primaryAction: {
     label: 'New Lead',
     icon: Plus,
-    onClick: () => {
-      window.dispatchEvent(new CustomEvent('openLeadDialog', { detail: { dialogId: 'create' } }))
-    },
+    href: '/employee/crm/leads/new',
   },
 
   statsCards: [
@@ -338,7 +337,7 @@ export const leadsListConfig: ListViewConfig<Lead> = {
       },
     },
     {
-      key: 'status',
+      key: 'lead_status',
       header: 'Status',
       label: 'Status',
       sortable: true,
@@ -399,7 +398,7 @@ export const leadsListConfig: ListViewConfig<Lead> = {
   ],
 
   renderMode: 'table',
-  statusField: 'status',
+  statusField: 'lead_status',
   statusConfig: LEAD_STATUS_CONFIG,
 
   pageSize: 20,
@@ -413,9 +412,7 @@ export const leadsListConfig: ListViewConfig<Lead> = {
         : 'Create your first lead to start building your pipeline',
     action: {
       label: 'Create Lead',
-      onClick: () => {
-        window.dispatchEvent(new CustomEvent('openLeadDialog', { detail: { dialogId: 'create' } }))
-      },
+      href: '/employee/crm/leads/new',
     },
   },
 
@@ -494,6 +491,105 @@ export const leadsListConfig: ListViewConfig<Lead> = {
   useStatsQuery: () => {
     return trpc.unifiedContacts.leads.stats.useQuery()
   },
+
+  // Tabs configuration - "Leads" and "Drafts" tabs
+  tabs: [
+    {
+      id: 'leads',
+      label: 'Leads',
+      showFilters: true,
+      useQuery: (filters) => {
+        const statusValue = filters.status as string | undefined
+        const sortByValue = filters.sortBy as string | undefined
+        const sortOrderValue = filters.sortOrder as string | undefined
+        const minScoreValue = filters.minScore as string | undefined
+        const ownerIdValue = filters.ownerId as string | undefined
+
+        const validStatuses = [
+          'new', 'contacted', 'warm', 'hot', 'cold', 'qualified', 'unqualified', 'converted',
+        ] as const
+        type LeadStatus = (typeof validStatuses)[number]
+
+        const validSortFields = ['name', 'lead_status', 'lead_score', 'lead_estimated_value', 'created_at'] as const
+        type SortField = (typeof validSortFields)[number]
+
+        const sortFieldMap: Record<string, SortField> = {
+          name: 'name',
+          company_name: 'name',
+          status: 'lead_status',
+          bant_total_score: 'lead_score',
+          created_at: 'created_at',
+          source: 'created_at',
+          campaign: 'created_at',
+          owner: 'created_at',
+          last_contacted_at: 'created_at',
+        }
+
+        const mappedSortBy: SortField = sortByValue && sortFieldMap[sortByValue]
+          ? sortFieldMap[sortByValue]
+          : 'created_at'
+
+        let ownerIdFilter: string | undefined
+        if (ownerIdValue && ownerIdValue !== 'all' && ownerIdValue !== 'me' && ownerIdValue !== 'unassigned') {
+          ownerIdFilter = ownerIdValue
+        }
+
+        const mappedStatus: LeadStatus | undefined = statusValue && statusValue !== 'all' && statusValue !== 'nurture'
+          ? (validStatuses.includes(statusValue as LeadStatus) ? statusValue as LeadStatus : undefined)
+          : undefined
+
+        return trpc.unifiedContacts.leads.list.useQuery({
+          search: filters.search as string | undefined,
+          status: mappedStatus,
+          ownerId: ownerIdFilter,
+          minScore: minScoreValue && minScoreValue !== 'all' ? parseInt(minScoreValue, 10) : undefined,
+          limit: (filters.limit as number) || 20,
+          offset: (filters.offset as number) || 0,
+          sortBy: mappedSortBy,
+          sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'desc'),
+        })
+      },
+      emptyState: {
+        icon: Target,
+        title: 'No leads found',
+        description: (filters) =>
+          filters.search
+            ? 'Try adjusting your search or filters'
+            : 'Create your first lead to start building your pipeline',
+        action: {
+          label: 'Create Lead',
+          href: '/employee/crm/leads/new',
+        },
+      },
+    },
+    {
+      id: 'drafts',
+      label: 'Drafts',
+      showFilters: false,
+      useQuery: () => {
+        const draftsQuery = trpc.unifiedContacts.leads.listMyDrafts.useQuery()
+        return {
+          data: draftsQuery.data ? {
+            items: draftsQuery.data as unknown as Lead[],
+            total: draftsQuery.data.length,
+          } : undefined,
+          isLoading: draftsQuery.isLoading,
+          error: draftsQuery.error,
+        }
+      },
+      customComponent: LeadDraftsTabContent,
+      emptyState: {
+        icon: FileText,
+        title: 'No drafts',
+        description: "You don't have any leads in progress. Start creating a new one!",
+        action: {
+          label: 'Start New Lead',
+          href: '/employee/crm/leads/new',
+        },
+      },
+    },
+  ],
+  defaultTab: 'leads',
 }
 
 // Leads Detail View Configuration
@@ -501,7 +597,7 @@ export const leadsDetailConfig: DetailViewConfig<Lead> = {
   entityType: 'lead',
   baseRoute: '/employee/crm/leads',
   titleField: 'company_name',
-  statusField: 'status',
+  statusField: 'lead_status',
   statusConfig: LEAD_STATUS_CONFIG,
 
   breadcrumbs: [

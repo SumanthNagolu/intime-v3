@@ -22,6 +22,7 @@ export type EntityType =
   | 'invoice'
   | 'pay_run'
   | 'timesheet'
+  | 'team'
 
 // Navigation style for entity types
 // - 'journey': Sequential workflow steps (jobs, submissions)
@@ -45,6 +46,7 @@ export const ENTITY_NAVIGATION_STYLES: Record<EntityType, NavigationStyle> = {
   invoice: 'sections',
   pay_run: 'journey',
   timesheet: 'sections',
+  team: 'sections',
 }
 
 // Entity journey step definition
@@ -146,6 +148,7 @@ export const ENTITY_BASE_PATHS: Record<EntityType, string> = {
   invoice: '/employee/finance/invoices',
   pay_run: '/employee/finance/payroll',
   timesheet: '/employee/recruiting/timesheets',
+  team: '/employee/settings/teams',
 }
 
 // Helper to get entity URL

@@ -1,11 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useParams } from 'next/navigation'
-import { EntityDetailView } from '@/components/pcf/detail-view/EntityDetailView'
-import { jobsDetailConfig, Job } from '@/configs/entities/jobs.config'
+import { useParams, useRouter } from 'next/navigation'
+import { JobWorkspace } from '@/components/workspaces/JobWorkspace'
+import { useJobWorkspace } from '@/components/workspaces/job/JobWorkspaceProvider'
 import { UpdateStatusDialog, CloseJobWizard } from '@/components/recruiting/jobs'
-import { useEntityData } from '@/components/layouts/EntityContextProvider'
 import { trpc } from '@/lib/trpc/client'
 
 // Custom event handler types
@@ -17,11 +16,11 @@ declare global {
 
 export default function JobDetailPage() {
   const params = useParams()
+  const router = useRouter()
   const jobId = params.id as string
 
-  // ONE DATABASE CALL pattern: Get entity data from context (fetched by layout)
-  const entityData = useEntityData<Job>()
-  const job = entityData?.data
+  // ONE DATABASE CALL pattern: Get entity data from workspace context (fetched by layout)
+  const { data: job, refreshData } = useJobWorkspace()
 
   // Dialog states
   const [showStatusDialog, setShowStatusDialog] = useState(false)
@@ -58,11 +57,7 @@ export default function JobDetailPage() {
 
   return (
     <>
-      <EntityDetailView<Job>
-        config={jobsDetailConfig}
-        entityId={jobId}
-        entity={job}  // Pass entity from context to skip client query
-      />
+      <JobWorkspace />
 
       {/* Update Status Dialog */}
       {job && (
@@ -72,10 +67,11 @@ export default function JobDetailPage() {
           jobId={jobId}
           currentStatus={job.status}
           jobTitle={job.title}
-          positionsFilled={(job as Job).positions_filled || 0}
-          positionsCount={(job as Job).positions_available || 1}
+          positionsFilled={job.positions_filled || 0}
+          positionsCount={job.positions_count || 1}
           onSuccess={() => {
             historyQuery.refetch()
+            refreshData()
           }}
         />
       )}
@@ -88,14 +84,15 @@ export default function JobDetailPage() {
           jobId={jobId}
           jobTitle={job.title}
           currentStatus={job.status}
-          positionsFilled={(job as Job).positions_filled || 0}
-          positionsCount={(job as Job).positions_available || 1}
+          positionsFilled={job.positions_filled || 0}
+          positionsCount={job.positions_count || 1}
           activeSubmissionsCount={submissions.filter(
             (s) => !['placed', 'rejected', 'withdrawn'].includes(s.status)
           ).length}
           onSuccess={() => {
             historyQuery.refetch()
             submissionsQuery.refetch()
+            refreshData()
           }}
         />
       )}
