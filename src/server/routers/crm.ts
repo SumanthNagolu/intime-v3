@@ -3957,8 +3957,7 @@ export const crmRouter = router({
             secondary_owner:user_profiles!secondary_owner_id(id, full_name),
             pod_manager:user_profiles!pod_manager_id(id, full_name),
             company:companies!deals_company_id_fkey(id, name, segment, website),
-            lead:leads!lead_id(id, company_name, first_name, last_name, email, phone),
-            created_company:companies!created_company_id(id, name)
+            lead:leads!lead_id(id, company_name, first_name, last_name, email, phone)
           `)
           .eq('id', input.id)
           .eq('org_id', orgId)
@@ -4041,8 +4040,7 @@ export const crmRouter = router({
             secondary_owner:user_profiles!secondary_owner_id(id, full_name),
             pod_manager:user_profiles!pod_manager_id(id, full_name),
             company:companies!deals_company_id_fkey(id, name, segment, website, industry, employee_count, phone, headquarters_city, headquarters_state),
-            lead:leads!lead_id(id, company_name, first_name, last_name, email, phone),
-            created_company:companies!created_company_id(id, name)
+            lead:leads!lead_id(id, company_name, first_name, last_name, email, phone)
           `)
           .eq('id', input.id)
           .eq('org_id', orgId)
