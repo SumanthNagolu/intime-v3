@@ -22,6 +22,28 @@ interface ChannelSequenceData {
 }
 
 // ============================================
+// HELPER FUNCTIONS
+// ============================================
+
+/**
+ * Helper to get user_profiles.id from auth_id
+ * (user.id from ctx is auth.users.id, NOT user_profiles.id)
+ * Many FK constraints reference user_profiles.id, not auth.users.id
+ */
+async function getUserProfileId(authId: string | undefined): Promise<string | null> {
+  if (!authId) return null
+
+  const adminClient = getAdminClient()
+  const { data: profile } = await adminClient
+    .from('user_profiles')
+    .select('id')
+    .eq('auth_id', authId)
+    .single()
+
+  return profile?.id ?? null
+}
+
+// ============================================
 // CRM ROUTER - Accounts, Leads, Deals, Contacts
 // ============================================
 
@@ -5189,6 +5211,429 @@ export const crmRouter = router({
           avgDealSize: Math.round(avgDealSize),
         }
       }),
+
+    // ============================================
+    // WIZARD/DRAFT ENDPOINTS (B03 - Create Deal Wizard)
+    // ============================================
+
+    /**
+     * Create a draft deal for the wizard
+     * Creates a minimal deal record that can be incrementally updated
+     */
+    createDraft: orgProtectedProcedure
+      .input(z.object({
+        title: z.string().min(1).max(200).default('New Deal'),
+        accountId: z.string().uuid().optional(),
+        leadId: z.string().uuid().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Ensure we have a valid user ID for owner_id (required field)
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        // Look up user_profiles.id from auth_id (FK references user_profiles, not auth.users)
+        const userProfileId = await getUserProfileId(user.id)
+        if (!userProfileId) {
+          throw new TRPCError({
+            code: 'UNAUTHORIZED',
+            message: 'User profile not found. Please contact support.',
+          })
+        }
+
+        const { data, error } = await adminClient
+          .from('deals')
+          .insert({
+            org_id: orgId,
+            name: input.title,
+            title: input.title,
+            stage: 'discovery',
+            probability: 20,
+            value: 0,
+            value_basis: 'one_time',
+            account_id: input.accountId || null,
+            lead_id: input.leadId || null,
+            owner_id: userProfileId,
+            created_by: userProfileId,
+          })
+          .select('id, title, name, stage')
+          .single()
+
+        if (error) {
+          console.error('[createDraft] Database error:', error)
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        if (!data) {
+          console.error('[createDraft] No data returned from insert')
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Failed to create deal' })
+        }
+
+        // Initialize stage history
+        const { error: historyError } = await adminClient
+          .from('deal_stages_history')
+          .insert({
+            deal_id: data.id,
+            stage: 'discovery',
+            entered_at: new Date().toISOString(),
+            changed_by: userProfileId,
+          })
+
+        if (historyError) {
+          console.error('[createDraft] Stage history error:', historyError)
+          // Don't fail the whole operation for history error
+        }
+
+        return data
+      }),
+
+    /**
+     * Update a draft deal (incremental wizard saves)
+     * Accepts flexible partial data for any section
+     */
+    updateDraft: orgProtectedProcedure
+      .input(z.object({
+        id: z.string().uuid(),
+        data: z.record(z.unknown()).optional(),
+        stakeholders: z.array(z.object({
+          id: z.string().optional(),
+          contact_id: z.string().uuid().nullable().optional(),
+          name: z.string(),
+          title: z.string().nullable().optional(),
+          email: z.string().nullable().optional(),
+          phone: z.string().nullable().optional(),
+          role: z.string(),
+          influence_level: z.string().optional(),
+          sentiment: z.string().optional(),
+          engagement_notes: z.string().nullable().optional(),
+          is_primary: z.boolean().optional(),
+          is_active: z.boolean().optional(),
+        })).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Verify deal exists and belongs to org
+        const { data: existingDeal } = await adminClient
+          .from('deals')
+          .select('id')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .single()
+
+        if (!existingDeal) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Deal not found' })
+        }
+
+        // Update deal data if provided
+        if (input.data && Object.keys(input.data).length > 0) {
+          // Note: deals table doesn't have updated_by column, only updated_at (auto-handled)
+          const updateData: Record<string, unknown> = {
+            ...input.data,
+            last_activity_at: new Date().toISOString(),
+          }
+
+          // Map common camelCase fields to snake_case
+          if ('expectedCloseDate' in updateData) {
+            updateData.expected_close_date = updateData.expectedCloseDate
+            delete updateData.expectedCloseDate
+          }
+          if ('valueBasis' in updateData) {
+            updateData.value_basis = updateData.valueBasis
+            delete updateData.valueBasis
+          }
+          if ('healthStatus' in updateData) {
+            updateData.health_status = updateData.healthStatus
+            delete updateData.healthStatus
+          }
+          if ('estimatedPlacements' in updateData) {
+            updateData.estimated_placements = updateData.estimatedPlacements
+            delete updateData.estimatedPlacements
+          }
+          if ('avgBillRate' in updateData) {
+            updateData.avg_bill_rate = updateData.avgBillRate
+            delete updateData.avgBillRate
+          }
+          if ('contractLengthMonths' in updateData) {
+            updateData.contract_length_months = updateData.contractLengthMonths
+            delete updateData.contractLengthMonths
+          }
+          if ('hiringNeeds' in updateData) {
+            updateData.hiring_needs = updateData.hiringNeeds
+            delete updateData.hiringNeeds
+          }
+          if ('servicesRequired' in updateData) {
+            updateData.services_required = updateData.servicesRequired
+            delete updateData.servicesRequired
+          }
+          if ('nextStep' in updateData) {
+            updateData.next_step = updateData.nextStep
+            delete updateData.nextStep
+          }
+          if ('nextStepDate' in updateData) {
+            updateData.next_step_date = updateData.nextStepDate
+            delete updateData.nextStepDate
+          }
+          if ('competitiveAdvantage' in updateData) {
+            updateData.competitive_advantage = updateData.competitiveAdvantage
+            delete updateData.competitiveAdvantage
+          }
+          if ('contractType' in updateData) {
+            updateData.contract_type = updateData.contractType
+            delete updateData.contractType
+          }
+          if ('contractDurationMonths' in updateData) {
+            updateData.contract_duration_months = updateData.contractDurationMonths
+            delete updateData.contractDurationMonths
+          }
+          if ('paymentTerms' in updateData) {
+            updateData.payment_terms = updateData.paymentTerms
+            delete updateData.paymentTerms
+          }
+          if ('billingFrequency' in updateData) {
+            updateData.billing_frequency = updateData.billingFrequency
+            delete updateData.billingFrequency
+          }
+          if ('billingContact' in updateData) {
+            updateData.billing_contact = updateData.billingContact
+            delete updateData.billingContact
+          }
+          if ('rolesBreakdown' in updateData) {
+            updateData.roles_breakdown = updateData.rolesBreakdown
+            delete updateData.rolesBreakdown
+          }
+
+          const { error } = await adminClient
+            .from('deals')
+            .update(updateData)
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+
+          if (error) {
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          }
+        }
+
+        // Update stakeholders if provided
+        if (input.stakeholders) {
+          // Delete existing stakeholders
+          await adminClient
+            .from('deal_stakeholders')
+            .delete()
+            .eq('deal_id', input.id)
+
+          // Insert new stakeholders
+          if (input.stakeholders.length > 0) {
+            const stakeholderInserts = input.stakeholders.map((s) => ({
+              deal_id: input.id,
+              contact_id: s.contact_id || null,
+              name: s.name,
+              title: s.title || null,
+              email: s.email || null,
+              phone: s.phone || null,
+              role: s.role,
+              influence_level: s.influence_level || 'medium',
+              sentiment: s.sentiment || 'neutral',
+              engagement_notes: s.engagement_notes || null,
+              is_primary: s.is_primary || false,
+              is_active: s.is_active ?? true,
+              created_by: user?.id,
+            }))
+
+            await adminClient
+              .from('deal_stakeholders')
+              .insert(stakeholderInserts)
+          }
+        }
+
+        return { success: true }
+      }),
+
+    /**
+     * Submit (finalize) a draft deal
+     * Marks the deal as no longer a draft and triggers workflows
+     */
+    submit: orgProtectedProcedure
+      .input(z.object({
+        id: z.string().uuid(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get the deal and verify it exists
+        const { data: deal, error: fetchError } = await adminClient
+          .from('deals')
+          .select('*')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .single()
+
+        if (fetchError || !deal) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Deal not found' })
+        }
+
+        // Validate required fields
+        if (!deal.title || !deal.value || deal.value <= 0) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'Deal must have a title and value greater than 0',
+          })
+        }
+
+        // Look up user_profiles.id from auth_id (FK references user_profiles, not auth.users)
+        const userProfileId = await getUserProfileId(user?.id)
+
+        // Mark as no longer a draft
+        // Mark the deal as finalized (update activity timestamp)
+        // Note: deals table doesn't have updated_by column
+        const { data, error } = await adminClient
+          .from('deals')
+          .update({
+            last_activity_at: new Date().toISOString(),
+          })
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .select('*, owner:user_profiles!owner_id(id, full_name), company:companies!deals_company_id_fkey(id, name)')
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        // Log activity (only if we have a user profile ID for FK constraint)
+        if (userProfileId) {
+          await adminClient
+            .from('activities')
+            .insert({
+              org_id: orgId,
+              entity_type: 'deal',
+              entity_id: input.id,
+              activity_type: 'note',
+              subject: 'Deal Created',
+              description: `New deal created: ${deal.title} ($${(deal.value || 0).toLocaleString()})`,
+              created_by: userProfileId,
+            })
+        }
+
+        // Trigger workflows (use userProfileId for FK constraints)
+        if (userProfileId) {
+          const workflowEngine = createWorkflowEngine(orgId, userProfileId)
+          await workflowEngine.checkTriggers('deal', input.id, {
+            type: 'created',
+            newValue: data,
+          }).catch(err => console.error('[Workflow] Deal create trigger failed:', err))
+        }
+
+        return data
+      }),
+
+    /**
+     * Get full deal for wizard editing
+     * Returns deal with all section data, including stakeholders
+     */
+    getFullDeal: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .query(async ({ ctx, input }) => {
+        const { orgId } = ctx
+        const adminClient = getAdminClient()
+
+        // Get deal with relations
+        const { data: deal, error } = await adminClient
+          .from('deals')
+          .select(`
+            *,
+            owner:user_profiles!owner_id(id, full_name, avatar_url, email),
+            company:companies!deals_company_id_fkey(id, name, segment),
+            lead:leads!lead_id(id, company_name, first_name, last_name)
+          `)
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .single()
+
+        if (error || !deal) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Deal not found' })
+        }
+
+        // Get stakeholders
+        const { data: stakeholders } = await adminClient
+          .from('deal_stakeholders')
+          .select('*')
+          .eq('deal_id', input.id)
+          .eq('is_active', true)
+          .order('is_primary', { ascending: false })
+
+        return {
+          deal,
+          stakeholders: stakeholders || [],
+        }
+      }),
+
+    /**
+     * Update deal details section (workspace edit)
+     */
+    updateDetails: orgProtectedProcedure
+      .input(z.object({
+        id: z.string().uuid(),
+        data: z.record(z.unknown()),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Map camelCase to snake_case for database
+        const updateData: Record<string, unknown> = {
+          updated_by: user?.id,
+          last_activity_at: new Date().toISOString(),
+        }
+
+        const fieldMappings: Record<string, string> = {
+          title: 'title',
+          name: 'name',
+          description: 'description',
+          value: 'value',
+          probability: 'probability',
+          valueBasis: 'value_basis',
+          currency: 'currency',
+          stage: 'stage',
+          expectedCloseDate: 'expected_close_date',
+          estimatedPlacements: 'estimated_placements',
+          avgBillRate: 'avg_bill_rate',
+          contractLengthMonths: 'contract_length_months',
+          hiringNeeds: 'hiring_needs',
+          servicesRequired: 'services_required',
+          healthStatus: 'health_status',
+        }
+
+        for (const [camelKey, snakeKey] of Object.entries(fieldMappings)) {
+          if (camelKey in input.data) {
+            updateData[snakeKey] = input.data[camelKey]
+          }
+        }
+
+        // Also update name when title changes
+        if ('title' in input.data) {
+          updateData.name = input.data.title
+        }
+
+        const { data, error } = await adminClient
+          .from('deals')
+          .update(updateData)
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .select()
+          .single()
+
+        if (error) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return data
+      }),
   }),
 
   // ============================================
@@ -7533,30 +7978,66 @@ export const crmRouter = router({
         }
       }),
 
-    // Create new campaign (A01)
+    // Create new campaign (A01) - Enterprise-grade staffing campaign
     create: orgProtectedProcedure
       .input(z.object({
         // Step 1: Campaign Setup
         name: z.string().min(3).max(100),
-        campaignType: z.enum(['lead_generation', 're_engagement', 'event_promotion', 'brand_awareness', 'candidate_sourcing']),
-        goal: z.enum(['generate_qualified_leads', 'book_discovery_meetings', 'drive_event_registrations', 'build_brand_awareness', 'expand_candidate_pool']),
+        campaignType: z.enum([
+          // Client-focused
+          'client_outreach', 'account_expansion', 'client_reengagement',
+          // Candidate-focused
+          'candidate_sourcing', 'bench_marketing', 'passive_sourcing', 'talent_nurturing', 'job_marketing',
+          // Marketing
+          'referral_campaign', 'event_promotion', 'brand_awareness',
+          // Internal
+          'compliance_outreach', 'training_campaign',
+          // Legacy compatibility
+          'lead_generation', 're_engagement',
+        ]),
+        goal: z.enum([
+          // Revenue goals
+          'generate_qualified_leads', 'book_discovery_meetings', 'acquire_new_clients', 'expand_existing_accounts',
+          // Recruiting goals
+          'fill_job_orders', 'expand_candidate_pool', 'market_bench_consultants', 'increase_submissions', 'generate_referrals',
+          // Engagement goals
+          'reactivate_dormant_contacts', 'drive_event_registrations', 'build_brand_awareness', 'improve_response_rates',
+          // Compliance goals
+          'ensure_compliance_training', 'collect_updated_documents',
+        ]),
         description: z.string().optional(),
         // Step 2: Target Audience
         targetCriteria: z.object({
-          audienceSource: z.enum(['new_prospects', 'existing_leads', 'dormant_accounts', 'import_list']),
+          audienceSource: z.enum([
+            'new_prospects', 'existing_leads', 'dormant_accounts', 'bench_consultants',
+            'candidate_pool', 'job_applicants', 'saved_search', 'import_list',
+          ]),
           industries: z.array(z.string()).optional(),
           companySizes: z.array(z.string()).optional(),
           regions: z.array(z.string()).optional(),
           fundingStages: z.array(z.string()).optional(),
           targetTitles: z.array(z.string()).optional(),
+          // Client targeting
+          clientTiers: z.array(z.string()).optional(),
+          serviceTypes: z.array(z.string()).optional(),
+          // Candidate targeting
+          candidateCriteria: z.object({
+            skills: z.array(z.string()).optional(),
+            experienceLevels: z.array(z.string()).optional(),
+            workAuthorizations: z.array(z.string()).optional(),
+            certifications: z.array(z.string()).optional(),
+            benchOnly: z.boolean().optional(),
+            availableWithinDays: z.number().nullable().optional(),
+          }).optional(),
           exclusions: z.object({
             excludeExistingClients: z.boolean().default(true),
             excludeRecentlyContacted: z.number().default(90),
             excludeCompetitors: z.boolean().default(true),
+            excludeDncList: z.boolean().default(true),
           }).optional(),
         }),
         // Step 3: Channels & Sequences
-        channels: z.array(z.enum(['linkedin', 'email', 'phone', 'event', 'direct_mail'])),
+        channels: z.array(z.enum(['linkedin', 'email', 'phone', 'sms', 'event', 'direct_mail', 'job_board', 'referral'])),
         sequenceTemplateIds: z.array(z.string().uuid()).optional(),
         sequences: z.record(z.object({
           steps: z.array(z.object({
@@ -7571,21 +8052,72 @@ export const crmRouter = router({
           respectTimezone: z.boolean().optional(),
           dailyLimit: z.number().optional(),
         })).optional(),
-        // Step 4: Schedule & Budget
+        // Step 4: Schedule
         startDate: z.string(),
         endDate: z.string(),
         launchImmediately: z.boolean().default(true),
-        budgetTotal: z.number().min(0).default(0),
+        sendWindow: z.object({
+          start: z.string().optional(),
+          end: z.string().optional(),
+          days: z.array(z.string()).optional(),
+          timezone: z.string().optional(),
+        }).optional(),
+        isRecurring: z.boolean().default(false),
+        recurringInterval: z.enum(['daily', 'weekly', 'monthly']).optional(),
+        // Step 5: Budget & Targets
+        budgetTotal: z.union([z.number(), z.string()]).default(0),
         budgetCurrency: z.string().default('USD'),
+        targets: z.object({
+          contacts: z.union([z.number(), z.string()]).optional(),
+          responses: z.union([z.number(), z.string()]).optional(),
+          leads: z.union([z.number(), z.string()]).optional(),
+          meetings: z.union([z.number(), z.string()]).optional(),
+          revenue: z.union([z.number(), z.string()]).optional(),
+          // Staffing-specific
+          submissions: z.union([z.number(), z.string()]).optional(),
+          interviews: z.union([z.number(), z.string()]).optional(),
+          placements: z.union([z.number(), z.string()]).optional(),
+          expectedResponseRate: z.union([z.number(), z.string()]).optional(),
+          expectedConversionRate: z.union([z.number(), z.string()]).optional(),
+        }).optional(),
+        // Legacy fields (for backwards compatibility)
         targetLeads: z.number().min(0).default(0),
         targetMeetings: z.number().min(0).default(0),
         targetRevenue: z.number().min(0).default(0),
-        // Step 5: Compliance
+        // Step 6: Team Assignment
+        teamAssignment: z.object({
+          ownerId: z.string().uuid().optional(),
+          teamId: z.string().uuid().optional(),
+          collaboratorIds: z.array(z.string().uuid()).optional(),
+        }).optional(),
+        approval: z.object({
+          required: z.boolean().default(false),
+          approverIds: z.array(z.string().uuid()).optional(),
+        }).optional(),
+        notifications: z.object({
+          onResponse: z.boolean().default(true),
+          onConversion: z.boolean().default(true),
+          onCompletion: z.boolean().default(true),
+        }).optional(),
+        // Step 7: Compliance
         complianceSettings: z.object({
           gdpr: z.boolean().default(true),
           canSpam: z.boolean().default(true),
           casl: z.boolean().default(true),
+          ccpa: z.boolean().default(true),
           includeUnsubscribe: z.boolean().default(true),
+          email: z.object({
+            includeUnsubscribe: z.boolean().default(true),
+            includePhysicalAddress: z.boolean().default(true),
+          }).optional(),
+          dnc: z.object({
+            respectList: z.boolean().default(true),
+            respectOptOuts: z.boolean().default(true),
+          }).optional(),
+          dataHandling: z.object({
+            collectConsent: z.boolean().default(false),
+            retentionDays: z.number().default(365),
+          }).optional(),
         }).optional(),
       }))
       .mutation(async ({ ctx, input }) => {
@@ -7604,6 +8136,32 @@ export const crmRouter = router({
         // Determine initial status
         const status = input.launchImmediately ? 'active' : 'scheduled'
 
+        // Parse numeric values (they may come as strings from the form)
+        const parseNum = (val: string | number | undefined, def = 0) => {
+          if (val === undefined || val === '' || val === null) return def
+          const num = typeof val === 'string' ? parseFloat(val) : val
+          return isNaN(num) ? def : num
+        }
+
+        // Build extended target_criteria with all new fields
+        const extendedTargetCriteria = {
+          ...input.targetCriteria,
+          sendWindow: input.sendWindow,
+          isRecurring: input.isRecurring,
+          recurringInterval: input.recurringInterval,
+          teamAssignment: input.teamAssignment,
+          approval: input.approval,
+          notifications: input.notifications,
+        }
+
+        // Use new targets structure or legacy fields
+        const targetLeads = input.targets?.leads !== undefined ? parseNum(input.targets.leads) : input.targetLeads
+        const targetMeetings = input.targets?.meetings !== undefined ? parseNum(input.targets.meetings) : input.targetMeetings
+        const targetRevenue = input.targets?.revenue !== undefined ? parseNum(input.targets.revenue) : input.targetRevenue
+
+        // Determine owner_id from teamAssignment or current user
+        const ownerId = input.teamAssignment?.ownerId ?? profileId
+
         // Create campaign
         const { data, error } = await adminClient
           .from('campaigns')
@@ -7613,20 +8171,20 @@ export const crmRouter = router({
             campaign_type: input.campaignType,
             goal: input.goal,
             description: input.description,
-            target_criteria: input.targetCriteria,
+            target_criteria: extendedTargetCriteria,
             channels: input.channels,
             sequences: input.sequences ?? {},
             sequence_template_ids: input.sequenceTemplateIds ?? [],
             start_date: input.startDate,
             end_date: input.endDate,
             status,
-            budget_total: input.budgetTotal,
+            budget_total: parseNum(input.budgetTotal),
             budget_currency: input.budgetCurrency,
-            target_leads: input.targetLeads,
-            target_meetings: input.targetMeetings,
-            target_revenue: input.targetRevenue,
-            compliance_settings: input.complianceSettings ?? { gdpr: true, canSpam: true, casl: true, includeUnsubscribe: true },
-            owner_id: profileId,
+            target_leads: targetLeads,
+            target_meetings: targetMeetings,
+            target_revenue: targetRevenue,
+            compliance_settings: input.complianceSettings ?? { gdpr: true, canSpam: true, casl: true, ccpa: true, includeUnsubscribe: true },
+            owner_id: ownerId,
             created_by: profileId,
           })
           .select('*, owner:user_profiles!owner_id(id, full_name, avatar_url)')
@@ -7665,11 +8223,21 @@ export const crmRouter = router({
         sequences: z.record(z.unknown()).optional(),
         startDate: z.string().optional(),
         endDate: z.string().optional(),
-        budgetTotal: z.number().min(0).optional(),
+        budgetTotal: z.union([z.number(), z.string()]).optional(),
+        budgetCurrency: z.string().optional(),
         targetLeads: z.number().min(0).optional(),
         targetMeetings: z.number().min(0).optional(),
         targetRevenue: z.number().min(0).optional(),
-        complianceSettings: z.record(z.boolean()).optional(),
+        targets: z.record(z.unknown()).optional(),
+        teamAssignment: z.record(z.unknown()).optional(),
+        approval: z.record(z.unknown()).optional(),
+        notifications: z.record(z.unknown()).optional(),
+        sendWindow: z.record(z.unknown()).optional(),
+        isRecurring: z.boolean().optional(),
+        recurringInterval: z.string().optional(),
+        complianceSettings: z.record(z.unknown()).optional(),
+        ownerId: z.string().uuid().optional(),
+        teamId: z.string().uuid().optional(),
       }))
       .mutation(async ({ ctx, input }) => {
         const { orgId, user } = ctx
