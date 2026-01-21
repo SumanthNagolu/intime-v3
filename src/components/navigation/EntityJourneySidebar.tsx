@@ -3,14 +3,13 @@
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { Check, ChevronRight, ChevronDown, Wrench, ArrowLeft, Zap } from 'lucide-react'
+import { Check, ChevronRight, ChevronDown, ArrowLeft } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { entityJourneys, getVisibleQuickActions } from '@/lib/navigation/entity-journeys'
 import { EntityType, ENTITY_BASE_PATHS, ENTITY_NAVIGATION_STYLES } from '@/lib/navigation/entity-navigation.types'
-import { commonToolSections, getSectionsByGroup, jobSectionGroups, jobToolSections } from '@/lib/navigation/entity-sections'
+import { commonToolSections, getSectionsByGroup, jobSectionGroups, jobToolSections, getAccountSectionsByGroup } from '@/lib/navigation/entity-sections'
 import { CollapsibleSectionGroup } from './CollapsibleSectionGroup'
 import { SidebarActionsPopover, type ActionItem } from './SidebarActionsPopover'
-import { Badge } from '@/components/ui/badge'
 import {
   Collapsible,
   CollapsibleContent,
@@ -60,6 +59,15 @@ const backLinkText: Record<EntityType, string> = {
   timesheet: 'All Timesheets',
 }
 
+/**
+ * EntityJourneySidebar - Hublot-inspired entity detail sidebar
+ *
+ * Design principles:
+ * - Clean visual hierarchy with generous whitespace
+ * - Gold accents for active states
+ * - No numbered sections (sections are navigation, not wizard steps)
+ * - Clear separation between navigation zones
+ */
 export function EntityJourneySidebar({
   entityType,
   entityId,
@@ -77,8 +85,9 @@ export function EntityJourneySidebar({
   // Default section varies by entity type (account uses 'summary', others use 'overview')
   const defaultSection = entityType === 'account' ? 'summary' : 'overview'
   const currentSection = searchParams.get('section') || defaultSection
+  const [isRelatedOpen, setIsRelatedOpen] = useState(true)
   const [isToolsOpen, setIsToolsOpen] = useState(true)
-  
+
   // Get collapsed state from context
   const sidebarContext = useSidebarUIContextSafe()
   const isCollapsed = sidebarContext?.isCollapsed ?? false
@@ -95,6 +104,14 @@ export function EntityJourneySidebar({
     }
     return { mainSections: [], toolSections: commonToolSections }
   }, [entityType, navigationStyle])
+
+  // Get account-specific sections (overview, main, related, tools)
+  const accountSections = useMemo(() => {
+    if (entityType === 'account') {
+      return getAccountSectionsByGroup()
+    }
+    return null
+  }, [entityType])
 
   // Determine current and completed steps based on entity status (for journey navigation)
   const { currentStepIndex, steps } = useMemo(() => {
@@ -124,7 +141,6 @@ export function EntityJourneySidebar({
     return { currentStepIndex: currentIdx, steps: stepsWithState }
   }, [journeyConfig, entityStatus, navigationStyle])
 
-
   // Build step href - use defaultTab if available, otherwise use step query param
   const buildStepHref = (stepId: string, defaultTab?: string) => {
     const basePath = ENTITY_BASE_PATHS[entityType]
@@ -148,15 +164,19 @@ export function EntityJourneySidebar({
     }
     // Fall back to tool counts for tool sections
     switch (sectionId) {
-      case 'activities': return toolCounts.activities
-      case 'notes': return toolCounts.notes
-      case 'documents': return toolCounts.documents
-      default: return undefined
+      case 'activities':
+        return toolCounts.activities
+      case 'notes':
+        return toolCounts.notes
+      case 'documents':
+        return toolCounts.documents
+      default:
+        return undefined
     }
   }
 
   // Handle quick action click
-  const handleQuickAction = (action: typeof visibleQuickActions[0]) => {
+  const handleQuickAction = (action: (typeof visibleQuickActions)[0]) => {
     switch (action.actionType) {
       case 'navigate':
         if (action.href) {
@@ -191,18 +211,17 @@ export function EntityJourneySidebar({
     }
   }
 
-
   return (
     <TooltipProvider delayDuration={100}>
-      <div className={cn('flex flex-col flex-1 overflow-hidden', className)}>
-        {/* Back Link */}
-        <div className="px-4 pt-4 pb-2">
+      <div className={cn('flex flex-col flex-1 overflow-hidden bg-white', className)}>
+        {/* ===== BACK + ACTIONS ROW ===== */}
+        <div className="px-3 py-2.5 border-b border-charcoal-100 flex items-center justify-between gap-2">
           {isCollapsed ? (
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
                   href={ENTITY_BASE_PATHS[entityType]}
-                  className="inline-flex items-center justify-center w-8 h-8 text-sm text-charcoal-500 hover:text-charcoal-700 hover:bg-charcoal-50 rounded-md transition-colors"
+                  className="inline-flex items-center justify-center w-9 h-9 text-charcoal-500 hover:text-charcoal-700 hover:bg-charcoal-50 rounded-lg transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4" />
                 </Link>
@@ -214,635 +233,709 @@ export function EntityJourneySidebar({
           ) : (
             <Link
               href={ENTITY_BASE_PATHS[entityType]}
-              className="inline-flex items-center gap-1.5 text-sm text-charcoal-500 hover:text-charcoal-700 transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm text-charcoal-500 hover:text-charcoal-700 transition-colors group"
             >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              {backLinkText[entityType]}
+              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+              <span>{backLinkText[entityType]}</span>
             </Link>
           )}
-        </div>
 
-        {/* Entity Header */}
-        <div className="px-4 pb-4 border-b border-charcoal-100">
-          {isCollapsed ? (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-10 h-10 rounded-full bg-gold-100 flex items-center justify-center text-gold-700 font-semibold text-sm">
-                    {entityName.substring(0, 2).toUpperCase()}
-                  </div>
-                  <StatusBadgeDot status={entityStatus} />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent side="right" className="bg-charcoal-900 text-white">
-                <div>
-                  <p className="font-semibold">{entityName}</p>
-                  {entitySubtitle && <p className="text-xs text-charcoal-300">{entitySubtitle}</p>}
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          ) : (
-            <>
-              <h2 className="font-heading font-semibold text-charcoal-900 truncate text-base">
-                {entityName}
-              </h2>
-              {entitySubtitle && (
-                <p className="text-sm text-charcoal-500 truncate mt-0.5">
-                  {entitySubtitle}
-                </p>
-              )}
-              <div className="mt-2">
-                <StatusBadge status={entityStatus} />
-              </div>
-            </>
+          {/* Quick Actions Dropdown */}
+          {visibleQuickActions.length > 0 && !isCollapsed && (
+            <SidebarActionsPopover
+              actions={visibleQuickActions.map((action) => ({
+                id: action.id,
+                label: action.label,
+                icon: action.icon,
+                variant: action.variant as ActionItem['variant'],
+                separator: action.separator,
+              }))}
+              onAction={(actionId) => {
+                const action = visibleQuickActions.find((a) => a.id === actionId)
+                if (action) handleQuickAction(action)
+              }}
+            />
           )}
         </div>
 
-        {/* Guidewire-style Quick Actions Popover */}
-        {visibleQuickActions.length > 0 && (
-          <div className="border-b border-charcoal-100 py-3 px-3">
-            {isCollapsed ? (
-              // Collapsed mode: Show icon-only buttons with tooltips
-              <div className="flex flex-col items-center space-y-1.5">
-                {visibleQuickActions.slice(0, 3).map((action) => {
-                  const Icon = action.icon
-                  return (
-                    <Tooltip key={action.id}>
-                      <TooltipTrigger asChild>
-                        <button
-                          className={cn(
-                            'w-9 h-9 rounded-lg flex items-center justify-center transition-colors',
-                            action.variant === 'destructive'
-                              ? 'text-red-600 hover:bg-red-50'
-                              : 'text-charcoal-600 hover:bg-gold-50 hover:text-gold-700'
-                          )}
-                          onClick={() => handleQuickAction(action)}
-                        >
-                          <Icon className="w-4 h-4" />
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent side="right" className="bg-charcoal-900 text-white">
-                        <p>{action.label}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  )
-                })}
-              </div>
-            ) : (
-              // Expanded mode: Show Guidewire-style popover
-              <SidebarActionsPopover
-                actions={visibleQuickActions.map((action) => ({
-                  id: action.id,
-                  label: action.label,
-                  icon: action.icon,
-                  variant: action.variant as ActionItem['variant'],
-                }))}
-                onAction={(actionId) => {
-                  const action = visibleQuickActions.find(a => a.id === actionId)
-                  if (action) handleQuickAction(action)
-                }}
-                isCollapsed={isCollapsed}
-              />
-            )}
-          </div>
-        )}
-
-        <nav className="flex-1 overflow-y-auto">
-        {/* SECTIONS MODE: Show main sections + tool sections */}
-        {navigationStyle === 'sections' && entityType === 'job' && (
-          <>
-            {/* Job-specific: Collapsible Section Groups */}
-            {jobSectionGroups.map((group) => {
-              const groupSections = mainSections.filter(s => group.sectionIds.includes(s.id))
-              const groupTotal = groupSections.reduce((sum, s) => {
-                const count = getSectionCount(s.id)
-                return sum + (count || 0)
-              }, 0)
-
-              return (
-                <CollapsibleSectionGroup
-                  key={group.id}
-                  id={group.id}
-                  label={group.label}
-                  count={group.sectionIds.length > 1 ? groupTotal : undefined}
-                  defaultOpen={group.defaultOpen}
-                >
-                  <ul className="space-y-0.5 px-2">
-                    {groupSections.map((section) => {
-                      const Icon = section.icon
-                      const isActive = currentSection === section.id
-                      const count = section.showCount ? getSectionCount(section.id) : undefined
-
-                      return (
-                        <li key={section.id}>
-                          <Link
-                            href={buildToolHref(section.id)}
-                            className={cn(
-                              'flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-150 group',
-                              isActive
-                                ? 'bg-gold-50 text-gold-700'
-                                : 'text-charcoal-600 hover:bg-charcoal-50 hover:text-charcoal-800'
-                            )}
-                          >
-                            <Icon
-                              className={cn(
-                                'w-4 h-4 flex-shrink-0 transition-colors',
-                                isActive ? 'text-gold-600' : 'text-charcoal-400 group-hover:text-charcoal-500'
-                              )}
-                            />
-                            <span className={cn('flex-1 text-sm', isActive && 'font-medium')}>
-                              {section.label}
-                            </span>
-                            {count !== undefined && (
-                              <Badge
-                                variant="secondary"
-                                className={cn(
-                                  'min-w-[22px] h-5 text-xs tabular-nums justify-center',
-                                  isActive
-                                    ? 'bg-gold-100 text-gold-700'
-                                    : 'bg-charcoal-100 text-charcoal-600'
-                                )}
-                              >
-                                {count}
-                              </Badge>
-                            )}
-                            {isActive && (
-                              <ChevronRight className="w-4 h-4 text-gold-400" />
-                            )}
-                          </Link>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </CollapsibleSectionGroup>
-              )
-            })}
-
-            {/* Tool Sections (Collapsible) for Jobs */}
-            <Collapsible
-              open={isToolsOpen}
-              onOpenChange={setIsToolsOpen}
-              className="border-t border-charcoal-100 pt-2 px-3 pb-3"
-            >
-              <CollapsibleTrigger className="flex items-center gap-2 w-full px-2 py-1.5 text-xs font-medium text-charcoal-400 uppercase tracking-wider hover:text-charcoal-600 transition-colors">
-                {isToolsOpen ? (
-                  <ChevronDown className="w-3.5 h-3.5" />
-                ) : (
-                  <ChevronRight className="w-3.5 h-3.5" />
-                )}
-                <Wrench className="w-3.5 h-3.5" />
-                <span>Tools</span>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="mt-1">
-                <ul className="space-y-0.5">
-                  {jobToolSections.map((section) => {
-                    const Icon = section.icon
-                    const isActive = currentSection === section.id
-                    const count = section.showCount ? getSectionCount(section.id) : undefined
-
-                    return (
-                      <li key={section.id}>
-                        <Link
-                          href={buildToolHref(section.id)}
-                          className={cn(
-                            'flex items-center gap-3 px-3 py-1.5 rounded-lg transition-all duration-150 group',
-                            isActive
-                              ? 'bg-gold-50 text-gold-700'
-                              : 'text-charcoal-600 hover:bg-charcoal-50 hover:text-charcoal-800'
-                          )}
-                        >
-                          <Icon
-                            className={cn(
-                              'w-4 h-4 flex-shrink-0 transition-colors',
-                              isActive ? 'text-gold-600' : 'text-charcoal-400 group-hover:text-charcoal-500'
-                            )}
-                          />
-                          <span className={cn('flex-1 text-sm', isActive && 'font-medium')}>
-                            {section.label}
-                          </span>
-                          {count !== undefined && (
-                            <Badge
-                              variant="secondary"
-                              className={cn(
-                                'min-w-[22px] h-5 text-xs tabular-nums justify-center',
-                                isActive
-                                  ? 'bg-gold-100 text-gold-700'
-                                  : 'bg-charcoal-100 text-charcoal-600'
-                              )}
-                            >
-                              {count}
-                            </Badge>
-                          )}
-                          {isActive && (
-                            <ChevronRight className="w-4 h-4 text-gold-400" />
-                          )}
-                        </Link>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </CollapsibleContent>
-            </Collapsible>
-          </>
-        )}
-
-        {/* SECTIONS MODE for non-job entities: Show flat main sections + tool sections */}
-        {navigationStyle === 'sections' && entityType !== 'job' && (
-          <>
-            {/* Main Sections */}
-            <div className="p-3">
-              <div className="text-xs font-medium text-charcoal-400 uppercase tracking-wider px-2 mb-2">
-                Sections
-              </div>
-              <ul className="space-y-0.5">
-                {mainSections.map((section) => {
-                  const Icon = section.icon
-                  const isActive = currentSection === section.id
-                  const count = section.showCount ? getSectionCount(section.id) : undefined
-
-                  return (
-                    <li key={section.id}>
-                      <Link
-                        href={buildToolHref(section.id)}
-                        className={cn(
-                          'flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-150 group',
-                          isActive
-                            ? 'bg-gold-50 text-gold-700'
-                            : 'text-charcoal-600 hover:bg-charcoal-50 hover:text-charcoal-800'
-                        )}
-                      >
-                        <Icon
-                          className={cn(
-                            'w-4 h-4 flex-shrink-0 transition-colors',
-                            isActive ? 'text-gold-600' : 'text-charcoal-400 group-hover:text-charcoal-500'
-                          )}
-                        />
-                        <span className={cn('flex-1 text-sm', isActive && 'font-medium')}>
-                          {section.label}
-                        </span>
-                        {count !== undefined && (
-                          <Badge
-                            variant="secondary"
-                            className={cn(
-                              'min-w-[22px] h-5 text-xs tabular-nums justify-center',
-                              isActive
-                                ? 'bg-gold-100 text-gold-700'
-                                : 'bg-charcoal-100 text-charcoal-600'
-                            )}
-                          >
-                            {count}
-                          </Badge>
-                        )}
-                        {isActive && (
-                          <ChevronRight className="w-4 h-4 text-gold-400" />
-                        )}
-                      </Link>
-                    </li>
-                  )
-                })}
-              </ul>
+        {/* ===== ENTITY HEADER - Dark Premium Style ===== */}
+        <div className="bg-charcoal-900 text-white">
+          {isCollapsed ? (
+            <div className="px-2 py-4">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gold-500 to-gold-600 flex items-center justify-center text-charcoal-900 font-bold text-sm shadow-lg">
+                      {entityName.substring(0, 2).toUpperCase()}
+                    </div>
+                    <StatusBadgeDot status={entityStatus} />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="bg-charcoal-800 text-white border-charcoal-700">
+                  <div>
+                    <p className="font-semibold">{entityName}</p>
+                    {entitySubtitle && <p className="text-xs text-charcoal-300">{entitySubtitle}</p>}
+                    <p className="text-xs text-charcoal-400 mt-1 capitalize">{entityStatus.replace(/_/g, ' ')}</p>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
             </div>
-
-            {/* Tool Sections (Collapsible) */}
-            <Collapsible
-              open={isToolsOpen}
-              onOpenChange={setIsToolsOpen}
-              className="border-t border-charcoal-100 pt-2 px-3 pb-3"
-            >
-              <CollapsibleTrigger className="flex items-center gap-2 w-full px-2 py-1.5 text-xs font-medium text-charcoal-400 uppercase tracking-wider hover:text-charcoal-600 transition-colors">
-                {isToolsOpen ? (
-                  <ChevronDown className="w-3.5 h-3.5" />
-                ) : (
-                  <ChevronRight className="w-3.5 h-3.5" />
-                )}
-                <Wrench className="w-3.5 h-3.5" />
-                <span>Tools</span>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="mt-1">
-                <ul className="space-y-0.5">
-                  {toolSections.map((section) => {
-                    const Icon = section.icon
-                    const isActive = currentSection === section.id
-                    const count = section.showCount ? getSectionCount(section.id) : undefined
-
-                    return (
-                      <li key={section.id}>
-                        <Link
-                          href={buildToolHref(section.id)}
-                          className={cn(
-                            'flex items-center gap-3 px-3 py-1.5 rounded-lg transition-all duration-150 group',
-                            isActive
-                              ? 'bg-gold-50 text-gold-700'
-                              : 'text-charcoal-600 hover:bg-charcoal-50 hover:text-charcoal-800'
-                          )}
-                        >
-                          <Icon
-                            className={cn(
-                              'w-4 h-4 flex-shrink-0 transition-colors',
-                              isActive ? 'text-gold-600' : 'text-charcoal-400 group-hover:text-charcoal-500'
-                            )}
-                          />
-                          <span className={cn('flex-1 text-sm', isActive && 'font-medium')}>
-                            {section.label}
-                          </span>
-                          {count !== undefined && (
-                            <Badge
-                              variant="secondary"
-                              className={cn(
-                                'min-w-[22px] h-5 text-xs tabular-nums justify-center',
-                                isActive
-                                  ? 'bg-gold-100 text-gold-700'
-                                  : 'bg-charcoal-100 text-charcoal-600'
-                              )}
-                            >
-                              {count}
-                            </Badge>
-                          )}
-                          {isActive && (
-                            <ChevronRight className="w-4 h-4 text-gold-400" />
-                          )}
-                        </Link>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </CollapsibleContent>
-            </Collapsible>
-          </>
-        )}
-
-        {/* JOURNEY MODE: Show journey steps + tool sections */}
-        {navigationStyle === 'journey' && (
-          <>
-            {/* Journey Steps */}
-            <div className="p-3">
-              <div className="text-xs font-medium text-charcoal-400 uppercase tracking-wider px-2 mb-2">
-                Journey
+          ) : (
+            <div className="px-4 py-4">
+              {/* Entity Type + Status Row */}
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-semibold uppercase tracking-widest text-gold-500">
+                  {entityType.replace(/_/g, ' ')}
+                </span>
+                <StatusBadgeDark status={entityStatus} />
               </div>
-              <ul className="space-y-1">
-                {steps.map((step, index) => {
-                  const Icon = step.icon
-                  const isCurrent = index === currentStepIndex
-                  const isPast = step.isCompleted || index < currentStepIndex
-                  const isFuture = !isPast && !isCurrent
+              {/* Entity Name */}
+              <h2 className="font-heading font-bold text-white text-lg truncate leading-tight">
+                {entityName}
+              </h2>
+              {/* Subtitle */}
+              {entitySubtitle && (
+                <p className="text-sm text-charcoal-400 truncate mt-1">{entitySubtitle}</p>
+              )}
+            </div>
+          )}
+        </div>
 
-                  return (
-                    <li key={step.id}>
-                      <Link
-                        href={buildStepHref(step.id, step.defaultTab)}
-                        className={cn(
-                          'flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200',
-                          isCurrent && 'bg-gold-50 text-gold-700 font-medium',
-                          isPast && 'text-charcoal-600 hover:bg-charcoal-50',
-                          isFuture && 'text-charcoal-400 hover:bg-charcoal-50'
+        {/* ===== NAVIGATION ===== */}
+        <nav className="flex-1 overflow-y-auto">
+          {/* ACCOUNT SECTIONS MODE - Hublot-inspired clean design */}
+          {navigationStyle === 'sections' && entityType === 'account' && accountSections && (
+            <>
+              {/* Main Sections - Clean list without numbers */}
+              <div className="py-3">
+                {!isCollapsed && (
+                  <div className="px-4 pb-2">
+                    <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                      Sections
+                    </span>
+                  </div>
+                )}
+                <ul className="space-y-0.5 px-2">
+                  {/* Overview/Summary Section */}
+                  {accountSections.overviewSection && (
+                    <SectionNavItem
+                      section={accountSections.overviewSection}
+                      isActive={currentSection === accountSections.overviewSection.id}
+                      href={buildToolHref(accountSections.overviewSection.id)}
+                      count={getSectionCount(accountSections.overviewSection.id)}
+                      isCollapsed={isCollapsed}
+                    />
+                  )}
+                  {/* Main Sections (no numbers, just clean icons) */}
+                  {accountSections.mainSections.map((section) => (
+                    <SectionNavItem
+                      key={section.id}
+                      section={section}
+                      isActive={currentSection === section.id}
+                      href={buildToolHref(section.id)}
+                      count={section.showCount ? getSectionCount(section.id) : undefined}
+                      isCollapsed={isCollapsed}
+                    />
+                  ))}
+                </ul>
+              </div>
+
+              {/* Related Data - Collapsible */}
+              {accountSections.relatedSections.length > 0 && (
+                <Collapsible
+                  open={isRelatedOpen}
+                  onOpenChange={setIsRelatedOpen}
+                  className="border-t border-charcoal-100/80"
+                >
+                  <CollapsibleTrigger
+                    className={cn(
+                      'flex items-center gap-2 w-full px-4 py-3 text-left transition-all duration-200 hover:bg-charcoal-50/50',
+                      isCollapsed && 'justify-center px-2'
                     )}
                   >
-                    {/* Step Indicator */}
-                    <div
-                      className={cn(
-                        'w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium transition-colors flex-shrink-0',
-                        isPast && 'bg-green-500 text-white',
-                        isCurrent && 'bg-gold-500 text-white',
-                        isFuture && 'bg-charcoal-200 text-charcoal-500'
-                      )}
-                    >
-                      {isPast ? (
-                        <Check className="w-3.5 h-3.5" />
-                      ) : (
-                        index + 1
-                      )}
-                    </div>
-
-                    {/* Step Content */}
-                    <div className="flex-1 min-w-0">
-                      <span className={cn(
-                        'text-sm truncate block',
-                        isCurrent && 'font-medium'
-                      )}>
-                        {step.label}
-                      </span>
-                      {step.description && isCurrent && (
-                        <span className="text-xs text-charcoal-500 truncate block">
-                          {step.description}
+                    {!isCollapsed && (
+                      <>
+                        <ChevronRight className={cn(
+                          'w-3 h-3 text-charcoal-400 transition-transform duration-200',
+                          isRelatedOpen && 'rotate-90'
+                        )} />
+                        <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                          Related
                         </span>
-                      )}
-                    </div>
-
-                    {/* Active Indicator */}
-                    {isCurrent && (
-                      <ChevronRight className="w-4 h-4 text-gold-500 flex-shrink-0" />
+                      </>
                     )}
-                  </Link>
+                    {isCollapsed && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="w-9 h-9 flex items-center justify-center">
+                            <ChevronRight className={cn(
+                              'w-3.5 h-3.5 text-charcoal-400 transition-transform duration-200',
+                              isRelatedOpen && 'rotate-90'
+                            )} />
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                          <p>Related Data</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <ul className="space-y-0.5 px-2 pb-3">
+                      {accountSections.relatedSections.map((section) => (
+                        <SectionNavItem
+                          key={section.id}
+                          section={section}
+                          isActive={currentSection === section.id}
+                          href={buildToolHref(section.id)}
+                          count={section.showCount ? getSectionCount(section.id) : undefined}
+                          isCollapsed={isCollapsed}
+                        />
+                      ))}
+                    </ul>
+                  </CollapsibleContent>
+                </Collapsible>
+              )}
 
-                  {/* Connector Line */}
-                  {index < steps.length - 1 && (
-                    <div className="ml-6 pl-[11px] py-1">
-                      <div
-                        className={cn(
-                          'w-0.5 h-4',
-                          isPast ? 'bg-green-500' : 'bg-charcoal-200'
-                        )}
+              {/* Tools - Collapsible */}
+              {accountSections.toolSections.length > 0 && (
+                <Collapsible
+                  open={isToolsOpen}
+                  onOpenChange={setIsToolsOpen}
+                  className="border-t border-charcoal-100/80"
+                >
+                  <CollapsibleTrigger
+                    className={cn(
+                      'flex items-center gap-2 w-full px-4 py-3 text-left transition-all duration-200 hover:bg-charcoal-50/50',
+                      isCollapsed && 'justify-center px-2'
+                    )}
+                  >
+                    {!isCollapsed && (
+                      <>
+                        <ChevronRight className={cn(
+                          'w-3 h-3 text-charcoal-400 transition-transform duration-200',
+                          isToolsOpen && 'rotate-90'
+                        )} />
+                        <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                          Tools
+                        </span>
+                      </>
+                    )}
+                    {isCollapsed && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="w-9 h-9 flex items-center justify-center">
+                            <ChevronRight className={cn(
+                              'w-3.5 h-3.5 text-charcoal-400 transition-transform duration-200',
+                              isToolsOpen && 'rotate-90'
+                            )} />
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                          <p>Tools</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <ul className="space-y-0.5 px-2 pb-3">
+                      {accountSections.toolSections.map((section) => (
+                        <SectionNavItem
+                          key={section.id}
+                          section={section}
+                          isActive={currentSection === section.id}
+                          href={buildToolHref(section.id)}
+                          count={section.showCount ? getSectionCount(section.id) : undefined}
+                          isCollapsed={isCollapsed}
+                        />
+                      ))}
+                    </ul>
+                  </CollapsibleContent>
+                </Collapsible>
+              )}
+            </>
+          )}
+
+          {/* JOB SECTIONS MODE - Collapsible groups */}
+          {navigationStyle === 'sections' && entityType === 'job' && (
+            <>
+              {/* Job-specific: Collapsible Section Groups */}
+              {jobSectionGroups.map((group) => {
+                const groupSections = mainSections.filter((s) => group.sectionIds.includes(s.id))
+                const groupTotal = groupSections.reduce((sum, s) => {
+                  const count = getSectionCount(s.id)
+                  return sum + (count || 0)
+                }, 0)
+
+                return (
+                  <CollapsibleSectionGroup
+                    key={group.id}
+                    id={group.id}
+                    label={group.label}
+                    count={group.sectionIds.length > 1 ? groupTotal : undefined}
+                    defaultOpen={group.defaultOpen}
+                  >
+                    <ul className="space-y-0.5 px-2">
+                      {groupSections.map((section) => (
+                        <SectionNavItem
+                          key={section.id}
+                          section={section}
+                          isActive={currentSection === section.id}
+                          href={buildToolHref(section.id)}
+                          count={section.showCount ? getSectionCount(section.id) : undefined}
+                          isCollapsed={isCollapsed}
+                        />
+                      ))}
+                    </ul>
+                  </CollapsibleSectionGroup>
+                )
+              })}
+
+              {/* Tool Sections (Collapsible) for Jobs */}
+              <Collapsible
+                open={isToolsOpen}
+                onOpenChange={setIsToolsOpen}
+                className="border-t border-charcoal-100/80"
+              >
+                <CollapsibleTrigger className="flex items-center gap-2 w-full px-4 py-3 text-left transition-all duration-200 hover:bg-charcoal-50/50">
+                  <ChevronRight className={cn(
+                    'w-3 h-3 text-charcoal-400 transition-transform duration-200',
+                    isToolsOpen && 'rotate-90'
+                  )} />
+                  <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                    Tools
+                  </span>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <ul className="space-y-0.5 px-2 pb-3">
+                    {jobToolSections.map((section) => (
+                      <SectionNavItem
+                        key={section.id}
+                        section={section}
+                        isActive={currentSection === section.id}
+                        href={buildToolHref(section.id)}
+                        count={section.showCount ? getSectionCount(section.id) : undefined}
+                        isCollapsed={isCollapsed}
                       />
-                    </div>
-                  )}
-                </li>
-              )
-                })}
-              </ul>
-            </div>
+                    ))}
+                  </ul>
+                </CollapsibleContent>
+              </Collapsible>
+            </>
+          )}
 
-            {/* Tools Section - Collapsible */}
-            <Collapsible
-              open={isToolsOpen}
-              onOpenChange={setIsToolsOpen}
-              className="border-t border-charcoal-100 pt-2 px-3 pb-3"
-            >
-              <CollapsibleTrigger className="flex items-center gap-2 w-full px-2 py-1.5 text-xs font-medium text-charcoal-400 uppercase tracking-wider hover:text-charcoal-600 transition-colors">
-                {isToolsOpen ? (
-                  <ChevronDown className="w-3.5 h-3.5" />
-                ) : (
-                  <ChevronRight className="w-3.5 h-3.5" />
+          {/* OTHER SECTIONS MODE - Generic non-job, non-account entities */}
+          {navigationStyle === 'sections' && entityType !== 'job' && entityType !== 'account' && (
+            <>
+              {/* Main Sections */}
+              <div className="py-3">
+                {!isCollapsed && (
+                  <div className="px-4 pb-2">
+                    <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                      Sections
+                    </span>
+                  </div>
                 )}
-                <Wrench className="w-3.5 h-3.5" />
-                <span>Tools</span>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="mt-1">
-                <ul className="space-y-0.5">
-                  {commonToolSections.map((section) => {
-                    const Icon = section.icon
-                    const isActive = currentSection === section.id
-                    const count = getSectionCount(section.id)
+                <ul className="space-y-0.5 px-2">
+                  {mainSections.map((section) => (
+                    <SectionNavItem
+                      key={section.id}
+                      section={section}
+                      isActive={currentSection === section.id}
+                      href={buildToolHref(section.id)}
+                      count={section.showCount ? getSectionCount(section.id) : undefined}
+                      isCollapsed={isCollapsed}
+                    />
+                  ))}
+                </ul>
+              </div>
+
+              {/* Tool Sections (Collapsible) */}
+              <Collapsible
+                open={isToolsOpen}
+                onOpenChange={setIsToolsOpen}
+                className="border-t border-charcoal-100/80"
+              >
+                <CollapsibleTrigger className="flex items-center gap-2 w-full px-4 py-3 text-left transition-all duration-200 hover:bg-charcoal-50/50">
+                  <ChevronRight className={cn(
+                    'w-3 h-3 text-charcoal-400 transition-transform duration-200',
+                    isToolsOpen && 'rotate-90'
+                  )} />
+                  <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                    Tools
+                  </span>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <ul className="space-y-0.5 px-2 pb-3">
+                    {toolSections.map((section) => (
+                      <SectionNavItem
+                        key={section.id}
+                        section={section}
+                        isActive={currentSection === section.id}
+                        href={buildToolHref(section.id)}
+                        count={section.showCount ? getSectionCount(section.id) : undefined}
+                        isCollapsed={isCollapsed}
+                      />
+                    ))}
+                  </ul>
+                </CollapsibleContent>
+              </Collapsible>
+            </>
+          )}
+
+          {/* JOURNEY MODE: Show journey steps + tool sections */}
+          {navigationStyle === 'journey' && (
+            <>
+              {/* Journey Steps */}
+              <div className="py-3">
+                {!isCollapsed && (
+                  <div className="px-4 pb-2">
+                    <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                      Journey
+                    </span>
+                  </div>
+                )}
+                <ul className="space-y-1 px-2">
+                  {steps.map((step, index) => {
+                    const Icon = step.icon
+                    const isCurrent = index === currentStepIndex
+                    const isPast = step.isCompleted || index < currentStepIndex
+                    const isFuture = !isPast && !isCurrent
 
                     return (
-                      <li key={section.id}>
+                      <li key={step.id}>
                         <Link
-                          href={buildToolHref(section.id)}
+                          href={buildStepHref(step.id, step.defaultTab)}
                           className={cn(
-                            'flex items-center gap-3 px-3 py-1.5 rounded-lg transition-all duration-150 group',
-                            isActive
-                              ? 'bg-gold-50 text-gold-700'
-                              : 'text-charcoal-600 hover:bg-charcoal-50 hover:text-charcoal-800'
+                            'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
+                            isCurrent && 'bg-gold-50 text-gold-700',
+                            isPast && 'text-charcoal-600 hover:bg-charcoal-50',
+                            isFuture && 'text-charcoal-400 hover:bg-charcoal-50'
                           )}
                         >
-                          <Icon
+                          {/* Step Indicator */}
+                          <div
                             className={cn(
-                              'w-4 h-4 flex-shrink-0 transition-colors',
-                              isActive ? 'text-gold-600' : 'text-charcoal-400 group-hover:text-charcoal-500'
+                              'w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium transition-colors flex-shrink-0',
+                              isPast && 'bg-success-500 text-white',
+                              isCurrent && 'bg-gold-500 text-white',
+                              isFuture && 'bg-charcoal-200 text-charcoal-500'
                             )}
-                          />
-                          <span className={cn('flex-1 text-sm', isActive && 'font-medium')}>
-                            {section.label}
-                          </span>
-                          {section.showCount && count !== undefined && (
-                            <Badge
-                              variant="secondary"
-                              className={cn(
-                                'min-w-[22px] h-5 text-xs tabular-nums justify-center',
-                                isActive
-                                  ? 'bg-gold-100 text-gold-700'
-                                  : 'bg-charcoal-100 text-charcoal-600'
+                          >
+                            {isPast ? <Check className="w-3.5 h-3.5" /> : index + 1}
+                          </div>
+
+                          {/* Step Content */}
+                          {!isCollapsed && (
+                            <div className="flex-1 min-w-0">
+                              <span className={cn('text-sm truncate block', isCurrent && 'font-medium')}>
+                                {step.label}
+                              </span>
+                              {step.description && isCurrent && (
+                                <span className="text-xs text-charcoal-500 truncate block">
+                                  {step.description}
+                                </span>
                               )}
-                            >
-                              {count}
-                            </Badge>
+                            </div>
                           )}
-                          {isActive && (
-                            <ChevronRight className="w-4 h-4 text-gold-400" />
+
+                          {/* Active Indicator */}
+                          {isCurrent && !isCollapsed && (
+                            <ChevronRight className="w-4 h-4 text-gold-500 flex-shrink-0" />
                           )}
                         </Link>
+
+                        {/* Connector Line */}
+                        {index < steps.length - 1 && !isCollapsed && (
+                          <div className="ml-6 pl-[11px] py-1">
+                            <div className={cn('w-0.5 h-4', isPast ? 'bg-success-500' : 'bg-charcoal-200')} />
+                          </div>
+                        )}
                       </li>
                     )
                   })}
                 </ul>
-              </CollapsibleContent>
-            </Collapsible>
-          </>
-        )}
+              </div>
+
+              {/* Tools Section - Collapsible */}
+              <Collapsible
+                open={isToolsOpen}
+                onOpenChange={setIsToolsOpen}
+                className="border-t border-charcoal-100/80"
+              >
+                <CollapsibleTrigger className="flex items-center gap-2 w-full px-4 py-3 text-left transition-all duration-200 hover:bg-charcoal-50/50">
+                  <ChevronRight className={cn(
+                    'w-3 h-3 text-charcoal-400 transition-transform duration-200',
+                    isToolsOpen && 'rotate-90'
+                  )} />
+                  <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                    Tools
+                  </span>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <ul className="space-y-0.5 px-2 pb-3">
+                    {commonToolSections.map((section) => (
+                      <SectionNavItem
+                        key={section.id}
+                        section={section}
+                        isActive={currentSection === section.id}
+                        href={buildToolHref(section.id)}
+                        count={section.showCount ? getSectionCount(section.id) : undefined}
+                        isCollapsed={isCollapsed}
+                      />
+                    ))}
+                  </ul>
+                </CollapsibleContent>
+              </Collapsible>
+            </>
+          )}
         </nav>
       </div>
     </TooltipProvider>
   )
 }
 
-// Simple status badge component
+// ============================================================================
+// SECTION NAV ITEM - Reusable navigation item component
+// ============================================================================
+
+interface SectionNavItemProps {
+  section: {
+    id: string
+    label: string
+    icon: React.ComponentType<{ className?: string }>
+    alertOnCount?: boolean
+  }
+  isActive: boolean
+  href: string
+  count?: number
+  isCollapsed: boolean
+}
+
+function SectionNavItem({ section, isActive, href, count, isCollapsed }: SectionNavItemProps) {
+  const Icon = section.icon
+  const hasAlert = section.alertOnCount && count && count > 0
+
+  if (isCollapsed) {
+    return (
+      <li>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link
+              href={href}
+              className={cn(
+                'flex items-center justify-center w-9 h-9 rounded-lg transition-all duration-200',
+                isActive
+                  ? 'bg-charcoal-900 text-white'
+                  : 'text-charcoal-500 hover:bg-charcoal-100 hover:text-charcoal-700'
+              )}
+            >
+              <Icon className="w-4 h-4" />
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent side="right" className="bg-charcoal-900 text-white">
+            <div className="flex items-center gap-2">
+              <span>{section.label}</span>
+              {count !== undefined && (
+                <span className="text-charcoal-400">({count})</span>
+              )}
+            </div>
+          </TooltipContent>
+        </Tooltip>
+      </li>
+    )
+  }
+
+  return (
+    <li>
+      <Link
+        href={href}
+        className={cn(
+          'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group',
+          isActive
+            ? 'bg-charcoal-900 text-white'
+            : 'text-charcoal-600 hover:bg-charcoal-100 hover:text-charcoal-800'
+        )}
+      >
+        <Icon
+          className={cn(
+            'w-4 h-4 flex-shrink-0 transition-colors',
+            isActive ? 'text-white' : 'text-charcoal-400 group-hover:text-charcoal-500'
+          )}
+        />
+        <span className={cn('flex-1 text-sm', isActive && 'font-medium')}>{section.label}</span>
+        {count !== undefined && (
+          <span
+            className={cn(
+              'text-xs tabular-nums transition-colors',
+              isActive ? 'text-charcoal-400' : hasAlert ? 'text-error-600 font-medium' : 'text-charcoal-400'
+            )}
+          >
+            {count}
+          </span>
+        )}
+      </Link>
+    </li>
+  )
+}
+
+// ============================================================================
+// STATUS BADGES
+// ============================================================================
+
 function StatusBadge({ status }: { status: string }) {
-  const colors: Record<string, string> = {
-    // Job statuses
-    draft: 'bg-charcoal-100 text-charcoal-700 border-charcoal-200',
-    open: 'bg-blue-100 text-blue-700 border-blue-200',
-    active: 'bg-green-100 text-green-700 border-green-200',
-    on_hold: 'bg-amber-100 text-amber-700 border-amber-200',
-    filled: 'bg-purple-100 text-purple-700 border-purple-200',
-    cancelled: 'bg-red-100 text-red-700 border-red-200',
-    // Candidate statuses
-    sourced: 'bg-amber-100 text-amber-700 border-amber-200',
-    new: 'bg-blue-100 text-blue-700 border-blue-200',
-    screening: 'bg-blue-100 text-blue-700 border-blue-200',
-    bench: 'bg-purple-100 text-purple-700 border-purple-200',
-    placed: 'bg-indigo-100 text-indigo-700 border-indigo-200',
-    inactive: 'bg-charcoal-100 text-charcoal-600 border-charcoal-200',
-    // Account statuses
-    prospect: 'bg-amber-100 text-amber-700 border-amber-200',
-    churned: 'bg-red-100 text-red-700 border-red-200',
-    // Lead statuses
-    contacted: 'bg-blue-100 text-blue-700 border-blue-200',
-    qualified: 'bg-green-100 text-green-700 border-green-200',
-    converted: 'bg-purple-100 text-purple-700 border-purple-200',
-    lost: 'bg-red-100 text-red-700 border-red-200',
-    // Deal statuses
-    discovery: 'bg-blue-100 text-blue-700 border-blue-200',
-    qualification: 'bg-cyan-100 text-cyan-700 border-cyan-200',
-    proposal: 'bg-amber-100 text-amber-700 border-amber-200',
-    negotiation: 'bg-orange-100 text-orange-700 border-orange-200',
-    verbal_commit: 'bg-purple-100 text-purple-700 border-purple-200',
-    closed_won: 'bg-green-100 text-green-700 border-green-200',
-    closed_lost: 'bg-red-100 text-red-700 border-red-200',
-    // Submission statuses
-    submission_ready: 'bg-blue-100 text-blue-700 border-blue-200',
-    submitted_to_client: 'bg-cyan-100 text-cyan-700 border-cyan-200',
-    client_review: 'bg-amber-100 text-amber-700 border-amber-200',
-    client_interview: 'bg-orange-100 text-orange-700 border-orange-200',
-    offer_stage: 'bg-purple-100 text-purple-700 border-purple-200',
-    rejected: 'bg-red-100 text-red-700 border-red-200',
-    withdrawn: 'bg-charcoal-100 text-charcoal-600 border-charcoal-200',
-    // Placement statuses
-    pending_start: 'bg-amber-100 text-amber-700 border-amber-200',
-    extended: 'bg-blue-100 text-blue-700 border-blue-200',
-    ended: 'bg-charcoal-100 text-charcoal-600 border-charcoal-200',
-    // Campaign statuses
-    scheduled: 'bg-blue-100 text-blue-700 border-blue-200',
-    paused: 'bg-amber-100 text-amber-700 border-amber-200',
-    completed: 'bg-purple-100 text-purple-700 border-purple-200',
-    // Default
-    default: 'bg-charcoal-100 text-charcoal-700 border-charcoal-200',
-  }
+  const config = getStatusConfig(status)
 
   return (
-    <Badge className={cn(
-      'font-medium border',
-      colors[status] || colors.default
-    )}>
-      {status.replace(/_/g, ' ')}
-    </Badge>
+    <div
+      className={cn(
+        'inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium border',
+        config.bg,
+        config.text,
+        config.border
+      )}
+    >
+      <span className={cn('w-1.5 h-1.5 rounded-full', config.dot)} />
+      <span className="capitalize">{status.replace(/_/g, ' ')}</span>
+    </div>
   )
 }
 
-// Simpler status badge as just a colored dot (for collapsed mode)
+// Dark variant for dark header backgrounds
+function StatusBadgeDark({ status }: { status: string }) {
+  const darkConfig = getStatusConfigDark(status)
+
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium border',
+        darkConfig.bg,
+        darkConfig.text,
+        darkConfig.border
+      )}
+    >
+      <span className={cn('w-1.5 h-1.5 rounded-full', darkConfig.dot)} />
+      <span className="capitalize">{status.replace(/_/g, ' ')}</span>
+    </span>
+  )
+}
+
 function StatusBadgeDot({ status }: { status: string }) {
-  const colors: Record<string, string> = {
-    // Job statuses
-    draft: 'bg-charcoal-400',
-    open: 'bg-blue-500',
-    active: 'bg-green-500',
-    on_hold: 'bg-amber-500',
-    filled: 'bg-purple-500',
-    cancelled: 'bg-red-500',
-    // Candidate statuses
-    sourced: 'bg-amber-500',
-    new: 'bg-blue-500',
-    screening: 'bg-blue-500',
-    bench: 'bg-purple-500',
-    placed: 'bg-indigo-500',
-    inactive: 'bg-charcoal-400',
-    // Account statuses
-    prospect: 'bg-amber-500',
-    churned: 'bg-red-500',
-    // Lead statuses
-    contacted: 'bg-blue-500',
-    qualified: 'bg-green-500',
-    converted: 'bg-purple-500',
-    lost: 'bg-red-500',
-    // Deal statuses
-    discovery: 'bg-blue-500',
-    qualification: 'bg-cyan-500',
-    proposal: 'bg-amber-500',
-    negotiation: 'bg-orange-500',
-    verbal_commit: 'bg-purple-500',
-    closed_won: 'bg-green-500',
-    closed_lost: 'bg-red-500',
-    // Submission statuses
-    submission_ready: 'bg-blue-500',
-    submitted_to_client: 'bg-cyan-500',
-    client_review: 'bg-amber-500',
-    client_interview: 'bg-orange-500',
-    offer_stage: 'bg-purple-500',
-    rejected: 'bg-red-500',
-    withdrawn: 'bg-charcoal-400',
-    // Placement statuses
-    pending_start: 'bg-amber-500',
-    extended: 'bg-blue-500',
-    ended: 'bg-charcoal-400',
-    // Campaign statuses
-    scheduled: 'bg-blue-500',
-    paused: 'bg-amber-500',
-    completed: 'bg-purple-500',
-    // Default
-    default: 'bg-charcoal-400',
-  }
-
-  return (
-    <div className={cn('w-2 h-2 rounded-full', colors[status] || colors.default)} />
-  )
+  const config = getStatusConfig(status)
+  return <div className={cn('w-2.5 h-2.5 rounded-full', config.dot)} />
 }
 
-export { StatusBadge, StatusBadgeDot }
+function getStatusConfig(status: string): {
+  bg: string
+  text: string
+  dot: string
+  border: string
+} {
+  const configs: Record<string, { bg: string; text: string; dot: string; border: string }> = {
+    // Success states
+    active: { bg: 'bg-success-50', text: 'text-success-700', dot: 'bg-success-500', border: 'border-success-200' },
+    placed: { bg: 'bg-success-50', text: 'text-success-700', dot: 'bg-success-500', border: 'border-success-200' },
+    qualified: { bg: 'bg-success-50', text: 'text-success-700', dot: 'bg-success-500', border: 'border-success-200' },
+    closed_won: { bg: 'bg-success-50', text: 'text-success-700', dot: 'bg-success-500', border: 'border-success-200' },
+    filled: { bg: 'bg-success-50', text: 'text-success-700', dot: 'bg-success-500', border: 'border-success-200' },
+    completed: { bg: 'bg-success-50', text: 'text-success-700', dot: 'bg-success-500', border: 'border-success-200' },
+
+    // Warning states
+    prospect: { bg: 'bg-amber-50', text: 'text-amber-700', dot: 'bg-amber-500', border: 'border-amber-200' },
+    sourced: { bg: 'bg-amber-50', text: 'text-amber-700', dot: 'bg-amber-500', border: 'border-amber-200' },
+    on_hold: { bg: 'bg-amber-50', text: 'text-amber-700', dot: 'bg-amber-500', border: 'border-amber-200' },
+    paused: { bg: 'bg-amber-50', text: 'text-amber-700', dot: 'bg-amber-500', border: 'border-amber-200' },
+    pending_start: { bg: 'bg-amber-50', text: 'text-amber-700', dot: 'bg-amber-500', border: 'border-amber-200' },
+    proposal: { bg: 'bg-amber-50', text: 'text-amber-700', dot: 'bg-amber-500', border: 'border-amber-200' },
+
+    // Info/Blue states
+    open: { bg: 'bg-blue-50', text: 'text-blue-700', dot: 'bg-blue-500', border: 'border-blue-200' },
+    new: { bg: 'bg-blue-50', text: 'text-blue-700', dot: 'bg-blue-500', border: 'border-blue-200' },
+    screening: { bg: 'bg-blue-50', text: 'text-blue-700', dot: 'bg-blue-500', border: 'border-blue-200' },
+    contacted: { bg: 'bg-blue-50', text: 'text-blue-700', dot: 'bg-blue-500', border: 'border-blue-200' },
+    discovery: { bg: 'bg-blue-50', text: 'text-blue-700', dot: 'bg-blue-500', border: 'border-blue-200' },
+    submission_ready: { bg: 'bg-blue-50', text: 'text-blue-700', dot: 'bg-blue-500', border: 'border-blue-200' },
+    extended: { bg: 'bg-blue-50', text: 'text-blue-700', dot: 'bg-blue-500', border: 'border-blue-200' },
+    scheduled: { bg: 'bg-blue-50', text: 'text-blue-700', dot: 'bg-blue-500', border: 'border-blue-200' },
+
+    // Purple states
+    bench: { bg: 'bg-purple-50', text: 'text-purple-700', dot: 'bg-purple-500', border: 'border-purple-200' },
+    converted: { bg: 'bg-purple-50', text: 'text-purple-700', dot: 'bg-purple-500', border: 'border-purple-200' },
+    verbal_commit: { bg: 'bg-purple-50', text: 'text-purple-700', dot: 'bg-purple-500', border: 'border-purple-200' },
+    offer_stage: { bg: 'bg-purple-50', text: 'text-purple-700', dot: 'bg-purple-500', border: 'border-purple-200' },
+
+    // Error states
+    churned: { bg: 'bg-error-50', text: 'text-error-700', dot: 'bg-error-500', border: 'border-error-200' },
+    cancelled: { bg: 'bg-error-50', text: 'text-error-700', dot: 'bg-error-500', border: 'border-error-200' },
+    rejected: { bg: 'bg-error-50', text: 'text-error-700', dot: 'bg-error-500', border: 'border-error-200' },
+    lost: { bg: 'bg-error-50', text: 'text-error-700', dot: 'bg-error-500', border: 'border-error-200' },
+    closed_lost: { bg: 'bg-error-50', text: 'text-error-700', dot: 'bg-error-500', border: 'border-error-200' },
+
+    // Neutral states
+    draft: { bg: 'bg-charcoal-100', text: 'text-charcoal-600', dot: 'bg-charcoal-400', border: 'border-charcoal-200' },
+    inactive: { bg: 'bg-charcoal-100', text: 'text-charcoal-600', dot: 'bg-charcoal-400', border: 'border-charcoal-200' },
+    withdrawn: { bg: 'bg-charcoal-100', text: 'text-charcoal-600', dot: 'bg-charcoal-400', border: 'border-charcoal-200' },
+    ended: { bg: 'bg-charcoal-100', text: 'text-charcoal-600', dot: 'bg-charcoal-400', border: 'border-charcoal-200' },
+  }
+
+  return configs[status] || { bg: 'bg-charcoal-100', text: 'text-charcoal-600', dot: 'bg-charcoal-400', border: 'border-charcoal-200' }
+}
+
+// Dark variant config for dark backgrounds
+function getStatusConfigDark(status: string): {
+  bg: string
+  text: string
+  dot: string
+  border: string
+} {
+  const configs: Record<string, { bg: string; text: string; dot: string; border: string }> = {
+    // Success states - green glow on dark
+    active: { bg: 'bg-green-500/20', text: 'text-green-300', dot: 'bg-green-400', border: 'border-green-500/30' },
+    placed: { bg: 'bg-green-500/20', text: 'text-green-300', dot: 'bg-green-400', border: 'border-green-500/30' },
+    qualified: { bg: 'bg-green-500/20', text: 'text-green-300', dot: 'bg-green-400', border: 'border-green-500/30' },
+    closed_won: { bg: 'bg-green-500/20', text: 'text-green-300', dot: 'bg-green-400', border: 'border-green-500/30' },
+    filled: { bg: 'bg-green-500/20', text: 'text-green-300', dot: 'bg-green-400', border: 'border-green-500/30' },
+    completed: { bg: 'bg-green-500/20', text: 'text-green-300', dot: 'bg-green-400', border: 'border-green-500/30' },
+
+    // Warning states - amber glow
+    prospect: { bg: 'bg-amber-500/20', text: 'text-amber-300', dot: 'bg-amber-400', border: 'border-amber-500/30' },
+    sourced: { bg: 'bg-amber-500/20', text: 'text-amber-300', dot: 'bg-amber-400', border: 'border-amber-500/30' },
+    on_hold: { bg: 'bg-amber-500/20', text: 'text-amber-300', dot: 'bg-amber-400', border: 'border-amber-500/30' },
+    paused: { bg: 'bg-amber-500/20', text: 'text-amber-300', dot: 'bg-amber-400', border: 'border-amber-500/30' },
+    pending_start: { bg: 'bg-amber-500/20', text: 'text-amber-300', dot: 'bg-amber-400', border: 'border-amber-500/30' },
+    proposal: { bg: 'bg-amber-500/20', text: 'text-amber-300', dot: 'bg-amber-400', border: 'border-amber-500/30' },
+
+    // Info/Blue states
+    open: { bg: 'bg-blue-500/20', text: 'text-blue-300', dot: 'bg-blue-400', border: 'border-blue-500/30' },
+    new: { bg: 'bg-blue-500/20', text: 'text-blue-300', dot: 'bg-blue-400', border: 'border-blue-500/30' },
+    screening: { bg: 'bg-blue-500/20', text: 'text-blue-300', dot: 'bg-blue-400', border: 'border-blue-500/30' },
+    contacted: { bg: 'bg-blue-500/20', text: 'text-blue-300', dot: 'bg-blue-400', border: 'border-blue-500/30' },
+    discovery: { bg: 'bg-blue-500/20', text: 'text-blue-300', dot: 'bg-blue-400', border: 'border-blue-500/30' },
+    submission_ready: { bg: 'bg-blue-500/20', text: 'text-blue-300', dot: 'bg-blue-400', border: 'border-blue-500/30' },
+    extended: { bg: 'bg-blue-500/20', text: 'text-blue-300', dot: 'bg-blue-400', border: 'border-blue-500/30' },
+    scheduled: { bg: 'bg-blue-500/20', text: 'text-blue-300', dot: 'bg-blue-400', border: 'border-blue-500/30' },
+
+    // Purple states
+    bench: { bg: 'bg-purple-500/20', text: 'text-purple-300', dot: 'bg-purple-400', border: 'border-purple-500/30' },
+    converted: { bg: 'bg-purple-500/20', text: 'text-purple-300', dot: 'bg-purple-400', border: 'border-purple-500/30' },
+    verbal_commit: { bg: 'bg-purple-500/20', text: 'text-purple-300', dot: 'bg-purple-400', border: 'border-purple-500/30' },
+    offer_stage: { bg: 'bg-purple-500/20', text: 'text-purple-300', dot: 'bg-purple-400', border: 'border-purple-500/30' },
+
+    // Error states - red glow
+    churned: { bg: 'bg-red-500/20', text: 'text-red-300', dot: 'bg-red-400', border: 'border-red-500/30' },
+    cancelled: { bg: 'bg-red-500/20', text: 'text-red-300', dot: 'bg-red-400', border: 'border-red-500/30' },
+    rejected: { bg: 'bg-red-500/20', text: 'text-red-300', dot: 'bg-red-400', border: 'border-red-500/30' },
+    lost: { bg: 'bg-red-500/20', text: 'text-red-300', dot: 'bg-red-400', border: 'border-red-500/30' },
+    closed_lost: { bg: 'bg-red-500/20', text: 'text-red-300', dot: 'bg-red-400', border: 'border-red-500/30' },
+
+    // Neutral states
+    draft: { bg: 'bg-white/10', text: 'text-charcoal-300', dot: 'bg-charcoal-400', border: 'border-white/20' },
+    inactive: { bg: 'bg-white/10', text: 'text-charcoal-300', dot: 'bg-charcoal-400', border: 'border-white/20' },
+    withdrawn: { bg: 'bg-white/10', text: 'text-charcoal-300', dot: 'bg-charcoal-400', border: 'border-white/20' },
+    ended: { bg: 'bg-white/10', text: 'text-charcoal-300', dot: 'bg-charcoal-400', border: 'border-white/20' },
+  }
+
+  return configs[status] || { bg: 'bg-white/10', text: 'text-charcoal-300', dot: 'bg-charcoal-400', border: 'border-white/20' }
+}
+
+export { StatusBadge, StatusBadgeDark, StatusBadgeDot }

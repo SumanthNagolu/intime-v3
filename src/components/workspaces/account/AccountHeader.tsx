@@ -1,19 +1,10 @@
 'use client'
 
 import * as React from 'react'
-import { Building2, ChevronDown, Pencil, Pause, Archive, Megaphone, Download, Play, Star, ExternalLink, Copy, Check } from 'lucide-react'
+import { Building2, Star, ExternalLink, Copy, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 import type { AccountData } from '@/types/workspace'
-import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/use-toast'
 
 interface AccountHeaderProps {
@@ -61,13 +52,14 @@ const TIER_CONFIG: Record<string, { bg: string; text: string; icon: typeof Star 
 
 /**
  * AccountHeader - Premium entity header with visual hierarchy
- * Features: Gradient backgrounds, tier badges, sophisticated actions
+ *
+ * Hublot-inspired design: Clean information display only.
+ * All actions are centralized in the sidebar Quick Actions panel.
  */
 export function AccountHeader({ account }: AccountHeaderProps) {
-  const router = useRouter()
   const { toast } = useToast()
   const [copied, setCopied] = React.useState(false)
-  
+
   const statusConfig = STATUS_CONFIG[account.status] || STATUS_CONFIG.inactive
   const tierConfig = TIER_CONFIG[account.tier || 'standard']
 
@@ -90,36 +82,6 @@ export function AccountHeader({ account }: AccountHeaderProps) {
     setCopied(true)
     toast({ title: 'Account ID copied to clipboard' })
     setTimeout(() => setCopied(false), 2000)
-  }
-
-  // Handle quick actions
-  const handleAction = (action: string) => {
-    switch (action) {
-      case 'edit':
-        router.push(`/employee/recruiting/accounts/new?edit=${account.id}`)
-        break
-      case 'addContact':
-        window.dispatchEvent(new CustomEvent('openAccountDialog', { 
-          detail: { dialogId: 'addContact', accountId: account.id } 
-        }))
-        break
-      case 'createJob':
-        router.push(`/employee/recruiting/jobs/new?accountId=${account.id}`)
-        break
-      case 'logActivity':
-        window.dispatchEvent(new CustomEvent('openAccountDialog', { 
-          detail: { dialogId: 'logActivity', accountId: account.id } 
-        }))
-        break
-      case 'addToCampaign':
-        // TODO: Implement add to campaign
-        toast({ title: 'Coming soon', description: 'Campaign feature is under development' })
-        break
-      case 'deactivate':
-        // TODO: Implement status change
-        toast({ title: 'Coming soon', description: 'Status change feature is under development' })
-        break
-    }
   }
 
   return (
@@ -226,80 +188,6 @@ export function AccountHeader({ account }: AccountHeaderProps) {
                 </a>
               )}
             </div>
-          </div>
-
-          {/* Quick Actions */}
-          <div className="flex items-center gap-2">
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={() => handleAction('edit')}
-              className="text-charcoal-600 hover:text-charcoal-900 hover:bg-charcoal-50"
-            >
-              <Pencil className="h-4 w-4 mr-1.5" />
-              Edit
-            </Button>
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button 
-                  size="sm"
-                  className="bg-gradient-to-r from-forest-600 to-forest-700 hover:from-forest-700 hover:to-forest-800 text-white shadow-sm"
-                >
-                  Actions
-                  <ChevronDown className="h-4 w-4 ml-1.5" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-52">
-                <DropdownMenuItem onClick={() => handleAction('addContact')}>
-                  <div className="w-8 h-8 rounded-lg bg-charcoal-100 flex items-center justify-center mr-2">
-                    <Building2 className="h-4 w-4 text-charcoal-600" />
-                  </div>
-                  <span>Add Contact</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleAction('createJob')}>
-                  <div className="w-8 h-8 rounded-lg bg-charcoal-100 flex items-center justify-center mr-2">
-                    <Building2 className="h-4 w-4 text-charcoal-600" />
-                  </div>
-                  <span>Create Job</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleAction('logActivity')}>
-                  <div className="w-8 h-8 rounded-lg bg-charcoal-100 flex items-center justify-center mr-2">
-                    <Building2 className="h-4 w-4 text-charcoal-600" />
-                  </div>
-                  <span>Log Activity</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => handleAction('addToCampaign')}>
-                  <div className="w-8 h-8 rounded-lg bg-gold-100 flex items-center justify-center mr-2">
-                    <Megaphone className="h-4 w-4 text-gold-700" />
-                  </div>
-                  <span>Add to Campaign</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleAction('export')}>
-                  <div className="w-8 h-8 rounded-lg bg-charcoal-100 flex items-center justify-center mr-2">
-                    <Download className="h-4 w-4 text-charcoal-600" />
-                  </div>
-                  <span>Export Data</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                {account.status === 'active' ? (
-                  <DropdownMenuItem onClick={() => handleAction('deactivate')} className="text-amber-600 focus:text-amber-700">
-                    <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center mr-2">
-                      <Pause className="h-4 w-4 text-amber-600" />
-                    </div>
-                    <span>Put On Hold</span>
-                  </DropdownMenuItem>
-                ) : (
-                  <DropdownMenuItem onClick={() => handleAction('activate')} className="text-success-600 focus:text-success-700">
-                    <div className="w-8 h-8 rounded-lg bg-success-100 flex items-center justify-center mr-2">
-                      <Play className="h-4 w-4 text-success-600" />
-                    </div>
-                    <span>Activate</span>
-                  </DropdownMenuItem>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
           </div>
         </div>
       </div>

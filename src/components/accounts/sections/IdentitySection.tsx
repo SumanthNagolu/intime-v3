@@ -2,33 +2,16 @@
 
 import * as React from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { PhoneInput } from '@/components/ui/phone-input'
 import {
   Building2,
   User,
   Globe,
-  Linkedin,
   Landmark,
   Tag,
-  ExternalLink,
   CheckCircle2,
 } from 'lucide-react'
-import { SectionWrapper } from '../layouts/SectionHeader'
 import { SectionHeader } from '../fields/SectionHeader'
 import { UnifiedField } from '../fields/UnifiedField'
-import { FieldGrid } from '../layouts/FieldGrid'
-import { InfoRow } from '../layouts/CardView'
 import {
   INDUSTRIES,
   COMPANY_TYPES,
@@ -39,7 +22,6 @@ import {
   REVENUE_RANGES,
   OWNERSHIP_TYPES,
   getStatusBadgeVariant,
-  getLabel,
 } from '@/lib/accounts/constants'
 import type { SectionMode, IdentitySectionData } from '@/lib/accounts/types'
 import { cn } from '@/lib/utils'
@@ -53,7 +35,7 @@ interface IdentitySectionProps {
   data: IdentitySectionData
   /** Handler for field changes */
   onChange?: (field: string, value: unknown) => void
-  /** Handler for toggling industry selection (create mode) */
+  /** Handler for toggling industry selection */
   onToggleIndustry?: (industry: string) => void
   /** Handler to enter edit mode (view mode) */
   onEdit?: () => void
@@ -72,10 +54,10 @@ interface IdentitySectionProps {
 /**
  * IdentitySection - Unified component for Identity & Classification
  *
- * Handles all three modes:
- * - create: Full form for wizard step (Step 1)
- * - view: Read-only card grid for detail page with in-place editing
- * - edit: Same layout as view but fields are editable
+ * Guidewire PCH Architecture:
+ * - Same card-based layout in all modes (create, view, edit)
+ * - Consistent field groupings across wizard and detail view
+ * - Mode determines editability, not layout
  */
 export function IdentitySection({
   mode,
@@ -115,8 +97,21 @@ export function IdentitySection({
     setIsEditing(true)
   }
 
-  const isPerson = data.accountType === 'person'
+  const handleToggleIndustry = (industry: string) => {
+    if (onToggleIndustry) {
+      onToggleIndustry(industry)
+    } else {
+      const isSelected = data.industries.includes(industry)
+      const newIndustries = isSelected
+        ? data.industries.filter((i) => i !== industry)
+        : [...data.industries, industry]
+      handleChange('industries', newIndustries)
+    }
+  }
+
+  // Editable in create mode or when explicitly editing
   const isEditable = mode === 'create' || isEditing
+  const isCreateMode = mode === 'create'
 
   // Convert constants to option format for UnifiedField
   const industryOptions = INDUSTRIES.map(i => ({ value: i.value, label: i.label, icon: i.icon }))
@@ -128,309 +123,50 @@ export function IdentitySection({
   const revenueOptions = REVENUE_RANGES.map(r => ({ value: r.value, label: r.label }))
   const ownershipOptions = OWNERSHIP_TYPES.map(o => ({ value: o.value, label: o.label }))
 
-  // ============ CREATE MODE ============
-  if (mode === 'create') {
-    return (
-      <div className={cn('space-y-10', className)}>
-        {/* Account Type Selection */}
-        <SectionWrapper
-          icon={Building2}
-          title="Account Type"
-          subtitle="Select the entity type for this account"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <AccountTypeCard
-              type="company"
-              selected={data.accountType === 'company'}
-              onSelect={() => handleChange('accountType', 'company')}
-            />
-            <AccountTypeCard
-              type="person"
-              selected={data.accountType === 'person'}
-              onSelect={() => handleChange('accountType', 'person')}
-            />
-          </div>
-        </SectionWrapper>
-
-        {/* Company Identity */}
-        <SectionWrapper
-          icon={Building2}
-          title="Company Identity"
-          subtitle="Legal entity details"
-        >
-          <FieldGrid cols={2}>
-            <div className="md:col-span-2 space-y-2">
-              <Label className="text-charcoal-700 font-medium">
-                {isPerson ? 'Full Name' : 'Company Name'} <span className="text-gold-500">*</span>
-              </Label>
-              <Input
-                value={data.name}
-                onChange={(e) => handleChange('name', e.target.value)}
-                placeholder={isPerson ? 'e.g., John Smith' : 'e.g., Acme Corporation'}
-                className="h-12 rounded-xl border-charcoal-200 bg-white"
-              />
-              {errors.name && (
-                <p className="text-xs text-error-600">{errors.name}</p>
-              )}
-            </div>
-
-            {!isPerson && (
-              <>
-                <div className="space-y-2">
-                  <Label className="text-charcoal-700 font-medium">Legal Name</Label>
-                  <Input
-                    value={data.legalName}
-                    onChange={(e) => handleChange('legalName', e.target.value)}
-                    placeholder="e.g., Acme International, LLC"
-                    className="h-12 rounded-xl border-charcoal-200 bg-white"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-charcoal-700 font-medium">DBA (Doing Business As)</Label>
-                  <Input
-                    value={data.dba}
-                    onChange={(e) => handleChange('dba', e.target.value)}
-                    placeholder="e.g., Acme Tech"
-                    className="h-12 rounded-xl border-charcoal-200 bg-white"
-                  />
-                </div>
-              </>
-            )}
-          </FieldGrid>
-        </SectionWrapper>
-
-        {/* Classification */}
-        <SectionWrapper
-          icon={Tag}
-          title="Classification"
-          subtitle="Business categorization and tier"
-        >
-          <div className="space-y-6">
-            {/* Industries Multi-Select */}
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">
-                Industries <span className="text-gold-500">*</span>
-              </Label>
-              <div className="flex flex-wrap gap-2">
-                {INDUSTRIES.map((industry) => {
-                  const isSelected = data.industries.includes(industry.value)
-                  return (
-                    <button
-                      key={industry.value}
-                      type="button"
-                      onClick={() => {
-                        if (onToggleIndustry) {
-                          onToggleIndustry(industry.value)
-                        } else {
-                          const newIndustries = isSelected
-                            ? data.industries.filter((i) => i !== industry.value)
-                            : [...data.industries, industry.value]
-                          handleChange('industries', newIndustries)
-                        }
-                      }}
-                      className={cn(
-                        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200',
-                        isSelected
-                          ? 'bg-gradient-to-r from-hublot-800 to-hublot-900 text-white shadow-sm'
-                          : 'bg-charcoal-100 text-charcoal-700 hover:bg-charcoal-200'
-                      )}
-                    >
-                      <span>{industry.icon}</span>
-                      {industry.label}
-                      {isSelected && <CheckCircle2 className="w-3.5 h-3.5 ml-0.5" />}
-                    </button>
-                  )
-                })}
-              </div>
-              {errors.industries && (
-                <p className="text-xs text-error-600">{errors.industries}</p>
-              )}
-            </div>
-
-            {/* Company Type, Tier, Segment */}
-            <FieldGrid cols={3}>
-              <div className="space-y-2">
-                <Label className="text-charcoal-700 font-medium">Company Type</Label>
-                <Select
-                  value={data.companyType}
-                  onValueChange={(v) => handleChange('companyType', v)}
-                >
-                  <SelectTrigger className="h-12 rounded-xl border-charcoal-200 bg-white">
-                    <SelectValue placeholder="Select type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {COMPANY_TYPES.map((type) => (
-                      <SelectItem key={type.value} value={type.value}>
-                        {type.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-charcoal-700 font-medium">Partnership Tier</Label>
-                <Select
-                  value={data.tier}
-                  onValueChange={(v) => handleChange('tier', v)}
-                >
-                  <SelectTrigger className="h-12 rounded-xl border-charcoal-200 bg-white">
-                    <SelectValue placeholder="No tier assigned" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {PARTNERSHIP_TIERS.map((tier) => (
-                      <SelectItem key={tier.value} value={tier.value}>
-                        {tier.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-charcoal-700 font-medium">Market Segment</Label>
-                <Select
-                  value={data.segment}
-                  onValueChange={(v) => handleChange('segment', v)}
-                >
-                  <SelectTrigger className="h-12 rounded-xl border-charcoal-200 bg-white">
-                    <SelectValue placeholder="No segment assigned" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {COMPANY_SEGMENTS.map((segment) => (
-                      <SelectItem key={segment.value} value={segment.value}>
-                        {segment.icon} {segment.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </FieldGrid>
-          </div>
-        </SectionWrapper>
-
-        {/* Registration & Contact */}
-        <SectionWrapper
-          icon={Landmark}
-          title="Registration & Contact"
-          subtitle="Tax information and primary contact details"
-        >
-          <FieldGrid cols={2}>
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">
-                {isPerson ? 'SSN' : 'Tax ID (EIN)'}
-              </Label>
-              <TaxIdInput
-                value={data.taxId}
-                onChange={(v) => handleChange('taxId', v)}
-                isPerson={isPerson}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">Primary Email</Label>
-              <Input
-                type="email"
-                value={data.email}
-                onChange={(e) => handleChange('email', e.target.value)}
-                placeholder="contact@example.com"
-                className="h-12 rounded-xl border-charcoal-200 bg-white"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">Primary Phone</Label>
-              <PhoneInput
-                value={data.phone}
-                onChange={(v) => handleChange('phone', v)}
-              />
-            </div>
-
-            {!isPerson && (
-              <div className="space-y-2">
-                <Label className="text-charcoal-700 font-medium">Founded Year</Label>
-                <Input
-                  type="number"
-                  value={data.foundedYear}
-                  onChange={(e) => handleChange('foundedYear', e.target.value)}
-                  placeholder="2020"
-                  min={1800}
-                  max={new Date().getFullYear()}
-                  className="h-12 rounded-xl border-charcoal-200 bg-white"
-                />
-              </div>
-            )}
-          </FieldGrid>
-        </SectionWrapper>
-
-        {/* Digital Presence */}
-        <SectionWrapper
-          icon={Globe}
-          title="Digital Presence"
-          subtitle="Website and social media profiles"
-        >
-          <FieldGrid cols={2}>
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">Company Website</Label>
-              <Input
-                type="url"
-                value={data.website}
-                onChange={(e) => handleChange('website', e.target.value)}
-                placeholder="https://example.com"
-                className="h-12 rounded-xl border-charcoal-200 bg-white"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">LinkedIn URL</Label>
-              <Input
-                type="url"
-                value={data.linkedinUrl}
-                onChange={(e) => handleChange('linkedinUrl', e.target.value)}
-                placeholder="https://linkedin.com/company/..."
-                className="h-12 rounded-xl border-charcoal-200 bg-white"
-              />
-            </div>
-          </FieldGrid>
-        </SectionWrapper>
-
-        {/* Company Description */}
-        <SectionWrapper
-          icon={Building2}
-          title="Company Description"
-          subtitle="Brief description of the company"
-        >
-          <Textarea
-            value={data.description}
-            onChange={(e) => handleChange('description', e.target.value)}
-            placeholder="Brief description of the company, what they do, and their key business areas..."
-            className="min-h-[120px] rounded-xl border-charcoal-200 bg-white resize-none"
-            maxLength={500}
-          />
-          <p className="text-xs text-charcoal-400 text-right">
-            {(data.description || '').length}/500 characters
-          </p>
-        </SectionWrapper>
-      </div>
-    )
-  }
-
-  // ============ VIEW/EDIT MODE - In-Place Editing ============
   return (
     <div className={cn('space-y-6', className)}>
-      {/* Section Header with Edit/Save/Cancel */}
-      <SectionHeader
-        title="Identity & Classification"
-        subtitle="Company details, registration, and industry classification"
-        mode={isEditing ? 'edit' : 'view'}
-        onEdit={handleEdit}
-        onSave={handleSave}
-        onCancel={handleCancel}
-        isSaving={isSaving}
-      />
+      {/* Section Header - only show Edit/Save/Cancel in view/edit mode */}
+      {!isCreateMode && (
+        <SectionHeader
+          title="Identity & Classification"
+          subtitle="Company details, registration, and industry classification"
+          mode={isEditing ? 'edit' : 'view'}
+          onEdit={handleEdit}
+          onSave={handleSave}
+          onCancel={handleCancel}
+          isSaving={isSaving}
+        />
+      )}
 
-      {/* Cards Grid */}
+      {/* Account Type Selection - only in create mode */}
+      {isCreateMode && (
+        <Card className="shadow-elevation-sm">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-2">
+              <div className="p-2 bg-gold-50 rounded-lg">
+                <Building2 className="w-4 h-4 text-gold-600" />
+              </div>
+              <CardTitle className="text-base font-heading">Account Type</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <AccountTypeCard
+                type="company"
+                selected={data.accountType === 'company'}
+                onSelect={() => handleChange('accountType', 'company')}
+              />
+              <AccountTypeCard
+                type="person"
+                selected={data.accountType === 'person'}
+                onSelect={() => handleChange('accountType', 'person')}
+              />
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Cards Grid - Same structure in all modes */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Company Identity Card */}
         <Card className="shadow-elevation-sm hover:shadow-elevation-md transition-shadow">
@@ -450,18 +186,21 @@ export function IdentitySection({
               editable={isEditable}
               required
               error={errors?.name}
+              placeholder="e.g., Acme Corporation"
             />
             <UnifiedField
               label="Legal Name"
               value={data.legalName}
               onChange={(v) => handleChange('legalName', v)}
               editable={isEditable}
+              placeholder="e.g., Acme International, LLC"
             />
             <UnifiedField
               label="DBA / Trade Name"
               value={data.dba}
               onChange={(v) => handleChange('dba', v)}
               editable={isEditable}
+              placeholder="e.g., Acme Tech"
             />
             <UnifiedField
               label="Relationship Type"
@@ -485,16 +224,57 @@ export function IdentitySection({
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <UnifiedField
-              label="Industries"
-              type="multiSelect"
-              options={industryOptions}
-              value={data.industries}
-              onChange={(v) => handleChange('industries', v)}
-              editable={isEditable}
-              required
-              error={errors?.industries}
-            />
+            {/* Industries - custom multi-select with chips */}
+            <div className="space-y-2">
+              <label className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
+                Industries {isEditable && <span className="text-gold-500">*</span>}
+              </label>
+              {isEditable ? (
+                <div className="flex flex-wrap gap-2">
+                  {INDUSTRIES.map((industry) => {
+                    const isSelected = data.industries.includes(industry.value)
+                    return (
+                      <button
+                        key={industry.value}
+                        type="button"
+                        onClick={() => handleToggleIndustry(industry.value)}
+                        className={cn(
+                          'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200',
+                          isSelected
+                            ? 'bg-gradient-to-r from-hublot-800 to-hublot-900 text-white shadow-sm'
+                            : 'bg-charcoal-100 text-charcoal-700 hover:bg-charcoal-200'
+                        )}
+                      >
+                        <span>{industry.icon}</span>
+                        {industry.label}
+                        {isSelected && <CheckCircle2 className="w-3.5 h-3.5 ml-0.5" />}
+                      </button>
+                    )
+                  })}
+                </div>
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {data.industries.length > 0 ? (
+                    data.industries.map((ind) => {
+                      const industry = INDUSTRIES.find(i => i.value === ind)
+                      return (
+                        <span
+                          key={ind}
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-sm bg-charcoal-100 text-charcoal-700"
+                        >
+                          {industry?.icon} {industry?.label || ind}
+                        </span>
+                      )
+                    })
+                  ) : (
+                    <span className="text-charcoal-400 text-sm">Not specified</span>
+                  )}
+                </div>
+              )}
+              {errors?.industries && (
+                <p className="text-xs text-error-600">{errors.industries}</p>
+              )}
+            </div>
             <UnifiedField
               label="Segment"
               type="select"
@@ -502,6 +282,7 @@ export function IdentitySection({
               value={data.segment}
               onChange={(v) => handleChange('segment', v)}
               editable={isEditable}
+              placeholder="Select segment"
             />
             <UnifiedField
               label="Tier"
@@ -511,6 +292,7 @@ export function IdentitySection({
               onChange={(v) => handleChange('tier', v)}
               editable={isEditable}
               badge={!isEditable}
+              placeholder="Select tier"
             />
             <UnifiedField
               label="Status"
@@ -537,12 +319,20 @@ export function IdentitySection({
           </CardHeader>
           <CardContent className="space-y-4">
             <UnifiedField
+              label="Tax ID (EIN)"
+              value={data.taxId}
+              onChange={(v) => handleChange('taxId', v)}
+              editable={isEditable}
+              placeholder="XX-XXXXXXX"
+            />
+            <UnifiedField
               label="Ownership Type"
               type="select"
               options={ownershipOptions}
               value={data.ownershipType}
               onChange={(v) => handleChange('ownershipType', v)}
               editable={isEditable}
+              placeholder="Select ownership type"
             />
             <UnifiedField
               label="Founded Year"
@@ -552,6 +342,7 @@ export function IdentitySection({
               editable={isEditable}
               min={1800}
               max={new Date().getFullYear()}
+              placeholder="e.g., 2020"
             />
             <UnifiedField
               label="Employee Range"
@@ -560,6 +351,7 @@ export function IdentitySection({
               value={data.employeeRange}
               onChange={(v) => handleChange('employeeRange', v)}
               editable={isEditable}
+              placeholder="Select range"
             />
             <UnifiedField
               label="Revenue Range"
@@ -568,6 +360,7 @@ export function IdentitySection({
               value={data.revenueRange}
               onChange={(v) => handleChange('revenueRange', v)}
               editable={isEditable}
+              placeholder="Select range"
             />
           </CardContent>
         </Card>
@@ -618,25 +411,23 @@ export function IdentitySection({
         </Card>
       </div>
 
-      {/* Description Card */}
-      {(data.description || isEditable) && (
-        <Card className="shadow-elevation-sm">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base font-heading">Description</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <UnifiedField
-              label=""
-              type="textarea"
-              value={data.description}
-              onChange={(v) => handleChange('description', v)}
-              editable={isEditable}
-              placeholder="Brief description of the company..."
-              maxLength={500}
-            />
-          </CardContent>
-        </Card>
-      )}
+      {/* Description Card - full width */}
+      <Card className="shadow-elevation-sm">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base font-heading">Description</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <UnifiedField
+            label=""
+            type="textarea"
+            value={data.description}
+            onChange={(v) => handleChange('description', v)}
+            editable={isEditable}
+            placeholder="Brief description of the company, what they do, and their key business areas..."
+            maxLength={500}
+          />
+        </CardContent>
+      </Card>
     </div>
   )
 }
@@ -687,42 +478,6 @@ function AccountTypeCard({ type, selected, onSelect }: AccountTypeCardProps) {
           : 'Individual consultant or sole proprietor'}
       </p>
     </button>
-  )
-}
-
-interface TaxIdInputProps {
-  value: string
-  onChange: (value: string) => void
-  isPerson: boolean
-}
-
-function TaxIdInput({ value, onChange, isPerson }: TaxIdInputProps) {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const input = e.target.value.replace(/\D/g, '')
-    let formatted = input
-
-    if (isPerson) {
-      // SSN format: XXX-XX-XXXX
-      if (input.length <= 3) formatted = input
-      else if (input.length <= 5) formatted = `${input.slice(0, 3)}-${input.slice(3)}`
-      else formatted = `${input.slice(0, 3)}-${input.slice(3, 5)}-${input.slice(5, 9)}`
-    } else {
-      // EIN format: XX-XXXXXXX
-      if (input.length <= 2) formatted = input
-      else formatted = `${input.slice(0, 2)}-${input.slice(2, 9)}`
-    }
-
-    onChange(formatted)
-  }
-
-  return (
-    <Input
-      type="text"
-      value={value}
-      onChange={handleChange}
-      placeholder={isPerson ? 'XXX-XX-XXXX' : 'XX-XXXXXXX'}
-      className="h-12 rounded-xl border-charcoal-200 bg-white"
-    />
   )
 }
 

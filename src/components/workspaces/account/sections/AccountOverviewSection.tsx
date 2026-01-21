@@ -133,23 +133,22 @@ export function AccountOverviewSection({
 
   return (
     <div className="space-y-6">
-      {/* Premium KPI Grid */}
+      {/* Premium KPI Grid - Clean monochromatic design */}
       <div className="grid grid-cols-4 gap-4">
         {/* Health Score - Premium Card */}
-        <div 
-          className="group relative overflow-hidden rounded-xl border border-charcoal-200/60 bg-gradient-to-br from-white via-white to-charcoal-50/50 p-5 shadow-elevation-sm hover:shadow-elevation-md transition-all duration-300 animate-fade-in"
+        <div
+          className="group relative overflow-hidden rounded-xl border border-charcoal-200/60 bg-white p-5 shadow-elevation-sm hover:shadow-elevation-md hover:-translate-y-0.5 transition-all duration-300 animate-fade-in"
           style={getDelay(0)}
         >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-gold-200/20 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform duration-500" />
-          <div className="relative flex items-start justify-between">
+          <div className="flex items-start justify-between">
             <div className="space-y-2">
-              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Health Score</p>
+              <p className="text-[11px] font-medium text-charcoal-400 uppercase tracking-wider">Health Score</p>
               <div className="flex items-baseline gap-2">
                 <span className={cn(
                   "text-3xl font-bold tracking-tight",
-                  healthConfig.variant === 'success' && "text-success-600",
-                  healthConfig.variant === 'warning' && "text-amber-600",
-                  healthConfig.variant === 'error' && "text-error-600",
+                  healthConfig.variant === 'success' && "text-charcoal-900",
+                  healthConfig.variant === 'warning' && "text-charcoal-700",
+                  healthConfig.variant === 'error' && "text-charcoal-600",
                   !healthConfig.variant && "text-charcoal-400"
                 )}>
                   {account.health_score ?? '—'}
@@ -160,137 +159,109 @@ export function AccountOverviewSection({
               </div>
               <div className="flex items-center gap-1.5">
                 <span className={cn(
-                  "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium",
-                  healthConfig.variant === 'success' && "bg-success-50 text-success-700",
-                  healthConfig.variant === 'warning' && "bg-amber-50 text-amber-700",
-                  healthConfig.variant === 'error' && "bg-error-50 text-error-700",
-                  !healthConfig.variant && "bg-charcoal-100 text-charcoal-500"
+                  "inline-flex items-center gap-1.5 text-xs font-medium",
+                  healthConfig.variant === 'success' && "text-charcoal-600",
+                  healthConfig.variant === 'warning' && "text-amber-600",
+                  healthConfig.variant === 'error' && "text-error-600",
+                  !healthConfig.variant && "text-charcoal-400"
                 )}>
+                  <span className={cn(
+                    "w-2 h-2 rounded-full",
+                    healthConfig.variant === 'success' && "bg-charcoal-600",
+                    healthConfig.variant === 'warning' && "bg-amber-500",
+                    healthConfig.variant === 'error' && "bg-error-500",
+                    !healthConfig.variant && "bg-charcoal-300"
+                  )} />
                   {healthConfig.label}
                 </span>
               </div>
             </div>
-            <div className={cn(
-              "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-105",
-              healthConfig.variant === 'success' && "bg-gradient-to-br from-success-100 to-success-50",
-              healthConfig.variant === 'warning' && "bg-gradient-to-br from-amber-100 to-amber-50",
-              healthConfig.variant === 'error' && "bg-gradient-to-br from-error-100 to-error-50",
-              !healthConfig.variant && "bg-gradient-to-br from-charcoal-100 to-charcoal-50"
-            )}>
-              <Heart className={cn(
-                "h-6 w-6",
-                healthConfig.variant === 'success' && "text-success-600",
-                healthConfig.variant === 'warning' && "text-amber-600",
-                healthConfig.variant === 'error' && "text-error-600",
-                !healthConfig.variant && "text-charcoal-400"
-              )} />
+            <div className="w-11 h-11 rounded-lg bg-charcoal-100 flex items-center justify-center transition-all duration-300 group-hover:bg-charcoal-200">
+              <Heart className="h-5 w-5 text-charcoal-500 group-hover:text-charcoal-700 transition-colors" />
             </div>
           </div>
         </div>
 
         {/* Revenue YTD */}
-        <div 
-          className="group relative overflow-hidden rounded-xl border border-charcoal-200/60 bg-gradient-to-br from-white via-white to-forest-50/30 p-5 shadow-elevation-sm hover:shadow-elevation-md transition-all duration-300 animate-fade-in"
+        <div
+          className="group relative overflow-hidden rounded-xl border border-charcoal-200/60 bg-white p-5 shadow-elevation-sm hover:shadow-elevation-md hover:-translate-y-0.5 transition-all duration-300 animate-fade-in"
           style={getDelay(1)}
         >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-forest-200/20 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform duration-500" />
-          <div className="relative flex items-start justify-between">
+          <div className="flex items-start justify-between">
             <div className="space-y-2">
-              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Revenue YTD</p>
+              <p className="text-[11px] font-medium text-charcoal-400 uppercase tracking-wider">Revenue YTD</p>
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-forest-600 tracking-tight">
+                <span className="text-3xl font-bold text-charcoal-900 tracking-tight">
                   {formatCurrency(account.revenue_ytd)}
                 </span>
               </div>
               {account.avg_margin_percentage && (
                 <div className="flex items-center gap-1.5">
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-forest-50 text-forest-700">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-medium text-charcoal-600">
                     <TrendingUp className="h-3 w-3" />
                     {account.avg_margin_percentage.toFixed(0)}% margin
                   </span>
                 </div>
               )}
             </div>
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-forest-100 to-forest-50 flex items-center justify-center transition-all duration-300 group-hover:scale-105">
-              <DollarSign className="h-6 w-6 text-forest-600" />
+            <div className="w-11 h-11 rounded-lg bg-charcoal-100 flex items-center justify-center transition-all duration-300 group-hover:bg-charcoal-200">
+              <DollarSign className="h-5 w-5 text-charcoal-500 group-hover:text-charcoal-700 transition-colors" />
             </div>
           </div>
         </div>
 
         {/* Active Jobs */}
-        <div 
-          className="group relative overflow-hidden rounded-xl border border-charcoal-200/60 bg-gradient-to-br from-white via-white to-blue-50/30 p-5 shadow-elevation-sm hover:shadow-elevation-md transition-all duration-300 cursor-pointer animate-fade-in"
+        <div
+          className="group relative overflow-hidden rounded-xl border border-charcoal-200/60 bg-white p-5 shadow-elevation-sm hover:shadow-elevation-md hover:-translate-y-0.5 transition-all duration-300 cursor-pointer animate-fade-in"
           style={getDelay(2)}
           onClick={() => onNavigate('jobs')}
         >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-200/20 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform duration-500" />
-          <div className="relative flex items-start justify-between">
+          <div className="flex items-start justify-between">
             <div className="space-y-2">
-              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Active Jobs</p>
+              <p className="text-[11px] font-medium text-charcoal-400 uppercase tracking-wider">Active Jobs</p>
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-blue-600 tracking-tight">
+                <span className="text-3xl font-bold text-charcoal-900 tracking-tight">
                   {activeJobs.length}
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700">
+                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-charcoal-500">
                   <Briefcase className="h-3 w-3" />
                   {jobs.length} total
                 </span>
               </div>
             </div>
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center transition-all duration-300 group-hover:scale-105">
-              <Briefcase className="h-6 w-6 text-blue-600" />
+            <div className="w-11 h-11 rounded-lg bg-charcoal-100 flex items-center justify-center transition-all duration-300 group-hover:bg-charcoal-200">
+              <Briefcase className="h-5 w-5 text-charcoal-500 group-hover:text-charcoal-700 transition-colors" />
             </div>
           </div>
-          <ArrowRight className="absolute bottom-4 right-4 h-4 w-4 text-charcoal-300 group-hover:text-blue-500 group-hover:translate-x-1 transition-all duration-300" />
+          <ArrowRight className="absolute bottom-4 right-4 h-4 w-4 text-charcoal-300 group-hover:text-charcoal-500 group-hover:translate-x-1 transition-all duration-300" />
         </div>
 
         {/* Fill Rate */}
-        <div 
-          className="group relative overflow-hidden rounded-xl border border-charcoal-200/60 bg-gradient-to-br from-white via-white to-gold-50/30 p-5 shadow-elevation-sm hover:shadow-elevation-md transition-all duration-300 animate-fade-in"
+        <div
+          className="group relative overflow-hidden rounded-xl border border-charcoal-200/60 bg-white p-5 shadow-elevation-sm hover:shadow-elevation-md hover:-translate-y-0.5 transition-all duration-300 animate-fade-in"
           style={getDelay(3)}
         >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-gold-200/20 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-110 transition-transform duration-500" />
-          <div className="relative flex items-start justify-between">
+          <div className="flex items-start justify-between">
             <div className="space-y-2">
-              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Fill Rate</p>
+              <p className="text-[11px] font-medium text-charcoal-400 uppercase tracking-wider">Fill Rate</p>
               <div className="flex items-baseline gap-2">
-                <span className={cn(
-                  "text-3xl font-bold tracking-tight",
-                  fillRate !== null && fillRate >= 70 ? "text-success-600" :
-                  fillRate !== null && fillRate < 50 ? "text-amber-600" :
-                  "text-gold-600"
-                )}>
+                <span className="text-3xl font-bold text-charcoal-900 tracking-tight">
                   {fillRate !== null ? `${fillRate}%` : '—'}
                 </span>
               </div>
               {totalJobs > 0 && (
                 <div className="flex items-center gap-1.5">
-                  <span className={cn(
-                    "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium",
-                    fillRate !== null && fillRate >= 70 ? "bg-success-50 text-success-700" :
-                    fillRate !== null && fillRate < 50 ? "bg-amber-50 text-amber-700" :
-                    "bg-gold-50 text-gold-700"
-                  )}>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-medium text-charcoal-500">
                     <Target className="h-3 w-3" />
                     {filledJobs}/{totalJobs} filled
                   </span>
                 </div>
               )}
             </div>
-            <div className={cn(
-              "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-105",
-              fillRate !== null && fillRate >= 70 ? "bg-gradient-to-br from-success-100 to-success-50" :
-              fillRate !== null && fillRate < 50 ? "bg-gradient-to-br from-amber-100 to-amber-50" :
-              "bg-gradient-to-br from-gold-100 to-gold-50"
-            )}>
-              <BarChart3 className={cn(
-                "h-6 w-6",
-                fillRate !== null && fillRate >= 70 ? "text-success-600" :
-                fillRate !== null && fillRate < 50 ? "text-amber-600" :
-                "text-gold-600"
-              )} />
+            <div className="w-11 h-11 rounded-lg bg-charcoal-100 flex items-center justify-center transition-all duration-300 group-hover:bg-charcoal-200">
+              <BarChart3 className="h-5 w-5 text-charcoal-500 group-hover:text-charcoal-700 transition-colors" />
             </div>
           </div>
         </div>
@@ -302,21 +273,21 @@ export function AccountOverviewSection({
         <div className="col-span-8 space-y-6">
           {/* Company Overview Card */}
           <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(4)}>
-            <div className="px-6 py-4 border-b border-charcoal-100 bg-gradient-to-r from-charcoal-50/50 to-transparent">
+            <div className="px-6 py-4 border-b border-charcoal-100">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-forest-500 to-forest-600 flex items-center justify-center shadow-sm">
-                    <Building2 className="h-5 w-5 text-white" />
+                  <div className="w-10 h-10 rounded-lg bg-charcoal-100 flex items-center justify-center">
+                    <Building2 className="h-5 w-5 text-charcoal-600" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-charcoal-900">Company Details</h3>
                     <p className="text-xs text-charcoal-500">Core business information</p>
                   </div>
                 </div>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="text-xs text-charcoal-500 hover:text-charcoal-700"
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-xs text-charcoal-500 hover:text-charcoal-700 hover:bg-charcoal-100"
                   onClick={() => onNavigate('edit')}
                 >
                   <ExternalLink className="h-3.5 w-3.5 mr-1" />
@@ -382,18 +353,18 @@ export function AccountOverviewSection({
 
           {/* Action Items Card */}
           <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(8)}>
-            <div className="px-6 py-4 border-b border-charcoal-100 bg-gradient-to-r from-amber-50/50 to-transparent">
+            <div className="px-6 py-4 border-b border-charcoal-100">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shadow-sm">
-                    <Zap className="h-5 w-5 text-white" />
+                  <div className="w-10 h-10 rounded-lg bg-charcoal-100 flex items-center justify-center">
+                    <Zap className="h-5 w-5 text-charcoal-600" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-charcoal-900">Action Items</h3>
                     <p className="text-xs text-charcoal-500">Pending tasks and follow-ups</p>
                   </div>
                 </div>
-                <Button variant="ghost" size="sm" onClick={() => onNavigate('activities')} className="text-xs text-charcoal-500 hover:text-charcoal-700">
+                <Button variant="ghost" size="sm" onClick={() => onNavigate('activities')} className="text-xs text-charcoal-500 hover:text-charcoal-700 hover:bg-charcoal-100">
                   View All <ArrowRight className="h-3.5 w-3.5 ml-1" />
                 </Button>
               </div>
@@ -479,15 +450,15 @@ export function AccountOverviewSection({
         <div className="col-span-4 space-y-6">
           {/* Primary Contact Card */}
           <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(4)}>
-            <div className="px-5 py-4 border-b border-charcoal-100 bg-gradient-to-r from-gold-50/50 to-transparent">
+            <div className="px-5 py-4 border-b border-charcoal-100">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-gold-500 to-gold-600 flex items-center justify-center shadow-sm">
-                    <Star className="h-4 w-4 text-white fill-white" />
+                  <div className="w-8 h-8 rounded-lg bg-charcoal-100 flex items-center justify-center">
+                    <Star className="h-4 w-4 text-charcoal-600" />
                   </div>
                   <h3 className="font-semibold text-charcoal-900 text-sm">Primary Contact</h3>
                 </div>
-                <Button variant="ghost" size="sm" onClick={() => onNavigate('contacts')} className="text-xs text-charcoal-500 hover:text-charcoal-700 h-7 px-2">
+                <Button variant="ghost" size="sm" onClick={() => onNavigate('contacts')} className="text-xs text-charcoal-500 hover:text-charcoal-700 hover:bg-charcoal-100 h-7 px-2">
                   All <ArrowRight className="h-3 w-3 ml-1" />
                 </Button>
               </div>
@@ -496,8 +467,8 @@ export function AccountOverviewSection({
               {primaryContact ? (
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center shadow-sm">
-                      <span className="text-base font-semibold text-charcoal-900">
+                    <div className="w-12 h-12 rounded-full bg-charcoal-200 flex items-center justify-center">
+                      <span className="text-base font-semibold text-charcoal-700">
                         {primaryContact.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
                       </span>
                     </div>
@@ -562,46 +533,46 @@ export function AccountOverviewSection({
           <TeamAssignmentsCard account={account} getDelay={getDelay} />
 
           {/* Quick Stats Card */}
-          <div className="rounded-xl border border-charcoal-200/60 bg-gradient-to-br from-forest-600 via-forest-700 to-forest-800 text-white shadow-elevation-md overflow-hidden animate-slide-up" style={getDelay(6)}>
-            <div className="px-5 py-4 border-b border-white/10">
+          <div className="rounded-xl border border-charcoal-200/60 bg-charcoal-50 shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(6)}>
+            <div className="px-5 py-4 border-b border-charcoal-200/60">
               <div className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-gold-400" />
-                <h3 className="font-semibold text-white/95 text-sm">Quick Stats</h3>
+                <Sparkles className="h-4 w-4 text-charcoal-500" />
+                <h3 className="font-semibold text-charcoal-900 text-sm">Quick Stats</h3>
               </div>
             </div>
             <div className="p-5 space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
-                    <Users className="h-4 w-4 text-white/80" />
+                  <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center border border-charcoal-200/60">
+                    <Users className="h-4 w-4 text-charcoal-500" />
                   </div>
-                  <span className="text-sm text-white/80">Contacts</span>
+                  <span className="text-sm text-charcoal-600">Contacts</span>
                 </div>
-                <span className="text-lg font-semibold text-white">{contacts.length}</span>
+                <span className="text-lg font-semibold text-charcoal-900">{contacts.length}</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
-                    <Briefcase className="h-4 w-4 text-white/80" />
+                  <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center border border-charcoal-200/60">
+                    <Briefcase className="h-4 w-4 text-charcoal-500" />
                   </div>
-                  <span className="text-sm text-white/80">Total Jobs</span>
+                  <span className="text-sm text-charcoal-600">Total Jobs</span>
                 </div>
-                <span className="text-lg font-semibold text-white">{jobs.length}</span>
+                <span className="text-lg font-semibold text-charcoal-900">{jobs.length}</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
-                    <Activity className="h-4 w-4 text-white/80" />
+                  <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center border border-charcoal-200/60">
+                    <Activity className="h-4 w-4 text-charcoal-500" />
                   </div>
-                  <span className="text-sm text-white/80">Activities</span>
+                  <span className="text-sm text-charcoal-600">Activities</span>
                 </div>
-                <span className="text-lg font-semibold text-white">{activities.length}</span>
+                <span className="text-lg font-semibold text-charcoal-900">{activities.length}</span>
               </div>
-              <div className="pt-3 border-t border-white/10">
+              <div className="pt-3 border-t border-charcoal-200/60">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-white/60 uppercase tracking-wider">Last Activity</span>
-                  <span className="text-sm font-medium text-gold-400">
-                    {recentActivities[0] 
+                  <span className="text-[10px] text-charcoal-500 uppercase tracking-wider">Last Activity</span>
+                  <span className="text-sm font-medium text-charcoal-700">
+                    {recentActivities[0]
                       ? formatDistanceToNow(new Date(recentActivities[0].createdAt), { addSuffix: true })
                       : 'Never'}
                   </span>
@@ -614,18 +585,18 @@ export function AccountOverviewSection({
 
       {/* Recent Activity - Full Width */}
       <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(6)}>
-        <div className="px-6 py-4 border-b border-charcoal-100 bg-gradient-to-r from-charcoal-50/50 to-transparent">
+        <div className="px-6 py-4 border-b border-charcoal-100">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-charcoal-600 to-charcoal-700 flex items-center justify-center shadow-sm">
-                <Activity className="h-5 w-5 text-white" />
+              <div className="w-10 h-10 rounded-lg bg-charcoal-100 flex items-center justify-center">
+                <Activity className="h-5 w-5 text-charcoal-600" />
               </div>
               <div>
                 <h3 className="font-semibold text-charcoal-900">Recent Activity</h3>
                 <p className="text-xs text-charcoal-500">Latest interactions with this account</p>
               </div>
             </div>
-            <Button variant="ghost" size="sm" onClick={() => onNavigate('activities')} className="text-xs text-charcoal-500 hover:text-charcoal-700">
+            <Button variant="ghost" size="sm" onClick={() => onNavigate('activities')} className="text-xs text-charcoal-500 hover:text-charcoal-700 hover:bg-charcoal-100">
               View All <ArrowRight className="h-3.5 w-3.5 ml-1" />
             </Button>
           </div>
@@ -877,10 +848,10 @@ function CorporateProfileCard({
 
   return (
     <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(5)}>
-      <div className="px-6 py-4 border-b border-charcoal-100 bg-gradient-to-r from-violet-50/50 to-transparent">
+      <div className="px-6 py-4 border-b border-charcoal-100">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-violet-500 to-violet-600 flex items-center justify-center shadow-sm">
-            <Landmark className="h-5 w-5 text-white" />
+          <div className="w-10 h-10 rounded-lg bg-charcoal-100 flex items-center justify-center">
+            <Landmark className="h-5 w-5 text-charcoal-600" />
           </div>
           <div>
             <h3 className="font-semibold text-charcoal-900">Corporate Profile</h3>
@@ -957,10 +928,10 @@ function BillingTermsCard({
 
   return (
     <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(6)}>
-      <div className="px-6 py-4 border-b border-charcoal-100 bg-gradient-to-r from-emerald-50/50 to-transparent">
+      <div className="px-6 py-4 border-b border-charcoal-100">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-sm">
-            <CreditCard className="h-5 w-5 text-white" />
+          <div className="w-10 h-10 rounded-lg bg-charcoal-100 flex items-center justify-center">
+            <CreditCard className="h-5 w-5 text-charcoal-600" />
           </div>
           <div>
             <h3 className="font-semibold text-charcoal-900">Billing & Terms</h3>
@@ -1064,10 +1035,10 @@ function EngagementCard({
 
   return (
     <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(7)}>
-      <div className="px-6 py-4 border-b border-charcoal-100 bg-gradient-to-r from-sky-50/50 to-transparent">
+      <div className="px-6 py-4 border-b border-charcoal-100">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-sky-500 to-sky-600 flex items-center justify-center shadow-sm">
-            <MessageSquare className="h-5 w-5 text-white" />
+          <div className="w-10 h-10 rounded-lg bg-charcoal-100 flex items-center justify-center">
+            <MessageSquare className="h-5 w-5 text-charcoal-600" />
           </div>
           <div>
             <h3 className="font-semibold text-charcoal-900">Engagement Preferences</h3>
@@ -1187,10 +1158,10 @@ function TeamAssignmentsCard({
 
   return (
     <div className="rounded-xl border border-charcoal-200/60 bg-white shadow-elevation-sm overflow-hidden animate-slide-up" style={getDelay(5)}>
-      <div className="px-5 py-4 border-b border-charcoal-100 bg-gradient-to-r from-indigo-50/50 to-transparent">
+      <div className="px-5 py-4 border-b border-charcoal-100">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center shadow-sm">
-            <Users className="h-4 w-4 text-white" />
+          <div className="w-8 h-8 rounded-lg bg-charcoal-100 flex items-center justify-center">
+            <Users className="h-4 w-4 text-charcoal-600" />
           </div>
           <h3 className="font-semibold text-charcoal-900 text-sm">Team</h3>
         </div>
@@ -1221,37 +1192,26 @@ function TeamMemberRow({
   role,
   name,
   avatarUrl,
-  roleColor
 }: {
   role: string
   name: string
   avatarUrl: string | null
-  roleColor: 'gold' | 'blue' | 'green' | 'purple'
+  roleColor?: 'gold' | 'blue' | 'green' | 'purple'
 }) {
-  const colorClasses = {
-    gold: 'from-gold-400 to-gold-600',
-    blue: 'from-blue-400 to-blue-600',
-    green: 'from-emerald-400 to-emerald-600',
-    purple: 'from-violet-400 to-violet-600',
-  }
-
   return (
     <div className="flex items-center gap-3">
-      <div className={cn(
-        "w-10 h-10 rounded-full flex items-center justify-center shadow-sm bg-gradient-to-br",
-        colorClasses[roleColor]
-      )}>
+      <div className="w-10 h-10 rounded-full flex items-center justify-center bg-charcoal-200">
         {avatarUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={avatarUrl} alt={name} className="w-10 h-10 rounded-full object-cover" />
         ) : (
-          <span className="text-sm font-semibold text-white">
+          <span className="text-sm font-semibold text-charcoal-700">
             {name.split(' ').map(n => n[0]).join('').slice(0, 2)}
           </span>
         )}
       </div>
       <div className="min-w-0">
-        <p className="text-xs text-charcoal-500 uppercase tracking-wider">{role}</p>
+        <p className="text-[10px] text-charcoal-500 uppercase tracking-wider">{role}</p>
         <p className="font-medium text-charcoal-900 truncate">{name}</p>
       </div>
     </div>
