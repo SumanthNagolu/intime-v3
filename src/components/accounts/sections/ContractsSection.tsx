@@ -3,6 +3,7 @@
 import * as React from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -31,11 +32,10 @@ import {
   X,
   DollarSign,
   RefreshCw,
-  Loader2,
 } from 'lucide-react'
 import { FileUpload } from '@/components/ui/file-upload'
-import { SectionWrapper } from '../layouts/SectionHeader'
-import { CONTRACT_TYPES, CONTRACT_STATUSES, CURRENCIES, getLabel } from '@/lib/accounts/constants'
+import { SectionHeader } from '../fields/SectionHeader'
+import { CONTRACT_TYPES, CONTRACT_STATUSES, getLabel } from '@/lib/accounts/constants'
 import type { SectionMode, AccountContract, ContractsSectionData } from '@/lib/accounts/types'
 import { cn } from '@/lib/utils'
 import { v4 as uuidv4 } from 'uuid'
@@ -53,6 +53,8 @@ interface ContractsSectionProps {
   onUpdateContract?: (id: string, contract: Partial<AccountContract>) => void
   /** Handler for removing a contract */
   onRemoveContract?: (id: string) => void
+  /** Handler to enter edit mode (view mode) */
+  onEdit?: () => void
   /** Save handler (for edit mode) */
   onSave?: () => Promise<void>
   /** Cancel handler (for edit mode) */
@@ -80,10 +82,10 @@ const DEFAULT_CONTRACT: Partial<AccountContract> = {
 /**
  * ContractsSection - Unified component for Contracts & Agreements
  *
- * Handles all three modes:
- * - create: Table with inline add/edit panel for wizard step
- * - view: Read-only table for detail page
- * - edit: Table with add/edit panel
+ * Guidewire PCH Architecture:
+ * - Same card-based layout in all modes (create, view, edit)
+ * - Consistent table structure across wizard and detail view
+ * - Mode determines editability, not layout
  */
 export function ContractsSection({
   mode,
@@ -91,17 +93,41 @@ export function ContractsSection({
   onAddContract,
   onUpdateContract,
   onRemoveContract,
+  onEdit,
   onSave,
   onCancel,
   isSaving = false,
   errors = {},
   className,
 }: ContractsSectionProps) {
+  const [isEditing, setIsEditing] = React.useState(mode === 'edit')
   const [editingId, setEditingId] = React.useState<string | null>(null)
   const [isAddingNew, setIsAddingNew] = React.useState(false)
   const [currentContract, setCurrentContract] = React.useState<Partial<AccountContract>>(DEFAULT_CONTRACT)
 
+  // Reset editing state when mode changes
+  React.useEffect(() => {
+    setIsEditing(mode === 'edit')
+  }, [mode])
+
   const isPanelOpen = isAddingNew || editingId !== null
+  const isEditable = mode === 'create' || isEditing
+  const isCreateMode = mode === 'create'
+
+  const handleEdit = () => {
+    onEdit?.()
+    setIsEditing(true)
+  }
+
+  const handleSectionSave = async () => {
+    await onSave?.()
+    setIsEditing(false)
+  }
+
+  const handleSectionCancel = () => {
+    onCancel?.()
+    setIsEditing(false)
+  }
 
   const handleOpenAdd = () => {
     setEditingId(null)
@@ -113,6 +139,7 @@ export function ContractsSection({
   }
 
   const handleOpenEdit = (contract: AccountContract) => {
+    if (!isEditable) return
     setIsAddingNew(false)
     setEditingId(contract.id)
     setCurrentContract({ ...contract })
@@ -124,7 +151,7 @@ export function ContractsSection({
     setCurrentContract(DEFAULT_CONTRACT)
   }
 
-  const handleSave = () => {
+  const handleContractSave = () => {
     if (!currentContract.name) {
       return
     }
@@ -178,86 +205,137 @@ export function ContractsSection({
     }).format(num)
   }
 
-  // ============ CREATE MODE ============
-  if (mode === 'create') {
-    return (
-      <div className={cn('space-y-6', className)}>
-        <SectionWrapper
-          icon={FileText}
-          title="Contracts & Agreements"
-          subtitle="Manage legal documents and agreements"
-        >
-          <div className="flex flex-col gap-4">
-            {/* Add Button */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleOpenAdd}
-              className="mb-4 w-full border-dashed h-12 rounded-xl"
-              disabled={isPanelOpen}
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Contract
-            </Button>
+  return (
+    <div className={cn('space-y-6', className)}>
+      {/* Section Header - only show Edit/Save/Cancel in view/edit mode */}
+      {!isCreateMode && (
+        <SectionHeader
+          title="Contracts"
+          subtitle={`Legal documents and agreements (${data.contracts.length})`}
+          mode={isEditing ? 'edit' : 'view'}
+          onEdit={handleEdit}
+          onSave={handleSectionSave}
+          onCancel={handleSectionCancel}
+          isSaving={isSaving}
+        />
+      )}
 
-            {/* Contracts Table */}
-            {data.contracts.length > 0 ? (
-              <div className="border border-charcoal-200 rounded-xl overflow-hidden bg-white">
-                <Table>
-                  <TableHeader>
-                    <TableRow className="bg-charcoal-50/50">
-                      <TableHead className="font-semibold text-charcoal-700">Contract</TableHead>
-                      <TableHead className="font-semibold text-charcoal-700">Type</TableHead>
-                      <TableHead className="font-semibold text-charcoal-700">Status</TableHead>
-                      <TableHead className="font-semibold text-charcoal-700">Dates</TableHead>
+      {/* Contracts Card */}
+      <Card className="shadow-elevation-sm hover:shadow-elevation-md transition-shadow">
+        <CardHeader className="pb-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="p-2 bg-amber-50 rounded-lg">
+                <FileText className="w-4 h-4 text-amber-600" />
+              </div>
+              <CardTitle className="text-base font-heading">Contracts & Agreements</CardTitle>
+            </div>
+            {isEditable && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleOpenAdd}
+                className="gap-1.5"
+                disabled={isPanelOpen}
+              >
+                <Plus className="w-4 h-4" />
+                Add Contract
+              </Button>
+            )}
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {/* Contracts Table */}
+          {data.contracts.length > 0 ? (
+            <div className="border border-charcoal-200 rounded-lg overflow-hidden">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-charcoal-50/50">
+                    <TableHead className="font-semibold text-charcoal-700">Contract</TableHead>
+                    <TableHead className="font-semibold text-charcoal-700">Type</TableHead>
+                    <TableHead className="font-semibold text-charcoal-700">Status</TableHead>
+                    <TableHead className="font-semibold text-charcoal-700">Value</TableHead>
+                    <TableHead className="font-semibold text-charcoal-700">Dates</TableHead>
+                    {isEditable && (
                       <TableHead className="font-semibold text-charcoal-700 w-20">Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {data.contracts.map((contract) => {
-                      const statusConfig = getStatusConfig(contract.status)
-                      return (
-                        <TableRow
-                          key={contract.id}
-                          className={cn(
-                            'group hover:bg-charcoal-50/50 cursor-pointer transition-colors',
-                            editingId === contract.id && 'bg-gold-50'
-                          )}
-                          onClick={() => handleOpenEdit(contract)}
-                        >
-                          <TableCell>
-                            <div className="flex items-center gap-3">
-                              <div className="w-8 h-8 rounded-lg bg-charcoal-50 flex items-center justify-center">
-                                <FileText className="w-4 h-4 text-charcoal-500" />
-                              </div>
-                              <div>
-                                <div className="font-medium text-charcoal-900 truncate max-w-[200px]">
-                                  {contract.name}
-                                </div>
-                                {contract.number && (
-                                  <div className="text-xs text-charcoal-400">#{contract.number}</div>
-                                )}
-                              </div>
+                    )}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {data.contracts.map((contract) => {
+                    const statusConfig = getStatusConfig(contract.status)
+                    return (
+                      <TableRow
+                        key={contract.id}
+                        className={cn(
+                          'group transition-colors',
+                          isEditable && 'hover:bg-charcoal-50/50 cursor-pointer',
+                          editingId === contract.id && 'bg-gold-50'
+                        )}
+                        onClick={() => handleOpenEdit(contract)}
+                      >
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-lg bg-charcoal-50 flex items-center justify-center">
+                              <FileText className="w-4 h-4 text-charcoal-500" />
                             </div>
-                          </TableCell>
-                          <TableCell>
-                            <span className="text-xs text-charcoal-500 uppercase tracking-wide">
-                              {getTypeLabel(contract.type).split('(')[0].trim()}
-                            </span>
-                          </TableCell>
-                          <TableCell>
-                            <Badge className={cn('border-0', statusConfig.color)}>
-                              {statusConfig.label}
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="text-sm text-charcoal-600">
+                            <div>
+                              <div className="font-medium text-charcoal-900 truncate max-w-[200px]">
+                                {contract.name}
+                              </div>
+                              {contract.number && (
+                                <div className="text-xs text-charcoal-400">#{contract.number}</div>
+                              )}
+                              {contract.fileName && (
+                                <div className="flex items-center gap-1 mt-0.5">
+                                  <Paperclip className="w-3 h-3 text-gold-500" />
+                                  <span className="text-xs text-charcoal-500">{contract.fileName}</span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="capitalize">
+                            {getTypeLabel(contract.type).split('(')[0].trim()}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge className={cn('border-0', statusConfig.color)}>
+                            {statusConfig.label}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-sm text-charcoal-600">
+                          {contract.contractValue && (
+                            <div className="flex items-center gap-1">
+                              <DollarSign className="w-3.5 h-3.5 text-charcoal-400" />
+                              {formatCurrency(contract.contractValue, contract.currency)}
+                            </div>
+                          )}
+                        </TableCell>
+                        <TableCell className="text-sm text-charcoal-600">
+                          <div className="space-y-1">
                             {contract.effectiveDate && (
                               <div className="flex items-center gap-1.5">
-                                <Calendar className="w-3.5 h-3.5 text-charcoal-400" />
-                                {formatDate(contract.effectiveDate)}
+                                <Calendar className="w-3.5 h-3.5 text-green-500" />
+                                <span className="text-xs">Start: {formatDate(contract.effectiveDate)}</span>
                               </div>
                             )}
-                          </TableCell>
+                            {contract.expiryDate && (
+                              <div className="flex items-center gap-1.5">
+                                <Calendar className="w-3.5 h-3.5 text-red-400" />
+                                <span className="text-xs">End: {formatDate(contract.expiryDate)}</span>
+                              </div>
+                            )}
+                            {contract.autoRenew && (
+                              <div className="flex items-center gap-1.5">
+                                <RefreshCw className="w-3.5 h-3.5 text-blue-500" />
+                                <span className="text-xs text-blue-600">Auto-renew</span>
+                              </div>
+                            )}
+                          </div>
+                        </TableCell>
+                        {isEditable && (
                           <TableCell>
                             <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                               <Button
@@ -284,191 +362,43 @@ export function ContractsSection({
                               </Button>
                             </div>
                           </TableCell>
-                        </TableRow>
-                      )
-                    })}
-                  </TableBody>
-                </Table>
-              </div>
-            ) : (
-              <div className="text-center py-12 bg-charcoal-50/50 rounded-xl border border-dashed border-charcoal-200">
-                <FileText className="w-10 h-10 text-charcoal-300 mx-auto mb-3" />
-                <p className="text-sm text-charcoal-500 mb-1 font-medium">No contracts added yet</p>
-                <p className="text-xs text-charcoal-400">
-                  Add MSAs, NDAs, and other agreements
-                </p>
-              </div>
-            )}
-
-            {/* Inline Edit Panel */}
-            {isPanelOpen && (
-              <ContractEditPanel
-                isAddingNew={isAddingNew}
-                currentContract={currentContract}
-                setCurrentContract={setCurrentContract}
-                onSave={handleSave}
-                onClose={handleClose}
-              />
-            )}
-          </div>
-        </SectionWrapper>
-      </div>
-    )
-  }
-
-  // ============ VIEW MODE ============
-  return (
-    <div className={cn('space-y-6', className)}>
-      {/* Section Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-xl font-heading font-semibold text-charcoal-900">Contracts</h2>
-          <p className="text-sm text-charcoal-500 mt-1">
-            Legal documents and agreements ({data.contracts.length})
-          </p>
-        </div>
-        <Button variant="outline" size="sm" onClick={handleOpenAdd} className="gap-2">
-          <Plus className="w-4 h-4" />
-          Add Contract
-        </Button>
-      </div>
-
-      {/* Contracts Table */}
-      {data.contracts.length > 0 ? (
-        <div className="border border-charcoal-200 rounded-xl overflow-hidden bg-white shadow-elevation-sm">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-charcoal-50/50">
-                <TableHead className="font-semibold text-charcoal-700">Contract</TableHead>
-                <TableHead className="font-semibold text-charcoal-700">Type</TableHead>
-                <TableHead className="font-semibold text-charcoal-700">Status</TableHead>
-                <TableHead className="font-semibold text-charcoal-700">Value</TableHead>
-                <TableHead className="font-semibold text-charcoal-700">Dates</TableHead>
-                <TableHead className="font-semibold text-charcoal-700 w-20">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.contracts.map((contract) => {
-                const statusConfig = getStatusConfig(contract.status)
-                return (
-                  <TableRow
-                    key={contract.id}
-                    className="group hover:bg-charcoal-50/50 cursor-pointer transition-colors"
-                    onClick={() => handleOpenEdit(contract)}
-                  >
-                    <TableCell>
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-charcoal-50 flex items-center justify-center">
-                          <FileText className="w-5 h-5 text-charcoal-500" />
-                        </div>
-                        <div>
-                          <div className="font-medium text-charcoal-900">{contract.name}</div>
-                          {contract.number && (
-                            <div className="text-xs text-charcoal-400">#{contract.number}</div>
-                          )}
-                          {contract.fileName && (
-                            <div className="flex items-center gap-1 mt-0.5">
-                              <Paperclip className="w-3 h-3 text-gold-500" />
-                              <span className="text-xs text-charcoal-500">{contract.fileName}</span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline" className="capitalize">
-                        {getTypeLabel(contract.type).split('(')[0].trim()}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Badge className={cn('border-0', statusConfig.color)}>
-                        {statusConfig.label}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-sm text-charcoal-600">
-                      {contract.contractValue && (
-                        <div className="flex items-center gap-1">
-                          <DollarSign className="w-3.5 h-3.5 text-charcoal-400" />
-                          {formatCurrency(contract.contractValue, contract.currency)}
-                        </div>
-                      )}
-                    </TableCell>
-                    <TableCell className="text-sm text-charcoal-600">
-                      <div className="space-y-1">
-                        {contract.effectiveDate && (
-                          <div className="flex items-center gap-1.5">
-                            <Calendar className="w-3.5 h-3.5 text-green-500" />
-                            <span className="text-xs">Start: {formatDate(contract.effectiveDate)}</span>
-                          </div>
                         )}
-                        {contract.expiryDate && (
-                          <div className="flex items-center gap-1.5">
-                            <Calendar className="w-3.5 h-3.5 text-red-400" />
-                            <span className="text-xs">End: {formatDate(contract.expiryDate)}</span>
-                          </div>
-                        )}
-                        {contract.autoRenew && (
-                          <div className="flex items-center gap-1.5">
-                            <RefreshCw className="w-3.5 h-3.5 text-blue-500" />
-                            <span className="text-xs text-blue-600">Auto-renew</span>
-                          </div>
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7 text-charcoal-400 hover:text-charcoal-600"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleOpenEdit(contract)
-                          }}
-                        >
-                          <Pencil className="w-3.5 h-3.5" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7 text-charcoal-400 hover:text-red-500 hover:bg-red-50"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleDelete(contract.id)
-                          }}
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
-        </div>
-      ) : (
-        <div className="text-center py-12 bg-charcoal-50/50 rounded-xl border border-dashed border-charcoal-200">
-          <FileText className="w-10 h-10 text-charcoal-300 mx-auto mb-3" />
-          <p className="text-sm text-charcoal-500 mb-1 font-medium">No contracts added yet</p>
-          <p className="text-xs text-charcoal-400 mb-4">Add your first contract to get started</p>
-          <Button variant="outline" size="sm" onClick={handleOpenAdd}>
-            <Plus className="w-4 h-4 mr-2" />
-            Add Contract
-          </Button>
-        </div>
-      )}
+                      </TableRow>
+                    )
+                  })}
+                </TableBody>
+              </Table>
+            </div>
+          ) : (
+            <div className="text-center py-12 bg-charcoal-50/50 rounded-lg border border-dashed border-charcoal-200">
+              <FileText className="w-10 h-10 text-charcoal-300 mx-auto mb-3" />
+              <p className="text-sm text-charcoal-500 mb-1 font-medium">No contracts added yet</p>
+              <p className="text-xs text-charcoal-400 mb-4">
+                {isEditable
+                  ? 'Add MSAs, NDAs, and other agreements'
+                  : 'No contracts have been added to this account'}
+              </p>
+              {isEditable && (
+                <Button variant="outline" size="sm" onClick={handleOpenAdd}>
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Contract
+                </Button>
+              )}
+            </div>
+          )}
 
-      {/* Inline Edit Panel for View Mode */}
-      {isPanelOpen && (
-        <ContractEditPanel
-          isAddingNew={isAddingNew}
-          currentContract={currentContract}
-          setCurrentContract={setCurrentContract}
-          onSave={handleSave}
-          onClose={handleClose}
-        />
-      )}
+          {/* Inline Edit Panel */}
+          {isPanelOpen && (
+            <ContractEditPanel
+              isAddingNew={isAddingNew}
+              currentContract={currentContract}
+              setCurrentContract={setCurrentContract}
+              onSave={handleContractSave}
+              onClose={handleClose}
+            />
+          )}
+        </CardContent>
+      </Card>
     </div>
   )
 }

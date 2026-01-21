@@ -1,6 +1,7 @@
 'use client'
 
-import { Suspense, useEffect, useState, useCallback, useRef } from 'react'
+import * as React from 'react'
+import { Suspense, useEffect, useState, useCallback, useRef, useMemo } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { trpc } from '@/lib/trpc/client'
 import { useToast } from '@/components/ui/use-toast'
@@ -350,9 +351,13 @@ interface StepWrapperProps {
 }
 
 function IdentityStepWrapper({ accountId, draft, onSaveComplete, saveStepRef }: StepWrapperProps) {
+  // Memoize the initial data to prevent infinite re-renders
+  // mapToIdentityData creates a new object each render, which triggers useEffect in the hook
+  const initialData = useMemo(() => mapToIdentityData(draft), [draft])
+
   const section = useIdentitySection({
     accountId,
-    initialData: mapToIdentityData(draft),
+    initialData,
     mode: 'create',
     onSaveComplete,
   })
@@ -377,9 +382,12 @@ function IdentityStepWrapper({ accountId, draft, onSaveComplete, saveStepRef }: 
 }
 
 function LocationsStepWrapper({ accountId, draft, onSaveComplete, saveStepRef }: StepWrapperProps) {
+  // Memoize the initial data to prevent infinite re-renders
+  const initialData = useMemo(() => mapToLocationsData(draft), [draft])
+
   const section = useLocationsSection({
     accountId,
-    initialData: mapToLocationsData(draft),
+    initialData,
     mode: 'create',
     onSaveComplete,
   })
@@ -405,9 +413,12 @@ function LocationsStepWrapper({ accountId, draft, onSaveComplete, saveStepRef }:
 }
 
 function BillingStepWrapper({ accountId, draft, onSaveComplete, saveStepRef }: StepWrapperProps) {
+  // Memoize the initial data to prevent infinite re-renders
+  const initialData = useMemo(() => mapToBillingData(draft), [draft])
+
   const section = useBillingSection({
     accountId,
-    initialData: mapToBillingData(draft),
+    initialData,
     mode: 'create',
     onSaveComplete,
   })
@@ -431,9 +442,12 @@ function BillingStepWrapper({ accountId, draft, onSaveComplete, saveStepRef }: S
 }
 
 function ContactsStepWrapper({ accountId, draft, onSaveComplete, saveStepRef }: StepWrapperProps) {
+  // Memoize the initial data to prevent infinite re-renders
+  const initialData = useMemo(() => mapToContactsData(draft), [draft])
+
   const section = useContactsSection({
     accountId,
-    initialData: mapToContactsData(draft),
+    initialData,
     mode: 'create',
     onSaveComplete,
   })
@@ -459,9 +473,12 @@ function ContactsStepWrapper({ accountId, draft, onSaveComplete, saveStepRef }: 
 }
 
 function ContractsStepWrapper({ accountId, draft, onSaveComplete, saveStepRef }: StepWrapperProps) {
+  // Memoize the initial data to prevent infinite re-renders
+  const initialData = useMemo(() => mapToContractsData(draft), [draft])
+
   const section = useContractsSection({
     accountId,
-    initialData: mapToContractsData(draft),
+    initialData,
     mode: 'create',
     onSaveComplete,
   })
@@ -487,9 +504,12 @@ function ContractsStepWrapper({ accountId, draft, onSaveComplete, saveStepRef }:
 }
 
 function ComplianceStepWrapper({ accountId, draft, onSaveComplete, saveStepRef }: StepWrapperProps) {
+  // Memoize the initial data to prevent infinite re-renders
+  const initialData = useMemo(() => mapToComplianceData(draft), [draft])
+
   const section = useComplianceSection({
     accountId,
-    initialData: mapToComplianceData(draft),
+    initialData,
     mode: 'create',
     onSaveComplete,
   })
@@ -517,9 +537,12 @@ interface TeamStepWrapperProps extends StepWrapperProps {
 }
 
 function TeamStepWrapper({ accountId, draft, teamMembers, onSaveComplete, saveStepRef }: TeamStepWrapperProps) {
+  // Memoize the initial data to prevent infinite re-renders
+  const initialData = useMemo(() => mapToTeamData(draft), [draft])
+
   const section = useTeamSection({
     accountId,
-    initialData: mapToTeamData(draft),
+    initialData,
     mode: 'create',
     onSaveComplete,
   })

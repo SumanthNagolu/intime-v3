@@ -5,7 +5,6 @@ import { Suspense } from "react"
 import { SectionSidebar } from "@/components/navigation/SectionSidebar"
 import { EntityJourneySidebar } from "@/components/navigation/EntityJourneySidebar"
 import { CampaignEntitySidebar } from "@/components/navigation/CampaignEntitySidebar"
-import { AccountSectionsSidebar } from "@/components/navigation/AccountSectionsSidebar"
 import { TopNavigation } from "@/components/navigation/TopNavigation"
 import { useEntityNavigationSafe } from "@/lib/navigation/EntityNavigationContext"
 import { useEntityData } from "@/components/layouts/EntityContextProvider"
@@ -93,19 +92,9 @@ function SidebarLayoutInner({
                   campaignStatus={currentEntity.status}
                   counts={toolCounts}
                 />
-              ) : currentEntity.type === 'account' ? (
-                // Account uses wizard-matching sidebar with numbered sections
-                <AccountSectionsSidebar
-                  entityId={currentEntity.id}
-                  entityName={currentEntity.name}
-                  entitySubtitle={currentEntity.subtitle}
-                  entityStatus={currentEntity.status}
-                  sectionCounts={sectionCounts}
-                  sectionHasData={sectionHasData}
-                />
               ) : (
-                // All other entities use unified EntityJourneySidebar
-                // It handles both journey and section navigation based on entity type
+                // All entities use unified EntityJourneySidebar
+                // It handles journey, section, and account-specific navigation
                 <EntityJourneySidebar
                   entityType={currentEntity.type}
                   entityId={currentEntity.id}
@@ -113,6 +102,7 @@ function SidebarLayoutInner({
                   entitySubtitle={currentEntity.subtitle}
                   entityStatus={currentEntity.status}
                   toolCounts={toolCounts}
+                  sectionCounts={sectionCounts}
                 />
               )
             ) : (

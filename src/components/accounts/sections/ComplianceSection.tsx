@@ -3,15 +3,7 @@
 import * as React from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import {
   ShieldCheck,
   FileCheck,
@@ -20,11 +12,9 @@ import {
   CheckCircle2,
   XCircle,
 } from 'lucide-react'
-import { SectionWrapper } from '../layouts/SectionHeader'
 import { SectionHeader } from '../fields/SectionHeader'
 import { UnifiedField } from '../fields/UnifiedField'
-import { FieldGrid } from '../layouts/FieldGrid'
-import { BACKGROUND_CHECK_LEVELS, getLabel } from '@/lib/accounts/constants'
+import { BACKGROUND_CHECK_LEVELS } from '@/lib/accounts/constants'
 import type { SectionMode, ComplianceSectionData } from '@/lib/accounts/types'
 import { cn } from '@/lib/utils'
 
@@ -151,6 +141,7 @@ export function ComplianceSection({
   }
 
   const isEditable = mode === 'create' || isEditing
+  const isCreateMode = mode === 'create'
 
   // Count active requirements
   const insuranceCount = Object.values(data.compliance.insurance).filter(Boolean).length
@@ -160,156 +151,23 @@ export function ComplianceSection({
   // Convert constants to options
   const backgroundCheckOptions = BACKGROUND_CHECK_LEVELS.map(l => ({ value: l.value, label: l.label }))
 
-  // ============ CREATE MODE ============
-  if (mode === 'create') {
-    return (
-      <div className={cn('space-y-10', className)}>
-        {/* Insurance Requirements */}
-        <SectionWrapper
-          icon={ShieldCheck}
-          title="Insurance Requirements"
-          subtitle="Required insurance coverage for contractors"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {INSURANCE_ITEMS.map((item) => {
-              const isChecked =
-                data.compliance.insurance[item.key as keyof typeof data.compliance.insurance]
-              return (
-                <label
-                  key={item.key}
-                  className={cn(
-                    'flex items-start gap-4 p-5 rounded-xl border-2 cursor-pointer transition-all duration-300',
-                    isChecked
-                      ? 'border-gold-400 bg-gradient-to-r from-gold-50 to-amber-50'
-                      : 'border-charcoal-200 hover:border-charcoal-300'
-                  )}
-                >
-                  <Checkbox
-                    checked={isChecked}
-                    onCheckedChange={(checked) => handleInsuranceChange(item.key, !!checked)}
-                    className="mt-0.5"
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <item.icon className="w-4 h-4 text-charcoal-500" />
-                      <span className="text-sm font-semibold text-charcoal-800">{item.label}</span>
-                    </div>
-                    <span className="text-xs text-charcoal-500 block mt-1">{item.description}</span>
-                  </div>
-                  {isChecked && <CheckCircle2 className="w-5 h-5 text-gold-500 flex-shrink-0" />}
-                </label>
-              )
-            })}
-          </div>
-        </SectionWrapper>
-
-        {/* Background Check */}
-        <SectionWrapper
-          icon={UserCheck}
-          title="Background Check"
-          subtitle="Pre-employment screening requirements"
-        >
-          <div className="space-y-6">
-            <label
-              className={cn(
-                'flex items-center gap-4 p-5 rounded-xl border-2 cursor-pointer transition-all duration-300',
-                data.compliance.backgroundCheck.required
-                  ? 'border-gold-400 bg-gradient-to-r from-gold-50 to-amber-50'
-                  : 'border-charcoal-200 hover:border-charcoal-300'
-              )}
-            >
-              <Checkbox
-                checked={data.compliance.backgroundCheck.required}
-                onCheckedChange={(checked) => handleBackgroundCheckChange('required', !!checked)}
-              />
-              <div className="flex-1">
-                <span className="text-sm font-semibold text-charcoal-800 block">
-                  Background Check Required
-                </span>
-                <span className="text-xs text-charcoal-500">
-                  All contractors must pass a background check before starting
-                </span>
-              </div>
-              {data.compliance.backgroundCheck.required && (
-                <CheckCircle2 className="w-5 h-5 text-gold-500" />
-              )}
-            </label>
-
-            {data.compliance.backgroundCheck.required && (
-              <div className="animate-fade-in pl-4 border-l-2 border-gold-200">
-                <div className="space-y-2">
-                  <Label className="text-charcoal-700 font-medium">Background Check Level</Label>
-                  <Select
-                    value={data.compliance.backgroundCheck.level}
-                    onValueChange={(v) => handleBackgroundCheckChange('level', v)}
-                  >
-                    <SelectTrigger className="h-12 rounded-xl border-charcoal-200 bg-white max-w-md">
-                      <SelectValue placeholder="Select check level" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {BACKGROUND_CHECK_LEVELS.map((level) => (
-                        <SelectItem key={level.value} value={level.value}>
-                          {level.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            )}
-          </div>
-        </SectionWrapper>
-
-        {/* Drug Test */}
-        <SectionWrapper
-          icon={FlaskConical}
-          title="Drug Screening"
-          subtitle="Pre-employment drug testing requirements"
-        >
-          <label
-            className={cn(
-              'flex items-center gap-4 p-5 rounded-xl border-2 cursor-pointer transition-all duration-300',
-              data.compliance.drugTest.required
-                ? 'border-gold-400 bg-gradient-to-r from-gold-50 to-amber-50'
-                : 'border-charcoal-200 hover:border-charcoal-300'
-            )}
-          >
-            <Checkbox
-              checked={data.compliance.drugTest.required}
-              onCheckedChange={(checked) => handleDrugTestChange(!!checked)}
-            />
-            <div className="flex-1">
-              <span className="text-sm font-semibold text-charcoal-800 block">
-                Drug Test Required
-              </span>
-              <span className="text-xs text-charcoal-500">
-                All contractors must pass a drug screening before starting
-              </span>
-            </div>
-            {data.compliance.drugTest.required && (
-              <CheckCircle2 className="w-5 h-5 text-gold-500" />
-            )}
-          </label>
-        </SectionWrapper>
-      </div>
-    )
-  }
-
-  // ============ VIEW/EDIT MODE - In-Place Editing ============
+  // ============ UNIFIED LAYOUT - Same structure in all modes ============
   return (
     <div className={cn('space-y-6', className)}>
-      {/* Section Header with Edit/Save/Cancel */}
-      <SectionHeader
-        title="Compliance"
-        subtitle="Insurance, background check, and screening requirements"
-        mode={isEditing ? 'edit' : 'view'}
-        onEdit={handleEdit}
-        onSave={handleSave}
-        onCancel={handleCancel}
-        isSaving={isSaving}
-      />
+      {/* Section Header - only show Edit/Save/Cancel in view/edit mode */}
+      {!isCreateMode && (
+        <SectionHeader
+          title="Compliance"
+          subtitle="Insurance, background check, and screening requirements"
+          mode={isEditing ? 'edit' : 'view'}
+          onEdit={handleEdit}
+          onSave={handleSave}
+          onCancel={handleCancel}
+          isSaving={isSaving}
+        />
+      )}
 
-      {/* Cards Grid */}
+      {/* Cards Grid - Same structure in all modes */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Insurance Requirements Card */}
         <Card className="shadow-elevation-sm hover:shadow-elevation-md transition-shadow">
@@ -338,7 +196,11 @@ export function ComplianceSection({
                         checked={isRequired}
                         onCheckedChange={(checked) => handleInsuranceChange(item.key, !!checked)}
                       />
-                      <span className="text-sm text-charcoal-700">{item.label}</span>
+                      <div className="flex-1">
+                        <span className="text-sm font-medium text-charcoal-700">{item.label}</span>
+                        <span className="text-xs text-charcoal-500 block">{item.description}</span>
+                      </div>
+                      {isRequired && <CheckCircle2 className="w-4 h-4 text-gold-500 flex-shrink-0" />}
                     </label>
                   ) : (
                     <>

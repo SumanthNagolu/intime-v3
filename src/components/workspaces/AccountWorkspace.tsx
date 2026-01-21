@@ -258,14 +258,23 @@ function AccountIdentitySectionWrapper() {
   const { data, refreshData } = useAccountWorkspace()
   const { toast } = useToast()
 
+  // Memoize initialData to prevent infinite loop from useEffect dependency
+  const initialData = React.useMemo(
+    () => mapToIdentityData(data.account as unknown as Record<string, unknown>),
+    [data.account]
+  )
+
+  // Memoize callback to prevent unnecessary re-renders
+  const onSaveComplete = React.useCallback(() => {
+    toast({ title: 'Account identity updated successfully' })
+    refreshData()
+  }, [toast, refreshData])
+
   const section = useIdentitySection({
     accountId: data.account.id,
-    initialData: mapToIdentityData(data.account as unknown as Record<string, unknown>),
+    initialData,
     mode: 'view',
-    onSaveComplete: () => {
-      toast({ title: 'Account identity updated successfully' })
-      refreshData()
-    },
+    onSaveComplete,
   })
 
   return (
@@ -287,20 +296,26 @@ function AccountLocationsSectionWrapper() {
   const { data, refreshData } = useAccountWorkspace()
   const { toast } = useToast()
 
-  // Construct object with addresses for the mapper
-  const accountWithAddresses = {
-    ...data.account,
-    addresses: data.addresses,
-  }
+  // Memoize initialData to prevent infinite loop from useEffect dependency
+  const initialData = React.useMemo(() => {
+    const accountWithAddresses = {
+      ...data.account,
+      addresses: data.addresses,
+    }
+    return mapToLocationsData(accountWithAddresses as unknown as Record<string, unknown>)
+  }, [data.account, data.addresses])
+
+  // Memoize callback to prevent unnecessary re-renders
+  const onSaveComplete = React.useCallback(() => {
+    toast({ title: 'Locations updated successfully' })
+    refreshData()
+  }, [toast, refreshData])
 
   const section = useLocationsSection({
     accountId: data.account.id,
-    initialData: mapToLocationsData(accountWithAddresses as unknown as Record<string, unknown>),
+    initialData,
     mode: 'view',
-    onSaveComplete: () => {
-      toast({ title: 'Locations updated successfully' })
-      refreshData()
-    },
+    onSaveComplete,
   })
 
   return (
@@ -322,14 +337,23 @@ function AccountBillingSectionWrapper() {
   const { data, refreshData } = useAccountWorkspace()
   const { toast } = useToast()
 
+  // Memoize initialData to prevent infinite loop from useEffect dependency
+  const initialData = React.useMemo(
+    () => mapToBillingData(data.account as unknown as Record<string, unknown>),
+    [data.account]
+  )
+
+  // Memoize callback to prevent unnecessary re-renders
+  const onSaveComplete = React.useCallback(() => {
+    toast({ title: 'Billing settings updated successfully' })
+    refreshData()
+  }, [toast, refreshData])
+
   const section = useBillingSection({
     accountId: data.account.id,
-    initialData: mapToBillingData(data.account as unknown as Record<string, unknown>),
+    initialData,
     mode: 'view',
-    onSaveComplete: () => {
-      toast({ title: 'Billing settings updated successfully' })
-      refreshData()
-    },
+    onSaveComplete,
   })
 
   return (
@@ -352,21 +376,27 @@ function AccountContractsSectionWrapper() {
   const { data, refreshData } = useAccountWorkspace()
   const { toast } = useToast()
 
-  // Construct object with contracts for the mapper
+  // Memoize initialData to prevent infinite loop from useEffect dependency
   // Note: contracts are not yet in FullAccountData, so we use an empty array
-  const accountWithContracts = {
-    ...data.account,
-    contracts: [],
-  }
+  const initialData = React.useMemo(() => {
+    const accountWithContracts = {
+      ...data.account,
+      contracts: [],
+    }
+    return mapToContractsData(accountWithContracts as unknown as Record<string, unknown>)
+  }, [data.account])
+
+  // Memoize callback to prevent unnecessary re-renders
+  const onSaveComplete = React.useCallback(() => {
+    toast({ title: 'Contracts updated successfully' })
+    refreshData()
+  }, [toast, refreshData])
 
   const section = useContractsSection({
     accountId: data.account.id,
-    initialData: mapToContractsData(accountWithContracts as unknown as Record<string, unknown>),
+    initialData,
     mode: 'view',
-    onSaveComplete: () => {
-      toast({ title: 'Contracts updated successfully' })
-      refreshData()
-    },
+    onSaveComplete,
   })
 
   return (
@@ -388,14 +418,23 @@ function AccountComplianceSectionWrapper() {
   const { data, refreshData } = useAccountWorkspace()
   const { toast } = useToast()
 
+  // Memoize initialData to prevent infinite loop from useEffect dependency
+  const initialData = React.useMemo(
+    () => mapToComplianceData(data.account as unknown as Record<string, unknown>),
+    [data.account]
+  )
+
+  // Memoize callback to prevent unnecessary re-renders
+  const onSaveComplete = React.useCallback(() => {
+    toast({ title: 'Compliance settings updated successfully' })
+    refreshData()
+  }, [toast, refreshData])
+
   const section = useComplianceSection({
     accountId: data.account.id,
-    initialData: mapToComplianceData(data.account as unknown as Record<string, unknown>),
+    initialData,
     mode: 'view',
-    onSaveComplete: () => {
-      toast({ title: 'Compliance settings updated successfully' })
-      refreshData()
-    },
+    onSaveComplete,
   })
 
   return (
@@ -419,14 +458,23 @@ function AccountTeamSectionWrapper() {
   // Fetch team members for selection
   const usersQuery = trpc.users.list.useQuery({})
 
+  // Memoize initialData to prevent infinite loop from useEffect dependency
+  const initialData = React.useMemo(
+    () => mapToTeamData(data.account as unknown as Record<string, unknown>),
+    [data.account]
+  )
+
+  // Memoize callback to prevent unnecessary re-renders
+  const onSaveComplete = React.useCallback(() => {
+    toast({ title: 'Team settings updated successfully' })
+    refreshData()
+  }, [toast, refreshData])
+
   const section = useTeamSection({
     accountId: data.account.id,
-    initialData: mapToTeamData(data.account as unknown as Record<string, unknown>),
+    initialData,
     mode: 'view',
-    onSaveComplete: () => {
-      toast({ title: 'Team settings updated successfully' })
-      refreshData()
-    },
+    onSaveComplete,
   })
 
   // Map users to team members format

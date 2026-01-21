@@ -67,22 +67,23 @@ export function SidebarActionsPopover({
       <PopoverTrigger asChild>
         <button
           className={cn(
-            'flex items-center gap-2 w-full px-3 py-2 text-sm rounded-lg',
-            'text-charcoal-600 hover:bg-charcoal-50 hover:text-charcoal-800',
-            'transition-all duration-150 group',
-            open && 'bg-gold-50 text-gold-700',
+            'inline-flex items-center gap-1.5 px-2.5 py-1.5 text-sm rounded-md',
+            'border transition-all duration-200',
+            open
+              ? 'bg-gold-50 text-gold-700 border-gold-200'
+              : 'text-charcoal-600 border-charcoal-200 hover:bg-charcoal-50 hover:border-charcoal-300',
             className
           )}
         >
           <Zap className={cn(
-            'w-4 h-4 flex-shrink-0 transition-colors',
-            open ? 'text-gold-600' : 'text-charcoal-400 group-hover:text-charcoal-500'
+            'w-3.5 h-3.5 flex-shrink-0',
+            open ? 'text-gold-600' : 'text-charcoal-500'
           )} />
           {!isCollapsed && (
             <>
-              <span className="flex-1 text-left font-medium">Actions</span>
+              <span className="font-medium">Actions</span>
               <ChevronRight className={cn(
-                'w-4 h-4 transition-transform',
+                'w-3.5 h-3.5 transition-transform',
                 open && 'rotate-90'
               )} />
             </>

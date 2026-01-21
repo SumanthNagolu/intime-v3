@@ -2,8 +2,6 @@
 
 import * as React from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Label } from '@/components/ui/label'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   Select,
@@ -18,20 +16,14 @@ import {
   UserCog,
   Briefcase,
   Target,
-  Mail,
-  Phone,
-  Calendar,
   MessageSquare,
 } from 'lucide-react'
-import { SectionWrapper } from '../layouts/SectionHeader'
 import { SectionHeader } from '../fields/SectionHeader'
 import { UnifiedField } from '../fields/UnifiedField'
-import { FieldGrid } from '../layouts/FieldGrid'
 import {
   CONTACT_METHODS,
   MEETING_CADENCES,
   SUBMISSION_METHODS,
-  getLabel,
 } from '@/lib/accounts/constants'
 import type { SectionMode, TeamSectionData } from '@/lib/accounts/types'
 import { cn } from '@/lib/utils'
@@ -122,6 +114,7 @@ export function TeamSection({
   }
 
   const isEditable = mode === 'create' || isEditing
+  const isCreateMode = mode === 'create'
 
   // Convert team members to options format
   const teamMemberOptions = teamMembers.map(m => ({ value: m.id, label: m.full_name }))
@@ -131,145 +124,28 @@ export function TeamSection({
   const meetingCadenceOptions = MEETING_CADENCES.map(c => ({ value: c.value, label: c.label }))
   const submissionMethodOptions = SUBMISSION_METHODS.map(m => ({ value: m.value, label: m.label }))
 
-  // ============ CREATE MODE ============
-  if (mode === 'create') {
-    return (
-      <div className={cn('space-y-10', className)}>
-        {/* Account Team */}
-        <SectionWrapper
-          icon={Users}
-          title="Account Team"
-          subtitle="Assign team members to this account"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <TeamRoleCard
-              icon={User}
-              title="Account Owner"
-              description="Primary owner responsible for the account"
-              required
-              value={data.team.ownerId}
-              onChange={(v) => handleTeamChange('owner', v)}
-              teamMembers={teamMembers}
-              error={errors['team.ownerId']}
-            />
-
-            <TeamRoleCard
-              icon={UserCog}
-              title="Account Manager"
-              description="Day-to-day relationship manager"
-              value={data.team.accountManagerId}
-              onChange={(v) => handleTeamChange('accountManager', v)}
-              teamMembers={teamMembers}
-            />
-
-            <TeamRoleCard
-              icon={Briefcase}
-              title="Lead Recruiter"
-              description="Primary recruiter for this account"
-              value={data.team.recruiterId}
-              onChange={(v) => handleTeamChange('recruiter', v)}
-              teamMembers={teamMembers}
-            />
-
-            <TeamRoleCard
-              icon={Target}
-              title="Sales Lead"
-              description="Sales representative for expansion"
-              value={data.team.salesLeadId}
-              onChange={(v) => handleTeamChange('salesLead', v)}
-              teamMembers={teamMembers}
-            />
-          </div>
-        </SectionWrapper>
-
-        {/* Engagement Preferences */}
-        <SectionWrapper
-          icon={MessageSquare}
-          title="Engagement Preferences"
-          subtitle="Communication and meeting preferences"
-        >
-          <FieldGrid cols={3}>
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">Preferred Contact Method</Label>
-              <Select
-                value={data.preferredContactMethod}
-                onValueChange={(v) => handleChange('preferredContactMethod', v)}
-              >
-                <SelectTrigger className="h-12 rounded-xl border-charcoal-200 bg-white">
-                  <SelectValue placeholder="Select method" />
-                </SelectTrigger>
-                <SelectContent>
-                  {CONTACT_METHODS.map((method) => (
-                    <SelectItem key={method.value} value={method.value}>
-                      {method.icon} {method.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">Meeting Cadence</Label>
-              <Select
-                value={data.meetingCadence}
-                onValueChange={(v) => handleChange('meetingCadence', v)}
-              >
-                <SelectTrigger className="h-12 rounded-xl border-charcoal-200 bg-white">
-                  <SelectValue placeholder="Select cadence" />
-                </SelectTrigger>
-                <SelectContent>
-                  {MEETING_CADENCES.map((cadence) => (
-                    <SelectItem key={cadence.value} value={cadence.value}>
-                      {cadence.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">Submission Method</Label>
-              <Select
-                value={data.submissionMethod}
-                onValueChange={(v) => handleChange('submissionMethod', v)}
-              >
-                <SelectTrigger className="h-12 rounded-xl border-charcoal-200 bg-white">
-                  <SelectValue placeholder="Select method" />
-                </SelectTrigger>
-                <SelectContent>
-                  {SUBMISSION_METHODS.map((method) => (
-                    <SelectItem key={method.value} value={method.value}>
-                      {method.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </FieldGrid>
-        </SectionWrapper>
-      </div>
-    )
-  }
-
-  // ============ VIEW/EDIT MODE - In-Place Editing ============
+  // ============ UNIFIED LAYOUT - Same structure in all modes ============
   return (
     <div className={cn('space-y-6', className)}>
-      {/* Section Header with Edit/Save/Cancel */}
-      <SectionHeader
-        title="Team"
-        subtitle="Account team assignments and engagement preferences"
-        mode={isEditing ? 'edit' : 'view'}
-        onEdit={handleEdit}
-        onSave={handleSave}
-        onCancel={handleCancel}
-        isSaving={isSaving}
-      />
+      {/* Section Header - only show Edit/Save/Cancel in view/edit mode */}
+      {!isCreateMode && (
+        <SectionHeader
+          title="Team"
+          subtitle="Account team assignments and engagement preferences"
+          mode={isEditing ? 'edit' : 'view'}
+          onEdit={handleEdit}
+          onSave={handleSave}
+          onCancel={handleCancel}
+          isSaving={isSaving}
+        />
+      )}
 
-      {/* Team Members Grid */}
+      {/* Team Members Grid - Same structure in all modes */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <TeamMemberCard
           icon={User}
           title="Account Owner"
+          description="Primary owner responsible for the account"
           name={data.team.ownerName}
           userId={data.team.ownerId}
           teamMembers={teamMembers}
@@ -281,6 +157,7 @@ export function TeamSection({
         <TeamMemberCard
           icon={UserCog}
           title="Account Manager"
+          description="Day-to-day relationship manager"
           name={data.team.accountManagerName}
           userId={data.team.accountManagerId}
           teamMembers={teamMembers}
@@ -290,6 +167,7 @@ export function TeamSection({
         <TeamMemberCard
           icon={Briefcase}
           title="Lead Recruiter"
+          description="Primary recruiter for this account"
           name={data.team.recruiterName}
           userId={data.team.recruiterId}
           teamMembers={teamMembers}
@@ -299,6 +177,7 @@ export function TeamSection({
         <TeamMemberCard
           icon={Target}
           title="Sales Lead"
+          description="Sales representative for expansion"
           name={data.team.salesLeadName}
           userId={data.team.salesLeadId}
           teamMembers={teamMembers}
@@ -352,90 +231,10 @@ export function TeamSection({
 
 // ============ HELPER COMPONENTS ============
 
-interface TeamRoleCardProps {
-  icon: React.ElementType
-  title: string
-  description: string
-  required?: boolean
-  value?: string
-  onChange: (value: string) => void
-  teamMembers: Array<{ id: string; full_name: string; email?: string; avatar_url?: string }>
-  error?: string
-}
-
-function TeamRoleCard({
-  icon: Icon,
-  title,
-  description,
-  required,
-  value,
-  onChange,
-  teamMembers,
-  error,
-}: TeamRoleCardProps) {
-  const selectedMember = value ? teamMembers.find((m) => m.id === value) : null
-
-  return (
-    <div
-      className={cn(
-        'p-5 rounded-xl border-2 transition-all duration-300',
-        value
-          ? 'border-gold-400 bg-gradient-to-br from-gold-50/50 to-white'
-          : 'border-charcoal-200 bg-white'
-      )}
-    >
-      <div className="flex items-start gap-4">
-        <div
-          className={cn(
-            'w-10 h-10 rounded-xl flex items-center justify-center',
-            value
-              ? 'bg-gradient-to-br from-gold-400 to-gold-500 text-white'
-              : 'bg-charcoal-100 text-charcoal-400'
-          )}
-        >
-          <Icon className="w-5 h-5" />
-        </div>
-        <div className="flex-1">
-          <h4 className="text-sm font-semibold text-charcoal-800">
-            {title}
-            {required && <span className="text-gold-500 ml-1">*</span>}
-          </h4>
-          <p className="text-xs text-charcoal-500 mb-3">{description}</p>
-
-          <Select value={value || ''} onValueChange={onChange}>
-            <SelectTrigger className="h-10 rounded-lg border-charcoal-200 bg-white">
-              <SelectValue placeholder="Select team member" />
-            </SelectTrigger>
-            <SelectContent>
-              {teamMembers.map((member) => (
-                <SelectItem key={member.id} value={member.id}>
-                  <div className="flex items-center gap-2">
-                    <Avatar className="w-6 h-6">
-                      <AvatarImage src={member.avatar_url} />
-                      <AvatarFallback className="text-xs">
-                        {member.full_name
-                          .split(' ')
-                          .map((n) => n[0])
-                          .join('')}
-                      </AvatarFallback>
-                    </Avatar>
-                    {member.full_name}
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          {error && <p className="text-xs text-error-600 mt-1">{error}</p>}
-        </div>
-      </div>
-    </div>
-  )
-}
-
 interface TeamMemberCardProps {
   icon: React.ElementType
   title: string
+  description?: string
   name?: string
   userId?: string
   teamMembers: Array<{ id: string; full_name: string; email?: string; avatar_url?: string }>
@@ -448,6 +247,7 @@ interface TeamMemberCardProps {
 function TeamMemberCard({
   icon: Icon,
   title,
+  description,
   name,
   userId,
   teamMembers,
@@ -462,10 +262,10 @@ function TeamMemberCard({
     return (
       <Card className="shadow-elevation-sm hover:shadow-elevation-md transition-shadow">
         <CardContent className="p-5">
-          <div className="flex items-center gap-4">
+          <div className="flex items-start gap-4">
             <div
               className={cn(
-                'w-12 h-12 rounded-xl flex items-center justify-center',
+                'w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0',
                 member
                   ? 'bg-gradient-to-br from-gold-400 to-gold-500 text-white'
                   : 'bg-charcoal-100 text-charcoal-400'
@@ -474,10 +274,13 @@ function TeamMemberCard({
               <Icon className="w-6 h-6" />
             </div>
             <div className="flex-1">
-              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider mb-1">
+              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">
                 {title}
                 {required && <span className="text-gold-500 ml-1">*</span>}
               </p>
+              {description && (
+                <p className="text-xs text-charcoal-400 mb-2">{description}</p>
+              )}
               <Select value={userId || ''} onValueChange={onChange}>
                 <SelectTrigger className="h-9 rounded-lg">
                   <SelectValue placeholder="Select team member" />

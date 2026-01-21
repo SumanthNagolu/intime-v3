@@ -2,31 +2,16 @@
 
 import * as React from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Checkbox } from '@/components/ui/checkbox'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { PhoneInput } from '@/components/ui/phone-input'
 import {
   CreditCard,
   DollarSign,
   Clock,
-  CheckCircle2,
-  AlertTriangle,
   Receipt,
   Building2,
+  Mail,
 } from 'lucide-react'
-import { SectionWrapper } from '../layouts/SectionHeader'
 import { SectionHeader } from '../fields/SectionHeader'
 import { UnifiedField } from '../fields/UnifiedField'
-import { FieldGrid } from '../layouts/FieldGrid'
 import {
   BILLING_FREQUENCIES,
   PAYMENT_TERMS,
@@ -36,7 +21,6 @@ import {
   CREDIT_STATUSES,
   formatCurrency,
   formatPercentage,
-  getLabel,
 } from '@/lib/accounts/constants'
 import type { SectionMode, BillingSectionData } from '@/lib/accounts/types'
 import { cn } from '@/lib/utils'
@@ -74,10 +58,10 @@ interface BillingSectionProps {
 /**
  * BillingSection - Unified component for Billing & Terms
  *
- * Handles all three modes:
- * - create: Full form for wizard step (Step 3)
- * - view: Read-only card grid for detail page with in-place editing
- * - edit: Same layout as view but fields are editable
+ * Guidewire PCH Architecture:
+ * - Same card-based layout in all modes (create, view, edit)
+ * - Consistent field groupings across wizard and detail view
+ * - Mode determines editability, not layout
  */
 export function BillingSection({
   mode,
@@ -117,7 +101,9 @@ export function BillingSection({
     setIsEditing(true)
   }
 
+  // Editable in create mode or when explicitly editing
   const isEditable = mode === 'create' || isEditing
+  const isCreateMode = mode === 'create'
 
   // Get credit status styling
   const getCreditStatusVariant = (status: string | null | undefined): 'secondary' | 'success' | 'warning' | 'destructive' => {
@@ -143,268 +129,59 @@ export function BillingSection({
   const invoiceMethodOptions = INVOICE_METHODS.map(m => ({ value: m.value, label: m.label }))
   const creditStatusOptions = CREDIT_STATUSES.map(s => ({ value: s.value, label: s.label }))
 
-  // ============ CREATE MODE ============
-  if (mode === 'create') {
-    return (
-      <div className={cn('space-y-10', className)}>
-        {/* Billing Entity */}
-        <SectionWrapper
-          icon={Building2}
-          title="Billing Entity"
-          subtitle="Primary billing contact and entity details"
-        >
-          <FieldGrid cols={2}>
-            <div className="md:col-span-2 space-y-2">
-              <Label className="text-charcoal-700 font-medium">Billing Entity Name</Label>
-              <Input
-                value={data.billingEntityName}
-                onChange={(e) => handleChange('billingEntityName', e.target.value)}
-                placeholder="e.g., Acme Corporation - Accounts Payable"
-                className="h-12 rounded-xl border-charcoal-200 bg-white"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">Billing Email</Label>
-              <Input
-                type="email"
-                value={data.billingEmail}
-                onChange={(e) => handleChange('billingEmail', e.target.value)}
-                placeholder="billing@example.com"
-                className="h-12 rounded-xl border-charcoal-200 bg-white"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">Billing Phone</Label>
-              <PhoneInput
-                value={data.billingPhone}
-                onChange={(v) => handleChange('billingPhone', v)}
-              />
-            </div>
-          </FieldGrid>
-        </SectionWrapper>
-
-        {/* Payment Configuration */}
-        <SectionWrapper
-          icon={CreditCard}
-          title="Payment Configuration"
-          subtitle="Payment terms, frequency, and currency"
-        >
-          <FieldGrid cols={3}>
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">Payment Terms</Label>
-              <Select
-                value={data.paymentTermsDays}
-                onValueChange={(v) => handleChange('paymentTermsDays', v)}
-              >
-                <SelectTrigger className="h-12 rounded-xl border-charcoal-200 bg-white">
-                  <SelectValue placeholder="Select terms" />
-                </SelectTrigger>
-                <SelectContent>
-                  {PAYMENT_TERMS.map((term) => (
-                    <SelectItem key={term.value} value={term.value}>
-                      {term.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">Billing Frequency</Label>
-              <Select
-                value={data.billingFrequency}
-                onValueChange={(v) => handleChange('billingFrequency', v)}
-              >
-                <SelectTrigger className="h-12 rounded-xl border-charcoal-200 bg-white">
-                  <SelectValue placeholder="Select frequency" />
-                </SelectTrigger>
-                <SelectContent>
-                  {BILLING_FREQUENCIES.map((freq) => (
-                    <SelectItem key={freq.value} value={freq.value}>
-                      {freq.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">Currency</Label>
-              <Select
-                value={data.currency}
-                onValueChange={(v) => handleChange('currency', v)}
-              >
-                <SelectTrigger className="h-12 rounded-xl border-charcoal-200 bg-white">
-                  <SelectValue placeholder="Select currency" />
-                </SelectTrigger>
-                <SelectContent>
-                  {CURRENCIES.map((curr) => (
-                    <SelectItem key={curr.value} value={curr.value}>
-                      {curr.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </FieldGrid>
-
-          <FieldGrid cols={2}>
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">Invoice Format</Label>
-              <Select
-                value={data.invoiceFormat}
-                onValueChange={(v) => handleChange('invoiceFormat', v)}
-              >
-                <SelectTrigger className="h-12 rounded-xl border-charcoal-200 bg-white">
-                  <SelectValue placeholder="Select format" />
-                </SelectTrigger>
-                <SelectContent>
-                  {INVOICE_FORMATS.map((format) => (
-                    <SelectItem key={format.value} value={format.value}>
-                      {format.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">Invoice Delivery</Label>
-              <Select
-                value={data.invoiceDeliveryMethod}
-                onValueChange={(v) => handleChange('invoiceDeliveryMethod', v)}
-              >
-                <SelectTrigger className="h-12 rounded-xl border-charcoal-200 bg-white">
-                  <SelectValue placeholder="Select method" />
-                </SelectTrigger>
-                <SelectContent>
-                  {INVOICE_METHODS.map((method) => (
-                    <SelectItem key={method.value} value={method.value}>
-                      {method.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </FieldGrid>
-        </SectionWrapper>
-
-        {/* PO Requirements */}
-        <SectionWrapper
-          icon={Receipt}
-          title="PO Requirements"
-          subtitle="Purchase order configuration"
-        >
-          <div className="space-y-6">
-            <label
-              className={cn(
-                'flex items-center gap-4 p-5 rounded-xl border-2 cursor-pointer transition-all duration-300',
-                data.poRequired
-                  ? 'border-gold-400 bg-gradient-to-r from-gold-50 to-amber-50'
-                  : 'border-charcoal-200 hover:border-charcoal-300'
-              )}
-            >
-              <Checkbox
-                checked={data.poRequired}
-                onCheckedChange={(checked) => handleChange('poRequired', !!checked)}
-              />
-              <div className="flex-1">
-                <span className="text-sm font-semibold text-charcoal-800 block">
-                  PO Required for Invoicing
-                </span>
-                <span className="text-xs text-charcoal-500">
-                  All invoices must include a valid purchase order number
-                </span>
-              </div>
-              {data.poRequired && <CheckCircle2 className="w-5 h-5 text-gold-500" />}
-            </label>
-
-            {data.poRequired && (
-              <div className="animate-fade-in">
-                <FieldGrid cols={2}>
-                  <div className="space-y-2">
-                    <Label className="text-charcoal-700 font-medium">Current PO Number</Label>
-                    <Input
-                      value={data.currentPoNumber}
-                      onChange={(e) => handleChange('currentPoNumber', e.target.value)}
-                      placeholder="e.g., PO-2024-001"
-                      className="h-12 rounded-xl border-charcoal-200 bg-white"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label className="text-charcoal-700 font-medium">PO Expiration Date</Label>
-                    <Input
-                      type="date"
-                      value={data.poExpirationDate || ''}
-                      onChange={(e) => handleChange('poExpirationDate', e.target.value || null)}
-                      className="h-12 rounded-xl border-charcoal-200 bg-white"
-                    />
-                  </div>
-                </FieldGrid>
-              </div>
-            )}
-          </div>
-        </SectionWrapper>
-
-        {/* Rate Configuration */}
-        <SectionWrapper
-          icon={DollarSign}
-          title="Rate Configuration"
-          subtitle="Default markup and fee percentages"
-        >
-          <FieldGrid cols={2}>
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">Default Markup (%)</Label>
-              <Input
-                type="number"
-                value={data.defaultMarkupPercentage}
-                onChange={(e) => handleChange('defaultMarkupPercentage', e.target.value)}
-                placeholder="e.g., 25"
-                min={0}
-                max={100}
-                step={0.1}
-                className="h-12 rounded-xl border-charcoal-200 bg-white"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-charcoal-700 font-medium">Default Fee (%)</Label>
-              <Input
-                type="number"
-                value={data.defaultFeePercentage}
-                onChange={(e) => handleChange('defaultFeePercentage', e.target.value)}
-                placeholder="e.g., 15"
-                min={0}
-                max={100}
-                step={0.1}
-                className="h-12 rounded-xl border-charcoal-200 bg-white"
-              />
-            </div>
-          </FieldGrid>
-        </SectionWrapper>
-      </div>
-    )
-  }
-
-  // ============ VIEW/EDIT MODE - In-Place Editing ============
   return (
     <div className={cn('space-y-6', className)}>
-      {/* Section Header with Edit/Save/Cancel */}
-      <SectionHeader
-        title="Billing & Terms"
-        subtitle="Payment terms, rates, and billing configuration"
-        mode={isEditing ? 'edit' : 'view'}
-        onEdit={handleEdit}
-        onSave={handleSave}
-        onCancel={handleCancel}
-        isSaving={isSaving}
-      />
+      {/* Section Header - only show Edit/Save/Cancel in view/edit mode */}
+      {!isCreateMode && (
+        <SectionHeader
+          title="Billing & Terms"
+          subtitle="Payment terms, rates, and billing configuration"
+          mode={isEditing ? 'edit' : 'view'}
+          onEdit={handleEdit}
+          onSave={handleSave}
+          onCancel={handleCancel}
+          isSaving={isSaving}
+        />
+      )}
 
-      {/* Cards Grid */}
+      {/* Cards Grid - Same structure in all modes */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Billing Entity Card */}
+        <Card className="shadow-elevation-sm hover:shadow-elevation-md transition-shadow">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-2">
+              <div className="p-2 bg-blue-50 rounded-lg">
+                <Mail className="w-4 h-4 text-blue-600" />
+              </div>
+              <CardTitle className="text-base font-heading">Billing Entity</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <UnifiedField
+              label="Billing Entity Name"
+              value={data.billingEntityName}
+              onChange={(v) => handleChange('billingEntityName', v)}
+              editable={isEditable}
+              placeholder="e.g., Acme Corporation - Accounts Payable"
+            />
+            <UnifiedField
+              label="Billing Email"
+              type="email"
+              value={data.billingEmail}
+              onChange={(v) => handleChange('billingEmail', v)}
+              editable={isEditable}
+              placeholder="billing@example.com"
+            />
+            <UnifiedField
+              label="Billing Phone"
+              type="phone"
+              value={data.billingPhone}
+              onChange={(v) => handleChange('billingPhone', v)}
+              editable={isEditable}
+            />
+          </CardContent>
+        </Card>
+
         {/* Payment Terms Card */}
         <Card className="shadow-elevation-sm hover:shadow-elevation-md transition-shadow">
           <CardHeader className="pb-3">
@@ -423,6 +200,7 @@ export function BillingSection({
               value={data.paymentTermsDays}
               onChange={(v) => handleChange('paymentTermsDays', v)}
               editable={isEditable}
+              placeholder="Select terms"
             />
             <UnifiedField
               label="Billing Frequency"
@@ -431,6 +209,7 @@ export function BillingSection({
               value={data.billingFrequency}
               onChange={(v) => handleChange('billingFrequency', v)}
               editable={isEditable}
+              placeholder="Select frequency"
             />
             <UnifiedField
               label="Invoice Delivery"
@@ -439,6 +218,7 @@ export function BillingSection({
               value={data.invoiceDeliveryMethod}
               onChange={(v) => handleChange('invoiceDeliveryMethod', v)}
               editable={isEditable}
+              placeholder="Select method"
             />
             <UnifiedField
               label="Currency"
@@ -447,6 +227,7 @@ export function BillingSection({
               value={data.currency}
               onChange={(v) => handleChange('currency', v)}
               editable={isEditable}
+              placeholder="Select currency"
             />
           </CardContent>
         </Card>
@@ -471,6 +252,7 @@ export function BillingSection({
               min={0}
               max={100}
               step={0.1}
+              placeholder="e.g., 25"
             />
             <UnifiedField
               label="Default Fee"
@@ -481,6 +263,16 @@ export function BillingSection({
               min={0}
               max={100}
               step={0.1}
+              placeholder="e.g., 15"
+            />
+            <UnifiedField
+              label="Invoice Format"
+              type="select"
+              options={invoiceFormatOptions}
+              value={data.invoiceFormat}
+              onChange={(v) => handleChange('invoiceFormat', v)}
+              editable={isEditable}
+              placeholder="Select format"
             />
           </CardContent>
         </Card>
@@ -489,8 +281,8 @@ export function BillingSection({
         <Card className="shadow-elevation-sm hover:shadow-elevation-md transition-shadow">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
-              <div className="p-2 bg-blue-50 rounded-lg">
-                <CreditCard className="w-4 h-4 text-blue-600" />
+              <div className="p-2 bg-purple-50 rounded-lg">
+                <CreditCard className="w-4 h-4 text-purple-600" />
               </div>
               <CardTitle className="text-base font-heading">Credit Information</CardTitle>
             </div>
@@ -505,6 +297,7 @@ export function BillingSection({
               editable={isEditable}
               badge={!isEditable}
               badgeVariant={getCreditStatusVariant(data.creditStatus)}
+              placeholder="Select status"
             />
             <UnifiedField
               label="Credit Limit"
@@ -517,56 +310,58 @@ export function BillingSection({
         </Card>
 
         {/* PO Configuration Card */}
-        <Card className="shadow-elevation-sm hover:shadow-elevation-md transition-shadow">
+        <Card className="shadow-elevation-sm hover:shadow-elevation-md transition-shadow lg:col-span-2">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
-              <div className="p-2 bg-purple-50 rounded-lg">
-                <Receipt className="w-4 h-4 text-purple-600" />
+              <div className="p-2 bg-amber-50 rounded-lg">
+                <Receipt className="w-4 h-4 text-amber-600" />
               </div>
               <CardTitle className="text-base font-heading">PO Configuration</CardTitle>
             </div>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <UnifiedField
-              label="Requires PO"
-              type="switch"
-              value={data.poRequired}
-              onChange={(v) => handleChange('poRequired', v)}
-              editable={isEditable}
-              helpText="PO number required on all invoices"
-            />
-            <UnifiedField
-              label="Requires Submission Approval"
-              type="switch"
-              value={data.requiresApprovalForSubmission}
-              onChange={(v) => handleChange('requiresApprovalForSubmission', v)}
-              editable={isEditable}
-              helpText="Manager approval before candidate submission"
-            />
-            {data.poRequired && (
-              <>
-                <UnifiedField
-                  label="Current PO Number"
-                  value={data.currentPoNumber}
-                  onChange={(v) => handleChange('currentPoNumber', v)}
-                  editable={isEditable}
-                  placeholder="e.g., PO-2024-001"
-                />
-                <UnifiedField
-                  label="PO Expiration"
-                  type="date"
-                  value={data.poExpirationDate}
-                  onChange={(v) => handleChange('poExpirationDate', v)}
-                  editable={isEditable}
-                />
-              </>
-            )}
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <UnifiedField
+                label="Requires PO"
+                type="switch"
+                value={data.poRequired}
+                onChange={(v) => handleChange('poRequired', v)}
+                editable={isEditable}
+                helpText="PO number required on all invoices"
+              />
+              <UnifiedField
+                label="Requires Submission Approval"
+                type="switch"
+                value={data.requiresApprovalForSubmission}
+                onChange={(v) => handleChange('requiresApprovalForSubmission', v)}
+                editable={isEditable}
+                helpText="Manager approval before candidate submission"
+              />
+              {data.poRequired && (
+                <>
+                  <UnifiedField
+                    label="Current PO Number"
+                    value={data.currentPoNumber}
+                    onChange={(v) => handleChange('currentPoNumber', v)}
+                    editable={isEditable}
+                    placeholder="e.g., PO-2024-001"
+                  />
+                  <UnifiedField
+                    label="PO Expiration"
+                    type="date"
+                    value={data.poExpirationDate}
+                    onChange={(v) => handleChange('poExpirationDate', v)}
+                    editable={isEditable}
+                  />
+                </>
+              )}
+            </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Financial Metrics Summary */}
-      {financialSummary && (
+      {/* Financial Metrics Summary - only show in view/edit mode with data */}
+      {!isCreateMode && financialSummary && (
         <Card className="shadow-elevation-sm">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
