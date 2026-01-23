@@ -114,10 +114,10 @@ export default function ProspectDetailPage() {
           // Handle meeting scheduling
           break
         case 'unsubscribeProspect':
-          // Update status to unsubscribed
+          // Update status to opted_out
           updateProspectMutation.mutate({
             prospectId,
-            status: 'unsubscribed',
+            status: 'opted_out',
           })
           break
       }

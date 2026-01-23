@@ -2,9 +2,12 @@
 
 import * as React from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import { Mail, Linkedin, Phone, Zap, CheckCircle2, Calendar, Send, MessageSquare, Briefcase, Users } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { Switch } from '@/components/ui/switch'
+import { Label } from '@/components/ui/label'
+import { Badge } from '@/components/ui/badge'
+import { Mail, Linkedin, Phone, Zap, Calendar, Send, MessageSquare, Briefcase, Users, Check } from 'lucide-react'
 import { SectionHeader } from '@/components/accounts/fields/SectionHeader'
-import { UnifiedField } from '@/components/accounts/fields/UnifiedField'
 import type { SectionMode, CampaignChannelsSectionData, CampaignChannel } from '@/lib/campaigns/types'
 import { CHANNEL_OPTIONS } from '@/lib/campaigns/types'
 import { cn } from '@/lib/utils'
@@ -34,6 +37,13 @@ const CHANNEL_ICONS: Record<CampaignChannel, React.ComponentType<{ className?: s
   job_board: Briefcase,
   referral: Users,
 }
+
+// Group channels by type for cleaner display
+const CHANNEL_GROUPS = [
+  { label: 'Digital', channels: ['email', 'linkedin', 'sms'] as CampaignChannel[] },
+  { label: 'Direct', channels: ['phone', 'direct_mail', 'event'] as CampaignChannel[] },
+  { label: 'Other', channels: ['job_board', 'referral'] as CampaignChannel[] },
+]
 
 /**
  * CampaignChannelsSection - Unified component for Channels & Sequence configuration
@@ -116,67 +126,79 @@ export function CampaignChannelsSection({
             </div>
             <CardTitle className="text-base font-heading">Outreach Channels</CardTitle>
           </div>
+          <p className="text-xs text-charcoal-500 mt-1">
+            Select one or more channels to reach your target audience
+          </p>
         </CardHeader>
         <CardContent>
           {isEditable ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {CHANNEL_OPTIONS.map((channel) => {
-                const isSelected = data.channels.includes(channel.value)
-                const IconComponent = CHANNEL_ICONS[channel.value]
-                return (
-                  <button
-                    key={channel.value}
-                    type="button"
-                    onClick={() => handleToggleChannel(channel.value)}
-                    className={cn(
-                      'relative p-5 rounded-xl border-2 text-left transition-all duration-300 group hover:shadow-elevation-sm',
-                      isSelected
-                        ? 'border-gold-400 bg-gradient-to-br from-gold-50/50 to-white shadow-gold-glow'
-                        : 'border-charcoal-100 bg-white hover:border-gold-200'
-                    )}
-                  >
-                    {isSelected && (
-                      <div className="absolute top-3 right-3">
-                        <CheckCircle2 className="w-5 h-5 text-gold-500" />
-                      </div>
-                    )}
-                    <div
-                      className={cn(
-                        'w-10 h-10 rounded-lg flex items-center justify-center mb-3 transition-colors',
-                        isSelected
-                          ? 'bg-gradient-to-br from-gold-400 to-gold-500 text-white shadow-gold-glow'
-                          : 'bg-charcoal-50 text-charcoal-400 group-hover:bg-gold-50 group-hover:text-gold-500'
-                      )}
-                    >
-                      <IconComponent className="w-5 h-5" />
-                    </div>
-                    <h3 className="text-sm font-semibold text-charcoal-900 mb-1">{channel.label}</h3>
-                    <p className="text-xs text-charcoal-500">{channel.description}</p>
-                  </button>
-                )
-              })}
+            <div className="space-y-4">
+              {CHANNEL_GROUPS.map((group) => (
+                <div key={group.label} className="flex items-start gap-4">
+                  <Label className="text-sm font-medium text-charcoal-700 w-20 pt-2 shrink-0">
+                    {group.label}
+                  </Label>
+                  <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-2">
+                    {group.channels.map((channelValue) => {
+                      const channel = CHANNEL_OPTIONS.find(c => c.value === channelValue)
+                      if (!channel) return null
+                      const isSelected = data.channels.includes(channelValue)
+                      const IconComponent = CHANNEL_ICONS[channelValue]
+                      return (
+                        <button
+                          key={channelValue}
+                          type="button"
+                          onClick={() => handleToggleChannel(channelValue)}
+                          className={cn(
+                            'flex items-center gap-2 px-3 py-2.5 rounded-lg border transition-all duration-200',
+                            isSelected
+                              ? 'border-hublot-900 bg-charcoal-50'
+                              : 'border-charcoal-200 hover:border-charcoal-300 bg-white'
+                          )}
+                        >
+                          <div
+                            className={cn(
+                              'flex h-4 w-4 items-center justify-center rounded border transition-colors shrink-0',
+                              isSelected
+                                ? 'bg-hublot-900 border-hublot-900 text-white'
+                                : 'border-charcoal-300'
+                            )}
+                          >
+                            {isSelected && <Check className="h-3 w-3" />}
+                          </div>
+                          <IconComponent className={cn(
+                            'w-4 h-4 shrink-0',
+                            isSelected ? 'text-charcoal-700' : 'text-charcoal-400'
+                          )} />
+                          <span className="text-sm text-charcoal-700 truncate">{channel.label}</span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
           ) : (
-            <div className="flex flex-wrap gap-3">
-              {data.channels.length > 0 ? (
-                data.channels.map((channel) => {
-                  const channelOption = CHANNEL_OPTIONS.find(c => c.value === channel)
-                  const IconComponent = CHANNEL_ICONS[channel]
-                  return (
-                    <div
-                      key={channel}
-                      className="inline-flex items-center gap-2 px-3 py-2 bg-charcoal-50 rounded-lg"
-                    >
-                      <IconComponent className="w-4 h-4 text-charcoal-500" />
-                      <span className="text-sm font-medium text-charcoal-700">
+            <div className="flex items-start gap-4">
+              <Label className="text-sm font-medium text-charcoal-700 w-20 shrink-0">
+                Selected
+              </Label>
+              <div className="flex-1 flex flex-wrap gap-1.5">
+                {data.channels.length > 0 ? (
+                  data.channels.map((channel) => {
+                    const channelOption = CHANNEL_OPTIONS.find(c => c.value === channel)
+                    const IconComponent = CHANNEL_ICONS[channel]
+                    return (
+                      <Badge key={channel} variant="outline" className="gap-1.5 font-normal py-1">
+                        <IconComponent className="w-3.5 h-3.5" />
                         {channelOption?.label || channel}
-                      </span>
-                    </div>
-                  )
-                })
-              ) : (
-                <span className="text-sm text-charcoal-400">No channels selected</span>
-              )}
+                      </Badge>
+                    )
+                  })
+                ) : (
+                  <span className="text-sm text-charcoal-400">No channels selected</span>
+                )}
+              </div>
             </div>
           )}
           {errors?.channels && (
@@ -200,24 +222,46 @@ export function CampaignChannelsSection({
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <UnifiedField
-                  label="Number of Steps"
-                  type="number"
-                  value={String(data.emailSteps)}
-                  onChange={(v) => handleChange('emailSteps', parseInt(String(v), 10) || 1)}
-                  editable={isEditable}
-                  min={1}
-                  max={10}
-                />
-                <UnifiedField
-                  label="Days Between Steps"
-                  type="number"
-                  value={String(data.emailDaysBetween)}
-                  onChange={(v) => handleChange('emailDaysBetween', parseInt(String(v), 10) || 1)}
-                  editable={isEditable}
-                  min={1}
-                  max={14}
-                />
+                {/* Number of Steps */}
+                <div className="flex items-start gap-4">
+                  <Label className="text-sm font-medium text-charcoal-700 w-32 pt-2.5 shrink-0">
+                    Steps
+                  </Label>
+                  <div className="flex-1">
+                    {isEditable ? (
+                      <Input
+                        type="number"
+                        value={data.emailSteps}
+                        onChange={(e) => handleChange('emailSteps', parseInt(e.target.value, 10) || 1)}
+                        min={1}
+                        max={10}
+                        className="h-10 w-24 tabular-nums"
+                      />
+                    ) : (
+                      <p className="text-charcoal-900 py-2">{data.emailSteps} steps</p>
+                    )}
+                  </div>
+                </div>
+                {/* Days Between */}
+                <div className="flex items-start gap-4">
+                  <Label className="text-sm font-medium text-charcoal-700 w-32 pt-2.5 shrink-0">
+                    Days Between
+                  </Label>
+                  <div className="flex-1">
+                    {isEditable ? (
+                      <Input
+                        type="number"
+                        value={data.emailDaysBetween}
+                        onChange={(e) => handleChange('emailDaysBetween', parseInt(e.target.value, 10) || 1)}
+                        min={1}
+                        max={14}
+                        className="h-10 w-24 tabular-nums"
+                      />
+                    ) : (
+                      <p className="text-charcoal-900 py-2">{data.emailDaysBetween} days</p>
+                    )}
+                  </div>
+                </div>
               </CardContent>
             </Card>
           )}
@@ -234,24 +278,46 @@ export function CampaignChannelsSection({
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <UnifiedField
-                  label="Number of Steps"
-                  type="number"
-                  value={String(data.linkedinSteps)}
-                  onChange={(v) => handleChange('linkedinSteps', parseInt(String(v), 10) || 1)}
-                  editable={isEditable}
-                  min={1}
-                  max={5}
-                />
-                <UnifiedField
-                  label="Days Between Steps"
-                  type="number"
-                  value={String(data.linkedinDaysBetween)}
-                  onChange={(v) => handleChange('linkedinDaysBetween', parseInt(String(v), 10) || 1)}
-                  editable={isEditable}
-                  min={1}
-                  max={14}
-                />
+                {/* Number of Steps */}
+                <div className="flex items-start gap-4">
+                  <Label className="text-sm font-medium text-charcoal-700 w-32 pt-2.5 shrink-0">
+                    Steps
+                  </Label>
+                  <div className="flex-1">
+                    {isEditable ? (
+                      <Input
+                        type="number"
+                        value={data.linkedinSteps}
+                        onChange={(e) => handleChange('linkedinSteps', parseInt(e.target.value, 10) || 1)}
+                        min={1}
+                        max={5}
+                        className="h-10 w-24 tabular-nums"
+                      />
+                    ) : (
+                      <p className="text-charcoal-900 py-2">{data.linkedinSteps} steps</p>
+                    )}
+                  </div>
+                </div>
+                {/* Days Between */}
+                <div className="flex items-start gap-4">
+                  <Label className="text-sm font-medium text-charcoal-700 w-32 pt-2.5 shrink-0">
+                    Days Between
+                  </Label>
+                  <div className="flex-1">
+                    {isEditable ? (
+                      <Input
+                        type="number"
+                        value={data.linkedinDaysBetween}
+                        onChange={(e) => handleChange('linkedinDaysBetween', parseInt(e.target.value, 10) || 1)}
+                        min={1}
+                        max={14}
+                        className="h-10 w-24 tabular-nums"
+                      />
+                    ) : (
+                      <p className="text-charcoal-900 py-2">{data.linkedinDaysBetween} days</p>
+                    )}
+                  </div>
+                </div>
               </CardContent>
             </Card>
           )}
@@ -269,32 +335,62 @@ export function CampaignChannelsSection({
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <UnifiedField
-            label="Stop on Reply"
-            type="switch"
-            value={data.stopOnReply}
-            onChange={(v) => handleChange('stopOnReply', v)}
-            editable={isEditable}
-            helpText="Automatically pause sequence when prospect replies"
-          />
-          <UnifiedField
-            label="Stop on Meeting Booked"
-            type="switch"
-            value={data.stopOnBooking}
-            onChange={(v) => handleChange('stopOnBooking', v)}
-            editable={isEditable}
-            helpText="Automatically pause sequence when meeting is scheduled"
-          />
-          <UnifiedField
-            label="Daily Send Limit"
-            type="number"
-            value={String(data.dailyLimit)}
-            onChange={(v) => handleChange('dailyLimit', parseInt(String(v), 10) || 100)}
-            editable={isEditable}
-            min={10}
-            max={500}
-            helpText="Maximum messages to send per day"
-          />
+          {/* Stop on Reply */}
+          <div className="flex items-center justify-between gap-4">
+            <div className="space-y-0.5">
+              <Label className="text-sm font-medium text-charcoal-700">
+                Stop on Reply
+              </Label>
+              <p className="text-xs text-charcoal-500">
+                Automatically pause sequence when prospect replies
+              </p>
+            </div>
+            <Switch
+              checked={data.stopOnReply}
+              onCheckedChange={(v) => handleChange('stopOnReply', v)}
+              disabled={!isEditable}
+            />
+          </div>
+
+          {/* Stop on Meeting Booked */}
+          <div className="flex items-center justify-between gap-4">
+            <div className="space-y-0.5">
+              <Label className="text-sm font-medium text-charcoal-700">
+                Stop on Meeting Booked
+              </Label>
+              <p className="text-xs text-charcoal-500">
+                Automatically pause sequence when meeting is scheduled
+              </p>
+            </div>
+            <Switch
+              checked={data.stopOnBooking}
+              onCheckedChange={(v) => handleChange('stopOnBooking', v)}
+              disabled={!isEditable}
+            />
+          </div>
+
+          {/* Daily Send Limit */}
+          <div className="flex items-start gap-4">
+            <div className="flex-1 space-y-0.5">
+              <Label className="text-sm font-medium text-charcoal-700">
+                Daily Send Limit
+              </Label>
+              <p className="text-xs text-charcoal-500">
+                Maximum messages to send per day
+              </p>
+            </div>
+            <div className="w-24">
+              <Input
+                type="number"
+                value={data.dailyLimit}
+                onChange={(e) => handleChange('dailyLimit', parseInt(e.target.value, 10) || 100)}
+                disabled={!isEditable}
+                min={10}
+                max={500}
+                className="h-9 text-center tabular-nums"
+              />
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>

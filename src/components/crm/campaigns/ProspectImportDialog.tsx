@@ -104,6 +104,9 @@ export function ProspectImportDialog({
 
   const utils = trpc.useUtils()
 
+  // Mutation for adding prospects
+  const addProspectsMutation = trpc.crm.campaigns.addProspects.useMutation()
+
   // Parse CSV content
   const parseCSV = (content: string): { headers: string[]; rows: ParsedRow[] } => {
     const lines = content.split(/\r?\n/).filter(line => line.trim())
@@ -251,24 +254,63 @@ export function ProspectImportDialog({
     setStep('preview')
   }
 
-  // Simulate import (in production, this would call the actual API)
+  // Execute actual import via tRPC mutation
   const executeImport = async () => {
     setStep('importing')
     setImportProgress(0)
 
-    // Simulate batch import
+    // Process in batches to avoid timeout
     const batchSize = 50
     const totalBatches = Math.ceil(parsedData.length / batchSize)
+    let totalAdded = 0
 
-    for (let i = 0; i < totalBatches; i++) {
-      // In production, call API here
-      await new Promise(resolve => setTimeout(resolve, 500))
-      setImportProgress(Math.round(((i + 1) / totalBatches) * 100))
+    try {
+      for (let i = 0; i < totalBatches; i++) {
+        const start = i * batchSize
+        const end = Math.min(start + batchSize, parsedData.length)
+        const batch = parsedData.slice(start, end)
+
+        // Transform data to match API schema
+        const prospects = batch.map(row => ({
+          email: row.email!,
+          firstName: row.first_name,
+          lastName: row.last_name,
+          phone: row.phone,
+          linkedinUrl: row.linkedin_url,
+          companyName: row.company_name,
+          companyIndustry: row.company_industry,
+          companySize: row.company_size,
+          title: row.title,
+          location: row.location,
+          timezone: row.timezone,
+        }))
+
+        // Call the actual API
+        const result = await addProspectsMutation.mutateAsync({
+          campaignId,
+          prospects,
+          channel: 'email',
+        })
+
+        totalAdded += result.added
+        setImportProgress(Math.round(((i + 1) / totalBatches) * 100))
+      }
+
+      // Update stats with actual results
+      setImportStats(prev => ({ ...prev, valid: totalAdded }))
+      setStep('complete')
+
+      // Invalidate queries to refresh data
+      utils.crm.campaigns.getProspects.invalidate({ campaignId })
+      utils.crm.campaigns.getFullEntity.invalidate({ id: campaignId })
+      onSuccess?.()
+
+      toast.success(`Successfully imported ${totalAdded} prospects`)
+    } catch (error) {
+      console.error('Import failed:', error)
+      toast.error('Failed to import prospects. Please try again.')
+      setStep('preview') // Go back to preview on error
     }
-
-    setStep('complete')
-    utils.crm.campaigns.getProspects.invalidate({ campaignId })
-    onSuccess?.()
   }
 
   const resetDialog = () => {

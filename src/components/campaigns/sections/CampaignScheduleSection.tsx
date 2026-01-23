@@ -2,13 +2,22 @@
 
 import * as React from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import { Calendar, Clock, Repeat, Globe } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Switch } from '@/components/ui/switch'
+import { Badge } from '@/components/ui/badge'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Calendar, Clock, Repeat, Globe, Check } from 'lucide-react'
 import { SectionHeader } from '@/components/accounts/fields/SectionHeader'
-import { UnifiedField } from '@/components/accounts/fields/UnifiedField'
 import type { SectionMode, CampaignScheduleSectionData, SendDay } from '@/lib/campaigns/types'
 import { SEND_DAY_OPTIONS, TIMEZONE_OPTIONS } from '@/lib/campaigns/types'
 import { cn } from '@/lib/utils'
-import { CheckCircle2 } from 'lucide-react'
 
 // ============ PROPS ============
 
@@ -100,32 +109,66 @@ export function CampaignScheduleSection({
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <UnifiedField
-              label="Start Date"
-              type="date"
-              value={data.startDate}
-              onChange={(v) => handleChange('startDate', v)}
-              editable={isEditable}
-              required
-              error={errors?.startDate}
-            />
-            <UnifiedField
-              label="End Date"
-              type="date"
-              value={data.endDate}
-              onChange={(v) => handleChange('endDate', v)}
-              editable={isEditable}
-              required
-              error={errors?.endDate}
-            />
-            <UnifiedField
-              label="Launch Immediately"
-              type="switch"
-              value={data.launchImmediately}
-              onChange={(v) => handleChange('launchImmediately', v)}
-              editable={isEditable}
-              helpText="Start the campaign as soon as it's created and approved"
-            />
+            {/* Start Date */}
+            <div className="flex items-start gap-4">
+              <Label className="text-sm font-medium text-charcoal-700 w-28 pt-2.5 shrink-0">
+                Start Date <span className="text-red-500">*</span>
+              </Label>
+              <div className="flex-1">
+                {isEditable ? (
+                  <Input
+                    type="date"
+                    value={data.startDate || ''}
+                    onChange={(e) => handleChange('startDate', e.target.value)}
+                    className={cn('h-10 w-40', errors?.startDate && 'border-red-500')}
+                  />
+                ) : (
+                  <p className="text-charcoal-900 py-2">
+                    {data.startDate ? new Date(data.startDate).toLocaleDateString() : '—'}
+                  </p>
+                )}
+                {errors?.startDate && <p className="text-xs text-red-500 mt-1">{errors.startDate}</p>}
+              </div>
+            </div>
+
+            {/* End Date */}
+            <div className="flex items-start gap-4">
+              <Label className="text-sm font-medium text-charcoal-700 w-28 pt-2.5 shrink-0">
+                End Date <span className="text-red-500">*</span>
+              </Label>
+              <div className="flex-1">
+                {isEditable ? (
+                  <Input
+                    type="date"
+                    value={data.endDate || ''}
+                    onChange={(e) => handleChange('endDate', e.target.value)}
+                    className={cn('h-10 w-40', errors?.endDate && 'border-red-500')}
+                  />
+                ) : (
+                  <p className="text-charcoal-900 py-2">
+                    {data.endDate ? new Date(data.endDate).toLocaleDateString() : '—'}
+                  </p>
+                )}
+                {errors?.endDate && <p className="text-xs text-red-500 mt-1">{errors.endDate}</p>}
+              </div>
+            </div>
+
+            {/* Launch Immediately */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-medium text-charcoal-700">
+                  Launch Immediately
+                </Label>
+                <p className="text-xs text-charcoal-500">
+                  Start when created and approved
+                </p>
+              </div>
+              <Switch
+                checked={data.launchImmediately}
+                onCheckedChange={(v) => handleChange('launchImmediately', v)}
+                disabled={!isEditable}
+              />
+            </div>
           </CardContent>
         </Card>
 
@@ -140,34 +183,55 @@ export function CampaignScheduleSection({
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <UnifiedField
-              label="Recurring Campaign"
-              type="switch"
-              value={data.isRecurring}
-              onChange={(v) => handleChange('isRecurring', v)}
-              editable={isEditable}
-              helpText="Automatically restart the campaign on a schedule"
-            />
-            {data.isRecurring && (
-              <UnifiedField
-                label="Recurring Interval"
-                type="select"
-                value={data.recurringInterval}
-                onChange={(v) => handleChange('recurringInterval', v)}
-                editable={isEditable}
-                options={[
-                  { value: 'daily', label: 'Daily' },
-                  { value: 'weekly', label: 'Weekly' },
-                  { value: 'monthly', label: 'Monthly' },
-                ]}
-                placeholder="Select interval..."
-                required={data.isRecurring}
-                error={errors?.recurringInterval}
+            {/* Recurring Toggle */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-medium text-charcoal-700">
+                  Recurring Campaign
+                </Label>
+                <p className="text-xs text-charcoal-500">
+                  Auto-restart on schedule
+                </p>
+              </div>
+              <Switch
+                checked={data.isRecurring}
+                onCheckedChange={(v) => handleChange('isRecurring', v)}
+                disabled={!isEditable}
               />
+            </div>
+
+            {/* Recurring Interval */}
+            {data.isRecurring && (
+              <div className="flex items-start gap-4">
+                <Label className="text-sm font-medium text-charcoal-700 w-28 pt-2.5 shrink-0">
+                  Interval <span className="text-red-500">*</span>
+                </Label>
+                <div className="flex-1">
+                  {isEditable ? (
+                    <Select
+                      value={data.recurringInterval || ''}
+                      onValueChange={(v) => handleChange('recurringInterval', v)}
+                    >
+                      <SelectTrigger className={cn('h-10 w-36', errors?.recurringInterval && 'border-red-500')}>
+                        <SelectValue placeholder="Select..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="daily">Daily</SelectItem>
+                        <SelectItem value="weekly">Weekly</SelectItem>
+                        <SelectItem value="monthly">Monthly</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <p className="text-charcoal-900 py-2 capitalize">{data.recurringInterval || '—'}</p>
+                  )}
+                  {errors?.recurringInterval && <p className="text-xs text-red-500 mt-1">{errors.recurringInterval}</p>}
+                </div>
+              </div>
             )}
+
             {!isEditable && !data.isRecurring && (
               <p className="text-sm text-charcoal-400 italic">
-                One-time campaign - will run once during the specified dates
+                One-time campaign
               </p>
             )}
           </CardContent>
@@ -183,103 +247,126 @@ export function CampaignScheduleSection({
             </div>
             <CardTitle className="text-base font-heading">Send Window</CardTitle>
           </div>
-          <p className="text-sm text-charcoal-500 mt-1">
+          <p className="text-xs text-charcoal-500 mt-1">
             Configure when messages can be sent
           </p>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <UnifiedField
-              label="Start Time"
-              type="text"
-              value={data.sendWindowStart}
-              onChange={(v) => handleChange('sendWindowStart', v)}
-              editable={isEditable}
-              placeholder="09:00"
-              helpText="Messages will start sending at this time (HH:MM format)"
-            />
-            <UnifiedField
-              label="End Time"
-              type="text"
-              value={data.sendWindowEnd}
-              onChange={(v) => handleChange('sendWindowEnd', v)}
-              editable={isEditable}
-              placeholder="17:00"
-              helpText="No messages will be sent after this time (HH:MM format)"
-            />
+        <CardContent className="space-y-4">
+          {/* Time Range */}
+          <div className="flex items-start gap-4">
+            <Label className="text-sm font-medium text-charcoal-700 w-28 pt-2.5 shrink-0">
+              Time Range
+            </Label>
+            <div className="flex-1">
+              {isEditable ? (
+                <div className="flex items-center gap-2">
+                  <Input
+                    type="time"
+                    value={data.sendWindowStart || ''}
+                    onChange={(e) => handleChange('sendWindowStart', e.target.value)}
+                    placeholder="09:00"
+                    className="h-10 w-28"
+                  />
+                  <span className="text-charcoal-400">to</span>
+                  <Input
+                    type="time"
+                    value={data.sendWindowEnd || ''}
+                    onChange={(e) => handleChange('sendWindowEnd', e.target.value)}
+                    placeholder="17:00"
+                    className="h-10 w-28"
+                  />
+                </div>
+              ) : (
+                <p className="text-charcoal-900 py-2">
+                  {data.sendWindowStart || '—'} to {data.sendWindowEnd || '—'}
+                </p>
+              )}
+            </div>
           </div>
 
           {/* Timezone */}
-          <div className="flex items-start gap-3">
-            <div className="p-2 bg-charcoal-50 rounded-lg mt-1">
-              <Globe className="w-4 h-4 text-charcoal-500" />
-            </div>
+          <div className="flex items-start gap-4">
+            <Label className="text-sm font-medium text-charcoal-700 w-28 pt-2.5 shrink-0 flex items-center gap-1">
+              <Globe className="w-3.5 h-3.5" />
+              Timezone
+            </Label>
             <div className="flex-1">
-              <UnifiedField
-                label="Timezone"
-                type="select"
-                value={data.timezone}
-                onChange={(v) => handleChange('timezone', v)}
-                editable={isEditable}
-                options={TIMEZONE_OPTIONS.map(t => ({ value: t.value, label: t.label }))}
-                helpText="Send times will be based on this timezone"
-              />
+              {isEditable ? (
+                <Select
+                  value={data.timezone}
+                  onValueChange={(v) => handleChange('timezone', v)}
+                >
+                  <SelectTrigger className="h-10 w-64">
+                    <SelectValue placeholder="Select timezone..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {TIMEZONE_OPTIONS.map((t) => (
+                      <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : (
+                <p className="text-charcoal-900 py-2">
+                  {TIMEZONE_OPTIONS.find(t => t.value === data.timezone)?.label || data.timezone || '—'}
+                </p>
+              )}
             </div>
           </div>
 
           {/* Send Days */}
-          <div className="space-y-3">
-            <label className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+          <div className="flex items-start gap-4">
+            <Label className="text-sm font-medium text-charcoal-700 w-28 pt-2 shrink-0">
               Send Days
-            </label>
-            {isEditable ? (
-              <div className="flex flex-wrap gap-2">
-                {SEND_DAY_OPTIONS.map((day) => {
-                  const isSelected = data.sendDays.includes(day.value)
-                  return (
-                    <button
-                      key={day.value}
-                      type="button"
-                      onClick={() => handleToggleSendDay(day.value)}
-                      className={cn(
-                        'relative px-4 py-2 rounded-lg border-2 text-sm font-medium transition-all duration-300',
-                        isSelected
-                          ? 'border-gold-400 bg-gradient-to-br from-gold-50/50 to-white text-charcoal-900'
-                          : 'border-charcoal-100 bg-white text-charcoal-500 hover:border-gold-200 hover:bg-gold-50/30'
-                      )}
-                    >
-                      {isSelected && (
-                        <CheckCircle2 className="absolute -top-1 -right-1 w-4 h-4 text-gold-500" />
-                      )}
-                      {day.shortLabel}
-                    </button>
-                  )
-                })}
-              </div>
-            ) : (
-              <div className="flex flex-wrap gap-2">
-                {data.sendDays.length > 0 ? (
-                  data.sendDays.map((day) => {
-                    const dayOption = SEND_DAY_OPTIONS.find(d => d.value === day)
+            </Label>
+            <div className="flex-1">
+              {isEditable ? (
+                <div className="flex flex-wrap gap-1.5">
+                  {SEND_DAY_OPTIONS.map((day) => {
+                    const isSelected = data.sendDays.includes(day.value)
                     return (
-                      <span
-                        key={day}
-                        className="px-3 py-1 bg-charcoal-50 rounded-lg text-sm font-medium text-charcoal-700"
+                      <button
+                        key={day.value}
+                        type="button"
+                        onClick={() => handleToggleSendDay(day.value)}
+                        className={cn(
+                          'flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm font-medium transition-all duration-200',
+                          isSelected
+                            ? 'border-hublot-900 bg-charcoal-50'
+                            : 'border-charcoal-200 bg-white hover:border-charcoal-300'
+                        )}
                       >
-                        {dayOption?.shortLabel || day}
-                      </span>
+                        <div
+                          className={cn(
+                            'flex h-4 w-4 items-center justify-center rounded border transition-colors',
+                            isSelected
+                              ? 'bg-hublot-900 border-hublot-900 text-white'
+                              : 'border-charcoal-300'
+                          )}
+                        >
+                          {isSelected && <Check className="h-3 w-3" />}
+                        </div>
+                        {day.shortLabel}
+                      </button>
                     )
-                  })
-                ) : (
-                  <span className="text-sm text-charcoal-400 italic">
-                    No send days selected
-                  </span>
-                )}
-              </div>
-            )}
-            <p className="text-xs text-charcoal-400">
-              Select the days of the week when messages should be sent
-            </p>
+                  })}
+                </div>
+              ) : (
+                <div className="flex flex-wrap gap-1.5">
+                  {data.sendDays.length > 0 ? (
+                    data.sendDays.map((day) => {
+                      const dayOption = SEND_DAY_OPTIONS.find(d => d.value === day)
+                      return (
+                        <Badge key={day} variant="outline" className="font-normal">
+                          {dayOption?.shortLabel || day}
+                        </Badge>
+                      )
+                    })
+                  ) : (
+                    <span className="text-sm text-charcoal-400">No send days selected</span>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>

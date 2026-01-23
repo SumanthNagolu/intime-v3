@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useCallback } from 'react'
+import { useEffect, useMemo, useCallback, useState, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCreateCampaignStore, type CreateCampaignFormData } from '@/stores/create-campaign-store'
 import { trpc } from '@/lib/trpc/client'
@@ -51,8 +51,66 @@ export default function NewCampaignPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const currentStep = parseInt(searchParams.get('step') || '1')
+  const resumeId = searchParams.get('resume')
 
-  const { formData, setFormData, setCurrentStep, resetForm, lastSaved, isDirty } = useCreateCampaignStore()
+  const { formData, setFormData, setCurrentStep, resetForm, lastSaved, isDirty, draftId, setDraftId } = useCreateCampaignStore()
+  const [isSavingDraft, setIsSavingDraft] = useState(false)
+  const hasLoadedDraft = useRef(false)
+
+  // Save draft mutation
+  const saveDraftMutation = trpc.crm.campaigns.saveDraft.useMutation({
+    onSuccess: (result) => {
+      if (result.isNew && result.id) {
+        // Store the draft ID for subsequent saves
+        setDraftId(result.id)
+        // Update URL with the resume parameter
+        const params = new URLSearchParams(searchParams.toString())
+        params.set('resume', result.id)
+        router.replace(`?${params.toString()}`, { scroll: false })
+      }
+      setIsSavingDraft(false)
+    },
+    onError: (error) => {
+      console.error('Failed to save draft:', error)
+      setIsSavingDraft(false)
+    },
+  })
+
+  // Load draft data if resuming
+  const { data: draftData } = trpc.crm.campaigns.getById.useQuery(
+    { id: resumeId! },
+    { enabled: !!resumeId && !hasLoadedDraft.current }
+  )
+
+  // Populate form with draft data when loaded
+  useEffect(() => {
+    if (draftData && !hasLoadedDraft.current) {
+      hasLoadedDraft.current = true
+      setDraftId(draftData.id)
+
+      // Map draft data to form fields
+      setFormData({
+        name: draftData.name || '',
+        campaignType: draftData.campaign_type || draftData.campaignType || '',
+        goal: draftData.goal || '',
+        description: draftData.description || '',
+        channels: draftData.channels || [],
+        startDate: draftData.start_date || draftData.startDate || '',
+        endDate: draftData.end_date || draftData.endDate || '',
+        // Add more fields as needed based on draft data
+      })
+
+      // Restore wizard step if saved in wizard_state
+      const wizardState = draftData.wizard_state as { currentStep?: number } | null
+      if (wizardState?.currentStep) {
+        const params = new URLSearchParams(searchParams.toString())
+        params.set('step', String(wizardState.currentStep))
+        router.replace(`?${params.toString()}`, { scroll: false })
+      }
+
+      toast.success('Draft loaded')
+    }
+  }, [draftData, setFormData, setDraftId, searchParams, router])
 
   // Sync URL step with store
   useEffect(() => {
@@ -71,9 +129,39 @@ export default function NewCampaignPage() {
     }
   }, [formData.startDate, formData.endDate, setFormData])
 
+  // Auto-save draft when form changes (debounced)
+  const saveDraft = useCallback(() => {
+    if (!formData.name || formData.name.length < 3) return // Need at least a name to save
+
+    setIsSavingDraft(true)
+    saveDraftMutation.mutate({
+      id: draftId || resumeId || undefined,
+      name: formData.name,
+      campaignType: formData.campaignType || undefined,
+      goal: formData.goal || undefined,
+      description: formData.description || undefined,
+      channels: formData.channels.length > 0 ? formData.channels : undefined,
+      startDate: formData.startDate || undefined,
+      endDate: formData.endDate || undefined,
+      budgetTotal: formData.budgetTotal || undefined,
+      wizardState: {
+        currentStep,
+        totalSteps: WIZARD_STEPS.length,
+        completedSteps: Array.from({ length: currentStep - 1 }, (_, i) => i + 1),
+      },
+    })
+  }, [formData, draftId, resumeId, currentStep, saveDraftMutation])
+
   const navigateToStep = (step: number) => {
+    // Save draft before navigating
+    if (formData.name && formData.name.length >= 3) {
+      saveDraft()
+    }
     const params = new URLSearchParams(searchParams.toString())
     params.set('step', step.toString())
+    if (draftId || resumeId) {
+      params.set('resume', draftId || resumeId || '')
+    }
     router.push(`?${params.toString()}`, { scroll: false })
   }
 
@@ -84,14 +172,41 @@ export default function NewCampaignPage() {
       router.push(`/employee/crm/campaigns/${data.id}`)
     },
     onError: (error) => {
-      toast.error(error.message || 'Failed to create campaign')
+      console.error('Campaign creation error:', error)
+      console.error('Error data:', JSON.stringify(error.data, null, 2))
+      // Show more specific error for Zod validation failures
+      if (error.data?.zodError) {
+        const zodErrors = error.data.zodError.fieldErrors
+        const errorMessages = Object.entries(zodErrors || {})
+          .map(([field, errors]) => `${field}: ${(errors as string[]).join(', ')}`)
+          .join('; ')
+        toast.error(`Validation failed: ${errorMessages || error.message}`)
+      } else {
+        toast.error(error.message || 'Failed to create campaign')
+      }
     },
   })
 
   const handleSubmit = () => {
     // Validate required fields before submission
-    if (!formData.campaignType || !formData.goal || !formData.audienceSource) {
-      toast.error('Please complete all required fields (Campaign Type, Goal, and Audience Source)')
+    if (!formData.campaignType || !formData.goal) {
+      toast.error('Please complete Step 1: Campaign Type and Goal are required')
+      return
+    }
+    if (!formData.audienceSource) {
+      toast.error('Please complete Step 2: Audience Source is required')
+      return
+    }
+    if (formData.channels.length === 0) {
+      toast.error('Please complete Step 3: At least one channel is required')
+      return
+    }
+    if (!formData.startDate || !formData.endDate) {
+      toast.error('Please complete Step 4: Start Date and End Date are required')
+      return
+    }
+    if (formData.name.length < 3) {
+      toast.error('Campaign name must be at least 3 characters')
       return
     }
 
@@ -144,7 +259,7 @@ export default function NewCampaignPage() {
       }
     }
 
-    createCampaign.mutate({
+    const payload = {
       name: formData.name,
       campaignType: formData.campaignType as CampaignType,
       goal: formData.goal as CampaignGoal,
@@ -200,15 +315,25 @@ export default function NewCampaignPage() {
         expectedResponseRate: formData.expectedResponseRate,
         expectedConversionRate: formData.expectedConversionRate,
       },
-      teamAssignment: {
-        ownerId: formData.ownerId || undefined,
-        teamId: formData.teamId || undefined,
-        collaboratorIds: formData.collaboratorIds.length > 0 ? formData.collaboratorIds : undefined,
-      },
-      approval: {
-        required: formData.requiresApproval,
-        approverIds: formData.approverIds.length > 0 ? formData.approverIds : undefined,
-      },
+      // Only include teamAssignment if any field has a value
+      ...(formData.ownerId || formData.teamId || formData.collaboratorIds.length > 0
+        ? {
+            teamAssignment: {
+              ...(formData.ownerId ? { ownerId: formData.ownerId } : {}),
+              ...(formData.teamId ? { teamId: formData.teamId } : {}),
+              ...(formData.collaboratorIds.length > 0 ? { collaboratorIds: formData.collaboratorIds } : {}),
+            },
+          }
+        : {}),
+      // Only include approval if it's required or has approvers
+      ...(formData.requiresApproval || formData.approverIds.length > 0
+        ? {
+            approval: {
+              required: formData.requiresApproval,
+              ...(formData.approverIds.length > 0 ? { approverIds: formData.approverIds } : {}),
+            },
+          }
+        : {}),
       notifications: {
         onResponse: formData.notifyOnResponse,
         onConversion: formData.notifyOnConversion,
@@ -219,6 +344,7 @@ export default function NewCampaignPage() {
         canSpam: formData.canSpam,
         casl: formData.casl,
         ccpa: formData.ccpa,
+        includeUnsubscribe: formData.includeUnsubscribe, // Required at root level by backend
         email: {
           includeUnsubscribe: formData.includeUnsubscribe,
           includePhysicalAddress: formData.includePhysicalAddress,
@@ -232,7 +358,29 @@ export default function NewCampaignPage() {
           retentionDays: formData.dataRetentionDays,
         },
       },
-    })
+    }
+
+    // Debug: Log key field values before submission
+    console.log('=== CAMPAIGN CREATION DEBUG ===')
+    console.log('name:', formData.name, '| length:', formData.name.length)
+    console.log('campaignType:', formData.campaignType)
+    console.log('goal:', formData.goal)
+    console.log('audienceSource:', formData.audienceSource)
+    console.log('channels:', formData.channels)
+    console.log('startDate:', formData.startDate)
+    console.log('endDate:', formData.endDate)
+    console.log('--- TEAM ASSIGNMENT DEBUG ---')
+    console.log('ownerId:', JSON.stringify(formData.ownerId), 'truthy:', !!formData.ownerId)
+    console.log('teamId:', JSON.stringify(formData.teamId), 'truthy:', !!formData.teamId)
+    console.log('collaboratorIds:', JSON.stringify(formData.collaboratorIds))
+    console.log('approverIds:', JSON.stringify(formData.approverIds))
+    console.log('requiresApproval:', formData.requiresApproval)
+    console.log('--- PAYLOAD teamAssignment/approval ---')
+    console.log('payload.teamAssignment:', JSON.stringify(payload.teamAssignment))
+    console.log('payload.approval:', JSON.stringify(payload.approval))
+    console.log('=== END DEBUG ===')
+
+    createCampaign.mutate(payload)
   }
 
   const handleCancel = () => {
@@ -340,7 +488,7 @@ export default function NewCampaignPage() {
       onCancel={handleCancel}
       isLastStep={isLastStep}
       isSubmitting={createCampaign.isPending}
-      isSaving={false}
+      isSaving={isSavingDraft}
       lastSavedAt={lastSaved ? new Date(lastSaved) : null}
       validationErrors={!canProceed ? validationErrors : {}}
       submitLabel="Create Campaign"

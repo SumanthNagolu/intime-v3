@@ -86,9 +86,10 @@ function SidebarLayoutInner({
               // Use entity-specific sidebars where available
               currentEntity.type === 'campaign' ? (
                 // Campaign uses specialized dual-mode sidebar (Journey + Sections)
-                // Note: CampaignEntitySidebar fetches its own data using the ID
                 <CampaignEntitySidebar
                   campaignId={currentEntity.id}
+                  campaignName={currentEntity.name}
+                  campaignSubtitle={currentEntity.subtitle}
                   campaignStatus={currentEntity.status}
                   counts={toolCounts}
                 />

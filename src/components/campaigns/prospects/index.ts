@@ -1,3 +1,7 @@
 export { ProspectContactTab } from './ProspectContactTab'
 export { ProspectEngagementTab } from './ProspectEngagementTab'
 export { ProspectQualificationTab } from './ProspectQualificationTab'
+export { LogProspectActivityDialog } from './LogProspectActivityDialog'
+export { EditProspectDialog } from './EditProspectDialog'
+export { RemoveProspectDialog } from './RemoveProspectDialog'
+export { ConvertToLeadDialog } from './ConvertToLeadDialog'

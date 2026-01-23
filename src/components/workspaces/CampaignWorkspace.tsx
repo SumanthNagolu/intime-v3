@@ -15,6 +15,8 @@ import {
   CampaignTargetingSection,
   CampaignChannelsSection,
   CampaignScheduleSection,
+  CampaignBudgetSection,
+  CampaignTeamSection,
   CampaignComplianceSection,
 } from '@/components/campaigns/sections'
 
@@ -24,6 +26,8 @@ import {
   useCampaignTargetingSection,
   useCampaignChannelsSection,
   useCampaignScheduleSection,
+  useCampaignBudgetSection,
+  useCampaignTeamSection,
   useCampaignComplianceSection,
 } from '@/components/campaigns/hooks'
 
@@ -33,6 +37,8 @@ import {
   mapToTargetingData,
   mapToChannelsData,
   mapToScheduleData,
+  mapToBudgetData,
+  mapToTeamData,
   mapToComplianceData,
 } from '@/lib/campaigns/mappers'
 
@@ -71,7 +77,7 @@ export function CampaignWorkspace({ onAction: _onAction }: CampaignWorkspaceProp
   const searchParams = useSearchParams()
 
   // Get section from URL, default to 'overview'
-  const currentSection = (searchParams.get('section') || 'overview') as CampaignSection | 'setup' | 'targeting' | 'channels' | 'schedule' | 'compliance'
+  const currentSection = (searchParams.get('section') || 'overview') as CampaignSection | 'setup' | 'targeting' | 'channels' | 'schedule' | 'budget' | 'team' | 'compliance'
 
   // Handle section change - update URL for deep linking
   const handleSectionChange = React.useCallback((section: string) => {
@@ -145,6 +151,14 @@ export function CampaignWorkspace({ onAction: _onAction }: CampaignWorkspaceProp
 
       {currentSection === 'schedule' && (
         <CampaignScheduleSectionWrapper />
+      )}
+
+      {currentSection === 'budget' && (
+        <CampaignBudgetSectionWrapper />
+      )}
+
+      {currentSection === 'team' && (
+        <CampaignTeamSectionWrapper />
       )}
 
       {currentSection === 'compliance' && (
@@ -358,6 +372,76 @@ function CampaignScheduleSectionWrapper() {
 
   return (
     <CampaignScheduleSection
+      mode={section.isEditing ? 'edit' : 'view'}
+      data={section.data}
+      onChange={section.handleChange}
+      onEdit={section.handleEdit}
+      onSave={section.handleSave}
+      onCancel={section.handleCancel}
+      isSaving={section.isSaving}
+      errors={section.errors}
+    />
+  )
+}
+
+function CampaignBudgetSectionWrapper() {
+  const { data, refreshData } = useCampaignWorkspace()
+  const { toast } = useToast()
+
+  const initialData = React.useMemo(
+    () => mapToBudgetData(data.campaign as unknown as Record<string, unknown>),
+    [data.campaign]
+  )
+
+  const onSaveComplete = React.useCallback(() => {
+    toast({ title: 'Campaign budget updated successfully' })
+    refreshData()
+  }, [toast, refreshData])
+
+  const section = useCampaignBudgetSection({
+    campaignId: data.campaign.id,
+    initialData,
+    mode: 'view',
+    onSaveComplete,
+  })
+
+  return (
+    <CampaignBudgetSection
+      mode={section.isEditing ? 'edit' : 'view'}
+      data={section.data}
+      onChange={section.handleChange}
+      onEdit={section.handleEdit}
+      onSave={section.handleSave}
+      onCancel={section.handleCancel}
+      isSaving={section.isSaving}
+      errors={section.errors}
+    />
+  )
+}
+
+function CampaignTeamSectionWrapper() {
+  const { data, refreshData } = useCampaignWorkspace()
+  const { toast } = useToast()
+
+  const initialData = React.useMemo(
+    () => mapToTeamData(data.campaign as unknown as Record<string, unknown>),
+    [data.campaign]
+  )
+
+  const onSaveComplete = React.useCallback(() => {
+    toast({ title: 'Campaign team updated successfully' })
+    refreshData()
+  }, [toast, refreshData])
+
+  const section = useCampaignTeamSection({
+    campaignId: data.campaign.id,
+    initialData,
+    mode: 'view',
+    onSaveComplete,
+  })
+
+  return (
+    <CampaignTeamSection
       mode={section.isEditing ? 'edit' : 'view'}
       data={section.data}
       onChange={section.handleChange}
