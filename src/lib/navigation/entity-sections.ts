@@ -36,6 +36,9 @@ import {
   UserCog,
   Gauge,
   UsersRound,
+  Settings,
+  SlidersHorizontal,
+  Megaphone,
 } from 'lucide-react'
 
 /**
@@ -49,7 +52,7 @@ export interface SectionDefinition {
   showCount?: boolean
   alertOnCount?: boolean // Show alert styling when count > 0
   isToolSection?: boolean // Marks section as part of the collapsible Tools group
-  group?: 'main' | 'automation' | 'tools' | 'related' // For grouping in sidebar
+  group?: 'main' | 'settings' | 'automation' | 'tools' | 'related' // For grouping in sidebar
   description?: string // Tooltip/description for the section
   number?: number // Step number for wizard-style navigation (1-based)
   isOverview?: boolean // True for summary/overview sections (no number)
@@ -57,15 +60,22 @@ export interface SectionDefinition {
 }
 
 /**
- * Campaign sections - Enterprise-grade with main sections + automation + tools
+ * Campaign sections - Enterprise-grade with 3 categories: Core, Related, Tools
  *
- * MAIN: Core campaign management
+ * CORE: Campaign configuration and settings (matching wizard sections)
  *   - Overview: Campaign health dashboard with key metrics
+ *   - Setup: Campaign name, type, goal, priority
+ *   - Targeting: Audience source, filters, exclusions
+ *   - Channels: Communication channels and sequence config
+ *   - Schedule: Timing, send window, recurring settings
+ *   - Budget: Budget allocation and performance targets
+ *   - Team: Ownership, collaborators, approval workflow
+ *   - Compliance: GDPR, CAN-SPAM, data handling
+ *
+ * RELATED: Campaign data and execution
  *   - Prospects: Audience management and prospect tracking
  *   - Leads: Converted prospects and lead tracking
  *   - Funnel: Visual pipeline progression visualization
- *
- * AUTOMATION: Outreach execution and analysis
  *   - Sequence: Email/LinkedIn/Phone automation workflow
  *   - Analytics: Deep performance metrics and ROI
  *
@@ -73,7 +83,7 @@ export interface SectionDefinition {
  *   - Activities, Notes, Documents, History
  */
 export const campaignSections: SectionDefinition[] = [
-  // Main sections - Core campaign management
+  // Core sections - Campaign configuration (matching wizard)
   {
     id: 'overview',
     label: 'Overview',
@@ -82,11 +92,63 @@ export const campaignSections: SectionDefinition[] = [
     description: 'Campaign health and key metrics at a glance',
   },
   {
+    id: 'setup',
+    label: 'Setup',
+    icon: Settings,
+    group: 'main',
+    description: 'Campaign name, type, goal, and priority',
+  },
+  {
+    id: 'targeting',
+    label: 'Targeting',
+    icon: SlidersHorizontal,
+    group: 'main',
+    description: 'Audience source, filters, and exclusions',
+  },
+  {
+    id: 'channels',
+    label: 'Channels',
+    icon: Megaphone,
+    group: 'main',
+    description: 'Communication channels and sequence configuration',
+  },
+  {
+    id: 'schedule',
+    label: 'Schedule',
+    icon: Calendar,
+    group: 'main',
+    description: 'Timing, send window, and recurring settings',
+  },
+  {
+    id: 'budget',
+    label: 'Budget',
+    icon: DollarSign,
+    group: 'main',
+    description: 'Budget allocation and performance targets',
+  },
+  {
+    id: 'team',
+    label: 'Team',
+    icon: UserCog,
+    group: 'main',
+    description: 'Ownership, collaborators, and approval workflow',
+  },
+  {
+    id: 'compliance',
+    label: 'Compliance',
+    icon: Shield,
+    group: 'main',
+    description: 'GDPR, CAN-SPAM, and data handling settings',
+  },
+
+  // Related sections - Campaign data and execution
+  {
     id: 'prospects',
     label: 'Prospects',
     icon: Users,
     showCount: true,
-    group: 'main',
+    group: 'related',
+    isRelatedData: true,
     description: 'Manage campaign audience and prospect list',
   },
   {
@@ -94,30 +156,32 @@ export const campaignSections: SectionDefinition[] = [
     label: 'Leads',
     icon: Target,
     showCount: true,
-    group: 'main',
+    group: 'related',
+    isRelatedData: true,
     description: 'Track converted prospects and qualified leads',
   },
   {
     id: 'funnel',
     label: 'Funnel',
     icon: TrendingDown,
-    group: 'main',
+    group: 'related',
+    isRelatedData: true,
     description: 'Visual pipeline showing prospect progression',
   },
-
-  // Automation sections - Outreach execution
   {
     id: 'sequence',
     label: 'Sequence',
     icon: Workflow,
-    group: 'automation',
+    group: 'related',
+    isRelatedData: true,
     description: 'Email, LinkedIn, and phone automation workflow',
   },
   {
     id: 'analytics',
     label: 'Analytics',
     icon: BarChart3,
-    group: 'automation',
+    group: 'related',
+    isRelatedData: true,
     description: 'Performance metrics, ROI, and channel analysis',
   },
 
@@ -736,16 +800,16 @@ export function getSectionsByGroup(entityType: string): {
 
 /**
  * Helper to get campaign sections organized by group
- * Returns sections grouped for enterprise sidebar rendering
+ * Returns sections grouped for enterprise sidebar rendering: Core, Related, Tools
  */
 export function getCampaignSectionsByGroup(): {
-  mainSections: SectionDefinition[]
-  automationSections: SectionDefinition[]
+  coreSections: SectionDefinition[]
+  relatedSections: SectionDefinition[]
   toolSections: SectionDefinition[]
 } {
   return {
-    mainSections: campaignSections.filter(s => s.group === 'main'),
-    automationSections: campaignSections.filter(s => s.group === 'automation'),
+    coreSections: campaignSections.filter(s => s.group === 'main'),
+    relatedSections: campaignSections.filter(s => s.group === 'related'),
     toolSections: campaignSections.filter(s => s.group === 'tools'),
   }
 }

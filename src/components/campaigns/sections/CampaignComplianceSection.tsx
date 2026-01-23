@@ -2,9 +2,11 @@
 
 import * as React from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Switch } from '@/components/ui/switch'
 import { Shield, AlertTriangle, Mail, PhoneOff, Database } from 'lucide-react'
 import { SectionHeader } from '@/components/accounts/fields/SectionHeader'
-import { UnifiedField } from '@/components/accounts/fields/UnifiedField'
 import type { SectionMode, CampaignComplianceSectionData } from '@/lib/campaigns/types'
 import { cn } from '@/lib/utils'
 
@@ -118,43 +120,62 @@ export function CampaignComplianceSection({
               </div>
               <CardTitle className="text-base font-heading">Regulatory Compliance</CardTitle>
             </div>
-            <p className="text-sm text-charcoal-500 mt-1">
+            <p className="text-xs text-charcoal-500 mt-1">
               Enable compliance with applicable regulations
             </p>
           </CardHeader>
           <CardContent className="space-y-4">
-            <UnifiedField
-              label="GDPR Compliant"
-              type="switch"
-              value={data.gdpr}
-              onChange={(v) => handleChange('gdpr', v)}
-              editable={isEditable}
-              helpText="General Data Protection Regulation (EU)"
-            />
-            <UnifiedField
-              label="CAN-SPAM Compliant"
-              type="switch"
-              value={data.canSpam}
-              onChange={(v) => handleChange('canSpam', v)}
-              editable={isEditable}
-              helpText="Controlling the Assault of Non-Solicited Pornography And Marketing Act (US)"
-            />
-            <UnifiedField
-              label="CASL Compliant"
-              type="switch"
-              value={data.casl}
-              onChange={(v) => handleChange('casl', v)}
-              editable={isEditable}
-              helpText="Canada's Anti-Spam Legislation"
-            />
-            <UnifiedField
-              label="CCPA Compliant"
-              type="switch"
-              value={data.ccpa}
-              onChange={(v) => handleChange('ccpa', v)}
-              editable={isEditable}
-              helpText="California Consumer Privacy Act"
-            />
+            {/* GDPR */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-medium text-charcoal-700">GDPR</Label>
+                <p className="text-xs text-charcoal-500">EU data protection</p>
+              </div>
+              <Switch
+                checked={data.gdpr}
+                onCheckedChange={(v) => handleChange('gdpr', v)}
+                disabled={!isEditable}
+              />
+            </div>
+
+            {/* CAN-SPAM */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-medium text-charcoal-700">CAN-SPAM</Label>
+                <p className="text-xs text-charcoal-500">US email marketing</p>
+              </div>
+              <Switch
+                checked={data.canSpam}
+                onCheckedChange={(v) => handleChange('canSpam', v)}
+                disabled={!isEditable}
+              />
+            </div>
+
+            {/* CASL */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-medium text-charcoal-700">CASL</Label>
+                <p className="text-xs text-charcoal-500">Canada anti-spam</p>
+              </div>
+              <Switch
+                checked={data.casl}
+                onCheckedChange={(v) => handleChange('casl', v)}
+                disabled={!isEditable}
+              />
+            </div>
+
+            {/* CCPA */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-medium text-charcoal-700">CCPA</Label>
+                <p className="text-xs text-charcoal-500">California privacy</p>
+              </div>
+              <Switch
+                checked={data.ccpa}
+                onCheckedChange={(v) => handleChange('ccpa', v)}
+                disabled={!isEditable}
+              />
+            </div>
           </CardContent>
         </Card>
 
@@ -167,32 +188,41 @@ export function CampaignComplianceSection({
               </div>
               <CardTitle className="text-base font-heading">Email Requirements</CardTitle>
             </div>
-            <p className="text-sm text-charcoal-500 mt-1">
+            <p className="text-xs text-charcoal-500 mt-1">
               Required elements for marketing emails
             </p>
           </CardHeader>
           <CardContent className="space-y-4">
-            <UnifiedField
-              label="Include Unsubscribe Link"
-              type="switch"
-              value={data.includeUnsubscribe}
-              onChange={(v) => handleChange('includeUnsubscribe', v)}
-              editable={isEditable}
-              helpText="Required: Include an unsubscribe link in all marketing emails"
-            />
+            {/* Unsubscribe Link */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-medium text-charcoal-700">Unsubscribe Link</Label>
+                <p className="text-xs text-charcoal-500">Required for marketing emails</p>
+              </div>
+              <Switch
+                checked={data.includeUnsubscribe}
+                onCheckedChange={(v) => handleChange('includeUnsubscribe', v)}
+                disabled={!isEditable}
+              />
+            </div>
             {!data.includeUnsubscribe && (
-              <p className="text-xs text-error-600 -mt-2">
-                Unsubscribe links are legally required for marketing emails
+              <p className="text-xs text-error-600 bg-red-50 px-3 py-2 rounded-lg">
+                ⚠️ Unsubscribe links are legally required for marketing emails
               </p>
             )}
-            <UnifiedField
-              label="Include Physical Address"
-              type="switch"
-              value={data.includePhysicalAddress}
-              onChange={(v) => handleChange('includePhysicalAddress', v)}
-              editable={isEditable}
-              helpText="Include your company's physical mailing address (required by CAN-SPAM)"
-            />
+
+            {/* Physical Address */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-medium text-charcoal-700">Physical Address</Label>
+                <p className="text-xs text-charcoal-500">Required by CAN-SPAM</p>
+              </div>
+              <Switch
+                checked={data.includePhysicalAddress}
+                onCheckedChange={(v) => handleChange('includePhysicalAddress', v)}
+                disabled={!isEditable}
+              />
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -207,27 +237,36 @@ export function CampaignComplianceSection({
               </div>
               <CardTitle className="text-base font-heading">Do Not Contact (DNC)</CardTitle>
             </div>
-            <p className="text-sm text-charcoal-500 mt-1">
+            <p className="text-xs text-charcoal-500 mt-1">
               Respect contact preferences and opt-outs
             </p>
           </CardHeader>
           <CardContent className="space-y-4">
-            <UnifiedField
-              label="Respect Internal DNC List"
-              type="switch"
-              value={data.respectDncList}
-              onChange={(v) => handleChange('respectDncList', v)}
-              editable={isEditable}
-              helpText="Exclude contacts on your internal do-not-contact list"
-            />
-            <UnifiedField
-              label="Respect Previous Opt-Outs"
-              type="switch"
-              value={data.respectPreviousOptOuts}
-              onChange={(v) => handleChange('respectPreviousOptOuts', v)}
-              editable={isEditable}
-              helpText="Exclude contacts who have previously unsubscribed from communications"
-            />
+            {/* Respect DNC List */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-medium text-charcoal-700">Internal DNC List</Label>
+                <p className="text-xs text-charcoal-500">Exclude do-not-contact entries</p>
+              </div>
+              <Switch
+                checked={data.respectDncList}
+                onCheckedChange={(v) => handleChange('respectDncList', v)}
+                disabled={!isEditable}
+              />
+            </div>
+
+            {/* Respect Previous Opt-Outs */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-medium text-charcoal-700">Previous Opt-Outs</Label>
+                <p className="text-xs text-charcoal-500">Exclude unsubscribed contacts</p>
+              </div>
+              <Switch
+                checked={data.respectPreviousOptOuts}
+                onCheckedChange={(v) => handleChange('respectPreviousOptOuts', v)}
+                disabled={!isEditable}
+              />
+            </div>
           </CardContent>
         </Card>
 
@@ -240,29 +279,52 @@ export function CampaignComplianceSection({
               </div>
               <CardTitle className="text-base font-heading">Data Handling</CardTitle>
             </div>
-            <p className="text-sm text-charcoal-500 mt-1">
+            <p className="text-xs text-charcoal-500 mt-1">
               Consent and data retention settings
             </p>
           </CardHeader>
           <CardContent className="space-y-4">
-            <UnifiedField
-              label="Collect Consent"
-              type="switch"
-              value={data.collectConsent}
-              onChange={(v) => handleChange('collectConsent', v)}
-              editable={isEditable}
-              helpText="Collect explicit consent before adding to marketing lists"
-            />
-            <UnifiedField
-              label="Data Retention Period (days)"
-              type="number"
-              value={String(data.dataRetentionDays)}
-              onChange={(v) => handleChange('dataRetentionDays', parseInt(String(v), 10) || 365)}
-              editable={isEditable}
-              min={30}
-              max={3650}
-              helpText="How long to retain campaign data (default: 365 days)"
-            />
+            {/* Collect Consent */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-medium text-charcoal-700">Collect Consent</Label>
+                <p className="text-xs text-charcoal-500">Require explicit consent</p>
+              </div>
+              <Switch
+                checked={data.collectConsent}
+                onCheckedChange={(v) => handleChange('collectConsent', v)}
+                disabled={!isEditable}
+              />
+            </div>
+
+            {/* Data Retention */}
+            <div className="flex items-start gap-4">
+              <div className="flex-1 space-y-0.5">
+                <Label className="text-sm font-medium text-charcoal-700">
+                  Retention Period
+                </Label>
+                <p className="text-xs text-charcoal-500">
+                  How long to keep data
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                {isEditable ? (
+                  <>
+                    <Input
+                      type="number"
+                      value={data.dataRetentionDays}
+                      onChange={(e) => handleChange('dataRetentionDays', parseInt(e.target.value, 10) || 365)}
+                      min={30}
+                      max={3650}
+                      className="h-9 w-20 text-center tabular-nums"
+                    />
+                    <span className="text-sm text-charcoal-500">days</span>
+                  </>
+                ) : (
+                  <p className="text-charcoal-900">{data.dataRetentionDays} days</p>
+                )}
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>

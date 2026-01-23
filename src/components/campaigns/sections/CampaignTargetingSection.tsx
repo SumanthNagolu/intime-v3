@@ -5,9 +5,18 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Users, Building2, MapPin, Briefcase, Plus, X, CheckCircle2, Filter } from 'lucide-react'
+import { Switch } from '@/components/ui/switch'
+import { Label } from '@/components/ui/label'
+import { Users, Building2, MapPin, Briefcase, Plus, X, Filter, Database } from 'lucide-react'
 import { SectionHeader } from '@/components/accounts/fields/SectionHeader'
-import { UnifiedField } from '@/components/accounts/fields/UnifiedField'
+import { MultiSelectDropdown, type MultiSelectOption } from '@/components/ui/multi-select-dropdown'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import type { SectionMode, CampaignTargetingSectionData } from '@/lib/campaigns/types'
 import {
   AUDIENCE_SOURCE_OPTIONS,
@@ -32,8 +41,30 @@ interface CampaignTargetingSectionProps {
   className?: string
 }
 
+// Convert options to MultiSelectOption format
+const industryOptions: MultiSelectOption[] = INDUSTRY_OPTIONS.map((ind) => ({
+  value: ind,
+  label: ind,
+}))
+
+const companySizeOptions: MultiSelectOption[] = COMPANY_SIZE_OPTIONS.map((size) => ({
+  value: size.value,
+  label: size.label,
+}))
+
+const regionOptions: MultiSelectOption[] = REGION_OPTIONS.map((region) => ({
+  value: region.value,
+  label: region.label,
+  group: region.value.startsWith('US') ? 'United States' : 'International',
+}))
+
 /**
  * CampaignTargetingSection - Unified component for Target Audience configuration
+ *
+ * Redesigned with:
+ * - Multi-select dropdowns instead of tag chips
+ * - Horizontal label:value layout (Guidewire style)
+ * - Compact, professional appearance
  */
 export function CampaignTargetingSection({
   mode,
@@ -56,20 +87,6 @@ export function CampaignTargetingSection({
 
   const handleChange = (field: string, value: unknown) => {
     onChange?.(field, value)
-  }
-
-  const handleToggle = (field: string, value: string) => {
-    if (onToggle) {
-      onToggle(field, value)
-    } else {
-      // Fallback: handle toggle internally
-      const currentArray = data[field as keyof CampaignTargetingSectionData] as string[]
-      const isSelected = currentArray.includes(value)
-      handleChange(
-        field,
-        isSelected ? currentArray.filter(v => v !== value) : [...currentArray, value]
-      )
-    }
   }
 
   const handleAddTitle = () => {
@@ -115,281 +132,280 @@ export function CampaignTargetingSection({
         />
       )}
 
-      {/* Audience Source Selection - prominent in create mode */}
-      {isCreateMode && (
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Audience Source Card */}
         <Card className="shadow-elevation-sm">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
               <div className="p-2 bg-blue-50 rounded-lg">
-                <Users className="w-4 h-4 text-blue-600" />
+                <Database className="w-4 h-4 text-blue-600" />
               </div>
               <CardTitle className="text-base font-heading">Audience Source</CardTitle>
             </div>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {AUDIENCE_SOURCE_OPTIONS.map((source) => (
-                <button
-                  key={source.value}
-                  type="button"
-                  onClick={() => handleChange('audienceSource', source.value)}
-                  className={cn(
-                    'relative p-4 rounded-xl border-2 text-left transition-all duration-300 group hover:shadow-elevation-sm',
-                    data.audienceSource === source.value
-                      ? 'border-gold-400 bg-gradient-to-br from-gold-50/50 to-white shadow-gold-glow'
-                      : 'border-charcoal-100 bg-white hover:border-gold-200'
+          <CardContent className="space-y-4">
+            {/* Source Selection */}
+            <div className="flex items-start gap-4">
+              <Label className="text-sm font-medium text-charcoal-700 w-28 pt-2.5 shrink-0">
+                Source
+              </Label>
+              <div className="flex-1">
+                {isEditable ? (
+                  <Select
+                    value={data.audienceSource}
+                    onValueChange={(v) => handleChange('audienceSource', v)}
+                  >
+                    <SelectTrigger className="h-10">
+                      <SelectValue placeholder="Select audience source..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {AUDIENCE_SOURCE_OPTIONS.map((source) => (
+                        <SelectItem key={source.value} value={source.value}>
+                          <div className="flex flex-col">
+                            <span className="font-medium">{source.label}</span>
+                            <span className="text-xs text-charcoal-500">{source.description}</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                ) : (
+                  <p className="text-charcoal-900 py-2">
+                    {AUDIENCE_SOURCE_OPTIONS.find(s => s.value === data.audienceSource)?.label || '—'}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Target Titles */}
+            <div className="flex items-start gap-4">
+              <Label className="text-sm font-medium text-charcoal-700 w-28 pt-2.5 shrink-0 flex items-center gap-1">
+                <Briefcase className="w-3.5 h-3.5" />
+                Job Titles
+              </Label>
+              <div className="flex-1">
+                {isEditable && (
+                  <div className="flex gap-2 mb-2">
+                    <Input
+                      value={newTitle}
+                      onChange={(e) => setNewTitle(e.target.value)}
+                      placeholder="Add job title (e.g., VP of Engineering)"
+                      onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTitle())}
+                      className="h-10"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      onClick={handleAddTitle}
+                      className="h-10 w-10 shrink-0"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </Button>
+                  </div>
+                )}
+                <div className="flex flex-wrap gap-1.5">
+                  {data.targetTitles.length > 0 ? (
+                    data.targetTitles.map((title) => (
+                      <Badge key={title} variant="outline" className="gap-1 font-normal">
+                        {title}
+                        {isEditable && (
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveTitle(title)}
+                            className="ml-0.5 hover:text-red-500"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        )}
+                      </Badge>
+                    ))
+                  ) : (
+                    <span className="text-sm text-charcoal-400">No specific titles</span>
                   )}
-                >
-                  {data.audienceSource === source.value && (
-                    <div className="absolute top-3 right-3">
-                      <CheckCircle2 className="w-4 h-4 text-gold-500" />
-                    </div>
-                  )}
-                  <h3 className="text-sm font-semibold text-charcoal-900 mb-1">{source.label}</h3>
-                  <p className="text-xs text-charcoal-500">{source.description}</p>
-                </button>
-              ))}
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
-      )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Industries Card */}
+        {/* Targeting Filters Card */}
         <Card className="shadow-elevation-sm">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
               <div className="p-2 bg-purple-50 rounded-lg">
-                <Building2 className="w-4 h-4 text-purple-600" />
+                <Filter className="w-4 h-4 text-purple-600" />
               </div>
-              <CardTitle className="text-base font-heading">Industries</CardTitle>
+              <CardTitle className="text-base font-heading">Targeting Filters</CardTitle>
             </div>
           </CardHeader>
-          <CardContent>
-            {isEditable ? (
-              <div className="flex flex-wrap gap-2">
-                {INDUSTRY_OPTIONS.map((industry) => {
-                  const isSelected = data.industries.includes(industry)
-                  return (
-                    <button
-                      key={industry}
-                      type="button"
-                      onClick={() => handleToggle('industries', industry)}
-                      className={cn(
-                        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200',
-                        isSelected
-                          ? 'bg-gradient-to-r from-hublot-800 to-hublot-900 text-white shadow-sm'
-                          : 'bg-charcoal-100 text-charcoal-700 hover:bg-charcoal-200'
-                      )}
-                    >
-                      {industry}
-                      {isSelected && <CheckCircle2 className="w-3.5 h-3.5 ml-0.5" />}
-                    </button>
-                  )
-                })}
-              </div>
-            ) : (
-              <div className="flex flex-wrap gap-2">
-                {data.industries.length > 0 ? (
-                  data.industries.map((ind) => (
-                    <Badge key={ind} variant="outline">{ind}</Badge>
-                  ))
+          <CardContent className="space-y-4">
+            {/* Industries - Multi-select Dropdown */}
+            <div className="flex items-start gap-4">
+              <Label className="text-sm font-medium text-charcoal-700 w-28 pt-2.5 shrink-0 flex items-center gap-1">
+                <Building2 className="w-3.5 h-3.5" />
+                Industries
+              </Label>
+              <div className="flex-1">
+                {isEditable ? (
+                  <MultiSelectDropdown
+                    placeholder="Select industries..."
+                    options={industryOptions}
+                    value={data.industries}
+                    onChange={(v) => handleChange('industries', v)}
+                    maxDisplay={2}
+                    showSelectAll={true}
+                  />
                 ) : (
-                  <span className="text-sm text-charcoal-400">All industries</span>
-                )}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Company Sizes Card */}
-        <Card className="shadow-elevation-sm">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <div className="p-2 bg-green-50 rounded-lg">
-                <Users className="w-4 h-4 text-green-600" />
-              </div>
-              <CardTitle className="text-base font-heading">Company Size</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            {isEditable ? (
-              <div className="flex flex-wrap gap-2">
-                {COMPANY_SIZE_OPTIONS.map((size) => {
-                  const isSelected = data.companySizes.includes(size.value)
-                  return (
-                    <button
-                      key={size.value}
-                      type="button"
-                      onClick={() => handleToggle('companySizes', size.value)}
-                      className={cn(
-                        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200',
-                        isSelected
-                          ? 'bg-gradient-to-r from-hublot-800 to-hublot-900 text-white shadow-sm'
-                          : 'bg-charcoal-100 text-charcoal-700 hover:bg-charcoal-200'
-                      )}
-                    >
-                      {size.label}
-                      {isSelected && <CheckCircle2 className="w-3.5 h-3.5 ml-0.5" />}
-                    </button>
-                  )
-                })}
-              </div>
-            ) : (
-              <div className="flex flex-wrap gap-2">
-                {data.companySizes.length > 0 ? (
-                  data.companySizes.map((size) => {
-                    const sizeOption = COMPANY_SIZE_OPTIONS.find(s => s.value === size)
-                    return <Badge key={size} variant="outline">{sizeOption?.label || size}</Badge>
-                  })
-                ) : (
-                  <span className="text-sm text-charcoal-400">All sizes</span>
-                )}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Regions Card */}
-        <Card className="shadow-elevation-sm">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <div className="p-2 bg-orange-50 rounded-lg">
-                <MapPin className="w-4 h-4 text-orange-600" />
-              </div>
-              <CardTitle className="text-base font-heading">Regions</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            {isEditable ? (
-              <div className="flex flex-wrap gap-2">
-                {REGION_OPTIONS.map((region) => {
-                  const isSelected = data.regions.includes(region.value)
-                  return (
-                    <button
-                      key={region.value}
-                      type="button"
-                      onClick={() => handleToggle('regions', region.value)}
-                      className={cn(
-                        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200',
-                        isSelected
-                          ? 'bg-gradient-to-r from-hublot-800 to-hublot-900 text-white shadow-sm'
-                          : 'bg-charcoal-100 text-charcoal-700 hover:bg-charcoal-200'
-                      )}
-                    >
-                      {region.label}
-                      {isSelected && <CheckCircle2 className="w-3.5 h-3.5 ml-0.5" />}
-                    </button>
-                  )
-                })}
-              </div>
-            ) : (
-              <div className="flex flex-wrap gap-2">
-                {data.regions.length > 0 ? (
-                  data.regions.map((region) => {
-                    const regionOption = REGION_OPTIONS.find(r => r.value === region)
-                    return <Badge key={region} variant="outline">{regionOption?.label || region}</Badge>
-                  })
-                ) : (
-                  <span className="text-sm text-charcoal-400">All regions</span>
-                )}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Target Titles Card */}
-        <Card className="shadow-elevation-sm">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <div className="p-2 bg-blue-50 rounded-lg">
-                <Briefcase className="w-4 h-4 text-blue-600" />
-              </div>
-              <CardTitle className="text-base font-heading">Target Titles</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            {isEditable && (
-              <div className="flex gap-2 mb-3">
-                <Input
-                  value={newTitle}
-                  onChange={(e) => setNewTitle(e.target.value)}
-                  placeholder="Add job title (e.g., VP of Engineering)"
-                  onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTitle())}
-                  className="h-10"
-                />
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={handleAddTitle}
-                  className="h-10"
-                >
-                  <Plus className="w-4 h-4" />
-                </Button>
-              </div>
-            )}
-            <div className="flex flex-wrap gap-2">
-              {data.targetTitles.length > 0 ? (
-                data.targetTitles.map((title) => (
-                  <Badge key={title} variant="outline" className="gap-1">
-                    {title}
-                    {isEditable && (
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveTitle(title)}
-                        className="ml-1 hover:text-error-500"
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
+                  <div className="flex flex-wrap gap-1.5">
+                    {data.industries.length > 0 ? (
+                      data.industries.map((ind) => (
+                        <Badge key={ind} variant="outline">{ind}</Badge>
+                      ))
+                    ) : (
+                      <span className="text-sm text-charcoal-400">All industries</span>
                     )}
-                  </Badge>
-                ))
-              ) : (
-                <span className="text-sm text-charcoal-400">No specific titles</span>
-              )}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Company Sizes - Multi-select Dropdown */}
+            <div className="flex items-start gap-4">
+              <Label className="text-sm font-medium text-charcoal-700 w-28 pt-2.5 shrink-0 flex items-center gap-1">
+                <Users className="w-3.5 h-3.5" />
+                Company Size
+              </Label>
+              <div className="flex-1">
+                {isEditable ? (
+                  <MultiSelectDropdown
+                    placeholder="Select company sizes..."
+                    options={companySizeOptions}
+                    value={data.companySizes}
+                    onChange={(v) => handleChange('companySizes', v)}
+                    maxDisplay={3}
+                  />
+                ) : (
+                  <div className="flex flex-wrap gap-1.5">
+                    {data.companySizes.length > 0 ? (
+                      data.companySizes.map((size) => {
+                        const sizeOption = COMPANY_SIZE_OPTIONS.find(s => s.value === size)
+                        return <Badge key={size} variant="outline">{sizeOption?.label || size}</Badge>
+                      })
+                    ) : (
+                      <span className="text-sm text-charcoal-400">All sizes</span>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Regions - Multi-select Dropdown */}
+            <div className="flex items-start gap-4">
+              <Label className="text-sm font-medium text-charcoal-700 w-28 pt-2.5 shrink-0 flex items-center gap-1">
+                <MapPin className="w-3.5 h-3.5" />
+                Regions
+              </Label>
+              <div className="flex-1">
+                {isEditable ? (
+                  <MultiSelectDropdown
+                    placeholder="Select regions..."
+                    options={regionOptions}
+                    value={data.regions}
+                    onChange={(v) => handleChange('regions', v)}
+                    maxDisplay={2}
+                    showSelectAll={true}
+                  />
+                ) : (
+                  <div className="flex flex-wrap gap-1.5">
+                    {data.regions.length > 0 ? (
+                      data.regions.map((region) => {
+                        const regionOption = REGION_OPTIONS.find(r => r.value === region)
+                        return <Badge key={region} variant="outline">{regionOption?.label || region}</Badge>
+                      })
+                    ) : (
+                      <span className="text-sm text-charcoal-400">All regions</span>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Exclusions Card */}
+      {/* Exclusions Card - Full Width */}
       <Card className="shadow-elevation-sm">
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2">
             <div className="p-2 bg-charcoal-100 rounded-lg">
-              <Filter className="w-4 h-4 text-charcoal-600" />
+              <X className="w-4 h-4 text-charcoal-600" />
             </div>
             <CardTitle className="text-base font-heading">Exclusions</CardTitle>
           </div>
+          <p className="text-xs text-charcoal-500 mt-1">
+            Define contacts to exclude from this campaign
+          </p>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <UnifiedField
-            label="Exclude Existing Clients"
-            type="switch"
-            value={data.excludeExistingClients}
-            onChange={(v) => handleChange('excludeExistingClients', v)}
-            editable={isEditable}
-            helpText="Don't target contacts from active client accounts"
-          />
-          <UnifiedField
-            label="Exclude Recently Contacted (days)"
-            type="number"
-            value={String(data.excludeRecentlyContacted)}
-            onChange={(v) => handleChange('excludeRecentlyContacted', parseInt(String(v), 10) || 0)}
-            editable={isEditable}
-            min={0}
-            max={365}
-            helpText="Contacts reached in the last N days will be excluded"
-          />
-          <UnifiedField
-            label="Exclude Competitors"
-            type="switch"
-            value={data.excludeCompetitors}
-            onChange={(v) => handleChange('excludeCompetitors', v)}
-            editable={isEditable}
-            helpText="Don't target contacts from competitor companies"
-          />
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Exclude Existing Clients */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-medium text-charcoal-700">
+                  Exclude Existing Clients
+                </Label>
+                <p className="text-xs text-charcoal-500">
+                  Don't target contacts from active client accounts
+                </p>
+              </div>
+              <Switch
+                checked={data.excludeExistingClients}
+                onCheckedChange={(v) => handleChange('excludeExistingClients', v)}
+                disabled={!isEditable}
+              />
+            </div>
+
+            {/* Exclude Competitors */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-0.5">
+                <Label className="text-sm font-medium text-charcoal-700">
+                  Exclude Competitors
+                </Label>
+                <p className="text-xs text-charcoal-500">
+                  Don't target contacts from competitor companies
+                </p>
+              </div>
+              <Switch
+                checked={data.excludeCompetitors}
+                onCheckedChange={(v) => handleChange('excludeCompetitors', v)}
+                disabled={!isEditable}
+              />
+            </div>
+
+            {/* Exclude Recently Contacted */}
+            <div className="flex items-start gap-4">
+              <div className="flex-1 space-y-0.5">
+                <Label className="text-sm font-medium text-charcoal-700">
+                  Exclude Recently Contacted
+                </Label>
+                <p className="text-xs text-charcoal-500">
+                  Days since last contact
+                </p>
+              </div>
+              <div className="w-20">
+                <Input
+                  type="number"
+                  value={data.excludeRecentlyContacted}
+                  onChange={(e) => handleChange('excludeRecentlyContacted', parseInt(e.target.value, 10) || 0)}
+                  disabled={!isEditable}
+                  min={0}
+                  max={365}
+                  className="h-9 text-center"
+                />
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>

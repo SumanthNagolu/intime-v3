@@ -154,10 +154,12 @@ interface CreateCampaignStore {
   currentStep: number
   isDirty: boolean
   lastSaved: Date | null
+  draftId: string | null // Database draft ID for server persistence
 
   // Actions
   setFormData: (data: Partial<CreateCampaignFormData>) => void
   setCurrentStep: (step: number) => void
+  setDraftId: (id: string | null) => void
   resetForm: () => void
   clearDraft: () => void
 }
@@ -261,6 +263,7 @@ export const useCreateCampaignStore = create<CreateCampaignStore>()(
       currentStep: 1,
       isDirty: false,
       lastSaved: null,
+      draftId: null,
 
       setFormData: (data) =>
         set((state) => ({
@@ -271,12 +274,15 @@ export const useCreateCampaignStore = create<CreateCampaignStore>()(
 
       setCurrentStep: (step) => set({ currentStep: step }),
 
+      setDraftId: (id) => set({ draftId: id }),
+
       resetForm: () =>
         set({
           formData: defaultFormData,
           currentStep: 1,
           isDirty: false,
           lastSaved: null,
+          draftId: null,
         }),
 
       clearDraft: () =>
@@ -285,14 +291,16 @@ export const useCreateCampaignStore = create<CreateCampaignStore>()(
           currentStep: 1,
           isDirty: false,
           lastSaved: null,
+          draftId: null,
         }),
     }),
     {
-      name: 'create-campaign-draft-v2', // Updated version for new schema
+      name: 'create-campaign-draft-v3', // Updated version for server persistence
       partialize: (state) => ({
         formData: state.formData,
         currentStep: state.currentStep,
         lastSaved: state.lastSaved,
+        draftId: state.draftId,
       }),
     }
   )

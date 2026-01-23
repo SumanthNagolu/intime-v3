@@ -1,10 +1,6 @@
 'use client'
 
 import * as React from 'react'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import {
@@ -14,16 +10,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { InlinePanel, InlinePanelSection } from '@/components/ui/inline-panel'
 import {
   UserCog, Users, Crown, Briefcase, Phone,
-  Pencil, User, Loader2
 } from 'lucide-react'
 import type { AccountData } from '@/types/workspace'
 import { useAccountWorkspace } from '../AccountWorkspaceProvider'
 import { trpc } from '@/lib/trpc/client'
 import { useToast } from '@/components/ui/use-toast'
-import { cn } from '@/lib/utils'
+import {
+  UnifiedSection,
+  InfoCard,
+  InfoRow,
+  CardsGrid,
+  EditPanelSection,
+} from '@/components/pcf/sections/UnifiedSection'
+import { UserCard } from '@/components/ui/user-display'
+import { formatSnakeCase } from '@/lib/formatters'
 
 // Constants
 const CONTACT_METHODS = [
@@ -59,7 +61,7 @@ interface AccountTeamSectionProps {
  * Matches wizard Step 7: Team
  */
 export function AccountTeamSection({ account }: AccountTeamSectionProps) {
-  const { refreshData, data } = useAccountWorkspace()
+  const { refreshData } = useAccountWorkspace()
   const { toast } = useToast()
   const [isEditing, setIsEditing] = React.useState(false)
 
@@ -113,158 +115,19 @@ export function AccountTeamSection({ account }: AccountTeamSectionProps) {
     })
   }
 
-  // Get initials for avatar
-  const getInitials = (name: string) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
-  }
-
   // Get users for select options
   const users: Array<{ id: string; full_name: string | null; email: string }> = usersQuery.data?.items || []
 
   return (
-    <div className="flex gap-0">
-      {/* Main Content */}
-      <div className={cn("space-y-6 animate-fade-in flex-1 transition-all", isEditing && "pr-0")}>
-        {/* Section Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-xl font-heading font-semibold text-charcoal-900">Team Assignments</h2>
-            <p className="text-sm text-charcoal-500 mt-1">Account ownership and team member assignments</p>
-          </div>
-          {!isEditing && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setIsEditing(true)}
-              className="gap-2"
-            >
-              <Pencil className="w-4 h-4" />
-              Edit
-            </Button>
-          )}
-        </div>
-
-      {/* Team Members Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Account Owner */}
-        <TeamMemberCard
-          role="Account Owner"
-          roleIcon={Crown}
-          roleColor="gold"
-          member={account.owner}
-          description="Primary owner responsible for the account relationship"
-        />
-
-        {/* Account Manager */}
-        <TeamMemberCard
-          role="Account Manager"
-          roleIcon={Briefcase}
-          roleColor="blue"
-          member={account.account_manager}
-          description="Day-to-day manager handling account operations"
-        />
-      </div>
-
-      {/* Additional Team Info */}
-      <Card className="shadow-elevation-sm">
-        <CardHeader className="pb-3">
-          <div className="flex items-center gap-2">
-            <div className="p-2 bg-charcoal-100 rounded-lg">
-              <Users className="w-4 h-4 text-charcoal-600" />
-            </div>
-            <CardTitle className="text-base font-heading">Team Settings</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Submission Approval</p>
-              <Badge
-                variant={account.requires_approval_for_submission ? 'warning' : 'secondary'}
-                className="mt-2"
-              >
-                {account.requires_approval_for_submission ? 'Required' : 'Not Required'}
-              </Badge>
-              <p className="text-xs text-charcoal-400 mt-1">
-                {account.requires_approval_for_submission
-                  ? 'Submissions require manager approval before sending to client'
-                  : 'Team members can submit candidates directly'}
-              </p>
-            </div>
-            <div>
-              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Strategic Account</p>
-              <Badge
-                variant={account.is_strategic ? 'success' : 'secondary'}
-                className="mt-2"
-              >
-                {account.is_strategic ? 'Yes' : 'No'}
-              </Badge>
-              <p className="text-xs text-charcoal-400 mt-1">
-                {account.is_strategic
-                  ? 'This is a strategic/key account with special handling'
-                  : 'Standard account handling'}
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Contact Preferences */}
-      <Card className="shadow-elevation-sm">
-        <CardHeader className="pb-3">
-          <div className="flex items-center gap-2">
-            <div className="p-2 bg-purple-50 rounded-lg">
-              <Phone className="w-4 h-4 text-purple-600" />
-            </div>
-            <CardTitle className="text-base font-heading">Engagement Preferences</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
-              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Preferred Contact Method</p>
-              <p className={cn("text-sm mt-1", account.preferred_contact_method ? "text-charcoal-900" : "text-charcoal-400")}>
-                {formatContactMethod(account.preferred_contact_method) || 'Not specified'}
-              </p>
-            </div>
-            <div>
-              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Meeting Cadence</p>
-              <p className={cn("text-sm mt-1", account.meeting_cadence ? "text-charcoal-900" : "text-charcoal-400")}>
-                {formatMeetingCadence(account.meeting_cadence) || 'Not specified'}
-              </p>
-            </div>
-            <div>
-              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Submission Method</p>
-              <p className={cn("text-sm mt-1", account.submission_method ? "text-charcoal-900" : "text-charcoal-400")}>
-                {formatSubmissionMethod(account.submission_method) || 'Not specified'}
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-      </div>
-
-      {/* Edit Panel */}
-      <InlinePanel
-        isOpen={isEditing}
-        onClose={() => setIsEditing(false)}
-        title="Edit Team Settings"
-        description="Update team assignments and engagement preferences"
-        width="lg"
-        actions={
-          <>
-            <Button variant="outline" onClick={() => setIsEditing(false)}>
-              Cancel
-            </Button>
-            <Button onClick={handleSave} disabled={updateMutation.isPending}>
-              {updateMutation.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-              Save Changes
-            </Button>
-          </>
-        }
-      >
+    <UnifiedSection
+      title="Team Assignments"
+      description="Account ownership and team member assignments"
+      icon={UserCog}
+      isEditing={isEditing}
+      setIsEditing={setIsEditing}
+      editContent={
         <div className="space-y-6">
-          <InlinePanelSection title="Team Assignments">
+          <EditPanelSection title="Team Assignments">
             <div className="space-y-4">
               <div>
                 <Label htmlFor="owner">Account Owner</Label>
@@ -305,9 +168,9 @@ export function AccountTeamSection({ account }: AccountTeamSectionProps) {
                 <p className="text-xs text-charcoal-500 mt-1">Day-to-day manager handling operations</p>
               </div>
             </div>
-          </InlinePanelSection>
+          </EditPanelSection>
 
-          <InlinePanelSection title="Account Settings">
+          <EditPanelSection title="Account Settings">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
@@ -332,9 +195,9 @@ export function AccountTeamSection({ account }: AccountTeamSectionProps) {
                 />
               </div>
             </div>
-          </InlinePanelSection>
+          </EditPanelSection>
 
-          <InlinePanelSection title="Engagement Preferences">
+          <EditPanelSection title="Engagement Preferences">
             <div className="space-y-4">
               <div>
                 <Label htmlFor="contactMethod">Preferred Contact Method</Label>
@@ -391,108 +254,111 @@ export function AccountTeamSection({ account }: AccountTeamSectionProps) {
                 </Select>
               </div>
             </div>
-          </InlinePanelSection>
+          </EditPanelSection>
         </div>
-      </InlinePanel>
-    </div>
-  )
-}
+      }
+      editPanel={{
+        title: 'Edit Team Settings',
+        description: 'Update team assignments and engagement preferences',
+        width: 'lg',
+        onSave: handleSave,
+        isSaving: updateMutation.isPending,
+      }}
+    >
+      {/* Team Members Grid */}
+      <CardsGrid columns={2}>
+        {/* Account Owner */}
+        <UserCard
+          user={account.owner ? {
+            name: account.owner.full_name,
+            avatarUrl: account.owner.avatar_url,
+          } : null}
+          role="Account Owner"
+          description="Primary owner responsible for the account relationship"
+          icon={Crown}
+          iconBg="bg-charcoal-100"
+          iconColor="text-charcoal-600"
+          showStatus={false}
+        />
 
-// Team Member Card Component
-interface TeamMemberCardProps {
-  role: string
-  roleIcon: React.ElementType
-  roleColor: 'gold' | 'blue' | 'green' | 'purple'
-  member: {
-    id: string
-    full_name: string
-    avatar_url: string | null
-  } | null
-  description: string
-}
+        {/* Account Manager */}
+        <UserCard
+          user={account.account_manager ? {
+            name: account.account_manager.full_name,
+            avatarUrl: account.account_manager.avatar_url,
+          } : null}
+          role="Account Manager"
+          description="Day-to-day manager handling account operations"
+          icon={Briefcase}
+          iconBg="bg-charcoal-100"
+          iconColor="text-charcoal-600"
+          showStatus={false}
+        />
+      </CardsGrid>
 
-function TeamMemberCard({ role, roleIcon: RoleIcon, roleColor, member, description }: TeamMemberCardProps) {
-  const colorClasses = {
-    gold: 'bg-gold-50 text-gold-600',
-    blue: 'bg-blue-50 text-blue-600',
-    green: 'bg-green-50 text-green-600',
-    purple: 'bg-purple-50 text-purple-600',
-  }
-
-  const getInitials = (name: string) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
-  }
-
-  return (
-    <Card className="shadow-elevation-sm hover:shadow-elevation-md transition-shadow">
-      <CardContent className="pt-6">
-        <div className="flex items-start gap-4">
-          {member ? (
-            <Avatar className="w-14 h-14 ring-2 ring-white shadow-md">
-              <AvatarImage src={member.avatar_url || undefined} alt={member.full_name} />
-              <AvatarFallback className="bg-gold-100 text-gold-700 font-medium">
-                {getInitials(member.full_name)}
-              </AvatarFallback>
-            </Avatar>
-          ) : (
-            <div className="w-14 h-14 rounded-full bg-charcoal-100 flex items-center justify-center">
-              <User className="w-6 h-6 text-charcoal-400" />
-            </div>
-          )}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <div className={cn("p-1.5 rounded-md", colorClasses[roleColor])}>
-                <RoleIcon className="w-3.5 h-3.5" />
-              </div>
-              <span className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">{role}</span>
-            </div>
-            {member ? (
-              <p className="font-medium text-charcoal-900 truncate">{member.full_name}</p>
-            ) : (
-              <p className="text-charcoal-400 italic">Not assigned</p>
-            )}
-            <p className="text-xs text-charcoal-500 mt-1">{description}</p>
+      {/* Additional Team Info */}
+      <InfoCard
+        title="Team Settings"
+        icon={Users}
+        iconBg="bg-charcoal-100"
+        iconColor="text-charcoal-600"
+        className="mt-6"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <InfoRow
+              label="Submission Approval"
+              value={account.requires_approval_for_submission ? 'Required' : 'Not Required'}
+              badge={true}
+              badgeVariant={account.requires_approval_for_submission ? 'warning' : 'secondary'}
+            />
+            <p className="text-xs text-charcoal-400 mt-1">
+              {account.requires_approval_for_submission
+                ? 'Submissions require manager approval before sending to client'
+                : 'Team members can submit candidates directly'}
+            </p>
+          </div>
+          <div>
+            <InfoRow
+              label="Strategic Account"
+              value={account.is_strategic ? 'Yes' : 'No'}
+              badge={true}
+              badgeVariant={account.is_strategic ? 'success' : 'secondary'}
+            />
+            <p className="text-xs text-charcoal-400 mt-1">
+              {account.is_strategic
+                ? 'This is a strategic/key account with special handling'
+                : 'Standard account handling'}
+            </p>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </InfoCard>
+
+      {/* Contact Preferences */}
+      <InfoCard
+        title="Engagement Preferences"
+        icon={Phone}
+        iconBg="bg-charcoal-100"
+        iconColor="text-charcoal-600"
+        className="mt-6"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <InfoRow
+            label="Preferred Contact Method"
+            value={account.preferred_contact_method ? formatSnakeCase(account.preferred_contact_method) : null}
+          />
+          <InfoRow
+            label="Meeting Cadence"
+            value={account.meeting_cadence ? formatSnakeCase(account.meeting_cadence) : null}
+          />
+          <InfoRow
+            label="Submission Method"
+            value={account.submission_method ? formatSnakeCase(account.submission_method) : null}
+          />
+        </div>
+      </InfoCard>
+    </UnifiedSection>
   )
-}
-
-// Formatting helpers
-function formatContactMethod(method: string | null): string | null {
-  if (!method) return null
-  const map: Record<string, string> = {
-    'email': 'Email',
-    'phone': 'Phone',
-    'teams': 'Microsoft Teams',
-    'slack': 'Slack',
-    'in_person': 'In Person',
-  }
-  return map[method] || method.replace(/_/g, ' ')
-}
-
-function formatMeetingCadence(cadence: string | null): string | null {
-  if (!cadence) return null
-  const map: Record<string, string> = {
-    'weekly': 'Weekly',
-    'biweekly': 'Bi-weekly',
-    'monthly': 'Monthly',
-    'quarterly': 'Quarterly',
-    'as_needed': 'As Needed',
-  }
-  return map[cadence] || cadence.replace(/_/g, ' ')
-}
-
-function formatSubmissionMethod(method: string | null): string | null {
-  if (!method) return null
-  const map: Record<string, string> = {
-    'email': 'Email',
-    'ats': 'Client ATS/VMS',
-    'portal': 'Client Portal',
-    'direct': 'Direct to Hiring Manager',
-  }
-  return map[method] || method.replace(/_/g, ' ')
 }
 
 export default AccountTeamSection

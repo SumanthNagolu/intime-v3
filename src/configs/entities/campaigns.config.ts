@@ -22,6 +22,7 @@ import {
 } from 'lucide-react'
 import { ListViewConfig, DetailViewConfig, StatusConfig } from './types'
 import { trpc } from '@/lib/trpc/client'
+import { CampaignDraftsTabContent } from '@/components/pcf/list-view/CampaignDraftsTabContent'
 import {
   CampaignOverviewSectionPCF,
   CampaignProspectsSectionPCF,
@@ -458,6 +459,112 @@ export const campaignsListConfig: ListViewConfig<Campaign> = {
 
   // Stats are now included in useListQuery response (ONE database call pattern)
   // useStatsQuery is no longer needed
+
+  // Tabs configuration - "Campaigns" and "Drafts" tabs (like Accounts)
+  tabs: [
+    {
+      id: 'campaigns',
+      label: 'Campaigns',
+      showFilters: true,
+      useQuery: (filters) => {
+        const statusValue = filters.status as string | undefined
+        const typeValue = filters.type as string | undefined
+        const sortByValue = filters.sortBy as string | undefined
+        const sortOrderValue = filters.sortOrder as string | undefined
+
+        const validStatuses = ['draft', 'scheduled', 'active', 'paused', 'completed', 'all'] as const
+        const validTypes = [
+          'lead_generation',
+          're_engagement',
+          'event_promotion',
+          'brand_awareness',
+          'candidate_sourcing',
+          'all',
+        ] as const
+        const validSortFields = ['created_at', 'start_date', 'end_date', 'name', 'leads_generated', 'audience_size', 'prospects_contacted', 'budget_spent', 'status', 'campaign_type'] as const
+
+        type CampaignStatus = (typeof validStatuses)[number]
+        type CampaignType = (typeof validTypes)[number]
+        type SortField = (typeof validSortFields)[number]
+
+        const sortFieldMap: Record<string, SortField> = {
+          name: 'name',
+          campaignType: 'campaign_type',
+          status: 'status',
+          startDate: 'start_date',
+          endDate: 'end_date',
+          audienceSize: 'audience_size',
+          prospectsContacted: 'prospects_contacted',
+          leadsGenerated: 'leads_generated',
+          budgetSpent: 'budget_spent',
+          createdAt: 'created_at',
+        }
+
+        const mappedSortBy = sortByValue && sortFieldMap[sortByValue]
+          ? sortFieldMap[sortByValue]
+          : 'created_at'
+
+        // Exclude drafts from main campaigns tab - drafts are in separate tab
+        const effectiveStatus = statusValue && statusValue !== 'all' && statusValue !== 'draft'
+          ? statusValue as CampaignStatus
+          : 'all'
+
+        return trpc.crm.campaigns.listWithStats.useQuery({
+          search: filters.search as string | undefined,
+          status: effectiveStatus,
+          type: (typeValue && validTypes.includes(typeValue as CampaignType)
+            ? typeValue
+            : 'all') as CampaignType,
+          limit: (filters.limit as number) || 20,
+          offset: (filters.offset as number) || 0,
+          sortBy: mappedSortBy,
+          sortOrder: (sortOrderValue === 'asc' || sortOrderValue === 'desc' ? sortOrderValue : 'desc'),
+        })
+      },
+      emptyState: {
+        icon: Megaphone,
+        title: 'No campaigns found',
+        description: (filters) =>
+          filters.search
+            ? 'Try adjusting your search or filters'
+            : 'Create your first campaign to start generating leads',
+        action: {
+          label: 'Create Campaign',
+          href: '/employee/crm/campaigns/new',
+        },
+      },
+    },
+    {
+      id: 'drafts',
+      label: 'Drafts',
+      showFilters: false,
+      useQuery: () => {
+        // Query user's draft campaigns using dedicated listMyDrafts procedure
+        const draftsQuery = trpc.crm.campaigns.listMyDrafts.useQuery()
+
+        return {
+          data: draftsQuery.data ? {
+            items: draftsQuery.data as unknown as Campaign[],
+            total: draftsQuery.data.length,
+          } : undefined,
+          isLoading: draftsQuery.isLoading,
+          error: draftsQuery.error,
+        }
+      },
+      // Use custom component that renders draft cards with Edit action
+      customComponent: CampaignDraftsTabContent,
+      emptyState: {
+        icon: FileText,
+        title: 'No drafts',
+        description: "You don't have any campaigns in draft. Start creating a new one!",
+        action: {
+          label: 'New Campaign',
+          href: '/employee/crm/campaigns/new',
+        },
+      },
+    },
+  ],
+  defaultTab: 'campaigns',
 }
 
 // Campaigns Detail View Configuration

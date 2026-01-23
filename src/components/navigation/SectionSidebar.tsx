@@ -29,6 +29,10 @@ import {
   Flame,
   UserCheck,
   FileText,
+  FilePen,
+  CalendarClock,
+  Pause,
+  CheckCircle,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useEntityNavigationSafe } from '@/lib/navigation/EntityNavigationContext'
@@ -172,7 +176,11 @@ export const sectionConfigs: Record<string, SectionConfig> = {
     views: [
       { id: 'all', label: 'All Campaigns', icon: List, href: '/employee/crm/campaigns' },
       { id: 'my-campaigns', label: 'My Campaigns', icon: User, href: '/employee/crm/campaigns?owner=me' },
+      { id: 'drafts', label: 'Drafts', icon: FilePen, href: '/employee/crm/campaigns?status=draft' },
+      { id: 'scheduled', label: 'Scheduled', icon: CalendarClock, href: '/employee/crm/campaigns?status=scheduled' },
       { id: 'active', label: 'Active', icon: Activity, href: '/employee/crm/campaigns?status=active' },
+      { id: 'paused', label: 'Paused', icon: Pause, href: '/employee/crm/campaigns?status=paused' },
+      { id: 'completed', label: 'Completed', icon: CheckCircle, href: '/employee/crm/campaigns?status=completed' },
     ],
   },
   contacts: {
@@ -443,7 +451,7 @@ export function SectionSidebar({ sectionId, className }: SectionSidebarProps) {
 
         {/* Recent Entities - Grouped by time */}
         {section.entityType && recentEntities.length > 0 && (
-          <div className="flex-1 overflow-y-auto py-2">
+          <div className="flex-1 py-2">
             {!isCollapsed && (
               <h3 className="text-[10px] font-semibold text-charcoal-400 uppercase tracking-wider mb-2 px-5">
                 Recent

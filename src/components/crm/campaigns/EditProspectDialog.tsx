@@ -51,7 +51,7 @@ const statusOptions = [
   { value: 'contacted', label: 'Contacted' },
   { value: 'engaged', label: 'Engaged' },
   { value: 'responded', label: 'Responded' },
-  { value: 'unsubscribed', label: 'Unsubscribed' },
+  { value: 'opted_out', label: 'Opted Out' },
   { value: 'bounced', label: 'Bounced' },
 ]
 
@@ -122,7 +122,7 @@ export function EditProspectDialog({
       companyName: companyName || undefined,
       title: title || undefined,
       linkedinUrl: linkedinUrl || undefined,
-      status: status as 'enrolled' | 'contacted' | 'engaged' | 'responded' | 'converted' | 'unsubscribed' | 'bounced',
+      status: status as 'enrolled' | 'contacted' | 'engaged' | 'responded' | 'converted' | 'opted_out' | 'bounced',
       responseType: responseType as 'positive' | 'neutral' | 'negative' | undefined,
       responseText: responseText || undefined,
       engagementScore,

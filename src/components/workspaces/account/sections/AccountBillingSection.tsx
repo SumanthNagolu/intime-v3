@@ -1,9 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
@@ -14,16 +12,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { InlinePanel, InlinePanelSection } from '@/components/ui/inline-panel'
 import {
-  CreditCard, DollarSign, Clock, CheckCircle2, AlertTriangle,
-  Receipt, Pencil, Building2, Loader2
+  CreditCard, DollarSign, Clock, Receipt,
 } from 'lucide-react'
 import type { AccountData } from '@/types/workspace'
 import { useAccountWorkspace } from '../AccountWorkspaceProvider'
 import { trpc } from '@/lib/trpc/client'
 import { useToast } from '@/components/ui/use-toast'
-import { cn } from '@/lib/utils'
+import {
+  UnifiedSection,
+  InfoCard,
+  InfoRow,
+  CardsGrid,
+  EditPanelSection,
+} from '@/components/pcf/sections/UnifiedSection'
+import { CurrencyDisplay } from '@/components/ui/currency-input'
+import { PercentageDisplay } from '@/components/ui/percentage-input'
+import { formatSnakeCase } from '@/lib/formatters'
 
 // Constants
 const PAYMENT_TERMS = [
@@ -130,230 +135,16 @@ export function AccountBillingSection({ account }: AccountBillingSectionProps) {
     })
   }
 
-  // Format currency
-  const formatCurrency = (value: string | number | null) => {
-    if (!value) return 'Not specified'
-    const num = typeof value === 'string' ? parseFloat(value) : value
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(num)
-  }
-
-  // Format percentage
-  const formatPercentage = (value: number | null) => {
-    if (value === null || value === undefined) return 'Not specified'
-    return `${value}%`
-  }
-
-  // Get credit status styling
-  const getCreditStatusStyle = (status: string | null) => {
-    if (!status) return { variant: 'secondary' as const, icon: null }
-    switch (status.toLowerCase()) {
-      case 'approved':
-        return { variant: 'success' as const, icon: CheckCircle2 }
-      case 'pending':
-        return { variant: 'warning' as const, icon: Clock }
-      case 'suspended':
-      case 'declined':
-        return { variant: 'destructive' as const, icon: AlertTriangle }
-      default:
-        return { variant: 'secondary' as const, icon: null }
-    }
-  }
-
-  const creditStatusStyle = getCreditStatusStyle(account.credit_status)
-
   return (
-    <div className="flex gap-0">
-      {/* Main Content */}
-      <div className={cn("space-y-6 animate-fade-in flex-1 transition-all", isEditing && "pr-0")}>
-        {/* Section Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-xl font-heading font-semibold text-charcoal-900">Billing & Terms</h2>
-            <p className="text-sm text-charcoal-500 mt-1">Payment terms, rates, and billing configuration</p>
-          </div>
-          {!isEditing && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setIsEditing(true)}
-              className="gap-2"
-            >
-              <Pencil className="w-4 h-4" />
-              Edit
-            </Button>
-          )}
-        </div>
-
-      {/* Cards Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Payment Terms Card */}
-        <Card className="shadow-elevation-sm hover:shadow-elevation-md transition-shadow">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <div className="p-2 bg-green-50 rounded-lg">
-                <Clock className="w-4 h-4 text-green-600" />
-              </div>
-              <CardTitle className="text-base font-heading">Payment Terms</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <InfoRow
-              label="Default Payment Terms"
-              value={formatPaymentTerms(account.default_payment_terms)}
-            />
-            <InfoRow
-              label="Invoice Delivery Method"
-              value={account.invoice_delivery_method}
-            />
-            <InfoRow
-              label="Default Currency"
-              value={account.default_currency || 'USD'}
-            />
-          </CardContent>
-        </Card>
-
-        {/* Rate Configuration Card */}
-        <Card className="shadow-elevation-sm hover:shadow-elevation-md transition-shadow">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <div className="p-2 bg-gold-50 rounded-lg">
-                <DollarSign className="w-4 h-4 text-gold-600" />
-              </div>
-              <CardTitle className="text-base font-heading">Rate Configuration</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <InfoRow
-              label="Default Markup"
-              value={formatPercentage(account.default_markup_percentage)}
-            />
-            <InfoRow
-              label="Default Fee"
-              value={formatPercentage(account.default_fee_percentage)}
-            />
-          </CardContent>
-        </Card>
-
-        {/* Credit Information Card */}
-        <Card className="shadow-elevation-sm hover:shadow-elevation-md transition-shadow">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <div className="p-2 bg-blue-50 rounded-lg">
-                <CreditCard className="w-4 h-4 text-blue-600" />
-              </div>
-              <CardTitle className="text-base font-heading">Credit Information</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Credit Status</p>
-              {account.credit_status ? (
-                <Badge variant={creditStatusStyle.variant} className="mt-1 capitalize gap-1">
-                  {creditStatusStyle.icon && <creditStatusStyle.icon className="w-3 h-3" />}
-                  {account.credit_status.replace(/_/g, ' ')}
-                </Badge>
-              ) : (
-                <span className="text-sm text-charcoal-400">Not specified</span>
-              )}
-            </div>
-            <InfoRow
-              label="Credit Limit"
-              value={formatCurrency(account.credit_limit)}
-            />
-          </CardContent>
-        </Card>
-
-        {/* PO Configuration Card */}
-        <Card className="shadow-elevation-sm hover:shadow-elevation-md transition-shadow">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <div className="p-2 bg-purple-50 rounded-lg">
-                <Receipt className="w-4 h-4 text-purple-600" />
-              </div>
-              <CardTitle className="text-base font-heading">PO Configuration</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Requires PO</p>
-              <Badge
-                variant={account.requires_po ? 'warning' : 'secondary'}
-                className="mt-1"
-              >
-                {account.requires_po ? 'Yes - PO Required' : 'No - PO Optional'}
-              </Badge>
-            </div>
-            <div>
-              <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Requires Approval for Submission</p>
-              <Badge
-                variant={account.requires_approval_for_submission ? 'warning' : 'secondary'}
-                className="mt-1"
-              >
-                {account.requires_approval_for_submission ? 'Yes' : 'No'}
-              </Badge>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Financial Metrics Summary */}
-      <Card className="shadow-elevation-sm">
-        <CardHeader className="pb-3">
-          <div className="flex items-center gap-2">
-            <div className="p-2 bg-charcoal-100 rounded-lg">
-              <Building2 className="w-4 h-4 text-charcoal-600" />
-            </div>
-            <CardTitle className="text-base font-heading">Financial Summary</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <MetricCard
-              label="Lifetime Revenue"
-              value={formatCurrency(account.lifetime_revenue)}
-              trend={null}
-            />
-            <MetricCard
-              label="Revenue YTD"
-              value={formatCurrency(account.revenue_ytd)}
-              trend={null}
-            />
-            <MetricCard
-              label="Last 12 Months"
-              value={formatCurrency(account.revenue_last_12m)}
-              trend={null}
-            />
-            <MetricCard
-              label="Avg Margin"
-              value={formatPercentage(account.avg_margin_percentage)}
-              trend={null}
-            />
-          </div>
-        </CardContent>
-      </Card>
-      </div>
-
-      {/* Edit Panel */}
-      <InlinePanel
-        isOpen={isEditing}
-        onClose={() => setIsEditing(false)}
-        title="Edit Billing & Terms"
-        description="Update payment terms, rates, and billing configuration"
-        width="lg"
-        actions={
-          <>
-            <Button variant="outline" onClick={() => setIsEditing(false)}>
-              Cancel
-            </Button>
-            <Button onClick={handleSave} disabled={updateMutation.isPending}>
-              {updateMutation.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-              Save Changes
-            </Button>
-          </>
-        }
-      >
+    <UnifiedSection
+      title="Billing & Terms"
+      description="Payment terms, rates, and billing configuration"
+      icon={CreditCard}
+      isEditing={isEditing}
+      setIsEditing={setIsEditing}
+      editContent={
         <div className="space-y-6">
-          <InlinePanelSection title="Payment Terms">
+          <EditPanelSection title="Payment Terms">
             <div className="space-y-4">
               <div>
                 <Label htmlFor="paymentTerms">Default Payment Terms</Label>
@@ -410,9 +201,9 @@ export function AccountBillingSection({ account }: AccountBillingSectionProps) {
                 </Select>
               </div>
             </div>
-          </InlinePanelSection>
+          </EditPanelSection>
 
-          <InlinePanelSection title="Rate Configuration">
+          <EditPanelSection title="Rate Configuration">
             <div className="space-y-4">
               <div>
                 <Label htmlFor="markup">Default Markup (%)</Label>
@@ -441,9 +232,9 @@ export function AccountBillingSection({ account }: AccountBillingSectionProps) {
                 />
               </div>
             </div>
-          </InlinePanelSection>
+          </EditPanelSection>
 
-          <InlinePanelSection title="Credit Information">
+          <EditPanelSection title="Credit Information">
             <div className="space-y-4">
               <div>
                 <Label htmlFor="creditStatus">Credit Status</Label>
@@ -476,9 +267,9 @@ export function AccountBillingSection({ account }: AccountBillingSectionProps) {
                 />
               </div>
             </div>
-          </InlinePanelSection>
+          </EditPanelSection>
 
-          <InlinePanelSection title="PO Configuration">
+          <EditPanelSection title="PO Configuration">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
@@ -503,53 +294,176 @@ export function AccountBillingSection({ account }: AccountBillingSectionProps) {
                 />
               </div>
             </div>
-          </InlinePanelSection>
+          </EditPanelSection>
         </div>
-      </InlinePanel>
-    </div>
-  )
-}
+      }
+      editPanel={{
+        title: 'Edit Billing & Terms',
+        description: 'Update payment terms, rates, and billing configuration',
+        width: 'lg',
+        onSave: handleSave,
+        isSaving: updateMutation.isPending,
+      }}
+    >
+      {/* Cards Grid */}
+      <CardsGrid columns={2}>
+        {/* Payment Terms Card */}
+        <InfoCard
+          title="Payment Terms"
+          icon={Clock}
+          iconBg="bg-charcoal-100"
+          iconColor="text-charcoal-600"
+        >
+          <InfoRow
+            label="Default Payment Terms"
+            value={account.default_payment_terms ? formatSnakeCase(account.default_payment_terms) : null}
+          />
+          <InfoRow
+            label="Invoice Delivery Method"
+            value={account.invoice_delivery_method ? formatSnakeCase(account.invoice_delivery_method) : null}
+          />
+          <InfoRow
+            label="Default Currency"
+            value={account.default_currency || 'USD'}
+          />
+        </InfoCard>
 
-// Helper Components
-function InfoRow({ label, value }: { label: string; value: string | null | undefined }) {
-  return (
-    <div>
-      <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">{label}</p>
-      <p className={cn("text-sm mt-0.5", value && value !== 'Not specified' ? "text-charcoal-900" : "text-charcoal-400")}>
-        {value || 'Not specified'}
-      </p>
-    </div>
-  )
-}
+        {/* Rate Configuration Card */}
+        <InfoCard
+          title="Rate Configuration"
+          icon={DollarSign}
+          iconBg="bg-charcoal-100"
+          iconColor="text-charcoal-600"
+        >
+          <div>
+            <p className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+              Default Markup
+            </p>
+            <div className="mt-1">
+              <PercentageDisplay
+                value={account.default_markup_percentage}
+                showProgress={false}
+              />
+            </div>
+          </div>
+          <div>
+            <p className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+              Default Fee
+            </p>
+            <div className="mt-1">
+              <PercentageDisplay
+                value={account.default_fee_percentage}
+                showProgress={false}
+              />
+            </div>
+          </div>
+        </InfoCard>
 
-function MetricCard({
-  label,
-  value,
-  trend
-}: {
-  label: string
-  value: string
-  trend: 'up' | 'down' | null
-}) {
-  return (
-    <div className="text-center">
-      <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">{label}</p>
-      <p className="text-lg font-semibold text-charcoal-900 mt-1">{value}</p>
-    </div>
-  )
-}
+        {/* Credit Information Card */}
+        <InfoCard
+          title="Credit Information"
+          icon={CreditCard}
+          iconBg="bg-charcoal-100"
+          iconColor="text-charcoal-600"
+        >
+          <InfoRow
+            label="Credit Status"
+            value={account.credit_status}
+            badge={true}
+          />
+          <div>
+            <p className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+              Credit Limit
+            </p>
+            <div className="mt-1">
+              <CurrencyDisplay
+                value={{ amount: account.credit_limit, currency: 'USD' }}
+                size="default"
+              />
+            </div>
+          </div>
+        </InfoCard>
 
-// Formatting helpers
-function formatPaymentTerms(terms: string | null): string | null {
-  if (!terms) return null
-  const map: Record<string, string> = {
-    'net_15': 'Net 15',
-    'net_30': 'Net 30',
-    'net_45': 'Net 45',
-    'net_60': 'Net 60',
-    'due_on_receipt': 'Due on Receipt',
-  }
-  return map[terms] || terms.replace(/_/g, ' ')
+        {/* PO Configuration Card */}
+        <InfoCard
+          title="PO Configuration"
+          icon={Receipt}
+          iconBg="bg-charcoal-100"
+          iconColor="text-charcoal-600"
+        >
+          <InfoRow
+            label="Requires PO"
+            value={account.requires_po ? 'Yes - PO Required' : 'No - PO Optional'}
+            badge={true}
+            badgeVariant={account.requires_po ? 'warning' : 'secondary'}
+          />
+          <InfoRow
+            label="Requires Approval"
+            value={account.requires_approval_for_submission ? 'Yes' : 'No'}
+            badge={true}
+            badgeVariant={account.requires_approval_for_submission ? 'warning' : 'secondary'}
+          />
+        </InfoCard>
+      </CardsGrid>
+
+      {/* Financial Metrics Summary */}
+      <InfoCard
+        title="Financial Summary"
+        icon={DollarSign}
+        iconBg="bg-charcoal-100"
+        iconColor="text-charcoal-600"
+        className="mt-6"
+      >
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="text-center">
+            <p className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+              Lifetime Revenue
+            </p>
+            <div className="mt-1">
+              <CurrencyDisplay
+                value={{ amount: account.lifetime_revenue, currency: 'USD' }}
+                size="lg"
+              />
+            </div>
+          </div>
+          <div className="text-center">
+            <p className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+              Revenue YTD
+            </p>
+            <div className="mt-1">
+              <CurrencyDisplay
+                value={{ amount: account.revenue_ytd, currency: 'USD' }}
+                size="lg"
+              />
+            </div>
+          </div>
+          <div className="text-center">
+            <p className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+              Last 12 Months
+            </p>
+            <div className="mt-1">
+              <CurrencyDisplay
+                value={{ amount: account.revenue_last_12m, currency: 'USD' }}
+                size="lg"
+              />
+            </div>
+          </div>
+          <div className="text-center">
+            <p className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+              Avg Margin
+            </p>
+            <div className="mt-1">
+              <PercentageDisplay
+                value={account.avg_margin_percentage}
+                showProgress={false}
+                size="lg"
+              />
+            </div>
+          </div>
+        </div>
+      </InfoCard>
+    </UnifiedSection>
+  )
 }
 
 export default AccountBillingSection

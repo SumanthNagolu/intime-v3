@@ -58,30 +58,46 @@ import {
   ProspectContactTab,
   ProspectEngagementTab,
   ProspectQualificationTab,
+  LogProspectActivityDialog,
+  EditProspectDialog,
+  RemoveProspectDialog,
 } from '@/components/campaigns/prospects'
 import {
   LeadOverviewTab,
   LeadEngagementTab,
   LeadDealTab,
 } from '@/components/campaigns/leads'
-import type { CampaignProspect, CampaignLead } from '@/types/campaign'
+import type { CampaignProspect, CampaignLead, ProspectStatus } from '@/types/campaign'
 import { cn } from '@/lib/utils'
+import { toast } from 'sonner'
 
 /**
  * Dispatch a dialog open event for the Campaign entity
  * The detail page listens for this and manages dialog state
  */
-function dispatchCampaignDialog(dialogId: string, entityId: string, stepData?: {
-  id: string
-  channel: string
-  stepNumber: number
-  dayOffset?: number
-  subject?: string
-  templateName?: string
-}) {
+function dispatchCampaignDialog(
+  dialogId: string,
+  entityId: string,
+  options?: {
+    stepData?: {
+      id: string
+      channel: string
+      stepNumber: number
+      dayOffset?: number
+      subject?: string
+      templateName?: string
+    }
+    prospectData?: CampaignProspect
+  }
+) {
   window.dispatchEvent(
     new CustomEvent('openCampaignDialog', {
-      detail: { dialogId, campaignId: entityId, stepData },
+      detail: {
+        dialogId,
+        campaignId: entityId,
+        stepData: options?.stepData,
+        prospectData: options?.prospectData,
+      },
     })
   )
 }
@@ -561,37 +577,42 @@ export function CampaignOverviewSectionPCF({ entityId, entity }: PCFSectionProps
 }
 
 /**
- * Transform raw prospect data from DB to typed CampaignProspect
+ * Transform prospect data to typed CampaignProspect
+ * Handles both pre-transformed data (camelCase from server action) and raw DB data (snake_case)
  */
 function transformRawProspect(prospect: Record<string, unknown>): CampaignProspect {
+  // For raw DB data, contact is nested; for pre-transformed, fields are flattened
   const contact = prospect.contact as Record<string, unknown> | undefined
 
   return {
     id: prospect.id as string,
-    campaignId: prospect.campaign_id as string,
-    contactId: prospect.contact_id as string,
+    campaignId: (prospect.campaignId ?? prospect.campaign_id) as string,
+    contactId: (prospect.contactId ?? prospect.contact_id) as string,
     status: prospect.status as CampaignProspect['status'],
-    firstName: (contact?.first_name as string) || '',
-    lastName: (contact?.last_name as string) || '',
-    email: (contact?.email as string | null) || null,
-    phone: (contact?.phone as string | null) || null,
-    companyName: (contact?.company_name as string | null) || null,
-    title: (contact?.title as string | null) || null,
-    engagementScore: prospect.engagement_score as number | null,
-    emailsSent: prospect.emails_sent as number | null,
-    emailsOpened: prospect.emails_opened as number | null,
-    linksClicked: prospect.links_clicked as number | null,
-    repliesReceived: prospect.replies_received as number | null,
-    currentStep: prospect.current_step as number | null,
-    sequenceStatus: prospect.sequence_status as string | null,
-    nextStepAt: prospect.next_step_at as string | null,
-    enrolledAt: prospect.created_at as string,
-    firstContactedAt: prospect.first_contacted_at as string | null,
-    openedAt: prospect.opened_at as string | null,
-    clickedAt: prospect.clicked_at as string | null,
-    respondedAt: prospect.responded_at as string | null,
-    convertedAt: prospect.converted_to_lead_at as string | null,
-    convertedLeadId: prospect.converted_lead_id as string | null,
+    // Contact fields: check flattened (pre-transformed) first, then nested (raw)
+    firstName: (prospect.firstName ?? contact?.first_name ?? '') as string,
+    lastName: (prospect.lastName ?? contact?.last_name ?? '') as string,
+    email: (prospect.email ?? contact?.email ?? null) as string | null,
+    phone: (prospect.phone ?? contact?.phone ?? null) as string | null,
+    companyName: (prospect.companyName ?? contact?.company_name ?? null) as string | null,
+    title: (prospect.title ?? contact?.title ?? null) as string | null,
+    // Metrics
+    engagementScore: (prospect.engagementScore ?? prospect.engagement_score ?? null) as number | null,
+    emailsSent: (prospect.emailsSent ?? prospect.emails_sent ?? null) as number | null,
+    emailsOpened: (prospect.emailsOpened ?? prospect.emails_opened ?? null) as number | null,
+    linksClicked: (prospect.linksClicked ?? prospect.links_clicked ?? null) as number | null,
+    repliesReceived: (prospect.repliesReceived ?? prospect.replies_received ?? null) as number | null,
+    currentStep: (prospect.currentStep ?? prospect.current_step ?? null) as number | null,
+    sequenceStatus: (prospect.sequenceStatus ?? prospect.sequence_status ?? null) as string | null,
+    nextStepAt: (prospect.nextStepAt ?? prospect.next_step_at ?? null) as string | null,
+    // Timestamps
+    enrolledAt: (prospect.enrolledAt ?? prospect.created_at) as string,
+    firstContactedAt: (prospect.firstContactedAt ?? prospect.first_contacted_at ?? null) as string | null,
+    openedAt: (prospect.openedAt ?? prospect.opened_at ?? null) as string | null,
+    clickedAt: (prospect.clickedAt ?? prospect.clicked_at ?? null) as string | null,
+    respondedAt: (prospect.respondedAt ?? prospect.responded_at ?? null) as string | null,
+    convertedAt: (prospect.convertedAt ?? prospect.converted_to_lead_at ?? null) as string | null,
+    convertedLeadId: (prospect.convertedLeadId ?? prospect.converted_lead_id ?? null) as string | null,
   }
 }
 
@@ -614,12 +635,37 @@ export function CampaignProspectsSectionPCF({ entityId, entity, sectionData }: P
   const [selectedProspect, setSelectedProspect] = useState<CampaignProspect | null>(null)
   const [activeTab, setActiveTab] = useState('contact')
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+
+  // Dialog state
+  const [editDialogOpen, setEditDialogOpen] = useState(false)
+  const [removeDialogOpen, setRemoveDialogOpen] = useState(false)
+  const [logActivityDialogOpen, setLogActivityDialogOpen] = useState(false)
+  const [activityType, setActivityType] = useState<'email' | 'call' | 'linkedin' | 'note'>('note')
+
+  // tRPC utils for invalidation
+  const utils = trpc.useUtils()
+
+  // Mutation for updating prospect status
+  const updateProspectMutation = trpc.crm.campaigns.updateProspect.useMutation({
+    onSuccess: () => {
+      toast.success('Prospect status updated')
+      utils.crm.campaigns.getProspects.invalidate({ campaignId: entityId })
+      utils.crm.campaigns.getFullEntity.invalidate({ id: entityId })
+    },
+    onError: (error) => {
+      toast.error(error.message || 'Failed to update prospect')
+    },
+  })
+
   // ONE database call pattern: Use pre-loaded data if available
   const hasPreloadedData = !!sectionData?.items
 
   // Query prospects only if sectionData not provided (legacy pattern)
   const prospectsQuery = trpc.crm.campaigns.getProspects.useQuery(
-    { campaignId: entityId, limit: 100 },
+    { campaignId: entityId, limit: 500 }, // Fetch more for client-side pagination
     {
       enabled: !!entityId && !hasPreloadedData, // Skip if pre-loaded
       staleTime: 30_000,
@@ -632,9 +678,21 @@ export function CampaignProspectsSectionPCF({ entityId, entity, sectionData }: P
   const rawProspects = hasPreloadedData
     ? (sectionData.items as Record<string, unknown>[])
     : (prospectsQuery.data?.items || []) as Record<string, unknown>[]
-  const prospects = rawProspects.map(transformRawProspect)
-  const total = prospects.length
+  const allProspects = rawProspects.map(transformRawProspect)
+  const total = allProspects.length
   const isLoading = !hasPreloadedData && prospectsQuery.isLoading
+
+  // Calculate pagination
+  const totalPages = Math.ceil(total / pageSize)
+  const startIndex = (currentPage - 1) * pageSize
+  const endIndex = startIndex + pageSize
+  const prospects = allProspects.slice(startIndex, endIndex)
+
+  // Reset to page 1 when page size changes
+  const handlePageSizeChange = (newSize: number) => {
+    setPageSize(newSize)
+    setCurrentPage(1)
+  }
 
   // Handle row click to select prospect
   const handleRowClick = (prospect: CampaignProspect) => {
@@ -650,11 +708,53 @@ export function CampaignProspectsSectionPCF({ entityId, entity, sectionData }: P
   const handleConvertToLead = () => {
     if (selectedProspect) {
       dispatchCampaignDialog('convertToLead', entityId, {
-        id: selectedProspect.id,
-        channel: 'prospect',
-        stepNumber: 0,
+        prospectData: selectedProspect,
       })
     }
+  }
+
+  // Handle status change
+  const handleStatusChange = (status: ProspectStatus) => {
+    if (selectedProspect) {
+      updateProspectMutation.mutate({
+        prospectId: selectedProspect.id,
+        status,
+      })
+      // Optimistically update the selected prospect
+      setSelectedProspect({ ...selectedProspect, status })
+    }
+  }
+
+  // Handle log activity
+  const handleLogActivity = (type: 'email' | 'call' | 'linkedin' | 'note') => {
+    setActivityType(type)
+    setLogActivityDialogOpen(true)
+  }
+
+  // Handle edit
+  const handleEdit = () => {
+    setEditDialogOpen(true)
+  }
+
+  // Handle remove
+  const handleRemove = () => {
+    setRemoveDialogOpen(true)
+  }
+
+  // Handle successful prospect update (update local state)
+  const handleProspectUpdated = () => {
+    // Refresh the selected prospect data after edit
+    if (selectedProspect) {
+      const updatedProspect = allProspects.find((p) => p.id === selectedProspect.id)
+      if (updatedProspect) {
+        setSelectedProspect(updatedProspect)
+      }
+    }
+  }
+
+  // Handle successful prospect removal
+  const handleProspectRemoved = () => {
+    setSelectedProspect(null)
   }
 
   // Build tabs for detail panel
@@ -663,7 +763,16 @@ export function CampaignProspectsSectionPCF({ entityId, entity, sectionData }: P
         {
           id: 'contact',
           label: 'Contact',
-          content: <ProspectContactTab prospect={selectedProspect} />,
+          content: (
+            <ProspectContactTab
+              prospect={selectedProspect}
+              onStatusChange={handleStatusChange}
+              onLogActivity={handleLogActivity}
+              onEdit={handleEdit}
+              onRemove={handleRemove}
+              isUpdating={updateProspectMutation.isPending}
+            />
+          ),
         },
         {
           id: 'engagement',
@@ -711,6 +820,28 @@ export function CampaignProspectsSectionPCF({ entityId, entity, sectionData }: P
 
       {/* Prospects Table + Detail Panel */}
       <Card className="bg-white">
+        {/* Page Size Selector - Top of table */}
+        {total > 0 && (
+          <div className="flex items-center justify-between px-4 py-3 border-b border-charcoal-100 bg-charcoal-50/30">
+            <div className="flex items-center gap-2 text-sm text-charcoal-600">
+              <span>Show</span>
+              <select
+                value={pageSize}
+                onChange={(e) => handlePageSizeChange(Number(e.target.value))}
+                className="border border-charcoal-200 rounded-md px-2 py-1 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500"
+              >
+                <option value={10}>10</option>
+                <option value={25}>25</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+              </select>
+              <span>per page</span>
+            </div>
+            <div className="text-sm text-charcoal-500">
+              Showing {startIndex + 1}-{Math.min(endIndex, total)} of {total}
+            </div>
+          </div>
+        )}
         <CardContent className="p-0">
           {isLoading ? (
             <div className="py-8 text-center text-charcoal-500">
@@ -820,6 +951,96 @@ export function CampaignProspectsSectionPCF({ entityId, entity, sectionData }: P
                 </table>
               </div>
 
+              {/* Pagination Controls - Bottom of table */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-between px-4 py-3 border-t border-charcoal-100 bg-charcoal-50/30">
+                  <div className="text-sm text-charcoal-500">
+                    Page {currentPage} of {totalPages}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPage(1)}
+                      disabled={currentPage === 1}
+                      className="px-2"
+                    >
+                      <span className="sr-only">First page</span>
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+                      </svg>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                      disabled={currentPage === 1}
+                      className="px-2"
+                    >
+                      <span className="sr-only">Previous page</span>
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </Button>
+
+                    {/* Page numbers */}
+                    <div className="flex items-center gap-1 mx-2">
+                      {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                        let pageNum: number
+                        if (totalPages <= 5) {
+                          pageNum = i + 1
+                        } else if (currentPage <= 3) {
+                          pageNum = i + 1
+                        } else if (currentPage >= totalPages - 2) {
+                          pageNum = totalPages - 4 + i
+                        } else {
+                          pageNum = currentPage - 2 + i
+                        }
+                        return (
+                          <Button
+                            key={pageNum}
+                            variant={currentPage === pageNum ? 'default' : 'outline'}
+                            size="sm"
+                            onClick={() => setCurrentPage(pageNum)}
+                            className={cn(
+                              'w-8 px-0',
+                              currentPage === pageNum && 'bg-charcoal-900 text-white hover:bg-charcoal-800'
+                            )}
+                          >
+                            {pageNum}
+                          </Button>
+                        )
+                      })}
+                    </div>
+
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                      disabled={currentPage === totalPages}
+                      className="px-2"
+                    >
+                      <span className="sr-only">Next page</span>
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPage(totalPages)}
+                      disabled={currentPage === totalPages}
+                      className="px-2"
+                    >
+                      <span className="sr-only">Last page</span>
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                      </svg>
+                    </Button>
+                  </div>
+                </div>
+              )}
+
               {/* Detail Panel */}
               <ListDetailPanel
                 isOpen={!!selectedProspect}
@@ -839,6 +1060,34 @@ export function CampaignProspectsSectionPCF({ entityId, entity, sectionData }: P
           )}
         </CardContent>
       </Card>
+
+      {/* Log Activity Dialog */}
+      {selectedProspect && (
+        <LogProspectActivityDialog
+          open={logActivityDialogOpen}
+          onOpenChange={setLogActivityDialogOpen}
+          prospectId={selectedProspect.id}
+          prospectName={`${selectedProspect.firstName} ${selectedProspect.lastName}`.trim() || 'Prospect'}
+          initialType={activityType}
+          onSuccess={handleProspectUpdated}
+        />
+      )}
+
+      {/* Edit Prospect Dialog */}
+      <EditProspectDialog
+        open={editDialogOpen}
+        onOpenChange={setEditDialogOpen}
+        prospect={selectedProspect}
+        onSuccess={handleProspectUpdated}
+      />
+
+      {/* Remove Prospect Dialog */}
+      <RemoveProspectDialog
+        open={removeDialogOpen}
+        onOpenChange={setRemoveDialogOpen}
+        prospect={selectedProspect}
+        onSuccess={handleProspectRemoved}
+      />
     </div>
   )
 }
@@ -938,9 +1187,11 @@ export function CampaignLeadsSectionPCF({ entityId, entity, sectionData }: PCFSe
   const handleCreateDeal = () => {
     if (selectedLead) {
       dispatchCampaignDialog('createDeal', entityId, {
-        id: selectedLead.id,
-        channel: 'lead',
-        stepNumber: 0,
+        stepData: {
+          id: selectedLead.id,
+          channel: 'lead',
+          stepNumber: 0,
+        },
       })
     }
   }
@@ -1887,20 +2138,24 @@ export function CampaignSequenceSectionPCF({ entityId, entity, sectionData }: PC
               currentStep={currentStepIndex >= 0 ? currentStepIndex : undefined}
               isRunning={isSequenceRunning}
               onStepClick={(step) => dispatchCampaignDialog('viewSequenceStep', entityId, {
-                id: step.id,
-                channel: step.channel,
-                stepNumber: step.stepNumber,
-                dayOffset: step.delay?.value,
-                subject: step.subject,
-                templateName: step.templateName,
+                stepData: {
+                  id: step.id,
+                  channel: step.channel,
+                  stepNumber: step.stepNumber,
+                  dayOffset: step.delay?.value,
+                  subject: step.subject,
+                  templateName: step.templateName,
+                },
               })}
               onEditStep={(step) => dispatchCampaignDialog('editSequenceStep', entityId, {
-                id: step.id,
-                channel: step.channel,
-                stepNumber: step.stepNumber,
-                dayOffset: step.delay?.value,
-                subject: step.subject,
-                templateName: step.templateName,
+                stepData: {
+                  id: step.id,
+                  channel: step.channel,
+                  stepNumber: step.stepNumber,
+                  dayOffset: step.delay?.value,
+                  subject: step.subject,
+                  templateName: step.templateName,
+                },
               })}
               onPauseResume={() => dispatchCampaignDialog('toggleSequence', entityId)}
             />

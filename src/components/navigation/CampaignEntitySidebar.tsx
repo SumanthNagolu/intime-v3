@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import {
@@ -12,22 +13,28 @@ import {
 import {
   ChevronDown,
   ChevronRight,
-  Map,
-  LayoutGrid,
-  Check,
-  Circle,
-  LucideIcon,
   Loader2,
+  ArrowLeft,
+  Play,
+  Pause,
+  Copy,
+  Pencil,
+  CheckCircle,
+  BarChart3,
+  UserPlus,
+  Upload,
+  StickyNote,
+  FileText,
 } from 'lucide-react'
 import { getCampaignSectionsByGroup, SectionDefinition } from '@/lib/navigation/entity-sections'
-import { getEntityJourney, getCurrentStepIndex } from '@/lib/navigation/entity-journeys'
 import { useEntityNavigation } from '@/lib/navigation/EntityNavigationContext'
 import { useSidebarUIContextSafe } from '@/lib/contexts/SidebarUIContext'
-
-type NavigationMode = 'journey' | 'sections'
+import { SidebarActionsPopover, type ActionItem } from './SidebarActionsPopover'
 
 interface CampaignEntitySidebarProps {
   campaignId: string
+  campaignName: string
+  campaignSubtitle?: string
   campaignStatus: string
   counts?: {
     prospects?: number
@@ -40,33 +47,29 @@ interface CampaignEntitySidebarProps {
 }
 
 /**
- * CampaignEntitySidebar - Enterprise-grade sidebar with dual navigation modes
+ * CampaignEntitySidebar - Simplified sidebar with 3 categories
  *
- * Journey Mode: Sequential workflow execution (Setup → Audience → Execute → Nurture → Close)
- * Sections Mode: Information-centric navigation (Overview, Prospects, Leads, Funnel, etc.)
- *
- * Features:
- * - Mode toggle with smooth transitions
- * - Journey progress indicator
- * - Section groups (Main, Automation, Tools)
- * - Context-aware quick actions
- * - Section counts with badges
+ * Categories:
+ * - Core: Overview + configuration sections (Setup, Targeting, Channels, Schedule, Budget, Team, Compliance)
+ * - Related: Campaign data (Prospects, Leads, Funnel, Sequence, Analytics)
+ * - Tools: Supporting functions (Activities, Notes, Documents, History)
  */
 export function CampaignEntitySidebar({
   campaignId,
+  campaignName,
+  campaignSubtitle,
   campaignStatus,
   counts = {},
   className,
 }: CampaignEntitySidebarProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
-  
+
   // Get collapsed state from context
   const sidebarContext = useSidebarUIContextSafe()
   const isCollapsed = sidebarContext?.isCollapsed ?? false
 
   // ONE DB CALL pattern: Get full entity data from navigation context
-  // Data is set by EntityContextProvider from server-side fetch - NO client query needed
   const { currentEntityData } = useEntityNavigation()
   const campaign = currentEntityData as { sections?: { prospects?: { total: number }, leads?: { total: number }, activities?: { total: number }, notes?: { total: number }, documents?: { total: number } } } | null
   const isLoading = !campaign
@@ -80,63 +83,24 @@ export function CampaignEntitySidebar({
     documents: counts.documents ?? campaign?.sections?.documents?.total,
   }
 
-  // Navigation mode from URL or default to sections
-  const urlMode = searchParams.get('mode') as NavigationMode | null
-  const [mode, setMode] = useState<NavigationMode>(urlMode || 'sections')
-
-  // Current section/step from URL
+  // Current section from URL
   const currentSection = searchParams.get('section') || 'overview'
-  const currentStep = searchParams.get('step') || 'setup'
 
-  // Tools section collapsed state
+  // Collapsible section states
+  const [coreExpanded, setCoreExpanded] = useState(true)
+  const [relatedExpanded, setRelatedExpanded] = useState(true)
   const [toolsExpanded, setToolsExpanded] = useState(true)
 
-  // Get journey and section configs
-  const journeyConfig = getEntityJourney('campaign')
-  const { mainSections, automationSections, toolSections } = getCampaignSectionsByGroup()
-
-  // Get current journey step index - use passed status for immediate UI
-  const currentStepIndex = getCurrentStepIndex('campaign', campaignStatus)
-
-  // Calculate journey progress percentage
-  const progressPercentage = Math.round(((currentStepIndex + 1) / journeyConfig.steps.length) * 100)
-
-  // Handle mode change
-  const handleModeChange = (newMode: NavigationMode) => {
-    setMode(newMode)
-    const params = new URLSearchParams(searchParams.toString())
-    params.set('mode', newMode)
-
-    // Reset to appropriate default
-    if (newMode === 'journey') {
-      params.delete('section')
-      params.set('step', journeyConfig.steps[currentStepIndex]?.id || 'setup')
-    } else {
-      params.delete('step')
-      params.set('section', 'overview')
-    }
-
-    router.push(`?${params.toString()}`, { scroll: false })
-  }
+  // Get section configs
+  const { coreSections, relatedSections, toolSections } = getCampaignSectionsByGroup()
 
   // Handle section navigation
   const handleSectionClick = (sectionId: string) => {
     const params = new URLSearchParams(searchParams.toString())
-    params.set('mode', 'sections')
     params.set('section', sectionId)
+    // Clean up legacy params
+    params.delete('mode')
     params.delete('step')
-    router.push(`?${params.toString()}`, { scroll: false })
-  }
-
-  // Handle journey step navigation
-  const handleStepClick = (stepId: string, stepIndex: number) => {
-    // Only allow navigation to completed or current steps
-    if (stepIndex > currentStepIndex) return
-
-    const params = new URLSearchParams(searchParams.toString())
-    params.set('mode', 'journey')
-    params.set('step', stepId)
-    params.delete('section')
     router.push(`?${params.toString()}`, { scroll: false })
   }
 
@@ -172,243 +136,207 @@ export function CampaignEntitySidebar({
     }
   }
 
+  // Quick actions based on campaign status
+  const getQuickActions = (): ActionItem[] => {
+    const actions: ActionItem[] = []
+
+    // Status-based actions
+    if (campaignStatus === 'draft' || campaignStatus === 'scheduled') {
+      actions.push({ id: 'start', label: 'Start Campaign', icon: Play, description: 'Launch campaign now' })
+    }
+    if (campaignStatus === 'active') {
+      actions.push({ id: 'pause', label: 'Pause Campaign', icon: Pause, description: 'Temporarily pause campaign' })
+    }
+    if (campaignStatus === 'paused') {
+      actions.push({ id: 'resume', label: 'Resume Campaign', icon: Play, description: 'Resume paused campaign' })
+    }
+
+    // Common actions
+    actions.push({ id: 'edit', label: 'Edit Campaign', icon: Pencil, description: 'Edit campaign settings' })
+    actions.push({ id: 'duplicate', label: 'Duplicate', icon: Copy, description: 'Create a copy of this campaign' })
+    actions.push({ id: 'viewAnalytics', label: 'View Analytics', icon: BarChart3, description: 'View campaign analytics', separator: true })
+    actions.push({ id: 'addProspect', label: 'Add Prospect', icon: UserPlus, description: 'Add a prospect to campaign' })
+    actions.push({ id: 'importProspects', label: 'Import Prospects', icon: Upload, description: 'Import prospects from file' })
+    actions.push({ id: 'logActivity', label: 'Log Activity', icon: StickyNote, description: 'Log an activity', separator: true })
+    actions.push({ id: 'uploadDocument', label: 'Upload Document', icon: FileText, description: 'Upload a document' })
+
+    // Terminal action
+    if (campaignStatus !== 'completed' && campaignStatus !== 'cancelled') {
+      actions.push({ id: 'complete', label: 'Complete Campaign', icon: CheckCircle, description: 'Mark campaign as completed', variant: 'destructive', separator: true })
+    }
+
+    return actions
+  }
+
+  const handleQuickAction = (actionId: string) => {
+    window.dispatchEvent(
+      new CustomEvent('openCampaignDialog', {
+        detail: { dialogId: actionId, campaignId },
+      })
+    )
+  }
+
   return (
     <TooltipProvider>
       <div className={cn('flex flex-col flex-1 overflow-hidden h-full', className)}>
-        {/* Mode Toggle Header */}
-        <div className="pt-4 px-4 pb-4 border-b border-charcoal-100">
-          {!isCollapsed && (
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="font-heading font-semibold text-charcoal-900 text-sm uppercase tracking-wide">
-                Campaign
-              </h2>
-            </div>
+        {/* ===== BACK + ACTIONS ROW ===== */}
+        <div className="px-3 py-2.5 border-b border-charcoal-100 flex items-center justify-between gap-2">
+          {isCollapsed ? (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href="/employee/crm/campaigns"
+                  className="inline-flex items-center justify-center w-9 h-9 text-charcoal-500 hover:text-charcoal-700 hover:bg-charcoal-50 rounded-lg transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                <p>All Campaigns</p>
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <Link
+              href="/employee/crm/campaigns"
+              className="inline-flex items-center gap-1.5 text-sm text-charcoal-500 hover:text-charcoal-700 transition-colors group"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+              <span>All Campaigns</span>
+            </Link>
           )}
 
-          {/* Mode Toggle Buttons */}
+          {/* Quick Actions Dropdown */}
+          {!isCollapsed && (
+            <SidebarActionsPopover
+              actions={getQuickActions()}
+              onAction={handleQuickAction}
+            />
+          )}
+        </div>
+
+        {/* ===== ENTITY HEADER - Dark Premium Style ===== */}
+        <div className="bg-charcoal-900 text-white">
           {isCollapsed ? (
-            <div className="flex flex-col gap-2">
+            <div className="px-2 py-4">
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <button
-                    onClick={() => handleModeChange('journey')}
-                    className={cn(
-                      'w-10 h-10 flex items-center justify-center rounded-md transition-all duration-200',
-                      mode === 'journey'
-                        ? 'bg-gold-100 text-gold-700'
-                        : 'text-charcoal-600 hover:bg-charcoal-100'
-                    )}
-                  >
-                    <Map className="w-4 h-4" />
-                  </button>
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gold-500 to-gold-600 flex items-center justify-center text-charcoal-900 font-bold text-sm shadow-lg">
+                      {campaignName.substring(0, 2).toUpperCase()}
+                    </div>
+                    <StatusBadgeDot status={campaignStatus} />
+                  </div>
                 </TooltipTrigger>
-                <TooltipContent side="right" className="bg-charcoal-900 text-white">
-                  <p>Journey Mode</p>
-                </TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button
-                    onClick={() => handleModeChange('sections')}
-                    className={cn(
-                      'w-10 h-10 flex items-center justify-center rounded-md transition-all duration-200',
-                      mode === 'sections'
-                        ? 'bg-gold-100 text-gold-700'
-                        : 'text-charcoal-600 hover:bg-charcoal-100'
-                    )}
-                  >
-                    <LayoutGrid className="w-4 h-4" />
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent side="right" className="bg-charcoal-900 text-white">
-                  <p>Sections Mode</p>
+                <TooltipContent side="right" className="bg-charcoal-800 text-white border-charcoal-700">
+                  <div>
+                    <p className="font-semibold">{campaignName}</p>
+                    {campaignSubtitle && <p className="text-xs text-charcoal-300">{campaignSubtitle}</p>}
+                    <p className="text-xs text-charcoal-400 mt-1 capitalize">{campaignStatus.replace(/_/g, ' ')}</p>
+                  </div>
                 </TooltipContent>
               </Tooltip>
             </div>
           ) : (
-            <div className="flex gap-1 p-1 bg-charcoal-100 rounded-lg">
-              <button
-                onClick={() => handleModeChange('journey')}
-                className={cn(
-                  'flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200',
-                  mode === 'journey'
-                    ? 'bg-white text-charcoal-900 shadow-sm'
-                    : 'text-charcoal-600 hover:text-charcoal-900'
-                )}
-              >
-                <Map className="w-3.5 h-3.5" />
-                Journey
-              </button>
-              <button
-                onClick={() => handleModeChange('sections')}
-                className={cn(
-                  'flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200',
-                  mode === 'sections'
-                    ? 'bg-white text-charcoal-900 shadow-sm'
-                    : 'text-charcoal-600 hover:text-charcoal-900'
-                )}
-              >
-                <LayoutGrid className="w-3.5 h-3.5" />
-                Sections
-              </button>
+            <div className="px-4 py-4">
+              {/* Entity Type + Status Row */}
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-semibold uppercase tracking-widest text-gold-500">
+                  Campaign
+                </span>
+                <StatusBadgeDark status={campaignStatus} />
+              </div>
+              {/* Entity Name */}
+              <h2 className="font-heading font-bold text-white text-lg truncate leading-tight">
+                {campaignName}
+              </h2>
+              {/* Subtitle */}
+              {campaignSubtitle && (
+                <p className="text-sm text-charcoal-400 truncate mt-1">{campaignSubtitle}</p>
+              )}
             </div>
           )}
         </div>
 
-        {/* Journey Mode Navigation */}
-        {mode === 'journey' && (
-          <div className="flex-1 overflow-y-auto">
-            {/* Progress Indicator */}
-            <div className="p-4 border-b border-charcoal-100">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-medium text-charcoal-500 uppercase tracking-wide">
-                  Progress
-                </span>
-                <span className="text-xs font-bold text-gold-600">{progressPercentage}%</span>
-              </div>
-              <div className="h-2 bg-charcoal-100 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-gold-400 to-gold-500 transition-all duration-500 ease-out"
-                  style={{ width: `${progressPercentage}%` }}
-                />
-              </div>
-            </div>
-
-            {/* Journey Steps */}
-            <nav className="p-4">
-              <h3 className="text-xs font-medium text-charcoal-500 uppercase tracking-wide mb-3">
-                Journey Steps
-              </h3>
-              <div className="relative">
-                {/* Vertical line connecting steps */}
-                <div className="absolute left-4 top-6 bottom-6 w-0.5 bg-charcoal-200" />
-
-                <ul className="space-y-1 relative">
-                  {journeyConfig.steps.map((step, index) => {
-                    const StepIcon = step.icon
-                    const isCompleted = index < currentStepIndex
-                    const isCurrent = index === currentStepIndex
-                    const isFuture = index > currentStepIndex
-                    const isActive = currentStep === step.id && mode === 'journey'
-
-                    return (
-                      <li key={step.id}>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <button
-                              onClick={() => handleStepClick(step.id, index)}
-                              disabled={isFuture}
-                              className={cn(
-                                'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 text-left',
-                                isActive && 'bg-gold-50',
-                                isCurrent && !isActive && 'bg-charcoal-50',
-                                isFuture && 'opacity-50 cursor-not-allowed',
-                                !isFuture && !isActive && 'hover:bg-charcoal-50'
-                              )}
-                            >
-                              {/* Step indicator */}
-                              <div
-                                className={cn(
-                                  'relative z-10 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200',
-                                  isCompleted && 'bg-green-500 text-white',
-                                  isCurrent && 'bg-gold-500 text-white ring-4 ring-gold-100',
-                                  isFuture && 'bg-charcoal-200 text-charcoal-400'
-                                )}
-                              >
-                                {isCompleted ? (
-                                  <Check className="w-4 h-4" />
-                                ) : (
-                                  <span className="text-xs font-bold">{index + 1}</span>
-                                )}
-                              </div>
-
-                              {/* Step label */}
-                              <div className="flex-1 min-w-0">
-                                <p
-                                  className={cn(
-                                    'text-sm font-medium truncate',
-                                    isActive && 'text-gold-700',
-                                    isCurrent && !isActive && 'text-charcoal-900',
-                                    isCompleted && 'text-charcoal-700',
-                                    isFuture && 'text-charcoal-400'
-                                  )}
-                                >
-                                  {step.label}
-                                </p>
-                                <p className="text-xs text-charcoal-500 truncate">
-                                  {step.description}
-                                </p>
-                              </div>
-                            </button>
-                          </TooltipTrigger>
-                          <TooltipContent side="right">
-                            <p className="font-medium">{step.label}</p>
-                            <p className="text-xs text-charcoal-400">{step.description}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-            </nav>
-          </div>
-        )}
-
-        {/* Sections Mode Navigation */}
-        {mode === 'sections' && (
-          <div className="flex-1 overflow-y-auto">
-            {/* Main Sections */}
-            <nav className="p-4 border-b border-charcoal-100">
-              <h3 className="text-xs font-medium text-charcoal-500 uppercase tracking-wide mb-3">
-                Main
-              </h3>
+        {/* ===== SECTIONS NAVIGATION ===== */}
+        <div className="flex-1">
+          {/* Core Sections (Collapsible) */}
+          <nav className="p-4 border-b border-charcoal-100">
+            {!isCollapsed ? (
+              <button
+                onClick={() => setCoreExpanded(!coreExpanded)}
+                className="w-full flex items-center justify-between text-xs font-semibold text-charcoal-700 uppercase tracking-wide mb-3 hover:text-charcoal-900 transition-colors"
+              >
+                <span>Core</span>
+                {coreExpanded ? (
+                  <ChevronDown className="w-3.5 h-3.5" />
+                ) : (
+                  <ChevronRight className="w-3.5 h-3.5" />
+                )}
+              </button>
+            ) : null}
+            {(coreExpanded || isCollapsed) && (
               <SectionList
-                sections={mainSections}
+                sections={coreSections}
                 currentSection={currentSection}
                 onSectionClick={handleSectionClick}
                 getSectionCount={getSectionCount}
+                isCollapsed={isCollapsed}
               />
-            </nav>
+            )}
+          </nav>
 
-            {/* Automation Sections */}
-            <nav className="p-4 border-b border-charcoal-100">
-              <h3 className="text-xs font-medium text-charcoal-500 uppercase tracking-wide mb-3">
-                Automation
-              </h3>
+          {/* Related Sections (Collapsible) */}
+          <nav className="p-4 border-b border-charcoal-100">
+            {!isCollapsed ? (
+              <button
+                onClick={() => setRelatedExpanded(!relatedExpanded)}
+                className="w-full flex items-center justify-between text-xs font-semibold text-charcoal-700 uppercase tracking-wide mb-3 hover:text-charcoal-900 transition-colors"
+              >
+                <span>Related</span>
+                {relatedExpanded ? (
+                  <ChevronDown className="w-3.5 h-3.5" />
+                ) : (
+                  <ChevronRight className="w-3.5 h-3.5" />
+                )}
+              </button>
+            ) : null}
+            {(relatedExpanded || isCollapsed) && (
               <SectionList
-                sections={automationSections}
+                sections={relatedSections}
                 currentSection={currentSection}
                 onSectionClick={handleSectionClick}
                 getSectionCount={getSectionCount}
+                isCollapsed={isCollapsed}
               />
-            </nav>
+            )}
+          </nav>
 
-            {/* Tools Sections (Collapsible) */}
-            <nav className="p-4">
+          {/* Tools Sections (Collapsible) */}
+          <nav className="p-4">
+            {!isCollapsed ? (
               <button
                 onClick={() => setToolsExpanded(!toolsExpanded)}
-                className="w-full flex items-center justify-between text-xs font-medium text-charcoal-500 uppercase tracking-wide mb-3 hover:text-charcoal-700 transition-colors"
+                className="w-full flex items-center justify-between text-xs font-semibold text-charcoal-700 uppercase tracking-wide mb-3 hover:text-charcoal-900 transition-colors"
               >
                 <span>Tools</span>
                 {toolsExpanded ? (
-                  <ChevronDown className="w-4 h-4" />
+                  <ChevronDown className="w-3.5 h-3.5" />
                 ) : (
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-3.5 h-3.5" />
                 )}
               </button>
-              {toolsExpanded && (
-                <SectionList
-                  sections={toolSections}
-                  currentSection={currentSection}
-                  onSectionClick={handleSectionClick}
-                  getSectionCount={getSectionCount}
-                />
-              )}
-            </nav>
-          </div>
-        )}
-
+            ) : null}
+            {(toolsExpanded || isCollapsed) && (
+              <SectionList
+                sections={toolSections}
+                currentSection={currentSection}
+                onSectionClick={handleSectionClick}
+                getSectionCount={getSectionCount}
+                isCollapsed={isCollapsed}
+              />
+            )}
+          </nav>
+        </div>
       </div>
     </TooltipProvider>
   )
@@ -422,6 +350,7 @@ interface SectionListProps {
   currentSection: string
   onSectionClick: (sectionId: string) => void
   getSectionCount: (sectionId: string) => number | undefined
+  isCollapsed?: boolean
 }
 
 function SectionList({
@@ -429,6 +358,7 @@ function SectionList({
   currentSection,
   onSectionClick,
   getSectionCount,
+  isCollapsed = false,
 }: SectionListProps) {
   return (
     <ul className="space-y-1">
@@ -436,6 +366,34 @@ function SectionList({
         const SectionIcon = section.icon
         const isActive = currentSection === section.id
         const count = section.showCount ? getSectionCount(section.id) : undefined
+
+        if (isCollapsed) {
+          return (
+            <li key={section.id}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => onSectionClick(section.id)}
+                    className={cn(
+                      'w-full flex items-center justify-center p-2.5 rounded-lg transition-all duration-200',
+                      isActive
+                        ? 'bg-charcoal-900 text-white'
+                        : 'text-charcoal-600 hover:bg-charcoal-100'
+                    )}
+                  >
+                    <SectionIcon className="w-4 h-4" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                  <p>{section.label}</p>
+                  {count !== undefined && count > 0 && (
+                    <span className="text-xs text-charcoal-400 ml-1">({count})</span>
+                  )}
+                </TooltipContent>
+              </Tooltip>
+            </li>
+          )
+        }
 
         return (
           <li key={section.id}>
@@ -446,24 +404,22 @@ function SectionList({
                   className={cn(
                     'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 text-left group',
                     isActive
-                      ? 'bg-gold-50 text-gold-700 font-medium'
-                      : 'text-charcoal-600 hover:bg-charcoal-50'
+                      ? 'bg-charcoal-900 text-white'
+                      : 'text-charcoal-600 hover:bg-charcoal-100 hover:text-charcoal-800'
                   )}
                 >
                   <SectionIcon
                     className={cn(
-                      'w-4 h-4 flex-shrink-0',
-                      isActive ? 'text-gold-600' : 'text-charcoal-400 group-hover:text-charcoal-600'
+                      'w-4 h-4 flex-shrink-0 transition-colors',
+                      isActive ? 'text-white' : 'text-charcoal-400 group-hover:text-charcoal-500'
                     )}
                   />
                   <span className="flex-1 truncate text-sm">{section.label}</span>
                   {count !== undefined && count > 0 && (
                     <span
                       className={cn(
-                        'px-1.5 py-0.5 text-xs rounded-full font-medium',
-                        isActive
-                          ? 'bg-gold-100 text-gold-700'
-                          : 'bg-charcoal-100 text-charcoal-600'
+                        'text-xs tabular-nums transition-colors',
+                        isActive ? 'text-charcoal-400' : 'text-charcoal-400'
                       )}
                     >
                       {count}
@@ -482,6 +438,54 @@ function SectionList({
       })}
     </ul>
   )
+}
+
+// ============================================================================
+// STATUS BADGES
+// ============================================================================
+
+function StatusBadgeDark({ status }: { status: string }) {
+  const config = getStatusConfigDark(status)
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium border',
+        config.bg,
+        config.text,
+        config.border
+      )}
+    >
+      <span className={cn('w-1.5 h-1.5 rounded-full', config.dot)} />
+      <span className="capitalize">{status.replace(/_/g, ' ')}</span>
+    </span>
+  )
+}
+
+function StatusBadgeDot({ status }: { status: string }) {
+  const config = getStatusConfigDark(status)
+  return <div className={cn('w-2.5 h-2.5 rounded-full', config.dot)} />
+}
+
+function getStatusConfigDark(status: string): {
+  bg: string
+  text: string
+  dot: string
+  border: string
+} {
+  const configs: Record<string, { bg: string; text: string; dot: string; border: string }> = {
+    // Success states
+    active: { bg: 'bg-green-500/20', text: 'text-green-300', dot: 'bg-green-400', border: 'border-green-500/30' },
+    completed: { bg: 'bg-green-500/20', text: 'text-green-300', dot: 'bg-green-400', border: 'border-green-500/30' },
+    // Warning states
+    paused: { bg: 'bg-amber-500/20', text: 'text-amber-300', dot: 'bg-amber-400', border: 'border-amber-500/30' },
+    // Info/Blue states
+    scheduled: { bg: 'bg-blue-500/20', text: 'text-blue-300', dot: 'bg-blue-400', border: 'border-blue-500/30' },
+    // Error states
+    cancelled: { bg: 'bg-red-500/20', text: 'text-red-300', dot: 'bg-red-400', border: 'border-red-500/30' },
+    // Neutral states
+    draft: { bg: 'bg-white/10', text: 'text-charcoal-300', dot: 'bg-charcoal-400', border: 'border-white/20' },
+  }
+  return configs[status] || { bg: 'bg-white/10', text: 'text-charcoal-300', dot: 'bg-charcoal-400', border: 'border-white/20' }
 }
 
 export default CampaignEntitySidebar

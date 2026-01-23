@@ -8083,15 +8083,63 @@ export const crmRouter = router({
         targetMeetings: z.number().min(0).default(0),
         targetRevenue: z.number().min(0).default(0),
         // Step 6: Team Assignment
-        teamAssignment: z.object({
-          ownerId: z.string().uuid().optional(),
-          teamId: z.string().uuid().optional(),
-          collaboratorIds: z.array(z.string().uuid()).optional(),
-        }).optional(),
-        approval: z.object({
-          required: z.boolean().default(false),
-          approverIds: z.array(z.string().uuid()).optional(),
-        }).optional(),
+        // Use preprocess to handle empty strings, invalid UUIDs, and invalid data from forms
+        teamAssignment: z.preprocess(
+          (val) => {
+            if (!val || typeof val !== 'object') return undefined
+            const obj = val as Record<string, unknown>
+            // UUID regex pattern for validation
+            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+            const isValidUuid = (id: unknown): id is string =>
+              typeof id === 'string' && id.length > 0 && uuidRegex.test(id)
+
+            const result = {
+              ownerId: isValidUuid(obj.ownerId) ? obj.ownerId : undefined,
+              teamId: isValidUuid(obj.teamId) ? obj.teamId : undefined,
+              collaboratorIds: Array.isArray(obj.collaboratorIds)
+                ? obj.collaboratorIds.filter(isValidUuid)
+                : undefined,
+            }
+            // Return undefined if all fields are empty/undefined
+            if (!result.ownerId && !result.teamId && (!result.collaboratorIds || result.collaboratorIds.length === 0)) {
+              return undefined
+            }
+            return result
+          },
+          z.object({
+            ownerId: z.string().uuid().optional(),
+            teamId: z.string().uuid().optional(),
+            collaboratorIds: z.array(z.string().uuid()).optional(),
+          }).optional()
+        ),
+        approval: z.preprocess(
+          (val) => {
+            if (!val || typeof val !== 'object') return undefined
+            const obj = val as Record<string, unknown>
+            // UUID regex pattern for validation
+            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+            const isValidUuid = (id: unknown): id is string =>
+              typeof id === 'string' && id.length > 0 && uuidRegex.test(id)
+
+            const validApproverIds = Array.isArray(obj.approverIds)
+              ? obj.approverIds.filter(isValidUuid)
+              : undefined
+
+            // If no valid approvers and not required, return undefined
+            if (!obj.required && (!validApproverIds || validApproverIds.length === 0)) {
+              return undefined
+            }
+
+            return {
+              required: obj.required ?? false,
+              approverIds: validApproverIds && validApproverIds.length > 0 ? validApproverIds : undefined,
+            }
+          },
+          z.object({
+            required: z.boolean().default(false),
+            approverIds: z.array(z.string().uuid()).optional(),
+          }).optional()
+        ),
         notifications: z.object({
           onResponse: z.boolean().default(true),
           onConversion: z.boolean().default(true),
@@ -8119,17 +8167,15 @@ export const crmRouter = router({
         }).optional(),
       }))
       .mutation(async ({ ctx, input }) => {
-        const { orgId, user } = ctx
+        console.log('[campaigns.create] Input received:', JSON.stringify(input, null, 2))
+        const { orgId, profileId } = ctx
+        console.log('[campaigns.create] Context - orgId:', orgId, 'profileId:', profileId)
         const adminClient = getAdminClient()
 
-        // Get the user's profile ID (user_profiles.id may differ from auth user id)
-        const { data: userProfile } = await adminClient
-          .from('user_profiles')
-          .select('id')
-          .eq('auth_id', user?.id)
-          .single()
-
-        const profileId = userProfile?.id ?? user?.id
+        // Ensure we have a valid profile ID for foreign keys
+        if (!profileId) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User profile not found' })
+        }
 
         // Determine initial status
         const status = input.launchImmediately ? 'active' : 'scheduled'
@@ -8189,21 +8235,35 @@ export const crmRouter = router({
           .single()
 
         if (error) {
+          console.error('[campaigns.create] Database error:', JSON.stringify(error, null, 2))
+          console.error('[campaigns.create] Insert payload:', JSON.stringify({
+            org_id: orgId,
+            name: input.name,
+            campaign_type: input.campaignType,
+            goal: input.goal,
+            owner_id: ownerId,
+            created_by: profileId,
+          }, null, 2))
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
         }
 
         // Log activity
-        await adminClient
-          .from('activities')
-          .insert({
-            org_id: orgId,
-            entity_type: 'campaign',
-            entity_id: data.id,
-            activity_type: 'note',
-            subject: 'Campaign Created',
-            description: `Campaign "${input.name}" created with ${input.channels.length} channels`,
-            created_by: profileId,
-          })
+        try {
+          await adminClient
+            .from('activities')
+            .insert({
+              org_id: orgId,
+              entity_type: 'campaign',
+              entity_id: data.id,
+              activity_type: 'note',
+              subject: 'Campaign Created',
+              description: `Campaign "${input.name}" created with ${input.channels.length} channels`,
+              created_by: profileId,
+            })
+        } catch (activityError) {
+          // Don't fail the whole request if activity logging fails
+          console.error('[campaigns.create] Activity logging failed:', activityError)
+        }
 
         return data
       }),
@@ -8534,6 +8594,229 @@ export const crmRouter = router({
         return data
       }),
 
+    // List user's draft campaigns (for "Drafts" tab in list view)
+    listMyDrafts: orgProtectedProcedure.query(async ({ ctx }) => {
+      const { orgId, user } = ctx
+      const adminClient = getAdminClient()
+
+      if (!user?.id) {
+        return []
+      }
+
+      // Get the user's profile ID to match with owner_id
+      const { data: profile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_id', user.id)
+        .single()
+
+      if (!profile) {
+        return []
+      }
+
+      // Fetch draft campaigns owned by this user
+      const { data, error } = await adminClient
+        .from('campaigns')
+        .select(`
+          id, name, campaign_type, goal, status, channels,
+          wizard_state, created_at, updated_at,
+          owner:user_profiles!owner_id(id, full_name, avatar_url)
+        `)
+        .eq('org_id', orgId)
+        .eq('owner_id', profile.id)
+        .eq('status', 'draft')
+        .is('deleted_at', null)
+        .order('updated_at', { ascending: false })
+
+      if (error) {
+        console.error('[campaigns.listMyDrafts] Error:', error.message)
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      // Transform to match expected format
+      return (data ?? []).map(c => ({
+        id: c.id,
+        name: c.name,
+        campaignType: c.campaign_type,
+        goal: c.goal,
+        status: c.status,
+        channels: c.channels,
+        wizardState: c.wizard_state,
+        createdAt: c.created_at,
+        updatedAt: c.updated_at,
+        owner: c.owner,
+      }))
+    }),
+
+    // Delete a draft campaign (soft delete, verify ownership and draft status)
+    deleteDraft: orgProtectedProcedure
+      .input(z.object({ id: z.string().uuid() }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Not authenticated' })
+        }
+
+        // Get user's profile ID
+        const { data: profile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('auth_id', user.id)
+          .single()
+
+        if (!profile) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User profile not found' })
+        }
+
+        // Verify the campaign exists, is a draft, and is owned by this user
+        const { data: campaign, error: fetchError } = await adminClient
+          .from('campaigns')
+          .select('id, status, owner_id')
+          .eq('id', input.id)
+          .eq('org_id', orgId)
+          .is('deleted_at', null)
+          .single()
+
+        if (fetchError || !campaign) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Campaign not found' })
+        }
+
+        if (campaign.status !== 'draft') {
+          throw new TRPCError({ code: 'BAD_REQUEST', message: 'Can only delete draft campaigns' })
+        }
+
+        if (campaign.owner_id !== profile.id) {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Can only delete your own drafts' })
+        }
+
+        // Soft delete
+        const { error } = await adminClient
+          .from('campaigns')
+          .update({ deleted_at: new Date().toISOString() })
+          .eq('id', input.id)
+
+        if (error) {
+          console.error('[campaigns.deleteDraft] Error:', error.message)
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+        }
+
+        return { success: true }
+      }),
+
+    // Save draft campaign (create or update with wizard state)
+    saveDraft: orgProtectedProcedure
+      .input(z.object({
+        id: z.string().uuid().optional(), // If provided, update existing draft
+        name: z.string().min(1).max(100),
+        campaignType: z.string().optional(),
+        goal: z.string().optional(),
+        description: z.string().optional(),
+        channels: z.array(z.string()).optional(),
+        targetCriteria: z.record(z.unknown()).optional(),
+        sequences: z.record(z.unknown()).optional(),
+        startDate: z.string().optional(),
+        endDate: z.string().optional(),
+        budgetTotal: z.union([z.number(), z.string()]).optional(),
+        targets: z.record(z.unknown()).optional(),
+        teamAssignment: z.record(z.unknown()).optional(),
+        complianceSettings: z.record(z.unknown()).optional(),
+        wizardState: z.object({
+          currentStep: z.number(),
+          totalSteps: z.number(),
+          completedSteps: z.array(z.number()).optional(),
+          lastSavedAt: z.string().optional(),
+        }).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, profileId } = ctx
+        const adminClient = getAdminClient()
+
+        if (!profileId) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User profile not found' })
+        }
+
+        const parseNum = (val: string | number | undefined, def = 0) => {
+          if (val === undefined || val === '' || val === null) return def
+          const num = typeof val === 'string' ? parseFloat(val) : val
+          return isNaN(num) ? def : num
+        }
+
+        const wizardState = input.wizardState ? {
+          ...input.wizardState,
+          lastSavedAt: new Date().toISOString(),
+        } : null
+
+        if (input.id) {
+          // Update existing draft
+          const { data, error } = await adminClient
+            .from('campaigns')
+            .update({
+              name: input.name,
+              campaign_type: input.campaignType,
+              goal: input.goal,
+              description: input.description,
+              channels: input.channels,
+              target_criteria: input.targetCriteria,
+              sequences: input.sequences,
+              start_date: input.startDate,
+              end_date: input.endDate,
+              budget_total: parseNum(input.budgetTotal),
+              target_leads: parseNum(input.targets?.leads as string | number | undefined),
+              target_meetings: parseNum(input.targets?.meetings as string | number | undefined),
+              compliance_settings: input.complianceSettings,
+              wizard_state: wizardState,
+              updated_at: new Date().toISOString(),
+            })
+            .eq('id', input.id)
+            .eq('org_id', orgId)
+            .eq('status', 'draft')
+            .select('id')
+            .single()
+
+          if (error) {
+            console.error('[campaigns.saveDraft] Update error:', error.message)
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          }
+
+          return { id: data.id, isNew: false }
+        } else {
+          // Create new draft
+          const { data, error } = await adminClient
+            .from('campaigns')
+            .insert({
+              org_id: orgId,
+              name: input.name,
+              campaign_type: input.campaignType || 'lead_generation',
+              goal: input.goal,
+              description: input.description,
+              channels: input.channels || [],
+              target_criteria: input.targetCriteria || {},
+              sequences: input.sequences || {},
+              start_date: input.startDate,
+              end_date: input.endDate,
+              budget_total: parseNum(input.budgetTotal),
+              target_leads: parseNum(input.targets?.leads as string | number | undefined),
+              target_meetings: parseNum(input.targets?.meetings as string | number | undefined),
+              compliance_settings: input.complianceSettings || { gdpr: true, canSpam: true },
+              wizard_state: wizardState,
+              status: 'draft',
+              owner_id: profileId,
+              created_by: profileId,
+            })
+            .select('id')
+            .single()
+
+          if (error) {
+            console.error('[campaigns.saveDraft] Insert error:', error.message)
+            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+          }
+
+          return { id: data.id, isNew: true }
+        }
+      }),
+
     // Get prospects (enrollments) for a campaign
     getProspects: orgProtectedProcedure
       .input(z.object({
@@ -8737,7 +9020,7 @@ export const crmRouter = router({
         title: z.string().optional(),
         location: z.string().optional(),
         timezone: z.string().optional(),
-        status: z.enum(['enrolled', 'contacted', 'engaged', 'responded', 'converted', 'unsubscribed', 'bounced']).optional(),
+        status: z.enum(['enrolled', 'contacted', 'engaged', 'responded', 'converted', 'opted_out', 'bounced']).optional(),
         responseType: z.enum(['positive', 'neutral', 'negative']).optional(),
         responseText: z.string().optional(),
         engagementScore: z.number().min(0).max(100).optional(),
@@ -8805,6 +9088,134 @@ export const crmRouter = router({
         return data
       }),
 
+    // Unenroll prospect from campaign (soft delete)
+    unenrollProspect: orgProtectedProcedure
+      .input(z.object({
+        prospectId: z.string().uuid(),
+        reason: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get enrollment to verify it exists and get campaign info
+        const { data: enrollment, error: fetchError } = await adminClient
+          .from('campaign_enrollments')
+          .select('id, campaign_id, contact_id, status')
+          .eq('id', input.prospectId)
+          .eq('org_id', orgId)
+          .single()
+
+        if (fetchError || !enrollment) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Enrollment not found' })
+        }
+
+        // Soft delete the enrollment
+        const { error: deleteError } = await adminClient
+          .from('campaign_enrollments')
+          .update({
+            status: 'unenrolled',
+            unenrolled_at: new Date().toISOString(),
+            unenrolled_reason: input.reason || null,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', input.prospectId)
+          .eq('org_id', orgId)
+
+        if (deleteError) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: deleteError.message })
+        }
+
+        // Log activity
+        await adminClient.from('activities').insert({
+          org_id: orgId,
+          entity_type: 'campaign',
+          entity_id: enrollment.campaign_id,
+          activity_type: 'note',
+          subject: 'Prospect Unenrolled',
+          description: input.reason
+            ? `Prospect was removed from campaign. Reason: ${input.reason}`
+            : 'Prospect was removed from campaign.',
+          created_by: user?.id,
+        })
+
+        return { success: true, campaignId: enrollment.campaign_id }
+      }),
+
+    // Log activity for a prospect
+    logProspectActivity: orgProtectedProcedure
+      .input(z.object({
+        prospectId: z.string().uuid(),
+        activityType: z.enum(['email', 'call', 'meeting', 'linkedin', 'note', 'task']),
+        subject: z.string().min(1),
+        description: z.string().optional(),
+        outcome: z.string().optional(),
+        nextSteps: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        // Get enrollment with contact and campaign info
+        const { data: enrollment, error: fetchError } = await adminClient
+          .from('campaign_enrollments')
+          .select('id, campaign_id, contact_id, status')
+          .eq('id', input.prospectId)
+          .eq('org_id', orgId)
+          .single()
+
+        if (fetchError || !enrollment) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Enrollment not found' })
+        }
+
+        // Create activity for the contact
+        const { data: activity, error: activityError } = await adminClient
+          .from('activities')
+          .insert({
+            org_id: orgId,
+            entity_type: 'contact',
+            entity_id: enrollment.contact_id,
+            activity_type: input.activityType,
+            subject: input.subject,
+            description: input.description || null,
+            outcome: input.outcome || null,
+            status: 'completed',
+            created_by: user?.id,
+            completed_at: new Date().toISOString(),
+          })
+          .select('id')
+          .single()
+
+        if (activityError) {
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: activityError.message })
+        }
+
+        // Update enrollment status if needed (e.g., after call or reply)
+        if (input.activityType === 'email' && enrollment.status === 'enrolled') {
+          await adminClient
+            .from('campaign_enrollments')
+            .update({
+              status: 'contacted',
+              first_contacted_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+            })
+            .eq('id', input.prospectId)
+        }
+
+        // Also log to campaign activities
+        await adminClient.from('activities').insert({
+          org_id: orgId,
+          entity_type: 'campaign',
+          entity_id: enrollment.campaign_id,
+          activity_type: input.activityType,
+          subject: `${input.activityType}: ${input.subject}`,
+          description: input.description || null,
+          created_by: user?.id,
+        })
+
+        return { activityId: activity.id }
+      }),
+
     // Convert prospect to lead (A03)
     convertProspectToLead: orgProtectedProcedure
       .input(z.object({
@@ -8853,6 +9264,15 @@ export const crmRouter = router({
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Enrollment not found' })
         }
 
+        // Get user profile ID (owner_id must reference user_profiles, not auth.users)
+        const { data: userProfile } = await adminClient
+          .from('user_profiles')
+          .select('id')
+          .eq('user_id', user?.id)
+          .single()
+
+        const ownerId = userProfile?.id || null
+
         // Check if already converted
         if (enrollment.converted_lead_id) {
           throw new TRPCError({ code: 'CONFLICT', message: 'Prospect already converted to lead' })
@@ -8866,7 +9286,7 @@ export const crmRouter = router({
           .insert({
             org_id: orgId,
             lead_type: 'company',
-            contact_id: contact?.id,  // Link to unified contact
+            contact_id: contact?.id,
             company_name: contact?.company_name,
             first_name: contact?.first_name,
             last_name: contact?.last_name,
@@ -8876,6 +9296,7 @@ export const crmRouter = router({
             linkedin_url: contact?.linkedin_url,
             source: 'campaign',
             campaign_id: enrollment.campaign_id,
+            campaign_prospect_id: enrollment.id,
             status: 'qualified',
             lead_score: input.leadScore,
             interest_level: input.interestLevel,
@@ -8892,8 +9313,9 @@ export const crmRouter = router({
             pain_points: input.painPoints,
             next_action: input.nextAction,
             next_action_date: input.nextActionDate,
-            owner_id: user?.id,
-            created_by: user?.id,
+            owner_id: ownerId,
+            created_by: ownerId,
+            notes: input.notes,
           })
           .select('*')
           .single()

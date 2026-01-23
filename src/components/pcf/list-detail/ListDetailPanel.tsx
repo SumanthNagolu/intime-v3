@@ -183,8 +183,8 @@ export function ListDetailPanel<T>({
         />
       </div>
 
-      {/* Tab Content */}
-      <GWTabContent className="px-4 pb-4 max-h-[400px] overflow-y-auto">
+      {/* Tab Content - no max-height, flows with main page scroll */}
+      <GWTabContent className="px-4 pb-4">
         {tabs.map((tab) => (
           <GWTabPanel key={tab.id} id={tab.id} activeTab={activeTab}>
             {tab.content}

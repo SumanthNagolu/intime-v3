@@ -315,7 +315,7 @@ export function EntityJourneySidebar({
         </div>
 
         {/* ===== NAVIGATION ===== */}
-        <nav className="flex-1 overflow-y-auto">
+        <nav className="flex-1">
           {/* ACCOUNT SECTIONS MODE - Hublot-inspired clean design */}
           {navigationStyle === 'sections' && entityType === 'account' && accountSections && (
             <>

@@ -13,6 +13,8 @@ import { UploadDocumentDialog } from '@/components/crm/campaigns/UploadDocumentD
 import { AddSequenceStepDialog } from '@/components/crm/campaigns/AddSequenceStepDialog'
 import { EditSequenceStepDialog } from '@/components/crm/campaigns/EditSequenceStepDialog'
 import { LogActivityModal } from '@/components/recruiter-workspace/LogActivityModal'
+import { ConvertToLeadDialog } from '@/components/campaigns/prospects'
+import type { CampaignProspect } from '@/types/campaign'
 import { useCampaignWorkspace } from '@/components/workspaces/campaign/CampaignWorkspaceProvider'
 import { trpc } from '@/lib/trpc/client'
 import { toast } from 'sonner'
@@ -23,6 +25,7 @@ declare global {
     openCampaignDialog: CustomEvent<{
       dialogId: string
       campaignId?: string
+      prospectData?: CampaignProspect
       stepData?: {
         id: string
         channel: string
@@ -61,6 +64,8 @@ export default function CampaignPage() {
     templateName?: string
   } | null>(null)
   const [logActivityOpen, setLogActivityOpen] = useState(false)
+  const [convertToLeadOpen, setConvertToLeadOpen] = useState(false)
+  const [selectedProspectForConversion, setSelectedProspectForConversion] = useState<CampaignProspect | null>(null)
 
   const utils = trpc.useUtils()
 
@@ -81,6 +86,7 @@ export default function CampaignPage() {
     const handleCampaignDialog = (event: CustomEvent<{
       dialogId: string
       campaignId?: string
+      prospectData?: CampaignProspect
       stepData?: {
         id: string
         channel: string
@@ -123,6 +129,16 @@ export default function CampaignPage() {
         // Activity logging
         case 'logActivity':
           setLogActivityOpen(true)
+          break
+
+        // Convert prospect to lead
+        case 'convertToLead':
+          if (event.detail.prospectData) {
+            setSelectedProspectForConversion(event.detail.prospectData)
+            setConvertToLeadOpen(true)
+          } else {
+            toast.error('Prospect data not found')
+          }
           break
 
         // Sequence management (from Sequence section and sidebar)
@@ -296,6 +312,17 @@ export default function CampaignPage() {
             entityType="campaign"
             entityId={campaignId}
             entityName={campaign.name}
+          />
+
+          {/* Convert to Lead Dialog */}
+          <ConvertToLeadDialog
+            open={convertToLeadOpen}
+            onOpenChange={(open) => {
+              setConvertToLeadOpen(open)
+              if (!open) setSelectedProspectForConversion(null)
+            }}
+            prospect={selectedProspectForConversion}
+            onSuccess={() => refreshData()}
           />
         </>
       )}
