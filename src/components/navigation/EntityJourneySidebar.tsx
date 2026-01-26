@@ -7,7 +7,7 @@ import { Check, ChevronRight, ChevronDown, ArrowLeft } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { entityJourneys, getVisibleQuickActions } from '@/lib/navigation/entity-journeys'
 import { EntityType, ENTITY_BASE_PATHS, ENTITY_NAVIGATION_STYLES } from '@/lib/navigation/entity-navigation.types'
-import { commonToolSections, getSectionsByGroup, jobSectionGroups, jobToolSections, getAccountSectionsByGroup, getContactSectionsByCategory, ContactCategory } from '@/lib/navigation/entity-sections'
+import { commonToolSections, getSectionsByGroup, getJobSectionsByGroup, getAccountSectionsByGroup, getContactSectionsByCategory, ContactCategory } from '@/lib/navigation/entity-sections'
 import { useEntityNavigation } from '@/lib/navigation/EntityNavigationContext'
 import { CollapsibleSectionGroup } from './CollapsibleSectionGroup'
 import { SidebarActionsPopover, type ActionItem } from './SidebarActionsPopover'
@@ -111,6 +111,14 @@ export function EntityJourneySidebar({
   const accountSections = useMemo(() => {
     if (entityType === 'account') {
       return getAccountSectionsByGroup()
+    }
+    return null
+  }, [entityType])
+
+  // Get job-specific sections (overview, main, related, tools)
+  const jobSectionsData = useMemo(() => {
+    if (entityType === 'job') {
+      return getJobSectionsByGroup()
     }
     return null
   }, [entityType])
@@ -622,27 +630,86 @@ export function EntityJourneySidebar({
             </>
           )}
 
-          {/* JOB SECTIONS MODE - Collapsible groups */}
-          {navigationStyle === 'sections' && entityType === 'job' && (
+          {/* JOB SECTIONS MODE - Hublot-inspired clean design (matches Account pattern) */}
+          {navigationStyle === 'sections' && entityType === 'job' && jobSectionsData && (
             <>
-              {/* Job-specific: Collapsible Section Groups */}
-              {jobSectionGroups.map((group) => {
-                const groupSections = mainSections.filter((s) => group.sectionIds.includes(s.id))
-                const groupTotal = groupSections.reduce((sum, s) => {
-                  const count = getSectionCount(s.id)
-                  return sum + (count || 0)
-                }, 0)
+              {/* Main Sections - Clean list without numbers */}
+              <div className="py-3">
+                {!isCollapsed && (
+                  <div className="px-4 pb-2">
+                    <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                      Sections
+                    </span>
+                  </div>
+                )}
+                <ul className="space-y-0.5 px-2">
+                  {/* Overview/Summary Section */}
+                  {jobSectionsData.overviewSection && (
+                    <SectionNavItem
+                      section={jobSectionsData.overviewSection}
+                      isActive={currentSection === jobSectionsData.overviewSection.id}
+                      href={buildToolHref(jobSectionsData.overviewSection.id)}
+                      count={getSectionCount(jobSectionsData.overviewSection.id)}
+                      isCollapsed={isCollapsed}
+                    />
+                  )}
+                  {/* Main Sections (numbered 1-7) */}
+                  {jobSectionsData.mainSections.map((section) => (
+                    <SectionNavItem
+                      key={section.id}
+                      section={section}
+                      isActive={currentSection === section.id}
+                      href={buildToolHref(section.id)}
+                      count={section.showCount ? getSectionCount(section.id) : undefined}
+                      isCollapsed={isCollapsed}
+                    />
+                  ))}
+                </ul>
+              </div>
 
-                return (
-                  <CollapsibleSectionGroup
-                    key={group.id}
-                    id={group.id}
-                    label={group.label}
-                    count={group.sectionIds.length > 1 ? groupTotal : undefined}
-                    defaultOpen={group.defaultOpen}
+              {/* Related Data - Collapsible */}
+              {jobSectionsData.relatedSections.length > 0 && (
+                <Collapsible
+                  open={isRelatedOpen}
+                  onOpenChange={setIsRelatedOpen}
+                  className="border-t border-charcoal-100/80"
+                >
+                  <CollapsibleTrigger
+                    className={cn(
+                      'flex items-center gap-2 w-full px-4 py-3 text-left transition-all duration-200 hover:bg-charcoal-50/50',
+                      isCollapsed && 'justify-center px-2'
+                    )}
                   >
-                    <ul className="space-y-0.5 px-2">
-                      {groupSections.map((section) => (
+                    {!isCollapsed && (
+                      <>
+                        <ChevronRight className={cn(
+                          'w-3 h-3 text-charcoal-400 transition-transform duration-200',
+                          isRelatedOpen && 'rotate-90'
+                        )} />
+                        <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                          Related
+                        </span>
+                      </>
+                    )}
+                    {isCollapsed && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="w-9 h-9 flex items-center justify-center">
+                            <ChevronRight className={cn(
+                              'w-3.5 h-3.5 text-charcoal-400 transition-transform duration-200',
+                              isRelatedOpen && 'rotate-90'
+                            )} />
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                          <p>Related Data</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <ul className="space-y-0.5 px-2 pb-3">
+                      {jobSectionsData.relatedSections.map((section) => (
                         <SectionNavItem
                           key={section.id}
                           section={section}
@@ -653,40 +720,66 @@ export function EntityJourneySidebar({
                         />
                       ))}
                     </ul>
-                  </CollapsibleSectionGroup>
-                )
-              })}
+                  </CollapsibleContent>
+                </Collapsible>
+              )}
 
-              {/* Tool Sections (Collapsible) for Jobs */}
-              <Collapsible
-                open={isToolsOpen}
-                onOpenChange={setIsToolsOpen}
-                className="border-t border-charcoal-100/80"
-              >
-                <CollapsibleTrigger className="flex items-center gap-2 w-full px-4 py-3 text-left transition-all duration-200 hover:bg-charcoal-50/50">
-                  <ChevronRight className={cn(
-                    'w-3 h-3 text-charcoal-400 transition-transform duration-200',
-                    isToolsOpen && 'rotate-90'
-                  )} />
-                  <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
-                    Tools
-                  </span>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <ul className="space-y-0.5 px-2 pb-3">
-                    {jobToolSections.map((section) => (
-                      <SectionNavItem
-                        key={section.id}
-                        section={section}
-                        isActive={currentSection === section.id}
-                        href={buildToolHref(section.id)}
-                        count={section.showCount ? getSectionCount(section.id) : undefined}
-                        isCollapsed={isCollapsed}
-                      />
-                    ))}
-                  </ul>
-                </CollapsibleContent>
-              </Collapsible>
+              {/* Tools - Collapsible */}
+              {jobSectionsData.toolSections.length > 0 && (
+                <Collapsible
+                  open={isToolsOpen}
+                  onOpenChange={setIsToolsOpen}
+                  className="border-t border-charcoal-100/80"
+                >
+                  <CollapsibleTrigger
+                    className={cn(
+                      'flex items-center gap-2 w-full px-4 py-3 text-left transition-all duration-200 hover:bg-charcoal-50/50',
+                      isCollapsed && 'justify-center px-2'
+                    )}
+                  >
+                    {!isCollapsed && (
+                      <>
+                        <ChevronRight className={cn(
+                          'w-3 h-3 text-charcoal-400 transition-transform duration-200',
+                          isToolsOpen && 'rotate-90'
+                        )} />
+                        <span className="text-[11px] font-medium text-charcoal-500 uppercase tracking-wider">
+                          Tools
+                        </span>
+                      </>
+                    )}
+                    {isCollapsed && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="w-9 h-9 flex items-center justify-center">
+                            <ChevronRight className={cn(
+                              'w-3.5 h-3.5 text-charcoal-400 transition-transform duration-200',
+                              isToolsOpen && 'rotate-90'
+                            )} />
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent side="right" className="bg-charcoal-900 text-white">
+                          <p>Tools</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <ul className="space-y-0.5 px-2 pb-3">
+                      {jobSectionsData.toolSections.map((section) => (
+                        <SectionNavItem
+                          key={section.id}
+                          section={section}
+                          isActive={currentSection === section.id}
+                          href={buildToolHref(section.id)}
+                          count={section.showCount ? getSectionCount(section.id) : undefined}
+                          isCollapsed={isCollapsed}
+                        />
+                      ))}
+                    </ul>
+                  </CollapsibleContent>
+                </Collapsible>
+              )}
             </>
           )}
 
