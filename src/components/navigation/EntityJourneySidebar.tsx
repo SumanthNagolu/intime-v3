@@ -85,7 +85,7 @@ export function EntityJourneySidebar({
   const searchParams = useSearchParams()
   const router = useRouter()
   // Default section varies by entity type - use 'summary' for entities that have it, 'overview' for others
-  const defaultSection = ['account', 'lead', 'contact'].includes(entityType) ? 'summary' : 'overview'
+  const defaultSection = ['account', 'lead', 'contact', 'job'].includes(entityType) ? 'summary' : 'overview'
   const currentSection = searchParams.get('section') || defaultSection
   const [isRelatedOpen, setIsRelatedOpen] = useState(true)
   const [isToolsOpen, setIsToolsOpen] = useState(true)

@@ -55,19 +55,21 @@ export interface JobWorkspaceProps {
 }
 
 type JobSection =
-  | 'overview'
+  // Summary/Overview
+  | 'summary'
+  // Main sections (match wizard IDs: basic, requirements, role, location, compensation, interview, team)
+  | 'basic'
+  | 'requirements'
+  | 'role'
+  | 'location'
+  | 'compensation'
+  | 'interview'
+  | 'team'
+  // Related sections
   | 'pipeline'
   | 'submissions'
   | 'interviews'
   | 'offers'
-  // Unified sections (editable, same as wizard)
-  | 'basicInfo'
-  | 'requirements'
-  | 'roleDetails'
-  | 'location'
-  | 'compensation'
-  | 'interviewProcess'
-  | 'team'
   // Tool sections
   | 'activities'
   | 'notes'
@@ -89,8 +91,8 @@ export function JobWorkspace({ onAction: _onAction }: JobWorkspaceProps = {}) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  // Get section from URL, default to 'overview'
-  const currentSection = (searchParams.get('section') || 'overview') as JobSection
+  // Get section from URL, default to 'summary'
+  const currentSection = (searchParams.get('section') || 'summary') as JobSection
 
   // Handle section change - update URL for deep linking
   const handleSectionChange = React.useCallback((section: string) => {
@@ -105,12 +107,38 @@ export function JobWorkspace({ onAction: _onAction }: JobWorkspaceProps = {}) {
       <JobHeader job={data} />
 
       {/* Section Content - instant switching, no loading */}
-      {currentSection === 'overview' && (
+      {/* Summary section (overview dashboard) */}
+      {currentSection === 'summary' && (
         <JobOverviewSection
           job={data}
           onNavigate={handleSectionChange}
         />
       )}
+
+      {/* Main sections (1-7, match wizard steps) */}
+      {currentSection === 'basic' && (
+        <JobBasicInfoSectionWrapper />
+      )}
+      {currentSection === 'requirements' && (
+        <JobRequirementsSectionWrapper />
+      )}
+      {currentSection === 'role' && (
+        <JobRoleDetailsSectionWrapper />
+      )}
+      {currentSection === 'location' && (
+        <JobLocationSectionWrapper />
+      )}
+      {currentSection === 'compensation' && (
+        <JobCompensationSectionWrapper />
+      )}
+      {currentSection === 'interview' && (
+        <JobInterviewProcessSectionWrapper />
+      )}
+      {currentSection === 'team' && (
+        <JobTeamSectionWrapper />
+      )}
+
+      {/* Related sections */}
       {currentSection === 'pipeline' && (
         <JobPipelineSection
           job={data}
@@ -134,29 +162,6 @@ export function JobWorkspace({ onAction: _onAction }: JobWorkspaceProps = {}) {
           job={data}
           onRefresh={refreshData}
         />
-      )}
-
-      {/* Unified sections (same components used in wizard) */}
-      {currentSection === 'basicInfo' && (
-        <JobBasicInfoSectionWrapper />
-      )}
-      {currentSection === 'requirements' && (
-        <JobRequirementsSectionWrapper />
-      )}
-      {currentSection === 'roleDetails' && (
-        <JobRoleDetailsSectionWrapper />
-      )}
-      {currentSection === 'location' && (
-        <JobLocationSectionWrapper />
-      )}
-      {currentSection === 'compensation' && (
-        <JobCompensationSectionWrapper />
-      )}
-      {currentSection === 'interviewProcess' && (
-        <JobInterviewProcessSectionWrapper />
-      )}
-      {currentSection === 'team' && (
-        <JobTeamSectionWrapper />
       )}
 
       {/* Tool sections */}
