@@ -104,9 +104,14 @@ export async function getFullCandidate(id: string): Promise<FullCandidateData | 
         is_current,
         location_city,
         location_state,
+        location_country,
         is_remote,
         description,
+        responsibilities,
         achievements,
+        tools_used,
+        internal_notes,
+        display_order,
         created_at
       `)
       .eq('candidate_id', id)
@@ -127,6 +132,11 @@ export async function getFullCandidate(id: string): Promise<FullCandidateData | 
         is_current,
         gpa,
         honors,
+        institution_city,
+        institution_state,
+        institution_country,
+        internal_notes,
+        display_order,
         created_at
       `)
       .eq('candidate_id', id)
@@ -674,9 +684,14 @@ function transformWorkHistory(data: Record<string, unknown>[]): CandidateWorkHis
       location,
       locationCity: city,
       locationState: state,
+      locationCountry: w.location_country as string | null,
       isRemote,
       description: w.description as string | null,
+      responsibilities: (w.responsibilities as string[]) || [],
       achievements: (w.achievements as string[]) || [],
+      toolsUsed: (w.tools_used as string[]) || [],
+      internalNotes: w.internal_notes as string | null,
+      displayOrder: w.display_order as number | null,
       createdAt: w.created_at as string,
     }
   })
@@ -710,6 +725,16 @@ function transformEducation(data: Record<string, unknown>[]): CandidateEducation
       }
     }
 
+    // Build location string
+    const instCity = e.institution_city as string | null
+    const instState = e.institution_state as string | null
+    let eduLocation: string | null = null
+    if (instCity && instState) {
+      eduLocation = `${instCity}, ${instState}`
+    } else if (instCity) {
+      eduLocation = instCity
+    }
+
     return {
       id: e.id as string,
       institutionName: (e.institution_name as string) || '',
@@ -723,6 +748,12 @@ function transformEducation(data: Record<string, unknown>[]): CandidateEducation
       isCurrent: (e.is_current as boolean) || false,
       gpa: e.gpa as number | null,
       honors: e.honors as string | null,
+      location: eduLocation,
+      locationCity: instCity,
+      locationState: instState,
+      locationCountry: e.institution_country as string | null,
+      internalNotes: e.internal_notes as string | null,
+      displayOrder: e.display_order as number | null,
       createdAt: e.created_at as string,
     }
   })

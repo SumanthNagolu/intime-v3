@@ -82,6 +82,7 @@ function formToEntityData(formData: CreateCandidateFormData) {
 
   // Convert PhoneInputValue to string for API
   const phoneString = formData.phone ? formatPhoneValue(formData.phone) : undefined
+  const mobileString = formData.mobile ? formatPhoneValue(formData.mobile) : undefined
 
   // Map visa status to work authorization label for display
   const visaStatusLabels: Record<string, string> = {
@@ -97,16 +98,18 @@ function formToEntityData(formData: CreateCandidateFormData) {
   }
 
   return {
-    // Personal info
-    firstName: formData.firstName || undefined,
-    lastName: formData.lastName || undefined,
-    email: formData.email || undefined,
+    // Personal info - only pass when not empty (Zod requires min(1))
+    firstName: formData.firstName?.trim() || undefined,
+    lastName: formData.lastName?.trim() || undefined,
+    email: formData.email?.trim() || undefined,
     phone: phoneString || undefined,
+    mobile: mobileString || undefined,
     linkedinUrl: formData.linkedinProfile || undefined,
 
     // Professional info
     professionalHeadline: formData.professionalHeadline || undefined,
     professionalSummary: formData.professionalSummary || undefined,
+    currentCompany: formData.currentCompany || undefined,
     // experienceYears: Zod schema accepts number|undefined, not null
     experienceYears: formData.experienceYears ?? undefined,
 
@@ -235,6 +238,7 @@ function entityToFormData(entity: any): CreateCandidateFormData {
     lastName: entity.last_name || '',
     email: entity.email || '',
     phone: parsePhoneValue(entity.phone),
+    mobile: parsePhoneValue(entity.mobile),
     linkedinProfile: entity.linkedin_url || '',
     location: entity.location || '',
     locationCity: entity.location_city || '',
@@ -435,8 +439,17 @@ function NewCandidatePageContent() {
         } as any)
         setLastSavedAt(new Date())
         utils.ats.candidates.advancedSearch.invalidate()
-      } catch (error) {
+      } catch (error: any) {
         console.error('[Candidate Wizard] Auto-save failed:', error)
+        // Show user-friendly error for specific cases
+        const errorMessage = error?.message || ''
+        if (errorMessage.includes('email already exists') || errorMessage.includes('CONFLICT')) {
+          toast({
+            title: 'Duplicate Email',
+            description: 'A candidate with this email already exists. Please use a different email address.',
+            variant: 'error',
+          })
+        }
       }
     },
     2000
@@ -454,8 +467,18 @@ function NewCandidatePageContent() {
     if (currentFormDataStr === previousFormData.current) return
     previousFormData.current = currentFormDataStr
 
-    // Check if form has meaningful data worth saving
-    const hasData = store.formData.firstName?.trim() !== '' || store.formData.email?.trim() !== ''
+    // Check if form has any meaningful data worth saving
+    // Include multiple fields to ensure we save progress even if name/email aren't filled yet
+    const hasData =
+      store.formData.firstName?.trim() !== '' ||
+      store.formData.lastName?.trim() !== '' ||
+      store.formData.email?.trim() !== '' ||
+      store.formData.location?.trim() !== '' ||
+      (store.formData.skills && store.formData.skills.length > 0) ||
+      (store.formData.workHistory && store.formData.workHistory.length > 0) ||
+      (store.formData.education && store.formData.education.length > 0) ||
+      store.formData.professionalHeadline?.trim() !== '' ||
+      store.currentStep > 2 // Always save if user progressed beyond identity step
     if (!hasData) return
 
     // Trigger debounced save - this ONLY updates, never creates
@@ -633,8 +656,9 @@ function NewCandidatePageContent() {
           isLifetime: c.isLifetime || false,
         }))
 
-        // Convert phone to string for API
+        // Convert phone and mobile to string for API
         const phoneForApi = data.phone ? formatPhoneValue(data.phone) : undefined
+        const mobileForApi = data.mobile ? formatPhoneValue(data.mobile) : undefined
 
         // Map visa status to work authorization label for display
         const visaStatusLabels: Record<string, string> = {
@@ -656,6 +680,7 @@ function NewCandidatePageContent() {
           lastName: data.lastName,
           email: data.email,
           phone: phoneForApi,
+          mobile: mobileForApi,
           linkedinUrl: data.linkedinProfile || undefined,
 
           // Professional info

@@ -40,9 +40,15 @@ export function ExperienceStepWrapper({
       location: w.locationCity && w.locationState
         ? `${w.locationCity}, ${w.locationState}`
         : w.locationCity || w.locationState || null,
+      locationCity: w.locationCity || null,
+      locationState: w.locationState || null,
+      locationCountry: w.locationCountry || null,
       isRemote: w.isRemote || false,
       description: w.description || null,
+      responsibilities: w.responsibilities || [],
       achievements: w.achievements || [],
+      toolsUsed: w.toolsUsed || [],
+      notes: w.notes || null,
     }))
 
     // Map store's EducationEntry to section's format
@@ -57,6 +63,10 @@ export function ExperienceStepWrapper({
       isCurrent: e.isCurrent || false,
       gpa: e.gpa ?? null,
       honors: e.honors || null,
+      locationCity: e.locationCity || null,
+      locationState: e.locationState || null,
+      locationCountry: e.locationCountry || null,
+      notes: e.notes || null,
     }))
 
     return { workHistory, education }
@@ -71,16 +81,28 @@ export function ExperienceStepWrapper({
       startDate: entry.startDate || '',
       endDate: entry.endDate || undefined,
       isCurrent: entry.isCurrent,
-      locationCity: '',
-      locationState: '',
+      locationCity: (entry as any).locationCity || undefined,
+      locationState: (entry as any).locationState || undefined,
+      locationCountry: (entry as any).locationCountry || undefined,
       isRemote: entry.isRemote,
       description: entry.description || undefined,
+      responsibilities: (entry as any).responsibilities || [],
       achievements: entry.achievements || [],
+      toolsUsed: (entry as any).toolsUsed || [],
+      notes: (entry as any).notes || undefined,
     })
   }, [addWorkHistory])
 
   const handleUpdateWorkHistory = React.useCallback((id: string, entry: Partial<WorkHistoryEntry>) => {
-    updateWorkHistory(id, entry as any)
+    // Map the entry fields to store format
+    const storeEntry: Record<string, unknown> = { ...entry }
+    if ((entry as any).locationCity !== undefined) storeEntry.locationCity = (entry as any).locationCity
+    if ((entry as any).locationState !== undefined) storeEntry.locationState = (entry as any).locationState
+    if ((entry as any).locationCountry !== undefined) storeEntry.locationCountry = (entry as any).locationCountry
+    if ((entry as any).responsibilities !== undefined) storeEntry.responsibilities = (entry as any).responsibilities
+    if ((entry as any).toolsUsed !== undefined) storeEntry.toolsUsed = (entry as any).toolsUsed
+    if ((entry as any).notes !== undefined) storeEntry.notes = (entry as any).notes
+    updateWorkHistory(id, storeEntry as any)
   }, [updateWorkHistory])
 
   const handleRemoveWorkHistory = React.useCallback((id: string) => {
@@ -98,11 +120,21 @@ export function ExperienceStepWrapper({
       isCurrent: entry.isCurrent,
       gpa: entry.gpa ?? undefined,
       honors: entry.honors || undefined,
+      locationCity: (entry as any).locationCity || undefined,
+      locationState: (entry as any).locationState || undefined,
+      locationCountry: (entry as any).locationCountry || undefined,
+      notes: (entry as any).notes || undefined,
     })
   }, [addEducation])
 
   const handleUpdateEducation = React.useCallback((id: string, entry: Partial<EducationEntry>) => {
-    updateEducation(id, entry as any)
+    // Map the entry fields to store format
+    const storeEntry: Record<string, unknown> = { ...entry }
+    if ((entry as any).locationCity !== undefined) storeEntry.locationCity = (entry as any).locationCity
+    if ((entry as any).locationState !== undefined) storeEntry.locationState = (entry as any).locationState
+    if ((entry as any).locationCountry !== undefined) storeEntry.locationCountry = (entry as any).locationCountry
+    if ((entry as any).notes !== undefined) storeEntry.notes = (entry as any).notes
+    updateEducation(id, storeEntry as any)
   }, [updateEducation])
 
   const handleRemoveEducation = React.useCallback((id: string) => {

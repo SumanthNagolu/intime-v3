@@ -95,7 +95,14 @@ export function CandidateDraftsTabContent({
     <div className="space-y-3">
       {items.map((draft) => {
         const wizardState = draft.wizard_state
-        const displayName = [draft.first_name, draft.last_name].filter(Boolean).join(' ') || 'Untitled'
+        // Prefer wizard_state formData over DB placeholders
+        const wsFormData = wizardState?.formData as { firstName?: string; lastName?: string } | undefined
+        const firstName = wsFormData?.firstName || draft.first_name
+        const lastName = wsFormData?.lastName || draft.last_name
+        // Filter out placeholder values like "(Untitled)"
+        const cleanFirst = firstName && !firstName.startsWith('(') ? firstName : ''
+        const cleanLast = lastName && lastName !== 'Candidate' ? lastName : ''
+        const displayName = [cleanFirst, cleanLast].filter(Boolean).join(' ') || 'Untitled'
         const lastSaved = wizardState?.lastSavedAt || draft.updated_at || draft.created_at
         const progress = wizardState
           ? Math.round((wizardState.currentStep / wizardState.totalSteps) * 100)

@@ -273,8 +273,16 @@ export function UnifiedField({
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-charcoal-500">$</span>
           <Input
             type="number"
-            value={(value as string) || ''}
-            onChange={e => onChange(e.target.value)}
+            value={value === null || value === undefined ? '' : String(value)}
+            onChange={e => {
+              const val = e.target.value
+              if (val === '') {
+                onChange(undefined)
+              } else {
+                const num = parseFloat(val)
+                onChange(Number.isNaN(num) ? undefined : num)
+              }
+            }}
             placeholder={placeholder || '0.00'}
             min={min}
             max={max}
@@ -286,8 +294,16 @@ export function UnifiedField({
         <div className="relative">
           <Input
             type="number"
-            value={(value as string) || ''}
-            onChange={e => onChange(e.target.value)}
+            value={value === null || value === undefined ? '' : String(value)}
+            onChange={e => {
+              const val = e.target.value
+              if (val === '') {
+                onChange(undefined)
+              } else {
+                const num = parseFloat(val)
+                onChange(Number.isNaN(num) ? undefined : num)
+              }
+            }}
             placeholder={placeholder || '0'}
             min={min ?? 0}
             max={max ?? 100}

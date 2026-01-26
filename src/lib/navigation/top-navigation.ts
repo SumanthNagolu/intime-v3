@@ -133,9 +133,9 @@ export const topNavigationTabs: EntityNavTab[] = [
       { id: 'recent-candidates', label: 'Recent Candidates', type: 'recent' },
       { id: 'divider-1', label: '', type: 'divider' },
       { id: 'all-candidates', label: 'All Candidates', icon: Users, href: '/employee/recruiting/candidates', type: 'link' },
-      { id: 'hotlist', label: 'Hotlist', icon: CheckCircle, href: '/employee/recruiting/hotlist', type: 'link' },
+      { id: 'my-candidates', label: 'My Candidates', icon: UserCheck, href: '/employee/recruiting/candidates?owner=me', type: 'link' },
+      { id: 'hotlist', label: 'Hotlist', icon: Star, href: '/employee/recruiting/hotlist', type: 'link' },
       { id: 'bench', label: 'Bench', icon: Package, href: '/employee/recruiting/candidates?status=bench', type: 'link' },
-      { id: 'talent', label: 'Talent Pool', icon: UserCheck, href: '/employee/recruiting/talent', type: 'link' },
       { id: 'divider-2', label: '', type: 'divider' },
       { id: 'new-candidate', label: 'Add Candidate', icon: Plus, href: '/employee/recruiting/candidates/new', type: 'link' },
     ],
@@ -163,7 +163,6 @@ export function getActiveTabFromPath(pathname: string): string | null {
   if (pathname.includes('/employee/contacts')) return 'contacts'
   if (pathname.includes('/employee/recruiting/jobs')) return 'jobs'
   if (pathname.includes('/employee/recruiting/candidates') ||
-      pathname.includes('/employee/recruiting/talent') ||
       pathname.includes('/employee/recruiting/hotlist')) return 'candidates'
 
   // Pipeline paths - map to workspace (user's pipeline) or team
