@@ -90,13 +90,14 @@ export async function getFullCampaign(id: string): Promise<FullCampaignData | nu
       .select('id, status', { count: 'exact' })
       .eq('campaign_id', id),
 
-    // Leads linked to campaign
+    // Leads linked to campaign (with deal if converted)
     adminClient
       .from('leads')
       .select(`
         *,
         owner:user_profiles!owner_id(id, full_name, avatar_url),
-        contact:contacts!contact_id(id, first_name, last_name, email, phone, company_name, title)
+        contact:contacts!contact_id(id, first_name, last_name, email, phone, company_name, title),
+        deal:deals!converted_to_deal_id(id, title, stage, value)
       `)
       .eq('campaign_id', id)
       .is('deleted_at', null)
@@ -308,6 +309,7 @@ function transformLeads(data: Record<string, unknown>[]): CampaignLead[] {
       title?: string | null
     } | null
     const owner = l.owner as { id?: string; full_name?: string; avatar_url?: string | null } | null
+    const deal = l.deal as { id?: string; title?: string; stage?: string; value?: number | null } | null
 
     return {
       id: l.id as string,
@@ -333,8 +335,13 @@ function transformLeads(data: Record<string, unknown>[]): CampaignLead[] {
         fullName: owner.full_name || '',
         avatarUrl: owner.avatar_url || null,
       } : null,
-      // Deal (would need separate join, set to null for now)
-      deal: null,
+      // Linked deal (if converted)
+      deal: deal ? {
+        id: deal.id || '',
+        name: deal.title || '',
+        stage: deal.stage || 'discovery',
+        value: deal.value ?? null,
+      } : null,
       // Source
       source: l.source as string | null,
       campaignProspectId: l.campaign_prospect_id as string | null,

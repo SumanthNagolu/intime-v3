@@ -16,6 +16,8 @@ import {
 } from 'lucide-react'
 import { SectionHeader } from '@/components/accounts/fields/SectionHeader'
 import { UnifiedField } from '@/components/accounts/fields/UnifiedField'
+import { PhoneInput, parsePhoneValue, formatPhoneValue, type PhoneInputValue } from '@/components/ui/phone-input'
+import { AddressForm, type AddressFormData } from '@/components/addresses'
 import {
   CONTRACT_TYPES,
   PAYMENT_TERMS,
@@ -343,22 +345,65 @@ export function ProposalSection({
               editable={isEditable}
               placeholder="billing@company.com"
             />
-            <UnifiedField
-              label="Phone"
-              value={data.billingContact.phone}
-              onChange={(v) => handleBillingContactChange('phone', v)}
-              editable={isEditable}
-              placeholder="+1 (555) 123-4567"
-            />
-            <UnifiedField
-              label="Billing Address"
-              type="textarea"
-              value={data.billingContact.address}
-              onChange={(v) => handleBillingContactChange('address', v)}
-              editable={isEditable}
-              placeholder="Street, City, State, ZIP"
-              maxLength={500}
-            />
+            {isEditable ? (
+              <PhoneInput
+                label="Phone"
+                value={parsePhoneValue(data.billingContact.phone)}
+                onChange={(phoneValue: PhoneInputValue) =>
+                  handleBillingContactChange('phone', formatPhoneValue(phoneValue))
+                }
+              />
+            ) : (
+              <UnifiedField
+                label="Phone"
+                value={data.billingContact.phone}
+                onChange={(v) => handleBillingContactChange('phone', v)}
+                editable={false}
+                placeholder="No phone"
+              />
+            )}
+            {isEditable ? (
+              <div className="pt-2 border-t border-charcoal-100">
+                <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider mb-3">
+                  Billing Address
+                </p>
+                <AddressForm
+                  value={{
+                    addressLine1: data.billingContact.addressLine1,
+                    addressLine2: data.billingContact.addressLine2,
+                    city: data.billingContact.city,
+                    stateProvince: data.billingContact.stateProvince,
+                    postalCode: data.billingContact.postalCode,
+                    countryCode: data.billingContact.countryCode || 'US',
+                    county: '',
+                  }}
+                  onChange={(addressData: Partial<AddressFormData>) => {
+                    // Update each address field that changed
+                    Object.entries(addressData).forEach(([key, value]) => {
+                      if (key !== 'county') {
+                        handleBillingContactChange(key, value)
+                      }
+                    })
+                  }}
+                  compact
+                  showAddressLine2={false}
+                />
+              </div>
+            ) : (
+              <UnifiedField
+                label="Billing Address"
+                value={[
+                  data.billingContact.addressLine1,
+                  data.billingContact.city,
+                  data.billingContact.stateProvince,
+                  data.billingContact.postalCode,
+                  data.billingContact.countryCode,
+                ].filter(Boolean).join(', ')}
+                onChange={() => {}}
+                editable={false}
+                placeholder="No address"
+              />
+            )}
           </CardContent>
         </Card>
       </div>

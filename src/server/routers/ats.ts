@@ -479,7 +479,10 @@ const createCandidateInput = z.object({
   lastName: z.string().min(1).max(50),
   email: z.string().email().max(100),
   phone: z.string().max(20).optional(),
-  linkedinUrl: z.string().url().optional(),
+  linkedinUrl: z.preprocess(
+    (val) => (val === '' ? null : val),
+    z.string().url().optional().nullable()
+  ),
 
   // Professional
   professionalHeadline: z.string().max(200).optional(),
@@ -566,7 +569,10 @@ const updateCandidateInput = z.object({
   email: z.string().email().max(100).optional(),
   phone: z.string().max(20).optional().nullable(),
   mobile: z.string().max(20).optional().nullable(),
-  linkedinUrl: z.string().url().optional().nullable(),
+  linkedinUrl: z.preprocess(
+    (val) => (val === '' ? null : val),
+    z.string().url().optional().nullable()
+  ),
   professionalHeadline: z.string().max(200).optional().nullable(),
   professionalSummary: z.string().max(2000).optional().nullable(),
   currentCompany: z.string().max(200).optional().nullable(),
@@ -9595,7 +9601,10 @@ export const atsRouter = router({
       .input(z.object({
         email: z.string().email().optional(),
         phone: z.string().optional(),
-        linkedinUrl: z.string().url().optional(),
+        linkedinUrl: z.preprocess(
+          (val) => (val === '' ? null : val),
+          z.string().url().optional().nullable()
+        ),
       }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx
@@ -9965,6 +9974,120 @@ export const atsRouter = router({
         }
 
         return { updatedCount: input.candidateIds.length }
+      }),
+
+    // Bulk import candidates from CSV
+    bulkImportFromCsv: orgProtectedProcedure
+      .input(z.object({
+        candidates: z.array(z.object({
+          firstName: z.string().min(1),
+          lastName: z.string().min(1),
+          email: z.string().email(),
+          phone: z.string().optional(),
+          mobile: z.string().optional(),
+          linkedinProfile: z.string().optional(),
+          professionalHeadline: z.string().optional(),
+          currentCompany: z.string().optional(),
+          experienceYears: z.number().optional(),
+          city: z.string().optional(),
+          state: z.string().optional(),
+          country: z.string().optional(),
+          visaStatus: z.string().optional(),
+          skills: z.array(z.string()).optional(),
+          rateType: z.string().optional(),
+          desiredRate: z.number().optional(),
+          currency: z.string().optional(),
+          leadSource: z.string().optional(),
+          tags: z.array(z.string()).optional(),
+          internalNotes: z.string().optional(),
+        })).min(1).max(500),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { orgId, user } = ctx
+        const adminClient = getAdminClient()
+
+        if (!user?.id) {
+          throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
+        }
+
+        const now = new Date().toISOString()
+        const results = {
+          total: input.candidates.length,
+          success: 0,
+          failed: 0,
+          errors: [] as string[],
+        }
+
+        // Process each candidate
+        for (let i = 0; i < input.candidates.length; i++) {
+          const candidate = input.candidates[i]
+          try {
+            // Check for duplicate email
+            const { data: existing } = await adminClient
+              .from('candidates')
+              .select('id')
+              .eq('org_id', orgId)
+              .eq('email', candidate.email)
+              .is('deleted_at', null)
+              .single()
+
+            if (existing) {
+              results.failed++
+              results.errors.push(`Row ${i + 2}: Email ${candidate.email} already exists`)
+              continue
+            }
+
+            // Build location string from city/state/country
+            const locationParts = [candidate.city, candidate.state, candidate.country].filter(Boolean)
+            const location = locationParts.join(', ') || null
+
+            // Create candidate record
+            const { error: insertError } = await adminClient
+              .from('candidates')
+              .insert({
+                org_id: orgId,
+                first_name: candidate.firstName,
+                last_name: candidate.lastName,
+                email: candidate.email,
+                phone: candidate.phone || null,
+                mobile: candidate.mobile || null,
+                linkedin_url: candidate.linkedinProfile || null,
+                title: candidate.professionalHeadline || null,
+                current_company: candidate.currentCompany || null,
+                years_experience: candidate.experienceYears ?? null,
+                location: location,
+                city: candidate.city || null,
+                state: candidate.state || null,
+                country: candidate.country || null,
+                visa_status: candidate.visaStatus || 'unknown',
+                skills: candidate.skills || [],
+                rate_type: candidate.rateType || 'hourly',
+                desired_rate: candidate.desiredRate ?? null,
+                currency: candidate.currency || 'USD',
+                source: candidate.leadSource || 'csv_import',
+                source_type: 'csv',
+                tags: candidate.tags || [],
+                internal_notes: candidate.internalNotes || null,
+                status: 'active',
+                created_by: user.id,
+                updated_by: user.id,
+                created_at: now,
+                updated_at: now,
+              })
+
+            if (insertError) {
+              results.failed++
+              results.errors.push(`Row ${i + 2}: ${insertError.message}`)
+            } else {
+              results.success++
+            }
+          } catch (err) {
+            results.failed++
+            results.errors.push(`Row ${i + 2}: ${err instanceof Error ? err.message : 'Unknown error'}`)
+          }
+        }
+
+        return results
       }),
 
     // ============================================

@@ -138,39 +138,73 @@ export function FunnelChart({
                 <TooltipTrigger asChild>
                   <div
                     className={cn(
-                      'relative overflow-hidden rounded-lg transition-all duration-300 cursor-pointer group',
-                      barHeight,
+                      'relative flex items-center gap-3 transition-all duration-300 cursor-pointer group',
                       onStageClick && 'hover:opacity-90'
                     )}
-                    style={{ width: `${stage.widthPercent}%` }}
                     onClick={() => onStageClick?.(stage)}
                   >
-                    {/* Background bar */}
-                    <div className={cn('absolute inset-0', color)} />
-
-                    {/* Content */}
+                    {/* Bar container - always full width for layout */}
                     <div
                       className={cn(
-                        'relative h-full flex items-center justify-between text-white',
-                        padding
+                        'relative overflow-hidden rounded-lg flex-shrink-0',
+                        barHeight
                       )}
+                      style={{ width: `${stage.widthPercent}%`, minWidth: stage.widthPercent < 25 ? '60px' : undefined }}
                     >
-                      <div className="flex items-center gap-2">
+                      {/* Background bar */}
+                      <div className={cn('absolute inset-0', color)} />
+
+                      {/* Content inside bar - only show if wide enough */}
+                      {stage.widthPercent >= 25 && (
+                        <div
+                          className={cn(
+                            'relative h-full flex items-center justify-between text-white',
+                            padding
+                          )}
+                        >
+                          <div className="flex items-center gap-2 min-w-0">
+                            {stage.icon}
+                            <span className={cn('font-medium truncate', fontSize)}>{stage.label}</span>
+                          </div>
+                          <div className="flex items-center gap-2 flex-shrink-0">
+                            <span className={cn('font-bold', fontSize)}>
+                              {stage.count.toLocaleString()}
+                            </span>
+                            <span className={cn('opacity-80', fontSize === 'text-xs' ? 'text-[10px]' : 'text-xs')}>
+                              ({stage.percentage.toFixed(1)}%)
+                            </span>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Minimal content for narrow bars */}
+                      {stage.widthPercent < 25 && (
+                        <div
+                          className={cn(
+                            'relative h-full flex items-center justify-center text-white',
+                            padding
+                          )}
+                        >
+                          <span className={cn('font-bold', fontSize)}>
+                            {stage.count.toLocaleString()}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Hover overlay */}
+                      <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                    </div>
+
+                    {/* Label outside bar for narrow bars */}
+                    {stage.widthPercent < 25 && (
+                      <div className="flex items-center gap-2 text-charcoal-700">
                         {stage.icon}
                         <span className={cn('font-medium', fontSize)}>{stage.label}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className={cn('font-bold', fontSize)}>
-                          {stage.count.toLocaleString()}
-                        </span>
-                        <span className={cn('opacity-80', fontSize === 'text-xs' ? 'text-[10px]' : 'text-xs')}>
+                        <span className={cn('text-charcoal-400', fontSize === 'text-xs' ? 'text-[10px]' : 'text-xs')}>
                           ({stage.percentage.toFixed(1)}%)
                         </span>
                       </div>
-                    </div>
-
-                    {/* Hover overlay */}
-                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                    )}
                   </div>
                 </TooltipTrigger>
                 <TooltipContent side="right" className="max-w-xs">

@@ -49,10 +49,11 @@ export interface CandidateData {
   title: string | null
   headline: string | null
   professionalSummary: string | null
-  // Location
+  // Location (standard address pattern)
+  streetAddress: string | null
   city: string | null
-  state: string | null
-  country: string | null
+  state: string | null // State/province code (e.g., 'TX', 'CA', 'ON')
+  country: string | null // Country code (e.g., 'US', 'CA', 'IN')
   location: string | null // Computed: "City, State" or "City, Country"
   willingToRelocate: boolean
   relocationPreferences: string | null

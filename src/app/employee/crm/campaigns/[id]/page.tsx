@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { CampaignWorkspace } from '@/components/workspaces/CampaignWorkspace'
-import { EditCampaignDialog } from '@/components/crm/campaigns/EditCampaignDialog'
 import { CompleteCampaignDialog } from '@/components/crm/campaigns/CompleteCampaignDialog'
 import { DuplicateCampaignDialog } from '@/components/crm/campaigns/DuplicateCampaignDialog'
 import { AddProspectDialog } from '@/components/crm/campaigns/AddProspectDialog'
@@ -46,7 +45,6 @@ export default function CampaignPage() {
   const campaign = data.campaign
 
   // Dialog states
-  const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [completeDialogOpen, setCompleteDialogOpen] = useState(false)
   const [duplicateDialogOpen, setDuplicateDialogOpen] = useState(false)
   const [addProspectOpen, setAddProspectOpen] = useState(false)
@@ -98,9 +96,6 @@ export default function CampaignPage() {
     }>) => {
       switch (event.detail.dialogId) {
         // Campaign management dialogs
-        case 'edit':
-          setEditDialogOpen(true)
-          break
         case 'complete':
           setCompleteDialogOpen(true)
           break
@@ -203,6 +198,16 @@ export default function CampaignPage() {
         case 'viewLeads':
           router.push(`/employee/crm/campaigns/${campaignId}?section=leads`, { scroll: false })
           break
+
+        // Deal creation from lead
+        case 'createDeal':
+          if (event.detail.stepData?.id) {
+            // Navigate to deal wizard with lead ID for linking
+            router.push(`/employee/crm/deals/new?leadId=${event.detail.stepData.id}&campaignId=${campaignId}`)
+          } else {
+            router.push('/employee/crm/deals/new')
+          }
+          break
       }
     }
 
@@ -226,16 +231,6 @@ export default function CampaignPage() {
       {/* Dialogs */}
       {campaign && (
         <>
-          <EditCampaignDialog
-            open={editDialogOpen}
-            onOpenChange={(open) => handleDialogChange(open, setEditDialogOpen)}
-            campaignId={campaignId}
-            onSuccess={() => {
-              refreshData()
-              utils.crm.campaigns.list.invalidate()
-            }}
-          />
-
           <CompleteCampaignDialog
             open={completeDialogOpen}
             onOpenChange={(open) => handleDialogChange(open, setCompleteDialogOpen)}

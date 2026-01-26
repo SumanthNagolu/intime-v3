@@ -17,13 +17,14 @@
  * The detail page listens for these events and manages dialog state.
  */
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { format } from 'date-fns'
 import { Campaign } from '../campaigns.config'
 import { SectionData, PCFSectionProps } from '../types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { trpc } from '@/lib/trpc/client'
@@ -48,6 +49,15 @@ import {
   MessageSquare,
   AlertCircle,
   ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+  ExternalLink,
+  Pencil,
+  Send,
+  Briefcase,
+  Check,
 } from 'lucide-react'
 import { FunnelChart, FunnelStage } from '@/components/ui/funnel-chart'
 import { SequenceTimeline, SequenceStep } from '@/components/ui/sequence-timeline'
@@ -1096,26 +1106,31 @@ export function CampaignProspectsSectionPCF({ entityId, entity, sectionData }: P
  * Transform raw lead data from DB to typed CampaignLead
  */
 function transformRawLead(lead: Record<string, unknown>): CampaignLead {
-  const contact = lead.contact as Record<string, unknown> | undefined
   const owner = lead.owner as Record<string, unknown> | undefined
   const deal = lead.deal as Record<string, unknown> | undefined
 
+  // Unified contacts table uses lead_ prefix for lead-specific fields
+  // e.g., lead_status, lead_score, lead_source
   return {
     id: lead.id as string,
-    contactId: (lead.contact_id as string) || '',
-    campaignId: (lead.campaign_id as string | null) || null,
-    status: (lead.status as CampaignLead['status']) || 'new',
-    score: (lead.score as number | null) || null,
-    firstName: (contact?.first_name as string) || (lead.first_name as string) || '',
-    lastName: (contact?.last_name as string) || (lead.last_name as string) || '',
-    email: (contact?.email as string | null) || (lead.email as string | null) || null,
-    phone: (contact?.phone as string | null) || (lead.phone as string | null) || null,
-    companyName: (contact?.company_name as string | null) || (lead.company_name as string | null) || null,
-    title: (contact?.title as string | null) || (lead.title as string | null) || null,
-    budgetScore: (lead.budget_score as number | null) || null,
-    authorityScore: (lead.authority_score as number | null) || null,
-    needScore: (lead.need_score as number | null) || null,
-    timelineScore: (lead.timeline_score as number | null) || null,
+    contactId: lead.id as string, // In unified model, lead IS the contact
+    campaignId: (lead.source_campaign_id as string | null) ?? (lead.campaign_id as string | null) ?? null,
+    // Status: unified uses lead_status, legacy uses status
+    status: (lead.lead_status as CampaignLead['status']) ?? (lead.status as CampaignLead['status']) ?? 'new',
+    // Score: unified uses lead_score
+    score: (lead.lead_score as number | null) ?? (lead.score as number | null) ?? null,
+    // Contact fields are directly on the record in unified model
+    firstName: (lead.first_name as string) || '',
+    lastName: (lead.last_name as string) || '',
+    email: (lead.email as string | null) ?? null,
+    phone: (lead.phone as string | null) ?? null,
+    companyName: (lead.company_name as string | null) ?? null,
+    title: (lead.title as string | null) ?? null,
+    // BANT scores: unified contacts uses lead_bant_ prefix
+    budgetScore: (lead.lead_bant_budget as number | null) ?? (lead.bant_budget as number | null) ?? null,
+    authorityScore: (lead.lead_bant_authority as number | null) ?? (lead.bant_authority as number | null) ?? null,
+    needScore: (lead.lead_bant_need as number | null) ?? (lead.bant_need as number | null) ?? null,
+    timelineScore: (lead.lead_bant_timeline as number | null) ?? (lead.bant_timeline as number | null) ?? null,
     owner: owner
       ? {
           id: owner.id as string,
@@ -1131,10 +1146,11 @@ function transformRawLead(lead: Record<string, unknown>): CampaignLead {
           stage: (deal.stage as string) || 'qualification',
         }
       : null,
-    source: (lead.source as string | null) || 'campaign',
-    campaignProspectId: (lead.campaign_prospect_id as string | null) || null,
+    // Source: unified uses lead_source
+    source: (lead.lead_source as string | null) ?? (lead.source as string | null) ?? 'campaign',
+    campaignProspectId: (lead.campaign_prospect_id as string | null) ?? null,
     createdAt: (lead.created_at as string) || '',
-    convertedAt: (lead.converted_at as string | null) || null,
+    convertedAt: (lead.converted_at as string | null) ?? null,
   }
 }
 
@@ -1151,27 +1167,46 @@ function transformRawLead(lead: Record<string, unknown>): CampaignLead {
  */
 export function CampaignLeadsSectionPCF({ entityId, entity, sectionData }: PCFSectionProps) {
   const campaign = entity as Campaign | undefined
+  const router = useRouter()
 
   // State for selected lead and active tab
   const [selectedLead, setSelectedLead] = useState<CampaignLead | null>(null)
   const [activeTab, setActiveTab] = useState('overview')
 
+  // Pagination state (same as Prospects)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+
   // ONE database call pattern: Use pre-loaded data if available
   const hasPreloadedData = !!sectionData?.items
 
   // Query leads only if sectionData not provided (legacy pattern)
+  // Use unifiedContacts.leads.listByCampaign which queries contacts with subtype='person_lead'
   const leadsQuery = trpc.unifiedContacts.leads.listByCampaign.useQuery(
-    { campaignId: entityId, limit: 100 },
+    { campaignId: entityId, limit: 500 },
     { enabled: !!entityId && !hasPreloadedData }
   )
 
   // Use pre-loaded data or fall back to query results
+  // Note: unifiedContacts.leads.listByCampaign returns { items: [...], total: number }
   const rawLeads = hasPreloadedData
     ? (sectionData.items as Record<string, unknown>[])
     : ((leadsQuery.data?.items || []) as Record<string, unknown>[])
-  const leads = rawLeads.map(transformRawLead)
-  const total = leads.length
+  const allLeads = rawLeads.map(transformRawLead)
+  const total = allLeads.length
   const isLoading = !hasPreloadedData && leadsQuery.isLoading
+
+  // Calculate pagination
+  const totalPages = Math.ceil(total / pageSize)
+  const startIndex = (currentPage - 1) * pageSize
+  const endIndex = startIndex + pageSize
+  const leads = allLeads.slice(startIndex, endIndex)
+
+  // Reset to page 1 when page size changes
+  const handlePageSizeChange = (newSize: number) => {
+    setPageSize(newSize)
+    setCurrentPage(1)
+  }
 
   // Handle row click to select lead
   const handleRowClick = (lead: CampaignLead) => {
@@ -1180,6 +1215,13 @@ export function CampaignLeadsSectionPCF({ entityId, entity, sectionData }: PCFSe
     } else {
       setSelectedLead(lead)
       setActiveTab('overview') // Reset to first tab
+    }
+  }
+
+  // Navigate to full lead record
+  const handleViewFullLead = () => {
+    if (selectedLead) {
+      router.push(`/employee/crm/leads/${selectedLead.id}`)
     }
   }
 
@@ -1242,12 +1284,34 @@ export function CampaignLeadsSectionPCF({ entityId, entity, sectionData }: PCFSe
 
       {/* Leads Table + Detail Panel */}
       <Card className="bg-white">
+        {/* Page Size Selector - Top of table */}
+        {total > 0 && (
+          <div className="flex items-center justify-between px-4 py-3 border-b border-charcoal-100 bg-charcoal-50/30">
+            <div className="flex items-center gap-2 text-sm text-charcoal-600">
+              <span>Show</span>
+              <select
+                value={pageSize}
+                onChange={(e) => handlePageSizeChange(Number(e.target.value))}
+                className="border border-charcoal-200 rounded-md px-2 py-1 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500"
+              >
+                <option value={10}>10</option>
+                <option value={25}>25</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+              </select>
+              <span>per page</span>
+            </div>
+            <div className="text-sm text-charcoal-500">
+              Showing {startIndex + 1}-{Math.min(endIndex, total)} of {total}
+            </div>
+          </div>
+        )}
         <CardContent className="p-0">
           {isLoading ? (
             <div className="py-8 text-center text-charcoal-500">
               Loading leads...
             </div>
-          ) : leads.length === 0 ? (
+          ) : allLeads.length === 0 ? (
             <div className="py-12 text-center">
               <Target className="w-12 h-12 text-charcoal-300 mx-auto mb-4" />
               <p className="text-charcoal-500 mb-4">No leads generated yet</p>
@@ -1355,6 +1419,77 @@ export function CampaignLeadsSectionPCF({ entityId, entity, sectionData }: PCFSe
                 </table>
               </div>
 
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-between px-4 py-3 border-t border-charcoal-100">
+                  <p className="text-sm text-charcoal-500">
+                    Page {currentPage} of {totalPages}
+                  </p>
+                  <div className="flex items-center gap-1">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPage(1)}
+                      disabled={currentPage === 1}
+                      className="h-8 w-8 p-0"
+                    >
+                      <ChevronsLeft className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                      disabled={currentPage === 1}
+                      className="h-8 w-8 p-0"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </Button>
+                    {/* Page numbers */}
+                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                      let pageNum: number
+                      if (totalPages <= 5) {
+                        pageNum = i + 1
+                      } else if (currentPage <= 3) {
+                        pageNum = i + 1
+                      } else if (currentPage >= totalPages - 2) {
+                        pageNum = totalPages - 4 + i
+                      } else {
+                        pageNum = currentPage - 2 + i
+                      }
+                      return (
+                        <Button
+                          key={pageNum}
+                          variant={currentPage === pageNum ? 'default' : 'outline'}
+                          size="sm"
+                          onClick={() => setCurrentPage(pageNum)}
+                          className="h-8 w-8 p-0"
+                        >
+                          {pageNum}
+                        </Button>
+                      )
+                    })}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                      disabled={currentPage === totalPages}
+                      className="h-8 w-8 p-0"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPage(totalPages)}
+                      disabled={currentPage === totalPages}
+                      className="h-8 w-8 p-0"
+                    >
+                      <ChevronsRight className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              )}
+
               {/* Detail Panel */}
               <ListDetailPanel
                 isOpen={!!selectedLead}
@@ -1369,6 +1504,17 @@ export function CampaignLeadsSectionPCF({ entityId, entity, sectionData }: PCFSe
                     : ''
                 }
                 subtitle={selectedLead?.companyName || undefined}
+                headerActions={
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleViewFullLead}
+                    className="text-charcoal-600 hover:text-charcoal-900"
+                  >
+                    <ExternalLink className="w-4 h-4 mr-1.5" />
+                    View Full Lead
+                  </Button>
+                }
               />
             </>
           )}
@@ -2018,20 +2164,31 @@ export function CampaignFunnelSectionPCF({ entityId, entity }: PCFSectionProps) 
   )
 }
 
+// Channel configuration for sequence list/detail view
+const SEQUENCE_CHANNELS = [
+  { id: 'email', label: 'Email', icon: Mail, color: 'text-blue-500', bg: 'bg-blue-50', borderColor: 'border-blue-500' },
+  { id: 'linkedin', label: 'LinkedIn', icon: Linkedin, color: 'text-[#0A66C2]', bg: 'bg-blue-50', borderColor: 'border-blue-600' },
+  { id: 'phone', label: 'Phone', icon: Phone, color: 'text-green-500', bg: 'bg-green-50', borderColor: 'border-green-500' },
+  { id: 'sms', label: 'SMS', icon: MessageSquare, color: 'text-purple-500', bg: 'bg-purple-50', borderColor: 'border-purple-500' },
+  { id: 'direct_mail', label: 'Direct Mail', icon: Send, color: 'text-orange-500', bg: 'bg-orange-50', borderColor: 'border-orange-500' },
+  { id: 'event', label: 'Events', icon: Calendar, color: 'text-amber-500', bg: 'bg-amber-50', borderColor: 'border-amber-500' },
+  { id: 'job_board', label: 'Job Boards', icon: Briefcase, color: 'text-cyan-500', bg: 'bg-cyan-50', borderColor: 'border-cyan-500' },
+  { id: 'referral', label: 'Referral', icon: Users, color: 'text-rose-500', bg: 'bg-rose-50', borderColor: 'border-rose-500' },
+] as const
+
 /**
- * Sequence Section - Outreach sequence management
+ * Sequence Section - Outreach sequence management with List/Detail view
  *
- * Displays campaign sequence with:
- * - Step-by-step timeline
- * - Channel indicators (email, LinkedIn, phone, SMS)
- * - Per-step performance metrics
- * - Sequence controls (pause/resume)
+ * Displays campaign sequences organized by channel:
+ * - Left side: List of channels with step counts
+ * - Right side: Detail panel showing steps for selected channel
  *
  * ONE database call pattern: When sectionData is provided, uses pre-loaded data
  * instead of making a separate query.
  */
 export function CampaignSequenceSectionPCF({ entityId, entity, sectionData }: PCFSectionProps) {
   const campaign = entity as Campaign | undefined
+  const [selectedChannel, setSelectedChannel] = useState<string | null>(null)
 
   // ONE database call pattern: Use pre-loaded data if available
   const hasPreloadedData = !!sectionData?.items
@@ -2053,12 +2210,12 @@ export function CampaignSequenceSectionPCF({ entityId, entity, sectionData }: PC
   // Transform to SequenceStep format
   const steps: SequenceStep[] = sequenceSteps.map((step: any, index: number) => ({
     id: step.id,
-    stepNumber: index + 1,
+    stepNumber: step.stepNumber || step.step_number || index + 1,
     channel: step.channel || 'email',
     subject: step.subject,
-    templateName: step.template_name || step.templateName || `Step ${index + 1}`,
+    templateName: step.template_name || step.templateName || `Step ${step.stepNumber || index + 1}`,
     delay: {
-      value: step.delay_value || step.delayValue || 1,
+      value: step.dayOffset || step.delay_value || step.delayValue || 1,
       unit: step.delay_unit || step.delayUnit || 'days',
     },
     status: step.status || 'pending',
@@ -2076,39 +2233,75 @@ export function CampaignSequenceSectionPCF({ entityId, entity, sectionData }: PC
     completedAt: step.completed_at || step.completedAt,
   }))
 
-  // Find current step (first non-completed step)
-  const currentStepIndex = steps.findIndex(
-    (step) => step.status === 'in_progress' || step.status === 'pending'
+  // Group steps by channel
+  const stepsByChannel = useMemo(() => {
+    const grouped: Record<string, SequenceStep[]> = {}
+    for (const step of steps) {
+      if (!grouped[step.channel]) {
+        grouped[step.channel] = []
+      }
+      grouped[step.channel].push(step)
+    }
+    // Sort steps within each channel by stepNumber
+    for (const channel of Object.keys(grouped)) {
+      grouped[channel].sort((a, b) => a.stepNumber - b.stepNumber)
+    }
+    return grouped
+  }, [steps])
+
+  // Get channels that have steps or are commonly used
+  const activeChannels = SEQUENCE_CHANNELS.filter(
+    ch => stepsByChannel[ch.id]?.length > 0
   )
+
+  // Get steps for selected channel
+  const selectedChannelSteps = selectedChannel ? stepsByChannel[selectedChannel] || [] : []
+  const selectedChannelConfig = SEQUENCE_CHANNELS.find(ch => ch.id === selectedChannel)
+
+  // Calculate stats for selected channel
+  const selectedChannelStats = useMemo(() => {
+    if (!selectedChannel) return null
+    const channelSteps = stepsByChannel[selectedChannel] || []
+    return channelSteps.reduce(
+      (acc, s) => ({
+        sent: acc.sent + (s.stats?.sent || 0),
+        delivered: acc.delivered + (s.stats?.delivered || 0),
+        opened: acc.opened + (s.stats?.opened || 0),
+        clicked: acc.clicked + (s.stats?.clicked || 0),
+        replied: acc.replied + (s.stats?.replied || 0),
+        bounced: acc.bounced + (s.stats?.bounced || 0),
+      }),
+      { sent: 0, delivered: 0, opened: 0, clicked: 0, replied: 0, bounced: 0 }
+    )
+  }, [selectedChannel, stepsByChannel])
+
+  // Handle adding step for specific channel
+  const handleAddStepForChannel = (channel: string) => {
+    dispatchCampaignDialog('addSequenceStep', entityId, { channel } as any)
+  }
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-charcoal-900">Outreach Sequence</h3>
+          <h3 className="text-lg font-semibold text-charcoal-900">Outreach Sequences</h3>
           <p className="text-sm text-charcoal-500">
             {steps.length > 0
-              ? `${steps.length} step${steps.length !== 1 ? 's' : ''} in sequence`
-              : 'Configure your outreach workflow'}
+              ? `${steps.length} step${steps.length !== 1 ? 's' : ''} across ${activeChannels.length} channel${activeChannels.length !== 1 ? 's' : ''}`
+              : 'Configure your multi-channel outreach workflow'}
           </p>
         </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" onClick={() => dispatchCampaignDialog('editSequence', entityId)}>
-            <Workflow className="w-4 h-4 mr-2" />
-            Edit Sequence
-          </Button>
-          <Button onClick={() => dispatchCampaignDialog('addSequenceStep', entityId)}>
-            <Plus className="w-4 h-4 mr-2" />
-            Add Step
-          </Button>
-        </div>
+        <Button onClick={() => dispatchCampaignDialog('addSequenceStep', entityId)}>
+          <Plus className="w-4 h-4 mr-2" />
+          Add Step
+        </Button>
       </div>
 
-      {/* Sequence Timeline */}
-      <Card className="bg-white">
-        <CardContent className="p-6">
-          {isLoading ? (
+      {/* List/Detail View */}
+      <Card className="bg-white overflow-hidden">
+        {isLoading ? (
+          <CardContent className="p-6">
             <div className="space-y-4">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="flex gap-4">
@@ -2120,138 +2313,223 @@ export function CampaignSequenceSectionPCF({ entityId, entity, sectionData }: PC
                 </div>
               ))}
             </div>
-          ) : steps.length === 0 ? (
-            <div className="py-12 text-center">
-              <Workflow className="w-12 h-12 text-charcoal-300 mx-auto mb-4" />
-              <p className="text-charcoal-500 mb-2">No sequence steps configured</p>
-              <p className="text-sm text-charcoal-400 mb-4">
-                Create a multi-step outreach sequence to engage your prospects
-              </p>
-              <Button onClick={() => dispatchCampaignDialog('addSequenceStep', entityId)}>
-                <Plus className="w-4 h-4 mr-2" />
-                Create First Step
-              </Button>
+          </CardContent>
+        ) : (
+          <div className="flex min-h-[400px]">
+            {/* Left: Channel List */}
+            <div className="w-72 border-r border-charcoal-100 bg-charcoal-50/30">
+              <div className="p-3 border-b border-charcoal-100 bg-white">
+                <p className="text-xs font-medium text-charcoal-500 uppercase tracking-wider">Channels</p>
+              </div>
+              <div className="divide-y divide-charcoal-100">
+                {SEQUENCE_CHANNELS.map((channel) => {
+                  const channelSteps = stepsByChannel[channel.id] || []
+                  const stepCount = channelSteps.length
+                  const isSelected = selectedChannel === channel.id
+                  const Icon = channel.icon
+
+                  // Calculate quick stats
+                  const sent = channelSteps.reduce((sum, s) => sum + (s.stats?.sent || 0), 0)
+                  const replied = channelSteps.reduce((sum, s) => sum + (s.stats?.replied || 0), 0)
+
+                  return (
+                    <button
+                      key={channel.id}
+                      onClick={() => setSelectedChannel(isSelected ? null : channel.id)}
+                      className={cn(
+                        'w-full px-4 py-3 text-left transition-all hover:bg-white',
+                        isSelected && 'bg-white border-l-2',
+                        isSelected && channel.borderColor
+                      )}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center', channel.bg)}>
+                          <Icon className={cn('w-4 h-4', channel.color)} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between">
+                            <p className={cn(
+                              'font-medium text-sm',
+                              isSelected ? 'text-charcoal-900' : 'text-charcoal-700'
+                            )}>
+                              {channel.label}
+                            </p>
+                            <Badge
+                              variant={stepCount > 0 ? 'default' : 'secondary'}
+                              className={cn(
+                                'text-xs',
+                                stepCount > 0 ? 'bg-charcoal-900' : 'bg-charcoal-200 text-charcoal-500'
+                              )}
+                            >
+                              {stepCount}
+                            </Badge>
+                          </div>
+                          {stepCount > 0 && sent > 0 && (
+                            <p className="text-xs text-charcoal-500 mt-0.5">
+                              {sent.toLocaleString()} sent · {replied} replied
+                            </p>
+                          )}
+                          {stepCount === 0 && (
+                            <p className="text-xs text-charcoal-400 mt-0.5">No steps configured</p>
+                          )}
+                        </div>
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
             </div>
-          ) : (
-            <SequenceTimeline
-              steps={steps}
-              currentStep={currentStepIndex >= 0 ? currentStepIndex : undefined}
-              isRunning={isSequenceRunning}
-              onStepClick={(step) => dispatchCampaignDialog('viewSequenceStep', entityId, {
-                stepData: {
-                  id: step.id,
-                  channel: step.channel,
-                  stepNumber: step.stepNumber,
-                  dayOffset: step.delay?.value,
-                  subject: step.subject,
-                  templateName: step.templateName,
-                },
-              })}
-              onEditStep={(step) => dispatchCampaignDialog('editSequenceStep', entityId, {
-                stepData: {
-                  id: step.id,
-                  channel: step.channel,
-                  stepNumber: step.stepNumber,
-                  dayOffset: step.delay?.value,
-                  subject: step.subject,
-                  templateName: step.templateName,
-                },
-              })}
-              onPauseResume={() => dispatchCampaignDialog('toggleSequence', entityId)}
-            />
-          )}
-        </CardContent>
-      </Card>
 
-      {/* Channel Summary - Responsive */}
-      {steps.length > 0 && (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4" role="region" aria-label="Sequence channel summary">
-          {[
-            {
-              channel: 'email',
-              label: 'Email Steps',
-              icon: Mail,
-              color: 'text-blue-500',
-              bg: 'bg-blue-50',
-            },
-            {
-              channel: 'linkedin',
-              label: 'LinkedIn Steps',
-              icon: Linkedin,
-              color: 'text-[#0A66C2]',
-              bg: 'bg-blue-50',
-            },
-            {
-              channel: 'phone',
-              label: 'Call Steps',
-              icon: Phone,
-              color: 'text-green-500',
-              bg: 'bg-green-50',
-            },
-            {
-              channel: 'sms',
-              label: 'SMS Steps',
-              icon: MessageSquare,
-              color: 'text-purple-500',
-              bg: 'bg-purple-50',
-            },
-          ].map(({ channel, label, icon: Icon, color, bg }) => {
-            const channelSteps = steps.filter((s) => s.channel === channel)
-            const channelStats = channelSteps.reduce(
-              (acc, s) => ({
-                sent: acc.sent + (s.stats?.sent || 0),
-                opened: acc.opened + (s.stats?.opened || 0),
-                replied: acc.replied + (s.stats?.replied || 0),
-              }),
-              { sent: 0, opened: 0, replied: 0 }
-            )
+            {/* Right: Detail Panel */}
+            <div className="flex-1 bg-white">
+              {selectedChannel && selectedChannelConfig ? (
+                <div className="h-full flex flex-col">
+                  {/* Channel Header */}
+                  <div className="px-6 py-4 border-b border-charcoal-100 bg-charcoal-50/50">
+                    <div className="flex items-center gap-3">
+                      <div className={cn('w-10 h-10 rounded-lg flex items-center justify-center', selectedChannelConfig.bg)}>
+                        <selectedChannelConfig.icon className={cn('w-5 h-5', selectedChannelConfig.color)} />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-charcoal-900">{selectedChannelConfig.label} Sequence</h4>
+                        <p className="text-sm text-charcoal-500">
+                          {selectedChannelSteps.length} step{selectedChannelSteps.length !== 1 ? 's' : ''}
+                        </p>
+                      </div>
+                    </div>
 
-            return (
-              <Card key={channel} className="bg-white">
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center', bg)}>
-                      <Icon className={cn('w-4 h-4', color)} />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-charcoal-900">{label}</p>
-                      <p className="text-xs text-charcoal-400">{channelSteps.length} steps</p>
-                    </div>
+                    {/* Stats Row */}
+                    {selectedChannelStats && selectedChannelStats.sent > 0 && (
+                      <div className="flex gap-6 mt-4 pt-4 border-t border-charcoal-200/60">
+                        <div>
+                          <p className="text-2xl font-bold text-charcoal-900">{selectedChannelStats.sent.toLocaleString()}</p>
+                          <p className="text-xs text-charcoal-500">Sent</p>
+                        </div>
+                        <div>
+                          <p className="text-2xl font-bold text-blue-600">
+                            {selectedChannelStats.sent > 0 ? ((selectedChannelStats.opened / selectedChannelStats.sent) * 100).toFixed(0) : 0}%
+                          </p>
+                          <p className="text-xs text-charcoal-500">Opened</p>
+                        </div>
+                        <div>
+                          <p className="text-2xl font-bold text-purple-600">
+                            {selectedChannelStats.sent > 0 ? ((selectedChannelStats.clicked / selectedChannelStats.sent) * 100).toFixed(0) : 0}%
+                          </p>
+                          <p className="text-xs text-charcoal-500">Clicked</p>
+                        </div>
+                        <div>
+                          <p className="text-2xl font-bold text-green-600">
+                            {selectedChannelStats.sent > 0 ? ((selectedChannelStats.replied / selectedChannelStats.sent) * 100).toFixed(0) : 0}%
+                          </p>
+                          <p className="text-xs text-charcoal-500">Replied</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  {channelStats.sent > 0 && (
-                    <div className="grid grid-cols-3 gap-2 pt-3 border-t border-charcoal-100">
-                      <div>
-                        <p className="text-lg font-bold text-charcoal-900">
-                          {channelStats.sent.toLocaleString()}
+
+                  {/* Steps List */}
+                  <div className="flex-1 overflow-auto p-6">
+                    {selectedChannelSteps.length === 0 ? (
+                      <div className="py-12 text-center">
+                        <selectedChannelConfig.icon className={cn('w-10 h-10 mx-auto mb-3', selectedChannelConfig.color, 'opacity-30')} />
+                        <p className="text-charcoal-500 mb-2">No {selectedChannelConfig.label.toLowerCase()} steps yet</p>
+                        <p className="text-sm text-charcoal-400 mb-4">
+                          Add your first {selectedChannelConfig.label.toLowerCase()} step to this sequence
                         </p>
-                        <p className="text-xs text-charcoal-400">Sent</p>
+                        <Button
+                          variant="outline"
+                          onClick={() => handleAddStepForChannel(selectedChannel)}
+                        >
+                          <Plus className="w-4 h-4 mr-2" />
+                          Add {selectedChannelConfig.label} Step
+                        </Button>
                       </div>
-                      <div>
-                        <p className="text-lg font-bold text-blue-600">
-                          {channelStats.sent > 0
-                            ? ((channelStats.opened / channelStats.sent) * 100).toFixed(0)
-                            : 0}
-                          %
-                        </p>
-                        <p className="text-xs text-charcoal-400">Opened</p>
+                    ) : (
+                      <div className="space-y-3">
+                        {selectedChannelSteps.map((step, index) => (
+                          <div
+                            key={step.id}
+                            className="group relative flex items-start gap-4 p-4 rounded-lg border border-charcoal-200 hover:border-charcoal-300 hover:shadow-sm transition-all cursor-pointer"
+                            onClick={() => dispatchCampaignDialog('editSequenceStep', entityId, {
+                              stepData: {
+                                id: step.id,
+                                channel: step.channel,
+                                stepNumber: step.stepNumber,
+                                dayOffset: step.delay?.value,
+                                subject: step.subject,
+                                templateName: step.templateName,
+                              },
+                            })}
+                          >
+                            {/* Step Number */}
+                            <div className={cn(
+                              'w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium shrink-0',
+                              step.status === 'completed' ? 'bg-green-100 text-green-700' :
+                              step.status === 'in_progress' ? 'bg-gold-100 text-gold-700' :
+                              'bg-charcoal-100 text-charcoal-600'
+                            )}>
+                              {step.status === 'completed' ? (
+                                <Check className="w-4 h-4" />
+                              ) : (
+                                index + 1
+                              )}
+                            </div>
+
+                            {/* Content */}
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2">
+                                <p className="font-medium text-charcoal-900">
+                                  {step.templateName || `Step ${index + 1}`}
+                                </p>
+                                {step.status === 'in_progress' && (
+                                  <Badge variant="outline" className="text-xs text-gold-600 border-gold-300">
+                                    In Progress
+                                  </Badge>
+                                )}
+                              </div>
+                              {step.subject && (
+                                <p className="text-sm text-charcoal-600 mt-0.5 truncate">{step.subject}</p>
+                              )}
+                              <div className="flex items-center gap-4 mt-2 text-xs text-charcoal-500">
+                                <span className="flex items-center gap-1">
+                                  <Clock className="w-3 h-3" />
+                                  {index === 0 ? 'Day 0' : `+${step.delay?.value || 1} day${(step.delay?.value || 1) !== 1 ? 's' : ''}`}
+                                </span>
+                                {step.stats && (step.stats.sent ?? 0) > 0 && (
+                                  <>
+                                    <span>{step.stats.sent ?? 0} sent</span>
+                                    <span>{step.stats.opened ?? 0} opened</span>
+                                    <span>{step.stats.replied ?? 0} replied</span>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Edit Icon */}
+                            <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                              <Pencil className="w-4 h-4 text-charcoal-400" />
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                      <div>
-                        <p className="text-lg font-bold text-green-600">
-                          {channelStats.sent > 0
-                            ? ((channelStats.replied / channelStats.sent) * 100).toFixed(0)
-                            : 0}
-                          %
-                        </p>
-                        <p className="text-xs text-charcoal-400">Replied</p>
-                      </div>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            )
-          })}
-        </div>
-      )}
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="h-full flex items-center justify-center">
+                  <div className="text-center">
+                    <Workflow className="w-12 h-12 text-charcoal-300 mx-auto mb-3" />
+                    <p className="text-charcoal-500">Select a channel to view steps</p>
+                    <p className="text-sm text-charcoal-400 mt-1">
+                      Click on a channel from the list to see its sequence steps
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </Card>
     </div>
   )
 }

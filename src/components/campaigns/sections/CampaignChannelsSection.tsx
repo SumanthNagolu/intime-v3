@@ -45,6 +45,93 @@ const CHANNEL_GROUPS = [
   { label: 'Other', channels: ['job_board', 'referral'] as CampaignChannel[] },
 ]
 
+// ============ HELPER COMPONENT ============
+
+interface SequenceConfigCardProps {
+  icon: React.ComponentType<{ className?: string }>
+  iconBgClass: string
+  iconClass: string
+  title: string
+  steps: number
+  daysBetween: number
+  stepsField: string
+  daysBetweenField: string
+  maxSteps?: number
+  maxDaysBetween?: number
+  isEditable: boolean
+  onChange: (field: string, value: unknown) => void
+}
+
+function SequenceConfigCard({
+  icon: Icon,
+  iconBgClass,
+  iconClass,
+  title,
+  steps,
+  daysBetween,
+  stepsField,
+  daysBetweenField,
+  maxSteps = 10,
+  maxDaysBetween = 14,
+  isEditable,
+  onChange,
+}: SequenceConfigCardProps) {
+  return (
+    <Card className="shadow-elevation-sm">
+      <CardHeader className="pb-3">
+        <div className="flex items-center gap-2">
+          <div className={cn('p-2 rounded-lg', iconBgClass)}>
+            <Icon className={cn('w-4 h-4', iconClass)} />
+          </div>
+          <CardTitle className="text-base font-heading">{title}</CardTitle>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {/* Number of Steps */}
+        <div className="flex items-start gap-4">
+          <Label className="text-sm font-medium text-charcoal-700 w-32 pt-2.5 shrink-0">
+            Steps
+          </Label>
+          <div className="flex-1">
+            {isEditable ? (
+              <Input
+                type="number"
+                value={steps}
+                onChange={(e) => onChange(stepsField, parseInt(e.target.value, 10) || 1)}
+                min={1}
+                max={maxSteps}
+                className="h-10 w-24 tabular-nums"
+              />
+            ) : (
+              <p className="text-charcoal-900 py-2">{steps} steps</p>
+            )}
+          </div>
+        </div>
+        {/* Days Between */}
+        <div className="flex items-start gap-4">
+          <Label className="text-sm font-medium text-charcoal-700 w-32 pt-2.5 shrink-0">
+            Days Between
+          </Label>
+          <div className="flex-1">
+            {isEditable ? (
+              <Input
+                type="number"
+                value={daysBetween}
+                onChange={(e) => onChange(daysBetweenField, parseInt(e.target.value, 10) || 1)}
+                min={1}
+                max={maxDaysBetween}
+                className="h-10 w-24 tabular-nums"
+              />
+            ) : (
+              <p className="text-charcoal-900 py-2">{daysBetween} days</p>
+            )}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 /**
  * CampaignChannelsSection - Unified component for Channels & Sequence configuration
  */
@@ -208,118 +295,143 @@ export function CampaignChannelsSection({
       </Card>
 
       {/* Sequence Configuration - show when no templates selected */}
-      {showManualConfig && (
+      {showManualConfig && data.channels.length > 0 && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Email Sequence Config */}
           {data.channels.includes('email') && (
-            <Card className="shadow-elevation-sm">
-              <CardHeader className="pb-3">
-                <div className="flex items-center gap-2">
-                  <div className="p-2 bg-blue-50 rounded-lg">
-                    <Mail className="w-4 h-4 text-blue-600" />
-                  </div>
-                  <CardTitle className="text-base font-heading">Email Sequence</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Number of Steps */}
-                <div className="flex items-start gap-4">
-                  <Label className="text-sm font-medium text-charcoal-700 w-32 pt-2.5 shrink-0">
-                    Steps
-                  </Label>
-                  <div className="flex-1">
-                    {isEditable ? (
-                      <Input
-                        type="number"
-                        value={data.emailSteps}
-                        onChange={(e) => handleChange('emailSteps', parseInt(e.target.value, 10) || 1)}
-                        min={1}
-                        max={10}
-                        className="h-10 w-24 tabular-nums"
-                      />
-                    ) : (
-                      <p className="text-charcoal-900 py-2">{data.emailSteps} steps</p>
-                    )}
-                  </div>
-                </div>
-                {/* Days Between */}
-                <div className="flex items-start gap-4">
-                  <Label className="text-sm font-medium text-charcoal-700 w-32 pt-2.5 shrink-0">
-                    Days Between
-                  </Label>
-                  <div className="flex-1">
-                    {isEditable ? (
-                      <Input
-                        type="number"
-                        value={data.emailDaysBetween}
-                        onChange={(e) => handleChange('emailDaysBetween', parseInt(e.target.value, 10) || 1)}
-                        min={1}
-                        max={14}
-                        className="h-10 w-24 tabular-nums"
-                      />
-                    ) : (
-                      <p className="text-charcoal-900 py-2">{data.emailDaysBetween} days</p>
-                    )}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <SequenceConfigCard
+              icon={Mail}
+              iconBgClass="bg-blue-50"
+              iconClass="text-blue-600"
+              title="Email Sequence"
+              steps={data.emailSteps}
+              daysBetween={data.emailDaysBetween}
+              stepsField="emailSteps"
+              daysBetweenField="emailDaysBetween"
+              maxSteps={10}
+              isEditable={isEditable}
+              onChange={handleChange}
+            />
           )}
 
           {/* LinkedIn Sequence Config */}
           {data.channels.includes('linkedin') && (
-            <Card className="shadow-elevation-sm">
-              <CardHeader className="pb-3">
-                <div className="flex items-center gap-2">
-                  <div className="p-2 bg-blue-700/10 rounded-lg">
-                    <Linkedin className="w-4 h-4 text-blue-700" />
-                  </div>
-                  <CardTitle className="text-base font-heading">LinkedIn Sequence</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Number of Steps */}
-                <div className="flex items-start gap-4">
-                  <Label className="text-sm font-medium text-charcoal-700 w-32 pt-2.5 shrink-0">
-                    Steps
-                  </Label>
-                  <div className="flex-1">
-                    {isEditable ? (
-                      <Input
-                        type="number"
-                        value={data.linkedinSteps}
-                        onChange={(e) => handleChange('linkedinSteps', parseInt(e.target.value, 10) || 1)}
-                        min={1}
-                        max={5}
-                        className="h-10 w-24 tabular-nums"
-                      />
-                    ) : (
-                      <p className="text-charcoal-900 py-2">{data.linkedinSteps} steps</p>
-                    )}
-                  </div>
-                </div>
-                {/* Days Between */}
-                <div className="flex items-start gap-4">
-                  <Label className="text-sm font-medium text-charcoal-700 w-32 pt-2.5 shrink-0">
-                    Days Between
-                  </Label>
-                  <div className="flex-1">
-                    {isEditable ? (
-                      <Input
-                        type="number"
-                        value={data.linkedinDaysBetween}
-                        onChange={(e) => handleChange('linkedinDaysBetween', parseInt(e.target.value, 10) || 1)}
-                        min={1}
-                        max={14}
-                        className="h-10 w-24 tabular-nums"
-                      />
-                    ) : (
-                      <p className="text-charcoal-900 py-2">{data.linkedinDaysBetween} days</p>
-                    )}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <SequenceConfigCard
+              icon={Linkedin}
+              iconBgClass="bg-blue-700/10"
+              iconClass="text-blue-700"
+              title="LinkedIn Sequence"
+              steps={data.linkedinSteps}
+              daysBetween={data.linkedinDaysBetween}
+              stepsField="linkedinSteps"
+              daysBetweenField="linkedinDaysBetween"
+              maxSteps={5}
+              isEditable={isEditable}
+              onChange={handleChange}
+            />
+          )}
+
+          {/* SMS Sequence Config */}
+          {data.channels.includes('sms') && (
+            <SequenceConfigCard
+              icon={MessageSquare}
+              iconBgClass="bg-green-50"
+              iconClass="text-green-600"
+              title="SMS Sequence"
+              steps={data.smsSteps}
+              daysBetween={data.smsDaysBetween}
+              stepsField="smsSteps"
+              daysBetweenField="smsDaysBetween"
+              maxSteps={5}
+              isEditable={isEditable}
+              onChange={handleChange}
+            />
+          )}
+
+          {/* Phone Sequence Config */}
+          {data.channels.includes('phone') && (
+            <SequenceConfigCard
+              icon={Phone}
+              iconBgClass="bg-purple-50"
+              iconClass="text-purple-600"
+              title="Phone Sequence"
+              steps={data.phoneSteps}
+              daysBetween={data.phoneDaysBetween}
+              stepsField="phoneSteps"
+              daysBetweenField="phoneDaysBetween"
+              maxSteps={5}
+              isEditable={isEditable}
+              onChange={handleChange}
+            />
+          )}
+
+          {/* Direct Mail Sequence Config */}
+          {data.channels.includes('direct_mail') && (
+            <SequenceConfigCard
+              icon={Send}
+              iconBgClass="bg-orange-50"
+              iconClass="text-orange-600"
+              title="Direct Mail Sequence"
+              steps={data.directMailSteps}
+              daysBetween={data.directMailDaysBetween}
+              stepsField="directMailSteps"
+              daysBetweenField="directMailDaysBetween"
+              maxSteps={3}
+              maxDaysBetween={30}
+              isEditable={isEditable}
+              onChange={handleChange}
+            />
+          )}
+
+          {/* Event Sequence Config */}
+          {data.channels.includes('event') && (
+            <SequenceConfigCard
+              icon={Calendar}
+              iconBgClass="bg-amber-50"
+              iconClass="text-amber-600"
+              title="Event Sequence"
+              steps={data.eventSteps}
+              daysBetween={data.eventDaysBetween}
+              stepsField="eventSteps"
+              daysBetweenField="eventDaysBetween"
+              maxSteps={5}
+              isEditable={isEditable}
+              onChange={handleChange}
+            />
+          )}
+
+          {/* Job Board Sequence Config */}
+          {data.channels.includes('job_board') && (
+            <SequenceConfigCard
+              icon={Briefcase}
+              iconBgClass="bg-cyan-50"
+              iconClass="text-cyan-600"
+              title="Job Board Sequence"
+              steps={data.jobBoardSteps}
+              daysBetween={data.jobBoardDaysBetween}
+              stepsField="jobBoardSteps"
+              daysBetweenField="jobBoardDaysBetween"
+              maxSteps={3}
+              isEditable={isEditable}
+              onChange={handleChange}
+            />
+          )}
+
+          {/* Referral Sequence Config */}
+          {data.channels.includes('referral') && (
+            <SequenceConfigCard
+              icon={Users}
+              iconBgClass="bg-rose-50"
+              iconClass="text-rose-600"
+              title="Referral Sequence"
+              steps={data.referralSteps}
+              daysBetween={data.referralDaysBetween}
+              stepsField="referralSteps"
+              daysBetweenField="referralDaysBetween"
+              maxSteps={3}
+              isEditable={isEditable}
+              onChange={handleChange}
+            />
           )}
         </div>
       )}

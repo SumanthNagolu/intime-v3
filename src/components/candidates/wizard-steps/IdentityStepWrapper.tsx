@@ -26,7 +26,15 @@ export function IdentityStepWrapper({
     return DEFAULT_PHONE
   }, [formData?.phone])
 
+  // Get most recent/current job from work history
+  const currentJob = React.useMemo(() => {
+    const workHistory = formData?.workHistory || []
+    // First try to find current job, otherwise use most recent (first in array)
+    return workHistory.find(job => job.isCurrent) || workHistory[0] || null
+  }, [formData?.workHistory])
+
   // Map formData to section data format
+  // Use currentTitle/currentCompany from formData as primary, with workHistory as fallback
   const sectionData: IdentitySectionData = React.useMemo(() => ({
     firstName: formData?.firstName || '',
     lastName: formData?.lastName || '',
@@ -34,15 +42,16 @@ export function IdentityStepWrapper({
     phone: safePhone,
     mobile: { countryCode: 'US', number: '' }, // Default empty phone for mobile
     linkedinUrl: formData?.linkedinProfile || '',
+    streetAddress: formData?.locationStreet || '',
     city: formData?.locationCity || '',
     state: formData?.locationState || '',
-    country: formData?.locationCountry || 'United States',
-    title: '', // Professional title not separate in wizard
+    country: formData?.locationCountry || 'US', // Country code for dropdown
+    title: formData?.currentTitle || currentJob?.jobTitle || '', // Primary: formData, fallback: workHistory
     headline: formData?.professionalHeadline || '',
     professionalSummary: formData?.professionalSummary || '',
-    currentCompany: '', // Not in wizard form
+    currentCompany: formData?.currentCompany || currentJob?.companyName || '', // Primary: formData, fallback: workHistory
     yearsExperience: formData?.experienceYears ?? null,
-  }), [formData, safePhone])
+  }), [formData, safePhone, currentJob])
 
   // Map section onChange to setFormData
   const handleChange = React.useCallback((field: string, value: unknown) => {
@@ -55,9 +64,12 @@ export function IdentityStepWrapper({
       email: 'email',
       phone: 'phone',
       linkedinUrl: 'linkedinProfile',
+      streetAddress: 'locationStreet',
       city: 'locationCity',
       state: 'locationState',
       country: 'locationCountry',
+      title: 'currentTitle', // Map Job Title to currentTitle
+      currentCompany: 'currentCompany', // Explicit mapping
       headline: 'professionalHeadline',
       professionalSummary: 'professionalSummary',
       yearsExperience: 'experienceYears',
@@ -74,7 +86,7 @@ export function IdentityStepWrapper({
     if (errors.lastName) mapped.lastName = errors.lastName
     if (errors.email) mapped.email = errors.email
     if (errors.phone) mapped.phone = errors.phone
-    if (errors.location) mapped.city = errors.location
+    if (errors.locationCity) mapped.city = errors.locationCity
     if (errors.linkedinProfile) mapped.linkedinUrl = errors.linkedinProfile
     if (errors.professionalHeadline) mapped.headline = errors.professionalHeadline
     if (errors.professionalSummary) mapped.professionalSummary = errors.professionalSummary

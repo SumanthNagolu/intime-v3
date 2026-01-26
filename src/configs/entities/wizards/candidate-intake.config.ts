@@ -82,8 +82,14 @@ export interface CandidateIntakeFormData {
 }
 
 // Validation schemas per step
+// Source selection step - csv redirects to bulk import dialog
+export const candidateSourceSelectionSchema = z.object({
+  sourceType: z.enum(['manual', 'resume', 'csv']),
+})
+
+// Legacy schema kept for backwards compatibility
 export const candidateStep1Schema = z.object({
-  sourceType: z.enum(['manual', 'resume', 'linkedin']),
+  sourceType: z.enum(['manual', 'resume', 'csv']),
   linkedinUrl: z.string().url().optional().or(z.literal('')),
 })
 
@@ -98,7 +104,8 @@ export const candidateStep2Schema = z.object({
   lastName: z.string().min(1, 'Last name is required'),
   email: z.string().email('Valid email is required'),
   phone: phoneInputValueSchema,
-  location: z.string().min(1, 'Location is required'),
+  // Validate city instead of combined location since form uses individual fields
+  locationCity: z.string().min(1, 'City is required'),
 })
 
 export const candidateStep3Schema = z.object({

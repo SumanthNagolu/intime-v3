@@ -50,7 +50,7 @@ export function ResizableSidebarWrapper({ children, className }: ResizableSideba
         <SidebarToggleButton />
 
         {/* Sidebar Content - with bottom padding for collapse button */}
-        <div className="flex-1 flex flex-col overflow-y-auto pb-16">
+        <div className="flex-1 flex flex-col min-h-0 pb-16">
           {children}
         </div>
 

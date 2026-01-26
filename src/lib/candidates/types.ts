@@ -130,10 +130,11 @@ export interface IdentitySectionData {
   phone: PhoneInputValue
   mobile: PhoneInputValue | null
   linkedinUrl: string
-  // Location
+  // Location (using standard address pattern with dropdowns)
+  streetAddress: string
   city: string
-  state: string
-  country: string
+  state: string // State/province code (e.g., 'TX', 'CA', 'ON')
+  country: string // Country code (e.g., 'US', 'CA', 'IN')
   // Professional
   title: string
   headline: string
@@ -320,9 +321,10 @@ export const DEFAULT_IDENTITY_DATA: IdentitySectionData = {
   phone: { ...DEFAULT_PHONE },
   mobile: null,
   linkedinUrl: '',
+  streetAddress: '',
   city: '',
   state: '',
-  country: 'United States',
+  country: 'US', // Country code for dropdown
   title: '',
   headline: '',
   professionalSummary: '',

@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import { SectionHeader } from '@/components/accounts/fields/SectionHeader'
 import { UnifiedField } from '@/components/accounts/fields/UnifiedField'
+import { TagInput } from '@/components/ui/tag-input'
 import {
   CONTRACT_TYPES,
   POSITION_URGENCY,
@@ -264,22 +265,38 @@ export function RequirementsSection({
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <UnifiedField
-              label="Primary Skills"
-              value={data.primarySkills.join(', ')}
-              onChange={(v) => handleChange('primarySkills', typeof v === 'string' ? v.split(',').map(s => s.trim()).filter(Boolean) : v)}
-              editable={isEditable}
-              type="text"
-              placeholder="e.g., Java, Spring Boot, AWS"
-            />
-            <UnifiedField
-              label="Secondary Skills"
-              value={data.secondarySkills.join(', ')}
-              onChange={(v) => handleChange('secondarySkills', typeof v === 'string' ? v.split(',').map(s => s.trim()).filter(Boolean) : v)}
-              editable={isEditable}
-              type="text"
-              placeholder="e.g., Docker, Kubernetes"
-            />
+            {isEditable ? (
+              <TagInput
+                label="Primary Skills"
+                value={data.primarySkills}
+                onChange={(v) => handleChange('primarySkills', v)}
+                placeholder="Type skill and press Enter..."
+                helperText="Add required technical skills"
+              />
+            ) : (
+              <UnifiedField
+                label="Primary Skills"
+                value={data.primarySkills.join(', ')}
+                editable={false}
+                type="text"
+              />
+            )}
+            {isEditable ? (
+              <TagInput
+                label="Secondary Skills"
+                value={data.secondarySkills}
+                onChange={(v) => handleChange('secondarySkills', v)}
+                placeholder="Type skill and press Enter..."
+                helperText="Add nice-to-have skills"
+              />
+            ) : (
+              <UnifiedField
+                label="Secondary Skills"
+                value={data.secondarySkills.join(', ')}
+                editable={false}
+                type="text"
+              />
+            )}
             <UnifiedField
               label="Experience Level"
               value={data.experienceLevel}

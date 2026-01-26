@@ -536,7 +536,8 @@ function transformCandidate(data: Record<string, unknown>): CandidateData {
     title: data.title as string | null,
     headline: data.headline as string | null,
     professionalSummary: data.professional_summary as string | null,
-    // Location
+    // Location (standard address pattern)
+    streetAddress: data.street_address as string | null, // Note: requires DB migration to add street_address column
     city,
     state,
     country,

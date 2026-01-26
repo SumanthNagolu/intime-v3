@@ -167,6 +167,8 @@ export async function getFullLead(id: string): Promise<FullLeadData | null> {
     documents: transformDocuments(documentsResult.data || []),
     history: transformHistory(historyResult.data || []),
     warnings: computeWarnings(leadRecord),
+    // Include raw record for workspace mappers (contains all snake_case DB columns)
+    raw: leadRecord,
   }
 }
 

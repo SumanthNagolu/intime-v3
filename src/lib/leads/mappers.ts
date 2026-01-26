@@ -45,11 +45,27 @@ function parsePhone(phone: unknown): PhoneInputValue {
     }
   }
 
-  // If it's a string, assume US country code
+  // If it's a string, parse it
   if (typeof phone === 'string') {
+    // Handle various formats:
+    // "+1 6025553210" -> { countryCode: 'US', number: '6025553210' }
+    // "US 6025553210" -> { countryCode: 'US', number: '6025553210' } (legacy bad format)
+    // "6025553210" -> { countryCode: 'US', number: '6025553210' }
+    let cleanedNumber = phone
+    let countryCode: PhoneInputValue['countryCode'] = 'US'
+
+    // Remove +1 prefix
+    if (cleanedNumber.startsWith('+1 ') || cleanedNumber.startsWith('+1')) {
+      cleanedNumber = cleanedNumber.replace(/^\+1\s?/, '')
+    }
+    // Remove "US " prefix (legacy bad format)
+    else if (cleanedNumber.startsWith('US ')) {
+      cleanedNumber = cleanedNumber.replace(/^US\s+/, '')
+    }
+
     return {
-      countryCode: 'US',
-      number: phone.replace(/^\+1\s?/, ''), // Remove +1 prefix if present
+      countryCode,
+      number: cleanedNumber,
     }
   }
 
@@ -73,11 +89,14 @@ function parseArray<T>(value: unknown): T[] {
 
 /**
  * Safe string extraction with fallback
+ * Also converts numbers to strings for numeric DB columns
  */
 function getString(obj: Record<string, unknown>, ...keys: string[]): string {
   for (const key of keys) {
     const value = obj[key]
     if (typeof value === 'string' && value !== '') return value
+    // Convert numbers to strings (for numeric DB columns like bill_rate_min)
+    if (typeof value === 'number') return String(value)
   }
   return ''
 }
@@ -116,23 +135,26 @@ function getBoolean(obj: Record<string, unknown>, ...keys: string[]): boolean {
 export function mapToIdentityData(lead: Record<string, unknown>): IdentitySectionData {
   return {
     // Contact Info
-    firstName: getString(lead, 'first_name', 'firstName') || DEFAULT_IDENTITY_DATA.firstName,
-    lastName: getString(lead, 'last_name', 'lastName') || DEFAULT_IDENTITY_DATA.lastName,
-    email: getString(lead, 'email') || DEFAULT_IDENTITY_DATA.email,
+    firstName: getString(lead, 'first_name', 'firstName'),
+    lastName: getString(lead, 'last_name', 'lastName'),
+    email: getString(lead, 'email'),
     phone: parsePhone(lead.phone),
     mobile: parsePhone(lead.mobile),
-    title: getString(lead, 'title') || DEFAULT_IDENTITY_DATA.title,
-    department: getString(lead, 'department') || DEFAULT_IDENTITY_DATA.department,
-    linkedinUrl: getString(lead, 'linkedin_url', 'linkedinUrl') || DEFAULT_IDENTITY_DATA.linkedinUrl,
-    // Company Info
-    companyName: getString(lead, 'company_name', 'companyName') || DEFAULT_IDENTITY_DATA.companyName,
-    companyWebsite: getString(lead, 'company_website', 'companyWebsite') || DEFAULT_IDENTITY_DATA.companyWebsite,
-    industry: getString(lead, 'industry') || DEFAULT_IDENTITY_DATA.industry,
-    companySize: getString(lead, 'company_size', 'companySize') || DEFAULT_IDENTITY_DATA.companySize,
-    companyLocation: getString(lead, 'company_location', 'companyLocation') || DEFAULT_IDENTITY_DATA.companyLocation,
-    companyLinkedinUrl: getString(lead, 'company_linkedin_url', 'companyLinkedinUrl') || DEFAULT_IDENTITY_DATA.companyLinkedinUrl,
+    title: getString(lead, 'title'),
+    department: getString(lead, 'department'),
+    linkedinUrl: getString(lead, 'linkedin_url', 'linkedinUrl'),
+    // Company Info - DB uses website_url not company_website
+    companyName: getString(lead, 'company_name', 'companyName'),
+    companyWebsite: getString(lead, 'website_url', 'company_website', 'companyWebsite'),
+    industry: getString(lead, 'industry'),
+    companySize: getString(lead, 'company_size', 'employee_count_range', 'companySize'),
+    // Location fields
+    companyCity: getString(lead, 'city', 'company_city', 'companyCity'),
+    companyState: getString(lead, 'state', 'company_state', 'companyState'),
+    companyCountry: getString(lead, 'country', 'company_country', 'companyCountry'),
+    companyLinkedinUrl: getString(lead, 'company_linkedin_url', 'companyLinkedinUrl'),
     // Status
-    status: getString(lead, 'lead_status', 'status') || DEFAULT_IDENTITY_DATA.status,
+    status: getString(lead, 'lead_status', 'status'),
   }
 }
 
@@ -143,21 +165,21 @@ export function mapToIdentityData(lead: Record<string, unknown>): IdentitySectio
  */
 export function mapToClassificationData(lead: Record<string, unknown>): ClassificationSectionData {
   return {
-    // Lead Type
-    leadType: getString(lead, 'lead_type', 'leadType') || DEFAULT_CLASSIFICATION_DATA.leadType,
-    leadCategory: getString(lead, 'lead_category', 'leadCategory') || DEFAULT_CLASSIFICATION_DATA.leadCategory,
+    // Lead Type - DB uses lead_ prefix
+    leadType: getString(lead, 'lead_type', 'leadType'),
+    leadCategory: getString(lead, 'lead_category', 'leadCategory'),
     // Opportunity Type
-    opportunityType: getString(lead, 'opportunity_type', 'opportunityType') || DEFAULT_CLASSIFICATION_DATA.opportunityType,
+    opportunityType: getString(lead, 'lead_opportunity_type', 'opportunity_type', 'opportunityType'),
     // Business Model
-    businessModel: getString(lead, 'business_model', 'businessModel') || DEFAULT_CLASSIFICATION_DATA.businessModel,
-    engagementType: getString(lead, 'engagement_type', 'engagementType') || DEFAULT_CLASSIFICATION_DATA.engagementType,
+    businessModel: getString(lead, 'lead_business_model', 'business_model', 'businessModel'),
+    engagementType: getString(lead, 'lead_engagement_type', 'engagement_type', 'engagementType'),
     // Relationship
-    relationshipType: getString(lead, 'relationship_type', 'relationshipType') || DEFAULT_CLASSIFICATION_DATA.relationshipType,
-    existingRelationship: getBoolean(lead, 'existing_relationship', 'existingRelationship'),
-    previousEngagementNotes: getString(lead, 'previous_engagement_notes', 'previousEngagementNotes'),
+    relationshipType: getString(lead, 'lead_relationship_type', 'relationship_type', 'relationshipType'),
+    existingRelationship: getBoolean(lead, 'lead_existing_relationship', 'existing_relationship', 'existingRelationship'),
+    previousEngagementNotes: getString(lead, 'lead_previous_engagement_notes', 'previous_engagement_notes', 'previousEngagementNotes'),
     // Priority & Urgency
-    priority: getString(lead, 'priority') || DEFAULT_CLASSIFICATION_DATA.priority,
-    temperature: getString(lead, 'temperature', 'lead_temperature') || DEFAULT_CLASSIFICATION_DATA.temperature,
+    priority: getString(lead, 'lead_priority', 'priority'),
+    temperature: getString(lead, 'lead_temperature', 'temperature'),
   }
 }
 
@@ -168,34 +190,34 @@ export function mapToClassificationData(lead: Record<string, unknown>): Classifi
  */
 export function mapToRequirementsData(lead: Record<string, unknown>): RequirementsSectionData {
   return {
-    // Contract Types
-    contractTypes: parseArray<string>(lead.contract_types || lead.contractTypes) || DEFAULT_REQUIREMENTS_DATA.contractTypes,
-    primaryContractType: getString(lead, 'primary_contract_type', 'primaryContractType') || DEFAULT_REQUIREMENTS_DATA.primaryContractType,
+    // Contract Types - DB uses lead_ prefix
+    contractTypes: parseArray<string>(lead.lead_contract_types || lead.contract_types || lead.contractTypes),
+    primaryContractType: getString(lead, 'lead_primary_contract_type', 'primary_contract_type', 'primaryContractType'),
     // Rate Information
-    billRateMin: getString(lead, 'bill_rate_min', 'billRateMin'),
-    billRateMax: getString(lead, 'bill_rate_max', 'billRateMax'),
-    billRateCurrency: getString(lead, 'bill_rate_currency', 'billRateCurrency') || DEFAULT_REQUIREMENTS_DATA.billRateCurrency,
-    targetMarkupPercentage: getString(lead, 'target_markup_percentage', 'targetMarkupPercentage'),
-    // Position Details
-    positionsCount: getNumber(lead, 'positions_count', 'positionsCount') ?? DEFAULT_REQUIREMENTS_DATA.positionsCount,
-    positionsUrgency: getString(lead, 'positions_urgency', 'positionsUrgency') || DEFAULT_REQUIREMENTS_DATA.positionsUrgency,
-    estimatedDuration: getString(lead, 'estimated_duration', 'estimatedDuration') || DEFAULT_REQUIREMENTS_DATA.estimatedDuration,
-    remotePolicy: getString(lead, 'remote_policy', 'remotePolicy') || DEFAULT_REQUIREMENTS_DATA.remotePolicy,
+    billRateMin: getString(lead, 'lead_bill_rate_min', 'bill_rate_min', 'billRateMin'),
+    billRateMax: getString(lead, 'lead_bill_rate_max', 'bill_rate_max', 'billRateMax'),
+    billRateCurrency: getString(lead, 'lead_bill_rate_currency', 'bill_rate_currency', 'billRateCurrency'),
+    targetMarkupPercentage: getString(lead, 'lead_target_markup', 'target_markup_percentage', 'targetMarkupPercentage'),
+    // Position Details - DB uses lead_ prefix
+    positionsCount: getNumber(lead, 'lead_positions_count', 'positions_count', 'positionsCount') ?? 1,
+    positionsUrgency: getString(lead, 'lead_positions_urgency', 'positions_urgency', 'positionsUrgency'),
+    estimatedDuration: getString(lead, 'lead_estimated_duration', 'estimated_duration', 'estimatedDuration'),
+    remotePolicy: getString(lead, 'lead_remote_policy', 'remote_policy', 'remotePolicy'),
     // Skills & Requirements
-    primarySkills: parseArray<string>(lead.primary_skills || lead.primarySkills),
-    secondarySkills: parseArray<string>(lead.secondary_skills || lead.secondarySkills),
-    requiredCertifications: parseArray<string>(lead.required_certifications || lead.requiredCertifications),
-    experienceLevel: getString(lead, 'experience_level', 'experienceLevel') || DEFAULT_REQUIREMENTS_DATA.experienceLevel,
-    yearsExperienceMin: getString(lead, 'years_experience_min', 'yearsExperienceMin'),
-    yearsExperienceMax: getString(lead, 'years_experience_max', 'yearsExperienceMax'),
+    primarySkills: parseArray<string>(lead.lead_skills_needed || lead.primary_skills || lead.primarySkills),
+    secondarySkills: parseArray<string>(lead.lead_secondary_skills || lead.secondary_skills || lead.secondarySkills),
+    requiredCertifications: parseArray<string>(lead.lead_required_certifications || lead.required_certifications || lead.requiredCertifications),
+    experienceLevel: getString(lead, 'lead_experience_level', 'experience_level', 'experienceLevel'),
+    yearsExperienceMin: getString(lead, 'lead_years_experience_min', 'years_experience_min', 'yearsExperienceMin'),
+    yearsExperienceMax: getString(lead, 'lead_years_experience_max', 'years_experience_max', 'yearsExperienceMax'),
     // Security & Compliance
-    securityClearanceRequired: getBoolean(lead, 'security_clearance_required', 'securityClearanceRequired'),
-    securityClearanceLevel: getString(lead, 'security_clearance_level', 'securityClearanceLevel'),
-    backgroundCheckRequired: getBoolean(lead, 'background_check_required', 'backgroundCheckRequired'),
-    drugTestRequired: getBoolean(lead, 'drug_test_required', 'drugTestRequired'),
+    securityClearanceRequired: getBoolean(lead, 'lead_security_clearance_required', 'security_clearance_required', 'securityClearanceRequired'),
+    securityClearanceLevel: getString(lead, 'lead_security_clearance_level', 'security_clearance_level', 'securityClearanceLevel'),
+    backgroundCheckRequired: getBoolean(lead, 'lead_background_check_required', 'background_check_required', 'backgroundCheckRequired'),
+    drugTestRequired: getBoolean(lead, 'lead_drug_test_required', 'drug_test_required', 'drugTestRequired'),
     // Notes
-    technicalNotes: getString(lead, 'technical_notes', 'technicalNotes'),
-    hiringManagerPreferences: getString(lead, 'hiring_manager_preferences', 'hiringManagerPreferences'),
+    technicalNotes: getString(lead, 'lead_technical_notes', 'technical_notes', 'technicalNotes'),
+    hiringManagerPreferences: getString(lead, 'lead_hiring_manager_preferences', 'hiring_manager_preferences', 'hiringManagerPreferences'),
   }
 }
 
@@ -205,44 +227,54 @@ export function mapToRequirementsData(lead: Record<string, unknown>): Requiremen
  * Map lead data to QualificationSectionData
  */
 export function mapToQualificationData(lead: Record<string, unknown>): QualificationSectionData {
+  // DB stores BANT as 0-25, UI expects 0-100 - scale up by 4
+  const scaleFromDb = (val: number | null) => val != null ? val * 4 : null
+
   return {
-    // BANT Scores
-    bantBudget: getNumber(lead, 'bant_budget', 'bantBudget'),
-    bantAuthority: getNumber(lead, 'bant_authority', 'bantAuthority'),
-    bantNeed: getNumber(lead, 'bant_need', 'bantNeed'),
-    bantTimeline: getNumber(lead, 'bant_timeline', 'bantTimeline'),
-    // BANT Notes
-    bantBudgetNotes: getString(lead, 'bant_budget_notes', 'bantBudgetNotes'),
-    bantAuthorityNotes: getString(lead, 'bant_authority_notes', 'bantAuthorityNotes'),
-    bantNeedNotes: getString(lead, 'bant_need_notes', 'bantNeedNotes'),
-    bantTimelineNotes: getString(lead, 'bant_timeline_notes', 'bantTimelineNotes'),
+    // BANT Scores - DB uses lead_ prefix and 0-25 scale
+    bantBudget: scaleFromDb(getNumber(lead, 'lead_bant_budget', 'bant_budget', 'bantBudget')),
+    bantAuthority: scaleFromDb(getNumber(lead, 'lead_bant_authority', 'bant_authority', 'bantAuthority')),
+    bantNeed: scaleFromDb(getNumber(lead, 'lead_bant_need', 'bant_need', 'bantNeed')),
+    bantTimeline: scaleFromDb(getNumber(lead, 'lead_bant_timeline', 'bant_timeline', 'bantTimeline')),
+    // BANT Notes - DB uses lead_ prefix
+    bantBudgetNotes: getString(lead, 'lead_bant_budget_notes', 'bant_budget_notes', 'bantBudgetNotes'),
+    bantAuthorityNotes: getString(lead, 'lead_bant_authority_notes', 'bant_authority_notes', 'bantAuthorityNotes'),
+    bantNeedNotes: getString(lead, 'lead_bant_need_notes', 'bant_need_notes', 'bantNeedNotes'),
+    bantTimelineNotes: getString(lead, 'lead_bant_timeline_notes', 'bant_timeline_notes', 'bantTimelineNotes'),
     // Staffing-Specific Qualification
-    budgetConfirmed: getBoolean(lead, 'budget_confirmed', 'budgetConfirmed'),
-    budgetRange: getString(lead, 'budget_range', 'budgetRange'),
-    decisionMakerIdentified: getBoolean(lead, 'decision_maker_identified', 'decisionMakerIdentified'),
-    decisionMakerTitle: getString(lead, 'decision_maker_title', 'decisionMakerTitle'),
-    decisionMakerName: getString(lead, 'decision_maker_name', 'decisionMakerName'),
-    competitorInvolved: getBoolean(lead, 'competitor_involved', 'competitorInvolved'),
-    competitorNames: getString(lead, 'competitor_names', 'competitorNames'),
-    // Volume & Value
+    budgetConfirmed: getBoolean(lead, 'lead_budget_confirmed', 'budget_confirmed', 'budgetConfirmed'),
+    budgetRange: getString(lead, 'lead_budget_range', 'budget_range', 'budgetRange'),
+    decisionMakerIdentified: getBoolean(lead, 'lead_decision_maker_identified', 'decision_maker_identified', 'decisionMakerIdentified'),
+    decisionMakerTitle: getString(lead, 'lead_decision_maker_title', 'decision_maker_title', 'decisionMakerTitle'),
+    decisionMakerName: getString(lead, 'lead_decision_maker_name', 'decision_maker_name', 'decisionMakerName'),
+    competitorInvolved: getBoolean(lead, 'lead_competitor_involved', 'competitor_involved', 'competitorInvolved'),
+    competitorNames: getString(lead, 'lead_competitor_names', 'competitor_names', 'competitorNames'),
+    // Volume & Value - DB uses lead_ prefix
     estimatedAnnualValue: lead.lead_estimated_value
       ? String(lead.lead_estimated_value)
       : lead.estimated_annual_value
         ? String(lead.estimated_annual_value)
         : getString(lead, 'estimatedAnnualValue'),
-    estimatedPlacements: getString(lead, 'estimated_placements', 'estimatedPlacements'),
-    volumePotential: getString(lead, 'volume_potential', 'volumePotential') || DEFAULT_QUALIFICATION_DATA.volumePotential,
-    // Qualification Result
-    qualificationResult: getString(lead, 'qualification_result', 'qualificationResult') || DEFAULT_QUALIFICATION_DATA.qualificationResult,
-    qualificationNotes: getString(lead, 'qualification_notes', 'qualificationNotes'),
-    disqualificationReason: getString(lead, 'disqualification_reason', 'disqualificationReason'),
+    estimatedPlacements: getString(lead, 'lead_estimated_placements', 'estimated_placements', 'estimatedPlacements'),
+    volumePotential: getString(lead, 'lead_volume_potential', 'volume_potential', 'volumePotential'),
+    // Qualification Result - DB uses lead_ prefix
+    // Map DB values to UI values: qualified_convert->qualified, qualified_nurture->nurture, not_qualified->disqualified
+    qualificationResult: (() => {
+      const val = getString(lead, 'lead_qualification_result', 'qualification_result', 'qualificationResult')
+      if (val === 'qualified_convert') return 'qualified'
+      if (val === 'qualified_nurture') return 'nurture'
+      if (val === 'not_qualified') return 'disqualified'
+      return val || 'pending'
+    })(),
+    qualificationNotes: getString(lead, 'lead_qualification_notes', 'qualification_notes', 'qualificationNotes'),
+    disqualificationReason: getString(lead, 'lead_disqualification_reason', 'disqualification_reason', 'disqualificationReason'),
     // Probability & Forecast
     probability: lead.lead_probability
       ? String(lead.lead_probability)
       : getString(lead, 'probability'),
     expectedCloseDate: getString(lead, 'lead_estimated_close_date', 'expected_close_date', 'expectedCloseDate') || null,
-    nextSteps: getString(lead, 'next_steps', 'nextSteps'),
-    nextStepDate: getString(lead, 'next_step_date', 'nextStepDate') || null,
+    nextSteps: getString(lead, 'lead_next_steps', 'next_steps', 'nextSteps'),
+    nextStepDate: getString(lead, 'lead_next_step_date', 'next_step_date', 'nextStepDate') || null,
   }
 }
 
@@ -253,34 +285,34 @@ export function mapToQualificationData(lead: Record<string, unknown>): Qualifica
  */
 export function mapToClientProfileData(lead: Record<string, unknown>): ClientProfileSectionData {
   return {
-    // VMS/MSP Information
-    usesVms: getBoolean(lead, 'uses_vms', 'usesVms'),
-    vmsPlatform: getString(lead, 'vms_platform', 'vmsPlatform'),
-    vmsOther: getString(lead, 'vms_other', 'vmsOther'),
-    vmsAccessStatus: getString(lead, 'vms_access_status', 'vmsAccessStatus') || DEFAULT_CLIENT_PROFILE_DATA.vmsAccessStatus,
+    // VMS/MSP Information - DB uses lead_ prefix
+    usesVms: getBoolean(lead, 'lead_uses_vms', 'client_uses_vms', 'uses_vms', 'usesVms'),
+    vmsPlatform: getString(lead, 'lead_vms_platform', 'client_vms_system', 'vms_platform', 'vmsPlatform'),
+    vmsOther: getString(lead, 'lead_vms_other', 'vms_other', 'vmsOther'),
+    vmsAccessStatus: getString(lead, 'lead_vms_access_status', 'vms_access_status', 'vmsAccessStatus'),
     // MSP/Program Information
-    hasMsp: getBoolean(lead, 'has_msp', 'hasMsp'),
-    mspName: getString(lead, 'msp_name', 'mspName'),
-    programType: getString(lead, 'program_type', 'programType') || DEFAULT_CLIENT_PROFILE_DATA.programType,
+    hasMsp: getBoolean(lead, 'lead_has_msp', 'client_has_msp', 'has_msp', 'hasMsp'),
+    mspName: getString(lead, 'lead_msp_name', 'client_msp_name', 'msp_name', 'mspName'),
+    programType: getString(lead, 'lead_program_type', 'program_type', 'programType'),
     // Contract & Legal
-    msaStatus: getString(lead, 'msa_status', 'msaStatus') || DEFAULT_CLIENT_PROFILE_DATA.msaStatus,
-    msaExpirationDate: getString(lead, 'msa_expiration_date', 'msaExpirationDate') || null,
-    ndaRequired: getBoolean(lead, 'nda_required', 'ndaRequired'),
-    ndaStatus: getString(lead, 'nda_status', 'ndaStatus') || DEFAULT_CLIENT_PROFILE_DATA.ndaStatus,
+    msaStatus: getString(lead, 'lead_msa_status', 'msa_status', 'msaStatus'),
+    msaExpirationDate: getString(lead, 'lead_msa_expiration_date', 'msa_expiration_date', 'msaExpirationDate') || null,
+    ndaRequired: getBoolean(lead, 'lead_nda_required', 'nda_required', 'ndaRequired'),
+    ndaStatus: getString(lead, 'lead_nda_status', 'nda_status', 'ndaStatus'),
     // Payment Terms
-    paymentTerms: getString(lead, 'payment_terms', 'paymentTerms') || DEFAULT_CLIENT_PROFILE_DATA.paymentTerms,
-    poRequired: getBoolean(lead, 'po_required', 'poRequired'),
-    invoiceFormat: getString(lead, 'invoice_format', 'invoiceFormat') || DEFAULT_CLIENT_PROFILE_DATA.invoiceFormat,
-    billingCycle: getString(lead, 'billing_cycle', 'billingCycle') || DEFAULT_CLIENT_PROFILE_DATA.billingCycle,
+    paymentTerms: getString(lead, 'lead_payment_terms', 'client_payment_terms', 'payment_terms', 'paymentTerms'),
+    poRequired: getBoolean(lead, 'lead_po_required', 'po_required', 'poRequired'),
+    invoiceFormat: getString(lead, 'lead_invoice_format', 'invoice_format', 'invoiceFormat'),
+    billingCycle: getString(lead, 'lead_billing_cycle', 'billing_cycle', 'billingCycle'),
     // Compliance Requirements
-    insuranceRequired: getBoolean(lead, 'insurance_required', 'insuranceRequired'),
-    insuranceTypes: parseArray<string>(lead.insurance_types || lead.insuranceTypes),
-    minimumInsuranceCoverage: getString(lead, 'minimum_insurance_coverage', 'minimumInsuranceCoverage'),
+    insuranceRequired: getBoolean(lead, 'lead_insurance_required', 'insurance_required', 'insuranceRequired'),
+    insuranceTypes: parseArray<string>(lead.lead_insurance_types || lead.insurance_types || lead.insuranceTypes),
+    minimumInsuranceCoverage: getString(lead, 'lead_minimum_insurance_coverage', 'minimum_insurance_coverage', 'minimumInsuranceCoverage'),
     // Account Classification
-    accountTier: getString(lead, 'account_tier', 'accountTier') || DEFAULT_CLIENT_PROFILE_DATA.accountTier,
-    industryVertical: getString(lead, 'industry_vertical', 'industryVertical'),
-    companyRevenue: getString(lead, 'company_revenue', 'companyRevenue'),
-    employeeCount: getString(lead, 'employee_count', 'employeeCount'),
+    accountTier: getString(lead, 'lead_account_tier', 'client_tier', 'account_tier', 'accountTier'),
+    industryVertical: getString(lead, 'lead_industry_vertical', 'industry_vertical', 'industryVertical'),
+    companyRevenue: getString(lead, 'lead_company_revenue', 'company_revenue', 'companyRevenue'),
+    employeeCount: lead.employee_count ? String(lead.employee_count) : getString(lead, 'employeeCount'),
   }
 }
 
@@ -292,27 +324,27 @@ export function mapToClientProfileData(lead: Record<string, unknown>): ClientPro
 export function mapToSourceData(lead: Record<string, unknown>): SourceSectionData {
   return {
     // Primary Source
-    source: getString(lead, 'lead_source', 'source') || DEFAULT_SOURCE_DATA.source,
-    sourceDetails: getString(lead, 'source_details', 'sourceDetails'),
+    source: getString(lead, 'lead_source', 'source'),
+    sourceDetails: getString(lead, 'lead_source_details', 'source_details', 'sourceDetails'),
     // Campaign Association
-    campaignId: getString(lead, 'campaign_id', 'campaignId'),
-    campaignName: getString(lead, 'campaign_name', 'campaignName'),
+    campaignId: getString(lead, 'source_campaign_id', 'campaign_id', 'campaignId'),
+    campaignName: getString(lead, 'lead_campaign_name', 'campaign_name', 'campaignName'),
     // Referral Information
-    referralType: getString(lead, 'referral_type', 'referralType'),
-    referredBy: getString(lead, 'referred_by', 'referredBy'),
-    referralContactId: getString(lead, 'referral_contact_id', 'referralContactId'),
-    referralRewardStatus: getString(lead, 'referral_reward_status', 'referralRewardStatus') || DEFAULT_SOURCE_DATA.referralRewardStatus,
-    // Marketing Attribution
-    utmSource: getString(lead, 'utm_source', 'utmSource'),
-    utmMedium: getString(lead, 'utm_medium', 'utmMedium'),
-    utmCampaign: getString(lead, 'utm_campaign', 'utmCampaign'),
-    utmContent: getString(lead, 'utm_content', 'utmContent'),
-    utmTerm: getString(lead, 'utm_term', 'utmTerm'),
-    landingPage: getString(lead, 'landing_page', 'landingPage'),
+    referralType: getString(lead, 'lead_referral_type', 'referral_type', 'referralType'),
+    referredBy: getString(lead, 'lead_referred_by', 'referred_by', 'referredBy'),
+    referralContactId: getString(lead, 'lead_referral_contact_id', 'referral_contact_id', 'referralContactId'),
+    referralRewardStatus: getString(lead, 'referral_reward_status', 'referralRewardStatus'),
+    // Marketing Attribution - DB uses lead_ prefix
+    utmSource: getString(lead, 'lead_utm_source', 'utm_source', 'utmSource'),
+    utmMedium: getString(lead, 'lead_utm_medium', 'utm_medium', 'utmMedium'),
+    utmCampaign: getString(lead, 'lead_utm_campaign', 'utm_campaign', 'utmCampaign'),
+    utmContent: getString(lead, 'lead_utm_content', 'utm_content', 'utmContent'),
+    utmTerm: getString(lead, 'lead_utm_term', 'utm_term', 'utmTerm'),
+    landingPage: getString(lead, 'lead_landing_page', 'landing_page', 'landingPage'),
     // Engagement
     firstContactDate: getString(lead, 'first_contact_date', 'firstContactDate') || null,
-    firstContactMethod: getString(lead, 'first_contact_method', 'firstContactMethod'),
-    totalTouchpoints: getNumber(lead, 'total_touchpoints', 'totalTouchpoints') ?? DEFAULT_SOURCE_DATA.totalTouchpoints,
+    firstContactMethod: getString(lead, 'lead_first_contact_method', 'first_contact_method', 'firstContactMethod'),
+    totalTouchpoints: getNumber(lead, 'total_touchpoints', 'totalTouchpoints') ?? 0,
     lastTouchpointDate: getString(lead, 'last_touchpoint_date', 'lastTouchpointDate') || null,
   }
 }
@@ -333,26 +365,26 @@ export function mapToTeamData(lead: Record<string, unknown>): TeamSectionData {
     ownerId,
     ownerName,
     assignedAt: getString(lead, 'assigned_at', 'assignedAt') || null,
-    // Secondary Assignments
-    salesRepId: getString(lead, 'sales_rep_id', 'salesRepId'),
+    // Secondary Assignments - DB uses lead_ prefix
+    salesRepId: getString(lead, 'lead_sales_rep_id', 'sales_rep_id', 'salesRepId'),
     salesRepName: getString(lead, 'sales_rep_name', 'salesRepName'),
-    accountManagerId: getString(lead, 'account_manager_id', 'accountManagerId'),
+    accountManagerId: getString(lead, 'lead_account_manager_id', 'account_manager_id', 'accountManagerId'),
     accountManagerName: getString(lead, 'account_manager_name', 'accountManagerName'),
-    recruiterId: getString(lead, 'recruiter_id', 'recruiterId'),
+    recruiterId: getString(lead, 'lead_recruiter_id', 'recruiter_id', 'recruiterId'),
     recruiterName: getString(lead, 'recruiter_name', 'recruiterName'),
-    // Routing & Territory
-    territory: getString(lead, 'territory'),
-    region: getString(lead, 'region'),
-    businessUnit: getString(lead, 'business_unit', 'businessUnit'),
+    // Routing & Territory - DB uses lead_ prefix
+    territory: getString(lead, 'lead_territory', 'territory'),
+    region: getString(lead, 'lead_region', 'region'),
+    businessUnit: getString(lead, 'lead_business_unit', 'business_unit', 'businessUnit'),
     // Communication Preferences
-    preferredContactMethod: getString(lead, 'preferred_contact_method', 'preferredContactMethod') || DEFAULT_TEAM_DATA.preferredContactMethod,
-    bestTimeToContact: getString(lead, 'best_time_to_contact', 'bestTimeToContact') || DEFAULT_TEAM_DATA.bestTimeToContact,
+    preferredContactMethod: getString(lead, 'preferred_contact_method', 'preferredContactMethod'),
+    bestTimeToContact: getString(lead, 'best_time_to_contact', 'bestTimeToContact'),
     timezone: getString(lead, 'timezone'),
-    doNotContact: getBoolean(lead, 'do_not_contact', 'doNotContact'),
-    doNotContactReason: getString(lead, 'do_not_contact_reason', 'doNotContactReason'),
+    doNotContact: getBoolean(lead, 'do_not_call', 'do_not_contact', 'doNotContact'),
+    doNotContactReason: getString(lead, 'lead_do_not_contact_reason', 'do_not_contact_reason', 'doNotContactReason'),
     // Internal Notes
     internalNotes: getString(lead, 'internal_notes', 'internalNotes'),
-    strategyNotes: getString(lead, 'strategy_notes', 'strategyNotes'),
+    strategyNotes: getString(lead, 'lead_strategy_notes', 'strategy_notes', 'strategyNotes'),
   }
 }
 
@@ -406,7 +438,10 @@ export function mapIdentityToApi(data: IdentitySectionData): Record<string, unkn
     company_website: data.companyWebsite || null,
     industry: data.industry || null,
     company_size: data.companySize || null,
-    company_location: data.companyLocation || null,
+    // Location fields
+    city: data.companyCity || null,
+    state: data.companyState || null,
+    country: data.companyCountry || null,
     company_linkedin_url: data.companyLinkedinUrl || null,
     lead_status: data.status,
   }

@@ -90,6 +90,7 @@ function CreateLeadWizard() {
   // Mutations
   const createDraftMutation = trpc.unifiedContacts.leads.createDraft.useMutation()
   const submitMutation = trpc.unifiedContacts.leads.submit.useMutation()
+  const deleteDraftMutation = trpc.unifiedContacts.leads.deleteDraft.useMutation()
 
   // Fetch draft data when we have an ID
   const {
@@ -126,13 +127,39 @@ function CreateLeadWizard() {
     }
   }, [draftId, router])
 
-  const handleStepClick = useCallback((stepNumber: number) => {
-    goToStep(stepNumber)
+  const handleStepClick = useCallback(async (stepNumber: number) => {
+    // Save current step before navigating
+    if (saveStepRef.current) {
+      setIsSavingStep(true)
+      try {
+        await saveStepRef.current()
+        goToStep(stepNumber)
+      } catch (error) {
+        console.error('Failed to save step:', error)
+      } finally {
+        setIsSavingStep(false)
+      }
+    } else {
+      goToStep(stepNumber)
+    }
   }, [goToStep])
 
-  const handleBack = useCallback(() => {
+  const handleBack = useCallback(async () => {
     if (currentStep > 1) {
-      goToStep(currentStep - 1)
+      // Save current step before navigating back
+      if (saveStepRef.current) {
+        setIsSavingStep(true)
+        try {
+          await saveStepRef.current()
+          goToStep(currentStep - 1)
+        } catch (error) {
+          console.error('Failed to save step:', error)
+        } finally {
+          setIsSavingStep(false)
+        }
+      } else {
+        goToStep(currentStep - 1)
+      }
     }
   }, [currentStep, goToStep])
 
@@ -155,9 +182,18 @@ function CreateLeadWizard() {
     }
   }, [currentStep, goToStep])
 
-  const handleCancel = useCallback(() => {
+  const handleCancel = useCallback(async () => {
+    // Delete the draft when cancelling
+    if (draftId) {
+      try {
+        await deleteDraftMutation.mutateAsync({ id: draftId })
+      } catch (error) {
+        // Ignore errors - draft may not exist or already deleted
+        console.error('Failed to delete draft:', error)
+      }
+    }
     router.push('/employee/crm/leads')
-  }, [router])
+  }, [router, draftId, deleteDraftMutation])
 
   // Handle save completion for any step
   const handleSaveComplete = useCallback(() => {
@@ -182,7 +218,7 @@ function CreateLeadWizard() {
     try {
       await submitMutation.mutateAsync({
         leadId: draftId,
-        targetStatus: 'contacted',
+        targetStatus: 'new',
       })
 
       toast({
@@ -302,6 +338,9 @@ function CreateLeadWizard() {
   // Derive entity name from draft
   const entityName = [draft.first_name, draft.last_name].filter(Boolean).join(' ') || 'New Lead'
 
+  // Determine if we're on the last step
+  const isLastStep = currentStep === WIZARD_STEPS.length
+
   return (
     <WizardLayout
       title="Create Lead"
@@ -314,6 +353,7 @@ function CreateLeadWizard() {
       onNext={handleNext}
       onCancel={handleCancel}
       onSubmit={handleSubmit}
+      isLastStep={isLastStep}
       isSubmitting={submitMutation.isPending}
       isSaving={isSavingStep}
       lastSavedAt={lastSavedAt}

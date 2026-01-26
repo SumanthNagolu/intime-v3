@@ -21,6 +21,7 @@ import {
   COMPANY_SIZES,
   getStatusBadgeVariant,
 } from '@/lib/leads/constants'
+import { US_STATES, COUNTRIES } from '@/lib/jobs/constants'
 import type { SectionMode, IdentitySectionData } from '@/lib/leads/types'
 import { cn } from '@/lib/utils'
 
@@ -100,6 +101,8 @@ export function IdentitySection({
   const statusOptions = LEAD_STATUSES.map(s => ({ value: s.value, label: s.label }))
   const industryOptions = INDUSTRIES.map(i => ({ value: i.value, label: `${i.icon} ${i.label}` }))
   const companySizeOptions = COMPANY_SIZES.map(s => ({ value: s.value, label: s.label }))
+  const stateOptions = US_STATES.map(s => ({ value: s.value, label: s.label }))
+  const countryOptions = COUNTRIES.map(c => ({ value: c.value, label: c.label }))
 
   return (
     <div className={cn('space-y-6', className)}>
@@ -159,24 +162,23 @@ export function IdentitySection({
               error={errors?.email}
               placeholder="john.smith@company.com"
             />
-            <div className="grid grid-cols-2 gap-4">
-              <UnifiedField
-                label="Phone"
-                value={data.phone}
-                onChange={(v) => handleChange('phone', v)}
-                editable={isEditable}
-                type="phone"
-                placeholder="(555) 123-4567"
-              />
-              <UnifiedField
-                label="Mobile"
-                value={data.mobile}
-                onChange={(v) => handleChange('mobile', v)}
-                editable={isEditable}
-                type="phone"
-                placeholder="(555) 123-4567"
-              />
-            </div>
+            {/* Phone fields - full width for better display */}
+            <UnifiedField
+              label="Phone"
+              value={data.phone}
+              onChange={(v) => handleChange('phone', v)}
+              editable={isEditable}
+              type="phone"
+              placeholder="(555) 123-4567"
+            />
+            <UnifiedField
+              label="Mobile"
+              value={data.mobile}
+              onChange={(v) => handleChange('mobile', v)}
+              editable={isEditable}
+              type="phone"
+              placeholder="(555) 123-4567"
+            />
           </CardContent>
         </Card>
 
@@ -251,22 +253,39 @@ export function IdentitySection({
               options={industryOptions}
               placeholder="Select industry"
             />
-            <div className="grid grid-cols-2 gap-4">
+            <UnifiedField
+              label="Company Size"
+              value={data.companySize}
+              onChange={(v) => handleChange('companySize', v)}
+              editable={isEditable}
+              type="select"
+              options={companySizeOptions}
+              placeholder="Select size"
+            />
+            <div className="grid grid-cols-3 gap-4">
               <UnifiedField
-                label="Company Size"
-                value={data.companySize}
-                onChange={(v) => handleChange('companySize', v)}
+                label="City"
+                value={data.companyCity}
+                onChange={(v) => handleChange('companyCity', v)}
                 editable={isEditable}
-                type="select"
-                options={companySizeOptions}
-                placeholder="Select size"
+                placeholder="e.g., San Francisco"
               />
               <UnifiedField
-                label="Location"
-                value={data.companyLocation}
-                onChange={(v) => handleChange('companyLocation', v)}
+                label="State"
+                value={data.companyState}
+                onChange={(v) => handleChange('companyState', v)}
                 editable={isEditable}
-                placeholder="e.g., New York, NY"
+                type="select"
+                options={stateOptions}
+                placeholder="Select state"
+              />
+              <UnifiedField
+                label="Country"
+                value={data.companyCountry}
+                onChange={(v) => handleChange('companyCountry', v)}
+                editable={isEditable}
+                type="select"
+                options={countryOptions}
               />
             </div>
           </CardContent>

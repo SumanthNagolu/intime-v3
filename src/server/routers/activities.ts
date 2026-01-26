@@ -1004,8 +1004,8 @@ export const activitiesRouter = router({
           .select('id, first_name, last_name, email, title')
           .eq('id', activity.entity_id)
           .single()
-        entityInfo = candidate ? { 
-          type: 'candidate', 
+        entityInfo = candidate ? {
+          type: 'candidate',
           ...candidate,
           name: `${candidate.first_name} ${candidate.last_name}`
         } : null
@@ -1031,7 +1031,7 @@ export const activitiesRouter = router({
         completedAt: activity.completed_at,
         createdAt: activity.created_at,
         updatedAt: activity.updated_at,
-        
+
         // Assignment
         assignedTo: assignedToUser,
         createdBy: createdByUser,
@@ -1050,18 +1050,18 @@ export const activitiesRouter = router({
 
         // Instructions
         instructions: activity.instructions,
-        
+
         // Outcomes
         outcome: activity.outcome,
         outcomeNotes: activity.outcome_notes,
-        
+
         // Escalation
         escalationCount: activity.escalation_count,
         lastEscalatedAt: activity.last_escalated_at,
-        
+
         // Snooze
         snoozedUntil: activity.snoozed_until,
-        
+
         // Related data
         notes: notes?.map(n => ({
           id: n.id,
@@ -1114,7 +1114,7 @@ export const activitiesRouter = router({
       // Calculate due date from pattern if not provided
       const targetDays = pattern.target_days || 1
       const dueDate = input.dueDate || new Date(Date.now() + targetDays * 24 * 60 * 60 * 1000)
-      
+
       // Calculate escalation date
       const escalationDays = pattern.escalation_days || targetDays + 1
       const escalationDate = new Date(Date.now() + escalationDays * 24 * 60 * 60 * 1000)
@@ -2187,4 +2187,48 @@ export const activitiesRouter = router({
         source: orgAdmin ? 'org_admin' : null,
       }
     }),
+  // ============================================
+  // UPDATE ACTIVITY STATUS (BOARD DRAG-DROP)
+  // ============================================
+  updateStatus: orgProtectedProcedure
+    .input(z.object({
+      id: z.string().uuid(),
+      status: z.string(), // Accepting string to allow 'todo'/'review' mapping if necessary, but ideally should leverage StatusEnum
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { orgId, user, supabase } = ctx
+      const adminClient = getAdminClient()
+
+      // Look up user_profiles.id via auth_id
+      const { data: userProfile } = await adminClient
+        .from('user_profiles')
+        .select('id')
+        .eq('auth_id', user?.id)
+        .single()
+
+      const userProfileId = userProfile?.id
+
+      // Allow mapping 'todo' -> 'open', 'done' -> 'completed', etc if the UI sends those
+      // But TeamBoardSection sends: 'completed', 'waiting', 'in_progress', 'open' based on its getStatusFromColumn.
+      // So input.status should be valid.
+
+      const { data: activity, error } = await supabase
+        .from('activities')
+        .update({
+          status: input.status,
+          updated_at: new Date().toISOString(),
+          updated_by: userProfileId,
+        })
+        .eq('id', input.id)
+        .eq('org_id', orgId)
+        .select()
+        .single()
+
+      if (error) {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message })
+      }
+
+      return activity
+    }),
 })
+

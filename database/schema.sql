@@ -4590,15 +4590,12 @@ DECLARE
   v_activity_id UUID;
   v_owner_id UUID;
 BEGIN
-  -- Get campaign owner for activity assignment
   SELECT owner_id INTO v_owner_id
   FROM campaigns
   WHERE id = p_campaign_id AND org_id = p_org_id;
 
-  -- Use creator if no owner set
   v_owner_id := COALESCE(v_owner_id, p_created_by);
 
-  -- Get the campaign standard template
   SELECT * INTO v_template
   FROM workplan_templates
   WHERE code = 'campaign_standard'
@@ -4608,10 +4605,9 @@ BEGIN
   LIMIT 1;
 
   IF v_template IS NULL THEN
-    RAISE EXCEPTION 'Campaign workplan template not found';
+    RETURN NULL;
   END IF;
 
-  -- Create workplan instance
   INSERT INTO workplan_instances (
     org_id, template_id, entity_type, entity_id,
     template_code, template_name, total_activities,
@@ -4622,7 +4618,6 @@ BEGIN
     'active', p_created_by
   ) RETURNING id INTO v_instance_id;
 
-  -- Get first activity pattern (setup)
   SELECT ap.* INTO v_first_pattern
   FROM activity_patterns ap
   JOIN workplan_template_activities wta ON wta.pattern_id = ap.id
@@ -4630,11 +4625,14 @@ BEGIN
   ORDER BY wta.order_index
   LIMIT 1;
 
-  -- Create first activity
+  IF v_first_pattern IS NULL THEN
+    RETURN v_instance_id;
+  END IF;
+
   INSERT INTO activities (
     org_id, entity_type, entity_id,
     pattern_code, pattern_id, workplan_instance_id,
-    subject, description, instructions, checklist,
+    subject, description, instructions,
     priority, category, activity_type,
     due_date, escalation_date,
     assigned_to, status,
@@ -4642,7 +4640,7 @@ BEGIN
   ) VALUES (
     p_org_id, 'campaign', p_campaign_id,
     v_first_pattern.code, v_first_pattern.id, v_instance_id,
-    v_first_pattern.name, v_first_pattern.description, v_first_pattern.instructions, v_first_pattern.checklist,
+    v_first_pattern.name, v_first_pattern.description, v_first_pattern.instructions,
     v_first_pattern.priority, v_first_pattern.category, 'task',
     NOW() + (v_first_pattern.target_days || ' days')::INTERVAL,
     NOW() + (COALESCE(v_first_pattern.escalation_days, v_first_pattern.target_days + 1) || ' days')::INTERVAL,
@@ -4650,11 +4648,14 @@ BEGIN
     TRUE, p_created_by
   ) RETURNING id INTO v_activity_id;
 
-  -- Log activity history
   INSERT INTO activity_history (activity_id, action, changed_by, notes)
   VALUES (v_activity_id, 'created', p_created_by, 'Auto-created from campaign workflow');
 
   RETURN v_instance_id;
+EXCEPTION
+  WHEN OTHERS THEN
+    RAISE WARNING 'Failed to create campaign workplan: %', SQLERRM;
+    RETURN NULL;
 END;
 $$;
 
@@ -16612,6 +16613,94 @@ CREATE TABLE public.contacts (
     vendor_company_id uuid,
     source_company_id uuid,
     employer_company_id uuid,
+    city text,
+    state text,
+    country text DEFAULT 'US'::text,
+    company_size text,
+    industry text,
+    lead_type text,
+    lead_category text,
+    lead_opportunity_type text,
+    lead_business_model text,
+    lead_engagement_type text,
+    lead_relationship_type text,
+    lead_existing_relationship boolean DEFAULT false,
+    lead_previous_engagement_notes text,
+    lead_priority text,
+    lead_temperature text,
+    lead_primary_contract_type text,
+    lead_bill_rate_min numeric(10,2),
+    lead_bill_rate_max numeric(10,2),
+    lead_bill_rate_currency text DEFAULT 'USD'::text,
+    lead_target_markup numeric(5,2),
+    lead_positions_urgency text,
+    lead_estimated_duration text,
+    lead_remote_policy text,
+    lead_secondary_skills text[],
+    lead_required_certifications text[],
+    lead_experience_level text,
+    lead_years_experience_min integer,
+    lead_years_experience_max integer,
+    lead_security_clearance_required boolean DEFAULT false,
+    lead_security_clearance_level text,
+    lead_background_check_required boolean DEFAULT false,
+    lead_drug_test_required boolean DEFAULT false,
+    lead_technical_notes text,
+    lead_hiring_manager_preferences text,
+    lead_referred_by text,
+    lead_referral_type text,
+    lead_referral_contact_id uuid,
+    lead_utm_source text,
+    lead_utm_medium text,
+    lead_utm_campaign text,
+    lead_utm_content text,
+    lead_utm_term text,
+    lead_landing_page text,
+    lead_first_contact_method text,
+    lead_source_details text,
+    lead_uses_vms boolean DEFAULT false,
+    lead_vms_platform text,
+    lead_vms_other text,
+    lead_vms_access_status text,
+    lead_has_msp boolean DEFAULT false,
+    lead_msp_name text,
+    lead_program_type text,
+    lead_msa_status text,
+    lead_msa_expiration_date date,
+    lead_nda_required boolean DEFAULT false,
+    lead_nda_status text,
+    lead_payment_terms text,
+    lead_po_required boolean DEFAULT false,
+    lead_invoice_format text,
+    lead_billing_cycle text,
+    lead_insurance_required boolean DEFAULT false,
+    lead_insurance_types text[],
+    lead_minimum_insurance_coverage text,
+    lead_account_tier text,
+    lead_industry_vertical text,
+    lead_company_revenue text,
+    lead_budget_confirmed boolean DEFAULT false,
+    lead_budget_range text,
+    lead_decision_maker_identified boolean DEFAULT false,
+    lead_decision_maker_title text,
+    lead_decision_maker_name text,
+    lead_competitor_involved boolean DEFAULT false,
+    lead_competitor_names text,
+    lead_estimated_placements integer,
+    lead_volume_potential text,
+    lead_disqualification_reason text,
+    lead_probability integer,
+    lead_estimated_close_date date,
+    lead_next_steps text,
+    lead_next_step_date date,
+    lead_sales_rep_id uuid,
+    lead_account_manager_id uuid,
+    lead_recruiter_id uuid,
+    lead_territory text,
+    lead_region text,
+    lead_business_unit text,
+    lead_do_not_contact_reason text,
+    lead_strategy_notes text,
     CONSTRAINT contacts_agency_relationship_check CHECK (((agency_relationship IS NULL) OR (agency_relationship = ANY (ARRAY['partner'::text, 'competitor'::text, 'both'::text])))),
     CONSTRAINT contacts_bench_type_check CHECK (((bench_type IS NULL) OR (bench_type = ANY (ARRAY['w2_internal'::text, 'w2_vendor'::text, '1099'::text, 'c2c'::text])))),
     CONSTRAINT contacts_candidate_availability_check CHECK (((candidate_availability IS NULL) OR (candidate_availability = ANY (ARRAY['immediate'::text, '2_weeks'::text, '1_month'::text, '2_months'::text, '3_months'::text, 'not_available'::text])))),
@@ -16791,6 +16880,34 @@ COMMENT ON COLUMN public.contacts.source_company_id IS 'FK to companies table fo
 --
 
 COMMENT ON COLUMN public.contacts.employer_company_id IS 'FK to companies table for current employer';
+
+
+--
+-- Name: COLUMN contacts.city; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.city IS 'City for contact/company location';
+
+
+--
+-- Name: COLUMN contacts.state; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.state IS 'State/Province code (e.g., CA, NY)';
+
+
+--
+-- Name: COLUMN contacts.country; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.country IS 'Country code (e.g., US, CA, GB)';
+
+
+--
+-- Name: COLUMN contacts.company_size; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.contacts.company_size IS 'Company size range (e.g., 1-10, 11-50, 51-200)';
 
 
 --
@@ -16976,7 +17093,8 @@ END) STORED,
     total_completed integer DEFAULT 0,
     total_active integer DEFAULT 0,
     total_bounced integer DEFAULT 0,
-    total_unsubscribed integer DEFAULT 0
+    total_unsubscribed integer DEFAULT 0,
+    wizard_state jsonb
 );
 
 
@@ -17041,6 +17159,13 @@ COMMENT ON COLUMN public.campaigns.total_completed IS 'Total number of enrollmen
 --
 
 COMMENT ON COLUMN public.campaigns.total_active IS 'Total number of currently active enrollments';
+
+
+--
+-- Name: COLUMN campaigns.wizard_state; Type: COMMENT; Schema: public; Owner: -
+--
+
+COMMENT ON COLUMN public.campaigns.wizard_state IS 'Wizard progress state for draft campaigns';
 
 
 --
@@ -40699,6 +40824,13 @@ CREATE INDEX idx_contacts_category_subtype ON public.contacts USING btree (categ
 
 
 --
+-- Name: idx_contacts_city; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_city ON public.contacts USING btree (city) WHERE (deleted_at IS NULL);
+
+
+--
 -- Name: idx_contacts_client_contact_company; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -40745,6 +40877,13 @@ CREATE INDEX idx_contacts_company_subtypes ON public.contacts USING btree (subty
 --
 
 CREATE INDEX idx_contacts_contact_status ON public.contacts USING btree (contact_status) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contacts_country; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_country ON public.contacts USING btree (country) WHERE (deleted_at IS NULL);
 
 
 --
@@ -40864,6 +41003,13 @@ CREATE INDEX idx_contacts_search ON public.contacts USING gin (search_vector);
 --
 
 CREATE INDEX idx_contacts_source_company ON public.contacts USING btree (source_company_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_contacts_state; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_contacts_state ON public.contacts USING btree (state) WHERE (deleted_at IS NULL);
 
 
 --
@@ -66011,5 +66157,5 @@ ALTER TABLE public.xp_transactions ENABLE ROW LEVEL SECURITY;
 -- PostgreSQL database dump complete
 --
 
-\unrestrict Yz7jokSJHNNAzCPyjGZnrZ372JMX7N4i5yMphLGPVAoZtHXN8Fu2BPMHVGQ886k
+\unrestrict vb1TNegTfMya1p8CBDfDe46yFp5eXAY0f59iP4xq1bjC8bNG5cLPPm5JefmWnk5
 

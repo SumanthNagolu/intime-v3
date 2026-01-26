@@ -81,11 +81,11 @@ export function CandidateIntakeStep1Source() {
             <RadioOptionCard
               key={type.value}
               selected={formData.sourceType === type.value}
-              onClick={() => setFormData({ sourceType: type.value as 'manual' | 'resume' | 'linkedin' })}
+              onClick={() => setFormData({ sourceType: type.value as 'manual' | 'resume' | 'csv' })}
               icon={sourceIcons[type.value]}
               label={type.label}
               description={type.description}
-              disabled={'disabled' in type ? type.disabled : false}
+              disabled={'disabled' in type ? Boolean(type.disabled) : false}
             />
           ))}
         </div>

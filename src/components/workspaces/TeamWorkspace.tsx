@@ -10,6 +10,7 @@ import { TeamOverviewSection } from './team/sections/TeamOverviewSection'
 import { TeamIdentitySection } from '@/components/teams/sections/TeamIdentitySection'
 import { TeamLocationSection } from '@/components/teams/sections/TeamLocationSection'
 import { TeamMembersSection } from '@/components/teams/sections/TeamMembersSection'
+import { TeamBoardSection } from './team/sections/TeamBoardSection'
 
 // Hooks and mappers for per-section state management
 import { useTeamIdentitySection } from '@/components/teams/hooks/useTeamIdentitySection'
@@ -28,6 +29,7 @@ import type { TeamEntityMember, TeamEntityMetrics, TeamEntityActivity, TeamEntit
 
 type TeamSection =
   | 'summary'
+  | 'board' // Added board view
   | 'details'
   | 'members'
   | 'roles'
@@ -58,6 +60,12 @@ export function TeamWorkspace({ onAction: _onAction }: TeamWorkspaceProps = {}) 
   const router = useRouter()
   const searchParams = useSearchParams()
 
+  const updateActivityStatus = trpc.activities.updateStatus.useMutation({
+    onSuccess: () => {
+      refreshData()
+    }
+  })
+
   // Get section from URL, default to 'summary'
   const currentSection = (searchParams.get('section') || 'summary') as TeamSection
 
@@ -67,6 +75,13 @@ export function TeamWorkspace({ onAction: _onAction }: TeamWorkspaceProps = {}) 
     params.set('section', section)
     router.push(`?${params.toString()}`, { scroll: false })
   }, [router, searchParams])
+
+  const handleActivityUpdate = async (id: string, updates: any) => {
+    await updateActivityStatus.mutateAsync({
+      id,
+      status: updates.status
+    })
+  }
 
   return (
     <div className="w-full max-w-none px-8 py-6 space-y-6 animate-fade-in">
@@ -83,6 +98,14 @@ export function TeamWorkspace({ onAction: _onAction }: TeamWorkspaceProps = {}) 
           activities={data.activities}
           metrics={data.metrics}
           onNavigate={handleSectionChange}
+        />
+      )}
+
+      {/* Kanban Board Section */}
+      {currentSection === 'board' && (
+        <TeamBoardSection
+          activities={data.activities}
+          onActivityUpdate={handleActivityUpdate}
         />
       )}
 
@@ -407,10 +430,9 @@ function TeamWorkloadSectionPlaceholder({ members, metrics }: { members: TeamEnt
               <span className="text-sm text-charcoal-700 w-40 truncate">{member.fullName}</span>
               <div className="flex-1 h-2 bg-charcoal-100 rounded-full overflow-hidden">
                 <div
-                  className={`h-full transition-all ${
-                    member.loadFactor > 80 ? 'bg-error-500' :
-                    member.loadFactor > 60 ? 'bg-amber-500' : 'bg-success-500'
-                  }`}
+                  className={`h-full transition-all ${member.loadFactor > 80 ? 'bg-error-500' :
+                      member.loadFactor > 60 ? 'bg-amber-500' : 'bg-success-500'
+                    }`}
                   style={{ width: `${Math.min(member.loadFactor, 100)}%` }}
                 />
               </div>

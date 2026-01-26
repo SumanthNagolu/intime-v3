@@ -213,20 +213,45 @@ export function AuthorizationSection({
             )}
             <UnifiedField
               label="Notice Period"
-              value={data.noticePeriod}
-              onChange={(v) => handleChange('noticePeriod', v)}
+              type="select"
+              options={[
+                { value: 'immediate', label: 'Immediate' },
+                { value: '1_week', label: '1 Week' },
+                { value: '2_weeks', label: '2 Weeks' },
+                { value: '30_days', label: '30 Days' },
+                { value: '60_days', label: '60 Days' },
+                { value: '90_days', label: '90 Days' },
+                { value: 'other', label: 'Other (specify days)' },
+              ]}
+              value={data.noticePeriod || (data.noticePeriodDays === 0 ? 'immediate' : data.noticePeriodDays === 7 ? '1_week' : data.noticePeriodDays === 14 ? '2_weeks' : data.noticePeriodDays === 30 ? '30_days' : data.noticePeriodDays === 60 ? '60_days' : data.noticePeriodDays === 90 ? '90_days' : 'other')}
+              onChange={(v) => {
+                handleChange('noticePeriod', v)
+                // Auto-populate days based on selection
+                const daysMap: Record<string, number> = {
+                  immediate: 0,
+                  '1_week': 7,
+                  '2_weeks': 14,
+                  '30_days': 30,
+                  '60_days': 60,
+                  '90_days': 90,
+                }
+                if (v && v !== 'other' && daysMap[v as string] !== undefined) {
+                  handleChange('noticePeriodDays', daysMap[v as string])
+                }
+              }}
               editable={isEditable}
-              placeholder="e.g., 2 weeks"
             />
-            <UnifiedField
-              label="Notice Period (Days)"
-              type="number"
-              value={data.noticePeriodDays}
-              onChange={(v) => handleChange('noticePeriodDays', v)}
-              editable={isEditable}
-              min={0}
-              max={180}
-            />
+            {(data.noticePeriod === 'other' || (data.noticePeriodDays && ![0, 7, 14, 30, 60, 90].includes(data.noticePeriodDays))) && (
+              <UnifiedField
+                label="Notice Period (Days)"
+                type="number"
+                value={data.noticePeriodDays}
+                onChange={(v) => handleChange('noticePeriodDays', v)}
+                editable={isEditable}
+                min={0}
+                max={180}
+              />
+            )}
           </CardContent>
         </Card>
 

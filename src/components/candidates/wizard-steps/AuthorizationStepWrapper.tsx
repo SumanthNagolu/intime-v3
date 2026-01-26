@@ -18,16 +18,16 @@ export function AuthorizationStepWrapper({
 }: WizardStepComponentProps<CreateCandidateFormData>) {
   // Map formData to section data format
   const sectionData: AuthorizationSectionData = React.useMemo(() => ({
-    workAuthorization: null, // Not separate in wizard form
+    workAuthorization: null, // Display-only field derived from visaStatus
     visaStatus: formData?.visaStatus || 'us_citizen',
     visaExpiryDate: formData?.visaExpiryDate || null,
     requiresSponsorship: formData?.requiresSponsorship ?? false,
     currentSponsor: formData?.currentSponsor || null,
     isTransferable: formData?.isTransferable ?? false,
-    clearanceLevel: null, // Not in wizard form
+    clearanceLevel: formData?.clearanceLevel || 'none',
     availability: formData?.availability || '2_weeks',
     availableFrom: formData?.availableFrom || null,
-    noticePeriod: null, // Not separate in wizard form
+    noticePeriod: formData?.noticePeriod || null,
     noticePeriodDays: formData?.noticePeriodDays ?? null,
     willingToRelocate: formData?.willingToRelocate ?? false,
     relocationPreferences: formData?.relocationPreferences || null,
@@ -45,8 +45,10 @@ export function AuthorizationStepWrapper({
       requiresSponsorship: 'requiresSponsorship',
       currentSponsor: 'currentSponsor',
       isTransferable: 'isTransferable',
+      clearanceLevel: 'clearanceLevel',
       availability: 'availability',
       availableFrom: 'availableFrom',
+      noticePeriod: 'noticePeriod',
       noticePeriodDays: 'noticePeriodDays',
       willingToRelocate: 'willingToRelocate',
       relocationPreferences: 'relocationPreferences',

@@ -34,20 +34,20 @@ import type {
  */
 export function mapToDetailsData(deal: Record<string, unknown>): DetailsSectionData {
   return {
-    title: (deal.title as string) || '',
-    description: (deal.description as string) || '',
-    value: (deal.value as number) || 0,
-    probability: (deal.probability as number) || 20,
-    valueBasis: (deal.value_basis as string) || (deal.valueBasis as string) || 'one_time',
-    currency: (deal.currency as string) || 'USD',
-    stage: (deal.stage as DetailsSectionData['stage']) || 'discovery',
-    expectedCloseDate: (deal.expected_close_date as string) || (deal.expectedCloseDate as string) || null,
-    estimatedPlacements: (deal.estimated_placements as number) || (deal.estimatedPlacements as number) || null,
-    avgBillRate: (deal.avg_bill_rate as number) || (deal.avgBillRate as number) || null,
-    contractLengthMonths: (deal.contract_length_months as number) || (deal.contractLengthMonths as number) || null,
-    hiringNeeds: (deal.hiring_needs as string) || (deal.hiringNeeds as string) || '',
-    servicesRequired: (deal.services_required as string[]) || (deal.servicesRequired as string[]) || [],
-    healthStatus: (deal.health_status as string) || (deal.healthStatus as string) || 'on_track',
+    title: (deal.title as string) ?? '',
+    description: (deal.description as string) ?? '',
+    value: (deal.value as number) ?? 0,
+    probability: (deal.probability as number) ?? 0,
+    valueBasis: (deal.value_basis as string) ?? (deal.valueBasis as string) ?? '',
+    currency: (deal.currency as string) ?? '',
+    stage: (deal.stage as DetailsSectionData['stage']) ?? 'discovery',
+    expectedCloseDate: (deal.expected_close_date as string) ?? (deal.expectedCloseDate as string) ?? null,
+    estimatedPlacements: (deal.estimated_placements as number) ?? (deal.estimatedPlacements as number) ?? null,
+    avgBillRate: (deal.avg_bill_rate as number) ?? (deal.avgBillRate as number) ?? null,
+    contractLengthMonths: (deal.contract_length_months as number) ?? (deal.contractLengthMonths as number) ?? null,
+    hiringNeeds: (deal.hiring_needs as string) ?? (deal.hiringNeeds as string) ?? '',
+    servicesRequired: (deal.services_required as string[]) ?? (deal.servicesRequired as string[]) ?? [],
+    healthStatus: (deal.health_status as string) ?? (deal.healthStatus as string) ?? '',
   }
 }
 
@@ -79,20 +79,20 @@ export function mapDetailsToApi(data: DetailsSectionData): Record<string, unknow
  * Map API stakeholder data to section format
  */
 export function mapToStakeholdersData(stakeholders: unknown[]): StakeholdersSectionData {
-  const mapped: DealStakeholder[] = (stakeholders || []).map((s: unknown) => {
+  const mapped: DealStakeholder[] = (stakeholders ?? []).map((s: unknown) => {
     const stakeholder = s as Record<string, unknown>
     return {
-      id: (stakeholder.id as string) || crypto.randomUUID(),
-      contactId: (stakeholder.contact_id as string) || (stakeholder.contactId as string) || null,
-      name: (stakeholder.name as string) || '',
-      title: (stakeholder.title as string) || '',
-      email: (stakeholder.email as string) || '',
-      phone: (stakeholder.phone as string) || '',
-      role: (stakeholder.role as string) || 'influencer',
-      influenceLevel: (stakeholder.influence_level as string) || (stakeholder.influenceLevel as string) || 'medium',
-      sentiment: (stakeholder.sentiment as string) || 'neutral',
-      engagementNotes: (stakeholder.engagement_notes as string) || (stakeholder.engagementNotes as string) || '',
-      isPrimary: (stakeholder.is_primary as boolean) || (stakeholder.isPrimary as boolean) || false,
+      id: (stakeholder.id as string) ?? crypto.randomUUID(),
+      contactId: (stakeholder.contact_id as string) ?? (stakeholder.contactId as string) ?? null,
+      name: (stakeholder.name as string) ?? '',
+      title: (stakeholder.title as string) ?? '',
+      email: (stakeholder.email as string) ?? '',
+      phone: (stakeholder.phone as string) ?? '',
+      role: (stakeholder.role as string) ?? '',
+      influenceLevel: (stakeholder.influence_level as string) ?? (stakeholder.influenceLevel as string) ?? '',
+      sentiment: (stakeholder.sentiment as string) ?? '',
+      engagementNotes: (stakeholder.engagement_notes as string) ?? (stakeholder.engagementNotes as string) ?? '',
+      isPrimary: (stakeholder.is_primary as boolean) ?? (stakeholder.isPrimary as boolean) ?? false,
       isActive: (stakeholder.is_active as boolean) ?? (stakeholder.isActive as boolean) ?? true,
     }
   })
@@ -145,13 +145,14 @@ export function mapStakeholdersToApi(data: StakeholdersSectionData): ApiStakehol
  */
 export function mapToTimelineData(deal: Record<string, unknown>): TimelineSectionData {
   return {
-    nextStep: (deal.next_step as string) || (deal.nextStep as string) || '',
-    nextStepDate: (deal.next_step_date as string) || (deal.nextStepDate as string) || null,
-    expectedCloseDate: (deal.expected_close_date as string) || (deal.expectedCloseDate as string) || null,
-    actualCloseDate: (deal.actual_close_date as string) || (deal.actualCloseDate as string) || null,
-    contractSignedDate: (deal.contract_signed_date as string) || (deal.contractSignedDate as string) || null,
-    contractStartDate: (deal.contract_start_date as string) || (deal.contractStartDate as string) || null,
-    milestones: [], // TODO: Map milestones when available
+    // Note: Database columns are next_action/next_action_date, not next_step
+    nextStep: (deal.next_action as string) ?? (deal.nextStep as string) ?? '',
+    nextStepDate: (deal.next_action_date as string) ?? (deal.nextStepDate as string) ?? null,
+    expectedCloseDate: (deal.expected_close_date as string) ?? (deal.expectedCloseDate as string) ?? null,
+    actualCloseDate: (deal.actual_close_date as string) ?? (deal.actualCloseDate as string) ?? null,
+    contractSignedDate: (deal.contract_signed_date as string) ?? (deal.contractSignedDate as string) ?? null,
+    contractStartDate: (deal.contract_start_date as string) ?? (deal.contractStartDate as string) ?? null,
+    milestones: [],
   }
 }
 
@@ -160,8 +161,9 @@ export function mapToTimelineData(deal: Record<string, unknown>): TimelineSectio
  */
 export function mapTimelineToApi(data: TimelineSectionData): Record<string, unknown> {
   return {
-    next_step: data.nextStep || null,
-    next_step_date: data.nextStepDate || null,
+    // Note: Database columns are next_action/next_action_date, not next_step
+    next_action: data.nextStep || null,
+    next_action_date: data.nextStepDate || null,
     expected_close_date: data.expectedCloseDate || null,
     actual_close_date: data.actualCloseDate || null,
     contract_signed_date: data.contractSignedDate || null,
@@ -176,19 +178,19 @@ export function mapTimelineToApi(data: TimelineSectionData): Record<string, unkn
  */
 export function mapToCompetitorsData(deal: Record<string, unknown>): CompetitorsSectionData {
   return {
-    competitors: (deal.competitors as string[]) || [],
-    competitiveAdvantage: (deal.competitive_advantage as string) || (deal.competitiveAdvantage as string) || '',
-    winReason: (deal.win_reason as string) || (deal.winReason as string) || '',
-    winDetails: (deal.win_details as string) || (deal.winDetails as string) || '',
-    competitorsBeat: (deal.competitors_beat as string[]) || (deal.competitorsBeat as string[]) || [],
-    lossReason: (deal.loss_reason as string) || (deal.lossReason as string) || '',
-    lossReasonCategory: (deal.loss_reason_category as string) || (deal.lossReasonCategory as string) || '',
-    lossDetails: (deal.loss_details as string) || (deal.lossDetails as string) || '',
-    competitorWon: (deal.competitor_won as string) || (deal.competitorWon as string) || '',
-    competitorPrice: (deal.competitor_price as number) || (deal.competitorPrice as number) || null,
-    futurePotential: (deal.future_potential as string) || (deal.futurePotential as string) || '',
-    reengagementDate: (deal.reengagement_date as string) || (deal.reengagementDate as string) || null,
-    lessonsLearned: (deal.lessons_learned as string) || (deal.lessonsLearned as string) || '',
+    competitors: (deal.competitors as string[]) ?? [],
+    competitiveAdvantage: (deal.competitive_advantage as string) ?? (deal.competitiveAdvantage as string) ?? '',
+    winReason: (deal.win_reason as string) ?? (deal.winReason as string) ?? '',
+    winDetails: (deal.win_details as string) ?? (deal.winDetails as string) ?? '',
+    competitorsBeat: (deal.competitors_beat as string[]) ?? (deal.competitorsBeat as string[]) ?? [],
+    lossReason: (deal.loss_reason as string) ?? (deal.lossReason as string) ?? '',
+    lossReasonCategory: (deal.loss_reason_category as string) ?? (deal.lossReasonCategory as string) ?? '',
+    lossDetails: (deal.loss_details as string) ?? (deal.lossDetails as string) ?? '',
+    competitorWon: (deal.competitor_won as string) ?? (deal.competitorWon as string) ?? '',
+    competitorPrice: (deal.competitor_price as number) ?? (deal.competitorPrice as number) ?? null,
+    futurePotential: (deal.future_potential as string) ?? (deal.futurePotential as string) ?? '',
+    reengagementDate: (deal.reengagement_date as string) ?? (deal.reengagementDate as string) ?? null,
+    lessonsLearned: (deal.lessons_learned as string) ?? (deal.lessonsLearned as string) ?? '',
   }
 }
 
@@ -220,48 +222,53 @@ export function mapCompetitorsToApi(data: CompetitorsSectionData): Record<string
  */
 export function mapToProposalData(deal: Record<string, unknown>): ProposalSectionData {
   // Map roles breakdown
-  const rolesRaw = (deal.roles_breakdown as unknown[]) || (deal.rolesBreakdown as unknown[]) || []
+  const rolesRaw = (deal.roles_breakdown as unknown[]) ?? (deal.rolesBreakdown as unknown[]) ?? []
   const rolesBreakdown: DealRoleBreakdown[] = rolesRaw.map((r: unknown) => {
     const role = r as Record<string, unknown>
     return {
-      id: (role.id as string) || crypto.randomUUID(),
-      title: (role.title as string) || '',
-      count: (role.count as number) || 1,
-      billRate: (role.bill_rate as number) || (role.billRate as number) || null,
-      startDate: (role.start_date as string) || (role.startDate as string) || null,
+      id: (role.id as string) ?? crypto.randomUUID(),
+      title: (role.title as string) ?? '',
+      count: (role.count as number) ?? 0,
+      billRate: (role.bill_rate as number) ?? (role.billRate as number) ?? null,
+      startDate: (role.start_date as string) ?? (role.startDate as string) ?? null,
     }
   })
 
   // Map billing contact
-  const billingRaw = (deal.billing_contact as Record<string, unknown>) || (deal.billingContact as Record<string, unknown>)
+  const billingRaw = (deal.billing_contact as Record<string, unknown>) ?? (deal.billingContact as Record<string, unknown>)
   const billingContact: DealBillingContact = billingRaw
     ? {
-        name: (billingRaw.name as string) || '',
-        email: (billingRaw.email as string) || '',
-        phone: (billingRaw.phone as string) || '',
-        address: (billingRaw.address as string) || '',
+        name: (billingRaw.name as string) ?? '',
+        email: (billingRaw.email as string) ?? '',
+        phone: (billingRaw.phone as string) ?? '',
+        addressLine1: (billingRaw.addressLine1 as string) ?? (billingRaw.address_line_1 as string) ?? '',
+        addressLine2: (billingRaw.addressLine2 as string) ?? (billingRaw.address_line_2 as string) ?? '',
+        city: (billingRaw.city as string) ?? '',
+        stateProvince: (billingRaw.stateProvince as string) ?? (billingRaw.state_province as string) ?? '',
+        postalCode: (billingRaw.postalCode as string) ?? (billingRaw.postal_code as string) ?? '',
+        countryCode: (billingRaw.countryCode as string) ?? (billingRaw.country_code as string) ?? 'US',
       }
-    : { name: '', email: '', phone: '', address: '' }
+    : { name: '', email: '', phone: '', addressLine1: '', addressLine2: '', city: '', stateProvince: '', postalCode: '', countryCode: 'US' }
 
   // Map confirmed roles
-  const confirmedRaw = (deal.confirmed_roles as unknown[]) || (deal.confirmedRoles as unknown[]) || []
+  const confirmedRaw = (deal.confirmed_roles as unknown[]) ?? (deal.confirmedRoles as unknown[]) ?? []
   const confirmedRoles = confirmedRaw.map((r: unknown) => {
     const role = r as Record<string, unknown>
     return {
-      id: (role.id as string) || crypto.randomUUID(),
-      title: (role.title as string) || '',
-      count: (role.count as number) || 1,
-      billRate: (role.bill_rate as number) || (role.billRate as number) || 0,
-      startDate: (role.start_date as string) || (role.startDate as string) || null,
+      id: (role.id as string) ?? crypto.randomUUID(),
+      title: (role.title as string) ?? '',
+      count: (role.count as number) ?? 0,
+      billRate: (role.bill_rate as number) ?? (role.billRate as number) ?? 0,
+      startDate: (role.start_date as string) ?? (role.startDate as string) ?? null,
     }
   })
 
   return {
     rolesBreakdown,
-    contractType: (deal.contract_type as string) || (deal.contractType as string) || '',
-    contractDurationMonths: (deal.contract_duration_months as number) || (deal.contractDurationMonths as number) || null,
-    paymentTerms: (deal.payment_terms as string) || (deal.paymentTerms as string) || 'net_30',
-    billingFrequency: (deal.billing_frequency as string) || (deal.billingFrequency as string) || 'monthly',
+    contractType: (deal.contract_type as string) ?? (deal.contractType as string) ?? '',
+    contractDurationMonths: (deal.contract_duration_months as number) ?? (deal.contractDurationMonths as number) ?? null,
+    paymentTerms: (deal.payment_terms as string) ?? (deal.paymentTerms as string) ?? '',
+    billingFrequency: (deal.billing_frequency as string) ?? (deal.billingFrequency as string) ?? '',
     billingContact,
     confirmedRoles,
   }
@@ -282,14 +289,19 @@ export function mapProposalToApi(data: ProposalSectionData): Record<string, unkn
       : null,
     contract_type: data.contractType || null,
     contract_duration_months: data.contractDurationMonths || null,
-    payment_terms: data.paymentTerms,
-    billing_frequency: data.billingFrequency,
+    payment_terms: data.paymentTerms || null,
+    billing_frequency: data.billingFrequency || null,
     billing_contact: data.billingContact.name
       ? {
           name: data.billingContact.name,
           email: data.billingContact.email,
           phone: data.billingContact.phone,
-          address: data.billingContact.address,
+          address_line_1: data.billingContact.addressLine1,
+          address_line_2: data.billingContact.addressLine2,
+          city: data.billingContact.city,
+          state_province: data.billingContact.stateProvince,
+          postal_code: data.billingContact.postalCode,
+          country_code: data.billingContact.countryCode,
         }
       : null,
     confirmed_roles: data.confirmedRoles.length > 0
@@ -310,16 +322,16 @@ export function mapProposalToApi(data: ProposalSectionData): Record<string, unkn
  */
 export function mapToTeamData(deal: Record<string, unknown>): TeamSectionData {
   const owner = deal.owner as Record<string, unknown> | null
-  const podManager = (deal.pod_manager || deal.podManager) as Record<string, unknown> | null
-  const secondaryOwner = (deal.secondary_owner || deal.secondaryOwner) as Record<string, unknown> | null
+  const podManager = (deal.pod_manager ?? deal.podManager) as Record<string, unknown> | null
+  const secondaryOwner = (deal.secondary_owner ?? deal.secondaryOwner) as Record<string, unknown> | null
 
   return {
-    ownerId: (deal.owner_id as string) || (owner?.id as string) || '',
-    ownerName: (owner?.full_name as string) || (owner?.fullName as string) || '',
-    podManagerId: (deal.pod_manager_id as string) || (podManager?.id as string) || '',
-    podManagerName: (podManager?.full_name as string) || (podManager?.fullName as string) || '',
-    secondaryOwnerId: (deal.secondary_owner_id as string) || (secondaryOwner?.id as string) || '',
-    secondaryOwnerName: (secondaryOwner?.full_name as string) || (secondaryOwner?.fullName as string) || '',
+    ownerId: (deal.owner_id as string) ?? (owner?.id as string) ?? '',
+    ownerName: (owner?.full_name as string) ?? (owner?.fullName as string) ?? '',
+    podManagerId: (deal.pod_manager_id as string) ?? (podManager?.id as string) ?? '',
+    podManagerName: (podManager?.full_name as string) ?? (podManager?.fullName as string) ?? '',
+    secondaryOwnerId: (deal.secondary_owner_id as string) ?? (secondaryOwner?.id as string) ?? '',
+    secondaryOwnerName: (secondaryOwner?.full_name as string) ?? (secondaryOwner?.fullName as string) ?? '',
   }
 }
 

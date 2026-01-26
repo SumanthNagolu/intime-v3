@@ -213,6 +213,21 @@ export interface CampaignChannelsSectionData {
   // Phone sequence config
   phoneSteps: number
   phoneDaysBetween: number
+  // SMS sequence config
+  smsSteps: number
+  smsDaysBetween: number
+  // Direct Mail sequence config
+  directMailSteps: number
+  directMailDaysBetween: number
+  // Event sequence config
+  eventSteps: number
+  eventDaysBetween: number
+  // Job Board sequence config
+  jobBoardSteps: number
+  jobBoardDaysBetween: number
+  // Referral sequence config
+  referralSteps: number
+  referralDaysBetween: number
   // Automation settings
   stopOnReply: boolean
   stopOnBooking: boolean
@@ -230,8 +245,18 @@ export const DEFAULT_CHANNELS_DATA: CampaignChannelsSectionData = {
   emailDaysBetween: 3,
   linkedinSteps: 2,
   linkedinDaysBetween: 5,
-  phoneSteps: 1,
-  phoneDaysBetween: 7,
+  phoneSteps: 2,
+  phoneDaysBetween: 3,
+  smsSteps: 2,
+  smsDaysBetween: 2,
+  directMailSteps: 1,
+  directMailDaysBetween: 14,
+  eventSteps: 2,
+  eventDaysBetween: 7,
+  jobBoardSteps: 1,
+  jobBoardDaysBetween: 7,
+  referralSteps: 2,
+  referralDaysBetween: 7,
   stopOnReply: true,
   stopOnBooking: true,
   stopOnApplication: true,

@@ -234,10 +234,10 @@ function LeadIdentitySectionWrapper() {
   const { data, refreshData } = useLeadWorkspace()
   const { toast } = useToast()
 
-  // Map lead data to section format
+  // Map raw lead data to section format (raw contains snake_case DB columns)
   const initialData = React.useMemo(
-    () => mapToIdentityData(data.lead as unknown as Record<string, unknown>),
-    [data.lead]
+    () => mapToIdentityData(data.raw),
+    [data.raw]
   )
 
   const onSaveComplete = React.useCallback(() => {
@@ -273,9 +273,10 @@ function LeadClassificationSectionWrapper() {
   const { data, refreshData } = useLeadWorkspace()
   const { toast } = useToast()
 
+  // Map raw lead data to section format (raw contains snake_case DB columns)
   const initialData = React.useMemo(
-    () => mapToClassificationData(data.lead as unknown as Record<string, unknown>),
-    [data.lead]
+    () => mapToClassificationData(data.raw),
+    [data.raw]
   )
 
   const onSaveComplete = React.useCallback(() => {
@@ -311,9 +312,10 @@ function LeadRequirementsSectionWrapper() {
   const { data, refreshData } = useLeadWorkspace()
   const { toast } = useToast()
 
+  // Map raw lead data to section format (raw contains snake_case DB columns)
   const initialData = React.useMemo(
-    () => mapToRequirementsData(data.lead as unknown as Record<string, unknown>),
-    [data.lead]
+    () => mapToRequirementsData(data.raw),
+    [data.raw]
   )
 
   const onSaveComplete = React.useCallback(() => {
@@ -349,9 +351,10 @@ function LeadQualificationSectionWrapper() {
   const { data, refreshData } = useLeadWorkspace()
   const { toast } = useToast()
 
+  // Map raw lead data to section format (raw contains snake_case DB columns)
   const initialData = React.useMemo(
-    () => mapToQualificationData(data.lead as unknown as Record<string, unknown>),
-    [data.lead]
+    () => mapToQualificationData(data.raw),
+    [data.raw]
   )
 
   const onSaveComplete = React.useCallback(() => {
@@ -387,9 +390,10 @@ function LeadClientProfileSectionWrapper() {
   const { data, refreshData } = useLeadWorkspace()
   const { toast } = useToast()
 
+  // Map raw lead data to section format (raw contains snake_case DB columns)
   const initialData = React.useMemo(
-    () => mapToClientProfileData(data.lead as unknown as Record<string, unknown>),
-    [data.lead]
+    () => mapToClientProfileData(data.raw),
+    [data.raw]
   )
 
   const onSaveComplete = React.useCallback(() => {
@@ -425,9 +429,10 @@ function LeadSourceSectionWrapper() {
   const { data, refreshData } = useLeadWorkspace()
   const { toast } = useToast()
 
+  // Map raw lead data to section format (raw contains snake_case DB columns)
   const initialData = React.useMemo(
-    () => mapToSourceData(data.lead as unknown as Record<string, unknown>),
-    [data.lead]
+    () => mapToSourceData(data.raw),
+    [data.raw]
   )
 
   const onSaveComplete = React.useCallback(() => {
@@ -463,9 +468,10 @@ function LeadTeamSectionWrapper() {
   const { data, refreshData } = useLeadWorkspace()
   const { toast } = useToast()
 
+  // Map raw lead data to section format (raw contains snake_case DB columns)
   const initialData = React.useMemo(
-    () => mapToTeamData(data.lead as unknown as Record<string, unknown>),
-    [data.lead]
+    () => mapToTeamData(data.raw),
+    [data.raw]
   )
 
   const onSaveComplete = React.useCallback(() => {
