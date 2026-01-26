@@ -26,6 +26,15 @@ export function IdentityStepWrapper({
     return DEFAULT_PHONE
   }, [formData?.phone])
 
+  // Ensure mobile has valid structure
+  const safeMobile = React.useMemo(() => {
+    const mobile = formData?.mobile
+    if (mobile && typeof mobile === 'object' && 'countryCode' in mobile) {
+      return mobile
+    }
+    return DEFAULT_PHONE
+  }, [formData?.mobile])
+
   // Get most recent/current job from work history
   const currentJob = React.useMemo(() => {
     const workHistory = formData?.workHistory || []
@@ -40,7 +49,7 @@ export function IdentityStepWrapper({
     lastName: formData?.lastName || '',
     email: formData?.email || '',
     phone: safePhone,
-    mobile: { countryCode: 'US', number: '' }, // Default empty phone for mobile
+    mobile: safeMobile,
     linkedinUrl: formData?.linkedinProfile || '',
     streetAddress: formData?.locationStreet || '',
     city: formData?.locationCity || '',
@@ -51,7 +60,7 @@ export function IdentityStepWrapper({
     professionalSummary: formData?.professionalSummary || '',
     currentCompany: formData?.currentCompany || currentJob?.companyName || '', // Primary: formData, fallback: workHistory
     yearsExperience: formData?.experienceYears ?? null,
-  }), [formData, safePhone, currentJob])
+  }), [formData, safePhone, safeMobile, currentJob])
 
   // Map section onChange to setFormData
   const handleChange = React.useCallback((field: string, value: unknown) => {
@@ -63,6 +72,7 @@ export function IdentityStepWrapper({
       lastName: 'lastName',
       email: 'email',
       phone: 'phone',
+      mobile: 'mobile',
       linkedinUrl: 'linkedinProfile',
       streetAddress: 'locationStreet',
       city: 'locationCity',
@@ -86,6 +96,7 @@ export function IdentityStepWrapper({
     if (errors.lastName) mapped.lastName = errors.lastName
     if (errors.email) mapped.email = errors.email
     if (errors.phone) mapped.phone = errors.phone
+    if (errors.mobile) mapped.mobile = errors.mobile
     if (errors.locationCity) mapped.city = errors.locationCity
     if (errors.linkedinProfile) mapped.linkedinUrl = errors.linkedinProfile
     if (errors.professionalHeadline) mapped.headline = errors.professionalHeadline

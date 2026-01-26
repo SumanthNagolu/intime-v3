@@ -74,8 +74,11 @@ const FIELD_LABELS: Record<string, string> = {
   // Candidate fields - Contact
   firstName: 'First Name',
   lastName: 'Last Name',
-  location: 'Location',
   linkedinProfile: 'LinkedIn',
+  location: 'Street Address',
+  locationCity: 'City',
+  locationState: 'State/Province',
+  locationCountry: 'Country',
   professionalHeadline: 'Professional Headline',
   professionalSummary: 'Professional Summary',
   experienceYears: 'Years of Experience',
@@ -1016,6 +1019,52 @@ function ComplianceReview({ compliance }: { compliance: unknown }) {
   )
 }
 
+// Location renderer - combines location fields into a nice display
+function LocationReview({ formData }: { formData: Record<string, unknown> }) {
+  const location = formData.location as string | undefined
+  const city = formData.locationCity as string | undefined
+  const state = formData.locationState as string | undefined
+  const country = formData.locationCountry as string | undefined
+
+  // Check if any location data exists
+  const hasAnyLocation = location || city || state || country
+
+  if (!hasAnyLocation) {
+    return (
+      <div className="mb-6">
+        <dt className="text-xs font-medium text-charcoal-500 uppercase tracking-wider mb-1">
+          Location
+        </dt>
+        <dd className="text-sm text-charcoal-400 italic">Not provided</dd>
+      </div>
+    )
+  }
+
+  // Build city, state, country line
+  const cityStateCountry = [city, state, country].filter(Boolean).join(', ')
+
+  return (
+    <div className="mb-6">
+      <dt className="text-xs font-medium text-charcoal-500 uppercase tracking-wider mb-1">
+        Location
+      </dt>
+      <dd className="text-sm text-charcoal-900">
+        <div className="flex items-start gap-2">
+          <MapPin className="w-3.5 h-3.5 text-charcoal-400 mt-0.5 flex-shrink-0" />
+          <div className="space-y-0.5">
+            {location && <div>{location}</div>}
+            {cityStateCountry && (
+              <div className={location ? 'text-charcoal-500 text-sm' : ''}>
+                {cityStateCountry}
+              </div>
+            )}
+          </div>
+        </div>
+      </dd>
+    </div>
+  )
+}
+
 // Team renderer
 function TeamReview({ team, teamMembers }: { team: unknown; teamMembers?: Record<string, { name: string; role: string }> }) {
   if (!team) {
@@ -1101,9 +1150,21 @@ function ReviewSection<T>({
   const hasCompliance = section.fields.includes('compliance' as keyof T)
   const hasTeam = section.fields.includes('team' as keyof T)
 
+  // Check if section has location fields
+  const hasLocationFields = section.fields.some(f => 
+    ['location', 'locationCity', 'locationState', 'locationCountry'].includes(String(f))
+  )
+
   // Filter out complex fields for simple field rendering
+  // Also filter out individual location fields if we have location data (we'll render them as one combined field)
   const simpleFields = section.fields.filter(
-    f => !['addresses', 'contacts', 'contracts', 'compliance', 'team'].includes(String(f))
+    f => {
+      const key = String(f)
+      if (['addresses', 'contacts', 'contracts', 'compliance', 'team'].includes(key)) return false
+      // If we have location fields, filter them out - we'll render them as a combined field
+      if (hasLocationFields && ['location', 'locationCity', 'locationState', 'locationCountry'].includes(key)) return false
+      return true
+    }
   )
 
   // Group fields logically
@@ -1188,9 +1249,9 @@ function ReviewSection<T>({
             <div key={group} className="mb-6 last:mb-0">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-4">
                 {fields.map((fieldKey) => {
-                  const value = (formData as Record<string, unknown>)[String(fieldKey)]
-                  const label = FIELD_LABELS[String(fieldKey)] || String(fieldKey)
                   const key = String(fieldKey)
+                  const label = FIELD_LABELS[key] || key
+                  const value = (formData as Record<string, unknown>)[key]
 
                   // Full width for complex/multi-line fields
                   const fullWidthFields = [
@@ -1229,6 +1290,11 @@ function ReviewSection<T>({
             </div>
           )
         })}
+
+        {/* Location fields combined */}
+        {hasLocationFields && (
+          <LocationReview formData={formData as Record<string, unknown>} />
+        )}
 
         {/* Complex field renderers */}
         {hasAddresses && (

@@ -141,7 +141,7 @@ export const candidateCreateWizardConfig: WizardConfig<CreateCandidateFormData> 
     sections: [
       {
         label: 'Identity',
-        fields: ['firstName', 'lastName', 'email', 'phone', 'linkedinProfile', 'location', 'professionalHeadline', 'professionalSummary', 'experienceYears'],
+        fields: ['firstName', 'lastName', 'email', 'phone', 'linkedinProfile', 'location', 'locationCity', 'locationState', 'locationCountry', 'professionalHeadline', 'professionalSummary', 'experienceYears'],
         stepNumber: 2,
       },
       {
@@ -184,6 +184,7 @@ export const candidateCreateWizardConfig: WizardConfig<CreateCandidateFormData> 
     email: '',
     location: '',
     phone: { countryCode: 'US', number: '' },
+    mobile: { countryCode: 'US', number: '' },
     // Professional
     professionalHeadline: '',
     professionalSummary: '',

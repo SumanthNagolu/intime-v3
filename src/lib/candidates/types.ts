@@ -56,10 +56,18 @@ export interface WorkHistoryEntry {
   startDate: string | null
   endDate: string | null
   isCurrent: boolean
-  location: string | null
+  // Location fields (both combined and separate)
+  location: string | null // Combined display string
+  locationCity?: string | null
+  locationState?: string | null
+  locationCountry?: string | null
   isRemote: boolean
+  // Content fields
   description: string | null
-  achievements: string[]
+  responsibilities?: string[] // Roles & responsibilities
+  achievements: string[] // Key achievements
+  toolsUsed?: string[] // Tools/technologies used
+  notes?: string | null // Internal notes
 }
 
 export interface EducationEntry {
@@ -73,6 +81,13 @@ export interface EducationEntry {
   isCurrent: boolean
   gpa: number | null
   honors: string | null
+  // Location fields
+  location?: string | null // Combined display string
+  locationCity?: string | null
+  locationState?: string | null
+  locationCountry?: string | null
+  // Internal notes
+  notes?: string | null
 }
 
 export interface SkillEntry {
@@ -263,11 +278,12 @@ export const VISA_STATUSES = [
 
 export const AVAILABILITY_OPTIONS = [
   { value: 'immediate', label: 'Immediately' },
-  { value: '1_week', label: '1 Week' },
   { value: '2_weeks', label: '2 Weeks' },
+  { value: '30_days', label: '30 Days' },
   { value: '1_month', label: '1 Month' },
-  { value: '2_months', label: '2+ Months' },
-  { value: 'specific_date', label: 'Specific Date' },
+  { value: '60_days', label: '60 Days' },
+  { value: '90_days', label: '90 Days' },
+  { value: 'not_available', label: 'Not Available' },
 ] as const
 
 export const PROFICIENCY_LEVELS = [

@@ -413,7 +413,7 @@ const extendPlacementInput = z.object({
 
 const candidateStatusEnum = z.enum(['draft', 'active', 'sourced', 'screening', 'bench', 'placed', 'inactive', 'archived'])
 const visaStatusEnum = z.enum(['us_citizen', 'green_card', 'h1b', 'l1', 'tn', 'opt', 'cpt', 'ead', 'other'])
-const availabilityEnum = z.enum(['immediate', '2_weeks', '30_days', '60_days', 'not_available'])
+const availabilityEnum = z.enum(['immediate', '2_weeks', '30_days', '60_days', 'not_available', '1_month', '90_days'])
 const leadSourceEnum = z.enum(['linkedin', 'indeed', 'dice', 'monster', 'referral', 'direct', 'agency', 'job_board', 'website', 'event', 'other'])
 const employmentTypeEnum = z.enum(['full_time', 'contract', 'contract_to_hire', 'part_time'])
 const workModeEnum = z.enum(['on_site', 'remote', 'hybrid'])
@@ -427,7 +427,16 @@ const workHistoryEmploymentTypeEnum = z.enum(['full_time', 'contract', 'part_tim
 const skillEntrySchema = z.object({
   name: z.string().min(1).max(100),
   proficiency: proficiencyEnum.default('intermediate'),
-  yearsOfExperience: z.number().min(0).max(50).optional(),
+  yearsOfExperience: z.preprocess(
+    (val) => {
+      if (val === null || val === undefined) return undefined
+      const num = typeof val === 'number' ? val : Number(val)
+      if (isNaN(num)) return undefined
+      // Cap at 50 years
+      return Math.min(Math.max(0, num), 50)
+    },
+    z.number().min(0).max(50).optional()
+  ),
   isPrimary: z.boolean().default(false),
   isCertified: z.boolean().default(false),
   lastUsed: z.string().max(20).optional(),
@@ -443,9 +452,14 @@ const workHistoryEntrySchema = z.object({
   isCurrent: z.boolean().default(false),
   locationCity: z.string().max(100).optional(),
   locationState: z.string().max(100).optional(),
+  locationCountry: z.string().max(100).optional(),
   isRemote: z.boolean().default(false),
   description: z.string().max(2000).optional(),
+  responsibilities: z.array(z.string().max(500)).max(20).default([]),
   achievements: z.array(z.string().max(500)).max(10).default([]),
+  skillsUsed: z.array(z.string().max(100)).max(30).default([]),
+  toolsUsed: z.array(z.string().max(100)).max(30).default([]),
+  notes: z.string().max(2000).optional(), // Internal notes
 })
 
 // Education entry
@@ -459,7 +473,23 @@ const educationEntrySchema = z.object({
   isCurrent: z.boolean().default(false),
   gpa: z.number().min(0).max(5).optional(),
   honors: z.string().max(200).optional(),
+  locationCity: z.string().max(100).optional(),
+  locationState: z.string().max(100).optional(),
+  locationCountry: z.string().max(100).optional(),
+  notes: z.string().max(2000).optional(), // Internal notes
 })
+
+// Helper to normalize URLs (add https:// if missing protocol)
+const normalizeUrl = (val: unknown): string | null | undefined => {
+  if (val === '' || val === null || val === undefined) return undefined
+  const str = String(val).trim()
+  if (!str) return undefined
+  // If it looks like a URL but missing protocol, add https://
+  if (str && !str.startsWith('http://') && !str.startsWith('https://')) {
+    return `https://${str}`
+  }
+  return str
+}
 
 // Certification entry
 const certificationEntrySchema = z.object({
@@ -467,7 +497,7 @@ const certificationEntrySchema = z.object({
   acronym: z.string().max(20).optional(),
   issuingOrganization: z.string().max(200).optional(),
   credentialId: z.string().max(100).optional(),
-  credentialUrl: z.string().url().optional(),
+  credentialUrl: z.preprocess(normalizeUrl, z.string().url().optional()),
   issueDate: z.string().optional(),
   expiryDate: z.string().optional(),
   isLifetime: z.boolean().default(false),
@@ -479,10 +509,8 @@ const createCandidateInput = z.object({
   lastName: z.string().min(1).max(50),
   email: z.string().email().max(100),
   phone: z.string().max(20).optional(),
-  linkedinUrl: z.preprocess(
-    (val) => (val === '' ? null : val),
-    z.string().url().optional().nullable()
-  ),
+  mobile: z.string().max(20).optional(),
+  linkedinUrl: z.preprocess(normalizeUrl, z.string().url().optional().nullable()),
 
   // Professional
   professionalHeadline: z.string().max(200).optional(),
@@ -537,7 +565,10 @@ const createCandidateInput = z.object({
   leadSource: leadSourceEnum,
   sourceDetails: z.string().max(500).optional(),
   referredBy: z.string().max(200).optional(),
-  campaignId: z.string().uuid().optional(),
+  campaignId: z.preprocess(
+    (val) => (val === '' || val === null ? undefined : val),
+    z.string().uuid().optional()
+  ),
 
   // Optional
   tags: z.array(z.string()).max(20).optional(),
@@ -569,10 +600,7 @@ const updateCandidateInput = z.object({
   email: z.string().email().max(100).optional(),
   phone: z.string().max(20).optional().nullable(),
   mobile: z.string().max(20).optional().nullable(),
-  linkedinUrl: z.preprocess(
-    (val) => (val === '' ? null : val),
-    z.string().url().optional().nullable()
-  ),
+  linkedinUrl: z.preprocess(normalizeUrl, z.string().url().optional().nullable()),
   professionalHeadline: z.string().max(200).optional().nullable(),
   professionalSummary: z.string().max(2000).optional().nullable(),
   currentCompany: z.string().max(200).optional().nullable(),
@@ -623,7 +651,10 @@ const updateCandidateInput = z.object({
   leadSource: leadSourceEnum.optional(),
   sourceDetails: z.string().max(500).optional().nullable(),
   referredBy: z.string().max(200).optional().nullable(),
-  campaignId: z.string().uuid().optional().nullable(),
+  campaignId: z.preprocess(
+    (val) => (val === '' || val === null ? undefined : val),
+    z.string().uuid().optional().nullable()
+  ),
   // Internal notes
   internalNotes: z.string().max(5000).optional().nullable(),
   // Wizard state for draft persistence
@@ -8685,6 +8716,7 @@ export const atsRouter = router({
             last_name: input.lastName,
             email: input.email.toLowerCase(),
             phone: input.phone,
+            mobile: input.mobile,
             linkedin_url: input.linkedinUrl,
             title: input.professionalHeadline,
             professional_summary: input.professionalSummary,
@@ -8761,7 +8793,7 @@ export const atsRouter = router({
 
         // Add work history
         if (input.workHistory.length > 0) {
-          const workHistoryToInsert = input.workHistory.map(job => ({
+          const workHistoryToInsert = input.workHistory.map((job, index) => ({
             org_id: orgId,
             candidate_id: candidate.id,
             company_name: job.companyName,
@@ -8772,9 +8804,15 @@ export const atsRouter = router({
             is_current: job.isCurrent,
             location_city: job.locationCity,
             location_state: job.locationState,
+            location_country: job.locationCountry || null,
             is_remote: job.isRemote,
             description: job.description,
-            achievements: job.achievements,
+            responsibilities: job.responsibilities || [],
+            achievements: job.achievements || [],
+            skills_used: job.skillsUsed || [],
+            tools_used: job.toolsUsed || [],
+            internal_notes: job.notes || null,
+            display_order: index,
             created_at: now,
             updated_at: now,
           }))
@@ -8784,7 +8822,7 @@ export const atsRouter = router({
 
         // Add education
         if (input.education.length > 0) {
-          const educationToInsert = input.education.map(edu => ({
+          const educationToInsert = input.education.map((edu, index) => ({
             org_id: orgId,
             candidate_id: candidate.id,
             institution_name: edu.institutionName,
@@ -8796,6 +8834,11 @@ export const atsRouter = router({
             is_current: edu.isCurrent,
             gpa: edu.gpa,
             honors: edu.honors,
+            institution_city: edu.locationCity || null,
+            institution_state: edu.locationState || null,
+            institution_country: edu.locationCountry || null,
+            internal_notes: edu.notes || null,
+            display_order: index,
             created_at: now,
             updated_at: now,
           }))
@@ -8917,6 +8960,8 @@ export const atsRouter = router({
           throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not authenticated' })
         }
 
+        try {
+
         // Look up user_profiles.id from auth_id for FK constraints (resume/document uploads)
         const { data: userProfile, error: userProfileError } = await adminClient
           .from('user_profiles')
@@ -9030,6 +9075,13 @@ export const atsRouter = router({
           .eq('org_id', orgId)
 
         if (updateError) {
+          // Handle duplicate email error with user-friendly message
+          if (updateError.message?.includes('candidates_email_unique') || updateError.code === '23505') {
+            throw new TRPCError({
+              code: 'CONFLICT',
+              message: 'A candidate with this email already exists. Please use a different email address.',
+            })
+          }
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: updateError.message })
         }
 
@@ -9154,9 +9206,14 @@ export const atsRouter = router({
             is_current: w.isCurrent || false,
             location_city: w.locationCity || null,
             location_state: w.locationState || null,
+            location_country: w.locationCountry || null,
             is_remote: w.isRemote || false,
             description: w.description || null,
+            responsibilities: w.responsibilities || [],
             achievements: w.achievements || [],
+            skills_used: w.skillsUsed || [],
+            tools_used: w.toolsUsed || [],
+            internal_notes: w.notes || null,
             display_order: index,
             created_at: now,
             updated_at: now,
@@ -9201,6 +9258,10 @@ export const atsRouter = router({
             is_current: e.isCurrent || false,
             gpa: e.gpa || null,
             honors: e.honors || null,
+            institution_city: e.locationCity || null,
+            institution_state: e.locationState || null,
+            institution_country: e.locationCountry || null,
+            internal_notes: e.notes || null,
             display_order: index,
             created_at: now,
             updated_at: now,
@@ -9365,7 +9426,7 @@ export const atsRouter = router({
 
         // Log activity - customize message for draft finalization
         const isFinalizingDraft = input.profileStatus === 'active' && candidate.status === 'draft'
-        await adminClient.from('activities').insert({
+        const { error: activityError } = await adminClient.from('activities').insert({
           org_id: orgId,
           entity_type: 'candidate',
           entity_id: input.candidateId,
@@ -9380,8 +9441,20 @@ export const atsRouter = router({
           created_by: user.id,
           created_at: now,
         })
+        if (activityError) {
+          console.error('[Candidate Update] Failed to insert activity:', activityError.message)
+          // Don't throw - activity logging is not critical
+        }
 
         return { success: true, candidateId: input.candidateId }
+        } catch (error) {
+          console.error('[Candidate Update] Unhandled error:', error)
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: error instanceof Error ? error.message : 'Failed to update candidate',
+            cause: error,
+          })
+        }
       }),
 
     // ============================================
@@ -9601,10 +9674,7 @@ export const atsRouter = router({
       .input(z.object({
         email: z.string().email().optional(),
         phone: z.string().optional(),
-        linkedinUrl: z.preprocess(
-          (val) => (val === '' ? null : val),
-          z.string().url().optional().nullable()
-        ),
+        linkedinUrl: z.preprocess(normalizeUrl, z.string().url().optional().nullable()),
       }))
       .query(async ({ ctx, input }) => {
         const { orgId } = ctx

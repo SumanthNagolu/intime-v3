@@ -22,6 +22,7 @@ export interface WorkHistoryEntry {
   achievements: string[]
   skillsUsed?: string[] // Skills used in this role
   toolsUsed?: string[] // Tools/technologies used
+  notes?: string // Internal notes (not shown on resume)
   isFromResume?: boolean // Flag for AI-parsed entries
 }
 
@@ -37,6 +38,13 @@ export interface EducationEntry {
   isCurrent?: boolean
   gpa?: number
   honors?: string
+  // Location fields
+  location?: string // Combined display string
+  locationCity?: string
+  locationState?: string
+  locationCountry?: string
+  // Internal notes
+  notes?: string // Internal notes (not shown on resume)
   isFromResume?: boolean
 }
 
@@ -68,6 +76,7 @@ export interface CreateCandidateFormData {
   lastName: string
   email: string
   phone: PhoneInputValue
+  mobile: PhoneInputValue
   linkedinProfile?: string
   // Location (standard address pattern)
   location: string
@@ -105,7 +114,7 @@ export interface CreateCandidateFormData {
   currentSponsor?: string
   isTransferable?: boolean
   clearanceLevel?: 'none' | 'public_trust' | 'secret' | 'top_secret' | 'ts_sci' // Security clearance
-  availability: 'immediate' | '2_weeks' | '30_days' | '60_days' | 'not_available'
+  availability: 'immediate' | '2_weeks' | '30_days' | '1_month' | '60_days' | '90_days' | 'not_available'
   availableFrom?: string // ISO date string for specific date
   noticePeriod?: string // Text description e.g., "2 weeks"
   noticePeriodDays?: number
@@ -220,6 +229,7 @@ const defaultFormData: CreateCandidateFormData = {
   lastName: '',
   email: '',
   phone: { countryCode: 'US', number: '' },
+  mobile: { countryCode: 'US', number: '' },
   linkedinProfile: '',
   location: '',
   locationCity: '',
@@ -750,7 +760,10 @@ export const useCreateCandidateStore = create<CreateCandidateStore>()((set, get)
           locationState: job.locationState || (job.location?.split(',')[1]?.trim()),
           isRemote: job.isRemote,
           description: job.description,
+          responsibilities: job.responsibilities || [],
           achievements: job.achievements || [],
+          skillsUsed: job.skillsUsed || [],
+          toolsUsed: job.toolsUsed || [],
           isFromResume: true,
         })
       })
@@ -819,7 +832,9 @@ export const AVAILABILITY_OPTIONS = [
   { value: 'immediate', label: 'Immediately Available' },
   { value: '2_weeks', label: '2 Weeks Notice' },
   { value: '30_days', label: '30 Days Notice' },
+  { value: '1_month', label: '1 Month Notice' },
   { value: '60_days', label: '60 Days Notice' },
+  { value: '90_days', label: '90 Days Notice' },
   { value: 'not_available', label: 'Not Currently Available' },
 ] as const
 

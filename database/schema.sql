@@ -8283,6 +8283,7 @@ BEGIN
       AND exited_at IS NULL;
 
     -- Insert new stage entry
+    -- Note: deals table doesn't have updated_by, use created_by instead
     INSERT INTO deal_stages_history (
       deal_id,
       stage,
@@ -8294,7 +8295,7 @@ BEGIN
       NEW.stage,
       OLD.stage,
       NOW(),
-      NEW.updated_by
+      NEW.created_by
     );
 
     -- Update last activity
@@ -16701,6 +16702,7 @@ CREATE TABLE public.contacts (
     lead_business_unit text,
     lead_do_not_contact_reason text,
     lead_strategy_notes text,
+    lead_campaign_name text,
     CONSTRAINT contacts_agency_relationship_check CHECK (((agency_relationship IS NULL) OR (agency_relationship = ANY (ARRAY['partner'::text, 'competitor'::text, 'both'::text])))),
     CONSTRAINT contacts_bench_type_check CHECK (((bench_type IS NULL) OR (bench_type = ANY (ARRAY['w2_internal'::text, 'w2_vendor'::text, '1099'::text, 'c2c'::text])))),
     CONSTRAINT contacts_candidate_availability_check CHECK (((candidate_availability IS NULL) OR (candidate_availability = ANY (ARRAY['immediate'::text, '2_weeks'::text, '1_month'::text, '2_months'::text, '3_months'::text, 'not_available'::text])))),
@@ -16722,7 +16724,7 @@ CREATE TABLE public.contacts (
     CONSTRAINT contacts_lead_bant_timeline_check CHECK (((lead_bant_timeline IS NULL) OR ((lead_bant_timeline >= 0) AND (lead_bant_timeline <= 25)))),
     CONSTRAINT contacts_lead_qualification_result_check CHECK (((lead_qualification_result IS NULL) OR (lead_qualification_result = ANY (ARRAY['qualified_convert'::text, 'qualified_nurture'::text, 'not_qualified'::text])))),
     CONSTRAINT contacts_lead_score_check CHECK (((lead_score IS NULL) OR ((lead_score >= 0) AND (lead_score <= 100)))),
-    CONSTRAINT contacts_lead_status_check CHECK (((lead_status IS NULL) OR (lead_status = ANY (ARRAY['new'::text, 'contacted'::text, 'warm'::text, 'hot'::text, 'cold'::text, 'qualified'::text, 'unqualified'::text, 'converted'::text, 'lost'::text, 'nurture'::text])))),
+    CONSTRAINT contacts_lead_status_check CHECK (((lead_status IS NULL) OR (lead_status = ANY (ARRAY['draft'::text, 'new'::text, 'contacted'::text, 'warm'::text, 'hot'::text, 'cold'::text, 'qualified'::text, 'unqualified'::text, 'converted'::text, 'lost'::text, 'nurture'::text])))),
     CONSTRAINT contacts_placed_status_check CHECK (((placed_status IS NULL) OR (placed_status = ANY (ARRAY['active'::text, 'ending_soon'::text, 'extended'::text, 'completed'::text])))),
     CONSTRAINT contacts_prospect_response_type_check CHECK (((prospect_response_type IS NULL) OR (prospect_response_type = ANY (ARRAY['positive'::text, 'neutral'::text, 'negative'::text, 'auto_reply'::text, 'out_of_office'::text])))),
     CONSTRAINT contacts_prospect_sequence_status_check CHECK (((prospect_sequence_status IS NULL) OR (prospect_sequence_status = ANY (ARRAY['pending'::text, 'in_progress'::text, 'paused'::text, 'completed'::text, 'stopped'::text])))),
@@ -17410,7 +17412,8 @@ CREATE TABLE public.candidate_education (
     updated_at timestamp with time zone DEFAULT now(),
     created_by uuid,
     updated_by uuid,
-    contact_id uuid
+    contact_id uuid,
+    internal_notes text
 );
 
 
@@ -17837,7 +17840,8 @@ CREATE TABLE public.candidate_work_history (
     updated_at timestamp with time zone DEFAULT now(),
     created_by uuid,
     updated_by uuid,
-    contact_id uuid
+    contact_id uuid,
+    internal_notes text
 );
 
 
@@ -66157,5 +66161,5 @@ ALTER TABLE public.xp_transactions ENABLE ROW LEVEL SECURITY;
 -- PostgreSQL database dump complete
 --
 
-\unrestrict vb1TNegTfMya1p8CBDfDe46yFp5eXAY0f59iP4xq1bjC8bNG5cLPPm5JefmWnk5
+\unrestrict zVEPTdpnAd5oLjcYr9ImaKwGqGaB20mNssC3KA2UNvqBHYhxESvvScCxVK1uzdg
 

@@ -165,9 +165,14 @@ export interface CandidateWorkHistory {
   location: string | null
   locationCity: string | null
   locationState: string | null
+  locationCountry: string | null
   isRemote: boolean
   description: string | null
+  responsibilities: string[]
   achievements: string[]
+  toolsUsed: string[]
+  internalNotes: string | null
+  displayOrder: number | null
   createdAt: string
 }
 
@@ -197,6 +202,12 @@ export interface CandidateEducation {
   isCurrent: boolean
   gpa: number | null
   honors: string | null
+  location: string | null
+  locationCity: string | null
+  locationState: string | null
+  locationCountry: string | null
+  internalNotes: string | null
+  displayOrder: number | null
   createdAt: string
 }
 
