@@ -297,26 +297,48 @@ export function getAccountSectionsByGroup(): {
 }
 
 /**
- * Job sections - Guidewire-style with main sections + tools
- * Main: Overview (consolidated), Pipeline, Submissions, Interviews, Offers
- * Tools: Activities, Notes, Documents, History
+ * Job sections - Unified architecture matching Account/Candidate pattern
  *
- * Note: Overview now includes Requirements, Location, Hiring Team, and Client Details
- * as collapsible cards within the single Overview page.
+ * MAIN SECTIONS (numbered 1-7, match wizard steps):
+ *   - Summary: Job overview with KPIs and pipeline metrics
+ *   - Basic Info: Account, title, type, and dates
+ *   - Requirements: Skills, experience, and qualifications
+ *   - Role Details: Summary, responsibilities, and team
+ *   - Location: Work arrangement and authorization
+ *   - Compensation: Rates, fees, and benefits
+ *   - Interview Process: Rounds, timelines, and requirements
+ *   - Team Assignment: Owner, recruiters, and priority
+ *
+ * RELATED DATA (collapsible):
+ *   - Pipeline, Submissions, Interviews, Offers
+ *
+ * TOOLS (collapsible):
+ *   - Activities, Notes, Documents, History
  */
 export const jobSections: SectionDefinition[] = [
-  // Overview (consolidated from former Job Details, Requirements, Location, Hiring Team, Client Details)
-  { id: 'overview', label: 'Overview', icon: FileText, group: 'main', description: 'Job details, requirements, location, team, and client info' },
-  // Pipeline group
-  { id: 'pipeline', label: 'Pipeline', icon: Layers, showCount: true, group: 'main' },
-  { id: 'submissions', label: 'Submissions', icon: Send, showCount: true, group: 'main' },
-  { id: 'interviews', label: 'Interviews', icon: Calendar, showCount: true, group: 'main' },
-  { id: 'offers', label: 'Offers', icon: Gift, showCount: true, group: 'main' },
-  // Tools section
-  { id: 'activities', label: 'Activities', icon: Activity, showCount: true, isToolSection: true, group: 'tools' },
-  { id: 'notes', label: 'Notes', icon: StickyNote, showCount: true, isToolSection: true, group: 'tools' },
-  { id: 'documents', label: 'Documents', icon: FileText, showCount: true, isToolSection: true, group: 'tools' },
-  { id: 'history', label: 'History', icon: History, isToolSection: true, group: 'tools' },
+  // Summary section (overview dashboard)
+  { id: 'summary', label: 'Summary', icon: LayoutDashboard, group: 'main', isOverview: true, description: 'Job overview, pipeline metrics, and quick facts' },
+
+  // Main sections (numbered 1-7, match wizard steps)
+  { id: 'basic', label: 'Basic Info', icon: Building2, group: 'main', number: 1, description: 'Account, title, type, and dates' },
+  { id: 'requirements', label: 'Requirements', icon: ClipboardList, group: 'main', number: 2, description: 'Skills, experience, and qualifications' },
+  { id: 'role', label: 'Role Details', icon: FileText, group: 'main', number: 3, description: 'Summary, responsibilities, and team' },
+  { id: 'location', label: 'Location', icon: MapPin, group: 'main', number: 4, description: 'Work arrangement and authorization' },
+  { id: 'compensation', label: 'Compensation', icon: DollarSign, group: 'main', number: 5, description: 'Rates, fees, and benefits' },
+  { id: 'interview', label: 'Interview Process', icon: Calendar, group: 'main', number: 6, description: 'Rounds, timelines, and requirements' },
+  { id: 'team', label: 'Team Assignment', icon: Users, group: 'main', number: 7, description: 'Owner, recruiters, and priority' },
+
+  // Related data sections (collapsible)
+  { id: 'pipeline', label: 'Pipeline', icon: Layers, group: 'related', showCount: true, isRelatedData: true, description: 'Candidate pipeline overview' },
+  { id: 'submissions', label: 'Submissions', icon: Send, group: 'related', showCount: true, isRelatedData: true, description: 'Submitted candidates' },
+  { id: 'interviews', label: 'Interviews', icon: Calendar, group: 'related', showCount: true, isRelatedData: true, description: 'Scheduled interviews' },
+  { id: 'offers', label: 'Offers', icon: Gift, group: 'related', showCount: true, isRelatedData: true, description: 'Offer management' },
+
+  // Tool sections
+  { id: 'activities', label: 'Activities', icon: Activity, group: 'tools', showCount: true, isToolSection: true, description: 'All job interactions' },
+  { id: 'notes', label: 'Notes', icon: StickyNote, group: 'tools', showCount: true, isToolSection: true, description: 'Internal notes and observations' },
+  { id: 'documents', label: 'Documents', icon: FileText, group: 'tools', showCount: true, isToolSection: true, description: 'Job-related documents' },
+  { id: 'history', label: 'History', icon: History, group: 'tools', isToolSection: true, description: 'Audit trail and change history' },
 ]
 
 /**
@@ -330,40 +352,19 @@ export interface SectionGroup {
 }
 
 /**
- * Job section groups - organized for Guidewire-style collapsible sidebar
- * Overview is standalone at top, Pipeline has workflow sections
- */
-export const jobSectionGroups: SectionGroup[] = [
-  {
-    id: 'overview-standalone',
-    label: '', // Empty label = no group header, just the item
-    sectionIds: ['overview'],
-    defaultOpen: true,
-  },
-  {
-    id: 'pipeline',
-    label: 'Pipeline',
-    sectionIds: ['pipeline', 'submissions', 'interviews', 'offers'],
-    defaultOpen: true,
-  },
-]
-
-/**
- * Tool sections for jobs - remain separate and collapsible
- */
-export const jobToolSections = jobSections.filter(s => s.isToolSection)
-
-/**
  * Helper to get job sections organized by group for sidebar rendering
+ * Matches getAccountSectionsByGroup() pattern
  */
 export function getJobSectionsByGroup(): {
   overviewSection: SectionDefinition | undefined
   mainSections: SectionDefinition[]
+  relatedSections: SectionDefinition[]
   toolSections: SectionDefinition[]
 } {
   return {
-    overviewSection: jobSections.find(s => s.id === 'overview'),
-    mainSections: jobSections.filter(s => s.group === 'main' && s.id !== 'overview'),
+    overviewSection: jobSections.find(s => s.isOverview),
+    mainSections: jobSections.filter(s => s.group === 'main' && !s.isOverview),
+    relatedSections: jobSections.filter(s => s.isRelatedData),
     toolSections: jobSections.filter(s => s.isToolSection),
   }
 }
